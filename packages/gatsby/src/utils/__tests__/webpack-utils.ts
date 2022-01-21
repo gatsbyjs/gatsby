@@ -70,42 +70,42 @@ describe(`webpack utils`, () => {
         })
         pageTemplateRule = js.oneOf[0]
       })
-      it(`matches page template files from user code`, () => {
+      it(`matches JS import paths for page templates issued from async-requires`, () => {
         expect(
           pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/_this_is_virtual_fs_path_/$virtual/async-requires.js`
           )
         ).toEqual(true)
       })
-      it(`does not match other files from user code`, () => {
+      it(`does not match other file paths from user code`, () => {
         expect(
           pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`
           )
         ).toEqual(false)
       })
-      it(`does not match files from .cache`, () => {
+      it(`does not match other file paths from .cache`, () => {
         expect(
           pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
           )
         ).toEqual(false)
       })
-      it(`does not match dependencies that use gatsby`, () => {
+      it(`does not match dependency file paths that use gatsby`, () => {
         expect(
           pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`
           )
         ).toEqual(false)
       })
-      it(`does not match other dependencies`, () => {
+      it(`does not match other dependency file paths`, () => {
         expect(
           pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/react/index.js`
           )
         ).toEqual(false)
       })
-      it(`does not include gatsby-browser.js`, () => {
+      it(`does not match gatsby-browser.js file paths`, () => {
         expect(
           pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
