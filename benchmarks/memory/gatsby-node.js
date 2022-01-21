@@ -1,35 +1,8 @@
-// const {
-//   takeHeapSnapshot,
-// } = require(`./node_modules/gatsby/dist/utils/debug-memory.js`)
+const { cpuCoreCount } = require(`gatsby-core-utils`)
 
-// exports.createSchemaCustomization = ({ actions }) => {
-//   actions.createTypes(`
-//     type Test implements Node @dontInfer {
-//       id: ID!
-//       nodeNum: Int!
-//       nodeNumStr: String!
-//       pageNum: Int!
-//       pageNumStr: String!
-//       fooBar: String!
-//       fooBar2: String!
-//       fooBarArray: [TestFooBarArray!]
-//       text: String!
-//       random: Int!
-//       randomPage: Int!
-//     }
-//     type TestFooBarArray {
-//       fooBar: String!
-//     }
-//     type SitePage implements Node @dontInfer {
-//       id: ID!
-//     }
-//   `)
-// }
-const NUM_NODES = 200
+const NUM_NODES = parseInt(process.env.NUM_NODES || 300, 10)
 
 exports.sourceNodes = async ({ actions }) => {
-  // await takeHeapSnapshot(`sourceNodes-1`)
-
   for (let i = 0; i < NUM_NODES; i++) {
     const largeSizeObj = {}
     for (let j = 1; j <= 1024; j++) {
@@ -58,31 +31,90 @@ exports.sourceNodes = async ({ actions }) => {
   }
 
   await new Promise(resolve => setTimeout(resolve, 100))
-
-  // await takeHeapSnapshot(`sourceNodes-2`)
 }
 
-// exports.onCreateNode = ({ node, actions, getNode }) => {
-//   if (node.internal.type === `TestChild`) {
-//     const grandpa = getNode(node.parent)
-//     console.log({ grandpa })
+const printedMessages = new Set()
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    Query: {
+      workerInfo: {
+        type: `String`,
+        args: {
+          label: `String!`,
+        },
+        resolve: (_, args) => {
+          const msg = `${args.label} on ${
+            process.env.GATSBY_WORKER_ID
+              ? `worker #${process.env.GATSBY_WORKER_ID}`
+              : `main`
+          }`
+          if (!printedMessages.has(msg)) {
+            printedMessages.add(msg)
+            console.log(msg)
+          }
+          return msg
+        },
+      },
+    },
+  })
+}
 
-//     actions.createNode({
-//       id: `${node.id} << test child2`,
-//       parent: node.id,
-//       internal: {
-//         type: `TestGrandChild`,
-//         contentDigest: `wa`,
-//       },
-//     })
-//   }
-// }
+const WORKER_BATCH_SIZE = 50
+exports.createPages = async ({ actions, graphql }) => {
+  const numWorkers = Math.max(1, cpuCoreCount() - 1)
 
-exports.createPages = async ({ getNode, action, graphql }) => {
-  debugger
+  // we do want ALL available workers to execute each query type
+  const minNumOfPagesToSaturateAllWorkers = WORKER_BATCH_SIZE * numWorkers
 
-  const node = getNode(`memory-1`)
-  // console.log({ node })
-  // console.info(`just using node`, node.id)
-  // await takeHeapSnapshot(`create-pages`)
+  const { data } = await graphql(`
+    {
+      allTest {
+        nodes {
+          id
+          idClone
+        }
+      }
+    }
+  `)
+
+  // we might need to "duplicate" pages if node count is less than number of needed pages
+  const repeatCount = Math.min(
+    1,
+    Math.ceil(minNumOfPagesToSaturateAllWorkers / data.allTest.nodes.length)
+  )
+
+  function createEnoughToSaturate(cb) {
+    let counter = 0
+    for (let i = 0; i < repeatCount; i++) {
+      for (const node of data.allTest.nodes) {
+        const { template, context } = cb(node)
+
+        actions.createPage({
+          path: `/${template}/${counter++}`,
+          component: require.resolve(`./src/templates/${template}`),
+          context,
+        })
+      }
+    }
+  }
+
+  // fast path (eq: { id: x })
+  createEnoughToSaturate(node => {
+    return {
+      template: `eq_id`,
+      context: {
+        id: node.id,
+      },
+    }
+  })
+
+  // (eq: { idClone: x })
+  createEnoughToSaturate(node => {
+    return {
+      template: `eq_field`,
+      context: {
+        id: node.id,
+      },
+    }
+  })
 }
