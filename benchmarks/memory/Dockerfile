@@ -7,7 +7,7 @@ RUN echo "\n\necho \"Welcome to the Gatsby Memory benchmark container!\\n  - /us
 
 
 # TODO figure out port forwarding
-EXPOSE 9229
+# EXPOSE 9229
 
 
 # set up gatsby-dev

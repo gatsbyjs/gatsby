@@ -8,6 +8,7 @@ fi
 # TODO ports still not working here...
 DOCKER_ID=$(\
   docker run -td \
+  -p 127.0.0.1:9229:9229 \
   --mount type=bind,source="$(pwd)/../..",target=/usr/src/gatsby \
   --mount type=bind,source="$(pwd)",target=/usr/src/app \
   gatsby-memory \
