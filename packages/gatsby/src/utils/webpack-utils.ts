@@ -428,6 +428,7 @@ export const createWebpackUtils = (
             use: [
               loaders.js({
                 ...options,
+                configFile: true,
                 compact: PRODUCTION,
                 pageTemplate: true, // Flag to check in `babel-loader`
               }),
