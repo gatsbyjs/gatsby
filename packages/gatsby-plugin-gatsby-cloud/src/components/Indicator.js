@@ -153,20 +153,28 @@ const Indicator = () => {
       buildId !== newBuildInfo?.latestBuild?.id &&
       currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
-      const { hasPageChanged, errorMessage } = await hasPageDataChanged(buildId)
-      if (errorMessage) {
-        setBuildInfo({
-          ...newBuildInfo,
-          buildStatus: BuildStatus.ERROR,
-          errorMessage,
-        })
-      } else if (refreshNeeded || hasPageChanged) {
-        refreshNeeded = true
-        // Build updated, data for this specific page has changed!
+      if (refreshNeeded) {
         setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
       } else {
-        // Build updated, data for this specific page has NOT changed, no need to refresh content.
-        setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+        const { hasPageChanged, errorMessage } = await hasPageDataChanged(
+          buildId
+        )
+
+        if (errorMessage) {
+          setBuildInfo({
+            ...newBuildInfo,
+            buildStatus: BuildStatus.ERROR,
+            errorMessage,
+          })
+        } else if (hasPageChanged) {
+          // Force a "This page has updated message" until a page is refreshed
+          refreshNeeded = true
+          // Build updated, data for this specific page has changed!
+          setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+        } else {
+          // Build updated, data for this specific page has NOT changed, no need to refresh content.
+          setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+        }
       }
     }
 
