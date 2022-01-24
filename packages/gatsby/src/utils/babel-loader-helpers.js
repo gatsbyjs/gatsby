@@ -52,14 +52,9 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     ),
   ]
 
-  const develop = stage === `develop`
-  const developPageTemplate = develop && pageTemplate // Matches if import is from async-requires
-  const developOnDemand =
-    develop && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND // On demand does not generate async-requires
-
   if (
     _CFLAGS_.GATSBY_MAJOR === `4` &&
-    (developPageTemplate || developOnDemand || stage === `build-javascript`)
+    ((stage === `develop` && pageTemplate) || stage === `build-javascript`)
   ) {
     requiredPlugins.push(
       babel.createConfigItem(

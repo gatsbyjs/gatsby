@@ -423,7 +423,7 @@ export const createWebpackUtils = (
            * `babel-plugin-remove-api`).
            */
           {
-            issuer: /async-requires/, // Only JS imports in async-requires are for page templates
+            resourceQuery: /page-template/,
             type: `javascript/auto`,
             use: [
               loaders.js({
