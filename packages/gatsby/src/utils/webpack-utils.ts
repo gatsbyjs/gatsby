@@ -1,5 +1,5 @@
 import * as path from "path"
-import { RuleSetRule, WebpackPluginInstance, Configuration } from "webpack"
+import { RuleSetRule, WebpackPluginInstance } from "webpack"
 import { GraphQLSchema } from "graphql"
 import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
@@ -65,16 +65,12 @@ type CSSModulesOptions =
       exportOnlyLocals?: boolean
     }
 
-interface IMiniCSSExtractLoaderModuleOptions {
-  filename?: Required<Configuration>["output"]["filename"] | undefined
-  chunkFilename?: Required<Configuration>["output"]["chunkFilename"] | undefined
-  experimentalUseImportModule?: boolean | undefined
-  ignoreOrder?: boolean | undefined
-  insert?: string | ((linkTag: any) => void) | undefined
-  attributes?: Record<string, string> | undefined
-  linkType?: string | false | "text/css" | undefined
-  runtime?: boolean | undefined
-}
+type MiniCSSExtractLoaderModuleOptions =
+  | undefined
+  | boolean
+  | {
+      namedExport?: boolean
+    }
 /**
  * Utils that produce webpack `loader` objects
  */
@@ -238,13 +234,28 @@ export const createWebpackUtils = (
       }
     },
 
-    miniCssExtract: (options: IMiniCSSExtractLoaderModuleOptions = {}) => {
-      // @ts-ignore - legacy modules
+    // TODO(v5): Re-Apply https://github.com/gatsbyjs/gatsby/pull/33979 with breaking change in inline loader syntax
+    miniCssExtract: (
+      options: {
+        modules?: MiniCSSExtractLoaderModuleOptions
+      } = {}
+    ) => {
+      let moduleOptions: MiniCSSExtractLoaderModuleOptions = undefined
+
       const { modules, ...restOptions } = options
+
+      if (typeof modules === `boolean` && options.modules) {
+        moduleOptions = {
+          namedExport: true,
+        }
+      } else {
+        moduleOptions = modules
+      }
 
       return {
         loader: MiniCssExtractPlugin.loader,
         options: {
+          modules: moduleOptions,
           ...restOptions,
         },
       }
@@ -273,15 +284,13 @@ export const createWebpackUtils = (
         loader: require.resolve(`css-loader`),
         options: {
           // Absolute urls (https or //) are not send to this function. Only resolvable paths absolute or relative ones.
-          url: {
-            filter: function (url: string): boolean {
-              // When an url starts with /
-              if (url.startsWith(`/`)) {
-                return false
-              }
+          url: function (url: string): boolean {
+            // When an url starts with /
+            if (url.startsWith(`/`)) {
+              return false
+            }
 
-              return true
-            },
+            return true
           },
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
@@ -342,7 +351,6 @@ export const createWebpackUtils = (
       }
     },
 
-    // TODO(v5): Consider removing this (as not used anymore internally)
     url: (options = {}) => {
       return {
         loader: require.resolve(`url-loader`),
@@ -538,11 +546,8 @@ export const createWebpackUtils = (
    */
   rules.fonts = (): RuleSetRule => {
     return {
+      use: [loaders.url()],
       test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/,
-      type: `asset/resource`,
-      generator: {
-        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
-      },
     }
   }
 
@@ -552,11 +557,8 @@ export const createWebpackUtils = (
    */
   rules.images = (): RuleSetRule => {
     return {
+      use: [loaders.url()],
       test: /\.(ico|svg|jpg|jpeg|png|gif|webp|avif)(\?.*)?$/,
-      type: `asset/resource`,
-      generator: {
-        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
-      },
     }
   }
 
@@ -566,11 +568,8 @@ export const createWebpackUtils = (
    */
   rules.media = (): RuleSetRule => {
     return {
+      use: [loaders.url()],
       test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
-      type: `asset/resource`,
-      generator: {
-        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
-      },
     }
   }
 

@@ -146,6 +146,35 @@ export type PageProps<
   serverData: ServerDataType
 }
 
+/**
+ * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerDataProps = {
+  headers: Map<string, unknown>
+  method: string
+  url: string
+  query?: Record<string, unknown>
+  params?: Record<string, unknown>
+  pageContext: Record<string, unknown>
+};
+
+/**
+ * The return type (promise payload) from the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerDataReturn<ServerDataType = Record<string, unknown>> = Promise<{
+  headers?: Map<string, unknown>
+  props?: ServerDataType
+  status?: number
+}>;
+
+/**
+ * A shorthand type for combining the props and return type for the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerData<ServerDataType> = (props: GetServerDataProps) => GetServerDataReturn<ServerDataType>;
+
+/**
+ * Constructor arguments for the PageRenderer.
+ */
 export interface PageRendererProps {
   location: WindowLocation
 }

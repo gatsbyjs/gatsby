@@ -3,6 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.5.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.4/packages/gatsby) (2022-01-19)
+
+#### Bug Fixes
+
+- handle session storage not being available [#34525](https://github.com/gatsbyjs/gatsby/issues/34525) [#34539](https://github.com/gatsbyjs/gatsby/issues/34539) ([e69270b](https://github.com/gatsbyjs/gatsby/commit/e69270b01aee337993ec4084d354bf5b09becadf))
+
+### [4.5.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.3/packages/gatsby) (2022-01-17)
+
+#### Bug Fixes
+
+- handle loaded page being potentially undefined [#34488](https://github.com/gatsbyjs/gatsby/issues/34488) [#34509](https://github.com/gatsbyjs/gatsby/issues/34509) ([0d29e95](https://github.com/gatsbyjs/gatsby/commit/0d29e9579baf308521c07336b09944b737664c52))
+- Fix issue with env variables not being passed to getServerData Fix [#34447](https://github.com/gatsbyjs/gatsby/issues/34447) Fix [#34508](https://github.com/gatsbyjs/gatsby/issues/34508) ([2fb74de](https://github.com/gatsbyjs/gatsby/commit/2fb74dec7d757f2d43d61be090475d98f4ca1b21))
+
+### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.2/packages/gatsby) (2022-01-12)
+
+**Note:** Version bump only for package gatsby
+
+### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.1/packages/gatsby) (2022-01-12)
+
+#### Bug Fixes
+
+- Revert #33786 [#33786](https://github.com/gatsbyjs/gatsby/issues/33786) [#34458](https://github.com/gatsbyjs/gatsby/issues/34458) [#34459](https://github.com/gatsbyjs/gatsby/issues/34459) ([96f435a](https://github.com/gatsbyjs/gatsby/commit/96f435ac846a3555de994a04e1cec2211d440d35))
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.0/packages/gatsby) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Features
+
+- remove unused exports from query-engine [#33484](https://github.com/gatsbyjs/gatsby/issues/33484) ([ccf70da](https://github.com/gatsbyjs/gatsby/commit/ccf70da543d1408d4dfa76d9fb202dc024079131))
+- Deprecate `gatsby-recipes` [#34094](https://github.com/gatsbyjs/gatsby/issues/34094) ([5f62345](https://github.com/gatsbyjs/gatsby/commit/5f623451fefb55d6ace04ba6c9a221740a538bda))
+
+#### Bug Fixes
+
+- Only start write page-data.json activity if there's pages to write [#34403](https://github.com/gatsbyjs/gatsby/issues/34403) ([ca37398](https://github.com/gatsbyjs/gatsby/commit/ca3739869d4776d5cfff56e1a188913c81b8637f))
+- createNode return promise [#34399](https://github.com/gatsbyjs/gatsby/issues/34399) ([8a9b023](https://github.com/gatsbyjs/gatsby/commit/8a9b023510650e71f00f8c5c3d841e199f5b3ad0))
+- Wrong route resolved by findPageByPath function resolved [#34070](https://github.com/gatsbyjs/gatsby/issues/34070) ([0cc5a5a](https://github.com/gatsbyjs/gatsby/commit/0cc5a5a68fd145805aba08b41bfd6705d19804a8))
+- update typescript to v5 (major) [#33786](https://github.com/gatsbyjs/gatsby/issues/33786) ([33049c8](https://github.com/gatsbyjs/gatsby/commit/33049c8e5384c856dd5fa28e79ad4c76ad628ad5))
+- update dependency eslint-plugin-react to ^7.28.0 [#34372](https://github.com/gatsbyjs/gatsby/issues/34372) ([3af68e1](https://github.com/gatsbyjs/gatsby/commit/3af68e1413514f3f5e5f6a448cfb3383db76dbe3))
+- resolve createNode promise when datastore is ready resolve [#34277](https://github.com/gatsbyjs/gatsby/issues/34277) ([c7efdb9](https://github.com/gatsbyjs/gatsby/commit/c7efdb99cdf03df028a56705921a032afdf7d6e4))
+- handle case of html and data files mismatch [#34225](https://github.com/gatsbyjs/gatsby/issues/34225) ([97e942e](https://github.com/gatsbyjs/gatsby/commit/97e942e28cccaf665fd94cfa8f3aed2c28237dbb))
+- Reorder head tags [#34030](https://github.com/gatsbyjs/gatsby/issues/34030) ([10c8227](https://github.com/gatsbyjs/gatsby/commit/10c8227a8176b40f292243954029120dab6d2ba8))
+- fix running config when page doesnt contain graphql or getServerData or gatsby-plugin-image fix [#34275](https://github.com/gatsbyjs/gatsby/issues/34275) ([d163724](https://github.com/gatsbyjs/gatsby/commit/d163724c2cc05171c7b3fe34820f9cab96e2058f))
+- Update mini-css-extract-plugin to fix inc builds issue fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) [#33982](https://github.com/gatsbyjs/gatsby/issues/33982) ([725dc36](https://github.com/gatsbyjs/gatsby/commit/725dc3609a85728e3dbcbd77e740b5fed488c515))
+
+#### Performance Improvements
+
+- use saved schema snapshot in PQR workers [#34256](https://github.com/gatsbyjs/gatsby/issues/34256) ([c231ef6](https://github.com/gatsbyjs/gatsby/commit/c231ef6cbf26195460b7f44e78d34ff2bd1666a2))
+
+#### Chores
+
+- Add types for `getServerData` [#34406](https://github.com/gatsbyjs/gatsby/issues/34406) ([183b5f1](https://github.com/gatsbyjs/gatsby/commit/183b5f1bd0673598559ee64ace639484f97b09c0))
+- update dependency typescript to ^4.5.4 [#34358](https://github.com/gatsbyjs/gatsby/issues/34358) ([c6e4298](https://github.com/gatsbyjs/gatsby/commit/c6e42985a20d6b148442aa5f7af1880fa600780b))
+- update dependency graphql to ^15.8.0 [#34366](https://github.com/gatsbyjs/gatsby/issues/34366) ([865a23e](https://github.com/gatsbyjs/gatsby/commit/865a23e5279996febe984c3662193867f9100da5))
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
+#### Other Changes
+
+- Revert "fix(gatsby): Update mini-css-extract-plugin to fix inc builds issue (#33979)" fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) fix [#34413](https://github.com/gatsbyjs/gatsby/issues/34413) ([26a94f2](https://github.com/gatsbyjs/gatsby/commit/26a94f218f3a8dbd2581ddb2cf4a6788fc48eaf1))
+- Add backticks to inline code comments [#34235](https://github.com/gatsbyjs/gatsby/issues/34235) ([728ac09](https://github.com/gatsbyjs/gatsby/commit/728ac09cc8b4dac32da24676904d1587bb773cb4))
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.4.0/packages/gatsby) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

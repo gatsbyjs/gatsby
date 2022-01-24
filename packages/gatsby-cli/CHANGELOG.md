@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.5.2/packages/gatsby-cli) (2022-01-17)
+
+#### Bug Fixes
+
+- Re-Add plugin-add functionality [#34482](https://github.com/gatsbyjs/gatsby/issues/34482) [#34510](https://github.com/gatsbyjs/gatsby/issues/34510) ([0f5f7e4](https://github.com/gatsbyjs/gatsby/commit/0f5f7e46ca4e803a1f43059e5de984ce8cd150f3))
+
+### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.5.1/packages/gatsby-cli) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.5.0/packages/gatsby-cli) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Features
+
+- Deprecate `gatsby-recipes` [#34094](https://github.com/gatsbyjs/gatsby/issues/34094) ([5f62345](https://github.com/gatsbyjs/gatsby/commit/5f623451fefb55d6ace04ba6c9a221740a538bda))
+
+#### Bug Fixes
+
+- make `--inspect-brk` work [#34242](https://github.com/gatsbyjs/gatsby/issues/34242) ([9b9419c](https://github.com/gatsbyjs/gatsby/commit/9b9419cea33994db0bce5eec76ec5532ca0cb476))
+
+#### Chores
+
+- update dependency typescript to ^4.5.4 [#34358](https://github.com/gatsbyjs/gatsby/issues/34358) ([c6e4298](https://github.com/gatsbyjs/gatsby/commit/c6e42985a20d6b148442aa5f7af1880fa600780b))
+- update dependency rollup to ^2.62.0 for gatsby-cli [#34369](https://github.com/gatsbyjs/gatsby/issues/34369) ([ada4a62](https://github.com/gatsbyjs/gatsby/commit/ada4a6281a199be78884cf05e2013b36b8997914))
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.4.0/packages/gatsby-cli) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

@@ -454,7 +454,7 @@ describe(`Load plugins`, () => {
       expect((reporter.warn as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
         Array [
           "Warning: there are unknown plugin options for \\"gatsby-plugin-google-analytics\\": doesThisExistInTheSchema
-        Please open an issue at ghub.io/gatsby-plugin-google-analytics if you believe this option is valid.",
+        Please open an issue at https://ghub.io/gatsby-plugin-google-analytics if you believe this option is valid.",
         ]
       `)
       expect(mockProcessExit).not.toHaveBeenCalled()

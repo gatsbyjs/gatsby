@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.5.2/packages/gatsby-core-utils) (2022-01-17)
+
+#### Bug Fixes
+
+- Re-Add plugin-add functionality [#34482](https://github.com/gatsbyjs/gatsby/issues/34482) [#34510](https://github.com/gatsbyjs/gatsby/issues/34510) ([0f5f7e4](https://github.com/gatsbyjs/gatsby/commit/0f5f7e46ca4e803a1f43059e5de984ce8cd150f3))
+
+### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.5.1/packages/gatsby-core-utils) (2022-01-12)
+
+#### Bug Fixes
+
+- Re-Export updateSiteMetadata [#34462](https://github.com/gatsbyjs/gatsby/issues/34462) [#34464](https://github.com/gatsbyjs/gatsby/issues/34464) ([0544886](https://github.com/gatsbyjs/gatsby/commit/0544886fb792e40275a4f22675f499714b87529a))
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.5.0/packages/gatsby-core-utils) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Features
+
+- Deprecate `gatsby-recipes` [#34094](https://github.com/gatsbyjs/gatsby/issues/34094) ([5f62345](https://github.com/gatsbyjs/gatsby/commit/5f623451fefb55d6ace04ba6c9a221740a538bda))
+
+#### Bug Fixes
+
+- Replace special filename characters [#34249](https://github.com/gatsbyjs/gatsby/issues/34249) ([fa77ceb](https://github.com/gatsbyjs/gatsby/commit/fa77ceb2b4d729ed3f64a81ad6fad8dfe556dc60))
+
+#### Chores
+
+- update dependency typescript to ^4.5.4 [#34358](https://github.com/gatsbyjs/gatsby/issues/34358) ([c6e4298](https://github.com/gatsbyjs/gatsby/commit/c6e42985a20d6b148442aa5f7af1880fa600780b))
+- update dependency msw to ^0.36.3 for gatsby-core-utils [#34367](https://github.com/gatsbyjs/gatsby/issues/34367) ([42c7d64](https://github.com/gatsbyjs/gatsby/commit/42c7d64169b1383310d1a422d6964a0cca3c4972))
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.4.0/packages/gatsby-core-utils) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

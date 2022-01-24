@@ -8,7 +8,6 @@ import { IGatsbyNode } from "../../../redux/types"
 import { GatsbyIterable } from "../../common/iterable"
 import {
   createDbQueriesFromObject,
-  DbComparator,
   DbQuery,
   dbQueryToDottedField,
   getFilterStatement,
@@ -53,16 +52,6 @@ interface IQueryContext {
 export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
   // Note: Keeping doRunQuery method the only async method in chain for perf
   const context = createQueryContext(args)
-
-  // Fast-path: filter by node id
-  const nodeId = getFilterById(context)
-  if (nodeId) {
-    const node = args.datastore.getNode(nodeId)
-    return {
-      entries: new GatsbyIterable(node ? [node] : []),
-      totalCount: async (): Promise<number> => (node ? 1 : 0),
-    }
-  }
 
   const totalCount = async (): Promise<number> =>
     runCountOnce({ ...context, limit: undefined, skip: 0 })
@@ -331,19 +320,6 @@ function isFullyFiltered(
   usedQueries: Set<DbQuery>
 ): boolean {
   return dbQueries.length === usedQueries.size
-}
-
-function getFilterById(context: IQueryContext): string | undefined {
-  for (const q of context.dbQueries) {
-    const filter = getFilterStatement(q)
-    if (
-      filter.comparator === DbComparator.EQ &&
-      dbQueryToDottedField(q) === `id`
-    ) {
-      return String(filter.value)
-    }
-  }
-  return undefined
 }
 
 function createNodeSortComparator(sortFields: SortFields): (a, b) => number {

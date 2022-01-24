@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
-import getBuildInfo from "../utils/getBuildInfo"
-import trackEvent from "../utils/trackEvent"
+import IndicatorProvider from "../context/indicatorProvider"
+import { BuildStatus } from "../models/enums"
+import { useTrackEvent, getBuildInfo } from "../utils"
 import {
   LinkIndicatorButton,
   InfoIndicatorButton,
@@ -8,33 +9,31 @@ import {
 } from "./buttons"
 import Style from "./Style"
 
-const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
+const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
+  ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
+  : 3000
 
-export function PreviewIndicator({ children }) {
-  return (
-    <>
-      <Style />
-      <div
-        data-testid="preview-status-indicator"
-        data-gatsby-preview-indicator="root"
-        aria-live="assertive"
-      >
-        {React.Children.map(children, (child, i) =>
-          React.cloneElement(child, { ...child.props, buttonIndex: i })
-        )}
-      </div>
-    </>
-  )
-}
+const PreviewIndicator = ({ children }) => (
+  <>
+    <Style />
+    <div
+      data-testid="preview-status-indicator"
+      data-gatsby-preview-indicator="root"
+      aria-live="assertive"
+    >
+      {children}
+    </div>
+  </>
+)
 
-let buildId
+let buildId = ``
 
-export default function Indicator() {
+const Indicator = () => {
   const [buildInfo, setBuildInfo] = useState()
-
-  const timeoutRef = useRef()
+  const timeoutRef = useRef(null)
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
+  const { track } = useTrackEvent()
 
   const { siteInfo, currentBuild } = buildInfo || {
     siteInfo: {},
@@ -71,18 +70,18 @@ export default function Indicator() {
       isOnPrettyUrl,
     }
 
-    if (currentBuild?.buildStatus === `BUILDING`) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `BUILDING` })
-    } else if (currentBuild?.buildStatus === `ERROR`) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `ERROR` })
+    if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+    } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
     } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (
       buildId &&
       buildId !== newBuildInfo?.latestBuild?.id &&
-      currentBuild?.buildStatus === `SUCCESS`
+      currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
     }
 
     if (shouldPoll.current) {
@@ -92,7 +91,7 @@ export default function Indicator() {
 
   useEffect(() => {
     if (buildInfo?.siteInfo && !trackedInitialLoad.current) {
-      trackEvent({
+      track({
         eventType: `PREVIEW_INDICATOR_LOADED`,
         buildId,
         orgId,
@@ -129,10 +128,15 @@ export default function Indicator() {
   }
 
   return (
-    <PreviewIndicator>
-      <GatsbyIndicatorButton {...buttonProps} />
-      <LinkIndicatorButton {...buttonProps} />
-      <InfoIndicatorButton {...buttonProps} />
-    </PreviewIndicator>
+    <IndicatorProvider>
+      <PreviewIndicator>
+        <GatsbyIndicatorButton {...buttonProps} buttonIndex={1} />
+        <InfoIndicatorButton {...buttonProps} buttonIndex={2} />
+        <LinkIndicatorButton {...buttonProps} buttonIndex={3} />
+      </PreviewIndicator>
+    </IndicatorProvider>
   )
 }
+
+export { PreviewIndicator }
+export default Indicator

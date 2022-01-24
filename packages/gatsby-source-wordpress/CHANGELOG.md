@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.5.2/packages/gatsby-source-wordpress) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [6.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.5.1/packages/gatsby-source-wordpress) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.5.0/packages/gatsby-source-wordpress) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Features
+
+- Deprecate `gatsby-recipes` [#34094](https://github.com/gatsbyjs/gatsby/issues/34094) ([5f62345](https://github.com/gatsbyjs/gatsby/commit/5f623451fefb55d6ace04ba6c9a221740a538bda))
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.4.0/packages/gatsby-source-wordpress) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
