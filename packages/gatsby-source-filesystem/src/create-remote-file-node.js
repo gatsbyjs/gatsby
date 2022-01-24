@@ -1,15 +1,6 @@
-const fs = require(`fs-extra`)
-const {
-  createContentDigest,
-  fetchRemoteFile,
-  createFilePath,
-} = require(`gatsby-core-utils`)
-const path = require(`path`)
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
 const { isWebUri } = require(`valid-url`)
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension } = require(`./utils`)
-
-let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
 /********************
  * Type Definitions *
@@ -68,25 +59,14 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  let filename
-  if (process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER) {
-    filename = await fetchPlaceholder({
-      fromPath: process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER,
-      url,
-      cache,
-      ext,
-      name,
-    })
-  } else {
-    filename = await fetchRemoteFile({
-      url,
-      cache,
-      auth,
-      httpHeaders,
-      ext,
-      name,
-    })
-  }
+  const filename = await fetchRemoteFile({
+    url,
+    cache,
+    auth,
+    httpHeaders,
+    ext,
+    name,
+  })
 
   // Create the file node.
   const fileNode = await createFileNode(filename, createNodeId, {})
@@ -100,19 +80,6 @@ async function processRemoteNode({
   await createNode(fileNode, { name: `gatsby-source-filesystem` })
 
   return fileNode
-}
-
-async function fetchPlaceholder({ fromPath, url, cache, ext, name }) {
-  const pluginCacheDir = cache.directory
-  const digest = createContentDigest(url)
-
-  if (!ext) {
-    ext = getRemoteFileExtension(url)
-  }
-
-  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
-  fs.copySync(fromPath, filename)
-  return filename
 }
 
 /**
@@ -147,20 +114,6 @@ module.exports = function createRemoteFileNode({
   ext = null,
   name = null,
 }) {
-  if (showFlagWarning) {
-    showFlagWarning = false
-    // Note: This will use a placeholder image as the default for every file that is downloaded through this API.
-    //       That may break certain cases, in particular when the file is not meant to be an image or when the image
-    //       is expected to be of a particular type that is other than the placeholder. This API is meant to bypass
-    //       the remote download for local testing only.
-    console.info(
-      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: Any file downloaded by \`createRemoteFileNode\` will use the same placeholder image and skip the remote fetch. Note: This is an experimental flag that can change/disappear at any point.`
-    )
-    console.info(
-      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: File to use: \`${process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER}\``
-    )
-  }
-
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
