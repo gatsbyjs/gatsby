@@ -1,3 +1,5 @@
+import { assetPageVisits } from "../support/utils/trailing-slash"
+
 describe(`never`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
@@ -101,19 +103,18 @@ describe(`never (direct visits)`, () => {
   it(`page-creator`, () => {
     cy.visit(`/page-2`).waitForRouteChange().assertRoute(`/page-2`)
   })
-  it(`create-page with`, () => {
-    cy.intercept(/^\/create-page\/with$/, req => {
-      req.continue(res => {
-        expect(res.statusCode).to.equal(200)
-      })
-    })
-
-    cy.intercept(/^\/create-page\/with\/$/, req => {
-      req.continue(res => {
-        expect(res.statusCode).to.equal(301)
-        expect(res.headers.location).to.equal("/create-page/with")
-      })
-    })
+  it.only(`create-page with`, () => {
+    assetPageVisits([
+      {
+        path: "/create-page/with",
+        status: 200,
+      },
+      {
+        path: "/create-page/with/",
+        status: 301,
+        destinationPath: "/create-page/with",
+      },
+    ])
 
     cy.visit(`/create-page/with/`)
       .waitForRouteChange()
