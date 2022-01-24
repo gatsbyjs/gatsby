@@ -1,6 +1,6 @@
 import * as React from "react"
 
-const FSApiClientOnlySplatNamePage = ({ params }) => {
+const ClientOnlySplatNamePage = ({ params }) => {
   return (
     <main>
       <h1 data-testid="title">{params.name}</h1>
@@ -11,4 +11,4 @@ const FSApiClientOnlySplatNamePage = ({ params }) => {
   )
 }
 
-export default FSApiClientOnlySplatNamePage
+export default ClientOnlySplatNamePage
