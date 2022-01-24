@@ -82,7 +82,7 @@ const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
   ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
   : 50
 
-const q: queue<IFetchRemoteFileOptions> = Queue(
+const q: queue<IFetchRemoteFileOptions, string> = Queue(
   fetchWorker,
   GATSBY_CONCURRENT_DOWNLOAD
 )
@@ -94,13 +94,13 @@ const q: queue<IFetchRemoteFileOptions> = Queue(
  */
 async function fetchWorker(
   task: IFetchRemoteFileOptions,
-  cb: done
-): Promise<unknown> {
+  cb: done<string>
+): Promise<void> {
   try {
     const node = await fetchFile(task)
-    return cb(null, node)
+    return void cb(null, node)
   } catch (e) {
-    return cb(e)
+    return void cb(e)
   }
 }
 
