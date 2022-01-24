@@ -121,7 +121,7 @@ const InfoIndicatorButton = ({
   }
 
   const onInfoClick = () => {
-    if (buttonProps?.active && buttonProps.onClick) {
+    if (buttonProps?.active && buttonProps?.onClick) {
       buttonProps.onClick()
     } else if (buttonProps?.active) {
       trackClick()
