@@ -13,7 +13,7 @@ const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
   : 2000
 
-const pageDataRetryLimit = 15
+const PAGE_DATA_RETRY_LIMIT = 30
 
 const PreviewIndicator = ({ children }) => (
   <>
@@ -31,7 +31,7 @@ const PreviewIndicator = ({ children }) => (
 let buildId = ``
 let pageData
 let latestCheckedBuild
-let pageDataCounter = 0
+let refreshNeeded = false
 
 const Indicator = () => {
   const [buildInfo, setBuildInfo] = useState()
@@ -46,37 +46,64 @@ const Indicator = () => {
       window.location.pathname === `/` ? `/index` : window.location.pathname
 
     const url = `${urlHostString}/page-data${pathAdjustment}/page-data.json`
+    try {
+      const resp = await fetch(url)
+      const data = await resp.text()
 
-    const resp = await fetch(url)
-    const data = await resp.text()
+      if (data === `{}`) {
+        const err = new Error(`Not Found`)
+        err.status = 404
+        throw err
+      }
 
-    return data
+      return { data, errorMessage: null }
+    } catch (e) {
+      if (e.status === 404) {
+        return { data: null, errorMessage: `This page has moved.` }
+      } else {
+        return { data: null, errorMessage: null }
+      }
+    }
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchPageData()
+      const { data } = await fetchPageData()
       pageData = data
     }
 
-    fetchData().catch(console.error)
+    fetchData()
   }, [])
 
   const hasPageDataChanged = async () => {
     if (buildId !== latestCheckedBuild || !pageData) {
-      const loadedPageData = pageData
-      const newData = await fetchPageData()
-      pageDataCounter++
+      let pageDataCounter = 0
+      const hasPageChanged = false
 
-      const hasPageChanged = loadedPageData !== newData
-      if (hasPageChanged || pageDataCounter == pageDataRetryLimit) {
-        pageDataCounter = 0
-        latestCheckedBuild = buildId
-        pageData = newData
+      while (!hasPageChanged && pageDataCounter <= PAGE_DATA_RETRY_LIMIT) {
+        const loadedPageData = pageData
+        const { data, errorMessage } = await fetchPageData()
+
+        if (errorMessage) {
+          return { hasPageChanged: false, errorMessage }
+        }
+
+        pageDataCounter++
+
+        const hasPageChanged = loadedPageData !== data
+
+        if (hasPageChanged || pageDataCounter === PAGE_DATA_RETRY_LIMIT) {
+          latestCheckedBuild = buildId
+          pageData = data
+
+          return { hasPageChanged, errorMessage: null }
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 1000))
       }
-      return hasPageChanged
+      return { hasPageChanged, errorMessage: null }
     }
-    return false
+    return { hasPageChanged: false, errorMessage: null }
   }
 
   const { siteInfo, currentBuild } = buildInfo || {
@@ -114,7 +141,6 @@ const Indicator = () => {
       isOnPrettyUrl,
     }
 
-    console.log(`Build Status`, currentBuild?.buildStatus)
     if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
       // setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
@@ -127,7 +153,15 @@ const Indicator = () => {
       buildId !== newBuildInfo?.latestBuild?.id &&
       currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
-      if (await hasPageDataChanged(buildId)) {
+      const { hasPageChanged, errorMessage } = await hasPageDataChanged(buildId)
+      if (errorMessage) {
+        setBuildInfo({
+          ...newBuildInfo,
+          buildStatus: BuildStatus.ERROR,
+          errorMessage,
+        })
+      } else if (refreshNeeded || hasPageChanged) {
+        refreshNeeded = true
         // Build updated, data for this specific page has changed!
         setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
       } else {
