@@ -11,7 +11,9 @@ import Style from "./Style"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
-  : 3000
+  : 2000
+
+const pageDataRetryLimit = 15
 
 const PreviewIndicator = ({ children }) => (
   <>
@@ -27,6 +29,9 @@ const PreviewIndicator = ({ children }) => (
 )
 
 let buildId = ``
+let pageData
+let latestCheckedBuild
+let pageDataCounter = 0
 
 const Indicator = () => {
   const [buildInfo, setBuildInfo] = useState()
@@ -34,6 +39,45 @@ const Indicator = () => {
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
   const { track } = useTrackEvent()
+
+  async function fetchPageData() {
+    const urlHostString = window.location.origin
+    const pathAdjustment =
+      window.location.pathname === `/` ? `/index` : window.location.pathname
+
+    const url = `${urlHostString}/page-data${pathAdjustment}/page-data.json`
+
+    const resp = await fetch(url)
+    const data = await resp.text()
+
+    return data
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchPageData()
+      pageData = data
+    }
+
+    fetchData().catch(console.error)
+  }, [])
+
+  const hasPageDataChanged = async () => {
+    if (buildId !== latestCheckedBuild || !pageData) {
+      const loadedPageData = pageData
+      const newData = await fetchPageData()
+      pageDataCounter++
+
+      const hasPageChanged = loadedPageData !== newData
+      if (hasPageChanged || pageDataCounter == pageDataRetryLimit) {
+        pageDataCounter = 0
+        latestCheckedBuild = buildId
+        pageData = newData
+      }
+      return hasPageChanged
+    }
+    return false
+  }
 
   const { siteInfo, currentBuild } = buildInfo || {
     siteInfo: {},
@@ -70,8 +114,10 @@ const Indicator = () => {
       isOnPrettyUrl,
     }
 
+    console.log(`Build Status`, currentBuild?.buildStatus)
     if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+      // setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
     } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
@@ -81,7 +127,13 @@ const Indicator = () => {
       buildId !== newBuildInfo?.latestBuild?.id &&
       currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+      if (await hasPageDataChanged(buildId)) {
+        // Build updated, data for this specific page has changed!
+        setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+      } else {
+        // Build updated, data for this specific page has NOT changed, no need to refresh content.
+        setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+      }
     }
 
     if (shouldPoll.current) {
