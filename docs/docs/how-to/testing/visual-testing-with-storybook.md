@@ -55,7 +55,7 @@ module.exports = {
 
 ## Configuration
 
-Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading. If you wish to streamline the process, jump to the [addon section](#using-an-addon) below.
+Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading. If you wish to streamline the process, jump to the [add-on section](#using-an-addon) below.
 
 ### Manual configuration
 

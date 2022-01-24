@@ -39,7 +39,7 @@ The hierarchy is as follows, from most specific to least specific:
 
 ## Source Plugin Authors
 
-If you're a source plugin author, you can find instructions on adding Content Sync support to your source plugin and CMS extension in the [source plugin author docs](authordocs).
+If you're a source plugin author, you can find instructions on adding Content Sync support to your source plugin and CMS extension in the [source plugin author docs](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
 
 ## Diagram
 

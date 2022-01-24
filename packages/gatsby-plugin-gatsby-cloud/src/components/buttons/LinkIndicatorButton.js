@@ -1,7 +1,35 @@
-import React, { useCallback, useState } from "react"
-import trackEvent from "../../utils/trackEvent"
+import React, { useEffect, useState } from "react"
 import IndicatorButton from "./IndicatorButton"
+import { useTrackEvent } from "../../utils"
 import { linkIcon, successIcon } from "../icons"
+import { BuildStatus } from "../../models/enums"
+
+const getBaseButtonProps = ({ buttonIndex, buildStatus }) => {
+  const baseProps = {
+    buttonIndex,
+    testId: `link`,
+    hoverable: true,
+    iconSvg: linkIcon,
+  }
+  const activeProps = {
+    active: true,
+    tooltip: {
+      testId: baseProps.testId,
+      content: `Copy link`,
+    },
+  }
+  const buildStatusProps = {
+    [BuildStatus.UPTODATE]: activeProps,
+    [BuildStatus.BUILDING]: activeProps,
+    [BuildStatus.SUCCESS]: null,
+    [BuildStatus.ERROR]: null,
+  }
+  const props = buildStatus ? buildStatusProps[buildStatus] : null
+  if (props) {
+    return { ...baseProps, ...props }
+  }
+  return baseProps
+}
 
 const copySuccessTooltip = (
   <>
@@ -10,30 +38,18 @@ const copySuccessTooltip = (
   </>
 )
 
-const getButtonProps = ({ buildStatus }) => {
-  switch (buildStatus) {
-    case `BUILDING`:
-    case `UPTODATE`:
-      return {
-        tooltipContent: `Copy link`,
-        active: true,
-      }
-    case `SUCCESS`:
-    case `ERROR`:
-    default: {
-      return {}
-    }
-  }
-}
-
-export default function LinkIndicatorButton(props) {
-  const { orgId, siteId, buildId } = props
-  const [linkButtonCopyProps, setLinkButtonCopyProps] = useState()
-
-  const buttonProps = getButtonProps(props)
+const LinkIndicatorButton = props => {
+  const { orgId, siteId, buildId, buttonIndex } = props
+  const [buttonProps, setButtonProps] = useState({
+    buttonIndex,
+    testId: `link`,
+    hoverable: true,
+    iconSvg: linkIcon,
+  })
+  const { track } = useTrackEvent()
 
   const copyLinkClick = () => {
-    trackEvent({
+    track({
       eventType: `PREVIEW_INDICATOR_CLICK`,
       orgId,
       siteId,
@@ -41,24 +57,32 @@ export default function LinkIndicatorButton(props) {
       name: `copy link`,
     })
 
-    setLinkButtonCopyProps({
-      tooltipContent: copySuccessTooltip,
-      overrideShowTooltip: true,
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        tooltip: {
+          ...buttonProps.tooltip,
+          content: copySuccessTooltip,
+          overrideShow: true,
+        },
+        hoverable: false,
+      }
     })
 
     setTimeout(() => {
-      setLinkButtonCopyProps({
-        tooltipContent: copySuccessTooltip,
-        overrideShowTooltip: false,
+      setButtonProps(btnProps => {
+        return {
+          ...btnProps,
+          tooltip: {
+            ...btnProps.tooltip,
+            overrideShow: false,
+            show: false,
+          },
+          hoverable: true,
+        }
       })
       // We want the tooltip to linger for two seconds to let the user know it has been copied
     }, 2000)
-
-    setTimeout(() => {
-      setLinkButtonCopyProps({ tooltipContent: `Copy Link` })
-      // The tooltips fade out, in order to make sure that the text does not change
-      // while it is fading out we need to wait a bit longer than the time used above.
-    }, 2400)
 
     if (window) {
       navigator.clipboard.writeText(window.location.href)
@@ -66,7 +90,7 @@ export default function LinkIndicatorButton(props) {
   }
 
   const trackHover = () => {
-    trackEvent({
+    track({
       eventType: `PREVIEW_INDICATOR_HOVER`,
       orgId,
       siteId,
@@ -75,16 +99,35 @@ export default function LinkIndicatorButton(props) {
     })
   }
 
+  useEffect(() => {
+    const baseButtonProps = getBaseButtonProps(props)
+    const onDisappear = () => {
+      setButtonProps(btnProps => {
+        return {
+          ...btnProps,
+          tooltip: { ...buttonProps.tooltip, content: `Copy link` },
+        }
+      })
+    }
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        ...baseButtonProps,
+        onClick: copyLinkClick,
+        tooltip: {
+          ...baseButtonProps.tooltip,
+          onDisappear,
+        },
+      }
+    })
+  }, [props.buildStatus])
+
   return (
     <IndicatorButton
-      testId={`link`}
-      iconSvg={linkIcon}
-      onClick={copyLinkClick}
-      onMouseEnter={buttonProps?.active && trackHover}
-      buttonIndex={props.buttonIndex}
-      hoverable={true}
+      onMouseEnter={buttonProps.active ? trackHover : undefined}
       {...buttonProps}
-      {...linkButtonCopyProps}
     />
   )
 }
+
+export default LinkIndicatorButton
