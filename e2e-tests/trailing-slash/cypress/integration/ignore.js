@@ -103,7 +103,7 @@ describe(`ignore (direct visits)`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
 
-  it.only(`page-creator`, () => {
+  it(`page-creator`, () => {
     assetPageVisits([
       { path: "/page-2", status: 200 },
       { path: "/page-2/", status: 200 },

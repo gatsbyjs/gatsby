@@ -103,7 +103,7 @@ describe(`never (direct visits)`, () => {
   it(`page-creator`, () => {
     cy.visit(`/page-2`).waitForRouteChange().assertRoute(`/page-2`)
   })
-  it.only(`create-page with`, () => {
+  it(`create-page with`, () => {
     assetPageVisits([
       {
         path: "/create-page/with",
