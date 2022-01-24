@@ -1,4 +1,4 @@
-import { RootDatabase, open, ArrayLikeIterable } from "lmdb-store"
+import { RootDatabase, open, ArrayLikeIterable } from "lmdb"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
