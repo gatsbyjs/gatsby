@@ -418,8 +418,7 @@ describe(`gatsby-node`, () => {
 
     createdBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
-      expect(blogEntry).toMatchSnapshot()
-      expect(getNode(blogEntry[`author___NODE`])).toMatchSnapshot()
+      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
   })
 
@@ -470,8 +469,7 @@ describe(`gatsby-node`, () => {
     updatedBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
       expect(blogEntry.title).toBe(`Hello world 1234`)
-      expect(blogEntry).toMatchSnapshot()
-      expect(getNode(blogEntry[`author___NODE`])).toMatchSnapshot()
+      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
   })
 
@@ -515,15 +513,29 @@ describe(`gatsby-node`, () => {
     // remove blog post
     await simulateGatsbyBuild()
 
+    const { deletedEntries } =
+      startersBlogFixture.removeBlogPost().currentSyncData
+
     testIfContentTypesExists(startersBlogFixture.contentTypeItems())
-    testIfEntriesDeleted(
-      startersBlogFixture.removeBlogPost().currentSyncData.assets,
-      locales
+    testIfEntriesDeleted(deletedEntries, locales)
+
+    const deletedEntryIds = deletedEntries.map(entry =>
+      createNodeId(
+        makeId({
+          spaceId: entry.sys.space.sys.id,
+          currentLocale: entry.sys.locale,
+          defaultLocale: locales[0],
+          id: entry.sys.id,
+          type: entry.sys.type,
+        })
+      )
     )
 
     // check if references are gone
     authorIds.forEach(authorId => {
-      expect(getNode(authorId)).toMatchSnapshot()
+      expect(getNode(authorId)[`blog post___NODE`]).toEqual(
+        expect.not.arrayContaining(deletedEntryIds)
+      )
     })
   })
 
