@@ -51,6 +51,7 @@ const Indicator = () => {
       const data = await resp.text()
 
       if (data === `{}`) {
+        // for local development, force and error if page is missing.
         const err = new Error(`Not Found`)
         err.status = 404
         throw err
@@ -78,7 +79,7 @@ const Indicator = () => {
   const hasPageDataChanged = async () => {
     if (buildId !== latestCheckedBuild || !pageData) {
       let pageDataCounter = 0
-      const hasPageChanged = false
+      let hasPageChanged = false
 
       while (!hasPageChanged && pageDataCounter <= PAGE_DATA_RETRY_LIMIT) {
         const loadedPageData = pageData
@@ -89,18 +90,14 @@ const Indicator = () => {
         }
 
         pageDataCounter++
+        hasPageChanged = loadedPageData !== data
 
-        const hasPageChanged = loadedPageData !== data
-
-        if (hasPageChanged || pageDataCounter === PAGE_DATA_RETRY_LIMIT) {
-          latestCheckedBuild = buildId
-          pageData = data
-
-          return { hasPageChanged, errorMessage: null }
-        }
-
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await new Promise(resolve => setTimeout(resolve, POLLING_INTERVAL))
       }
+
+      latestCheckedBuild = buildId
+      pageData = data
+
       return { hasPageChanged, errorMessage: null }
     }
     return { hasPageChanged: false, errorMessage: null }
@@ -142,7 +139,7 @@ const Indicator = () => {
     }
 
     if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      // setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+      // Keep status as up to date for non conent sync builds. We should not show building status unless we know a build is applicable
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })

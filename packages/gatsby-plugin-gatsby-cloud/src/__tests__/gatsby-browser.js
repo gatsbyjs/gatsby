@@ -103,7 +103,7 @@ describe(`Preview status indicator`, () => {
 
     await waitFor(() => {
       if (action) {
-        // Initial poll fetch, initial load trackEvent, and trackEvent after action
+        // intial page data fetch, initial poll fetch, initial load trackEvent, and trackEvent after action
         expect(window.fetch).toBeCalledTimes(5)
       } else {
         // Initial poll fetch for build data and then trackEvent fetch call
@@ -232,6 +232,7 @@ describe(`Preview status indicator`, () => {
         })
       })
 
+      // see SKIPPED TEST NOTE
       it.skip(`should trackEvent after error logs are opened`, async () => {
         window.open = jest.fn()
 
@@ -242,6 +243,7 @@ describe(`Preview status indicator`, () => {
         })
       })
 
+      // see SKIPPED TEST NOTE
       it.skip(`should trackEvent after copy link is clicked`, async () => {
         navigator.clipboard = { writeText: jest.fn() }
 
@@ -417,6 +419,7 @@ describe(`Preview status indicator`, () => {
         })
       })
 
+      // see SKIPPED TEST NOTE
       it.skip(`should have a last updated tooltip when up to date`, async () => {
         await assertTooltipText({
           route: `uptodate`,
@@ -425,6 +428,7 @@ describe(`Preview status indicator`, () => {
         })
       })
 
+      // see SKIPPED TEST NOTE
       it.skip(`should open a new window to build logs when tooltip is clicked on error`, async () => {
         process.env.GATSBY_PREVIEW_API_URL = createUrl(`error`)
         window.open = jest.fn()
