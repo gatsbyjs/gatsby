@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.6.0/packages/gatsby) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Features
+
+- create more resilient wrapper around sharp [#34339](https://github.com/gatsbyjs/gatsby/issues/34339) ([a3fa646](https://github.com/gatsbyjs/gatsby/commit/a3fa646eb6b51004ef9e85a32f7be1cf2d0cc2db))
+- content sync debugging tweaks [#34487](https://github.com/gatsbyjs/gatsby/issues/34487) ([f10d0e5](https://github.com/gatsbyjs/gatsby/commit/f10d0e5dc5a481c397a59c157f50c3380123c343))
+
+#### Bug Fixes
+
+- don't remove onPluginInit in graphql-engine [#34558](https://github.com/gatsbyjs/gatsby/issues/34558) [#34586](https://github.com/gatsbyjs/gatsby/issues/34586) ([e39f6cd](https://github.com/gatsbyjs/gatsby/commit/e39f6cd636b83c65d01685fe2cd184af99772f33))
+- handle session storage not being available [#34525](https://github.com/gatsbyjs/gatsby/issues/34525) ([77e4bb0](https://github.com/gatsbyjs/gatsby/commit/77e4bb01a1994448d685afa82620f5125dd029d3))
+- handle loaded page being potentially undefined [#34488](https://github.com/gatsbyjs/gatsby/issues/34488) ([59cd704](https://github.com/gatsbyjs/gatsby/commit/59cd704ceceb173f3c6c69f8f1d5d3810b86fb0c))
+- Fix issue with env variables not being passed to getServerData Fix [#34447](https://github.com/gatsbyjs/gatsby/issues/34447) ([64ff3c6](https://github.com/gatsbyjs/gatsby/commit/64ff3c63cfbebcf06d8d24023ea10b7b71c2610f))
+- don't throw on warnings in `pluginOptionsSchema` [#34182](https://github.com/gatsbyjs/gatsby/issues/34182) ([252f50d](https://github.com/gatsbyjs/gatsby/commit/252f50d0f282bee4c7e10065682bea52a603aa0c))
+- Revert #33786 [#33786](https://github.com/gatsbyjs/gatsby/issues/33786) [#34458](https://github.com/gatsbyjs/gatsby/issues/34458) ([9c8323a](https://github.com/gatsbyjs/gatsby/commit/9c8323ac40c9f4f6552eccf64e0bd090fe70c407))
+
+#### Performance Improvements
+
+- move id: eq fast path handling to node-model so it's shared between query running strategies [#34520](https://github.com/gatsbyjs/gatsby/issues/34520) ([d2ba1f9](https://github.com/gatsbyjs/gatsby/commit/d2ba1f99eed0ce52ce58012aed487bf775126ecc))
+- reuse rootNode & trackedRootNodes caches across instances of graphqlRunner [#33695](https://github.com/gatsbyjs/gatsby/issues/33695) ([26882f3](https://github.com/gatsbyjs/gatsby/commit/26882f3438b18a0c3c9dad71217213625344f87f))
+
+#### Chores
+
+- Give option to ignore output from workers and silence validate-engines [#34416](https://github.com/gatsbyjs/gatsby/issues/34416) ([0571199](https://github.com/gatsbyjs/gatsby/commit/0571199ebc746b53b23a10360311c0f5ba33a275))
+
+#### Other Changes
+
+- Fix misspelling of "precedence" in log message Fix [#34428](https://github.com/gatsbyjs/gatsby/issues/34428) ([f95be79](https://github.com/gatsbyjs/gatsby/commit/f95be79e9aeec35d5cd22ec6c0bede161d6975fb))
+- Upgrade to strip-ansi ^6.0.1 [#34383](https://github.com/gatsbyjs/gatsby/issues/34383) ([73b4625](https://github.com/gatsbyjs/gatsby/commit/73b462591f1e97a5d84803c792868a8058e895ff))
+
 ### [4.5.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.5/packages/gatsby) (2022-01-24)
 
 #### Bug Fixes
