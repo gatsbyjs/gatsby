@@ -26,7 +26,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "blogPost",
         "id": "blogPost",
         "linkType": "ContentType",
         "type": "Link",
@@ -73,7 +72,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "person",
         "id": "person",
         "linkType": "ContentType",
         "type": "Link",
@@ -114,7 +112,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "blogPost",
         "id": "blogPost",
         "linkType": "ContentType",
         "type": "Link",
@@ -161,7 +158,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "person",
         "id": "person",
         "linkType": "ContentType",
         "type": "Link",
@@ -208,7 +204,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "person",
         "id": "person",
         "linkType": "ContentType",
         "type": "Link",
@@ -255,7 +250,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "person",
         "id": "person",
         "linkType": "ContentType",
         "type": "Link",
@@ -296,7 +290,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "blogPost",
         "id": "blogPost",
         "linkType": "ContentType",
         "type": "Link",
@@ -343,7 +336,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "person",
         "id": "person",
         "linkType": "ContentType",
         "type": "Link",
@@ -384,7 +376,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "blogPost",
         "id": "blogPost",
         "linkType": "ContentType",
         "type": "Link",
@@ -431,7 +422,6 @@ Object {
   "sys": Object {
     "contentType": Object {
       "sys": Object {
-        "contentful_id": "person",
         "id": "person",
         "linkType": "ContentType",
         "type": "Link",
