@@ -8,14 +8,23 @@ Welcome to `gatsby@4.6.0` release (November 2021 #1)
 
 Key highlights of this release:
 
--
+- [Performance update: Reuse cache across instances](#reuse-cache-across-instances).
+- [Improve live editing experience for images in markdown files](#improve-live-editing-experience-for-image-in-markdown-files)
+
+## Reuse cache across instances
+
+Walking nodes to track inline objects is very expensive. Caching this across instances of the graphql query sped up subsequent queries by ~10-15% (depending on complexity of nodes). Every performance improvement is important to use as we constantly look for way to make Gatsby faster than ever 🚀
+
+## Improve live editing experience for images in markdown files
+
+Images seen in markdown are not actually registered as node dependencies for the given page, this means that images won't get updated on the fly if the content changes and the image name doesn't. In this release, we addressed this issues and we believe this a will lead to a better developer expreience for all our user.
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
-[Previous release notes](/docs/reference/release-notes/v4.4)
+[Previous release notes](/docs/reference/release-notes/v4.5)
 
 [Full changelog][full-changelog]
 
@@ -29,6 +38,9 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
   - `pluginOptionsSchema` will respect default configuration keys set with Joi
   - `testPluginOptionsSchema` function will also return `hasWarnings` and `warnings` properties for use in test suites
 - `create-gatsby`: Fixed issue where user-provided `GATSBY_TELEMETRY_DISABLED` environment variable did not disable telemetry, via [PR #34495](https://github.com/gatsbyjs/gatsby/pull/34495)
+- `gatsby-sharp` - create more resilient wrapper around sharp via [PR #34339](https://github.com/gatsbyjs/gatsby/pull/34339)
+- `gatsby-source-contentful` : enable tag support for assets via [PR #34480](https://github.com/gatsbyjs/gatsby/pull/34480)
+- `gatsby` - move id.eq fast path handling to node-model so it's shared between query running strategies via [PR #34520](https://github.com/gatsbyjs/gatsby/pull/34520)
 
 ## Contributors
 
