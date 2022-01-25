@@ -2,11 +2,12 @@ import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
-import { getDataStore, getNode, getNodes } from "../datastore"
+import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
-import { IGatsbyState } from "../redux/types"
+import { IGatsbyState, IGatsbyNode } from "../redux/types"
+import type { GatsbyIterable } from "../datastore/common/iterable"
+
 const { deleteNode } = actions
-import { Node } from "../../index"
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -14,7 +15,7 @@ import { Node } from "../../index"
  */
 function discoverPluginsWithoutNodes(
   storeState: IGatsbyState,
-  nodes: Array<Node>
+  nodes: GatsbyIterable<IGatsbyNode>
 ): Array<string> {
   // Find out which plugins own already created nodes
   const nodeOwnerSet = new Set([`default-site-plugin`])
@@ -36,7 +37,7 @@ function discoverPluginsWithoutNodes(
  */
 function warnForPluginsWithoutNodes(
   state: IGatsbyState,
-  nodes: Array<Node>
+  nodes: GatsbyIterable<IGatsbyNode>
 ): void {
   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state, nodes)
 
@@ -50,10 +51,13 @@ function warnForPluginsWithoutNodes(
 /**
  * Return the set of nodes for which its root node has not been touched
  */
-function getStaleNodes(state: IGatsbyState, nodes: Array<Node>): Array<Node> {
+function getStaleNodes(
+  state: IGatsbyState,
+  nodes: GatsbyIterable<IGatsbyNode>
+): GatsbyIterable<IGatsbyNode> {
   return nodes.filter(node => {
     let rootNode = node
-    let next: Node | undefined = undefined
+    let next: IGatsbyNode | undefined = undefined
 
     let whileCount = 0
     do {
@@ -77,12 +81,13 @@ function getStaleNodes(state: IGatsbyState, nodes: Array<Node>): Array<Node> {
 /**
  * Find all stale nodes and delete them
  */
-function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
+function deleteStaleNodes(
+  state: IGatsbyState,
+  nodes: GatsbyIterable<IGatsbyNode>
+): void {
   const staleNodes = getStaleNodes(state, nodes)
 
-  if (staleNodes.length > 0) {
-    staleNodes.forEach(node => store.dispatch(deleteNode(node)))
-  }
+  staleNodes.forEach(node => store.dispatch(deleteNode(node)))
 }
 
 let isInitialSourcing = true
@@ -115,7 +120,7 @@ export default async ({
   // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
   if (isInitialSourcing) {
     const state = store.getState()
-    const nodes = getNodes()
+    const nodes = getDataStore().iterateNodes()
 
     warnForPluginsWithoutNodes(state, nodes)
 
