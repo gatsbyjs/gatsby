@@ -328,6 +328,28 @@ export const createNodesForContentType = ({
   }
 
   const createNodePromises = []
+
+  // Create a node for each content type
+  const contentTypeNode = {
+    id: createNodeId(contentTypeItemId),
+    parent: null,
+    children: [],
+    name: contentTypeItem.name,
+    displayField: contentTypeItem.displayField,
+    description: contentTypeItem.description,
+    internal: {
+      type: `${makeTypeName(`ContentType`)}`,
+    },
+    sys: {
+      type: contentTypeItem.sys.type,
+    },
+  }
+
+  // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
+  contentTypeNode.internal.contentDigest = contentTypeItem.sys.updatedAt
+
+  createNodePromises.push(createNode(contentTypeNode))
+
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -681,26 +703,6 @@ export const createNodesForContentType = ({
       })
       .filter(Boolean)
 
-    // Create a node for each content type
-    const contentTypeNode = {
-      id: createNodeId(contentTypeItemId),
-      parent: null,
-      children: [],
-      name: contentTypeItem.name,
-      displayField: contentTypeItem.displayField,
-      description: contentTypeItem.description,
-      internal: {
-        type: `${makeTypeName(`ContentType`)}`,
-      },
-      sys: {
-        type: contentTypeItem.sys.type,
-      },
-    }
-
-    // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-    contentTypeNode.internal.contentDigest = contentTypeItem.sys.updatedAt
-
-    createNodePromises.push(createNode(contentTypeNode))
     entryNodes.forEach(entryNode => {
       createNodePromises.push(createNode(entryNode))
     })
