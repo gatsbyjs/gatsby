@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - don't remove onPluginInit in graphql-engine [#34558](https://github.com/gatsbyjs/gatsby/issues/34558) [#34573](https://github.com/gatsbyjs/gatsby/issues/34573) ([b81b8f3](https://github.com/gatsbyjs/gatsby/commit/b81b8f3210557ef680ba9bae930f8ba72edd22cf))
 
-
-
 ### [4.5.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.4/packages/gatsby) (2022-01-19)
 
 #### Bug Fixes
