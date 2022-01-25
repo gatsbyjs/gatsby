@@ -17812,6 +17812,13 @@ pidtree@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/pidtree/-/pidtree-0.3.0.tgz#f6fada10fccc9f99bf50e90d0b23d72c9ebc2e6b"
 
+pidusage@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/pidusage/-/pidusage-3.0.0.tgz#69108079724c9afdd958644b920bc40bac964044"
+  integrity sha512-8VJLToXhj+RYZGNVw8oxc7dS54iCQXUJ+MDFHezQ/fwF5B8W4OWodAMboc1wb08S/4LiHwAmkT4ohf/d3YPPsw==
+  dependencies:
+    safe-buffer "^5.2.1"
+
 pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
@@ -21220,7 +21227,7 @@ sade@^1.7.4:
   dependencies:
     mri "^1.1.0"
 
-safe-buffer@*, safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@^5.2.0:
+safe-buffer@*, safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@^5.2.0, safe-buffer@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==

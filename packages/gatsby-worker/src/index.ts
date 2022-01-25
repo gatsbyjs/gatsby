@@ -1,4 +1,7 @@
 import { fork, ChildProcess } from "child_process"
+import pidusage from "pidusage"
+import { OOMWatcher } from "./oom-watcher"
+import os from "os";
 
 import { TaskQueue } from "./task-queue"
 import {
@@ -86,7 +89,8 @@ interface IWorkerInfo<T> {
     code: number | null
     signal: NodeJS.Signals | null
   }>
-  currentTask?: TaskInfo<T>
+  currentTask?: TaskInfo<T>,
+  terminated?: boolean,
 }
 
 export interface IPublicWorkerInfo {
@@ -168,91 +172,136 @@ export class WorkerPool<
   }
 
   private startAll(): void {
-    const options = this.options
-    for (let workerId = 1; workerId <= (options?.numWorkers ?? 1); workerId++) {
-      const worker = fork(childWrapperPath, {
-        cwd: process.cwd(),
-        env: {
-          ...process.env,
-          ...(options?.env ?? {}),
-          GATSBY_WORKER_ID: workerId.toString(),
-          GATSBY_WORKER_MODULE_PATH: this.workerPath,
-        },
-        // Suppress --debug / --inspect flags while preserving others (like --harmony).
-        execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
-        silent: options && options.silent,
-      })
+    // TODO clean this out, pull out constants
+    const memoryThreashold = 0.80;
 
-      const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
-        workerId,
-        worker,
-        exitedPromise: new Promise(resolve => {
-          worker.on(`exit`, (code, signal) => {
-            if (workerInfo.currentTask) {
-              // worker exited without finishing a task
-              workerInfo.currentTask.reject(
-                new Error(`Worker exited before finishing task`)
-              )
-            }
-            // remove worker from list of workers
-            this.workers.splice(this.workers.indexOf(workerInfo), 1)
-            resolve({ code, signal })
-          })
-        }),
-      }
+    const oomWatcher = new OOMWatcher();
+    oomWatcher.start(async ({ratio}) => {
+      if (ratio > memoryThreashold && this.workers.length > 1) {
+        let highestMemoryIndex = -1;
+        let highestMemory = 0;
 
-      worker.on(`message`, (msg: ChildMessageUnion) => {
-        if (msg[0] === RESULT) {
-          if (!workerInfo.currentTask) {
-            throw new Error(
-              `Invariant: gatsby-worker received execution result, but it wasn't expecting it.`
-            )
-          }
-          const task = workerInfo.currentTask
-          workerInfo.currentTask = undefined
-          this.checkForWork(workerInfo)
-          task.resolve(msg[1])
-        } else if (msg[0] === ERROR) {
-          if (!workerInfo.currentTask) {
-            throw new Error(
-              `Invariant: gatsby-worker received execution rejection, but it wasn't expecting it.`
-            )
-          }
-
-          let error = msg[4]
-
-          if (error !== null && typeof error === `object`) {
-            const extra = error
-
-            const NativeCtor = global[msg[1]]
-            const Ctor = typeof NativeCtor === `function` ? NativeCtor : Error
-
-            error = new Ctor(msg[2])
-            // @ts-ignore type doesn't exist on Error, but that's what jest-worker does for errors :shrug:
-            error.type = msg[1]
-            error.stack = msg[3]
-
-            for (const key in extra) {
-              if (Object.prototype.hasOwnProperty.call(extra, key)) {
-                error[key] = extra[key]
-              }
-            }
-          }
-
-          const task = workerInfo.currentTask
-          workerInfo.currentTask = undefined
-          this.checkForWork(workerInfo)
-          task.reject(error)
-        } else if (msg[0] === CUSTOM_MESSAGE) {
-          for (const listener of this.listeners) {
-            listener(msg[1] as MessagesFromChild, workerId)
+        // find the worker we should terminate
+        for (let i = 0; i < this.workers.length; i++) {
+          const worker = this.workers[i]
+          const usage = await pidusage(worker.worker.pid);
+          if (usage.memory > highestMemory) {
+            highestMemory = usage.memory;
+            highestMemoryIndex = i;
           }
         }
-      })
 
+        const workerToRemove = this.workers[highestMemoryIndex];
+        const taskToQueue = workerToRemove.currentTask;
+
+        if (taskToQueue) {
+          workerToRemove.currentTask = undefined;
+          // TODO put at beginning of queue?
+          this.taskQueue.enqueue(taskToQueue);
+        }
+
+        // remove worker and kill the process
+        workerToRemove.terminated = true;
+        workerToRemove.worker.kill(os.constants.signals.SIGINT);
+        this.workers.splice(highestMemoryIndex, 1);
+      }
+    });
+
+    const options = this.options
+    for (let workerId = 1; workerId <= (options?.numWorkers ?? 1); workerId++) {
+      const workerInfo = this.startWorker(workerId);
       this.workers.push(workerInfo)
       this.idleWorkers.add(workerInfo)
     }
+  }
+
+  private startWorker(workerId: number): IWorkerInfo<keyof WorkerModuleExports> {
+    const worker = fork(childWrapperPath, {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        ...(this.options?.env ?? {}),
+        GATSBY_WORKER_ID: workerId.toString(),
+        GATSBY_WORKER_MODULE_PATH: this.workerPath,
+      },
+      // Suppress --debug / --inspect flags while preserving others (like --harmony).
+      execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
+      silent: this.options && this.options.silent,
+    })
+
+    const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
+      workerId,
+      worker,
+      exitedPromise: new Promise(resolve => {
+        worker.on(`exit`, (code, signal) => {
+          if (workerInfo.currentTask) {
+            // worker exited without finishing a task
+            workerInfo.currentTask.reject(
+              new Error(`Worker exited before finishing task`)
+            )
+          }
+          // remove worker from list of workers
+          this.workers.splice(this.workers.indexOf(workerInfo), 1)
+          resolve({ code, signal })
+        })
+      }),
+    }
+
+    worker.on(`message`, (msg: ChildMessageUnion) => {
+      // If we were already terminated, don't accept any incoming messages
+      if (workerInfo.terminated) {
+        return
+      }
+
+      if (msg[0] === RESULT) {
+        if (!workerInfo.currentTask) {
+          throw new Error(
+            `Invariant: gatsby-worker received execution result, but it wasn't expecting it.`
+          )
+        }
+        const task = workerInfo.currentTask
+        workerInfo.currentTask = undefined
+        this.checkForWork(workerInfo)
+        task.resolve(msg[1])
+      } else if (msg[0] === ERROR) {
+        if (!workerInfo.currentTask) {
+          throw new Error(
+            `Invariant: gatsby-worker received execution rejection, but it wasn't expecting it.`
+          )
+        }
+
+        let error = msg[4]
+
+        if (error !== null && typeof error === `object`) {
+          const extra = error
+
+          const NativeCtor = global[msg[1]]
+          const Ctor = typeof NativeCtor === `function` ? NativeCtor : Error
+
+          error = new Ctor(msg[2])
+          // @ts-ignore type doesn't exist on Error, but that's what jest-worker does for errors :shrug:
+          error.type = msg[1]
+          error.stack = msg[3]
+
+          for (const key in extra) {
+            if (Object.prototype.hasOwnProperty.call(extra, key)) {
+              error[key] = extra[key]
+            }
+          }
+        }
+
+        const task = workerInfo.currentTask
+        workerInfo.currentTask = undefined
+        this.checkForWork(workerInfo)
+        task.reject(error)
+      } else if (msg[0] === CUSTOM_MESSAGE) {
+        for (const listener of this.listeners) {
+          listener(msg[1] as MessagesFromChild, workerId)
+        }
+      }
+    })
+
+    return workerInfo
   }
 
   /**
@@ -387,7 +436,7 @@ export class WorkerPool<
   }
 
   sendMessage(msg: MessagesFromParent, workerId: number): void {
-    const worker = this.workers[workerId - 1]
+    const worker = this.workers.find(w => w.workerId == workerId)
     if (!worker) {
       throw new Error(`There is no worker with "${workerId}" id.`)
     }

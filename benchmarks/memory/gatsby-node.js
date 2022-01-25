@@ -16,7 +16,7 @@ exports.sourceNodes = async ({ actions }) => {
       number1: 5,
       number2: 7,
       largeSizeObj,
-      largeSizeString: `x`.repeat(1024 * 1024),
+      // largeSizeString: `x`.repeat(1024 * 1024),
       internal: {
         contentDigest: `hash`, // we won't be changing nodes so this can be hardcoded
         type: `Test`,
