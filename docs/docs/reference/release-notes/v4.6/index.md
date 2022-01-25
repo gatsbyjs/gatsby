@@ -12,6 +12,17 @@ Key highlights of this release:
 - [Tracking Image Changes in Markdown Files](#tracking-image-changes-in-markdown-files)
 - [Fix Plugin Schema Validation](#fix-plugin-schema-validation)
 
+Also check out [notable bugfixes](#notable-bugfixes--improvements).
+
+**Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
+if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
+
+[Previous release notes](/docs/reference/release-notes/v4.5)
+
+[Full changelog][full-changelog]
+
+---
+
 ## Speeding Up Subsequent Queries
 
 Walking nodes to track inline objects is very expensive. Caching this across instances of the graphql query sped up subsequent queries by ~10-15% (depending on complexity of nodes).
@@ -27,17 +38,6 @@ For plugin authors, we fixed an issue that prevented default values from `plugin
 - `pluginOptionsSchema` will give warnings instead of throw errors when a plugin receives an uknown configuration key
 - `pluginOptionsSchema` will respect default configuration keys set with Joi
 - `testPluginOptionsSchema` function will also return `hasWarnings` and `warnings` properties for use in test suites
-
-Also check out [notable bugfixes](#notable-bugfixes--improvements).
-
-**Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
-if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
-
-[Previous release notes](/docs/reference/release-notes/v4.5)
-
-[Full changelog][full-changelog]
-
----
 
 ## Notable Bugfixes & Improvements
 
