@@ -10,14 +10,23 @@ Key highlights of this release:
 
 - [Speeding Up Subsequent Queries](#speeding-up-subsequent-queries)
 - [Tracking Image Changes in Markdown Files](#tracking-image-changes-in-markdown-files)
+- [Fix Plugin Schema Validation](#fix-plugin-schema-validation)
 
 ## Speeding Up Subsequent Queries
 
-Walking nodes to track inline objects is very expensive. Caching this across instances of the graphql query sped up subsequent queries by ~10-15% (depending on complexity of nodes). Every performance improvement is important to use as we constantly look for way to make Gatsby faster than ever 🚀
+Walking nodes to track inline objects is very expensive. Caching this across instances of the graphql query sped up subsequent queries by ~10-15% (depending on complexity of nodes).
 
 ## Tracking Image Changes in Markdown Files
 
-Images seen in markdown are not actually registered as node dependencies for the given page, this means that images won't get updated on the fly if the image content changes and the image name doesn't change. In this release, we addressed this issues and we believe this will lead to a better developer expreience for all our users
+Images seen in markdown are not actually registered as node dependencies for the given page, this means that images won't get updated on the fly if the image content changes and the image name doesn't change.
+
+## Fix Plugin Schema Validation
+
+For plugin authors, we fixed an issue that prevented default values from `pluginOptionsSchema` to be passed when consuming plugin options. This [issue](https://github.com/gatsbyjs/gatsby/issues/33033) is now fixed via [#34182](https://github.com/gatsbyjs/gatsby/pull/34182) This introduces some breaking changes:
+
+- `pluginOptionsSchema` will give warnings instead of throw errors when a plugin receives an uknown configuration key
+- `pluginOptionsSchema` will respect default configuration keys set with Joi
+- `testPluginOptionsSchema` function will also return `hasWarnings` and `warnings` properties for use in test suites
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -32,10 +41,8 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Notable Bugfixes & Improvements
 
-- `gatsby-plugin-utils` fixes to plugin schema validation via [PR #34182](https://github.com/gatsbyjs/gatsby/pull/34182):
-  - `pluginOptionsSchema` will give warnings instead of throw errors when a plugin receives an uknown configuration key
-  - `pluginOptionsSchema` will respect default configuration keys set with Joi
-  - `testPluginOptionsSchema` function will also return `hasWarnings` and `warnings` properties for use in test suites
+`gatsby-plugin-manifest` generate icons sequentially via [PR #34331](https://github.com/gatsbyjs/gatsby/pull/34331)
+
 - `create-gatsby`: Fixed issue where user-provided `GATSBY_TELEMETRY_DISABLED` environment variable did not disable telemetry, via [PR #34495](https://github.com/gatsbyjs/gatsby/pull/34495)
 - `gatsby-sharp` - create more resilient wrapper around sharp via [PR #34339](https://github.com/gatsbyjs/gatsby/pull/34339)
 - `gatsby-source-contentful` : enable tag support for assets via [PR #34480](https://github.com/gatsbyjs/gatsby/pull/34480)
