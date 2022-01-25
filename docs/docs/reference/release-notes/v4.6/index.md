@@ -11,7 +11,7 @@ Key highlights of this release:
 - [Speeding Up Subsequent Queries](#speeding-up-subsequent-queries)
 - [Tracking Image Changes in Markdown Files](#tracking-image-changes-in-markdown-files)
 
-## Reuse cache across instances
+## Speeding Up Subsequent Queries
 
 Walking nodes to track inline objects is very expensive. Caching this across instances of the graphql query sped up subsequent queries by ~10-15% (depending on complexity of nodes). Every performance improvement is important to use as we constantly look for way to make Gatsby faster than ever 🚀
 
