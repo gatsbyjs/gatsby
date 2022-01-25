@@ -39,6 +39,7 @@ Here's a short list of changes you'll need to make or be aware of:
 
 - [`pluginOptionsSchema`](/docs/reference/config-files/gatsby-node/#pluginOptionsSchema) returns warnings instead of errors now for unknown keys
 - [`testPluginOptionsSchema`](/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/#unit-testing-an-options-schema) now returns `warnings` and `hasWarnings` in addition to the existing values
+- Default options you set in your plugin option schema are now correctly passed through to the plugin, even when a user sets unknown keys
 
 ### Migration
 
