@@ -1138,7 +1138,7 @@ export interface NodePluginArgs {
    * @param {string} name the name of the feature
    * @returns {boolean} true if the feature is enabled
    * @example
-   * if (isFeatureEnabled(`imageService`)) {
+   * if (isFeatureEnabled(`image-service`)) {
    *   // do stuff
    * }
    */

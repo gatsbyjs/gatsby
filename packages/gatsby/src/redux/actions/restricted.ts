@@ -432,7 +432,7 @@ export const actions = {
    * @example
    * // When you want to enable the custom /_gatsby/file & /_gatsby/image endpoints
    * exports.onPreInit = ({ actions }) => {
-   *   actions.setFeatureEnabled('imageService', true)
+   *   actions.setFeatureEnabled('image-service', true)
    * }
    */
   setFeatureEnabled: (

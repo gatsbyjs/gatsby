@@ -25,13 +25,13 @@ describe(`Features actions`, () => {
   it.skip(`should not be able to toggle a feature if another plugin already changed it`, () => {
     const state = featuresReducer(
       undefined,
-      actions.setFeatureEnabled(`imageService`, true)
+      actions.setFeatureEnabled(`image-service`, true)
     )
     expect(
-      featuresReducer(state, actions.setFeatureEnabled(`imageService`, false))
+      featuresReducer(state, actions.setFeatureEnabled(`image-service`, false))
     ).toEqual(
       expect.objectContaining({
-        imageService: true,
+        "image-service": true,
       })
     )
   })
