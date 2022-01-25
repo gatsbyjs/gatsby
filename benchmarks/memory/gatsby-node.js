@@ -3,6 +3,8 @@ const { cpuCoreCount } = require(`gatsby-core-utils`)
 const NUM_NODES = parseInt(process.env.NUM_NODES || 300, 10)
 
 exports.sourceNodes = async ({ actions, reporter }) => {
+  const contentDigest = Date.now().toString() // make each sourcing mark everything as dirty
+
   const activity = reporter.createProgress(`Creating test nodes`, NUM_NODES)
   activity.start()
 
@@ -21,7 +23,7 @@ exports.sourceNodes = async ({ actions, reporter }) => {
       largeSizeObj,
       largeSizeString: `x`.repeat(1024 * 1024),
       internal: {
-        contentDigest: `hash`, // we won't be changing nodes so this can be hardcoded
+        contentDigest,
         type: `Test`,
       },
     }
