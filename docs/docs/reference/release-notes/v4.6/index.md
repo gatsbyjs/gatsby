@@ -46,7 +46,7 @@ For plugin authors, we fixed an issue that prevented default values from `plugin
 - `create-gatsby`: Fixed issue where user-provided `GATSBY_TELEMETRY_DISABLED` environment variable did not disable telemetry, via [PR #34495](https://github.com/gatsbyjs/gatsby/pull/34495)
 - `gatsby-sharp` - create more resilient wrapper around sharp via [PR #34339](https://github.com/gatsbyjs/gatsby/pull/34339)
 - `gatsby-source-contentful` : enable tag support for assets via [PR #34480](https://github.com/gatsbyjs/gatsby/pull/34480)
-- `gatsby` - move id.eq fast path handling to node-model so it's shared between query running strategies via [PR #34520](https://github.com/gatsbyjs/gatsby/pull/34520)
+- `gatsby`: optimized queries that filter just on id via [PR #34520](https://github.com/gatsbyjs/gatsby/pull/34520)
 
 ## Contributors
 
