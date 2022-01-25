@@ -17,7 +17,7 @@ Walking nodes to track inline objects is very expensive. Caching this across ins
 
 ## Improve live editing experience for images in markdown files
 
-Images seen in markdown are not actually registered as node dependencies for the given page, this means that images won't get updated on the fly if the content changes and the image name doesn't. In this release, we addressed this issues and we believe this a will lead to a better developer expreience for all our user.
+Images seen in markdown are not actually registered as node dependencies for the given page, this means that images won't get updated on the fly if the image content changes and the image name doesn't change. In this release, we addressed this issues and we believe this will lead to a better developer expreience for all our users
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
