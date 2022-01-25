@@ -103,6 +103,37 @@ it(`should not accept any options`, async () => {
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [newhouse](https://github.com/newhouse): Update plugins.md to have correct URL for gatsby-plugin-segment-js [PR #34397](https://github.com/gatsbyjs/gatsby/pull/34397)
+- [AnilSeervi](https://github.com/AnilSeervi)
+  - chore(docs): Old occurrences of gatbyjs.org [PR #34402](https://github.com/gatsbyjs/gatsby/pull/34402)
+  - chore(docs) : Typo fix GatbsyImage -> GatsbyImage [PR #34439](https://github.com/gatsbyjs/gatsby/pull/34439)
+
+
+- [janaagaard75](https://github.com/janaagaard75): Upgrade to strip-ansi ^6.0.1 [PR #34383](https://github.com/gatsbyjs/gatsby/pull/34383)
+- [varghesejose2020](https://github.com/varghesejose2020)
+  - chore(docs): Update static-folder doc [PR #34392](https://github.com/gatsbyjs/gatsby/pull/34392)
+  - chore(docs): Update localization doc [PR #34429](https://github.com/gatsbyjs/gatsby/pull/34429)
+  - chore(docs): Update links on plugins overview doc [PR #34479](https://github.com/gatsbyjs/gatsby/pull/34479)
+  - chore(docs): Update links on gatsby-for-ecommerce [PR #34517](https://github.com/gatsbyjs/gatsby/pull/34517)
+
+
+- [jazanne](https://github.com/jazanne): Fix misspelling of "precedence" in log message [PR #34428](https://github.com/gatsbyjs/gatsby/pull/34428)
+- [fedek6](https://github.com/fedek6): Update media-item-processing.md [PR #34434](https://github.com/gatsbyjs/gatsby/pull/34434)
+- [jfgilmore](https://github.com/jfgilmore)
+  - chore(docs): webpack branding guidelines updated [PR #34470](https://github.com/gatsbyjs/gatsby/pull/34470)
+  - chore(docs): Fix broken link to `gatsby-plugin-guess.js` [PR #34469](https://github.com/gatsbyjs/gatsby/pull/34469)
+
+
+- [ferdi05](https://github.com/ferdi05): chore(docs): Add MeiliSearch [PR #34478](https://github.com/gatsbyjs/gatsby/pull/34478)
+- [axe312ger](https://github.com/axe312ger): fix(contentful): enable tag support for assets [PR #34480](https://github.com/gatsbyjs/gatsby/pull/34480)
+- [herecydev](https://github.com/herecydev): fix(gatsby): handle session storage not being available [PR #34525](https://github.com/gatsbyjs/gatsby/pull/34525)
+- [homearanya](https://github.com/homearanya)
+  - docs(migrating-from-v2-to-v3): correct getNode snippet [PR #34542](https://github.com/gatsbyjs/gatsby/pull/34542)
+  - docs(migrating-from-v3-to-v4): correct getNode snippet [PR #34543](https://github.com/gatsbyjs/gatsby/pull/34543)
+
+
+- [njbmartin](https://github.com/njbmartin): fix(plugin-schema-snapshot): unlink file on init [PR #34527](https://github.com/gatsbyjs/gatsby/pull/34527)
+- [merceyz](https://github.com/merceyz): fix: add missing dependencies [PR #28759](https://github.com/gatsbyjs/gatsby/pull/28759)
+- [ShaunDychko](https://github.com/ShaunDychko): chore(docs): Update client-only self-hosting instructions [PR #34537](https://github.com/gatsbyjs/gatsby/pull/34537)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.6.0-next.0...gatsby@4.6.0
