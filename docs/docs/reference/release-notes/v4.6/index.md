@@ -4,7 +4,7 @@ version: "4.6.0"
 title: "v4.6 Release Notes"
 ---
 
-Welcome to `gatsby@4.6.0` release (November 2021 #1)
+Welcome to `gatsby@4.6.0` release (January 2022 #2)
 
 Key highlights of this release:
 
