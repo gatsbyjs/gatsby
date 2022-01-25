@@ -13,7 +13,7 @@ const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
   : 2000
 
-const PAGE_DATA_RETRY_LIMIT = 30
+const PAGE_DATA_RETRY_LIMIT = 60
 
 const PreviewIndicator = ({ children }) => (
   <>
@@ -77,7 +77,7 @@ const Indicator = () => {
   }, [])
 
   const hasPageDataChanged = async () => {
-    if (buildId !== latestCheckedBuild || !pageData) {
+    if (buildId !== latestCheckedBuild) {
       let pageDataCounter = 0
       let hasPageChanged = false
 
@@ -96,8 +96,6 @@ const Indicator = () => {
       }
 
       latestCheckedBuild = buildId
-      pageData = data
-
       return { hasPageChanged, errorMessage: null }
     }
     return { hasPageChanged: false, errorMessage: null }
@@ -139,7 +137,7 @@ const Indicator = () => {
     }
 
     if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      // Keep status as up to date for non conent sync builds. We should not show building status unless we know a build is applicable
+      // Keep status as up to date for non content sync builds. We should not show building status unless we know a build is applicable to the viewed content
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
@@ -170,7 +168,7 @@ const Indicator = () => {
           setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
         } else {
           // Build updated, data for this specific page has NOT changed, no need to refresh content.
-          setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
         }
       }
     }
