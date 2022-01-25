@@ -15,7 +15,7 @@ Key highlights of this release:
 
 Walking nodes to track inline objects is very expensive. Caching this across instances of the graphql query sped up subsequent queries by ~10-15% (depending on complexity of nodes). Every performance improvement is important to use as we constantly look for way to make Gatsby faster than ever 🚀
 
-## Improve live editing experience for images in markdown files
+## Tracking Image Changes in Markdown Files
 
 Images seen in markdown are not actually registered as node dependencies for the given page, this means that images won't get updated on the fly if the image content changes and the image name doesn't change. In this release, we addressed this issues and we believe this will lead to a better developer expreience for all our users
 
