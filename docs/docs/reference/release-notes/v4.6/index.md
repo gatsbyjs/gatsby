@@ -8,7 +8,7 @@ Welcome to `gatsby@4.6.0` release (January 2022 #2)
 
 Key highlights of this release:
 
-- [Performance update: Reuse cache across instances](#reuse-cache-across-instances).
+- [Speeding Up Subsequent Queries](#speeding-up-subsequent-queries)
 - [Improve live editing experience for images in markdown files](#improve-live-editing-experience-for-image-in-markdown-files)
 
 ## Reuse cache across instances
