@@ -14,6 +14,7 @@ exports.sourceNodes = async ({ actions, reporter }) => {
       largeSizeObj[`key_${j}`] = `x`.repeat(1024)
     }
 
+    // each node is ~2MB
     const node = {
       id: `memory-${i}`,
       idClone: `memory-${i}`,
@@ -72,6 +73,23 @@ exports.createResolvers = ({ createResolvers }) => {
 const WORKER_BATCH_SIZE =
   Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
 
+let enabledTemplates = new Set()
+exports.onPreBootstrap = () => {
+  const availableTemplates = new Set([
+    `eq_id`, // this should skip node-model and fast filters completely and should be very cheap already
+    `eq_field`, // this needs fast filters for eq operator on non-id field
+  ])
+  enabledTemplates = new Set(
+    process.env.TEMPLATES
+      ? process.env.TEMPLATES.split(`,`).filter(template =>
+          availableTemplates.has(template)
+        )
+      : availableTemplates
+  )
+
+  console.info(`Enabled templates`, enabledTemplates)
+}
+
 exports.createPages = async ({ actions, graphql }) => {
   const numWorkers = Math.max(1, cpuCoreCount() - 1)
 
@@ -95,11 +113,15 @@ exports.createPages = async ({ actions, graphql }) => {
     Math.ceil(minNumOfPagesToSaturateAllWorkers / data.allTest.nodes.length)
   )
 
-  function createEnoughToSaturate(cb) {
+  function createEnoughToSaturate(template, cb) {
+    if (!enabledTemplates.has(template)) {
+      return
+    }
+    console.log(`Creating pages with template "${template}"`)
     let counter = 0
     for (let i = 0; i < repeatCount; i++) {
       for (const node of data.allTest.nodes) {
-        const { template, context } = cb(node)
+        const { context } = cb(node)
 
         actions.createPage({
           path: `/${template}/${counter++}`,
@@ -115,9 +137,8 @@ exports.createPages = async ({ actions, graphql }) => {
   }
 
   // fast path (eq: { id: x })
-  createEnoughToSaturate(node => {
+  createEnoughToSaturate(`eq_id`, node => {
     return {
-      template: `eq_id`,
       context: {
         id: node.id,
       },
@@ -125,9 +146,8 @@ exports.createPages = async ({ actions, graphql }) => {
   })
 
   // (eq: { idClone: x })
-  createEnoughToSaturate(node => {
+  createEnoughToSaturate(`eq_field`, node => {
     return {
-      template: `eq_field`,
       context: {
         id: node.id,
       },
