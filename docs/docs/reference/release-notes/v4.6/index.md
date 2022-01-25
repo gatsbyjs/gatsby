@@ -9,7 +9,7 @@ Welcome to `gatsby@4.6.0` release (January 2022 #2)
 Key highlights of this release:
 
 - [Speeding Up Subsequent Queries](#speeding-up-subsequent-queries)
-- [Improve live editing experience for images in markdown files](#improve-live-editing-experience-for-image-in-markdown-files)
+- [Tracking Image Changes in Markdown Files](#tracking-image-changes-in-markdown-files)
 
 ## Reuse cache across instances
 
