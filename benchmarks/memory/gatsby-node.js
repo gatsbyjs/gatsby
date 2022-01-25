@@ -67,7 +67,9 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
-const WORKER_BATCH_SIZE = 50
+const WORKER_BATCH_SIZE =
+  Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
+
 exports.createPages = async ({ actions, graphql }) => {
   const numWorkers = Math.max(1, cpuCoreCount() - 1)
 
@@ -102,6 +104,10 @@ exports.createPages = async ({ actions, graphql }) => {
           component: require.resolve(`./src/templates/${template}`),
           context,
         })
+
+        if (counter >= minNumOfPagesToSaturateAllWorkers) {
+          break
+        }
       }
     }
   }
