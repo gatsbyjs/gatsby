@@ -1,3 +1,4 @@
+import { clearKeptObjects } from "lmdb"
 /**
  * Wrapper for any iterable providing chainable interface and convenience methods
  * similar to array.
@@ -10,10 +11,18 @@
 export class GatsbyIterable<T> {
   constructor(private source: Iterable<T> | (() => Iterable<T>)) {}
 
-  [Symbol.iterator](): Iterator<T> {
+  *[Symbol.iterator](): Generator<T> {
     const source =
       typeof this.source === `function` ? this.source() : this.source
-    return source[Symbol.iterator]()
+
+    let i = 0
+    for (const val of source) {
+      yield val
+
+      if (++i % 100 === 0) {
+        clearKeptObjects()
+      }
+    }
   }
 
   concat<U>(other: Iterable<U>): GatsbyIterable<T | U> {

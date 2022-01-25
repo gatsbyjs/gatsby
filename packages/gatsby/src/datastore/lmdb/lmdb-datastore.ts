@@ -47,6 +47,8 @@ let fullDbPath
 let rootDb
 let databases
 
+console.log(`do I see a change?`)
+
 function getRootDb(): RootDatabase {
   if (!rootDb) {
     if (!fullDbPath) {
@@ -56,6 +58,7 @@ function getRootDb(): RootDatabase {
       name: `root`,
       path: fullDbPath,
       compression: true,
+      overlappingSync: true,
     })
   }
   return rootDb
@@ -70,7 +73,9 @@ function getDatabases(): ILmdbDatabases {
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
         // sharedStructuresKey: Symbol.for(`structures`),
         // @ts-ignore
-        cache: true,
+        cache: {
+          expirer: false,
+        },
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
