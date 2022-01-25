@@ -29,7 +29,7 @@ Subseqent queries now get a ~10-15% performance boost! You'll see this improveme
 
 ## Tracking Image Changes in Markdown Files
 
-When using an image inside markdown files together with `gatsby-remark-images` (e.g. `![alt text](./some-image.jpg)`) there where cases when a change to the image wasn't reflected in the site. Changes like resizing or directly editing the image required a `gatsby clean` in the past. This broken functionality is now fixed with [PR #34433 ](https://github.com/gatsbyjs/gatsby/pull/34433) and changed images will now directly show during `gatsby develop` and `gatsby build`.
+When using an image inside markdown files together with `gatsby-remark-images` (e.g. `![alt text](./some-image.jpg)`) there were cases when a change to the image wasn't reflected in the site. Changes like resizing or directly editing the image required a `gatsby clean` in the past. This broken functionality is now fixed with [PR #34433 ](https://github.com/gatsbyjs/gatsby/pull/34433) and changed images will now directly show during `gatsby develop` and `gatsby build`.
 
 ## New Major Version for `gatsby-plugin-utils`
 
