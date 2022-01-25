@@ -226,11 +226,6 @@ export interface IStaticQueryResultState {
   staticQueryResultHash: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IFeaturesState {
-  // imageService: boolean
-}
-
 export type GatsbyNodeAPI =
   | "onPreBoostrap"
   | "onPostBoostrap"
@@ -273,7 +268,6 @@ export interface IGatsbyState {
   }>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>
-  features: IFeaturesState
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
@@ -438,7 +432,6 @@ export type ActionsUnion =
   | IMaterializePageMode
   | ISetJobV2Context
   | IClearJobV2Context
-  | ISetFeatureEnabledAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -823,14 +816,6 @@ export interface ISetSiteConfig {
 export interface ISetSiteFunctions {
   type: `SET_SITE_FUNCTIONS`
   payload: IGatsbyState["functions"]
-}
-
-export interface ISetFeatureEnabledAction {
-  type: `ENABLE_FEATURE`
-  payload: {
-    name: string // keyof IFeaturesState - will add this back when we have a key (now ts is complaining about never)
-    value: boolean
-  }
 }
 
 export interface ICreateNodeAction {

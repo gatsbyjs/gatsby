@@ -16,10 +16,8 @@ import {
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
-// Sadly I can't import from build files because types are not generated at the correct time
-// import type { IFeaturesState } from "./dist/redux/types"
 
-export type AvailableFeatures = never // "image-service" -- will change later
+export type AvailableFeatures = never // "image-service"
 
 export {
   default as Link,
@@ -913,9 +911,7 @@ export interface NodePluginSchema {
   buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
 }
 export interface PreInitArgs extends ParentSpanPluginArgs {
-  actions: Actions & {
-    setFeatureEnabled(this: void, name: AvailableFeatures, value: boolean)
-  }
+  actions: Actions
 }
 
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
@@ -1133,18 +1129,6 @@ export interface NodePluginArgs {
    * }
    */
   createContentDigest(this: void, input: string | object): string
-
-  /**
-   * Allow plugins to check if a feature is enabled or not.
-   *
-   * @param {string} name the name of the feature
-   * @returns {boolean} true if the feature is enabled
-   * @example
-   * if (isFeatureEnabled(`imageService`)) {
-   *   // do stuff
-   * }
-   */
-  isFeatureEnabled(this: void, name: AvailableFeatures): boolean
 
   /**
    * Set of utilities that allow adding more detailed tracing for plugins.

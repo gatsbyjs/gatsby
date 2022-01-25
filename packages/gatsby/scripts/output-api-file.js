@@ -1,7 +1,6 @@
 const path = require("path")
 const documentation = require("documentation")
 const fs = require("fs-extra")
-const { initialState: featureState } = require('../dist/redux/reducers/features')
 
 const OUTPUT_FILE_NAME = `apis.json`
 
@@ -41,7 +40,7 @@ async function outputFile() {
     return merged
   }, {})
 
-  output.features = Object.keys(featureState);
+  output.features = [];
 
   return fs.writeFile(
     path.resolve(OUTPUT_FILE_NAME),

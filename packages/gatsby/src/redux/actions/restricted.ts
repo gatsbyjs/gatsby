@@ -19,7 +19,6 @@ import {
   IPrintTypeDefinitions,
   ICreateResolverContext,
   IGatsbyPluginContext,
-  ISetFeatureEnabledAction,
 } from "../types"
 
 type RestrictionActionNames =
@@ -28,7 +27,6 @@ type RestrictionActionNames =
   | "createResolverContext"
   | "addThirdPartySchema"
   | "printTypeDefinitions"
-  | "setFeatureEnabled"
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
@@ -421,32 +419,6 @@ export const actions = {
         })
       }
     },
-
-  /**
-   * Enables/Disables a feature in Gatsby, this is helpful when your site is backed by a service like Gatsby Cloud.
-   *
-   * @availableIn [onPreInit]
-   *
-   * @param {string} name The feature name you want to toggle on and off
-   * @param {boolean} value The value you want it to set
-   * @example
-   * // When you want to enable the custom /_gatsby/file & /_gatsby/image endpoints
-   * exports.onPreInit = ({ actions }) => {
-   *   actions.setFeatureEnabled('imageService', true)
-   * }
-   */
-  setFeatureEnabled: (
-    name: ISetFeatureEnabledAction["payload"]["name"],
-    value: ISetFeatureEnabledAction["payload"]["value"]
-  ): ISetFeatureEnabledAction => {
-    return {
-      type: `ENABLE_FEATURE`,
-      payload: {
-        name,
-        value,
-      },
-    }
-  },
 }
 
 const withDeprecationWarning =
@@ -566,8 +538,5 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
   },
   printTypeDefinitions: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
-  },
-  setFeatureEnabled: {
-    [ALLOWED_IN]: [`onPreInit`],
   },
 })

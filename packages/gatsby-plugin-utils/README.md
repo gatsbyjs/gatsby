@@ -75,7 +75,7 @@ Here's a list of features:
 ```js
 const { hasFeature } = require(`gatsby-plugin-utils`)
 
-if (!hasFeature(`imageService`)) {
+if (!hasFeature(`image-service`)) {
   polyfillImageService()
 }
 ```

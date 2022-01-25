@@ -265,12 +265,6 @@ const getUninitializedCache = plugin => {
   }
 }
 
-function isFeatureEnabled(name) {
-  const { features } = store.getState()
-
-  return !!features[name]
-}
-
 const availableActionsCache = new Map()
 let publicPath
 const runAPI = async (plugin, api, args, activity) => {
@@ -426,7 +420,6 @@ const runAPI = async (plugin, api, args, activity) => {
         getNodeAndSavePathDependency: shouldDetectNodeMutations
           ? nodeMutationsWrappers.getNodeAndSavePathDependency
           : getNodeAndSavePathDependency,
-        isFeatureEnabled,
         cache,
         createNodeId: namespacedCreateNodeId,
         createContentDigest,
