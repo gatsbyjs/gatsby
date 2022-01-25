@@ -2,7 +2,10 @@ const { cpuCoreCount } = require(`gatsby-core-utils`)
 
 const NUM_NODES = parseInt(process.env.NUM_NODES || 300, 10)
 
-exports.sourceNodes = async ({ actions }) => {
+exports.sourceNodes = async ({ actions, reporter }) => {
+  const activity = reporter.createProgress(`Creating test nodes`, NUM_NODES)
+  activity.start()
+
   for (let i = 0; i < NUM_NODES; i++) {
     const largeSizeObj = {}
     for (let j = 1; j <= 1024; j++) {
@@ -26,11 +29,16 @@ exports.sourceNodes = async ({ actions }) => {
     actions.createNode(node)
 
     if (i % 100 === 99) {
+      activity.tick(100)
       await new Promise(resolve => setImmediate(resolve))
     }
   }
 
+  activity.tick(NUM_NODES % 100)
+
   await new Promise(resolve => setTimeout(resolve, 100))
+
+  activity.end()
 }
 
 const printedMessages = new Set()
