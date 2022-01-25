@@ -60,7 +60,7 @@ it(`should not accept any options`, async () => {
   const expectedErrors = [`"optionA" is not allowed`]
 
   const { errors } = await testPluginOptionsSchema(
-    pluginOptionsSchema, 
+    pluginOptionsSchema,
     {
       optionA: `This options shouldn't exist`,
     }
