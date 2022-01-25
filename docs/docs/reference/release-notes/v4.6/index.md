@@ -25,15 +25,15 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Speeding Up Subsequent Queries
 
-Walking nodes to track inline objects is very expensive. Caching this across instances of the graphql query sped up subsequent queries by ~10-15% (depending on complexity of nodes).
+Subseqent queries now get ~10-15% performance boost! These percentage may defer depending on the complexity of nodes. We were able to achieve this by caching `rootNode` & `trackedRootNodes` across instances of `graphqlRunner`
 
 ## Tracking Image Changes in Markdown Files
 
-Images seen in markdown are not actually registered as node dependencies for the given page, this means that images won't get updated on the fly if the image content changes and the image name doesn't change.
+When using `gatsby-remark-images`, updating image files specified in markdown doesn't cause changes to reflect in the broswer, this was because images seen in markdown are not actually registered as node dependencies for the given page and you'll typically need to do a gatsby clean for changes to reflect. This is now fixed via [PR #34433 ](https://github.com/gatsbyjs/gatsby/pull/34433). Now you can update images and see them reflect on the fly
 
 ## Fix Plugin Schema Validation
 
-For plugin authors, we fixed an issue that prevented default values from `pluginOptionsSchema` to be passed when consuming plugin options. This [issue](https://github.com/gatsbyjs/gatsby/issues/33033) is now fixed via [#34182](https://github.com/gatsbyjs/gatsby/pull/34182) This introduces some breaking changes:
+For plugin authors, we fixed an issue that prevented default values from `pluginOptionsSchema` to be passed when consuming plugin options. This [issue](https://github.com/gatsbyjs/gatsby/issues/33033) is now fixed via [PR #34182](https://github.com/gatsbyjs/gatsby/pull/34182) This introduces some breaking changes:
 
 - `pluginOptionsSchema` will give warnings instead of throw errors when a plugin receives an uknown configuration key
 - `pluginOptionsSchema` will respect default configuration keys set with Joi
