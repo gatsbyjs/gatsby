@@ -1,7 +1,11 @@
 import { declare } from "@babel/helper-plugin-utils"
 import * as t from "@babel/types"
-import type { PluginObj, ConfigAPI } from "@babel/core"
+import type { PluginObj, ConfigAPI, NodePath } from "@babel/core"
+import { removeExportProperties } from "./babel-module-exports-helpers"
 
+/**
+ * Remove specified module exports from files.
+ */
 export default declare(function removeApiCalls(
   api: ConfigAPI,
   options: { apis?: Array<string> }
@@ -104,6 +108,8 @@ export default declare(function removeApiCalls(
             | t.ExportNamespaceSpecifier
             | t.ExportSpecifier
           > = []
+
+          // Remove `export { foo }` shaped exports
           path.node.specifiers.forEach(specifier => {
             if (
               t.isExportSpecifier(specifier) &&
@@ -119,10 +125,13 @@ export default declare(function removeApiCalls(
           path.node.specifiers = specifiersToKeep
         }
 
+        // Remove `export function foo() {}` shaped exports
         let apiToCheck
         if (t.isFunctionDeclaration(declaration) && declaration.id) {
           apiToCheck = declaration.id.name
         }
+
+        // Remove `export const foo = () => {}` shaped exports
         if (
           t.isVariableDeclaration(declaration) &&
           t.isIdentifier(declaration.declarations[0].id)
@@ -134,9 +143,21 @@ export default declare(function removeApiCalls(
           state.apiRemoved = true
           path.remove()
         }
+
+        // Remove `export const { foo } = () => {}` shaped exports
+        if (t.isVariableDeclaration(declaration)) {
+          for (let i = 0; i < declaration?.declarations.length; i++) {
+            if (declaration?.declarations[i].id.type === `ObjectPattern`) {
+              const objectPath = path.get(
+                `declaration.declarations.${i}.id`
+              ) as NodePath<t.ObjectPattern>
+              removeExportProperties(path, objectPath, apisToRemove)
+            }
+          }
+        }
       },
 
-      // remove exports
+      // Remove `module.exports = { foo }` and `exports.foo = {}` shaped exports
       ExpressionStatement(path, state): void {
         if (
           !t.isAssignmentExpression(path.node.expression) ||
