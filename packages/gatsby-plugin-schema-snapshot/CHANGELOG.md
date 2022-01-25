@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - unlink file on init [#34527](https://github.com/gatsbyjs/gatsby/issues/34527) [#34572](https://github.com/gatsbyjs/gatsby/issues/34572) ([fe61ad8](https://github.com/gatsbyjs/gatsby/commit/fe61ad8526a5aec392472a398d7edad4bda92f28))
 
-
-
 ## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.5.0/packages/gatsby-plugin-schema-snapshot) (2022-01-11)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
