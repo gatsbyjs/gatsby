@@ -25,7 +25,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Speeding Up Subsequent Queries
 
-Subseqent queries now get ~10-15% performance boost! These percentage may defer depending on the complexity of nodes. We were able to achieve this by caching `rootNode` & `trackedRootNodes` across instances of `graphqlRunner`
+Subseqent queries now get ~10-15% performance boost! These percentage may defer depending on the complexity of nodes. We were able to achieve this by caching `rootNode` & `trackedRootNodes` across instances of `graphqlRunner` via [PR #33695](https://github.com/gatsbyjs/gatsby/pull/33695)
 
 ## Tracking Image Changes in Markdown Files
 
