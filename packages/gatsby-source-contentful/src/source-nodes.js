@@ -162,32 +162,6 @@ export async function sourceNodes(
     })
   }
 
-  // Create a map of up to date entries and assets
-  function mergeSyncData(previous, current, deletedEntities) {
-    const deleted = new Set(deletedEntities.map(e => e.sys.id))
-    const entryMap = new Map()
-    previous.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
-    current.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
-    return [...entryMap.values()]
-  }
-
-  // @todo based on the sys metadata we should be able to differentiate new and updated entities
-  reporter.info(
-    `Contentful: ${currentSyncData.entries.length} new/updated entries`
-  )
-  reporter.info(
-    `Contentful: ${currentSyncData.deletedEntries.length} deleted entries`
-  )
-  // @todo also these can be loaded from gatsby cache
-  // reporter.info(`Contentful: ${previousSyncData.entries.length} cached entries`)
-  // reporter.info(
-  //   `Contentful: ${currentSyncData.assets.length} new/updated assets`
-  // )
-  // reporter.info(`Contentful: ${previousSyncData.assets.length} cached assets`)
-  // reporter.info(
-  //   `Contentful: ${currentSyncData.deletedAssets.length} deleted assets`
-  // )
-
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
 
@@ -213,6 +187,34 @@ export async function sourceNodes(
       n.internal.type !== `ContentfulTag`
   )
   existingNodes.forEach(n => touchNode(n))
+
+  // Report existing, new and updated nodes
+  const nodeCounts = {
+    newEntry: 0,
+    newAsset: 0,
+    updatedEntry: 0,
+    updatedAsset: 0,
+    existingEntry: 0,
+    existingAsset: 0,
+    deletedEntry: currentSyncData.deletedEntries.length,
+    deletedAsset: currentSyncData.deletedAssets.length,
+  }
+  existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
+  currentSyncData.entries.forEach(entry =>
+    entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
+  )
+  currentSyncData.assets.forEach(asset =>
+    asset.sys.revision === 1 ? nodeCounts.newAsset++ : nodeCounts.updatedAsset++
+  )
+
+  reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
+  reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
+  reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
+  reporter.info(`Contentful: ${nodeCounts.existingEntry} cached entries`)
+  reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
+  reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
+  reporter.info(`Contentful: ${nodeCounts.existingAsset} cached assets`)
+  reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
   reporter.verbose(`Building Contentful reference map`)
 
