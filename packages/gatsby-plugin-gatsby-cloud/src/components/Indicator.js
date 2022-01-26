@@ -15,7 +15,7 @@ const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
   : 2000
 
-const PAGE_DATA_RETRY_LIMIT = 30
+const PAGE_DATA_RETRY_LIMIT = 60
 
 const PreviewIndicator = ({ children }) => (
   <>
@@ -74,6 +74,7 @@ const Indicator = () => {
 
       // for local dev with `gatsby develop` where page-data.json files never 404 and return an empty object instead.
       if (data === `{}`) {
+        // for local development, force an error if page is missing.
         const err = new Error(`Not Found`)
         err.status = 404
         throw err
@@ -150,9 +151,9 @@ const Indicator = () => {
   // }, [buildInfo])
 
   const hasPageDataChanged = async () => {
-    if (buildId !== latestCheckedBuild || !pageData) {
+    if (buildId !== latestCheckedBuild) {
       let pageDataCounter = 0
-      const hasPageChanged = false
+      let hasPageChanged = false
 
       while (!hasPageChanged && pageDataCounter <= PAGE_DATA_RETRY_LIMIT) {
         const loadedPageData = pageData
@@ -163,18 +164,14 @@ const Indicator = () => {
         }
 
         pageDataCounter++
+        hasPageChanged = loadedPageData !== data
 
-        const hasPageChanged = loadedPageData !== data
-
-        if (hasPageChanged || pageDataCounter === PAGE_DATA_RETRY_LIMIT) {
-          latestCheckedBuild = buildId
-          pageData = data
-
-          return { hasPageChanged, errorMessage: null }
+        if (!hasPageChanged) {
+          await new Promise(resolve => setTimeout(resolve, POLLING_INTERVAL))
         }
-
-        await new Promise(resolve => setTimeout(resolve, 1000))
       }
+
+      latestCheckedBuild = buildId
       return { hasPageChanged, errorMessage: null }
     }
     return { hasPageChanged: false, errorMessage: null }
@@ -222,7 +219,7 @@ const Indicator = () => {
       }
 
       if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-        // setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+        // Keep status as up to date builds where we cannot fetch manifest id info.
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
       } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
@@ -234,8 +231,8 @@ const Indicator = () => {
         currentBuild?.buildStatus === BuildStatus.SUCCESS
       ) {
         if (refreshNeeded) {
-          setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
-        } else if (!contentSyncInfo) {
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+        } else {
           const { hasPageChanged, errorMessage } = await hasPageDataChanged(
             buildId
           )
@@ -250,16 +247,16 @@ const Indicator = () => {
             // Force a "This page has updated message" until a page is refreshed
             refreshNeeded = true
             // Build updated, data for this specific page has changed!
-            setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+            setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
           } else {
             // Build updated, data for this specific page has NOT changed, no need to refresh content.
-            setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+            setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
           }
         }
-      }
 
-      if (shouldPoll.current) {
-        timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
+        if (shouldPoll.current) {
+          timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
+        }
       }
     },
     [contentSyncRedirectUrl]

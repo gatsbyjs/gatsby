@@ -14,6 +14,7 @@ import {
   INTERACTION_COOKIE_NAME,
 } from "../../constants"
 import { BuildStatus } from "../../models/enums"
+import { useMemo } from "react"
 
 const InfoIndicatorButton = ({
   buttonIndex,
@@ -33,6 +34,13 @@ const InfoIndicatorButton = ({
   const { setCookie } = useCookie()
   const { shouldShowFeedback } = useFeedback()
   const { track } = useTrackEvent()
+
+  const showNotificationInfoIcon = useMemo(
+    () =>
+      shouldShowFeedback ||
+      [BuildStatus.SUCCESS, BuildStatus.ERROR].includes(buildStatus),
+    [shouldShowFeedback, buildStatus]
+  )
 
   const trackClick = () => {
     track({
@@ -75,6 +83,20 @@ const InfoIndicatorButton = ({
           ...btnProps.tooltip,
           show: false,
           overrideShow: false,
+          hoverable: false,
+        },
+      }
+    })
+  }
+
+  const onTooltipToogle = () => {
+    trackClick()
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        tooltip: {
+          ...btnProps.tooltip,
+          overrideShow: !btnProps.tooltip.overrideShow,
         },
       }
     })
@@ -100,6 +122,14 @@ const InfoIndicatorButton = ({
     }, 500)
   }
 
+  const onInfoClick = () => {
+    if (buttonProps?.active && buttonProps?.onClick) {
+      buttonProps.onClick()
+    } else if (buttonProps?.active) {
+      trackClick()
+    }
+  }
+
   useEffect(() => {
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
@@ -119,88 +149,89 @@ const InfoIndicatorButton = ({
               ),
               overrideShow: true,
               closable: true,
+              hoverable: false,
               onClose: closeFeedbackTooltip,
             },
             active: true,
             highlighted: true,
+            hoverable: true,
           })
         } else {
-          setButtonProps(btnProps => {
-            return {
-              ...btnProps,
-              tooltip: {
-                testId: btnProps.testId,
-                content: `Preview updated ${formatDistance(
-                  Date.now(),
-                  new Date(createdAt),
-                  { includeSeconds: true }
-                )} ago`,
-                overrideShow: false,
-                show: false,
-              },
-              active: true,
-            }
+          setButtonProps({
+            ...initialButtonProps,
+            tooltip: {
+              testId: initialButtonProps.testId,
+              content: `Preview updated ${formatDistance(
+                Date.now(),
+                new Date(createdAt),
+                { includeSeconds: true }
+              )} ago`,
+              overrideShow: false,
+              show: false,
+              hoverable: true,
+            },
+            active: true,
+            hoverable: true,
           })
         }
       },
       [BuildStatus.SUCCESS]: () => {
-        setButtonProps(btnProps => {
-          return {
-            ...btnProps,
-            tooltip: {
-              testId: btnProps.testId,
-              content: (
-                <BuildSuccessTooltipContent
-                  isOnPrettyUrl={isOnPrettyUrl}
-                  sitePrefix={sitePrefix}
-                  buildId={buildId}
-                  siteId={siteId}
-                  orgId={orgId}
-                />
-              ),
-              closable: true,
-              onClose: closeInfoTooltip,
-            },
-            active: true,
-            hoverable: true,
-          }
+        setButtonProps({
+          ...initialButtonProps,
+          tooltip: {
+            testId: initialButtonProps.testId,
+            content: (
+              <BuildSuccessTooltipContent
+                isOnPrettyUrl={isOnPrettyUrl}
+                sitePrefix={sitePrefix}
+                buildId={buildId}
+                siteId={siteId}
+                orgId={orgId}
+              />
+            ),
+            closable: true,
+            hoverable: false,
+            onClose: closeInfoTooltip,
+          },
+          active: true,
+          hoverable: true,
+          onClose: closeInfoTooltip,
         })
       },
       [BuildStatus.ERROR]: () => {
-        setButtonProps(btnProps => {
-          return {
-            ...btnProps,
-            tooltip: {
-              testId: btnProps.testId,
-              content: (
-                <BuildErrorTooltipContent
-                  siteId={siteId}
-                  orgId={orgId}
-                  buildId={erroredBuildId}
-                />
-              ),
-              overrideShow: true,
-              closable: true,
-              onClose: closeInfoTooltip,
-            },
-            active: true,
-            hoverable: true,
-          }
+        setButtonProps({
+          ...initialButtonProps,
+          tooltip: {
+            testId: initialButtonProps.testId,
+            content: (
+              <BuildErrorTooltipContent
+                siteId={siteId}
+                orgId={orgId}
+                buildId={erroredBuildId}
+              />
+            ),
+            overrideShow: true,
+            closable: true,
+            hoverable: false,
+            onClose: closeInfoTooltip,
+          },
+          active: true,
+          hoverable: true,
+          onClick: onTooltipToogle,
         })
       },
       [BuildStatus.BUILDING]: () => {
-        setButtonProps(btnProps => {
-          return {
-            ...btnProps,
-            tooltip: {
-              testId: btnProps.testId,
-              content: `Building a new preview`,
-              overrideShow: true,
-            },
-            active: false,
-            hoverable: true,
-            showSpinner: true,
-          }
+        setButtonProps({
+          ...initialButtonProps,
+          tooltip: {
+            testId: initialButtonProps.testId,
+            content: `Building a new preview`,
+            overrideShow: true,
+            hoverable: false,
+          },
+          active: true,
+          hoverable: false,
+          showSpinner: true,
         })
       },
     }
@@ -262,11 +293,13 @@ const InfoIndicatorButton = ({
   return (
     <IndicatorButton
       {...buttonProps}
-      onClick={buttonProps?.active ? trackClick : undefined}
+      onClick={onInfoClick}
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
       onTooltipToogle={updateTootipVisibility}
       iconSvg={
-        shouldShowFeedback || contentSyncRedirectUrl ? infoAlertIcon : infoIcon
+        showNotificationInfoIcon || contentSyncRedirectUrl
+          ? infoAlertIcon
+          : infoIcon
       }
     />
   )
