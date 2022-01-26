@@ -98,7 +98,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   port = typeof port === `string` ? parseInt(port, 10) : port
 
   const { configModule } = await getConfigFile(
-    program.directory,
+    `${program.directory}/.cache/compiled`,
     `gatsby-config`
   )
   const config = preferDefault(configModule)

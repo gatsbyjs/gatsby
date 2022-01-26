@@ -27,10 +27,8 @@ export async function compileGatsbyConfig(dir: string): Promise<void> {
   try {
     const { bundleGraph, buildTime } = await bundler.run()
     const bundles = bundleGraph.getBundles()
-    reporter.log(
-      `Built gatsby config files (${bundles.length}) in ${buildTime}ms`
-    )
+    reporter.log(`Built gatsby files (${bundles.length}) in ${buildTime}ms`)
   } catch (err) {
-    reporter.panicOnBuild(err)
+    reporter.panicOnBuild(err.diagnostics)
   }
 }

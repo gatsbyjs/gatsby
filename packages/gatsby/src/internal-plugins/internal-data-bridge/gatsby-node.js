@@ -52,18 +52,34 @@ exports.sourceNodes = ({
 
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
-    createNode({
-      ...plugin,
-      packageJson: transformPackageJson(
-        require(`${plugin.resolve}/package.json`)
-      ),
-      parent: null,
-      children: [],
-      internal: {
-        contentDigest: createContentDigest(plugin),
-        type: `SitePlugin`,
-      },
-    })
+
+    if (plugin.name === `default-site-plugin`) {
+      createNode({
+        ...plugin,
+        packageJson: transformPackageJson(
+          require(`${program.directory}/package.json`)
+        ),
+        parent: null,
+        children: [],
+        internal: {
+          contentDigest: createContentDigest(plugin),
+          type: `SitePlugin`,
+        },
+      })
+    } else {
+      createNode({
+        ...plugin,
+        packageJson: transformPackageJson(
+          require(`${plugin.resolve}/package.json`)
+        ),
+        parent: null,
+        children: [],
+        internal: {
+          contentDigest: createContentDigest(plugin),
+          type: `SitePlugin`,
+        },
+      })
+    }
   })
 
   // Add site node.
@@ -113,7 +129,7 @@ exports.sourceNodes = ({
   })
 
   const pathToGatsbyConfig = systemPath.join(
-    program.directory,
+    `${program.directory}/.cache/compiled`,
     `gatsby-config.js`
   )
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)

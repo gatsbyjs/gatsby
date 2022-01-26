@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
-import fs, { ensureDirSync } from "fs-extra"
+import * as fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
 import del from "del"
@@ -169,7 +169,9 @@ export async function initialize({
   )
   activity.start()
 
-  await ensureDirSync(`${program.directory}/.cache/compiled`)
+  const compiledDirectory = `${program.directory}/.cache/compiled`
+
+  await fs.ensureDir(compiledDirectory)
   await compileGatsbyConfig(program.directory)
 
   const { config, flattenedPlugins } = await loadConfigAndPlugins({
@@ -314,11 +316,18 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
-  const hashes: any = await Promise.all([
-    md5File(`package.json`),
-    md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
-    md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
-  ])
+  const optionalFiles = [
+    `${program.directory}/gatsby-config.js`,
+    `${program.directory}/gatsby-node.js`,
+    `${program.directory}/gatsby-config.ts`,
+    `${program.directory}/gatsby-node.ts`,
+  ].filter(Boolean) as Array<string>
+  const hashes = await Promise.all(
+    // Ignore optional files with .catch() as these are not required
+    [md5File(`package.json`)].concat(
+      optionalFiles.map(f => md5File(f).catch(() => ``))
+    )
+  )
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
@@ -413,6 +422,7 @@ export async function initialize({
           // By default delete all files & subdirectories
           `${cacheDirectory}/**`,
           `${cacheDirectory}/*/`,
+          `!${cacheDirectory}/compiled`,
         ]
 
         if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
@@ -490,9 +500,9 @@ export async function initialize({
     await fs.copy(srcDir, siteDir)
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
     if (lmdbStoreIsUsed) {
-      await fs.ensureDirSync(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
+      await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
     } else {
-      await fs.ensureDirSync(`${cacheDirectory}/json`)
+      await fs.ensureDir(`${cacheDirectory}/json`)
     }
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be

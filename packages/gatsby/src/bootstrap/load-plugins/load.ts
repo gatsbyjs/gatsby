@@ -339,11 +339,12 @@ export function loadPlugins(
   }
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
+  const compiledPath = `${path.join(process.cwd(), `.cache/compiled`)}`
   plugins.push({
-    resolve: slash(process.cwd()),
+    resolve: slash(compiledPath),
     id: createPluginId(`default-site-plugin`),
     name: `default-site-plugin`,
-    version: createFileContentHash(process.cwd(), `gatsby-*`),
+    version: createFileContentHash(compiledPath, `gatsby-*`),
     pluginOptions: {
       plugins: [],
     },
