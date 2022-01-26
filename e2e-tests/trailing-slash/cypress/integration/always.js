@@ -1,3 +1,5 @@
+import { assertPageVisits } from "../support/utils/trailing-slash"
+
 describe(`always`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
@@ -98,65 +100,139 @@ describe(`always (direct visits)`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
   })
+
   it(`page-creator`, () => {
+    assertPageVisits([
+      { path: "/page-2/", status: 200 },
+      { path: "/page-2", status: 301, destinationPath: "/page-2/" },
+    ])
+
     cy.visit(`/page-2`).waitForRouteChange().assertRoute(`/page-2/`)
   })
+
   it(`create-page with`, () => {
+    assertPageVisits([{ path: "/create-page/with/", status: 200 }])
+
     cy.visit(`/create-page/with/`)
       .waitForRouteChange()
       .assertRoute(`/create-page/with/`)
   })
+
   it(`create-page without`, () => {
+    assertPageVisits([
+      {
+        path: "/create-page/without",
+        status: 301,
+        destinationPath: "/create-page/without",
+      },
+    ])
+
     cy.visit(`/create-page/without`)
       .waitForRouteChange()
       .assertRoute(`/create-page/without/`)
   })
+
   it(`fs-api-simple with`, () => {
+    assertPageVisits([{ path: "/fs-api-simple/with/", status: 200 }])
+
     cy.visit(`/fs-api-simple/with/`)
       .waitForRouteChange()
       .assertRoute(`/fs-api-simple/with/`)
   })
+
   it(`fs-api-simple without`, () => {
+    assertPageVisits([
+      {
+        path: "/fs-api-simple/without",
+        status: 301,
+        destinationPath: "/fs-api-simple/without/",
+      },
+    ])
+
     cy.visit(`/fs-api-simple/without`)
       .waitForRouteChange()
       .assertRoute(`/fs-api-simple/without/`)
   })
+
   it(`fs-api client only splat with`, () => {
+    assertPageVisits([{ path: "/fs-api/with/with/", status: 200 }])
+
     cy.visit(`/fs-api/with/with/`)
       .waitForRouteChange()
       .assertRoute(`/fs-api/with/with/`)
   })
+
   it(`fs-api client only splat without`, () => {
+    assertPageVisits([
+      {
+        path: "`/fs-api/without/without",
+        status: 301,
+        destinationPath: "`/fs-api/without/without/",
+      },
+    ])
+
     cy.visit(`/fs-api/without/without`)
       .waitForRouteChange()
       .assertRoute(`/fs-api/without/without/`)
   })
+
   it(`client-only with`, () => {
+    assertPageVisits([{ path: "/create-page/with/", status: 200 }])
+
     cy.visit(`/client-only/with/`)
       .waitForRouteChange()
       .assertRoute(`/client-only/with/`)
   })
+
   it(`client-only without`, () => {
+    assertPageVisits([
+      {
+        path: "/client-only/without",
+        status: 301,
+        destinationPath: "/client-only/without",
+      },
+    ])
+
     cy.visit(`/client-only/without`)
       .waitForRouteChange()
       .assertRoute(`/client-only/without/`)
   })
+
   it(`client-only-splat with`, () => {
+    assertPageVisits([{ path: "/client-only-splat/with/with/", status: 200 }])
+
     cy.visit(`/client-only-splat/with/with/`)
       .waitForRouteChange()
       .assertRoute(`/client-only-splat/with/with/`)
   })
+
   it(`client-only-splat without`, () => {
+    assertPageVisits([
+      {
+        path: "`/client-only-splat/without/without",
+        status: 301,
+        destinationPath: "`/client-only-splat/without/without/",
+      },
+    ])
+
     cy.visit(`/client-only-splat/without/without`)
       .waitForRouteChange()
       .assertRoute(`/client-only-splat/without/without/`)
   })
+
   it(`query-param-hash with`, () => {
+    assertPageVisits([
+      { path: "/page-2/?query_param=hello#anchor", status: 200 },
+    ])
+
     cy.visit(`/page-2/?query_param=hello#anchor`)
       .waitForRouteChange()
       .assertRoute(`/page-2/?query_param=hello#anchor`)
   })
+
   it(`query-param-hash without`, () => {
+    assertPageVisits([{ path: "/page-2?query_param=hello#anchor", status: 200 }])
+
     cy.visit(`/page-2?query_param=hello#anchor`)
       .waitForRouteChange()
       .assertRoute(`/page-2/?query_param=hello#anchor`)
