@@ -1,8 +1,10 @@
 import type { TrailingSlash } from "gatsby-page-utils"
 import express from "express"
+import type { IGatsbyState } from "../redux/types"
+import { findPageByPath } from "./find-page-by-path"
 
 export const configureTrailingSlash =
-  (option: TrailingSlash | undefined) =>
+  (getState: () => IGatsbyState, option: TrailingSlash | undefined) =>
   (
     req: express.Request,
     res: express.Response,
@@ -20,26 +22,38 @@ export const configureTrailingSlash =
       return
     }
 
-    // Remove trailing slash
-    if (
-      req.path.length > 1 &&
-      req.path.slice(-1) === `/` &&
-      option === `never`
-    ) {
-      const query = req.url.slice(req.path.length)
-      res.redirect(301, req.path.slice(0, -1) + query)
+    if (req.path.length <= 1) {
+      next()
       return
     }
 
-    // Add trailing slash
-    if (
-      req.path.length > 1 &&
-      req.path.slice(-1) !== `/` &&
-      option === `always`
-    ) {
-      const query = req.url.slice(req.path.length)
-      res.redirect(301, `${req.path}/${query}`)
-      return
+    // check if it's Gatsby Page
+    const page = findPageByPath(getState(), req.path)
+
+    if (page) {
+      if (option === `never`) {
+        if (req.path.slice(-1) === `/` && page.path !== req.path) {
+          // Remove trailing slash
+          const query = req.url.slice(req.path.length)
+          res.redirect(301, req.path.slice(0, -1) + query)
+          return
+        } else {
+          // express.static really doesn't like paths without trailing slashes
+          // so we "rewrite" request to look like request with trailing slash
+          const BASE = `http://localhost`
+          const urlToMessWith = new URL(req.url, BASE)
+          urlToMessWith.pathname += `/`
+
+          req.url = urlToMessWith.toString().replace(BASE, ``)
+        }
+      } else if (option === `always`) {
+        if (req.path.slice(-1) !== `/` && page.path !== req.path) {
+          // Add trailing slash
+          const query = req.url.slice(req.path.length)
+          res.redirect(301, `${req.path}/${query}`)
+          return
+        }
+      }
     }
 
     next()

@@ -525,15 +525,15 @@ export async function startServer(
     developMiddleware(app, program)
   }
 
+  const { proxy, trailingSlash } = store.getState().config
+
+  app.use(configureTrailingSlash(() => store.getState(), trailingSlash))
+
   // Disable directory indexing i.e. serving index.html from a directory.
   // This can lead to serving stale html files during development.
   //
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(developStatic(`public`, { index: false }))
-
-  const { proxy, trailingSlash } = store.getState().config
-
-  app.use(configureTrailingSlash(trailingSlash))
 
   // Set up API proxy.
   if (proxy) {

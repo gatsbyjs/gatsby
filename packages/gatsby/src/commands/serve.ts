@@ -16,10 +16,19 @@ import { getConfigFile } from "../bootstrap/get-config-file"
 import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
-import { IGatsbyConfig, IGatsbyFunction } from "../redux/types"
+import {
+  IGatsbyConfig,
+  IGatsbyFunction,
+  IGatsbyPage,
+  IGatsbyState,
+} from "../redux/types"
 import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
 import { configureTrailingSlash } from "../utils/express-middlewares"
+import { getDataStore, detectLmdbStore } from "../datastore"
+
+process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
+detectLmdbStore()
 
 interface IMatchPath {
   path: string
@@ -117,9 +126,29 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
-  router.use(express.static(`public`, { dotfiles: `allow` }))
 
-  router.use(configureTrailingSlash(trailingSlash))
+  router.use(
+    configureTrailingSlash(
+      () =>
+        ({
+          pages: {
+            get(pathName: string): IGatsbyPage | undefined {
+              return getDataStore().getNode(`SitePage ${pathName}`) as
+                | IGatsbyPage
+                | undefined
+            },
+            values(): Iterable<IGatsbyPage> {
+              return getDataStore().iterateNodesByType(
+                `SitePage`
+              ) as Iterable<IGatsbyPage>
+            },
+          },
+        } as unknown as IGatsbyState),
+      trailingSlash
+    )
+  )
+
+  router.use(express.static(`public`, { dotfiles: `allow` }))
 
   const compiledFunctionsDir = path.join(
     program.directory,
