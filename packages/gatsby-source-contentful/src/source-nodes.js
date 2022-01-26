@@ -110,7 +110,6 @@ export async function sourceNodes(
   fetchActivity.start()
 
   const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
-  const CACHE_SYNC_DATA = `contentful-sync-data-${sourceId}`
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
 
   /*
@@ -172,29 +171,6 @@ export async function sourceNodes(
     return [...entryMap.values()]
   }
 
-  let previousSyncData = {
-    assets: [],
-    entries: [],
-  }
-  const cachedData = await cache.get(CACHE_SYNC_DATA)
-
-  if (cachedData) {
-    previousSyncData = cachedData
-  }
-
-  const mergedSyncData = {
-    entries: mergeSyncData(
-      previousSyncData.entries,
-      currentSyncData.entries,
-      currentSyncData.deletedEntries
-    ),
-    assets: mergeSyncData(
-      previousSyncData.assets,
-      currentSyncData.assets,
-      currentSyncData.deletedAssets
-    ),
-  }
-
   // @todo based on the sys metadata we should be able to differentiate new and updated entities
   reporter.info(
     `Contentful: ${currentSyncData.entries.length} new/updated entries`
@@ -202,19 +178,19 @@ export async function sourceNodes(
   reporter.info(
     `Contentful: ${currentSyncData.deletedEntries.length} deleted entries`
   )
-  reporter.info(`Contentful: ${previousSyncData.entries.length} cached entries`)
-  reporter.info(
-    `Contentful: ${currentSyncData.assets.length} new/updated assets`
-  )
-  reporter.info(`Contentful: ${previousSyncData.assets.length} cached assets`)
-  reporter.info(
-    `Contentful: ${currentSyncData.deletedAssets.length} deleted assets`
-  )
+  // @todo also these can be loaded from gatsby cache
+  // reporter.info(`Contentful: ${previousSyncData.entries.length} cached entries`)
+  // reporter.info(
+  //   `Contentful: ${currentSyncData.assets.length} new/updated assets`
+  // )
+  // reporter.info(`Contentful: ${previousSyncData.assets.length} cached assets`)
+  // reporter.info(
+  //   `Contentful: ${currentSyncData.deletedAssets.length} deleted assets`
+  // )
 
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
 
-  await cache.set(CACHE_SYNC_DATA, mergedSyncData)
   actions.setPluginStatus({
     [CACHE_SYNC_TOKEN]: nextSyncToken,
   })
@@ -240,8 +216,8 @@ export async function sourceNodes(
 
   reporter.verbose(`Building Contentful reference map`)
 
-  const entryList = buildEntryList({ contentTypeItems, mergedSyncData })
-  const { assets } = mergedSyncData
+  const entryList = buildEntryList({ contentTypeItems, currentSyncData })
+  const { assets } = currentSyncData
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
