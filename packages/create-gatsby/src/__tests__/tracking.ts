@@ -3,7 +3,7 @@ let isTrackingEnabled: () => boolean
 const get = jest.fn()
 const set = jest.fn()
 
-jest.doMock(`../get-config-store`, () => {
+jest.doMock(`../utils/get-config-store`, () => {
   return {
     getConfigStore: (): unknown => {
       return {
