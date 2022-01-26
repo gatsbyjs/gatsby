@@ -26,7 +26,7 @@ export async function loadConfigAndPlugins({
 }> {
   // Try opening the site's gatsby-config.js file.
   const { configModule, configFilePath } = await getConfigFile(
-    siteDirectory,
+    `${siteDirectory}/.cache/compiled`,
     `gatsby-config`
   )
   let config = preferDefault(configModule)

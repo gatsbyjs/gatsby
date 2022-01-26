@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
-import fs from "fs-extra"
+import fs, { ensureDirSync } from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
 import del from "del"
@@ -22,6 +22,7 @@ import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
+import { compileGatsbyConfig } from "../utils/parcel/compile-gatsby-config"
 
 interface IPluginResolution {
   resolve: string
@@ -167,6 +168,9 @@ export async function initialize({
     }
   )
   activity.start()
+
+  await ensureDirSync(`${program.directory}/.cache/compiled`)
+  await compileGatsbyConfig(program.directory)
 
   const { config, flattenedPlugins } = await loadConfigAndPlugins({
     siteDirectory: program.directory,
