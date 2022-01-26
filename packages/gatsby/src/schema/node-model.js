@@ -482,6 +482,7 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
+      console.log(`materialization`, { typeName, actualFieldsToResolve })
       const resolvedNodes = new Map()
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         this.trackInlineObjectsInRootNode(node)
