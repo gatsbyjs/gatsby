@@ -22,11 +22,16 @@ import {
   getNodesFromCacheByValue,
   intersectNodesByCounter,
   IFilterCache,
+  GatsbyNodeID,
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
 import { IRunQueryArgs, IQueryResult } from "../types"
 import { GatsbyIterable } from "../common/iterable"
+import { getNode } from "../"
 
+function isGatsbyNode(node: IGatsbyNode | undefined): node is IGatsbyNode {
+  return !!node
+}
 export interface IRunFilterArg extends IRunQueryArgs {
   filtersCache: FiltersCache
 }
@@ -101,8 +106,8 @@ export function applyFastFilters(
 
     while (nodesPerValueArrs.length > 1) {
       // TS limitation: cannot guard against .pop(), so we must double cast
-      const a = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNode>
-      const b = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNode>
+      const a = nodesPerValueArrs.pop() as unknown as Array<GatsbyNodeID>
+      const b = nodesPerValueArrs.pop() as unknown as Array<GatsbyNodeID>
       nodesPerValueArrs.push(intersectNodesByCounter(a, b))
     }
 
@@ -113,7 +118,7 @@ export function applyFastFilters(
       return null
     }
 
-    return result
+    return result.map(getNode).filter(isGatsbyNode)
   }
 }
 
@@ -124,8 +129,8 @@ function getBucketsForFilters(
   filters: Array<DbQuery>,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
-): Array<Array<IGatsbyNode>> | undefined {
-  const nodesPerValueArrs: Array<Array<IGatsbyNode>> = []
+): Array<Array<GatsbyNodeID>> | undefined {
+  const nodesPerValueArrs: Array<Array<GatsbyNodeID>> = []
 
   // Fail fast while trying to create and get the value-cache for each path
   const every = filters.every(filter => {
@@ -170,7 +175,7 @@ function getBucketsForQueryFilter(
   filter: IDbQueryQuery,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<IGatsbyNode>>
+  nodesPerValueArrs: Array<Array<GatsbyNodeID>>
 ): boolean {
   const {
     path: filterPath,
@@ -187,6 +192,14 @@ function getBucketsForQueryFilter(
     )
   }
 
+  const readableWorkerId = process.env.GATSBY_WORKER_ID
+    ? `worker #${process.env.GATSBY_WORKER_ID}`
+    : `main`
+
+  console.log(
+    `getBucketsForQueryFilter "${filterCacheKey}" start ${readableWorkerId}`
+  )
+
   const nodesPerValue = getNodesFromCacheByValue(
     filterCacheKey,
     filterValue as FilterValueNullable,
@@ -202,6 +215,10 @@ function getBucketsForQueryFilter(
   // mechanism does not create an array unless there's a IGatsbyNode for it
   nodesPerValueArrs.push(nodesPerValue)
 
+  console.log(
+    `getBucketsForQueryFilter "${filterCacheKey}" end ${readableWorkerId}`
+  )
+
   return true
 }
 
@@ -213,7 +230,7 @@ function collectBucketForElemMatch(
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<IGatsbyNode>>
+  nodesPerValueArrs: Array<Array<GatsbyNodeID>>
 ): boolean {
   // Get comparator and target value for this elemMatch
   let comparator: FilterOp = `$eq` // (Must be overridden but TS requires init)
@@ -339,9 +356,9 @@ function convertAndApplyFastFilters(
     // If there's a filter, there (now) must be an entry for this cache key
     const filterCache = filtersCache.get(filterCacheKey) as IFilterCache
     // If there is no filter then the ensureCache step will populate this:
-    const cache = filterCache.meta.orderedByCounter as Array<IGatsbyNode>
+    const cache = filterCache.meta.orderedByCounter as Array<GatsbyNodeID>
 
-    return cache.slice(0)
+    return cache.slice(0).map(getNode).filter(isGatsbyNode)
   }
 
   const result = applyFastFilters(filters, nodeTypeNames, filtersCache)
