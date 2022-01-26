@@ -92,7 +92,9 @@ const Indicator = () => {
         pageDataCounter++
         hasPageChanged = loadedPageData !== data
 
-        await new Promise(resolve => setTimeout(resolve, POLLING_INTERVAL))
+        if (!hasPageChanged) {
+          await new Promise(resolve => setTimeout(resolve, POLLING_INTERVAL))
+        }
       }
 
       latestCheckedBuild = buildId
@@ -137,7 +139,7 @@ const Indicator = () => {
     }
 
     if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      // Keep status as up to date for non content sync builds. We should not show building status unless we know a build is applicable to the viewed content
+      // Keep status as up to date builds where we cannot fetch manifest id info.
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
@@ -149,7 +151,7 @@ const Indicator = () => {
       currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
       if (refreshNeeded) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
       } else {
         const { hasPageChanged, errorMessage } = await hasPageDataChanged(
           buildId
@@ -165,7 +167,7 @@ const Indicator = () => {
           // Force a "This page has updated message" until a page is refreshed
           refreshNeeded = true
           // Build updated, data for this specific page has changed!
-          setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
         } else {
           // Build updated, data for this specific page has NOT changed, no need to refresh content.
           setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
