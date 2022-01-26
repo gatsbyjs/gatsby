@@ -1,3 +1,4 @@
+// @ts-ignore
 import { clearKeptObjects } from "lmdb"
 /**
  * Wrapper for any iterable providing chainable interface and convenience methods

@@ -47,8 +47,6 @@ let fullDbPath
 let rootDb
 let databases
 
-console.log(`do I see a change?`)
-
 function getRootDb(): RootDatabase {
   if (!rootDb) {
     if (!fullDbPath) {
@@ -58,7 +56,6 @@ function getRootDb(): RootDatabase {
       name: `root`,
       path: fullDbPath,
       compression: true,
-      overlappingSync: true,
     })
   }
   return rootDb
