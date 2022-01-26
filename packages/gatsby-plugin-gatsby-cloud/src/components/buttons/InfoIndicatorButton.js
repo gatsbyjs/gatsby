@@ -25,6 +25,8 @@ const InfoIndicatorButton = ({
   buildId,
   createdAt,
   buildStatus,
+  contentSyncRedirectUrl,
+  contentSyncInfo,
 }) => {
   const initialButtonProps = { buttonIndex, testId: `info`, hoverable: true }
   const [buttonProps, setButtonProps] = useState(initialButtonProps)
@@ -203,13 +205,59 @@ const InfoIndicatorButton = ({
       },
     }
 
-    const buildStatusAction = buildStatusActions[buildStatus]
+    const contentSyncAction =
+      // if there's a redirect url we show that
+      contentSyncRedirectUrl
+        ? () => {
+            setButtonProps(btnProps => {
+              return {
+                ...btnProps,
+                tooltip: {
+                  testId: btnProps.testId,
+                  content: (
+                    <BuildSuccessTooltipContent
+                      contentSyncRedirectUrl={contentSyncRedirectUrl}
+                    />
+                  ),
+                  closable: true,
+                  onClose: closeInfoTooltip,
+                },
+                active: true,
+                hoverable: true,
+                showSpinner: false,
+              }
+            })
+          }
+        : // otherwise if we're running content sync logic, show the loading state
+        contentSyncInfo
+        ? () => {
+            setButtonProps(btnProps => {
+              return {
+                ...btnProps,
+                tooltip: {
+                  testId: btnProps.testId,
+                  content: `Building a new preview`,
+                  overrideShow: true,
+                },
+                active: true,
+                hoverable: true,
+                showSpinner: true,
+              }
+            })
+          }
+        : // otherwise we're not running content sync logic here
+          null
+
+    const buildStatusAction =
+      // with the introduction of Content Sync eager redirects, button state is no longer tied to build status. So we need a separate action for Content Sync.
+      contentSyncAction || buildStatusActions[buildStatus]
+
     if (typeof buildStatusAction === `function`) {
       buildStatusAction()
     } else {
       setButtonProps({ ...buttonProps, active: true, hoverable: true })
     }
-  }, [buildStatus, shouldShowFeedback])
+  }, [buildStatus, shouldShowFeedback, contentSyncRedirectUrl])
 
   return (
     <IndicatorButton
@@ -217,7 +265,9 @@ const InfoIndicatorButton = ({
       onClick={buttonProps?.active ? trackClick : undefined}
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
       onTooltipToogle={updateTootipVisibility}
-      iconSvg={shouldShowFeedback ? infoAlertIcon : infoIcon}
+      iconSvg={
+        shouldShowFeedback || contentSyncRedirectUrl ? infoAlertIcon : infoIcon
+      }
     />
   )
 }
