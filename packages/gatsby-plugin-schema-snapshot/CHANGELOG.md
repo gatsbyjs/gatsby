@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.6.0/packages/gatsby-plugin-schema-snapshot) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- unlink file on init [#34527](https://github.com/gatsbyjs/gatsby/issues/34527) ([42ed5ef](https://github.com/gatsbyjs/gatsby/commit/42ed5efbd382ed99c314c0f5e4ea0ff90a98dd86))
+
+
+
 ### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.5.1/packages/gatsby-plugin-schema-snapshot) (2022-01-24)
 
 #### Bug Fixes
