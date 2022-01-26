@@ -51,7 +51,7 @@ const Indicator = () => {
       const data = await resp.text()
 
       if (data === `{}`) {
-        // for local development, force and error if page is missing.
+        // for local development, force an error if page is missing.
         const err = new Error(`Not Found`)
         err.status = 404
         throw err
