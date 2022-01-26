@@ -44,6 +44,23 @@ exports.sourceNodes = async ({ actions, reporter }) => {
   activity.end()
 }
 
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  actions.createTypes(
+    schema.buildObjectType({
+      name: `Test`,
+      fields: {
+        idCloneWithResolver: {
+          type: `String`,
+          resolve: source => {
+            return source.idClone
+          },
+        },
+      },
+      interfaces: ["Node"],
+    })
+  )
+}
+
 const printedMessages = new Set()
 exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
@@ -78,6 +95,7 @@ exports.onPreBootstrap = () => {
   const availableTemplates = new Set([
     `eq_id`, // this should skip node-model and fast filters completely and should be very cheap already
     `eq_field`, // this needs fast filters for eq operator on non-id field
+    `eq_field_with_resolver`, // / this needs fast filters for eq operator on non-id field + materialization
   ])
   enabledTemplates = new Set(
     process.env.TEMPLATES
@@ -147,6 +165,15 @@ exports.createPages = async ({ actions, graphql }) => {
 
   // (eq: { idClone: x })
   createEnoughToSaturate(`eq_field`, node => {
+    return {
+      context: {
+        id: node.id,
+      },
+    }
+  })
+
+  // (eq: { idCloneWithResolver: x })
+  createEnoughToSaturate(`eq_field_with_resolver`, node => {
     return {
       context: {
         id: node.id,
