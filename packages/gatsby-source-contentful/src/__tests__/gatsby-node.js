@@ -56,7 +56,6 @@ describe(`gatsby-node`, () => {
   let currentNodeMap
   const getNodes = () => Array.from(currentNodeMap.values())
   const getNode = id => currentNodeMap.get(id)
-  const getNodesByType = jest.fn()
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
@@ -74,7 +73,6 @@ describe(`gatsby-node`, () => {
         actions,
         getNode,
         getNodes,
-        getNodesByType,
         createNodeId,
         store,
         cache,

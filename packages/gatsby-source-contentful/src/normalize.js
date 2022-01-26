@@ -418,12 +418,7 @@ export const createNodesForContentType = ({
           if (entryItemFields[entryItemFieldKey]) {
             const entryItemFieldValue = entryItemFields[entryItemFieldKey]
             if (Array.isArray(entryItemFieldValue)) {
-              if (
-                entryItemFieldValue[0] &&
-                entryItemFieldValue[0].sys &&
-                entryItemFieldValue[0].sys.type &&
-                entryItemFieldValue[0].sys.id
-              ) {
+              if (entryItemFieldValue[0]?.sys?.type === `Link`) {
                 // Check if there are any values in entryItemFieldValue to prevent
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
@@ -447,12 +442,7 @@ export const createNodesForContentType = ({
 
                 delete entryItemFields[entryItemFieldKey]
               }
-            } else if (
-              entryItemFieldValue &&
-              entryItemFieldValue.sys &&
-              entryItemFieldValue.sys.type &&
-              entryItemFieldValue.sys.id
-            ) {
+            } else if (entryItemFieldValue?.sys?.type === `Link`) {
               if (
                 resolvable.has(
                   `${entryItemFieldValue.sys.id}___${
