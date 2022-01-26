@@ -309,6 +309,8 @@ describe(`gatsby-node`, () => {
     cache.actualMap.clear()
     cache.get.mockClear()
     cache.set.mockClear()
+    reporter.info.mockClear()
+    reporter.panic.mockClear()
   })
 
   it(`should create nodes from initial payload`, async () => {
@@ -372,6 +374,8 @@ describe(`gatsby-node`, () => {
         "contentful-sync-data-testSpaceId-master",
       ]
     `)
+
+    expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
   it(`should add a new blogpost and update linkedNodes`, async () => {
@@ -420,6 +424,8 @@ describe(`gatsby-node`, () => {
       const blogEntry = getNode(blogEntryId)
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
+
+    expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
   it(`should update a blogpost`, async () => {
@@ -471,6 +477,8 @@ describe(`gatsby-node`, () => {
       expect(blogEntry.title).toBe(`Hello world 1234`)
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
+
+    expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
   it(`should remove a blogpost and update linkedNodes`, async () => {
@@ -537,6 +545,8 @@ describe(`gatsby-node`, () => {
         expect.not.arrayContaining(deletedEntryIds)
       )
     })
+
+    expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
   it(`should remove an asset`, async () => {
@@ -590,6 +600,8 @@ describe(`gatsby-node`, () => {
       startersBlogFixture.removeAsset().currentSyncData.deletedAssets,
       locales
     )
+
+    expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
   it(`stores rich text as raw with references attached`, async () => {
