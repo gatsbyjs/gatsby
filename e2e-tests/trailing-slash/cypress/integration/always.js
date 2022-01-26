@@ -1,4 +1,4 @@
-import { assetPageVisits } from "../support/utils/trailing-slash"
+import { assertPageVisits } from "../support/utils/trailing-slash"
 
 describe(`always`, () => {
   beforeEach(() => {
@@ -102,7 +102,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`page-creator`, () => {
-    assetPageVisits([
+    assertPageVisits([
       { path: "/page-2/", status: 200 },
       { path: "/page-2", status: 301, destinationPath: "/page-2/" },
     ])
@@ -111,7 +111,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`create-page with`, () => {
-    assetPageVisits([{ path: "/create-page/with/", status: 200 }])
+    assertPageVisits([{ path: "/create-page/with/", status: 200 }])
 
     cy.visit(`/create-page/with/`)
       .waitForRouteChange()
@@ -119,7 +119,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`create-page without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/create-page/without",
         status: 301,
@@ -133,7 +133,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`fs-api-simple with`, () => {
-    assetPageVisits([{ path: "/fs-api-simple/with/", status: 200 }])
+    assertPageVisits([{ path: "/fs-api-simple/with/", status: 200 }])
 
     cy.visit(`/fs-api-simple/with/`)
       .waitForRouteChange()
@@ -141,7 +141,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`fs-api-simple without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api-simple/without",
         status: 301,
@@ -155,7 +155,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`fs-api client only splat with`, () => {
-    assetPageVisits([{ path: "/fs-api/with/with/", status: 200 }])
+    assertPageVisits([{ path: "/fs-api/with/with/", status: 200 }])
 
     cy.visit(`/fs-api/with/with/`)
       .waitForRouteChange()
@@ -163,7 +163,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`fs-api client only splat without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "`/fs-api/without/without",
         status: 301,
@@ -177,7 +177,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`client-only with`, () => {
-    assetPageVisits([{ path: "/create-page/with/", status: 200 }])
+    assertPageVisits([{ path: "/create-page/with/", status: 200 }])
 
     cy.visit(`/client-only/with/`)
       .waitForRouteChange()
@@ -185,7 +185,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`client-only without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only/without",
         status: 301,
@@ -199,7 +199,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`client-only-splat with`, () => {
-    assetPageVisits([{ path: "/client-only-splat/with/with/", status: 200 }])
+    assertPageVisits([{ path: "/client-only-splat/with/with/", status: 200 }])
 
     cy.visit(`/client-only-splat/with/with/`)
       .waitForRouteChange()
@@ -207,7 +207,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`client-only-splat without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "`/client-only-splat/without/without",
         status: 301,
@@ -221,7 +221,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`query-param-hash with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       { path: "/page-2/?query_param=hello#anchor", status: 200 },
     ])
 
@@ -231,7 +231,7 @@ describe(`always (direct visits)`, () => {
   })
 
   it(`query-param-hash without`, () => {
-    assetPageVisits([{ path: "/page-2?query_param=hello#anchor", status: 200 }])
+    assertPageVisits([{ path: "/page-2?query_param=hello#anchor", status: 200 }])
 
     cy.visit(`/page-2?query_param=hello#anchor`)
       .waitForRouteChange()

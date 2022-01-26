@@ -1,4 +1,4 @@
-import { assetPageVisits } from "../support/utils/trailing-slash"
+import { assertPageVisits } from "../support/utils/trailing-slash"
 
 describe(`legacy`, () => {
   beforeEach(() => {
@@ -104,7 +104,7 @@ describe(`legacy (direct visits)`, () => {
   })
 
   it(`page-creator`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2/",
         destinationPath: IS_BUILD ? false : `/page-2`,
@@ -118,7 +118,7 @@ describe(`legacy (direct visits)`, () => {
   })
 
   it(`create-page with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/create-page/with/",
         status: 200,
@@ -131,7 +131,7 @@ describe(`legacy (direct visits)`, () => {
   })
 
   it(`create-page without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/create-page/without",
         status: 200,
@@ -143,7 +143,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/create-page/without`)
   })
   it(`fs-api-simple with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api-simple/with/",
         status: 200,
@@ -155,7 +155,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/fs-api-simple/with/`)
   })
   it(`fs-api-simple without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api-simple/without",
         status: IS_BUILD ? 301 : 200,
@@ -170,7 +170,7 @@ describe(`legacy (direct visits)`, () => {
       )
   })
   it(`fs-api client only splat with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api/with/with/",
         status: 200,
@@ -182,7 +182,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/fs-api/with/with/`)
   })
   it(`fs-api client only splat without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api/without/without",
         status: 200,
@@ -194,7 +194,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/fs-api/without/without`)
   })
   it(`client-only with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only/with/",
         status: 200,
@@ -206,7 +206,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/client-only/with/`)
   })
   it(`client-only without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only/without",
         status: 200,
@@ -218,7 +218,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/client-only/without`)
   })
   it(`client-only-splat with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: `/client-only-splat/with/with/`,
         status: 200,
@@ -230,7 +230,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/client-only-splat/with/with/`)
   })
   it(`client-only-splat without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only-splat/without/without",
         status: 200,
@@ -242,7 +242,7 @@ describe(`legacy (direct visits)`, () => {
       .assertRoute(`/client-only-splat/without/without`)
   })
   it(`query-param-hash with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2/?query_param=hello#anchor",
         status: 200,
@@ -255,7 +255,7 @@ describe(`legacy (direct visits)`, () => {
   })
 
   it(`query-param-hash without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2?query_param=hello#anchor",
         status: IS_BUILD ? 301 : 200,
