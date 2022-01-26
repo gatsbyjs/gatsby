@@ -1,4 +1,4 @@
-import { assetPageVisits } from "../support/utils/trailing-slash"
+import { assertPageVisits } from "../support/utils/trailing-slash"
 
 describe(`ignore`, () => {
   beforeEach(() => {
@@ -105,7 +105,7 @@ describe(`ignore (direct visits)`, () => {
 
   //Fix
   it(`page-creator`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2",
         destinationPath: IS_BUILD ? `/page-2/` : false,
@@ -120,7 +120,7 @@ describe(`ignore (direct visits)`, () => {
   })
 
   it(`create-page with`, () => {
-    assetPageVisits([{ path: "/create-page/with/", status: 200 }])
+    assertPageVisits([{ path: "/create-page/with/", status: 200 }])
 
     cy.visit(`/create-page/with/`)
       .waitForRouteChange()
@@ -128,7 +128,7 @@ describe(`ignore (direct visits)`, () => {
   })
 
   it(`create-page without`, () => {
-    assetPageVisits([{ path: "/create-page/without", status: 200 }])
+    assertPageVisits([{ path: "/create-page/without", status: 200 }])
 
     cy.visit(`/create-page/without`)
       .waitForRouteChange()
@@ -136,7 +136,7 @@ describe(`ignore (direct visits)`, () => {
   })
 
   it(`fs-api-simple with`, () => {
-    assetPageVisits([{ path: "/fs-api-simple/with/", status: 200 }])
+    assertPageVisits([{ path: "/fs-api-simple/with/", status: 200 }])
 
     cy.visit(`/fs-api-simple/with/`)
       .waitForRouteChange()
@@ -144,7 +144,7 @@ describe(`ignore (direct visits)`, () => {
   })
 
   it(`fs-api-simple without`, () => {
-    assetPageVisits([{ path: "/fs-api-simple/without", status: 200 }])
+    assertPageVisits([{ path: "/fs-api-simple/without", status: 200 }])
 
     cy.visit(`/fs-api-simple/without`)
       .waitForRouteChange()
@@ -152,7 +152,7 @@ describe(`ignore (direct visits)`, () => {
   })
 
   it(`fs-api client only splat with`, () => {
-    assetPageVisits([{ path: "/fs-api/with/with/", status: 200 }])
+    assertPageVisits([{ path: "/fs-api/with/with/", status: 200 }])
 
     cy.visit(`/fs-api/with/with/`)
       .waitForRouteChange()
@@ -160,7 +160,7 @@ describe(`ignore (direct visits)`, () => {
   })
 
   it(`fs-api client only splat without`, () => {
-    assetPageVisits([{ path: "/fs-api/without/without", status: 200 }])
+    assertPageVisits([{ path: "/fs-api/without/without", status: 200 }])
 
     cy.visit(`/fs-api/without/without`)
       .waitForRouteChange()
@@ -168,42 +168,42 @@ describe(`ignore (direct visits)`, () => {
   })
 
   it(`client-only with`, () => {
-    assetPageVisits([{ path: "/client-only/with/", status: 200 }])
+    assertPageVisits([{ path: "/client-only/with/", status: 200 }])
 
     cy.visit(`/client-only/with/`)
       .waitForRouteChange()
       .assertRoute(`/client-only/with/`)
   })
   it(`client-only without`, () => {
-    assetPageVisits([{ path: "/create-page/without", status: 200 }])
+    assertPageVisits([{ path: "/create-page/without", status: 200 }])
 
     cy.visit(`/client-only/without`)
       .waitForRouteChange()
       .assertRoute(`/client-only/without`)
   })
   it(`client-only-splat with`, () => {
-    assetPageVisits([{ path: "/create-page/without", status: 200 }])
+    assertPageVisits([{ path: "/create-page/without", status: 200 }])
 
     cy.visit(`/client-only-splat/with/with/`)
       .waitForRouteChange()
       .assertRoute(`/client-only-splat/with/with/`)
   })
   it(`client-only-splat without`, () => {
-    assetPageVisits([{ path: "/create-page/without", status: 200 }])
+    assertPageVisits([{ path: "/create-page/without", status: 200 }])
 
     cy.visit(`/client-only-splat/without/without`)
       .waitForRouteChange()
       .assertRoute(`/client-only-splat/without/without`)
   })
   it(`query-param-hash with`, () => {
-    assetPageVisits([{ path: "/create-page/without", status: 200 }])
+    assertPageVisits([{ path: "/create-page/without", status: 200 }])
 
     cy.visit(`/page-2/?query_param=hello#anchor`)
       .waitForRouteChange()
       .assertRoute(`/page-2/?query_param=hello#anchor`)
   })
   it(`query-param-hash without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2?query_param=hello#anchor",
         status: IS_BUILD ? 301 : 200,

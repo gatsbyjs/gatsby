@@ -1,4 +1,4 @@
-import { assetPageVisits } from "../support/utils/trailing-slash"
+import { assertPageVisits } from "../support/utils/trailing-slash"
 
 describe(`never`, () => {
   beforeEach(() => {
@@ -102,7 +102,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`page-creator`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2",
         status: 200,
@@ -113,7 +113,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`create-page with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/create-page/with/",
         status: 301,
@@ -127,7 +127,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`create-page without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/create-page/without",
         status: 200,
@@ -140,7 +140,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`fs-api-simple with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api-simple/with/",
         status: 301,
@@ -162,7 +162,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`fs-api-simple without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api-simple/without",
         status: 200,
@@ -175,7 +175,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`fs-api client only splat with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api/with/with/",
         status: 301,
@@ -189,7 +189,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`fs-api client only splat without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/fs-api/without/without",
         status: 200,
@@ -202,7 +202,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`client-only with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only/with/",
         status: 301,
@@ -216,7 +216,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`client-only without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only/without",
         status: 200,
@@ -229,7 +229,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`client-only-splat with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only-splat/with/with/",
         status: 301,
@@ -243,7 +243,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`client-only-splat without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/client-only-splat/without/without",
         status: 200,
@@ -256,7 +256,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`query-param-hash with`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2/?query_param=hello#anchor",
         status: 301,
@@ -270,7 +270,7 @@ describe(`never (direct visits)`, () => {
   })
 
   it(`query-param-hash without`, () => {
-    assetPageVisits([
+    assertPageVisits([
       {
         path: "/page-2?query_param=hello#anchor",
         status: 200,
