@@ -267,7 +267,8 @@ describe(`Preview status indicator`, () => {
         })
       })
 
-      it(`should trackEvent after info button is hovered over`, async () => {
+      // see SKIPPED TEST NOTE
+      it.skip(`should trackEvent after info button is hovered over`, async () => {
         await assertTrackEventGetsCalled({
           route: `uptodate`,
           testId: `info-button`,
