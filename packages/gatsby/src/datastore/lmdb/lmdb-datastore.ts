@@ -1,4 +1,4 @@
-import { RootDatabase, open, ArrayLikeIterable } from "lmdb-store"
+import { RootDatabase, open, ArrayLikeIterable } from "lmdb"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
@@ -184,10 +184,10 @@ function updateDataStore(action: ActionsUnion): void {
       const dbs = getDatabases()
       // Force sync commit
       dbs.nodes.transactionSync(() => {
-        dbs.nodes.clear()
-        dbs.nodesByType.clear()
-        dbs.metadata.clear()
-        dbs.indexes.clear()
+        dbs.nodes.clearSync()
+        dbs.nodesByType.clearSync()
+        dbs.metadata.clearSync()
+        dbs.indexes.clearSync()
       })
       break
     }
@@ -229,8 +229,8 @@ function updateDataStore(action: ActionsUnion): void {
 function clearIndexes(): void {
   const dbs = getDatabases()
   dbs.nodes.transactionSync(() => {
-    dbs.metadata.clear()
-    dbs.indexes.clear()
+    dbs.metadata.clearSync()
+    dbs.indexes.clearSync()
   })
 }
 
