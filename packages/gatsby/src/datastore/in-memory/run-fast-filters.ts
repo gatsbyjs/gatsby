@@ -22,7 +22,7 @@ import {
   getNodesFromCacheByValue,
   intersectNodesByCounter,
   IFilterCache,
-  GatsbyNodeIdentifiers,
+  IGatsbyNodeIdentifiers,
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
 import { IRunQueryArgs, IQueryResult } from "../types"
@@ -106,8 +106,10 @@ export function applyFastFilters(
 
     while (nodesPerValueArrs.length > 1) {
       // TS limitation: cannot guard against .pop(), so we must double cast
-      const a = nodesPerValueArrs.pop() as unknown as Array<GatsbyNodeIdentifiers>
-      const b = nodesPerValueArrs.pop() as unknown as Array<GatsbyNodeIdentifiers>
+      const a =
+        nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodeIdentifiers>
+      const b =
+        nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodeIdentifiers>
       nodesPerValueArrs.push(intersectNodesByCounter(a, b))
     }
 
@@ -129,8 +131,8 @@ function getBucketsForFilters(
   filters: Array<DbQuery>,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
-): Array<Array<GatsbyNodeIdentifiers>> | undefined {
-  const nodesPerValueArrs: Array<Array<GatsbyNodeIdentifiers>> = []
+): Array<Array<IGatsbyNodeIdentifiers>> | undefined {
+  const nodesPerValueArrs: Array<Array<IGatsbyNodeIdentifiers>> = []
 
   // Fail fast while trying to create and get the value-cache for each path
   const every = filters.every(filter => {
@@ -175,7 +177,7 @@ function getBucketsForQueryFilter(
   filter: IDbQueryQuery,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<GatsbyNodeIdentifiers>>
+  nodesPerValueArrs: Array<Array<IGatsbyNodeIdentifiers>>
 ): boolean {
   const {
     path: filterPath,
@@ -230,7 +232,7 @@ function collectBucketForElemMatch(
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<GatsbyNodeIdentifiers>>
+  nodesPerValueArrs: Array<Array<IGatsbyNodeIdentifiers>>
 ): boolean {
   // Get comparator and target value for this elemMatch
   let comparator: FilterOp = `$eq` // (Must be overridden but TS requires init)
@@ -356,9 +358,13 @@ function convertAndApplyFastFilters(
     // If there's a filter, there (now) must be an entry for this cache key
     const filterCache = filtersCache.get(filterCacheKey) as IFilterCache
     // If there is no filter then the ensureCache step will populate this:
-    const cache = filterCache.meta.orderedByCounter as Array<GatsbyNodeIdentifiers>
+    const cache = filterCache.meta
+      .orderedByCounter as Array<IGatsbyNodeIdentifiers>
 
-    return cache.slice(0).map(nodeIds => getNode(nodeIds.id)).filter(isGatsbyNode)
+    return cache
+      .slice(0)
+      .map(nodeIds => getNode(nodeIds.id))
+      .filter(isGatsbyNode)
   }
 
   const result = applyFastFilters(filters, nodeTypeNames, filtersCache)
