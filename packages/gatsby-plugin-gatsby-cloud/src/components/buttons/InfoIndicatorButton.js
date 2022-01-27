@@ -27,7 +27,8 @@ const InfoIndicatorButton = ({
   createdAt,
   buildStatus,
   contentSyncRedirectUrl,
-  contentSyncInfo,
+  usingContentSync,
+  contentSyncErrorMessage,
 }) => {
   const initialButtonProps = { buttonIndex, testId: `info`, hoverable: true }
   const [buttonProps, setButtonProps] = useState(initialButtonProps)
@@ -133,7 +134,7 @@ const InfoIndicatorButton = ({
   useEffect(() => {
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
-        if (shouldShowFeedback && buildStatus === BuildStatus.UPTODATE) {
+        if (shouldShowFeedback) {
           const url = FEEDBACK_URL
           setButtonProps({
             ...initialButtonProps,
@@ -220,64 +221,63 @@ const InfoIndicatorButton = ({
           onClick: onTooltipToogle,
         })
       },
-      [BuildStatus.BUILDING]: () => {
-        setButtonProps({
-          ...initialButtonProps,
-          tooltip: {
-            testId: initialButtonProps.testId,
-            content: `Building a new preview`,
-            overrideShow: true,
-            hoverable: false,
-          },
-          active: true,
-          hoverable: false,
-          showSpinner: true,
-        })
-      },
     }
 
+    // this is because the build status enum is used for ui state - so we can't have 1 ui state that covers multiple build statuses.
+    // If we don't have content sync info (pollForNodeManifest), we have to assume that a currently building build isn't applicable to the current user. So we default to the least noisy state which is UPTODATE.
+    // @todo refactor and decouple build states from UI states - this state should be something like uiState === `IDLE`
+    buildStatusActions[BuildStatus.BUILDING] =
+      buildStatusActions[BuildStatus.UPTODATE]
+
+    const contentSyncSuccessAction = contentSyncRedirectUrl
+      ? () => {
+          setButtonProps(btnProps => {
+            return {
+              ...btnProps,
+              tooltip: {
+                testId: btnProps.testId,
+                content: (
+                  <BuildSuccessTooltipContent
+                    contentSyncRedirectUrl={contentSyncRedirectUrl}
+                  />
+                ),
+                closable: true,
+                onClose: closeInfoTooltip,
+              },
+              active: true,
+              hoverable: true,
+              showSpinner: false,
+            }
+          })
+        }
+      : false
+
+    const contentSyncLoadingAction = usingContentSync
+      ? () => {
+          setButtonProps(btnProps => {
+            return {
+              ...btnProps,
+              tooltip: {
+                testId: btnProps.testId,
+                content: `Building a new preview`,
+                overrideShow: true,
+              },
+              active: true,
+              hoverable: true,
+              showSpinner: true,
+            }
+          })
+        }
+      : false
+
+    const contentSyncErrorAction = contentSyncErrorMessage
+      ? buildStatusActions[BuildStatus.ERROR]
+      : false
+
     const contentSyncAction =
-      // if there's a redirect url we show that
-      contentSyncRedirectUrl
-        ? () => {
-            setButtonProps(btnProps => {
-              return {
-                ...btnProps,
-                tooltip: {
-                  testId: btnProps.testId,
-                  content: (
-                    <BuildSuccessTooltipContent
-                      contentSyncRedirectUrl={contentSyncRedirectUrl}
-                    />
-                  ),
-                  closable: true,
-                  onClose: closeInfoTooltip,
-                },
-                active: true,
-                hoverable: true,
-                showSpinner: false,
-              }
-            })
-          }
-        : // otherwise if we're running content sync logic, show the loading state
-        contentSyncInfo
-        ? () => {
-            setButtonProps(btnProps => {
-              return {
-                ...btnProps,
-                tooltip: {
-                  testId: btnProps.testId,
-                  content: `Building a new preview`,
-                  overrideShow: true,
-                },
-                active: true,
-                hoverable: true,
-                showSpinner: true,
-              }
-            })
-          }
-        : // otherwise we're not running content sync logic here
-          null
+      contentSyncErrorAction ||
+      contentSyncLoadingAction ||
+      contentSyncSuccessAction
 
     const buildStatusAction =
       // with the introduction of Content Sync eager redirects, button state is no longer tied to build status. So we need a separate action for Content Sync.
@@ -288,7 +288,12 @@ const InfoIndicatorButton = ({
     } else {
       setButtonProps({ ...buttonProps, active: true, hoverable: true })
     }
-  }, [buildStatus, shouldShowFeedback, contentSyncRedirectUrl])
+  }, [
+    buildStatus,
+    shouldShowFeedback,
+    contentSyncRedirectUrl,
+    contentSyncErrorMessage,
+  ])
 
   return (
     <IndicatorButton

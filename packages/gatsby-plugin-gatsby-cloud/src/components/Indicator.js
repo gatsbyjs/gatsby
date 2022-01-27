@@ -51,6 +51,8 @@ let refreshNeeded = false
 const Indicator = () => {
   const [buildInfo, setBuildInfo] = useState()
   const [contentSyncInfo, setContentSyncInfo] = useState(null)
+  const usingContentSync = !!contentSyncInfo
+
   const timeoutRef = useRef(null)
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
@@ -124,31 +126,16 @@ const Indicator = () => {
 
   const {
     redirectUrl: contentSyncRedirectUrl,
-    errorMessage: eagerRedirectPollingErrorMessage,
+    errorMessage: contentSyncErrorMessage,
   } = usePollForNodeManifest(pollForNodeManifestArgs)
 
   React.useEffect(() => {
-    if (eagerRedirectPollingErrorMessage) {
-      console.error(eagerRedirectPollingErrorMessage)
-
-      setBuildInfo({
-        buildStatus: BuildStatus.ERROR,
-      })
+    if (contentSyncErrorMessage) {
+      console.error(contentSyncErrorMessage)
     } else if (contentSyncRedirectUrl) {
       refreshNeeded = true
-      setBuildInfo({ ...buildInfo, buildStatus: BuildStatus.UPTODATE })
-    } else if (contentSyncInfo) {
-      setBuildInfo({ ...buildInfo, buildStatus: BuildStatus.BUILDING })
     }
-  }, [
-    contentSyncInfo,
-    contentSyncRedirectUrl,
-    eagerRedirectPollingErrorMessage,
-  ])
-
-  // React.useEffect(() => {
-  //   console.log({ buildInfo })
-  // }, [buildInfo])
+  }, [contentSyncInfo, contentSyncRedirectUrl, contentSyncErrorMessage])
 
   const hasPageDataChanged = async () => {
     if (buildId !== latestCheckedBuild) {
@@ -186,11 +173,6 @@ const Indicator = () => {
 
   const pollData = useCallback(
     async function pollData() {
-      if (contentSyncRedirectUrl) {
-        // once we have a content sync redirect url we don't need to poll anymore until the user refreshes or navigates to their new preview.
-        return
-      }
-
       const prettyUrlRegex = /^preview-/
       const host = window.location.hostname
 
@@ -220,8 +202,11 @@ const Indicator = () => {
 
       if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
         // Keep status as up to date builds where we cannot fetch manifest id info.
-        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
-      } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+      } else if (
+        currentBuild?.buildStatus === BuildStatus.ERROR &&
+        !usingContentSync
+      ) {
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
       } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
@@ -232,7 +217,7 @@ const Indicator = () => {
       ) {
         if (refreshNeeded) {
           setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
-        } else {
+        } else if (!usingContentSync) {
           const { hasPageChanged, errorMessage } = await hasPageDataChanged(
             buildId
           )
@@ -307,7 +292,8 @@ const Indicator = () => {
         <InfoIndicatorButton
           {...buttonProps}
           contentSyncRedirectUrl={contentSyncRedirectUrl}
-          contentSyncInfo={contentSyncInfo}
+          usingContentSync={usingContentSync}
+          contentSyncErrorMessage={contentSyncErrorMessage}
           buttonIndex={2}
         />
         <LinkIndicatorButton {...buttonProps} buttonIndex={3} />

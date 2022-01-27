@@ -36,13 +36,6 @@ const IndicatorButton = ({
       onTooltipToogle(false)
     }
   }
-  const onButtonClick = event => {
-    event.preventDefault()
-    event.stopPropagation()
-    if (active && typeof onClick === `function`) {
-      onClick()
-    }
-  }
 
   useEffect(() => {
     setShowTooltip(tooltip?.show)
@@ -61,7 +54,7 @@ const IndicatorButton = ({
         style={{ marginTop: marginTop }}
         onMouseEnter={onButtonMouseEnter}
         onMouseLeave={onMouseLeave}
-        onClick={onButtonClick}
+        onClick={onClick}
       >
         <div>
           {iconSvg}
