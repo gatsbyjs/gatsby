@@ -46,9 +46,8 @@ export const configureTrailingSlash =
           const urlToMessWith = new URL(req.url, BASE)
           urlToMessWith.pathname += `/`
 
-
-	 // The incoming req.url is relative, so we remove the base again
-	 // we use new URL so that queries/hashes are handled automatically
+          // The incoming req.url is relative, so we remove the base again
+          // we use new URL so that queries/hashes are handled automatically
           req.url = urlToMessWith.toString().replace(BASE, ``)
         }
       } else if (option === `always`) {
