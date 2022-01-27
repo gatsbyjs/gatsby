@@ -5,6 +5,11 @@
  * `config` and `getServerData`, so it's not necessary (or possible) to test other exports
  * in page templates.
  */
+
+const config = `config exported from a non-page template module`
+const getServerData = `getServerData exported from a non-page template module`
+const helloWorld = `hello world`
+
 describe(`modifed exports`, () => {
   beforeEach(() => {
     cy.visit(`/modified-exports`).waitForRouteChange()
@@ -12,14 +17,29 @@ describe(`modifed exports`, () => {
 
   describe(`page templates`, () => {
     it(`should have exports named config removed`, () => {
-      cy.getTestElement(`modified-exports-config`)
+      cy.getTestElement(`modified-exports-page-template-config`)
         .invoke(`text`)
         .should(`contain`, `undefined`)
     })
     it(`should have exports named getServerData removed`, () => {
-      cy.getTestElement(`modified-exports-get-server-data`)
+      cy.getTestElement(`modified-exports-page-template-get-server-data`)
         .invoke(`text`)
         .should(`contain`, `undefined`)
+    })
+    it(`should have imported exports named config left alone`, () => {
+      cy.getTestElement(`unmodified-exports-page-template-config`)
+        .invoke(`text`)
+        .should(`contain`, config)
+    })
+    it(`should have imported exports named getServerData left alone`, () => {
+      cy.getTestElement(`unmodified-exports-page-template-get-server-data`)
+        .invoke(`text`)
+        .should(`contain`, getServerData)
+    })
+    it(`should have other imported exports left alone`, () => {
+      cy.getTestElement(`unmodified-exports-page-template-hello-world`)
+        .invoke(`text`)
+        .should(`contain`, helloWorld)
     })
   })
 
@@ -27,22 +47,19 @@ describe(`modifed exports`, () => {
     it(`should have exports named config left alone`, () => {
       cy.getTestElement(`unmodified-exports-config`)
         .invoke(`text`)
-        .should(`contain`, `config exported from a non-page template module`)
+        .should(`contain`, config)
     })
 
     it(`should have exports named getServerData left alone`, () => {
       cy.getTestElement(`unmodified-exports-get-server-data`)
         .invoke(`text`)
-        .should(
-          `contain`,
-          `getServerData exported from a non-page template module`
-        )
+        .should(`contain`, getServerData)
     })
 
     it(`should have other named exports left alone`, () => {
       cy.getTestElement(`unmodified-exports-hello-world`)
         .invoke(`text`)
-        .should(`contain`, `hello world`)
+        .should(`contain`, helloWorld)
     })
   })
 })
