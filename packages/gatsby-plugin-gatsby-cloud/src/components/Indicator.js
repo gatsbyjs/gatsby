@@ -11,7 +11,9 @@ import Style from "./Style"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
-  : 3000
+  : 2000
+
+const PAGE_DATA_RETRY_LIMIT = 60
 
 const PreviewIndicator = ({ children }) => (
   <>
@@ -27,6 +29,9 @@ const PreviewIndicator = ({ children }) => (
 )
 
 let buildId = ``
+let pageData
+let latestCheckedBuild
+let refreshNeeded = false
 
 const Indicator = () => {
   const [buildInfo, setBuildInfo] = useState()
@@ -34,6 +39,69 @@ const Indicator = () => {
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
   const { track } = useTrackEvent()
+
+  async function fetchPageData() {
+    const urlHostString = window.location.origin
+    const pathAdjustment =
+      window.location.pathname === `/` ? `/index` : window.location.pathname
+
+    const url = `${urlHostString}/page-data${pathAdjustment}/page-data.json`
+    try {
+      const resp = await fetch(url)
+      const data = await resp.text()
+
+      if (data === `{}`) {
+        // for local development, force an error if page is missing.
+        const err = new Error(`Not Found`)
+        err.status = 404
+        throw err
+      }
+
+      return { data, errorMessage: null }
+    } catch (e) {
+      if (e.status === 404) {
+        return { data: null, errorMessage: `This page has moved.` }
+      } else {
+        return { data: null, errorMessage: null }
+      }
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await fetchPageData()
+      pageData = data
+    }
+
+    fetchData()
+  }, [])
+
+  const hasPageDataChanged = async () => {
+    if (buildId !== latestCheckedBuild) {
+      let pageDataCounter = 0
+      let hasPageChanged = false
+
+      while (!hasPageChanged && pageDataCounter <= PAGE_DATA_RETRY_LIMIT) {
+        const loadedPageData = pageData
+        const { data, errorMessage } = await fetchPageData()
+
+        if (errorMessage) {
+          return { hasPageChanged: false, errorMessage }
+        }
+
+        pageDataCounter++
+        hasPageChanged = loadedPageData !== data
+
+        if (!hasPageChanged) {
+          await new Promise(resolve => setTimeout(resolve, POLLING_INTERVAL))
+        }
+      }
+
+      latestCheckedBuild = buildId
+      return { hasPageChanged, errorMessage: null }
+    }
+    return { hasPageChanged: false, errorMessage: null }
+  }
 
   const { siteInfo, currentBuild } = buildInfo || {
     siteInfo: {},
@@ -71,7 +139,8 @@ const Indicator = () => {
     }
 
     if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+      // Keep status as up to date builds where we cannot fetch manifest id info.
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
     } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
@@ -81,7 +150,29 @@ const Indicator = () => {
       buildId !== newBuildInfo?.latestBuild?.id &&
       currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+      if (refreshNeeded) {
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+      } else {
+        const { hasPageChanged, errorMessage } = await hasPageDataChanged(
+          buildId
+        )
+
+        if (errorMessage) {
+          setBuildInfo({
+            ...newBuildInfo,
+            buildStatus: BuildStatus.ERROR,
+            errorMessage,
+          })
+        } else if (hasPageChanged) {
+          // Force a "This page has updated message" until a page is refreshed
+          refreshNeeded = true
+          // Build updated, data for this specific page has changed!
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+        } else {
+          // Build updated, data for this specific page has NOT changed, no need to refresh content.
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
+        }
+      }
     }
 
     if (shouldPoll.current) {

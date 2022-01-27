@@ -16,12 +16,17 @@ const generateBuildLogUrl = ({ orgId, siteId, buildId }) => {
   return `${pathToBuildLogs}?returnTo=${returnTo}`
 }
 
-const BuildErrorTooltipContent = ({ siteId, orgId, buildId }) => {
+const BuildErrorTooltipContent = ({
+  siteId,
+  orgId,
+  buildId,
+  errorMessage = `Unable to build preview`,
+}) => {
   const { track } = useTrackEvent()
   return (
     <>
       {failedIcon}
-      {`Unable to build preview`}
+      {errorMessage}
       <a
         href={generateBuildLogUrl({ orgId, siteId, buildId })}
         target="_blank"
