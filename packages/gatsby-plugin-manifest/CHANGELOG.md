@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.6.0/packages/gatsby-plugin-manifest) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Features
+
+- create more resilient wrapper around sharp [#34339](https://github.com/gatsbyjs/gatsby/issues/34339) ([a3fa646](https://github.com/gatsbyjs/gatsby/commit/a3fa646eb6b51004ef9e85a32f7be1cf2d0cc2db))
+
+#### Bug Fixes
+
+- don't throw on warnings in `pluginOptionsSchema` [#34182](https://github.com/gatsbyjs/gatsby/issues/34182) ([252f50d](https://github.com/gatsbyjs/gatsby/commit/252f50d0f282bee4c7e10065682bea52a603aa0c))
+- generate icons sequentially [#34331](https://github.com/gatsbyjs/gatsby/issues/34331) ([024d298](https://github.com/gatsbyjs/gatsby/commit/024d298e9d38386327dd44744ce877368a3261c6))
+
 ### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.5.2/packages/gatsby-plugin-manifest) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

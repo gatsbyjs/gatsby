@@ -19,7 +19,7 @@ const IndicatorButton = ({
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
   const onButtonMouseEnter = () => {
-    if (active) {
+    if (active && tooltip?.hoverable) {
       setShowTooltip(true)
 
       if (typeof onMouseEnter === `function`) {
@@ -37,8 +37,9 @@ const IndicatorButton = ({
     }
   }
   const onButtonClick = event => {
+    event.preventDefault()
     event.stopPropagation()
-    if (active && hoverable && typeof onClick === `function`) {
+    if (active && typeof onClick === `function`) {
       onClick()
     }
   }

@@ -16,6 +16,7 @@ const getBaseButtonProps = ({ buttonIndex, buildStatus }) => {
     tooltip: {
       testId: baseProps.testId,
       content: `Copy link`,
+      hoverable: true,
     },
   }
   const buildStatusProps = {
@@ -64,6 +65,7 @@ const LinkIndicatorButton = props => {
           ...buttonProps.tooltip,
           content: copySuccessTooltip,
           overrideShow: true,
+          hoverable: false,
         },
         hoverable: false,
       }
@@ -77,6 +79,7 @@ const LinkIndicatorButton = props => {
             ...btnProps.tooltip,
             overrideShow: false,
             show: false,
+            hoverable: true,
           },
           hoverable: true,
         }
@@ -105,7 +108,11 @@ const LinkIndicatorButton = props => {
       setButtonProps(btnProps => {
         return {
           ...btnProps,
-          tooltip: { ...buttonProps.tooltip, content: `Copy link` },
+          tooltip: {
+            ...buttonProps.tooltip,
+            content: `Copy link`,
+            hoverable: true,
+          },
         }
       })
     }
