@@ -275,9 +275,9 @@ const InfoIndicatorButton = ({
       : false
 
     const contentSyncAction =
+      contentSyncSuccessAction ||
       contentSyncErrorAction ||
-      contentSyncLoadingAction ||
-      contentSyncSuccessAction
+      contentSyncLoadingAction
 
     const buildStatusAction =
       // with the introduction of Content Sync eager redirects, button state is no longer tied to build status. So we need a separate action for Content Sync.
