@@ -14,3 +14,9 @@ exports.onCreatePage = ({ page, actions }) => {
     resolve()
   })
 }
+
+exports.onPreInit = ({ reporter }) => {
+  reporter.warn(
+    `gatsby-plugin-remove-trailing-slashes: Gatsby now let you configure trailing slash out of the box. See documentation https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash/`
+  )
+}

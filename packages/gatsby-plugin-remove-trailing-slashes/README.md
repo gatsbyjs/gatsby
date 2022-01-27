@@ -1,3 +1,5 @@
+❗❗❗ Deprecation Notice: Gatsby now let you configure trailing slash out of the box. See [documentation](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash/)
+
 # gatsby-plugin-remove-trailing-slashes
 
 This plugin removes trailing slashes from your project's paths. For
