@@ -40,10 +40,15 @@ export const configureTrailingSlash =
         } else {
           // express.static really doesn't like paths without trailing slashes
           // so we "rewrite" request to look like request with trailing slash
+          // otherwise we'll have an infinite redirect loop. We did this because
+          // express.static automatically adds the redirect trailing slash then
           const BASE = `http://localhost`
           const urlToMessWith = new URL(req.url, BASE)
           urlToMessWith.pathname += `/`
 
+
+	 // The incoming req.url is relative, so we remove the base again
+	 // we use new URL so that queries/hashes are handled automatically
           req.url = urlToMessWith.toString().replace(BASE, ``)
         }
       } else if (option === `always`) {
