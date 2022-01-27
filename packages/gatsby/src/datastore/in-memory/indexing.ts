@@ -28,10 +28,25 @@ export interface IGatsbyNodeIdentifiers {
   counter: number
 }
 
+const nodeIdToIdentifierMap = new Map<
+  GatsbyNodeID,
+  WeakRef<IGatsbyNodeIdentifiers>
+>()
+
 const getIdentifierObjectFromNode = (
   node: IGatsbyNode
 ): IGatsbyNodeIdentifiers => {
-  return { id: node.id, counter: node.internal.counter }
+  const cacheKey = `${node.id}_____${node.internal.counter}`
+  if (nodeIdToIdentifierMap.has(cacheKey)) {
+    const maybeStillExist = nodeIdToIdentifierMap.get(cacheKey)?.deref()
+    if (maybeStillExist) {
+      return maybeStillExist
+    }
+  }
+
+  const identifier = { id: node.id, counter: node.internal.counter }
+  nodeIdToIdentifierMap.set(cacheKey, new WeakRef(identifier))
+  return identifier
 }
 
 const sortByIds = (
