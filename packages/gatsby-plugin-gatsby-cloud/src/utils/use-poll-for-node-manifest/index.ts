@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { ContentLoaderInfo, PollArguments } from "./types"
+import { IContentLoaderInfo, IPollArguments } from "./types"
 import { fetchNodeManifest } from "./utils"
 import { DEBUG_CONTENT_SYNC_MODE } from "./constants"
 
@@ -15,7 +15,7 @@ const minutesUntilNodeManifestTimeout = 0.5
 /**
  * The polling fn for the ContentLoader component to poll for node manifest files for the users Gatsby site
  */
-export const poll = async (pollArgs: PollArguments): Promise<void> => {
+export const poll = async (pollArgs: IPollArguments): Promise<void> => {
   const {
     shouldPoll: shouldPollInput,
     showError,
@@ -75,7 +75,7 @@ export const poll = async (pollArgs: PollArguments): Promise<void> => {
 
       const is404 =
         error?.message?.includes(`invalid json response body`) ||
-        error?.code === 404
+        (typeof error !== `undefined` && `code` in error && error?.code === 404)
 
       // 404's may just mean that the build hasn't finished.
       if (is404) {
@@ -93,7 +93,7 @@ export const poll = async (pollArgs: PollArguments): Promise<void> => {
       } else if (error) {
         console.error(`Manifest request errored.`, error)
 
-        if (error.passwordProtected) {
+        if (`passwordProtected` in error && error.passwordProtected) {
           setErrorMessage(
             `Content Sync does not currently work with password protected Previews.`
           )
@@ -124,19 +124,16 @@ const useHandlePollingTimeout = ({
   contentLoaderInfo,
   setShowError,
 }: {
-  contentLoaderInfo: ContentLoaderInfo | undefined
+  contentLoaderInfo: IContentLoaderInfo | undefined
   setShowError: (arg: boolean) => void
-}) => {
+}): { handlePollingTimeout: () => boolean } => {
   const [idleSince, setIdleSince] = useState<number | null>(null)
   const [lastPollBuildStatus, setLastPollBuildStatus] = useState<string | null>(
     null
   )
 
-  const statusHas = (state: string) => {
-    if (contentLoaderInfo?.previewBuildStatus) {
-      return contentLoaderInfo?.previewBuildStatus.includes(state)
-    }
-  }
+  const statusHas = (state: string): boolean =>
+    !!contentLoaderInfo?.previewBuildStatus?.includes(state)
 
   /**
    * handlePollingTimeout Handles updating timeout state and returns
@@ -211,13 +208,17 @@ export const usePollForNodeManifest = ({
   siteId,
   pollCallback,
 }: {
-  contentLoaderInfo: ContentLoaderInfo | undefined
+  contentLoaderInfo: IContentLoaderInfo | undefined
   shouldPoll: boolean
   manifestId: string
   sourcePluginName: string
   siteId: string
   pollCallback?: () => void
-}) => {
+}): {
+  redirectUrl?: string
+  loadingDuration: number
+  errorMessage: string | null
+} => {
   const [showError, setShowError] = useState(false)
   const [errorMessage, setErrorMessage] = useState(errorMessages.default)
   const [pollCount, setPollCount] = useState(0)
@@ -230,9 +231,10 @@ export const usePollForNodeManifest = ({
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined)
   const [loadingDuration, setLoadingDuration] = useState<number>(0)
 
-  const triggerNextPoll = () => setPollCount(pollCount + 1)
-  const waitThenTriggerNextPoll = () =>
+  const triggerNextPoll = (): void => setPollCount(pollCount + 1)
+  const waitThenTriggerNextPoll = (): void => {
     setTimeout(triggerNextPoll, betweenPollWaitTimeMs)
+  }
 
   // only polling above 0 allows us to manually start polling.
   // The first useEffect run of poll will have pollCount set to 0.

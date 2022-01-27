@@ -1,10 +1,15 @@
 import { DEBUG_CONTENT_SYNC_MODE } from "./constants"
-import { INodeManifestOut, PageData, PageDataJsonParams } from "./types"
+import {
+  INodeManifestOut,
+  IPageData,
+  IPageDataJsonParams,
+  IProxyRequestError,
+} from "./types"
 
 /**
  * Returns a fixed path for requesting page-data.json files.
  */
-export function fixedPagePath(pagePath: string) {
+export function fixedPagePath(pagePath: string): string {
   return pagePath === `/` ? `/index` : pagePath
 }
 
@@ -17,7 +22,14 @@ export const maybeProxiedRequest = async ({
 }: {
   url: string
   skipJson?: boolean
-}) => {
+}): Promise<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: any
+  exists?: boolean
+  statusCode?: number
+  error?: IProxyRequestError | Error
+  passwordProtected?: true
+}> => {
   const parsedUrl = new URL(url)
 
   // fix pathnames that have double forward slashes //
@@ -82,10 +94,19 @@ export const maybeProxiedRequest = async ({
   }
 }
 
+/**
+ * Used to check if a redirect url exists before we redirect the user.
+ */
+export const doesUrlExist = async (url: string): Promise<boolean> => {
+  const responseJson = await maybeProxiedRequest({ url, skipJson: true })
+
+  return !!responseJson?.exists
+}
+
 export const fetchPageDataJson = async ({
   manifest,
   frontendUrl,
-}: PageDataJsonParams): Promise<null | PageData> => {
+}: IPageDataJsonParams): Promise<null | IPageData> => {
   if (!manifest?.page?.path) {
     return null
   }
@@ -106,8 +127,8 @@ export const fetchPageDataJson = async ({
 }
 
 export const doesPageManifestIdMatch = async (
-  params: PageDataJsonParams,
-  pageDataJson?: PageData | null
+  params: IPageDataJsonParams,
+  pageDataJson?: IPageData | null
 ): Promise<boolean> => {
   const pageData = pageDataJson || (await fetchPageDataJson(params))
 
@@ -237,7 +258,7 @@ export const fetchNodeManifest = async ({
   setShowError: (arg: boolean) => void
 }): Promise<{
   manifest?: INodeManifestOut
-  error?: { message?: string; code: number; passwordProtected: boolean }
+  error?: IProxyRequestError | Error
   shouldPoll: boolean
   loadingDuration?: number
   redirectUrl?: string
@@ -322,13 +343,4 @@ export const fetchNodeManifest = async ({
   }
 
   return { shouldPoll: true }
-}
-
-/**
- * Used to check if a redirect url exists before we redirect the user.
- */
-export const doesUrlExist = async (url: string): Promise<boolean> => {
-  const responseJson = await maybeProxiedRequest({ url, skipJson: true })
-
-  return !!responseJson?.exists
 }

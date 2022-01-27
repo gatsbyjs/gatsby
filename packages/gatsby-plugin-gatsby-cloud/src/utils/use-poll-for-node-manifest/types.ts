@@ -1,4 +1,10 @@
-type INodeManifestPage = {
+export interface IProxyRequestError {
+  message?: string
+  code: number
+  passwordProtected?: true
+}
+
+interface INodeManifestPage {
   path?: string
 }
 
@@ -9,7 +15,7 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
-export type INodeManifestOut = {
+export interface INodeManifestOut {
   page: INodeManifestPage
   node: {
     id: string
@@ -19,45 +25,45 @@ export type INodeManifestOut = {
   id?: string
 }
 
-export type PageDataJsonParams = {
+export interface IPageDataJsonParams {
   manifest?: INodeManifestOut
   frontendUrl: string
 }
 
-export type PageData = {
+export interface IPageData {
   path: string
   manifestId?: string
 }
 
 enum BuildStatus {
-  GitClone = "GIT_CLONE",
-  GitCloneError = "GIT_CLONE_ERROR",
-  GitPull = "GIT_PULL",
-  GitPullError = "GIT_PULL_ERROR",
-  DepInstall = "DEP_INSTALL",
-  DepInstallError = "DEP_INSTALL_ERROR",
-  Queued = "QUEUED",
-  Canceled = "CANCELED",
-  CanceledByGatsbyCloud = "CANCELED_BY_GATSBY_CLOUD",
-  Building = "BUILDING",
-  Uploading = "UPLOADING",
-  Publishing = "PUBLISHING",
-  UploadError = "UPLOAD_ERROR",
-  PublishError = "PUBLISH_ERROR",
-  PublishCanceled = "PUBLISH_CANCELED",
-  TimedOut = "TIMED_OUT",
-  Success = "SUCCESS",
-  Error = "ERROR",
+  GitClone = `GIT_CLONE`,
+  GitCloneError = `GIT_CLONE_ERROR`,
+  GitPull = `GIT_PULL`,
+  GitPullError = `GIT_PULL_ERROR`,
+  DepInstall = `DEP_INSTALL`,
+  DepInstallError = `DEP_INSTALL_ERROR`,
+  Queued = `QUEUED`,
+  Canceled = `CANCELED`,
+  CanceledByGatsbyCloud = `CANCELED_BY_GATSBY_CLOUD`,
+  Building = `BUILDING`,
+  Uploading = `UPLOADING`,
+  Publishing = `PUBLISHING`,
+  UploadError = `UPLOAD_ERROR`,
+  PublishError = `PUBLISH_ERROR`,
+  PublishCanceled = `PUBLISH_CANCELED`,
+  TimedOut = `TIMED_OUT`,
+  Success = `SUCCESS`,
+  Error = `ERROR`,
 }
 
-export type ContentLoaderInfo = {
+export interface IContentLoaderInfo {
   previewBuildStatus?: BuildStatus
   previewUrl?: string
   orgId?: string
 }
 
-export type PollArguments = {
-  contentLoaderInfo?: ContentLoaderInfo
+export interface IPollArguments {
+  contentLoaderInfo?: IContentLoaderInfo
   shouldPoll: boolean
   showError: boolean
   manifestId: string
