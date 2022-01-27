@@ -115,7 +115,9 @@ const Indicator = () => {
       orgId: buildInfo?.siteInfo?.orgId,
       previewBuildStatus: buildInfo?.currentBuild?.buildStatus,
       previewUrl:
-        `https://preview-contentfulstartertryingcontent.gtsb.io` ||
+        // for local dev / debugging
+        process.env.GATSBY_PREVIEW_URL ||
+        // for production
         window.location.origin,
     },
     manifestId: contentSyncInfo?.manifestId,
