@@ -79,7 +79,7 @@ export function applyFastFilters(
   filters: Array<DbQuery>,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
-): Array<IGatsbyNode> | null {
+): Array<IGatsbyNodeIdentifiers> | null {
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
     return null
@@ -120,7 +120,7 @@ export function applyFastFilters(
       return null
     }
 
-    return result.map(nodeIds => getNode(nodeIds.id)).filter(isGatsbyNode)
+    return result
   }
 }
 
@@ -306,7 +306,10 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
     stats
   )
 
-  const sortedResult = sortNodes(result, sort, resolvedFields, stats)
+  const resultingNodes = result
+    .map(nodeIds => getNode(nodeIds.id))
+    .filter(isGatsbyNode)
+  const sortedResult = sortNodes(resultingNodes, sort, resolvedFields, stats)
   const totalCount = async (): Promise<number> => sortedResult.length
 
   const entries =
@@ -326,7 +329,7 @@ function convertAndApplyFastFilters(
   filtersCache: FiltersCache,
   resolvedFields: Record<string, any>,
   stats: IGraphQLRunnerStats
-): Array<IGatsbyNode> {
+): Array<IGatsbyNodeIdentifiers> {
   const filters = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
@@ -361,10 +364,7 @@ function convertAndApplyFastFilters(
     const cache = filterCache.meta
       .orderedByCounter as Array<IGatsbyNodeIdentifiers>
 
-    return cache
-      .slice(0)
-      .map(nodeIds => getNode(nodeIds.id))
-      .filter(isGatsbyNode)
+    return cache.slice(0)
   }
 
   const result = applyFastFilters(filters, nodeTypeNames, filtersCache)
