@@ -56,7 +56,6 @@ describe(`gatsby-node`, () => {
   let currentNodeMap
   const getNodes = () => Array.from(currentNodeMap.values())
   const getNode = id => currentNodeMap.get(id)
-  const getNodesByType = jest.fn()
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
@@ -74,7 +73,6 @@ describe(`gatsby-node`, () => {
         actions,
         getNode,
         getNodes,
-        getNodesByType,
         createNodeId,
         store,
         cache,
@@ -333,18 +331,10 @@ describe(`gatsby-node`, () => {
 
     expect(store.getState).toHaveBeenCalled()
 
-    // Tries to load data from cache
-    expect(cache.get).toHaveBeenCalledWith(
-      `contentful-sync-data-testSpaceId-master`
-    )
-
     expect(cache.get.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           "contentful-content-types-testSpaceId-master",
-        ],
-        Array [
-          "contentful-sync-data-testSpaceId-master",
         ],
       ]
     `)
@@ -355,23 +345,9 @@ describe(`gatsby-node`, () => {
         startersBlogFixture.initialSync().currentSyncData.nextSyncToken,
     })
 
-    // Check for valid cache data
-    const cacheCall = cache.set.mock.calls.filter(
-      args => args[0] === `contentful-sync-data-testSpaceId-master`
-    )
-
-    expect(cacheCall).toBeTruthy()
-    expect(cacheCall[0][1].entries).toHaveLength(
-      startersBlogFixture.initialSync().currentSyncData.entries.length
-    )
-    expect(cacheCall[0][1].assets).toHaveLength(
-      startersBlogFixture.initialSync().currentSyncData.assets.length
-    )
-
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`
       Array [
         "contentful-content-types-testSpaceId-master",
-        "contentful-sync-data-testSpaceId-master",
       ]
     `)
 

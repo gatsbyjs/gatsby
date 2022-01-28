@@ -57,13 +57,13 @@ const makeMakeId =
   (spaceId, id, type) =>
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-export const buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
+export const buildEntryList = ({ contentTypeItems, currentSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
   )
   // Now fill the buckets. Ignore entries for which there exists no bucket. (Not sure if that ever happens)
-  mergedSyncData.entries.map(entry => {
+  currentSyncData.entries.map(entry => {
     const arr = map.get(entry.sys.contentType.sys.id)
     if (arr) {
       arr.push(entry)
@@ -418,12 +418,7 @@ export const createNodesForContentType = ({
           if (entryItemFields[entryItemFieldKey]) {
             const entryItemFieldValue = entryItemFields[entryItemFieldKey]
             if (Array.isArray(entryItemFieldValue)) {
-              if (
-                entryItemFieldValue[0] &&
-                entryItemFieldValue[0].sys &&
-                entryItemFieldValue[0].sys.type &&
-                entryItemFieldValue[0].sys.id
-              ) {
+              if (entryItemFieldValue[0]?.sys?.type === `Link`) {
                 // Check if there are any values in entryItemFieldValue to prevent
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
@@ -447,12 +442,7 @@ export const createNodesForContentType = ({
 
                 delete entryItemFields[entryItemFieldKey]
               }
-            } else if (
-              entryItemFieldValue &&
-              entryItemFieldValue.sys &&
-              entryItemFieldValue.sys.type &&
-              entryItemFieldValue.sys.id
-            ) {
+            } else if (entryItemFieldValue?.sys?.type === `Link`) {
               if (
                 resolvable.has(
                   `${entryItemFieldValue.sys.id}___${

@@ -3,7 +3,10 @@
 exports[`gatsby-node should add a new blogpost and update linkedNodes 1`] = `
 Array [
   Array [
-    "Contentful: 4 new/updated entries",
+    "Contentful: 4 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
@@ -12,7 +15,10 @@ Array [
     "Contentful: 0 cached entries",
   ],
   Array [
-    "Contentful: 4 new/updated assets",
+    "Contentful: 4 new assets",
+  ],
+  Array [
+    "Contentful: 0 updated assets",
   ],
   Array [
     "Contentful: 0 cached assets",
@@ -30,31 +36,34 @@ Array [
     "Creating 4 Contentful asset nodes",
   ],
   Array [
-    "Contentful: 1 new/updated entries",
+    "Contentful: 1 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
   ],
   Array [
-    "Contentful: 4 cached entries",
+    "Contentful: 22 cached entries",
   ],
   Array [
-    "Contentful: 1 new/updated assets",
+    "Contentful: 1 new assets",
   ],
   Array [
-    "Contentful: 4 cached assets",
+    "Contentful: 0 updated assets",
+  ],
+  Array [
+    "Contentful: 8 cached assets",
   ],
   Array [
     "Contentful: 0 deleted assets",
   ],
   Array [
-    "Creating 1 Contentful Person nodes",
+    "Creating 1 Contentful Blog Post nodes",
   ],
   Array [
-    "Creating 4 Contentful Blog Post nodes",
-  ],
-  Array [
-    "Creating 5 Contentful asset nodes",
+    "Creating 1 Contentful asset nodes",
   ],
 ]
 `;
@@ -62,7 +71,10 @@ Array [
 exports[`gatsby-node should create nodes from initial payload 3`] = `
 Array [
   Array [
-    "Contentful: 4 new/updated entries",
+    "Contentful: 4 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
@@ -71,7 +83,10 @@ Array [
     "Contentful: 0 cached entries",
   ],
   Array [
-    "Contentful: 4 new/updated assets",
+    "Contentful: 4 new assets",
+  ],
+  Array [
+    "Contentful: 0 updated assets",
   ],
   Array [
     "Contentful: 0 cached assets",
@@ -94,7 +109,10 @@ Array [
 exports[`gatsby-node should remove a blogpost and update linkedNodes 1`] = `
 Array [
   Array [
-    "Contentful: 4 new/updated entries",
+    "Contentful: 4 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
@@ -103,7 +121,10 @@ Array [
     "Contentful: 0 cached entries",
   ],
   Array [
-    "Contentful: 4 new/updated assets",
+    "Contentful: 4 new assets",
+  ],
+  Array [
+    "Contentful: 0 updated assets",
   ],
   Array [
     "Contentful: 0 cached assets",
@@ -121,58 +142,58 @@ Array [
     "Creating 4 Contentful asset nodes",
   ],
   Array [
-    "Contentful: 1 new/updated entries",
+    "Contentful: 1 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
   ],
   Array [
-    "Contentful: 4 cached entries",
+    "Contentful: 22 cached entries",
   ],
   Array [
-    "Contentful: 1 new/updated assets",
+    "Contentful: 1 new assets",
   ],
   Array [
-    "Contentful: 4 cached assets",
+    "Contentful: 0 updated assets",
+  ],
+  Array [
+    "Contentful: 8 cached assets",
   ],
   Array [
     "Contentful: 0 deleted assets",
   ],
   Array [
-    "Creating 1 Contentful Person nodes",
+    "Creating 1 Contentful Blog Post nodes",
   ],
   Array [
-    "Creating 4 Contentful Blog Post nodes",
+    "Creating 1 Contentful asset nodes",
   ],
   Array [
-    "Creating 5 Contentful asset nodes",
+    "Contentful: 0 new entries",
   ],
   Array [
-    "Contentful: 0 new/updated entries",
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 1 deleted entries",
   ],
   Array [
-    "Contentful: 5 cached entries",
+    "Contentful: 28 cached entries",
   ],
   Array [
-    "Contentful: 0 new/updated assets",
+    "Contentful: 0 new assets",
   ],
   Array [
-    "Contentful: 5 cached assets",
+    "Contentful: 0 updated assets",
+  ],
+  Array [
+    "Contentful: 10 cached assets",
   ],
   Array [
     "Contentful: 0 deleted assets",
-  ],
-  Array [
-    "Creating 1 Contentful Person nodes",
-  ],
-  Array [
-    "Creating 3 Contentful Blog Post nodes",
-  ],
-  Array [
-    "Creating 5 Contentful asset nodes",
   ],
 ]
 `;
@@ -180,7 +201,10 @@ Array [
 exports[`gatsby-node should remove an asset 1`] = `
 Array [
   Array [
-    "Contentful: 4 new/updated entries",
+    "Contentful: 4 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
@@ -189,7 +213,10 @@ Array [
     "Contentful: 0 cached entries",
   ],
   Array [
-    "Contentful: 4 new/updated assets",
+    "Contentful: 4 new assets",
+  ],
+  Array [
+    "Contentful: 0 updated assets",
   ],
   Array [
     "Contentful: 0 cached assets",
@@ -207,58 +234,58 @@ Array [
     "Creating 4 Contentful asset nodes",
   ],
   Array [
-    "Contentful: 1 new/updated entries",
+    "Contentful: 1 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
   ],
   Array [
-    "Contentful: 4 cached entries",
+    "Contentful: 22 cached entries",
   ],
   Array [
-    "Contentful: 1 new/updated assets",
+    "Contentful: 1 new assets",
   ],
   Array [
-    "Contentful: 4 cached assets",
+    "Contentful: 0 updated assets",
+  ],
+  Array [
+    "Contentful: 8 cached assets",
   ],
   Array [
     "Contentful: 0 deleted assets",
   ],
   Array [
-    "Creating 1 Contentful Person nodes",
+    "Creating 1 Contentful Blog Post nodes",
   ],
   Array [
-    "Creating 4 Contentful Blog Post nodes",
+    "Creating 1 Contentful asset nodes",
   ],
   Array [
-    "Creating 5 Contentful asset nodes",
+    "Contentful: 0 new entries",
   ],
   Array [
-    "Contentful: 0 new/updated entries",
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
   ],
   Array [
-    "Contentful: 5 cached entries",
+    "Contentful: 28 cached entries",
   ],
   Array [
-    "Contentful: 0 new/updated assets",
+    "Contentful: 0 new assets",
   ],
   Array [
-    "Contentful: 5 cached assets",
+    "Contentful: 0 updated assets",
+  ],
+  Array [
+    "Contentful: 10 cached assets",
   ],
   Array [
     "Contentful: 1 deleted assets",
-  ],
-  Array [
-    "Creating 1 Contentful Person nodes",
-  ],
-  Array [
-    "Creating 4 Contentful Blog Post nodes",
-  ],
-  Array [
-    "Creating 4 Contentful asset nodes",
   ],
 ]
 `;
@@ -266,7 +293,10 @@ Array [
 exports[`gatsby-node should update a blogpost 1`] = `
 Array [
   Array [
-    "Contentful: 4 new/updated entries",
+    "Contentful: 4 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
@@ -275,7 +305,10 @@ Array [
     "Contentful: 0 cached entries",
   ],
   Array [
-    "Contentful: 4 new/updated assets",
+    "Contentful: 4 new assets",
+  ],
+  Array [
+    "Contentful: 0 updated assets",
   ],
   Array [
     "Contentful: 0 cached assets",
@@ -293,58 +326,61 @@ Array [
     "Creating 4 Contentful asset nodes",
   ],
   Array [
-    "Contentful: 1 new/updated entries",
+    "Contentful: 1 new entries",
+  ],
+  Array [
+    "Contentful: 0 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
   ],
   Array [
-    "Contentful: 4 cached entries",
+    "Contentful: 22 cached entries",
   ],
   Array [
-    "Contentful: 1 new/updated assets",
+    "Contentful: 1 new assets",
   ],
   Array [
-    "Contentful: 4 cached assets",
+    "Contentful: 0 updated assets",
+  ],
+  Array [
+    "Contentful: 8 cached assets",
   ],
   Array [
     "Contentful: 0 deleted assets",
   ],
   Array [
-    "Creating 1 Contentful Person nodes",
+    "Creating 1 Contentful Blog Post nodes",
   ],
   Array [
-    "Creating 4 Contentful Blog Post nodes",
+    "Creating 1 Contentful asset nodes",
   ],
   Array [
-    "Creating 5 Contentful asset nodes",
+    "Contentful: 0 new entries",
   ],
   Array [
-    "Contentful: 1 new/updated entries",
+    "Contentful: 1 updated entries",
   ],
   Array [
     "Contentful: 0 deleted entries",
   ],
   Array [
-    "Contentful: 5 cached entries",
+    "Contentful: 28 cached entries",
   ],
   Array [
-    "Contentful: 0 new/updated assets",
+    "Contentful: 0 new assets",
   ],
   Array [
-    "Contentful: 5 cached assets",
+    "Contentful: 0 updated assets",
+  ],
+  Array [
+    "Contentful: 10 cached assets",
   ],
   Array [
     "Contentful: 0 deleted assets",
   ],
   Array [
-    "Creating 1 Contentful Person nodes",
-  ],
-  Array [
-    "Creating 4 Contentful Blog Post nodes",
-  ],
-  Array [
-    "Creating 5 Contentful asset nodes",
+    "Creating 1 Contentful Blog Post nodes",
   ],
 ]
 `;

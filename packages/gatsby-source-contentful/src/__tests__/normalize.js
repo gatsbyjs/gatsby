@@ -51,7 +51,7 @@ function countCreatedNodeTypesFromMock(mock) {
 describe(`generic`, () => {
   it(`builds entry list`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
 
@@ -75,7 +75,7 @@ describe(`generic`, () => {
 
   it(`builds list of resolvable data`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
 
@@ -92,7 +92,7 @@ describe(`generic`, () => {
   })
   it(`builds foreignReferenceMap`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
 
@@ -147,7 +147,7 @@ describe(`generic`, () => {
 describe(`Process contentful data (by name)`, () => {
   it(`builds foreignReferenceMap`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
 
@@ -176,7 +176,7 @@ describe(`Process contentful data (by name)`, () => {
 
   it(`creates nodes for each entry`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
 
@@ -275,7 +275,7 @@ describe(`Process contentful data (by name)`, () => {
 describe(`Skip existing nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
 
@@ -364,7 +364,7 @@ describe(`Skip existing nodes in warm build`, () => {
 describe(`Process existing mutated nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
 
@@ -459,7 +459,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
 describe(`Process contentful data (by id)`, () => {
   it(`builds foreignReferenceMap`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
     const resolvable = buildResolvableSet({
@@ -486,7 +486,7 @@ describe(`Process contentful data (by id)`, () => {
 
   it(`creates nodes for each entry`, () => {
     const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+      currentSyncData,
       contentTypeItems,
     })
     const resolvable = buildResolvableSet({
