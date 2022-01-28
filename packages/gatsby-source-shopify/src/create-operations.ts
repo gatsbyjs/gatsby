@@ -1,5 +1,4 @@
 import { SourceNodesArgs } from "gatsby"
-import { shiftLeft } from "shift-left"
 
 import { createGraphqlClient } from "./clients"
 import { OperationError } from "./errors"
@@ -40,7 +39,6 @@ export function createOperations(
   lastBuildTime?: Date
 ): IOperations {
   const graphqlClient = createGraphqlClient(pluginOptions)
-  const operationNamePrefix = lastBuildTime ? `INCREMENTAL_` : ``
 
   function createOperation(
     operationQuery: string,
@@ -49,7 +47,7 @@ export function createOperations(
     return {
       execute: (): Promise<IBulkOperationRunQueryResponse> =>
         graphqlClient.request<IBulkOperationRunQueryResponse>(operationQuery),
-      name: `${operationNamePrefix}${name}`,
+      name,
     }
   }
 
@@ -90,21 +88,18 @@ export function createOperations(
 
   async function cancelOperationInProgress(): Promise<void> {
     let { currentBulkOperation: bulkOperation } = await currentOperation()
-    if (!bulkOperation) {
+
+    if (!bulkOperation || finishedStatuses.includes(bulkOperation.status)) {
       return
     }
 
     const cancelTimer = gatsbyApi.reporter.activityTimer(
-      `Canceling previous operation: ${bulkOperation.id}`
+      `Cancelling previous operation: ${bulkOperation.id}`
     )
 
     cancelTimer.start()
 
     if (bulkOperation.status === `RUNNING`) {
-      cancelTimer.setStatus(
-        `Canceling a currently running operation: ${bulkOperation.id}, this could take a few moments`
-      )
-
       const { bulkOperationCancel } = await cancelOperation(bulkOperation.id)
 
       bulkOperation = bulkOperationCancel.bulkOperation
@@ -114,9 +109,10 @@ export function createOperations(
         const currentOp = await currentOperation()
         bulkOperation = currentOp.currentBulkOperation
         cancelTimer.setStatus(
-          `Waiting for operation to cancel: ${bulkOperation.id}, ${bulkOperation.status}`
+          `Waiting for operation to cancel: ${bulkOperation.id}`
         )
       }
+      cancelTimer.setStatus(`Cancelled operation: ${bulkOperation.id}`)
     } else {
       /**
        * Just because it's not running doesn't mean it's done. For
@@ -127,9 +123,10 @@ export function createOperations(
         await new Promise(resolve => setTimeout(resolve, 100))
         bulkOperation = (await currentOperation()).currentBulkOperation
         cancelTimer.setStatus(
-          `Waiting for operation to cancel: ${bulkOperation.id}, ${bulkOperation.status}`
+          `Waiting for operation to complete: ${bulkOperation.id}`
         )
       }
+      cancelTimer.setStatus(`Completed operation: ${bulkOperation.id}`)
     }
 
     cancelTimer.end()
@@ -152,23 +149,15 @@ export function createOperations(
       id: operationId,
     })
 
-    const completedTimer = gatsbyApi.reporter.activityTimer(
-      `Waiting for bulk operation to complete`
-    )
-
-    completedTimer.start()
-
     let waitForOperation = true
 
     while (waitForOperation) {
       if (failedStatuses.includes(operation.node.status)) {
-        completedTimer.end()
         waitForOperation = false
         throw new OperationError(operation.node)
       }
 
       if (operation.node.status === `COMPLETED`) {
-        completedTimer.end()
         waitForOperation = false
         return operation
       }
@@ -180,12 +169,6 @@ export function createOperations(
       }>(OPERATION_BY_ID, {
         id: operationId,
       })
-
-      completedTimer.setStatus(shiftLeft`
-        Polling bulk operation: ${operation.node.id}
-        Status: ${operation.node.status}
-        Object count: ${operation.node.objectCount}
-      `)
     }
 
     throw new Error(`It should never reach this error`)
@@ -194,27 +177,27 @@ export function createOperations(
   return {
     productsOperation: createOperation(
       new ProductsQuery(pluginOptions).query(lastBuildTime),
-      `PRODUCTS`
+      `products`
     ),
 
     productVariantsOperation: createOperation(
       new ProductVariantsQuery(pluginOptions).query(lastBuildTime),
-      `PRODUCT_VARIANTS`
+      `variants`
     ),
 
     ordersOperation: createOperation(
       new OrdersQuery(pluginOptions).query(lastBuildTime),
-      `ORDERS`
+      `orders`
     ),
 
     collectionsOperation: createOperation(
       new CollectionsQuery(pluginOptions).query(lastBuildTime),
-      `COLLECTIONS`
+      `collections`
     ),
 
     locationsOperation: createOperation(
       new LocationsQuery(pluginOptions).query(lastBuildTime),
-      `LOCATIONS`
+      `locations`
     ),
 
     cancelOperationInProgress,

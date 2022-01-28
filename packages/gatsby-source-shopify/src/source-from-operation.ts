@@ -15,18 +15,24 @@ export function makeSourceFromOperation(
   completedOperation: (id: string) => Promise<{ node: IBulkOperationNode }>,
   cancelOperationInProgress: () => Promise<void>,
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
+  lastBuildTime?: Date
 ) {
   return async function sourceFromOperation(
-    op: IShopifyBulkOperation,
-    // A build on the main branch && a production build
-    isPriorityBuild = process.env.GATSBY_IS_PR_BUILD !== `true` &&
-      process.env.GATSBY_IS_PREVIEW !== `true`
+    op: IShopifyBulkOperation
   ): Promise<void> {
     const { reporter } = gatsbyApi
 
+    /**
+     * A Priority build should not be the default.
+     * TODO - Change this logic so that a flag must be ENABLED for a priority build
+     */
+    const isPriorityBuild =
+      process.env.GATSBY_IS_PREVIEW !== `true` &&
+      process.env.GATSBY_IS_PR_BUILD !== `true`
+
     const operationTimer = reporter.activityTimer(
-      `Source from bulk operation ${op.name}`
+      `source ${lastBuildTime ? `changed ` : ``}shopify ${op.name}`
     )
 
     operationTimer.start()
@@ -38,7 +44,6 @@ export function makeSourceFromOperation(
         await finishLastOperation()
       }
 
-      reporter.info(`Initiating bulk operation query ${op.name}`)
       const {
         bulkOperationRunQuery: { userErrors, bulkOperation },
       } = await op.execute()
@@ -62,30 +67,18 @@ export function makeSourceFromOperation(
       }
 
       const resp = await completedOperation(bulkOperation.id)
-      reporter.info(`Completed bulk operation ${op.name}: ${bulkOperation.id}`)
 
       if (parseInt(resp.node.objectCount, 10) === 0) {
-        reporter.info(`No data was returned for this operation`)
         operationTimer.end()
         return
       }
 
-      operationTimer.setStatus(
-        `Fetching ${resp.node.objectCount} results for ${op.name}: ${bulkOperation.id}`
-      )
-
       const { body: jsonLines } = await fetch(resp.node.url)
-
-      operationTimer.setStatus(
-        `Processing ${resp.node.objectCount} results for ${op.name}: ${bulkOperation.id}`
-      )
 
       const rl = createInterface({
         input: jsonLines,
         crlfDelay: Infinity,
       })
-
-      reporter.info(`Creating nodes from bulk operation ${op.name}`)
 
       const results: BulkResults = []
 

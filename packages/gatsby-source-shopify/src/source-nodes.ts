@@ -114,12 +114,6 @@ export async function sourceNodes(
   const lastBuildTime = getLastBuildTime(gatsbyApi, pluginOptions)
   setLastBuildTime(gatsbyApi, pluginOptions)
 
-  if (lastBuildTime !== undefined) {
-    gatsbyApi.reporter.info(`Running an incremental build`)
-  } else {
-    gatsbyApi.reporter.info(`Running a clean build`)
-  }
-
   const {
     productsOperation,
     productVariantsOperation,
@@ -136,7 +130,8 @@ export async function sourceNodes(
     completedOperation,
     cancelOperationInProgress,
     gatsbyApi,
-    pluginOptions
+    pluginOptions,
+    lastBuildTime
   )
 
   const operations = [productsOperation, productVariantsOperation]
@@ -199,6 +194,4 @@ export async function sourceNodes(
       reportDeletionSummary(gatsbyApi)
     }
   }
-
-  gatsbyApi.reporter.info(`Finished sourcing nodes`)
 }
