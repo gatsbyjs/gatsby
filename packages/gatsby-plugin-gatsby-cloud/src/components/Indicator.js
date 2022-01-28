@@ -10,6 +10,7 @@ import {
 import Style from "./Style"
 
 import { usePollForNodeManifest } from "../utils/use-poll-for-node-manifest"
+import { getContentSyncInfoFromUrl } from "../utils/getContentSyncInfoFromUrl"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
@@ -29,19 +30,6 @@ const PreviewIndicator = ({ children }) => (
     </div>
   </>
 )
-
-const getContentSyncInfoFromURL = () => {
-  const urlSearchParams = new URLSearchParams(window.location.search)
-  const { mid: manifestId, plgn: pluginName } = JSON.parse(
-    atob(urlSearchParams.get(`csync`) || ``) || `{}`
-  )
-
-  if (!manifestId || !pluginName) {
-    return null
-  }
-
-  return { manifestId, pluginName }
-}
 
 let buildId = ``
 let pageData
@@ -98,7 +86,7 @@ const Indicator = () => {
       pageData = data
     }
 
-    const contentSyncUrlParamInfo = getContentSyncInfoFromURL()
+    const contentSyncUrlParamInfo = getContentSyncInfoFromUrl()
 
     // prefer content sync
     if (contentSyncUrlParamInfo) {

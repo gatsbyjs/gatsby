@@ -37,7 +37,8 @@ export const maybeProxiedRequest = async ({
 
   const shouldProxy =
     window.location.host !== parsedUrl.host &&
-    window.location.host !== `localhost:8000`
+    window.location.host !== `localhost:8000` &&
+    process.env.NODE_ENV !== `test`
 
   if (shouldProxy) {
     if (DEBUG_CONTENT_SYNC_MODE) {

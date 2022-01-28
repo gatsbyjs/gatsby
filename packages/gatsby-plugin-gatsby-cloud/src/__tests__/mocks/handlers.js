@@ -59,4 +59,29 @@ export const handlers = [
     `https://build-123-unchanged.gtsb.io/page-data/index/page-data.json`,
     async (req, res, ctx) => res(ctx.text(`abcdefg`))
   ),
+
+  rest.get(
+    `https://content-sync-pretty-url.gtsb.io/__node-manifests/source-plugin/manifest-id.json`,
+    async (_req, res, ctx) =>
+      res(
+        ctx.json({
+          node: { id: `8378aa5f-291c-5182-8d54-e00ff9fbc11b` },
+          page: { path: `/blog/automate-with-webhooks/` },
+          foundPageBy: `ownerNodeId`,
+        })
+      )
+  ),
+  rest.get(
+    `https://content-sync-pretty-url.gtsb.io/page-data/blog/automate-with-webhooks/page-data.json`,
+    async (_req, res, ctx) => res(ctx.json({}))
+  ),
+  rest.get(
+    `https://content-sync-pretty-url.gtsb.io/blog/automate-with-webhooks/`,
+    async (_req, res, ctx) => res(ctx.json({}))
+  ),
+
+  rest.get(
+    `https://content-sync-pretty-url-four-oh-four.gtsb.io/__node-manifests/source-plugin/manifest-id.json`,
+    async (_req, res, ctx) => res(ctx.status(404))
+  ),
 ]

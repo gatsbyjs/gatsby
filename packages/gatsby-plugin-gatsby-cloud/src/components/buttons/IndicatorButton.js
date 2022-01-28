@@ -59,7 +59,9 @@ const IndicatorButton = ({
         <div>
           {iconSvg}
           {showSpinner && (
-            <div data-gatsby-preview-indicator="spinner">{spinnerIcon}</div>
+            <div data-gatsby-preview-indicator="spinner" data-testid="spinner">
+              {spinnerIcon}
+            </div>
           )}
         </div>
         {tooltip && (

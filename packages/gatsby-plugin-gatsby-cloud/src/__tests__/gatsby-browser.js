@@ -7,10 +7,17 @@ import "@testing-library/jest-dom/extend-expect"
 import userEvent from "@testing-library/user-event"
 import { render, screen, act, fireEvent } from "@testing-library/react"
 import { setInterval, setTimeout, clearInterval, clearTimeout } from "timers"
-
 import Indicator from "../components/Indicator"
 
 import { server } from "./mocks/server"
+
+jest.mock(`../utils/getContentSyncInfoFromUrl`, () => {
+  return {
+    getContentSyncInfoFromUrl: jest.fn(),
+  }
+})
+
+import { getContentSyncInfoFromUrl } from "../utils/getContentSyncInfoFromUrl"
 
 const createUrl = path => `https://test.com/${path}`
 const copyLinkMessage = `Copy link`
@@ -147,6 +154,57 @@ describe(`Preview status indicator`, () => {
 
   afterAll(() => {
     server.close()
+  })
+
+  describe(`Content Sync Eager Redirects`, () => {
+    beforeEach(() => {
+      process.env.GATSBY_DEBUG_CONTENT_SYNC = `true`
+      jest.useFakeTimers()
+      getContentSyncInfoFromUrl.mockImplementation(() => {
+        return {
+          manifestId: `manifest-id`,
+          pluginName: `source-plugin`,
+        }
+      })
+    })
+    afterAll(() => {
+      jest.resetModules()
+    })
+
+    it(`Times out and displays an error when builds are idle and no node manifest is found`, async () => {
+      process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
+      process.env.GATSBY_PREVIEW_URL = `https://content-sync-pretty-url-four-oh-four.gtsb.io`
+
+      process.env.GATSBY_NODE_MANIFEST_MINUTES_TIMEOUT = 0
+
+      act(() => {
+        render(<Indicator />)
+      })
+      act(() => {
+        jest.runAllTimers()
+      })
+      // await new Promise(res => setTimeout(res, 1000))
+      // screen.debug(screen.queryByTestId(`info-button`))
+      // const errorEl = await screen.findByText(`Unable to build preview`)
+      // expect(errorEl).toBeInTheDocument()
+    })
+
+    it(`Displays a loading state while polling for node manifest files`, async () => {
+      process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
+      process.env.GATSBY_PREVIEW_URL = `https://content-sync-pretty-url.gtsb.io`
+
+      act(() => {
+        render(<Indicator />)
+      })
+
+      act(() => {
+        jest.runAllTimers()
+      })
+      // screen.debug(screen.queryByTestId(`info-button`))
+      expect(screen.queryByText(`Building a new preview`)).toBeInTheDocument()
+      expect(screen.queryByTestId(`spinner`)).toBeInTheDocument()
+    })
+    it(`Displays a "this page has changed" popup when successfully finding a node manifest`, async () => {})
   })
 
   // We are now rendering a Shadow DOM in wrapRootElement, testing-library does not play nicely with
