@@ -204,10 +204,7 @@ const Indicator = () => {
 
       if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
-      } else if (
-        currentBuild?.buildStatus === BuildStatus.ERROR &&
-        !usingContentSync
-      ) {
+      } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
       } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
