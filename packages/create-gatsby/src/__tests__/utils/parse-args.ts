@@ -4,39 +4,39 @@ import { reporter } from "../../utils/reporter"
 jest.mock(`../../utils/reporter`)
 
 describe(`parseArgs`, () => {
-  it(`should parse without flags and dir`, () => {
-    const { flags, siteDirectory } = parseArgs([])
+  it(`should parse without flags and dir name`, () => {
+    const { flags, dirName } = parseArgs([])
     expect(flags.yes).toBeFalsy()
     expect(flags.ts).toBeFalsy()
-    expect(siteDirectory).toEqual(``)
+    expect(dirName).toEqual(``)
   })
-  it(`should parse with dir without flags`, () => {
-    const { flags, siteDirectory } = parseArgs([`hello-world`])
+  it(`should parse with dir name without flags`, () => {
+    const { flags, dirName } = parseArgs([`hello-world`])
     expect(flags.yes).toBeFalsy()
     expect(flags.ts).toBeFalsy()
-    expect(siteDirectory).toEqual(`hello-world`)
+    expect(dirName).toEqual(`hello-world`)
   })
-  it(`should parse with flags before dir`, () => {
-    const { flags, siteDirectory } = parseArgs([`-y`, `-ts`, `hello-world`])
+  it(`should parse with flags before dir name`, () => {
+    const { flags, dirName } = parseArgs([`-y`, `-ts`, `hello-world`])
     expect(flags.yes).toBeTruthy()
     expect(flags.ts).toBeTruthy()
-    expect(siteDirectory).toEqual(`hello-world`)
+    expect(dirName).toEqual(`hello-world`)
   })
-  it(`should parse with flags after dir`, () => {
-    const { flags, siteDirectory } = parseArgs([`hello-world`, `-y`, `-ts`])
+  it(`should parse with flags after dir name`, () => {
+    const { flags, dirName } = parseArgs([`hello-world`, `-y`, `-ts`])
     expect(flags.yes).toBeTruthy()
     expect(flags.ts).toBeTruthy()
-    expect(siteDirectory).toEqual(`hello-world`)
+    expect(dirName).toEqual(`hello-world`)
   })
-  it(`should parse with flags before and after dir`, () => {
-    const { flags, siteDirectory } = parseArgs([`-y`, `hello-world`, `-ts`])
+  it(`should parse with flags before and after dir name`, () => {
+    const { flags, dirName } = parseArgs([`-y`, `hello-world`, `-ts`])
     expect(flags.yes).toBeTruthy()
     expect(flags.ts).toBeTruthy()
-    expect(siteDirectory).toEqual(`hello-world`)
+    expect(dirName).toEqual(`hello-world`)
   })
   it(`should warn if unknown flags are used`, () => {
     const unknownFlag = `-unknown`
-    const { flags, siteDirectory } = parseArgs([`hello-world`, unknownFlag])
+    const { flags, dirName } = parseArgs([`hello-world`, unknownFlag])
     expect(reporter.warn).toBeCalledTimes(1)
     expect(reporter.warn).toBeCalledWith(
       expect.stringContaining(
@@ -45,6 +45,6 @@ describe(`parseArgs`, () => {
     )
     expect(flags.yes).toBeFalsy()
     expect(flags.ts).toBeFalsy()
-    expect(siteDirectory).toEqual(`hello-world`)
+    expect(dirName).toEqual(`hello-world`)
   })
 })

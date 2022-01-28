@@ -1,8 +1,8 @@
 import { reporter } from "./reporter"
 
 enum Flag {
-  yes = `-y`,
-  ts = `-ts`,
+  yes = `-y`, // Skip prompts
+  ts = `-ts`, // Use TypeScript
 }
 
 interface IArgs {
@@ -10,7 +10,7 @@ interface IArgs {
     yes: boolean
     ts: boolean
   }
-  siteDirectory: string
+  dirName: string
 }
 
 /**
@@ -23,7 +23,7 @@ interface IArgs {
  * prepended with a dash (e.g. `-my-project`) for flags that work regardless of position.
  */
 export function parseArgs(args: Array<string>): IArgs {
-  const { flags, siteDirectory } = args.reduce(
+  const { flags, dirName } = args.reduce(
     (sortedArgs, arg) => {
       switch (arg) {
         case Flag.yes:
@@ -39,7 +39,7 @@ export function parseArgs(args: Array<string>): IArgs {
             )
             break
           }
-          sortedArgs.siteDirectory = arg
+          sortedArgs.dirName = arg
       }
       return sortedArgs
     },
@@ -48,12 +48,12 @@ export function parseArgs(args: Array<string>): IArgs {
         yes: false,
         ts: false,
       },
-      siteDirectory: ``,
+      dirName: ``,
     }
   )
 
   return {
     flags,
-    siteDirectory,
+    dirName,
   }
 }
