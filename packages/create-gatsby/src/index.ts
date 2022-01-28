@@ -125,7 +125,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
   }
 
   // Prompt user with questions and gather answers
-  const questions = generateQuestions(npmSafeSiteName, flags.yes)
+  const questions = generateQuestions(npmSafeSiteName, flags)
   const answers = await enquirer.prompt(questions)
 
   answers.project = answers.project.trim()
@@ -275,9 +275,15 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
     }
   }
 
+  // Decide starter
+  let starter = DEFAULT_STARTERS[answers.language || `js`]
+  if (flags.ts) {
+    starter = DEFAULT_STARTERS.ts
+  }
+
   // Do all the things
   await initStarter(
-    DEFAULT_STARTERS[answers.language || `js`],
+    starter,
     answers.project,
     packages.map((plugin: string) => plugin.split(`:`)[0]),
     npmSafeSiteName

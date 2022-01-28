@@ -5,11 +5,13 @@ enum Flag {
   ts = `-ts`, // Use TypeScript
 }
 
+export interface IFlags {
+  yes: boolean
+  ts: boolean
+}
+
 interface IArgs {
-  flags: {
-    yes: boolean
-    ts: boolean
-  }
+  flags: IFlags
   dirName: string
 }
 

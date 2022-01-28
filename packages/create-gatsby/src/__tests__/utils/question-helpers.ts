@@ -106,15 +106,30 @@ describe(`question-helpers`, () => {
 
   describe(`generateQuestions`, () => {
     it(`should return one question if the skip flag is passed`, () => {
-      const questions = generateQuestions(`hello-world`, true)
+      const questions = generateQuestions(`hello-world`, {
+        yes: true,
+        ts: false,
+      })
       expect(questions).toMatchSnapshot({
         hint: expect.any(String),
       })
     })
 
     it(`should return all questions if no skip flag is passed`, () => {
-      const questions = generateQuestions(`hello-world`, false)
+      const questions = generateQuestions(`hello-world`, {
+        yes: false,
+        ts: false,
+      })
       expect(questions).toHaveLength(5)
+      expect(questions).toMatchSnapshot()
+    })
+
+    it(`should return all questions except for language if ts flag is passed`, () => {
+      const questions = generateQuestions(`hello-world`, {
+        yes: false,
+        ts: true,
+      })
+      expect(questions).toHaveLength(4)
       expect(questions).toMatchSnapshot()
     })
   })
