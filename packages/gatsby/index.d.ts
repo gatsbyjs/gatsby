@@ -1589,6 +1589,7 @@ export interface Page<TContext = Record<string, unknown>> {
   matchPath?: string
   component: string
   context: TContext
+  defer?: boolean
 }
 
 export interface IPluginRefObject {
