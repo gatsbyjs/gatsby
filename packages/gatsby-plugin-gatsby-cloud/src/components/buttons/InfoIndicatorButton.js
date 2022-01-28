@@ -14,7 +14,6 @@ import {
   INTERACTION_COOKIE_NAME,
 } from "../../constants"
 import { BuildStatus } from "../../models/enums"
-import { useMemo } from "react"
 
 const InfoIndicatorButton = ({
   buttonIndex,
