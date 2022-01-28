@@ -36,13 +36,6 @@ const InfoIndicatorButton = ({
   const { shouldShowFeedback } = useFeedback()
   const { track } = useTrackEvent()
 
-  const showNotificationInfoIcon = useMemo(
-    () =>
-      shouldShowFeedback ||
-      [BuildStatus.SUCCESS, BuildStatus.ERROR].includes(buildStatus),
-    [shouldShowFeedback, buildStatus]
-  )
-
   const trackClick = () => {
     track({
       eventType: `PREVIEW_INDICATOR_CLICK`,
@@ -196,7 +189,7 @@ const InfoIndicatorButton = ({
           },
           active: true,
           hoverable: true,
-          onClose: closeInfoTooltip,
+          onClick: onTooltipToogle,
         })
       },
       [BuildStatus.ERROR]: () => {
@@ -247,6 +240,7 @@ const InfoIndicatorButton = ({
               active: true,
               hoverable: true,
               showSpinner: false,
+              onClick: onTooltipToogle,
             }
           })
         }
@@ -295,17 +289,21 @@ const InfoIndicatorButton = ({
     nodeManifestErrorMessage,
   ])
 
+  const showNotificationInfoIcon =
+    shouldShowFeedback ||
+    nodeManifestRedirectUrl ||
+    nodeManifestErrorMessage ||
+    // we only use build statuses to update UI state when not running content sync logic
+    (!usingContentSync &&
+      [BuildStatus.SUCCESS, BuildStatus.ERROR].includes(buildStatus))
+
   return (
     <IndicatorButton
       {...buttonProps}
       onClick={onInfoClick}
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
       onTooltipToogle={updateTootipVisibility}
-      iconSvg={
-        showNotificationInfoIcon || nodeManifestRedirectUrl
-          ? infoAlertIcon
-          : infoIcon
-      }
+      iconSvg={showNotificationInfoIcon ? infoAlertIcon : infoIcon}
     />
   )
 }
