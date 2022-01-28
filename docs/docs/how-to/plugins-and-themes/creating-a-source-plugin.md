@@ -935,7 +935,7 @@ The CMS will need to send a preview webhook to Gatsby Cloud when content is chan
 
 ##### Using the Gatsby preview extension
 
-We are currently in process of creating an open source package to handle most of this functionality for you. In the meantime, you will need to create a button in your CMS that does the following...
+You will need to create a button in your CMS that does the following:
 
 1. `POST` to the preview webhook url in Gatsby Cloud
 2. Open the Content Sync waiting room
@@ -945,9 +945,9 @@ The button might look something like this:
 
 ##### Configuration
 
-You will need to store the Content Sync URL from a given Gatsby Cloud site. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the CMS plugin extension configuration, this will differ from CMS to CMS depending on how they handle their plugin ecosystem.
+You will need to store the Content Sync URL from a given Gatsby Cloud site as a CMS extension option. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the CMS plugin extension configuration, this will differ from CMS to CMS depending on how extension settings are stored.
 
-Depending on the CMS you will also need to store the preview webhook URL. This might also be stored in the plugin extension configuration, but often is stored in a separate webhooks configuration. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
+You will also need to store the preview webhook URL. This might also be stored in the plugin extension settings, but often is stored in a separate CMS webhooks settings page if your CMS supports webhooks already. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
 
 Both of these need to be user configurable in the CMS.
 
