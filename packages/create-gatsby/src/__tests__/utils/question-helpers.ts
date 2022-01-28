@@ -106,13 +106,11 @@ describe(`question-helpers`, () => {
 
   describe(`generateQuestions`, () => {
     it(`should return one question if the skip flag is passed`, () => {
-      const questions = generateQuestions(`hello-world`, {
+      const question = generateQuestions(`hello-world`, {
         yes: true,
         ts: false,
       })
-      expect(questions).toMatchSnapshot({
-        hint: expect.any(String),
-      })
+      expect(question.name).toEqual(`project`)
     })
 
     it(`should return all questions if no skip flag is passed`, () => {
@@ -120,8 +118,13 @@ describe(`question-helpers`, () => {
         yes: false,
         ts: false,
       })
+      const [first, second, third, fourth, fifth] = questions
       expect(questions).toHaveLength(5)
-      expect(questions).toMatchSnapshot()
+      expect(first.name).toEqual(`project`)
+      expect(second.name).toEqual(`language`)
+      expect(third.name).toEqual(`cms`)
+      expect(fourth.name).toEqual(`styling`)
+      expect(fifth.name).toEqual(`features`)
     })
 
     it(`should return all questions except for language if ts flag is passed`, () => {
@@ -129,8 +132,12 @@ describe(`question-helpers`, () => {
         yes: false,
         ts: true,
       })
+      const [first, second, third, fourth] = questions
       expect(questions).toHaveLength(4)
-      expect(questions).toMatchSnapshot()
+      expect(first.name).toEqual(`project`)
+      expect(second.name).toEqual(`cms`)
+      expect(third.name).toEqual(`styling`)
+      expect(fourth.name).toEqual(`features`)
     })
   })
 })
