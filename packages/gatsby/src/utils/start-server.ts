@@ -52,6 +52,7 @@ import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
+import { configureTrailingSlash } from "./express-middlewares"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -173,6 +174,7 @@ export async function startServer(
    */
   const graphqlEndpoint = `/_+graphi?ql`
 
+  // TODO(v5): Remove GraphQL Playground (GraphiQL will be more future-proof)
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
       graphqlEndpoint,
@@ -523,6 +525,10 @@ export async function startServer(
     developMiddleware(app, program)
   }
 
+  const { proxy, trailingSlash } = store.getState().config
+
+  app.use(configureTrailingSlash(() => store.getState(), trailingSlash))
+
   // Disable directory indexing i.e. serving index.html from a directory.
   // This can lead to serving stale html files during development.
   //
@@ -530,7 +536,6 @@ export async function startServer(
   app.use(developStatic(`public`, { index: false }))
 
   // Set up API proxy.
-  const { proxy } = store.getState().config
   if (proxy) {
     proxy.forEach(({ prefix, url }) => {
       app.use(`${prefix}/*`, (req, res) => {

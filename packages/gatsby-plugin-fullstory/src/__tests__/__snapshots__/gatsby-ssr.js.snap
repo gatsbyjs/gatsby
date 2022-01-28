@@ -25,9 +25,10 @@ window['_fs_namespace'] = 'FS';
     g.consent=function(a){g(\\"consent\\",!arguments.length||a)};
     g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;g(o,v)};
     g.clearUserCookie=function(){};
+    g.setVars=function(n, p){g('setVars',[n,p]);};
     g._w={};y='XMLHttpRequest';g._w[y]=m[y];y='fetch';g._w[y]=m[y];
     if(m[y])m[y]=function(){return g._w[y].apply(this,arguments)};
-    g._v=\\"1.2.0\\";
+    g._v=\\"1.3.0\\";
 })(window,document,window['_fs_namespace'],'script','user');
       ",
           }

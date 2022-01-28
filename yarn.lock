@@ -11457,13 +11457,12 @@ graphiql@^1.4.0:
     graphql-language-service "^3.1.2"
     markdown-it "^10.0.0"
 
-graphql-compose@~7.25.1:
-  version "7.25.1"
-  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-7.25.1.tgz#9d89f72781931590d4dfca6a709f381f2f76b873"
-  integrity sha512-TPXTe1BoQkMjp/MH93yA0SQo8PiXxJAv6Eo6K/+kpJELM9l2jZnd5PCduweuXFcKv+nH973wn/VYzYKDMQ9YoQ==
+graphql-compose@^9.0.6:
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-9.0.6.tgz#594195f3a3ac92d0e6d869adc6376f7bb1c74b6a"
+  integrity sha512-qnZeeodaFbf8J4F/NXlqAHKVthdUtej+evI7E/Z8rjxcmuXosiMxoZ9gBqbCarxq42XiusKqMUle0HdYiYoWwA==
   dependencies:
     graphql-type-json "0.3.2"
-    object-path "0.11.5"
 
 graphql-config@^3.0.2:
   version "3.0.3"
@@ -13938,6 +13937,11 @@ js-combinatorics@^1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/js-combinatorics/-/js-combinatorics-1.4.5.tgz#f9b5d57ba97d1dba420c133b4ddbfabc5a41353c"
   integrity sha512-lIBPgsZnIK5S8kCyTUY4L34Kq5YXj2LXyk9WJDPsK6iklV96+ZahxIsgHtXcwHhG9XZhqrS1EbnaEkUh5gyXdg==
+
+js-cookie@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
+  integrity sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==
 
 js-levenshtein@^1.1.6:
   version "1.1.6"
@@ -16928,11 +16932,6 @@ object-keys@^1.0.12, object-keys@^1.0.6, object-keys@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
-
-object-path@0.11.5:
-  version "0.11.5"
-  resolved "https://registry.yarnpkg.com/object-path/-/object-path-0.11.5.tgz#d4e3cf19601a5140a55a16ad712019a9c50b577a"
-  integrity sha512-jgSbThcoR/s+XumvGMTMf81QVBmah+/Q7K7YduKeKVWL7N111unR2d6pZZarSk6kY/caeNxUDyxOvMWyzoU2eg==
 
 object-visit@^1.0.0:
   version "1.0.1"

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.6.0/packages/create-gatsby) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- Respect telemetry disable [#34495](https://github.com/gatsbyjs/gatsby/issues/34495) ([44b2ef5](https://github.com/gatsbyjs/gatsby/commit/44b2ef5905801d1b40a15313966867bd3d410be7))
+- Re-Add plugin-add functionality [#34482](https://github.com/gatsbyjs/gatsby/issues/34482) ([618b32b](https://github.com/gatsbyjs/gatsby/commit/618b32b17751c76ea1b1a6f4fbc91da928bd18c1))
+
 ### [2.5.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.5.1/packages/create-gatsby) (2022-01-17)
 
 #### Bug Fixes
