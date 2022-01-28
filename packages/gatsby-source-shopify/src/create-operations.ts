@@ -2,7 +2,6 @@ import { SourceNodesArgs } from "gatsby"
 import { shiftLeft } from "shift-left"
 
 import { createGraphqlClient } from "./clients"
-import { getLastBuildTime } from "./helpers"
 import { OperationError } from "./errors"
 
 import { ProductsQuery } from "./query-builders/products-query"
@@ -37,10 +36,10 @@ const failedStatuses = [`FAILED`, `CANCELED`]
 
 export function createOperations(
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
+  lastBuildTime?: Date
 ): IOperations {
   const graphqlClient = createGraphqlClient(pluginOptions)
-  const lastBuildTime = getLastBuildTime(gatsbyApi, pluginOptions)
   const operationNamePrefix = lastBuildTime ? `INCREMENTAL_` : ``
 
   function createOperation(
@@ -194,27 +193,27 @@ export function createOperations(
 
   return {
     productsOperation: createOperation(
-      new ProductsQuery(pluginOptions).query(),
+      new ProductsQuery(pluginOptions).query(lastBuildTime),
       `PRODUCTS`
     ),
 
     productVariantsOperation: createOperation(
-      new ProductVariantsQuery(pluginOptions).query(),
+      new ProductVariantsQuery(pluginOptions).query(lastBuildTime),
       `PRODUCT_VARIANTS`
     ),
 
     ordersOperation: createOperation(
-      new OrdersQuery(pluginOptions).query(),
+      new OrdersQuery(pluginOptions).query(lastBuildTime),
       `ORDERS`
     ),
 
     collectionsOperation: createOperation(
-      new CollectionsQuery(pluginOptions).query(),
+      new CollectionsQuery(pluginOptions).query(lastBuildTime),
       `COLLECTIONS`
     ),
 
     locationsOperation: createOperation(
-      new LocationsQuery(pluginOptions).query(),
+      new LocationsQuery(pluginOptions).query(lastBuildTime),
       `LOCATIONS`
     ),
 

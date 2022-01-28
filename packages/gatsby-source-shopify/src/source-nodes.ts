@@ -129,7 +129,7 @@ export async function sourceNodes(
     finishLastOperation,
     completedOperation,
     cancelOperationInProgress,
-  } = createOperations(gatsbyApi, pluginOptions)
+  } = createOperations(gatsbyApi, pluginOptions, lastBuildTime)
 
   const sourceFromOperation = makeSourceFromOperation(
     finishLastOperation,
