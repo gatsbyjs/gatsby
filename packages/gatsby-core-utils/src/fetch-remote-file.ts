@@ -117,7 +117,8 @@ async function pushTask(task: IFetchRemoteFileOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     q.push(task, (err, node) => {
       if (!err) {
-        resolve(node)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        resolve(node!)
       } else {
         reject(err)
       }
