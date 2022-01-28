@@ -9,6 +9,8 @@ import {
 } from "./buttons"
 import Style from "./Style"
 
+import { usePollForNodeManifest } from "../utils/use-poll-for-node-manifest"
+
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
   : 2000
@@ -28,6 +30,21 @@ const PreviewIndicator = ({ children }) => (
   </>
 )
 
+const getContentSyncInfoFromURL = () => {
+  const urlSearchParams = new URLSearchParams(window.location.search)
+
+  // mid and plgn are shortened to keep the url short
+  const { mid: manifestId, plgn: pluginName } = JSON.parse(
+    atob(urlSearchParams.get(`csync`) || ``) || `{}`
+  )
+
+  if (!manifestId || !pluginName) {
+    return null
+  }
+
+  return { manifestId, pluginName }
+}
+
 let buildId = ``
 let pageData
 let latestCheckedBuild
@@ -35,6 +52,9 @@ let refreshNeeded = false
 
 const Indicator = () => {
   const [buildInfo, setBuildInfo] = useState()
+  const [contentSyncInfo, setContentSyncInfo] = useState(null)
+  const usingContentSync = !!contentSyncInfo
+
   const timeoutRef = useRef(null)
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
@@ -45,11 +65,18 @@ const Indicator = () => {
     const pathAdjustment =
       window.location.pathname === `/` ? `/index` : window.location.pathname
 
-    const url = `${urlHostString}/page-data${pathAdjustment}/page-data.json`
+    const normalizedPath = `/page-data${pathAdjustment}/page-data.json`.replace(
+      /\/\//g,
+      `/`
+    )
+
+    const url = urlHostString + normalizedPath
+
     try {
       const resp = await fetch(url)
       const data = await resp.text()
 
+      // for local dev with `gatsby develop` where page-data.json files never 404 and return an empty object instead.
       if (data === `{}`) {
         // for local development, force an error if page is missing.
         const err = new Error(`Not Found`)
@@ -73,8 +100,47 @@ const Indicator = () => {
       pageData = data
     }
 
-    fetchData()
+    const contentSyncUrlParamInfo = getContentSyncInfoFromURL()
+
+    // prefer content sync
+    if (contentSyncUrlParamInfo) {
+      setContentSyncInfo(contentSyncUrlParamInfo)
+    }
+    // fall back to diffing page data
+    else {
+      fetchData()
+    }
   }, [])
+
+  const pollForNodeManifestArgs = {
+    contentLoaderInfo: {
+      orgId: buildInfo?.siteInfo?.orgId,
+      previewBuildStatus: buildInfo?.currentBuild?.buildStatus,
+      previewUrl:
+        // for local dev / debugging
+        process.env.GATSBY_PREVIEW_URL ||
+        // for production
+        window.location.origin,
+    },
+    manifestId: contentSyncInfo?.manifestId,
+    sourcePluginName: contentSyncInfo?.pluginName,
+    siteId: buildInfo?.siteInfo?.siteId,
+    shouldPoll: !!buildInfo?.siteInfo && !!contentSyncInfo,
+  }
+
+  const {
+    redirectUrl: nodeManifestRedirectUrl,
+    errorMessage: nodeManifestErrorMessage,
+  } = usePollForNodeManifest(pollForNodeManifestArgs)
+
+  React.useEffect(() => {
+    if (nodeManifestErrorMessage) {
+      console.error(nodeManifestErrorMessage)
+    } else if (nodeManifestRedirectUrl) {
+      // Force a "This page has updated message" until the page is refreshed
+      refreshNeeded = true
+    }
+  }, [nodeManifestRedirectUrl, nodeManifestErrorMessage])
 
   const hasPageDataChanged = async () => {
     if (buildId !== latestCheckedBuild) {
@@ -110,75 +176,77 @@ const Indicator = () => {
 
   const { orgId, siteId } = siteInfo || {}
 
-  const pollData = useCallback(async function pollData() {
-    const prettyUrlRegex = /^preview-/
-    const host = window.location.hostname
+  const pollData = useCallback(
+    async function pollData() {
+      const prettyUrlRegex = /^preview-/
+      const host = window.location.hostname
 
-    // currentBuild is the most recent build that is not QUEUED.
-    // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
-    const isOnPrettyUrl = prettyUrlRegex.test(host)
-    const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
+      // currentBuild is the most recent build that is not QUEUED.
+      // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
+      const isOnPrettyUrl = prettyUrlRegex.test(host)
+      const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
 
-    if (!buildId) {
-      if (isOnPrettyUrl || host === `localhost`) {
-        buildId = latestBuild?.id
-      } else {
-        // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
-        const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
-        if (buildIdMatch) {
-          buildId = buildIdMatch[1]
-        }
-      }
-    }
-
-    const newBuildInfo = {
-      currentBuild,
-      latestBuild,
-      siteInfo,
-      isOnPrettyUrl,
-    }
-
-    if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      // Keep status as up to date builds where we cannot fetch manifest id info.
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
-    } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
-    } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
-    } else if (
-      buildId &&
-      buildId !== newBuildInfo?.latestBuild?.id &&
-      currentBuild?.buildStatus === BuildStatus.SUCCESS
-    ) {
-      if (refreshNeeded) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
-      } else {
-        const { hasPageChanged, errorMessage } = await hasPageDataChanged(
-          buildId
-        )
-
-        if (errorMessage) {
-          setBuildInfo({
-            ...newBuildInfo,
-            buildStatus: BuildStatus.ERROR,
-            errorMessage,
-          })
-        } else if (hasPageChanged) {
-          // Force a "This page has updated message" until a page is refreshed
-          refreshNeeded = true
-          // Build updated, data for this specific page has changed!
-          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+      if (!buildId) {
+        if (isOnPrettyUrl || host === `localhost`) {
+          buildId = latestBuild?.id
         } else {
-          // Build updated, data for this specific page has NOT changed, no need to refresh content.
-          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
+          // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
+          const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
+          if (buildIdMatch) {
+            buildId = buildIdMatch[1]
+          }
         }
       }
-    }
 
-    if (shouldPoll.current) {
-      timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
-    }
-  }, [])
+      const newBuildInfo = {
+        currentBuild,
+        latestBuild,
+        siteInfo,
+        isOnPrettyUrl,
+      }
+
+      if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+      } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
+      } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
+      } else if (
+        buildId &&
+        buildId !== newBuildInfo?.latestBuild?.id &&
+        currentBuild?.buildStatus === BuildStatus.SUCCESS
+      ) {
+        if (refreshNeeded) {
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+        } else if (!usingContentSync) {
+          const { hasPageChanged, errorMessage } = await hasPageDataChanged(
+            buildId
+          )
+
+          if (errorMessage) {
+            setBuildInfo({
+              ...newBuildInfo,
+              buildStatus: BuildStatus.ERROR,
+              errorMessage,
+            })
+          } else if (hasPageChanged) {
+            // Force a "This page has updated message" until a page is refreshed
+            refreshNeeded = true
+            // Build updated, data for this specific page has changed!
+            setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+          } else {
+            // Build updated, data for this specific page has NOT changed, no need to refresh content.
+            setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
+          }
+        }
+
+        if (shouldPoll.current) {
+          timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
+        }
+      }
+    },
+    [nodeManifestRedirectUrl]
+  )
 
   useEffect(() => {
     if (buildInfo?.siteInfo && !trackedInitialLoad.current) {
@@ -222,7 +290,13 @@ const Indicator = () => {
     <IndicatorProvider>
       <PreviewIndicator>
         <GatsbyIndicatorButton {...buttonProps} buttonIndex={1} />
-        <InfoIndicatorButton {...buttonProps} buttonIndex={2} />
+        <InfoIndicatorButton
+          {...buttonProps}
+          nodeManifestRedirectUrl={nodeManifestRedirectUrl}
+          usingContentSync={usingContentSync}
+          nodeManifestErrorMessage={nodeManifestErrorMessage}
+          buttonIndex={2}
+        />
         <LinkIndicatorButton {...buttonProps} buttonIndex={3} />
       </PreviewIndicator>
     </IndicatorProvider>
