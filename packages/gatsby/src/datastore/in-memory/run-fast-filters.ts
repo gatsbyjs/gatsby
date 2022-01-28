@@ -438,13 +438,10 @@ function sortNodes(
       return field
     }
   })
-
-  // TODO this is not performant (probably)!
-  // fix this up
   const sortFns = sortFields.map(
     field =>
       (v): ((any) => any) =>
-        getValueAt(getNode(v.id)!, field)
+        getValueAt(v, field)
   )
   const sortOrder = sort.order.map(order =>
     typeof order === `boolean` ? order : order.toLowerCase()
