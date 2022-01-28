@@ -29,9 +29,7 @@ export const makeChoices = (
   return [none, divider, ...entries]
 }
 
-export const validateProjectName = async (
-  value: string
-): Promise<string | boolean> => {
+export function validateProjectName(value: string): boolean {
   if (!value) {
     reporter.warn(
       `You have not provided a directory name for your site. Please do so when running with the 'y' flag.`
@@ -60,7 +58,7 @@ export const validateProjectName = async (
   return true
 }
 
-// The enquirer types are not accurate
+// Enquirer types are not exported and are out of date
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const generateQuestions = (
   initialFolderName: string,

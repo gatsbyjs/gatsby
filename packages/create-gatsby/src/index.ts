@@ -115,7 +115,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     npmSafeSiteName = makeNpmSafe(name)
   } else {
-    const valid = await validateProjectName(dirName)
+    const valid = validateProjectName(dirName)
 
     if (!valid) {
       return
