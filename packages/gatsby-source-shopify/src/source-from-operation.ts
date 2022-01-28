@@ -86,7 +86,13 @@ export function makeSourceFromOperation(
         results.push(JSON.parse(line))
       }
 
-      await processBulkResults(gatsbyApi, pluginOptions, results)
+      const nodeCount = await processBulkResults(
+        gatsbyApi,
+        pluginOptions,
+        results
+      )
+
+      operationTimer.setStatus(`${nodeCount} nodes`)
 
       operationTimer.end()
     } catch (e) {

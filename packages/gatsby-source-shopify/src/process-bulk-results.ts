@@ -53,7 +53,8 @@ export async function processBulkResults(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
   results: BulkResults
-): Promise<void> {
+): Promise<number> {
+  let nodeCount = 0
   const promises: Array<Promise<void>> = []
   const children: IBulkResultChildren = {}
 
@@ -66,6 +67,9 @@ export async function processBulkResults(
       const type = parseShopifyId(result.id)[1]
       const imageFields = shopifyTypes[type].imageFields
       const referenceFields = shopifyTypes[type].referenceFields
+
+      // Only increment for parent nodes
+      if (!result.__parentId) nodeCount++
 
       // Attach reference fields
       if (referenceFields) {
@@ -135,4 +139,5 @@ export async function processBulkResults(
   }
 
   await Promise.all(promises)
+  return nodeCount
 }
