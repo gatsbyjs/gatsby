@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-create-client-paths@4.6.0/packages/gatsby-plugin-create-client-paths) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Chores
+
+- Update client paths plugin readme with migration info [#34423](https://github.com/gatsbyjs/gatsby/issues/34423) ([dda1a26](https://github.com/gatsbyjs/gatsby/commit/dda1a2645baed183321cd47316140cc6f169b79d))
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-create-client-paths@4.5.0/packages/gatsby-plugin-create-client-paths) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-plugin-create-client-paths
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-create-client-paths@4.4.0/packages/gatsby-plugin-create-client-paths) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

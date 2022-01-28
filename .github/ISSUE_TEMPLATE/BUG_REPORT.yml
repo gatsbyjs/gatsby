@@ -1,6 +1,6 @@
 name: Bug Report
 description: Something isn't working as expected? Report your bugs here.
-labels: "type: bug"
+labels: ["type: bug"]
 body:
   - type: markdown
     attributes:

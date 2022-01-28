@@ -9,6 +9,8 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 const nodes = require(`./fixtures/queries`)
 
+const { getDataStore } = require(`../../datastore`)
+
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     log: jest.fn(),
@@ -2009,6 +2011,157 @@ describe(`Query schema`, () => {
           },
         }
       `)
+    })
+  })
+
+  describe(`id.eq fast path`, () => {
+    let datastoreRunQuerySpy
+    beforeAll(() => {
+      datastoreRunQuerySpy = jest.spyOn(getDataStore(), `runQuery`)
+    })
+
+    beforeEach(() => {
+      datastoreRunQuerySpy.mockClear()
+    })
+
+    afterAll(() => {
+      datastoreRunQuerySpy.mockRestore()
+    })
+
+    const queryEqId = `
+      query($id: String!) {
+        markdown(id: { eq: $id }) {
+          frontmatter {
+            title
+          }
+        }
+      }
+    `
+
+    it(`skips running datastore runQuery (there is node that satisfies filters)`, async () => {
+      const results = await runQuery(queryEqId, { id: `md2` })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "markdown": Object {
+              "frontmatter": Object {
+                "title": "Markdown File 2",
+              },
+            },
+          },
+        }
+      `)
+      expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+    })
+
+    it(`skips running datastore runQuery (there is no node that satisfies filters)`, async () => {
+      const results = await runQuery(queryEqId, { id: `that-should-not-exist` })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "markdown": null,
+          },
+        }
+      `)
+      expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+    })
+
+    it(`respect node type`, async () => {
+      const id = `file2`
+
+      {
+        const results = await runQuery(queryEqId, { id })
+        expect(results).toMatchInlineSnapshot(`
+          Object {
+            "data": Object {
+              "markdown": null,
+            },
+          }
+        `)
+        expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+      }
+
+      {
+        // we didn't find a node above, but let's make sure there is a node with given id
+        const results = await runQuery(
+          `
+            query($id: String!) {
+              file(id: { eq: $id }) {
+                name
+              }
+            }
+          `,
+          {
+            id,
+          }
+        )
+        expect(results).toMatchInlineSnapshot(`
+          Object {
+            "data": Object {
+              "file": Object {
+                "name": "2.md",
+              },
+            },
+          }
+        `)
+        expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+      }
+    })
+
+    describe(`doesn't try to use fast path if there are more or different filters than just id.eq`, () => {
+      it(`using single filter different than id.eq`, async () => {
+        const results = await runQuery(
+          `
+            query($title: String!) {
+              markdown(frontmatter: { title: { eq: $title } }) {
+                frontmatter {
+                  title
+                }
+              }
+            }
+          `,
+          { title: `Markdown File 2` }
+        )
+        expect(results).toMatchInlineSnapshot(`
+          Object {
+            "data": Object {
+              "markdown": Object {
+                "frontmatter": Object {
+                  "title": "Markdown File 2",
+                },
+              },
+            },
+          }
+        `)
+        expect(datastoreRunQuerySpy).toBeCalledTimes(1)
+      })
+    })
+
+    it(`using multiple filters `, async () => {
+      const results = await runQuery(
+        `
+          query($id: String!, $title: String!) {
+            markdown(id: { eq: $id }, frontmatter: { title: { eq: $title } }) {
+              frontmatter {
+                title
+              }
+            }
+          }
+        `,
+        { title: `Markdown File 2`, id: `md2` }
+      )
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "markdown": Object {
+              "frontmatter": Object {
+                "title": "Markdown File 2",
+              },
+            },
+          },
+        }
+      `)
+      expect(datastoreRunQuerySpy).toBeCalledTimes(1)
     })
   })
 })

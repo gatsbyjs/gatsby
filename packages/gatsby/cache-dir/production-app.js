@@ -162,8 +162,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )
   }
 
+  // It's possible that sessionStorage can throw an exception if access is not granted, see https://github.com/gatsbyjs/gatsby/issues/34512
+  const getSessionStorage = () => {
+    try {
+      return sessionStorage
+    } catch {
+      return null
+    }
+  }
+
   publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {
-    if (page.page.webpackCompilationHash !== window.___webpackCompilationHash) {
+    const sessionStorage = getSessionStorage()
+
+    if (
+      page?.page?.webpackCompilationHash &&
+      page.page.webpackCompilationHash !== window.___webpackCompilationHash
+    ) {
       // Purge plugin-offline cache
       if (
         `serviceWorker` in navigator &&

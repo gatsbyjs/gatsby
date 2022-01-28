@@ -77,13 +77,16 @@ module.exports = async (
       }
     }
 
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+
     const envObject = Object.keys(parsed).reduce((acc, key) => {
       acc[key] = JSON.stringify(parsed[key])
       return acc
     }, {})
 
     const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-      if (key.match(/^GATSBY_/)) {
+      if (target === `node` || key.match(/^GATSBY_/)) {
         acc[key] = JSON.stringify(process.env[key])
       }
       return acc
@@ -889,11 +892,17 @@ module.exports = async (
         continue
       }
 
-      const ruleLoaders = Array.isArray(rule.use)
-        ? rule.use.map(useEntry =>
+      let use = rule.use
+
+      if (typeof use === `function`) {
+        use = rule.use({})
+      }
+
+      const ruleLoaders = Array.isArray(use)
+        ? use.map(useEntry =>
             typeof useEntry === `string` ? useEntry : useEntry.loader
           )
-        : [rule.use?.loader ?? rule.loader]
+        : [use?.loader ?? rule.loader]
 
       const hasBabelLoader = ruleLoaders.some(
         loader => loader === babelLoaderLoc

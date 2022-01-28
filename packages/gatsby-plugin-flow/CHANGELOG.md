@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-flow@3.6.0/packages/gatsby-plugin-flow) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- don't throw on warnings in `pluginOptionsSchema` [#34182](https://github.com/gatsbyjs/gatsby/issues/34182) ([252f50d](https://github.com/gatsbyjs/gatsby/commit/252f50d0f282bee4c7e10065682bea52a603aa0c))
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-flow@3.5.0/packages/gatsby-plugin-flow) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-plugin-flow
+
 ## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-flow@3.4.0/packages/gatsby-plugin-flow) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

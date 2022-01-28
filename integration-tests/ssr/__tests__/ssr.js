@@ -33,7 +33,7 @@ describe(`SSR`, () => {
     expect(String(childProcess.stdout)).toContain(
       `testing these paths for differences between dev & prod outputs`
     )
-  }, 15000)
+  }, 30000)
 
   test(`it generates an error page correctly`, async () => {
     const src = path.join(__dirname, `/fixtures/bad-page.js`)

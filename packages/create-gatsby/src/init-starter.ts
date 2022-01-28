@@ -2,12 +2,13 @@ import { execSync } from "child_process"
 import execa, { Options } from "execa"
 import fs from "fs-extra"
 import path from "path"
-import { reporter } from "./reporter"
+import { reporter } from "./utils/reporter"
 import { spin } from "tiny-spin"
-import { getConfigStore } from "./get-config-store"
+import { getConfigStore } from "./utils/get-config-store"
 type PackageManager = "yarn" | "npm"
-import c from "ansi-colors"
-import { clearLine, makeNpmSafe } from "./utils"
+import colors from "ansi-colors"
+import { makeNpmSafe } from "./utils/make-npm-safe"
+import { clearLine } from "./utils/clear-line"
 
 const packageManagerConfigKey = `cli.packageManager`
 
@@ -109,7 +110,9 @@ const install = async (
 ): Promise<void> => {
   const prevDir = process.cwd()
 
-  reporter.info(`${c.blueBright(c.symbols.pointer)} Installing Gatsby...`)
+  reporter.info(
+    `${colors.blueBright(colors.symbols.pointer)} Installing Gatsby...`
+  )
 
   process.chdir(rootPath)
 
@@ -137,7 +140,9 @@ const install = async (
       await clearLine()
 
       reporter.success(`Installed Gatsby`)
-      reporter.info(`${c.blueBright(c.symbols.pointer)} Installing plugins...`)
+      reporter.info(
+        `${colors.blueBright(colors.symbols.pointer)} Installing plugins...`
+      )
 
       await execa(
         `npm`,

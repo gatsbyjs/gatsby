@@ -12,11 +12,11 @@ This quick start is intended for intermediate to advanced developers. For a gent
 npm init gatsby
 ```
 
-Follow the prompts to choose your preferred CMS, styling tools and additional features.
+It'll ask for a site title and the name of the project's directory. Continue following the prompts to choose your preferred CMS, styling tools and additional features.
 
 2. Once everything is downloaded you will see a message with instructions for navigating to your site and running it locally.
 
-It will look like this, but use your project's directory.
+The CLI created the site as a new folder with the name you chose in step 1.
 
 Start by going to the directory with
 
@@ -40,8 +40,8 @@ Try editing the home page in `src/pages/index.js`. Saved changes will live reloa
 
 ### Add more features
 
-[Install and configure additional plugins](/docs/recipes/) to quickly add additional functionality to your site.
+[Follow our guides](/docs/how-to/) to add more functionality to your site or browse [our plugins](/plugins/) to quickly install additional features.
 
 ### Deploy your site
 
-Try using [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) to build and deploy your site to one of many hosting providers.
+Try using [Gatsby Cloud](/products/cloud/) to build and deploy your site to one of many hosting providers.

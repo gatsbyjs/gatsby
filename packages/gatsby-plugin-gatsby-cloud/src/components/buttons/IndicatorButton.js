@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
 import { spinnerIcon } from "../icons"
 
-export default function IndicatorButton({
+const IndicatorButton = ({
   buttonIndex,
-  tooltipContent,
-  overrideShowTooltip = false,
+  tooltip,
   iconSvg,
   onClick,
   showSpinner,
@@ -13,52 +12,73 @@ export default function IndicatorButton({
   testId,
   onMouseEnter,
   hoverable,
-}) {
-  const [showTooltip, setShowTooltip] = useState(false)
-  const buttonRef = useRef(null)
+  highlighted,
+  onTooltipToogle,
+}) => {
+  const [showTooltip, setShowTooltip] = useState(tooltip?.show)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
+  const onButtonMouseEnter = () => {
+    if (active && tooltip?.hoverable) {
+      setShowTooltip(true)
 
-  const onMouseLeave = () => setShowTooltip(false)
+      if (typeof onMouseEnter === `function`) {
+        onMouseEnter()
+      }
+      if (typeof onTooltipToogle === `function`) {
+        onTooltipToogle(true)
+      }
+    }
+  }
+  const onMouseLeave = () => {
+    setShowTooltip(false)
+    if (typeof onTooltipToogle === `function`) {
+      onTooltipToogle(false)
+    }
+  }
+  const onButtonClick = event => {
+    event.preventDefault()
+    event.stopPropagation()
+    if (active && typeof onClick === `function`) {
+      onClick()
+    }
+  }
+
+  useEffect(() => {
+    setShowTooltip(tooltip?.show)
+  }, [tooltip?.show])
 
   return (
     <>
       <button
-        ref={buttonRef}
         data-gatsby-preview-indicator="button"
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
-          active && hoverable ? `true` : `false`
+          active && hoverable && !highlighted ? `true` : `false`
         }
+        data-gatsby-preview-indicator-highlighted-button={`${highlighted}`}
+        data-testid={`${testId}-button`}
         style={{ marginTop: marginTop }}
+        onMouseEnter={onButtonMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onButtonClick}
       >
-        <div
-          data-testid={`${testId}-button`}
-          onMouseEnter={() => {
-            setShowTooltip(true)
-
-            if (onMouseEnter) {
-              onMouseEnter()
-            }
-          }}
-          onMouseLeave={onMouseLeave}
-          onClick={active ? onClick : null}
-        >
+        <div>
           {iconSvg}
           {showSpinner && (
             <div data-gatsby-preview-indicator="spinner">{spinnerIcon}</div>
           )}
         </div>
+        {tooltip && (
+          <IndicatorButtonTooltip
+            {...tooltip}
+            testId={testId}
+            show={showTooltip}
+          />
+        )}
       </button>
-      {tooltipContent && (
-        <IndicatorButtonTooltip
-          tooltipContent={tooltipContent}
-          overrideShowTooltip={overrideShowTooltip}
-          showTooltip={showTooltip}
-          elementRef={buttonRef}
-          testId={testId}
-        />
-      )}
     </>
   )
 }
+
+export default IndicatorButton

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.6.0/packages/gatsby-dev-cli) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- Do not ignore engines [#34461](https://github.com/gatsbyjs/gatsby/issues/34461) ([822c6ca](https://github.com/gatsbyjs/gatsby/commit/822c6ca376a18a00557f0dcb748c1bed39156862))
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.5.0/packages/gatsby-dev-cli) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.4.0/packages/gatsby-dev-cli) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

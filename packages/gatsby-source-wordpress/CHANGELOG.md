@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.6.0/packages/gatsby-source-wordpress) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Chores
+
+- Old occurrences of gatbyjs.org [#34402](https://github.com/gatsbyjs/gatsby/issues/34402) ([dda64c3](https://github.com/gatsbyjs/gatsby/commit/dda64c3b8089f36cb96be0281e197aabc5e3cd06))
+
+#### Other Changes
+
+- cleanup callbacks at the end instead of the beginning [#34391](https://github.com/gatsbyjs/gatsby/issues/34391) ([1555234](https://github.com/gatsbyjs/gatsby/commit/1555234496b2e381ce71d50a8f829c1dae83f229))
+- Update media-item-processing.md [#34434](https://github.com/gatsbyjs/gatsby/issues/34434) ([f1dfedc](https://github.com/gatsbyjs/gatsby/commit/f1dfedc01a8bf635e6199adc7a5508b345165ba9))
+
+### [6.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.5.2/packages/gatsby-source-wordpress) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [6.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.5.1/packages/gatsby-source-wordpress) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.5.0/packages/gatsby-source-wordpress) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Features
+
+- Deprecate `gatsby-recipes` [#34094](https://github.com/gatsbyjs/gatsby/issues/34094) ([5f62345](https://github.com/gatsbyjs/gatsby/commit/5f623451fefb55d6ace04ba6c9a221740a538bda))
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.4.0/packages/gatsby-source-wordpress) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
