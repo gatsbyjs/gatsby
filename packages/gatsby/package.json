@@ -82,6 +82,7 @@
     "gatsby-graphiql-explorer": "^2.7.0-next.0",
     "gatsby-legacy-polyfills": "^2.7.0-next.0",
     "gatsby-link": "^4.7.0-next.0",
+    "gatsby-page-utils": "^2.7.0-next.0",
     "gatsby-plugin-page-creator": "^4.7.0-next.0",
     "gatsby-plugin-typescript": "^4.7.0-next.0",
     "gatsby-plugin-utils": "^3.1.0-next.0",

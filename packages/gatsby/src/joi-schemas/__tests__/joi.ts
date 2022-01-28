@@ -107,6 +107,39 @@ describe(`gatsby config`, () => {
       `[Error: assetPrefix must be an absolute URI when used with pathPrefix]`
     )
   })
+
+  it(`returns "legacy" for trailingSlash when not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        trailingSlash: `legacy`,
+      })
+    )
+  })
+
+  it(`throws when trailingSlash is not valid string`, () => {
+    const config = {
+      trailingSlash: `arrakis`,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
+    )
+  })
+
+  it(`throws when trailingSlash is not a string`, () => {
+    const config = {
+      trailingSlash: true,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
+    )
+  })
 })
 
 describe(`node schema`, () => {

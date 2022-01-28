@@ -51,6 +51,9 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
     developMiddleware: Joi.func(),
     jsxRuntime: Joi.string().valid(`automatic`, `classic`).default(`classic`),
     jsxImportSource: Joi.string(),
+    trailingSlash: Joi.string()
+      .valid(`always`, `never`, `ignore`, `legacy`) // TODO(v5): Remove legacy
+      .default(`legacy`),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(
