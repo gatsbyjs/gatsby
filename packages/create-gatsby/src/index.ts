@@ -2,6 +2,7 @@ import Enquirer from "enquirer"
 import cmses from "./questions/cmses.json"
 import styles from "./questions/styles.json"
 import features from "./questions/features.json"
+import languages from "./questions/languages.json"
 import { initStarter, getPackageManager, gitSetup } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import colors from "ansi-colors"
@@ -20,12 +21,17 @@ import {
 } from "./utils/question-helpers"
 import { sha256, md5 } from "./utils/hash"
 import { maybeUseEmoji } from "./utils/emoji"
+import { parseArgs } from "./utils/parse-args"
 
-const DEFAULT_STARTER = `https://github.com/gatsbyjs/gatsby-starter-minimal.git`
+const DEFAULT_STARTERS: Record<keyof typeof languages, string> = {
+  js: `https://github.com/gatsbyjs/gatsby-starter-minimal.git`,
+  ts: `https://github.com/gatsbyjs/gatsby-starter-minimal-ts.git`, // TODO - Create
+}
 
 interface IAnswers {
   name: string
   project: string
+  language: keyof typeof languages
   styling?: keyof typeof styles
   cms?: keyof typeof cmses
   features?: Array<keyof typeof features>
@@ -59,12 +65,7 @@ export type PluginMap = Record<string, IPluginEntry>
 export type PluginConfigMap = Record<string, Record<string, unknown>>
 
 export async function run(): Promise<void> {
-  const [flag, siteDirectory] = process.argv.slice(2) // TODO - Refactor this to not be positional in upcoming TS PR since it's related
-
-  let yesFlag = false
-  if (flag === `-y`) {
-    yesFlag = true
-  }
+  const { flags, siteDirectory } = parseArgs(process.argv.slice(2))
 
   trackCli(`CREATE_GATSBY_START`)
 
@@ -82,7 +83,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 `
   )
 
-  if (!yesFlag) {
+  if (!flags.yes) {
     reporter.info(
       wrap(
         `This command will generate a new Gatsby site for you in ${colors.bold(
@@ -102,7 +103,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
   let data
   let siteName
 
-  if (!yesFlag) {
+  if (!flags.yes) {
     ;({ name: siteName } = await enquirer.prompt({
       type: `textinput`,
       name: `name`,
@@ -112,7 +113,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
     } as any))
 
     data = await enquirer.prompt(
-      generateQuestions(makeNpmSafe(siteName), yesFlag)
+      generateQuestions(makeNpmSafe(siteName), flags.yes)
     )
   } else {
     const warn = await validateProjectName(siteDirectory)
@@ -122,7 +123,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
     }
     siteName = siteDirectory
     data = await enquirer.prompt(
-      generateQuestions(makeNpmSafe(siteDirectory), yesFlag)[0]
+      generateQuestions(makeNpmSafe(siteDirectory), flags.yes)[0]
     )
   }
 
@@ -130,6 +131,10 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `project_name`,
+    valueString: sha256(data.project),
+  })
+  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
+    name: `LANGUAGE`,
     valueString: sha256(data.project),
   })
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
@@ -234,7 +239,8 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
-  if (!yesFlag) {
+
+  if (!flags.yes) {
     reporter.info(`
 
 ${colors.bold(`Thanks! Here's what we'll now do:`)}
@@ -259,7 +265,7 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
   }
 
   await initStarter(
-    DEFAULT_STARTER,
+    DEFAULT_STARTERS[data.language || `js`],
     data.project,
     packages.map((plugin: string) => plugin.split(`:`)[0]),
     siteName

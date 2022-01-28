@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import languages from "../questions/languages.json"
 import cmses from "../questions/cmses.json"
 import styles from "../questions/styles.json"
 import features from "../questions/features.json"
@@ -62,6 +63,13 @@ export const generateQuestions = (
     format: (value: string): string => colors.cyan(value),
     validate: validateProjectName,
     skip,
+  },
+  {
+    type: `selectinput`,
+    name: `language`,
+    message: `Will you be using JavaScript or TypeScript?`,
+    hint: `(Single choice) Arrow keys to move, enter to confirm`,
+    choices: makeChoices(languages, true),
   },
   {
     type: `selectinput`,
