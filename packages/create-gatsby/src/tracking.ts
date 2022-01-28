@@ -1,7 +1,7 @@
 import fetch from "node-fetch"
 import { v4 as uuidv4 } from "@lukeed/uuid"
-import { getConfigStore } from "./get-config-store"
-import { isTruthy } from "./is-truthy"
+import { getConfigStore } from "./utils/get-config-store"
+import { isTruthy } from "./utils/is-truthy"
 
 const store = getConfigStore()
 const gatsbyCliVersion = require(`../package.json`).version

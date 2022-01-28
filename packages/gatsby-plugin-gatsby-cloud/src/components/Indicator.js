@@ -203,7 +203,6 @@ const Indicator = () => {
       }
 
       if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-        // Keep status as up to date builds where we cannot fetch manifest id info.
         setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
       } else if (
         currentBuild?.buildStatus === BuildStatus.ERROR &&
