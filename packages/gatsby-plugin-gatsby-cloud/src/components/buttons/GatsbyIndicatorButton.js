@@ -1,40 +1,19 @@
 import React from "react"
 import IndicatorButton from "./IndicatorButton"
-import {
-  BuildErrorTooltipContent,
-  BuildSuccessTooltipContent,
-} from "../tooltips"
 import { gatsbyIcon } from "../icons"
 
-const getButtonProps = ({
-  buildStatus,
-  orgId,
-  siteId,
-  buildId,
-  isOnPrettyUrl,
-  sitePrefix,
-  erroredBuildId,
-}) => {
-  switch (buildStatus) {
-    case `BUILDING`:
-    case `ERROR`:
-    case `SUCCESS`:
-    case `UPTODATE`:
-    default: {
-      return {
-        active: true,
-      }
-    }
+const getButtonProps = ({ buttonIndex }) => {
+  const baseProps = {
+    testId: `gatsby`,
+    buttonIndex,
+    iconSvg: gatsbyIcon,
+    active: true,
   }
+  return baseProps
 }
 
-export default function GatsbyIndicatorButton(props) {
-  return (
-    <IndicatorButton
-      testId="gatsby"
-      iconSvg={gatsbyIcon}
-      {...getButtonProps(props)}
-      buttonIndex={props.buttonIndex}
-    />
-  )
-}
+const GatsbyIndicatorButton = props => (
+  <IndicatorButton {...getButtonProps(props)} />
+)
+
+export default GatsbyIndicatorButton
