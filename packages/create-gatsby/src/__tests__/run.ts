@@ -62,6 +62,12 @@ jest.mock(`../utils/question-helpers`, () => {
     validateProjectName: jest.fn(() => true),
   }
 })
+jest.mock(`../components/utils`, () => {
+  return {
+    center: jest.fn(args => args),
+    wrap: jest.fn(args => args),
+  }
+})
 
 const dirName = `hello-world`
 let parseArgsMock
