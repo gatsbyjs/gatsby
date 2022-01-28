@@ -28,6 +28,8 @@ import { IGraphQLRunnerStats } from "../../query/types"
 import { IRunQueryArgs, IQueryResult } from "../types"
 import { GatsbyIterable } from "../common/iterable"
 import { getNode } from "../"
+// @ts-ignore
+import { clearKeptObjects } from "lmdb"
 
 function isGatsbyNode(node: IGatsbyNode | undefined): node is IGatsbyNode {
   return !!node
@@ -306,10 +308,7 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
     stats
   )
 
-  const resultingNodes = result
-    .map(nodeIds => getNode(nodeIds.id))
-    .filter(isGatsbyNode)
-  const sortedResult = sortNodes(resultingNodes, sort, resolvedFields, stats)
+  const sortedResult = sortNodes(result, sort, resolvedFields, stats)
   const totalCount = async (): Promise<number> => sortedResult.length
 
   const entries =
@@ -317,7 +316,12 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
       ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
       : sortedResult
 
-  return { entries: new GatsbyIterable(entries), totalCount }
+  return {
+    entries: new GatsbyIterable(entries)
+      .map(nodeIds => getNode(nodeIds.id))
+      .filter(isGatsbyNode) as GatsbyIterable<IGatsbyNode>,
+    totalCount,
+  }
 }
 
 /**
@@ -411,7 +415,7 @@ function filterToStats(
  * Returns same reference as input, sorted inline
  */
 function sortNodes(
-  nodes: Array<IGatsbyNode>,
+  nodes: Array<IGatsbyNodeIdentifiers>,
   sort:
     | {
         fields: Array<string>
@@ -420,7 +424,7 @@ function sortNodes(
     | undefined,
   resolvedFields: any,
   stats: IGraphQLRunnerStats
-): Array<IGatsbyNode> {
+): Array<IGatsbyNodeIdentifiers> {
   if (!sort || sort.fields?.length === 0 || !nodes || nodes.length === 0) {
     return nodes
   }
@@ -438,10 +442,18 @@ function sortNodes(
       return field
     }
   })
+  let i = 0
   const sortFns = sortFields.map(
     field =>
-      (v): ((any) => any) =>
-        getValueAt(v, field)
+      (v: IGatsbyNodeIdentifiers): ((any) => any) => {
+        i++
+        // lodash sorting needs ArrayLike thing, which our iterable isn't
+        // so for now this hack will do
+        if (i % 100 === 0) {
+          clearKeptObjects()
+        }
+        return getValueAt(getNode(v.id)!, field)
+      }
   )
   const sortOrder = sort.order.map(order =>
     typeof order === `boolean` ? order : order.toLowerCase()
