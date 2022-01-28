@@ -1,5 +1,9 @@
 import { Actions } from "gatsby"
-import { createPath } from "gatsby-page-utils"
+import {
+  createPath,
+  applyTrailingSlashOption,
+  TrailingSlash,
+} from "gatsby-page-utils"
 import { getMatchPath } from "gatsby-core-utils"
 
 // Create a client side page with a matchPath
@@ -9,12 +13,14 @@ import { getMatchPath } from "gatsby-core-utils"
 export function createClientOnlyPage(
   filePath: string,
   absolutePath: string,
-  actions: Actions
+  actions: Actions,
+  trailingSlash: TrailingSlash
 ): void {
   const path = createPath(filePath)
+  const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
   actions.createPage({
-    path,
+    path: modifiedPath,
     matchPath: getMatchPath(path),
     component: absolutePath,
     context: {},

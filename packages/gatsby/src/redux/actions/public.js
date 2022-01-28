@@ -20,6 +20,7 @@ const {
   truncatePath,
   tooLongSegmentsInPath,
 } = require(`../../utils/path`)
+const { applyTrailingSlashOption } = require(`gatsby-page-utils`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
@@ -275,6 +276,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
+  const { trailingSlash } = store.getState().config
   const rootPath = store.getState().program.directory
   const { error, message, panicOnBuild } = validatePageComponent(
     page,
@@ -385,6 +387,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
     page.path = truncatedPath
   }
+
+  page.path = applyTrailingSlashOption(page.path, trailingSlash)
 
   const internalPage: Page = {
     internalComponentName,
