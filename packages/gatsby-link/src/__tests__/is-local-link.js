@@ -11,17 +11,15 @@ describe(`isLocalLink`, () => {
     expect(isLocalLink(undefined)).toBeUndefined()
     expect(isLocalLink(-1)).toBeUndefined()
   })
-  /*
-  TODO(v5): Re-Add Tests
-  it(`throws TypeError if input is undefined`, () => {
+  // TODO(v5): Unskip Tests
+  it.skip(`throws TypeError if input is undefined`, () => {
     expect(() => isLocalLink(undefined)).toThrowError(
       `Expected a \`string\`, got \`undefined\``
     )
   })
-  it(`throws TypeError if input is not a string`, () => {
+  it.skip(`throws TypeError if input is not a string`, () => {
     expect(() => isLocalLink(-1)).toThrowError(
       `Expected a \`string\`, got \`number\``
     )
   })
-  */
 })

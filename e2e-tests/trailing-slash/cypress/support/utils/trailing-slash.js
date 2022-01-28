@@ -7,6 +7,8 @@ export function assertPageVisits(pages) {
         expect(res.statusCode).to.equal(page.status)
         if (page.destinationPath) {
           expect(res.headers.location).to.equal(page.destinationPath)
+        } else {
+          expect(res.headers.location).toBeUndefined()
         }
       })
     })
