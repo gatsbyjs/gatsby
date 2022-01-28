@@ -310,16 +310,21 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
+
+  const state = store.getState()
+
   const hashes: any = await Promise.all([
     md5File(`package.json`),
     md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
     md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
+    { trailingSlash: state.config.trailingSlash },
   ])
+
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  const state = store.getState()
+
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -603,6 +608,9 @@ export async function initialize({
     parentSpan: activity.span,
   })
   activity.end()
+
+  // Track trailing slash option used in config
+  telemetry.trackFeatureIsUsed(`trailingSlash:${state.config.trailingSlash}`)
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
