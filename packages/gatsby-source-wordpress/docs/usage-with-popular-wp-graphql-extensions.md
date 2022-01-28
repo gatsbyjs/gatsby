@@ -19,6 +19,7 @@ If you find a bug when using an extension please open an issue and let us know.
 
 - [WPGraphQL WooCommerce](https://woographql.com/)
 - [WPGraphQL Gutenberg](https://wp-graphql-gutenberg.netlify.app/)
+- [WPGraphQL WPML](https://www.wpgraphql.com/extenstion-plugins/wpgraphql-wpml/)
 
 # Up Next :point_right:
 
