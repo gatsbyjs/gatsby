@@ -9,7 +9,7 @@ const BuildSuccessTooltipContent = ({
   orgId,
   siteId,
   buildId,
-  contentSyncRedirectUrl,
+  nodeManifestRedirectUrl,
 }) => {
   const { track } = useTrackEvent()
 
@@ -43,9 +43,9 @@ const BuildSuccessTooltipContent = ({
 
     const isLocalhost = window.location.hostname === `localhost`
 
-    if (contentSyncRedirectUrl) {
+    if (nodeManifestRedirectUrl) {
       window.location[isLocalhost ? `assign` : `replace`](
-        contentSyncRedirectUrl
+        nodeManifestRedirectUrl
       )
     } else if (isOnPrettyUrl || isLocalhost) {
       window.location.reload()

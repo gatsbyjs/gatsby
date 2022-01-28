@@ -32,6 +32,8 @@ const PreviewIndicator = ({ children }) => (
 
 const getContentSyncInfoFromURL = () => {
   const urlSearchParams = new URLSearchParams(window.location.search)
+
+  // mid and plgn are shortened to keep the url short
   const { mid: manifestId, plgn: pluginName } = JSON.parse(
     atob(urlSearchParams.get(`csync`) || ``) || `{}`
   )
@@ -127,17 +129,18 @@ const Indicator = () => {
   }
 
   const {
-    redirectUrl: contentSyncRedirectUrl,
-    errorMessage: contentSyncErrorMessage,
+    redirectUrl: nodeManifestRedirectUrl,
+    errorMessage: nodeManifestErrorMessage,
   } = usePollForNodeManifest(pollForNodeManifestArgs)
 
   React.useEffect(() => {
-    if (contentSyncErrorMessage) {
-      console.error(contentSyncErrorMessage)
-    } else if (contentSyncRedirectUrl) {
+    if (nodeManifestErrorMessage) {
+      console.error(nodeManifestErrorMessage)
+    } else if (nodeManifestRedirectUrl) {
+      // Force a "This page has updated message" until the page is refreshed
       refreshNeeded = true
     }
-  }, [contentSyncInfo, contentSyncRedirectUrl, contentSyncErrorMessage])
+  }, [nodeManifestRedirectUrl, nodeManifestErrorMessage])
 
   const hasPageDataChanged = async () => {
     if (buildId !== latestCheckedBuild) {
@@ -242,7 +245,7 @@ const Indicator = () => {
         }
       }
     },
-    [contentSyncRedirectUrl]
+    [nodeManifestRedirectUrl]
   )
 
   useEffect(() => {
@@ -289,9 +292,9 @@ const Indicator = () => {
         <GatsbyIndicatorButton {...buttonProps} buttonIndex={1} />
         <InfoIndicatorButton
           {...buttonProps}
-          contentSyncRedirectUrl={contentSyncRedirectUrl}
+          nodeManifestRedirectUrl={nodeManifestRedirectUrl}
           usingContentSync={usingContentSync}
-          contentSyncErrorMessage={contentSyncErrorMessage}
+          nodeManifestErrorMessage={nodeManifestErrorMessage}
           buttonIndex={2}
         />
         <LinkIndicatorButton {...buttonProps} buttonIndex={3} />

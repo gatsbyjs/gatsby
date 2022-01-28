@@ -26,9 +26,9 @@ const InfoIndicatorButton = ({
   buildId,
   createdAt,
   buildStatus,
-  contentSyncRedirectUrl,
+  nodeManifestRedirectUrl,
   usingContentSync,
-  contentSyncErrorMessage,
+  nodeManifestErrorMessage,
 }) => {
   const initialButtonProps = { buttonIndex, testId: `info`, hoverable: true }
   const [buttonProps, setButtonProps] = useState(initialButtonProps)
@@ -229,7 +229,7 @@ const InfoIndicatorButton = ({
     buildStatusActions[BuildStatus.BUILDING] =
       buildStatusActions[BuildStatus.UPTODATE]
 
-    const contentSyncSuccessAction = contentSyncRedirectUrl
+    const contentSyncSuccessAction = nodeManifestRedirectUrl
       ? () => {
           setButtonProps(btnProps => {
             return {
@@ -238,7 +238,7 @@ const InfoIndicatorButton = ({
                 testId: btnProps.testId,
                 content: (
                   <BuildSuccessTooltipContent
-                    contentSyncRedirectUrl={contentSyncRedirectUrl}
+                    nodeManifestRedirectUrl={nodeManifestRedirectUrl}
                   />
                 ),
                 closable: true,
@@ -270,7 +270,7 @@ const InfoIndicatorButton = ({
         }
       : false
 
-    const contentSyncErrorAction = contentSyncErrorMessage
+    const contentSyncErrorAction = nodeManifestErrorMessage
       ? buildStatusActions[BuildStatus.ERROR]
       : false
 
@@ -291,8 +291,8 @@ const InfoIndicatorButton = ({
   }, [
     buildStatus,
     shouldShowFeedback,
-    contentSyncRedirectUrl,
-    contentSyncErrorMessage,
+    nodeManifestRedirectUrl,
+    nodeManifestErrorMessage,
   ])
 
   return (
@@ -302,7 +302,7 @@ const InfoIndicatorButton = ({
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
       onTooltipToogle={updateTootipVisibility}
       iconSvg={
-        showNotificationInfoIcon || contentSyncRedirectUrl
+        showNotificationInfoIcon || nodeManifestRedirectUrl
           ? infoAlertIcon
           : infoIcon
       }
