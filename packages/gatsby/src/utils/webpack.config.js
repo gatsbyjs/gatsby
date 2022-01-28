@@ -52,7 +52,7 @@ module.exports = async (
   const stage = suppliedStage
   const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
-  const { assetPrefix, pathPrefix } = store.getState().config
+  const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 
   const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
@@ -228,6 +228,7 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
       }),

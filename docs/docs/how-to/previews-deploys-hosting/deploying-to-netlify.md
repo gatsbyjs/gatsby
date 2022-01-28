@@ -5,7 +5,7 @@ title: Deploying to Netlify
 This guide walks through how to deploy and host your next Gatsby site on [Netlify](https://www.netlify.com/).
 
 Netlify includes a free tier and features like a CDN, HTTPS, custom domains, and
-continuous deployment from public or private repos. 
+continuous deployment from public or private repos.
 
 ## Hosting setup
 
