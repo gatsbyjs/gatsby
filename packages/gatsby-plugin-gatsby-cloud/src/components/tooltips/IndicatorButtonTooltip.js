@@ -16,6 +16,7 @@ const IndicatorButtonTooltip = ({
   const shouldShow = useMemo(() => overrideShow || show, [overrideShow, show])
   const onCloseClick = event => {
     event.preventDefault()
+    event.stopPropagation()
     if (onClose) {
       onClose()
     }

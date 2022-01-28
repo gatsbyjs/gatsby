@@ -386,11 +386,22 @@ const mergeTypes = ({
     mergeResolveType({ typeComposer, type })
   }
 
+  let extensions = {}
   if (isNamedTypeComposer(type)) {
-    typeComposer.extendExtensions(type.getExtensions())
+    if (createdFrom === `sdl`) {
+      extensions = convertDirectivesToExtensions(type, type.getDirectives())
+    } else {
+      typeComposer.extendExtensions(type.getExtensions())
+    }
   }
 
-  addExtensions({ schemaComposer, typeComposer, plugin, createdFrom })
+  addExtensions({
+    schemaComposer,
+    typeComposer,
+    extensions,
+    plugin,
+    createdFrom,
+  })
 
   return true
 }
@@ -413,45 +424,67 @@ const processAddedType = ({
     }
   }
   schemaComposer.addSchemaMustHaveType(typeComposer)
+  let extensions = {}
+  if (createdFrom === `sdl`) {
+    extensions = convertDirectivesToExtensions(
+      typeComposer,
+      typeComposer.getDirectives()
+    )
+  }
 
-  addExtensions({ schemaComposer, typeComposer, plugin, createdFrom })
+  addExtensions({
+    schemaComposer,
+    typeComposer,
+    extensions,
+    plugin,
+    createdFrom,
+  })
 
   return typeComposer
+}
+
+/**
+ * @param {import("graphql-compose").AnyTypeComposer} typeComposer
+ * @param {Array<import("graphql-compose").Directive>} directives
+ * @return {{infer?: boolean, mimeTypes?: { types: Array<string> }, childOf?: { types: Array<string> }, nodeInterface?: boolean}}
+ */
+const convertDirectivesToExtensions = (typeComposer, directives) => {
+  const extensions = {}
+  directives.forEach(({ name, args }) => {
+    switch (name) {
+      case `infer`:
+      case `dontInfer`: {
+        extensions[`infer`] = name === `infer`
+        break
+      }
+      case `mimeTypes`:
+        extensions[`mimeTypes`] = args
+        break
+      case `childOf`:
+        extensions[`childOf`] = args
+        break
+      case `nodeInterface`:
+        if (typeComposer instanceof InterfaceTypeComposer) {
+          extensions[`nodeInterface`] = true
+        }
+        break
+      default:
+    }
+  })
+
+  return extensions
 }
 
 const addExtensions = ({
   schemaComposer,
   typeComposer,
+  extensions = {},
   plugin,
   createdFrom,
 }) => {
   typeComposer.setExtension(`createdFrom`, createdFrom)
   typeComposer.setExtension(`plugin`, plugin ? plugin.name : null)
-
-  if (createdFrom === `sdl`) {
-    const directives = typeComposer.getDirectives()
-    directives.forEach(({ name, args }) => {
-      switch (name) {
-        case `infer`:
-        case `dontInfer`: {
-          typeComposer.setExtension(`infer`, name === `infer`)
-          break
-        }
-        case `mimeTypes`:
-          typeComposer.setExtension(`mimeTypes`, args)
-          break
-        case `childOf`:
-          typeComposer.setExtension(`childOf`, args)
-          break
-        case `nodeInterface`:
-          if (typeComposer instanceof InterfaceTypeComposer) {
-            typeComposer.setExtension(`nodeInterface`, true)
-          }
-          break
-        default:
-      }
-    })
-  }
+  typeComposer.extendExtensions(extensions)
 
   if (
     typeComposer instanceof InterfaceTypeComposer &&
