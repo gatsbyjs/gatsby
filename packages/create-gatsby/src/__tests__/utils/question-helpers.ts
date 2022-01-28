@@ -107,7 +107,9 @@ describe(`question-helpers`, () => {
   describe(`generateQuestions`, () => {
     it(`should return one question if the skip flag is passed`, () => {
       const questions = generateQuestions(`hello-world`, true)
-      expect(questions).toMatchSnapshot()
+      expect(questions).toMatchSnapshot({
+        hint: expect.any(String),
+      })
     })
 
     it(`should return all questions if no skip flag is passed`, () => {

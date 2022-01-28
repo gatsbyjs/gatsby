@@ -149,7 +149,7 @@ Array [
 exports[`question-helpers generateQuestions should return one question if the skip flag is passed 1`] = `
 Object {
   "format": [Function],
-  "hint": "gatsby",
+  "hint": Any<String>,
   "initial": "hello-world",
   "message": "What would you like to name the folder where your site will be created?",
   "name": "project",
