@@ -94,7 +94,7 @@ Content goes here!
 
 Now that you've sourced Markdown and image data, you can query for featured images in GraphQL. If a filepath points to an actual image, it will be transformed into a `File` node in GraphQL and then you can get the image data out of it by using the `childImageSharp` field.
 
-This can be added to the GraphQL query in a Markdown template file. In this example, a [Fluid query](/docs/reference/built-in-components/gatsby-image#images-that-stretch-across-a-fluid-container) is used to make a responsive image.
+This can be added to the GraphQL query in a Markdown template file. In this example, a [Dynamic images](/docs/how-to/images-and-media/using-gatsby-plugin-image/#dynamic-images) is used to make a responsive image.
 
 ```jsx:title=src/templates/blog-post.js
 export const query = graphql`
@@ -106,9 +106,7 @@ export const query = graphql`
         // highlight-start
         featuredImage {
           childImageSharp {
-            fluid(maxWidth: 800) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(width: 800)
           }
         }
         // highlight-end
@@ -118,21 +116,21 @@ export const query = graphql`
 `
 ```
 
-Also in the Markdown post template, import the `gatsby-image` package and pass the results of the GraphQL query into an `<Img />` component.
+Also in the Markdown post template, import the `gatsby-plugin-image` package and pass the results of the GraphQL query into an `<GatsbyImage />` component.
 
 ```jsx:title=src/templates/blog-post.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 // highlight-start
-import Img from "gatsby-image"
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 // highlight-end
 
 export default function BlogPost({ data }) {
   let post = data.markdownRemark
 
   // highlight-start
-  let featuredImgFluid = post.frontmatter.featuredImage.childImageSharp.fluid
+  let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
   // highlight-end
 
   return (
@@ -140,7 +138,7 @@ export default function BlogPost({ data }) {
       <div>
         <h1>{post.frontmatter.title}</h1>
         // highlight-start
-        <Img fluid={featuredImgFluid} />
+        <GatsbyImage image={featuredImg} />
         // highlight-end
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
@@ -156,9 +154,7 @@ export const query = graphql`
         title
         featuredImage {
           childImageSharp {
-            fluid(maxWidth: 800) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(width: 800)
           }
         }
       }
