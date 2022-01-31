@@ -54,7 +54,7 @@ Once the build is complete, the work of Redux is done and it is not part of the 
 
 If using a data store such as Redux in your Gatsby application, check out [Adding a Redux Store](/docs/adding-redux-store).
 
-## GraphQL queries
+## GraphQL Queries
 
 GraphQL is a query language (the QL part of its name) that Gatsby uses to generate a data layer available to your site’s components. If you're familiar with SQL, it works in a very similar way at build time.
 
