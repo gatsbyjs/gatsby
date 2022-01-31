@@ -289,7 +289,9 @@ export async function sourceNodes(
   const existingNodes = getNodes().filter(
     n =>
       n.internal.owner === `gatsby-source-contentful` &&
-      n.internal.type !== `ContentfulTag`
+      (pluginConfig.get(`enableTags`)
+        ? n.internal.type !== `ContentfulTag`
+        : true)
   )
   existingNodes.forEach(n => touchNode(n))
 

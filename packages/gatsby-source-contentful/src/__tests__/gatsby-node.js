@@ -644,4 +644,33 @@ describe(`gatsby-node`, () => {
       })
     )
   })
+
+  it(`panics when response contains content type Tag while enableTags is true`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(
+      restrictedContentTypeFixture.initialSync
+    )
+    const contentTypesWithTag = () => {
+      const manipulatedContentTypeItems =
+        restrictedContentTypeFixture.contentTypeItems()
+      manipulatedContentTypeItems[0].name = `Tag`
+      return manipulatedContentTypeItems
+    }
+    // @ts-ignore
+    fetchContentTypes.mockImplementationOnce(contentTypesWithTag)
+
+    await simulateGatsbyBuild({
+      spaceId: `mocked`,
+      enableTags: true,
+      useNameForId: true,
+    })
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Restricted ContentType name found. The name "tag" is not allowed.`,
+        },
+      })
+    )
+  })
 })

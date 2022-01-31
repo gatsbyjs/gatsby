@@ -17,7 +17,7 @@ async function getContentTypesFromContentFul({
   const restrictedContentTypes = [`entity`, `reference`, `asset`]
 
   if (pluginConfig.get(`enableTags`)) {
-    restrictedContentTypes.push(`tags`)
+    restrictedContentTypes.push(`tag`)
   }
 
   contentTypeItems.forEach(contentTypeItem => {
