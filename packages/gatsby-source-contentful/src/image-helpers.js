@@ -49,7 +49,12 @@ export function createUrl(imgUrl, options = {}) {
     r: cornerRadius || undefined,
   }
 
-  const searchParams = new URLSearchParams()
+  const isBrowser = typeof window !== `undefined`
+
+  const searchParams = isBrowser
+    ? new window.URLSearchParams()
+    : new URLSearchParams()
+
   for (const paramKey in urlArgs) {
     if (typeof urlArgs[paramKey] !== `undefined`) {
       searchParams.append(paramKey, urlArgs[paramKey] ?? ``)
