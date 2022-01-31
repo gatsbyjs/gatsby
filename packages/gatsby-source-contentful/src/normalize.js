@@ -329,7 +329,7 @@ export const createNodesForContentType = ({
 
   const createNodePromises = []
 
-  // Create a node for each content type
+  // Create a node for the content type
   const contentTypeNode = {
     id: createNodeId(contentTypeItemId),
     parent: null,
