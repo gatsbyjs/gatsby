@@ -35,7 +35,7 @@ For any kind of change to files in the Gatsby repo, you can follow the below ste
 
 To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), fork the repo and install parts of it to run on your local machine.
 
-- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
+- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-instructions).
 
 - Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
 
