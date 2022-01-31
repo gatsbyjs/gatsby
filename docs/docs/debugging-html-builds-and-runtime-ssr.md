@@ -1,8 +1,8 @@
 ---
-title: Debugging HTML Builds
+title: Debugging HTML Builds and runtime SSR
 ---
 
-Errors while building static HTML files (the build-time React SSR process) generally happen for one of the following reasons:
+Errors while building static HTML files (the build-time and runtime React SSR processes) generally happen for one of the following reasons:
 
 1. Some of your code references "browser globals" like `window` or `document`
    that aren't available in Node.js. If this is your problem you should see an
@@ -14,7 +14,9 @@ Errors while building static HTML files (the build-time React SSR process) gener
    lifecycle](https://reactjs.org/docs/react-component.html#componentdidmount)
    or into a [`useEffect`
    hook](https://reactjs.org/docs/hooks-reference.html#useeffect), which
-   ensures the code doesn't run unless it's in the browser.
+   ensures the code doesn't run unless it's in the browser. 
+   
+   **When using `getServerData` on a page for Gatsby v4's [runtime SSR](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/), the rest of the page will still be going through some HTML generation. If your our page and/or `getServerData` contain any unchecked access to "browser globals" such as `window` it will fail to load and cause a 500 error on the server.**
 
 2. Check that each of your JS files listed in your `pages` directory (and any
    sub-directories) are exporting either a React component or string. Gatsby
