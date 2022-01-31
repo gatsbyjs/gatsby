@@ -2,7 +2,7 @@
 
 exports[`useContentfulImage constrained: width and aspectRatio 1`] = `
 Object {
-  "backgroundColor": undefined,
+  "backgroundColor": null,
   "height": 337,
   "images": Object {
     "fallback": Object {
@@ -21,7 +21,7 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=337&fm=auto 600w",
 
 exports[`useContentfulImage constrained: width and height 1`] = `
 Object {
-  "backgroundColor": undefined,
+  "backgroundColor": null,
   "height": 480,
   "images": Object {
     "fallback": Object {
@@ -40,7 +40,7 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480&fm=auto 600w",
 
 exports[`useContentfulImage fixed: width and height 1`] = `
 Object {
-  "backgroundColor": undefined,
+  "backgroundColor": null,
   "height": 480,
   "images": Object {
     "fallback": Object {
@@ -57,7 +57,7 @@ Object {
 
 exports[`useContentfulImage fullWidth: aspect ratio 1`] = `
 Object {
-  "backgroundColor": undefined,
+  "backgroundColor": null,
   "height": 0.5625,
   "images": Object {
     "fallback": Object {
@@ -85,7 +85,7 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304&fm=auto 4096w",
 
 exports[`useContentfulImage fullWidth: aspectRatio, maxWidth 1`] = `
 Object {
-  "backgroundColor": undefined,
+  "backgroundColor": null,
   "height": 0.5625,
   "images": Object {
     "fallback": Object {
@@ -113,7 +113,7 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304&fm=auto 4096w",
 
 exports[`useContentfulImage fullWidth: width, height & maxWidth 1`] = `
 Object {
-  "backgroundColor": undefined,
+  "backgroundColor": null,
   "height": 0.75,
   "images": Object {
     "fallback": Object {
