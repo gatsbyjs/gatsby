@@ -29,6 +29,10 @@ export function createUrl(imgUrl, options = {}) {
   const cornerRadius =
     options.cornerRadius === -1 ? `max` : options.cornerRadius
 
+  if (options.toFormat === `auto`) {
+    delete options.toFormat
+  }
+
   // Convert to Contentful names and filter out undefined/null values.
   const urlArgs = {
     w: options.width || undefined,
