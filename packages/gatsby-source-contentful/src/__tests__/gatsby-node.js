@@ -34,7 +34,19 @@ const createMockCache = () => {
 }
 
 describe(`gatsby-node`, () => {
-  const actions = { createTypes: jest.fn(), setPluginStatus: jest.fn() }
+  const actions = {
+    createTypes: jest.fn(),
+    setPluginStatus: jest.fn(),
+    createNode: jest.fn(async node => {
+      node.internal.owner = `gatsby-source-contentful`
+      // don't allow mutations (this isn't traversing so only top level is frozen)
+      currentNodeMap.set(node.id, Object.freeze(node))
+    }),
+    deleteNode: jest.fn(node => {
+      currentNodeMap.delete(node.id)
+    }),
+    touchNode: jest.fn(),
+  }
   const schema = { buildObjectType: jest.fn(), buildInterfaceType: jest.fn() }
   const store = {
     getState: jest.fn(() => {
@@ -293,16 +305,11 @@ describe(`gatsby-node`, () => {
     // @ts-ignore
     fetchContentTypes.mockClear()
     currentNodeMap = new Map()
-    actions.createNode = jest.fn(async node => {
-      node.internal.owner = `gatsby-source-contentful`
-      // don't allow mutations (this isn't traversing so only top level is frozen)
-      currentNodeMap.set(node.id, Object.freeze(node))
-    })
-    actions.deleteNode = node => {
-      currentNodeMap.delete(node.id)
-    }
-    actions.touchNode = jest.fn()
-    actions.setPluginStatus = jest.fn()
+    actions.createTypes.mockClear()
+    actions.setPluginStatus.mockClear()
+    actions.createNode.mockClear()
+    actions.deleteNode.mockClear()
+    actions.touchNode.mockClear()
     store.getState.mockClear()
     cache.actualMap.clear()
     cache.get.mockClear()
@@ -350,7 +357,9 @@ describe(`gatsby-node`, () => {
         "contentful-content-types-testSpaceId-master",
       ]
     `)
-
+    expect(actions.createNode).toHaveBeenCalledTimes(32)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
@@ -401,6 +410,9 @@ describe(`gatsby-node`, () => {
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
 
+    expect(actions.createNode).toHaveBeenCalledTimes(42)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(32)
     expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
@@ -454,6 +466,9 @@ describe(`gatsby-node`, () => {
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
 
+    expect(actions.createNode).toHaveBeenCalledTimes(50)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(72)
     expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
@@ -522,6 +537,9 @@ describe(`gatsby-node`, () => {
       )
     })
 
+    expect(actions.createNode).toHaveBeenCalledTimes(44)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(2)
+    expect(actions.touchNode).toHaveBeenCalledTimes(74)
     expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
@@ -577,6 +595,9 @@ describe(`gatsby-node`, () => {
       locales
     )
 
+    expect(actions.createNode).toHaveBeenCalledTimes(44)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(2)
+    expect(actions.touchNode).toHaveBeenCalledTimes(74)
     expect(reporter.info.mock.calls).toMatchSnapshot()
   })
 
