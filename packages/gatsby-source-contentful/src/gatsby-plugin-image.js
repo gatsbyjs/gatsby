@@ -263,10 +263,9 @@ export async function resolveGatsbyImageData(
 
   const { generateImageData } = await import(`gatsby-plugin-image`)
 
-  const {
-    getPluginOptions,
-    doMergeDefaults,
-  } = require(`gatsby-plugin-sharp/plugin-options`)
+  const { getPluginOptions, doMergeDefaults } = await import(
+    `gatsby-plugin-sharp/plugin-options`
+  )
 
   const sharpOptions = getPluginOptions()
 
