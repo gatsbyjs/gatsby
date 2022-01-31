@@ -360,7 +360,43 @@ describe(`gatsby-node`, () => {
     expect(actions.createNode).toHaveBeenCalledTimes(32)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(0)
-    expect(reporter.info.mock.calls).toMatchSnapshot()
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Person nodes",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
+      ]
+    `)
   })
 
   it(`should add a new blogpost and update linkedNodes`, async () => {
@@ -413,7 +449,73 @@ describe(`gatsby-node`, () => {
     expect(actions.createNode).toHaveBeenCalledTimes(42)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(32)
-    expect(reporter.info.mock.calls).toMatchSnapshot()
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Person nodes",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
+        Array [
+          "Contentful: 1 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 22 cached entries",
+        ],
+        Array [
+          "Contentful: 1 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 8 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 1 Contentful asset nodes",
+        ],
+      ]
+    `)
   })
 
   it(`should update a blogpost`, async () => {
@@ -469,7 +571,100 @@ describe(`gatsby-node`, () => {
     expect(actions.createNode).toHaveBeenCalledTimes(50)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(72)
-    expect(reporter.info.mock.calls).toMatchSnapshot()
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Person nodes",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
+        Array [
+          "Contentful: 1 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 22 cached entries",
+        ],
+        Array [
+          "Contentful: 1 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 8 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 1 Contentful asset nodes",
+        ],
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 1 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 28 cached entries",
+        ],
+        Array [
+          "Contentful: 0 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 10 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Blog Post nodes",
+        ],
+      ]
+    `)
   })
 
   it(`should remove a blogpost and update linkedNodes`, async () => {
@@ -540,7 +735,97 @@ describe(`gatsby-node`, () => {
     expect(actions.createNode).toHaveBeenCalledTimes(44)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(74)
-    expect(reporter.info.mock.calls).toMatchSnapshot()
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Person nodes",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
+        Array [
+          "Contentful: 1 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 22 cached entries",
+        ],
+        Array [
+          "Contentful: 1 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 8 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 1 Contentful asset nodes",
+        ],
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 1 deleted entries",
+        ],
+        Array [
+          "Contentful: 28 cached entries",
+        ],
+        Array [
+          "Contentful: 0 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 10 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+      ]
+    `)
   })
 
   it(`should remove an asset`, async () => {
@@ -598,7 +883,97 @@ describe(`gatsby-node`, () => {
     expect(actions.createNode).toHaveBeenCalledTimes(44)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(74)
-    expect(reporter.info.mock.calls).toMatchSnapshot()
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Person nodes",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
+        Array [
+          "Contentful: 1 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 22 cached entries",
+        ],
+        Array [
+          "Contentful: 1 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 8 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 1 Contentful asset nodes",
+        ],
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 28 cached entries",
+        ],
+        Array [
+          "Contentful: 0 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 10 cached assets",
+        ],
+        Array [
+          "Contentful: 1 deleted assets",
+        ],
+      ]
+    `)
   })
 
   it(`stores rich text as raw with references attached`, async () => {
