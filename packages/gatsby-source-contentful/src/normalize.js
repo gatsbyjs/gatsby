@@ -339,14 +339,12 @@ export const createNodesForContentType = ({
     description: contentTypeItem.description,
     internal: {
       type: `${makeTypeName(`ContentType`)}`,
+      contentDigest: contentTypeItem.sys.updatedAt,
     },
     sys: {
       type: contentTypeItem.sys.type,
     },
   }
-
-  // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-  contentTypeNode.internal.contentDigest = contentTypeItem.sys.updatedAt
 
   createNodePromises.push(createNode(contentTypeNode))
 
