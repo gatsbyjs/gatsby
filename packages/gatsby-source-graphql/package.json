@@ -16,7 +16,7 @@
     "dataloader": "^2.0.0",
     "gatsby-core-utils": "^3.7.0-next.0",
     "invariant": "^2.2.4",
-    "node-fetch": "^2.6.6"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
