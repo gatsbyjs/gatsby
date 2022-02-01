@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "fast-glob": "^3.2.7",
+    "fast-glob": "^3.2.11",
     "gatsby-core-utils": "^3.7.0-next.0",
-    "node-fetch": "^2.6.6"
+    "node-fetch": "^2.6.7"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
