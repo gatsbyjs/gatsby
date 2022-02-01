@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@types/reach__router": "^1.3.9",
+    "@types/reach__router": "^1.3.10",
     "gatsby-page-utils": "^2.7.0-next.2",
     "prop-types": "^15.7.2"
   },
