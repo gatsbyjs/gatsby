@@ -15,12 +15,12 @@
     "js-cookie": "^3.0.1",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
-    "webpack-assets-manifest": "^5.0.6"
+    "webpack-assets-manifest": "^5.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "@testing-library/dom": "^8.11.1",
+    "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.5.0",
