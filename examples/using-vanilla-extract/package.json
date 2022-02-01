@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "gatsby": "^4.6.0",
+    "gatsby-plugin-vanilla-extract": "^1.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

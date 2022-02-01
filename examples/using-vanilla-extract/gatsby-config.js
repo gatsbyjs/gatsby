@@ -3,7 +3,5 @@ module.exports = {
       title: `using-vanilla-extract`,
         siteUrl: `https://www.yourdomain.tld`,
     },
-    plugins: [
-
-    ]
+    plugins: [`gatsby-plugin-vanilla-extract`]
 }
