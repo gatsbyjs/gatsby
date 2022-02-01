@@ -96,7 +96,8 @@ Once logged into Shopify admin, navigate to the `Apps` page and click the link a
 For the Private app name enter `Gatsby` (the name does not really matter). Add the following under the `Active Permissions for this App` section:
 
 - `Read access` for `Products`
-- `Read access` for `Product listings` if you want to use Shopify's Product Collections in your Gatsby site
+- `Read access` for `Product listings`
+- `Rea access` for `Files`
 - `Read access` for `Orders` if you want to use order information in your Gatsby site
 - `Read access` for `Inventory` and `Locations` if you want to use location information in your Gatsby site
 
