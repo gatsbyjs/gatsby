@@ -24,7 +24,7 @@
     "remark-stringify": "^9.0.1",
     "retext-english": "^3.0.4",
     "sanitize-html": "^1.27.5",
-    "underscore.string": "^3.3.5",
+    "underscore.string": "^3.3.6",
     "unified": "^9.2.2",
     "unist-util-remove-position": "^3.0.0",
     "unist-util-select": "^3.0.4",
