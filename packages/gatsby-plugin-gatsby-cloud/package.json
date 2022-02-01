@@ -15,7 +15,7 @@
     "js-cookie": "^3.0.1",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
-    "webpack-assets-manifest": "^5.0.6"
+    "webpack-assets-manifest": "^5.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
