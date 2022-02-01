@@ -125,7 +125,7 @@ const Indicator = () => {
     manifestId: contentSyncInfo?.manifestId,
     sourcePluginName: contentSyncInfo?.pluginName,
     siteId: buildInfo?.siteInfo?.siteId,
-    shouldPoll: !!buildInfo?.siteInfo && !!contentSyncInfo,
+    shouldPoll: !!contentSyncInfo,
   }
 
   const {
