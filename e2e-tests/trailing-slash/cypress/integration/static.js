@@ -18,7 +18,7 @@ describe(`static directory`, () => {
 
       cy.visit(`/something.html/`, {
         failOnStatusCode: false,
-      }).assertRoute(`/something.html/`)
+      }).waitForRouteChange().assertRoute(`/something.html/`)
     })
   })
 
@@ -32,10 +32,10 @@ describe(`static directory`, () => {
       }
     )
 
-    it(`visiting with trailing slash returns 200`, () => {
+    it(`visiting with trailing slash returns 404`, () => {
       assertPageVisits([{ path: "/nested/", status: 404 }])
 
-      cy.visit(`/nested/`, { failOnStatusCode: false }).assertRoute(`/nested/`)
+      cy.visit(`/nested/`, { failOnStatusCode: false }).waitForRouteChange().assertRoute(`/nested/`)
     })
   })
 })
