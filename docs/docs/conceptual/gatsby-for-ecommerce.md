@@ -22,7 +22,7 @@ In this case, your options are likely between a technologically forward e-commer
 
 Once an organization selects a main e-commerce platform, it may also want or need other content stores that will get pulled into the website. They might choose a CMS like Contentful for complex content modelling, or WordPress for blog content authoring. They might choose Yotpo for customer reviews or Salsify for product information management.
 
-### Why organizations build e-commerce sites with Gatsby
+### Why organizations build e-commerce sites with Gatsby?
 
 Organizations looking for a JAMStack e-commerce site that go with Gatsby typically do so for a combination of three reasons: they want to embrace a modern development framework (React), they want to optimize performance, and they want a web framework that’s already integrated with the systems they’re using (via Gatsby’s plugin system and pre-built integrations).
 
