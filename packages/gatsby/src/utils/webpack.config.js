@@ -892,11 +892,17 @@ module.exports = async (
         continue
       }
 
-      const ruleLoaders = Array.isArray(rule.use)
-        ? rule.use.map(useEntry =>
+      let use = rule.use
+
+      if (typeof use === `function`) {
+        use = rule.use({})
+      }
+
+      const ruleLoaders = Array.isArray(use)
+        ? use.map(useEntry =>
             typeof useEntry === `string` ? useEntry : useEntry.loader
           )
-        : [rule.use?.loader ?? rule.loader]
+        : [use?.loader ?? rule.loader]
 
       const hasBabelLoader = ruleLoaders.some(
         loader => loader === babelLoaderLoc

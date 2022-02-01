@@ -23,6 +23,7 @@ import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 import { store } from "../redux"
+import type { RuleSetUseItem } from "webpack"
 
 type Loader = string | { loader: string; options?: { [name: string]: any } }
 type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
@@ -429,11 +430,21 @@ export const createWebpackUtils = (
           )
         },
         type: `javascript/auto`,
-        use: [
+        use: ({ issuer }): Array<RuleSetUseItem> => [
+          // If a JS import comes from async-requires, assume it is for a page component.
+          // Using `issuer` allows us to avoid mutating async-requires for this case.
+          //
+          // If other imports are added to async-requires in the future, another option is to
+          // append a query param to page components in the store and check against `resourceQuery` here.
+          //
+          // This would require we adjust `doesModuleMatchResourcePath` in `static-query-mapper`
+          // to check against the module's `resourceResolveData.path` instead of resource to avoid
+          // mismatches because of the added query param. Other adjustments may also be needed.
           loaders.js({
             ...options,
             configFile: true,
             compact: PRODUCTION,
+            isPageTemplate: /async-requires/.test(issuer),
           }),
         ],
       }
