@@ -35,7 +35,7 @@ describe(`static directory`, () => {
     it(`visiting with trailing slash returns 404`, () => {
       assertPageVisits([{ path: "/nested/", status: 404 }])
 
-      cy.visit(`/nested/`, { failOnStatusCode: false }).waitForRouteChange().assertRoute(`/nested/`)
+      cy.visit(`/nested/`, { failOnStatusCode: false }).assertRoute(`/nested/`)
     })
   })
 })
