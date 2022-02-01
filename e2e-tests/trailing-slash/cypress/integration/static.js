@@ -12,13 +12,13 @@ describe(`static directory`, () => {
       cy.visit(`/something.html`).assertRoute(`/something.html`)
     })
 
-    it(`adding trailing slash result in 404`, () => {
+    itWhenIsBuild(`adding trailing slash result in 404`, () => {
       // works for build+serve, doesn't work for develop
       assertPageVisits([{ path: "/something.html/", status: 404 }])
 
       cy.visit(`/something.html/`, {
         failOnStatusCode: false,
-      }).waitForRouteChange().assertRoute(`/something.html/`)
+      }).assertRoute(`/something.html/`)
     })
   })
 
