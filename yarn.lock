@@ -24472,10 +24472,10 @@ webidl-conversions@^6.1.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-6.1.0.tgz#9111b4d7ea80acd40f5270d666621afa78b69514"
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
-webpack-assets-manifest@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-5.0.6.tgz#1fe7baf9b57f2d28ff09fcaef3d678cc15912b88"
-  integrity sha512-CW94ylPHurZTmxnYajSFA8763Cv/QFIKNgBwqBLaIOnBjH1EbDUAf8Eq1/i+o8qaKyKXJ3aX7r4/jtpXD88ldg==
+webpack-assets-manifest@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-5.1.0.tgz#5af328f6c8fa760cb9a62af631a83da2b478b791"
+  integrity sha512-kPuTMEjBrqZQVJ5M6yXNBCEdFbQQn7p+loNXt8NOeDFaAbsNFWqqwR0YL1mfG5LbwhK5FLXWXpuK3GuIIZ46rg==
   dependencies:
     chalk "^4.0"
     deepmerge "^4.0"
