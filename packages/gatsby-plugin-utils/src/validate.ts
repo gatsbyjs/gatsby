@@ -36,12 +36,7 @@ export async function validateOptionsSchema(
 ): Promise<IValidateAsyncResult> {
   const { validateExternalRules, returnWarnings } = options
 
-  const warnOnUnknownSchema = pluginSchema.pattern(
-    /.*/,
-    Joi.any().warning(`any.unknown`)
-  )
-
-  return (await warnOnUnknownSchema.validateAsync(pluginOptions, {
+  return (await pluginSchema.validateAsync(pluginOptions, {
     ...validationOptions,
     externals: validateExternalRules,
     warnings: returnWarnings,

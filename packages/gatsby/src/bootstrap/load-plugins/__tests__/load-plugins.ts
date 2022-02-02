@@ -460,6 +460,36 @@ describe(`Load plugins`, () => {
       expect(mockProcessExit).not.toHaveBeenCalled()
     })
 
+    it(`allows unknown nested options`, async () => {
+      const plugins = [
+        {
+          resolve: `gatsby-remark-images`,
+          options: {
+            withWebp: {
+              doesThisExistInTheSchema: `no`,
+              quality: 100,
+            }
+          },
+        },
+      ]
+      await loadPlugins(
+        {
+          plugins,
+        },
+        process.cwd()
+      )
+
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(0)
+      expect(reporter.warn as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((reporter.warn as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          "Warning: there are unknown plugin options for \\"gatsby-remark-images\\": withWebp.doesThisExistInTheSchema
+        Please open an issue at https://ghub.io/gatsby-remark-images if you believe this option is valid.",
+        ]
+      `)
+      expect(mockProcessExit).not.toHaveBeenCalled()
+    })
+
     it(`defaults plugin options to the ones defined in the schema`, async () => {
       let plugins = await loadPlugins(
         {
