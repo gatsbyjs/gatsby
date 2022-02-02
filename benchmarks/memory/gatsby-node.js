@@ -98,7 +98,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
   const { data } = await graphql(`
     {
-      allTest {
+      allTest(sort: {fields: fooBar}) {
         nodes {
           id
           idClone

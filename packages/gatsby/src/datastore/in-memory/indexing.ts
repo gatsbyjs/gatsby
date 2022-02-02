@@ -4,8 +4,11 @@ import {
   IDbQueryElemMatch,
   FilterValue,
   FilterValueNullable,
+  objectToDottedField,
 } from "../common/query"
 import { getDataStore, getNode } from "../"
+import _ from "lodash"
+import { getValueAt } from "../../utils/get-value-at"
 
 // Only list supported ops here. "CacheableFilterOp"
 export type FilterOp =  // TODO: merge with DbComparator ?
@@ -23,36 +26,67 @@ export type FilterOp =  // TODO: merge with DbComparator ?
 export type FilterCacheKey = string
 type GatsbyNodeID = string
 
-export interface IGatsbyNodeIdentifiers {
+export interface IGatsbyNodePartial {
+  isGatsbyNodePartial: boolean
   id: GatsbyNodeID
-  counter: number
+  internal: {
+    counter: number
+  }
+  indexFields: Set<string>
+  [k: string]: any
 }
 
 const nodeIdToIdentifierMap = new Map<
   GatsbyNodeID,
-  WeakRef<IGatsbyNodeIdentifiers>
+  WeakRef<IGatsbyNodePartial>
 >()
 
-const getIdentifierObjectFromNode = (
-  node: IGatsbyNode
-): IGatsbyNodeIdentifiers => {
+export const getGatsbyNodePartial = (
+  node: IGatsbyNode | IGatsbyNodePartial,
+  indexFields: Array<string>,
+  resolvedFields: any
+): IGatsbyNodePartial => {
   const cacheKey = `${node.id}_____${node.internal.counter}`
   if (nodeIdToIdentifierMap.has(cacheKey)) {
     const maybeStillExist = nodeIdToIdentifierMap.get(cacheKey)?.deref()
-    if (maybeStillExist) {
+    if (
+      maybeStillExist &&
+      _.isEqual(new Set(indexFields), maybeStillExist.indexFields)
+    ) {
       return maybeStillExist
     }
   }
 
-  const identifier = { id: node.id, counter: node.internal.counter }
-  nodeIdToIdentifierMap.set(cacheKey, new WeakRef(identifier))
-  return identifier
+  const dottedFields = {}
+
+  for (const dottedField of getSortFieldIdentifierKeys(
+    indexFields,
+    resolvedFields
+  )) {
+    if (dottedField in node) {
+      dottedFields[dottedField] = node[dottedField]
+    } else {
+      dottedFields[dottedField] = getValueAt(
+        node.isGatsbyNodePartial ? getNode(node.id)! : node,
+        dottedField
+      )
+    }
+  }
+
+  const partial = Object.assign(dottedFields, {
+    isGatsbyNodePartial: true,
+    id: node.id,
+    internal: {
+      counter: node.internal.counter,
+    },
+    indexFields: new Set(indexFields),
+  })
+  nodeIdToIdentifierMap.set(cacheKey, new WeakRef<IGatsbyNodePartial>(partial))
+  return partial
 }
 
-const sortByIds = (
-  a: IGatsbyNodeIdentifiers,
-  b: IGatsbyNodeIdentifiers
-): number => a.counter - b.counter
+const sortByIds = (a: IGatsbyNodePartial, b: IGatsbyNodePartial): number =>
+  a.internal.counter - b.internal.counter
 
 export interface IFilterCache {
   op: FilterOp
@@ -63,22 +97,22 @@ export interface IFilterCache {
   // This arrays may contain duplicates (!) because those only get filtered in the
   // last step.
   // TODO: We might decide to make sure these buckets _are_ deduped for eq perf
-  byValue: Map<FilterValueNullable, Array<IGatsbyNodeIdentifiers>>
+  byValue: Map<FilterValueNullable, Array<IGatsbyNodePartial>>
   meta: {
     // Used by ne/nin, which will create a Set from this array and then remove another set(s) and sort
-    nodesUnordered?: Array<IGatsbyNodeIdentifiers>
+    nodesUnordered?: Array<IGatsbyNodePartial>
     // Flat list of all nodes by requested types, ordered by counter (cached for empty filters)
-    orderedByCounter?: Array<IGatsbyNodeIdentifiers>
+    orderedByCounter?: Array<IGatsbyNodePartial>
     // Ordered list of all values (by `<`) found by this filter. No null / undefs
     valuesAsc?: Array<FilterValue>
     // Flat list of nodes, ordered by valueAsc
-    nodesByValueAsc?: Array<IGatsbyNodeIdentifiers>
+    nodesByValueAsc?: Array<IGatsbyNodePartial>
     // Ranges of nodes per value, maps to the nodesByValueAsc array
     valueRangesAsc?: Map<FilterValue, [number, number]>
     // Ordered list of all values (by `>`) found by this filter. No null / undefs
     valuesDesc?: Array<FilterValue>
     // Flat list of nodes, ordered by valueDesc
-    nodesByValueDesc?: Array<IGatsbyNodeIdentifiers>
+    nodesByValueDesc?: Array<IGatsbyNodePartial>
     // Ranges of nodes per value, maps to the nodesByValueDesc array
     valueRangesDesc?: Map<FilterValue, [number, number]>
   }
@@ -115,7 +149,7 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   // For `$ne` we will take the list of all targeted nodes and eliminate the
   // bucket of nodes with a particular value, if it exists at all..
 
-  const arr: Array<IGatsbyNodeIdentifiers> = []
+  const arr: Array<IGatsbyNodePartial> = []
   filterCache.meta.nodesUnordered = arr
   filterCache.byValue.forEach(v => {
     v.forEach(nodeId => {
@@ -134,14 +168,14 @@ function postIndexingMetaSetupLtLteGtGte(
   // This way non-eq ops can simply slice the array to get a range.
 
   const entriesNullable: Array<
-    [FilterValueNullable, Array<IGatsbyNodeIdentifiers>]
+    [FilterValueNullable, Array<IGatsbyNodePartial>]
   > = [...filterCache.byValue.entries()]
 
   // These range checks never return `null` or `undefined` so filter those out
   // By filtering them out early, the sort should be faster. Could be ...
-  const entries: Array<[FilterValue, Array<IGatsbyNodeIdentifiers>]> =
+  const entries: Array<[FilterValue, Array<IGatsbyNodePartial>]> =
     entriesNullable.filter(([v]) => v != null) as Array<
-      [FilterValue, Array<IGatsbyNodeIdentifiers>]
+      [FilterValue, Array<IGatsbyNodePartial>]
     >
 
   // Sort all arrays by its value, asc. Ignore/allow potential type casting.
@@ -165,21 +199,19 @@ function postIndexingMetaSetupLtLteGtGte(
     entries.sort(([a], [b]) => (a > b ? -1 : a < b ? 1 : 0))
   }
 
-  const orderedNodes: Array<IGatsbyNodeIdentifiers> = []
+  const orderedNodes: Array<IGatsbyNodePartial> = []
   const orderedValues: Array<FilterValue> = []
   const offsets: Map<FilterValue, [number, number]> = new Map()
-  entries.forEach(
-    ([v, bucket]: [FilterValue, Array<IGatsbyNodeIdentifiers>]) => {
-      // Record the range containing all nodes with as filter value v
-      // The last value of the range should be the offset of the next value
-      // (So you should be able to do `nodes.slice(start, stop)` to get them)
-      offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.length])
-      // We could do `arr.push(...bucket)` here but that's not safe with very
-      // large sets, so we use a regular loop
-      bucket.forEach(node => orderedNodes.push(node))
-      orderedValues.push(v)
-    }
-  )
+  entries.forEach(([v, bucket]: [FilterValue, Array<IGatsbyNodePartial>]) => {
+    // Record the range containing all nodes with as filter value v
+    // The last value of the range should be the offset of the next value
+    // (So you should be able to do `nodes.slice(start, stop)` to get them)
+    offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.length])
+    // We could do `arr.push(...bucket)` here but that's not safe with very
+    // large sets, so we use a regular loop
+    bucket.forEach(node => orderedNodes.push(node))
+    orderedValues.push(v)
+  })
 
   if (op === `$lt` || op === `$lte`) {
     filterCache.meta.valuesAsc = orderedValues
@@ -210,7 +242,9 @@ export const ensureIndexByQuery = (
   filterCacheKey: FilterCacheKey,
   filterPath: Array<string>,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache
+  filtersCache: FiltersCache,
+  indexFields: Array<string>,
+  resolvedFields: any
 ): void => {
   const readableWorkerId = process.env.GATSBY_WORKER_ID
     ? `worker #${process.env.GATSBY_WORKER_ID}`
@@ -224,7 +258,7 @@ export const ensureIndexByQuery = (
 
   const filterCache: IFilterCache = {
     op,
-    byValue: new Map<FilterValueNullable, Array<IGatsbyNodeIdentifiers>>(),
+    byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
     meta: {},
   } as IFilterCache
   filtersCache.set(filterCacheKey, filterCache)
@@ -237,7 +271,14 @@ export const ensureIndexByQuery = (
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
       .forEach(node => {
-        addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
+        addNodeToFilterCache(
+          node,
+          filterPath,
+          filterCache,
+          resolvedNodesCache,
+          indexFields,
+          resolvedFields
+        )
       })
   } else {
     // Here we must first filter for the node type
@@ -249,7 +290,14 @@ export const ensureIndexByQuery = (
           return
         }
 
-        addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
+        addNodeToFilterCache(
+          node,
+          filterPath,
+          filterCache,
+          resolvedNodesCache,
+          indexFields,
+          resolvedFields
+        )
       })
   }
 
@@ -261,7 +309,9 @@ export const ensureIndexByQuery = (
 export function ensureEmptyFilterCache(
   filterCacheKey,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache
+  filtersCache: FiltersCache,
+  indexFields: Array<string>,
+  resolvedFields: any
 ): void {
   // This is called for queries without any filters
   // We want to cache the result since it's basically a list of nodes by type(s)
@@ -269,11 +319,11 @@ export function ensureEmptyFilterCache(
 
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
-  const orderedByCounter: Array<IGatsbyNodeIdentifiers> = []
+  const orderedByCounter: Array<IGatsbyNodePartial> = []
 
   filtersCache.set(filterCacheKey, {
     op: `$eq`, // Ignore.
-    byValue: new Map<FilterValueNullable, Array<IGatsbyNodeIdentifiers>>(),
+    byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
     meta: {
       orderedByCounter, // This is what we want
     },
@@ -291,7 +341,9 @@ export function ensureEmptyFilterCache(
             node.__gatsby_resolved = resolved
           }
         }
-        orderedByCounter.push(getIdentifierObjectFromNode(node))
+        orderedByCounter.push(
+          getGatsbyNodePartial(node, indexFields, resolvedFields)
+        )
       })
   } else {
     // Here we must first filter for the node type
@@ -308,7 +360,9 @@ export function ensureEmptyFilterCache(
               node.__gatsby_resolved = resolved
             }
           }
-          orderedByCounter.push(getIdentifierObjectFromNode(node))
+          orderedByCounter.push(
+            getGatsbyNodePartial(node, indexFields, resolvedFields)
+          )
         }
       })
   }
@@ -323,6 +377,8 @@ function addNodeToFilterCache(
   chain: Array<string>,
   filterCache: IFilterCache,
   resolvedNodesCache,
+  indexFields: Array<string>,
+  resolvedFields: any,
   valueOffset: any = node
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
@@ -353,7 +409,9 @@ function addNodeToFilterCache(
       // Add an entry for each element of the array. This would work for ops
       // like eq and ne, but not sure about range ops like lt,lte,gt,gte.
 
-      v.forEach(v => markNodeForValue(filterCache, node, v))
+      v.forEach(v =>
+        markNodeForValue(filterCache, node, v, indexFields, resolvedFields)
+      )
 
       return
     }
@@ -365,20 +423,26 @@ function addNodeToFilterCache(
     v = undefined
   }
 
-  markNodeForValue(filterCache, node, v)
+  markNodeForValue(filterCache, node, v, indexFields, resolvedFields)
 }
 
 function markNodeForValue(
   filterCache: IFilterCache,
   node: IGatsbyNode,
-  value: FilterValueNullable
+  value: FilterValueNullable,
+  indexFields: Array<string>,
+  resolvedFields: any
 ): void {
   let arr = filterCache.byValue.get(value)
   if (!arr) {
     arr = []
     filterCache.byValue.set(value, arr)
   }
-  arr.push(getIdentifierObjectFromNode(node))
+
+  const partial = getGatsbyNodePartial(node, indexFields, resolvedFields)
+  if (!arr.includes(partial)) {
+    arr.push(partial)
+  }
 }
 
 export const ensureIndexByElemMatch = (
@@ -386,7 +450,9 @@ export const ensureIndexByElemMatch = (
   filterCacheKey: FilterCacheKey,
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache
+  filtersCache: FiltersCache,
+  indexFields: Array<string>,
+  resolvedFields: any
 ): void => {
   // Given an elemMatch filter, generate the cache that contains all nodes that
   // matches a given value for that sub-query
@@ -396,7 +462,7 @@ export const ensureIndexByElemMatch = (
 
   const filterCache: IFilterCache = {
     op,
-    byValue: new Map<FilterValueNullable, Array<IGatsbyNodeIdentifiers>>(),
+    byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
     meta: {},
   } as IFilterCache
   filtersCache.set(filterCacheKey, filterCache)
@@ -410,7 +476,9 @@ export const ensureIndexByElemMatch = (
           node,
           filter,
           filterCache,
-          resolvedNodesCache
+          resolvedNodesCache,
+          indexFields,
+          resolvedFields
         )
       })
   } else {
@@ -427,7 +495,9 @@ export const ensureIndexByElemMatch = (
           node,
           filter,
           filterCache,
-          resolvedNodesCache
+          resolvedNodesCache,
+          indexFields,
+          resolvedFields
         )
       })
   }
@@ -440,7 +510,9 @@ function addNodeToBucketWithElemMatch(
   valueAtCurrentStep: any, // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch,
   filterCache: IFilterCache,
-  resolvedNodesCache
+  resolvedNodesCache,
+  indexFields: Array<string>,
+  resolvedFields: any
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
@@ -480,7 +552,9 @@ function addNodeToBucketWithElemMatch(
         elem,
         nestedQuery,
         filterCache,
-        resolvedNodesCache
+        resolvedNodesCache,
+        indexFields,
+        resolvedFields
       )
     } else {
       // Now take same route as non-elemMatch filters would take
@@ -489,6 +563,8 @@ function addNodeToBucketWithElemMatch(
         nestedQuery.path,
         filterCache,
         resolvedNodesCache,
+        indexFields,
+        resolvedFields,
         elem
       )
     }
@@ -583,11 +659,13 @@ export const getNodesFromCacheByValue = (
   filterValue: FilterValueNullable,
   filtersCache: FiltersCache,
   wasElemMatch
-): Array<IGatsbyNodeIdentifiers> | undefined => {
+): Array<IGatsbyNodePartial> | undefined => {
   const filterCache = filtersCache.get(filterCacheKey)
   if (!filterCache) {
     return undefined
   }
+
+  // TODO we need to pass indexFields here and reload identifiers to be able to sort properly
 
   const op = filterCache.op
 
@@ -616,7 +694,7 @@ export const getNodesFromCacheByValue = (
     }
     const filterValueArr: Array<FilterValueNullable> = filterValue
 
-    const set: Set<IGatsbyNodeIdentifiers> = new Set()
+    const set: Set<IGatsbyNodePartial> = new Set()
 
     // TODO: we can also mergeSort for every step. this may perform worse because of how memory in js works.
     // For every value in the needle array, find the bucket of nodes for
@@ -692,7 +770,7 @@ export const getNodesFromCacheByValue = (
     }
     const regex = filterValue
 
-    const arr: Array<IGatsbyNodeIdentifiers> = []
+    const arr: Array<IGatsbyNodePartial> = []
     filterCache.byValue.forEach((nodes, value) => {
       // TODO: does the value have to be a string for $regex? Can we auto-ignore any non-strings? Or does it coerce.
       // Note: for legacy reasons partial paths should also be included for regex
@@ -978,7 +1056,7 @@ export const getNodesFromCacheByValue = (
 function removeBucketFromSet(
   filterValue: FilterValueNullable,
   filterCache: IFilterCache,
-  set: Set<IGatsbyNodeIdentifiers>
+  set: Set<IGatsbyNodePartial>
 ): void {
   if (filterValue === null) {
     // Edge case: $ne with `null` returns only the nodes that contain the full
@@ -1003,13 +1081,13 @@ function removeBucketFromSet(
  * list that is also ordered by node.internal.counter
  */
 export function intersectNodesByCounter(
-  a: Array<IGatsbyNodeIdentifiers>,
-  b: Array<IGatsbyNodeIdentifiers>
-): Array<IGatsbyNodeIdentifiers> {
+  a: Array<IGatsbyNodePartial>,
+  b: Array<IGatsbyNodePartial>
+): Array<IGatsbyNodePartial> {
   let pointerA = 0
   let pointerB = 0
   // TODO: perf check: is it helpful to init the array to min(maxA,maxB) items?
-  const result: Array<IGatsbyNodeIdentifiers> = []
+  const result: Array<IGatsbyNodePartial> = []
   const maxA = a.length
   const maxB = b.length
   let lastAdded: IGatsbyNode | undefined = undefined // Used to dedupe the list
@@ -1019,8 +1097,8 @@ export function intersectNodesByCounter(
   while (pointerA < maxA && pointerB < maxB) {
     const nodeA = getNode(a[pointerA].id)
     const nodeB = getNode(b[pointerB].id)
-    const counterA = a[pointerA].counter
-    const counterB = b[pointerB].counter
+    const counterA = a[pointerA].internal.counter
+    const counterB = b[pointerB].internal.counter
 
     if (counterA < counterB) {
       pointerA++
@@ -1056,11 +1134,11 @@ export function intersectNodesByCounter(
  * list that is also ordered by node.internal.counter
  */
 export function unionNodesByCounter(
-  a: Array<IGatsbyNodeIdentifiers>,
-  b: Array<IGatsbyNodeIdentifiers>
-): Array<IGatsbyNodeIdentifiers> {
+  a: Array<IGatsbyNodePartial>,
+  b: Array<IGatsbyNodePartial>
+): Array<IGatsbyNodePartial> {
   // TODO: perf check: is it helpful to init the array to max(maxA,maxB) items?
-  const arr: Array<IGatsbyNodeIdentifiers> = []
+  const arr: Array<IGatsbyNodePartial> = []
   let lastAdded: IGatsbyNode | undefined = undefined // Used to dedupe the list
 
   // TODO some optimization could be done here to not call getNode
@@ -1119,11 +1197,11 @@ export function unionNodesByCounter(
   return arr
 }
 
-function expensiveDedupeInline(arr: Array<IGatsbyNodeIdentifiers>): void {
+function expensiveDedupeInline(arr: Array<IGatsbyNodePartial>): void {
   // An elemMatch filter may cause duplicates to appear in a bucket.
   // Since the bucket is sorted those should now be back to back
   // Worst case this is a fast O(n) loop that does nothing.
-  let prev: IGatsbyNodeIdentifiers | undefined = undefined
+  let prev: IGatsbyNodePartial | undefined = undefined
 
   // We copy-on-find because a splice is expensive and we can't use Sets
 
@@ -1140,4 +1218,24 @@ function expensiveDedupeInline(arr: Array<IGatsbyNodeIdentifiers>): void {
     }
   }
   arr.length = j
+}
+
+export function getSortFieldIdentifierKeys(
+  indexFields: Array<string>,
+  resolvedFields: any
+): Array<string> {
+  const dottedFields = objectToDottedField(resolvedFields)
+  const dottedFieldKeys = Object.keys(dottedFields)
+  const fieldKeys = indexFields.map(field => {
+    if (
+      dottedFields[field] ||
+      dottedFieldKeys.some(key => field.startsWith(key))
+    ) {
+      return `__gatsby_resolved.${field}`
+    } else {
+      return field
+    }
+  })
+
+  return fieldKeys
 }
