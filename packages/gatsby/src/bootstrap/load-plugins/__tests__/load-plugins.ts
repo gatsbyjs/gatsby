@@ -468,7 +468,7 @@ describe(`Load plugins`, () => {
             withWebp: {
               doesThisExistInTheSchema: `no`,
               quality: 100,
-            }
+            },
           },
         },
       ]
