@@ -1,6 +1,9 @@
 import joi from "joi"
 import { SchemaMap } from "joi"
-import { ObjectSchema, PluginOptionsSchemaJoi } from "./utils/plugin-options-schema-joi-type"
+import {
+  ObjectSchema,
+  PluginOptionsSchemaJoi,
+} from "./utils/plugin-options-schema-joi-type"
 
 const joiInstance: PluginOptionsSchemaJoi = joi.extend({
   // This tells Joi to extend _all_ types with .dotenv(), see
@@ -32,12 +35,10 @@ const joiInstance: PluginOptionsSchemaJoi = joi.extend({
 // we would only get root-level validation.
 const wrappedJoiObjectWithUnknownWarnings = <TSchema = any, T = TSchema>(
   schema?: SchemaMap<T>
-): ObjectSchema<TSchema> => {
-  return (joi as unknown as PluginOptionsSchemaJoi).object(schema).pattern(
-    /.*/,
-    Joi.any().warning(`any.unknown`)
-  )
-}
+): ObjectSchema<TSchema> =>
+  (joi as unknown as PluginOptionsSchemaJoi)
+    .object(schema)
+    .pattern(/.*/, joiInstance.any().warning(`any.unknown`))
 
 joiInstance.object = wrappedJoiObjectWithUnknownWarnings
 

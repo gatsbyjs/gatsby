@@ -1,5 +1,5 @@
 import { ValidationOptions } from "joi"
-import { ObjectSchema, Joi } from "./joi"
+import { ObjectSchema } from "./joi"
 import { IPluginInfoOptions } from "./types"
 
 const validationOptions: ValidationOptions = {
