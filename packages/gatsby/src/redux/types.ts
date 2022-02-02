@@ -1,3 +1,4 @@
+import type { TrailingSlash } from "gatsby-page-utils"
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
@@ -97,6 +98,7 @@ export interface IGatsbyConfig {
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
+  trailingSlash?: TrailingSlash
 }
 
 export interface IGatsbyNode {

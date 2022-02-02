@@ -1,16 +1,6 @@
-const fs = require(`fs-extra`)
-const {
-  createContentDigest,
-  fetchRemoteFile,
-  createFilePath,
-} = require(`gatsby-core-utils`)
-const path = require(`path`)
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
 const { isWebUri } = require(`valid-url`)
-const Queue = require(`fastq`)
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension } = require(`./utils`)
-
-let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
 /********************
  * Type Definitions *
@@ -46,41 +36,6 @@ let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
  * @param  {Reporter} [options.reporter]
  */
 
-/********************
- * Queue Management *
- ********************/
-
-const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
-  ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
-  : 200
-
-const queue = Queue(pushToQueue, GATSBY_CONCURRENT_DOWNLOAD)
-
-/**
- * @callback {Queue~queueCallback}
- * @param {*} error
- * @param {*} result
- */
-
-/**
- * pushToQueue
- * --
- * Handle tasks that are pushed in to the Queue
- *
- *
- * @param  {CreateRemoteFileNodePayload}          task
- * @param  {Queue~queueCallback}  cb
- * @return {Promise<null>}
- */
-async function pushToQueue(task, cb) {
-  try {
-    const node = await processRemoteNode(task)
-    return cb(null, node)
-  } catch (e) {
-    return cb(e)
-  }
-}
-
 /******************
  * Core Functions *
  ******************/
@@ -104,25 +59,14 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  let filename
-  if (process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER) {
-    filename = await fetchPlaceholder({
-      fromPath: process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER,
-      url,
-      cache,
-      ext,
-      name,
-    })
-  } else {
-    filename = await fetchRemoteFile({
-      url,
-      cache,
-      auth,
-      httpHeaders,
-      ext,
-      name,
-    })
-  }
+  const filename = await fetchRemoteFile({
+    url,
+    cache,
+    auth,
+    httpHeaders,
+    ext,
+    name,
+  })
 
   // Create the file node.
   const fileNode = await createFileNode(filename, createNodeId, {})
@@ -138,42 +82,10 @@ async function processRemoteNode({
   return fileNode
 }
 
-async function fetchPlaceholder({ fromPath, url, cache, ext, name }) {
-  const pluginCacheDir = cache.directory
-  const digest = createContentDigest(url)
-
-  if (!ext) {
-    ext = getRemoteFileExtension(url)
-  }
-
-  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
-  fs.copySync(fromPath, filename)
-  return filename
-}
-
 /**
  * Index of promises resolving to File node from remote url
  */
 const processingCache = {}
-/**
- * pushTask
- * --
- * pushes a task in to the Queue and the processing cache
- *
- * Promisfy a task in queue
- * @param {CreateRemoteFileNodePayload} task
- * @return {Promise<Object>}
- */
-const pushTask = task =>
-  new Promise((resolve, reject) => {
-    queue.push(task, (err, node) => {
-      if (!err) {
-        resolve(node)
-      } else {
-        reject(`failed to process ${task.url}\n${err}`)
-      }
-    })
-  })
 
 /***************
  * Entry Point *
@@ -202,20 +114,6 @@ module.exports = function createRemoteFileNode({
   ext = null,
   name = null,
 }) {
-  if (showFlagWarning) {
-    showFlagWarning = false
-    // Note: This will use a placeholder image as the default for every file that is downloaded through this API.
-    //       That may break certain cases, in particular when the file is not meant to be an image or when the image
-    //       is expected to be of a particular type that is other than the placeholder. This API is meant to bypass
-    //       the remote download for local testing only.
-    console.info(
-      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: Any file downloaded by \`createRemoteFileNode\` will use the same placeholder image and skip the remote fetch. Note: This is an experimental flag that can change/disappear at any point.`
-    )
-    console.info(
-      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: File to use: \`${process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER}\``
-    )
-  }
-
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
@@ -245,11 +143,13 @@ module.exports = function createRemoteFileNode({
 
   if (!url || isWebUri(url) === undefined) {
     return Promise.reject(
-      `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
+      new Error(
+        `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
+      )
     )
   }
 
-  const fileDownloadPromise = pushTask({
+  const fileDownloadPromise = processRemoteNode({
     url,
     cache,
     createNode,

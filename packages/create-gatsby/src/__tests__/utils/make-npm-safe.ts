@@ -1,4 +1,4 @@
-import { makeNpmSafe } from "../utils"
+import { makeNpmSafe } from "../../utils/make-npm-safe"
 
 const tests = [
   [`A gatsby SiteHere`, `a-gatsby-site-here`],
