@@ -86,21 +86,33 @@ describe(`gatsby-node`, () => {
     }),
     touchNode: jest.fn(),
   }
+
+  const schemaCustomizationTypes = []
   const schema = {
-    buildObjectType: jest.fn(() => {
-      return {
-        config: {
-          interfaces: [],
-        },
-      }
+    buildObjectType: jest.fn(config => {
+      schemaCustomizationTypes.push({
+        typeOrTypeDef: { config },
+        plugin: { name: `gatsby-source-contentful` },
+      })
     }),
-    buildInterfaceType: jest.fn(),
+    buildInterfaceType: jest.fn(config => {
+      schemaCustomizationTypes.push({
+        typeOrTypeDef: { config },
+        plugin: { name: `gatsby-source-contentful` },
+      })
+    }),
   }
+
   const store = {
     getState: jest.fn(() => {
-      return { program: { directory: process.cwd() }, status: {} }
+      return {
+        program: { directory: process.cwd() },
+        status: {},
+        schemaCustomization: { types: schemaCustomizationTypes },
+      }
     }),
   }
+
   const cache = createMockCache()
   const getCache = jest.fn(() => cache)
   const reporter = {
@@ -424,6 +436,7 @@ describe(`gatsby-node`, () => {
     cache.set.mockClear()
     reporter.info.mockClear()
     reporter.panic.mockClear()
+    schemaCustomizationTypes.length = 0
   })
 
   let hasImported = false
@@ -888,7 +901,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(52)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(actions.touchNode).toHaveBeenCalledTimes(72)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -974,7 +987,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(54)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(actions.touchNode).toHaveBeenCalledTimes(72)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [

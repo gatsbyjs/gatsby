@@ -2,10 +2,7 @@ import { getRichTextEntityLinks } from "@contentful/rich-text-links"
 import { stripIndent } from "common-tags"
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
-import {
-  getGatsbyImageFieldConfig,
-  resolveGatsbyImageData,
-} from "./gatsby-plugin-image"
+import { resolveGatsbyImageData } from "./gatsby-plugin-image"
 import { makeTypeName } from "./normalize"
 import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
 
@@ -168,7 +165,7 @@ const translateFieldType = (field, schema, createTypes) => {
   return fieldType
 }
 
-export function generateSchema({
+export async function generateSchema({
   createTypes,
   schema,
   pluginConfig,
@@ -176,6 +173,10 @@ export function generateSchema({
   cache,
   actions,
 }) {
+  const { getGatsbyImageFieldConfig } = await import(
+    `gatsby-plugin-image/graphql-utils`
+  )
+
   // Generic Types
   createTypes(
     schema.buildInterfaceType({

@@ -156,6 +156,9 @@ Array [
         "id": Object {
           "type": "ID!",
         },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
         "size": Object {
           "type": "Int",
         },
@@ -784,6 +787,9 @@ Array [
       "fields": Object {
         "id": Object {
           "type": "ID!",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
         },
         "sys": Object {
           "type": "ContentfulSys!",

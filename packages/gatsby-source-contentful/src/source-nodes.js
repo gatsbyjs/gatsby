@@ -4,7 +4,7 @@ import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
-import { generateSchema } from "./generate-schema"
+
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -41,17 +41,11 @@ export async function sourceNodes(
     getCache,
     reporter,
     parentSpan,
-    schema,
   },
   pluginOptions
 ) {
-  const {
-    createNode,
-    touchNode,
-    deleteNode,
-    unstable_createNodeManifest,
-    createTypes,
-  } = actions
+  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
+    actions
   const online = await isOnline()
 
   getNodes().forEach(node => {
@@ -175,16 +169,12 @@ export async function sourceNodes(
   )
   processingActivity.start()
 
-  // Generate schemas based on Contentful content model
-  generateSchema({ createTypes, schema, pluginConfig, contentTypeItems })
-
-  // Array of all existing Contentful nodes
+  // Array of all existing Contentful entry and asset nodes
   const existingNodes = getNodes().filter(
     n =>
-      n.internal.owner === `gatsby-source-contentful` &&
-      (pluginConfig.get(`enableTags`)
-        ? n.internal.type !== `ContentfulTag`
-        : true)
+      (n.internal.owner === `gatsby-source-contentful` &&
+        n.internal.type.indexOf(`ContentfulContentType`) === 0) ||
+      n.internal.type === `ContentfulAsset`
   )
 
   // Report existing, new and updated nodes
@@ -198,6 +188,7 @@ export async function sourceNodes(
     deletedEntry: currentSyncData.deletedEntries.length,
     deletedAsset: currentSyncData.deletedAssets.length,
   }
+
   existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
   currentSyncData.entries.forEach(entry =>
     entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
@@ -253,8 +244,51 @@ export async function sourceNodes(
       newOrUpdatedEntries.add(generateReferenceId(entry))
     })
   })
+  // const state = store.getState()
+  // console.log(
+  //   { schema, keys: Object.keys(schema) },
+  //   state
+  // )
+
+  // const typeMap = await schema.getTypeMap()
+
+  // console.log({ typeMap })
+
+  // const contentfulTypeDefinitions = new Map()
+  // store
+  //   .getState()
+  //   .schemaCustomization.types.filter(
+  //     ({ plugin }) => plugin.name === `gatsby-source-contentful`
+  //   )
+  //   .forEach(({ typeOrTypeDef }) => {
+  //     contentfulTypeDefinitions.set(
+  //       typeOrTypeDef.config.name,
+  //       typeOrTypeDef.config
+  //     )
+  //     // console.log(typeOrTypeDef.config.fields)
+  //   })
+
+  // console.log(contentfulTypeDefinitions)
 
   const { deletedEntries, deletedAssets } = currentSyncData
+
+  const allDeletedNodes = [...deletedEntries, ...deletedAssets]
+  const deletedNodeIds = []
+
+  locales.forEach(locale => {
+    allDeletedNodes.forEach(n => {
+      deletedNodeIds.push(
+        makeId({
+          spaceId: n.sys.space.sys.id,
+          id: n.sys.id,
+          type: n.sys.type,
+          currentLocale: locale.code,
+          defaultLocale,
+        })
+      )
+    })
+  })
+
   const deletedEntryGatsbyReferenceIds = new Set()
 
   function deleteContentfulNode(node) {
@@ -280,8 +314,6 @@ export async function sourceNodes(
       .filter(node => node)
 
     localizedNodes.forEach(node => {
-      // touchNode first, to populate typeOwners & avoid erroring
-      touchNode(node)
       deleteNode(node)
     })
   }
@@ -483,7 +515,6 @@ export async function sourceNodes(
           defaultLocale,
           locales,
           space,
-          pluginConfig,
         })
       ))
     )
