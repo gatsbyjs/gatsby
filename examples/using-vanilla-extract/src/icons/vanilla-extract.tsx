@@ -22,11 +22,11 @@ function VanillaExtractIcon() {
         gradientTransform="matrix(0 1 -1.5658 0 169.62 4)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#BE5D23" offset="0"></stop>
-        <stop stop-color="#B65B25" offset=".158"></stop>
-        <stop stop-color="#9F552A" offset=".407"></stop>
-        <stop stop-color="#7A4C33" offset=".715"></stop>
-        <stop stop-color="#52423C" offset=".999"></stop>
+        <stop stopColor="#BE5D23" offset="0"></stop>
+        <stop stopColor="#B65B25" offset=".158"></stop>
+        <stop stopColor="#9F552A" offset=".407"></stop>
+        <stop stopColor="#7A4C33" offset=".715"></stop>
+        <stop stopColor="#52423C" offset=".999"></stop>
       </radialGradient>
       <ellipse
         cx="63.86"
@@ -43,10 +43,10 @@ function VanillaExtractIcon() {
         y2="61.979"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#FF85AE" offset="0"></stop>
-        <stop stop-color="#FF7DA9" offset=".317"></stop>
-        <stop stop-color="#FF669A" offset=".816"></stop>
-        <stop stop-color="#FF5C93" offset="1"></stop>
+        <stop stopColor="#FF85AE" offset="0"></stop>
+        <stop stopColor="#FF7DA9" offset=".317"></stop>
+        <stop stopColor="#FF669A" offset=".816"></stop>
+        <stop stopColor="#FF5C93" offset="1"></stop>
       </linearGradient>
       <path
         d="M102.08 51.48c-.84-.85-1.87-1.65-3.1-2.35c0 0-28.68 9.33-48.64 8.32s-17.02-3.19-27.16 3.27c0 0-2.77 3.96.61 6.37c4.42 3.15 10 5.75 16.12 7.73c.74-.54 1.48-.88 2.11-.88c19.03-6.61 56.05 1.77 60.06-22.46z"
@@ -64,9 +64,9 @@ function VanillaExtractIcon() {
         y2="47.691"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#FFB0CB" offset=".003"></stop>
-        <stop stop-color="#F383A9" offset=".792"></stop>
-        <stop stop-color="#F0769F" offset="1"></stop>
+        <stop stopColor="#FFB0CB" offset=".003"></stop>
+        <stop stopColor="#F383A9" offset=".792"></stop>
+        <stop stopColor="#F0769F" offset="1"></stop>
       </linearGradient>
       <path
         d="M93.95 33.63s5.43 3.22 5.43 11.55s-6.93 19.13-37.68 16.04c-30.48-3.07-38.35-.47-38.35-.47s-9.34-12.68 10.18-12.61c17.47.06 43.45 2.12 49.57-1.76c9.11-5.8 9.45-5.96 10.85-12.75z"
@@ -84,10 +84,10 @@ function VanillaExtractIcon() {
         y2="24.14"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F697B7" offset="0"></stop>
-        <stop stop-color="#F78FB2" offset=".335"></stop>
-        <stop stop-color="#F878A3" offset=".862"></stop>
-        <stop stop-color="#F9719F" offset="1"></stop>
+        <stop stopColor="#F697B7" offset="0"></stop>
+        <stop stopColor="#F78FB2" offset=".335"></stop>
+        <stop stopColor="#F878A3" offset=".862"></stop>
+        <stop stopColor="#F9719F" offset="1"></stop>
       </linearGradient>
       <path
         d="M79.09 16.45c-4.23-4.56-9.23-8.28-15.02-10.88c-.42-.19-.85-.13-1.19.06c4.51 7.3 5.02 15.89-4.44 21.81c-6.28 3.14-14.59 6.96-17.36 13.79c2.76.72 6.54 1.37 11.46 1.52c12.06.36 28.31-.3 31.07-5.03c2.77-4.72.46-15.9-4.52-21.27z"
@@ -105,10 +105,10 @@ function VanillaExtractIcon() {
         y2="40.522"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F78FB2" offset="0"></stop>
-        <stop stop-color="#F887AD" offset=".272"></stop>
-        <stop stop-color="#FC709F" offset=".703"></stop>
-        <stop stop-color="#FF5C93" offset="1"></stop>
+        <stop stopColor="#F78FB2" offset="0"></stop>
+        <stop stopColor="#F887AD" offset=".272"></stop>
+        <stop stopColor="#FC709F" offset=".703"></stop>
+        <stop stopColor="#FF5C93" offset="1"></stop>
       </linearGradient>
       <path
         d="M94.82 32.96a8.561 8.561 0 0 0-1.2-2.74c-.12.61-.29 1.2-.52 1.78c-8.21 22.8-39.21 3.65-58.36 8.21c-2.96.99-5.93 1.71-8.46 3.04c-2.31 3.39-2.32 7.21-2.32 7.21c12.47-3.78 21.67.02 45.64.37c23.97.33 26.94-10.71 25.22-17.87z"
@@ -122,9 +122,9 @@ function VanillaExtractIcon() {
         y2="119.62"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#4FE8FF" offset="0"></stop>
-        <stop stop-color="#4BDDF3" offset=".497"></stop>
-        <stop stop-color="#45CEE3" offset="1"></stop>
+        <stop stopColor="#4FE8FF" offset="0"></stop>
+        <stop stopColor="#4BDDF3" offset=".497"></stop>
+        <stop stopColor="#45CEE3" offset="1"></stop>
       </linearGradient>
       <path
         d="M109.96 76.04c-2.19 1.02-4.48 3.36-5.05 5.31c.58-1.95-.77-2.78-3.01-1.95c-2.25.83-4.49 2.98-4.96 4.89c.47-1.91-1.01-2.86-3.3-2.22s-4.48 2.61-4.83 4.49c.36-1.88-1.24-2.96-3.56-2.51s-4.44 2.25-4.68 4.11c.25-1.86-1.47-3.08-3.81-2.82c-2.35.26-4.38 1.9-4.51 3.74c.13-1.84-1.68-3.21-4.04-3.14s-4.3 1.55-4.32 3.39c.02-1.84-1.89-3.36-4.25-3.48c-2.35-.12-4.2 1.21-4.1 3.06c-.09-1.85-2.09-3.52-4.44-3.83c-2.34-.31-4.08.88-3.87 2.74c-.21-1.86-2.28-3.71-4.6-4.2s-3.93.55-3.62 2.44c-.32-1.89-2.46-3.9-4.74-4.59s-3.77.24-3.34 2.16c-.43-1.92-2.63-4.12-4.86-4.99s-3.59-.07-3.05 1.89c-.54-1.96-2.78-4.35-4.95-5.41s-3.39-.37-2.75 1.64c2.58 6.06 4.09 12.85 6.08 19.13c1.76 5.53 3.42 11.26 5.72 16.59c1.39 3.22 4.33 4.92 7.47 6.34c8.99 4.05 19.49 5.1 29.23 5.19c8.8.09 17.92-.68 26.31-3.47c2.82-.94 5.74-2.11 8.08-3.98c3.27-2.61 4.42-7.6 5.54-11.46c2.67-9.24 5.82-18.25 8.92-27.35c.68-2.02-.52-2.73-2.71-1.71z"
@@ -143,10 +143,10 @@ function VanillaExtractIcon() {
       <g
         fill="none"
         stroke="#49A5B0"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-miterlimit="10"
-        stroke-width="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
+        strokeWidth="3"
       >
         <path opacity=".56" d="M28.5 85.5l6 25.75"></path>
         <path opacity=".56" d="M99.5 85.58l-6 25.92"></path>
@@ -154,10 +154,10 @@ function VanillaExtractIcon() {
       <g
         fill="none"
         stroke="#49A5B0"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-miterlimit="10"
-        stroke-width="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
+        strokeWidth="3"
       >
         <path opacity=".56" d="M40.96 89.58l3.5 25.5"></path>
         <path opacity=".56" d="M87.04 88.67l-3.5 25.5"></path>
@@ -165,10 +165,10 @@ function VanillaExtractIcon() {
       <g
         fill="none"
         stroke="#49A5B0"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-miterlimit="10"
-        stroke-width="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
+        strokeWidth="3"
       >
         <path opacity=".56" d="M51.83 91l2.34 26.17"></path>
         <path opacity=".56" d="M76.17 90.08l-2.34 26.17"></path>
@@ -177,10 +177,10 @@ function VanillaExtractIcon() {
         fill="none"
         opacity=".56"
         stroke="#49A5B0"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-miterlimit="10"
-        stroke-width="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit="10"
+        strokeWidth="3"
         d="M64.17 92.67l.33 25.16"
       ></path>
       <path

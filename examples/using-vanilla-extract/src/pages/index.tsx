@@ -1,29 +1,31 @@
 import * as React from "react"
 import VanillaExtractIcon from "../icons/vanilla-extract"
-import {
-  Container,
-  Wrapper,
-  Title,
-  Button,
-  CardBottom,
-} from "../styles/index.css"
+import * as styles from "../styles/index.css"
+import "../styles/global.css"
+import { ColorModeProvider, ColorModeToggle } from "../components/ColorModeToggle"
 
 class IndexPage extends React.Component {
   render() {
     return (
-      <div className={Container}>
-        <div className={Wrapper}>
-          <VanillaExtractIcon />
-          <h1 className={Title}>
-            Hello World, this is my first component styled with vanilla-extract!
-          </h1>
-          <div className={CardBottom}>
-            <a className={Button} href="https://vanilla-extract.style/">
-              vanilla-extract docs
-            </a>
-          </div>
+      <ColorModeProvider>
+        <div className={styles.wrapper}>
+          <main className={styles.container}>
+            <ColorModeToggle />
+            <div className={styles.spacer} />
+            <div className={styles.content}>
+              <VanillaExtractIcon />
+              <h1 className={styles.title}>
+                Hello World 🎉
+              </h1>
+              <p>This is my first component styled with vanilla-extract!</p>
+              <div className={styles.spacer} />
+              <a className={styles.button} href="https://vanilla-extract.style/">
+                vanilla-extract Documentation
+              </a>
+            </div>
+          </main>
         </div>
-      </div>
+      </ColorModeProvider>
     )
   }
 }
