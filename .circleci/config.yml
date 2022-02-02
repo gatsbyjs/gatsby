@@ -462,9 +462,10 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/contentful
           test_command: yarn test
-      - warm-build-test:
-          test_path: e2e-tests/contentful
-          test_command: yarn build
+      - run:
+          name: warm build
+          command: yarn build
+          working-directory: e2e-tests/contentful
       - store_artifacts:
           path: e2e-tests/contentful/__diff_output__
       - store_test_results:
