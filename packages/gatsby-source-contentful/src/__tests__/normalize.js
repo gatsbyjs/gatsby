@@ -210,35 +210,28 @@ describe(`Process contentful data (by name)`, () => {
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
-
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
-        // 3 Brand Contentful entries
-        ContentfulBrand: 6,
-        contentfulBrandCompanyDescriptionTextNode: 6,
-        contentfulBrandCompanyNameTextNode: 6,
-        // 2 Category Contentful entries
-        ContentfulCategory: 4,
-        contentfulCategoryCategoryDescriptionTextNode: 4,
-        contentfulCategoryTitleTextNode: 4,
         ContentfulContentType: contentTypeItems.length,
+        // Generated child entities
+        ContentfulText: 38,
+        // 3 Brand Contentful entries
+        ContentfulContentTypeBrand: 6,
+        // 2 Category Contentful entries
+        ContentfulContentTypeCategory: 4,
         // 1 JSON Test Contentful entry
-        ContentfulJsonTest: 2,
-        contentfulJsonTestJsonStringTestJsonNode: 2,
-        contentfulJsonTestJsonTestJsonNode: 2,
+        ContentfulContentTypeJsonTest: 2,
         // 4 Product Contentful entries
-        ContentfulProduct: 8,
-        contentfulProductProductDescriptionTextNode: 8,
-        contentfulProductProductNameTextNode: 8,
+        ContentfulContentTypeProduct: 8,
         // 1 Remark Test Contentful entry
-        ContentfulRemarkTest: 2,
-        contentfulRemarkTestContentTextNode: 2,
+        ContentfulContentTypeRemarkTest: 2,
       })
     )
 
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(7)
+
     // Relevant to compare to compare warm and cold situation
-    expect(createNode.mock.calls.length).toBe(69) // "cold build entries" count
+    expect(createNode.mock.calls.length).toBe(65) // "cold build entries" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -253,7 +246,6 @@ describe(`Process contentful data (by name)`, () => {
         defaultLocale,
         locales,
         space,
-        pluginConfig,
       })
     })
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
@@ -295,7 +287,7 @@ describe(`Skip existing nodes in warm build`, () => {
         // returned is not relevant to test so update if anything breaks.
         return {
           id,
-          internal: { contentDigest: entryList[0][0].sys.publishedAt },
+          internal: { contentDigest: entryList[0][0].sys.updatedAt },
         }
       }
       // All other nodes are new ("unknown")
@@ -323,32 +315,13 @@ describe(`Skip existing nodes in warm build`, () => {
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
+    expect(nodeTypeCounts.ContentfulContentTypeCategory).toBe(3)
 
-    expect(nodeTypeCounts).toEqual(
-      expect.objectContaining({
-        ContentfulBrand: 6,
-        contentfulBrandCompanyDescriptionTextNode: 6,
-        contentfulBrandCompanyNameTextNode: 6,
-        // These 3 category entities matter as the first node is skipped in the test
-        ContentfulCategory: 3,
-        contentfulCategoryCategoryDescriptionTextNode: 3,
-        contentfulCategoryTitleTextNode: 3,
-        ContentfulContentType: 5,
-        ContentfulJsonTest: 2,
-        contentfulJsonTestJsonStringTestJsonNode: 2,
-        contentfulJsonTestJsonTestJsonNode: 2,
-        ContentfulProduct: 8,
-        contentfulProductProductDescriptionTextNode: 8,
-        contentfulProductProductNameTextNode: 8,
-        ContentfulRemarkTest: 2,
-        contentfulRemarkTestContentTextNode: 2,
-      })
-    )
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(7)
 
     // Relevant to compare to compare warm and cold situation
     // This number ought to be less than the cold build
-    expect(createNode.mock.calls.length).toBe(66) // "warm build where entry was not changed" count
+    expect(createNode.mock.calls.length).toBe(62) // "warm build where entry was not changed" count
   })
 })
 
@@ -414,36 +387,28 @@ describe(`Process existing mutated nodes in warm build`, () => {
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
-
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
-        // 3 Brand Contentful entries
-        ContentfulBrand: 6,
-        contentfulBrandCompanyDescriptionTextNode: 6,
-        contentfulBrandCompanyNameTextNode: 6,
-        // 2 Category Contentful entries
-        ContentfulCategory: 4,
-        contentfulCategoryCategoryDescriptionTextNode: 4,
-        contentfulCategoryTitleTextNode: 4,
         ContentfulContentType: contentTypeItems.length,
+        // Child entities
+        ContentfulText: 38,
+        // 3 Brand Contentful entries
+        ContentfulContentTypeBrand: 6,
+        // 2 Category Contentful entries
+        ContentfulContentTypeCategory: 4,
         // 1 JSON Test Contentful entry
-        ContentfulJsonTest: 2,
-        contentfulJsonTestJsonStringTestJsonNode: 2,
-        contentfulJsonTestJsonTestJsonNode: 2,
+        ContentfulContentTypeJsonTest: 2,
         // 4 Product Contentful entries
-        ContentfulProduct: 8,
-        contentfulProductProductDescriptionTextNode: 8,
-        contentfulProductProductNameTextNode: 8,
+        ContentfulContentTypeProduct: 8,
         // 1 Remark Test Contentful entry
-        ContentfulRemarkTest: 2,
-        contentfulRemarkTestContentTextNode: 2,
+        ContentfulContentTypeRemarkTest: 2,
       })
     )
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(7)
 
     // Relevant to compare to compare warm and cold situation
     // This number ought to be the same as the cold build
-    expect(createNode.mock.calls.length).toBe(69) // "warm build where entry was changed" count
+    expect(createNode.mock.calls.length).toBe(65) // "warm build where entry was changed" count
   })
 })
 
@@ -517,32 +482,23 @@ describe(`Process contentful data (by id)`, () => {
     })
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
-
     expect(nodeTypeCounts).toEqual(
       expect.objectContaining({
-        // 3 Brand Contentful entries
-        ContentfulSFzTZbSuM8CoEwygeUYes: 6,
-        contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode: 6,
-        contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode: 6,
-        // 2 Category Contentful entries
-        Contentful6XwpTaSiiI2Ak2Ww0Oi6Qa: 4,
-        contentful6XwpTaSiiI2Ak2Ww0Oi6QaCategoryDescriptionTextNode: 4,
-        contentful6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode: 4,
         ContentfulContentType: contentTypeItems.length,
+        // 3 Brand Contentful entries
+        ContentfulContentTypeSFzTZbSuM8CoEwygeUYes: 6,
+        // 2 Category Contentful entries
+        ContentfulContentType6XwpTaSiiI2Ak2Ww0Oi6Qa: 4,
         // 1 JSON Test Contentful entry
-        ContentfulJsonTest: 2,
-        contentfulJsonTestJsonStringTestJsonNode: 2,
-        contentfulJsonTestJsonTestJsonNode: 2,
+        ContentfulContentTypeJsonTest: 2,
         // 4 Product Contentful entries
-        Contentful2PqfXuJwE8QSyKuM0U6W8M: 8,
-        contentful2PqfXuJwE8QSyKuM0U6W8MProductDescriptionTextNode: 8,
-        contentful2PqfXuJwE8QSyKuM0U6W8MProductNameTextNode: 8,
+        ContentfulContentType2PqfXuJwE8QSyKuM0U6W8M: 8,
         // 1 Remark Test Contentful entry
-        ContentfulRemarkTest: 2,
-        contentfulRemarkTestContentTextNode: 2,
+        ContentfulContentTypeRemarkTest: 2,
       })
     )
+
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(7)
   })
 })
 

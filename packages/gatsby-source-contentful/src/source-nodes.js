@@ -4,7 +4,7 @@ import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
-import { generateSchema } from "./generate-schema"
+
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -51,35 +51,29 @@ export async function sourceNodes(
     getCache,
     reporter,
     parentSpan,
-    schema,
   },
   pluginOptions
 ) {
-  const {
-    createNode,
-    touchNode,
-    deleteNode,
-    unstable_createNodeManifest,
-    createTypes,
-  } = actions
+  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
+    actions
   const online = await isOnline()
+
+  getNodes().forEach(node => {
+    if (node.internal.owner !== `gatsby-source-contentful`) {
+      return
+    }
+    touchNode(node)
+    if (node?.fields?.localFile) {
+      // Prevent GraphQL type inference from crashing on this property
+      touchNode(getNode(node.fields.localFile))
+    }
+  })
 
   if (
     !online &&
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes().forEach(node => {
-      if (node.internal.owner !== `gatsby-source-contentful`) {
-        return
-      }
-      touchNode(node)
-      if (node.localFile___NODE) {
-        // Prevent GraphQL type inference from crashing on this property
-        touchNode(getNode(node.localFile___NODE))
-      }
-    })
-
     return
   }
 
@@ -188,18 +182,13 @@ export async function sourceNodes(
   )
   processingActivity.start()
 
-  // Generate schemas based on Contentful content model
-  generateSchema({ createTypes, schema, pluginConfig, contentTypeItems })
-
-  // Array of all existing Contentful nodes
+  // Array of all existing Contentful entry and asset nodes
   const existingNodes = getNodes().filter(
     n =>
-      n.internal.owner === `gatsby-source-contentful` &&
-      (pluginConfig.get(`enableTags`)
-        ? n.internal.type !== `ContentfulTag`
-        : true)
+      (n.internal.owner === `gatsby-source-contentful` &&
+        n.internal.type.indexOf(`ContentfulContentType`) === 0) ||
+      n.internal.type === `ContentfulAsset`
   )
-  existingNodes.forEach(n => touchNode(n))
 
   // Report existing, new and updated nodes
   const nodeCounts = {
@@ -212,6 +201,7 @@ export async function sourceNodes(
     deletedEntry: currentSyncData.deletedEntries.length,
     deletedAsset: currentSyncData.deletedAssets.length,
   }
+
   existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
   currentSyncData.entries.forEach(entry =>
     entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
@@ -263,28 +253,101 @@ export async function sourceNodes(
       newOrUpdatedEntries.add(generateReferenceId(entry))
     })
   })
+  // const state = store.getState()
+  // console.log(
+  //   { schema, keys: Object.keys(schema) },
+  //   state
+  // )
 
-  // Update existing entry nodes that weren't updated but that need reverse links added.
+  // const typeMap = await schema.getTypeMap()
+
+  // console.log({ typeMap })
+
+  // const contentfulTypeDefinitions = new Map()
+  // store
+  //   .getState()
+  //   .schemaCustomization.types.filter(
+  //     ({ plugin }) => plugin.name === `gatsby-source-contentful`
+  //   )
+  //   .forEach(({ typeOrTypeDef }) => {
+  //     contentfulTypeDefinitions.set(
+  //       typeOrTypeDef.config.name,
+  //       typeOrTypeDef.config
+  //     )
+  //     // console.log(typeOrTypeDef.config.fields)
+  //   })
+
+  // console.log(contentfulTypeDefinitions)
+
+  const { deletedEntries, deletedAssets } = currentSyncData
+
+  const allDeletedNodes = [...deletedEntries, ...deletedAssets]
+  const deletedNodeIds = []
+
+  locales.forEach(locale => {
+    allDeletedNodes.forEach(n => {
+      deletedNodeIds.push(
+        makeId({
+          spaceId: n.sys.space.sys.id,
+          id: n.sys.id,
+          type: n.sys.type,
+          currentLocale: locale.code,
+          defaultLocale,
+        })
+      )
+    })
+  })
+
+  // Update existing entry nodes that weren't updated but that need references updated.
   existingNodes
     .filter(n => !newOrUpdatedEntries.has(generateReferenceId(n)))
     .forEach(n => {
       const nodeId = generateReferenceId(n)
+
       if (foreignReferenceMap[nodeId]) {
         foreignReferenceMap[nodeId].forEach(foreignReference => {
-          const { name, id } = foreignReference
+          const { name } = foreignReference
+
+          const referencedNodeId = makeId({
+            ...foreignReference,
+            currentLocale: n.sys.locale,
+            defaultLocale,
+          })
 
           // Create new reference field when none exists
           if (!n[name]) {
-            n[name] = [id]
+            n[name] = [referencedNodeId]
             return
           }
 
           // Add non existing references to reference field
-          if (n[name] && !n[name].includes(id)) {
-            n[name].push(id)
+          if (n[name] && !n[name].includes(referencedNodeId)) {
+            n[name].push(referencedNodeId)
           }
         })
       }
+
+      // Remove references to deleted nodes in regular reference fields and reverse reference fields
+      Object.keys(n)
+        .filter(fieldName => fieldName.endsWith(`___NODE`))
+        .forEach(fieldName => {
+          const referenceField = n[fieldName]
+
+          if (!referenceField) {
+            return
+          }
+
+          if (Array.isArray(referenceField)) {
+            n[fieldName] = referenceField.filter(
+              id => !deletedNodeIds.includes(id)
+            )
+            return
+          }
+
+          if (deletedNodeIds.includes(referenceField)) {
+            n[fieldName] = null
+          }
+        })
     })
 
   function deleteContentfulNode(node) {
@@ -308,13 +371,9 @@ export async function sourceNodes(
       .filter(node => node)
 
     localizedNodes.forEach(node => {
-      // touchNode first, to populate typeOwners & avoid erroring
-      touchNode(node)
       deleteNode(node)
     })
   }
-
-  const { deletedEntries, deletedAssets } = currentSyncData
 
   if (deletedEntries.length || deletedAssets.length) {
     const deletionActivity = reporter.activityTimer(
@@ -391,7 +450,6 @@ export async function sourceNodes(
           defaultLocale,
           locales,
           space,
-          pluginConfig,
         })
       ))
     )
