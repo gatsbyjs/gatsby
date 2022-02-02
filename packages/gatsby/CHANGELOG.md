@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Scope remove api babel plugin to page templates [#34582](https://github.com/gatsbyjs/gatsby/issues/34582) [#34673](https://github.com/gatsbyjs/gatsby/issues/34673) ([77511e7](https://github.com/gatsbyjs/gatsby/commit/77511e764add83a3572e4e87cb0c2cf1b30d11b6))
 
-
-
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.6.0/packages/gatsby) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
