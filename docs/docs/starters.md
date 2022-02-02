@@ -62,13 +62,13 @@ gatsby new blog ./Code/my-local-starter
 
 Official starters are maintained by Gatsby.
 
-| Starter                                                                                      | Demo/Docs                                                    | Use case                       | Features                     |
-| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------ | ---------------------------- |
-| [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)                 | [Demo](https://gatsby-starter-default-demo.netlify.app/)     | Appropriate for most use cases | General Gatsby site          |
-| [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)                       | [Demo](https://gatsby-starter-blog-demo.netlify.app/)        | Create a basic blog            | Blog post pages and listings |
-| [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)         | [Demo](https://gatsby-starter-hello-world-demo.netlify.app/) | Learn Gatsby                   | Gatsby bare essentials       |
-| [gatsby-starter-blog-theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)           | [Docs](/docs/how-to/new-site-with-theme)                     | Blog posts and pages           | Gatsby themes                |
-| [gatsby-starter-theme-workspace](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) | [Docs](/docs/how-to/plugins-and-themes/building-themes/)     | Building Gatsby Themes         | Minimal theme workspace      |
+| Starter                                                                                      | Demo/Docs                                                                            | Use case                       | Features                     |
+| -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------ | ---------------------------- |
+| [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)                 | [Demo](https://gatsby-starter-default-demo.netlify.app/)                             | Appropriate for most use cases | General Gatsby site          |
+| [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)                       | [Demo](https://gatsby-starter-blog-demo.netlify.app/)                                | Create a basic blog            | Blog post pages and listings |
+| [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)         | [Demo](https://gatsby-starter-hello-world-demo.netlify.app/)                         | Learn Gatsby                   | Gatsby bare essentials       |
+| [gatsby-starter-blog-theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)           | [Docs](/docs/recipes/working-with-themes/#creating-a-new-site-using-a-theme-starter) | Blog posts and pages           | Gatsby themes                |
+| [gatsby-starter-theme-workspace](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) | [Docs](/docs/how-to/plugins-and-themes/building-themes/)                             | Building Gatsby Themes         | Minimal theme workspace      |
 
 ## Modifying starters
 

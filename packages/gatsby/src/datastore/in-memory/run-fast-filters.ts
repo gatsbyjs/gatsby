@@ -1,5 +1,4 @@
 import { IGatsbyNode } from "../../redux/types"
-import { getValueAt } from "../../utils/get-value-at"
 import _ from "lodash"
 import {
   DbQuery,
@@ -7,7 +6,6 @@ import {
   IDbQueryElemMatch,
   IInputQuery,
   FilterValueNullable,
-  objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
   prepareQueryArgs,
@@ -22,7 +20,9 @@ import {
   getNodesFromCacheByValue,
   intersectNodesByCounter,
   IFilterCache,
-  IGatsbyNodeIdentifiers,
+  IGatsbyNodePartial,
+  getSortFieldIdentifierKeys,
+  getGatsbyNodePartial,
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
 import { IRunQueryArgs, IQueryResult } from "../types"
@@ -35,6 +35,13 @@ function isGatsbyNode(node: IGatsbyNode | undefined): node is IGatsbyNode {
 export interface IRunFilterArg extends IRunQueryArgs {
   filtersCache: FiltersCache
 }
+
+type ISortParameters =
+  | {
+      fields: Array<string>
+      order: Array<boolean | "asc" | "desc" | "ASC" | "DESC">
+    }
+  | undefined
 
 /**
  * Creates a key for one filterCache inside FiltersCache
@@ -78,8 +85,10 @@ function createFilterCacheKey(
 export function applyFastFilters(
   filters: Array<DbQuery>,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache
-): Array<IGatsbyNodeIdentifiers> | null {
+  filtersCache: FiltersCache,
+  sortFields: Array<string>,
+  resolvedFields: any
+): Array<IGatsbyNodePartial> | null {
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
     return null
@@ -88,7 +97,9 @@ export function applyFastFilters(
   const nodesPerValueArrs = getBucketsForFilters(
     filters,
     nodeTypeNames,
-    filtersCache
+    filtersCache,
+    sortFields,
+    resolvedFields
   )
 
   if (!nodesPerValueArrs) {
@@ -106,10 +117,8 @@ export function applyFastFilters(
 
     while (nodesPerValueArrs.length > 1) {
       // TS limitation: cannot guard against .pop(), so we must double cast
-      const a =
-        nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodeIdentifiers>
-      const b =
-        nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodeIdentifiers>
+      const a = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodePartial>
+      const b = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodePartial>
       nodesPerValueArrs.push(intersectNodesByCounter(a, b))
     }
 
@@ -130,9 +139,11 @@ export function applyFastFilters(
 function getBucketsForFilters(
   filters: Array<DbQuery>,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache
-): Array<Array<IGatsbyNodeIdentifiers>> | undefined {
-  const nodesPerValueArrs: Array<Array<IGatsbyNodeIdentifiers>> = []
+  filtersCache: FiltersCache,
+  sortFields: Array<string>,
+  resolvedFields: any
+): Array<Array<IGatsbyNodePartial>> | undefined {
+  const nodesPerValueArrs: Array<Array<IGatsbyNodePartial>> = []
 
   // Fail fast while trying to create and get the value-cache for each path
   const every = filters.every(filter => {
@@ -145,7 +156,9 @@ function getBucketsForFilters(
         q,
         nodeTypeNames,
         filtersCache,
-        nodesPerValueArrs
+        nodesPerValueArrs,
+        sortFields,
+        resolvedFields
       )
     } else {
       // (Let TS warn us if a new query type gets added)
@@ -155,7 +168,9 @@ function getBucketsForFilters(
         q,
         nodeTypeNames,
         filtersCache,
-        nodesPerValueArrs
+        nodesPerValueArrs,
+        sortFields,
+        resolvedFields
       )
     }
   })
@@ -177,7 +192,9 @@ function getBucketsForQueryFilter(
   filter: IDbQueryQuery,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<IGatsbyNodeIdentifiers>>
+  nodesPerValueArrs: Array<Array<IGatsbyNodePartial>>,
+  sortFields: Array<string>,
+  resolvedFields: any
 ): boolean {
   const {
     path: filterPath,
@@ -185,22 +202,17 @@ function getBucketsForQueryFilter(
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
+    // indexFields = sortFields
     ensureIndexByQuery(
       comparator as FilterOp,
       filterCacheKey,
       filterPath,
       nodeTypeNames,
-      filtersCache
+      filtersCache,
+      sortFields,
+      resolvedFields
     )
   }
-
-  const readableWorkerId = process.env.GATSBY_WORKER_ID
-    ? `worker #${process.env.GATSBY_WORKER_ID}`
-    : `main`
-
-  console.log(
-    `getBucketsForQueryFilter "${filterCacheKey}" start ${readableWorkerId}`
-  )
 
   const nodesPerValue = getNodesFromCacheByValue(
     filterCacheKey,
@@ -217,10 +229,6 @@ function getBucketsForQueryFilter(
   // mechanism does not create an array unless there's a IGatsbyNode for it
   nodesPerValueArrs.push(nodesPerValue)
 
-  console.log(
-    `getBucketsForQueryFilter "${filterCacheKey}" end ${readableWorkerId}`
-  )
-
   return true
 }
 
@@ -232,7 +240,9 @@ function collectBucketForElemMatch(
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<IGatsbyNodeIdentifiers>>
+  nodesPerValueArrs: Array<Array<IGatsbyNodePartial>>,
+  sortFields: Array<string>,
+  resolvedFields: any
 ): boolean {
   // Get comparator and target value for this elemMatch
   let comparator: FilterOp = `$eq` // (Must be overridden but TS requires init)
@@ -249,14 +259,15 @@ function collectBucketForElemMatch(
       break
     }
   }
-
   if (!filtersCache.has(filterCacheKey)) {
     ensureIndexByElemMatch(
       comparator,
       filterCacheKey,
       filter,
       nodeTypeNames,
-      filtersCache
+      filtersCache,
+      sortFields,
+      resolvedFields
     )
   }
 
@@ -303,13 +314,11 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
     nodeTypeNames,
     filtersCache,
     resolvedFields,
-    stats
+    stats,
+    sort
   )
 
-  const resultingNodes = result
-    .map(nodeIds => getNode(nodeIds.id))
-    .filter(isGatsbyNode)
-  const sortedResult = sortNodes(resultingNodes, sort, resolvedFields, stats)
+  const sortedResult = sortNodes(result, sort, resolvedFields, stats)
   const totalCount = async (): Promise<number> => sortedResult.length
 
   const entries =
@@ -317,7 +326,10 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
       ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
       : sortedResult
 
-  return { entries: new GatsbyIterable(entries), totalCount }
+  const nodeObjects = entries
+    .map(nodeIds => getNode(nodeIds.id))
+    .filter(isGatsbyNode)
+  return { entries: new GatsbyIterable(nodeObjects), totalCount }
 }
 
 /**
@@ -328,8 +340,9 @@ function convertAndApplyFastFilters(
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   resolvedFields: Record<string, any>,
-  stats: IGraphQLRunnerStats
-): Array<IGatsbyNodeIdentifiers> {
+  stats: IGraphQLRunnerStats,
+  sort: ISortParameters
+): Array<IGatsbyNodePartial> {
   const filters = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
@@ -355,19 +368,30 @@ function convertAndApplyFastFilters(
   if (filters.length === 0) {
     const filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
     if (!filtersCache.has(filterCacheKey)) {
-      ensureEmptyFilterCache(filterCacheKey, nodeTypeNames, filtersCache)
+      ensureEmptyFilterCache(
+        filterCacheKey,
+        nodeTypeNames,
+        filtersCache,
+        sort?.fields || [],
+        resolvedFields
+      )
     }
 
     // If there's a filter, there (now) must be an entry for this cache key
     const filterCache = filtersCache.get(filterCacheKey) as IFilterCache
     // If there is no filter then the ensureCache step will populate this:
-    const cache = filterCache.meta
-      .orderedByCounter as Array<IGatsbyNodeIdentifiers>
+    const cache = filterCache.meta.orderedByCounter as Array<IGatsbyNodePartial>
 
     return cache.slice(0)
   }
 
-  const result = applyFastFilters(filters, nodeTypeNames, filtersCache)
+  const result = applyFastFilters(
+    filters,
+    nodeTypeNames,
+    filtersCache,
+    sort?.fields || [],
+    resolvedFields
+  )
 
   if (result) {
     if (stats) {
@@ -411,37 +435,23 @@ function filterToStats(
  * Returns same reference as input, sorted inline
  */
 function sortNodes(
-  nodes: Array<IGatsbyNode>,
-  sort:
-    | {
-        fields: Array<string>
-        order: Array<boolean | "asc" | "desc" | "ASC" | "DESC">
-      }
-    | undefined,
+  nodes: Array<IGatsbyNodePartial>,
+  sort: ISortParameters,
   resolvedFields: any,
   stats: IGraphQLRunnerStats
-): Array<IGatsbyNode> {
+): Array<IGatsbyNodePartial> {
   if (!sort || sort.fields?.length === 0 || !nodes || nodes.length === 0) {
     return nodes
   }
 
   // create functions that return the item to compare on
-  const dottedFields = objectToDottedField(resolvedFields)
-  const dottedFieldKeys = Object.keys(dottedFields)
-  const sortFields = sort.fields.map(field => {
-    if (
-      dottedFields[field] ||
-      dottedFieldKeys.some(key => field.startsWith(key))
-    ) {
-      return `__gatsby_resolved.${field}`
-    } else {
-      return field
-    }
-  })
+  const sortFields = getSortFieldIdentifierKeys(sort.fields, resolvedFields)
   const sortFns = sortFields.map(
     field =>
       (v): ((any) => any) =>
-        getValueAt(v, field)
+        field in v
+          ? v[field]
+          : getGatsbyNodePartial(v, sort.fields, resolvedFields)[field]
   )
   const sortOrder = sort.order.map(order =>
     typeof order === `boolean` ? order : order.toLowerCase()

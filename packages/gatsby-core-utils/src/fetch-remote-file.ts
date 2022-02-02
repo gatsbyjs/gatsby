@@ -10,6 +10,8 @@ import {
 } from "./filename-utils"
 import type { IncomingMessage } from "http"
 import type { GatsbyCache } from "gatsby"
+import Queue from "fastq"
+import type { queue, done } from "fastq"
 
 export interface IFetchRemoteFileOptions {
   url: string
@@ -72,8 +74,63 @@ const ERROR_CODES_TO_RETRY = [
   `ERR_GOT_REQUEST_ERROR`,
 ]
 
+/********************
+ * Queue Management *
+ ********************/
+
+const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
+  ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
+  : 50
+
+const q: queue<IFetchRemoteFileOptions, string> = Queue(
+  fetchWorker,
+  GATSBY_CONCURRENT_DOWNLOAD
+)
+
+/**
+ * fetchWorker
+ * --
+ * Handle fetch requests that are pushed in to the Queue
+ */
+async function fetchWorker(
+  task: IFetchRemoteFileOptions,
+  cb: done<string>
+): Promise<void> {
+  try {
+    const node = await fetchFile(task)
+    return void cb(null, node)
+  } catch (e) {
+    return void cb(e)
+  }
+}
+
+/**
+ * pushTask
+ * --
+ * pushes a task in to the Queue and the processing cache
+ *
+ * Promisfy a task in queue
+ * @param {CreateRemoteFileNodePayload} task
+ * @return {Promise<Object>}
+ */
+async function pushTask(task: IFetchRemoteFileOptions): Promise<string> {
+  return new Promise((resolve, reject) => {
+    q.push(task, (err, node) => {
+      if (!err) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        resolve(node!)
+      } else {
+        reject(err)
+      }
+    })
+  })
+}
 let fetchCache = new Map()
 let latestBuildId = ``
+
+/***************************
+ * Fetch remote file logic *
+ ***************************/
 
 export async function fetchRemoteFile(
   args: IFetchRemoteFileOptions
@@ -91,7 +148,7 @@ export async function fetchRemoteFile(
   }
 
   // Create file fetch promise and store it into cache
-  const fetchPromise = fetchFile(args)
+  const fetchPromise = pushTask(args)
   fetchCache.set(args.url, fetchPromise)
 
   return fetchPromise.catch(err => {

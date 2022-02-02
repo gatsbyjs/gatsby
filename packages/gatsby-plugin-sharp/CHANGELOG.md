@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.6.0/packages/gatsby-plugin-sharp) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- add missing dependencies [#28759](https://github.com/gatsbyjs/gatsby/issues/28759) ([d20c97b](https://github.com/gatsbyjs/gatsby/commit/d20c97b9725cc80967f9d41b4d9e47fd0e3f473f))
+
 ### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.5.2/packages/gatsby-plugin-sharp) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
