@@ -22,6 +22,7 @@ import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
+import { resolveModule } from "../utils/module-resolver"
 
 interface IPluginResolution {
   resolve: string
@@ -517,9 +518,8 @@ export async function initialize({
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        return slash(
-          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
-        )
+        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+        return slash(resolveModule({}, modulePath, modulePath))
       }
     } catch (e) {
       // ignore

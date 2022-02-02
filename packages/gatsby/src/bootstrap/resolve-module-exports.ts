@@ -1,21 +1,18 @@
-import fs from "fs"
+import * as fs from "fs-extra"
 import * as t from "@babel/types"
 import traverse from "@babel/traverse"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
-import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import report from "gatsby-cli/lib/reporter"
-
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testRequireError } from "../utils/test-require-error"
+import { resolveModule } from "../utils/module-resolver"
 
-const staticallyAnalyzeExports = (
-  modulePath: string,
-  resolver = require.resolve
-): Array<string> => {
+const staticallyAnalyzeExports = (modulePath: string): Array<string> => {
   let absPath: string | undefined
   const exportNames: Array<string> = []
 
   try {
-    absPath = resolver(modulePath)
+    absPath = resolveModule({}, modulePath, modulePath)
   } catch (err) {
     return exportNames // doesn't exist
   }
@@ -205,7 +202,7 @@ export const resolveModuleExports = (
       }
     }
   } else {
-    return staticallyAnalyzeExports(modulePath, resolver)
+    return staticallyAnalyzeExports(modulePath)
   }
 
   return []
