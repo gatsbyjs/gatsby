@@ -246,13 +246,6 @@ export const ensureIndexByQuery = (
   indexFields: Array<string>,
   resolvedFields: any
 ): void => {
-  const readableWorkerId = process.env.GATSBY_WORKER_ID
-    ? `worker #${process.env.GATSBY_WORKER_ID}`
-    : `main`
-
-  console.log(
-    `ensureIndexByQuery "${filterCacheKey}" start ${readableWorkerId}`
-  )
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
 
@@ -302,8 +295,6 @@ export const ensureIndexByQuery = (
   }
 
   postIndexingMetaSetup(filterCache, op)
-
-  console.log(`ensureIndexByQuery "${filterCacheKey}" end ${readableWorkerId}`)
 }
 
 export function ensureEmptyFilterCache(
