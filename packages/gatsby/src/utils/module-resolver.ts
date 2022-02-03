@@ -1,14 +1,11 @@
 import * as fs from "fs"
 import enhancedResolve, { CachedInputFileSystem } from "enhanced-resolve"
 
-type ModuleResolver = (
-  contextDir: any,
-  modulePath: string,
-  request: string
-) => string
+type ModuleResolver = (modulePath: string) => string | false
+type ResolveType = (context?: any, path?: any, request?: any) => string | false
 
-export const resolveModule: ModuleResolver = (...args) => {
-  let resolve
+export const resolveModule: ModuleResolver = modulePath => {
+  let resolve: ResolveType
 
   try {
     resolve = enhancedResolve.create.sync({
@@ -19,5 +16,6 @@ export const resolveModule: ModuleResolver = (...args) => {
     // ignore
   }
 
-  return resolve(...args)
+  // @ts-ignore - See https://github.com/microsoft/TypeScript/issues/9568
+  return resolve({}, modulePath, modulePath)
 }

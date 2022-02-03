@@ -7,12 +7,15 @@ import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testRequireError } from "../utils/test-require-error"
 import { resolveModule } from "../utils/module-resolver"
 
-const staticallyAnalyzeExports = (modulePath: string): Array<string> => {
+const staticallyAnalyzeExports = (
+  modulePath: string,
+  resolver = resolveModule
+): Array<string> => {
   let absPath: string | undefined
   const exportNames: Array<string> = []
 
   try {
-    absPath = resolveModule({}, modulePath, modulePath)
+    absPath = resolver(modulePath) as string
   } catch (err) {
     return exportNames // doesn't exist
   }
@@ -202,7 +205,7 @@ export const resolveModuleExports = (
       }
     }
   } else {
-    return staticallyAnalyzeExports(modulePath)
+    return staticallyAnalyzeExports(modulePath, resolver)
   }
 
   return []

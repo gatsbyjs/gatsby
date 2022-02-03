@@ -519,7 +519,7 @@ export async function initialize({
     try {
       if (env === `browser`) {
         const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
-        return slash(resolveModule({}, modulePath, modulePath))
+        return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
       // ignore
