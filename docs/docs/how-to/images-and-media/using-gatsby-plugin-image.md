@@ -108,9 +108,7 @@ If you are using an image that will be the same each time the component is used,
 
 ### Dynamic images
 
-If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms-or-cdn) section for a list of supported CMSs and how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
-
-For other data sources, images are downloaded and processed locally at build time. If you are creating your own data source (for example using gatsby-node.js to add the contents of a JSON file into GraphQL), adding the URL or local path of the image relative to the json file as a node (eg {"image" : "./images/my-image.jpg"}) and they will be created automatically.
+If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms-or-cdn) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This includes local data sources where e.g. a JSON file references an image by relative path. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
 
 1. **Add the image to your page query.**
 
