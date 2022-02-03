@@ -14,8 +14,10 @@ import { ActionsUnion, IGatsbyState } from "../../redux/types"
 
 export type { GatsbyWorkerPool }
 
+const debugMemory = !!process.env.GATSBY_MEMORY_DEBUG
+
 export const create = (): GatsbyWorkerPool => {
-  const numWorkers = Math.max(1, cpuCoreCount() - 1)
+  const numWorkers = debugMemory ? 1 : Math.max(1, cpuCoreCount() - 1)
   reporter.verbose(`Creating ${numWorkers} worker`)
 
   const worker: GatsbyWorkerPool = new WorkerPool(require.resolve(`./child`), {
