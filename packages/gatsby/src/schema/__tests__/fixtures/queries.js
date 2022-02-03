@@ -8,6 +8,8 @@ const nodes = [
       contentDigest: `file1`,
     },
     name: `1.md`,
+    dir: `/test`,
+    absolutePath: `/test/file1`
   },
   {
     id: `file2`,
@@ -18,6 +20,8 @@ const nodes = [
       contentDigest: `file2`,
     },
     name: `2.md`,
+    dir: `/test`,
+    absolutePath: `/test/file2`
   },
   {
     id: `file3`,
@@ -28,6 +32,8 @@ const nodes = [
       contentDigest: `file3`,
     },
     name: `authors.yaml`,
+    dir: `/test`,
+    absolutePath: `/test/file3`
   },
   {
     id: `md1`,
@@ -46,6 +52,7 @@ const nodes = [
       authors: [`author2@example.com`, `author1@example.com`],
       reviewer___NODE: `author2`,
       reviewerByEmail: `author2@example.com`,
+      fileRef: `./file2`
     },
   },
   {

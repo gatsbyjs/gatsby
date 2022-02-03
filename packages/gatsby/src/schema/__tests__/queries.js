@@ -148,7 +148,7 @@ describe(`Query schema`, () => {
 
     const typeDefs = [
       `type Markdown implements Node { frontmatter: Frontmatter! }`,
-      `type Frontmatter { authors: [Author] }`,
+      `type Frontmatter { authors: [Author], fileRef: File @fileByRelativePath }`,
       `type Author implements Node { posts: [Markdown] }`,
     ]
     typeDefs.forEach(def =>
@@ -2106,6 +2106,36 @@ describe(`Query schema`, () => {
         `)
         expect(datastoreRunQuerySpy).toBeCalledTimes(0)
       }
+    })
+
+    it(`@fileByRelativePath works`, async () => {
+      const query = `
+        {
+          markdown(id: { eq: "md1"}) {
+            frontmatter {
+              title
+              fileRef {
+                childMarkdown {
+                  frontmatter {
+                    title
+                  }
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+
+      expect(results.errors).toBeUndefined()
+      expect(results.data.markdown.frontmatter.title).toEqual(`Markdown File 1`)
+
+      // main assertion - markdown.frontmatter.fileRef is a file referenced by local path
+      // we want to make sure it finds node correctly (and doesn't crash)
+      expect(
+        results.data.markdown.frontmatter.fileRef.childMarkdown.frontmatter
+          .title
+      ).toEqual(`Markdown File 2`)
     })
 
     describe(`doesn't try to use fast path if there are more or different filters than just id.eq`, () => {
