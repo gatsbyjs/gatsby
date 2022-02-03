@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-starter-minimal-ts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "gatsby-starter-minimal-ts",
+  "author": "Jude Agboola",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "gatsby": "^4.6.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "@types/node": "^17.0.14",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "typescript": "^4.5.5"
+  }
+}
