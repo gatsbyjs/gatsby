@@ -1,3 +1,8 @@
+const os = require(`os`)
+const path = require(`path`)
+
+const dir = os.platform() === "win32" ? "C:/Users/test/site" : "/home/test/site"
+
 const nodes = [
   {
     id: `file1`,
@@ -8,8 +13,8 @@ const nodes = [
       contentDigest: `file1`,
     },
     name: `1.md`,
-    dir: `/test`,
-    absolutePath: `/test/file1`
+    dir,
+    absolutePath: path.posix.join(dir, `1.md`)
   },
   {
     id: `file2`,
@@ -20,8 +25,8 @@ const nodes = [
       contentDigest: `file2`,
     },
     name: `2.md`,
-    dir: `/test`,
-    absolutePath: `/test/file2`
+    dir,
+    absolutePath: path.posix.join(dir, `2.md`)
   },
   {
     id: `file3`,
@@ -32,8 +37,8 @@ const nodes = [
       contentDigest: `file3`,
     },
     name: `authors.yaml`,
-    dir: `/test`,
-    absolutePath: `/test/file3`
+    dir,
+    absolutePath: path.posix.join(dir, `authors.yaml`)
   },
   {
     id: `md1`,
@@ -52,7 +57,7 @@ const nodes = [
       authors: [`author2@example.com`, `author1@example.com`],
       reviewer___NODE: `author2`,
       reviewerByEmail: `author2@example.com`,
-      fileRef: `./file2`
+      fileRef: `2.md`
     },
   },
   {

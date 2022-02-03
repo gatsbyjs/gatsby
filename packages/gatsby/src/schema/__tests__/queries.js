@@ -2127,14 +2127,16 @@ describe(`Query schema`, () => {
       `
       const results = await runQuery(query)
 
-      expect(results.errors).toBeUndefined()
-      expect(results.data.markdown.frontmatter.title).toEqual(`Markdown File 1`)
+      expect(results?.errors).toBeUndefined()
+      expect(results?.data?.markdown?.frontmatter?.title).toEqual(
+        `Markdown File 1`
+      )
 
       // main assertion - markdown.frontmatter.fileRef is a file referenced by local path
       // we want to make sure it finds node correctly (and doesn't crash)
       expect(
-        results.data.markdown.frontmatter.fileRef.childMarkdown.frontmatter
-          .title
+        results?.data?.markdown?.frontmatter?.fileRef?.childMarkdown
+          ?.frontmatter?.title
       ).toEqual(`Markdown File 2`)
     })
 
