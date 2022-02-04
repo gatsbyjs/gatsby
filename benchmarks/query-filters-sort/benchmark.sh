@@ -73,10 +73,15 @@ fi
 BUILD_COUNT="${BUILD_COUNT:=1}"
 SUMMARY_CSV_NAME="summary"
 BUILD_CSV_NAME="build"
+COMBINED_CSV_NAME="combined"
 
-SUMMARY_FILE="${OUTPUT_DIR}/${OUTPUT}_${SUMMARY_CSV_NAME}.csv"
+SUMMARY_FILE="${OUTPUT_DIR}/${SUMMARY_CSV_NAME}.csv"
 clear_csv $SUMMARY_FILE
 write_csv $SUMMARY_FILE build "time" max_rss max_vsz result code
+
+COMBINED_FILE="${OUTPUT_DIR}/${COMBINED_CSV_NAME}.csv"
+clear_csv $COMBINED_FILE
+write_csv $COMBINED_FILE build "time" rss vsz
 
 echo -e "\nStarting ${CYAN}${BUILD_COUNT}${RESET} builds..."
 
@@ -98,7 +103,7 @@ for i in $(seq 1 $BUILD_COUNT); do
     sleep 2
   fi
 
-  BUILD_FILE="${OUTPUT_DIR}/${OUTPUT}_${BUILD_CSV_NAME}_${i}.csv"
+  BUILD_FILE="${OUTPUT_DIR}/${BUILD_CSV_NAME}_${i}.csv"
   clear_csv $BUILD_FILE
   write_csv $BUILD_FILE "time" rss vsz
 
@@ -118,6 +123,7 @@ for i in $(seq 1 $BUILD_COUNT); do
   MAX_RSS=$RSS
   MAX_VSZ=$VSZ
 
+  # loop until ps no longer sees the process
   while [ -n "${RSS}" ]; do
     sleep .1
 
@@ -128,8 +134,10 @@ for i in $(seq 1 $BUILD_COUNT); do
     MAX_VSZ=$([[ $VSZ -gt $MAX_VSZ ]] && echo "$VSZ" || echo "$MAX_VSZ")
 
     write_csv $BUILD_FILE $(( CUR_TIME - START_TIME )) $RSS $VSZ
+    write_csv $COMBINED_FILE $i $(( CUR_TIME - START_TIME )) $RSS $VSZ
   done
 
+  # get exit result/code
   RESULT="SUCCESS"
   wait $BUILD_PID
   EXIT_CODE=$?
@@ -149,6 +157,7 @@ for i in $(seq 1 $BUILD_COUNT); do
   echo_build $i "finished in ${GREEN}${ELAPSED}ms${RESET}"
 
 done
+
 
 echo -e "\nFinished!"
 
