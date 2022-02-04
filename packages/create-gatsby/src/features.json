@@ -30,7 +30,7 @@
   "gatsby-plugin-mdx": {
     "message": "Add Markdown and MDX support",
     "plugins": ["gatsby-source-filesystem:pages"],
-    "dependencies": ["@mdx-js/react", "@mdx-js/mdx"],
+    "dependencies": ["@mdx-js/react@v1", "@mdx-js/mdx@v1"],
     "options": {
       "gatsby-source-filesystem:pages": {
         "name": "pages",
