@@ -11,7 +11,7 @@ import {
 } from "../utils/websocket-manager"
 import { GraphQLRunner } from "./graphql-runner"
 import { IGroupedQueryIds } from "../services"
-import { gc } from "../utils/debug/gc"
+import { beforeAfterMemorySample } from "../utils/debug/memory"
 
 if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
   console.info(
@@ -75,29 +75,6 @@ export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
   }
 }
 
-const STR_LENGTH = 59
-
-function logMemory(label: string = ``): void {
-  const first19 = label.slice(0, STR_LENGTH).padEnd(STR_LENGTH, ` `)
-
-  const { rss, heapTotal, heapUsed, external, arrayBuffers } =
-    process.memoryUsage()
-
-  console.log(
-    `${first19} R:${Math.round(rss / 1000000)
-      .toLocaleString()
-      .padStart(9, ` `)}M  |  hT:${Math.round(heapTotal / 1000000)
-      .toLocaleString()
-      .padStart(9, ` `)}M  |  hU:${Math.round(heapUsed / 1000000)
-      .toLocaleString()
-      .padStart(9, ` `)}M  |  E:${Math.round(external / 1000000)
-      .toLocaleString()
-      .padStart(9, ` `)}M  |  AB:${Math.round(arrayBuffers / 1000000)
-      .toLocaleString()
-      .padStart(9, ` `)}M`
-  )
-}
-
 function createQueue<QueryIDType>({
   createJobFn,
   state,
@@ -122,8 +99,13 @@ function createQueue<QueryIDType>({
   function worker(queryId: QueryIDType, cb): void {
     const readable =
       typeof queryId === `string` ? queryId : (queryId as any)?.path ?? queryId
+    const template = (queryId as any)?.componentPath
+    let afterCB
     if (debugMemory) {
-      logMemory(`BEFORE:   "${readable}"`)
+      afterCB = beforeAfterMemorySample(
+        `query`,
+        template ? `${readable}-${template}` : readable
+      )
     }
 
     const job = createJobFn(state, queryId)
@@ -139,15 +121,11 @@ function createQueue<QueryIDType>({
         // Note: we need setImmediate to ensure garbage collection has a chance
         //  to get started during query running
         setImmediate(() => {
-          if (debugMemory) {
-            logMemory(`AFTER:    "${readable}"`)
-
-            if (gc) {
-              gc()
-              logMemory(`AFTER_GC: "${readable}"`)
-            }
+          if (afterCB) {
+            afterCB().finally(() => cb(null, { job, result }))
+          } else {
+            cb(null, { job, result })
           }
-          cb(null, { job, result })
         })
       })
       .catch(error => {

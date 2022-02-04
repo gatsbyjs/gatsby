@@ -30,6 +30,10 @@ import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
 import { wrapNode } from "../../utils/detect-node-mutations"
+import {
+  memoryDecorationGatsbyNode,
+  memoryDecorationGatsbyPage,
+} from "../../utils/debug/memory"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -180,6 +184,7 @@ actions.createPage = (
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
+  memoryDecorationGatsbyPage(page)
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
@@ -408,6 +413,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     pluginCreatorId: plugin.id ?? ``,
   }
 
+  memoryDecorationGatsbyPage(internalPage)
+
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     if (page.defer) {
       internalPage.defer = true
@@ -446,6 +453,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
   const { updatedAt, ...node } = internalPage
+  memoryDecorationGatsbyPage(node)
   node.children = []
   node.internal = {
     type: `SitePage`,
@@ -677,6 +685,8 @@ const createNode = (
     )
   }
 
+  memoryDecorationGatsbyNode(node)
+
   // Ensure the new node has an internals object.
   if (!node.internal) {
     node.internal = {}
@@ -763,6 +773,8 @@ const createNode = (
   }
 
   node = sanitizeNode(node)
+
+  memoryDecorationGatsbyNode(node)
 
   const oldNode = getNode(node.id)
 

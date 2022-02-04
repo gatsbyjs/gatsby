@@ -17,6 +17,7 @@ export { renderHTMLProd, renderHTMLDev } from "./render-html"
 export { setInferenceMetadata, buildSchema } from "./schema"
 export { setComponents, runQueries, saveQueriesDependencies } from "./queries"
 export { loadConfigAndPlugins } from "./load-config-and-plugins"
+export { takeHeapSnapshot } from "../../debug/memory"
 
 // Let Gatsby force worker to grab latest version of `public/render-page.js`
 export function deleteModuleCache(htmlComponentRendererPath: string): void {

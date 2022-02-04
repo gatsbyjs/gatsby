@@ -15,7 +15,7 @@ import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
-
+import { memoryDecorationGatsbyPage } from "../utils/debug/memory"
 // Create event emitter for actions
 export const emitter = mett()
 
@@ -34,6 +34,12 @@ export const readState = (): IGatsbyState => {
         // The `.has` and `.set` calls above make this safe
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         state.nodesByType.get(type)!.set(node.id, node)
+      })
+    }
+
+    if (state.pages) {
+      state.pages.forEach(page => {
+        memoryDecorationGatsbyPage(page)
       })
     }
 

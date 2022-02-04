@@ -12,6 +12,8 @@ import {
   runFastFiltersAndSort,
 } from "../in-memory/run-fast-filters"
 
+import { memoryDecorationGatsbyNode } from "../../utils/debug/memory"
+
 const lmdbDatastore = {
   getNode,
   getTypes,
@@ -147,7 +149,7 @@ function getNode(id: string): IGatsbyNode | undefined {
   }
 
   const { nodes } = getDatabases()
-  return nodes.get(id)
+  return memoryDecorationGatsbyNode(nodes.get(id))
 }
 
 function getTypes(): Array<string> {
