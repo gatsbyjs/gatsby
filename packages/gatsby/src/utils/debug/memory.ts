@@ -61,6 +61,26 @@ function beforeAfterMemorySample(
       }
       MaxDeltaSamples.set(type, maxDeltas)
     }
+    let max = MaxSamples.get(type)
+    if (!max) {
+      max = {
+        after: {
+          rss: 0,
+          heapTotal: 0,
+          heapUsed: 0,
+          external: 0,
+          arrayBuffers: 0,
+        },
+        afterGC: {
+          rss: 0,
+          heapTotal: 0,
+          heapUsed: 0,
+          external: 0,
+          arrayBuffers: 0,
+        },
+      }
+      MaxSamples.set(type, max)
+    }
 
     for (const stage of [`after`, `afterGC`]) {
       const partChanged: Array<string> = []
@@ -71,18 +91,28 @@ function beforeAfterMemorySample(
         `external`,
         `arrayBuffers`,
       ]) {
-        const currentDelta =
-          (stage === `afterGC` ? afterGCMemory[part] : afterMemory[part]) -
-          beforeMemory[part]
+        const current =
+          stage === `afterGC` ? afterGCMemory[part] : afterMemory[part]
+        const currentDelta = current - beforeMemory[part]
 
-        const soFarMax = maxDeltas[stage][part]
+        const soFarMaxDelta = maxDeltas[stage][part]
 
         if (
-          currentDelta > soFarMax * 1.2 &&
-          currentDelta - soFarMax > 20 * 1000 * 1000
+          currentDelta > soFarMaxDelta * 1.2 &&
+          currentDelta - soFarMaxDelta > 20 * 1000 * 1000
         ) {
-          partChanged.push(part)
+          partChanged.push(`${part} Delta`)
           maxDeltas[stage][part] = currentDelta
+        }
+
+        const soFarMax = max[stage][part]
+
+        if (
+          current > soFarMax * 1.5 ||
+          current - soFarMax > 200 * 1000 * 1000
+        ) {
+          partChanged.push(`${part} Max`)
+          max[stage][part] = current
         }
       }
 
