@@ -17,7 +17,7 @@
     "dependencies": ["theme-ui"]
   },
   "gatsby-plugin-vanilla-extract": {
-    "message": "Vanilla Extract",
+    "message": "vanilla-extract",
     "dependencies": [
       "@vanilla-extract/webpack-plugin",
       "@vanilla-extract/css",
