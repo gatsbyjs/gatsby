@@ -462,6 +462,10 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/contentful
           test_command: yarn test
+      # we build a second time to see if warm/cached builds are successful
+      - e2e-test:
+          test_path: e2e-tests/contentful
+          test_command: yarn build
       - store_artifacts:
           path: e2e-tests/contentful/__diff_output__
       - store_test_results:

@@ -39,8 +39,7 @@ describe(`gatsby-node`, () => {
     setPluginStatus: jest.fn(),
     createNode: jest.fn(async node => {
       node.internal.owner = `gatsby-source-contentful`
-      // don't allow mutations (this isn't traversing so only top level is frozen)
-      currentNodeMap.set(node.id, Object.freeze(node))
+      currentNodeMap.set(node.id, node)
     }),
     deleteNode: jest.fn(node => {
       currentNodeMap.delete(node.id)
