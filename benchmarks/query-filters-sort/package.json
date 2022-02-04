@@ -3,7 +3,7 @@
   "description": "Gatsby hello world starter",
   "license": "MIT",
   "scripts": {
-    "bench": "gatsby clean && rimraf .data && node --max_old_space_size=16384 --expose-gc node_modules/gatsby/dist/bin/gatsby.js build",
+    "bench": "./benchmark.sh",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve"

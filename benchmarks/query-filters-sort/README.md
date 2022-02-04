@@ -14,6 +14,10 @@ All queries have `limit=100` (although some of them may return just several item
 
 ### Env vars:
 
+- `BUILD_COUNT`: The number builds to run (1 by default)
+- `SHOW_BUILD_OUTPUT`: Whether or not to show build output (off by default, set any value to set to true)
+- `OUTPUT`: The directory to write metrics files to ('output' by default)
+
 - `NUM_NODES`: The number of nodes created (1000 by default)
 - `NUM_PAGES`: The number of pages created (1000 by default, must be <= `NUM_NODES`)
 
