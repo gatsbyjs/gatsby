@@ -4,8 +4,18 @@ import ReactDOM from "react-dom"
 
 let hydrateRef
 let isFirstHydration = true
+const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(
+  navigator.userAgent
+)
+
 export function onRouteUpdate(): void {
-  if (process.env.NODE_ENV === `production` && isFirstHydration) {
+  if (
+    process.env.NODE_ENV === `production` &&
+    isFirstHydration &&
+    // Safari has a bug that causes images to stay blank when directly loading a page (images load when client-side navigating)
+    // running this code on first hydration makes images load.
+    !isSafari
+  ) {
     isFirstHydration = false
     return
   }
