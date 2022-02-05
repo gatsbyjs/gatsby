@@ -48,5 +48,5 @@ The environment variable `ENABLE_GATSBY_REFRESH_ENDPOINT` enables a "Refresh Dat
 ## Other resources
 
 - See [Tutorial Part 5: Source Plugins](/docs/tutorial/part-5/) for a more complete example of using GraphiQL
-- See the [README for GraphiQL](https://github.com/graphql/graphiql)
+- See the [README for GraphiQL](https://github.com/graphql/graphiql#readme)
 - See [Using GraphQL Playground](/docs/using-graphql-playground/) for another example of a GraphQL IDE
