@@ -35,8 +35,11 @@ It recognizes files with the following extensions as images.
 - webp
 - tif
 - tiff
+- pdf
 
 Each image file is parsed into a node of type `ImageSharp`.
+
+PDF support depends on sharp using a vips binary with PDF support. The first page of PDFs will be used to generate `ImageSharp` nodes, assuming a resolution of 72 DPI.
 
 ## Configuration options
 

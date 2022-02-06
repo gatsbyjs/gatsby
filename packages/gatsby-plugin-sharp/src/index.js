@@ -31,7 +31,14 @@ const getImageSizeAsync = async file => {
     return imageSizeCache.get(file.internal.contentDigest)
   }
   const input = fs.createReadStream(file.absolutePath)
-  const dimensions = await imageSize(input)
+  let dimensions
+  if (file.extension === `pdf`) {
+    const pipeline = sharp({ failOnError: !!getPluginOptions().failOnError })
+    const { width, height } = await input.pipe(pipeline).metadata()
+    dimensions = { width, height, type: `pdf` }
+  } else {
+    dimensions = await imageSize(input)
+  }
 
   if (!dimensions) {
     reportError(
@@ -278,6 +285,9 @@ async function generateBase64({ file, args = {}, reporter }) {
     options.toFormatBase64 || pluginOptions.forceBase64Format
   if (changedBase64Format) {
     options.toFormat = changedBase64Format
+  }
+  if (options.toFormat === `pdf`) {
+    options.toFormat = `jpg`
   }
 
   pipeline

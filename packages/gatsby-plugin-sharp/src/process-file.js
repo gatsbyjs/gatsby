@@ -103,6 +103,10 @@ exports.processFile = async (file, transforms, options = {}) => {
           roundedWidth = Math.round(roundedWidth)
         }
 
+        if (transformArgs.toFormat === `pdf`) {
+          transformArgs.toFormat = `png`
+        }
+
         clonedPipeline
           .resize(roundedWidth, roundedHeight, {
             position: transformArgs.cropFocus,
