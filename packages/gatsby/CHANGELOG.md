@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Local file lookups in `eq: $id` queries [#34699](https://github.com/gatsbyjs/gatsby/issues/34699) [#34717](https://github.com/gatsbyjs/gatsby/issues/34717) ([7c2f404](https://github.com/gatsbyjs/gatsby/commit/7c2f404c8a4d5e4143c608a1ac58914051936567))
 
-
-
 ### [4.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.6.1/packages/gatsby) (2022-02-01)
 
 #### Bug Fixes
