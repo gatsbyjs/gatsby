@@ -526,7 +526,8 @@ export async function initialize({
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      return slash(path.join(plugin.resolve, `gatsby-${env}`))
+      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+      return slash(resolveModule(modulePath) as string)
     }
     return undefined
   }
