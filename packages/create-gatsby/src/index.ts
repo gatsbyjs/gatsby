@@ -25,7 +25,7 @@ import { parseArgs } from "./utils/parse-args"
 
 const DEFAULT_STARTERS: Record<keyof typeof languages, string> = {
   js: `https://github.com/gatsbyjs/gatsby-starter-minimal.git`,
-  ts: `https://github.com/gatsbyjs/gatsby-starter-minimal-ts.git`, // TODO - Create
+  ts: `https://github.com/gatsbyjs/gatsby-starter-minimal-ts.git`,
 }
 
 interface IAnswers {
