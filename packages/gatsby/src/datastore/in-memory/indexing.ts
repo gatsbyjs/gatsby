@@ -41,14 +41,23 @@ const nodeIdToIdentifierMap = new Map<
   WeakRef<IGatsbyNodePartial>
 >()
 
+/**
+ * Grabs an instance of IGatsbyNodePartial for the given node.
+ * This accepts an IGatsbyNode or IGatsbyNodePartial as input, which allows
+ * us to conditionally store index fields on the partial if we encounter
+ * one that hasn't been stored on the partial yet.
+ */
 export const getGatsbyNodePartial = (
   node: IGatsbyNode | IGatsbyNodePartial,
   indexFields: Array<string>,
   resolvedFields: any
 ): IGatsbyNodePartial => {
+  // first, check if we have the partial in the cache
   const cacheKey = `${node.id}_____${node.internal.counter}`
   if (nodeIdToIdentifierMap.has(cacheKey)) {
     const maybeStillExist = nodeIdToIdentifierMap.get(cacheKey)?.deref()
+
+    // now check if we have it in memory and it has all the fields we need
     if (
       maybeStillExist &&
       _.isEqual(new Set(indexFields), maybeStillExist.indexFields)
@@ -57,22 +66,28 @@ export const getGatsbyNodePartial = (
     }
   }
 
+  // find all the keys of fields and store them and their values on the partial
   const dottedFields = {}
+  const sortFieldIds = getSortFieldIdentifierKeys(indexFields, resolvedFields)
+  let fullNodeObject: IGatsbyNode | undefined = node.isGatsbyNodePartial
+    ? undefined
+    : (node as IGatsbyNode)
 
-  for (const dottedField of getSortFieldIdentifierKeys(
-    indexFields,
-    resolvedFields
-  )) {
+  for (const dottedField of sortFieldIds) {
     if (dottedField in node) {
       dottedFields[dottedField] = node[dottedField]
     } else {
-      dottedFields[dottedField] = getValueAt(
-        node.isGatsbyNodePartial ? getNode(node.id)! : node,
-        dottedField
-      )
+      // if we haven't gotten the full node object, fetch it once
+      if (!fullNodeObject) {
+        fullNodeObject = getNode(node.id)!
+      }
+
+      // use the full node object to fetch the value
+      dottedFields[dottedField] = getValueAt(fullNodeObject, dottedField)
     }
   }
 
+  // create the partial object
   const partial = Object.assign(dottedFields, {
     isGatsbyNodePartial: true,
     id: node.id,
@@ -81,7 +96,10 @@ export const getGatsbyNodePartial = (
     },
     indexFields: new Set(indexFields),
   })
+
+  // set the object in the cache for later fetching
   nodeIdToIdentifierMap.set(cacheKey, new WeakRef<IGatsbyNodePartial>(partial))
+
   return partial
 }
 
