@@ -1,5 +1,5 @@
 ---
-title: Debugging HTML Builds and runtime SSR
+title: Debugging HTML Builds
 ---
 
 Errors while building static HTML files (the build-time React SSR process) or while using `getServerData` (the [runtime SSR](/docs/reference/rendering-options/server-side-rendering/) process) generally happen for one of the following reasons:
@@ -14,7 +14,7 @@ Errors while building static HTML files (the build-time React SSR process) or wh
    lifecycle](https://reactjs.org/docs/react-component.html#componentdidmount)
    or into a [`useEffect`
    hook](https://reactjs.org/docs/hooks-reference.html#useeffect), which
-   ensures the code doesn't run unless it's in the browser. 
+   ensures the code doesn't run unless it's in the browser.
 
 2. Check that each of your JS files listed in your `pages` directory (and any
    sub-directories) are exporting either a React component or string. Gatsby
