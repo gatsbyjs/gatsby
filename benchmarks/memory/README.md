@@ -38,6 +38,10 @@ A shorthand for start + connect.
 
 Stop the container used for testing.
 
+#### yarn docker:stats
+
+Show a polling display of the container's docker stats.
+
 ### Gatsby
 
 These commands are used for interfacing with gatsby.
@@ -68,7 +72,7 @@ Currently we can reproduce builds crashing with out default settings
 
 - Docker container running with 2GB limit
 - 300 nodes x ~2MB each = ~600MB of "just" nodes data in each process (number of nodes can be controlled with NUM_NODES env var)
-- 3 workers + main process (GATSBY_CPU_COUNT set to 4 in docker image, but you can specify different value with env var)
+- 3 workers + main process (`GATSBY_CPU_COUNT` set to 4 in docker image, but you can specify different value with env var - for example `GATSBY_CPU_COUNT=6 yarn gatsby:build`)
 - `eq_field` template using fast filters (single `eq` specifically)
 
 Goal is to make `eq_field` template to not cause crashes, then add next template (different operator) that cause crashes and repeat until all queries can be handled with set memory limits.
@@ -87,7 +91,7 @@ When starting working with this benchmark:
 And repeat as many times as you want:
 
 - make changes to `gatsby` source code as you normally would
-- run `yarn build` inside docker
+- run `yarn gatsby:build` inside docker
 
 ## Testing
 

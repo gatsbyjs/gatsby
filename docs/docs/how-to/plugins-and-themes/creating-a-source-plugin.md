@@ -935,7 +935,7 @@ The CMS will need to send a preview webhook to Gatsby Cloud when content is chan
 
 ##### Using the Gatsby preview extension
 
-We are currently in process of creating an open source package to handle most of this functionality for you. In the meantime, you will need to create a button in your CMS that does the following...
+You will need to create a button in your CMS that does the following:
 
 1. `POST` to the preview webhook url in Gatsby Cloud
 2. Open the Content Sync waiting room
@@ -945,9 +945,9 @@ The button might look something like this:
 
 ##### Configuration
 
-You will need to store the Content Sync URL from a given Gatsby Cloud site. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the CMS plugin extension configuration, this will differ from CMS to CMS depending on how they handle their plugin ecosystem.
+You will need to store the Content Sync URL from a given Gatsby Cloud site as a CMS extension option. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the CMS plugin extension configuration, this will differ from CMS to CMS depending on how extension settings are stored.
 
-Depending on the CMS you will also need to store the preview webhook URL. This might also be stored in the plugin extension configuration, but often is stored in a separate webhooks configuration. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
+You will also need to store the preview webhook URL. This might also be stored in the plugin extension settings, but often is stored in a separate CMS webhooks settings page if your CMS supports webhooks already. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
 
 Both of these need to be user configurable in the CMS.
 
@@ -967,13 +967,24 @@ In the CMS extension, we should have access to
 - the content id
 - the timestamp that the content was updated at (or some other piece of data that is tied to a very specific state of saved content)
 
+##### Enabling "Eager Redirects" with Content ID's
+
+Eager Redirects is a Content Sync feature which causes the user to be redirected to their site frontend as soon as possible.
+When they first preview a piece of content, they will stay in the Content Sync loading screen until their preview is ready. On subsequent previews of that same piece of content, they will be redirected as soon as the page loads. This is done by storing a "content ID" in local storage. The content ID should be a unique identifier for that piece of content which is consistent across all previews.
+
+```javascript
+const contentId = project.id
+```
+
+This content ID should be appended to the end of the Content Sync URL. See the sections below for more information.
+
 ##### Starting the preview build (optional)
 
 If the CMS does not handle this part automatically we will need to tell Gatsby cloud to build a preview by `POST`ing to the Gatsby Cloud preview build webhook url.
 
 ##### Opening the Content Sync waiting room
 
-Once we've built a `manifestId` and `POST`ed to the preview build webhook url, we need to open a new tab/window with a modified version of the Content Sync URL. You get that by grabbing the Content Sync URL you stored in the CMS extension earlier and appending the Gatsby source plugin name and the content's `manifestId` that you just created, `https://gatsbyjs.com/content-sync/<siteId>/<sourcePluginName>/<manifestId>`.
+Once we've built a `manifestId` and `POST`ed to the preview build webhook url, we need to open a new tab/window with a modified version of the Content Sync URL. You get that by grabbing the Content Sync URL you stored in the CMS extension earlier and appending the Gatsby source plugin name, the content ID, and the content's `manifestId` that you just created, `https://gatsbyjs.com/content-sync/<siteId>/<sourcePluginName>/<manifestId>/<contentId>/`.
 
 #### Useful Content Sync development tips
 

@@ -462,10 +462,27 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/contentful
           test_command: yarn test
+      # we build a second time to see if warm/cached builds are successful
+      - e2e-test:
+          test_path: e2e-tests/contentful
+          test_command: yarn build
       - store_artifacts:
           path: e2e-tests/contentful/__diff_output__
       - store_test_results:
           path: e2e-tests/contentful/cypress/results
+
+  e2e_tests_trailing-slash:
+    <<: *e2e-executor
+    environment:
+      <<: *e2e-executor-env
+      CYPRESS_PROJECT_ID: ofxgw8
+      CYPRESS_RECORD_KEY: 29c32742-6b85-40e0-9b45-a4c722749d52
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/trailing-slash
+          test_command: yarn test
+      - store_test_results:
+          path: e2e-tests/trailing-slash/cypress/results
 
   starters_validate:
     executor: node
@@ -668,6 +685,8 @@ workflows:
       - e2e_tests_visual-regression:
           <<: *e2e-test-workflow
       - e2e_tests_contentful:
+          <<: *e2e-test-workflow
+      - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
