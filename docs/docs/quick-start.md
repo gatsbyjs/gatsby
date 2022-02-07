@@ -43,7 +43,7 @@ Try editing the home page in `src/pages/index.js`. Saved changes will live reloa
 The CLI also supports two flags:
 
 - `-y` skips the questionnaire
-- `-ts` initializes your project with the [minimal TypeScript starter](https://github.com/gatsbyjs/gatsby-starter-minimal) instead of the [minimal JavaScript starter](https://github.com/gatsbyjs/gatsby-starter-minimal)
+- `-ts` initializes your project with the [minimal TypeScript starter](https://github.com/gatsbyjs/gatsby-starter-minimal-ts) instead of the [minimal JavaScript starter](https://github.com/gatsbyjs/gatsby-starter-minimal)
 
 Flags are not positional, so these commands are equivalent:
 
