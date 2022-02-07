@@ -48,11 +48,6 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT"
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "clean": "gatsby clean"
-  }
 }
 ```
 
@@ -132,7 +127,7 @@ If you run `yarn workspaces info`, you'll be able to verify that the site is usi
 }
 ```
 
-### Add peer and dev dependencies to `gatsby-theme-events`
+### Add peer dependencies to `gatsby-theme-events`
 
 Targeting the `gatsby-theme-events` workspace, install `gatsby`, `react`, and `react-dom` as peer dependencies:
 
@@ -142,12 +137,6 @@ yarn workspace gatsby-theme-events add -P gatsby react react-dom
 
 > 💡 The `-P` flag is shorthand for installing peer dependencies.
 
-During development, the `gatsby-theme-events` will also be used as a gatsby site. Install `gatsby`, `react`, and `react-dom` as dev dependencies:
-
-```shell
-yarn workspace gatsby-theme-events add -D gatsby react react-dom
-```
-
 The `gatsby-theme-events/package.json` file should now include the following:
 
 ```json:title=gatsby-theme-events/package.json
@@ -156,12 +145,22 @@ The `gatsby-theme-events/package.json` file should now include the following:
     "gatsby": "^3.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
-  },
-  "devDependencies": {
-    "gatsby": "^3.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
   }
+}
+```
+
+### Set up `site/gatsby-config.js`
+
+Create a `gatsby-config.js` file inside `site`:
+
+```javascript:title=site/gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-theme-events",
+      options: {},
+    },
+  ],
 }
 ```
 
@@ -241,7 +240,7 @@ module.exports = {
 With this saved, restart the development server:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 Open up the GraphiQL explorer for the site, and make a test query on `allEvent`:
@@ -474,10 +473,10 @@ exports.createResolvers = ({ createResolvers }) => {
 
 > 💡 The resolver function receives the `source`, which in this case is the `Event` node.
 
-Test that this is working by running `gatsby-theme-events` again:
+Test that this is working by running `site` again:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 If you query this time for `allEvent`, you'll see the `Event` data, including the new slugs:
@@ -620,10 +619,10 @@ export default EventTemplate
 
 ### Test that pages are building
 
-To test that the root path (`"/"`) and individual event pages are building successfully, run `gatsby-theme-events` in develop mode again:
+To test that the root path (`"/"`) and individual event pages are building successfully, run `site` in develop mode again:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 You should see the placeholder `events.js` component at `http://localhost:8000/`.
@@ -1043,13 +1042,13 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 
 Note that the example above sets default values for `options`. This behavior was also included in the prior `gatsby-config.js` example. You only need to set default values once, but both mechanisms for doing so are valid.
 
-> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because you've converted the theme to use a function export, you can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
+> 💡 The function export in `gatsby-config.js` is only supported for themes. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
 
-### Set up `site/gatsby-config.js`
+### Update `site/gatsby-config.js`
 
-Create a `gatsby-config.js` file inside `site`:
+Update the `gatsby-config.js` file inside `site`:
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
