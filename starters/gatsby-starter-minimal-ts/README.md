@@ -4,17 +4,17 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby minimal Typescript starter
+  Gatsby minimal TypeScript starter
 </h1>
 
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+    Use the Gatsby CLI to create a new site, specifying the minimal TypeScript starter.
 
     ```shell
-    # create a new Gatsby site using the minimal starter
+    # create a new Gatsby site using the minimal TypeScript starter
     npm init gatsby
     ```
 

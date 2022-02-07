@@ -2,7 +2,7 @@
   "name": "gatsby-starter-minimal-ts",
   "version": "1.0.0",
   "private": true,
-  "description": "gatsby-starter-minimal-ts",
+  "description": "A Gatsby starter written in TypeScript with no plugins and a single welcome page.",
   "author": "Jude Agboola",
   "keywords": [
     "gatsby"
@@ -15,6 +15,7 @@
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit"
   },
+  "license": "0BSD",
   "dependencies": {
     "@types/node": "^17.0.14",
     "@types/react": "^17.0.38",

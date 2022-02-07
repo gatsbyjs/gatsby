@@ -1,9 +1,9 @@
+/** @type {import('gatsby).GatsbyConfig} */
 module.exports = {
-    siteMetadata: {
-      title: `gatsby-starter-minimal-ts`,
-        siteUrl: `https://www.yourdomain.tld`,
-    },
-    plugins: [
+  siteMetadata: {
+    siteUrl: `https://www.yourdomain.tld`,
+  },
+  plugins: [
 
-    ]
+  ]
 }

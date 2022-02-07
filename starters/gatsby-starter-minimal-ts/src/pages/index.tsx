@@ -57,8 +57,8 @@ const descriptionStyle = {
 }
 
 const docLink = {
-  text: "Documentation",
-  url: "https://www.gatsbyjs.com/docs/",
+  text: "TypeScript Documentation",
+  url: "https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/",
   color: "#8954A8",
 }
 
@@ -72,7 +72,7 @@ const badgeStyle = {
   borderRadius: 4,
   padding: "4px 6px",
   display: "inline-block",
-  position: "relative",
+  position: "relative" as "relative",
   top: -2,
   marginLeft: 10,
   lineHeight: 1,
@@ -134,22 +134,17 @@ const IndexPage = () => {
         Congratulations
         <br />
         <span style={headingAccentStyles}>— you just made a Gatsby site! </span>
-        <span role="img" aria-label="Party popper emojis">
-          🎉🎉🎉
-        </span>
+        🎉🎉🎉
       </h1>
       <p style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
-        update in real-time.{" "}
-        <span role="img" aria-label="Sunglasses smiley emoji">
-          😎
-        </span>
+        update in real-time. 😎
       </p>
       <ul style={listStyles}>
         <li style={docLinkStyle}>
           <a
             style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
+            href={`${docLink.url}?utm_source=starter&utm_medium=ts-docs&utm_campaign=minimal-starter-ts`}
           >
             {docLink.text}
           </a>
@@ -159,7 +154,7 @@ const IndexPage = () => {
             <span>
               <a
                 style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
+                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter-ts`}
               >
                 {link.text}
               </a>
