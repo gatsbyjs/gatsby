@@ -75,7 +75,7 @@ More information on build related errors is available in the guide on [debugging
 
 ## Real-world example: Gatsby store
 
-The [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) is a live application built with Gatsby that implements authentication using Auth0.
+The [Gatsby store](store.gatsbyjs.org) is a live application built with Gatsby that implements authentication using Auth0.
 
 [Util functions](https://github.com/gatsbyjs/store.gatsbyjs.org/blob/master/src/utils/auth.js) in the Gatsby Store repo make use of Auth0's APIs to authenticate users with GitHub, and wrap Auth0's APIs to check that [some of the Auth0 code runs only in the browser](https://github.com/gatsbyjs/store.gatsbyjs.org/blob/master/src/utils/auth.js#L3).
 
