@@ -188,12 +188,12 @@ https://gatsby.dev/no-mixed-modules
  */
 export const resolveModuleExports = (
   modulePath: string,
-  { mode = `analysis`, resolver = require.resolve } = {}
+  { mode = `analysis`, resolver = resolveModule } = {}
 ): Array<string> => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {
-      absPath = resolver(modulePath)
+      absPath = require.resolve(modulePath)
       return Object.keys(require(modulePath)).filter(
         exportName => exportName !== `__esModule`
       )
