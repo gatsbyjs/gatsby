@@ -1081,13 +1081,9 @@ export function intersectNodesByCounter(
   const result: Array<IGatsbyNodePartial> = []
   const maxA = a.length
   const maxB = b.length
-  let lastAdded: IGatsbyNode | undefined = undefined // Used to dedupe the list
-
-  // TODO some optimization could be done here to not call getNode
+  let lastAdded: IGatsbyNodePartial | undefined = undefined // Used to dedupe the list
 
   while (pointerA < maxA && pointerB < maxB) {
-    const nodeA = getNode(a[pointerA].id)
-    const nodeB = getNode(b[pointerB].id)
     const counterA = a[pointerA].internal.counter
     const counterB = b[pointerB].internal.counter
 
@@ -1096,7 +1092,7 @@ export function intersectNodesByCounter(
     } else if (counterA > counterB) {
       pointerB++
     } else {
-      if (nodeA !== nodeB) {
+      if (a[pointerA] !== b[pointerB]) {
         throw new Error(
           `Invariant violation: inconsistent node counters detected`
         )
@@ -1105,9 +1101,9 @@ export function intersectNodesByCounter(
       // Since input arrays are sorted, the same node should be grouped
       // back to back, so even if both input arrays contained the same node
       // twice, this check would prevent the result from getting duplicate nodes
-      if (lastAdded !== nodeA) {
+      if (lastAdded !== a[pointerA]) {
         result.push(a[pointerA])
-        lastAdded = nodeA
+        lastAdded = a[pointerA]
       }
       pointerA++
       pointerB++
@@ -1130,9 +1126,7 @@ export function unionNodesByCounter(
 ): Array<IGatsbyNodePartial> {
   // TODO: perf check: is it helpful to init the array to max(maxA,maxB) items?
   const arr: Array<IGatsbyNodePartial> = []
-  let lastAdded: IGatsbyNode | undefined = undefined // Used to dedupe the list
-
-  // TODO some optimization could be done here to not call getNode
+  let lastAdded: IGatsbyNodePartial | undefined = undefined // Used to dedupe the list
 
   let pointerA = 0
   let pointerB = 0
@@ -1140,27 +1134,25 @@ export function unionNodesByCounter(
   const maxB = b.length
 
   while (pointerA < maxA && pointerB < maxB) {
-    const nodeA = getNode(a[pointerA].id)!
-    const nodeB = getNode(b[pointerB].id)!
-    const counterA = nodeA.internal.counter
-    const counterB = nodeB.internal.counter
+    const counterA = a[pointerA].internal.counter
+    const counterB = b[pointerB].internal.counter
 
     if (counterA < counterB) {
-      if (lastAdded !== nodeA) {
+      if (lastAdded !== a[pointerA]) {
         arr.push(a[pointerA])
-        lastAdded = nodeA
+        lastAdded = a[pointerA]
       }
       pointerA++
     } else if (counterA > counterB) {
-      if (lastAdded !== nodeB) {
+      if (lastAdded !== b[pointerB]) {
         arr.push(b[pointerB])
-        lastAdded = nodeB
+        lastAdded = b[pointerB]
       }
       pointerB++
     } else {
-      if (lastAdded !== nodeA) {
+      if (lastAdded !== a[pointerA]) {
         arr.push(a[pointerA])
-        lastAdded = nodeA
+        lastAdded = a[pointerA]
       }
       pointerA++
       pointerB++
@@ -1168,19 +1160,17 @@ export function unionNodesByCounter(
   }
 
   while (pointerA < maxA) {
-    const nodeA = getNode(a[pointerA].id)!
-    if (lastAdded !== nodeA) {
+    if (lastAdded !== a[pointerA]) {
       arr.push(a[pointerA])
-      lastAdded = nodeA
+      lastAdded = a[pointerA]
     }
     pointerA++
   }
 
   while (pointerB < maxB) {
-    const nodeB = getNode(b[pointerB].id)!
-    if (lastAdded !== nodeB) {
+    if (lastAdded !== b[pointerB]) {
       arr.push(b[pointerB])
-      lastAdded = nodeB
+      lastAdded = b[pointerB]
     }
     pointerB++
   }
