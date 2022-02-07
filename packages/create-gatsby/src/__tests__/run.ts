@@ -1,5 +1,6 @@
 import { reporter } from "../utils/reporter"
-import { run } from "../index"
+import { initStarter } from "../init-starter"
+import { run, DEFAULT_STARTERS } from "../index"
 
 jest.mock(`../utils/parse-args`)
 jest.mock(`enquirer`, () => {
@@ -92,7 +93,7 @@ describe(`run`, () => {
         expect.stringContaining(`Welcome to Gatsby!`)
       )
     })
-    it(`should communicate setup questions will be asked if no skip flag is passed`, async () => {
+    it(`should communicate setup questions will be asked`, async () => {
       await run()
       expect(reporter.info).toHaveBeenCalledWith(
         expect.stringContaining(
@@ -100,7 +101,7 @@ describe(`run`, () => {
         )
       )
     })
-    it(`should confirm actions if no skip flag is passed`, async () => {
+    it(`should confirm actions`, async () => {
       await run()
       expect(reporter.info).toHaveBeenCalledWith(
         expect.stringContaining(`Thanks! Here's what we'll now do`)
@@ -128,7 +129,7 @@ describe(`run`, () => {
         expect.stringContaining(`Welcome to Gatsby!`)
       )
     })
-    it(`should not communicate setup questions if skip flag is passed`, async () => {
+    it(`should not communicate setup questions`, async () => {
       await run()
       expect(reporter.info).not.toHaveBeenCalledWith(
         expect.stringContaining(
@@ -136,7 +137,7 @@ describe(`run`, () => {
         )
       )
     })
-    it(`should not confirm actions if skip flag is passed`, async () => {
+    it(`should not confirm actions`, async () => {
       await run()
       expect(reporter.info).not.toHaveBeenCalledWith(
         expect.stringContaining(`Thanks! Here's what we'll now do`)
@@ -146,6 +147,44 @@ describe(`run`, () => {
       await run()
       expect(reporter.success).toHaveBeenCalledWith(
         expect.stringContaining(`Created site`)
+      )
+    })
+  })
+
+  describe(`no ts flag`, () => {
+    beforeEach(() => {
+      parseArgsMock.mockReturnValueOnce({
+        flags: { ts: false },
+        dirName,
+      })
+    })
+
+    it(`should use the JS starter`, async () => {
+      await run()
+      expect(initStarter).toHaveBeenCalledWith(
+        DEFAULT_STARTERS.js,
+        `hello-world`,
+        [],
+        `hello-world`
+      )
+    })
+  })
+
+  describe(`ts flag`, () => {
+    beforeEach(() => {
+      parseArgsMock.mockReturnValueOnce({
+        flags: { ts: true },
+        dirName,
+      })
+    })
+
+    it(`should use the TS starter`, async () => {
+      await run()
+      expect(initStarter).toHaveBeenCalledWith(
+        DEFAULT_STARTERS.ts,
+        `hello-world`,
+        [],
+        `hello-world`
       )
     })
   })
