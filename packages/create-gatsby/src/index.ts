@@ -130,6 +130,10 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   answers.project = answers.project.trim()
 
+  if (flags.ts) {
+    answers.language = `ts`
+  }
+
   // Telemetry
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `project_name`,
@@ -276,10 +280,7 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
   }
 
   // Decide starter
-  let starter = DEFAULT_STARTERS[answers.language || `js`]
-  if (flags.ts) {
-    starter = DEFAULT_STARTERS.ts
-  }
+  const starter = DEFAULT_STARTERS[answers.language || `js`]
 
   // Do all the things
   await initStarter(

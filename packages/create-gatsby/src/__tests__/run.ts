@@ -1,5 +1,6 @@
 import { reporter } from "../utils/reporter"
 import { initStarter } from "../init-starter"
+import { trackCli } from "../tracking"
 import { run, DEFAULT_STARTERS } from "../index"
 
 jest.mock(`../utils/parse-args`)
@@ -52,6 +53,12 @@ jest.mock(`../install-plugins`, () => {
 jest.mock(`../utils/site-metadata`, () => {
   return {
     setSiteMetadata: jest.fn(),
+  }
+})
+jest.mock(`../utils/hash`, () => {
+  return {
+    sha256: jest.fn(args => args),
+    md5: jest.fn(args => args),
   }
 })
 jest.mock(`../utils/question-helpers`, () => {
@@ -168,6 +175,14 @@ describe(`run`, () => {
         `hello-world`
       )
     })
+
+    it(`should track JS was selected as language`, async () => {
+      await run()
+      expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
+        name: `LANGUAGE`,
+        valueString: `js`,
+      })
+    })
   })
 
   describe(`ts flag`, () => {
@@ -186,6 +201,14 @@ describe(`run`, () => {
         [],
         `hello-world`
       )
+    })
+
+    it(`should track TS was selected as language`, async () => {
+      await run()
+      expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
+        name: `LANGUAGE`,
+        valueString: `ts`,
+      })
     })
   })
 })
