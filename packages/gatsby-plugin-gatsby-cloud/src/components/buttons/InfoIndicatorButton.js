@@ -61,6 +61,7 @@ const InfoIndicatorButton = ({
         ...btnProps,
         tooltip: {
           ...btnProps.tooltip,
+          overrideShow: visible,
           show: visible,
         },
       }
@@ -182,6 +183,7 @@ const InfoIndicatorButton = ({
                 orgId={orgId}
               />
             ),
+            overrideShow: true,
             closable: true,
             hoverable: false,
             onClose: closeInfoTooltip,
@@ -233,6 +235,7 @@ const InfoIndicatorButton = ({
                     nodeManifestRedirectUrl={nodeManifestRedirectUrl}
                   />
                 ),
+                overrideShow: true,
                 closable: true,
                 onClose: closeInfoTooltip,
               },
