@@ -8,7 +8,7 @@ Welcome to `gatsby@4.7.0` release (February 2022 #1)
 
 Key highlights of this release:
 
-- TODO
+- `trailingSlash` Config Option
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -21,13 +21,23 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-## Highlight #1
+## `trailingSlash` Config Option
 
-TODO
+`gatsby-config.js` now supports a `trailingSlash` configuration with the three main options:
+
+- `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
+- `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.
+- `ignore`: Don't automatically modify the URL
+
+See [the docs page](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash) for more information.
+
 
 ## Notable Bugfixes & Improvements
-
--
+- Module export syntax added for `babel-plugin-remove-api`, via [PR #34581](https://github.com/gatsbyjs/gatsby/pull/34581)
+- GraphQL schema generation is sped up by upgrading `graphql-compose` from v7 to v9, via [PR #34504](https://github.com/gatsbyjs/gatsby/pull/34504)
+- Remote file downloads are now queued properly for all cases, via [PR #34414](https://github.com/gatsbyjs/gatsby/pull/34414)
+- Added a `vanilla-extract` example project, via [PR #34667](https://github.com/gatsbyjs/gatsby/pull/34667)
+- Fixed an issue using a `eq: $id` filter on a GatsbyImage in DSG, via [PR #34693](https://github.com/gatsbyjs/gatsby/pull/34693)
 
 ## Contributors
 
