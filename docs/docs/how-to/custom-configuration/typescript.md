@@ -11,7 +11,7 @@ examples:
 
 To see all of the types available and their generics look at our [TypeScript definition file](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/index.d.ts).
 
-## Initializing Gatsby project with Typescript
+## Initializing a new Gatsby project with Typescript
 
 Getting started with a Typescript Gatsby project is easy with the `create-gatsby` CLI
 
@@ -39,14 +39,6 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
 
 **Note**: You have be on `gatsby@4.7.0` or higher to use Typescript in `gatsby-*` files
 
-## tsconfig.json
-
-There are at least three reasons to maintain a tsconfig.json file in a Gatsby project:
-
-- Testing frameworks like Jest will not use the internal Gatsby config and need some direction on what to do with TypeScript files
-- Code editors like VS Code face similar limitations to Jest, so for example the TypeScript Server in VSCode needs that config
-- Linting libraries like ESLint use the tsconfig.json file as well.
-
 ## Type hinting in JS files
 
 You can still take advantage of type hinting in Javascript files with [JSdoc](https://jsdoc.app/) by importing types from directly from Gatsby. You need to be on a text exitor that supports [JSdoc](https://jsdoc.app/) for this to work.
@@ -73,6 +65,14 @@ module.exports = {
  */
 exports.createPages = () => {}
 ```
+
+## tsconfig.json
+
+There are at least three reasons to maintain a tsconfig.json file in a Gatsby project:
+
+- Testing frameworks like Jest will not use the internal Gatsby config and need some direction on what to do with TypeScript files
+- Code editors like VS Code face similar limitations to Jest, so for example the TypeScript Server in VSCode needs that config
+- Linting libraries like ESLint use the tsconfig.json file as well.
 
 ## `PageProps`
 
@@ -196,9 +196,9 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 }
 ```
 
-## Styling vanilla-extract
+## Styling
 
-[vanilla-extract](https://vanilla-extract.style/) vanilla-extract helps you write type‑safe, locally scoped classes, variables and themes and also generate static CSS files at build time. It's a great solution when it comes to styling in your Typescript project. To use [`vanilla-extract`](https://vanilla-extract.style/), you can select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby`/ `yarn create gatsby`. You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/)
+[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your Typescript project. To use [`vanilla-extract`](https://vanilla-extract.style/), you can select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby`/ `yarn create gatsby`. You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/)
 
 ## Other resources
 
