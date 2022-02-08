@@ -8,7 +8,7 @@ Welcome to `gatsby@4.7.0` release (February 2022 #1)
 
 Key highlights of this release:
 
-- [`trailingSlash` Option](#trailingslash-option) - Now built into the Framework itself
+- [`trailingSlash` Option (Beta)](#trailingslash-option) - Now built into the Framework itself
 - [Faster Schema Creation & `createPages`](#faster-schema-creation--createpages) - Speed improvements of at least 30%
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
@@ -23,6 +23,8 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 ---
 
 ## `trailingSlash` Option
+
+_Currently in public Beta_
 
 Through the RFC [Integrated handling of trailing slashes in Gatsby](https://github.com/gatsbyjs/gatsby/discussions/34205) we've worked on making the trailing slashes feature a first-class citizen in Gatsby. We're happy to announce that `gatsby-config` now supports a `trailingSlash` configuration with these three main options:
 
@@ -45,6 +47,8 @@ Gatsby Cloud supports this new setting out of the box and also uses `301` redire
 Please note that these plugins are considered deprecated now: [gatsby-plugin-force-trailing-slashes](/plugins/gatsby-plugin-force-trailing-slashes/) and [gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/).
 
 The information presented here is also available in the [gatsby-config docs page](/docs/reference/config-files/gatsby-config/#trailingslash) and in the [PR #34268](https://github.com/gatsbyjs/gatsby/pull/34268) that implemented this.
+
+Please share your feedback and any issues you encounter directly into the [corresponding discussion](https://github.com/gatsbyjs/gatsby/discussions/34205).
 
 ## Faster Schema Creation & `createPages`
 
