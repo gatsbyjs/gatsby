@@ -31,14 +31,15 @@
   - 🙌 [Retrieving API Information from Shopify](#retrieving-api-information-from-shopify)
     - 🛒 [Enabling Cart and Checkout features](#enabling-cart-and-checkout-features)
   - 🔥 [Fire it up](#fire-it-up)
+  - 🛠 [Priority builds](#priority-builds)
 - 🔌 [Plugin options](#plugin-options)
 - 🎨 [Images](#images)
-  - 🚀 [Use Shopify CDN](#use-shopify-cdn)
-  - 🚥 [Use runtime images](#use-runtime-images)
-  - 🖼️ [Download images up front](#download-images-up-front)
+  - 🛍️ [Use Shopify CDN](#use-shopify-cdn)
+  - ⬇️ [Use downloaded images](#use-downloaded-images)
+  - 🚥 [Use run-time images](#use-run-time-images)
+  - 🖼️ [Displaying images](#displaying-images)
 - 🚨 [Limitations](#limitations)
-- 🛠 [Development](#development)
-- 💾 [Migrating from v4 to v5](#migrating-from-v4-to-v5)
+- 💾 [Migration guide](#migration-guide)
 
 # gatsby-source-shopify
 
@@ -76,29 +77,32 @@ module.exports = {
     {
       resolve: "gatsby-source-shopify",
       options: {
-        password: process.env.SHOPIFY_SHOP_PASSWORD,
-        storeUrl: process.env.GATSBY_SHOPIFY_STORE_URL,
+        password: process.env.SHOPIFY_APP_PASSWORD,
+        storeUrl: process.env.GATSBY_MYSHOPIFY_URL,
+        salesChannel: process.env.SHOPIFY_APP_ID, // Optional but recommended
       },
     },
     "gatsby-plugin-image",
   ],
 }
 ```
+💡 Note: This plugin has a peer dependency on `gatsby-plugin-image` and will fail to build without it.
 
 <div id="retrieving-api-information-from-shopify"></div>
 
 ### Retrieving API Information from Shopify
 
-In Shopify admin, `SHOPIFY_STORE_URL` is the Store address you enter when logging into your Shopify account. This typically is in the format of `myshop.myshopify.com`.
+`GATSBY_MYSHOPIFY_URL` is the Store address you enter when logging into your Shopify account. This is in the format of `{store}.myshopify.com`.
 
-Once logged into Shopify admin, navigate to the `Apps` page and click the link at the bottom to `Manage private apps`. This will allow you to turn on private apps and create an app that Gatsby will use to access Shopify's Admin API.
+Once logged into Shopify admin, navigate to the `Apps` page and click the link at the top to `Develop apps`. If you haven't yet, an admin on the Shopify store will need to enable private app development. This will allow you to create an app that Gatsby will use to access Shopify's Admin API.
 
 For the Private app name enter `Gatsby` (the name does not really matter). Add the following under the `Active Permissions for this App` section:
 
+- `Read access` for `Files`
 - `Read access` for `Products`
-- `Read access` for `Product listings` if you want to use Shopify's Product Collections in your Gatsby site
-- `Read access` for `Orders` if you want to use order information in your Gatsby site
-- `Read access` for `Inventory` and `Locations` if you want to use location information in your Gatsby site
+- `Read access` for `Product listings` if you enable `collections` in the plugin options
+- `Read access` for `Orders` if you enable `orders` in the plugin options
+- `Read access` for `Inventory` and `Locations` if you enable `locations` in the plugin options
 
 <div id="enabling-cart-and-checkout-features"></div>
 
@@ -126,6 +130,18 @@ To create a production build, use gatsby build
 ```
 
 Now follow the second link to explore your Shopify data!
+
+<div id="priority-builds"></div>
+
+### Priority builds
+
+Because of the limiations of the Shopify Bulk API we have included logic in this plugin to determine which builds are high priority for a given Shopify site. This allows us to pause deploy preview builds while production builds are running while using the same Shopify App. The following logic determines whether a build is priority or not:
+
+```js
+const isPriorityBuild = process.env.GATSBY_IS_PREVIEW !== `true` && process.env.GATSBY_IS_PR_BUILD !== `true`
+```
+
+These environment variables are set by default by Gatsby Cloud, but we are working diligently to make this plugin workby default with Netlify and local development as well, and are looking at the option to override these defaults in the plugin options.
 
 <div id="plugin-options"></div>
 
@@ -157,11 +173,10 @@ Not set by default. If set to a string (example `MyStore`) node names will be `a
 
 `salesChannel: string`
 
-Not set by default. If set to a string (example `My Sales Channel`), only products and collections that are active in that channel will be sourced. If no sales channel is provided, the default behavior is to source products that are available in the online store.
+Not set by default. If set to a string (example `My Sales Channel`), only products, variants, collections and locations that are published to that channel will be sourced. If you want to filter products by a Private App instead of Public App or default sales channel, you have to provide the App ID instead of sales channel name. You can find this in the same place as the Shopify App Password.
 
-Note: If you set up your site with the Gatsby Cloud Public App integration, `salesChannel` is set for you.
+💡 Note: The `salesChannel` plugin option defaults to the value of `process.env.GATBSY_SHOPIFY_SALES_CHANNEL`. If that value is not set the plugin will source only objects that are published to the `online store` sales channel. 
 
-Note: If you want to filter products by a Private App instead of Public App or default sales channel, you have to provide App ID instead of sales channel name.
 
 <div id="images"></div>
 
@@ -173,70 +188,81 @@ We offer two options for displaying Shopify images in your Gatsby site. The defa
 
 ### Use Shopify CDN
 
-This is the default behavior and is intended to be used in conjunction with [gatsby-plugin-image][gatsby-plugin-image]. In this case, querying for image data from your Gatsby site might look like this:
+This is the default behavior and is intended to be used in conjunction with [gatsby-plugin-image][gatsby-plugin-image].
 
+#### Product Featured Media
+This query is commonly used on collection pages to only load necessary image data.
 ```graphql
-products: allShopifyProduct(
-  sort: { fields: [publishedAt], order: ASC }
-) {
-  edges {
-    node {
-      id
-      storefrontId
-      featuredImage {
-        id
-        altText
-        gatsbyImageData(width: 910, height: 910)
+query {
+  products: allShopifyProduct {
+    nodes {
+      featuredMedia {
+        preview {
+          image {
+            gatsbyImageData
+          }
+        }
       }
     }
   }
 }
 ```
 
-You could then display the image in your component like this:
-
-```jsx
-import { GatsbyImage } from "gatsby-plugin-image"
-
-function ProductListing(product) {
-  return (
-    <GatsbyImage
-      image={product.featuredImage.gatsbyImageData}
-      alt={product.featuredImage.altText}
-    />
-  )
+#### Product Media Previews
+This query is commonly used on product pages to display images for all media types.
+```graphql
+query {
+  products: allShopifyProduct {
+    nodes {
+      media {
+        preview {
+          image {
+            gatsbyImageData
+          }
+        }
+      }
+    }
+  }
 }
 ```
 
-<div id="use-runtime-images"></div>
+💡 Note: This query will return images for all media types including videos.
 
-### Use runtime images
-
-If you get Shopify images at runtime that don't have the `gatsbyImageData` resolver, for example from the cart or Storefront API, you can use the `getShopifyImage` function to create an imagedata object to use with `<GatsbyImage>`.
-
-It expects an `image` object that contains the properties `width`, `height` and `originalSrc`, such as [a Storefront API `Image` object](https://shopify.dev/docs/storefront-api/reference/common-objects/image).
-
-```jsx
-import { GatsbyImage } from "gatsby-plugin-image"
-import { getShopifyImage } from "gatsby-source-shopify"
-
-function CartImage(storefrontProduct) {
-  // This is data from Storefront, not from Gatsby
-  const image = storefrontProduct.images.edges[0].node
-  const imageData = getShopifyImage({
-    image,
-    layout: "fixed",
-    width: 200,
-    height: 200,
-  })
-
-  return <GatsbyImage image={imageData} alt={image.altText} />
+#### Product Media Previews and Videos
+This query is commonly used on product pages to display images alongside videos.
+```graphql
+query {
+  products: allShopifyProduct {
+    nodes {
+      media {
+        preview {
+          image {
+            gatsbyImageData
+          }
+        }
+        ... on ShopifyExternalVideo {
+          embeddedUrl
+          host
+        }
+        ... on ShopifyVideo {
+          sources {
+            format
+            height
+            url
+            width
+          }
+        }
+      }
+    }
+  }
 }
 ```
 
-<div id="download-images-up-front"></div>
+💡 Note: Previous versions of this plugin exposed the `images` field on products. Although it made the plugin easier to interact with, it made it impossible to add videos to your products. The new version of the plugin exposes the `media` field directly, allowing you to query for all of the images, videos and 3D renderings that Shopify supports.
 
-### Download images up front
+<div id="use-downloaded-images"></div>
+
+### Use downloaded images
 
 If you wish to download your images during the build, you can specify `downloadImages: true` as a plugin option:
 
@@ -248,79 +274,110 @@ module.exports = {
     {
       resolve: "gatsby-source-shopify",
       options: {
-        password: process.env.SHOPIFY_SHOP_PASSWORD,
-        storeUrl: process.env.GATSBY_SHOPIFY_STORE_URL,
+        password: process.env.SHOPIFY_APP_PASSWORD,
+        storeUrl: process.env.GATSBY_MYSHOPIFY_URL,
         downloadImages: true,
       },
     },
     "gatsby-plugin-image",
+    "gatsby-transformer-sharp", // Required when downloadImages is true
   ],
 }
 ```
 
-This will make the build take longer but will make images appear on your page faster at runtime. If you use this option, you can query for your image data like this.
+💡 Note: This will make the build take longer but will make images appear on your page faster at runtime.
 
+#### Media with local files
+The following fragment will work with any of the `preview` fields in the [runtime images](#use-run-time-images) section.
 ```graphql
-products: allShopifyProduct(
-  sort: { fields: [publishedAt], order: ASC }
-) {
-  edges {
-    node {
-      id
-      storefrontId
-      featuredImage {
-        id
-        localFile {
-          childImageSharp {
-            gatsbyImageData(width: 910, height: 910, placeholder: BLURRED)
-          }
-        }
-        altText
+fragment MediaImageLocalFile on ShopifyMediaPreviewImage {
+  image {
+    localFile {
+      childImageSharp {
+        gatsbyImageData
       }
     }
   }
 }
 ```
 
-Then you would use `gatsby-plugin-image` to render the image:
+<div id="use-run-time-images"></div>
+
+### Use run-time images
+
+If you get Shopify images at run-time that don't have the `gatsbyImageData` resolver, for example from the cart or Storefront API, you can use the `getShopifyImage` function to create an image-data object to use with `<GatsbyImage>`.
+
+It expects an `image` object that contains the properties `width`, `height` and `originalSrc`, such as [a Storefront API `Image` object](https://shopify.dev/docs/storefront-api/reference/common-objects/image).
 
 ```js
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { getShopifyImage } from "gatsby-source-shopify"
 
-function ProductListing(product) {
-  const image = getImage(product.featuredImage.localFile)
+function getCartImage(storefrontProduct) {
+  const image = storefrontProduct.images.edges[0].node;
+  const imageData = getShopifyImage({
+    image,
+    width: 200,
+    height: 200,
+    layout: "fixed",
+  });
 
-  return <GatsbyImage image={image} alt={product.featuredImage.altText} />
+  return imageData;
 }
 ```
+
+<div id="displaying-images"></div>
+
+### Displaying images
+
+```jsx
+import { GatsbyImage } from "gatsby-plugin-image";
+import { getShopifyImage } from "gatsby-source-shopify";
+
+const ShopifyProductImage = ({ product }) => (
+  <GatsbyImage src={product.featuredMedia.preview.image.gatsbyImageData} />
+);
+
+const DownloadedProductImage = ({ product }) => (
+  <GatsbyImage src={product.featuredMedia.preview.image.localFile.childImageSharp.gatsbyImageData} />
+);
+
+const RuntimeProductImage = ({ storefrontProduct }) => {
+  const gatsbyImageData = getShopifyImage({
+    image: storefrontProduct.images.edges[0],
+    width: 800,
+    height: 800,
+    layout: 'fixed',
+  });
+ 
+  return (
+    <GatsbyImage src={gatsbyImageData} />
+  );
+};
+
+const RuntimeLineItemImage = ({ storefrontLineItem }) => {
+  const gatsbyImageData = getShopifyImage({
+    image: storefrontLineItem.variant.image,
+    width: 800,
+    height: 800,
+    layout: 'fixed',
+  });
+ 
+  return (
+    <GatsbyImage src={gatsbyImageData} />
+  );
+};
+```
+
+Please refer to the [gatsby-plugin-image docs](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#dynamic-images) for more information on how to display images on your Gatsby site.
 
 <div id="limitations"></div>
 
 ## Limitations
 
-The bulk API was chosen for resiliency, but it comes with some limitations. For a given store + app combination, only one bulk operation can be run at a time, so this plugin will wait for in-progress operations to complete. If your store contains a lot of data and there are multiple developers doing a clean build at the same time, they could be waiting on each other for a significant period of time.
+The bulk API was chosen for resiliency, but it comes with some limitations, the most important of which is that a given Shopify App can only have one bulk operation running at a time. Because of this we recommend that you have at least two Shopify Apps for each Shopify Store, one for production and another for local development, in order to avoid potential build issues.
 
-<div id="development"></div>
+<div id="migration-guide"></div>
 
-## Development
+## Migration guide
 
-This is a yarn workspace with the plugin code in a `plugin/` folder and a test Gatsby site in the `test-site/` folder. After cloning the repo, you can run `yarn` from the project root and all dependencies for both the plugin and the test site will be installed. Then you compile the plugin in watch mode and run the test site. In other words,
-
-1. From the project root, run `yarn`
-1. `cd plugin`
-1. `yarn watch`
-1. Open a new terminal window to the `test-site/` folder
-1. `yarn start`
-
-Subsequent builds will be incremental unless you run `yarn clean` from the `test-site/` folder to clear Gatsby's cache.
-
-You can also test an incremental build without restarting the test site by running `yarn refresh` from the `test-site/` folder.
-
-[bulk-operations]: https://shopify.dev/tutorials/perform-bulk-operations-with-admin-api
-[gatsby-plugin-image]: https://www.npmjs.com/package/gatsby-plugin-image
-
-<div id="migrating-from-v4-to-v5"></div>
-
-## Migrating from v4 to v5
-
-We don't currently have a migration guide but you can find some tips in [this issue](https://github.com/gatsbyjs/gatsby-source-shopify/issues/151). Please read through it and add a comment with any additional information you might have.
+We don't currently have a migration guide for v7 of `gatsby-source-shopify`, but it is in the works and will be released shortly after the release of v7.
