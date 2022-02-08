@@ -11,9 +11,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-const fs = require(`fs`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const { resolveModuleExports } = require(`../resolve-module-exports`)
+import * as fs from "fs-extra"
+import reporter from "gatsby-cli/lib/reporter"
+import { resolveModuleExports } from "../resolve-module-exports"
 let resolver
 
 describe(`Resolve module exports`, () => {
@@ -129,10 +129,12 @@ describe(`Resolve module exports`, () => {
 
   beforeEach(() => {
     resolver = jest.fn(arg => arg)
+    // @ts-ignore
     fs.readFileSync.mockImplementation(file => {
       const existing = MOCK_FILE_INFO[file]
       return existing
     })
+    // @ts-ignore
     reporter.panic.mockClear()
   })
 
@@ -149,6 +151,7 @@ describe(`Resolve module exports`, () => {
   it(`Show meaningful error message for invalid JavaScript`, () => {
     resolveModuleExports(`/bad/file`, { resolver })
     expect(
+      // @ts-ignore
       reporter.panic.mock.calls.map(c =>
         // Remove console colors + trim whitespace
         // eslint-disable-next-line
