@@ -145,7 +145,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
   })
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `LANGUAGE`,
-    valueString: sha256(answers.language),
+    valueString: answers.language,
   })
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `CMS`,
