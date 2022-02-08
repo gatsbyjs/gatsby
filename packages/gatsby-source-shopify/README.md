@@ -280,6 +280,7 @@ module.exports = {
       },
     },
     "gatsby-plugin-image",
+    "gatsby-plugin-sharp", // Required when downloadImages is true
     "gatsby-transformer-sharp", // Required when downloadImages is true
   ],
 }
