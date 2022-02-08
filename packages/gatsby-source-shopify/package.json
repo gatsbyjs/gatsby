@@ -12,7 +12,7 @@
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-source-shopify"
   },
-  "author": "Sam Slotsky <sam.slotsky@gatsbyjs.com>, Daniel Lew <daniel.lew@gatsbyjs.com>",
+  "author": "Byron Hill <byron@atomicdigital.studio>, Sam Slotsky <sam.slotsky@gatsbyjs.com>, Daniel Lew <daniel.lew@gatsbyjs.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
