@@ -87,6 +87,6 @@ A big **Thank You** to [our community who contributed][full-changelog] to this r
 - [rileyjshaw](https://github.com/rileyjshaw): chore(docs): update PurgeCSS instructions for Tailwind 3 [PR #34726](https://github.com/gatsbyjs/gatsby/pull/34726)
 - [xaviemirmon](https://github.com/xaviemirmon): chore(docs): Update "Debugging HTML builds" to include `getServerData` [PR #34631](https://github.com/gatsbyjs/gatsby/pull/34631)
 - [marceloverdijk](https://github.com/marceloverdijk): chore(docs): Added required `type` attribute to resolver [PR #34716](https://github.com/gatsbyjs/gatsby/pull/34716)
-- [cameronbraid](https://github.com/cameronbraid): chore(docs): Update `transformOptions`  defaults [PR #34713](https://github.com/gatsbyjs/gatsby/pull/34713)%    
+- [cameronbraid](https://github.com/cameronbraid): chore(docs): Update `transformOptions` defaults [PR #34713](https://github.com/gatsbyjs/gatsby/pull/34713)%    
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.7.0-next.0...gatsby@4.7.0
