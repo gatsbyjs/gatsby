@@ -8,8 +8,8 @@ Welcome to `gatsby@4.7.0` release (February 2022 #1)
 
 Key highlights of this release:
 
-- [`trailingSlash` Option]() - Now built into the Framework itself
-- [Faster Schema Creation & `createPages`] - Speed improvements of at least 30%
+- [`trailingSlash` Option](#trailingslash-option) - Now built into the Framework itself
+- [Faster Schema Creation & `createPages`](#faster-schema-creation--createpages) - Speed improvements of at least 30%
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
