@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
+import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
@@ -439,6 +440,9 @@ export async function initialize({
       type: `DELETE_CACHE`,
       cacheIsCorrupt,
     })
+
+    // make sure all previous mutexes are released
+    await releaseAllMutexes()
 
     // in future this should show which plugin's caches are purged
     // possibly should also have which plugins had caches
