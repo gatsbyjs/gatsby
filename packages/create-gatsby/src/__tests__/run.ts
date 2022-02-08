@@ -227,3 +227,29 @@ describe(`run`, () => {
     })
   })
 })
+
+describe(`skip and ts flag`, () => {
+  beforeEach(() => {
+    parseArgsMock.mockReturnValueOnce({
+      flags: { yes: true, ts: true },
+      dirName,
+    })
+  })
+
+  it(`should use the TS starter`, async () => {
+    await run()
+    expect(initStarter).toHaveBeenCalledWith(
+      DEFAULT_STARTERS.ts,
+      dirName,
+      [],
+      dirName
+    )
+  })
+  it(`should track TS was selected as language`, async () => {
+    await run()
+    expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
+      name: `LANGUAGE`,
+      valueString: `ts`,
+    })
+  })
+})
