@@ -59,7 +59,7 @@ More information can be found in the [PR #34504](https://github.com/gatsbyjs/gat
   - Fix an issue using a `eq: $id` filter with files, via [PR #34693](https://github.com/gatsbyjs/gatsby/pull/34693)
 - `gatsby-plugin-fullstory`: Updated snippet, via [PR #34583](https://github.com/gatsbyjs/gatsby/pull/34583)
 - `gatsby-core-utils`: Remote file downloads are now queued properly for all cases, via [PR #34414](https://github.com/gatsbyjs/gatsby/pull/34414)
-- `gatsby-plugin-preact`: Fixalias for `react-dom/server`, via [PR #34694](https://github.com/gatsbyjs/gatsby/pull/34694)
+- `gatsby-plugin-preact`: Fix alias for `react-dom/server`, via [PR #34694](https://github.com/gatsbyjs/gatsby/pull/34694)
 - Added a `vanilla-extract` example project, via [PR #34667](https://github.com/gatsbyjs/gatsby/pull/34667)
 
 ## Contributors
