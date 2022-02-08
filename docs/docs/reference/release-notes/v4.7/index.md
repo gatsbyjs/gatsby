@@ -24,7 +24,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## `trailingSlash` Option
 
-*Currently in public Beta*
+_Currently in public Beta_
 
 Through the RFC [Integrated handling of trailing slashes in Gatsby](https://github.com/gatsbyjs/gatsby/discussions/34205) we've worked on making the trailing slashes feature a first-class citizen in Gatsby. We're happy to announce that `gatsby-config` now supports a `trailingSlash` configuration with these three main options:
 
