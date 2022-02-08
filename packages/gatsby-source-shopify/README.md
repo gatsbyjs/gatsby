@@ -182,7 +182,7 @@ Not set by default. If set to a string (example `My Sales Channel`), only produc
 
 ## Images
 
-We offer two options for displaying Shopify images in your Gatsby site. The default option is to use the Shopify CDN along with [gatsby-plugin-image][gatsby-plugin-image], but you can also opt-in to downloading the images as part of the build process. Your choice will result in differences to the schema. Both options are explained below.
+We offer two options for displaying Shopify images in your Gatsby site. The default option is to use the Shopify CDN along with [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/), but you can also opt-in to downloading the images as part of the build process. Your choice will result in differences to the schema. Both options are explained below.
 
 <div id="use-shopify-cdn"></div>
 
