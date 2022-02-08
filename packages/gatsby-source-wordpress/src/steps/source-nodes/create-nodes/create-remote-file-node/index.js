@@ -384,8 +384,7 @@ module.exports = ({
   reporter,
   pluginOptions,
 }) => {
-  const { requestConcurrency: limit, httpOpts = {} } =
-    pluginOptions?.type?.MediaItem?.localFile || {}
+  const limit = pluginOptions?.type?.MediaItem?.localFile?.requestConcurrency
   if (doneQueueTimeout) {
     // this is to give the bar a little time to wait when there are pauses
     // between file downloads.
