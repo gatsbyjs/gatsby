@@ -130,6 +130,10 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   answers.project = answers.project.trim()
 
+  // Language selection
+  if (flags.yes) {
+    answers.language = `js`
+  }
   if (flags.ts) {
     answers.language = `ts`
   }

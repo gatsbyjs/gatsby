@@ -156,6 +156,22 @@ describe(`run`, () => {
         expect.stringContaining(`Created site`)
       )
     })
+    it(`should use the JS starter by default`, async () => {
+      await run()
+      expect(initStarter).toHaveBeenCalledWith(
+        DEFAULT_STARTERS.js,
+        dirName,
+        [],
+        dirName
+      )
+    })
+    it(`should track JS was selected as language`, async () => {
+      await run()
+      expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
+        name: `LANGUAGE`,
+        valueString: `js`,
+      })
+    })
   })
 
   describe(`no ts flag`, () => {
@@ -170,12 +186,11 @@ describe(`run`, () => {
       await run()
       expect(initStarter).toHaveBeenCalledWith(
         DEFAULT_STARTERS.js,
-        `hello-world`,
+        dirName,
         [],
-        `hello-world`
+        dirName
       )
     })
-
     it(`should track JS was selected as language`, async () => {
       await run()
       expect(trackCli).toHaveBeenCalledWith(`CREATE_GATSBY_SELECT_OPTION`, {
@@ -197,9 +212,9 @@ describe(`run`, () => {
       await run()
       expect(initStarter).toHaveBeenCalledWith(
         DEFAULT_STARTERS.ts,
-        `hello-world`,
+        dirName,
         [],
-        `hello-world`
+        dirName
       )
     })
 
