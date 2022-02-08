@@ -314,7 +314,8 @@ export async function initialize({
 
   const state = store.getState()
 
-  const hashes: any = await Promise.all([
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const hashes: Array<any> = await Promise.all([
     md5File(`package.json`),
     md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
     md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
@@ -323,6 +324,7 @@ export async function initialize({
 
   const pluginsHash = crypto
     .createHash(`md5`)
+    // @ts-ignore - concat expecting same type for some reason
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
 
@@ -407,34 +409,20 @@ export async function initialize({
       // }
       // }
 
-      if (
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
-      ) {
-        const deleteGlobs = [
-          // By default delete all files & subdirectories
-          `${cacheDirectory}/**`,
-          `${cacheDirectory}/*/`,
-        ]
-
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
-          // Stop the caches directory from being deleted, add all sub directories,
-          // but remove gatsby-source-filesystem
-          deleteGlobs.push(`!${cacheDirectory}/caches`)
-          deleteGlobs.push(`${cacheDirectory}/caches/*`)
-          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
-        }
-
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-          // Add webpack
-          deleteGlobs.push(`!${cacheDirectory}/webpack`)
-        }
-        await del(deleteGlobs)
-      } else {
-        // Attempt to empty dir if remove fails,
-        // like when directory is mount point
-        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      const deleteGlobs = [
+        // By default delete all files & subdirectories
+        `${cacheDirectory}/**`,
+        `!${cacheDirectory}/data`,
+        `${cacheDirectory}/data/**`,
+        `!${cacheDirectory}/data/gatsby-core-utils/`,
+        `!${cacheDirectory}/data/gatsby-core-utils/**`,
+      ]
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+        // Add webpack
+        deleteGlobs.push(`!${cacheDirectory}/webpack`)
       }
+
+      await del(deleteGlobs)
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
