@@ -31,6 +31,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
 
 - Rename files in `/src` that use JSX from `.js` to `.tsx`
 - Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as devDependencies
+- Add a `tsconfig.json` file using `npx tsc init`. see details about `tsconfig` file [here](/#the-tsconfigjson-file)
 - Rename `gatsby-*` files:
   `gatsby-node.js` -> `gatsby-node.ts`
   `gatsby-config.js` -> `gatsby-node.js`
@@ -66,13 +67,9 @@ module.exports = {
 exports.createPages = () => {}
 ```
 
-## tsconfig.json
+## The `tsconfig.json` file
 
-There are at least three reasons to maintain a tsconfig.json file in a Gatsby project:
-
-- Testing frameworks like Jest will not use the internal Gatsby config and need some direction on what to do with TypeScript files
-- Code editors like VS Code face similar limitations to Jest, so for example the TypeScript Server in VSCode needs that config
-- Linting libraries like ESLint use the tsconfig.json file as well.
+Gatsby doesn't use the `tsconfig.json` file in your project root as options to the Typescript compiler when compiling your Typescript files. Essentially, the `tsconfig.json` file is used in tools external to Gatsby e.g Testing Frameworks like Jest, Code editors and Linting libraries like EsLint to enable them handle Typescript correctly.
 
 ## `PageProps`
 
