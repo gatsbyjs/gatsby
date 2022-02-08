@@ -65,10 +65,11 @@ export function onCreateWebpackConfig({ stage, actions, getConfig }) {
     resolve: {
       alias: {
         react: require.resolve(`preact/compat`).replace(`.js`, extension),
-        "react-dom/server": require
-          .resolve(`preact/compat/server`)
-          .replace(`.js`, extension),
+        "react-dom/server": require.resolve(`preact/compat/server`),
         "react-dom": require.resolve(`preact/compat`).replace(`.js`, extension),
+        "react/jsx-runtime": require
+          .resolve(`preact/jsx-runtime`)
+          .replace(`.js`, extension),
       },
     },
     plugins: webpackPlugins,

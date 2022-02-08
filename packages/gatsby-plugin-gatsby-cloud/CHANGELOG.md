@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.6.0/packages/gatsby-plugin-gatsby-cloud) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Features
+
+- request customer feedback [#34471](https://github.com/gatsbyjs/gatsby/issues/34471) ([17e8698](https://github.com/gatsbyjs/gatsby/commit/17e86980518d672d1bffca59163bd934be4decb2))
+
+#### Other Changes
+
+- preview 2.0 UI changes [#34440](https://github.com/gatsbyjs/gatsby/issues/34440) ([db188dc](https://github.com/gatsbyjs/gatsby/commit/db188dc5dbcc9bf4c8b67e35b934d247a85766ff))
+
 ### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.5.2/packages/gatsby-plugin-gatsby-cloud) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

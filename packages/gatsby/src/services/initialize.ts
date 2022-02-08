@@ -23,6 +23,7 @@ import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyConfig } from "../utils/parcel/compile-gatsby-config"
+import { resolveModule } from "../utils/module-resolver"
 
 interface IPluginResolution {
   resolve: string
@@ -322,17 +323,21 @@ export async function initialize({
     `${program.directory}/gatsby-config.ts`,
     `${program.directory}/gatsby-node.ts`,
   ].filter(Boolean) as Array<string>
+
+  const state = store.getState()
+
   const hashes = await Promise.all(
     // Ignore optional files with .catch() as these are not required
-    [md5File(`package.json`)].concat(
+    [md5File(`package.json`), state.config.trailingSlash as string].concat(
       optionalFiles.map(f => md5File(f).catch(() => ``))
     )
   )
+
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  const state = store.getState()
+
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -526,16 +531,16 @@ export async function initialize({
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        return slash(
-          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
-        )
+        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+        return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
       // ignore
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      return slash(path.join(plugin.resolve, `gatsby-${env}`))
+      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+      return slash(resolveModule(modulePath) as string)
     }
     return undefined
   }
@@ -617,6 +622,9 @@ export async function initialize({
     parentSpan: activity.span,
   })
   activity.end()
+
+  // Track trailing slash option used in config
+  telemetry.trackFeatureIsUsed(`trailingSlash:${state.config.trailingSlash}`)
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]

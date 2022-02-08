@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.4.0/packages/gatsby-source-contentful) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Features
+
+- create more resilient wrapper around sharp [#34339](https://github.com/gatsbyjs/gatsby/issues/34339) ([a3fa646](https://github.com/gatsbyjs/gatsby/commit/a3fa646eb6b51004ef9e85a32f7be1cf2d0cc2db))
+
+#### Bug Fixes
+
+- enable tag support for assets [#34480](https://github.com/gatsbyjs/gatsby/issues/34480) ([391b16d](https://github.com/gatsbyjs/gatsby/commit/391b16d21955f56a3514d52d487cee807ce6f7ad))
+
 ### [7.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.3.2/packages/gatsby-source-contentful) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-source-contentful
