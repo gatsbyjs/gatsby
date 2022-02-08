@@ -45,7 +45,7 @@
 
 A scalable solution for sourcing data from Shopify.
 
-This plugin works by leveraging [Shopify's bulk operations API][bulk-operations], which allows it to process large amounts of data at once. This gives it a more resilient and reliable build process. It also enables incremental builds so that your site can build quickly when you change your data in Shopify.
+This plugin works by leveraging [Shopify's bulk operations API](https://shopify.dev/api/usage/bulk-operations/queries), which allows it to process large amounts of data at once. This gives it a more resilient and reliable build process. It also enables incremental builds so that your site can build quickly when you change your data in Shopify.
 
 <div id="getting-started"></div>
 
