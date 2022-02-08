@@ -17,6 +17,8 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
+export type AvailableFeatures = never // "image-service"
+
 export {
   default as Link,
   GatsbyLinkProps,
@@ -156,21 +158,24 @@ export type GetServerDataProps = {
   query?: Record<string, unknown>
   params?: Record<string, unknown>
   pageContext: Record<string, unknown>
-};
+}
 
 /**
  * The return type (promise payload) from the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
-export type GetServerDataReturn<ServerDataType = Record<string, unknown>> = Promise<{
-  headers?: Map<string, unknown>
-  props?: ServerDataType
-  status?: number
-}>;
+export type GetServerDataReturn<ServerDataType = Record<string, unknown>> =
+  Promise<{
+    headers?: Map<string, unknown>
+    props?: ServerDataType
+    status?: number
+  }>
 
 /**
  * A shorthand type for combining the props and return type for the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
-export type GetServerData<ServerDataType> = (props: GetServerDataProps) => GetServerDataReturn<ServerDataType>;
+export type GetServerData<ServerDataType> = (
+  props: GetServerDataProps
+) => GetServerDataReturn<ServerDataType>
 
 /**
  * Constructor arguments for the PageRenderer.
@@ -442,7 +447,7 @@ export interface GatsbyNode<
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreInit?(
-    args: ParentSpanPluginArgs,
+    args: PreInitArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
@@ -904,6 +909,9 @@ export interface NodePluginSchema {
   ): GatsbyGraphQLInputObjectType
   buildEnumType(config: ComposeEnumTypeConfig): GatsbyGraphQLEnumType
   buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
+}
+export interface PreInitArgs extends ParentSpanPluginArgs {
+  actions: Actions
 }
 
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
