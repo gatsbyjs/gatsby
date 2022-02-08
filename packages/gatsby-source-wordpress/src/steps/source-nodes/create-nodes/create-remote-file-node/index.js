@@ -8,7 +8,7 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-
+const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
 const { createFileNode } = require(`gatsby-source-filesystem/create-file-node`)
 const {
   getRemoteFileExtension,
@@ -142,94 +142,6 @@ async function pushToQueue(task, cb) {
 /******************
  * Core Functions *
  ******************/
-
-/**
- * requestRemoteNode
- * --
- * Download the requested file
- *
- * @param  {String}   url
- * @param  {Headers}  headers
- * @param  {String}   tmpFilename
- * @param  {Object}   httpOpts
- * @param  {number}   attempt
- * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
- */
-const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
-  new Promise((resolve, reject) => {
-    let timeout
-
-    // Called if we stall without receiving any data
-    const handleTimeout = async () => {
-      fsWriteStream.close()
-      fs.removeSync(tmpFilename)
-      if (attempt < STALL_RETRY_LIMIT) {
-        // Retry by calling ourself recursively
-        resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
-        )
-      } else {
-        processingCache[url] = null
-        totalJobs -= 1
-        bar.total = totalJobs
-        reject(
-          new Error(
-            `Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`
-          )
-        )
-      }
-    }
-
-    const resetTimeout = () => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
-    }
-
-    const responseStream = got.stream(url, {
-      headers,
-      timeout: { send: CONNECTION_TIMEOUT },
-      ...httpOpts,
-    })
-    const fsWriteStream = fs.createWriteStream(tmpFilename)
-    responseStream.pipe(fsWriteStream)
-
-    // If there's a 400/500 response or other error.
-    responseStream.on(`error`, error => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      processingCache[url] = null
-      totalJobs -= 1
-      bar.total = totalJobs
-      fs.removeSync(tmpFilename)
-      console.error(error)
-      reject(error)
-    })
-
-    fsWriteStream.on(`error`, error => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      processingCache[url] = null
-      totalJobs -= 1
-      bar.total = totalJobs
-      reject(error)
-    })
-
-    responseStream.on(`response`, response => {
-      resetTimeout()
-
-      fsWriteStream.on(`finish`, () => {
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-        resolve(response)
-      })
-    })
-  })
-
 /**
  * processRemoteNode
  * --
@@ -249,71 +161,14 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  const pluginCacheDir = cache.directory
-  // See if there's response headers for this url
-  // from a previous request.
-  const cachedHeaders = await cache.get(cacheId(url))
-
-  const headers = { ...httpHeaders }
-  if (cachedHeaders && cachedHeaders.etag) {
-    headers[`If-None-Match`] = cachedHeaders.etag
-  }
-
-  // Add htaccess authentication if passed in. This isn't particularly
-  // extensible. We should define a proper API that we validate.
-  const httpOpts = {}
-  if (auth?.htaccess_pass && auth?.htaccess_user) {
-    headers[`Authorization`] = `Basic ${btoa(
-      `${auth.htaccess_user}:${auth.htaccess_pass}`
-    )}`
-  }
-
-  // Create the temp and permanent file names for the url.
-  const digest = createContentDigest(url)
-  if (!name) {
-    name = getRemoteFileName(url)
-  }
-  if (!ext) {
-    ext = getRemoteFileExtension(url)
-  }
-
-  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
-
-  // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
-
-  if (response.statusCode == 200) {
-    // Save the response headers for future requests.
-    await cache.set(cacheId(url), response.headers)
-  }
-
-  // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
-  if (ext === ``) {
-    const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-    const filetype = fileType(buffer)
-    if (filetype) {
-      ext = `.${filetype.ext}`
-    }
-  }
-
-  const filename = createFilePath(
-    path.join(pluginCacheDir, digest),
-    String(name),
-    ext
-  )
-
-  // If the status code is 200, move the piped temp file to the real name.
-  if (response.statusCode === 200) {
-    await fs.move(tmpFilename, filename, { overwrite: true })
-    // Else if 304, remove the empty response.
-  } else {
-    processingCache[url] = null
-    totalJobs -= 1
-
-    bar.total = totalJobs
-
-    await fs.remove(tmpFilename)
-  }
+  const filename = await fetchRemoteFile({
+    url,
+    httpHeaders,
+    auth,
+    ext,
+    name,
+    directory: cache.directory,
+  })
 
   // Create the file node.
   const fileNode = await createFileNode(filename, createNodeId, {})
