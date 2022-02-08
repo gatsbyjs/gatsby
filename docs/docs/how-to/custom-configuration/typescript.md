@@ -27,6 +27,18 @@ npm init gatsby -ts
 
 ## Migrating to TS
 
+Gatsby natively supports JavaScript and TypeScript, you can change files from `.js` to `.tsx`/ `ts` at any point to start adding types and gaining the benefits of a type system. But you'll need to do a bit more to be able use write use Typescipt in `gatsby-*` files
+
+- Rename files in `/src` that use JSX from `.js` to `.tsx`
+- Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as devDependencies
+- Rename `gatsby-*` files:
+  `gatsby-node.js` -> `gatsby-node.ts`
+  `gatsby-config.js` -> `gatsby-node.js`
+  `gatsby-browser.js` -> `gatsby-browser.tsx`
+  `gatsby-ssr.js` -> `gatsby-ssr.tsx`
+
+**Note**: You have be on `gatsby@4.7.0` or higher to use Typescript in `gatsby-*` files
+
 ## tsconfig.json
 
 There are at least three reasons to maintain a tsconfig.json file in a Gatsby project:
