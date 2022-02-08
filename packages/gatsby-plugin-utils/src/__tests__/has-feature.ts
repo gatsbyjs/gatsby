@@ -1,4 +1,4 @@
-import { hasFeature } from "../is-feature-available"
+import { hasFeature } from "../has-feature"
 import apis from "gatsby/apis.json"
 
 jest.mock(`gatsby/apis.json`, () => {
