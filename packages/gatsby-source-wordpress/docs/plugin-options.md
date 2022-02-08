@@ -11,3 +11,30 @@
 - :hammer_and_wrench: [Debugging and troubleshooting](./debugging-and-troubleshooting.md)
 - :national_park: [Community and Support](./community-and-support.md)
 - :point_left: [Back to README.md](../README.md)
+- [httpOpts](#httpopts)
+
+## httpOpts
+
+Option to use a custom agent when we download the files from your WordPress.
+We use the [got](https://github.com/sindresorhus/got) to fetch the files.
+
+**Field type**: `Object`
+
+**Default value**: `{}`
+
+ex: _Set a custom agent_
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    httpOpts: {
+      // cf https://github.com/sindresorhus/got#agent
+      agent: {
+        http: new ProxyAgent(process.env.http_proxy),
+        https: new ProxyAgent(process.env.https_proxy)
+      }
+    },
+  },
+}
+```

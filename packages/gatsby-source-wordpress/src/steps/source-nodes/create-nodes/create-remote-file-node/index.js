@@ -244,6 +244,7 @@ async function processRemoteNode({
   createNode,
   parentNodeId,
   auth = {},
+  httpOpts = {},
   httpHeaders = {},
   createNodeId,
   ext,
@@ -261,7 +262,6 @@ async function processRemoteNode({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  const httpOpts = {}
   if (auth?.htaccess_pass && auth?.htaccess_user) {
     headers[`Authorization`] = `Basic ${btoa(
       `${auth.htaccess_user}:${auth.htaccess_pass}`
@@ -376,6 +376,7 @@ module.exports = ({
   getCache,
   parentNodeId = null,
   auth = {},
+  httpOpts = {},
   httpHeaders = {},
   createNodeId,
   ext = null,
@@ -383,7 +384,8 @@ module.exports = ({
   reporter,
   pluginOptions,
 }) => {
-  const limit = pluginOptions?.type?.MediaItem?.localFile?.requestConcurrency
+  const { requestConcurrency: limit, httpOpts = {} } =
+    pluginOptions?.type?.MediaItem?.localFile || {}
   if (doneQueueTimeout) {
     // this is to give the bar a little time to wait when there are pauses
     // between file downloads.
@@ -449,6 +451,7 @@ module.exports = ({
     parentNodeId,
     createNodeId,
     auth,
+    httpOpts,
     httpHeaders,
     ext,
     name,
