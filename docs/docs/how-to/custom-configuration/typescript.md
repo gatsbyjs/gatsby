@@ -56,7 +56,9 @@ exports.createPages = () => {}
 
 Gatsby doesn't use the `tsconfig.json` file in your project root as options to the TypeScript compiler when compiling your TypeScript files. Essentially, the `tsconfig.json` file is used in tools external to Gatsby e.g Testing Frameworks like Jest, Code editors and Linting libraries like EsLint to enable them handle TypeScript correctly.
 
-## `PageProps`
+## Usage in Gatsby
+
+### `PageProps`
 
 ```tsx:title=src/pages/index.tsx
 import * as React from "react"
@@ -142,7 +144,7 @@ export const wrapPageElement: GatsbySSR["wrapPageElement"] = ({ element }) => {
 }
 ```
 
-## `getServerData`
+### `getServerData`
 
 You can use `GetServerData`, `GetServerDataProps`, and `GetServerDataReturn` for [`getServerData`](/docs/reference/rendering-options/server-side-rendering/).
 
@@ -178,7 +180,7 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 }
 ```
 
-## `gatsby-config.ts`
+### `gatsby-config.ts`
 
 ```ts:title=gatsby-config.ts
 
@@ -196,7 +198,7 @@ export default config;
 
 ```
 
-## `gatsby-node.ts`
+### `gatsby-node.ts`
 
 ```ts:title=gatsby-node.ts
 
