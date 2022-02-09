@@ -56,33 +56,21 @@ exports.sourceNodes = ({
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
 
-    if (plugin.name === `default-site-plugin`) {
-      createNode({
-        ...plugin,
-        packageJson: transformPackageJson(
-          require(`${program.directory}/package.json`)
-        ),
-        parent: null,
-        children: [],
-        internal: {
-          contentDigest: createContentDigest(plugin),
-          type: `SitePlugin`,
-        },
-      })
-    } else {
-      createNode({
-        ...plugin,
-        packageJson: transformPackageJson(
-          require(`${plugin.resolve}/package.json`)
-        ),
-        parent: null,
-        children: [],
-        internal: {
-          contentDigest: createContentDigest(plugin),
-          type: `SitePlugin`,
-        },
-      })
-    }
+    // Since `default-site-plugin` is a proxy for gatsby-* files that are compiled and live in .cache/compiled,
+    // use program.directory to access package.json since it is not compiled and lives in the site root
+    const dir =
+      plugin.name === `default-site-plugin` ? program.directory : plugin.resolve
+
+    createNode({
+      ...plugin,
+      packageJson: transformPackageJson(require(`${dir}/package.json`)),
+      parent: null,
+      children: [],
+      internal: {
+        contentDigest: createContentDigest(plugin),
+        type: `SitePlugin`,
+      },
+    })
   })
 
   // Add site node.
