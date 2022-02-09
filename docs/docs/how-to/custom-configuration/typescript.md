@@ -125,7 +125,7 @@ export const query = graphql`
 `
 ```
 
-## `gatsby-browser.tsx` / `gatsby-ssr.tsx`
+### `gatsby-browser.tsx` / `gatsby-ssr.tsx`
 
 You can also write `gatsby-browser` and `gatsby-ssr` in TypeScript. You have the types `GatsbyBrowser` and `GatsbySSR` available to type your API functions. Here are two examples:
 
@@ -191,6 +191,62 @@ If you’re using an anonymous function, you can also use the shorthand `GetServ
 const getServerData: GetServerData<ServerDataProps> = async props => {
   // your function body
 }
+```
+
+## gatsby-config.ts
+
+```ts:title=gatsby-config.ts
+
+import { GatsbyConfig } from "gatsby";
+
+const config: GatsbyConfig = {
+  siteMetadata: {
+    title: "Site Title",
+    siteUrl: "Site URL",
+  },
+  plugins: [],
+};
+
+export default config;
+
+```
+
+## gatsby-node.ts
+
+```ts:title=gatsby-node.ts
+
+import { GatsbyNode } from "gatsby";
+
+type Person = {
+  id: number;
+  name: string;
+  age: number;
+};
+
+export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
+  actions,
+  createNodeId,
+}) => {
+  const { createNode } = actions;
+
+  const data = await getSomeData();
+
+  data.forEach((person: Person) => {
+    const node = {
+      ...person,
+      parent: null,
+      children: [],
+      id: createNodeId(`person__${person.id}`),
+      internal: {
+        type: "Person",
+        content: JSON.stringify(person),
+        contentDigest: createContentDigest(person),
+      },
+    };
+
+    createNode(node);
+  });
+};
 ```
 
 ## Styling
