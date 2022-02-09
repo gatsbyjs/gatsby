@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency typescript to ^4.5.5 [#34641](https://github.com/gatsbyjs/gatsby/issues/34641) ([f7a7e1f](https://github.com/gatsbyjs/gatsby/commit/f7a7e1f642d91babb397156ab37cb28dcde19737))
 
-
-
 ## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@3.6.0/packages/gatsby-telemetry) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - run user handlers before default ones [#34286](https://github.com/gatsbyjs/gatsby/issues/34286) ([94a1e97](https://github.com/gatsbyjs/gatsby/commit/94a1e97ee6ea175e4a708741a18fd045681eb61d))
 
-
-
 ## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.6.0/packages/gatsby-transformer-react-docgen) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

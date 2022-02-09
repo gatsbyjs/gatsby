@@ -31,8 +31,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Add `defer` to `createPage` type [#34612](https://github.com/gatsbyjs/gatsby/issues/34612) ([e97dc80](https://github.com/gatsbyjs/gatsby/commit/e97dc801687cdf8e06a05d45cbf32e0efe194115))
 - use lazy iterable instead of fully realized arrays for detecting stale nodes [#34540](https://github.com/gatsbyjs/gatsby/issues/34540) ([7fffe0b](https://github.com/gatsbyjs/gatsby/commit/7fffe0be9b6a0c8cdec72600f79b43c34006e1bf))
 
-
-
 ### [4.6.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.6.2/packages/gatsby) (2022-02-04)
 
 #### Bug Fixes

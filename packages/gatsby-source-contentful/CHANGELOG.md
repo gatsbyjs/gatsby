@@ -21,8 +21,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Contentful warm builds [#34678](https://github.com/gatsbyjs/gatsby/issues/34678) ([d43112f](https://github.com/gatsbyjs/gatsby/commit/d43112f418f56a5d2ffb75f5bc59b5d8f132eff4))
 - clean up and refactor Contentful unit tests [#34584](https://github.com/gatsbyjs/gatsby/issues/34584) ([102eec0](https://github.com/gatsbyjs/gatsby/commit/102eec0b4a83d189f7ba7d47721da86f785860ab))
 
-
-
 ## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.4.0/packages/gatsby-source-contentful) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

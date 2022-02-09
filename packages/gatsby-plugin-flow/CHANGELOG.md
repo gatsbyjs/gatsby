@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-flow
 
-
-
 ## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-flow@3.6.0/packages/gatsby-plugin-flow) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

@@ -26,8 +26,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Fix polling logic for non eager redirected urls. Fix [#34712](https://github.com/gatsbyjs/gatsby/issues/34712) ([4b802ad](https://github.com/gatsbyjs/gatsby/commit/4b802ad4c1c1ff0aa141c6ab4ca179f0c95f8482))
 
-
-
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.6.0/packages/gatsby-plugin-gatsby-cloud) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

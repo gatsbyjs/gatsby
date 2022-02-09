@@ -12,8 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Fix alias for react-dom/server Fix [#34694](https://github.com/gatsbyjs/gatsby/issues/34694) ([61874f4](https://github.com/gatsbyjs/gatsby/commit/61874f40ea0a36aac9cea241536b7591edb37e87))
 - Adding missing alias for `react/jsx-runtime` [#34666](https://github.com/gatsbyjs/gatsby/issues/34666) ([594a1a4](https://github.com/gatsbyjs/gatsby/commit/594a1a435ce20311add4364ed1c3ea6caacdc41b))
 
-
-
 ## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.6.0/packages/gatsby-plugin-preact) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

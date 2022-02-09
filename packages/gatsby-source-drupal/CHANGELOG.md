@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency opentracing to ^0.14.7 for gatsby-source-drupal [#34652](https://github.com/gatsbyjs/gatsby/issues/34652) ([8088076](https://github.com/gatsbyjs/gatsby/commit/8088076aafca82581b483258b95446abdce8a43a))
 
-
-
 ## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.6.0/packages/gatsby-source-drupal) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

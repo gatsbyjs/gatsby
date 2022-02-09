@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Add WPGraphQL WPML [#34609](https://github.com/gatsbyjs/gatsby/issues/34609) ([a31bc5b](https://github.com/gatsbyjs/gatsby/commit/a31bc5b908e9605f85999de53f6c864f9bc4f7d6))
 
-
-
 ## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.6.0/packages/gatsby-source-wordpress) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

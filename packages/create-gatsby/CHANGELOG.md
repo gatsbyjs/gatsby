@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Decouple package functions [#34606](https://github.com/gatsbyjs/gatsby/issues/34606) ([dcbdc0c](https://github.com/gatsbyjs/gatsby/commit/dcbdc0cb46713cc90157882e3f7c23b5f03a27c3))
 
-
-
 ### [2.6.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.6.1/packages/create-gatsby) (2022-02-04)
 
 #### Bug Fixes

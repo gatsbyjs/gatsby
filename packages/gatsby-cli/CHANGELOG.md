@@ -16,8 +16,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency rollup to ^2.66.1 for gatsby-cli [#34659](https://github.com/gatsbyjs/gatsby/issues/34659) ([0cc56b4](https://github.com/gatsbyjs/gatsby/commit/0cc56b474e9280dd2addd1138a9eed12b9732746))
 - update dependency typescript to ^4.5.5 [#34641](https://github.com/gatsbyjs/gatsby/issues/34641) ([f7a7e1f](https://github.com/gatsbyjs/gatsby/commit/f7a7e1f642d91babb397156ab37cb28dcde19737))
 
-
-
 ### [4.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.6.1/packages/gatsby-cli) (2022-02-04)
 
 **Note:** Version bump only for package gatsby-cli

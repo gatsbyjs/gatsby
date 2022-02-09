@@ -19,9 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Bug Fixes
 
-- update dependency @types/reach__router to ^1.3.10 for gatsby-link [#34359](https://github.com/gatsbyjs/gatsby/issues/34359) ([923c881](https://github.com/gatsbyjs/gatsby/commit/923c88152a2c92f5bb32b47ff9fb4d7ceaafef64))
-
-
+- update dependency @types/reach\_\_router to ^1.3.10 for gatsby-link [#34359](https://github.com/gatsbyjs/gatsby/issues/34359) ([923c881](https://github.com/gatsbyjs/gatsby/commit/923c88152a2c92f5bb32b47ff9fb4d7ceaafef64))
 
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.6.0/packages/gatsby-link) (2022-01-25)
 

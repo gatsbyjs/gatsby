@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency node-fetch to ^2.6.7 for gatsby-source-graphql [#34647](https://github.com/gatsbyjs/gatsby/issues/34647) ([9590a44](https://github.com/gatsbyjs/gatsby/commit/9590a44c42a5253bda965a42f1682673baad6c29))
 
-
-
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.6.0/packages/gatsby-source-graphql) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

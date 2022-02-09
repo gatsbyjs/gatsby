@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-catch-links
 
-
-
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-catch-links@4.6.0/packages/gatsby-plugin-catch-links) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

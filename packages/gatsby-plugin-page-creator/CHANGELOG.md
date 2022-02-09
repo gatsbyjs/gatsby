@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
 
-
-
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.6.0/packages/gatsby-plugin-page-creator) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency del-cli to v4 for gatsby-plugin-preload-fonts [#34664](https://github.com/gatsbyjs/gatsby/issues/34664) ([5df2dcd](https://github.com/gatsbyjs/gatsby/commit/5df2dcd09939906255a7e89be23a9283955dcf3d))
 
-
-
 ## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.6.0/packages/gatsby-plugin-preload-fonts) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

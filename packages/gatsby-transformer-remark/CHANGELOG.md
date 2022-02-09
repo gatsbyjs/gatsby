@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency underscore.string to ^3.3.6 for gatsby-transformer-remark [#34653](https://github.com/gatsbyjs/gatsby/issues/34653) ([1d2530e](https://github.com/gatsbyjs/gatsby/commit/1d2530eaf7c2016f1dac427942b7d1bb29cc4933))
 
-
-
 ## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.6.0/packages/gatsby-transformer-remark) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
