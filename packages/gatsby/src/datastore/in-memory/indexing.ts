@@ -50,7 +50,7 @@ const nodeIdToIdentifierMap = new Map<
 export const getGatsbyNodePartial = (
   node: IGatsbyNode | IGatsbyNodePartial,
   indexFields: Array<string>,
-  resolvedFields: any
+  resolvedFields: Record<string, any>
 ): IGatsbyNodePartial => {
   // first, check if we have the partial in the cache
   const cacheKey = `${node.id}_____${node.internal.counter}`
@@ -60,7 +60,7 @@ export const getGatsbyNodePartial = (
     // now check if we have it in memory and it has all the fields we need
     if (
       maybeStillExist &&
-      _.isEqual(new Set(indexFields), maybeStillExist.indexFields)
+      _.every(indexFields.map(field => maybeStillExist.indexFields.has(field)))
     ) {
       return maybeStillExist
     }
@@ -262,7 +262,7 @@ export const ensureIndexByQuery = (
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   indexFields: Array<string>,
-  resolvedFields: any
+  resolvedFields: Record<string, any>
 ): void => {
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
@@ -320,7 +320,7 @@ export function ensureEmptyFilterCache(
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   indexFields: Array<string>,
-  resolvedFields: any
+  resolvedFields: Record<string, any>
 ): void {
   // This is called for queries without any filters
   // We want to cache the result since it's basically a list of nodes by type(s)
@@ -387,7 +387,7 @@ function addNodeToFilterCache(
   filterCache: IFilterCache,
   resolvedNodesCache,
   indexFields: Array<string>,
-  resolvedFields: any,
+  resolvedFields: Record<string, any>,
   valueOffset: any = node
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
@@ -440,7 +440,7 @@ function markNodeForValue(
   node: IGatsbyNode,
   value: FilterValueNullable,
   indexFields: Array<string>,
-  resolvedFields: any
+  resolvedFields: Record<string, any>
 ): void {
   let arr = filterCache.byValue.get(value)
   if (!arr) {
@@ -461,7 +461,7 @@ export const ensureIndexByElemMatch = (
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   indexFields: Array<string>,
-  resolvedFields: any
+  resolvedFields: Record<string, any>
 ): void => {
   // Given an elemMatch filter, generate the cache that contains all nodes that
   // matches a given value for that sub-query
@@ -521,7 +521,7 @@ function addNodeToBucketWithElemMatch(
   filterCache: IFilterCache,
   resolvedNodesCache,
   indexFields: Array<string>,
-  resolvedFields: any
+  resolvedFields: Record<string, any>
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
@@ -673,8 +673,6 @@ export const getNodesFromCacheByValue = (
   if (!filterCache) {
     return undefined
   }
-
-  // TODO we need to pass indexFields here and reload identifiers to be able to sort properly
 
   const op = filterCache.op
 
@@ -1221,7 +1219,7 @@ function expensiveDedupeInline(arr: Array<IGatsbyNodePartial>): void {
 
 export function getSortFieldIdentifierKeys(
   indexFields: Array<string>,
-  resolvedFields: any
+  resolvedFields: Record<string, any>
 ): Array<string> {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)
