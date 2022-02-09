@@ -1257,6 +1257,8 @@ describe(`NodeModel`, () => {
       })
     })
 
+    // TODO fix these tests, since we aren't using true IGatsbyNodes, they appear different in `toEqual`
+
     describe(`Tracks nodes returned by queries`, () => {
       it(`Tracks objects when running query without filter`, async () => {
         nodeModel.replaceFiltersCache()

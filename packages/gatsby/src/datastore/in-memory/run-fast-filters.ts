@@ -28,6 +28,7 @@ import { IGraphQLRunnerStats } from "../../query/types"
 import { IRunQueryArgs, IQueryResult } from "../types"
 import { GatsbyIterable } from "../common/iterable"
 import { getNode } from "../"
+import { WeakGatsbyNode } from "./weak-gatsby-node"
 
 function isGatsbyNode(node: IGatsbyNode | undefined): node is IGatsbyNode {
   return !!node
@@ -327,8 +328,8 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
       : sortedResult
 
   const nodeObjects = entries
-    .map(nodeIds => getNode(nodeIds.id))
-    .filter(isGatsbyNode)
+    .filter((partial) => !!getNode(partial.id))
+    .map(partial => new WeakGatsbyNode(partial) as unknown as IGatsbyNode)
   return { entries: new GatsbyIterable(nodeObjects), totalCount }
 }
 
