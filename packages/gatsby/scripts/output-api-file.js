@@ -40,6 +40,8 @@ async function outputFile() {
     return merged
   }, {})
 
+  output.features = [];
+
   return fs.writeFile(
     path.resolve(OUTPUT_FILE_NAME),
     JSON.stringify(output, null, 2),

@@ -9,8 +9,10 @@ const BuildSuccessTooltipContent = ({
   orgId,
   siteId,
   buildId,
+  nodeManifestRedirectUrl,
 }) => {
   const { track } = useTrackEvent()
+
   const newPreviewAvailableClick = async ({
     isOnPrettyUrl,
     sitePrefix,
@@ -39,7 +41,13 @@ const BuildSuccessTooltipContent = ({
       .slice(-2)
       .join(`.`)
 
-    if (isOnPrettyUrl || window.location.hostname === `localhost`) {
+    const isLocalhost = window.location.hostname === `localhost`
+
+    if (nodeManifestRedirectUrl) {
+      window.location[isLocalhost ? `assign` : `replace`](
+        nodeManifestRedirectUrl
+      )
+    } else if (isOnPrettyUrl || isLocalhost) {
       window.location.reload()
     } else {
       window.location.replace(
@@ -47,6 +55,7 @@ const BuildSuccessTooltipContent = ({
       )
     }
   }
+
   return (
     <>
       {`This page has been updated.`}

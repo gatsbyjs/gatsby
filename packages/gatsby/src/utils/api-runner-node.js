@@ -628,9 +628,12 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
 
           if (file) {
             const { fileName, lineNumber: line, columnNumber: column } = file
+            const trimmedFileName = fileName.match(/^(async )?(.*)/)[2]
 
             try {
-              const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+              const code = fs.readFileSync(trimmedFileName, {
+                encoding: `utf-8`,
+              })
               codeFrame = codeFrameColumns(
                 code,
                 {
