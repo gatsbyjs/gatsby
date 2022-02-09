@@ -32,20 +32,21 @@ You can still take advantage of type hinting in Javascript files with [JSdoc](ht
 ### Usage in `gatsby-config.js`
 
 ```js:title=gatsby-config.js
+//@ts-check
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
-module.exports = {
-  siteMetadata: {
-    title: `Gatsby`,
-    siteUrl: `https://www.example.com`,
-  },
-};
+const gatsbyConfig = {}
+
+module.exports = gatsbyConfig
 ```
 
 ### Usage in `gatsby-node.js`
 
 ```js:title=gatsby-node.js
+//@ts-check
+
 /**
  * @type {import('gatsby').GatsbyConfig['createPages']}
  */
@@ -148,7 +149,7 @@ export const wrapPageElement: GatsbySSR["wrapPageElement"] = ({ element }) => {
 
 You can use `GetServerData`, `GetServerDataProps`, and `GetServerDataReturn` for [`getServerData`](/docs/reference/rendering-options/server-side-rendering/).
 
-```tsx:src/pages/ssr.tsx
+```tsx:title=src/pages/ssr.tsx
 import * as React from "react"
 import { GetServerDataProps, GetServerDataReturn } from "gatsby"
 
