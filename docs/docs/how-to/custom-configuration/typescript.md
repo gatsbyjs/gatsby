@@ -238,7 +238,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 
 ## Styling
 
-[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use [`vanilla-extract`](https://vanilla-extract.style/), select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby`/ `yarn create gatsby`. You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/)
+[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use [`vanilla-extract`](https://vanilla-extract.style/), select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby` You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](/plugins/gatsby-plugin-vanilla-extract/)
 
 ## Migrating to TS
 
@@ -246,7 +246,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
 
 - Rename files in `/src` that use JSX from `.js` to `.tsx`
 - Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as devDependencies
-- Add a `tsconfig.json` file using `npx tsc init`. see details about `tsconfig` file [here](/#the-tsconfigjson-file)
+- Add a `tsconfig.json` file using `npx tsc init`. see details about `tsconfig` file [in this section](/#the-tsconfigjson-file)
 - Rename `gatsby-*` files:
   `gatsby-node.js` -> `gatsby-node.ts`
   `gatsby-config.js` -> `gatsby-node.js`
