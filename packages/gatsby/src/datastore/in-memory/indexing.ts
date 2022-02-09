@@ -282,14 +282,14 @@ export const ensureIndexByQuery = (
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
       .forEach(node => {
-        addNodeToFilterCache(
+        addNodeToFilterCache({
           node,
-          filterPath,
+          chain: filterPath,
           filterCache,
           resolvedNodesCache,
           indexFields,
-          resolvedFields
-        )
+          resolvedFields,
+        })
       })
   } else {
     // Here we must first filter for the node type
@@ -301,14 +301,14 @@ export const ensureIndexByQuery = (
           return
         }
 
-        addNodeToFilterCache(
+        addNodeToFilterCache({
           node,
-          filterPath,
+          chain: filterPath,
           filterCache,
           resolvedNodesCache,
           indexFields,
-          resolvedFields
-        )
+          resolvedFields,
+        })
       })
   }
 
@@ -381,15 +381,23 @@ export function ensureEmptyFilterCache(
   orderedByCounter.sort(sortByIds)
 }
 
-function addNodeToFilterCache(
-  node: IGatsbyNode,
-  chain: Array<string>,
-  filterCache: IFilterCache,
+function addNodeToFilterCache({
+  node,
+  chain,
+  filterCache,
   resolvedNodesCache,
-  indexFields: Array<string>,
-  resolvedFields: Record<string, any>,
-  valueOffset: any = node
-): void {
+  indexFields,
+  resolvedFields,
+  valueOffset = node,
+}: {
+  node: IGatsbyNode
+  chain: Array<string>
+  filterCache: IFilterCache
+  resolvedNodesCache: Map<string, any>
+  indexFields: Array<string>
+  resolvedFields: Record<string, any>
+  valueOffset?: any
+}): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
     const typeName = node.internal.type
@@ -480,15 +488,15 @@ export const ensureIndexByElemMatch = (
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
       .forEach(node => {
-        addNodeToBucketWithElemMatch(
+        addNodeToBucketWithElemMatch({
           node,
-          node,
+          valueAtCurrentStep: node,
           filter,
           filterCache,
           resolvedNodesCache,
           indexFields,
-          resolvedFields
-        )
+          resolvedFields,
+        })
       })
   } else {
     // Expensive at scale
@@ -499,30 +507,38 @@ export const ensureIndexByElemMatch = (
           return
         }
 
-        addNodeToBucketWithElemMatch(
+        addNodeToBucketWithElemMatch({
           node,
-          node,
+          valueAtCurrentStep: node,
           filter,
           filterCache,
           resolvedNodesCache,
           indexFields,
-          resolvedFields
-        )
+          resolvedFields,
+        })
       })
   }
 
   postIndexingMetaSetup(filterCache, op)
 }
 
-function addNodeToBucketWithElemMatch(
-  node: IGatsbyNode,
-  valueAtCurrentStep: any, // Arbitrary step on the path inside the node
-  filter: IDbQueryElemMatch,
-  filterCache: IFilterCache,
+function addNodeToBucketWithElemMatch({
+  node,
+  valueAtCurrentStep, // Arbitrary step on the path inside the node
+  filter,
+  filterCache,
   resolvedNodesCache,
-  indexFields: Array<string>,
+  indexFields,
+  resolvedFields,
+}: {
+  node: IGatsbyNode
+  valueAtCurrentStep: any // Arbitrary step on the path inside the node
+  filter: IDbQueryElemMatch
+  filterCache: IFilterCache
+  resolvedNodesCache
+  indexFields: Array<string>
   resolvedFields: Record<string, any>
-): void {
+}): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
     const typeName = node.internal.type
@@ -556,26 +572,26 @@ function addNodeToBucketWithElemMatch(
   // work when elements resolve to the same value, but that can't be helped.
   valueAtCurrentStep.forEach(elem => {
     if (nestedQuery.type === `elemMatch`) {
-      addNodeToBucketWithElemMatch(
+      addNodeToBucketWithElemMatch({
         node,
-        elem,
-        nestedQuery,
-        filterCache,
-        resolvedNodesCache,
-        indexFields,
-        resolvedFields
-      )
-    } else {
-      // Now take same route as non-elemMatch filters would take
-      addNodeToFilterCache(
-        node,
-        nestedQuery.path,
+        valueAtCurrentStep: elem,
+        filter: nestedQuery,
         filterCache,
         resolvedNodesCache,
         indexFields,
         resolvedFields,
-        elem
-      )
+      })
+    } else {
+      // Now take same route as non-elemMatch filters would take
+      addNodeToFilterCache({
+        node,
+        chain: nestedQuery.path,
+        filterCache,
+        resolvedNodesCache,
+        indexFields,
+        resolvedFields,
+        valueOffset: elem,
+      })
     }
   })
 }
