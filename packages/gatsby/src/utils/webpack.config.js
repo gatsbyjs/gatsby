@@ -1,5 +1,3 @@
-require(`v8-compile-cache`)
-
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)

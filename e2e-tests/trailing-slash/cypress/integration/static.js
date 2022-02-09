@@ -12,7 +12,7 @@ describe(`static directory`, () => {
       cy.visit(`/something.html`).assertRoute(`/something.html`)
     })
 
-    it(`adding trailing slash result in 404`, () => {
+    itWhenIsBuild(`adding trailing slash result in 404`, () => {
       // works for build+serve, doesn't work for develop
       assertPageVisits([{ path: "/something.html/", status: 404 }])
 
@@ -32,7 +32,7 @@ describe(`static directory`, () => {
       }
     )
 
-    it(`visiting with trailing slash returns 200`, () => {
+    it(`visiting with trailing slash returns 404`, () => {
       assertPageVisits([{ path: "/nested/", status: 404 }])
 
       cy.visit(`/nested/`, { failOnStatusCode: false }).assertRoute(`/nested/`)

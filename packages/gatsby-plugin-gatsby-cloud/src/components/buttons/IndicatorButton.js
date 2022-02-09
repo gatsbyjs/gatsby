@@ -31,9 +31,11 @@ const IndicatorButton = ({
     }
   }
   const onMouseLeave = () => {
-    setShowTooltip(false)
-    if (typeof onTooltipToogle === `function`) {
-      onTooltipToogle(false)
+    if (active && tooltip?.hoverable) {
+      setShowTooltip(false)
+      if (typeof onTooltipToogle === `function`) {
+        onTooltipToogle(false)
+      }
     }
   }
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@4.7.0/packages/gatsby-plugin-google-gtag) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- add selfHostedOrigin option [#34352](https://github.com/gatsbyjs/gatsby/issues/34352) ([290955c](https://github.com/gatsbyjs/gatsby/commit/290955c53a5e580f9ca4f93f3ed5c41775ecc5e4))
+
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-gtag@4.6.0/packages/gatsby-plugin-google-gtag) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

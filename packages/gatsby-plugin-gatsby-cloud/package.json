@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-gatsby-cloud",
   "description": "A Gatsby plugin which optimizes working with Gatsby Cloud",
-  "version": "4.7.0-next.2",
+  "version": "4.8.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,8 +10,8 @@
     "@babel/runtime": "^7.15.4",
     "date-fns": "^2.28.0",
     "fs-extra": "^10.0.0",
-    "gatsby-core-utils": "^3.7.0-next.0",
-    "gatsby-telemetry": "^3.7.0-next.0",
+    "gatsby-core-utils": "^3.8.0-next.0",
+    "gatsby-telemetry": "^3.8.0-next.0",
     "js-cookie": "^3.0.1",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
@@ -20,11 +20,11 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "@testing-library/dom": "^8.11.1",
+    "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.5.0",
-    "babel-preset-gatsby-package": "^2.7.0-next.0",
+    "babel-preset-gatsby-package": "^2.8.0-next.0",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
     "del-cli": "^3.0.1",
