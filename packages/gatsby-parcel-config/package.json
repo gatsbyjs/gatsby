@@ -1,0 +1,8 @@
+{
+  "name": "gatsby-parcel-config",
+  "main": "index.json",
+  "version": "1.0.0",
+  "engines": {
+    "parcel": "2.x"
+  }
+}
