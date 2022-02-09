@@ -52,6 +52,14 @@ jest.mock(`gatsby-telemetry`, () => {
   }
 })
 
+// Normally gatsby-config.js exists in .cache/compiled, but for the sake of this test
+// we'll mock it directly since it's not what we're testing (and .cache is git ignored)
+jest.mock(`../../../bootstrap/get-config-file`, () => {
+  return {
+    getConfigFile: jest.fn(dir => `${dir}/gatsby-config`),
+  }
+})
+
 const dummyKeys = `a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z`.split(
   `,`
 )
