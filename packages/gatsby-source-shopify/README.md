@@ -141,7 +141,7 @@ Because of the limiations of the Shopify Bulk API we have included logic in this
 const isPriorityBuild = process.env.GATSBY_IS_PREVIEW !== `true` && process.env.GATSBY_IS_PR_BUILD !== `true`
 ```
 
-These environment variables are set by default by Gatsby Cloud, but we are working diligently to make this plugin workby default with Netlify and local development as well, and are looking at the option to override these defaults in the plugin options.
+These environment variables are set by default by Gatsby Cloud, but we are working diligently to make this plugin work by default with Netlify and local development as well, and are looking at the option to override these defaults in the plugin options.
 
 <div id="plugin-options"></div>
 
