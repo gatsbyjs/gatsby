@@ -526,12 +526,14 @@ export async function initialize({
     if (env === `ssr` && plugin.skipSSR === true) return undefined
 
     const envAPIs = plugin[`${env}APIs`]
+    const dir =
+      plugin.name === `default-site-plugin` ? program.directory : plugin.resolve
 
     // Always include gatsby-browser.js files if they exist as they're
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+        const modulePath = path.join(dir, `gatsby-${env}`)
         return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
@@ -539,7 +541,7 @@ export async function initialize({
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+      const modulePath = path.join(dir, `gatsby-${env}`)
       return slash(resolveModule(modulePath) as string)
     }
     return undefined
