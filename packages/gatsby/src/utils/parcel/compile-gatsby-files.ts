@@ -3,7 +3,7 @@ import reporter from "gatsby-cli/lib/reporter"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 
-function constructBundler(dir: string): Parcel {
+export function constructBundler(dir: string): Parcel {
   return new Parcel({
     entries: `${dir}/gatsby-+(node|config).{ts,tsx,js}`,
     defaultConfig: `@parcel/config-default`,
