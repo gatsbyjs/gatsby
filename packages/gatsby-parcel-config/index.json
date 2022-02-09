@@ -9,7 +9,6 @@
       "..."
     ],
     "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
-      "@parcel/transformer-babel",
       "@parcel/transformer-js",
       "@parcel/transformer-react-refresh-wrap"
     ],
@@ -34,11 +33,6 @@
     "*.coffee": ["@parcel/transformer-coffeescript"],
     "*.elm": ["@parcel/transformer-elm"],
     "*.mdx": ["@parcel/transformer-mdx"],
-    "*.vue": ["@parcel/transformer-vue"],
-    "template:*.vue": ["@parcel/transformer-vue"],
-    "script:*.vue": ["@parcel/transformer-vue"],
-    "style:*.vue": ["@parcel/transformer-vue"],
-    "custom:*.vue": ["@parcel/transformer-vue"],
     "*.{png,jpg,jpeg,webp}": ["@parcel/transformer-image"],
     "*.svg": ["@parcel/transformer-svg"],
     "*.{xml,rss,atom}": ["@parcel/transformer-xml"],
