@@ -22,7 +22,10 @@ import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
-import { compileGatsbyConfig } from "../utils/parcel/compile-gatsby-config"
+import {
+  COMPILED_CACHE_DIR,
+  compileGatsbyFiles,
+} from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
 
 interface IPluginResolution {
@@ -170,10 +173,10 @@ export async function initialize({
   )
   activity.start()
 
-  const compiledDirectory = `${program.directory}/.cache/compiled`
+  const compiledDirectory = `${program.directory}/${COMPILED_CACHE_DIR}`
 
   await fs.ensureDir(compiledDirectory)
-  await compileGatsbyConfig(program.directory)
+  await compileGatsbyFiles(program.directory)
 
   const { config, flattenedPlugins } = await loadConfigAndPlugins({
     siteDirectory: program.directory,

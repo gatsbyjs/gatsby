@@ -1,6 +1,8 @@
 import { Parcel } from "@parcel/core"
 import reporter from "gatsby-cli/lib/reporter"
 
+export const COMPILED_CACHE_DIR = `.cache/compiled`
+
 function constructBundler(dir: string): Parcel {
   return new Parcel({
     entries: `${dir}/gatsby-+(node|config).{ts,tsx,js}`,
@@ -8,7 +10,7 @@ function constructBundler(dir: string): Parcel {
     mode: `production`,
     targets: {
       default: {
-        distDir: `${dir}/.cache/compiled`,
+        distDir: `${dir}/${COMPILED_CACHE_DIR}`,
         outputFormat: `commonjs`,
         includeNodeModules: false,
         sourceMap: false,
@@ -21,7 +23,11 @@ function constructBundler(dir: string): Parcel {
   })
 }
 
-export async function compileGatsbyConfig(dir: string): Promise<void> {
+/**
+ * Compiles known gatsby-* files (e.g. `gatsby-config`, `gatsby-node`)
+ * and stores them in `.cache/compiled` relative to the site root.
+ */
+export async function compileGatsbyFiles(dir: string): Promise<void> {
   const bundler = constructBundler(dir)
 
   try {

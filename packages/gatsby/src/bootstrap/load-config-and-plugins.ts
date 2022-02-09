@@ -12,6 +12,7 @@ import { store } from "../redux"
 import handleFlags from "../utils/handle-flags"
 import availableFlags from "../utils/flags"
 import { IProgram } from "../commands/types"
+import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 
 export async function loadConfigAndPlugins({
   siteDirectory,
@@ -26,7 +27,7 @@ export async function loadConfigAndPlugins({
 }> {
   // Try opening the site's gatsby-config.js file.
   const { configModule, configFilePath } = await getConfigFile(
-    `${siteDirectory}/.cache/compiled`,
+    `${siteDirectory}/${COMPILED_CACHE_DIR}`,
     `gatsby-config`
   )
   let config = preferDefault(configModule)

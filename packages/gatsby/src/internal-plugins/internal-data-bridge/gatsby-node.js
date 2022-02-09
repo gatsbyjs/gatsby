@@ -6,6 +6,9 @@ const _ = require(`lodash`)
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../datastore`)
+const {
+  COMPILED_CACHE_DIR,
+} = require(`../../utils/parcel/compile-gatsby-files`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
@@ -129,7 +132,7 @@ exports.sourceNodes = ({
   })
 
   const pathToGatsbyConfig = systemPath.join(
-    `${program.directory}/.cache/compiled`,
+    `${program.directory}/${COMPILED_CACHE_DIR}`,
     `gatsby-config.js`
   )
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
