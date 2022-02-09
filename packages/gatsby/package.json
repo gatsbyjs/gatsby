@@ -85,7 +85,7 @@
     "gatsby-legacy-polyfills": "^2.8.0-next.0",
     "gatsby-link": "^4.8.0-next.0",
     "gatsby-page-utils": "^2.8.0-next.0",
-    "gatsby-parcel-config": "^1.0.0",
+    "gatsby-parcel-config": "^0.0.1-next.0",
     "gatsby-plugin-page-creator": "^4.8.0-next.0",
     "gatsby-plugin-typescript": "^4.8.0-next.0",
     "gatsby-plugin-utils": "^3.2.0-next.0",
