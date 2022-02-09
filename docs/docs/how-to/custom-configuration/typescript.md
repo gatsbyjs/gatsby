@@ -32,7 +32,7 @@ You can still take advantage of type hinting in Javascript files with [JSdoc](ht
 ### Usage in `gatsby-config.js`
 
 ```js:title=gatsby-config.js
-//@ts-check
+// @ts-check
 
 /**
  * @type {import('gatsby').GatsbyConfig}
@@ -45,7 +45,7 @@ module.exports = gatsbyConfig
 ### Usage in `gatsby-node.js`
 
 ```js:title=gatsby-node.js
-//@ts-check
+// @ts-check
 
 /**
  * @type {import('gatsby').GatsbyConfig['createPages']}
