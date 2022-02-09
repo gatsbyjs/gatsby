@@ -1,3 +1,7 @@
+[![gatsby-conf-social-banner](https://user-images.githubusercontent.com/3477155/153261605-43e1075b-7889-435b-bd34-a5980b629843.jpg)](https://gatsbyconf.com?utm_source=github&utm_medium=readme-banner&utm_campaign=gatsbyconf22-repo-banner)
+
+---
+
 <p align="center">
   <a href="https://www.gatsbyjs.com">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
