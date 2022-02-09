@@ -4,9 +4,7 @@ import ReactDOM from "react-dom"
 
 let hydrateRef
 let isFirstHydration = true
-const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(
-  navigator.userAgent
-)
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 
 export function onRouteUpdate(): void {
   if (
