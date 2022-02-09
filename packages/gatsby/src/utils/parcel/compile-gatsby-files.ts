@@ -30,11 +30,14 @@ function constructBundler(dir: string): Parcel {
 export async function compileGatsbyFiles(dir: string): Promise<void> {
   const bundler = constructBundler(dir)
 
+  const activity = reporter.activityTimer(`compile gatsby files`)
+  activity.start()
+
   try {
-    const { bundleGraph, buildTime } = await bundler.run()
-    const bundles = bundleGraph.getBundles()
-    reporter.log(`Built gatsby files (${bundles.length}) in ${buildTime}ms`)
-  } catch (err) {
-    reporter.panicOnBuild(err.diagnostics)
+    await bundler.run()
+  } catch (error) {
+    activity.panic(`Failed to compile gatsby files.`, error)
   }
+
+  activity.end()
 }
