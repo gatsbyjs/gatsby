@@ -38,7 +38,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
   `gatsby-browser.js` -> `gatsby-browser.tsx`
   `gatsby-ssr.js` -> `gatsby-ssr.tsx`
 
-**Note**: You have be on `gatsby@4.7.0` or higher to use Typescript in `gatsby-*` files
+**Note**: You have be on `gatsby@4.8.0` or higher to use Typescript in `gatsby-*` files
 
 ## Type hinting in JS files
 
@@ -195,7 +195,7 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 
 ## Styling
 
-[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your Typescript project. To use [`vanilla-extract`](https://vanilla-extract.style/), you can select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby`/ `yarn create gatsby`. You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/)
+[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your Typescript project. To use [`vanilla-extract`](https://vanilla-extract.style/), select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby`/ `yarn create gatsby`. You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/)
 
 ## Other resources
 
