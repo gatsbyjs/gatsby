@@ -24,7 +24,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## `trailingSlash` Option
 
-_Currently in public Beta_
+_Currently in Public Beta_
 
 Through the RFC [Integrated handling of trailing slashes in Gatsby](https://github.com/gatsbyjs/gatsby/discussions/34205) we've worked on making the trailing slashes feature a first-class citizen in Gatsby. We're happy to announce that `gatsby-config` now supports a `trailingSlash` configuration with these three main options:
 
@@ -40,11 +40,11 @@ module.exports = {
 }
 ```
 
-Throughout Gatsby 4 the default setting for `trailingSlash` will be `legacy` (to keep the current behavior) but with Gatsby 5 we'll remove the `legacy` setting and make `always` the default.
+Throughout Gatsby 4 the default setting for `trailingSlash` will be `legacy` (to keep the current behavior) but with Gatsby 5 we'll remove the `legacy` setting and make `always` the default. Please note that these plugins are considered deprecated now: [gatsby-plugin-force-trailing-slashes](/plugins/gatsby-plugin-force-trailing-slashes/) and [gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/).
 
 Gatsby Cloud supports this new setting out of the box and also uses `301` redirects to bring visitors to the right location. Locally you can use `gatsby serve` to see the behavior. Any other hosting provider (or if you’re managing this on your own) should follow the “Redirects, and expected behavior from the hosting provider” section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
 
-Please note that these plugins are considered deprecated now: [gatsby-plugin-force-trailing-slashes](/plugins/gatsby-plugin-force-trailing-slashes/) and [gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/).
+If you're unit testing `gatsby-link` you'll need to update the `moduleNameMapper` option to include `gatsby-page-utils`, see [Unit Testing documentation](/docs/how-to/testing/unit-testing/#2-creating-a-configuration-file-for-jest) for more details.
 
 The information presented here is also available in the [gatsby-config docs page](/docs/reference/config-files/gatsby-config/#trailingslash) and in the [PR #34268](https://github.com/gatsbyjs/gatsby/pull/34268) that implemented this.
 
