@@ -11,34 +11,19 @@ examples:
 
 To see all of the types available and their generics look at our [TypeScript definition file](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/index.d.ts).
 
-## Initializing a new Gatsby project with Typescript
+## Initializing a new Gatsby project with TypeScript
 
-Getting started with a Typescript Gatsby project is easy with the `create-gatsby` CLI
+Getting started with a TypeScript Gatsby project is easy with the `create-gatsby` CLI
 
 ```
 npm init gatsby
 ```
 
-In the prompts, select Typescript as your preffred language. Instead of manually selecting Typescript as your preffered language in the prompts, You can also pass a `ts` flag to the above command like so:
+In the prompts, select TypeScript as your preferred language. Instead of manually selecting TypeScript as your preffered language in the prompts, You can also pass a `ts` flag to the above command like so:
 
 ```
 npm init gatsby -ts
 ```
-
-## Migrating to TS
-
-Gatsby natively supports JavaScript and TypeScript, you can change files from `.js` to `.tsx`/ `ts` at any point to start adding types and gaining the benefits of a type system. But you'll need to do a bit more to be able use write use Typescipt in `gatsby-*` files
-
-- Rename files in `/src` that use JSX from `.js` to `.tsx`
-- Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as devDependencies
-- Add a `tsconfig.json` file using `npx tsc init`. see details about `tsconfig` file [here](/#the-tsconfigjson-file)
-- Rename `gatsby-*` files:
-  `gatsby-node.js` -> `gatsby-node.ts`
-  `gatsby-config.js` -> `gatsby-node.js`
-  `gatsby-browser.js` -> `gatsby-browser.tsx`
-  `gatsby-ssr.js` -> `gatsby-ssr.tsx`
-
-**Note**: You have be on `gatsby@4.8.0` or higher to use Typescript in `gatsby-*` files
 
 ## Type hinting in JS files
 
@@ -69,7 +54,7 @@ exports.createPages = () => {}
 
 ## The `tsconfig.json` file
 
-Gatsby doesn't use the `tsconfig.json` file in your project root as options to the Typescript compiler when compiling your Typescript files. Essentially, the `tsconfig.json` file is used in tools external to Gatsby e.g Testing Frameworks like Jest, Code editors and Linting libraries like EsLint to enable them handle Typescript correctly.
+Gatsby doesn't use the `tsconfig.json` file in your project root as options to the TypeScript compiler when compiling your TypeScript files. Essentially, the `tsconfig.json` file is used in tools external to Gatsby e.g Testing Frameworks like Jest, Code editors and Linting libraries like EsLint to enable them handle TypeScript correctly.
 
 ## `PageProps`
 
@@ -251,7 +236,22 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 
 ## Styling
 
-[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your Typescript project. To use [`vanilla-extract`](https://vanilla-extract.style/), select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby`/ `yarn create gatsby`. You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/)
+[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use [`vanilla-extract`](https://vanilla-extract.style/), select "vanilla-extract" as your preffered styling solution when initializing your project with with `npm init gatsby`/ `yarn create gatsby`. You can also manually setup your project to use vanilla extract through [gatsby-plugin-vanilla-extract](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/). See [setup instructions](https://www.gatsbyjs.com/plugins/gatsby-plugin-vanilla-extract/)
+
+## Migrating to TS
+
+Gatsby natively supports JavaScript and TypeScript, you can change files from `.js` to `.tsx`/ `ts` at any point to start adding types and gaining the benefits of a type system. But you'll need to do a bit more to be able use write use Typescipt in `gatsby-*` files
+
+- Rename files in `/src` that use JSX from `.js` to `.tsx`
+- Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as devDependencies
+- Add a `tsconfig.json` file using `npx tsc init`. see details about `tsconfig` file [here](/#the-tsconfigjson-file)
+- Rename `gatsby-*` files:
+  `gatsby-node.js` -> `gatsby-node.ts`
+  `gatsby-config.js` -> `gatsby-node.js`
+  `gatsby-browser.js` -> `gatsby-browser.tsx`
+  `gatsby-ssr.js` -> `gatsby-ssr.tsx`
+
+**Note**: You have be on `gatsby@4.8.0` or higher to use TypeScript in `gatsby-*` files
 
 ## Other resources
 
