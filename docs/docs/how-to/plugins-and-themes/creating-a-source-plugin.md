@@ -505,12 +505,14 @@ Now in your plugin's `gatsby-node.js` file, you can implement a new API, called 
 Import the `createRemoteFileNode` helper from `gatsby-source-filesystem`, which will download a file from a remote location and create a `File` node for you.
 
 ```javascript:title=source-plugin/gatsby-node.js
-const { ApolloClient } = require("apollo-client")
-const { InMemoryCache } = require("apollo-cache-inmemory")
-const { split } = require("apollo-link")
-const { HttpLink } = require("apollo-link-http")
-const { WebSocketLink } = require("apollo-link-ws")
-const { getMainDefinition } = require("apollo-utilities")
+const {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+} = require("@apollo/client")
+const { WebSocketLink } = require("@apollo/client/link/ws")
+const { getMainDefinition } = require("@apollo/client/utilities")
 const fetch = require("node-fetch")
 const gql = require("graphql-tag")
 const WebSocket = require("ws")

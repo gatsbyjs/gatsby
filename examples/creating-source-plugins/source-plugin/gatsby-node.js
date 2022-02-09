@@ -1,11 +1,13 @@
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const WebSocket = require("ws")
-const { ApolloClient } = require("apollo-client")
-const { InMemoryCache } = require("apollo-cache-inmemory")
-const { split } = require("apollo-link")
-const { HttpLink } = require("apollo-link-http")
-const { WebSocketLink } = require("apollo-link-ws")
-const { getMainDefinition } = require("apollo-utilities")
+const {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+} = require("@apollo/client")
+const { WebSocketLink } = require("@apollo/client/link/ws")
+const { getMainDefinition } = require("@apollo/client/utilities")
 const fetch = require("node-fetch")
 const gql = require("graphql-tag")
 
@@ -145,9 +147,7 @@ exports.sourceNodes = async function sourceNodes(
 
   // touch nodes to ensure they aren't garbage collected
   getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
 
   // listen for updates using subscriptions from the API
   if (pluginOptions.preview) {

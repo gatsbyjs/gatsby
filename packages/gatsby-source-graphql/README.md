@@ -154,7 +154,7 @@ module.exports = {
 
 ## Composing Apollo Links for production network setup
 
-Network requests can fail, return errors or take too long. Use [Apollo Link](https://www.apollographql.com/docs/link/) to
+Network requests can fail, return errors or take too long. Use [Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/) to
 add retries, error handling, logging and more to your GraphQL requests.
 
 Use the plugin's `createLink` option to add a custom Apollo Link to your GraphQL requests.
@@ -162,18 +162,18 @@ Use the plugin's `createLink` option to add a custom Apollo Link to your GraphQL
 You can compose different types of links, depending on the functionality you're trying to achieve.
 The most common links are:
 
-- `apollo-link-retry` for retrying queries that fail or time out
-- `apollo-link-error` for error handling
-- `apollo-link-http` for sending queries in http requests (used by default)
+- `@apollo/client/link/retry` for retrying queries that fail or time out
+- `@apollo/client/link/error` for error handling
+- `@apollo/client/link/http` for sending queries in http requests (used by default)
 
 For more explanation of how Apollo Links work together, check out this Medium article: [Productionizing Apollo Links](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb).
 
-Here's an example of using the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
+Here's an example of using the HTTP link with retries (using [@apollo/client/link/retry](https://www.apollographql.com/docs/react/api/link/apollo-link-retry/)):
 
 ```js
 // gatsby-config.js
-const { createHttpLink } = require(`apollo-link-http`)
-const { RetryLink } = require(`apollo-link-retry`)
+const { createHttpLink, from } = require(`@apollo/client`)
+const { RetryLink } = require(`@apollo/client/link/retry`)
 
 const retryLink = new RetryLink({
   delay: {
@@ -200,10 +200,7 @@ module.exports = {
         // `pluginOptions`: all plugin options
         //   (i.e. in this example object with keys `typeName`, `fieldName`, `url`, `createLink`)
         createLink: pluginOptions =>
-          ApolloLink.from([
-            retryLink,
-            createHttpLink({ uri: pluginOptions.url }),
-          ]),
+          from([retryLink, createHttpLink({ uri: pluginOptions.url })]),
       },
     },
   ],
