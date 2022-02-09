@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.7.0/packages/gatsby-source-wikipedia) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.7 for gatsby-source-wikipedia [#34649](https://github.com/gatsbyjs/gatsby/issues/34649) ([0f4324b](https://github.com/gatsbyjs/gatsby/commit/0f4324b8a297be8c7e226490bea0e9127660f7a1))
+
+
+
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.6.0/packages/gatsby-source-wikipedia) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

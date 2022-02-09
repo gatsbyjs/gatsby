@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-remove-trailing-slashes@4.7.0/packages/gatsby-plugin-remove-trailing-slashes) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Chores
+
+- add deprecation warnings [#34604](https://github.com/gatsbyjs/gatsby/issues/34604) ([46ecb06](https://github.com/gatsbyjs/gatsby/commit/46ecb0693c81cda1ba556215053ecf8f1113ce1a))
+
+
+
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-remove-trailing-slashes@4.6.0/packages/gatsby-plugin-remove-trailing-slashes) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

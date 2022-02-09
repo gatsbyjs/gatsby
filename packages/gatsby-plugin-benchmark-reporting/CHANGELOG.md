@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.7.0/packages/gatsby-plugin-benchmark-reporting) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-benchmark-reporting [#34655](https://github.com/gatsbyjs/gatsby/issues/34655) ([9b5442b](https://github.com/gatsbyjs/gatsby/commit/9b5442ba52cb05afe64f19efdf76750592d3f278))
+
+
+
 ## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.6.0/packages/gatsby-plugin-benchmark-reporting) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
