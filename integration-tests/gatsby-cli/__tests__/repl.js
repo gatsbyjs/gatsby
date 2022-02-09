@@ -21,6 +21,7 @@ describe(`gatsby repl`, () => {
 
     // 3. Make assertions
     const logs = getLogs()
+    logs.should.contain(`success compile gatsby files`)
     logs.should.contain(
       `success open and validate gatsby-configs, load plugins`
     )
