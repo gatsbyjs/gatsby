@@ -193,7 +193,7 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 }
 ```
 
-## gatsby-config.ts
+## `gatsby-config.ts`
 
 ```ts:title=gatsby-config.ts
 
@@ -211,7 +211,7 @@ export default config;
 
 ```
 
-## gatsby-node.ts
+## `gatsby-node.ts`
 
 ```ts:title=gatsby-node.ts
 
