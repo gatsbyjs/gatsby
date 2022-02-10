@@ -20,10 +20,6 @@
     "*.{yaml,yml}": ["@parcel/transformer-yaml"],
     "*.{glsl,vert,frag}": ["@parcel/transformer-glsl"],
     "*.{gql,graphql}": ["@parcel/transformer-graphql"],
-    "*.{styl,stylus}": ["@parcel/transformer-stylus"],
-    "*.{sass,scss}": ["@parcel/transformer-sass"],
-    "*.less": ["@parcel/transformer-less"],
-    "*.{css,pcss}": ["@parcel/transformer-postcss", "@parcel/transformer-css"],
     "*.sss": ["@parcel/transformer-sugarss"],
     "*.{htm,html,xhtml}": [
       "@parcel/transformer-posthtml",
@@ -47,7 +43,6 @@
   ],
   "optimizers": {
     "data-url:*": ["...", "@parcel/optimizer-data-url"],
-    "*.css": ["@parcel/optimizer-cssnano"],
     "*.{html,xhtml}": ["@parcel/optimizer-htmlnano"],
     "*.{js,mjs,cjs}": ["@parcel/optimizer-terser"],
     "*.svg": ["@parcel/optimizer-svgo"],
@@ -55,7 +50,6 @@
   },
   "packagers": {
     "*.{html,xhtml}": "@parcel/packager-html",
-    "*.css": "@parcel/packager-css",
     "*.{js,mjs,cjs}": "@parcel/packager-js",
     "*.svg": "@parcel/packager-svg",
     "*.{xml,rss,atom}": "@parcel/packager-xml",
