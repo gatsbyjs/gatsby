@@ -55,15 +55,16 @@ export const getGatsbyNodePartial = (
 ): IGatsbyNodePartial => {
   // first, check if we have the partial in the cache
   const cacheKey = `${node.id}_____${node.internal.counter}`
+  let derefPartial: IGatsbyNodePartial | undefined = undefined
   if (nodeIdToIdentifierMap.has(cacheKey)) {
-    const derefPartial = nodeIdToIdentifierMap.get(cacheKey)?.deref()
+    derefPartial = nodeIdToIdentifierMap.get(cacheKey)?.deref()
 
     // now check if we have it in memory and it has all the fields we need
     if (
       derefPartial &&
       _.every(
         indexFields.map(field =>
-          derefPartial.gatsbyNodePartialInternalData.indexFields.has(field)
+          derefPartial!.gatsbyNodePartialInternalData.indexFields.has(field)
         )
       )
     ) {
@@ -72,8 +73,19 @@ export const getGatsbyNodePartial = (
   }
 
   // find all the keys of fields and store them and their values on the partial
+  // if we've already passed this partial, merge both sets of index fields
   const dottedFields = {}
-  const sortFieldIds = getSortFieldIdentifierKeys(indexFields, resolvedFields)
+  const fieldsToStore = derefPartial
+    ? new Set([
+        ...derefPartial.gatsbyNodePartialInternalData.indexFields,
+        ...indexFields,
+      ])
+    : new Set(indexFields)
+
+  const sortFieldIds = getSortFieldIdentifierKeys(
+    [...fieldsToStore],
+    resolvedFields
+  )
   let fullNodeObject: IGatsbyNode | undefined =
     node.gatsbyNodePartialInternalData ? undefined : (node as IGatsbyNode)
 
@@ -98,7 +110,7 @@ export const getGatsbyNodePartial = (
       counter: node.internal.counter,
     },
     gatsbyNodePartialInternalData: {
-      indexFields: new Set(indexFields),
+      indexFields: fieldsToStore,
     },
   })
 
