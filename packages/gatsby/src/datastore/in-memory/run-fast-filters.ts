@@ -326,9 +326,7 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
       ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
       : sortedResult
 
-  const nodeObjects = entries
-    .map(nodeIds => getNode(nodeIds.id))
-    .filter(isGatsbyNode)
+  const nodeObjects = entries.map(nodeIds => getNode(nodeIds.id)!)
   return { entries: new GatsbyIterable(nodeObjects), totalCount }
 }
 

@@ -27,12 +27,13 @@ export type FilterCacheKey = string
 type GatsbyNodeID = string
 
 export interface IGatsbyNodePartial {
-  isGatsbyNodePartial: boolean
   id: GatsbyNodeID
   internal: {
     counter: number
   }
-  indexFields: Set<string>
+  gatsbyNodePartialInternalData: {
+    indexFields: Set<string>
+  }
   [k: string]: any
 }
 
@@ -55,23 +56,26 @@ export const getGatsbyNodePartial = (
   // first, check if we have the partial in the cache
   const cacheKey = `${node.id}_____${node.internal.counter}`
   if (nodeIdToIdentifierMap.has(cacheKey)) {
-    const maybeStillExist = nodeIdToIdentifierMap.get(cacheKey)?.deref()
+    const derefPartial = nodeIdToIdentifierMap.get(cacheKey)?.deref()
 
     // now check if we have it in memory and it has all the fields we need
     if (
-      maybeStillExist &&
-      _.every(indexFields.map(field => maybeStillExist.indexFields.has(field)))
+      derefPartial &&
+      _.every(
+        indexFields.map(field =>
+          derefPartial.gatsbyNodePartialInternalData.indexFields.has(field)
+        )
+      )
     ) {
-      return maybeStillExist
+      return derefPartial
     }
   }
 
   // find all the keys of fields and store them and their values on the partial
   const dottedFields = {}
   const sortFieldIds = getSortFieldIdentifierKeys(indexFields, resolvedFields)
-  let fullNodeObject: IGatsbyNode | undefined = node.isGatsbyNodePartial
-    ? undefined
-    : (node as IGatsbyNode)
+  let fullNodeObject: IGatsbyNode | undefined =
+    node.gatsbyNodePartialInternalData ? undefined : (node as IGatsbyNode)
 
   for (const dottedField of sortFieldIds) {
     if (dottedField in node) {
@@ -89,12 +93,13 @@ export const getGatsbyNodePartial = (
 
   // create the partial object
   const partial = Object.assign(dottedFields, {
-    isGatsbyNodePartial: true,
     id: node.id,
     internal: {
       counter: node.internal.counter,
     },
-    indexFields: new Set(indexFields),
+    gatsbyNodePartialInternalData: {
+      indexFields: new Set(indexFields),
+    },
   })
 
   // set the object in the cache for later fetching
