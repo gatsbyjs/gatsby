@@ -151,11 +151,11 @@ async function pushToQueue(task, cb) {
  * @param  {String}   url
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
- * @param  {Object}    httpOptions
+ * @param  {Object}   httpOpts
  * @param  {number}   attempt
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename,  httpOptions, attempt = 1) =>
+const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
   new Promise((resolve, reject) => {
     let timeout
 
@@ -166,7 +166,7 @@ const requestRemoteNode = (url, headers, tmpFilename,  httpOptions, attempt = 1)
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          requestRemoteNode(url, headers, tmpFilename,  httpOptions, attempt + 1)
+          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
         )
       } else {
         processingCache[url] = null
@@ -190,7 +190,7 @@ const requestRemoteNode = (url, headers, tmpFilename,  httpOptions, attempt = 1)
     const responseStream = got.stream(url, {
       headers,
       timeout: { send: CONNECTION_TIMEOUT },
-      ... httpOptions,
+      ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
@@ -244,7 +244,7 @@ async function processRemoteNode({
   createNode,
   parentNodeId,
   auth = {},
-  httpOptions = {},
+  httpOpts = {},
   httpHeaders = {},
   createNodeId,
   ext,
@@ -280,7 +280,7 @@ async function processRemoteNode({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOptions)
+  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
 
   if (response.statusCode == 200) {
     // Save the response headers for future requests.
@@ -384,8 +384,7 @@ module.exports = ({
   reporter,
   pluginOptions,
 }) => {
-  const { requestConcurrency: limit, httpOptions = {} } =
-    pluginOptions?.type?.MediaItem?.localFile || {}
+  const limit = pluginOptions?.type?.MediaItem?.localFile?.requestConcurrency
   if (doneQueueTimeout) {
     // this is to give the bar a little time to wait when there are pauses
     // between file downloads.
