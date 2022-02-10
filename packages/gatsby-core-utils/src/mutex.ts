@@ -6,11 +6,12 @@ interface IMutex {
 }
 
 // Random number to re-check if mutex got released
-const MUTEX_INTERVAL = 3000
+const DEFAULT_MUTEX_INTERVAL = 3000
 
 async function waitUntilUnlocked(
   storage: ReturnType<typeof getStorage>,
-  key: string
+  key: string,
+  timeout: number
 ): Promise<void> {
   const isUnlocked = await storage.mutex.ifNoExists(key, () => {
     storage.mutex.put(key, LockStatus.Locked)
@@ -22,8 +23,8 @@ async function waitUntilUnlocked(
 
   await new Promise<void>(resolve => {
     setTimeout(() => {
-      resolve(waitUntilUnlocked(storage, key))
-    }, MUTEX_INTERVAL)
+      resolve(waitUntilUnlocked(storage, key, timeout))
+    }, timeout)
   })
 }
 
@@ -32,15 +33,18 @@ async function waitUntilUnlocked(
  *
  * @param {string} key A unique key
  */
-export function createMutex(key: string): IMutex {
+export function createMutex(
+  key: string,
+  timeout = DEFAULT_MUTEX_INTERVAL
+): IMutex {
   const storage = getStorage(getDatabaseDir())
   const BUILD_ID = global.__GATSBY?.buildId ?? ``
   const prefixedKey = `${BUILD_ID}-${key}`
 
   return {
-    acquire: (): Promise<void> => waitUntilUnlocked(storage, prefixedKey),
+    acquire: (): Promise<void> =>
+      waitUntilUnlocked(storage, prefixedKey, timeout),
     release: async (): Promise<void> => {
-      // console.log({ unlock: prefixedKey })
       await storage.mutex.remove(prefixedKey)
     },
   }
