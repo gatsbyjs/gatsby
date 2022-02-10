@@ -21,10 +21,6 @@
     "*.{glsl,vert,frag}": ["@parcel/transformer-glsl"],
     "*.{gql,graphql}": ["@parcel/transformer-graphql"],
     "*.sss": ["@parcel/transformer-sugarss"],
-    "*.{htm,html,xhtml}": [
-      "@parcel/transformer-posthtml",
-      "@parcel/transformer-html"
-    ],
     "*.mdx": ["@parcel/transformer-mdx"],
     "*.{xml,rss,atom}": ["@parcel/transformer-xml"],
     "url:*": ["...", "@parcel/transformer-raw"]
@@ -38,11 +34,9 @@
   ],
   "optimizers": {
     "data-url:*": ["...", "@parcel/optimizer-data-url"],
-    "*.{html,xhtml}": ["@parcel/optimizer-htmlnano"],
     "*.{js,mjs,cjs}": ["@parcel/optimizer-terser"]
   },
   "packagers": {
-    "*.{html,xhtml}": "@parcel/packager-html",
     "*.{js,mjs,cjs}": "@parcel/packager-js",
     "*.{xml,rss,atom}": "@parcel/packager-xml",
     "*.ts": "@parcel/packager-ts",
