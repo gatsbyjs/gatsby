@@ -25,9 +25,6 @@
       "@parcel/transformer-posthtml",
       "@parcel/transformer-html"
     ],
-    "*.pug": ["@parcel/transformer-pug"],
-    "*.coffee": ["@parcel/transformer-coffeescript"],
-    "*.elm": ["@parcel/transformer-elm"],
     "*.mdx": ["@parcel/transformer-mdx"],
     "*.{xml,rss,atom}": ["@parcel/transformer-xml"],
     "url:*": ["...", "@parcel/transformer-raw"]
@@ -42,7 +39,7 @@
   "optimizers": {
     "data-url:*": ["...", "@parcel/optimizer-data-url"],
     "*.{html,xhtml}": ["@parcel/optimizer-htmlnano"],
-    "*.{js,mjs,cjs}": ["@parcel/optimizer-terser"],
+    "*.{js,mjs,cjs}": ["@parcel/optimizer-terser"]
   },
   "packagers": {
     "*.{html,xhtml}": "@parcel/packager-html",
