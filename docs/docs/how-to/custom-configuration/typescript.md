@@ -184,7 +184,6 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 ### `gatsby-config.ts`
 
 ```ts:title=gatsby-config.ts
-
 import { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
@@ -195,27 +194,25 @@ const config: GatsbyConfig = {
   plugins: [],
 };
 
-export default config;
-
+export default config
 ```
 
 ### `gatsby-node.ts`
 
 ```ts:title=gatsby-node.ts
-
 import { GatsbyNode } from "gatsby";
 
 type Person = {
-  id: number;
-  name: string;
-  age: number;
-};
+  id: number
+  name: string
+  age: number
+}
 
 export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
   actions,
   createNodeId,
 }) => {
-  const { createNode } = actions;
+  const { createNode } = actions
 
   const data = await getSomeData();
 
@@ -232,7 +229,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
       },
     };
 
-    createNode(node);
+    createNode(node)
   });
 };
 ```
