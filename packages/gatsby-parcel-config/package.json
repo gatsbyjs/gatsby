@@ -4,5 +4,45 @@
   "version": "0.0.1-next.0",
   "engines": {
     "parcel": "2.x"
+  },
+  "scripts": {
+    "watch": "echo 'Not Implemented'"
+  },
+  "dependencies": {
+    "@parcel/bundler-default": "^2.2.1",
+    "@parcel/compressor-raw": "^2.2.1",
+    "@parcel/namer-default": "^2.2.1",
+    "@parcel/optimizer-terser": "^2.2.1",
+    "@parcel/packager-js": "^2.2.1",
+    "@parcel/packager-raw": "^2.2.1",
+    "@parcel/reporter-dev-server": "^2.2.1",
+    "@parcel/resolver-default": "^2.2.1",
+    "@parcel/runtime-browser-hmr": "^2.2.1",
+    "@parcel/runtime-js": "^2.2.1",
+    "@parcel/runtime-react-refresh": "^2.2.1",
+    "@parcel/runtime-service-worker": "^2.2.1",
+    "@parcel/transformer-js": "^2.2.1",
+    "@parcel/transformer-json": "^2.2.1",
+    "@parcel/transformer-raw": "^2.2.1",
+    "@parcel/transformer-react-refresh-wrap": "^2.2.1"
+  },
+  "parcelDependencies": {
+    "@parcel/optimizer-data-url": "^2.2.1",
+    "@parcel/packager-raw-url": "^2.2.1",
+    "@parcel/packager-ts": "^2.2.1",
+    "@parcel/packager-xml": "^2.2.1",
+    "@parcel/transformer-graphql": "^2.2.1",
+    "@parcel/transformer-inline-string": "^2.2.1",
+    "@parcel/transformer-jsonld": "^2.2.1",
+    "@parcel/transformer-mdx": "^2.2.1",
+    "@parcel/transformer-toml": "^2.2.1",
+    "@parcel/transformer-typescript-types": "^2.2.1",
+    "@parcel/transformer-webmanifest": "^2.2.1",
+    "@parcel/transformer-worklet": "^2.2.1",
+    "@parcel/transformer-xml": "^2.2.1",
+    "@parcel/transformer-yaml": "^2.2.1"
+  },
+  "peerDependencies": {
+   "@parcel/core": "^2.2.1"
   }
 }
