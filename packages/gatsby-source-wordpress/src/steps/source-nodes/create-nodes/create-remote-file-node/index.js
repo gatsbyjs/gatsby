@@ -151,11 +151,11 @@ async function pushToQueue(task, cb) {
  * @param  {String}   url
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
- * @param  {Object}   httpOpts
+ * @param  {Object}    httpOptions
  * @param  {number}   attempt
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
-const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
+const requestRemoteNode = (url, headers, tmpFilename,  httpOptions, attempt = 1) =>
   new Promise((resolve, reject) => {
     let timeout
 
@@ -166,7 +166,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
+          requestRemoteNode(url, headers, tmpFilename,  httpOptions, attempt + 1)
         )
       } else {
         processingCache[url] = null
@@ -190,7 +190,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     const responseStream = got.stream(url, {
       headers,
       timeout: { send: CONNECTION_TIMEOUT },
-      ...httpOpts,
+      ... httpOptions,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
@@ -244,6 +244,7 @@ async function processRemoteNode({
   createNode,
   parentNodeId,
   auth = {},
+  httpOptions = {},
   httpHeaders = {},
   createNodeId,
   ext,
@@ -261,7 +262,6 @@ async function processRemoteNode({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  const httpOpts = {}
   if (auth?.htaccess_pass && auth?.htaccess_user) {
     headers[`Authorization`] = `Basic ${btoa(
       `${auth.htaccess_user}:${auth.htaccess_pass}`
@@ -280,7 +280,7 @@ async function processRemoteNode({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
+  const response = await requestRemoteNode(url, headers, tmpFilename, httpOptions)
 
   if (response.statusCode == 200) {
     // Save the response headers for future requests.
@@ -376,6 +376,7 @@ module.exports = ({
   getCache,
   parentNodeId = null,
   auth = {},
+  httpOpts = {},
   httpHeaders = {},
   createNodeId,
   ext = null,
@@ -383,7 +384,8 @@ module.exports = ({
   reporter,
   pluginOptions,
 }) => {
-  const limit = pluginOptions?.type?.MediaItem?.localFile?.requestConcurrency
+  const { requestConcurrency: limit, httpOptions = {} } =
+    pluginOptions?.type?.MediaItem?.localFile || {}
   if (doneQueueTimeout) {
     // this is to give the bar a little time to wait when there are pauses
     // between file downloads.
@@ -449,6 +451,7 @@ module.exports = ({
     parentNodeId,
     createNodeId,
     auth,
+    httpOpts,
     httpHeaders,
     ext,
     name,
