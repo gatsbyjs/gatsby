@@ -87,9 +87,6 @@ export interface IPluginOptions {
       password: string | null
     }
   }
-  httpOpts?: {
-    agent?: any
-  }
   schema?: {
     queryDepth: number
     circularQueryLimit: number
@@ -123,6 +120,7 @@ export interface IPluginOptions {
       createFileNodes?: boolean
       localFile?: {
         excludeByMimeTypes?: Array<string>
+        httpOptions?: any
         maxFileSizeBytes?: number
         requestConcurrency?: number
       }
@@ -165,9 +163,6 @@ const defaultPluginOptions: IPluginOptions = {
       username: null,
       password: null,
     },
-  },
-  httpOpts: {
-    agent: null,
   },
   schema: {
     queryDepth: 15,
@@ -236,6 +231,9 @@ const defaultPluginOptions: IPluginOptions = {
       createFileNodes: true,
       localFile: {
         excludeByMimeTypes: [],
+        httpOptions: {
+          agent: null,
+        },
         maxFileSizeBytes: 15728640, // 15Mb
         requestConcurrency: 100,
       },

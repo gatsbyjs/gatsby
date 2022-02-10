@@ -322,7 +322,6 @@ export const createLocalFileNode = async ({
         const node = await createRemoteFileNode({
           url: mediaItemUrl,
           auth,
-          httpOpts,
           ...createFileNodeRequirements,
           pluginOptions,
         })
