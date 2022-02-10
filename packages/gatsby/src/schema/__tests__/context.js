@@ -99,6 +99,56 @@ describe(`Resolver context`, () => {
       expect(results).toEqual(expected)
     })
 
+    it(`allows filtering with resolver context`, async () => {
+      dispatch(
+        createResolverContext({
+          hello(planet) {
+            return `Hello ${planet}!`
+          },
+        })
+      )
+      dispatch(
+        createTypes(
+          buildObjectType({
+            name: `Test`,
+            interfaces: [`Node`],
+            fields: {
+              hello: {
+                type: `String!`,
+                args: {
+                  planet: {
+                    type: `String!`,
+                    defaultValue: `World`,
+                  },
+                },
+                resolve(source, args, context, info) {
+                  return context.hello(args.planet)
+                },
+              },
+            },
+          })
+        )
+      )
+      const query = `
+        {
+          allTest(filter: {hello: {glob: "World"}}) {
+            nodes {
+              world: hello
+              mars: hello(planet: "Mars")
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        test: {
+          world: `Hello World!`,
+          mars: `Hello Mars!`,
+        },
+      }
+      expect(results).toEqual(expected)
+    })
+
     it(`custom resolver context is available in custom field extension`, async () => {
       dispatch(
         createResolverContext({
