@@ -18,9 +18,7 @@
     "*.webmanifest": ["@parcel/transformer-webmanifest"],
     "webmanifest:*.{json,webmanifest}": ["@parcel/transformer-webmanifest"],
     "*.{yaml,yml}": ["@parcel/transformer-yaml"],
-    "*.{glsl,vert,frag}": ["@parcel/transformer-glsl"],
     "*.{gql,graphql}": ["@parcel/transformer-graphql"],
-    "*.sss": ["@parcel/transformer-sugarss"],
     "*.mdx": ["@parcel/transformer-mdx"],
     "*.{xml,rss,atom}": ["@parcel/transformer-xml"],
     "url:*": ["...", "@parcel/transformer-raw"]
