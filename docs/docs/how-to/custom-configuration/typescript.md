@@ -3,6 +3,8 @@ title: TypeScript and Gatsby
 examples:
   - label: Using Typescript
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-typescript"
+  - label: Using vanilla-extract
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract"
 ---
 
 ## Introduction
@@ -11,7 +13,23 @@ examples:
 
 To see all of the types available and their generics look at our [TypeScript definition file](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/index.d.ts).
 
-## `PageProps`
+## Initializing a New Project with TypeScript
+
+You can get started with TypeScript and Gatsby by using the CLI:
+
+```
+npm init gatsby
+```
+
+In the prompts, select TypeScript as your preferred language. You can also pass a `ts` flag to the above command to skip that question and use TypeScript:
+
+```
+npm init gatsby -ts
+```
+
+## Usage in Gatsby
+
+### `PageProps`
 
 ```tsx:title=src/pages/index.tsx
 import * as React from "react"
@@ -65,7 +83,7 @@ export const query = graphql`
 `
 ```
 
-## `gatsby-browser.tsx` / `gatsby-ssr.tsx`
+### `gatsby-browser.tsx` / `gatsby-ssr.tsx`
 
 You can also write `gatsby-browser` and `gatsby-ssr` in TypeScript. You have the types `GatsbyBrowser` and `GatsbySSR` available to type your API functions. Here are two examples:
 
@@ -73,7 +91,9 @@ You can also write `gatsby-browser` and `gatsby-ssr` in TypeScript. You have the
 import * as React from "react"
 import { GatsbyBrowser } from "gatsby"
 
-export const wrapPageElement: GatsbyBrowser["wrapPageElement"] = ({ element }) => {
+export const wrapPageElement: GatsbyBrowser["wrapPageElement"] = ({
+  element,
+}) => {
   return (
     <div>
       <h1>Hello World</h1>
@@ -97,11 +117,11 @@ export const wrapPageElement: GatsbySSR["wrapPageElement"] = ({ element }) => {
 }
 ```
 
-## `getServerData`
+### `getServerData`
 
 You can use `GetServerData`, `GetServerDataProps`, and `GetServerDataReturn` for [`getServerData`](/docs/reference/rendering-options/server-side-rendering/).
 
-```tsx:src/pages/ssr.tsx
+```tsx:title=src/pages/ssr.tsx
 import * as React from "react"
 import { GetServerDataProps, GetServerDataReturn } from "gatsby"
 
@@ -133,9 +153,110 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 }
 ```
 
-## Other resources
+### `gatsby-config.ts`
 
-TypeScript integration is supported through automatically including [`gatsby-plugin-typescript`](/plugins/gatsby-plugin-typescript/). Visit that link to see configuration options and limitations of this setup.
+```ts:title=gatsby-config.ts
+import { GatsbyConfig } from "gatsby"
+
+const config: GatsbyConfig = {
+  siteMetadata: {
+    title: "Your Title",
+  },
+  plugins: [],
+}
+
+export default config
+```
+
+### `gatsby-node.ts`
+
+```ts:title=gatsby-node.ts
+import { GatsbyNode } from "gatsby"
+
+type Person = {
+  id: number
+  name: string
+  age: number
+}
+
+export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
+  actions,
+  createNodeId,
+}) => {
+  const { createNode } = actions
+
+  const data = await getSomeData()
+
+  data.forEach((person: Person) => {
+    const node = {
+      ...person,
+      parent: null,
+      children: [],
+      id: createNodeId(`person__${person.id}`),
+      internal: {
+        type: "Person",
+        content: JSON.stringify(person),
+        contentDigest: createContentDigest(person),
+      },
+    }
+
+    createNode(node)
+  })
+}
+```
+
+## `tsconfig.json`
+
+Essentially, the `tsconfig.json` file is used in tools external to Gatsby e.g Testing Frameworks like Jest, Code editors and Linting libraries like EsLint to enable them handle TypeScript correctly. You can use the `tsconfig.json` from our [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json).
+
+## Type Hinting in JS Files
+
+You can still take advantage of type hinting in JavaScript files with [JSdoc](https://jsdoc.app/) by importing types directly from Gatsby. You need to use a text exitor that supports those type hints.
+
+### Usage in `gatsby-config.js`
+
+```js:title=gatsby-config.js
+// @ts-check
+
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+const gatsbyConfig = {}
+
+module.exports = gatsbyConfig
+```
+
+### Usage in `gatsby-node.js`
+
+```js:title=gatsby-node.js
+// @ts-check
+
+/**
+ * @type {import('gatsby').GatsbyNode['createPages']}
+ */
+exports.createPages = () => {}
+```
+
+## Styling
+
+[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use vanilla-extract, select it as your preferred styling solution when initializing your project with `npm init gatsby`. You can also manually setup your project through [gatsby-plugin-vanilla-extract](/plugins/gatsby-plugin-vanilla-extract/).
+
+## Migrating to TypeScript
+
+Gatsby natively supports JavaScript and TypeScript, you can change files from `.js`/`.jsx` to `.ts`/ `tsx` at any point to start adding types and gaining the benefits of a type system. But you'll need to do a bit more to be able use write use Typescipt in `gatsby-*` files
+
+- Convert your `.js`/`.jsx` files to `.ts/.tsx`
+- Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as `devDependencies`
+- Add a `tsconfig.json` file using `npx tsc init` or use the one from [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json)
+- Rename `gatsby-*` files:
+  - `gatsby-node.js` to `gatsby-node.ts`
+  - `gatsby-config.js` to `gatsby-config.ts`
+  - `gatsby-browser.js` to `gatsby-browser.tsx`
+  - `gatsby-ssr.js` to `gatsby-ssr.tsx`
+
+## Other Resources
+
+TypeScript integration for pages is supported through automatically including [`gatsby-plugin-typescript`](/plugins/gatsby-plugin-typescript/). Visit that link to see configuration options and limitations of this setup.
 
 If you are new to TypeScript, check out these other resources to learn more:
 
