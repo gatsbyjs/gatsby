@@ -250,7 +250,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
 - Add a `tsconfig.json` file using `npx tsc init` or use the one from [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json)
 - Rename `gatsby-*` files:
   - `gatsby-node.js` to `gatsby-node.ts`
-  - `gatsby-config.js` to `gatsby-node.ts`
+  - `gatsby-config.js` to `gatsby-config.ts`
   - `gatsby-browser.js` to `gatsby-browser.tsx`
   - `gatsby-ssr.js` to `gatsby-ssr.tsx`
 
