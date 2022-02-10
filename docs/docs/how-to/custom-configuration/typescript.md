@@ -232,7 +232,7 @@ module.exports = gatsbyConfig
 // @ts-check
 
 /**
- * @type {import('gatsby').GatsbyConfig['createPages']}
+ * @type {import('gatsby').GatsbyNode['createPages']}
  */
 exports.createPages = () => {}
 ```
