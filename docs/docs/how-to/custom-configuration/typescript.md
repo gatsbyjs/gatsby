@@ -13,7 +13,7 @@ examples:
 
 To see all of the types available and their generics look at our [TypeScript definition file](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/index.d.ts).
 
-## Initializing a new Gatsby project with TypeScript
+## Initializing a New Project with TypeScript
 
 You can get started with TypeScript and Gatsby by using the CLI:
 
@@ -205,11 +205,11 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 }
 ```
 
-## The `tsconfig.json` file
+## `tsconfig.json`
 
 Essentially, the `tsconfig.json` file is used in tools external to Gatsby e.g Testing Frameworks like Jest, Code editors and Linting libraries like EsLint to enable them handle TypeScript correctly. You can use the `tsconfig.json` from our [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json).
 
-## Type hinting in JS files
+## Type Hinting in JS Files
 
 You can still take advantage of type hinting in JavaScript files with [JSdoc](https://jsdoc.app/) by importing types directly from Gatsby. You need to use a text exitor that supports those type hints.
 
@@ -254,7 +254,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
   - `gatsby-browser.js` to `gatsby-browser.tsx`
   - `gatsby-ssr.js` to `gatsby-ssr.tsx`
 
-## Other resources
+## Other Resources
 
 TypeScript integration for pages is supported through automatically including [`gatsby-plugin-typescript`](/plugins/gatsby-plugin-typescript/). Visit that link to see configuration options and limitations of this setup.
 
