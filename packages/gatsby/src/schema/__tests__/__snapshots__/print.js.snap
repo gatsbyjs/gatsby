@@ -149,8 +149,23 @@ interface ITest implements Node {
 }
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  fieldWithArgsAndDescription(
+    \\"\\"\\"This is description\\"\\"\\"
+    withDefault: String = \\"Test\\"
+
+    \\"\\"\\"This is description too\\"\\"\\"
+    withoutDefault: String
+    usingDerivedType: BarChildSortInput
+  ): String
   bar: String
 }
+
+enum BuilderEnum {
+  One
+  Two
+}
+
+scalar BuilderScalar
 
 type Test implements Node @dontInfer {
   foo: Int
@@ -187,6 +202,14 @@ input Baz {
 }
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  fieldWithArgsAndDescription(
+    \\"\\"\\"This is description\\"\\"\\"
+    withDefault: String = \\"Test\\"
+
+    \\"\\"\\"This is description too\\"\\"\\"
+    withoutDefault: String
+    usingDerivedType: BarChildSortInput
+  ): String
   bar: String
 }"
 `;
@@ -339,6 +362,13 @@ interface ITest2 implements Node {
 
 union ThisOrThat = AnotherTest | OneMoreTest
 
+enum SDLEnumSimple {
+  One
+  Two
+}
+
+scalar SDLScalar
+
 type Inline {
   foo: Nested
 }
@@ -348,8 +378,23 @@ input Baz {
 }
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  fieldWithArgsAndDescription(
+    \\"\\"\\"This is description\\"\\"\\"
+    withDefault: String = \\"Test\\"
+
+    \\"\\"\\"This is description too\\"\\"\\"
+    withoutDefault: String
+    usingDerivedType: BarChildSortInput
+  ): String
   bar: String
 }
+
+enum BuilderEnum {
+  One
+  Two
+}
+
+scalar BuilderScalar
 
 type Test implements Node @dontInfer {
   foo: Int
@@ -532,6 +577,13 @@ interface ITest2 implements Node {
 
 union ThisOrThat = AnotherTest | OneMoreTest
 
+enum SDLEnumSimple {
+  One
+  Two
+}
+
+scalar SDLScalar
+
 type Inline {
   foo: Nested
 }
@@ -546,8 +598,23 @@ type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @do
 }
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  fieldWithArgsAndDescription(
+    \\"\\"\\"This is description\\"\\"\\"
+    withDefault: String = \\"Test\\"
+
+    \\"\\"\\"This is description too\\"\\"\\"
+    withoutDefault: String
+    usingDerivedType: BarChildSortInput
+  ): String
   bar: String
 }
+
+enum BuilderEnum {
+  One
+  Two
+}
+
+scalar BuilderScalar
 
 type Test implements Node @dontInfer {
   foo: Int
