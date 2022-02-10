@@ -481,6 +481,7 @@ export const createNodesForContentType = ({
             publishedAt: entryItem.sys.updatedAt,
             publishedVersion: entryItem.sys.revision,
           },
+          localeTest: entryItem.fields,
         }
 
         contentfulCreateNodeManifest({

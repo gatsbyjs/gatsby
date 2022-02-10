@@ -20,14 +20,7 @@ import { CODES } from "./report"
 const conflictFieldPrefix = `contentful`
 
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [
-  `children`,
-  `contentful_id`,
-  `fields`,
-  `id`,
-  `internal`,
-  `parent`,
-]
+const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 /***
  * Localization algorithm
