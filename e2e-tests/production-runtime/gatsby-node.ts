@@ -1,15 +1,18 @@
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+import { createContentDigest } from "gatsby-core-utils"
+import { GatsbyNode } from "gatsby"
+import fs from "fs-extra"
+import path from "path"
 
-exports.onPreBootstrap = () => {
+export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = () => {
   fs.copyFileSync(
     `./src/templates/static-page-from-cache.js`,
     `./.cache/static-page-from-cache.js`
   )
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({
+  actions,
+}) => {
   const { createTypes } = actions
   const typeDefs = `
       type Product implements Node {
@@ -21,10 +24,13 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 const products = ["Burger", "Chicken"]
 
-exports.sourceNodes = ({ actions, createNodeId }) => {
+export const sourceNodes: GatsbyNode["sourceNodes"] = ({
+  actions,
+  createNodeId,
+}) => {
   products.forEach((product, i) => {
     actions.createNode({
-      id: createNodeId(i),
+      id: createNodeId(String(i)),
       children: [],
       parent: null,
       internal: {
@@ -36,20 +42,25 @@ exports.sourceNodes = ({ actions, createNodeId }) => {
   })
 }
 
-exports.createPages = ({ actions: { createPage, createRedirect } }) => {
+export const createPages: GatsbyNode["createPages"] = ({
+  actions: { createPage, createRedirect },
+}) => {
   createPage({
     path: `/안녕`,
     component: path.resolve(`src/pages/page-2.js`),
+    context: {},
   })
 
   createPage({
     path: `/foo/@something/bar`,
     component: path.resolve(`src/pages/page-2.js`),
+    context: {},
   })
 
   createPage({
     path: `/client-only-paths/static`,
     component: path.resolve(`src/templates/static-page.js`),
+    context: {},
   })
 
   // 4 pages that will test prioritization of static pages that also match
@@ -128,6 +139,7 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
   createPage({
     path: `/page-from-cache/`,
     component: path.resolve(`./.cache/static-page-from-cache.js`),
+    context: {},
   })
 
   {
@@ -138,11 +150,13 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
     createPage({
       path: `/slashes/no-trailing`,
       component: searchParamComponent,
+      context: {},
     })
 
     createPage({
       path: `/slashes/with-trailing/`,
       component: searchParamComponent,
+      context: {},
     })
   }
 
@@ -170,7 +184,7 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
   })
 }
 
-exports.onCreatePage = ({ page, actions }) => {
+export const onCreatePage: GatsbyNode["onCreatePage"] = ({ page, actions }) => {
   switch (page.path) {
     case `/client-only-paths/`:
       // create client-only-paths

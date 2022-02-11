@@ -1,4 +1,6 @@
-module.exports = {
+import { GatsbyConfig } from "gatsby"
+
+const config: GatsbyConfig = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
     author: `Kyle Mathews`,
@@ -28,3 +30,5 @@ module.exports = {
     `gatsby-plugin-stylus`,
   ].concat(process.env.TEST_PLUGIN_OFFLINE ? [`gatsby-plugin-offline`] : []),
 }
+
+export default config
