@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.7.0/packages/gatsby-transformer-remark) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update dependency underscore.string to ^3.3.6 for gatsby-transformer-remark [#34653](https://github.com/gatsbyjs/gatsby/issues/34653) ([1d2530e](https://github.com/gatsbyjs/gatsby/commit/1d2530eaf7c2016f1dac427942b7d1bb29cc4933))
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.6.0/packages/gatsby-transformer-remark) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- regenerate markdown when used image changes [#34433](https://github.com/gatsbyjs/gatsby/issues/34433) ([3954944](https://github.com/gatsbyjs/gatsby/commit/3954944f70be205ff8202f26288263ba8db80730))
+
 ### [5.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.5.2/packages/gatsby-transformer-remark) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-transformer-remark

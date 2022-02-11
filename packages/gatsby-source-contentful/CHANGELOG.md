@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.5.0/packages/gatsby-source-contentful) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.7 for gatsby-source-contentful [#34646](https://github.com/gatsbyjs/gatsby/issues/34646) ([12b0056](https://github.com/gatsbyjs/gatsby/commit/12b005670dbd0e2819dcc2563cfc1333344541f2))
+- support Content Types named Tag [#34585](https://github.com/gatsbyjs/gatsby/issues/34585) ([aa42053](https://github.com/gatsbyjs/gatsby/commit/aa42053ddd7161c62a557189a747aa96a291eadf))
+
+#### Chores
+
+- update dependency nock to ^13.2.2 for gatsby-source-contentful [#34640](https://github.com/gatsbyjs/gatsby/issues/34640) ([33b6fc7](https://github.com/gatsbyjs/gatsby/commit/33b6fc738afd3d539f6154904c665ab99ecb37ae))
+
+#### Other Changes
+
+- Contentful warm builds [#34678](https://github.com/gatsbyjs/gatsby/issues/34678) ([d43112f](https://github.com/gatsbyjs/gatsby/commit/d43112f418f56a5d2ffb75f5bc59b5d8f132eff4))
+- clean up and refactor Contentful unit tests [#34584](https://github.com/gatsbyjs/gatsby/issues/34584) ([102eec0](https://github.com/gatsbyjs/gatsby/commit/102eec0b4a83d189f7ba7d47721da86f785860ab))
+
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.4.0/packages/gatsby-source-contentful) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Features
+
+- create more resilient wrapper around sharp [#34339](https://github.com/gatsbyjs/gatsby/issues/34339) ([a3fa646](https://github.com/gatsbyjs/gatsby/commit/a3fa646eb6b51004ef9e85a32f7be1cf2d0cc2db))
+
+#### Bug Fixes
+
+- enable tag support for assets [#34480](https://github.com/gatsbyjs/gatsby/issues/34480) ([391b16d](https://github.com/gatsbyjs/gatsby/commit/391b16d21955f56a3514d52d487cee807ce6f7ad))
+
 ### [7.3.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.3.2/packages/gatsby-source-contentful) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-source-contentful

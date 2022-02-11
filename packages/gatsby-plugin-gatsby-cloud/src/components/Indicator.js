@@ -9,9 +9,13 @@ import {
 } from "./buttons"
 import Style from "./Style"
 
+import { usePollForNodeManifest } from "../utils/use-poll-for-node-manifest"
+
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
-  : 3000
+  : 2000
+
+const PAGE_DATA_RETRY_LIMIT = 60
 
 const PreviewIndicator = ({ children }) => (
   <>
@@ -26,14 +30,144 @@ const PreviewIndicator = ({ children }) => (
   </>
 )
 
+const getContentSyncInfoFromURL = () => {
+  const urlSearchParams = new URLSearchParams(window.location.search)
+
+  // mid and plgn are shortened to keep the url short
+  const { mid: manifestId, plgn: pluginName } = JSON.parse(
+    atob(urlSearchParams.get(`csync`) || ``) || `{}`
+  )
+
+  if (!manifestId || !pluginName) {
+    return null
+  }
+
+  return { manifestId, pluginName }
+}
+
 let buildId = ``
+let pageData
+let latestCheckedBuild
+let refreshNeeded = false
 
 const Indicator = () => {
   const [buildInfo, setBuildInfo] = useState()
+  const [contentSyncInfo, setContentSyncInfo] = useState(null)
+  const usingContentSync = !!contentSyncInfo
+
   const timeoutRef = useRef(null)
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
   const { track } = useTrackEvent()
+
+  async function fetchPageData() {
+    const urlHostString = window.location.origin
+    const pathAdjustment =
+      window.location.pathname === `/` ? `/index` : window.location.pathname
+
+    const normalizedPath = `/page-data${pathAdjustment}/page-data.json`.replace(
+      /\/\//g,
+      `/`
+    )
+
+    const url = urlHostString + normalizedPath
+
+    try {
+      const resp = await fetch(url)
+      const data = await resp.text()
+
+      // for local dev with `gatsby develop` where page-data.json files never 404 and return an empty object instead.
+      if (data === `{}`) {
+        // for local development, force an error if page is missing.
+        const err = new Error(`Not Found`)
+        err.status = 404
+        throw err
+      }
+
+      return { data, errorMessage: null }
+    } catch (e) {
+      if (e.status === 404) {
+        return { data: null, errorMessage: `This page has moved.` }
+      } else {
+        return { data: null, errorMessage: null }
+      }
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await fetchPageData()
+      pageData = data
+    }
+
+    const contentSyncUrlParamInfo = getContentSyncInfoFromURL()
+
+    // prefer content sync
+    if (contentSyncUrlParamInfo) {
+      setContentSyncInfo(contentSyncUrlParamInfo)
+    }
+    // fall back to diffing page data
+    else {
+      fetchData()
+    }
+  }, [])
+
+  const pollForNodeManifestArgs = {
+    contentLoaderInfo: {
+      orgId: buildInfo?.siteInfo?.orgId,
+      previewBuildStatus: buildInfo?.currentBuild?.buildStatus,
+      previewUrl:
+        // for local dev / debugging
+        process.env.GATSBY_PREVIEW_URL ||
+        // for production
+        window.location.origin,
+    },
+    manifestId: contentSyncInfo?.manifestId,
+    sourcePluginName: contentSyncInfo?.pluginName,
+    siteId: buildInfo?.siteInfo?.siteId,
+    shouldPoll: !!contentSyncInfo,
+  }
+
+  const {
+    redirectUrl: nodeManifestRedirectUrl,
+    errorMessage: nodeManifestErrorMessage,
+  } = usePollForNodeManifest(pollForNodeManifestArgs)
+
+  React.useEffect(() => {
+    if (nodeManifestErrorMessage) {
+      console.error(nodeManifestErrorMessage)
+    } else if (nodeManifestRedirectUrl) {
+      // Force a "This page has updated message" until the page is refreshed
+      refreshNeeded = true
+    }
+  }, [nodeManifestRedirectUrl, nodeManifestErrorMessage])
+
+  const hasPageDataChanged = async () => {
+    if (buildId !== latestCheckedBuild) {
+      let pageDataCounter = 0
+      let hasPageChanged = false
+
+      while (!hasPageChanged && pageDataCounter <= PAGE_DATA_RETRY_LIMIT) {
+        const loadedPageData = pageData
+        const { data, errorMessage } = await fetchPageData()
+
+        if (errorMessage) {
+          return { hasPageChanged: false, errorMessage }
+        }
+
+        pageDataCounter++
+        hasPageChanged = loadedPageData !== data
+
+        if (!hasPageChanged) {
+          await new Promise(resolve => setTimeout(resolve, POLLING_INTERVAL))
+        }
+      }
+
+      latestCheckedBuild = buildId
+      return { hasPageChanged, errorMessage: null }
+    }
+    return { hasPageChanged: false, errorMessage: null }
+  }
 
   const { siteInfo, currentBuild } = buildInfo || {
     siteInfo: {},
@@ -42,7 +176,7 @@ const Indicator = () => {
 
   const { orgId, siteId } = siteInfo || {}
 
-  const pollData = useCallback(async function pollData() {
+  const pollData = async function pollData() {
     const prettyUrlRegex = /^preview-/
     const host = window.location.hostname
 
@@ -81,13 +215,34 @@ const Indicator = () => {
       buildId !== newBuildInfo?.latestBuild?.id &&
       currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
-    }
+      if (refreshNeeded) {
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+      } else if (!usingContentSync) {
+        const { hasPageChanged, errorMessage } = await hasPageDataChanged(
+          buildId
+        )
 
+        if (errorMessage) {
+          setBuildInfo({
+            ...newBuildInfo,
+            buildStatus: BuildStatus.ERROR,
+            errorMessage,
+          })
+        } else if (hasPageChanged) {
+          // Force a "This page has updated message" until a page is refreshed
+          refreshNeeded = true
+          // Build updated, data for this specific page has changed!
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+        } else {
+          // Build updated, data for this specific page has NOT changed, no need to refresh content.
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
+        }
+      }
+    }
     if (shouldPoll.current) {
       timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
     }
-  }, [])
+  }
 
   useEffect(() => {
     if (buildInfo?.siteInfo && !trackedInitialLoad.current) {
@@ -131,7 +286,13 @@ const Indicator = () => {
     <IndicatorProvider>
       <PreviewIndicator>
         <GatsbyIndicatorButton {...buttonProps} buttonIndex={1} />
-        <InfoIndicatorButton {...buttonProps} buttonIndex={2} />
+        <InfoIndicatorButton
+          {...buttonProps}
+          nodeManifestRedirectUrl={nodeManifestRedirectUrl}
+          usingContentSync={usingContentSync}
+          nodeManifestErrorMessage={nodeManifestErrorMessage}
+          buttonIndex={2}
+        />
         <LinkIndicatorButton {...buttonProps} buttonIndex={3} />
       </PreviewIndicator>
     </IndicatorProvider>

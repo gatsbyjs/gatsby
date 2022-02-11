@@ -1,0 +1,20 @@
+DOCKER_ID=$(./scripts/docker-get-id)
+if [ -n "$DOCKER_ID" ]; then
+  echo "\nA gatsby-memory container is already running with id $DOCKER_ID."
+  echo "Please use that container, or run \`yarn docker:stop\` to stop it.\n"
+  return 1
+fi
+
+DOCKER_ID=$(\
+  docker run -td \
+  --mount type=bind,source="$(pwd)/../..",target=/usr/src/gatsby \
+  --mount type=bind,source="$(pwd)",target=/usr/src/app \
+  --publish 9229:9229 \
+  --publish 9000:9000 \
+  --memory="2g" \
+  --memory-swap="2g" \
+  gatsby-memory \
+  | head -c 12 \
+)
+
+echo "\nStarted container id ${DOCKER_ID}! Run \`yarn docker:connect\` to connect to the container.\n"
