@@ -4,7 +4,7 @@ import reporter from "gatsby-cli/lib/reporter"
 function constructBundler(dir: string): Parcel {
   return new Parcel({
     entries: `${dir}/gatsby-+(node|config).{ts,tsx,js}`,
-    defaultConfig: `@parcel/config-default`,
+    defaultConfig: `gatsby-parcel-config`,
     mode: `production`,
     targets: {
       default: {
