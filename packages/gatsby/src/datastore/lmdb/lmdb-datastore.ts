@@ -61,8 +61,31 @@ function getRootDb(): RootDatabase {
   return rootDb
 }
 
+/* eslint-disable @typescript-eslint/no-namespace */
+declare global {
+  namespace NodeJS {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    interface Global {
+      __GATSBY_OPEN_LMDBS?: Map<string, ILmdbDatabases>
+    }
+  }
+}
+
 function getDatabases(): ILmdbDatabases {
   if (!databases) {
+    // __GATSBY_OPEN_LMDBS tracks if we already opened given db in this process
+    // In `gatsby serve` case we might try to open it twice - once for engines
+    // and second to get access to `SitePage` nodes (to power trailing slashes
+    // redirect middleware). This ensure there is single instance within a process.
+    // Using more instances seems to cause weird random errors.
+    if (!globalThis.__GATSBY_OPEN_LMDBS) {
+      globalThis.__GATSBY_OPEN_LMDBS = new Map()
+    }
+    databases = globalThis.__GATSBY_OPEN_LMDBS.get(fullDbPath)
+    if (databases) {
+      return databases
+    }
+
     const rootDb = getRootDb()
     databases = {
       nodes: rootDb.openDB({
@@ -86,6 +109,7 @@ function getDatabases(): ILmdbDatabases {
         // dupSort: true
       }),
     }
+    globalThis.__GATSBY_OPEN_LMDBS.set(fullDbPath, databases)
   }
   return databases
 }
