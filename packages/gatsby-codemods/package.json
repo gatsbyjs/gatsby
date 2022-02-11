@@ -32,7 +32,8 @@
     "execa": "^5.1.1",
     "graphql": "^15.8.0",
     "jscodeshift": "^0.12.0",
-    "recast": "^0.20.5"
+    "recast": "^0.20.5",
+    "chalk": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
