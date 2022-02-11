@@ -12,9 +12,6 @@
   "engines": {
     "parcel": "2.x"
   },
-  "scripts": {
-    "watch": "echo 'Not Implemented'"
-  },
   "dependencies": {
     "@parcel/bundler-default": "^2.2.1",
     "@parcel/compressor-raw": "^2.2.1",
@@ -50,6 +47,6 @@
     "@parcel/transformer-yaml": "^2.2.1"
   },
   "peerDependencies": {
-   "@parcel/core": "^2.2.1"
+    "@parcel/core": "^2.2.1"
   }
 }
