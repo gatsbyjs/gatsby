@@ -21,6 +21,7 @@ import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
 import { runQueriesInWorkersQueue } from "../pool"
 import { readPageQueryResult } from "../../page-data"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -49,14 +50,6 @@ jest.mock(`gatsby-telemetry`, () => {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
-  }
-})
-
-// Normally gatsby-config.js exists in .cache/compiled, but for the sake of this test
-// we'll mock it directly since it's not what we're testing (and .cache is git ignored)
-jest.mock(`../../../bootstrap/get-config-file`, () => {
-  return {
-    getConfigFile: jest.fn(dir => `${dir}/gatsby-config`),
   }
 })
 
@@ -132,6 +125,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
+    await compileGatsbyFiles(siteDirectory)
     await loadConfigAndPlugins({ siteDirectory })
     await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
