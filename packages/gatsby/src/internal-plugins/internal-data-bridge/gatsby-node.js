@@ -6,6 +6,9 @@ const _ = require(`lodash`)
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../datastore`)
+const {
+  COMPILED_CACHE_DIR,
+} = require(`../../utils/parcel/compile-gatsby-files`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
@@ -53,33 +56,21 @@ exports.sourceNodes = ({
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
 
-    if (plugin.name === `default-site-plugin`) {
-      createNode({
-        ...plugin,
-        packageJson: transformPackageJson(
-          require(`${program.directory}/package.json`)
-        ),
-        parent: null,
-        children: [],
-        internal: {
-          contentDigest: createContentDigest(plugin),
-          type: `SitePlugin`,
-        },
-      })
-    } else {
-      createNode({
-        ...plugin,
-        packageJson: transformPackageJson(
-          require(`${plugin.resolve}/package.json`)
-        ),
-        parent: null,
-        children: [],
-        internal: {
-          contentDigest: createContentDigest(plugin),
-          type: `SitePlugin`,
-        },
-      })
-    }
+    // Since `default-site-plugin` is a proxy for gatsby-* files that are compiled and live in .cache/compiled,
+    // use program.directory to access package.json since it is not compiled and lives in the site root
+    const dir =
+      plugin.name === `default-site-plugin` ? program.directory : plugin.resolve
+
+    createNode({
+      ...plugin,
+      packageJson: transformPackageJson(require(`${dir}/package.json`)),
+      parent: null,
+      children: [],
+      internal: {
+        contentDigest: createContentDigest(plugin),
+        type: `SitePlugin`,
+      },
+    })
   })
 
   // Add site node.
@@ -129,7 +120,7 @@ exports.sourceNodes = ({
   })
 
   const pathToGatsbyConfig = systemPath.join(
-    `${program.directory}/.cache/compiled`,
+    `${program.directory}/${COMPILED_CACHE_DIR}`,
     `gatsby-config.js`
   )
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)

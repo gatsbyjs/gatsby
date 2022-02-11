@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby file compilation constructBundler should construct Parcel relative to passed directory 1`] = `
+Object {
+  "cacheDir": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/.cache/.parcel-cache",
+  "defaultConfig": "@parcel/config-default",
+  "entries": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/gatsby-+(node|config).{ts,tsx,js}",
+  "mode": "production",
+  "targets": Object {
+    "default": Object {
+      "distDir": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/.cache/compiled",
+      "engines": Object {
+        "node": ">= 14.15.0",
+      },
+      "includeNodeModules": false,
+      "outputFormat": "commonjs",
+      "sourceMap": false,
+    },
+  },
+}
+`;

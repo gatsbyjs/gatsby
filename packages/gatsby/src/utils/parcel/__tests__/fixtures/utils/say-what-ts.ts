@@ -1,0 +1,1 @@
+export const working: string = `I am working!`

@@ -82,6 +82,16 @@ export async function createGraphqlEngineBundle(
           },
         },
         {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: `babel-loader`,
+            options: {
+              presets: [`@babel/preset-typescript`],
+            },
+          },
+        },
+        {
           // For node binary relocations, include ".node" files as well here
           test: /\.(m?js|node)$/,
           // it is recommended for Node builds to turn off AMD support

@@ -45,9 +45,13 @@ function renderQueryEnginePlugins(): string {
 }
 
 function relativePluginPath(resolve: string): string {
-  return slash(
+  const relativePath = slash(
     path.relative(path.dirname(schemaCustomizationPluginsPath), resolve)
   )
+
+  // TODO: This is quite hacky, better idea anyone?
+  if (relativePath.startsWith(`.`)) return relativePath
+  return relativePath.replace(`compiled`, `..`)
 }
 
 function render(

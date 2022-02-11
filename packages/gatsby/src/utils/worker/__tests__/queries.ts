@@ -21,6 +21,7 @@ import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
 import { runQueriesInWorkersQueue } from "../pool"
 import { readPageQueryResult } from "../../page-data"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -124,6 +125,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
+    await compileGatsbyFiles(siteDirectory)
     await loadConfigAndPlugins({ siteDirectory })
     await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })

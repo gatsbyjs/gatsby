@@ -19,6 +19,7 @@ import {
   ISiteConfig,
 } from "./types"
 import { PackageJson } from "../../.."
+import { COMPILED_CACHE_DIR } from "../../utils/parcel/compile-gatsby-files"
 
 const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
@@ -339,7 +340,7 @@ export function loadPlugins(
   }
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
-  const compiledPath = `${path.join(process.cwd(), `.cache/compiled`)}`
+  const compiledPath = `${path.join(process.cwd(), COMPILED_CACHE_DIR)}`
   plugins.push({
     resolve: slash(compiledPath),
     id: createPluginId(`default-site-plugin`),
