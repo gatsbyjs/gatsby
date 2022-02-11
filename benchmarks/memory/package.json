@@ -15,7 +15,9 @@
     "docker:connect": "./scripts/docker-connect",
     "docker:start-and-connect": "./scripts/docker-start && sleep 1 && ./scripts/docker-connect",
     "docker:stop": "./scripts/docker-stop",
-    "docker:stats": "./scripts/docker-stats"
+    "docker:stats": "./scripts/docker-stats",
+    "test": "node scripts/test.js",
+    "test-suite": "node scripts/test-suite.js"
   },
   "repository": {
     "type": "git",
