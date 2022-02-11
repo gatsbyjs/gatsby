@@ -61,7 +61,8 @@ async function findPageOwnedByNode({
   // but for builds (preview inc builds or regular builds) we will have a full map
   // of all nodeId's to pages they're queried on and we can use that instead since it
   // will be a much smaller list of pages, resulting in better performance for large sites
-  const usingPagesMap: boolean = `development` === process.env.NODE_ENV
+  const usingPagesMap = true
+  // const usingPagesMap: boolean = `development` === process.env.NODE_ENV
 
   const pagePathSetOrMap = usingPagesMap
     ? // this is a Map of page path to page node
