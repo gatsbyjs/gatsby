@@ -99,7 +99,7 @@ export async function requestRemoteNode(
     // Called if we stall for 30s without receiving any data
     const handleTimeout = async (): Promise<void> => {
       fsWriteStream.close()
-      fs.removeSync(tmpFilename)
+      await fs.remove(tmpFilename)
 
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
@@ -151,13 +151,13 @@ export async function requestRemoteNode(
 
     // If there's a 400/500 response or other error.
     // it will trigger a finish event on fsWriteStream
-    responseStream.on(`error`, error => {
+    responseStream.on(`error`, async error => {
       if (timeout) {
         clearTimeout(timeout)
       }
 
       fsWriteStream.close()
-      fs.removeSync(tmpFilename)
+      await fs.remove(tmpFilename)
 
       if (!(error instanceof RequestError)) {
         return reject(error)
@@ -229,14 +229,14 @@ export async function requestRemoteNode(
     responseStream.on(`response`, response => {
       resetTimeout()
 
-      fsWriteStream.once(`finish`, () => {
+      fsWriteStream.once(`finish`, async () => {
         if (timeout) {
           clearTimeout(timeout)
         }
 
         // We have an incomplete download
         if (!haveAllBytesBeenWritten) {
-          fs.removeSync(tmpFilename)
+          await fs.remove(tmpFilename)
 
           if (attempt < INCOMPLETE_RETRY_LIMIT) {
             // let's give node time to remove the file
