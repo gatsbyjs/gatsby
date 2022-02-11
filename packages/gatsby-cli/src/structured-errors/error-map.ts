@@ -641,7 +641,17 @@ const errors = {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
         inputManifest
-      )} but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.id in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes).`,
+      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.id in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes).`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
+  "11805": {
+    // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
+    text: ({ inputManifest, pagePath }): string =>
+      `${getSharedNodeManifestWarning(
+        inputManifest
+      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.slug in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes).`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
   },
@@ -651,7 +661,7 @@ const errors = {
     text: ({ inputManifest, pagePath }): string =>
       `${getSharedNodeManifestWarning(
         inputManifest
-      )} but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\nUsing the first page where this node is queried.\nThis may result in an inaccurate node manifest (for previews or other purposes).`,
+      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page where this node is queried.\nThis may result in an inaccurate node manifest (for previews or other purposes).`,
     level: Level.WARNING,
     category: ErrorCategory.USER,
   },
