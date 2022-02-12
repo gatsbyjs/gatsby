@@ -1,5 +1,6 @@
 import path from 'path'
 import execa from 'execa'
+import chalk  from 'chalk'
 
 const codemods = [`gatsby-plugin-image`, `global-graphql-calls`, `import-link`, `navigate-calls`, `rename-bound-action-creators`]
 
@@ -35,17 +36,17 @@ export function run() {
   let [transform, targetDir] = process.argv.slice(2)
 
   if (!transform) {
-    console.log(`Be sure to pass in the name of the codemod you're attempting to run.`)
+    console.log(chalk.red(`Be sure to pass in the name of the codemod you're attempting to run.`))
     return
   }
 
   if (!codemods.includes(transform)) {
-    console.log(`You have passed in invalid codemod name: ${transform}. Please pass in one of the following: ${codemods.join(", ")}.`)
+    console.log(`${chalk.red("You have passed in invalid codemod name:")} ${chalk.bold.underline(transform)}. ${chalk.red("Please pass in one of the following")} ${chalk.underline(codemods.join(", "))}.`)
     return
   }
 
   if(!targetDir) {
-    console.log(`You have not provided a target directory to run the codemod against, will default to root.`)
+    console.log(chalk.red(`You have not provided a target directory to run the codemod against, will default to root.`))
     targetDir = `./`
     
   }
