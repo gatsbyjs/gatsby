@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.7.0/packages/create-gatsby) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- Use MDX v1 [#34710](https://github.com/gatsbyjs/gatsby/issues/34710) ([03a1863](https://github.com/gatsbyjs/gatsby/commit/03a18632e2764e3f1b4b9c80e050282a92e0834c))
+
+#### Refactoring
+
+- Decouple package functions [#34606](https://github.com/gatsbyjs/gatsby/issues/34606) ([dcbdc0c](https://github.com/gatsbyjs/gatsby/commit/dcbdc0cb46713cc90157882e3f7c23b5f03a27c3))
+
 ### [2.6.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.6.1/packages/create-gatsby) (2022-02-04)
 
 #### Bug Fixes

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.7.0/packages/gatsby-plugin-page-creator) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
+
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.6.0/packages/gatsby-plugin-page-creator) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

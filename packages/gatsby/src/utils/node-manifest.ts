@@ -28,11 +28,12 @@ type FoundPageBy =
   | `filesystem-route-api`
   // for these three we warn to use ownerNodeId instead
   | `context.id`
+  | `context.slug`
   | `queryTracking`
   | `none`
 
 /**
- * Finds a final built page by nodeId
+ * Finds a final built page by nodeId or by node.slug as a fallback.
  *
  * Note that this function wont work properly in `gatsby develop`
  * since develop no longer runs all page queries when creating pages.
@@ -41,7 +42,13 @@ type FoundPageBy =
  * When this fn is being used for routing to previews the user wont necessarily have
  * visited the page in the browser yet.
  */
-async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
+async function findPageOwnedByNode({
+  nodeId,
+  slug,
+}: {
+  nodeId: string
+  slug?: string
+}): Promise<{
   page: INodeManifestPage
   foundPageBy: FoundPageBy
 }> {
@@ -78,10 +85,10 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
       // if we haven't found a page with this nodeId
       // set as page.ownerNodeId then run this logic.
       // this condition is on foundOwnerNodeId instead of ownerPagePath
-      // in case we find a page with the nodeId in page.context.id
+      // in case we find a page with the nodeId in page.context.id/context.slug
       // and then later in the loop there's a page with this nodeId
       // set on page.ownerNodeId.
-      // We always want to prefer ownerPagePath over context.id
+      // We always want to prefer ownerPagePath over context.id/context.slug
       if (foundOwnerNodeId) {
         break
       }
@@ -98,7 +105,10 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
 
       foundOwnerNodeId = fullPage?.ownerNodeId === nodeId
 
-      const foundPageIdInContext = fullPage?.context.id === nodeId
+      const foundPageIdInContext = fullPage?.context?.id === nodeId
+
+      // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
+      const foundPageSlugInContext = slug && fullPage?.context?.slug === slug
 
       if (foundOwnerNodeId) {
         foundPageBy = `ownerNodeId`
@@ -113,6 +123,8 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
         foundPageBy = pageCreatedByFilesystemPlugin
           ? `filesystem-route-api`
           : `context.id`
+      } else if (foundPageSlugInContext && fullPage) {
+        foundPageBy = `context.slug`
       }
 
       if (
@@ -128,7 +140,8 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
           // that's mapped to this node id.
           // this also makes this work with the filesystem Route API without
           // changing that API.
-          foundPageIdInContext)
+          foundPageIdInContext ||
+          foundPageSlugInContext)
       ) {
         // save this path to use in our manifest!
         ownerPagePath = fullPage.path
@@ -153,6 +166,7 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
 export const foundPageByToLogIds = {
   none: `11801`,
   [`context.id`]: `11802`,
+  [`context.slug`]: `11805`,
   queryTracking: `11803`,
   [`filesystem-route-api`]: `success`,
   ownerNodeId: `success`,
@@ -177,6 +191,7 @@ export function warnAboutNodeManifestMappingProblems({
   switch (foundPageBy) {
     case `none`:
     case `context.id`:
+    case `context.slug`:
     case `queryTracking`: {
       logId = foundPageByToLogIds[foundPageBy]
       if (verbose) {
@@ -236,8 +251,10 @@ export async function processNodeManifest(
   }
 
   // map the node to a page that was created
-  const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeId({
+  const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNode({
     nodeId,
+    // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
+    slug: fullNode?.slug as string,
   })
 
   const nodeManifestMappingProblemsContext = {

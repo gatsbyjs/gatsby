@@ -12,6 +12,7 @@ type FoundPageBy =
   | `ownerNodeId`
   | `filesystem-route-api`
   | `context.id`
+  | `context.slug`
   | `queryTracking`
   | `none`
 
