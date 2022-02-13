@@ -27,12 +27,12 @@ const Magenta = "\x1b[35m"
 const Cyan = "\x1b[36m"
 const White = "\x1b[37m"
 
-const testsPerConfig = 10;
+const testsPerConfig = 16;
 
 const config = {
-  memory: [`1g`, `2g`, `4g`, `8g`, `16g`],
-  numNodes: [`10`, `100`, `1000`, `10000`],
-  nodeSize: [`128`, `1k`, `128k`, `512k`, `1m`]
+  memory: [`16g`, `8g`, `4g`, `2g`],
+  numNodes: [`100`, `1000`, `10000`],
+  nodeSize: [`1k`, `512k`, `1m`]
 }
 
 const hostExec = (cmd) => {
@@ -78,6 +78,8 @@ async function runTest(memory, numNodes, nodeSize, i) {
   }
 
   writeResults(i + 1, memory, numNodes, nodeSize, code === 0 ? 'success' : 'failure', code, time)
+
+  return code
 }
 
 async function executeTestSuites() {

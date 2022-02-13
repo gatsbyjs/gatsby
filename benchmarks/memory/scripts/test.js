@@ -91,8 +91,8 @@ async function runTest() {
     console.log(`\nSuccess!\n`)
   }
 
-  // console.log(`Stopping container ${dockerId}`)
-  // await hostExec(`./scripts/docker-stop`)
+  console.log(`Stopping container ${dockerId}`)
+  await hostExec(`./scripts/docker-stop`)
 
   exit(code)
 }
