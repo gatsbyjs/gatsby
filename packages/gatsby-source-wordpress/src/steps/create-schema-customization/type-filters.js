@@ -77,28 +77,8 @@ export const typeDefinitionFilters = [
 
       objectType.fields.localFile = {
         type: `File`,
-        resolve: (mediaItemNode, _, context) => {
-          if (!mediaItemNode) {
-            return null
-          }
-
-          const localMediaNodeId = mediaItemNode?.localFile?.id
-
-          if (localMediaNodeId) {
-            const node = context.nodeModel.getNodeById({
-              id: mediaItemNode.localFile.id,
-              type: `File`,
-            })
-
-            if (node) {
-              return node
-            }
-          }
-
-          return createLocalFileNode({
-            mediaItemNode,
-            parentName: `Creating File node while resolving missing MediaItem.localFile`,
-          })
+        extensions: {
+          link: { from: `localFile` },
         },
       }
 

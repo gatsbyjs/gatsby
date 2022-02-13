@@ -7,6 +7,7 @@ import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
 import { formatLogMessage } from "../../utils/format-log-message"
 import { CODES } from "../../utils/report"
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
 /**
  * createSchemaCustomization
@@ -88,6 +89,20 @@ const customizeSchema = async ({ actions, schema }) => {
     },
     isAGatsbyNode: true,
   })
+
+  typeDefs.push(
+    addRemoteFilePolyfillInterface(
+      schema.buildObjectType({
+        name: pluginOptions.schema.typePrefix + `MediaItem`,
+        fields: {},
+        interfaces: [`Node`, `RemoteFile`],
+      }),
+      {
+        schema,
+        store,
+      }
+    )
+  )
 
   typeDefs.push(wpType)
 
