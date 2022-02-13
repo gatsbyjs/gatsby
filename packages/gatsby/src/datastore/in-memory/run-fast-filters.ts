@@ -1,4 +1,3 @@
-import { IGatsbyNode } from "../../redux/types"
 import _ from "lodash"
 import {
   DbQuery,
@@ -29,9 +28,6 @@ import { IRunQueryArgs, IQueryResult } from "../types"
 import { GatsbyIterable } from "../common/iterable"
 import { getNode } from "../"
 
-function isGatsbyNode(node: IGatsbyNode | undefined): node is IGatsbyNode {
-  return !!node
-}
 export interface IRunFilterArg extends IRunQueryArgs {
   filtersCache: FiltersCache
 }
@@ -326,9 +322,7 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
       ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
       : sortedResult
 
-  const nodeObjects = entries
-    .map(nodeIds => getNode(nodeIds.id))
-    .filter(isGatsbyNode)
+  const nodeObjects = entries.map(nodeIds => getNode(nodeIds.id)!)
   return { entries: new GatsbyIterable(nodeObjects), totalCount }
 }
 

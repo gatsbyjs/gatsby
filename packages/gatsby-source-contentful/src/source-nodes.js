@@ -56,22 +56,22 @@ export async function sourceNodes(
     actions
   const online = await isOnline()
 
+  getNodes().forEach(node => {
+    if (node.internal.owner !== `gatsby-source-contentful`) {
+      return
+    }
+    touchNode(node)
+    if (node?.fields?.localFile) {
+      // Prevent GraphQL type inference from crashing on this property
+      touchNode(getNode(node.fields.localFile))
+    }
+  })
+
   if (
     !online &&
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes().forEach(node => {
-      if (node.internal.owner !== `gatsby-source-contentful`) {
-        return
-      }
-      touchNode(node)
-      if (node.localFile___NODE) {
-        // Prevent GraphQL type inference from crashing on this property
-        touchNode(getNode(node.localFile___NODE))
-      }
-    })
-
     return
   }
 
@@ -188,7 +188,6 @@ export async function sourceNodes(
         ? n.internal.type !== `ContentfulTag`
         : true)
   )
-  existingNodes.forEach(n => touchNode(n))
 
   // Report existing, new and updated nodes
   const nodeCounts = {
@@ -254,8 +253,11 @@ export async function sourceNodes(
   existingNodes
     .filter(n => !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
     .forEach(n => {
-      if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
-        foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
+      if (
+        n.contentful_id &&
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
+      ) {
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
           foreignReference => {
             const { name, id } = foreignReference
 

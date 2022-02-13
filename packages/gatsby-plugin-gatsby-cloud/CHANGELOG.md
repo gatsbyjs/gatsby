@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.7.0/packages/gatsby-plugin-gatsby-cloud) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- preview UI 2.0 [#34617](https://github.com/gatsbyjs/gatsby/issues/34617) [#34577](https://github.com/gatsbyjs/gatsby/issues/34577) [#34603](https://github.com/gatsbyjs/gatsby/issues/34603) ([e07a7e0](https://github.com/gatsbyjs/gatsby/commit/e07a7e0a1056b17aef72963eeae087f1dd9fd3e8))
+- `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
+
+#### Bug Fixes
+
+- Preview UI race condition [#34680](https://github.com/gatsbyjs/gatsby/issues/34680) ([aa3d0ee](https://github.com/gatsbyjs/gatsby/commit/aa3d0eee816bb21368b3a796bffddff78b9785f8))
+- update dependency webpack-assets-manifest to ^5.1.0 for gatsby-plugin-gatsby-cloud [#34660](https://github.com/gatsbyjs/gatsby/issues/34660) ([4d023de](https://github.com/gatsbyjs/gatsby/commit/4d023def9f0c2ce229c22bd58bf720a4b1dd98e7))
+- usability updates for the info and link indicator buttons [#34562](https://github.com/gatsbyjs/gatsby/issues/34562) ([6f09a96](https://github.com/gatsbyjs/gatsby/commit/6f09a96b795ecd5583ec3eb135599fc04d154728))
+
+#### Chores
+
+- update dependency @testing-library/dom to ^8.11.3 [#34637](https://github.com/gatsbyjs/gatsby/issues/34637) ([d466518](https://github.com/gatsbyjs/gatsby/commit/d4665185f7aab0a389a5012b4907c81f4b665f86))
+
+#### Other Changes
+
+- Fix polling logic for non eager redirected urls. Fix [#34712](https://github.com/gatsbyjs/gatsby/issues/34712) ([4b802ad](https://github.com/gatsbyjs/gatsby/commit/4b802ad4c1c1ff0aa141c6ab4ca179f0c95f8482))
+
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.6.0/packages/gatsby-plugin-gatsby-cloud) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
