@@ -7,6 +7,9 @@ Array [
     Object {
       "bugfixes": false,
       "debug": false,
+      "exclude": Array [
+        "proposal-dynamic-import",
+      ],
       "loose": true,
       "modules": "commonjs",
       "shippedProposals": true,
@@ -34,6 +37,9 @@ Array [
     Object {
       "bugfixes": false,
       "debug": true,
+      "exclude": Array [
+        "proposal-dynamic-import",
+      ],
       "loose": true,
       "modules": "commonjs",
       "shippedProposals": true,
@@ -61,6 +67,9 @@ Array [
     Object {
       "bugfixes": true,
       "debug": false,
+      "exclude": Array [
+        "proposal-dynamic-import",
+      ],
       "loose": true,
       "modules": false,
       "shippedProposals": true,
@@ -127,6 +136,9 @@ Array [
       "bugfixes": false,
       "corejs": 3,
       "debug": false,
+      "exclude": Array [
+        "proposal-dynamic-import",
+      ],
       "loose": true,
       "modules": "commonjs",
       "shippedProposals": true,
@@ -151,6 +163,9 @@ Array [
       "bugfixes": false,
       "corejs": 3,
       "debug": true,
+      "exclude": Array [
+        "proposal-dynamic-import",
+      ],
       "loose": true,
       "modules": "commonjs",
       "shippedProposals": true,
