@@ -129,7 +129,7 @@ async function runTest(memory, numNodes, nodeSize, i) {
 
     if (fs.existsSync(memoryStatFile)) {
       // get docker container stats
-      const stat = fs.readFileSync(`/sys/fs/cgroup/memory/docker/${dockerId}/memory.stat`).toString()
+      const stat = fs.readFileSync(memoryStatFile).toString()
       const rssRegex = /[^_]rss\s+(\d+)\s+/
       const rss = stat.match(rssRegex)
 
