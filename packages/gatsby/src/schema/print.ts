@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-
 import * as fs from "fs-extra"
 import {
   EnumTypeComposer,
@@ -42,6 +40,274 @@ export interface ISchemaPrintConfig {
   }
   withFieldTypes?: boolean
   rewrite?: boolean
+}
+
+const breakLine = (line: string, maxLen: number): Array<string> => {
+  const parts = line.split(new RegExp(`((?: |^).{15,${maxLen - 40}}(?= |$))`))
+  if (parts.length < 4) {
+    return [line]
+  }
+  const sublines = [parts[0] + parts[1] + parts[2]]
+  for (let i = 3; i < parts.length; i += 2) {
+    sublines.push(parts[i].slice(1) + parts[i + 1])
+  }
+  return sublines
+}
+
+const descriptionLines = (
+  description: string,
+  maxLen: number
+): Array<string> => {
+  const rawLines = description.split(`\n`)
+  return _.flatMap(rawLines, line => {
+    if (line.length < maxLen + 5) {
+      return line
+    }
+    // For > 120 character long lines, cut at space boundaries into sublines
+    // of ~80 chars.
+    return breakLine(line, maxLen)
+  })
+}
+
+const printBlock = (items: Array<string>): string =>
+  items.length !== 0 ? ` {\n` + items.join(`\n`) + `\n}` : ``
+
+const printDeprecated = (
+  fieldOrEnumVal:
+    | ObjectTypeComposerFieldConfig<unknown, unknown>
+    | EnumTypeComposerValueConfig
+): string => {
+  const reason = fieldOrEnumVal.deprecationReason
+  if (!reason) {
+    return ``
+  }
+  const reasonAST = astFromValue(reason, GraphQLString)
+  if (reasonAST && reason !== `` && reason !== DEFAULT_DEPRECATION_REASON) {
+    return ` @deprecated(reason: ` + print(reasonAST) + `)`
+  }
+  return ` @deprecated`
+}
+
+const printDescription = (
+  def:
+    | ObjectTypeComposerFieldConfig<unknown, unknown>
+    | NamedTypeComposer<unknown>
+    | ObjectTypeComposerArgumentConfig
+    | EnumTypeComposerValueConfig,
+  indentation = ``,
+  firstInBlock = true
+): string => {
+  const description = isNamedTypeComposer(def)
+    ? def.getDescription()
+    : def.description
+  if (!description) {
+    return ``
+  }
+
+  const lines = descriptionLines(description, 120 - indentation.length)
+
+  const text = lines.join(`\n`)
+  const preferMultipleLines = text.length > 70
+  const blockString = printBlockString(text, ``, preferMultipleLines)
+  const prefix = indentation && !firstInBlock ? `\n` + indentation : indentation
+
+  return prefix + blockString.replace(/\n/g, `\n` + indentation) + `\n`
+}
+
+const printDirectiveArgs = (args: any, directive: GraphQLDirective): string => {
+  if (!args || !directive) {
+    return ``
+  }
+
+  const directiveArgs = Object.entries(args)
+  if (directiveArgs.length === 0) {
+    return ``
+  }
+
+  return (
+    `(` +
+    directiveArgs
+      .map(([name, value]) => {
+        const arg =
+          directive.args && directive.args.find(arg => arg.name === name)
+
+        return arg && `${name}: ${print(astFromValue(value, arg.type)!)}`
+      })
+      .join(`, `) +
+    `)`
+  )
+}
+
+export const printDirectives = (
+  extensions: Extensions,
+  directives: Array<GraphQLDirective>
+): string =>
+  Object.entries(extensions)
+    .map(([name, args]) => {
+      if ([...internalExtensionNames, `deprecated`].includes(name)) return ``
+      return (
+        ` @${name}` +
+        printDirectiveArgs(
+          args,
+          directives.find(directive => directive.name === name)!
+        )
+      )
+    })
+    .join(``)
+
+const printInputValue = ([name, inputTC]: [
+  string,
+  ObjectTypeComposerArgumentConfig
+]): string => {
+  let argDecl = name + `: ` + inputTC.type.getTypeName()
+  if (inputTC.defaultValue) {
+    const defaultAST = astFromValue(
+      inputTC.defaultValue,
+      inputTC.type.getType()
+    )
+    if (defaultAST) {
+      argDecl += ` = ${print(defaultAST)}`
+    }
+  }
+  return argDecl
+}
+
+const printArgs = (
+  args: ObjectTypeComposerArgumentConfigMap | undefined,
+  indentation = ``
+): string => {
+  if (!args) {
+    return ``
+  }
+  const argsArray = Object.entries(args)
+  if (argsArray.length === 0) {
+    return ``
+  }
+
+  // If all args have no description, print them on one line
+  if (argsArray.every(([_name, argTC]) => !argTC.description)) {
+    return `(` + argsArray.map(printInputValue).join(`, `) + `)`
+  }
+
+  return (
+    `(\n` +
+    argsArray
+      .map(
+        ([_name, argTC], i) =>
+          printDescription(argTC, `  ` + indentation, !i) +
+          `  ` +
+          indentation +
+          printInputValue([_name, argTC])
+      )
+      .join(`\n`) +
+    `\n` +
+    indentation +
+    `)`
+  )
+}
+
+const printFields = (
+  fields: ObjectTypeComposerFieldConfigMap<unknown, unknown>,
+  directives: Array<GraphQLDirective>
+): string => {
+  const printedFields = Object.entries(fields).map(
+    ([fieldName, fieldTC], i) =>
+      printDescription(fieldTC, `  `, !i) +
+      `  ` +
+      fieldName +
+      printArgs(fieldTC.args, `  `) +
+      `: ` +
+      String(fieldTC.type.getTypeName()) +
+      printDirectives(fieldTC.extensions || {}, directives) +
+      printDeprecated(fieldTC)
+  )
+  return printBlock(printedFields)
+}
+
+const printScalarType = (tc: ScalarTypeComposer): string =>
+  printDescription(tc) + `scalar ${tc.getTypeName()}`
+
+const printObjectType = (tc: ObjectTypeComposer<unknown>): string => {
+  const interfaces = tc.getInterfaces()
+  const implementedInterfaces = interfaces.length
+    ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
+    : ``
+  const extensions = tc.getExtensions()
+  let fields = tc.getFields()
+  if (tc.hasInterface(`Node`)) {
+    extensions.dontInfer = null
+    fields = _.omit(fields, [`id`, `parent`, `children`, `internal`])
+  }
+  const directives = tc.schemaComposer.getDirectives()
+  const printedDirectives = printDirectives(extensions, directives)
+
+  return (
+    printDescription(tc) +
+    `type ${tc.getTypeName()}${implementedInterfaces}${printedDirectives}` +
+    printFields(fields, directives)
+  )
+}
+
+const printInterfaceType = (tc: InterfaceTypeComposer<unknown>): string => {
+  const interfaces = tc.getInterfaces()
+  const implementedInterfaces = interfaces.length
+    ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
+    : ``
+  const extensions = tc.getExtensions()
+  const directives = tc.schemaComposer.getDirectives()
+  const printedDirectives = printDirectives(extensions, directives)
+  return (
+    printDescription(tc) +
+    `interface ${tc.getTypeName()}${implementedInterfaces}${printedDirectives}` +
+    printFields(tc.getFields(), directives)
+  )
+}
+
+const printUnionType = (tc: UnionTypeComposer): string => {
+  const types = tc.getTypeNames()
+  const possibleTypes = types.length ? ` = ` + types.join(` | `) : ``
+  return printDescription(tc) + `union ` + tc.getTypeName() + possibleTypes
+}
+
+const printEnumType = (tc: EnumTypeComposer): string => {
+  const values = Object.entries(tc.getFields()).map(
+    ([name, valueTC], i) =>
+      printDescription(valueTC, `  `, !i) +
+      `  ` +
+      name +
+      printDeprecated(valueTC)
+  )
+
+  return printDescription(tc) + `enum ${tc.getTypeName()}` + printBlock(values)
+}
+
+const printInputObjectType = (tc: InputTypeComposer): string => {
+  const fields = Object.entries(tc.getFields()).map(
+    ([fieldName, fieldTC], i) =>
+      printDescription(fieldTC, `  `, !i) +
+      `  ` +
+      printInputValue([fieldName, fieldTC])
+  )
+
+  return printDescription(tc) + `input ${tc.getTypeName()}` + printBlock(fields)
+}
+
+const printType = (tc: NamedTypeComposer<unknown>): string => {
+  if (tc instanceof ObjectTypeComposer) {
+    return printObjectType(tc)
+  } else if (tc instanceof InterfaceTypeComposer) {
+    return printInterfaceType(tc)
+  } else if (tc instanceof UnionTypeComposer) {
+    return printUnionType(tc)
+  } else if (tc instanceof EnumTypeComposer) {
+    return printEnumType(tc)
+  } else if (tc instanceof ScalarTypeComposer) {
+    return printScalarType(tc)
+  } else if (tc instanceof InputTypeComposer) {
+    return printInputObjectType(tc)
+  }
+
+  return ``
 }
 
 export const printTypeDefinitions = ({
@@ -213,272 +479,4 @@ export const printTypeDefinitions = ({
     report.error(`Failed writing type definitions to \`${path}\`.`, error)
     return Promise.resolve()
   }
-}
-
-const printType = (tc: NamedTypeComposer<unknown>): string => {
-  if (tc instanceof ObjectTypeComposer) {
-    return printObjectType(tc)
-  } else if (tc instanceof InterfaceTypeComposer) {
-    return printInterfaceType(tc)
-  } else if (tc instanceof UnionTypeComposer) {
-    return printUnionType(tc)
-  } else if (tc instanceof EnumTypeComposer) {
-    return printEnumType(tc)
-  } else if (tc instanceof ScalarTypeComposer) {
-    return printScalarType(tc)
-  } else if (tc instanceof InputTypeComposer) {
-    return printInputObjectType(tc)
-  }
-
-  return ``
-}
-
-const printScalarType = (tc: ScalarTypeComposer): string =>
-  printDescription(tc) + `scalar ${tc.getTypeName()}`
-
-const printObjectType = (tc: ObjectTypeComposer<unknown>): string => {
-  const interfaces = tc.getInterfaces()
-  const implementedInterfaces = interfaces.length
-    ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
-    : ``
-  const extensions = tc.getExtensions()
-  let fields = tc.getFields()
-  if (tc.hasInterface(`Node`)) {
-    extensions.dontInfer = null
-    fields = _.omit(fields, [`id`, `parent`, `children`, `internal`])
-  }
-  const directives = tc.schemaComposer.getDirectives()
-  const printedDirectives = printDirectives(extensions, directives)
-
-  return (
-    printDescription(tc) +
-    `type ${tc.getTypeName()}${implementedInterfaces}${printedDirectives}` +
-    printFields(fields, directives)
-  )
-}
-
-const printInterfaceType = (tc: InterfaceTypeComposer<unknown>): string => {
-  const interfaces = tc.getInterfaces()
-  const implementedInterfaces = interfaces.length
-    ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
-    : ``
-  const extensions = tc.getExtensions()
-  const directives = tc.schemaComposer.getDirectives()
-  const printedDirectives = printDirectives(extensions, directives)
-  return (
-    printDescription(tc) +
-    `interface ${tc.getTypeName()}${implementedInterfaces}${printedDirectives}` +
-    printFields(tc.getFields(), directives)
-  )
-}
-
-const printUnionType = (tc: UnionTypeComposer): string => {
-  const types = tc.getTypeNames()
-  const possibleTypes = types.length ? ` = ` + types.join(` | `) : ``
-  return printDescription(tc) + `union ` + tc.getTypeName() + possibleTypes
-}
-
-const printEnumType = (tc: EnumTypeComposer): string => {
-  const values = Object.entries(tc.getFields()).map(
-    ([name, valueTC], i) =>
-      printDescription(valueTC, `  `, !i) +
-      `  ` +
-      name +
-      printDeprecated(valueTC)
-  )
-
-  return printDescription(tc) + `enum ${tc.getTypeName()}` + printBlock(values)
-}
-
-const printInputObjectType = (tc: InputTypeComposer): string => {
-  const fields = Object.entries(tc.getFields()).map(
-    ([fieldName, fieldTC], i) =>
-      printDescription(fieldTC, `  `, !i) +
-      `  ` +
-      printInputValue([fieldName, fieldTC])
-  )
-
-  return printDescription(tc) + `input ${tc.getTypeName()}` + printBlock(fields)
-}
-
-const printFields = (
-  fields: ObjectTypeComposerFieldConfigMap<unknown, unknown>,
-  directives: Array<GraphQLDirective>
-): string => {
-  const printedFields = Object.entries(fields).map(
-    ([fieldName, fieldTC], i) =>
-      printDescription(fieldTC, `  `, !i) +
-      `  ` +
-      fieldName +
-      printArgs(fieldTC.args, `  `) +
-      `: ` +
-      String(fieldTC.type.getTypeName()) +
-      printDirectives(fieldTC.extensions || {}, directives) +
-      printDeprecated(fieldTC)
-  )
-  return printBlock(printedFields)
-}
-
-const printBlock = (items: Array<string>): string =>
-  items.length !== 0 ? ` {\n` + items.join(`\n`) + `\n}` : ``
-
-const printArgs = (
-  args: ObjectTypeComposerArgumentConfigMap | undefined,
-  indentation = ``
-): string => {
-  if (!args) {
-    return ``
-  }
-  const argsArray = Object.entries(args)
-  if (argsArray.length === 0) {
-    return ``
-  }
-
-  // If all args have no description, print them on one line
-  if (argsArray.every(([_name, argTC]) => !argTC.description)) {
-    return `(` + argsArray.map(printInputValue).join(`, `) + `)`
-  }
-
-  return (
-    `(\n` +
-    argsArray
-      .map(
-        ([_name, argTC], i) =>
-          printDescription(argTC, `  ` + indentation, !i) +
-          `  ` +
-          indentation +
-          printInputValue([_name, argTC])
-      )
-      .join(`\n`) +
-    `\n` +
-    indentation +
-    `)`
-  )
-}
-
-const printInputValue = ([name, inputTC]: [
-  string,
-  ObjectTypeComposerArgumentConfig
-]): string => {
-  let argDecl = name + `: ` + inputTC.type.getTypeName()
-  if (inputTC.defaultValue) {
-    const defaultAST = astFromValue(
-      inputTC.defaultValue,
-      inputTC.type.getType()
-    )
-    if (defaultAST) {
-      argDecl += ` = ${print(defaultAST)}`
-    }
-  }
-  return argDecl
-}
-
-export const printDirectives = (
-  extensions: Extensions,
-  directives: Array<GraphQLDirective>
-): string =>
-  Object.entries(extensions)
-    .map(([name, args]) => {
-      if ([...internalExtensionNames, `deprecated`].includes(name)) return ``
-      return (
-        ` @${name}` +
-        printDirectiveArgs(
-          args,
-          directives.find(directive => directive.name === name)!
-        )
-      )
-    })
-    .join(``)
-
-const printDirectiveArgs = (args: any, directive: GraphQLDirective): string => {
-  if (!args || !directive) {
-    return ``
-  }
-
-  const directiveArgs = Object.entries(args)
-  if (directiveArgs.length === 0) {
-    return ``
-  }
-
-  return (
-    `(` +
-    directiveArgs
-      .map(([name, value]) => {
-        const arg =
-          directive.args && directive.args.find(arg => arg.name === name)
-
-        return arg && `${name}: ${print(astFromValue(value, arg.type)!)}`
-      })
-      .join(`, `) +
-    `)`
-  )
-}
-
-const printDeprecated = (
-  fieldOrEnumVal:
-    | ObjectTypeComposerFieldConfig<unknown, unknown>
-    | EnumTypeComposerValueConfig
-): string => {
-  const reason = fieldOrEnumVal.deprecationReason
-  if (!reason) {
-    return ``
-  }
-  const reasonAST = astFromValue(reason, GraphQLString)
-  if (reasonAST && reason !== `` && reason !== DEFAULT_DEPRECATION_REASON) {
-    return ` @deprecated(reason: ` + print(reasonAST) + `)`
-  }
-  return ` @deprecated`
-}
-
-const printDescription = (
-  def:
-    | ObjectTypeComposerFieldConfig<unknown, unknown>
-    | NamedTypeComposer<unknown>
-    | ObjectTypeComposerArgumentConfig
-    | EnumTypeComposerValueConfig,
-  indentation = ``,
-  firstInBlock = true
-): string => {
-  const description = isNamedTypeComposer(def)
-    ? def.getDescription()
-    : def.description
-  if (!description) {
-    return ``
-  }
-
-  const lines = descriptionLines(description, 120 - indentation.length)
-
-  const text = lines.join(`\n`)
-  const preferMultipleLines = text.length > 70
-  const blockString = printBlockString(text, ``, preferMultipleLines)
-  const prefix = indentation && !firstInBlock ? `\n` + indentation : indentation
-
-  return prefix + blockString.replace(/\n/g, `\n` + indentation) + `\n`
-}
-
-const descriptionLines = (
-  description: string,
-  maxLen: number
-): Array<string> => {
-  const rawLines = description.split(`\n`)
-  return _.flatMap(rawLines, line => {
-    if (line.length < maxLen + 5) {
-      return line
-    }
-    // For > 120 character long lines, cut at space boundaries into sublines
-    // of ~80 chars.
-    return breakLine(line, maxLen)
-  })
-}
-
-const breakLine = (line: string, maxLen: number): Array<string> => {
-  const parts = line.split(new RegExp(`((?: |^).{15,${maxLen - 40}}(?= |$))`))
-  if (parts.length < 4) {
-    return [line]
-  }
-  const sublines = [parts[0] + parts[1] + parts[2]]
-  for (let i = 3; i < parts.length; i += 2) {
-    sublines.push(parts[i].slice(1) + parts[i + 1])
-  }
-  return sublines
 }
