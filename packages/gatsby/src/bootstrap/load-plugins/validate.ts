@@ -18,7 +18,7 @@ import {
   IPluginInfoOptions,
   ISiteConfig,
 } from "./types"
-import { resolvePlugin } from "./load"
+import { resolvePlugin } from "./resolve-plugin"
 
 interface IApi {
   version?: string
@@ -180,7 +180,7 @@ export async function handleBadExports({
 
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
-  rootDir: string | null
+  rootDir: string
 ): Promise<{
   errors: number
   plugins: Array<IPluginRefObject>
@@ -190,7 +190,7 @@ async function validatePluginsOptions(
     plugins.map(async plugin => {
       let gatsbyNode
       try {
-        const resolvedPlugin = resolvePlugin(plugin, rootDir)
+        const resolvedPlugin = await resolvePlugin(plugin, rootDir)
         gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
       } catch (err) {
         gatsbyNode = {}
@@ -384,7 +384,7 @@ async function validatePluginsOptions(
 
 export async function validateConfigPluginsOptions(
   config: ISiteConfig = {},
-  rootDir: string | null
+  rootDir: string
 ): Promise<void> {
   if (!config.plugins) return
 
