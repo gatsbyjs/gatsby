@@ -3,14 +3,14 @@ import reporter from "gatsby-cli/lib/reporter"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 
-export function constructBundler(dir: string): Parcel {
+export function constructBundler(entryDir: string, distDir?: string): Parcel {
   return new Parcel({
-    entries: `${dir}/gatsby-+(node|config).{ts,tsx,js}`,
+    entries: `${entryDir}/gatsby-+(node|config).{ts,tsx,js}`,
     defaultConfig: `gatsby-parcel-config`,
     mode: `production`,
     targets: {
       default: {
-        distDir: `${dir}/${COMPILED_CACHE_DIR}`,
+        distDir: distDir || `${entryDir}/${COMPILED_CACHE_DIR}`,
         outputFormat: `commonjs`,
         includeNodeModules: false,
         sourceMap: false,
@@ -19,7 +19,7 @@ export function constructBundler(dir: string): Parcel {
         },
       },
     },
-    cacheDir: `${dir}/.cache/.parcel-cache`,
+    cacheDir: `${entryDir}/.cache/.parcel-cache`,
   })
 }
 
@@ -27,8 +27,11 @@ export function constructBundler(dir: string): Parcel {
  * Compiles known gatsby-* files (e.g. `gatsby-config`, `gatsby-node`)
  * and stores them in `.cache/compiled` relative to the site root.
  */
-export async function compileGatsbyFiles(dir: string): Promise<void> {
-  const bundler = constructBundler(dir)
+export async function compileGatsbyFiles(
+  entryDir: string,
+  distDir?: string
+): Promise<void> {
+  const bundler = constructBundler(entryDir, distDir)
 
   const activity = reporter.activityTimer(`compile gatsby files`)
   activity.start()

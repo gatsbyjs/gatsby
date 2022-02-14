@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { slash, createRequireFromPath } from "gatsby-core-utils"
 import fs from "fs"
+import { ensureDirSync } from "fs-extra"
 import path from "path"
 import crypto from "crypto"
 import glob from "glob"
@@ -19,7 +20,10 @@ import {
   ISiteConfig,
 } from "./types"
 import { PackageJson } from "../../.."
-import { COMPILED_CACHE_DIR } from "../../utils/parcel/compile-gatsby-files"
+import {
+  compileGatsbyFiles,
+  COMPILED_CACHE_DIR,
+} from "../../utils/parcel/compile-gatsby-files"
 
 const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
@@ -79,18 +83,34 @@ export function resolvePlugin(
 
     if (existsSync(resolvedPath)) {
       if (existsSync(`${resolvedPath}/package.json`)) {
-        const packageJSON = JSON.parse(
-          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-        ) as PackageJson
-        const name = packageJSON.name || pluginName
-        warnOnIncompatiblePeerDependency(name, packageJSON)
+        let packageJSON
+        let name
+
+        const compiledDir = `${rootDir}/${COMPILED_CACHE_DIR}/${pluginName}`
+
+        ensureDirSync(compiledDir)
+
+        // TODO - This is a proof of concept, everything will be refactored
+
+        compileGatsbyFiles(resolvedPath, compiledDir)
+          .then(() => {
+            packageJSON = JSON.parse(
+              fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+            ) as PackageJson
+            name = packageJSON.name || pluginName
+            warnOnIncompatiblePeerDependency(name, packageJSON)
+          })
+          .catch(error => {
+            console.error(`CAUGHT ERROR:`, error)
+          })
 
         return {
           resolve: resolvedPath,
+          resolveCompiled: compiledDir,
           name,
           id: createPluginId(name),
           version:
-            packageJSON.version || createFileContentHash(resolvedPath, `**`),
+            packageJSON?.version || createFileContentHash(resolvedPath, `**`),
         }
       } else {
         // Make package.json a requirement for local plugins too
@@ -340,12 +360,12 @@ export function loadPlugins(
   }
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
-  const compiledPath = `${path.join(process.cwd(), COMPILED_CACHE_DIR)}`
   plugins.push({
-    resolve: slash(compiledPath),
+    resolve: slash(process.cwd()),
+    resolveCompiled: `${path.join(process.cwd(), COMPILED_CACHE_DIR)}`,
     id: createPluginId(`default-site-plugin`),
     name: `default-site-plugin`,
-    version: createFileContentHash(compiledPath, `gatsby-*`),
+    version: createFileContentHash(slash(process.cwd()), `gatsby-*`),
     pluginOptions: {
       plugins: [],
     },
