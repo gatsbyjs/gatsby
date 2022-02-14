@@ -2,33 +2,19 @@
 
 import path from "path"
 import zlib from "zlib"
-import os from "os"
 import { rest } from "msw"
 import { setupServer } from "msw/node"
 import { Writable } from "stream"
 import got from "got"
 import fs from "fs-extra"
+import { fetchRemoteFile } from "../fetch-remote-file"
+import * as storage from "../utils/get-storage"
 
-jest.mock(`got`, () => {
-  const realGot = jest.requireActual(`got`)
+jest.spyOn(storage, `getDatabaseDir`)
+jest.spyOn(got, `stream`)
+jest.spyOn(fs, `move`)
 
-  return {
-    ...realGot,
-    default: {
-      ...realGot,
-      stream: jest.fn(realGot.stream),
-    },
-  }
-})
 const gotStream = got.stream
-jest.mock(`fs-extra`, () => {
-  const realFs = jest.requireActual(`fs-extra`)
-
-  return {
-    ...realFs,
-    move: jest.fn(realFs.move),
-  }
-})
 const fsMove = fs.move
 
 const urlCount = new Map()
@@ -233,13 +219,7 @@ const server = setupServer(
   )
 )
 
-async function createMockCache() {
-  const tmpDir = fs.mkdtempSync(
-    path.join(os.tmpdir(), `gatsby-source-filesystem-`)
-  )
-
-  fs.ensureDir(tmpDir)
-
+async function createMockCache(tmpDir) {
   return {
     get: jest.fn(() => Promise.resolve(null)),
     set: jest.fn(() => Promise.resolve(null)),
@@ -249,22 +229,21 @@ async function createMockCache() {
 
 describe(`fetch-remote-file`, () => {
   let cache
-  let fetchRemoteFile
+  const cachePath = path.join(__dirname, `.cache-fetch`)
 
   beforeAll(async () => {
-    cache = await createMockCache()
     // Establish requests interception layer before all tests.
     server.listen()
+
+    cache = await createMockCache(cachePath)
+    await fs.ensureDir(cachePath)
+    storage.getDatabaseDir.mockReturnValue(cachePath)
   })
 
-  afterAll(() => {
-    if (cache) {
-      try {
-        fs.removeSync(cache.directory)
-      } catch (err) {
-        // ignore
-      }
-    }
+  afterAll(async () => {
+    await storage.closeDatabase()
+    await fs.remove(cachePath)
+    delete global.__GATSBY
 
     // Clean up after all tests are done, preventing this
     // interception layer from affecting irrelevant tests.
@@ -272,18 +251,15 @@ describe(`fetch-remote-file`, () => {
   })
 
   beforeEach(() => {
+    // simulate a new build each run
+    global.__GATSBY = {
+      buildId: global.__GATSBY?.buildId
+        ? String(Number(global.__GATSBY.buildId) + 1)
+        : `1`,
+    }
     gotStream.mockClear()
     fsMove.mockClear()
     urlCount.clear()
-
-    jest.isolateModules(() => {
-      // we need to bypass the cache for each test
-      fetchRemoteFile = require(`../fetch-remote-file`).fetchRemoteFile
-    })
-  })
-
-  afterEach(() => {
-    jest.useRealTimers()
   })
 
   it(`downloads and create a svg file`, async () => {
@@ -361,6 +337,26 @@ describe(`fetch-remote-file`, () => {
     expect(filePath).toBe(cachedFilePath)
     expect(path.basename(filePath)).toBe(`logo.svg`)
     expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`handles 304 responses correctly`, async () => {
+    const currentGlobal = global.__GATSBY
+    global.__GATSBY = { buildId: `304-1` }
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog-304.jpg`,
+      directory: cachePath,
+    })
+
+    global.__GATSBY = { buildId: `304-2` }
+    const filePathCached = await fetchRemoteFile({
+      url: `http://external.com/dog-304.jpg`,
+      directory: cachePath,
+    })
+
+    expect(filePathCached).toBe(filePath)
+    expect(fsMove).toBeCalledTimes(1)
+    expect(gotStream).toBeCalledTimes(2)
+    global.__GATSBY = currentGlobal
   })
 
   it(`fails when 404 is triggered`, async () => {

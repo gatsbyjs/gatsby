@@ -20,8 +20,8 @@ export type IFetchRemoteFileOptions = {
       cache?: never
     }
   | {
-      cache?: GatsbyCache
-      directory: never
+      directory?: never
+      cache: GatsbyCache
     }
 )
 
@@ -83,7 +83,9 @@ export async function requestRemoteNode(
   httpOptions?: Options,
   attempt: number = 1
 ): Promise<IncomingMessage> {
-  const { default: got, RequestError } = await import(`got`)
+  // TODO(v5): use dynamic import syntax - it's currently blocked because older v4 versions have V8-compile-cache
+  // const { default: got, RequestError } = await import(`got`)
+  const { default: got, RequestError } = require(`got`)
 
   return new Promise((resolve, reject) => {
     let timeout: NodeJS.Timeout

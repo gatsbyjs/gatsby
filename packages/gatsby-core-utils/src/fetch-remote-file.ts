@@ -22,6 +22,8 @@ const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
   ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
   : 50
 
+const alreadyCopiedFiles = new Set<string>()
+
 export type { IFetchRemoteFileOptions }
 
 /**
@@ -54,9 +56,21 @@ export async function fetchRemoteFile(
           return cachedPath
         }
 
-        await fs.copy(cachedPath, downloadPath, {
-          overwrite: true,
-        })
+        // Create a mutex to do our copy - we could do a md5 hash check as well but that's also expensive
+        if (alreadyCopiedFiles.has(downloadPath)) {
+          alreadyCopiedFiles.add(downloadPath)
+
+          const copyFileMutex = createMutex(
+            `gatsby-core-utils:copy-fetch:${downloadPath}`,
+            200
+          )
+          await copyFileMutex.acquire()
+          await fs.copy(cachedPath, downloadPath, {
+            overwrite: true,
+          })
+          await copyFileMutex.release()
+        }
+
         return downloadPath
       }
     }
@@ -157,16 +171,14 @@ async function fetchFile({
       ext = getRemoteFileExtension(url)
     }
 
-    await fs.ensureDir(fileDirectory as string)
-
     const digest = createContentDigest(url)
-    // TODO remove temp file- now with mutex we don't have to
+    await fs.ensureDir(path.join(fileDirectory as string, digest))
+
     const tmpFilename = createFilePath(
       fileDirectory as string,
       `tmp-${digest}`,
       ext
     )
-
     const response = await requestRemoteNode(
       url,
       headers,
@@ -196,6 +208,7 @@ async function fetchFile({
         cacheKey,
         extension: ext,
         headers,
+        headers: response.headers.etag ? { etag: response.headers.etag } : {},
         directory: fileDirectory,
         path: filename.replace(fileDirectory, ``),
       })
