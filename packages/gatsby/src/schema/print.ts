@@ -30,19 +30,33 @@ import { printBlockString } from "graphql/language/blockString"
 import { internalExtensionNames } from "./extensions"
 import _ from "lodash"
 
+export interface ISchemaPrintConfig {
+  path?: string
+  include?: {
+    types: Array<string>
+    plugins: Array<string>
+  }
+  exclude?: {
+    types: Array<string>
+    plugins: Array<string>
+  }
+  withFieldTypes?: boolean
+  rewrite?: boolean
+}
+
 export const printTypeDefinitions = ({
   config,
   schemaComposer,
 }: {
-  config: any
+  config: ISchemaPrintConfig
   schemaComposer: SchemaComposer
 }): Promise<void> => {
   if (!config) return Promise.resolve()
 
   const {
     path,
-    include = {},
-    exclude = {},
+    include,
+    exclude,
     withFieldTypes,
     rewrite = false,
   } = config || {}
@@ -79,8 +93,8 @@ export const printTypeDefinitions = ({
   ]
   const internalPlugins = [`internal-data-bridge`]
 
-  const typesToExclude = exclude.types || []
-  const pluginsToExclude = exclude.plugins || []
+  const typesToExclude = exclude?.types || []
+  const pluginsToExclude = exclude?.plugins || []
 
   const getName = (tc: NamedTypeComposer<any>): string => tc.getTypeName()
 
@@ -103,15 +117,19 @@ export const printTypeDefinitions = ({
     if (typesToExclude.includes(typeName)) {
       return false
     }
-    if (include.types && !include.types.includes(typeName)) {
+    if (include?.types && !include.types.includes(typeName)) {
       return false
     }
 
     const plugin = tc.getExtension(`plugin`)
-    if (pluginsToExclude.includes(plugin)) {
+    if (typeof plugin === `string` && pluginsToExclude.includes(plugin)) {
       return false
     }
-    if (include.plugins && !include.plugins.includes(plugin)) {
+    if (
+      typeof plugin === `string` &&
+      include?.plugins &&
+      !include.plugins.includes(plugin)
+    ) {
       return false
     }
 
