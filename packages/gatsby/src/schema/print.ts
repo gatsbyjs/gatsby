@@ -96,9 +96,9 @@ export const printTypeDefinitions = ({
   const typesToExclude = exclude?.types || []
   const pluginsToExclude = exclude?.plugins || []
 
-  const getName = (tc: NamedTypeComposer<any>): string => tc.getTypeName()
+  const getName = (tc: NamedTypeComposer<unknown>): string => tc.getTypeName()
 
-  const isInternalType = (tc: NamedTypeComposer<any>): boolean => {
+  const isInternalType = (tc: NamedTypeComposer<unknown>): boolean => {
     const typeName = getName(tc)
     if (internalTypes.includes(typeName)) {
       return true
@@ -112,7 +112,7 @@ export const printTypeDefinitions = ({
     return false
   }
 
-  const shouldIncludeType = (tc: NamedTypeComposer<any>): boolean => {
+  const shouldIncludeType = (tc: NamedTypeComposer<unknown>): boolean => {
     const typeName = getName(tc)
     if (typesToExclude.includes(typeName)) {
       return false
@@ -140,11 +140,11 @@ export const printTypeDefinitions = ({
   // because of how graphql-compose, at least in v6, processes
   // inline types
   const processedTypes = new Set<string>()
-  const typeDefs = new Set<NamedTypeComposer<any>>()
+  const typeDefs = new Set<NamedTypeComposer<unknown>>()
 
   const addType = (
-    tc: NamedTypeComposer<any>
-  ): null | Set<NamedTypeComposer<any>> => {
+    tc: NamedTypeComposer<unknown>
+  ): null | Set<NamedTypeComposer<unknown>> => {
     const typeName = getName(tc)
     if (!processedTypes.has(typeName) && !isInternalType(tc)) {
       processedTypes.add(typeName)
@@ -154,7 +154,7 @@ export const printTypeDefinitions = ({
     return null
   }
 
-  const addWithFieldTypes = (tc: NamedTypeComposer<any>): void => {
+  const addWithFieldTypes = (tc: NamedTypeComposer<unknown>): void => {
     if (
       addType(tc) &&
       (tc instanceof ObjectTypeComposer ||
@@ -215,7 +215,7 @@ export const printTypeDefinitions = ({
   }
 }
 
-const printType = (tc: NamedTypeComposer<any>): string => {
+const printType = (tc: NamedTypeComposer<unknown>): string => {
   if (tc instanceof ObjectTypeComposer) {
     return printObjectType(tc)
   } else if (tc instanceof InterfaceTypeComposer) {
@@ -236,7 +236,7 @@ const printType = (tc: NamedTypeComposer<any>): string => {
 const printScalarType = (tc: ScalarTypeComposer): string =>
   printDescription(tc) + `scalar ${tc.getTypeName()}`
 
-const printObjectType = (tc: ObjectTypeComposer<any>): string => {
+const printObjectType = (tc: ObjectTypeComposer<unknown>): string => {
   // const type = tc.getType()
   const interfaces = tc.getInterfaces()
   const implementedInterfaces = interfaces.length
@@ -258,7 +258,7 @@ const printObjectType = (tc: ObjectTypeComposer<any>): string => {
   )
 }
 
-const printInterfaceType = (tc: InterfaceTypeComposer<any>): string => {
+const printInterfaceType = (tc: InterfaceTypeComposer<unknown>): string => {
   const interfaces = tc.getInterfaces()
   const implementedInterfaces = interfaces.length
     ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
@@ -303,7 +303,7 @@ const printInputObjectType = (tc: InputTypeComposer): string => {
 }
 
 const printFields = (
-  fields: ObjectTypeComposerFieldConfigMap<any, any>,
+  fields: ObjectTypeComposerFieldConfigMap<unknown, unknown>,
   directives: Array<GraphQLDirective>
 ): string => {
   const printedFields = Object.entries(fields).map(
@@ -417,7 +417,7 @@ const printDirectiveArgs = (args: any, directive: GraphQLDirective): string => {
 
 const printDeprecated = (
   fieldOrEnumVal:
-    | ObjectTypeComposerFieldConfig<any, any>
+    | ObjectTypeComposerFieldConfig<unknown, unknown>
     | EnumTypeComposerValueConfig
 ): string => {
   const reason = fieldOrEnumVal.deprecationReason
@@ -433,8 +433,8 @@ const printDeprecated = (
 
 const printDescription = (
   def:
-    | ObjectTypeComposerFieldConfig<any, any>
-    | NamedTypeComposer<any>
+    | ObjectTypeComposerFieldConfig<unknown, unknown>
+    | NamedTypeComposer<unknown>
     | ObjectTypeComposerArgumentConfig
     | EnumTypeComposerValueConfig,
   indentation = ``,
