@@ -19,20 +19,18 @@ import {
   EnumTypeComposerValueConfig,
 } from "graphql-compose"
 import report from "gatsby-cli/lib/reporter"
-
-import { internalExtensionNames } from "./extensions"
-import { GraphQLDirective } from "graphql"
-
-const {
+import {
+  GraphQLDirective,
   astFromValue,
   print,
   GraphQLString,
   DEFAULT_DEPRECATION_REASON,
-} = require(`graphql`)
-const { printBlockString } = require(`graphql/language/blockString`)
-const _ = require(`lodash`)
+} from "graphql"
+import { printBlockString } from "graphql/language/blockString"
+import { internalExtensionNames } from "./extensions"
+import _ from "lodash"
 
-const printTypeDefinitions = ({
+export const printTypeDefinitions = ({
   config,
   schemaComposer,
 }: {
@@ -351,12 +349,14 @@ const printInputValue = ([name, inputTC]: [
       inputTC.defaultValue,
       inputTC.type.getType()
     )
-    argDecl += ` = ${print(defaultAST)}`
+    if (defaultAST) {
+      argDecl += ` = ${print(defaultAST)}`
+    }
   }
   return argDecl
 }
 
-const printDirectives = (
+export const printDirectives = (
   extensions: Extensions,
   directives: Array<GraphQLDirective>
 ): string =>
@@ -389,7 +389,8 @@ const printDirectiveArgs = (args: any, directive: GraphQLDirective): string => {
       .map(([name, value]) => {
         const arg =
           directive.args && directive.args.find(arg => arg.name === name)
-        return arg && `${name}: ${print(astFromValue(value, arg.type))}`
+
+        return arg && `${name}: ${print(astFromValue(value, arg.type)!)}`
       })
       .join(`, `) +
     `)`
@@ -463,9 +464,4 @@ const breakLine = (line: string, maxLen: number): Array<string> => {
     sublines.push(parts[i].slice(1) + parts[i + 1])
   }
   return sublines
-}
-
-module.exports = {
-  printTypeDefinitions,
-  printDirectives,
 }
