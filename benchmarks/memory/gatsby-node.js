@@ -14,8 +14,6 @@ if (match.length > 2 && suffixSizes.indexOf(match[2]) >= 0) {
 }
 const LARGE_FIELD_SIZE = parseInt(match[1], 10) * bytesMultiplier;
 
-console.log({NUM_KEYS_IN_LARGE_SIZE_OBJ, LARGE_FIELD_SIZE, NUM_NODES})
-
 
 exports.sourceNodes = async ({ actions, reporter }) => {
   const contentDigest = Date.now().toString() // make each sourcing mark everything as dirty
