@@ -34,7 +34,7 @@ async function runTest() {
   const { stderr: dockerStartError } = await hostExec(`DOCKER_MEMORY_LIMIT=${args.memory} ./scripts/docker-start`)
   if (dockerStartError) {
     console.log("Encountered an error:")
-    console.log(stderr)
+    console.log(dockerStartError)
     exit(1)
   }
 
