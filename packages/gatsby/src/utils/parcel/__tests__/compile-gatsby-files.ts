@@ -13,6 +13,11 @@ const dir = {
   ts: `${__dirname}/fixtures/ts`,
 }
 
+const config = {
+  js: [{ entry: dir.js, dist: `${dir.js}/${COMPILED_CACHE_DIR}` }],
+  ts: [{ entry: dir.ts, dist: `${dir.ts}/${COMPILED_CACHE_DIR}` }],
+}
+
 jest.mock(`@parcel/core`, () => {
   const parcelCore = jest.requireActual(`@parcel/core`)
 
@@ -38,7 +43,7 @@ interface IMockedParcel extends Parcel {
 describe(`gatsby file compilation`, () => {
   describe(`constructBundler`, () => {
     it(`should construct Parcel relative to passed directory`, () => {
-      const { options } = constructBundler(dir.js) as IMockedParcel
+      const { options } = constructBundler(config.js) as IMockedParcel
 
       expect(options).toMatchSnapshot({
         entries: `${dir.js}/gatsby-+(node|config).{ts,tsx,js}`,
@@ -60,7 +65,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-config.js`, async () => {
-      await compileGatsbyFiles(dir.js)
+      await compileGatsbyFiles(config.js)
 
       const compiledGatsbyConfig = await readFile(
         `${dir.js}/.cache/compiled/gatsby-config.js`,
@@ -73,7 +78,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-config.ts`, async () => {
-      await compileGatsbyFiles(dir.ts)
+      await compileGatsbyFiles(config.ts)
 
       const compiledGatsbyConfig = await readFile(
         `${dir.ts}/.cache/compiled/gatsby-config.js`,
@@ -86,7 +91,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-node.js`, async () => {
-      await compileGatsbyFiles(dir.js)
+      await compileGatsbyFiles(config.js)
 
       const compiledGatsbyNode = await readFile(
         `${dir.js}/.cache/compiled/gatsby-node.js`,
@@ -97,7 +102,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-node.ts`, async () => {
-      await compileGatsbyFiles(dir.ts)
+      await compileGatsbyFiles(config.ts)
 
       const compiledGatsbyNode = await readFile(
         `${dir.ts}/.cache/compiled/gatsby-node.js`,

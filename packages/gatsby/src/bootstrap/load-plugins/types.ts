@@ -17,6 +17,9 @@ export interface IPluginInfo {
   /** The absolute path to the plugin */
   resolve: string
 
+  /** The absolute path to the compiled plugin directory, if there is one */
+  resolveCompiled?: string
+
   /** The plugin name */
   name: string
 

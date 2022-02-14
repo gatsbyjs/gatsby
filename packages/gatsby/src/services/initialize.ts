@@ -28,6 +28,7 @@ import {
   compileGatsbyFiles,
 } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
+import { compileLocalPluginGatsbyFiles } from "../utils/parcel/compile-local-plugin-gatsby-files"
 
 interface IPluginResolution {
   resolve: string
@@ -165,22 +166,31 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
+  // Compile root gatsby files
+  let activity = reporter.activityTimer(`compile root gatsby files`)
+  activity.start()
+  await compileGatsbyFiles([
+    {
+      entry: program.directory,
+      dist: `${program.directory}/${COMPILED_CACHE_DIR}`,
+    },
+  ])
+  activity.end()
+
   // Load gatsby config
-  let activity = reporter.activityTimer(`load gatsby config`, {
+  activity = reporter.activityTimer(`load gatsby config`, {
     parentSpan,
   })
   activity.start()
-
-  const compiledDirectory = `${program.directory}/${COMPILED_CACHE_DIR}`
-  await fs.ensureDir(compiledDirectory)
-  await compileGatsbyFiles(program.directory)
-
   const siteDirectory = program.directory
   const config = await loadConfig({
     siteDirectory,
     processFlags: true,
   })
   activity.end()
+
+  // Compile local plugin gatsby files
+  await compileLocalPluginGatsbyFiles(config, siteDirectory)
 
   // Load plugins
   activity = reporter.activityTimer(`load plugins`, {
@@ -534,14 +544,15 @@ export async function initialize({
     if (env === `ssr` && plugin.skipSSR === true) return undefined
 
     const envAPIs = plugin[`${env}APIs`]
-    const dir =
-      plugin.name === `default-site-plugin` ? program.directory : plugin.resolve
 
     // Always include gatsby-browser.js files if they exist as they're
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        const modulePath = path.join(dir, `gatsby-${env}`)
+        const modulePath = path.join(
+          plugin?.compiledResolve || plugin.resolve,
+          `gatsby-${env}`
+        )
         return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
@@ -549,7 +560,10 @@ export async function initialize({
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      const modulePath = path.join(dir, `gatsby-${env}`)
+      const modulePath = path.join(
+        plugin?.compiledResolve || plugin.resolve,
+        `gatsby-${env}`
+      )
       return slash(resolveModule(modulePath) as string)
     }
     return undefined

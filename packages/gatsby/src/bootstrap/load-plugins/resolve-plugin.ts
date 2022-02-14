@@ -9,6 +9,7 @@ import { createFileContentHash } from "./utils/create-hash"
 import reporter from "gatsby-cli/lib/reporter"
 import { isString } from "lodash"
 import { checkLocalPlugin } from "./utils/check-local-plugin"
+import { COMPILED_CACHE_DIR } from "../../utils/parcel/compile-gatsby-files"
 
 /**
  * @param plugin
@@ -39,10 +40,11 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
 
     return {
       resolve: localPluginPath,
+      resolveCompiled: `${rootDir}/${COMPILED_CACHE_DIR}/${pluginName}`,
       name,
       id: createPluginId(name),
       version:
-        packageJSON.version || createFileContentHash(localPluginPath, `**`),
+        packageJSON?.version || createFileContentHash(localPluginPath, `**`),
     }
   }
 
