@@ -23,7 +23,7 @@ const queue = Queue<null, IImageServiceProps, string>(
 )
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export async function FILE_SERVICE({
+export async function FILE_CDN({
   outputDir,
   args: { url, filename, contentDigest },
 }: {

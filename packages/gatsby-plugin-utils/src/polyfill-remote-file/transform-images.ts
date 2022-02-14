@@ -3,7 +3,7 @@ import { readFile, writeFile, pathExists, mkdirp } from "fs-extra"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import getSharpInstance from "gatsby-sharp"
-import { getCache } from "./cache"
+import { getCache } from "./utils/cache"
 
 export interface IResizeArgs {
   width: number

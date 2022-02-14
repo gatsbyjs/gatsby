@@ -2,8 +2,7 @@ import path from "path"
 import { createReadStream, readFile, mkdtemp } from "fs-extra"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { createMutex } from "gatsby-core-utils/mutex"
-// import { cpuCoreCount as getCPUCoreCount } from "gatsby-core-utils/cpu-core-count"
-import { getCache } from "./cache"
+import { getCache } from "./utils/cache"
 import { getImageFormatFromMimeType } from "./utils/mime-type-helpers"
 import Queue from "fastq"
 import type { IRemoteImageNode } from "./types"
@@ -21,7 +20,7 @@ interface IPlaceholderGenerationArgs {
   contentDigest: string
 }
 
-const QUEUE_CONCURRENCY = 5
+const QUEUE_CONCURRENCY = 10
 
 let tmpDir: string
 
