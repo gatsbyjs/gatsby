@@ -37,7 +37,7 @@ describe(`mutex`, () => {
   })
 
   it(`should only allow one action go through at the same time`, async () => {
-    const mutex = createMutex(`test-key`)
+    const mutex = createMutex(`test-key`, 300)
 
     const result: Array<string> = []
 
@@ -51,6 +51,48 @@ describe(`mutex`, () => {
         "stop 1",
         "start 2",
         "stop 2",
+      ]
+    `)
+  })
+
+  it(`should generate the same mutex if key are identical`, async () => {
+    const mutex1 = createMutex(`test-key`, 300)
+    const mutex2 = createMutex(`test-key`, 300)
+
+    const result: Array<string> = []
+
+    const mutexPromise = doAsync(mutex1, result, 50, `1`)
+    await sleep(0)
+    await doAsync(mutex2, result, 10, `2`)
+    await mutexPromise
+
+    expect(result).toMatchInlineSnapshot(`
+      Array [
+        "start 1",
+        "stop 1",
+        "start 2",
+        "stop 2",
+      ]
+    `)
+  })
+
+  it(`shouldn't wait if keys are different`, async () => {
+    const mutex1 = createMutex(`test-key`, 300)
+    const mutex2 = createMutex(`other-key`, 300)
+
+    const result: Array<string> = []
+
+    const mutexPromise = doAsync(mutex1, result, 50, `1`)
+    await sleep(0)
+    await doAsync(mutex2, result, 10, `2`)
+    await mutexPromise
+
+    expect(result).toMatchInlineSnapshot(`
+      Array [
+        "start 1",
+        "start 2",
+        "stop 2",
+        "stop 1",
       ]
     `)
   })
