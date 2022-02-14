@@ -32,7 +32,7 @@ describe(`mutex`, () => {
   })
 
   afterAll(async () => {
-    storage.closeDatabase()
+    await storage.closeDatabase()
     await remove(cachePath)
   })
 
