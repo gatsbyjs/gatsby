@@ -1,4 +1,0 @@
-while true; do
-  sleep .2
-  cp /proc/meminfo /usr/src/app/.docker.meminfo
-done
