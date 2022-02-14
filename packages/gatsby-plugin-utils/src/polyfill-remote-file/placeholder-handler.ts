@@ -21,9 +21,7 @@ interface IPlaceholderGenerationArgs {
   contentDigest: string
 }
 
-const QUEUE_CONCURRENCY = Math.ceil(
-  Number(process.env.IMAGE_SERVICE_QUEUE || 20) / getCPUCoreCount()
-)
+const QUEUE_CONCURRENCY = Math.ceil(50 / getCPUCoreCount())
 
 let tmpDir: string
 
@@ -44,7 +42,7 @@ const queue = Queue<
   string
   // eslint-disable-next-line consistent-return
 >(async function (
-  { url, contentDigest, width, height, hasCorrectFormat, type },
+  { url, contentDigest, width, height, type },
   cb
 ): Promise<void> {
   const { default: getSharpInstance } = await import(`gatsby-sharp`)
@@ -60,31 +58,29 @@ const queue = Queue<
     cacheKey: contentDigest,
     directory: tmpDir,
   })
-  const fileStream = createReadStream(filePath)
 
   console.log(`Generating placeholder for ${url}`)
+
   switch (type) {
     case PlaceholderType.BLURRED: {
-      let buffer: Buffer = Buffer.from(``)
+      let buffer: Buffer
 
-      // when no width or height is available we should resize the image
-      if (!hasCorrectFormat) {
-        try {
-          const pipeline = sharp()
-          fileStream.pipe(pipeline)
-          buffer = await pipeline
-            .resize(20, 20 / (width / height))
-            .toFormat(`jpg`)
-            .toBuffer()
-        } catch (e) {
-          // do nothing
-          buffer = await readFile(filePath)
-        }
+      try {
+        const fileStream = createReadStream(filePath)
+        const pipeline = sharp()
+        fileStream.pipe(pipeline)
+        buffer = await pipeline
+          .resize(20, Math.ceil(20 / (width / height)))
+          .toFormat(`jpg`)
+          .toBuffer()
+      } catch (e) {
+        buffer = await readFile(filePath)
       }
 
       return cb(null, `data:image/jpg;base64,${buffer.toString(`base64`)}`)
     }
     case PlaceholderType.DOMINANT_COLOR: {
+      const fileStream = createReadStream(filePath)
       const pipeline = sharp({ failOnError: false })
       fileStream.pipe(pipeline)
       const { dominant } = await pipeline.stats()
@@ -133,7 +129,7 @@ export async function generatePlaceholder(
   }
 }
 
-export async function placeholderToBase64({
+async function placeholderToBase64({
   placeholderUrl,
   originalUrl,
   width,
@@ -194,7 +190,7 @@ export async function placeholderToBase64({
   }
 }
 
-export async function placeholderToDominantColor({
+async function placeholderToDominantColor({
   placeholderUrl,
   originalUrl,
   width,
