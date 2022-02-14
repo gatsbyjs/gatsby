@@ -6,9 +6,9 @@ const exec = util.promisify(require(`child_process`).exec)
 var path = require(`path`);
 
 const args = yargs
-  .option(`out`, {
-    default: `suite.csv`,
-    describe: `The file to save results to`,
+  .option(`name`, {
+    default: null,
+    describe: `The name to save this suite's results to`,
   })
   .option(`suite`, {
     default: `incremental`,
@@ -32,17 +32,60 @@ const Magenta = "\x1b[35m"
 const Cyan = "\x1b[36m"
 const White = "\x1b[37m"
 
-const hostExec = (cmd) => {
-  console.log(`${Dim}$ ${cmd}${Reset}`)
+const hostExec = (cmd, showCommand = true) => {
+  if (showCommand) {
+    console.log(`${Dim}$ ${cmd}${Reset}`)
+  }
+
   return exec(cmd)
 }
 
-// reset csv output file
-const csvColumns = `build,memory,numNodes,nodeSize,result,code,time`
-fs.writeFileSync(args.out, `${csvColumns}\n`)
+const outputDir = `output/${args.name}`
+const resultsFile = `${outputDir}/results.csv`;
 
-function writeResults(build, memory, numNodes, nodeSize, result, code, time) {
-  fs.writeFileSync(args.out, `${[build, memory, numNodes, nodeSize, result, code, time].join(',')}\n`, { flag: 'a+' })
+// reset output dir
+if (args.name) {
+  if (fs.existsSync(outputDir)) {
+    fs.rmSync(outputDir, {recursive: true})
+  }
+
+  fs.mkdirSync(outputDir, {recursive: true})
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+function writeResults(build, memory, numNodes, nodeSize, result, code, time, maxRss) {
+  if (!args.name) return
+  
+  if (!fs.existsSync(resultsFile)) {
+    const csvColumns = `build,memory,numNodes,nodeSize,result,code,time,maxRss`
+    fs.writeFileSync(resultsFile, `${csvColumns}\n`)
+  }
+
+  fs.writeFileSync(resultsFile, `${[build, memory, numNodes, nodeSize, result, code, time, maxRss].join(',')}\n`, { flag: 'a+' })
+}
+
+function writeMetrics(name, metrics, buildTime) {
+  if (!args.name) return
+
+  const outputFile = `${outputDir}/${name}.csv`;
+
+  if (!fs.existsSync(outputFile)) {
+    const csvColumns = `build,timestamp,memory,numNodes,nodeSize,rss`
+    fs.writeFileSync(outputFile, `${csvColumns}\n`)
+  }
+
+  // write file contents, but only if they come from after the build started
+  for (const {build, timestamp, memory, numNodes, nodeSize, rss} of metrics) {
+    const normalizedTime = timestamp - buildTime;
+    if (normalizedTime >= 0) {
+      fs.writeFileSync(outputFile, `${[build, timestamp - buildTime, memory, numNodes, nodeSize, rss].join(',')}\n`, { flag: 'a+' })
+    }
+  }
 }
 
 async function runTest(memory, numNodes, nodeSize, i) {
@@ -51,30 +94,78 @@ async function runTest(memory, numNodes, nodeSize, i) {
   let stdout = "";
   let code = 139;
 
-  try {
-    const {stdout: testOutput} = await hostExec(`yarn test --memory ${memory} --num-nodes ${numNodes} --node-size ${nodeSize}`)
-    stdout = testOutput
-    code = 0
-  } catch (e) {
-    code = e.code
-    stdout = e.stdout
+  let buildFinished = false;
+  let metrics = []
+
+  // start the build
+  hostExec(`yarn test --memory ${memory} --num-nodes ${numNodes} --node-size ${nodeSize}`)
+    .then((result) => {
+      stdout = result.stdout
+      code = 0
+    })
+    .catch((e) => {
+      stdout = e.stdout
+      code = e.code
+    })
+    .finally(() => {
+      buildFinished = true;
+    })
+
+  const start = Date.now()
+
+  // find the full docker ID
+  let dockerId = "";
+  while (!dockerId && !buildFinished) {
+    let { stdout } = await hostExec(`./scripts/docker-get-id`, false)
+    dockerId = stdout.trim()
+  }
+
+  dockerId = fs.readdirSync(`/sys/fs/cgroup/memory/docker/`).filter((f) => f.startsWith(dockerId))[0]
+
+  // loop until the build has finished
+  const buildName = `mem=${memory}-num=${numNodes}-size=${nodeSize}`
+  while (!buildFinished) {
+    const memoryStatFile = `/sys/fs/cgroup/memory/docker/${dockerId}/memory.stat`
+
+    if (fs.existsSync(memoryStatFile)) {
+      // get docker container stats
+      const stat = fs.readFileSync(`/sys/fs/cgroup/memory/docker/${dockerId}/memory.stat`).toString()
+      const rssRegex = /[^_]rss\s+(\d+)\s+/
+      const rss = stat.match(rssRegex)
+
+      if (rss && rss.length > 1) {
+        metrics.push({
+          build: i, 
+          timestamp: Date.now() - start, 
+          memory, 
+          numNodes, 
+          nodeSize, 
+          rss: rss[1]
+        })
+      }
+    }
+
+    await sleep(200)
   }
   
+  // grab results
   const timerRegex = /Finished test in (.+)s/
   const match = stdout.match(timerRegex)
-  const time = match[1]
+  const time = parseFloat(match[1])
 
   if (args.showTestOutput) {
     console.log(stdout)
   }
+
+  const maxRss = Math.max.apply(Math, metrics.map(m => m.rss))
+  writeMetrics(buildName, metrics, time * 1000)
+  writeResults(i + 1, memory, numNodes, nodeSize, code === 0 ? 'success' : 'failure', code, time, maxRss)
 
   if (code === 0) {
     console.log(`${Green}Built after ${time}s!${Reset}`)
   } else {
     console.log(`${Red}Failed with exit code ${code} after ${time}s.${Reset}`)
   }
-
-  writeResults(i + 1, memory, numNodes, nodeSize, code === 0 ? 'success' : 'failure', code, time)
 
   return code
 }
@@ -149,7 +240,9 @@ async function exhaustive() {
   }
 }
 
-console.log(`Writing ${args.suite} results to ${args.out}`)
+if (args.name) {
+  console.log(`Writing ${args.suite} results to ${outputDir}`)
+}
 
 if (args.suite === 'incremental') {
   incremental()
