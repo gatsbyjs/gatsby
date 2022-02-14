@@ -75,25 +75,26 @@ function writeMetrics(name, metrics, buildTime) {
   const outputFile = `${outputDir}/${name}.csv`;
 
   if (!fs.existsSync(outputFile)) {
-    const csvColumns = `build,timestamp,memory,numNodes,nodeSize,rss`
+    const csvColumns = `build,timestamp,memory,numNodes,nodeSize,usage`
     fs.writeFileSync(outputFile, `${csvColumns}\n`)
   }
 
   // write file contents, but only if they come from after the build started
-  for (const {build, timestamp, memory, numNodes, nodeSize, rss} of metrics) {
+  for (const {build, timestamp, memory, numNodes, nodeSize, usage} of metrics) {
     const normalizedTime = timestamp - buildTime;
     if (normalizedTime >= 0) {
-      fs.writeFileSync(outputFile, `${[build, timestamp - buildTime, memory, numNodes, nodeSize, rss].join(',')}\n`, { flag: 'a+' })
+      fs.writeFileSync(outputFile, `${[build, timestamp - buildTime, memory, numNodes, nodeSize, usage].join(',')}\n`, { flag: 'a+' })
     }
   }
 }
 
 async function runTest(memory, numNodes, nodeSize, i) {
   console.log(`\n${Underline + Cyan}Running test #${i} for ${memory} mem, ${numNodes} nodes of ${nodeSize}${Reset}`)
-  
+
   let stdout = "";
   let code = 139;
 
+  const memoryStatFile = path.join(__dirname, `..`, `.docker.memusage`)
   let buildFinished = false;
   let metrics = []
 
@@ -113,39 +114,27 @@ async function runTest(memory, numNodes, nodeSize, i) {
 
   const start = Date.now()
 
-  // find the full docker ID
-  let dockerId = "";
-  while (!dockerId && !buildFinished) {
-    let { stdout } = await hostExec(`./scripts/docker-get-id`, false)
-    dockerId = stdout.trim()
-  }
-
-  dockerId = fs.readdirSync(`/sys/fs/cgroup/memory/docker/`).filter((f) => f.startsWith(dockerId))[0]
-
   // loop until the build has finished
   const buildName = `mem=${memory}-num=${numNodes}-size=${nodeSize}`
   while (!buildFinished) {
-    const memoryStatFile = `/sys/fs/cgroup/memory/docker/${dockerId}/memory.stat`
 
     if (fs.existsSync(memoryStatFile)) {
       // get docker container stats
-      const stat = fs.readFileSync(memoryStatFile).toString()
-      const rssRegex = /[^_]rss\s+(\d+)\s+/
-      const rss = stat.match(rssRegex)
+      const stat = fs.readFileSync(memoryStatFile).toString().trim()
 
-      if (rss && rss.length > 1) {
+      if (stat && parseInt(stat) !== 0) {
         metrics.push({
           build: i, 
           timestamp: Date.now() - start, 
           memory, 
           numNodes, 
           nodeSize, 
-          rss: rss[1]
+          usage: stat
         })
       }
     }
 
-    await sleep(200)
+    await sleep(250)
   }
   
   // grab results
