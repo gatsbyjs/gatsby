@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.7.1/packages/gatsby-link) (2022-02-08)
+
+#### Bug Fixes
+
+- trailing slash undefined check for prod env [#34765](https://github.com/gatsbyjs/gatsby/issues/34765) [#34766](https://github.com/gatsbyjs/gatsby/issues/34766) ([07dccad](https://github.com/gatsbyjs/gatsby/commit/07dccadbe4df09e70003d9d3113d6c9fcc3dcf48))
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.7.0/packages/gatsby-link) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
+
+#### Bug Fixes
+
+- update dependency @types/reach\_\_router to ^1.3.10 for gatsby-link [#34359](https://github.com/gatsbyjs/gatsby/issues/34359) ([923c881](https://github.com/gatsbyjs/gatsby/commit/923c88152a2c92f5bb32b47ff9fb4d7ceaafef64))
+
 ## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.6.0/packages/gatsby-link) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

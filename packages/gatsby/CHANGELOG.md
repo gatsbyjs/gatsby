@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.7.1/packages/gatsby) (2022-02-08)
+
+**Note:** Version bump only for package gatsby
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.7.0/packages/gatsby) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
+- upgrade graphql-compose to latest for speed improvements [#34504](https://github.com/gatsbyjs/gatsby/issues/34504) ([e860faa](https://github.com/gatsbyjs/gatsby/commit/e860faaa3224b1702eb56639efb5ac12014b7ec7))
+
+#### Bug Fixes
+
+- Local file lookups in `eq: $id` queries [#34699](https://github.com/gatsbyjs/gatsby/issues/34699) ([23accf4](https://github.com/gatsbyjs/gatsby/commit/23accf445cb09552733fc76a16f485c7cd0ce6fa))
+- update dependency eslint-plugin-import to ^2.25.4 [#34645](https://github.com/gatsbyjs/gatsby/issues/34645) ([911d0cc](https://github.com/gatsbyjs/gatsby/commit/911d0cccd42e68a465a000efc0864e98d85c2293))
+- fixes stacktraces from async functions break error reporting fixes [#33712](https://github.com/gatsbyjs/gatsby/issues/33712) ([ffdcd9e](https://github.com/gatsbyjs/gatsby/commit/ffdcd9ebb70ad31834394170fa38e56bbabd2bc4))
+- Scope remove api babel plugin to page templates [#34582](https://github.com/gatsbyjs/gatsby/issues/34582) ([5be46c0](https://github.com/gatsbyjs/gatsby/commit/5be46c0b751219e60a37f93c5c7db67104c6a0b6))
+- Handle export const syntax in babel-remove-api plugin [#34581](https://github.com/gatsbyjs/gatsby/issues/34581) ([53ca1cf](https://github.com/gatsbyjs/gatsby/commit/53ca1cff72356fbc0e0ad3312fd2fd5e6d6750b0))
+- don't remove onPluginInit in graphql-engine [#34558](https://github.com/gatsbyjs/gatsby/issues/34558) ([135e080](https://github.com/gatsbyjs/gatsby/commit/135e0803bd3d45f8062c3797f7b12fb77f373ca8))
+
+#### Chores
+
+- update dependency typescript to ^4.5.5 [#34641](https://github.com/gatsbyjs/gatsby/issues/34641) ([f7a7e1f](https://github.com/gatsbyjs/gatsby/commit/f7a7e1f642d91babb397156ab37cb28dcde19737))
+- Add `defer` to `createPage` type [#34612](https://github.com/gatsbyjs/gatsby/issues/34612) ([e97dc80](https://github.com/gatsbyjs/gatsby/commit/e97dc801687cdf8e06a05d45cbf32e0efe194115))
+- use lazy iterable instead of fully realized arrays for detecting stale nodes [#34540](https://github.com/gatsbyjs/gatsby/issues/34540) ([7fffe0b](https://github.com/gatsbyjs/gatsby/commit/7fffe0be9b6a0c8cdec72600f79b43c34006e1bf))
+
 ### [4.6.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.6.2/packages/gatsby) (2022-02-04)
 
 #### Bug Fixes
