@@ -459,6 +459,10 @@ export function getRemoteFileFields(
           if (bgColor) {
             backgroundColor = bgColor
           }
+
+          await new Promise<void>(resolve => {
+            setImmediate(() => resolve())
+          })
         }
 
         return {

@@ -21,7 +21,7 @@ interface IPlaceholderGenerationArgs {
   contentDigest: string
 }
 
-const QUEUE_CONCURRENCY = Math.ceil(50 / getCPUCoreCount())
+const QUEUE_CONCURRENCY = Math.ceil(40 / getCPUCoreCount())
 
 let tmpDir: string
 
