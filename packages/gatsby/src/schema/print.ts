@@ -237,7 +237,6 @@ const printScalarType = (tc: ScalarTypeComposer): string =>
   printDescription(tc) + `scalar ${tc.getTypeName()}`
 
 const printObjectType = (tc: ObjectTypeComposer<unknown>): string => {
-  // const type = tc.getType()
   const interfaces = tc.getInterfaces()
   const implementedInterfaces = interfaces.length
     ? ` implements ` + interfaces.map(i => i.getTypeName()).join(` & `)
