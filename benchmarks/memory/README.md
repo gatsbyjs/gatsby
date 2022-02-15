@@ -111,17 +111,9 @@ When starting working with this benchmark:
 
 - start `yarn watch` (possibly with `--scope`) in monorepo
 - start `gatsby-dev` outside of docker in benchmark directory (just like with regular site)
-- `yarn docker:connect` to get inside docker
-- `npm rebuild` to rebuild binaries inside docker
+- `yarn test --memory 8g --num-nodes 1000 --node-size 1m`
 
 And repeat as many times as you want:
 
 - make changes to `gatsby` source code as you normally would
-- run `yarn gatsby:build` inside docker
-
-## Testing
-
-TODO
-
-- How to configure memory limits
-- Where to look
+- run your `yarn test` command again
