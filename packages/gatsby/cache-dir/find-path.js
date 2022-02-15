@@ -7,7 +7,7 @@ const pathCache = new Map()
 let matchPaths = []
 
 const trimPathname = rawPathname => {
-  const pathname = decodeURIComponent(rawPathname)
+  const pathname = decodeURIComponent(encodeURIComponent(rawPathname))
   // Remove the pathPrefix from the pathname.
   const trimmedPathname = stripPrefix(
     pathname,
