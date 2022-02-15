@@ -34,7 +34,7 @@ const resolveTheme = async (
       pathToLocalTheme = path.join(rootDir, `plugins`, themeName)
       // is a local plugin OR it doesn't exist
       try {
-        const { resolve } = await resolvePlugin(themeName, rootDir)
+        const { resolve } = resolvePlugin(themeName, rootDir)
         themeDir = resolve
       } catch (localErr) {
         reporter.panic(`Failed to resolve ${themeName}`, localErr)
