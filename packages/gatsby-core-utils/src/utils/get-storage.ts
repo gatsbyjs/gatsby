@@ -25,6 +25,21 @@ export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
       throw new Error(`LMDB path is not set!`)
     }
 
+    // __GATSBY_OPEN_LMDBS tracks if we already opened given db in this process
+    // In `gatsby serve` case we might try to open it twice - once for engines
+    // and second to get access to `SitePage` nodes (to power trailing slashes
+    // redirect middleware). This ensure there is single instance within a process.
+    // Using more instances seems to cause weird random errors.
+    if (!globalThis.__GATSBY_OPEN_LMDBS) {
+      globalThis.__GATSBY_OPEN_LMDBS = new Map()
+    }
+
+    databases = globalThis.__GATSBY_OPEN_LMDBS.get(fullDbPath)
+
+    if (databases) {
+      return databases
+    }
+
     const open = getLmdb().open
 
     rootDb = open({
@@ -39,6 +54,8 @@ export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
         name: `mutex`,
       }),
     }
+
+    globalThis.__GATSBY_OPEN_LMDBS.set(fullDbPath, databases)
   }
 
   return databases as ICoreUtilsDatabase
