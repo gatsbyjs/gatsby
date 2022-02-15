@@ -1,6 +1,7 @@
 import path from "path"
 import { getLmdb } from "./get-lmdb"
 import type { RootDatabase, Database } from "lmdb"
+import type { Headers } from "got"
 
 export enum LockStatus {
   Locked = 0,
@@ -8,6 +9,17 @@ export enum LockStatus {
 }
 
 interface ICoreUtilsDatabase {
+  remoteFileInfo: Database<
+    {
+      extension: string
+      headers: Headers
+      path: string
+      directory: string
+      cacheKey?: string
+      buildId: string
+    },
+    string
+  >
   mutex: Database<LockStatus, string>
 }
 
@@ -50,6 +62,9 @@ export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
     })
 
     databases = {
+      remoteFileInfo: rootDb.openDB({
+        name: `remote-file`,
+      }),
       mutex: rootDb.openDB({
         name: `mutex`,
       }),
