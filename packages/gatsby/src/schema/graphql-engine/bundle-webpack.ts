@@ -71,6 +71,21 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
+          test: require.resolve(`lmdb`),
+          parser: { amd: false },
+          use: [
+            {
+              loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
+              options: {
+                outputAssetBase: `assets`,
+              },
+            },
+            {
+              loader: require.resolve(`./lmdb-bundling-patch`),
+            },
+          ],
+        },
+        {
           test: /\.m?js$/,
           type: `javascript/auto`,
           resolve: {

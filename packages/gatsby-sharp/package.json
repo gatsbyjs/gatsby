@@ -1,6 +1,6 @@
 {
   "name": "gatsby-sharp",
-  "version": "0.2.0-next.0",
+  "version": "0.2.0-next.1",
   "sideEffects": false,
   "keywords": [
     "gatsby",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-sharp#readme",
   "dependencies": {
     "@types/sharp": "^0.29.5",
-    "sharp": "^0.29.3"
+    "sharp": "^0.30.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.5",

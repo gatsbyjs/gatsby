@@ -6,7 +6,7 @@ const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
-const { resolvePlugin } = require(`../load-plugins/load`)
+import { resolvePlugin } from "../load-plugins/resolve-plugin"
 const reporter = require(`gatsby-cli/lib/reporter`)
 
 // get the gatsby-config file for a theme

@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "4.8.0-next.1",
+  "version": "4.8.0-next.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -78,22 +78,22 @@
     "find-cache-dir": "^3.3.2",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^10.0.0",
-    "gatsby-cli": "^4.8.0-next.1",
+    "gatsby-cli": "^4.8.0-next.2",
     "gatsby-core-utils": "^3.8.0-next.0",
     "gatsby-graphiql-explorer": "^2.8.0-next.0",
     "gatsby-legacy-polyfills": "^2.8.0-next.0",
-    "gatsby-link": "^4.8.0-next.0",
+    "gatsby-link": "^4.8.0-next.1",
     "gatsby-page-utils": "^2.8.0-next.0",
-    "gatsby-plugin-page-creator": "^4.8.0-next.0",
+    "gatsby-plugin-page-creator": "^4.8.0-next.1",
     "gatsby-plugin-typescript": "^4.8.0-next.0",
-    "gatsby-plugin-utils": "^3.2.0-next.0",
+    "gatsby-plugin-utils": "^3.2.0-next.1",
     "gatsby-react-router-scroll": "^5.8.0-next.0",
     "gatsby-telemetry": "^3.8.0-next.0",
     "gatsby-worker": "^1.8.0-next.0",
     "glob": "^7.2.0",
     "got": "^11.8.2",
     "graphql": "^15.7.2",
-    "graphql-compose": "^9.0.6",
+    "graphql-compose": "^9.0.7",
     "graphql-playground-middleware-express": "^1.7.22",
     "hasha": "^5.2.2",
     "http-proxy": "^1.18.1",
@@ -103,7 +103,7 @@
     "joi": "^17.4.2",
     "json-loader": "^0.5.7",
     "latest-version": "5.1.0",
-    "lmdb-store": "^1.6.11",
+    "lmdb": "2.2.1",
     "lodash": "^4.17.21",
     "md5-file": "^5.0.0",
     "meant": "^1.0.3",
@@ -191,7 +191,7 @@
     "zipkin-transport-http": "^0.22.0"
   },
   "optionalDependencies": {
-    "gatsby-sharp": "^0.2.0-next.0"
+    "gatsby-sharp": "^0.2.0-next.1"
   },
   "engines": {
     "node": ">=14.15.0"

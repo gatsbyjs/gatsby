@@ -38,6 +38,10 @@ A shorthand for start + connect.
 
 Stop the container used for testing.
 
+#### yarn docker:stats
+
+Show a polling display of the container's docker stats.
+
 ### Gatsby
 
 These commands are used for interfacing with gatsby.

@@ -2,7 +2,7 @@
   "name": "gatsby-source-wordpress",
   "description": "Source data from WordPress in an efficient and scalable way.",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
-  "version": "6.8.0-next.0",
+  "version": "6.8.0-next.1",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -40,7 +40,7 @@
     "read-chunk": "^3.2.0",
     "replaceall": "^0.1.6",
     "semver": "^7.3.5",
-    "sharp": "^0.29.3",
+    "sharp": "^0.30.1",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
