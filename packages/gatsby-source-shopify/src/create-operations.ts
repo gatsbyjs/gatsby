@@ -58,20 +58,22 @@ export function createOperations(
   async function finishLastOperation(): Promise<void> {
     let { currentBulkOperation } = await currentOperation()
     if (currentBulkOperation && currentBulkOperation.id) {
-      const timer = gatsbyApi.reporter.activityTimer(
-        `Waiting for operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
-      )
-      timer.start()
-
-      while (!finishedStatuses.includes(currentBulkOperation.status)) {
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        currentBulkOperation = (await currentOperation()).currentBulkOperation
-        timer.setStatus(
-          `Polling operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
+      if (!finishedStatuses.includes(currentBulkOperation.status)) {
+        const timer = gatsbyApi.reporter.activityTimer(
+          `Waiting for operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
         )
-      }
+        timer.start()
 
-      timer.end()
+        while (!finishedStatuses.includes(currentBulkOperation.status)) {
+          await new Promise(resolve => setTimeout(resolve, 1000))
+          currentBulkOperation = (await currentOperation()).currentBulkOperation
+          timer.setStatus(
+            `Polling operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
+          )
+        }
+
+        timer.end()
+      }
     }
   }
 

@@ -34,30 +34,17 @@ export function getLastBuildTime(
   )
 }
 
-export function setCurrentBuildTime(
-  gatsbyApi: NodePluginArgs,
-  pluginOptions: IShopifyPluginOptions
-): void {
-  const { typePrefix = `` } = pluginOptions
-  const status = getPluginStatus(gatsbyApi)
-
-  gatsbyApi.actions.setPluginStatus({
-    ...status,
-    [`currentBuildTime${typePrefix}`]: Date.now(),
-  })
-}
-
 export function setLastBuildTime(
   gatsbyApi: NodePluginArgs,
-  pluginOptions: IShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
+  currentBuildTime: number
 ): void {
   const { typePrefix = `` } = pluginOptions
   const status = getPluginStatus(gatsbyApi)
 
   gatsbyApi.actions.setPluginStatus({
     ...status,
-    [`currentBuildTime${typePrefix}`]: undefined,
-    [`lastBuildTime${typePrefix}`]: status[`currentBuildTime${typePrefix}`],
+    [`lastBuildTime${typePrefix}`]: currentBuildTime,
   })
 }
 

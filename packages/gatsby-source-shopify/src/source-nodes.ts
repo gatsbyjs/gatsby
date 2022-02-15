@@ -3,11 +3,7 @@ import { SourceNodesArgs } from "gatsby"
 import { updateCache } from "./update-cache"
 import { createOperations } from "./create-operations"
 import { makeSourceFromOperation } from "./source-from-operation"
-import {
-  isPriorityBuild,
-  getLastBuildTime,
-  setCurrentBuildTime,
-} from "./helpers"
+import { isPriorityBuild, getLastBuildTime, setLastBuildTime } from "./helpers"
 
 export async function sourceNodes(
   gatsbyApi: SourceNodesArgs,
@@ -19,7 +15,7 @@ export async function sourceNodes(
     `Running ${isPriorityBuild(pluginOptions) ? `` : `non-`}priority queries`
   )
 
-  setCurrentBuildTime(gatsbyApi, pluginOptions)
+  const currentBuildTime = Date.now()
   const lastBuildTime = getLastBuildTime(gatsbyApi, pluginOptions)
 
   const {
@@ -63,4 +59,6 @@ export async function sourceNodes(
   if (lastBuildTime) {
     await updateCache(gatsbyApi, pluginOptions, lastBuildTime)
   }
+
+  setLastBuildTime(gatsbyApi, pluginOptions, currentBuildTime)
 }

@@ -19,8 +19,8 @@ const deletionCounter: { [key: string]: number } = {}
 function validateNodes(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
-  nodeMap: ICachedShopifyNodeMap,
-  nodes: Array<ICachedShopifyNode>,
+  nodeMap: IShopifyNodeMap,
+  nodes: Array<IShopifyNode>,
   prevalidatedNodeIds?: Array<string>
 ): Array<string> {
   let coupledNodeIds: Array<string> = []
@@ -63,7 +63,7 @@ function validateNodes(
 
 function reportNodeDeletion(
   gatsbyApi: SourceNodesArgs,
-  node: ICachedShopifyNode
+  node: IShopifyNode
 ): void {
   const type = parseShopifyId(node.shopifyId)[1]
   deletionCounter[type] = (deletionCounter[type] || 0) + 1
@@ -90,7 +90,7 @@ export async function updateCache(
 ): Promise<void> {
   const { typePrefix = `` } = pluginOptions
 
-  const nodeMap: ICachedShopifyNodeMap = Object.keys(shopifyTypes)
+  const nodeMap: IShopifyNodeMap = Object.keys(shopifyTypes)
     .map(type => gatsbyApi.getNodesByType(`${typePrefix}Shopify${type}`))
     .reduce((acc, value) => acc.concat(value), [])
     .reduce((acc, value) => {
@@ -103,6 +103,7 @@ export async function updateCache(
   destroyEvents.forEach(event => {
     const shopifyId = `gid://shopify/${event.subject_type}/${event.subject_id}`
     const id = createNodeId(shopifyId, gatsbyApi, pluginOptions)
+    gatsbyApi.actions.deleteNode(nodeMap[id])
     reportNodeDeletion(gatsbyApi, nodeMap[id])
     delete nodeMap[id]
   })
@@ -123,6 +124,7 @@ export async function updateCache(
     if (validatedNodeIds.includes(node.id)) {
       gatsbyApi.actions.touchNode(node)
     } else {
+      gatsbyApi.actions.deleteNode(node)
       reportNodeDeletion(gatsbyApi, node)
     }
   }
