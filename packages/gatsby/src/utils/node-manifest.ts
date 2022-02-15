@@ -49,32 +49,18 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
   const { pages, nodes } = state
   const { byNode } = state.queries
 
-  // in development queries are run on demand so we wont have an accurate nodeId->pages map until those pages are visited in the browser. We want this mapping before the page is visited in the browser so we can route to the right page in the browser.
-  // So in development we can just use the Map of all pages (pagePath -> pageNode)
-  // but for builds (preview inc builds or regular builds) we will have a full map
-  // of all nodeId's to pages they're queried on and we can use that instead since it
-  // will be a much smaller list of pages, resulting in better performance for large sites
-  const usingPagesMap: boolean = `development` === process.env.NODE_ENV
-
-  const pagePathSetOrMap = usingPagesMap
-    ? // this is a Map of page path to page node
-      pages
-    : // this is a Set of page paths
-      byNode?.get(nodeId)
-
   // the default page path is the first page found in
   // node id to page query tracking
-
   let pagePath = byNode?.get(nodeId)?.values()?.next()?.value
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
-  if (pagePathSetOrMap) {
+  if (pages) {
     let ownerPagePath: string | undefined
     let foundOwnerNodeId = false
 
     // for each page this nodeId is queried in
-    for (const pathOrPageObject of pagePathSetOrMap.values()) {
+    for (const pageObject of pages.values()) {
       // if we haven't found a page with this nodeId
       // set as page.ownerNodeId then run this logic.
       // this condition is on foundOwnerNodeId instead of ownerPagePath
@@ -86,13 +72,7 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
         break
       }
 
-      const path = (
-        usingPagesMap
-          ? // in development we're using a Map, so the value here is a page object
-            (pathOrPageObject as IGatsbyPage).path
-          : // in builds we're using a Set so the page path is the value
-            pathOrPageObject
-      ) as string
+      const path = pageObject.path
 
       const fullPage: IGatsbyPage | undefined = pages.get(path)
 
