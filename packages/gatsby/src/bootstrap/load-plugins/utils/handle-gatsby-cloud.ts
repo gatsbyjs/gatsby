@@ -5,17 +5,17 @@ import { processPlugin } from "../process-plugin"
 
 export const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
 
-export async function addGatsbyPluginCloudPluginWhenInstalled(
+export function addGatsbyPluginCloudPluginWhenInstalled(
   plugins: Array<IPluginInfo>,
   rootDir: string
-): Promise<void> {
+): void {
   const cloudPluginLocation = resolveFromSilent(
     rootDir,
     GATSBY_CLOUD_PLUGIN_NAME
   )
 
   if (cloudPluginLocation) {
-    const processedGatsbyCloudPlugin = await processPlugin(
+    const processedGatsbyCloudPlugin = processPlugin(
       {
         resolve: cloudPluginLocation,
         options: {},

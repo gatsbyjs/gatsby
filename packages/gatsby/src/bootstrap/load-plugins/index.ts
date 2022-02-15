@@ -32,7 +32,7 @@ export async function loadPlugins(
   })
 
   // Collate internal plugins, site config plugins, site default plugins
-  const pluginInfos = await loadInternalPlugins(config, rootDir)
+  const pluginInfos = loadInternalPlugins(config, rootDir)
 
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)

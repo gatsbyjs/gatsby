@@ -19,16 +19,16 @@ import {
 
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
 
-export async function loadInternalPlugins(
+export function loadInternalPlugins(
   config: ISiteConfig = {},
   rootDir: string
-): Promise<Array<IPluginInfo>> {
+): Array<IPluginInfo> {
   // Instantiate plugins.
   const plugins: Array<IPluginInfo> = []
   const configuredPluginNames = new Set()
 
   // Add internal plugins
-  const internalPluginPaths = [
+  const internalPlugins = [
     `../../internal-plugins/dev-404-page`,
     `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/internal-data-bridge`,
@@ -38,22 +38,18 @@ export async function loadInternalPlugins(
     `../../internal-plugins/functions`,
   ].filter(Boolean) as Array<string>
 
-  for (const internalPluginPath of internalPluginPaths) {
-    const internalPluginAbsolutePath = path.join(__dirname, internalPluginPath)
-    const processedPlugin = await processPlugin(
-      internalPluginAbsolutePath,
-      rootDir
-    )
-    plugins.push(processedPlugin)
-  }
+  internalPlugins.forEach(relPath => {
+    const absPath = path.join(__dirname, relPath)
+    plugins.push(processPlugin(absPath, rootDir))
+  })
 
   // Add plugins from the site config.
   if (config.plugins) {
-    for (const plugin of config.plugins) {
-      const processedPlugin = await processPlugin(plugin, rootDir)
+    config.plugins.forEach(plugin => {
+      const processedPlugin = processPlugin(plugin, rootDir)
       plugins.push(processedPlugin)
       configuredPluginNames.add(processedPlugin.name)
-    }
+    })
   }
 
   // the order of all of these page-creators matters. The "last plugin wins",
@@ -61,20 +57,20 @@ export async function loadInternalPlugins(
   // match the plugin definition order before that. This works fine for themes
   // because themes have already been added in the proper order to the plugins
   // array
-  for (const plugin of [...plugins]) {
-    const processedPlugin = await processPlugin(
-      {
-        resolve: require.resolve(`gatsby-plugin-page-creator`),
-        options: {
-          path: slash(path.join(plugin.resolve, `src/pages`)),
-          pathCheck: false,
+  plugins.forEach(plugin => {
+    plugins.push(
+      processPlugin(
+        {
+          resolve: require.resolve(`gatsby-plugin-page-creator`),
+          options: {
+            path: slash(path.join(plugin.resolve, `src/pages`)),
+            pathCheck: false,
+          },
         },
-      },
-      rootDir
+        rootDir
+      )
     )
-
-    plugins.push(processedPlugin)
-  }
+  })
 
   if (
     _CFLAGS_.GATSBY_MAJOR === `4` &&
@@ -90,12 +86,12 @@ export async function loadInternalPlugins(
     !configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
     (process.env.GATSBY_CLOUD === `true` || process.env.GATSBY_CLOUD === `1`)
   ) {
-    await addGatsbyPluginCloudPluginWhenInstalled(plugins, rootDir)
+    addGatsbyPluginCloudPluginWhenInstalled(plugins, rootDir)
   }
 
   // Support Typescript by default but allow users to override it
   if (!configuredPluginNames.has(TYPESCRIPT_PLUGIN_NAME)) {
-    const processedTypeScriptPlugin = await processPlugin(
+    const processedTypeScriptPlugin = processPlugin(
       {
         resolve: require.resolve(TYPESCRIPT_PLUGIN_NAME),
         options: {
@@ -144,7 +140,7 @@ export async function loadInternalPlugins(
     }
   }
 
-  const processedPageCreatorPlugin = await processPlugin(
+  const processedPageCreatorPlugin = processPlugin(
     {
       resolve: require.resolve(`gatsby-plugin-page-creator`),
       options: pageCreatorOptions,

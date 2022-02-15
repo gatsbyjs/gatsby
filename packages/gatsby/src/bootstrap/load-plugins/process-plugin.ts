@@ -3,15 +3,12 @@ import { createPluginId } from "./utils/create-id"
 import { resolvePlugin } from "./resolve-plugin"
 import { isString, isEmpty, set, merge } from "lodash"
 
-export async function processPlugin(
-  plugin: PluginRef,
-  rootDir: string
-): Promise<IPluginInfo> {
+export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   // Respect the directory that the plugin was sourced from initially
   rootDir = (!isString(plugin) && plugin.parentDir) || rootDir
 
   if (isString(plugin)) {
-    const info = await resolvePlugin(plugin, rootDir)
+    const info = resolvePlugin(plugin, rootDir)
 
     return {
       ...info,
@@ -54,7 +51,7 @@ export async function processPlugin(
       const processed: Array<IPluginInfo> = []
 
       for (const root of roots) {
-        const result = await processPlugin(root, rootDir)
+        const result = processPlugin(root, rootDir)
         processed.push(result)
       }
 
@@ -78,7 +75,7 @@ export async function processPlugin(
     }
   }
 
-  const info = await resolvePlugin(plugin, rootDir)
+  const info = resolvePlugin(plugin, rootDir)
 
   return {
     ...info,
