@@ -138,10 +138,14 @@ Now follow the second link to explore your Shopify data!
 Because of the limiations of the Shopify Bulk API we have included logic in this plugin to determine which builds are high priority for a given Shopify site. This allows us to pause deploy preview builds while production builds are running while using the same Shopify App. The following logic determines whether a build is priority or not:
 
 ```js
-const isPriorityBuild = process.env.GATSBY_IS_PREVIEW !== `true` && process.env.GATSBY_IS_PR_BUILD !== `true`
+const isGatsbyCloudPriorityBuild = CI === `true` && GATSBY_CLOUD === `true` && GATSBY_IS_PR_BUILD !== `true`
+
+const isNetlifyPriorityBuild = CI === `true` && NETLIFY === `true` && CONTEXT === `production`
+
+return pluginOptions.prioritize !== undefined ? pluginOptions.prioritize : isGatsbyCloudPriorityBuild || isNetlifyPriorityBuild
 ```
 
-These environment variables are set by default by Gatsby Cloud, but we are working diligently to make this plugin work by default with Netlify and local development as well, and are looking at the option to override these defaults in the plugin options.
+This logic allows us to determine whether we are running a production build on either Gatsby Cloud or Netlify using environment variables, but you also have the option to override the logic by setting the `prioritize` option in `gatsby-config`.
 
 <div id="plugin-options"></div>
 
