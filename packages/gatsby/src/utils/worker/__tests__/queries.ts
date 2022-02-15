@@ -125,7 +125,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
-    const { config } = await loadConfig({
+    const config = await loadConfig({
       siteDirectory,
     })
     await loadPlugins(config, siteDirectory)

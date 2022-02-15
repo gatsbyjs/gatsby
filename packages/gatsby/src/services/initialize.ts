@@ -167,7 +167,7 @@ export async function initialize({
   })
   activity.start()
   const siteDirectory = program.directory
-  const { config } = await loadConfig({
+  const config = await loadConfig({
     siteDirectory,
     processFlags: true,
   })

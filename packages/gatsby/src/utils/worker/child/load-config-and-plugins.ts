@@ -15,7 +15,7 @@ export async function loadConfigAndPlugins(
       directory: siteDirectory,
     },
   })
-  const { config } = await loadConfig(...args)
+  const config = await loadConfig(...args)
   await loadPlugins(config, siteDirectory)
 
   // Cache is already initialized

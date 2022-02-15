@@ -8,7 +8,7 @@ import { store } from "../../redux"
 import handleFlags from "../../utils/handle-flags"
 import availableFlags from "../../utils/flags"
 import { IProgram } from "../../commands/types"
-import { ISiteConfig } from "../load-plugins/types"
+import { IGatsbyConfig } from "../../internal"
 
 export async function loadConfig({
   siteDirectory,
@@ -17,9 +17,7 @@ export async function loadConfig({
   siteDirectory: string
   processFlags?: boolean
   program?: IProgram
-}): Promise<{
-  config: ISiteConfig
-}> {
+}): Promise<IGatsbyConfig> {
   // Try opening the site's gatsby-config.js file.
   const { configModule, configFilePath } = await getConfigFile(
     siteDirectory,

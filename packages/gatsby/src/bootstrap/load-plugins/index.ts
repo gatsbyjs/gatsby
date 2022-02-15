@@ -10,13 +10,14 @@ import {
   handleMultipleReplaceRenderers,
   validateConfigPluginsOptions,
 } from "./validate"
-import { IFlattenedPlugin, IRawSiteConfig } from "./types"
+import { IFlattenedPlugin } from "./types"
 import { normalizeConfig } from "./utils/normalize"
 import { getAPI } from "./utils/get-api"
 import { flattenPlugins } from "./utils/flatten-plugins"
+import { IGatsbyConfig } from "../../internal"
 
 export async function loadPlugins(
-  rawConfig: IRawSiteConfig = {},
+  rawConfig: IGatsbyConfig,
   rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
