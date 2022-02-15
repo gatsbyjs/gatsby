@@ -1,7 +1,6 @@
 import path from "path"
 import fs from "fs"
 import { slash, createRequireFromPath } from "gatsby-core-utils"
-import { sync as existsSync } from "fs-exists-cached"
 import { warnOnIncompatiblePeerDependency } from "./validate"
 import { PackageJson } from "../../.."
 import { IPluginInfo, PluginRef } from "./types"
@@ -9,6 +8,7 @@ import { createPluginId } from "./utils/create-id"
 import { createFileContentHash } from "./utils/create-hash"
 import reporter from "gatsby-cli/lib/reporter"
 import { isString } from "lodash"
+import { checkLocalPlugin } from "./utils/check-local-plugin"
 
 /**
  * @param plugin
@@ -24,30 +24,25 @@ import { isString } from "lodash"
 export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   const pluginName = isString(plugin) ? plugin : plugin.resolve
 
-  // Only find plugins when we're not given an absolute path
-  if (!existsSync(pluginName) && rootDir) {
-    // Find the plugin in the local plugins folder
-    const resolvedPath = slash(path.join(rootDir, `plugins/${pluginName}`))
+  // Handle local plugins
+  const { validLocalPlugin, localPluginPath = `` } = checkLocalPlugin(
+    plugin,
+    rootDir
+  )
 
-    if (existsSync(resolvedPath)) {
-      if (existsSync(`${resolvedPath}/package.json`)) {
-        const packageJSON = JSON.parse(
-          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-        ) as PackageJson
-        const name = packageJSON.name || pluginName
-        warnOnIncompatiblePeerDependency(name, packageJSON)
+  if (validLocalPlugin && localPluginPath) {
+    const packageJSON = JSON.parse(
+      fs.readFileSync(`${localPluginPath}/package.json`, `utf-8`)
+    ) as PackageJson
+    const name = packageJSON.name || pluginName
+    warnOnIncompatiblePeerDependency(name, packageJSON)
 
-        return {
-          resolve: resolvedPath,
-          name,
-          id: createPluginId(name),
-          version:
-            packageJSON.version || createFileContentHash(resolvedPath, `**`),
-        }
-      } else {
-        // Make package.json a requirement for local plugins too
-        throw new Error(`Plugin ${pluginName} requires a package.json file`)
-      }
+    return {
+      resolve: localPluginPath,
+      name,
+      id: createPluginId(name),
+      version:
+        packageJSON.version || createFileContentHash(localPluginPath, `**`),
     }
   }
 
