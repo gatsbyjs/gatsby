@@ -16,8 +16,6 @@ When someone wants to contribute to Gatsby, they open a request to _pull_ their 
 
 - [Documentation](#documentation-prs)
 - [Code](#code-changes)
-- [Starters or Site Showcase](#starters-or-site-showcase)
-- [Blog posts](#blog-posts)
 
 Recommendations for different kinds of contributions will follow in this guide and throughout the contributing docs.
 
@@ -90,14 +88,6 @@ Further instructions can be found on the [docs contributions](/contributing/docs
 ### Code changes
 
 Instructions for making changes to the Gatsby source code, tests, internals, APIs, packages, and more can be found in the contributing docs on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/). There are also additional details on the [Code contributions](/contributing/code-contributions/) page.
-
-### Starters or Site Showcase
-
-**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
-
-### Blog posts
-
-For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog contributions](/contributing/blog-contributions/), including how to propose an idea and setting up the blog to run locally.
 
 ## Follow up with reviews and suggestions
 

@@ -32,7 +32,6 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 - [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
 - [Make feature requests with an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Gatsby Translations - currently on hold](/contributing/translation/)
 
 ## Gatsby news
 
@@ -66,26 +65,10 @@ useful resources.
 
 Directly integrated into the repository, you can use [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions) to ask for help or share ideas.
 
-### Hashnode
-
-Many members of the community also use Hashnode to ask questions and share their tips. Read through
-the [existing questions and posts](https://hashnode.com/n/gatsby)
-tagged with `gatsby` or
-[ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
-
-### DEV Community
-
-DEV Community is another informative platform to ask questions and share tips as well. Read through
-the [existing questions and posts](https://dev.to/t/gatsby)
-tagged with `gatsby` or
-[ask for help](https://dev.to/new/help). You could also [write your post](https://dev.to/new/gatsby) with the `gatsby` tag.
-
 ## Learn More About Gatsby:
 
 - [Why Contribute to Gatsby?](/contributing/why-contribute-to-gatsby/)
-- [Gatsby Community Events](/contributing/events/)
 - [Where to Participate in the Community?](/contributing/where-to-participate/)
-- [Organize a Gatsby Event](/contributing/organize-a-gatsby-event/)
 - [How to Run a Gatsby Workshop](/contributing/how-to-run-a-gatsby-workshop/)
 - [How to Pitch Gatsby](/contributing/how-to-pitch-gatsby/)
 - [Blog posts on the Gatsby community](/blog/tags/community/)

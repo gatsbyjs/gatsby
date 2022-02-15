@@ -1,5 +1,5 @@
 ---
-title: Why Contribute to Gatsby.js?
+title: Why Contribute to Gatsby?
 ---
 
 There are many reasons to contribute to Gatsby.js and open source software in general. Here are some of the benefits of participating:

@@ -1,5 +1,5 @@
 ---
-title: Docs & Blog Components
+title: Docs Components
 tableOfContentsDepth: 2
 ---
 
@@ -25,7 +25,7 @@ The Guide List component takes one prop:
 
 - `slug` (required) - the value of which is already available on every page's context on the site by default
 
-The slug is used to find a matching value in one of the `yaml` files that sets up the hierarchical structure for how the guides in the [docs](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/doc-links.yaml), [tutorial](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/tutorial-links.yaml), and [contributing](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/contributing-links.yaml) section are organized. It finds the matching entry in the hierarchy and renders the pages that are children of it in a list.
+The slug is used to find a matching value in one of the sidebar files that powers this website. It finds the matching entry in the hierarchy and renders the pages that are children of it in a list.
 
 The component can be used like this:
 
@@ -92,7 +92,7 @@ Rendered, it looks like this:
 
 ### Pull Quote
 
-The `<Pullquote />` component is used to call out a quote in the blog. It applies borders and styles that make a section of the content pop out to readers.
+The `<Pullquote />` component is used to call out a quote. It applies borders and styles that make a section of the content pop out to readers.
 
 #### Usage
 
@@ -197,9 +197,9 @@ Doing so will break localized versions of the page, which are stored in other re
 
 ---
 
-## Writing content in Markdown
+## Writing content in markdown
 
-New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color/).
+New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to Gatsby's design guidelines.
 
 You can read more about writing in Markdown in the [Markdown syntax guide](/docs/reference/markdown-syntax/).
 
@@ -216,55 +216,6 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
 - `excerpt` (string)
 
   The excerpt for the post. Gatsby renders the value in `description`, `og:description`, and `twitter:description`.
-
-#### Blog Posts
-
-- `seoTitle` (string)
-
-  If provided, this value will overwrite the `title` for the blog post's `og:title` and `<title>`. This is useful for SEO, as it lets us target specific relevant keywords, without needing to change the page's primary visible title.
-
-- `date` (string)
-
-  The blog post's date in the format of `YYYY-MM-DD`.
-
-- `canonicalLink` (string)
-
-  The URL to the original piece of content. This is useful for SEO attribution when cross-posting blog posts across domains. Google [offers an explanation](https://support.google.com/webmasters/answer/139066?hl=en) if you're interested in learning more.
-
-- `tags` (array)
-
-  The blog post's related tags. Gatsby renders the [YAML array/list](https://en.wikipedia.org/wiki/YAML#Basic_components) as links to tag archives and creates the archive if it doesn't exist.
-
-- `image` (string)
-
-  The relative path to the image.
-
-  - Facebook and `twitterCard: summary` support an aspect ratio of 1:1.
-  - LinkedIn supports an aspect ratio of 1.91:1 and `twitterCard: summary_large_image` supports an aspect ratio of 2:1
-  - Gatsby resizes the image to 1500x1500 and renders the URL in the `og:image` and `twitter:image` metadata.
-
-- `imageAuthor` (string)
-
-  The name of the image's author. Gatsby renders the value in an `<a>` tag only if `imageAuthorLink` is defined.
-
-- `imageAuthorLink` (string)
-
-  The link to the image's author. Gatsby renders the value in an `<a>` tag only if `imageAuthor` is defined.
-
-- `showImageInArticle` (boolean, default false)
-
-  Determines if the `image` is displayed as a hero in the blog post. Gatsby renders it as a fluid image with a width of 786px.
-
-- `twitterCard` (string)
-
-  A choice between: `summary` or `summary_large_image` that Gatsby renders in the `twitter:card` metadata.
-
-  - `summary` - displays the post as a snapshot that includes a thumbnail, title, and description to convey its content.
-  - `summary_large_image` - displays the post as a large, full-width image that conveys the visual aspect.
-
-- `author` (string)
-
-  The author's name, which is also the `id` in the `/docs/blog/author.yaml` file. Gatsby renders a link to the author's archive page.
 
 #### Documentation
 
@@ -284,7 +235,7 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
 
   The number of levels to render the table of contents.
 
-#### Relevant Links
+#### Relevant links
 
 - [About Twitter Cards](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards)
 - [Facebook Sharing - Best Practices](https://developers.facebook.com/docs/sharing/best-practices#images)
