@@ -392,9 +392,9 @@ export const printTypeDefinitions = ({
       return false
     }
     if (
-      typeof plugin === `string` &&
       include?.plugins &&
-      !include.plugins.includes(plugin)
+      (!plugin ||
+        (typeof plugin === `string` && !include.plugins.includes(plugin)))
     ) {
       return false
     }
