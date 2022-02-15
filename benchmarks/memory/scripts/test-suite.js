@@ -58,15 +58,15 @@ function sleep(ms) {
   });
 }
 
-function writeResults(build, memory, numNodes, nodeSize, result, code, time, maxRss) {
+function writeResults(build, memory, numNodes, nodeSize, result, code, time, maxMemoryUsage) {
   if (!args.name) return
   
   if (!fs.existsSync(resultsFile)) {
-    const csvColumns = `build,memory,numNodes,nodeSize,result,code,time,maxRss`
+    const csvColumns = `build,memory,numNodes,nodeSize,result,code,time,maxMemoryUsage`
     fs.writeFileSync(resultsFile, `${csvColumns}\n`)
   }
 
-  fs.writeFileSync(resultsFile, `${[build, memory, numNodes, nodeSize, result, code, time, maxRss].join(',')}\n`, { flag: 'a+' })
+  fs.writeFileSync(resultsFile, `${[build, memory, numNodes, nodeSize, result, code, time, maxMemoryUsage].join(',')}\n`, { flag: 'a+' })
 }
 
 function writeMetrics(name, metrics, buildTime) {
@@ -115,7 +115,7 @@ async function runTest(memory, numNodes, nodeSize, i) {
   const start = Date.now()
 
   // loop until the build has finished
-  const buildName = `mem=${memory}-num=${numNodes}-size=${nodeSize}`
+  const buildName = `mem=${memory}`
   while (!buildFinished) {
 
     if (fs.existsSync(memoryStatFile)) {
@@ -124,7 +124,7 @@ async function runTest(memory, numNodes, nodeSize, i) {
 
       if (stat && parseInt(stat) !== 0) {
         metrics.push({
-          build: i, 
+          build: i + 1, 
           timestamp: Date.now() - start, 
           memory, 
           numNodes, 
@@ -146,9 +146,9 @@ async function runTest(memory, numNodes, nodeSize, i) {
     console.log(stdout)
   }
 
-  const maxRss = Math.max.apply(Math, metrics.map(m => m.rss))
+  const maxMemoryUsage = Math.max.apply(Math, metrics.map(m => m.usage))
   writeMetrics(buildName, metrics, time * 1000)
-  writeResults(i + 1, memory, numNodes, nodeSize, code === 0 ? 'success' : 'failure', code, time, maxRss)
+  writeResults(i + 1, memory, numNodes, nodeSize, code === 0 ? 'success' : 'failure', code, time, maxMemoryUsage)
 
   if (code === 0) {
     console.log(`${Green}Built after ${time}s!${Reset}`)
@@ -167,7 +167,7 @@ async function runTest(memory, numNodes, nodeSize, i) {
  * This sets up nodes of 1m and doubles the amount of nodes for each test.
  */
 
-const incrementalTestsPerConfig = 16;
+const incrementalTestsPerConfig = 15;
 const incrementalConfig = {
   memory: [`2g`, `4g`, `8g`],
   numNodesInitial: 100,
