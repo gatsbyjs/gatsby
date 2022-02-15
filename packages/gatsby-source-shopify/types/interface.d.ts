@@ -32,18 +32,8 @@ interface IBulkOperationNode {
   query: string
 }
 
-interface ICachedShopifyNode extends IShopifyNode, NodeInput {
-  internal: {
-    type: string
-    mediaType?: string
-    content?: string
-    contentDigest: string
-    description?: string
-  }
-}
-
-interface ICachedShopifyNodeMap {
-  [key: string]: ICachedShopifyNode
+interface IShopifyNodeMap {
+  [key: string]: IShopifyNode
 }
 
 interface ICurrentBulkOperationResponse {
@@ -137,6 +127,13 @@ interface IShopifyImage {
 interface IShopifyNode {
   id: string
   shopifyId: string
+  internal: {
+    type: string
+    mediaType?: string
+    content?: string
+    contentDigest: string
+    description?: string
+  }
   [key: string]: any
 }
 

@@ -81,23 +81,27 @@ export function parseShopifyId(shopifyId: string): Array<string> {
   return shopifyId.match(pattern) || []
 }
 
-export function decorateBulkObject(input: IBulkResult): IDecoratedResult {
-  const obj: { id?: string; shopifyId?: string; [key: string]: any } = {
-    ...input,
-  }
+export function decorateBulkObject(input: any): any {
+  if (input && typeof input === `object`) {
+    if (Array.isArray(input)) {
+      return input.map(decorateBulkObject)
+    }
 
-  if (typeof obj === `object`) {
+    const obj = { ...input }
+
+    for (const key of Object.keys(obj)) {
+      obj[key] = decorateBulkObject(obj[key])
+    }
+
     if (obj.id) {
       obj.shopifyId = obj.id
       delete obj.id
     }
 
-    for (const key of Object.keys(obj)) {
-      if (typeof obj[key] === `object`) obj[key] = decorateBulkObject(obj[key])
-    }
+    return obj
   }
 
-  return obj as IShopifyNode
+  return input
 }
 
 export async function processShopifyImages(

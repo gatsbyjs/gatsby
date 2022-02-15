@@ -25,10 +25,11 @@ export async function processBulkResults(
   for (let i = results.length - 1; i >= 0; i -= 1) {
     const result = decorateBulkObject(results[i])
     const resultIsNode =
-      result.id && JSON.stringify(Object.keys(result)) !== `["id","__parentId"]`
+      result.shopifyId &&
+      JSON.stringify(Object.keys(result)) !== `["shopifyId","__parentId"]`
 
     if (resultIsNode) {
-      const type = parseShopifyId(result.id)[1]
+      const type = parseShopifyId(result.shopifyId)[1]
       const imageFields = shopifyTypes[type].imageFields
       const referenceFields = shopifyTypes[type].referenceFields
 
@@ -43,8 +44,8 @@ export async function processBulkResults(
       }
 
       // Attach children references / objects
-      if (children[result.id]) {
-        for (const child of children[result.id]) {
+      if (children[result.shopifyId]) {
+        for (const child of children[result.shopifyId]) {
           const childType =
             typeof child === `string`
               ? parseShopifyId(child)[1]
@@ -66,7 +67,7 @@ export async function processBulkResults(
         }
       }
 
-      if (!isShopifyId(result.id)) {
+      if (!isShopifyId(result.shopifyId)) {
         throw new Error(
           `Expected an ID in the format gid://shopify/<typename>/<id>`
         )
@@ -74,12 +75,12 @@ export async function processBulkResults(
 
       const node = {
         ...result,
-        id: createNodeId(result.id, gatsbyApi, pluginOptions),
+        id: createNodeId(result.shopifyId, gatsbyApi, pluginOptions),
         internal: {
           type: `${pluginOptions.typePrefix || ``}Shopify${type}`,
           contentDigest: gatsbyApi.createContentDigest(result),
         },
-      }
+      } as IShopifyNode
 
       if (pluginOptions.downloadImages && imageFields) {
         promises.push(
@@ -96,7 +97,7 @@ export async function processBulkResults(
     if (result.__parentId) {
       children[result.__parentId] = [
         ...(children[result.__parentId] || []),
-        result.id || result,
+        result.shopifyId || result,
       ]
     }
   }
