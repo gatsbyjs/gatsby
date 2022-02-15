@@ -1,12 +1,14 @@
-interface IBulkObject {
+interface IBulkResult {
   id: string
   [key: string]: any
 }
 
-type BulkObjects = IBulkObject[]
+type BulkResults = IBulkResult[]
 
-type BulkResult = Record<string, any>
-type BulkResults = BulkResult[]
+interface IDecoratedResult {
+  shopifyId: string
+  [key: string]: any
+}
 
 type BulkOperationStatus =
   | "CANCELED"

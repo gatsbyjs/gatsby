@@ -4,11 +4,11 @@ export function locationTypeBuilder(prefix: string): string {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
         handle: String!
-        id: ID!
         inventoryManagement: Boolean!
         productBased: Boolean!
         serviceName: String!
         shippingMethods: [${prefix}ShippingMethod!]!
+        shopifyId: String!
         type: ${prefix}FulfillmentServiceType!
       }
 
@@ -23,13 +23,13 @@ export function locationTypeBuilder(prefix: string): string {
         createdAt: Date! @dateformat
         duplicateSkuCount: Int!
         harmonizedSystemCode: String
-        id: ID!
         inventoryHistoryUrl: String
         inventoryLevels: [${prefix}InventoryLevel!]! @link(from: "inventoryLevels___NODE", by: "id")
         legacyResourceId: String!
         locationsCount: Int!
         provinceCodeOfOrigin: String
         requiresShipping: Boolean!
+        shopifyId: String!
         sku: String
         tracked: Boolean!
         trackedEditable: ${prefix}EditableProperty!

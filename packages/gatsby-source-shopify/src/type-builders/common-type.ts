@@ -1,7 +1,7 @@
 export function commonTypeBuilder(prefix: string): string {
   return `
       type ${prefix}App {
-        id: ID!
+        shopifyId: String!
       }
 
       type ${prefix}AppFeedback {

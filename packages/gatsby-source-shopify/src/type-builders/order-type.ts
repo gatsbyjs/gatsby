@@ -18,7 +18,7 @@ export function orderTypeBuilder(prefix: string): string {
 
       type ${prefix}Refund {
         createdAt: Date @dateformat
-        id: ID!
+        shopifyId: String!
       }
     `
 }

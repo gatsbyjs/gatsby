@@ -43,9 +43,9 @@ export function productTypeBuilder(prefix: string): string {
       }
 
       type ${prefix}ProductOption {
-        id: ID!
         name: String!
         position: Int!
+        shopifyId: String!
         values: [String!]!
       }
 

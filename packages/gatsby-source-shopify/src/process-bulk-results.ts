@@ -1,52 +1,16 @@
 import { SourceNodesArgs } from "gatsby"
-import { createRemoteFileNode } from "gatsby-source-filesystem"
 
 import { shopifyTypes } from "./shopify-types"
 import {
-  createNodeId,
   isShopifyId,
+  createNodeId,
   parseShopifyId,
-  parseImageExtension,
+  decorateBulkObject,
+  processShopifyImages,
 } from "./helpers"
 
 interface IBulkResultChildren {
-  [key: string]: Array<string | BulkResult>
-}
-
-export async function processShopifyImages(
-  {
-    actions: { createNode },
-    createNodeId,
-    cache,
-    store,
-    reporter,
-  }: SourceNodesArgs,
-  node: IShopifyNode
-): Promise<void> {
-  const type = parseShopifyId(node.shopifyId)[1]
-  const imageFields = shopifyTypes[type].imageFields
-
-  if (imageFields) {
-    for (const fieldPath of imageFields) {
-      const image = fieldPath
-        .split(`.`)
-        .reduce((acc, value) => acc[value], node)
-
-      if (image && parseImageExtension(image.originalSrc) !== `gif`) {
-        const fileNode = await createRemoteFileNode({
-          url: image.originalSrc,
-          cache,
-          createNode,
-          createNodeId,
-          parentNodeId: node.id,
-          store,
-          reporter,
-        })
-
-        image.localFile___NODE = fileNode.id
-      }
-    }
-  }
+  [key: string]: Array<string | IBulkResult>
 }
 
 export async function processBulkResults(
@@ -59,7 +23,7 @@ export async function processBulkResults(
   const children: IBulkResultChildren = {}
 
   for (let i = results.length - 1; i >= 0; i -= 1) {
-    const result = { ...results[i] }
+    const result = decorateBulkObject(results[i])
     const resultIsNode =
       result.id && JSON.stringify(Object.keys(result)) !== `["id","__parentId"]`
 
@@ -111,7 +75,6 @@ export async function processBulkResults(
       const node = {
         ...result,
         id: createNodeId(result.id, gatsbyApi, pluginOptions),
-        shopifyId: result.id,
         internal: {
           type: `${pluginOptions.typePrefix || ``}Shopify${type}`,
           contentDigest: gatsbyApi.createContentDigest(result),
