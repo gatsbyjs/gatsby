@@ -14,6 +14,36 @@ Within the container, two points to your local filesystem are mounted:
 
 ## Commands
 
+### Tests
+
+#### yarn test --memory X --num-nodes Y --node-size Z
+
+Runs a test build within a docker container with the given memory allotment.
+Within our gatsby-node, we'll create X nodes with a string property of size Y.
+
+Example: running a build with 1000 nodes of 1mb each, in a docker container with 8gb of memory.
+
+```
+$ yarn test --memory 8g --num-nodes 500 --node-size 1m
+```
+
+#### yarn test-suite --name some-name --suite [incremental|exhaustive]
+
+Runs through test suites defined in `scripts/test-suite.js` and outputs results to `output/some-name`.
+Output includes a `results.csv` with a summary of all builds, as well as breakdowns for each memory configuration.
+
+##### incremental
+
+Incremental tests run builds with a `node-size` of 1m. For each memory allotment, it will start with 100
+nodes in the build and increment by 100 on each success. The test will stop when all builds in a given
+configuration fail.
+See `incrementalConfig` in `scripts/test-suite.js` to customize test sets.
+
+##### exhaustive
+
+Exhaustive tests are just that, exhaustive. It will measure the time/success of every combination given.
+See `exhaustiveConfig` in `scripts/test-suite.js` to customize test sets.
+
 ### Docker
 
 These commands are used for interfacing with docker and have built-in utilities for managing the docker container.
