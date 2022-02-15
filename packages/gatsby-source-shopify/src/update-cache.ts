@@ -103,9 +103,12 @@ export async function updateCache(
   destroyEvents.forEach(event => {
     const shopifyId = `gid://shopify/${event.subject_type}/${event.subject_id}`
     const id = createNodeId(shopifyId, gatsbyApi, pluginOptions)
-    gatsbyApi.actions.deleteNode(nodeMap[id])
-    reportNodeDeletion(gatsbyApi, nodeMap[id])
-    delete nodeMap[id]
+
+    if (nodeMap[id]) {
+      gatsbyApi.actions.deleteNode(nodeMap[id])
+      reportNodeDeletion(gatsbyApi, nodeMap[id])
+      delete nodeMap[id]
+    }
   })
 
   const topLevelNodes = Object.values(nodeMap).filter(node => {
