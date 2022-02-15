@@ -128,7 +128,7 @@ async function fetchFile({
 }: IFetchRemoteFileOptions): Promise<string> {
   // global introduced in gatsby 4.0.0
   const BUILD_ID = global.__GATSBY?.buildId ?? ``
-  const fileDirectory = cache ? cache.directory : directory
+  const fileDirectory = (cache ? cache.directory : directory) as string
   const storage = getStorage(getDatabaseDir())
 
   if (!cache && !directory) {
@@ -172,13 +172,9 @@ async function fetchFile({
     }
 
     const digest = createContentDigest(url)
-    await fs.ensureDir(path.join(fileDirectory as string, digest))
+    await fs.ensureDir(path.join(fileDirectory, digest))
 
-    const tmpFilename = createFilePath(
-      fileDirectory as string,
-      `tmp-${digest}`,
-      ext
-    )
+    const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
     const response = await requestRemoteNode(
       url,
       headers,
@@ -186,11 +182,7 @@ async function fetchFile({
       httpOptions
     )
 
-    const filename = createFilePath(
-      path.join(fileDirectory as string, digest),
-      name,
-      ext
-    )
+    const filename = createFilePath(path.join(fileDirectory, digest), name, ext)
     if (response.statusCode === 200) {
       // Save the response headers for future requests.
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
@@ -207,7 +199,6 @@ async function fetchFile({
       await setInFlightObject(url, BUILD_ID, {
         cacheKey,
         extension: ext,
-        headers,
         headers: response.headers.etag ? { etag: response.headers.etag } : {},
         directory: fileDirectory,
         path: filename.replace(fileDirectory, ``),
