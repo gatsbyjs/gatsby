@@ -30,7 +30,9 @@ it("generates the expected api output", done => {
           "wrapPageElement": Object {},
           "wrapRootElement": Object {},
         },
-        "features": Array [],
+        "features": Array [
+          "image-service",
+        ],
         "node": Object {
           "createPages": Object {},
           "createPagesStatefully": Object {},
