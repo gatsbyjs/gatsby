@@ -170,10 +170,11 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  const compiledDirectory = `${program.directory}/${COMPILED_CACHE_DIR}`
 
+  const compiledDirectory = `${program.directory}/${COMPILED_CACHE_DIR}`
   await fs.ensureDir(compiledDirectory)
   await compileGatsbyFiles(program.directory)
+
   const siteDirectory = program.directory
   const config = await loadConfig({
     siteDirectory,
