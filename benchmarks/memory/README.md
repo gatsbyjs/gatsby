@@ -12,6 +12,8 @@ Within the container, two points to your local filesystem are mounted:
 - /usr/src/gatsby : Your local gatsby repo
 - /usr/src/site : The memory benchmark gatsby site
 
+If you'd like to configure `jemalloc` to run within the container, set the `JEMALLOC=1` env var when building the docker container.
+
 ## Commands
 
 ### Tests
@@ -51,6 +53,21 @@ These commands are used for interfacing with docker and have built-in utilities 
 #### yarn docker:build
 
 Builds the container used for testing.
+If you'd like to configure `jemalloc` to run within the container, set the `JEMALLOC=1` env var.
+
+Example:
+
+```
+$ JEMALLOC=1 yarn docker:build
+```
+
+#### yarn docker:remove
+
+Removes the docker image.
+
+#### yarn docker:rebuild
+
+Shorthand for remove + build.
 
 #### yarn docker:start
 

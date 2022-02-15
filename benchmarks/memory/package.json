@@ -10,7 +10,7 @@
     "gatsby:develop": "NODE_ENV=development yarn gatsby develop -H 0.0.0.0 -p 9000",
     "gatsby:build:debug": "node --nolazy --inspect-brk=0.0.0.0:9229 node_modules/.bin/gatsby build",
     "gatsby:develop:debug": "NODE_ENV=development node --nolazy --inspect-brk=0.0.0.0:9229 node_modules/.bin/gatsby develop -H 0.0.0.0 -p 9000",
-    "docker:build": "docker build -t gatsby-memory .",
+    "docker:build": "docker build -t gatsby-memory . --build-arg jemalloc=$JEMALLOC",
     "docker:remove": "docker image rm -f gatsby-memory",
     "docker:rebuild": "yarn docker:stop; yarn docker:remove && yarn docker:build",
     "docker:start": "./scripts/docker-start",
