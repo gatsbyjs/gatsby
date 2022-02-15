@@ -76,7 +76,7 @@ Here's a list of features:
 ```js
 const { hasFeature } = require(`gatsby-plugin-utils`)
 
-if (!hasFeature(`image-service`)) {
-  // You can polyfill image-service here so older versions have support as well
+if (!hasFeature(`image-cdn`)) {
+  // You can polyfill image-cdn here so older versions have support as well
 }
 ```
