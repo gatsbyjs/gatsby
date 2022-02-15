@@ -7,7 +7,7 @@ var path = require(`path`);
 
 const args = yargs
   .option(`name`, {
-    default: null,
+    default: 'test-suite',
     describe: `The name to save this suite's results to`,
   })
   .option(`suite`, {
@@ -40,17 +40,17 @@ const hostExec = (cmd, showCommand = true) => {
   return exec(cmd)
 }
 
-const outputDir = `output/${args.name}`
+// Set up output dir
+let outputDir = `output/${args.name}`
+let outputDirIndex = 0
 const resultsFile = `${outputDir}/results.csv`;
 
-// reset output dir
-if (args.name) {
-  if (fs.existsSync(outputDir)) {
-    fs.rmSync(outputDir, {recursive: true})
-  }
-
-  fs.mkdirSync(outputDir, {recursive: true})
+while (fs.existsSync(outputDir)) {
+  outputDirIndex += 1
+  outputDir = `output/${args.name}-${outputDirIndex}`
 }
+
+fs.mkdirSync(outputDir, {recursive: true})
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -58,9 +58,8 @@ function sleep(ms) {
   });
 }
 
-function writeResults(build, memory, numNodes, nodeSize, result, code, time, maxMemoryUsage) {
-  if (!args.name) return
-  
+// Write final results of a build
+function writeResults(build, memory, numNodes, nodeSize, result, code, time, maxMemoryUsage) {  
   if (!fs.existsSync(resultsFile)) {
     const csvColumns = `build,memory,numNodes,nodeSize,result,code,time,maxMemoryUsage`
     fs.writeFileSync(resultsFile, `${csvColumns}\n`)
@@ -69,9 +68,8 @@ function writeResults(build, memory, numNodes, nodeSize, result, code, time, max
   fs.writeFileSync(resultsFile, `${[build, memory, numNodes, nodeSize, result, code, time, maxMemoryUsage].join(',')}\n`, { flag: 'a+' })
 }
 
+// Write individual memory metrics of a build
 function writeMetrics(name, metrics, buildTime) {
-  if (!args.name) return
-
   const outputFile = `${outputDir}/${name}.csv`;
 
   if (!fs.existsSync(outputFile)) {
@@ -83,7 +81,7 @@ function writeMetrics(name, metrics, buildTime) {
   for (const {build, timestamp, memory, numNodes, nodeSize, usage} of metrics) {
     const normalizedTime = timestamp - buildTime;
     if (normalizedTime >= 0) {
-      fs.writeFileSync(outputFile, `${[build, timestamp - buildTime, memory, numNodes, nodeSize, usage].join(',')}\n`, { flag: 'a+' })
+      fs.writeFileSync(outputFile, `${[build, normalizedTime, memory, numNodes, nodeSize, usage].join(',')}\n`, { flag: 'a+' })
     }
   }
 }
@@ -229,9 +227,7 @@ async function exhaustive() {
   }
 }
 
-if (args.name) {
-  console.log(`Writing ${args.suite} results to ${outputDir}`)
-}
+console.log(`Writing ${args.suite} results to ${outputDir}`)
 
 if (args.suite === 'incremental') {
   incremental()
