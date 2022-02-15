@@ -1,29 +1,23 @@
 import reporter from "gatsby-cli/lib/reporter"
 import telemetry from "gatsby-telemetry"
+import { preferDefault } from "../prefer-default"
+import { getConfigFile } from "../get-config-file"
+import { internalActions } from "../../redux/actions"
+import loadThemes from "../load-themes"
+import { store } from "../../redux"
+import handleFlags from "../../utils/handle-flags"
+import availableFlags from "../../utils/flags"
+import { IProgram } from "../../commands/types"
+import { IGatsbyConfig } from "../../internal"
 
-import { IFlattenedPlugin } from "./load-plugins/types"
-
-import { preferDefault } from "../bootstrap/prefer-default"
-import { getConfigFile } from "../bootstrap/get-config-file"
-import { loadPlugins } from "../bootstrap/load-plugins"
-import { internalActions } from "../redux/actions"
-import loadThemes from "../bootstrap/load-themes"
-import { store } from "../redux"
-import handleFlags from "../utils/handle-flags"
-import availableFlags from "../utils/flags"
-import { IProgram } from "../commands/types"
-
-export async function loadConfigAndPlugins({
+export async function loadConfig({
   siteDirectory,
   processFlags = false,
 }: {
   siteDirectory: string
   processFlags?: boolean
   program?: IProgram
-}): Promise<{
-  config: any
-  flattenedPlugins: Array<IFlattenedPlugin>
-}> {
+}): Promise<IGatsbyConfig> {
   // Try opening the site's gatsby-config.js file.
   const { configModule, configFilePath } = await getConfigFile(
     siteDirectory,
@@ -94,7 +88,5 @@ export async function loadConfigAndPlugins({
 
   store.dispatch(internalActions.setSiteConfig(config))
 
-  const flattenedPlugins = await loadPlugins(config, siteDirectory)
-
-  return { config, flattenedPlugins }
+  return config
 }
