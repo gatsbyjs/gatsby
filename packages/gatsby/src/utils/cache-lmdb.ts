@@ -1,4 +1,4 @@
-import { open, RootDatabase, Database, DatabaseOptions } from "lmdb-store"
+import { open, RootDatabase, Database, DatabaseOptions } from "lmdb"
 import fs from "fs-extra"
 import path from "path"
 

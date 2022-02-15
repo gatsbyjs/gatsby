@@ -103,7 +103,7 @@
     "joi": "^17.4.2",
     "json-loader": "^0.5.7",
     "latest-version": "5.1.0",
-    "lmdb-store": "^1.6.11",
+    "lmdb": "2.2.1",
     "lodash": "^4.17.21",
     "md5-file": "^5.0.0",
     "meant": "^1.0.3",
