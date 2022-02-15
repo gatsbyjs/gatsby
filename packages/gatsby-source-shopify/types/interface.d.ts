@@ -30,6 +30,20 @@ interface IBulkOperationNode {
   query: string
 }
 
+interface ICachedShopifyNode extends IShopifyNode, NodeInput {
+  internal: {
+    type: string
+    mediaType?: string
+    content?: string
+    contentDigest: string
+    description?: string
+  }
+}
+
+interface ICachedShopifyNodeMap {
+  [key: string]: ICachedShopifyNode
+}
+
 interface ICurrentBulkOperationResponse {
   currentBulkOperation: {
     id: string
@@ -131,4 +145,5 @@ interface IShopifyPluginOptions {
   shopifyConnections?: string[]
   typePrefix?: string
   salesChannel?: string
+  prioritize?: boolean
 }

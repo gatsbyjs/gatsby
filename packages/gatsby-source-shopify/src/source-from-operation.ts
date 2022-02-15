@@ -3,6 +3,7 @@ import { SourceNodesArgs } from "gatsby"
 import { createInterface } from "readline"
 import { shiftLeft } from "shift-left"
 
+import { isPriorityBuild } from "./helpers"
 import { processBulkResults } from "./process-bulk-results"
 import {
   OperationError,
@@ -23,14 +24,6 @@ export function makeSourceFromOperation(
   ): Promise<void> {
     const { reporter } = gatsbyApi
 
-    /**
-     * A Priority build should not be the default.
-     * TODO - Change this logic so that a flag must be ENABLED for a priority build
-     */
-    const isPriorityBuild =
-      process.env.GATSBY_IS_PREVIEW !== `true` &&
-      process.env.GATSBY_IS_PR_BUILD !== `true`
-
     const operationTimer = reporter.activityTimer(
       `source ${lastBuildTime ? `changed ` : ``}shopify ${op.name}`
     )
@@ -38,7 +31,7 @@ export function makeSourceFromOperation(
     operationTimer.start()
 
     try {
-      if (isPriorityBuild) {
+      if (isPriorityBuild(pluginOptions)) {
         await cancelOperationInProgress()
       } else {
         await finishLastOperation()
@@ -100,7 +93,7 @@ export function makeSourceFromOperation(
         const code = errorCodes.bulkOperationFailed
 
         if (e.node.status === `CANCELED`) {
-          if (isPriorityBuild) {
+          if (isPriorityBuild(pluginOptions)) {
             /**
              * There are at least two production sites for this Shopify
              * store trying to run an operation at the same time.

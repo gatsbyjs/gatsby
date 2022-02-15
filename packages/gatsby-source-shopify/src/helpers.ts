@@ -2,6 +2,8 @@ import { NodePluginArgs } from "gatsby"
 
 const pattern = /^gid:\/\/shopify\/(\w+)\/(.+)$/
 
+const { CI, GATSBY_CLOUD, GATSBY_IS_PR_BUILD, NETLIFY, CONTEXT } = process.env
+
 export function createNodeId(
   shopifyId: string,
   gatsbyApi: NodePluginArgs,
@@ -29,6 +31,19 @@ export function getLastBuildTime(
   )
 }
 
+export function setCurrentBuildTime(
+  gatsbyApi: NodePluginArgs,
+  pluginOptions: IShopifyPluginOptions
+): void {
+  const { typePrefix = `` } = pluginOptions
+  const status = getPluginStatus(gatsbyApi)
+
+  gatsbyApi.actions.setPluginStatus({
+    ...status,
+    [`currentBuildTime${typePrefix}`]: Date.now(),
+  })
+}
+
 export function setLastBuildTime(
   gatsbyApi: NodePluginArgs,
   pluginOptions: IShopifyPluginOptions
@@ -38,8 +53,21 @@ export function setLastBuildTime(
 
   gatsbyApi.actions.setPluginStatus({
     ...status,
-    [`lastBuildTime${typePrefix}`]: Date.now(),
+    [`currentBuildTime${typePrefix}`]: undefined,
+    [`lastBuildTime${typePrefix}`]: status[`currentBuildTime${typePrefix}`],
   })
+}
+
+export function isPriorityBuild(pluginOptions: IShopifyPluginOptions): boolean {
+  const isGatsbyCloudPriorityBuild =
+    CI === `true` && GATSBY_CLOUD === `true` && GATSBY_IS_PR_BUILD !== `true`
+
+  const isNetlifyPriorityBuild =
+    CI === `true` && NETLIFY === `true` && CONTEXT === `production`
+
+  return pluginOptions.prioritize !== undefined
+    ? pluginOptions.prioritize
+    : isGatsbyCloudPriorityBuild || isNetlifyPriorityBuild
 }
 
 export function isShopifyId(shopifyId: string): boolean {

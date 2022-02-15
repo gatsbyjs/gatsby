@@ -25,5 +25,6 @@ export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): any {
     salesChannel: Joi.string().default(
       process.env.GATSBY_SHOPIFY_SALES_CHANNEL || ``
     ),
+    prioritize: Joi.boolean(),
   })
 }
