@@ -53,7 +53,7 @@ const convert = <TContext = any>({
   fields,
   prefix = null,
   depth = 0,
-  deprecationReason,
+  deprecationReason: parentFieldDeprecationReason,
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: AnyTypeComposer<TContext>
@@ -65,6 +65,7 @@ const convert = <TContext = any>({
   const sortFields = {}
 
   Object.keys(fields).forEach(fieldName => {
+    let deprecationReason = parentFieldDeprecationReason
     const fieldConfig = fields[fieldName]
     const sortable =
       typeComposer instanceof UnionTypeComposer ||
