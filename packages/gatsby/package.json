@@ -95,7 +95,7 @@
     "glob": "^7.2.0",
     "got": "^11.8.2",
     "graphql": "^15.7.2",
-    "graphql-compose": "^9.0.6",
+    "graphql-compose": "^9.0.7",
     "graphql-playground-middleware-express": "^1.7.22",
     "hasha": "^5.2.2",
     "http-proxy": "^1.18.1",

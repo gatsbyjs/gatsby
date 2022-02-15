@@ -6,7 +6,8 @@ import { CombinedState } from "redux"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { savePartialStateToDisk, store } from "../../../redux"
-import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
+import { loadConfig } from "../../../bootstrap/load-config"
+import { loadPlugins } from "../../../bootstrap/load-plugins"
 import {
   createTestWorker,
   describeWhenLMDB,
@@ -58,7 +59,10 @@ describeWhenLMDB(`worker (schema)`, () => {
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
     await compileGatsbyFiles(siteDirectory)
-    await loadConfigAndPlugins({ siteDirectory })
+    const config = await loadConfig({
+      siteDirectory,
+    })
+    await loadPlugins(config, siteDirectory)
     await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
     await getDataStore().ready()

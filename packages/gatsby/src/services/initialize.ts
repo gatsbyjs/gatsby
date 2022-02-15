@@ -19,7 +19,8 @@ import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
-import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
+import { loadConfig } from "../bootstrap/load-config"
+import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import {
@@ -164,24 +165,29 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
-  // Try opening the site's gatsby-config.js file.
-  let activity = reporter.activityTimer(
-    `open and validate gatsby-configs, load plugins`,
-    {
-      parentSpan,
-    }
-  )
+  // Load gatsby config
+  let activity = reporter.activityTimer(`load gatsby config`, {
+    parentSpan,
+  })
   activity.start()
-
   const compiledDirectory = `${program.directory}/${COMPILED_CACHE_DIR}`
 
   await fs.ensureDir(compiledDirectory)
   await compileGatsbyFiles(program.directory)
-
-  const { config, flattenedPlugins } = await loadConfigAndPlugins({
-    siteDirectory: program.directory,
+  const siteDirectory = program.directory
+  const config = await loadConfig({
+    siteDirectory,
     processFlags: true,
   })
+  activity.end()
+
+  // Load plugins
+  activity = reporter.activityTimer(`load plugins`, {
+    parentSpan,
+  })
+  activity.start()
+  const flattenedPlugins = await loadPlugins(config, siteDirectory)
+  activity.end()
 
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
@@ -205,8 +211,6 @@ export async function initialize({
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
   }
-
-  activity.end()
 
   if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
     if (process.env.gatsby_executing_command !== `develop`) {
