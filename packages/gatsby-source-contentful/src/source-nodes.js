@@ -211,10 +211,14 @@ export async function sourceNodes(
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
   reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
-  reporter.info(`Contentful: ${nodeCounts.existingEntry} cached entries`)
+  reporter.info(
+    `Contentful: ${nodeCounts.existingEntry / locales.length} cached entries`
+  )
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
-  reporter.info(`Contentful: ${nodeCounts.existingAsset} cached assets`)
+  reporter.info(
+    `Contentful: ${nodeCounts.existingAsset / locales.length} cached assets`
+  )
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
   reporter.verbose(`Building Contentful reference map`)
