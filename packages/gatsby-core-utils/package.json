@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "3.8.0-next.0",
+  "version": "3.8.0-next.1",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -49,8 +49,8 @@
     "fs-extra": "^10.0.0",
     "got": "^11.8.3",
     "import-from": "^4.0.0",
-    "lock": "^1.1.0",
     "lmdb": "^2.1.7",
+    "lock": "^1.1.0",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",
     "resolve-from": "^5.0.0",
