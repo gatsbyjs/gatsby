@@ -181,14 +181,24 @@ export const createMediaItemNode = async ({
 
       node = {
         ...node,
-        localFile: {
-          id: localFileNode?.id,
-        },
+        url: node.sourceUrl,
+        contentType: node.contentType,
+        mimeType: node.mimeType,
+        filename: node.mediaDetails.file?.split(`/`)?.pop(),
+        filesize: node.mediaDetails.fileSize,
+        width: node.mediaDetails.width,
+        height: node.mediaDetails.height,
+        placeholderUrl:
+          node.mediaDetails.sizes?.[0]?.sourceUrl ?? node.sourceUrl,
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
           type: buildTypeName(`MediaItem`),
         },
+      }
+
+      if (localFileNode) {
+        node.localFile = localFileNode?.id
       }
 
       const normalizedNode = normalizeNode({ node, nodeTypeName: `MediaItem` })
