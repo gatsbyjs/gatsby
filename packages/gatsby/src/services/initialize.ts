@@ -28,7 +28,7 @@ import {
   compileGatsbyFiles,
 } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
-import { compileLocalPluginGatsbyFiles } from "../utils/parcel/compile-local-plugin-gatsby-files"
+import { createLocalPluginParcelConfig } from "../utils/parcel/create-parcel-config"
 
 interface IPluginResolution {
   resolve: string
@@ -191,8 +191,17 @@ export async function initialize({
   })
   activity.end()
 
-  // Compile local plugin gatsby files
-  await compileLocalPluginGatsbyFiles(config, siteRoot)
+  // Compile local plugin gatsby files if there are local plugins
+  const localPluginParcelConfig = createLocalPluginParcelConfig(
+    config,
+    siteRoot
+  )
+  if (localPluginParcelConfig?.length) {
+    activity = reporter.activityTimer(`compile local plugin gatsby files`)
+    activity.start()
+    await compileGatsbyFiles(localPluginParcelConfig, siteRoot)
+    activity.end()
+  }
 
   // Load plugins
   activity = reporter.activityTimer(`load plugins`, {
