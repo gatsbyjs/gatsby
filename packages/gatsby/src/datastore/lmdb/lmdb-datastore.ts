@@ -93,7 +93,12 @@ function getDatabases(): ILmdbDatabases {
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
         // sharedStructuresKey: Symbol.for(`structures`),
         // @ts-ignore
-        cache: true,
+        cache: {
+          // expirer: false disables LRU part and only take care of WeakRefs
+          // this way we don't retain nodes strongly, but will continue to
+          // reuse them if they are loaded already
+          expirer: false,
+        },
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
