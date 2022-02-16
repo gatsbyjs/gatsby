@@ -23,12 +23,8 @@ import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
-import {
-  COMPILED_CACHE_DIR,
-  compileGatsbyFiles,
-} from "../utils/parcel/compile-gatsby-files"
+import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
-import { createLocalPluginParcelConfig } from "../utils/parcel/create-parcel-config"
 
 interface IPluginResolution {
   resolve: string
@@ -169,15 +165,9 @@ export async function initialize({
   const siteRoot = program.directory
 
   // Compile root gatsby files
-  let activity = reporter.activityTimer(`compile root gatsby files`)
+  let activity = reporter.activityTimer(`compile gatsby files`)
   activity.start()
-  const parcelConfig = [
-    {
-      entry: siteRoot,
-      dist: `${siteRoot}/${COMPILED_CACHE_DIR}`,
-    },
-  ]
-  await compileGatsbyFiles(parcelConfig, siteRoot)
+  await compileGatsbyFiles(siteRoot)
   activity.end()
 
   // Load gatsby config
@@ -190,18 +180,6 @@ export async function initialize({
     processFlags: true,
   })
   activity.end()
-
-  // Compile local plugin gatsby files if there are local plugins
-  const localPluginParcelConfig = createLocalPluginParcelConfig(
-    config,
-    siteRoot
-  )
-  if (localPluginParcelConfig?.length) {
-    activity = reporter.activityTimer(`compile local plugin gatsby files`)
-    activity.start()
-    await compileGatsbyFiles(localPluginParcelConfig, siteRoot)
-    activity.end()
-  }
 
   // Load plugins
   activity = reporter.activityTimer(`load plugins`, {

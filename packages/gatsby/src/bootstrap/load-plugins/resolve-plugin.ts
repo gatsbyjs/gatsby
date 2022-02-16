@@ -40,7 +40,7 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
 
     return {
       resolve: localPluginPath,
-      resolveCompiled: `${rootDir}/${COMPILED_CACHE_DIR}/${pluginName}`,
+      resolveCompiled: `${rootDir}/${COMPILED_CACHE_DIR}/plugins/${pluginName}`,
       name,
       id: createPluginId(name),
       version:
