@@ -1,6 +1,7 @@
 import moment, { MomentInput, unitOfTime, LocaleSpecifier } from "moment"
 import { GraphQLScalarType, Kind, GraphQLFieldConfig } from "graphql"
 import { oneLine } from "common-tags"
+import GatsbyCacheLmdb from "../../utils/cache-lmdb"
 
 interface IFormatDateArgs {
   date: Date | string
@@ -209,19 +210,34 @@ export function isDate(value: MomentInput): boolean {
   return typeof value !== `number` && momentDate.isValid()
 }
 
-const formatDate = ({
+const formatDateCache = new GatsbyCacheLmdb({
+  name: `format-date-cache`,
+  encoding: `string`,
+}).init()
+
+const formatDate = async ({
   date,
   fromNow,
   difference,
   formatString,
   locale = `en`,
-}: IFormatDateArgs): string | number => {
+}: IFormatDateArgs): Promise<string | number> => {
   const normalizedDate = JSON.parse(JSON.stringify(date))
   if (formatString) {
-    return moment
+    const cacheKey = `${normalizedDate}-${formatString}`
+    const cachedFormat = await formatDateCache.get<string>(cacheKey)
+    if (cachedFormat) {
+      return cachedFormat
+    }
+
+    const result = moment
       .utc(normalizedDate, ISO_8601_FORMAT, true)
       .locale(locale)
       .format(formatString)
+
+    await formatDateCache.set(cacheKey, result)
+
+    return result
   } else if (fromNow) {
     return moment
       .utc(normalizedDate, ISO_8601_FORMAT, true)
@@ -282,11 +298,18 @@ export const getDateResolver = (
         from: options.from || info.from,
         fromNode: options.from ? options.fromNode : info.fromNode,
       })
-      if (date == null) return null
 
-      return Array.isArray(date)
-        ? date.map(d => formatDate({ date: d, ...args }))
-        : formatDate({ date, ...args })
+      if (date == null) {
+        return null
+      }
+
+      if (Array.isArray(date)) {
+        return await Promise.all(
+          date.map(d => formatDate({ date: d, ...args }))
+        )
+      }
+
+      return await formatDate({ date, ...args })
     },
   }
 }
