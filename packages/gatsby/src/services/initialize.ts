@@ -166,15 +166,18 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
+  const siteRoot = program.directory
+
   // Compile root gatsby files
   let activity = reporter.activityTimer(`compile root gatsby files`)
   activity.start()
-  await compileGatsbyFiles([
+  const parcelConfig = [
     {
-      entry: program.directory,
-      dist: `${program.directory}/${COMPILED_CACHE_DIR}`,
+      entry: siteRoot,
+      dist: `${siteRoot}/${COMPILED_CACHE_DIR}`,
     },
-  ])
+  ]
+  await compileGatsbyFiles(parcelConfig, siteRoot)
   activity.end()
 
   // Load gatsby config
@@ -182,22 +185,21 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  const siteDirectory = program.directory
   const config = await loadConfig({
-    siteDirectory,
+    siteDirectory: siteRoot,
     processFlags: true,
   })
   activity.end()
 
   // Compile local plugin gatsby files
-  await compileLocalPluginGatsbyFiles(config, siteDirectory)
+  await compileLocalPluginGatsbyFiles(config, siteRoot)
 
   // Load plugins
   activity = reporter.activityTimer(`load plugins`, {
     parentSpan,
   })
   activity.start()
-  const flattenedPlugins = await loadPlugins(config, siteDirectory)
+  const flattenedPlugins = await loadPlugins(config, siteRoot)
   activity.end()
 
   // TODO: figure out proper way of disabling loading indicator

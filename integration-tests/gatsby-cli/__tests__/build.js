@@ -12,7 +12,7 @@ describe(`gatsby build`, () => {
   it(`creates a built gatsby site`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)
 
-    logs.should.contain(`success compile gatsby files`)
+    logs.should.contain(`success compile root gatsby files`)
     logs.should.contain(`success load gatsby config`)
     logs.should.contain(`success load plugins`)
     logs.should.contain(`success onPreInit`)

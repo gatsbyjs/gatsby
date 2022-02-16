@@ -3,11 +3,9 @@ import reporter from "gatsby-cli/lib/reporter"
 import { ensureDir } from "fs-extra"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
-
-const rootDir = process.cwd()
-const gatsbyFileRegex = `gatsby-+(node|config).{ts,tsx,js}`
-
-const commonTargetOptions = {
+export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
+export const gatsbyFileRegex = `gatsby-+(node|config).{ts,tsx,js}`
+export const commonTargetOptions = {
   outputFormat: `commonjs`,
   includeNodeModules: false,
   sourceMap: false,
@@ -27,7 +25,10 @@ export interface IParcelConfigItem {
  * Construct Parcel with config. Multiple targets may be provided for a single run.
  * @see {@link https://parceljs.org/features/targets/}
  */
-export function constructParcel(parcelConfig: IParcelConfig): Parcel {
+export function constructParcel(
+  parcelConfig: IParcelConfig,
+  siteRoot: string
+): Parcel {
   const entries: Array<string> = []
   const targets = {}
 
@@ -47,7 +48,7 @@ export function constructParcel(parcelConfig: IParcelConfig): Parcel {
     defaultConfig: `gatsby-parcel-config`,
     mode: `production`,
     targets,
-    cacheDir: `${rootDir}/.cache/.parcel-cache`,
+    cacheDir: `${siteRoot}/${PARCEL_CACHE_DIR}`,
   })
 }
 
@@ -56,9 +57,10 @@ export function constructParcel(parcelConfig: IParcelConfig): Parcel {
  * in the target dist from the provided config (e.g. `<ROOT_DIR>/.cache/compiled`).
  */
 export async function compileGatsbyFiles(
-  parcelConfig: IParcelConfig
+  parcelConfig: IParcelConfig,
+  siteRoot: string
 ): Promise<void> {
-  const parcel = constructParcel(parcelConfig)
+  const parcel = constructParcel(parcelConfig, siteRoot)
 
   try {
     await ensureDir(COMPILED_CACHE_DIR)

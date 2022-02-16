@@ -1,8 +1,11 @@
 import { Parcel } from "@parcel/core"
 import {
-  constructBundler,
+  constructParcel,
   compileGatsbyFiles,
+  gatsbyFileRegex,
+  commonTargetOptions,
   COMPILED_CACHE_DIR,
+  PARCEL_CACHE_DIR,
 } from "../compile-gatsby-files"
 import { siteMetadata } from "./fixtures/utils/site-metadata"
 import { moreDataConfig } from "./fixtures/utils/more-data-config"
@@ -43,16 +46,17 @@ interface IMockedParcel extends Parcel {
 describe(`gatsby file compilation`, () => {
   describe(`constructBundler`, () => {
     it(`should construct Parcel relative to passed directory`, () => {
-      const { options } = constructBundler(config.js) as IMockedParcel
+      const { options } = constructParcel(config.js, dir.js) as IMockedParcel
 
       expect(options).toMatchSnapshot({
-        entries: `${dir.js}/gatsby-+(node|config).{ts,tsx,js}`,
-        targets: {
-          default: {
+        entries: expect.arrayContaining([`${dir.js}/${gatsbyFileRegex}`]),
+        targets: expect.objectContaining({
+          [`${dir.js}/${COMPILED_CACHE_DIR}`]: {
+            ...commonTargetOptions,
             distDir: `${dir.js}/${COMPILED_CACHE_DIR}`,
           },
-        },
-        cacheDir: `${dir.js}/.cache/.parcel-cache`,
+        }),
+        cacheDir: `${dir.js}/${PARCEL_CACHE_DIR}`,
       })
     })
   })
@@ -65,7 +69,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-config.js`, async () => {
-      await compileGatsbyFiles(config.js)
+      await compileGatsbyFiles(config.js, dir.js)
 
       const compiledGatsbyConfig = await readFile(
         `${dir.js}/.cache/compiled/gatsby-config.js`,
@@ -78,7 +82,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-config.ts`, async () => {
-      await compileGatsbyFiles(config.ts)
+      await compileGatsbyFiles(config.ts, dir.ts)
 
       const compiledGatsbyConfig = await readFile(
         `${dir.ts}/.cache/compiled/gatsby-config.js`,
@@ -91,7 +95,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-node.js`, async () => {
-      await compileGatsbyFiles(config.js)
+      await compileGatsbyFiles(config.js, dir.js)
 
       const compiledGatsbyNode = await readFile(
         `${dir.js}/.cache/compiled/gatsby-node.js`,
@@ -102,7 +106,7 @@ describe(`gatsby file compilation`, () => {
     })
 
     it(`should compile gatsby-node.ts`, async () => {
-      await compileGatsbyFiles(config.ts)
+      await compileGatsbyFiles(config.ts, dir.ts)
 
       const compiledGatsbyNode = await readFile(
         `${dir.ts}/.cache/compiled/gatsby-node.js`,
