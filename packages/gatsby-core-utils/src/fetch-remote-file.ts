@@ -8,6 +8,7 @@ import {
   getRemoteFileExtension,
   createFilePath,
 } from "./filename-utils"
+import { slash } from "./path"
 import { requestRemoteNode } from "./remote-file-utils/fetch-file"
 import { getStorage, getDatabaseDir } from "./utils/get-storage"
 import { createMutex } from "./mutex"
@@ -200,8 +201,8 @@ async function fetchFile({
         cacheKey,
         extension: ext,
         headers: response.headers.etag ? { etag: response.headers.etag } : {},
-        directory: fileDirectory,
-        path: filename.replace(fileDirectory, ``),
+        directory: slash(fileDirectory),
+        path: slash(filename.replace(fileDirectory, ``)),
       })
     } else if (response.statusCode === 304) {
       await fs.remove(tmpFilename)

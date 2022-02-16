@@ -4,13 +4,13 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
+    "gatsby": "4.8.0-next.1-dev-1645011114818",
     "gatsby-image": "latest",
-    "gatsby-plugin-gatsby-cloud": "latest",
-    "gatsby-plugin-react-helmet": "latest",
-    "gatsby-plugin-sharp": "latest",
-    "gatsby-source-filesystem": "latest",
-    "gatsby-transformer-sharp": "latest",
+    "gatsby-plugin-gatsby-cloud": "4.8.0-next.1-dev-1645011114818",
+    "gatsby-plugin-react-helmet": "5.8.0-next.0-dev-1645011114818",
+    "gatsby-plugin-sharp": "4.8.0-next.0-dev-1645011114818",
+    "gatsby-source-filesystem": "4.8.0-next.0-dev-1645011114818",
+    "gatsby-transformer-sharp": "4.8.0-next.0-dev-1645011114818",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -26,11 +26,12 @@
     "test": "jest"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
+    "jest": "^27.2.1",
     "md5-file": "^5.0.0",
     "node-fetch": "^2.6.0",
-    "jest": "^27.2.1",
     "tree-kill": "^1.2.2"
   },
   "repository": {
