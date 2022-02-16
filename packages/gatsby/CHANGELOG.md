@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.7.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.7.2/packages/gatsby) (2022-02-15)
+
+#### Bug Fixes
+
+- Content Sync DSG bug [#34799](https://github.com/gatsbyjs/gatsby/issues/34799) [#34818](https://github.com/gatsbyjs/gatsby/issues/34818) ([7ef1fb6](https://github.com/gatsbyjs/gatsby/commit/7ef1fb6a3e6b75e74a41d545283dc0602dc9811e))
+
 ### [4.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.7.1/packages/gatsby) (2022-02-08)
 
 **Note:** Version bump only for package gatsby
