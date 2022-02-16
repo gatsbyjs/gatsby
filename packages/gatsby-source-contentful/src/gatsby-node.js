@@ -2,12 +2,12 @@
 import _ from "lodash"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
+import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 
 import { maskText } from "./plugin-options"
 
 export { createSchemaCustomization } from "./create-schema-customization"
 export { sourceNodes } from "./source-nodes"
-export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
 
 const fetch = fetchRetry(origFetch)
 
@@ -72,6 +72,9 @@ export const pluginOptionsSchema = ({ Joi }) =>
 You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).`
         )
         .default(false),
+      disableImageCdn: Joi.boolean()
+        .description(`Disables the built-in Gatsby Cloud CDN for images.`)
+        .default(false),
       localeFilter: Joi.func()
         .description(
           `Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
@@ -131,3 +134,8 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
       plugins: Joi.array(),
     })
     .external(validateContentfulAccess)
+
+/** @type {import('gatsby').GatsbyNode["onCreateDevServer"]} */
+export const onCreateDevServer = ({ app }) => {
+  polyfillImageServiceDevRoutes(app)
+}

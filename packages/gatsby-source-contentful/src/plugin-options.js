@@ -12,6 +12,7 @@ const defaultOptions = {
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
   enableTags: false,
+  disableImageCdn: false,
 }
 
 const createPluginConfig = pluginOptions => {
