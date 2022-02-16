@@ -6,6 +6,18 @@
     "gatsby",
     "gatsby-core-utils"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts",
+        "dist/index.d.ts"
+      ]
+    }
+  },
   "author": "Ward Peeters <ward@coding-tech.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
@@ -36,9 +48,12 @@
     "file-type": "^16.5.3",
     "fs-extra": "^10.0.0",
     "got": "^11.8.3",
+    "import-from": "^4.0.0",
     "lock": "^1.1.0",
+    "lmdb": "^2.1.7",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",
+    "resolve-from": "^5.0.0",
     "tmp": "^0.2.1",
     "xdg-basedir": "^4.0.0"
   },

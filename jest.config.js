@@ -47,6 +47,7 @@ module.exports = {
     "^ordered-binary$": `<rootDir>/node_modules/ordered-binary/dist/index.cjs`,
     "^msgpackr$": `<rootDir>/node_modules/msgpackr/dist/node.cjs`,
     "^gatsby-page-utils/(.*)$": `gatsby-page-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
+    "^gatsby-core-utils/(.*)$": `gatsby-core-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
