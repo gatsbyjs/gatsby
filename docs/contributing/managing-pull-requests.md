@@ -4,10 +4,6 @@ title: Managing Pull Requests
 
 If you're curious how we manage PRs on the Gatsby repo on GitHub, this document is for you. We'll go over conventions the team prefers, what we check for on various types of pull requests, permissions, and guidelines on how we leave feedback.
 
-We have over 3,300 contributors and so much of what makes Gatsby great is contributed by folks like you.
-
-Needless to say, we get a lot of PRs and we've been merging over a [100 contributions](https://twitter.com/kylemathews/status/1111435640581689345) every week. Yes, _every week_.
-
 Let's talk a little about how we manage pull requests in the Gatsby repo.
 
 For an introduction on what Pull Requests are and how to file one, check out the contributing doc on [How to Open a Pull Request](/contributing/how-to-open-a-pull-request).
@@ -51,25 +47,6 @@ For [PRs that add code](/contributing/code-contributions/) (whether a feature or
 - Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behavior. This can be a combination of unit tests for the specific package, snapshot tests, and end-to-end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this.
 - Code Quality — focus on reasonable changes that will likely improve code maintenance, comprehension, or correctness. Stylistic changes are typically linted for by Prettier. Don't nitpick.
 - Documentation in the package's README if you're adding something
-
-#### Starters or Site Showcase
-
-For PRs that add a site or a starter to the showcase, we ought to check:
-
-- Check if the site or starter is built with Gatsby
-- Links — check if the links are working and accessible
-- Tags — ensure the tags match existing tags
-- Featured Status — new sites should not be marked as featured. Featured sites are occasionally updated by a member of the Gatsby team.
-
-#### Blog posts
-
-For PRs that add a blog post, we ought to check:
-
-- Approval – has the [blog post been approved](/contributing/blog-contributions/) by marketing or another Gatsby internal team?
-- Correctness — whether the added documentation is technically correct
-- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
-- Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.
-- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should go in the [Reference Guides](/docs/guides/) or [Tutorials](/docs/tutorial/) section of the docs.
 
 ## Automated Checks
 

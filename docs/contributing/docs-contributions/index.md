@@ -2,7 +2,7 @@
 title: Docs Contributions
 ---
 
-Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of June 2020, over 2,100 people have contributed. It's people like you that make this community great!
+Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! It's people like you that make this community great!
 
 > _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs structure](/contributing/docs-contributions/docs-structure/) page._
 
@@ -17,7 +17,7 @@ Check the GitHub repo for issues labeled with ["type: documentation" and "good f
 When working on the Gatsby documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and make changes to the Markdown files using your favorite text editor. Currently (as of March 2021), there is no way for community members to build the docs site locally. We are working internally to figure out a fix for this.
+- Clone the Gatsby repo and make changes to the Markdown files using your favorite text editor. Currently (as of February 2022), there is no way for community members to build the docs site locally. We are working internally to figure out a fix for this.
 
 ## Fixing image and link paths
 
@@ -121,23 +121,6 @@ tableOfContentsDepth: 2
 
 When you're new to Gatsby there can be a lot of words to learn...
 ```
-
-## Adding embedded GraphQL examples
-
-There are embedded examples in a few places in the docs (like the [GraphQL Reference guide](/docs/graphql-reference/)) that provide a working version of the code described. In the specific example of the GraphQL Query Options Reference page, these examples of the GraphiQL interface show how data can be queried from Gatsby's data layer.
-
-To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be opened at its server container link, for example: https://graphql-reference-1124782374.gtsb.io/. Because CodeSandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
-
-<!-- prettier-ignore -->
-```mdx
-Here's an example of a GraphQL query inline:
-
-<iframe src="https://graphql-reference-1124782374.gtsb.io/___graphql?query=query%20TitleQuery%20%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false&operationName=TitleQuery" /> // highlight-line
-
-More markdown content...
-```
-
-> Note that you should set the `explorerIsOpen` parameter in the URL to `false` if it isn't already.
 
 ## Docs renaming instructions
 
