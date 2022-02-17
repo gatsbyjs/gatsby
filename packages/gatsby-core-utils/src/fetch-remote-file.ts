@@ -1,6 +1,6 @@
 import fileType from "file-type"
 import path from "path"
-import fs from "fs-extra"
+import fs, { pathExists } from "fs-extra"
 import Queue from "fastq"
 import { createContentDigest } from "./create-content-digest"
 import {
@@ -148,14 +148,6 @@ async function fetchFile({
 
     const cachedEntry = await storage.remoteFileInfo.get(url)
 
-    // See if there's response headers for this url
-    // from a previous request.
-    const headers = { ...httpHeaders }
-    if (cachedEntry?.headers?.etag) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      headers[`If-None-Match`] = cachedEntry.headers.etag
-    }
-
     // Add htaccess authentication if passed in. This isn't particularly
     // extensible. We should define a proper API that we validate.
     const httpOptions: Options = {}
@@ -176,6 +168,16 @@ async function fetchFile({
     await fs.ensureDir(path.join(fileDirectory, digest))
 
     const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
+    const filename = createFilePath(path.join(fileDirectory, digest), name, ext)
+
+    // See if there's response headers for this url
+    // from a previous request.
+    const headers = { ...httpHeaders }
+    if (cachedEntry?.headers?.etag && (await pathExists(filename))) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      headers[`If-None-Match`] = cachedEntry.headers.etag
+    }
+
     const response = await requestRemoteNode(
       url,
       headers,
@@ -183,7 +185,6 @@ async function fetchFile({
       httpOptions
     )
 
-    const filename = createFilePath(path.join(fileDirectory, digest), name, ext)
     if (response.statusCode === 200) {
       // Save the response headers for future requests.
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
