@@ -16,7 +16,6 @@ import {
   generateGatsbyImageDataFieldConfig,
   gatsbyImageDataResolver,
 } from "./graphql/gatsby-image-data-resolver"
-import { shouldDispatch } from "./jobs/dispatchers"
 
 import type { Store } from "gatsby"
 import type { InterfaceTypeComposerAsObjectDefinition } from "graphql-compose"
