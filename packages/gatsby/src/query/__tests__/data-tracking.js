@@ -85,6 +85,13 @@ jest.mock(`../../redux/persist`, () => {
   }
 })
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    trackCli: () => {},
+    captureEvent: () => {},
+  }
+})
+
 const pluginOptions = {}
 
 let mockAPIs = {}
