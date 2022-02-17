@@ -22,7 +22,7 @@ jest.mock(`got`, () => {
   }
 })
 
-jest.mock(`gatsby-core-utils`, () => {
+jest.mock(`gatsby-core-utils/fetch-remote-file`, () => {
   return {
     fetchRemoteFile: jest.fn(),
   }
@@ -37,7 +37,7 @@ const reporter = {}
 
 const createRemoteFileNode = require(`../create-remote-file-node`)
 const { createFileNode } = require(`../create-file-node`)
-const { fetchRemoteFile } = require(`gatsby-core-utils`)
+const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
 
 const createMockCache = () => {
   return {
