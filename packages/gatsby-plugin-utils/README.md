@@ -80,3 +80,42 @@ if (!hasFeature(`image-cdn`)) {
   // You can polyfill image-cdn here so older versions have support as well
 }
 ```
+
+### Add ImageCDN support
+
+Our new ImageCDN allows source plugins to lazily download and process images. if you're a plugin author please use this polyfill to add support for all Gatsby V4 versions.
+
+For more information check (TODO)[]
+
+#### Example
+
+```js
+const {
+  addRemoteFilePolyfillInterface,
+  polyfillImageServiceDevRoutes,
+} = require(`gatsby-plugin-utils/pollyfill-remote-file`)
+
+/** @type {import('gatsby').createSchemaCustomization} */
+exports.createSchemaCustomization ({ actions, schema, store }) => {
+  actions.createTypes([
+    addRemoteFilePolyfillInterface(
+      schema.buildObjectType({
+        name: `PrefixAsset`,
+        fields: {
+          // your fields
+        },
+        interfaces: [`Node`, 'RemoteFile'],
+      }),
+      {
+        schema,
+        store,
+      }
+    )
+  ]);
+}
+
+/** @type {import('gatsby').onCreateDevServer} */
+exports.onCreateDevServer = ({ app }) => {
+  polyfillImageServiceDevRoutes(app)
+}
+```

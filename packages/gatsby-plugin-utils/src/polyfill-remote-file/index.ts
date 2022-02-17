@@ -16,6 +16,7 @@ import {
   generateGatsbyImageDataFieldConfig,
   gatsbyImageDataResolver,
 } from "./graphql/gatsby-image-data-resolver"
+import { shouldDispatch } from "./jobs/dispatchers"
 
 import type { Store } from "gatsby"
 import type { InterfaceTypeComposerAsObjectDefinition } from "graphql-compose"
@@ -140,6 +141,13 @@ function addRemoteFilePolyfillInterface<
   return type
 }
 
+function isImageCdnEnabled(): boolean {
+  return (
+    process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
+    process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
+  )
+}
+
 export { polyfillImageServiceDevRoutes, addImageRoutes } from "./http-routes"
 export {
   getRemoteFileEnums,
@@ -147,4 +155,5 @@ export {
   gatsbyImageDataResolver,
   resizeResolver,
   publicUrlResolver,
+  isImageCdnEnabled,
 }
