@@ -1,6 +1,6 @@
 import path from "path"
 import { SchemaComposer } from "graphql-compose"
-import { actions } from "gatsby/dist/redux/actions"
+import importFrom from "import-from"
 import { getRemoteFileEnums } from "./graphql/get-remote-file-enums"
 import { getGatsbyVersion } from "./utils/get-gatsby-version"
 import { hasFeature } from "../has-feature"
@@ -108,7 +108,13 @@ function addRemoteFilePolyfillInterface<
       })
     )
 
+    // We need to use import-from to remove circular dependency
+    const actions = importFrom(
+      global.__GATSBY.root ?? process.cwd(),
+      `gatsby/dist/redux/actions`
+    )
     store.dispatch(
+      // @ts-ignore - importFrom doesn't work with types
       actions.createTypes(types, {
         name: `gatsby`,
         version: getGatsbyVersion(),
