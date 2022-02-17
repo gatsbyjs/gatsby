@@ -10,7 +10,8 @@
     "./dist/polyfill-remote-file": null,
     "./dist/utils": null,
     "./polyfill-remote-file": "./dist/polyfill-remote-file/index.js",
-    "./dist/polyfill-remote-file/jobs/gatsby-worker.js": "./dist/polyfill-remote-file/jobs/gatsby-worker.js"
+    "./dist/polyfill-remote-file/jobs/gatsby-worker.js": "./dist/polyfill-remote-file/jobs/gatsby-worker.js",
+    "./dist/polyfill-remote-file/graphql/*": "./dist/polyfill-remote-file/graphql/*.js"
   },
   "typesVersions": {
     "*": {

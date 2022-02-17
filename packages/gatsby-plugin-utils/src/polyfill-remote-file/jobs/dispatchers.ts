@@ -1,5 +1,5 @@
 import path from "path"
-import { actions } from "gatsby/dist/redux/actions"
+import importFrom from "import-from"
 import { getFileExtensionFromMimeType } from "../utils/mime-type-helpers"
 import { getGatsbyVersion } from "../utils/get-gatsby-version"
 import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
@@ -30,6 +30,11 @@ export function dispatchLocalFileServiceJob(
   const filename = publicUrl.pop()
   publicUrl.unshift(`public`)
 
+  const actions = importFrom(
+    global.__GATSBY.root ?? process.cwd(),
+    `gatsby/dist/redux/actions`
+  )
+  // @ts-ignore - we dont have correct typings for this
   actions.createJobV2(
     {
       name: `FILE_CDN`,
@@ -79,6 +84,13 @@ export function dispatchLocalImageServiceJob(
     mimeType: `image/${extension}`,
   }).split(`/`)
   publicUrl.unshift(`public`)
+
+  // We need to use import-from to remove circular dependency
+  const actions = importFrom(
+    global.__GATSBY.root ?? process.cwd(),
+    `gatsby/dist/redux/actions`
+  )
+  // @ts-ignore - importFrom doesn't work with types
   actions.createJobV2(
     {
       name: `IMAGE_CDN`,
