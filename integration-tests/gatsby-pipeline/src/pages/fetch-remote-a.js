@@ -5,7 +5,6 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const FetchRemoteA = ({ data }) => {
-  console.log({ data })
   return (
     <Layout>
       <SEO title="Fetch Remote A" />
