@@ -1,6 +1,7 @@
 require(`dotenv`).config({
   path: `.env.test`,
 })
+const path = require("path")
 
 console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
@@ -86,7 +87,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/assets/images`,
+        path: path.resolve(`src/assets/images`),
       },
     },
     {
