@@ -538,10 +538,7 @@ export async function initialize({
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        const modulePath = path.join(
-          plugin?.compiledResolve || plugin.resolve,
-          `gatsby-${env}`
-        )
+        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
         return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
@@ -549,10 +546,7 @@ export async function initialize({
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      const modulePath = path.join(
-        plugin?.compiledResolve || plugin.resolve,
-        `gatsby-${env}`
-      )
+      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
       return slash(resolveModule(modulePath) as string)
     }
     return undefined
