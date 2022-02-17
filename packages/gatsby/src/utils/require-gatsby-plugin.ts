@@ -10,7 +10,7 @@ export function setGatsbyPluginCache(
 }
 
 export function requireGatsbyPlugin(
-  plugin: { name: string; resolve: string; resolveCompiled: string },
+  plugin: { name: string; resolve: string; resolveCompiled?: string },
   module: string
 ): any {
   const key = `${plugin.name}/${module}`
