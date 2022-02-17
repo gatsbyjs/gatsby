@@ -1,5 +1,3 @@
-const path = require("path")
-
 module.exports = {
   siteMetadata: {
     title: `Blog Title Placeholder`,
@@ -10,7 +8,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: path.resolve(`src/pages`),
+        path: `${__dirname}/src/pages`,
       },
     },
   ],
