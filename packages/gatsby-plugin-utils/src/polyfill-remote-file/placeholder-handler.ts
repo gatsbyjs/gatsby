@@ -135,13 +135,19 @@ async function placeholderToBase64({
 }: IPlaceholderGenerationArgs): Promise<string> {
   const cache = getCache()
   const cacheKey = `image-cdn:${contentDigest}:base64`
-  const cachedValue = await cache.get(cacheKey)
+  let cachedValue = await cache.get(cacheKey)
   if (cachedValue) {
     return cachedValue
   }
 
   const mutex = createMutex(getMutexKey(contentDigest))
   await mutex.acquire()
+
+  // check cache again after mutex is acquired
+  cachedValue = await cache.get(cacheKey)
+  if (cachedValue) {
+    return cachedValue
+  }
 
   try {
     let url = originalUrl
@@ -179,7 +185,7 @@ async function placeholderToBase64({
       )
     })
 
-    cache.set(cacheKey, base64Placeholder)
+    await cache.set(cacheKey, base64Placeholder)
 
     return base64Placeholder
   } finally {
@@ -196,13 +202,20 @@ async function placeholderToDominantColor({
 }: IPlaceholderGenerationArgs): Promise<string> {
   const cache = getCache()
   const cacheKey = `image-cdn:${contentDigest}:dominantColor`
-  const cachedValue = await cache.get(cacheKey)
+  let cachedValue = await cache.get(cacheKey)
   if (cachedValue) {
     return cachedValue
   }
 
   const mutex = createMutex(getMutexKey(contentDigest))
   await mutex.acquire()
+
+  // check cache again after mutex is acquired
+  cachedValue = await cache.get(cacheKey)
+  if (cachedValue) {
+    return cachedValue
+  }
+
   try {
     let url = originalUrl
     if (placeholderUrl) {
@@ -235,7 +248,7 @@ async function placeholderToDominantColor({
       )
     })
 
-    cache.set(cacheKey, dominantColor)
+    await cache.set(cacheKey, dominantColor)
 
     return dominantColor
   } finally {
