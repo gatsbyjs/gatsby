@@ -40,15 +40,15 @@ jest.mock(`../../utils/cache-lmdb`, () => {
     __esModule: true,
     default: jest.fn().mockImplementation(() => {
       return {
-        init: () => {
-          return this
-        },
+        init: () =>
+          // eslint-disable-next-line @babel/no-invalid-this
+          this,
         get: jest.fn(() => Promise.resolve()),
-        set: jest.fn(() => Promise.resolve())
-      };
+        set: jest.fn(() => Promise.resolve()),
+      }
     }),
-  };
-});
+  }
+})
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
