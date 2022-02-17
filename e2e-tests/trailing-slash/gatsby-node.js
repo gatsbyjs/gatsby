@@ -1,3 +1,5 @@
+const path = require("path")
+
 const posts = [
   {
     id: 1,
@@ -51,7 +53,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   `)
 }
 
-const templatePath = require.resolve(`./src/templates/template.js`)
+const templatePath = path.resolve(`./src/templates/template.js`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions

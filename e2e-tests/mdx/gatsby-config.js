@@ -26,7 +26,7 @@ module.exports = {
         lessBabel: false,
         extensions: [`.mdx`, `.md`],
         defaultLayouts: {
-          default: require.resolve("./src/components/layout.js"),
+          default: path.resolve("./src/components/layout.js"),
         },
         remarkPlugins: [remarkRequireFilePathPlugin],
       },
