@@ -13,6 +13,7 @@ import fs from "fs-extra"
 import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions"
 import replaceAll from "replaceall"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { gatsbyImageDataResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/gatsby-image-data-resolver"
 
 import { formatLogMessage } from "~/utils/format-log-message"
 
@@ -239,51 +240,11 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
       wpUrl,
     })
 
-    let imageNode = pickNodeBySourceUrlOrCheerioImg({
+    const imageNode = pickNodeBySourceUrlOrCheerioImg({
       url: htmlImgSrc,
       cheerioImg,
       mediaItemNodes,
     })
-
-    if (!imageNode && htmlImgSrc) {
-      // if we didn't get a media item node for this image,
-      // we need to fetch it and create a file node for it with no
-      // media item node.
-      try {
-        imageNode = await createLocalFileNode({
-          skipExistingNode: true,
-          parentName: `Creating File node from URL where we couldn't find a MediaItem node`,
-          mediaItemNode: {
-            id: node.id,
-            mediaItemUrl: htmlImgSrc,
-            modifiedGmt: null,
-            mimeType: null,
-            title: null,
-            fileSize: null,
-            parentHtmlNode: node,
-          },
-        })
-      } catch (e) {
-        const sharedError = `when trying to fetch\n${htmlImgSrc}\nfrom ${
-          node.__typename
-        } #${node.databaseId} "${node.title ?? node.id}"`
-        const nodeEditLink = getNodeEditLink(node)
-
-        if (typeof e === `string` && e.includes(`404`)) {
-          helpers.reporter.warn(
-            formatLogMessage(
-              `\n\nReceived a 404 ${sharedError}\n\nMost likely this image was uploaded to this ${node.__typename} and then deleted from the media library.\nYou'll need to fix this and re-save this ${node.__typename} to remove this warning at\n${nodeEditLink}.\n\n`
-            )
-          )
-          imageNode = null
-        } else {
-          helpers.reporter.warn(
-            `Received the below error ${sharedError}\n\n${nodeEditLink}\n\n`
-          )
-          helpers.reporter.panic(formatLogMessage(e))
-        }
-      }
-    }
 
     cacheCreatedFileNodeBySrc({ node: imageNode, src: htmlImgSrc })
 
@@ -543,9 +504,10 @@ const replaceNodeHtmlImages = async ({
             : // otherwise grab the file node
               helpers.getNode(imageNode.localFile.id)
 
-        if (!fileNode) {
-          return null
-        }
+        const extension = imageNode?.mimeType?.replace(
+          `${imageNode?.mediaType}/`,
+          ``
+        )
 
         const imgTagMaxWidth = findImgTagMaxWidthFromCheerioImg(cheerioImg)
 
@@ -575,7 +537,7 @@ const replaceNodeHtmlImages = async ({
           // and we have a media item node to know it's full size max width
           mediaItemNodeWidth &&
           // and this isn't an svg which has no maximum width
-          fileNode.extension !== `svg` &&
+          extension !== `svg` &&
           // and the media item node max width is smaller than what we inferred
           // from html
           mediaItemNodeWidth < imgTagMaxWidth
@@ -595,28 +557,35 @@ const replaceNodeHtmlImages = async ({
           maxWidth = configuredMaxWidth
         }
 
-        const quality = pluginOptions?.html?.imageQuality
+        // const quality = pluginOptions?.html?.imageQuality
 
-        const { reporter, cache, pathPrefix } = helpers
+        const { reporter } = helpers
 
         const gatsbyTransformerSharpSupportsThisFileType =
-          supportedExtensions[fileNode?.extension]
+          supportedExtensions[extension]
 
-        let sharpImageData = null
+        let imageResize = null
 
         if (gatsbyTransformerSharpSupportsThisFileType) {
           try {
-            sharpImageData = await generateImageData({
-              file: fileNode,
-              args: {
-                width: maxWidth,
-                quality,
-                ...pluginOptions?.html?.gatsbyImageOptions,
+            imageResize = await gatsbyImageDataResolver(
+              {
+                url:
+                  imageNode.mediaItemUrl ||
+                  imageNode.sourceUrl ||
+                  imageNode.url,
+                mimeType: imageNode.mimeType,
+                width: imageNode.mediaDetails.width,
+                height: imageNode.mediaDetails.height,
               },
-              pathPrefix,
-              reporter,
-              cache,
-            })
+              {
+                width: maxWidth,
+                layout: `constrained`,
+                placeholder: `none`,
+                // placeholder @todo default to none - expose plugin options to allow using a small blurred image or other options - placeholder means we need to download a file, so it's slower and WP probably doesn't have that small file yet
+              },
+              helpers.store
+            )
           } catch (e) {
             reporter.error(e)
             reporter.warn(
@@ -632,7 +601,7 @@ const replaceNodeHtmlImages = async ({
           match,
           cheerioImg,
           fileNode,
-          imageResize: sharpImageData,
+          imageResize,
           maxWidth,
         }
       })
