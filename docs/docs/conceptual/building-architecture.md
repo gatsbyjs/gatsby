@@ -22,7 +22,7 @@ Systems and workflows in your architecture can be complex. We've written blog po
 
 - Custom fields and product variants: [Product Experience Management with Gatsby](/blog/product-experience-management-with-gatsby-delivering-a-rich-e-commerce-experience) (blog post)
 
-- [Modern Analytics](/blog/conceptual/modern-analytics) (doc)
+- [Choosing Analytics Systems](/blog/conceptual/choosing-analytics-systems) (doc)
 
 - [Improving Your Site Performance](/docs/how-to/performance/improving-site-performance) (doc)
 
