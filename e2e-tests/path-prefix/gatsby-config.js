@@ -1,3 +1,4 @@
+const path = require("path")
 const pathPrefix = `/blog`
 
 module.exports = {
@@ -24,7 +25,7 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/images/`,
+        path: path.resolve(`src/images`),
       },
     },
     `gatsby-plugin-sitemap`,

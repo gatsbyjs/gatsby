@@ -1,7 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 
-const CONFIG_PATH = path.join(__dirname, `../../gatsby-config.js`)
+const CONFIG_PATH = path.join(__dirname, `../../.cache/compiled/gatsby-config.js`)
 const originalConfig = fs.readFileSync(CONFIG_PATH, `utf8`)
 
 module.exports = {
