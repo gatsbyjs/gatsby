@@ -1,6 +1,6 @@
 When architecting a professional Gatsby website, you need to choose a number of systems: build & hosting provider, headless CMS, component library, e-commerce, analytics, auth, search, forms, and so on.
 
-In addition, your team probably has a number of workflows involving multiple systems. Setting up content preview involves your CMS, Gatsby, and your hosting provider. Creating CMS-driven landing pages involves your CMS, your React components, and Gatsby. 
+In addition, your team probably has a number of workflows involving multiple systems. Setting up content preview involves your CMS, Gatsby, and your hosting provider. Creating CMS-driven landing pages involves your CMS, your React components, and Gatsby.
 
 ## Architecture = Systems + Workflows
 
