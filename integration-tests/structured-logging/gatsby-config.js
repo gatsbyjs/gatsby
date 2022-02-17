@@ -1,3 +1,4 @@
+const path = require("path")
 const dynamicPlugins = []
 
 if (process.env.VALIDATE_PLUGIN_OPTIONS) {
@@ -9,7 +10,7 @@ if (process.env.VALIDATE_PLUGIN_OPTIONS) {
       },
     },
     {
-      resolve: require.resolve("./local-plugin-with-path"),
+      resolve: path.resolve("local-plugin-with-path"),
       options: {
         optionalString: 1234,
       },
