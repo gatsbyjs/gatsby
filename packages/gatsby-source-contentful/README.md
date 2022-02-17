@@ -420,7 +420,7 @@ const MyComponent = () => {
 
 This hook accepts the same parameters as the `gatsbyImageData` field in your GraphQL queries. They are automatically translated to the proper Contentful Image API parameters.
 
-Here is are the most relevant ones:
+Here are the most relevant ones:
 
 - width: maximum 4000
 - height: maximum 4000
