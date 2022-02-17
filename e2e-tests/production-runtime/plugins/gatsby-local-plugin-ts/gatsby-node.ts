@@ -1,7 +1,7 @@
 import { GatsbyNode } from "gatsby"
 
 export const onCreatePage: GatsbyNode["onCreatePage"] = ({ page, actions }) => {
-  if (!/gatsby-local-plugin-ts/.test(page.path)) {
+  if (!/local-plugin-ts/.test(page.path)) {
     return
   }
   const { createPage, deletePage } = actions
