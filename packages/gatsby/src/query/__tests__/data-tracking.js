@@ -37,15 +37,18 @@ jest.mock(`fs-extra`, () => {
 
 jest.mock(`../../utils/cache-lmdb`, () => {
   return {
-    default: class MockedCache {
-      init() {
-        return this
-      }
-      get = jest.fn(() => Promise.resolve())
-      set = jest.fn(() => Promise.resolve())
-    },
-  }
-})
+    __esModule: true,
+    default: jest.fn().mockImplementation(() => {
+      return {
+        init: () => {
+          return this
+        },
+        get: jest.fn(() => Promise.resolve()),
+        set: jest.fn(() => Promise.resolve())
+      };
+    }),
+  };
+});
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
