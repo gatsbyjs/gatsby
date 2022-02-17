@@ -35,18 +35,22 @@ jest.mock(`fs-extra`, () => {
   }
 })
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    trackCli: () => {},
+    captureEvent: () => {},
+  }
+})
+
 jest.mock(`../../utils/cache-lmdb`, () => {
   return {
-    __esModule: true,
-    default: jest.fn().mockImplementation(() => {
-      return {
-        init: () =>
-          // eslint-disable-next-line @babel/no-invalid-this
-          this,
-        get: jest.fn(() => Promise.resolve()),
-        set: jest.fn(() => Promise.resolve()),
+    default: class MockedCache {
+      init() {
+        return this
       }
-    }),
+      get = jest.fn(() => Promise.resolve())
+      set = jest.fn(() => Promise.resolve())
+    },
   }
 })
 
@@ -82,13 +86,6 @@ jest.mock(`../../redux/persist`, () => {
     writeToCache: state => {
       mockPersistedState = state
     },
-  }
-})
-
-jest.mock(`gatsby-telemetry`, () => {
-  return {
-    trackCli: () => {},
-    captureEvent: () => {},
   }
 })
 
