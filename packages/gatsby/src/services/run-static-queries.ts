@@ -2,6 +2,7 @@ import { processStaticQueries } from "../query"
 import reporter from "gatsby-cli/lib/reporter"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
+import { createPageDependencyBatcher } from "../redux/actions/add-page-dependency"
 
 export async function runStaticQueries({
   parentSpan,
