@@ -62,11 +62,11 @@ Work is in progress for TypeScript support for `gatsby-config` and `gatsby-node`
 
 ## New TypeScript option when creating Gatsby projects from the CLI
 
-When [initializing new Gatsby projects](https://www.gatsbyjs.com/docs/quick-start/) with `gatsby new`, `npm init gatsby`, or `npx create-gatsby`, you can now select JavaScript or TypeScript as an option to start your project with.
+When [initializing new Gatsby projects](/docs/quick-start/) with `gatsby new`, `npm init gatsby`, or `npx create-gatsby`, you can now select JavaScript or TypeScript as an option to start your project with.
 
 After calling one of the above commands with no flags, the third question will now be: "Will you be using JavaScript or TypeScript?". Selecting JavaScript will start your project with [`gatsby-starter-minimal`](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-minimal), and selecting TypeScript will start your project with [`gatsby-starter-minimal-ts`](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-minimal-ts).
 
-A [new `-ts` flag](https://www.gatsbyjs.com/docs/quick-start/#use-flags) has been added for use with `npm init gatsby` and `npx create-gatsby`. Executing `npm init gatsby -ts` or `npx create-gatsby -ts` will skip the language question and start your project with [`gatsby-starter-minimal-ts`](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-minimal-ts).
+A [new `-ts` flag](/docs/quick-start/#use-flags) has been added for use with `npm init gatsby` and `npx create-gatsby`. Executing `npm init gatsby -ts` or `npx create-gatsby -ts` will skip the language question and start your project with [`gatsby-starter-minimal-ts`](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-minimal-ts).
 
 Lastly, arguments for Gatsby initializer commands are now _not positional_. Any order of your desired site name and flags will work as expected (e.g. `npm init gatsby -ts hello-world -y`).
 
@@ -85,7 +85,7 @@ Two new APIs have been added:
 
 Calling `createMutex` gives you a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) that you can use to safely perform processes concurrently in places where that matters, such as in workers.
 
-This code below is executed one at a time and the other threads/async workloads are awaited until the current one is done. This is handy in scenarios like writing to the same file to disk.
+For example in the code below, one worker can execute while all others wait for it to finish. This is handy in scenarios like writing to the same file to disk.
 
 ```js
 const { createMutex } = require("gatsby-core-utils/mutex")
@@ -107,6 +107,8 @@ if (!hasFeature(`image-service`)) {
   // You can do things like polyfill image-service here so older versions have support as well
 }
 ```
+
+**Note** - The list of features available will be added in future PRs, the above is an example of how it will be used.
 
 ## Notable bugfixes & improvements
 
