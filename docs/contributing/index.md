@@ -45,60 +45,30 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 
 ### Help fellow users
 
-TODO
-
-### Help triage issues
-
-TODO
-
-### Contribute code
-
-TODO
+Answering questions for fellow Gatsby users on [Discord](https://gatsby.dev/discord) or [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/help) are valuable contributions. You can also help out users on issues and Pull Requests to contribute or fix their issues.
 
 ### Contribute documentation
 
-TODO
+You can help make the docs awesome. We strive to create inclusive, comprehensive, and enjoyable documentation for our users and everyone can help! Found a typo or an incorrect code example? Put up a PR! Found a better way to explain a concept? Put up a PR! Contributions to our documentation are valuable and greatly appreciated. Visit the [Docs Contributions Overview](/docs/contributing/docs-contributions/) to learn more about our style guide, the documentation structure, and how to write docs.
+
+### Contribute code
+
+Contributing bug fixes or new features are the most direct form of contribution you can make. The Gatsby monorepo consists of many interconnected pieces and thus it can be difficult to get started. Read the [code contributions guide](/docs/contributing/code-contributions) to learn how to set up the repository locally, how to contribute to the ecosystem, and how to create a Pull Request. Please note that our [governance model](/docs/contributing/gatsby-governance-model) lays out in what areas of the codebase we accept contributions and which are mostly reserved to core team members.
 
 ### Share (and build) your experience
 
-TODO
+There are a few other ways of contributing to the Gatsby ecosystem:
 
----
+- **Develop learning materials.** Strengthen your expertise by writing a blog post, developing a workshop, creating video tutorials, or present your knowledge as a presentation on meetups and conferences.
+- **Create a plugin.** Learn how to [create a plugin](/docs/how-to/plugins-and-themes/) and [submit it to the Plugin Library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
+- **Contribute to the Gatsby User Collective.** Interested in working on plugins that benefit the whole community? You can find them in the [Gatsby User Collective repository](https://github.com/gatsby-uc/plugins).
+- **Create a Gatsby starter.** Created a starter? Share it with the community and [submit it to the Starter Library](/starters/submissions).
 
-- Visiting our [Discord](https://gatsby.dev/discord) server and helping someone else who needs help
-- Teaching others how to contribute to Gatsby's repo!
+### Help triage issues
 
-- Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs) and/or email `devrel [at] gatsbyjs [dot] com` so we can give pointers and tips (if you want them 😄) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby-resources/) page.
-- Presenting at meetups and conferences about your Gatsby projects. Your unique challenges and successes in building things with Gatsby can provide great speaking material. We'd love to review your talk abstract/CFP, so get in touch with us if you'd like some help!
-- [Submitting new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
-- Tweeting about things you [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby) (make sure to use the hashtag and/or @ mention us!)
-- Submitting documentation updates, enhancements, designs, or bug fixes
-- Submitting spelling or grammar fixes
-- Adding unit or functional tests
-- [Reporting bugs or issues](/contributing/how-to-file-an-issue/)
+Triaging an issue means gathering missing information, running the given reproduction, verifying the issue's validity, and investigating the root cause of the issue. You don't have to triage an issue with the goal of fixing it (although it would certainly be much appreciated) but sharing the results of your investigation can already save us a ton of time.
 
-How to File an Issue
-How to Make a Reproducible Test Case
-RFC Process
-How to Open a Pull Request
-How to Label an Issue
-Triaging GitHub Issues
-Managing Pull Requests
-Community Contributions
-Docs & Blog Components
-
-- Your wonderful Gatsby website!
-- Gatsby starters
-- Gatsby plugins
-- Blog posts and case studies
-- Talk and lecture videos
-- Workshop materials
-- GitHub issues and pull requests
-
-...and anything else you can think of. Our showcase and library contribution docs are a great place to start:
-
-- [Submit to Plugin Library](/contributing/submit-to-plugin-library/)
-- [Submit to Starter Library](/starters/submissions)
+## Benefits of contributing to Open Source
 
 There are many reasons to contribute to Gatsby and open source software in general. Here are some of the benefits of participating:
 

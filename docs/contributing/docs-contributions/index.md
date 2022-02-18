@@ -126,12 +126,6 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 
 - Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
-- For SEO purposes, add a redirect to `legacy-redirects.yaml`. (This file currently only exists in the private repo where the Gatsby docs site is built. Only internal Gatsby staff have access to it.) Here's an example:
-
-```yaml:title=legacy-redirects.yaml
-- fromPath: /docs/source-plugin-tutorial/
-  toPath: /tutorial/source-plugin-tutorial/
-```
 
 ## Claim your swag
 
