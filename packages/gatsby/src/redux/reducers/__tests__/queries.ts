@@ -356,12 +356,10 @@ describe(`createPages API end`, () => {
       { path: StaticQueries.q1.id, nodeId: `123` },
     ]
     for (const payload of dataDependencies) {
-      state = reducer(state, [
-        {
-          type: `CREATE_COMPONENT_DEPENDENCY`,
-          payload,
-        },
-      ])
+      state = reducer(state, {
+        type: `CREATE_COMPONENT_DEPENDENCY`,
+        payload: [payload],
+      })
     }
     state = deletePage(state, Pages.foo)
     state = removeStaticQuery(state, StaticQueries.q1.id)
@@ -804,6 +802,7 @@ describe(`query start`, () => {
       { path: StaticQueries.q1.id, connection: `Test` },
       { path: StaticQueries.q1.id, nodeId: `123` },
     ]
+
     for (const payload of dataDependencies) {
       state = reducer(state, {
         type: `CREATE_COMPONENT_DEPENDENCY`,
