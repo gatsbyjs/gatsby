@@ -80,6 +80,22 @@ export async function gatsbyImageDataResolver(
     return null
   }
 
+  if (!args.formats) {
+    args.formats = [`auto`, `webp`, `avif`]
+  }
+
+  if (!args.outputPixelDensities) {
+    args.outputPixelDensities = DEFAULT_PIXEL_DENSITIES
+  }
+
+  if (!args.breakpoints) {
+    args.breakpoints = DEFAULT_BREAKPOINTS
+  }
+
+  if (!args.fit) {
+    args.fit = `cover`
+  }
+
   let backgroundColor = args.backgroundColor
   const sourceMetadata: ISourceMetadata = {
     width: source.width,
