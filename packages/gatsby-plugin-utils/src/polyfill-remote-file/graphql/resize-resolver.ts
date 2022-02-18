@@ -39,6 +39,18 @@ export async function resizeResolver(
     return null
   }
 
+  if (!args.format) {
+    args.format = `auto`
+  }
+
+  if (!args.fit) {
+    args.fit = `cover`
+  }
+
+  if (!args.cropFocus) {
+    args.cropFocus = `edges`
+  }
+
   const formats = validateAndNormalizeFormats(
     [args.format],
     getImageFormatFromMimeType(source.mimeType)
