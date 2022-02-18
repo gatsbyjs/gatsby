@@ -152,9 +152,7 @@ export function queriesReducer(
       return state
     }
     case `CREATE_COMPONENT_DEPENDENCY`: {
-      let dependencies = Array.isArray(action.payload) ? action.payload : [action.payload]
-
-      dependencies.forEach(dep => {
+      action.payload.forEach(dep => {
         const { path: queryId, nodeId, connection } = dep
 
         if (nodeId) {

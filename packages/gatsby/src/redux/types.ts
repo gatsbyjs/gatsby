@@ -543,9 +543,7 @@ export interface ICreatePageDependencyActionPayloadType {
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
   plugin?: string
-  payload:
-    | ICreatePageDependencyActionPayloadType
-    | Array<ICreatePageDependencyActionPayloadType>
+  payload: Array<ICreatePageDependencyActionPayloadType>
 }
 
 export interface IDeleteComponentDependenciesAction {
