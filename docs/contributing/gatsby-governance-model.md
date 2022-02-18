@@ -51,11 +51,10 @@ In the interest of fostering an open and welcoming environment, we as contributo
 
 Here are some relevant docs and resources for contributors:
 
-- [Contributing to Gatsby.js](/contributing)
+- [Contributing to Gatsby](/contributing)
 - [How to contribute](/contributing/how-to-contribute/)
 - [How to file an issue](/contributing/how-to-file-an-issue/)
 - [Request-for-comment (RFC) process](/contributing/rfc-process/)
-- [Community Maintainers Meeting](/contributing/community/#community-maintainers-meeting)
 
 ## Engage with the Gatsby team
 

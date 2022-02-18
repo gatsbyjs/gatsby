@@ -10,7 +10,7 @@ When writing (or reviewing) learning materials that show Gatsby users how to com
 
 ## Top priorities
 
-Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help. Once you start a Pull Request to address one of these issues, you can remove the "help wanted" label.
+Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help.
 
 ## Options for contributing to the Gatsby docs
 
@@ -39,9 +39,7 @@ For the purposes of an accessible document outline, content headings should go i
 
 > 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/reference/markdown-syntax/)!
 
-1. If you want to add/modify any Gatsby documentation, go to the
-   [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and
-   use the file editor to edit and then preview your changes.
+1. If you want to add/modify any Gatsby documentation, go to the [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and use the file editor to edit and then preview your changes.
 2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria:
    - Follow the standards outlined in the [Gatsby Style Guide](/contributing/gatsby-style-guide/).
    - If your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the [Docs Decision Tree](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).

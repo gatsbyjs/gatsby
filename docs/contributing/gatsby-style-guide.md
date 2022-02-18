@@ -2,15 +2,9 @@
 title: Gatsby Style Guide
 ---
 
-The Gatsby community is building out a more comprehensive Docs section. It
-will be full of relevant articles written to be easily understood by the many people who love building with Gatsby.
-
-The community plans, writes, and maintains these Docs on GitHub.
-
 ## Welcome!
 
-You don't have to be an expert in a
-topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
+You don't have to be an expert in a topic to write about it -- this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
 
 Before you begin writing, make sure to read the rest of this style guide.
 

@@ -17,7 +17,7 @@ A variety of components have been written to help with formatting code and conte
 
 ### Guide List
 
-The `<GuideList />` is a component that renders an `h2` heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
+The `<GuideList />` is a component that renders an `h2` heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages where many other pages are nested below it to show what a docs section contains.
 
 #### Usage
 
@@ -44,8 +44,6 @@ Overview information about headless CMSs...
 When rendered in a page, the Guide List looks like this:
 
 <GuideList slug="/docs/headless-cms/" />
-
-_This example has the prop `slug="/docs/headless-cms/"` set, and can be seen on the doc for [Headless CMS](/docs/headless-cms/)_
 
 ---
 
