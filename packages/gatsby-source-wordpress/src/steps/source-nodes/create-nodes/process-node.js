@@ -519,7 +519,7 @@ const replaceNodeHtmlImages = async ({
             ? // this will already be a file node
               imageNode
             : // otherwise grab the file node
-              helpers.getNode(imageNode.localFile.id)
+              helpers.getNode(imageNode?.localFile?.id)
 
         const extension = imageNode?.mimeType?.replace(
           `${imageNode?.mediaType}/`,
