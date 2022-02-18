@@ -99,7 +99,7 @@ Concise writing communicates the bare minimum without redundancy. Strive to make
 
 ### Use clear hyperlinks
 
-Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/).
+Hyperlinks should contain the clearest words to indicate where the link will lead you. The use of the title attribute on hyperlinks should be avoided for accessibility reasons.
 
 ```markdown
 <!-- Good -->
@@ -372,6 +372,8 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 - Gatsby
 - GraphQL
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
+- TypeScript
+- WordPress
 - Markdown
 - Node.js
 - webpack ([should always in lower-case letters, except at the beginning of a sentence](https://webpack.js.org/branding/#the-name))
@@ -379,8 +381,7 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 A full-stack developer (adjective form with a dash) works on the full stack
 (noun form with no dash). The same goes with many other compound terms.
 
-Use frontend for both adjective and noun forms as it's [more common and easier to maintain](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465). For example,
-a frontend developer works on the frontend. The same goes for backend.
+Use frontend for both adjective and noun forms as it's more common and easier to maintain. For example, a frontend developer works on the frontend. The same goes for backend.
 
 End users are spelled out with two words, rather than hyphenating with a dash.
 
@@ -397,8 +398,6 @@ straightforward way to communicate a subject. For example:
 Use the Oxford Comma except in titles. It is a comma used after the penultimate
 item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
 painter, sculptor, and architect. It makes things clearer.
-
-[Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
 
 ### Prefer US English
 

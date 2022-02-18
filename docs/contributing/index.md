@@ -19,7 +19,7 @@ In the interest of fostering an open and welcoming environment, we as contributo
 ### Gatsby news
 
 - Follow [Gatsby](https://twitter.com/gatsbyjs) and [Gatsby Changelog](https://twitter.com/GatsbyChangelog) on Twitter
-- Read and discuss about [Request for Comment (RFC) proposals](https://github.com/gatsbyjs/gatsby/discussions/categories/rfc)
+- Read and discuss about [Request for Comment (RFC) proposals](/docs/contributing/rfc-process)
 - Watch videos on [Gatsby's YouTube channel](https://www.youtube.com/c/Gatsbyjs/videos) to see past GatsbyConf presentations and tutorial walkthroughs
 - Follow the [official blog](/blog/)
 
@@ -59,6 +59,7 @@ Contributing bug fixes or new features are the most direct form of contribution 
 
 There are a few other ways of contributing to the Gatsby ecosystem:
 
+- **Contribute to Gatsby's blog**. Want to write about Gatsby? Read the [blog contributions doc](/docs/contributing/blog-contributions) to get your blog post onto gatsbyjs.com.
 - **Develop learning materials.** Strengthen your expertise by writing a blog post, developing a workshop, creating video tutorials, or present your knowledge as a presentation on meetups and conferences.
 - **Create a plugin.** Learn how to [create a plugin](/docs/how-to/plugins-and-themes/) and [submit it to the Plugin Library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
 - **Contribute to the Gatsby User Collective.** Interested in working on plugins that benefit the whole community? You can find them in the [Gatsby User Collective repository](https://github.com/gatsby-uc/plugins).
