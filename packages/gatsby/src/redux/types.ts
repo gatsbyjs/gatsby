@@ -534,7 +534,7 @@ interface IEndJobAction {
   plugin: IGatsbyIncompleteJob["plugin"]
 }
 
-export type CreatePageDependencyActionPayloadType = {
+export interface ICreatePageDependencyActionPayloadType {
   path: string
   nodeId?: string
   connection?: string
@@ -543,7 +543,9 @@ export type CreatePageDependencyActionPayloadType = {
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
   plugin?: string
-  payload: CreatePageDependencyActionPayloadType | CreatePageDependencyActionPayloadType[]
+  payload:
+    | ICreatePageDependencyActionPayloadType
+    | Array<ICreatePageDependencyActionPayloadType>
 }
 
 export interface IDeleteComponentDependenciesAction {
