@@ -1,6 +1,5 @@
 /* eslint-disable no-useless-escape */
 import { isWebUri } from "valid-url"
-import { generateImageData } from "gatsby-plugin-sharp"
 import { GatsbyImage } from "gatsby-plugin-image"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
@@ -22,13 +21,31 @@ import fetchReferencedMediaItemsAndCreateNodes, {
 } from "../fetch-nodes/fetch-referenced-media-items"
 import btoa from "btoa"
 import store from "~/store"
-import { createLocalFileNode } from "./create-local-file-node"
 
-const getNodeEditLink = node => {
-  const { protocol, hostname } = url.parse(node.link)
-  const editUrl = `${protocol}//${hostname}/wp-admin/post.php?post=${node.databaseId}&action=edit`
+/**
+ * Takes in a MediaItem node from WPGraphQL as well as Gatsby plugin options and returns the correct placeholder URL for GatsbyImage
+ *
+ * The user must set the placeholderSizeName plugin option, or otherwise create an image size in WP where the name is `gatsby-image-placeholder`
+ */
+export function getPlaceholderUrlFromMediaItemNode(node, pluginOptions) {
+  let placeholderSizeByWidth
+  let placeholderSizeByName
 
-  return editUrl
+  node.mediaDetails.sizes.forEach(size => {
+    if (
+      size.name ===
+      (pluginOptions?.type?.MediaItem?.placeholderSizeName ||
+        `gatsby-image-placeholder`)
+    ) {
+      placeholderSizeByName = size
+    } else if (Number(size.width) <= 20) {
+      placeholderSizeByWidth = size
+    }
+  })
+
+  const placeHolderSize = placeholderSizeByName || placeholderSizeByWidth
+
+  return placeHolderSize?.sourceUrl
 }
 
 const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
@@ -557,6 +574,7 @@ const replaceNodeHtmlImages = async ({
           maxWidth = configuredMaxWidth
         }
 
+        // @todo hook up quality to image data resolver
         // const quality = pluginOptions?.html?.imageQuality
 
         const { reporter } = helpers
@@ -567,22 +585,32 @@ const replaceNodeHtmlImages = async ({
         let imageResize = null
 
         if (gatsbyTransformerSharpSupportsThisFileType) {
+          const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
+            imageNode,
+            pluginOptions
+          )
+
+          const imageUrl =
+            imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
+
           try {
             imageResize = await gatsbyImageDataResolver(
               {
-                url:
-                  imageNode.mediaItemUrl ||
-                  imageNode.sourceUrl ||
-                  imageNode.url,
+                url: imageUrl,
                 mimeType: imageNode.mimeType,
                 width: imageNode.mediaDetails.width,
                 height: imageNode.mediaDetails.height,
+                internal: {
+                  contentDigest: imageNode.modifiedGmt,
+                },
               },
               {
                 width: maxWidth,
                 layout: `constrained`,
-                placeholder: `none`,
-                // placeholder @todo default to none - expose plugin options to allow using a small blurred image or other options - placeholder means we need to download a file, so it's slower and WP probably doesn't have that small file yet
+                placeholder: !placeholderUrl
+                  ? `none`
+                  : pluginOptions?.html?.placeholderType || `blurred`,
+                placeholderUrl,
               },
               helpers.store
             )
@@ -590,7 +618,7 @@ const replaceNodeHtmlImages = async ({
             reporter.error(e)
             reporter.warn(
               formatLogMessage(
-                `${node.__typename} ${node.id} couldn't process inline html image ${fileNode.url}`
+                `${node.__typename} ${node.id} couldn't process inline html image ${imageUrl}`
               )
             )
             return null

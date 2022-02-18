@@ -60,6 +60,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.placeholderSizeName](#typemediaitemplaceholdersizename)
     - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
     - [type.MediaItem.localFile](#typemediaitemlocalfile)
@@ -1178,6 +1179,14 @@ A special type which is applied to any non-node root fields that are ingested an
 ### type.MediaItem
 
 **Field type**: `Object`
+
+#### type.MediaItem.placeholderSizeName
+
+This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. If you create an image size in WP and name it "gatsby-placeholder" that size will be used automatically.
+
+**Field type**: `String`
+
+**Default value**: `gatsby-placeholder`
 
 #### type.MediaItem.createFileNodes
 

@@ -682,6 +682,18 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
               },
             `),
         }),
+      placeholderType: Joi.string()
+        .default(`blurred`)
+        .description(
+          `This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.`
+        )
+        .example(
+          wrapOptions(`
+          html: {
+            placeholderType: \`dominantColor\`
+          }
+        `)
+        ),
     })
       .description(`Options related to html field processing.`)
       .meta({
@@ -725,6 +737,11 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       MediaItem: Joi.object({
+        placeholderSizeName: Joi.string()
+          .default(`gatsby-image-placeholder`)
+          .description(
+            `This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. If you create an image size in WP and name it "gatsby-image-placeholder" that size will be used automatically.`
+          ),
         createFileNodes: Joi.boolean()
           .default(true)
           .description(
