@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
+import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
@@ -19,9 +20,11 @@ import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
-import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
+import { loadConfig } from "../bootstrap/load-config"
+import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
+import { resolveModule } from "../utils/module-resolver"
 
 interface IPluginResolution {
   resolve: string
@@ -159,19 +162,25 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
-  // Try opening the site's gatsby-config.js file.
-  let activity = reporter.activityTimer(
-    `open and validate gatsby-configs, load plugins`,
-    {
-      parentSpan,
-    }
-  )
+  // Load gatsby config
+  let activity = reporter.activityTimer(`load gatsby config`, {
+    parentSpan,
+  })
   activity.start()
-
-  const { config, flattenedPlugins } = await loadConfigAndPlugins({
-    siteDirectory: program.directory,
+  const siteDirectory = program.directory
+  const config = await loadConfig({
+    siteDirectory,
     processFlags: true,
   })
+  activity.end()
+
+  // Load plugins
+  activity = reporter.activityTimer(`load plugins`, {
+    parentSpan,
+  })
+  activity.start()
+  const flattenedPlugins = await loadPlugins(config, siteDirectory)
+  activity.end()
 
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
@@ -195,8 +204,6 @@ export async function initialize({
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
   }
-
-  activity.end()
 
   if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
     if (process.env.gatsby_executing_command !== `develop`) {
@@ -310,16 +317,21 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
+
+  const state = store.getState()
+
   const hashes: any = await Promise.all([
     md5File(`package.json`),
     md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
     md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
+    { trailingSlash: state.config.trailingSlash },
   ])
+
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  const state = store.getState()
+
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -401,34 +413,29 @@ export async function initialize({
       // }
       // }
 
-      if (
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
-      ) {
-        const deleteGlobs = [
-          // By default delete all files & subdirectories
-          `${cacheDirectory}/**`,
-          `${cacheDirectory}/*/`,
-        ]
+      const deleteGlobs = [
+        // By default delete all files & subdirectories
+        `${cacheDirectory}/**`,
+        `!${cacheDirectory}/data`,
+        `${cacheDirectory}/data/**`,
+        `!${cacheDirectory}/data/gatsby-core-utils/`,
+        `!${cacheDirectory}/data/gatsby-core-utils/**`,
+      ]
 
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
-          // Stop the caches directory from being deleted, add all sub directories,
-          // but remove gatsby-source-filesystem
-          deleteGlobs.push(`!${cacheDirectory}/caches`)
-          deleteGlobs.push(`${cacheDirectory}/caches/*`)
-          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
-        }
-
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-          // Add webpack
-          deleteGlobs.push(`!${cacheDirectory}/webpack`)
-        }
-        await del(deleteGlobs)
-      } else {
-        // Attempt to empty dir if remove fails,
-        // like when directory is mount point
-        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+        // Stop the caches directory from being deleted, add all sub directories,
+        // but remove gatsby-source-filesystem
+        deleteGlobs.push(`!${cacheDirectory}/caches`)
+        deleteGlobs.push(`${cacheDirectory}/caches/*`)
+        deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
       }
+
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+        // Add webpack
+        deleteGlobs.push(`!${cacheDirectory}/webpack`)
+      }
+
+      await del(deleteGlobs)
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
@@ -438,6 +445,9 @@ export async function initialize({
       type: `DELETE_CACHE`,
       cacheIsCorrupt,
     })
+
+    // make sure all previous mutexes are released
+    await releaseAllMutexes()
 
     // in future this should show which plugin's caches are purged
     // possibly should also have which plugins had caches
@@ -512,16 +522,16 @@ export async function initialize({
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        return slash(
-          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
-        )
+        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+        return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
       // ignore
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      return slash(path.join(plugin.resolve, `gatsby-${env}`))
+      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+      return slash(resolveModule(modulePath) as string)
     }
     return undefined
   }
@@ -603,6 +613,9 @@ export async function initialize({
     parentSpan: activity.span,
   })
   activity.end()
+
+  // Track trailing slash option used in config
+  telemetry.trackFeatureIsUsed(`trailingSlash:${state.config.trailingSlash}`)
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]

@@ -19,7 +19,7 @@ const IndicatorButton = ({
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
   const onButtonMouseEnter = () => {
-    if (active) {
+    if (active && tooltip?.hoverable) {
       setShowTooltip(true)
 
       if (typeof onMouseEnter === `function`) {
@@ -31,15 +31,11 @@ const IndicatorButton = ({
     }
   }
   const onMouseLeave = () => {
-    setShowTooltip(false)
-    if (typeof onTooltipToogle === `function`) {
-      onTooltipToogle(false)
-    }
-  }
-  const onButtonClick = event => {
-    event.stopPropagation()
-    if (active && hoverable && typeof onClick === `function`) {
-      onClick()
+    if (active && tooltip?.hoverable) {
+      setShowTooltip(false)
+      if (typeof onTooltipToogle === `function`) {
+        onTooltipToogle(false)
+      }
     }
   }
 
@@ -60,7 +56,7 @@ const IndicatorButton = ({
         style={{ marginTop: marginTop }}
         onMouseEnter={onButtonMouseEnter}
         onMouseLeave={onMouseLeave}
-        onClick={onButtonClick}
+        onClick={onClick}
       >
         <div>
           {iconSvg}

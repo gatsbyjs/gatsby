@@ -34,6 +34,9 @@ describe(`gatsby-plugin-preact`, () => {
           "react-dom/server": expect.stringContaining(
             path.join(`preact`, `compat`, `server`)
           ),
+          "react/jsx-runtime": expect.stringContaining(
+            path.join(`preact`, `jsx-runtime`)
+          ),
         },
       },
     })
@@ -101,6 +104,9 @@ describe(`gatsby-plugin-preact`, () => {
           "react-dom": expect.stringContaining(path.join(`preact`, `compat`)),
           "react-dom/server": expect.stringContaining(
             path.join(`preact`, `compat`, `server`)
+          ),
+          "react/jsx-runtime": expect.stringContaining(
+            path.join(`preact`, `jsx-runtime`)
           ),
         },
       },

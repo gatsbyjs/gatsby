@@ -96,7 +96,7 @@ function Index({ data }) {
         <h2>Client-Only routes</h2>
         <p>
           As shortly mentioned for the "Collection routes" the{` `}
-          <em>[name].js</em> file inside <em>src/pages/products</em> is alreay a
+          <em>[name].js</em> file inside <em>src/pages/products</em> is already a
           client-only page. But you can do even more with those! See the example
           below:
         </p>

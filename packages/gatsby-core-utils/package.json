@@ -1,11 +1,23 @@
 {
   "name": "gatsby-core-utils",
-  "version": "3.7.0-next.0",
+  "version": "3.9.0-next.0",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
     "gatsby-core-utils"
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts",
+        "dist/index.d.ts"
+      ]
+    }
+  },
   "author": "Ward Peeters <ward@coding-tech.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
@@ -32,12 +44,16 @@
     "@babel/runtime": "^7.15.4",
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
+    "fastq": "^1.13.0",
     "file-type": "^16.5.3",
     "fs-extra": "^10.0.0",
     "got": "^11.8.3",
+    "import-from": "^4.0.0",
+    "lmdb": "^2.1.7",
     "lock": "^1.1.0",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",
+    "resolve-from": "^5.0.0",
     "tmp": "^0.2.1",
     "xdg-basedir": "^4.0.0"
   },
@@ -45,11 +61,11 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@types/ci-info": "2.0.0",
-    "babel-preset-gatsby-package": "^2.7.0-next.0",
+    "babel-preset-gatsby-package": "^2.9.0-next.0",
     "cross-env": "^7.0.3",
     "is-uuid": "^1.0.2",
-    "msw": "^0.36.3",
-    "typescript": "^4.5.4"
+    "msw": "^0.36.8",
+    "typescript": "^4.5.5"
   },
   "engines": {
     "node": ">=14.15.0"

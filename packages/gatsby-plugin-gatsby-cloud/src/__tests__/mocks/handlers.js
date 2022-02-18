@@ -51,4 +51,12 @@ export const handlers = [
   rest.post(`http://test.com/events`, async (req, res, ctx) =>
     res(ctx.json({ message: `success` }))
   ),
+  rest.get(
+    `https://build-123-changed.gtsb.io/page-data/index/page-data.json`,
+    async (req, res, ctx) => res(ctx.text(`abcdefg` + Date.now().toString()))
+  ),
+  rest.get(
+    `https://build-123-unchanged.gtsb.io/page-data/index/page-data.json`,
+    async (req, res, ctx) => res(ctx.text(`abcdefg`))
+  ),
 ]

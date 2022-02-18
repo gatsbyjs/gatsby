@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.7.0/packages/gatsby-source-filesystem) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- ensure remote file downloads are queued in all cases [#34414](https://github.com/gatsbyjs/gatsby/issues/34414) ([6ac1ed6](https://github.com/gatsbyjs/gatsby/commit/6ac1ed6ad61b86094e3b57004e50981820390965))
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.6.0/packages/gatsby-source-filesystem) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.5.2/packages/gatsby-source-filesystem) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-source-filesystem

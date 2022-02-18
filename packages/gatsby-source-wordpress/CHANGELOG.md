@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.7.0/packages/gatsby-source-wordpress) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.7 for gatsby-source-wordpress [#34650](https://github.com/gatsbyjs/gatsby/issues/34650) ([0c4b1ca](https://github.com/gatsbyjs/gatsby/commit/0c4b1ca38af6e582d28a40009e13122d6eeae1c1))
+
+#### Chores
+
+- Add WPGraphQL WPML [#34609](https://github.com/gatsbyjs/gatsby/issues/34609) ([a31bc5b](https://github.com/gatsbyjs/gatsby/commit/a31bc5b908e9605f85999de53f6c864f9bc4f7d6))
+
+## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.6.0/packages/gatsby-source-wordpress) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Chores
+
+- Old occurrences of gatbyjs.org [#34402](https://github.com/gatsbyjs/gatsby/issues/34402) ([dda64c3](https://github.com/gatsbyjs/gatsby/commit/dda64c3b8089f36cb96be0281e197aabc5e3cd06))
+
+#### Other Changes
+
+- cleanup callbacks at the end instead of the beginning [#34391](https://github.com/gatsbyjs/gatsby/issues/34391) ([1555234](https://github.com/gatsbyjs/gatsby/commit/1555234496b2e381ce71d50a8f829c1dae83f229))
+- Update media-item-processing.md [#34434](https://github.com/gatsbyjs/gatsby/issues/34434) ([f1dfedc](https://github.com/gatsbyjs/gatsby/commit/f1dfedc01a8bf635e6199adc7a5508b345165ba9))
+
 ### [6.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.5.2/packages/gatsby-source-wordpress) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-source-wordpress

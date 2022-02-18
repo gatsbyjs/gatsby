@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.7.0/packages/gatsby-core-utils) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- ensure remote file downloads are queued in all cases [#34414](https://github.com/gatsbyjs/gatsby/issues/34414) ([6ac1ed6](https://github.com/gatsbyjs/gatsby/commit/6ac1ed6ad61b86094e3b57004e50981820390965))
+
+#### Chores
+
+- update dependency msw to ^0.36.8 for gatsby-core-utils [#34639](https://github.com/gatsbyjs/gatsby/issues/34639) ([741f30b](https://github.com/gatsbyjs/gatsby/commit/741f30b2d843207a78da297c0ce97323169b754c))
+- update dependency typescript to ^4.5.5 [#34641](https://github.com/gatsbyjs/gatsby/issues/34641) ([f7a7e1f](https://github.com/gatsbyjs/gatsby/commit/f7a7e1f642d91babb397156ab37cb28dcde19737))
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.6.0/packages/gatsby-core-utils) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- Re-Add plugin-add functionality [#34482](https://github.com/gatsbyjs/gatsby/issues/34482) ([618b32b](https://github.com/gatsbyjs/gatsby/commit/618b32b17751c76ea1b1a6f4fbc91da928bd18c1))
+- Re-Export updateSiteMetadata [#34462](https://github.com/gatsbyjs/gatsby/issues/34462) ([d061b1c](https://github.com/gatsbyjs/gatsby/commit/d061b1c5b92553a95da32707cc6a29380ec365c2))
+
 ### [3.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.5.2/packages/gatsby-core-utils) (2022-01-17)
 
 #### Bug Fixes

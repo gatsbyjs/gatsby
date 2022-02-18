@@ -104,3 +104,20 @@ const requireUtil = createRequireFromPath("../src/utils/")
 requireUtil("./some-tool")
 // ...
 ```
+
+### Mutex
+
+When working inside workers or async operations you want some kind of concurrency control that a specific work load can only concurrent one at a time. This is what a [Mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) does.
+
+By implementing the following code, the code is only executed one at a time and the other threads/async workloads are awaited until the current one is done. This is handy when writing to the same file to disk.
+
+```js
+const { createMutex } = require("gatsby-core-utils/mutex")
+
+const mutex = createMutex("my-custom-mutex-key")
+await mutex.acquire()
+
+await fs.writeFile("pathToFile", "my custom content")
+
+await mutex.release()
+```

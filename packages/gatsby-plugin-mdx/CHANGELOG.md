@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.7.1/packages/gatsby-plugin-mdx) (2022-02-15)
+
+#### Chores
+
+- Use MDX v1 for install instructions [#34774](https://github.com/gatsbyjs/gatsby/issues/34774) [#34817](https://github.com/gatsbyjs/gatsby/issues/34817) ([d149291](https://github.com/gatsbyjs/gatsby/commit/d1492917a4ed051de2f039c11e2b0ee36389f5a0))
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.7.0/packages/gatsby-plugin-mdx) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.6.0/packages/gatsby-plugin-mdx) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ### [3.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.5.2/packages/gatsby-plugin-mdx) (2022-01-17)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
