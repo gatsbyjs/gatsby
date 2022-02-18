@@ -7,6 +7,7 @@ import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
+import { generatePagesChecksum } from "../../utils/lmdb-pages-checksum"
 
 type Reporter = typeof reporter
 
@@ -131,6 +132,9 @@ export async function createGraphqlEngineBundle(
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        "process.env.GATSBY_PAGES_CHECKSUM": JSON.stringify(
+          generatePagesChecksum()
+        ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),

@@ -24,6 +24,7 @@ import {
   // @ts-ignore
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
+import { generatePagesChecksum } from "../../utils/lmdb-pages-checksum"
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -107,6 +108,16 @@ export class GraphQLEngine {
     // The way internal runner works can change, so we should not make it a public API.
     // Here we just want to expose way to await it being ready
     await this.getRunner()
+
+    if (process.env.GATSBY_PAGES_CHECKSUM) {
+      const engineChecksum = generatePagesChecksum()
+      // @ts-ignore PAGES_CHECKSUM is being "inlined" by bundler
+      if (engineChecksum !== process.env.GATSBY_PAGES_CHECKSUM) {
+        reporter.error(
+          `Pages checksum doesn't match: \n - calculated: "${engineChecksum}"\n - expected:   "${process.env.GATSBY_PAGES_CHECKSUM}"`
+        )
+      }
+    }
   }
 
   public async runQuery(
