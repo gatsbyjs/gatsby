@@ -50,6 +50,7 @@
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
   - [html.generateWebpImages](#htmlgeneratewebpimages)
+  - [html.placeholderType](#htmlplaceholdertype)
 - [type](#type)
   - [type.\_\_all](#type__all)
     - [type.\_\_all.where](#type__allwhere)
@@ -1026,6 +1027,14 @@ When this is true, .webp images will be generated for images in html fields in a
 
 ```
 
+### html.placeholderType
+
+This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.
+
+**Field type**: `String`
+
+**Default value**: `blurred`
+
 ## type
 
 Options related to specific types in the remote schema.
@@ -1182,11 +1191,11 @@ A special type which is applied to any non-node root fields that are ingested an
 
 #### type.MediaItem.placeholderSizeName
 
-This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. If you create an image size in WP and name it "gatsby-placeholder" that size will be used automatically.
+This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. If you create an image size in WP and name it "gatsby-image-placeholder" that size will be used automatically.
 
 **Field type**: `String`
 
-**Default value**: `gatsby-placeholder`
+**Default value**: `gatsby-image-placeholder`
 
 #### type.MediaItem.createFileNodes
 
