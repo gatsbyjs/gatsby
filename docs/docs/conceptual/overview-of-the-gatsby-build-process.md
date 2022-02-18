@@ -32,7 +32,8 @@ Using `gatsby develop` runs a server in the background, enabling useful features
 `gatsby develop` is optimized for rapid feedback and extra debugging information. The output of running `gatsby develop` in a fresh install of the Gatsby default starter looks like this:
 
 ```shell
-success open and validate gatsby-configs - 0.051 s
+success compile gatsby files - 0.051 s
+success load gatsby config - 0.051 s
 success load plugins - 0.591 s
 success onPreInit - 0.015 s
 success initialize cache - 0.019 s
@@ -69,7 +70,8 @@ Gatsby's `build` command should be run when you’ve added the finishing touches
 The output of running `gatsby build` in a fresh install of the Gatsby default starter looks like this:
 
 ```shell
-success open and validate gatsby-configs - 0.062 s
+success compile gatsby files - 0.051 s
+success load gatsby config - 0.051 s
 success load plugins - 0.915 s
 success onPreInit - 0.021 s
 success delete html and css files from previous builds - 0.030 s
@@ -111,7 +113,8 @@ If you compare the outputs of the two commands (`gatsby develop` vs `gatsby buil
 The following output shows the differences between the above two examples:
 
 ```diff
-success open and validate gatsby-configs - 0.051 s
+success compile gatsby files - 0.051 s
+success load gatsby config - 0.051 s
 success load plugins - 0.915 s
 success onPreInit - 0.021 s
 + success delete html and css files from previous builds - 0.030 s
@@ -190,9 +193,9 @@ For an introduction to what happens at each step throughout the process from the
 
 The steps of the bootstrap phase are shared between develop and build (with only one exception in the `delete html and css files from previous builds` step). This includes:
 
-1. `open and validate gatsby-configs`
+1. `compile gatsby files` / `load gatsby config`
 
-The `gatsby-config.js` file for the site and any installed themes are opened, ensuring that a function or object is exported for each.
+The root gatsby files (`gatsby-config` and `gatsby-node`) and any local plugins are compiled from e.g. ES6 or TypeScript to CommonSJ. The compiled `gatsby-config.js` file for the site and any installed themes are opened, ensuring that a function or object is exported for each.
 
 2. `load plugins`
 

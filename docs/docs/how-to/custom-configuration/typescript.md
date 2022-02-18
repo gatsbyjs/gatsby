@@ -205,6 +205,10 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 }
 ```
 
+### Local Plugins
+
+All the files mentioned above can also be written and used inside a [local plugin](/docs/creating-a-local-plugin/).
+
 ## `tsconfig.json`
 
 Essentially, the `tsconfig.json` file is used in tools external to Gatsby e.g Testing Frameworks like Jest, Code editors and Linting libraries like EsLint to enable them handle TypeScript correctly. You can use the `tsconfig.json` from our [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json).
