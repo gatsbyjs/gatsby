@@ -11,6 +11,7 @@ import { initReporterMessagingInMainProcess } from "./reporter"
 import { GatsbyWorkerPool } from "./types"
 import { loadPartialStateFromDisk, store } from "../../redux"
 import { ActionsUnion, IGatsbyState } from "../../redux/types"
+import { createPageDependencyBatcher } from "../../redux/actions/add-page-dependency"
 
 export type { GatsbyWorkerPool }
 
@@ -90,6 +91,10 @@ export async function runQueriesInWorkersQueue(
         })
         .catch(handleRunQueriesInWorkersQueueError)
     }
+
+    // at this point, we're done grabbing page dependencies, so we need to
+    // flush out the batcher in case there are any left in the queue
+    createPageDependencyBatcher.flush()
 
     // note that we only await on this and not on anything before (`.setComponents()` or `.runQueries()`)
     // because gatsby-worker will queue tasks internally and worker will never execute multiple tasks at the same time
