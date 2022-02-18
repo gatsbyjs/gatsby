@@ -45,7 +45,7 @@ describe(`gatsby file compilation`, () => {
       expect(options).toMatchSnapshot({
         entries: [
           `${dir.js}/${gatsbyFileRegex}`,
-          `${dir.js}/plugins/*/${gatsbyFileRegex}`,
+          `${dir.js}/plugins/**/${gatsbyFileRegex}`,
         ],
         targets: {
           root: {
