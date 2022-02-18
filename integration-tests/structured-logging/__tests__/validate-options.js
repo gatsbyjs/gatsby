@@ -58,7 +58,7 @@ describe(`Validate Plugin Options`, () => {
               category: `USER`,
               context: expect.objectContaining({
                 pluginName: expect.stringContaining(
-                  "integration-tests/structured-logging/local-plugin-with-path/index.js"
+                  "integration-tests/structured-logging/local-plugin-with-path"
                 ),
                 validationErrors: expect.arrayContaining([
                   {
