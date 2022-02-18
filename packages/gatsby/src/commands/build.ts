@@ -286,8 +286,12 @@ module.exports = async function build(
     )
   }
 
+  // Start saving page.mode in the main process (while queries run in workers in parallel)
+  let waitMaterializePageMode = Promise.resolve()
+
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    waitMaterializePageMode = materializePageMode()
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
     })
@@ -310,6 +314,7 @@ module.exports = async function build(
       parentSpan: buildSpan,
       store,
     })
+    waitMaterializePageMode = materializePageMode()
   }
 
   // create scope so we don't leak state object
@@ -322,6 +327,7 @@ module.exports = async function build(
   }
 
   if (process.send && shouldGenerateEngines()) {
+    await waitMaterializePageMode
     process.send({
       type: `LOG_ACTION`,
       action: {
@@ -400,9 +406,6 @@ module.exports = async function build(
   }
 
   await waitForWorkerPoolRestart
-
-  // Start saving page.mode in the main process (while HTML is generated in workers in parallel)
-  const waitMaterializePageMode = materializePageMode()
 
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
