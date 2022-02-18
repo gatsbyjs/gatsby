@@ -30,7 +30,7 @@ Systems and workflows in your architecture can be complex. We've written blog po
 
 ## Making Architecture Decisions Incrementally
 
-Architectures don't need to be finalized before the project starts. Sometimes, teams can build projects faster by parallelizing development and architecture.
+Architectures don't need to be finalized before the project starts. Sometimes, teams can build projects faster by parallelizing development and architecture decisions.
 
 For example, [one team](/blog/jaxxon-gatsby-shopify-faster-growth) had a senior developer work out the full architecture while the junior developer built components. [Another team](/blog/how-elevar-used-storybook-with-gatsby-to-support-a-modular-design-process) started by building components as they figured out their CMS and hosting providers.
 
