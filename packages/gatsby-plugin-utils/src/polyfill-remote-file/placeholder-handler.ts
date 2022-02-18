@@ -143,13 +143,13 @@ async function placeholderToBase64({
   const mutex = createMutex(getMutexKey(contentDigest))
   await mutex.acquire()
 
-  // check cache again after mutex is acquired
-  cachedValue = await cache.get(cacheKey)
-  if (cachedValue) {
-    return cachedValue
-  }
-
   try {
+    // check cache again after mutex is acquired
+    cachedValue = await cache.get(cacheKey)
+    if (cachedValue) {
+      return cachedValue
+    }
+
     let url = originalUrl
     let hasWidthOrHeightAttr = false
     if (placeholderUrl) {
@@ -210,13 +210,13 @@ async function placeholderToDominantColor({
   const mutex = createMutex(getMutexKey(contentDigest))
   await mutex.acquire()
 
-  // check cache again after mutex is acquired
-  cachedValue = await cache.get(cacheKey)
-  if (cachedValue) {
-    return cachedValue
-  }
-
   try {
+    // check cache again after mutex is acquired
+    cachedValue = await cache.get(cacheKey)
+    if (cachedValue) {
+      return cachedValue
+    }
+
     let url = originalUrl
     if (placeholderUrl) {
       url = generatePlaceholderUrl({
