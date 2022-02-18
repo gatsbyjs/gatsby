@@ -229,20 +229,20 @@ async function createMockCache(tmpDir) {
 
 describe(`fetch-remote-file`, () => {
   let cache
-  const cachePath = path.join(__dirname, `.cache-fetch`)
+  const cacheRoot = path.join(__dirname, `.cache-fetch`)
+  const cachePath = path.join(__dirname, `.cache-fetch`, `files`)
 
   beforeAll(async () => {
     // Establish requests interception layer before all tests.
     server.listen()
 
     cache = await createMockCache(cachePath)
-    await fs.ensureDir(cachePath)
-    storage.getDatabaseDir.mockReturnValue(cachePath)
+    storage.getDatabaseDir.mockReturnValue(cacheRoot)
   })
 
   afterAll(async () => {
     await storage.closeDatabase()
-    await fs.remove(cachePath)
+    await fs.remove(cacheRoot)
     delete global.__GATSBY
 
     // Clean up after all tests are done, preventing this
@@ -250,7 +250,7 @@ describe(`fetch-remote-file`, () => {
     server.close()
   })
 
-  beforeEach(() => {
+  beforeEach(async () => {
     // simulate a new build each run
     global.__GATSBY = {
       buildId: global.__GATSBY?.buildId
@@ -260,6 +260,9 @@ describe(`fetch-remote-file`, () => {
     gotStream.mockClear()
     fsMove.mockClear()
     urlCount.clear()
+
+    await fs.remove(cachePath)
+    await fs.ensureDir(cachePath)
   })
 
   it(`downloads and create a svg file`, async () => {
@@ -355,6 +358,28 @@ describe(`fetch-remote-file`, () => {
 
     expect(filePathCached).toBe(filePath)
     expect(fsMove).toBeCalledTimes(1)
+    expect(gotStream).toBeCalledTimes(2)
+    global.__GATSBY = currentGlobal
+  })
+
+  it(`handles 304 responses correctly when file does not exists`, async () => {
+    const currentGlobal = global.__GATSBY
+    global.__GATSBY = { buildId: `304-3` }
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog-304.jpg`,
+      directory: cachePath,
+    })
+
+    await fs.remove(filePath)
+
+    global.__GATSBY = { buildId: `304-4` }
+    const filePathCached = await fetchRemoteFile({
+      url: `http://external.com/dog-304.jpg`,
+      directory: cachePath,
+    })
+
+    expect(filePathCached).toBe(filePath)
+    expect(fsMove).toBeCalledTimes(2)
     expect(gotStream).toBeCalledTimes(2)
     global.__GATSBY = currentGlobal
   })
