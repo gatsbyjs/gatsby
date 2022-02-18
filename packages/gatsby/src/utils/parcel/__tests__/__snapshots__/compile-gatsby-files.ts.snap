@@ -6,7 +6,7 @@ Object {
   "defaultConfig": "gatsby-parcel-config",
   "entries": Array [
     "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/gatsby-+(node|config).{ts,tsx,js}",
-    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/plugins/*/gatsby-+(node|config).{ts,tsx,js}",
+    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/plugins/**/gatsby-+(node|config).{ts,tsx,js}",
   ],
   "mode": "production",
   "targets": Object {
