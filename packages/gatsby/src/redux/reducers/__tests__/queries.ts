@@ -187,17 +187,21 @@ describe(`delete page`, () => {
 
     const action1: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: Pages.foo.path,
-        nodeId: `123`,
-      },
+      payload: [
+        {
+          path: Pages.foo.path,
+          nodeId: `123`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: Pages.bar.path,
-        connection: `Bar`,
-      },
+      payload: [
+        {
+          path: Pages.bar.path,
+          connection: `Bar`,
+        },
+      ],
     }
     state = reducer(state, action1)
     state = reducer(state, action2)
@@ -352,10 +356,12 @@ describe(`createPages API end`, () => {
       { path: StaticQueries.q1.id, nodeId: `123` },
     ]
     for (const payload of dataDependencies) {
-      state = reducer(state, {
-        type: `CREATE_COMPONENT_DEPENDENCY`,
-        payload,
-      })
+      state = reducer(state, [
+        {
+          type: `CREATE_COMPONENT_DEPENDENCY`,
+          payload,
+        },
+      ])
     }
     state = deletePage(state, Pages.foo)
     state = removeStaticQuery(state, StaticQueries.q1.id)
@@ -659,10 +665,12 @@ describe(`add page data dependency`, () => {
   it(`lets you add a node dependency`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        nodeId: `123`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          nodeId: `123`,
+        },
+      ],
     }
 
     expect(reducer(undefined, action)).toMatchObject({
@@ -673,24 +681,30 @@ describe(`add page data dependency`, () => {
   it(`lets you add a node dependency to multiple paths`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        nodeId: `1.2.3`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          nodeId: `1.2.3`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi2/`,
-        nodeId: `1.2.3`,
-      },
+      payload: [
+        {
+          path: `/hi2/`,
+          nodeId: `1.2.3`,
+        },
+      ],
     }
     const action3: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/blog/`,
-        nodeId: `1.2.3`,
-      },
+      payload: [
+        {
+          path: `/blog/`,
+          nodeId: `1.2.3`,
+        },
+      ],
     }
 
     let state = reducer(undefined, action)
@@ -705,17 +719,21 @@ describe(`add page data dependency`, () => {
   it(`lets you add a connection dependency`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        connection: `Markdown.Remark`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          connection: `Markdown.Remark`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi2/`,
-        connection: `Markdown.Remark`,
-      },
+      payload: [
+        {
+          path: `/hi2/`,
+          connection: `Markdown.Remark`,
+        },
+      ],
     }
 
     let state = reducer(undefined, action)
@@ -729,19 +747,23 @@ describe(`add page data dependency`, () => {
   it(`removes duplicate paths`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        nodeId: `1`,
-        connection: `MarkdownRemark`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          nodeId: `1`,
+          connection: `MarkdownRemark`,
+        },
+      ],
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi2/`,
-        nodeId: `1`,
-        connection: `MarkdownRemark`,
-      },
+      payload: [
+        {
+          path: `/hi2/`,
+          nodeId: `1`,
+          connection: `MarkdownRemark`,
+        },
+      ],
     }
 
     let state = reducer(undefined, action)
@@ -756,11 +778,13 @@ describe(`add page data dependency`, () => {
   it(`lets you add both a node and connection in one action`, () => {
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: `/hi/`,
-        connection: `MarkdownRemark`,
-        nodeId: `SuperCoolNode`,
-      },
+      payload: [
+        {
+          path: `/hi/`,
+          connection: `MarkdownRemark`,
+          nodeId: `SuperCoolNode`,
+        },
+      ],
     }
 
     const state = reducer(undefined, action)
@@ -783,7 +807,7 @@ describe(`query start`, () => {
     for (const payload of dataDependencies) {
       state = reducer(state, {
         type: `CREATE_COMPONENT_DEPENDENCY`,
-        payload,
+        payload: [payload],
       })
     }
   })
@@ -876,11 +900,13 @@ describe(`merge worker query state`, () => {
 
     const action: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
-      payload: {
-        path: Pages.foo.path,
-        nodeId: `123`,
-        connection: `Foo`,
-      },
+      payload: [
+        {
+          path: Pages.foo.path,
+          nodeId: `123`,
+          connection: `Foo`,
+        },
+      ],
     }
 
     state = reducer(state, action)
