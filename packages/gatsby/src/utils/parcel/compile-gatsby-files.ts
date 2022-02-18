@@ -4,7 +4,7 @@ import { ensureDir } from "fs-extra"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
-export const gatsbyFileRegex = `gatsby-+(node|config).{ts,tsx,js}`
+export const gatsbyFileRegex = `gatsby-+(node|config).{ts,js}`
 
 /**
  * Construct Parcel with config.
@@ -14,7 +14,7 @@ export function constructParcel(siteRoot: string): Parcel {
   return new Parcel({
     entries: [
       `${siteRoot}/${gatsbyFileRegex}`,
-      `${siteRoot}/plugins/*/${gatsbyFileRegex}`,
+      `${siteRoot}/plugins/**/${gatsbyFileRegex}`,
     ],
     defaultConfig: `gatsby-parcel-config`,
     mode: `production`,

@@ -11,7 +11,7 @@ exports.onPostBuild = async ({ graphql }) => {
   `)
 
   await fs.outputJSON(
-    path.join(__dirname, `public`, `html-queried-like-feed-plugin.json`),
+    path.join(`public`, `html-queried-like-feed-plugin.json`),
     results,
     { spaces: 2 }
   )
