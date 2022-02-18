@@ -197,7 +197,10 @@ export const createMediaItemNode = async ({
         filesize: node.mediaDetails.fileSize,
         width: node.mediaDetails.width,
         height: node.mediaDetails.height,
-        placeholderUrl: placeholderUrl ?? node.sourceUrl,
+        placeholderUrl:
+          placeholderUrl ??
+          node.mediaDetails.sizes?.[0]?.sourceUrl ??
+          node.sourceUrl,
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
