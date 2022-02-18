@@ -17,7 +17,6 @@ import {
 } from "../../../redux/types"
 import { DeepPartial } from "redux"
 import { waitUntilPageQueryResultsAreStored } from "../../page-data"
-import { createPageDependencyBatcher } from "../../../redux/actions/add-page-dependency"
 
 export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
@@ -37,10 +36,6 @@ export async function saveQueriesDependencies(): Promise<void> {
     process.env.GATSBY_WORKER_ID,
     pickNecessaryQueryState
   )
-
-  // at this point, we're done grabbing page dependencies, so we need to
-  // flush out the batcher in case there are any left
-  createPageDependencyBatcher.flush()
 
   // make sure page query results we put in lmdb-store are flushed
   await waitUntilPageQueryResultsAreStored()

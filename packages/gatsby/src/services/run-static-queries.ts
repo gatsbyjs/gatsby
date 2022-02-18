@@ -43,6 +43,10 @@ export async function runStaticQueries({
     graphqlTracing: program?.graphqlTracing,
   })
 
+  // at this point, we're done grabbing page dependencies, so we need to
+  // flush out the batcher in case there are any left
+  createPageDependencyBatcher.flush()
+
   if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     activity.done()
   }
