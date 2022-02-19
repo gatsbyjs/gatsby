@@ -92,7 +92,6 @@ export class GraphQLEngine {
 
       if (process.env.GATSBY_PAGES_CHECKSUM) {
         const engineChecksum = generatePagesChecksum()
-        // @ts-ignore PAGES_CHECKSUM is being "inlined" by bundler
         if (engineChecksum !== process.env.GATSBY_PAGES_CHECKSUM) {
           reporter.error(
             `Pages checksum doesn't match: \n - calculated: "${engineChecksum}"\n - expected:   "${process.env.GATSBY_PAGES_CHECKSUM}"`
