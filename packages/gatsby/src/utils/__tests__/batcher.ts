@@ -35,7 +35,9 @@ describe(`Batcher`, () => {
   afterEach(() => {
     singleCall.mockRestore()
     bulkCall.mockRestore()
-  })[(1, 2, 10)].forEach(threshold => {
+  })
+  
+  Array(1, 2, 10).forEach(threshold => {
     it(`flushes single calls after threshold of ${threshold} is hit`, () => {
       createBatcherWithSpies(threshold)
 
