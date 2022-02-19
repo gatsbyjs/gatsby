@@ -291,9 +291,8 @@ module.exports = async function build(
 
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    if (process.env.GATSBY_MATERIALIZE_EARLY) {
-      waitMaterializePageMode = materializePageMode()
-    }
+    waitMaterializePageMode = materializePageMode()
+
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
     })
@@ -316,9 +315,8 @@ module.exports = async function build(
       parentSpan: buildSpan,
       store,
     })
-    if (process.env.GATSBY_MATERIALIZE_EARLY) {
-      waitMaterializePageMode = materializePageMode()
-    }
+
+    waitMaterializePageMode = materializePageMode()
   }
 
   // create scope so we don't leak state object
@@ -410,10 +408,6 @@ module.exports = async function build(
   }
 
   await waitForWorkerPoolRestart
-
-  if (!process.env.GATSBY_MATERIALIZE_EARLY) {
-    waitMaterializePageMode = materializePageMode()
-  }
 
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
