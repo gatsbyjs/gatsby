@@ -52,7 +52,13 @@ export const createPageDependencies = (
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload,
+    payload: payload.map(({ path, nodeId, connection }) => {
+      return {
+        path,
+        nodeId,
+        connection,
+      }
+    }),
   }
 }
 

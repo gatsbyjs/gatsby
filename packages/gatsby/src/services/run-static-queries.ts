@@ -2,7 +2,6 @@ import { processStaticQueries } from "../query"
 import reporter from "gatsby-cli/lib/reporter"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
-import { createPageDependencyBatcher } from "../redux/actions/add-page-dependency"
 
 export async function runStaticQueries({
   parentSpan,
@@ -43,10 +42,6 @@ export async function runStaticQueries({
     graphqlRunner,
     graphqlTracing: program?.graphqlTracing,
   })
-
-  // at this point, we're done grabbing page dependencies, so we need to
-  // flush out the batcher in case there are any left
-  createPageDependencyBatcher.flush()
 
   if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     activity.done()

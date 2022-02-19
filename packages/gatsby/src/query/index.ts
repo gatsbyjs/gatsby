@@ -11,6 +11,7 @@ import {
 } from "../utils/websocket-manager"
 import { GraphQLRunner } from "./graphql-runner"
 import { IGroupedQueryIds } from "../services"
+import { createPageDependencyBatcher } from "../redux/actions/add-page-dependency"
 
 if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
   console.info(
@@ -211,7 +212,7 @@ export async function processStaticQueries(
   queryIds: IGroupedQueryIds["staticQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
 ): Promise<void> {
-  return processQueries<string>({
+  const processedQueries = processQueries<string>({
     queryIds,
     createJobFn: createStaticQueryJob,
     onQueryDone:
@@ -223,6 +224,12 @@ export async function processStaticQueries(
     graphqlRunner,
     graphqlTracing,
   })
+
+  // at this point, we're done grabbing page dependencies, so we need to
+  // flush out the batcher in case there are any left
+  createPageDependencyBatcher.flush()
+
+  return processedQueries
 }
 
 export async function processPageQueries(
@@ -238,6 +245,10 @@ export async function processPageQueries(
     graphqlRunner,
     graphqlTracing,
   })
+
+  // at this point, we're done grabbing page dependencies, so we need to
+  // flush out the batcher in case there are any left
+  createPageDependencyBatcher.flush()
 
   return processedQueries
 }
