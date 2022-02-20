@@ -1,4 +1,4 @@
-import { ImageFormat, ImageFit } from "../types"
+import { ImageFormat, ImageFit, WidthOrHeight } from "../types"
 
 export function validateAndNormalizeFormats(
   formats: Array<ImageFormat>,
@@ -29,7 +29,7 @@ export function calculateImageDimensions(
     fit,
     width: requestedWidth,
     height: requestedHeight,
-  }: { fit: ImageFit; width: number; height: number }
+  }: { fit: ImageFit } & WidthOrHeight
 ): { width: number; height: number; aspectRatio: number } {
   // Calculate the eventual width/height of the image.
   const imageAspectRatio = originalDimensions.width / originalDimensions.height
@@ -37,11 +37,6 @@ export function calculateImageDimensions(
   let width = requestedWidth
   let height = requestedHeight
   switch (fit) {
-    case `cover`: {
-      width = requestedWidth ?? originalDimensions.width
-      height = requestedHeight ?? originalDimensions.height
-      break
-    }
     case `inside`: {
       const widthOption = requestedWidth ?? Number.MAX_SAFE_INTEGER
       const heightOption = requestedHeight ?? Number.MAX_SAFE_INTEGER
@@ -64,11 +59,17 @@ export function calculateImageDimensions(
       )
       break
     }
+    case `fill`: {
+      width = requestedWidth ?? originalDimensions.width
+      height = requestedHeight ?? originalDimensions.height
+
+      break
+    }
 
     default: {
       if (requestedWidth && !requestedHeight) {
         width = requestedWidth
-        height = Math.round(requestedHeight / imageAspectRatio)
+        height = Math.round(requestedWidth / imageAspectRatio)
       }
 
       if (requestedHeight && !requestedWidth) {
@@ -79,8 +80,8 @@ export function calculateImageDimensions(
   }
 
   return {
-    width,
-    height,
-    aspectRatio: width / height,
+    width: width as number,
+    height: height as number,
+    aspectRatio: (width as number) / (height as number),
   }
 }

@@ -55,16 +55,16 @@ export type ImageCropFocus =
   | "faces"
 
 export type WidthOrHeight =
-  | { width: number; height: never }
-  | { width: never; height: number }
   | { width: number; height: number }
+  | { width: number; height?: never }
+  | { width?: never; height: number }
 
-export type CalculateImageSizesArgs = WidthOrHeight & {
+export type CalculateImageSizesArgs = {
   fit: ImageFit
   layout: ImageLayout
   outputPixelDensities: Array<number>
   breakpoints?: Array<number>
-}
+} & WidthOrHeight
 
 export function isImage(node: {
   mimeType: IRemoteFileNode["mimeType"]

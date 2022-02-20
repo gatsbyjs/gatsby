@@ -1,5 +1,5 @@
 import { isImage } from "../types"
-import type { ImageFit, WidthOrHeight } from "../types"
+import type { ImageCropFocus, WidthOrHeight } from "../types"
 
 export function generatePublicUrl({
   url,
@@ -20,8 +20,11 @@ export function generateImageArgs({
   width,
   height,
   format,
-  fit,
-}: WidthOrHeight & { format: string; fit: ImageFit }): string {
+  cropFocus,
+}: WidthOrHeight & {
+  format: string
+  cropFocus?: ImageCropFocus | Array<ImageCropFocus>
+}): string {
   const args: Array<string> = []
   if (width) {
     args.push(`w=${width}`)
@@ -29,8 +32,11 @@ export function generateImageArgs({
   if (height) {
     args.push(`h=${height}`)
   }
-  if (fit) {
-    args.push(`fit=${fit}`)
+  if (cropFocus) {
+    args.push(`fit=crop`)
+    args.push(
+      `crop=${Array.isArray(cropFocus) ? cropFocus.join(`,`) : cropFocus}`
+    )
   }
   if (format) {
     args.push(`fm=${format}`)
