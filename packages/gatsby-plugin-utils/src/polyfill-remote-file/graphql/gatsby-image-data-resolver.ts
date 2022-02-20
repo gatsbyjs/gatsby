@@ -5,12 +5,11 @@ import {
   dispatchLocalImageServiceJob,
   shouldDispatch,
 } from "../jobs/dispatchers"
-import { generatePlaceholder } from "../placeholder-handler"
-import { isImage } from "../types"
+import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
+import { ImageCropFocus, ImageFit, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
 import type { Store } from "gatsby"
-import type { PlaceholderType } from "../placeholder-handler"
 import type {
   IRemoteFileNode,
   IRemoteImageNode,
@@ -41,12 +40,18 @@ interface ISourceMetadata {
   filename: string
 }
 
-type IGatsbyImageDataArgs = CalculateImageSizesArgs & {
-  formats: Array<ImageFormat>
-  backgroundColor: string
-  placeholder: PlaceholderType | "none"
-  aspectRatio: number
-  sizes: string
+type IGatsbyImageDataArgs = Omit<
+  CalculateImageSizesArgs,
+  "fit" | "outputPixelDensities"
+> & {
+  formats?: Array<ImageFormat>
+  backgroundColor?: string
+  placeholder?: PlaceholderType | "none"
+  aspectRatio?: number
+  sizes?: string
+  cropFocus?: Array<ImageCropFocus>
+  fit?: CalculateImageSizesArgs["fit"]
+  outputPixelDensities?: CalculateImageSizesArgs["outputPixelDensities"]
 }
 
 type ImageSizeArgs = CalculateImageSizesArgs & {
@@ -73,11 +78,19 @@ export async function gatsbyImageDataResolver(
   layout: string
   width: number
   height: number
-  backgroundColor: string
+  backgroundColor?: string
   placeholder?: { fallback: string } | undefined
 } | null> {
   if (!isImage(source)) {
     return null
+  }
+
+  if (!args.layout) {
+    throw new Error(`The "layout" argument is required for "${source.url}"`)
+  }
+
+  if (!args.width && !args.height) {
+    throw new Error(`The "layout" argument is required for "${source.url}"`)
   }
 
   if (!args.formats) {
@@ -96,6 +109,10 @@ export async function gatsbyImageDataResolver(
     args.fit = `cover`
   }
 
+  if (!args.placeholder) {
+    args.placeholder = PlaceholderType.DOMINANT_COLOR
+  }
+
   let backgroundColor = args.backgroundColor
   const sourceMetadata: ISourceMetadata = {
     width: source.width,
@@ -107,7 +124,10 @@ export async function gatsbyImageDataResolver(
     args.formats,
     sourceMetadata.format
   )
-  const imageSizes = calculateImageSizes(sourceMetadata, args)
+  const imageSizes = calculateImageSizes(
+    sourceMetadata,
+    args as CalculateImageSizesArgs
+  )
   const sizes = getSizesAttrFromLayout(
     args.layout,
     imageSizes.presentationWidth
@@ -130,7 +150,7 @@ export async function gatsbyImageDataResolver(
             width,
             height: Math.round(width / imageSizes.aspectRatio),
             format,
-            fit: args.fit,
+            fit: args.fit as ImageFit,
             contentDigest: source.internal.contentDigest,
           },
           store
@@ -141,7 +161,7 @@ export async function gatsbyImageDataResolver(
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         format,
-        fit: args.fit,
+        cropFocus: args.cropFocus,
       })}.${format}`
 
       if (!fallbackSrc) {
@@ -150,7 +170,10 @@ export async function gatsbyImageDataResolver(
 
       return {
         src,
-        width,
+        viewport:
+          args.layout === `fixed`
+            ? `${width / imageSizes.presentationWidth}x`
+            : `${width}w`,
       }
     })
 
@@ -291,6 +314,9 @@ export function generateGatsbyImageDataFieldConfig(
         type: enums.fit.getTypeName(),
         defaultValue: enums.fit.getField(`COVER`).value,
       },
+      cropFocus: {
+        type: enums.cropFocus.List.getTypeName(),
+      },
     },
     resolve(source, args): ReturnType<typeof gatsbyImageDataResolver> {
       return gatsbyImageDataResolver(source, args, store)
@@ -303,9 +329,9 @@ function sortNumeric(a: number, b: number): number {
 }
 
 function createSrcSetFromImages(
-  images: Array<{ src: string; width: number }>
+  images: Array<{ src: string; viewport: string }>
 ): string {
-  return images.map(image => `${image.src} ${image.width}w`).join(`,`)
+  return images.map(image => `${image.src} ${image.viewport}`).join(`,`)
 }
 
 // eslint-disable-next-line consistent-return
@@ -320,13 +346,13 @@ function calculateImageSizes(
     breakpoints,
   }: CalculateImageSizesArgs
 ): IImageSizes {
-  if (Number(width) <= 0) {
+  if (width && Number(width) <= 0) {
     throw new Error(
       `The provided width of "${width}" is incorrect. Dimensions should be a positive number.`
     )
   }
 
-  if (Number(height) <= 0) {
+  if (height && Number(height) <= 0) {
     throw new Error(
       `The provided height of "${height}" is incorrect. Dimensions should be a positive number.`
     )
@@ -343,6 +369,7 @@ function calculateImageSizes(
       })
     }
     case `constrained`: {
+      // @ts-ignore - only width or height can be undefined but it doesn't let me type this correctly
       return calculateResponsiveImageSizes({
         sourceMetadata,
         width,
@@ -353,6 +380,7 @@ function calculateImageSizes(
       })
     }
     case `fullWidth`: {
+      // @ts-ignore - only width or height can be undefined but it doesn't let me type this correctly
       return calculateResponsiveImageSizes({
         sourceMetadata,
         width,
@@ -394,7 +422,7 @@ function calculateFixedImageSizes({
   } else {
     // if we only get one value calculate the other value based on aspectRatio
     if (!width) {
-      width = Math.round(height * aspectRatio)
+      width = Math.round((height as number) * aspectRatio)
     } else {
       height = Math.round(width / aspectRatio)
     }
@@ -470,13 +498,20 @@ function calculateResponsiveImageSizes({
     width = calculated.width
     height = calculated.height
     aspectRatio = calculated.aspectRatio
+  } else {
+    if (!width) {
+      width = (height as number) / aspectRatio
+    } else {
+      height = width * aspectRatio
+    }
   }
 
-  // Case 1: width of height were passed in, make sure it isn't larger than the actual image
-  width = width && Math.round(Math.min(width, sourceMetadata.width))
-  height = height && Math.min(height, sourceMetadata.height)
+  // width of height were passed in, make sure it isn't larger than the actual image
+  width = width ? Math.round(Math.min(width, sourceMetadata.width)) : undefined
+  height = height ? Math.min(height, sourceMetadata.height) : undefined
 
-  const originalWidth = width
+  const nonNullableWidth = width as number
+  const originalWidth = width as number
 
   if (breakpoints && breakpoints.length > 0) {
     sizes = breakpoints.filter(size => size <= sourceMetadata.width)
@@ -490,14 +525,14 @@ function calculateResponsiveImageSizes({
     }
   } else {
     sizes = Array.from(densities).map(density =>
-      Math.round(density * (width as number))
+      Math.round(density * nonNullableWidth)
     )
     sizes = sizes.filter(size => size <= sourceMetadata.width)
   }
 
   // ensure that the size passed in is included in the final output
-  if (layout === `constrained` && !sizes.includes(width)) {
-    sizes.push(width)
+  if (layout === `constrained` && !sizes.includes(nonNullableWidth)) {
+    sizes.push(nonNullableWidth)
   }
 
   sizes = sizes.sort(sortNumeric)
@@ -507,7 +542,7 @@ function calculateResponsiveImageSizes({
     aspectRatio,
     presentationWidth: originalWidth,
     presentationHeight: Math.round(originalWidth / aspectRatio),
-    unscaledWidth: width,
+    unscaledWidth: nonNullableWidth,
   }
 }
 

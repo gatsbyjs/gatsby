@@ -23,7 +23,13 @@ export function publicUrlResolver(
   }
 
   const extension = getFileExtensionFromMimeType(source.mimeType)
-  return generatePublicUrl(source) + `.${extension}`
+  return (
+    generatePublicUrl({
+      url: source.url,
+      // We always want file based url
+      mimeType: `application/octet-stream`,
+    }) + `.${extension}`
+  )
 }
 
 export function generatePublicUrlFieldConfig(

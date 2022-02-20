@@ -24,16 +24,21 @@ export function dispatchLocalFileServiceJob(
   store: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
-  const publicUrl = generatePublicUrl({ url, mimeType }).split(`/`)
+  const publicUrl = generatePublicUrl({
+    url,
+    // We always want file based url
+    mimeType: `application/octet-stream`,
+  }).split(`/`)
   const extension = getFileExtensionFromMimeType(mimeType)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const filename = publicUrl.pop()
   publicUrl.unshift(`public`)
 
   const actions = importFrom(
-    global.__GATSBY.root ?? process.cwd(),
+    global.__GATSBY?.root ?? process.cwd(),
     `gatsby/dist/redux/actions`
   )
+
   // @ts-ignore - we dont have correct typings for this
   actions.createJobV2(
     {
@@ -87,7 +92,7 @@ export function dispatchLocalImageServiceJob(
 
   // We need to use import-from to remove circular dependency
   const actions = importFrom(
-    global.__GATSBY.root ?? process.cwd(),
+    global.__GATSBY?.root ?? process.cwd(),
     `gatsby/dist/redux/actions`
   )
   // @ts-ignore - importFrom doesn't work with types
@@ -102,7 +107,7 @@ export function dispatchLocalImageServiceJob(
       args: {
         url,
         filename:
-          generateImageArgs({ width, height, format, fit }) + `.${extension}`,
+          generateImageArgs({ width, height, format }) + `.${extension}`,
         width,
         height,
         format,

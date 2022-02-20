@@ -15,20 +15,27 @@ import type {
   ImageFit,
   ImageFormat,
   ImageCropFocus,
+  WidthOrHeight,
 } from "../types"
 import type { getRemoteFileEnums } from "./get-remote-file-enums"
 
 interface IResizeArgs {
-  width: number
-  height: number
   fit: ImageFit
   format: ImageFormat
-  cropFocus: ImageCropFocus
+  cropFocus: Array<ImageCropFocus>
 }
+
+const allowedFormats: Array<ImageFormat> = [
+  `jpg`,
+  `png`,
+  `webp`,
+  `avif`,
+  `auto`,
+]
 
 export async function resizeResolver(
   source: IRemoteFileNode,
-  args: IResizeArgs,
+  args: Partial<IResizeArgs> & WidthOrHeight,
   store: Store
 ): Promise<{
   width: number
@@ -43,12 +50,14 @@ export async function resizeResolver(
     args.format = `auto`
   }
 
-  if (!args.fit) {
-    args.fit = `cover`
+  if (!allowedFormats.includes(args.format)) {
+    throw new Error(
+      `Unknown format "${args.format}" was given to resize ${source.url}`
+    )
   }
 
-  if (!args.cropFocus) {
-    args.cropFocus = `edges`
+  if (!args.width && !args.height) {
+    throw new Error(`No width or height is given to resize "${source.url}"`)
   }
 
   const formats = validateAndNormalizeFormats(
@@ -56,14 +65,19 @@ export async function resizeResolver(
     getImageFormatFromMimeType(source.mimeType)
   )
   const [format] = formats
-  const { width, height } = calculateImageDimensions(source, args)
+  const { width, height } = calculateImageDimensions(
+    source,
+    args as IResizeArgs & WidthOrHeight
+  )
 
   if (shouldDispatch()) {
     dispatchLocalImageServiceJob(
       {
         url: source.url,
         extension: format,
-        ...args,
+        ...(args as IResizeArgs),
+        width,
+        height,
         format,
         contentDigest: source.internal.contentDigest,
       },
@@ -72,7 +86,9 @@ export async function resizeResolver(
   }
 
   const src = `${generatePublicUrl(source)}/${generateImageArgs({
-    ...args,
+    ...(args as IResizeArgs),
+    width,
+    height,
     format,
   })}.${format}`
 
@@ -89,7 +105,7 @@ export function generateResizeFieldConfig(
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode,
   ReturnType<typeof resizeResolver>,
-  IResizeArgs
+  IResizeArgs & WidthOrHeight
 > {
   return {
     type: `RemoteFileResize`,
@@ -110,12 +126,10 @@ export function generateResizeFieldConfig(
       both PNG and JPG is not supported and will be ignored.`,
       },
       cropFocus: {
-        type: enums.cropFocus.getTypeName(),
-        defaultValue: enums.cropFocus.getField(`EDGES`)
-          .value as IResizeArgs["cropFocus"],
+        type: enums.cropFocus.List.getTypeName(),
       },
     },
-    resolve(source, args: IResizeArgs): ReturnType<typeof resizeResolver> {
+    resolve(source, args): ReturnType<typeof resizeResolver> {
       return resizeResolver(source, args, store)
     },
   }
