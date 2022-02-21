@@ -24,7 +24,6 @@ import {
   // @ts-ignore
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
-import { generatePagesChecksum } from "../../utils/lmdb-pages-checksum"
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -89,15 +88,6 @@ export class GraphQLEngine {
       // Build runs
       // Note: skipping inference metadata because we rely on schema snapshot
       await build({ fullMetadataBuild: false, parentSpan: wrapActivity.span })
-
-      if (process.env.GATSBY_PAGES_CHECKSUM) {
-        const engineChecksum = generatePagesChecksum()
-        if (engineChecksum !== process.env.GATSBY_PAGES_CHECKSUM) {
-          reporter.error(
-            `Pages checksum doesn't match: \n - calculated: "${engineChecksum}"\n - expected:   "${process.env.GATSBY_PAGES_CHECKSUM}"`
-          )
-        }
-      }
 
       return new GraphQLRunner(store)
     } finally {
