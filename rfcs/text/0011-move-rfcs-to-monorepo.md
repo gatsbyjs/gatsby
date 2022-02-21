@@ -83,7 +83,7 @@ defined here.
 
 Why should we _not_ do this? Please consider:
 
-- implementation cost, both in term of code size and complexity
+- implementation cost, both in terms of code size and complexity
 - whether the proposed feature can be implemented in user space
 - the impact on teaching people React
 - integration of this feature with other existing and planned features

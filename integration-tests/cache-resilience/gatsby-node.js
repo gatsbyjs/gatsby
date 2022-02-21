@@ -3,7 +3,7 @@ const v8 = require(`v8`)
 const glob = require(`glob`)
 const path = require(`path`)
 const _ = require(`lodash`)
-const { open } = require(`lmdb-store`)
+const { open } = require(`lmdb`)
 
 const { saveState } = require(`gatsby/dist/redux/save-state`)
 
