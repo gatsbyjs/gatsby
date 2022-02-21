@@ -26,7 +26,6 @@ describe(`gatsby develop`, () => {
 
     // 3. Make sure logs for the user contain expected results
     const logs = getLogs()
-    // logs.should.contain(`success compile gatsby files`)
     logs.should.contain(`success load gatsby config`)
     logs.should.contain(`success load plugins`)
     logs.should.contain(`success onPreInit`)
