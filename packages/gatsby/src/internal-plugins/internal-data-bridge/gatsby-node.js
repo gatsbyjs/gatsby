@@ -8,6 +8,7 @@ const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../datastore`)
 const {
   COMPILED_CACHE_DIR,
+  isCompileGatsbyFilesFlagSet,
 } = require(`../../utils/parcel/compile-gatsby-files`)
 
 function transformPackageJson(json) {
@@ -56,14 +57,11 @@ exports.sourceNodes = ({
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
 
-    // Since `default-site-plugin` is a proxy for gatsby-* files that are compiled and live in .cache/compiled,
-    // use program.directory to access package.json since it is not compiled and lives in the site root
-    const dir =
-      plugin.name === `default-site-plugin` ? program.directory : plugin.resolve
-
     createNode({
       ...plugin,
-      packageJson: transformPackageJson(require(`${dir}/package.json`)),
+      packageJson: transformPackageJson(
+        require(`${plugin.resolve}/package.json`)
+      ),
       parent: null,
       children: [],
       internal: {
@@ -119,8 +117,11 @@ exports.sourceNodes = ({
     },
   })
 
+  const gatsbyConfigRootDir = isCompileGatsbyFilesFlagSet()
+    ? `${program.directory}/${COMPILED_CACHE_DIR}`
+    : program.directory
   const pathToGatsbyConfig = systemPath.join(
-    `${program.directory}/${COMPILED_CACHE_DIR}`,
+    gatsbyConfigRootDir,
     `gatsby-config.js`
   )
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)

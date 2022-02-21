@@ -235,6 +235,16 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `TS_GATSBY_FILES`,
+    env: `GATSBY_TS_GATSBY_FILES`,
+    command: `all`,
+    telemetryId: `TSGatsbyFiles`,
+    umbrellaIssue: `https://gatsby.dev/ts-gatsby-files-feedback`,
+    description: `Enable TypeScript support for gatsby-config, gatsby-node and local plugins.`,
+    experimental: false,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags

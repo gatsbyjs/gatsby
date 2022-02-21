@@ -1,8 +1,10 @@
 import { Parcel } from "@parcel/core"
 import {
-  constructBundler,
+  constructParcel,
   compileGatsbyFiles,
+  gatsbyFileRegex,
   COMPILED_CACHE_DIR,
+  PARCEL_CACHE_DIR,
 } from "../compile-gatsby-files"
 import { siteMetadata } from "./fixtures/utils/site-metadata"
 import { moreDataConfig } from "./fixtures/utils/more-data-config"
@@ -38,16 +40,19 @@ interface IMockedParcel extends Parcel {
 describe(`gatsby file compilation`, () => {
   describe(`constructBundler`, () => {
     it(`should construct Parcel relative to passed directory`, () => {
-      const { options } = constructBundler(dir.js) as IMockedParcel
+      const { options } = constructParcel(dir.js) as IMockedParcel
 
       expect(options).toMatchSnapshot({
-        entries: `${dir.js}/gatsby-+(node|config).{ts,tsx,js}`,
+        entries: [
+          `${dir.js}/${gatsbyFileRegex}`,
+          `${dir.js}/plugins/**/${gatsbyFileRegex}`,
+        ],
         targets: {
-          default: {
+          root: {
             distDir: `${dir.js}/${COMPILED_CACHE_DIR}`,
           },
         },
-        cacheDir: `${dir.js}/.cache/.parcel-cache`,
+        cacheDir: `${dir.js}/${PARCEL_CACHE_DIR}`,
       })
     })
   })

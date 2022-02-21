@@ -858,7 +858,12 @@ module.exports = async (
             .flattenedPlugins.filter(plugin =>
               plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
             )
-            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+            .map(plugin =>
+              path.join(
+                plugin?.resolveCompiled || plugin.resolve,
+                `gatsby-node.js`
+              )
+            ),
         ],
       },
     }

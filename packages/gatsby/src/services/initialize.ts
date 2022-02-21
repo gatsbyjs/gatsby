@@ -7,6 +7,7 @@ import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
+import type { ITimerReporter } from "gatsby-cli/lib/reporter/reporter-timer"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
@@ -25,8 +26,8 @@ import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import {
-  COMPILED_CACHE_DIR,
   compileGatsbyFiles,
+  isCompileGatsbyFilesFlagSet,
 } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
 
@@ -166,17 +167,23 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
+  const siteDirectory = program.directory
+
+  let activity: ITimerReporter
+
+  if (isCompileGatsbyFilesFlagSet()) {
+    // Compile root gatsby files
+    activity = reporter.activityTimer(`compile gatsby files`)
+    activity.start()
+    await compileGatsbyFiles(siteDirectory)
+    activity.end()
+  }
+
   // Load gatsby config
-  let activity = reporter.activityTimer(`load gatsby config`, {
+  activity = reporter.activityTimer(`load gatsby config`, {
     parentSpan,
   })
   activity.start()
-
-  const compiledDirectory = `${program.directory}/${COMPILED_CACHE_DIR}`
-  await fs.ensureDir(compiledDirectory)
-  await compileGatsbyFiles(program.directory)
-
-  const siteDirectory = program.directory
   const config = await loadConfig({
     siteDirectory,
     processFlags: true,
@@ -533,14 +540,12 @@ export async function initialize({
     if (env === `ssr` && plugin.skipSSR === true) return undefined
 
     const envAPIs = plugin[`${env}APIs`]
-    const dir =
-      plugin.name === `default-site-plugin` ? program.directory : plugin.resolve
 
     // Always include gatsby-browser.js files if they exist as they're
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        const modulePath = path.join(dir, `gatsby-${env}`)
+        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
         return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
@@ -548,7 +553,7 @@ export async function initialize({
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      const modulePath = path.join(dir, `gatsby-${env}`)
+      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
       return slash(resolveModule(modulePath) as string)
     }
     return undefined

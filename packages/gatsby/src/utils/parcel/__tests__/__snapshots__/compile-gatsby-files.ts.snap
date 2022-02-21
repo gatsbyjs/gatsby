@@ -4,10 +4,13 @@ exports[`gatsby file compilation constructBundler should construct Parcel relati
 Object {
   "cacheDir": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/.cache/.parcel-cache",
   "defaultConfig": "gatsby-parcel-config",
-  "entries": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/gatsby-+(node|config).{ts,tsx,js}",
+  "entries": Array [
+    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/gatsby-+(node|config).{ts,js}",
+    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/plugins/**/gatsby-+(node|config).{ts,js}",
+  ],
   "mode": "production",
   "targets": Object {
-    "default": Object {
+    "root": Object {
       "distDir": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/.cache/compiled",
       "engines": Object {
         "node": ">= 14.15.0",

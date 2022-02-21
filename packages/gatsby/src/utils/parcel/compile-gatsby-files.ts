@@ -1,43 +1,57 @@
 import { Parcel } from "@parcel/core"
 import reporter from "gatsby-cli/lib/reporter"
+import { ensureDir } from "fs-extra"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
+export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
+export const gatsbyFileRegex = `gatsby-+(node|config).{ts,js}`
 
-export function constructBundler(dir: string): Parcel {
+/**
+ * Construct Parcel with config.
+ * @see {@link https://parceljs.org/features/targets/}
+ */
+export function constructParcel(siteRoot: string): Parcel {
   return new Parcel({
-    entries: `${dir}/gatsby-+(node|config).{ts,tsx,js}`,
+    entries: [
+      `${siteRoot}/${gatsbyFileRegex}`,
+      `${siteRoot}/plugins/**/${gatsbyFileRegex}`,
+    ],
     defaultConfig: `gatsby-parcel-config`,
     mode: `production`,
     targets: {
-      default: {
-        distDir: `${dir}/${COMPILED_CACHE_DIR}`,
+      root: {
         outputFormat: `commonjs`,
         includeNodeModules: false,
         sourceMap: false,
         engines: {
           node: `>= 14.15.0`,
         },
+        distDir: `${siteRoot}/${COMPILED_CACHE_DIR}`,
       },
     },
-    cacheDir: `${dir}/.cache/.parcel-cache`,
+    cacheDir: `${siteRoot}/${PARCEL_CACHE_DIR}`,
   })
 }
 
 /**
- * Compiles known gatsby-* files (e.g. `gatsby-config`, `gatsby-node`)
- * and stores them in `.cache/compiled` relative to the site root.
+ * Compile known gatsby-* files (e.g. `gatsby-config`, `gatsby-node`)
+ * and output in `<SITE_ROOT>/.cache/compiled`.
  */
-export async function compileGatsbyFiles(dir: string): Promise<void> {
-  const bundler = constructBundler(dir)
-
-  const activity = reporter.activityTimer(`compile gatsby files`)
-  activity.start()
+export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
+  const parcel = constructParcel(siteRoot)
 
   try {
-    await bundler.run()
+    await ensureDir(`${siteRoot}/${COMPILED_CACHE_DIR}`)
+    await parcel.run()
   } catch (error) {
-    activity.panic(`Failed to compile gatsby files.`, error)
+    reporter.panic(`Failed to compile gatsby files.`, error)
   }
+}
 
-  activity.end()
+export function isCompileGatsbyFilesFlagSet(): boolean {
+  return (
+    Boolean(process.env.GATSBY_TS_GATSBY_FILES) &&
+    process.env.GATSBY_TS_GATSBY_FILES !== `false` &&
+    process.env.GATSBY_TS_GATSBY_FILES !== `0`
+  )
 }
