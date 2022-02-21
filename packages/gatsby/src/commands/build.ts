@@ -302,6 +302,8 @@ module.exports = async function build(
     waitForWorkerPoolRestart = workerPool.restart()
     await mergeWorkerState(workerPool, buildSpan)
   } else {
+    waitMaterializePageMode = materializePageMode()
+
     await runStaticQueries({
       queryIds,
       parentSpan: buildSpan,
@@ -315,8 +317,6 @@ module.exports = async function build(
       parentSpan: buildSpan,
       store,
     })
-
-    waitMaterializePageMode = materializePageMode()
   }
 
   // create scope so we don't leak state object
