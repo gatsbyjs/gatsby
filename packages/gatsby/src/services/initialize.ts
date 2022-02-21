@@ -7,6 +7,7 @@ import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
+import type { ITimerReporter } from "gatsby-cli/lib/reporter/reporter-timer"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
@@ -24,7 +25,10 @@ import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
-import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
+import {
+  compileGatsbyFiles,
+  isCompileGatsbyFilesFlagSet,
+} from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
 
 interface IPluginResolution {
@@ -163,13 +167,17 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
-  const siteRoot = program.directory
+  const siteDirectory = program.directory
 
-  // Compile root gatsby files
-  let activity = reporter.activityTimer(`compile gatsby files`)
-  activity.start()
-  await compileGatsbyFiles(siteRoot)
-  activity.end()
+  let activity: ITimerReporter
+
+  if (isCompileGatsbyFilesFlagSet()) {
+    // Compile root gatsby files
+    activity = reporter.activityTimer(`compile gatsby files`)
+    activity.start()
+    await compileGatsbyFiles(siteDirectory)
+    activity.end()
+  }
 
   // Load gatsby config
   activity = reporter.activityTimer(`load gatsby config`, {
@@ -177,7 +185,7 @@ export async function initialize({
   })
   activity.start()
   const config = await loadConfig({
-    siteDirectory: siteRoot,
+    siteDirectory,
     processFlags: true,
   })
   activity.end()
@@ -187,7 +195,7 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  const flattenedPlugins = await loadPlugins(config, siteRoot)
+  const flattenedPlugins = await loadPlugins(config, siteDirectory)
   activity.end()
 
   // TODO: figure out proper way of disabling loading indicator

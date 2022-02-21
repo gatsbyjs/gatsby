@@ -16,7 +16,10 @@ import {
   incompatibleGatsbyCloudPlugin,
   GATSBY_CLOUD_PLUGIN_NAME,
 } from "./utils/handle-gatsby-cloud"
-import { COMPILED_CACHE_DIR } from "../../utils/parcel/compile-gatsby-files"
+import {
+  COMPILED_CACHE_DIR,
+  isCompileGatsbyFilesFlagSet,
+} from "../../utils/parcel/compile-gatsby-files"
 
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
 
@@ -108,16 +111,26 @@ export function loadInternalPlugins(
     plugins.push(processedTypeScriptPlugin)
   }
 
+  let defaultSitePluginOverride: Record<string, string> | undefined
+
+  if (isCompileGatsbyFilesFlagSet()) {
+    defaultSitePluginOverride = {
+      resolve: rootDir,
+      resolveCompiled: `${path.join(rootDir, COMPILED_CACHE_DIR)}`,
+      version: createFileContentHash(rootDir, `gatsby-*`),
+    }
+  }
+
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
-    resolve: rootDir,
-    resolveCompiled: `${path.join(rootDir, COMPILED_CACHE_DIR)}`,
+    resolve: slash(process.cwd()),
     id: createPluginId(`default-site-plugin`),
     name: `default-site-plugin`,
-    version: createFileContentHash(rootDir, `gatsby-*`),
+    version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
       plugins: [],
     },
+    ...defaultSitePluginOverride,
   })
 
   const program = store.getState().program

@@ -9,7 +9,10 @@ import { createFileContentHash } from "./utils/create-hash"
 import reporter from "gatsby-cli/lib/reporter"
 import { isString } from "lodash"
 import { checkLocalPlugin } from "./utils/check-local-plugin"
-import { COMPILED_CACHE_DIR } from "../../utils/parcel/compile-gatsby-files"
+import {
+  COMPILED_CACHE_DIR,
+  isCompileGatsbyFilesFlagSet,
+} from "../../utils/parcel/compile-gatsby-files"
 
 /**
  * @param plugin
@@ -38,13 +41,21 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
     const name = packageJSON.name || pluginName
     warnOnIncompatiblePeerDependency(name, packageJSON)
 
+    let localPluginOverride: Record<string, string> | undefined
+
+    if (isCompileGatsbyFilesFlagSet()) {
+      localPluginOverride = {
+        resolveCompiled: `${rootDir}/${COMPILED_CACHE_DIR}/plugins/${pluginName}`,
+      }
+    }
+
     return {
       resolve: localPluginPath,
-      resolveCompiled: `${rootDir}/${COMPILED_CACHE_DIR}/plugins/${pluginName}`,
       name,
       id: createPluginId(name),
       version:
         packageJSON?.version || createFileContentHash(localPluginPath, `**`),
+      ...localPluginOverride,
     }
   }
 
