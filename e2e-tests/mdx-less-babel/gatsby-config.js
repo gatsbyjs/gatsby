@@ -1,5 +1,3 @@
-const path = require("path")
-
 module.exports = {
   siteMetadata: {
     title: `Gatsby MDX e2e`,
@@ -9,14 +7,14 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: path.resolve(`src/pages`),
+        path: `${__dirname}/src/pages/`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: path.resolve(`src/posts`),
+        path: `${__dirname}/src/posts`,
       },
     },
     {
@@ -25,7 +23,7 @@ module.exports = {
         lessBabel: true,
         extensions: [`.mdx`, `.md`],
         defaultLayouts: {
-          default: path.resolve("./src/components/layout.js"),
+          default: require.resolve("./src/components/layout.js"),
         },
         remarkPlugins: [remarkRequireFilePathPlugin],
       },

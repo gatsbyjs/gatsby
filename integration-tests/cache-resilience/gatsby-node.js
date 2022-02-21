@@ -56,12 +56,12 @@ exports.onPreBootstrap = ({ getNodes }) => {
 
 exports.onPostBuild = async ({ getNodes, store }) => {
   const queryResults = {}
-  const scenarioPagesDirectory = path.resolve(
+  const scenarioPagesDirectory = path.join(
+    __dirname,
     `src`,
     `pages`,
     `scenarios`
   )
-  
   const scenarioPagesFiles = glob.sync(
     path.join(scenarioPagesDirectory, `**`, `index.js`)
   )
@@ -73,7 +73,8 @@ exports.onPostBuild = async ({ getNodes, store }) => {
 
     const { dir: scenarioName, name: type } = path.parse(relativePathToPageData)
 
-    const pageDataPath = path.resolve(
+    const pageDataPath = path.join(
+      __dirname,
       `public`,
       `page-data`,
       `scenarios`,

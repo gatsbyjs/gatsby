@@ -140,7 +140,7 @@ exports.createPages = async ({ actions, graphql }) => {
   function createPageHelper(dummyId) {
     actions.createPage({
       path: `/stale-pages/${dummyId}`,
-      component: path.resolve(`src/templates/dummy`),
+      component: require.resolve(`./src/templates/dummy`),
       context: {
         dummyId,
       },
@@ -166,7 +166,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
   actions.createPage({
     path: `/changing-context/`,
-    component: path.resolve(`src/templates/dummy`),
+    component: require.resolve(`./src/templates/dummy`),
     context: {
       dummyId: `runNumber: ${runNumber}`,
     },
@@ -188,8 +188,8 @@ exports.createPages = async ({ actions, graphql }) => {
       path: `/${depPageQueryNode.id}/`,
       component:
         depPageQueryNode.template === `alternative`
-          ? path.resolve(`src/templates/deps-page-query-alternative`)
-          : path.resolve(`src/templates/deps-page-query`),
+          ? require.resolve(`./src/templates/deps-page-query-alternative`)
+          : require.resolve(`./src/templates/deps-page-query`),
       context: {
         id: depPageQueryNode.id,
       },
@@ -201,7 +201,7 @@ exports.createPagesStatefully = async ({ actions }) => {
   if (runNumber !== 3) {
     actions.createPage({
       path: `/stateful-page-not-recreated-in-third-run/`,
-      component: path.resolve(`src/templates/dummy`),
+      component: require.resolve(`./src/templates/dummy`),
       context: {
         dummyId: `stateful-page`,
       },

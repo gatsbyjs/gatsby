@@ -21,7 +21,7 @@ jest.setTimeout(100000)
 
 const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
-const defaultStdio = `inherit`
+const defaultStdio = `ignore`
 
 const collectEventsForDevelop = (events, env = {}) => {
   const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {

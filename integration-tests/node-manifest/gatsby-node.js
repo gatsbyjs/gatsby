@@ -1,4 +1,3 @@
-const path = require("path")
 const commandName = process.env.NODE_ENV === `development` ? `develop` : `build`
 const DEFAULT_MAX_DAYS_OLD = 30
 const createManifestId = nodeId => `${commandName}-${nodeId}`
@@ -88,12 +87,12 @@ exports.createPages = ({ actions }) => {
   actions.createPage({
     path: `one`,
     ownerNodeId: `1`,
-    component: path.resolve(`src/templates/one.js`),
+    component: require.resolve(`./src/templates/one.js`),
   })
 
   actions.createPage({
     path: `two`,
-    component: path.resolve(`src/templates/two.js`),
+    component: require.resolve(`./src/templates/two.js`),
     context: {
       id: `2`,
     },
@@ -101,17 +100,17 @@ exports.createPages = ({ actions }) => {
 
   actions.createPage({
     path: `two-alternative`,
-    component: path.resolve(`src/templates/two.js`),
+    component: require.resolve(`./src/templates/two.js`),
   })
 
   actions.createPage({
     path: `three`,
-    component: path.resolve(`src/templates/three.js`),
+    component: require.resolve(`./src/templates/three.js`),
   })
 
   actions.createPage({
     path: `three-alternative`,
-    component: path.resolve(`src/templates/three.js`),
+    component: require.resolve(`./src/templates/three.js`),
   })
 
   actions.createPage({
@@ -119,6 +118,6 @@ exports.createPages = ({ actions }) => {
     context: {
       slug: `test-slug`,
     },
-    component: path.resolve(`src/templates/four.js`),
+    component: require.resolve(`./src/templates/four.js`),
   })
 }
