@@ -4,7 +4,7 @@ version: "4.8.0"
 title: "v4.8 Release Notes"
 ---
 
-Welcome to `gatsby@4.8.0` release (February 2022 #1)
+Welcome to `gatsby@4.8.0` release (February 2022 #2)
 
 Key highlights of this release:
 
@@ -20,7 +20,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 [Previous release notes](/docs/reference/release-notes/v4.7)
 
-[Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.8.0-next.0...gatsby@4.8.0)
+[Full changelog][full-changelog]
 
 ---
 
@@ -58,7 +58,7 @@ export const wrapPageElement: GatsbySSR["wrapPageElement"] = ({ element }) => {
 }
 ```
 
-Work is in progress for TypeScript support for `gatsby-config` and `gatsby-node` files. Check out the [RFC](https://github.com/gatsbyjs/gatsby/discussions/34613) and the [feature branch](https://github.com/gatsbyjs/gatsby/pull/34776) for more information.
+Work is in progress for TypeScript support for `gatsby-config` and `gatsby-node` files. Check out the [RFC](https://github.com/gatsbyjs/gatsby/discussions/34613) to learn how to test it out today.
 
 ## New TypeScript option when creating Gatsby projects from the CLI
 
@@ -125,6 +125,8 @@ if (!hasFeature(`image-service`)) {
 
 ## Contributors
 
-A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.8.0-next.0...gatsby@4.8.0) to this release 💜
+A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
 TODO
+
+[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.8.0-next.0...gatsby@4.8.0
