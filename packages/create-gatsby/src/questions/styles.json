@@ -18,7 +18,7 @@
       "theme-ui",
       "@emotion/react",
       "@emotion/styled",
-      "@mdx-js/react"
+      "@mdx-js/react@v1"
     ]
   },
   "gatsby-plugin-vanilla-extract": {
