@@ -80,12 +80,9 @@ export async function sourceNodes(
     `environment`
   )}`
 
-  const fetchActivity = reporter.activityTimer(
-    `Contentful: Fetch data (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
+  const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
+    parentSpan,
+  })
 
   // If the user knows they are offline, serve them cached result
   // For prod builds though always fail if we can't get the latest data
@@ -173,7 +170,7 @@ export async function sourceNodes(
 
   // Process data fetch results and turn them into GraphQL entities
   const processingActivity = reporter.activityTimer(
-    `Contentful: Process data (${sourceId})`,
+    `Contentful: Process data`,
     {
       parentSpan,
     }
@@ -311,7 +308,7 @@ export async function sourceNodes(
 
   if (deletedEntries.length || deletedAssets.length) {
     const deletionActivity = reporter.activityTimer(
-      `Contentful: Deleting ${deletedEntries.length} nodes and ${deletedAssets.length} assets (${sourceId})`,
+      `Contentful: Deleting nodes and assets`,
       {
         parentSpan,
       }
@@ -322,12 +319,9 @@ export async function sourceNodes(
     deletionActivity.end()
   }
 
-  const creationActivity = reporter.activityTimer(
-    `Contentful: Create nodes (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
+  const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
+    parentSpan,
+  })
   creationActivity.start()
 
   for (let i = 0; i < contentTypeItems.length; i++) {
