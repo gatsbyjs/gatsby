@@ -58,7 +58,7 @@ To create your first Gatsby site, you're going to use a command from the Gatsby 
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** For this Tutorial, your Gatsby CLI should be v3 or newer. To check what version you have installed, run the following command:
+**Note:** For this Tutorial, your Gatsby CLI should be v4.8 or newer. To check what version you have installed, run the following command:
 
 ```shell
 gatsby --version
@@ -88,6 +88,17 @@ gatsby new
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
+You can also generate a Gatsby site without needing to go through all the prompts. In this case, the CLI will use the default values for the prompts except for the site name which you'll need to pass.
+You can do this by running the following command from the command line:
+
+```shell:title=Desktop
+ gatsby new <site-name> -y
+```
+
+</Announcement>
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
 **Having trouble with `gatsby new`?** If you had trouble globally installing `gatsby-cli` in Part 0, you can also create a new site by running `npm init gatsby` from the command line instead of `gatsby new`.
 
 </Announcement>
@@ -106,9 +117,25 @@ What would you like to name the folder where your site will be created?
 ✔ Desktop/ my-first-gatsby-site
 ```
 
+5. When the prompt asks, **"Will you be using JavaScript or TypeScript?"** choose between JavaScript or TypeScript.
+
+```shell
+? Will you be using JavaScript or TypeScript?
+(Single choice) Arrow keys to move, enter to confirm
+  JavaScript
+❯ TypeScript
+```
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+This question will be skipped if you passed in a `-ts` flag at the beginning i.e `gatsby new -ts`. This indicates that you want to use TypeScript.
+
+</Announcement>
+
 5. When the prompt asks, **"Will you be using a CMS?"** select **"No (or I'll add it later)"**.
 
 ```shell
+
 ✔ Will you be using a CMS?
 · No (or I'll add it later)
 ```
