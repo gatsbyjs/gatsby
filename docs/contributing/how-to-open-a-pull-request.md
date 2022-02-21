@@ -23,9 +23,7 @@ Recommendations for different kinds of contributions will follow in this guide a
 
 We typically recommend [opening an issue](/contributing/how-to-file-an-issue/) before a pull request if there isn't already an issue for the problem you'd like to solve. This helps facilitate a discussion before deciding on an implementation.
 
-For some changes, such as typo fixes or broken links, it may be appropriate to open a small PR by itself. This is somewhat subjective so if you have any questions, [feel free to ask us](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).
-
-The Gatsby core team uses a triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests/), if you're interested in learning more about how that works.
+For some changes, such as typo fixes or broken links, it may be appropriate to open a small PR by itself.
 
 ## Opening PRs in Gatsby
 
@@ -34,8 +32,6 @@ For any kind of change to files in the Gatsby repo, you can follow the below ste
 To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), fork the repo and install parts of it to run on your local machine.
 
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-instructions).
-
-- Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
 
 - Follow the instructions for the part of the project you want to change. (See specific sections below.)
 
@@ -93,7 +89,7 @@ Instructions for making changes to the Gatsby source code, tests, internals, API
 
 After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
 
-Depending on what type of change is proposed, some combination of the Gatsby Core, Themes, Developer Relations, and Product Marketing teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+The Gatsby teams reviews and approves every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
 
 These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
 
@@ -146,5 +142,4 @@ For more information on working with upstream repos, [visit the GitHub docs](htt
 - [Git Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
-- [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
 - [Guide on Markdown Syntax](/docs/reference/markdown-syntax/)

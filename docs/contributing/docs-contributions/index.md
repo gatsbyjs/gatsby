@@ -48,9 +48,7 @@ For the purposes of an accessible document outline, content headings should go i
 
 ## Docs site setup instructions
 
-The content of the docs site mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
-
-There is currently not a way for community members to build the docs site locally. We know this is not ideal and we're working internally on a fix.
+The content of the docs site mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs. You can directly edit the markdown files.
 
 ## Changing headers
 

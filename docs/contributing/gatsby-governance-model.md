@@ -10,10 +10,6 @@ Gatsby is an [open source](https://opensource.org/) project supported by [Gatsby
 
 Our objectives for this document are to provide current information about the management and maintenance of Gatsby open source software (OSS) and present a variety of resources and avenues of communication between Gatsby’s leadership and community.
 
-### This is a work in progress!
-
-It’s important to note that Gatsby’s governance model is a work in progress that will continue to grow and evolve over time. When new governance-related issues arise, Gatsby’s leadership and Core Team will do their best to include the community and anyone directly involved in the issue in the decision-making process.
-
 ## How are decisions made about Gatsby OSS?
 
 ### Contributing roles
