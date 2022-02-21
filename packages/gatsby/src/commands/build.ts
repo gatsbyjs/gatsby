@@ -286,6 +286,9 @@ module.exports = async function build(
     )
   }
 
+  // Start saving page.mode in the main process (while queries run in workers in parallel)
+  const waitMaterializePageMode = materializePageMode()
+
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
@@ -322,6 +325,7 @@ module.exports = async function build(
   }
 
   if (process.send && shouldGenerateEngines()) {
+    await waitMaterializePageMode
     process.send({
       type: `LOG_ACTION`,
       action: {
@@ -400,9 +404,6 @@ module.exports = async function build(
   }
 
   await waitForWorkerPoolRestart
-
-  // Start saving page.mode in the main process (while HTML is generated in workers in parallel)
-  const waitMaterializePageMode = materializePageMode()
 
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
