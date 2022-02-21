@@ -1,0 +1,13 @@
+while true; do
+  PROCESS="node"
+
+  # find all node processes
+  PROCESS_USAGES=$(ps -eo rss,pid,euser,args:100 --sort %mem | grep -v grep | grep -i "${PROCESS}" | awk '{print $1}')
+
+  # sum the usage
+  SUM_USAGE=$(echo "$PROCESS_USAGES" | awk '{s+=$1} END {printf "%.0f\n", s}')
+
+  # write to file
+  echo -e "$SUM_USAGE" > /usr/src/app/.docker.memusage
+  sleep .25
+done

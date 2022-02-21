@@ -37,9 +37,10 @@ export const actions = {
    * Add a third-party schema to be merged into main schema. Schema has to be a
    * graphql-js GraphQLSchema object.
    *
-   * This schema is going to be merged as-is. This can easily break the main
-   * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
-   * (by e.g. namespacing the schema).
+   * This schema is going to be merged as-is. Merging it in this way will
+   * easily break the main Gatsby Schema. Since we do not want that, therefore
+   * it is the user's responsibility to make sure that it does not happen.
+   * One such way of avoiding it is by namespacing the schema.
    *
    * @availableIn [createSchemaCustomization, sourceNodes]
    *

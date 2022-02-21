@@ -1,8 +1,19 @@
 const { cpuCoreCount } = require(`gatsby-core-utils`)
 
-const NUM_NODES = parseInt(process.env.NUM_NODES || 300, 10)
+const NUM_KEYS_IN_LARGE_SIZE_OBJ = parseInt(process.env.BUILD_LARGE_OBJECT_COUNT || 1024, 10)
+const NUM_NODES = parseInt(process.env.BUILD_NUM_NODES || 300, 10)
+const LARGE_FIELD_SIZE_RAW = process.env.BUILD_STRING_NODE_SIZE || '1m'
 
-const NUM_KEYS_IN_LARGE_SIZE_OBJ = 1024
+// convert raw size to number
+const regexpSize = /([0-9]+)([kmg])?/;
+const match = LARGE_FIELD_SIZE_RAW.match(regexpSize);
+const suffixSizes = ['k', 'm', 'g'];
+let bytesMultiplier = 1;
+if (match.length > 2 && suffixSizes.indexOf(match[2]) >= 0) {
+  bytesMultiplier = 2 ** ((suffixSizes.indexOf(match[2]) + 1) * 10)
+}
+const LARGE_FIELD_SIZE = parseInt(match[1], 10) * bytesMultiplier;
+
 
 exports.sourceNodes = async ({ actions, reporter }) => {
   const contentDigest = Date.now().toString() // make each sourcing mark everything as dirty
@@ -25,7 +36,7 @@ exports.sourceNodes = async ({ actions, reporter }) => {
       number2: NUM_NODES - i,
       number3: i % 20,
       largeSizeObj,
-      largeSizeString: `x`.repeat(1024 * 1024),
+      largeSizeString: `x`.repeat(LARGE_FIELD_SIZE),
       internal: {
         contentDigest,
         type: `Test`,

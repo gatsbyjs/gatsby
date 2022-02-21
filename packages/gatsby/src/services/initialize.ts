@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
 import * as fs from "fs-extra"
+import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import md5File from "md5-file"
 import crypto from "crypto"
 import del from "del"
@@ -427,35 +428,30 @@ export async function initialize({
       // }
       // }
 
-      if (
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
-      ) {
-        const deleteGlobs = [
-          // By default delete all files & subdirectories
-          `${cacheDirectory}/**`,
-          `${cacheDirectory}/*/`,
-          `!${cacheDirectory}/compiled`,
-        ]
+      const deleteGlobs = [
+        // By default delete all files & subdirectories
+        `${cacheDirectory}/**`,
+        `!${cacheDirectory}/data`,
+        `${cacheDirectory}/data/**`,
+        `!${cacheDirectory}/data/gatsby-core-utils/`,
+        `!${cacheDirectory}/data/gatsby-core-utils/**`,
+        `!${cacheDirectory}/compiled`,
+      ]
 
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
-          // Stop the caches directory from being deleted, add all sub directories,
-          // but remove gatsby-source-filesystem
-          deleteGlobs.push(`!${cacheDirectory}/caches`)
-          deleteGlobs.push(`${cacheDirectory}/caches/*`)
-          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
-        }
-
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-          // Add webpack
-          deleteGlobs.push(`!${cacheDirectory}/webpack`)
-        }
-        await del(deleteGlobs)
-      } else {
-        // Attempt to empty dir if remove fails,
-        // like when directory is mount point
-        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+        // Stop the caches directory from being deleted, add all sub directories,
+        // but remove gatsby-source-filesystem
+        deleteGlobs.push(`!${cacheDirectory}/caches`)
+        deleteGlobs.push(`${cacheDirectory}/caches/*`)
+        deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
       }
+
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+        // Add webpack
+        deleteGlobs.push(`!${cacheDirectory}/webpack`)
+      }
+
+      await del(deleteGlobs)
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
@@ -465,6 +461,9 @@ export async function initialize({
       type: `DELETE_CACHE`,
       cacheIsCorrupt,
     })
+
+    // make sure all previous mutexes are released
+    await releaseAllMutexes()
 
     // in future this should show which plugin's caches are purged
     // possibly should also have which plugins had caches
