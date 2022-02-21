@@ -7,7 +7,6 @@ import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
-import type { ITimerReporter } from "gatsby-cli/lib/reporter/reporter-timer"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
@@ -25,10 +24,7 @@ import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
-import {
-  compileGatsbyFiles,
-  isCompileGatsbyFilesFlagSet,
-} from "../utils/parcel/compile-gatsby-files"
+import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
 
 interface IPluginResolution {
@@ -169,15 +165,11 @@ export async function initialize({
 
   const siteDirectory = program.directory
 
-  let activity: ITimerReporter
-
-  if (isCompileGatsbyFilesFlagSet()) {
-    // Compile root gatsby files
-    activity = reporter.activityTimer(`compile gatsby files`)
-    activity.start()
-    await compileGatsbyFiles(siteDirectory)
-    activity.end()
-  }
+  // Compile root gatsby files
+  let activity = reporter.activityTimer(`compile gatsby files`)
+  activity.start()
+  await compileGatsbyFiles(siteDirectory)
+  activity.end()
 
   // Load gatsby config
   activity = reporter.activityTimer(`load gatsby config`, {

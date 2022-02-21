@@ -26,10 +26,6 @@ import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
 import { configureTrailingSlash } from "../utils/express-middlewares"
 import { getDataStore, detectLmdbStore } from "../datastore"
-import {
-  COMPILED_CACHE_DIR,
-  isCompileGatsbyFilesFlagSet,
-} from "../utils/parcel/compile-gatsby-files"
 
 process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
 detectLmdbStore()
@@ -111,10 +107,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  const rootDir = isCompileGatsbyFilesFlagSet()
-    ? `${program.directory}/${COMPILED_CACHE_DIR}`
-    : program.directory
-  const { configModule } = await getConfigFile(rootDir, `gatsby-config`)
+  const { configModule } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
+  )
   const config: IGatsbyConfig = preferDefault(configModule)
 
   const { pathPrefix: configPathPrefix, trailingSlash } = config || {}

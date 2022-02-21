@@ -49,9 +49,5 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
 }
 
 export function isCompileGatsbyFilesFlagSet(): boolean {
-  return (
-    Boolean(process.env.GATSBY_TS_GATSBY_FILES) &&
-    process.env.GATSBY_TS_GATSBY_FILES !== `false` &&
-    process.env.GATSBY_TS_GATSBY_FILES !== `0`
-  )
+  return true
 }

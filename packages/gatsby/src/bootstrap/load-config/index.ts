@@ -9,10 +9,6 @@ import handleFlags from "../../utils/handle-flags"
 import availableFlags from "../../utils/flags"
 import { IProgram } from "../../commands/types"
 import { IGatsbyConfig } from "../../internal"
-import {
-  COMPILED_CACHE_DIR,
-  isCompileGatsbyFilesFlagSet,
-} from "../../utils/parcel/compile-gatsby-files"
 
 export async function loadConfig({
   siteDirectory,
@@ -23,11 +19,8 @@ export async function loadConfig({
   program?: IProgram
 }): Promise<IGatsbyConfig> {
   // Try opening the site's gatsby-config.js file.
-  const rootDir = isCompileGatsbyFilesFlagSet()
-    ? `${siteDirectory}/${COMPILED_CACHE_DIR}`
-    : siteDirectory
   const { configModule, configFilePath } = await getConfigFile(
-    rootDir,
+    siteDirectory,
     `gatsby-config`
   )
   let config = preferDefault(configModule)
