@@ -287,12 +287,10 @@ module.exports = async function build(
   }
 
   // Start saving page.mode in the main process (while queries run in workers in parallel)
-  let waitMaterializePageMode = Promise.resolve()
+  const waitMaterializePageMode = materializePageMode()
 
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    waitMaterializePageMode = materializePageMode()
-
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
     })
@@ -302,8 +300,6 @@ module.exports = async function build(
     waitForWorkerPoolRestart = workerPool.restart()
     await mergeWorkerState(workerPool, buildSpan)
   } else {
-    waitMaterializePageMode = materializePageMode()
-
     await runStaticQueries({
       queryIds,
       parentSpan: buildSpan,
