@@ -64,7 +64,7 @@
   <a href="https://gatsby.dev/discord">Discord</a>
 </h2>
 
-Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites
+Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
