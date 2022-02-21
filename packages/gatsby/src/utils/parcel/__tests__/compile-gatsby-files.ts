@@ -8,7 +8,7 @@ import {
 } from "../compile-gatsby-files"
 import { siteMetadata } from "./fixtures/utils/site-metadata"
 import { moreDataConfig } from "./fixtures/utils/more-data-config"
-import { readFile, remove } from "fs-extra"
+import { readFile, remove, pathExists } from "fs-extra"
 
 const dir = {
   js: `${__dirname}/fixtures/js`,
@@ -64,17 +64,13 @@ describe(`gatsby file compilation`, () => {
       }
     })
 
-    it(`should compile gatsby-config.js`, async () => {
+    it(`should not compile gatsby-config.js`, async () => {
       await compileGatsbyFiles(dir.js)
 
-      const compiledGatsbyConfig = await readFile(
-        `${dir.js}/.cache/compiled/gatsby-config.js`,
-        `utf-8`
+      const isCompiled = await pathExists(
+        `${dir.js}/.cache/compiled/gatsby-config.js`
       )
-
-      expect(compiledGatsbyConfig).toContain(siteMetadata.title)
-      expect(compiledGatsbyConfig).toContain(siteMetadata.siteUrl)
-      expect(compiledGatsbyConfig).toContain(moreDataConfig.options.name)
+      expect(isCompiled).toEqual(false)
     })
 
     it(`should compile gatsby-config.ts`, async () => {
@@ -90,15 +86,13 @@ describe(`gatsby file compilation`, () => {
       expect(compiledGatsbyConfig).toContain(moreDataConfig.options.name)
     })
 
-    it(`should compile gatsby-node.js`, async () => {
+    it(`should not compile gatsby-node.js`, async () => {
       await compileGatsbyFiles(dir.js)
 
-      const compiledGatsbyNode = await readFile(
-        `${dir.js}/.cache/compiled/gatsby-node.js`,
-        `utf-8`
+      const isCompiled = await pathExists(
+        `${dir.js}/.cache/compiled/gatsby-node.js`
       )
-
-      expect(compiledGatsbyNode).toContain(`I am working!`)
+      expect(isCompiled).toEqual(false)
     })
 
     it(`should compile gatsby-node.ts`, async () => {

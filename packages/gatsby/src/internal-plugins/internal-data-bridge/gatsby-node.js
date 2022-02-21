@@ -7,8 +7,7 @@ const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../datastore`)
 const {
-  COMPILED_CACHE_DIR,
-  isCompileGatsbyFilesFlagSet,
+  findCompiledLocalPluginModule,
 } = require(`../../utils/parcel/compile-gatsby-files`)
 
 function transformPackageJson(json) {
@@ -117,13 +116,12 @@ exports.sourceNodes = ({
     },
   })
 
-  const gatsbyConfigRootDir = isCompileGatsbyFilesFlagSet()
-    ? `${program.directory}/${COMPILED_CACHE_DIR}`
-    : program.directory
-  const pathToGatsbyConfig = systemPath.join(
-    gatsbyConfigRootDir,
-    `gatsby-config.js`
-  )
+  const pathToGatsbyConfig =
+    findCompiledLocalPluginModule(
+      program.directory,
+      `default-site-plugin`,
+      `gatsby-config`
+    ) ?? systemPath.join(program.directory, `gatsby-config.js`)
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
 
   // Create nodes for functions

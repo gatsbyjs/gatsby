@@ -17,8 +17,8 @@ export interface IPluginInfo {
   /** The absolute path to the plugin */
   resolve: string
 
-  /** The absolute path to the compiled plugin directory, if there is one */
-  resolveCompiled?: string
+  /** The absolute path to the compiled plugin's gatsby-node module, if there is one */
+  resolvedCompiledGatsbyNode?: string
 
   /** The plugin name */
   name: string

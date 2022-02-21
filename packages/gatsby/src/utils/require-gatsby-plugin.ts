@@ -10,16 +10,21 @@ export function setGatsbyPluginCache(
 }
 
 export function requireGatsbyPlugin(
-  plugin: { name: string; resolve: string; resolveCompiled?: string },
+  plugin: {
+    name: string
+    resolve: string
+    resolvedCompiledGatsbyNode?: string
+  },
   module: string
 ): any {
   const key = `${plugin.name}/${module}`
 
   let pluginModule = pluginModuleCache.get(key)
   if (!pluginModule) {
-    pluginModule = require(`${
-      plugin?.resolveCompiled || plugin.resolve
-    }/${module}`)
+    pluginModule = require(module === `gatsby-node` &&
+      plugin.resolvedCompiledGatsbyNode
+      ? plugin.resolvedCompiledGatsbyNode
+      : `${plugin.resolve}/${module}`)
     pluginModuleCache.set(key, pluginModule)
   }
   return pluginModule
