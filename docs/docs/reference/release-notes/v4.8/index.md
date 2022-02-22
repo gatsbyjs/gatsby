@@ -127,6 +127,13 @@ if (!hasFeature(`image-service`)) {
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [kyleslie2](https://github.com/kyleslie2): Typo fix [PR #34749](https://github.com/gatsbyjs/gatsby/pull/34749)
+- [angeloashmore](https://github.com/angeloashmore): chore(docs): Add Prismic to `using-gatsby-plugin-image` [PR #34751](https://github.com/gatsbyjs/gatsby/pull/34751)
+- [paulduszak](https://github.com/paulduszak): chore(docs): Update "building a theme" tutorial [PR #34732](https://github.com/gatsbyjs/gatsby/pull/34732)
+- [jhcao23](https://github.com/jhcao23): docs: update typo Forestry [PR #34805](https://github.com/gatsbyjs/gatsby/pull/34805)
+- [VividhPandey003](https://github.com/VividhPandey003): documentation: Add Third Party Schema [PR #34820](https://github.com/gatsbyjs/gatsby/pull/34820)
+- [axe312ger](https://github.com/axe312ger)
+  - refactor(gatsby-source-contentful): remove unnecessary check for existing node [PR #34829](https://github.com/gatsbyjs/gatsby/pull/34829)
+  - fix(gatsby-source-contentful): avoid confusion of Gatsby node and Contentful node count in logs [PR #34830](https://github.com/gatsbyjs/gatsby/pull/34830)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.8.0-next.0...gatsby@4.8.0
