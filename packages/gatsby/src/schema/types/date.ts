@@ -224,7 +224,7 @@ const formatDate = async ({
 }: IFormatDateArgs): Promise<string | number> => {
   const normalizedDate = JSON.parse(JSON.stringify(date))
   if (formatString) {
-    const cacheKey = `${normalizedDate}-${formatString}`
+    const cacheKey = `${normalizedDate}-${formatString}-${locale}`
     const cachedFormat = await formatDateCache.get(cacheKey)
     if (cachedFormat) {
       return cachedFormat
