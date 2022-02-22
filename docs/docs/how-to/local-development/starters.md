@@ -11,12 +11,18 @@ tableOfContentsDepth: 1
 
 ## Directions
 
-1. Find the starter you'd like to use. (_The [Starter Library](/starters/?v=2) is a good place to look!_)
+1. Find the starter you'd like to use. (_The [Starter Library](/starters/) is a good place to look!_)
 
 2. Generate a new site based on the starter. In the terminal, run:
 
 ```shell
 gatsby new {your-project-name} {link-to-starter}
+```
+
+as an example:
+
+```shell
+gatsby new my-new-project gatsbyjs/gatsby-starter-default
 ```
 
 > _Don't run the above command as-is -- remember to replace {your-project-name} and {link-to-starter}!_
@@ -32,5 +38,5 @@ gatsby develop
 
 - Follow a [more detailed guide](/docs/starters/) on using Gatsby starters.
 - Learn how to use the [Gatsby CLI](/docs/reference/gatsby-cli) tool to use starters in [tutorial part one](/docs/tutorial/part-1/#using-gatsby-starters)
-- Browse the [Starter Library](/starters/?v=2)
+- Browse the [Starter Library](/starters/)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
