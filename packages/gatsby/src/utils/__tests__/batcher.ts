@@ -36,7 +36,8 @@ describe(`Batcher`, () => {
     singleCall.mockRestore()
     bulkCall.mockRestore()
   })
-  
+
+  // eslint-disable-next-line @typescript-eslint/no-array-constructor
   Array(1, 2, 10).forEach(threshold => {
     it(`flushes single calls after threshold of ${threshold} is hit`, () => {
       createBatcherWithSpies(threshold)
