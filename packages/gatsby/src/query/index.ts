@@ -212,7 +212,7 @@ export async function processStaticQueries(
   queryIds: IGroupedQueryIds["staticQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
 ): Promise<void> {
-  const processedQueries = processQueries<string>({
+  const processedQueries = await processQueries<string>({
     queryIds,
     createJobFn: createStaticQueryJob,
     onQueryDone:
