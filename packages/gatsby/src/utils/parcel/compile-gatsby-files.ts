@@ -16,7 +16,9 @@ export function constructParcel(siteRoot: string): Parcel {
       `${siteRoot}/${gatsbyFileRegex}`,
       `${siteRoot}/plugins/**/${gatsbyFileRegex}`,
     ],
-    defaultConfig: `gatsby-parcel-config`,
+    defaultConfig: require.resolve(`gatsby-parcel-config`, {
+      paths: [siteRoot],
+    }),
     mode: `production`,
     targets: {
       root: {
