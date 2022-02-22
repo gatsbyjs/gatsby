@@ -4,7 +4,7 @@ import _ from "lodash"
 import nock from "nock"
 import path from "path"
 import { generateImageSource, getBase64Image } from "../gatsby-plugin-image"
-import * as coreUtils from "gatsby-core-utils"
+import * as coreUtils from "gatsby-core-utils/fetch-remote-file"
 
 nock.disableNetConnect()
 
@@ -99,6 +99,9 @@ describe(`contentful extend node type`, () => {
         title: `Contentful Logo PNG`,
         description: ``,
         node_locale: `en-US`,
+        internal: {
+          contentDigest: `123`,
+        },
       },
       options: {
         width: 200,
