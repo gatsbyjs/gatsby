@@ -67,19 +67,23 @@ export function dispatchLocalImageServiceJob(
   {
     url,
     extension,
+    basename,
     width,
     height,
     format,
     fit,
     contentDigest,
+    quality,
   }: {
     url: string
     extension: string
+    basename: string
     width: number
     height: number
     format: string
     fit: ImageFit
     contentDigest: string
+    quality: number
   },
   store: Store
 ): void {
@@ -102,16 +106,17 @@ export function dispatchLocalImageServiceJob(
       inputPaths: [],
       outputDir: path.join(
         global.__GATSBY?.root || process.cwd(),
-        publicUrl.filter(Boolean).join(`/`)
+        publicUrl.filter(Boolean).join(`/`),
+        generateImageArgs({ width, height, format, quality })
       ),
       args: {
         url,
-        filename:
-          generateImageArgs({ width, height, format }) + `.${extension}`,
+        filename: `${basename}.${extension}`,
         width,
         height,
         format,
         fit,
+        quality,
         contentDigest,
       },
     },

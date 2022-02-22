@@ -53,6 +53,7 @@ type IGatsbyImageDataArgs = Omit<
   cropFocus?: Array<ImageCropFocus>
   fit?: CalculateImageSizesArgs["fit"]
   outputPixelDensities?: CalculateImageSizesArgs["outputPixelDensities"]
+  quality?: number
 }
 
 type ImageSizeArgs = CalculateImageSizesArgs & {
@@ -69,6 +70,7 @@ interface IImageSizes {
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
+const DEFAULT_QUALITY = 75
 
 export async function gatsbyImageDataResolver(
   source: IRemoteFileNode,
@@ -114,6 +116,10 @@ export async function gatsbyImageDataResolver(
     args.placeholder = PlaceholderType.DOMINANT_COLOR
   }
 
+  if (!args.quality) {
+    args.quality = DEFAULT_QUALITY
+  }
+
   let backgroundColor = args.backgroundColor
   const sourceMetadata: ISourceMetadata = {
     width: source.width,
@@ -148,11 +154,16 @@ export async function gatsbyImageDataResolver(
           {
             url: source.url,
             extension: format,
+            basename: path.basename(
+              source.filename,
+              path.extname(source.filename)
+            ),
             width,
             height: Math.round(width / imageSizes.aspectRatio),
             format,
             fit: args.fit as ImageFit,
             contentDigest: source.internal.contentDigest,
+            quality: args.quality as number,
           },
           store
         )
@@ -163,6 +174,7 @@ export async function gatsbyImageDataResolver(
         height: Math.round(width / imageSizes.aspectRatio),
         format,
         cropFocus: args.cropFocus,
+        quality: args.quality as number,
       })}/${path.basename(
         source.filename,
         path.extname(source.filename)
@@ -233,13 +245,14 @@ export function generateGatsbyImageDataFieldConfig(
     type: `JSON`,
     args: {
       layout: {
-        type: enums.layout.NonNull.getTypeName(),
+        type: enums.layout.getTypeName(),
         description: stripIndent`
       The layout for the image.
       FIXED: A static image sized, that does not resize according to the screen width
       FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
       CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
       `,
+        defaultValue: enums.layout.getField(`CONSTRAINED`).value,
       },
       width: {
         type: `Int`,
@@ -320,6 +333,10 @@ export function generateGatsbyImageDataFieldConfig(
       },
       cropFocus: {
         type: enums.cropFocus.List.getTypeName(),
+      },
+      quality: {
+        type: `Int`,
+        defaultValue: DEFAULT_QUALITY,
       },
     },
     resolve(source, args): ReturnType<typeof gatsbyImageDataResolver> {

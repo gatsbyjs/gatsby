@@ -11,3 +11,6 @@ for (const f of fit) {
 
   pipeline.toFile(path.join(__dirname, `./__fixtures__/dog-300-${f}.jpg`))
 }
+
+// pipeline.resize(300, 300).jpeg({ quality: 75 }).png({ quality: 75 })
+// pipeline.toFormat(`webp`).toFile(path.join(__dirname, `./__fixtures__/dog-300.webp`))

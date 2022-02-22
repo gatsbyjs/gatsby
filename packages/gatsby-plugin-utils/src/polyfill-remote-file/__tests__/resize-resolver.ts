@@ -204,7 +204,7 @@ describe(`resizeResolver`, () => {
       const [transformArgs] = args.split(`.`)
       expect(Buffer.from(url, `base64`).toString()).toBe(source.url)
       expect(Buffer.from(transformArgs, `base64`).toString()).toBe(
-        `w=${expected.widthOnly[0]}&h=${expected.widthOnly[1]}&fm=jpg`
+        `w=${expected.widthOnly[0]}&h=${expected.widthOnly[1]}&fm=jpg&q=75`
       )
       expect(result?.width).toBe(expected.widthOnly[0])
       expect(result?.height).toBe(expected.widthOnly[1])
@@ -223,7 +223,7 @@ describe(`resizeResolver`, () => {
       const [transformArgs] = args.split(`.`)
       expect(Buffer.from(url, `base64`).toString()).toBe(source.url)
       expect(Buffer.from(transformArgs, `base64`).toString()).toBe(
-        `w=${expected.heightOnly[0]}&h=${expected.heightOnly[1]}&fm=jpg`
+        `w=${expected.heightOnly[0]}&h=${expected.heightOnly[1]}&fm=jpg&q=75`
       )
       expect(result?.width).toBe(expected.heightOnly[0])
       expect(result?.height).toBe(expected.heightOnly[1])
@@ -295,12 +295,11 @@ describe(`resizeResolver`, () => {
         args: {
           contentDigest: `1`,
           url: portraitSource.url,
-          filename: `${Buffer.from(`w=100&h=160&fm=jpg`).toString(
-            `base64`
-          )}.jpg`,
+          filename: `dog-portrait.jpg`,
           format: `jpg`,
           width: 100,
           height: expect.any(Number),
+          quality: 75,
         },
         inputPaths: [],
         name: `IMAGE_CDN`,

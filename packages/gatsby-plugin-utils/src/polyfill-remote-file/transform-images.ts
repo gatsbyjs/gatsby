@@ -10,6 +10,7 @@ export interface IResizeArgs {
   height: number
   format: string
   outputPath?: string
+  quality: number
 }
 
 // Lots of work to get the sharp instance
@@ -101,7 +102,7 @@ export async function transformImage({
 
 async function resizeImageWithSharp(
   pipeline: Pipeline | Buffer,
-  { width, height, format, outputPath }: IResizeArgs
+  { width, height, format, outputPath, quality }: IResizeArgs
 ): Promise<Buffer | void> {
   if (pipeline instanceof Buffer) {
     if (!outputPath) {
@@ -113,6 +114,10 @@ async function resizeImageWithSharp(
 
   const resizedImage = pipeline
     .resize(width, height, {})
+    .jpeg({ quality })
+    .png({ quality })
+    .webp({ quality })
+    .avif({ quality })
     .toFormat(
       format as unknown as keyof Awaited<
         ReturnType<typeof getSharpInstance>

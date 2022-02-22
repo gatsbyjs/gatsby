@@ -114,7 +114,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -122,7 +122,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -172,7 +172,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=75&h=120&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=75&h=120&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -180,7 +180,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=150&h=241&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=150&h=241&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -188,7 +188,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -196,7 +196,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -250,7 +250,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=750&h=1202&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=750&h=1202&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -258,7 +258,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1080&h=1731&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=1080&h=1731&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -266,7 +266,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1366&h=2190&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=1366&h=2190&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -274,7 +274,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1920&h=3078&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=1920&h=3078&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -349,14 +349,14 @@ describe(`gatsbyImageData`, () => {
     expect(parsedFixedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
     expect(parsedFixedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
@@ -368,14 +368,14 @@ describe(`gatsbyImageData`, () => {
     expect(parsedConstrainedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
     expect(parsedConstrainedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
         portraitSource.basename
       }.webp`
     )
