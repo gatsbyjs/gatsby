@@ -11,7 +11,9 @@ import restrictedContentTypeFixture from "../__fixtures__/restricted-content-typ
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
+  const originalModule = jest.requireActual(`gatsby-core-utils`)
   return {
+    ...originalModule,
     createContentDigest: () => `contentDigest`,
   }
 })
@@ -75,7 +77,7 @@ describe(`gatsby-node`, () => {
     pluginOptions = defaultPluginOptions
   ) {
     await createSchemaCustomization(
-      { schema, actions, reporter, cache },
+      { schema, actions, reporter, cache, store },
       pluginOptions
     )
 
