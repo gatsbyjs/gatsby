@@ -64,6 +64,7 @@ describe(`gatsbyImageData`, () => {
     height: 962,
     mimeType: `image/jpeg`,
     filename: `dog-portrait.jpg`,
+    basename: `dog-portrait`,
     parent: null,
     children: [],
     internal: {
@@ -72,51 +73,6 @@ describe(`gatsbyImageData`, () => {
       contentDigest: `1`,
     },
   }
-  const landscapeSource = {
-    id: `2`,
-    url: `https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80`,
-    width: 600,
-    height: 400,
-    mimeType: `image/jpeg`,
-    filename: `dog-landscape.jpg`,
-    parent: null,
-    children: [],
-    internal: {
-      type: `Test`,
-      owner: `test`,
-      contentDigest: `1`,
-    },
-  }
-
-  const portrait = [
-    `portrait`,
-    portraitSource,
-    {
-      fixed: [300, 481],
-      constrained: [],
-      fullWidth: [],
-      widthOnly: [300, 481],
-      heightOnly: [187, 300],
-      widthWithFit: [
-        [`cover`, 300, 481],
-        [`fill`, 300, 962],
-        [`outside`, 300, 481],
-        [`contain`, 300, 481],
-      ],
-      heightWithFit: [
-        [`cover`, 187, 300],
-        [`fill`, 600, 300],
-        [`outside`, 187, 300],
-        [`contain`, 187, 300],
-      ],
-      bothWithFit: [
-        [`cover`, 300, 300],
-        [`fill`, 300, 300],
-        [`outside`, 300, 481],
-        [`contain`, 300, 300],
-      ],
-    },
-  ]
 
   it(`should return null when source is not an image`, async () => {
     expect(
@@ -158,13 +114,17 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[0].viewport).toEqual(`1x`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[1].viewport).toEqual(`2x`)
 
@@ -212,25 +172,33 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=75&h=120&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=75&h=120&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[0].viewport).toEqual(`75w`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=150&h=241&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=150&h=241&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[1].viewport).toEqual(`150w`)
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[2].viewport).toEqual(`300w`)
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[3].viewport).toEqual(`600w`)
 
@@ -282,25 +250,33 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=750&h=1202&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=750&h=1202&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[0].viewport).toEqual(`750w`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1080&h=1731&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=1080&h=1731&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[1].viewport).toEqual(`1080w`)
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1366&h=2190&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=1366&h=2190&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[2].viewport).toEqual(`1366w`)
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1920&h=3078&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=1920&h=3078&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedSrcSet[3].viewport).toEqual(`1920w`)
 
@@ -373,12 +349,16 @@ describe(`gatsbyImageData`, () => {
     expect(parsedFixedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedFixedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
 
     const parsedConstrainedSrcSet = parseSrcSet(
@@ -388,12 +368,16 @@ describe(`gatsbyImageData`, () => {
     expect(parsedConstrainedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=300&h=481&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
     expect(parsedConstrainedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}.webp`
+      )}/${Buffer.from(`w=600&h=962&fm=webp`).toString(`base64`)}/${
+        portraitSource.basename
+      }.webp`
     )
 
     const parsedFullWidthSrcSet = parseSrcSet(

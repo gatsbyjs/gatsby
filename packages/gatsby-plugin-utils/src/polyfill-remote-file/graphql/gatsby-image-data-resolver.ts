@@ -1,3 +1,4 @@
+import path from "path"
 import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
@@ -162,7 +163,10 @@ export async function gatsbyImageDataResolver(
         height: Math.round(width / imageSizes.aspectRatio),
         format,
         cropFocus: args.cropFocus,
-      })}.${format}`
+      })}/${path.basename(
+        source.filename,
+        path.extname(source.filename)
+      )}.${format}`
 
       if (!fallbackSrc) {
         fallbackSrc = src

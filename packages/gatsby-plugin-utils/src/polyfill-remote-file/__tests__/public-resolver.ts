@@ -27,7 +27,7 @@ describe(`publicResolver`, () => {
     }
 
     expect(publicUrlResolver(source, store)).toEqual(
-      `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}.pdf`
+      `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}/file.pdf`
     )
   })
 
@@ -47,7 +47,7 @@ describe(`publicResolver`, () => {
     }
 
     expect(publicUrlResolver(source, store)).toEqual(
-      `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}.jpg`
+      `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}/image.jpg`
     )
   })
 

@@ -1,3 +1,4 @@
+import path from "path"
 import { generatePublicUrl } from "../utils/url-generator"
 import { getFileExtensionFromMimeType } from "../utils/mime-type-helpers"
 import {
@@ -22,13 +23,12 @@ export function publicUrlResolver(
     )
   }
 
-  const extension = getFileExtensionFromMimeType(source.mimeType)
   return (
     generatePublicUrl({
       url: source.url,
       // We always want file based url
       mimeType: `application/octet-stream`,
-    }) + `.${extension}`
+    }) + `/${source.filename}`
   )
 }
 
