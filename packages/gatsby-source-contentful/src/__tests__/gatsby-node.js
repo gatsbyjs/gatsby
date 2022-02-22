@@ -461,7 +461,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 22 cached entries",
+          "Contentful: 11 cached entries",
         ],
         Array [
           "Contentful: 1 new assets",
@@ -470,7 +470,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 8 cached assets",
+          "Contentful: 4 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -551,7 +551,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -560,7 +560,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -653,7 +653,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 1 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -662,7 +662,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -739,7 +739,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -748,7 +748,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 1 deleted assets",
