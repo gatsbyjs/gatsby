@@ -21,9 +21,11 @@ export function generateImageArgs({
   height,
   format,
   cropFocus,
+  quality,
 }: WidthOrHeight & {
   format: string
   cropFocus?: ImageCropFocus | Array<ImageCropFocus>
+  quality: number
 }): string {
   const args: Array<string> = []
   if (width) {
@@ -38,9 +40,8 @@ export function generateImageArgs({
       `crop=${Array.isArray(cropFocus) ? cropFocus.join(`,`) : cropFocus}`
     )
   }
-  if (format) {
-    args.push(`fm=${format}`)
-  }
+  args.push(`fm=${format}`)
+  args.push(`q=${quality}`)
 
   return Buffer.from(args.join(`&`)).toString(`base64`)
 }

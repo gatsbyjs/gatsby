@@ -24,7 +24,10 @@ interface IResizeArgs {
   fit: ImageFit
   format: ImageFormat
   cropFocus: Array<ImageCropFocus>
+  quality: number
 }
+
+const DEFAULT_QUALITY = 75
 
 const allowedFormats: Array<ImageFormat> = [
   `jpg`,
@@ -49,6 +52,10 @@ export async function resizeResolver(
 
   if (!args.format) {
     args.format = `auto`
+  }
+
+  if (!args.quality) {
+    args.quality = DEFAULT_QUALITY
   }
 
   if (!allowedFormats.includes(args.format)) {
@@ -76,6 +83,7 @@ export async function resizeResolver(
       {
         url: source.url,
         extension: format,
+        basename: path.basename(source.filename, path.extname(source.filename)),
         ...(args as IResizeArgs),
         width,
         height,
@@ -131,6 +139,10 @@ export function generateResizeFieldConfig(
       },
       cropFocus: {
         type: enums.cropFocus.List.getTypeName(),
+      },
+      quality: {
+        type: `Int`,
+        defaultValue: DEFAULT_QUALITY,
       },
     },
     resolve(source, args): ReturnType<typeof resizeResolver> {
