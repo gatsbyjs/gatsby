@@ -14,11 +14,9 @@ When identifying a topic, start by:
 
    - This part may be covered if a docs issue is assigned to you, or if you’re signing up voluntarily to take on an issue.
 
-2. Look at the [learning workflow meta issue](https://github.com/gatsbyjs/gatsby/issues/13708) to find active areas looking for docs.
+2. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) to discuss it. If the team determines it warrants documentation, implement in a PR.
 
-3. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) to discuss it. If the team determines it warrants documentation, implement in a PR.
-
-4. Observe common points of confusion or rough edges through user feedback and recommend solutions.
+3. Observe common points of confusion or rough edges through user feedback and recommend solutions.
 
 > _Note: It’s required to open a GitHub issue before submitting a PR if one does not already exist._
 
@@ -43,8 +41,6 @@ Here are some tips for gathering information on a given topic within Gatsby:
 3. You can also search the web for additional examples outside of the Gatsby GitHub org or docs site. Be sure to check Gatsby versions and only reference the most current examples unless for a specific purpose.
 
 4. In the event there is no information available to write a greenfield doc after trying all the above steps, such as for a new integration, try asking Gatsby core team members to help to produce an outline and content tips. Please open a [documentation issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) for this then.
-
-5. **For Gatsby inkteam members:** You can also search in the Gatsby Slack internally for related information. It’s possible other team members have discussed the issue, or even compiled trouble points into a doc. Look and ask around as part of your discovery work.
 
 After you’ve collected supporting information, you must produce original writing to be accepted in the Gatsby docs. Copying other blog posts, materials, or Gatsby team member interviews word-for-word without attribution is not acceptable or allowed. Furthermore, direct quotes from interviews are also _almost never_ effective for guides, recipes, or tutorials.
 

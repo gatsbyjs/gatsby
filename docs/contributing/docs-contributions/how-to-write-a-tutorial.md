@@ -90,7 +90,7 @@ Articles should have a basic, real-world example that shows common use cases of 
 
     code example
 
-//See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
+See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
 
 ## Step 2
 
