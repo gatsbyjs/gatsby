@@ -1,7 +1,6 @@
 ---
 title: Contributing to Gatsby
 description: Learn about contributing to Gatsby and its ecosystem
-disableTableOfContents: true
 ---
 
 Thanks for being interested in contributing to Gatsby. We're glad you want to join this community! Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
@@ -19,7 +18,7 @@ In the interest of fostering an open and welcoming environment, we as contributo
 ### Gatsby news
 
 - Follow [Gatsby](https://twitter.com/gatsbyjs) and [Gatsby Changelog](https://twitter.com/GatsbyChangelog) on Twitter
-- Read and discuss about [Request for Comment (RFC) proposals](/docs/contributing/rfc-process)
+- Read and discuss about [Request for Comment (RFC) proposals](/contributing/rfc-process)
 - Watch videos on [Gatsby's YouTube channel](https://www.youtube.com/c/Gatsbyjs/videos) to see past GatsbyConf presentations and tutorial walkthroughs
 - Follow the [official blog](/blog/)
 
@@ -49,17 +48,17 @@ Answering questions for fellow Gatsby users on [Discord](https://gatsby.dev/disc
 
 ### Contribute documentation
 
-You can help make the docs awesome. We strive to create inclusive, comprehensive, and enjoyable documentation for our users and everyone can help! Found a typo or an incorrect code example? Put up a PR! Found a better way to explain a concept? Put up a PR! Contributions to our documentation are valuable and greatly appreciated. Visit the [Docs Contributions Overview](/docs/contributing/docs-contributions/) to learn more about our style guide, the documentation structure, and how to write docs.
+You can help make the docs awesome. We strive to create inclusive, comprehensive, and enjoyable documentation for our users and everyone can help! Found a typo or an incorrect code example? Put up a PR! Found a better way to explain a concept? Put up a PR! Contributions to our documentation are valuable and greatly appreciated. Visit the [Docs Contributions Overview](/contributing/docs-contributions/) to learn more about our style guide, the documentation structure, and how to write docs.
 
 ### Contribute code
 
-Contributing bug fixes or new features are the most direct form of contribution you can make. The Gatsby monorepo consists of many interconnected pieces and thus it can be difficult to get started. Read the [code contributions guide](/docs/contributing/code-contributions) to learn how to set up the repository locally, how to contribute to the ecosystem, and how to create a Pull Request. Please note that our [governance model](/docs/contributing/gatsby-governance-model) lays out in what areas of the codebase we accept contributions and which are mostly reserved to core team members.
+Contributing bug fixes or new features are the most direct form of contribution you can make. The Gatsby monorepo consists of many interconnected pieces and thus it can be difficult to get started. Read the [code contributions guide](/contributing/code-contributions) to learn how to set up the repository locally, how to contribute to the ecosystem, and how to create a Pull Request. Please note that our [governance model](/contributing/gatsby-governance-model) lays out in what areas of the codebase we accept contributions and which are mostly reserved to core team members.
 
 ### Share (and build) your experience
 
 There are a few other ways of contributing to the Gatsby ecosystem:
 
-- **Contribute to Gatsby's blog**. Want to write about Gatsby? Read the [blog contributions doc](/docs/contributing/blog-contributions) to get your blog post onto gatsbyjs.com.
+- **Contribute to Gatsby's blog**. Want to write about Gatsby? Read the [blog contributions doc](/contributing/blog-contributions) to get your blog post onto gatsbyjs.com.
 - **Develop learning materials.** Strengthen your expertise by writing a blog post, developing a workshop, creating video tutorials, or present your knowledge as a presentation on meetups and conferences.
 - **Create a plugin.** Learn how to [create a plugin](/docs/how-to/plugins-and-themes/) and [submit it to the Plugin Library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
 - **Contribute to the Gatsby User Collective.** Interested in working on plugins that benefit the whole community? You can find them in the [Gatsby User Collective repository](https://github.com/gatsby-uc/plugins).

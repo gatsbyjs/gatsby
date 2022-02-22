@@ -8,11 +8,11 @@ Gatsby is an [open source](https://opensource.org/) project supported by [Gatsby
 
 Our objectives for this document are to provide current information about the management and maintenance of Gatsby open source software (OSS) and present a variety of resources and avenues of communication between Gatsby’s leadership and community. It also includes a detailed description of contributor levels, code review process, pull request merge process and moderation. Furthermore, it outlines how you can get involved with Gatsby OSS. Establishing this governance models will help support active and productive communication/collaboration within the Gatsby community and between the community and the company.
 
-**All community members must follow the [Code of Conduct (CoC)](/docs/contributing/code-of-conduct/).** Consequences for CoC violations are detailed in [moderation](#moderation).
+**All community members must follow the [Code of Conduct (CoC)](/contributing/code-of-conduct/).** Consequences for CoC violations are detailed in [moderation](#moderation).
 
 ## Get involved
 
-All contributions are welcome, including issues, contributing code, new docs as well as updates and tweaks, blog posts, helping out people, and more. Read the [How to Contribute guide](/docs/contributing/#how-to-contribute) to learn what the community can do for you and what you can do for the community.
+All contributions are welcome, including issues, contributing code, new docs as well as updates and tweaks, blog posts, helping out people, and more. Read the [How to Contribute guide](/contributing/#how-to-contribute) to learn what the community can do for you and what you can do for the community.
 
 ### Gatsby User Collective
 
