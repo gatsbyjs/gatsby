@@ -348,7 +348,7 @@ jobs:
           command: touch yarn.lock
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
-          command: yarn policies set-version berry
+          command: yarn policies set-version 3.1.1 # TODO change this version back to berry
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Explicitly set nodeLinker to avoid Yarn selecting node_modules due to the Yarn 1.x lockfile
           command: yarn config set nodeLinker pnp
