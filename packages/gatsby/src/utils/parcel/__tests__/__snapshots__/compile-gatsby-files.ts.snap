@@ -5,8 +5,8 @@ Object {
   "cacheDir": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/.cache/.parcel-cache",
   "defaultConfig": "gatsby-parcel-config",
   "entries": Array [
-    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/gatsby-+(node|config).{ts,js}",
-    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/plugins/**/gatsby-+(node|config).{ts,js}",
+    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/gatsby-+(node|config).ts",
+    "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/plugins/**/gatsby-+(node|config).ts",
   ],
   "mode": "production",
   "targets": Object {
