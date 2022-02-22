@@ -5,5 +5,6 @@ export interface IMatch {
     [key: string]: unknown
   }
   error?: Error | undefined
+
   [key: string]: unknown
 }
