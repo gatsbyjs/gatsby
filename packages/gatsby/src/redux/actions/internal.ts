@@ -1,4 +1,7 @@
-import { IDeleteNodeManifests } from "./../types"
+import {
+  ICreatePageDependencyActionPayloadType,
+  IDeleteNodeManifests,
+} from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -42,24 +45,34 @@ import { getEngineContext } from "../../utils/engine-context"
  * internal use only.
  * @private
  */
-export const createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string; nodeId?: string; connection?: string },
+export const createPageDependencies = (
+  payload: Array<ICreatePageDependencyActionPayloadType>,
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: payload.map(({ path, nodeId, connection }) => {
+      return {
+        path,
+        nodeId,
+        connection,
+      }
+    }),
   }
 }
+
+/**
+ * Create a dependency between a page and data. Probably for
+ * internal use only.
+ *
+ * Shorthand for createPageDependencies.
+ * @private
+ */
+export const createPageDependency = (
+  payload: ICreatePageDependencyActionPayloadType,
+  plugin = ``
+): ICreatePageDependencyAction => createPageDependencies([payload], plugin)
 
 /**
  * Delete dependencies between an array of pages and data. Probably for
