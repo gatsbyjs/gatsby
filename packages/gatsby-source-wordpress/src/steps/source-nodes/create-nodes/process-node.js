@@ -464,7 +464,7 @@ export const getImgTagMatchesWithUrl = ({ nodeString, wpUrl }) =>
       .replace(/<code([\w\W]+?)[\/]?>.*(<\/code>)/gim, ``)
   ).filter(filterMatches(wpUrl))
 
-const replaceNodeHtmlImages = async ({
+export const replaceNodeHtmlImages = async ({
   nodeString,
   node,
   helpers,
