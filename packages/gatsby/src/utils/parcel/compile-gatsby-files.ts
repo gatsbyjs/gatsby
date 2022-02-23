@@ -1,4 +1,5 @@
 import { Parcel } from "@parcel/core"
+import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
 import { ensureDir, emptyDir, existsSync } from "fs-extra"
 
@@ -47,8 +48,43 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
     await emptyDir(distDir)
     await parcel.run()
   } catch (error) {
-    reporter.panic(`Failed to compile gatsby files.`, error)
+    handleErrors(error.diagnostics)
   }
+}
+
+function handleErrors(diagnostics: Array<Diagnostic>): void {
+  diagnostics.forEach(err => {
+    if (err.codeFrames) {
+      err.codeFrames.forEach(c => {
+        // Assuming that codeHighlights only ever has one entry in the array. Local tests only ever showed one
+        const codeHighlightsMessage = c?.codeHighlights[0]?.message
+        // If both messages are the same don't print the specific, otherwise they would be duplicate
+        const specificMessage =
+          codeHighlightsMessage === err.message
+            ? undefined
+            : codeHighlightsMessage
+        reporter.panic({
+          id: `11901`,
+          context: {
+            filePath: c?.filePath,
+            generalMessage: err.message,
+            specificMessage,
+            origin: err?.origin,
+            hints: err?.hints,
+          },
+        })
+      })
+    } else {
+      reporter.panic({
+        id: `11901`,
+        context: {
+          generalMessage: err.message,
+          origin: err?.origin,
+          hints: err?.hints,
+        },
+      })
+    }
+  })
 }
 
 export function getResolvedFieldsForPlugin(

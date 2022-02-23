@@ -33,6 +33,19 @@ export async function getConfigFile(
     configFilePath = require.resolve(configPath)
     configModule = require(configFilePath)
   } catch (err) {
+    if (!(err.code === `MODULE_NOT_FOUND`)) {
+      // If it's not the MODULE_NOT_FOUND error (which can happen if we're looking for JS files)
+      // It means it's an error with the compiled file
+      report.panic({
+        id: `11902`,
+        error: err,
+        context: {
+          configName,
+          message: err.message,
+        },
+      })
+    }
+
     // Fallback to regular rootDir gatsby-config
     configPath = path.join(siteDirectory, configName)
     try {
