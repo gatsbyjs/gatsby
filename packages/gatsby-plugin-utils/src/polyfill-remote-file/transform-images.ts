@@ -29,13 +29,9 @@ export async function transformImage({
   args: { url, filename, contentDigest, ...args },
 }: {
   outputDir: string
-  args: {
+  args: IResizeArgs & {
     url: string
     filename: string
-    width: number
-    height: number
-    format: string
-    fit: import("sharp").FitEnum[keyof import("sharp").FitEnum]
     contentDigest?: string
   }
 }): Promise<string> {
@@ -48,7 +44,8 @@ export async function transformImage({
     return cachedValue
   }
 
-  const [basename, ext] = filename.split(`.`)
+  const ext = path.extname(filename)
+  const basename = path.basename(filename, ext)
   const filePath = await fetchRemoteFile({
     directory: cache.directory,
     url: url,

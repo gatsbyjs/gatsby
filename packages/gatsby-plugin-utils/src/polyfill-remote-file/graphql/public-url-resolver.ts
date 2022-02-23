@@ -1,6 +1,4 @@
-import path from "path"
 import { generatePublicUrl } from "../utils/url-generator"
-import { getFileExtensionFromMimeType } from "../utils/mime-type-helpers"
 import {
   dispatchLocalFileServiceJob,
   shouldDispatch,
@@ -24,11 +22,13 @@ export function publicUrlResolver(
   }
 
   return (
-    generatePublicUrl({
-      url: source.url,
-      // We always want file based url
-      mimeType: `application/octet-stream`,
-    }) + `/${source.filename}`
+    generatePublicUrl(
+      {
+        url: source.url,
+        mimeType: source.mimeType,
+      },
+      false
+    ) + `/${source.filename}`
   )
 }
 
