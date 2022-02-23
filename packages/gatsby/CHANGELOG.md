@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.8.0/packages/gatsby) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Features
+
+- create proper mutex [#34761](https://github.com/gatsbyjs/gatsby/issues/34761) ([f2d4830](https://github.com/gatsbyjs/gatsby/commit/f2d4830ef22666786e0020108d97379a853282b3))
+- allow referencing derived types in schema customization [#34787](https://github.com/gatsbyjs/gatsby/issues/34787) ([3d74584](https://github.com/gatsbyjs/gatsby/commit/3d74584c0a9cfa230ee4c06c4f30ddca12c82d49))
+- Match node manifest pages by page context slug [#34790](https://github.com/gatsbyjs/gatsby/issues/34790) ([ba8e21c](https://github.com/gatsbyjs/gatsby/commit/ba8e21c32b9acb4c209e1dd7cffbf8bff4da58dd))
+- feature toggle and availability [#34748](https://github.com/gatsbyjs/gatsby/issues/34748) ([93a2071](https://github.com/gatsbyjs/gatsby/commit/93a2071742a583219836819a3d8665adc961209a))
+- Enable TS for `gatsby-browser/gatsby-ssr` [#34692](https://github.com/gatsbyjs/gatsby/issues/34692) ([040603f](https://github.com/gatsbyjs/gatsby/commit/040603f5add266a896137bd7c3b4aca75d8f12b2))
+
+#### Bug Fixes
+
+- wait for LMDB upserts to finish before emitting ENGINES_READY [#34853](https://github.com/gatsbyjs/gatsby/issues/34853) [#34896](https://github.com/gatsbyjs/gatsby/issues/34896) ([9a616c0](https://github.com/gatsbyjs/gatsby/commit/9a616c00dd32f41e760e5775ede88805977a52c4))
+- Remove double enhanced-resolve dep resolve [#34854](https://github.com/gatsbyjs/gatsby/issues/34854) resolve [#34889](https://github.com/gatsbyjs/gatsby/issues/34889) ([148d016](https://github.com/gatsbyjs/gatsby/commit/148d01669160a89e73f034850c1048d4db163eab))
+- Make filter/sort query only hold onto node properties it needs [#34747](https://github.com/gatsbyjs/gatsby/issues/34747) ([3df8583](https://github.com/gatsbyjs/gatsby/commit/3df85830e06abe120fd0888d2c39d05a3a445c71))
+- Content Sync DSG bug [#34799](https://github.com/gatsbyjs/gatsby/issues/34799) ([bfd04d3](https://github.com/gatsbyjs/gatsby/commit/bfd04d362b31ccebdf93e63dee6f0786fe27ef0d))
+
+#### Refactoring
+
+- Make load plugins modular, prepare for TS [#34813](https://github.com/gatsbyjs/gatsby/issues/34813) ([3c3362b](https://github.com/gatsbyjs/gatsby/commit/3c3362b0b2b0a9f4b01f2d0a2efecc9652b67220))
+
+#### Chores
+
+- cache shouldn't reference nodes strongly [#34821](https://github.com/gatsbyjs/gatsby/issues/34821) ([9f23dec](https://github.com/gatsbyjs/gatsby/commit/9f23dec7ac88352dfcab087594ed9ff96f855840))
+- upgrade from lmdb-store to lmdb [#34576](https://github.com/gatsbyjs/gatsby/issues/34576) ([54d29c4](https://github.com/gatsbyjs/gatsby/commit/54d29c424116bafeda5a85de71444b531d817d17))
+- remove v8-compile-cache [#34672](https://github.com/gatsbyjs/gatsby/issues/34672) ([c38cb1f](https://github.com/gatsbyjs/gatsby/commit/c38cb1f101735527cfd899b272830fe0d5a925d7))
+
+#### Other Changes
+
+- Add Third Party Schema [#34820](https://github.com/gatsbyjs/gatsby/issues/34820) [#34243](https://github.com/gatsbyjs/gatsby/issues/34243) ([4c832bf](https://github.com/gatsbyjs/gatsby/commit/4c832bf3132cc5776f11484b8caf6ec0da301663))
+
+
+
 ### [4.7.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.7.2/packages/gatsby) (2022-02-15)
 
 #### Bug Fixes
