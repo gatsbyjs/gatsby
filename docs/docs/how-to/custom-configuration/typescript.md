@@ -13,7 +13,7 @@ examples:
 
 To see all of the types available and their generics look at our [TypeScript definition file](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/index.d.ts).
 
-## Initializing a New Project with TypeScript
+## Initializing a new project with TypeScript
 
 You can get started with TypeScript and Gatsby by using the CLI:
 
@@ -33,7 +33,7 @@ npm init gatsby -ts
 
 ```tsx:title=src/pages/index.tsx
 import * as React from "react"
-import { PageProps } from "gatsby"
+import type { PageProps } from "gatsby"
 
 const IndexRoute = ({ path }: PageProps) => {
   return (
@@ -89,7 +89,7 @@ You can also write `gatsby-browser` and `gatsby-ssr` in TypeScript. You have the
 
 ```tsx:title=gatsby-browser.tsx
 import * as React from "react"
-import { GatsbyBrowser } from "gatsby"
+import type { GatsbyBrowser } from "gatsby"
 
 export const wrapPageElement: GatsbyBrowser["wrapPageElement"] = ({
   element,
@@ -105,7 +105,7 @@ export const wrapPageElement: GatsbyBrowser["wrapPageElement"] = ({
 
 ```tsx:title=gatsby-ssr.tsx
 import * as React from "react"
-import { GatsbySSR } from "gatsby"
+import type { GatsbySSR } from "gatsby"
 
 export const wrapPageElement: GatsbySSR["wrapPageElement"] = ({ element }) => {
   return (
@@ -123,7 +123,7 @@ You can use `GetServerData`, `GetServerDataProps`, and `GetServerDataReturn` for
 
 ```tsx:title=src/pages/ssr.tsx
 import * as React from "react"
-import { GetServerDataProps, GetServerDataReturn } from "gatsby"
+import type { GetServerDataProps, GetServerDataReturn } from "gatsby"
 
 type ServerDataProps = {
   hello: string
@@ -155,8 +155,10 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 
 ### `gatsby-config.ts`
 
+You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config` file.
+
 ```ts:title=gatsby-config.ts
-import { GatsbyConfig } from "gatsby"
+import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -170,8 +172,10 @@ export default config
 
 ### `gatsby-node.ts`
 
+You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node` file.
+
 ```ts:title=gatsby-node.ts
-import { GatsbyNode } from "gatsby"
+import type { GatsbyNode } from "gatsby"
 
 type Person = {
   id: number
@@ -243,11 +247,11 @@ exports.createPages = () => {}
 
 ## Styling
 
-[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use vanilla-extract, select it as your preferred styling solution when initializing your project with `npm init gatsby`. You can also manually setup your project through [gatsby-plugin-vanilla-extract](/plugins/gatsby-plugin-vanilla-extract/).
+[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use vanilla-extract, select it as your preferred styling solution when initializing your project with `npm init gatsby`. You can also manually setup your project through [gatsby-plugin-vanilla-extract](/plugins/gatsby-plugin-vanilla-extract/) or use the [vanilla-extract example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract).
 
 ## Migrating to TypeScript
 
-Gatsby natively supports JavaScript and TypeScript, you can change files from `.js`/`.jsx` to `.ts`/ `tsx` at any point to start adding types and gaining the benefits of a type system. But you'll need to do a bit more to be able use write use Typescipt in `gatsby-*` files
+Gatsby natively supports JavaScript and TypeScript, you can change files from `.js`/`.jsx` to `.ts`/ `tsx` at any point to start adding types and gaining the benefits of a type system. But you'll need to do a bit more to be able use Typescipt in `gatsby-*` files:
 
 - Convert your `.js`/`.jsx` files to `.ts/.tsx`
 - Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as `devDependencies`
@@ -257,6 +261,61 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
   - `gatsby-config.js` to `gatsby-config.ts`
   - `gatsby-browser.js` to `gatsby-browser.tsx`
   - `gatsby-ssr.js` to `gatsby-ssr.tsx`
+- Address any of the [current limitations](#current-limitations)
+
+## Current limitations
+
+There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code or through contributions to upstream dependencies.
+
+### Parcel TypeScript features
+
+Parcel is used for the compilation and it currently has [limitations on TypeScript features](https://parceljs.org/languages/typescript/), namely:
+
+- No support for `baseUrl` or `paths` inside `tsconfig.json`
+- It implicitly enables the [`isolatedModules`](https://www.typescriptlang.org/tsconfig#isolatedModules) option by default
+
+### `__dirname`
+
+You can't use `__dirname` and `__filename` in your files. You'll need to replace these instances with a `path.resolve` call. Example diff for a `gatsby-config` file:
+
+```diff
++ import path from "path"
+
+const config = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `your-name`,
++       path: path.resolve(`some/folder`),
+-       path: `${__dirname}/some/folder`,
+      },
+    },
+  ]
+}
+
+export default config
+```
+
+Progress on this is tracked in [Parcel #7611](https://github.com/parcel-bundler/parcel/issues/7611).
+
+### `require.resolve`
+
+You can't use `require.resolve` in your files. You'll need to replace these instances with a `path.resolve` call. Example diff for a `gatsby-node` file:
+
+```diff
++ import path from "path"
+
++ const template = path.resolve(`src/templates/template.tsx`)
+- const template = require.resolve(`./src/templates/template.tsx`)
+```
+
+Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/parcel/issues/6925).
+
+### Other
+
+- Workspaces (e.g. Yarn) are not supported yet.
+- When changing `siteMetadata` in `gatsby-config` no hot-reloading will occur during `gatsby develop`. A restart is needed at the moment.
 
 ## Other Resources
 
@@ -264,6 +323,5 @@ TypeScript integration for pages is supported through automatically including [`
 
 If you are new to TypeScript, check out these other resources to learn more:
 
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/handbook/basic-types.html)
-- [TypeScript Playground (Try it out!)](https://www.typescriptlang.org/play/index.html)
-- [TypeScript Gatsby Example](https://using-typescript.gatsbyjs.org/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
+- [TypeScript Playground (Try it out!)](https://www.typescriptlang.org/play)
