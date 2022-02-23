@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.6.0/packages/gatsby-source-contentful) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Features
+
+- improve fetch-remote-file [#34758](https://github.com/gatsbyjs/gatsby/issues/34758) ([19b0304](https://github.com/gatsbyjs/gatsby/commit/19b0304e0a69df32d954659b674f0bb3fc525235))
+
+#### Bug Fixes
+
+- avoid confusion of Gatsby node and Contentful node count in logs [#34830](https://github.com/gatsbyjs/gatsby/issues/34830) ([ac1d777](https://github.com/gatsbyjs/gatsby/commit/ac1d77768be747744d14be35366676886f3e66ba))
+
+#### Refactoring
+
+- remove unnecessary check for existing node [#34829](https://github.com/gatsbyjs/gatsby/issues/34829) ([ee8c874](https://github.com/gatsbyjs/gatsby/commit/ee8c87445a27676406b2b5db20c89d30b2a0f6d7))
+
+
+
 ## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.5.0/packages/gatsby-source-contentful) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
