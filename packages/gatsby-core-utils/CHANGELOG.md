@@ -16,8 +16,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fix 304 when file does not exists fix [#34842](https://github.com/gatsbyjs/gatsby/issues/34842) fix [#34888](https://github.com/gatsbyjs/gatsby/issues/34888) ([9a579f1](https://github.com/gatsbyjs/gatsby/commit/9a579f1b248dc49ea053b962defcbc21f447ee18))
 
-
-
 ## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.7.0/packages/gatsby-core-utils) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

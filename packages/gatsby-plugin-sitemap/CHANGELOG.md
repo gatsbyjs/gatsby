@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-sitemap
 
-
-
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.7.0/packages/gatsby-plugin-sitemap) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

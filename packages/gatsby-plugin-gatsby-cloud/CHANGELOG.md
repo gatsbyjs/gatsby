@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Force click-only behavior for SUCCESS and ERROR statuses. [#34725](https://github.com/gatsbyjs/gatsby/issues/34725) ([540dfdf](https://github.com/gatsbyjs/gatsby/commit/540dfdf910c39cea122a34ecdb265fb2117cc75b))
 
-
-
 ## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.7.0/packages/gatsby-plugin-gatsby-cloud) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Use MDX v1 for install instructions [#34774](https://github.com/gatsbyjs/gatsby/issues/34774) ([f720571](https://github.com/gatsbyjs/gatsby/commit/f7205719d41e767415ea9c15aebf606e62813b7a))
 
-
-
 ### [3.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.7.1/packages/gatsby-plugin-mdx) (2022-02-15)
 
 #### Chores

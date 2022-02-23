@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - trailing slash undefined check for prod env [#34765](https://github.com/gatsbyjs/gatsby/issues/34765) ([d3f2f5e](https://github.com/gatsbyjs/gatsby/commit/d3f2f5e0766613b5cdd10b19712702aa1712a9e1))
 
-
-
 ### [4.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.7.1/packages/gatsby-link) (2022-02-08)
 
 #### Bug Fixes

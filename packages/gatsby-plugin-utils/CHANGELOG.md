@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - feature toggle and availability [#34748](https://github.com/gatsbyjs/gatsby/issues/34748) ([93a2071](https://github.com/gatsbyjs/gatsby/commit/93a2071742a583219836819a3d8665adc961209a))
 
-
-
 ## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.1.0/packages/gatsby-plugin-utils) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-remark-katex
 
-
-
 ## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-katex@6.7.0/packages/gatsby-remark-katex) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

@@ -19,8 +19,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - remove unnecessary check for existing node [#34829](https://github.com/gatsbyjs/gatsby/issues/34829) ([ee8c874](https://github.com/gatsbyjs/gatsby/commit/ee8c87445a27676406b2b5db20c89d30b2a0f6d7))
 
-
-
 ## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.5.0/packages/gatsby-source-contentful) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

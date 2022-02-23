@@ -36,8 +36,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Add Third Party Schema [#34820](https://github.com/gatsbyjs/gatsby/issues/34820) [#34243](https://github.com/gatsbyjs/gatsby/issues/34243) ([4c832bf](https://github.com/gatsbyjs/gatsby/commit/4c832bf3132cc5776f11484b8caf6ec0da301663))
 
-
-
 ### [4.7.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.7.2/packages/gatsby) (2022-02-15)
 
 #### Bug Fixes

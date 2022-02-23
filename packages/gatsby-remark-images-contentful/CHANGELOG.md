@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency sharp to ^0.30.1 [#34755](https://github.com/gatsbyjs/gatsby/issues/34755) ([326a483](https://github.com/gatsbyjs/gatsby/commit/326a483bc01c5a3e433e3a82fd52c92a9f6467d5))
 
-
-
 ## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images-contentful@5.7.0/packages/gatsby-remark-images-contentful) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
