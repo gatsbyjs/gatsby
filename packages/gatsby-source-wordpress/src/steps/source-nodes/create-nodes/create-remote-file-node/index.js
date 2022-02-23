@@ -384,7 +384,7 @@ module.exports = ({
   pluginOptions,
 }) => {
   const { requestConcurrency: limit, httpOptions = {} } =
-    pluginOptions?.type?.MediaItem?.localFile || {}
+  pluginOptions?.type?.MediaItem?.localFile || {}
   if (doneQueueTimeout) {
     // this is to give the bar a little time to wait when there are pauses
     // between file downloads.
