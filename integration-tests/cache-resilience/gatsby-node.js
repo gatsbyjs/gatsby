@@ -35,10 +35,6 @@ const getDiskCacheSnapshot = () => {
     })
   } catch (e) {
     console.error(e)
-  } finally {
-    if (store) {
-      store.close()
-    }
   }
 
   return snapshot
