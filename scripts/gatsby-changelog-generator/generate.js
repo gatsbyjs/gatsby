@@ -237,7 +237,7 @@ function addChangelogEntries(packageName, entries, contents) {
   const updatedChangelogParts = [
     header,
     entries.trimRight(),
-    contents.substr(header.length),
+    contents.substr(header.length).trimStart(),
   ]
   fs.writeFileSync(
     changelogPath(packageName),
