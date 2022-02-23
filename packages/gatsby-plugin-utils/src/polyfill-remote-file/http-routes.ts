@@ -3,10 +3,8 @@ import fs from "fs-extra"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { hasFeature } from "../has-feature"
 import { getFileExtensionFromMimeType } from "./utils/mime-type-helpers"
-import { generateImageArgs } from "./utils/url-generator"
 import { transformImage } from "./transform-images"
 
-import type { ImageFit } from "./types"
 import type { Application } from "express"
 
 export function polyfillImageServiceDevRoutes(app: Application): void {
