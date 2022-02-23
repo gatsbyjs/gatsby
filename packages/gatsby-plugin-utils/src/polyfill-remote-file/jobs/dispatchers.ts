@@ -31,7 +31,6 @@ export function dispatchLocalFileServiceJob(
     },
     false
   ).split(`/`)
-
   publicUrl.unshift(`public`)
 
   const actions = importFrom(
