@@ -24,11 +24,14 @@ export function dispatchLocalFileServiceJob(
   store: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
-  const publicUrl = generatePublicUrl({
-    url,
-    // We always want file based url
-    mimeType: `application/octet-stream`,
-  }).split(`/`)
+  const publicUrl = generatePublicUrl(
+    {
+      url,
+      // We always want file based url
+      mimeType,
+    },
+    false
+  ).split(`/`)
   const extension = getFileExtensionFromMimeType(mimeType)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const filename = publicUrl.pop()
