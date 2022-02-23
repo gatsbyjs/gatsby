@@ -1,8 +1,42 @@
 import { replaceNodeHtmlImages } from "../dist/steps/source-nodes/create-nodes/process-node"
 
-test(`replaceNodeHtmlImages uses Gatsby image service`, async () => {
-  const newHtml = await replaceNodeHtmlImages()
+test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, async () => {
+  const pluginOptions = {
+    html: {
+      useGatsbyImage: true
+    }
+  }
+
+  // store.dispatch.gatsbyApi.setState({
+  //   pluginOptions,
+  // })
+
+  const helpers = {
+    getNode: () => null
+  }
+
+  const node = {
+    content: `\n<p>Welcome to WordPress. This is your first post. Edit or deleteit, then start writing!</p>\n\n\n\n<p></p>\n\n\n\n<figureclass="wp-block-image size-large"><img loading="lazy" width="1024" height="768" src="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg" alt=""class="wp-image-115" srcset="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg 1024w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-300x225.jpg 300w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-768x576.jpg 768w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1536x1152.jpg 1536w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-2048x1536.jpg 2048w"sizes="(max-width: 1024px) 100vw, 1024px" /></figure>\n`,
+    id: `cG9zdDox`,
+    modifiedGmt: `2022-02-18T23:18:00`,
+    __typename: `Post`
+  }
+
+  const nodeString = JSON.stringify(node)
+
+  const updatedNodeString = await replaceNodeHtmlImages({
+    nodeString,
+    node,
+    helpers,
+    wpUrl: `http://wpgatsby.local/`,
+    pluginOptions
+  })
+
+  console.log(updatedNodeString)
+
+  expect(true).toBe(false)
 })
+
 // import execall from "execall"
 
 // import {
