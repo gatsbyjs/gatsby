@@ -580,7 +580,7 @@ export const replaceNodeHtmlImages = async ({
         const { reporter } = helpers
 
         const gatsbyTransformerSharpSupportsThisFileType =
-          supportedExtensions[extension]
+          supportedExtensions[extension] || extension === `gif`
 
         let imageResize = null
 
@@ -643,14 +643,12 @@ export const replaceNodeHtmlImages = async ({
         continue
       }
 
-      const { match, imageResize, cheerioImg, maxWidth } = matchResize
-
-      // @todo retain img tag classes and attributes from cheerioImg
+      const { match, imageResize, cheerioImg } = matchResize
 
       let ReactGatsbyImage
       // used to create hydration data for images
       let gatsbyImageHydrationData = null
-      if (imageResize) {
+      if (imageResize && imageResize.images.sources.length > 0) {
         gatsbyImageHydrationData = {
           image: imageResize,
           alt: cheerioImg?.attribs?.alt,
@@ -664,49 +662,28 @@ export const replaceNodeHtmlImages = async ({
           gatsbyImageHydrationData,
           null
         )
-      } else {
-        const { fileNode } = matchResize
-        const relativeUrl = await copyFileToStaticAndReturnUrlPath(
-          fileNode,
-          helpers
+      }
+
+      if (ReactGatsbyImage) {
+        let gatsbyImageStringRaw =
+          ReactDOMServer.renderToString(ReactGatsbyImage)
+
+        // gatsby-plugin-image needs hydration data to work on navigations - we add the hydration data to the DOM to use it in gatsby-browser.ts
+        if (gatsbyImageHydrationData) {
+          gatsbyImageStringRaw += `<script type="application/json" data-wp-inline-image-hydration="${replaceIndex}">${JSON.stringify(
+            gatsbyImageHydrationData
+          )}</script>`
+        }
+        // need to remove the JSON stringify quotes around our image since we're
+        // threading this JSON string back into a larger JSON object string
+        const gatsbyImageStringJSON = JSON.stringify(gatsbyImageStringRaw)
+        const gatsbyImageString = gatsbyImageStringJSON.substring(
+          1,
+          gatsbyImageStringJSON.length - 1
         )
 
-        const imgOptions = {
-          style: {
-            // these styles make it so that the image wont be stretched
-            // beyond it's max width, but it also wont exceed the width
-            // of it's parent element
-            maxWidth: `100%`,
-            width: `${maxWidth}px`,
-          },
-          className: `${
-            cheerioImg?.attribs?.class || ``
-          } inline-gatsby-image-wrapper`,
-          loading: `eager`,
-          alt: cheerioImg?.attribs?.alt,
-          src: relativeUrl,
-        }
-
-        ReactGatsbyImage = React.createElement(`img`, imgOptions, null)
+        nodeString = replaceAll(match, gatsbyImageString, nodeString)
       }
-
-      let gatsbyImageStringRaw = ReactDOMServer.renderToString(ReactGatsbyImage)
-
-      // gatsby-plugin-image needs hydration data to work on navigations - we add the hydration data to the DOM to use it in gatsby-browser.ts
-      if (gatsbyImageHydrationData) {
-        gatsbyImageStringRaw += `<script type="application/json" data-wp-inline-image-hydration="${replaceIndex}">${JSON.stringify(
-          gatsbyImageHydrationData
-        )}</script>`
-      }
-      // need to remove the JSON stringify quotes around our image since we're
-      // threading this JSON string back into a larger JSON object string
-      const gatsbyImageStringJSON = JSON.stringify(gatsbyImageStringRaw)
-      const gatsbyImageString = gatsbyImageStringJSON.substring(
-        1,
-        gatsbyImageStringJSON.length - 1
-      )
-
-      nodeString = replaceAll(match, gatsbyImageString, nodeString)
     }
   }
 
