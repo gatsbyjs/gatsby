@@ -186,7 +186,7 @@ export async function gatsbyImageDataResolver(
 
       return {
         src,
-        viewport:
+        descriptor:
           args.layout === `fixed`
             ? `${width / imageSizes.presentationWidth}x`
             : `${width}w`,
@@ -350,9 +350,9 @@ function sortNumeric(a: number, b: number): number {
 }
 
 function createSrcSetFromImages(
-  images: Array<{ src: string; viewport: string }>
+  images: Array<{ src: string; descriptor: string }>
 ): string {
-  return images.map(image => `${image.src} ${image.viewport}`).join(`,`)
+  return images.map(image => `${image.src} ${image.descriptor}`).join(`,`)
 }
 
 // eslint-disable-next-line consistent-return
