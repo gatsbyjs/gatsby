@@ -31,7 +31,7 @@ export function getPlaceholderUrlFromMediaItemNode(node, pluginOptions) {
   let placeholderSizeByWidth
   let placeholderSizeByName
 
-  node.mediaDetails.sizes.forEach(size => {
+  node.mediaDetails?.sizes?.forEach(size => {
     if (
       size.name ===
       (pluginOptions?.type?.MediaItem?.placeholderSizeName ||
