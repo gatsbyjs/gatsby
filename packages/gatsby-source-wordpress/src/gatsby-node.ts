@@ -37,6 +37,7 @@ module.exports = runApisInSteps({
   ],
 
   onCreateDevServer: [
+    steps.imageRoutes,
     steps.setImageNodeIdCache,
     steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,
