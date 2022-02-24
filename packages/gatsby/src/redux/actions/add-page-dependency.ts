@@ -1,6 +1,18 @@
 import { store } from "../"
+import Batcher from "../../utils/batcher"
+import {
+  createPageDependency as internalCreatePageDependency,
+  createPageDependencies as internalCreatePageDependencies,
+} from "./internal"
 
-import { createPageDependency as internalCreatePageDependency } from "./internal"
+export const createPageDependencyBatcher = new Batcher<
+  typeof internalCreatePageDependency
+>(1000)
+
+createPageDependencyBatcher.bulkCall(createCalls => {
+  const dependencyPayloads = createCalls.map(call => call[0])
+  store.dispatch(internalCreatePageDependencies(dependencyPayloads))
+})
 
 export const createPageDependency = ({
   path,
@@ -42,5 +54,5 @@ export const createPageDependency = ({
   }
 
   // It's new, let's dispatch it
-  store.dispatch(internalCreatePageDependency({ path, nodeId, connection }))
+  createPageDependencyBatcher.add({ path, nodeId, connection })
 }

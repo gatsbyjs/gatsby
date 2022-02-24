@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.8.0/packages/create-gatsby) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Features
+
+- TypeScript option [#34611](https://github.com/gatsbyjs/gatsby/issues/34611) ([a78ef94](https://github.com/gatsbyjs/gatsby/commit/a78ef94e0d51a6a2b38d195a36524d46ea3d6087))
+
+#### Bug Fixes
+
+- Add required deps for theme-ui option [#34885](https://github.com/gatsbyjs/gatsby/issues/34885) [#34897](https://github.com/gatsbyjs/gatsby/issues/34897) ([f5705b9](https://github.com/gatsbyjs/gatsby/commit/f5705b9beb6f155f8cb5c9acdf1d0eb39538a84a))
+
 ## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.7.0/packages/create-gatsby) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
