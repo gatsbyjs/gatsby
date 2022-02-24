@@ -83,7 +83,7 @@ const nodes = [
     id: `file2`,
     parent: null,
     children: [`post2`],
-    internal: { type: `RemoteFile`, contentDigest: `0` },
+    internal: { type: `ExternalFile`, contentDigest: `0` },
     url: `RemoteFile2`,
   },
   {

@@ -38,7 +38,6 @@ export function getOrCreateRemoteFileInterface(
   })
 
   return schemaComposer.getOrCreateIFTC(`RemoteFile`, tc => {
-    tc.addInterface(`Node`)
     tc.setDescription(`Remote Interface`)
 
     // @ts-ignore - types are messed up by schema composer maybe new version helps here
