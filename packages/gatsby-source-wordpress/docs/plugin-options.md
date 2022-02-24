@@ -953,7 +953,7 @@ If a max width can't be inferred from html this value will be passed to Sharp. I
 
 **Field type**: `Number`
 
-**Default value**: `100`
+**Default value**: `1024`
 
 ```js
 {

@@ -185,19 +185,23 @@ export const createMediaItemNode = async ({
         pluginOptions
       )
 
+      const url = node.sourceUrl || node.mediaItemUrl
+
+      const filename =
+        node?.mediaDetails?.file?.split(`/`)?.pop() ||
+        path.basename(urlUtil.parse(url).pathname)
+
       node = {
         ...node,
-        url: node.sourceUrl,
+        url,
         contentType: node.contentType,
         mimeType: node.mimeType,
-        filename: node.mediaDetails.file?.split(`/`)?.pop(),
-        filesize: node.mediaDetails.fileSize,
-        width: node.mediaDetails.width,
-        height: node.mediaDetails.height,
+        filename,
+        filesize: node?.mediaDetails?.fileSize,
+        width: node?.mediaDetails?.width,
+        height: node?.mediaDetails?.height,
         placeholderUrl:
-          placeholderUrl ??
-          node.mediaDetails.sizes?.[0]?.sourceUrl ??
-          node.sourceUrl,
+          placeholderUrl ?? node?.mediaDetails?.sizes?.[0]?.sourceUrl ?? url,
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
