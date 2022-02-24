@@ -600,6 +600,7 @@ export const replaceNodeHtmlImages = async ({
                 mimeType: imageNode.mimeType,
                 width: imageNode.mediaDetails.width,
                 height: imageNode.mediaDetails.height,
+                filename: path.basename(imageNode.mediaDetails.file),
                 internal: {
                   contentDigest: imageNode.modifiedGmt,
                 },
