@@ -3660,7 +3660,7 @@
     "@parcel/utils" "2.3.1"
     nullthrows "^1.1.1"
 
-"@parcel/source-map@2.0.2", "@parcel/source-map@^2.0.0":
+"@parcel/source-map@^2.0.0":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@parcel/source-map/-/source-map-2.0.2.tgz#9aa0b00518cee31d5634de6e9c924a5539b142c1"
   integrity sha512-NnUrPYLpYB6qyx2v6bcRPn/gVigmGG6M6xL8wIg/i0dP1GLkuY1nf+Hqdf63FzPTqqT7K3k6eE5yHPQVMO5jcA==

@@ -58,52 +58,52 @@ describe(`gatsby file compilation`, () => {
   })
 
   describe(`compileGatsbyFiles`, () => {
-    afterEach(async () => {
-      for (const directory of [dir.js, dir.ts]) {
-        await remove(`${directory}/.cache`)
-      }
+    describe(`js files are not touched`, () => {
+      beforeAll(async () => {
+        await remove(`${dir.js}/.cache`)
+        await compileGatsbyFiles(dir.js)
+      })
+
+      it(`should not compile gatsby-config.js`, async () => {
+        const isCompiled = await pathExists(
+          `${dir.js}/.cache/compiled/gatsby-config.js`
+        )
+        expect(isCompiled).toEqual(false)
+      })
+
+      it(`should not compile gatsby-node.js`, async () => {
+        const isCompiled = await pathExists(
+          `${dir.js}/.cache/compiled/gatsby-node.js`
+        )
+        expect(isCompiled).toEqual(false)
+      })
     })
 
-    it(`should not compile gatsby-config.js`, async () => {
-      await compileGatsbyFiles(dir.js)
+    describe(`ts files are compiled`, () => {
+      beforeAll(async () => {
+        await remove(`${dir.ts}/.cache`)
+        await compileGatsbyFiles(dir.ts)
+      })
 
-      const isCompiled = await pathExists(
-        `${dir.js}/.cache/compiled/gatsby-config.js`
-      )
-      expect(isCompiled).toEqual(false)
-    })
+      it(`should compile gatsby-config.ts`, async () => {
+        const compiledGatsbyConfig = await readFile(
+          `${dir.ts}/.cache/compiled/gatsby-config.js`,
+          `utf-8`
+        )
 
-    it(`should compile gatsby-config.ts`, async () => {
-      await compileGatsbyFiles(dir.ts)
+        expect(compiledGatsbyConfig).toContain(siteMetadata.title)
+        expect(compiledGatsbyConfig).toContain(siteMetadata.siteUrl)
+        expect(compiledGatsbyConfig).toContain(moreDataConfig.options.name)
+      })
 
-      const compiledGatsbyConfig = await readFile(
-        `${dir.ts}/.cache/compiled/gatsby-config.js`,
-        `utf-8`
-      )
+      it(`should compile gatsby-node.ts`, async () => {
+        const compiledGatsbyNode = await readFile(
+          `${dir.ts}/.cache/compiled/gatsby-node.js`,
+          `utf-8`
+        )
 
-      expect(compiledGatsbyConfig).toContain(siteMetadata.title)
-      expect(compiledGatsbyConfig).toContain(siteMetadata.siteUrl)
-      expect(compiledGatsbyConfig).toContain(moreDataConfig.options.name)
-    })
-
-    it(`should not compile gatsby-node.js`, async () => {
-      await compileGatsbyFiles(dir.js)
-
-      const isCompiled = await pathExists(
-        `${dir.js}/.cache/compiled/gatsby-node.js`
-      )
-      expect(isCompiled).toEqual(false)
-    })
-
-    it(`should compile gatsby-node.ts`, async () => {
-      await compileGatsbyFiles(dir.ts)
-
-      const compiledGatsbyNode = await readFile(
-        `${dir.ts}/.cache/compiled/gatsby-node.js`,
-        `utf-8`
-      )
-
-      expect(compiledGatsbyNode).toContain(`I am working!`)
+        expect(compiledGatsbyNode).toContain(`I am working!`)
+      })
     })
   })
 })
