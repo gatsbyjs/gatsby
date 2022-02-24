@@ -5,7 +5,7 @@ description: Learn about contributing to Gatsby and its ecosystem
 
 Thanks for being interested in contributing to Gatsby. We're glad you want to join this community! Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
 
-All contributions are welcome, including issues, contributing code, new docs as well as updates and tweaks, blog posts, helping out people, and more. Continue reading to learn what the community can do for you and what you can do for the community.
+All contributions are welcome, including issues, contributing code, new docs as well as updates and tweaks, blog posts, helping out people, and more. Continue reading to learn what the community can do for you and what you can do for the community. By contributing to open source projects you can connect with people, learn new skills, become a subject-matter expert, and apply all learnings to your own projects.
 
 ## Resources
 
