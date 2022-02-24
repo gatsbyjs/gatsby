@@ -631,7 +631,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
       fallbackImageMaxWidth: Joi.number()
         .integer()
         .allow(null)
-        .default(100)
+        .default(1024)
         .description(
           `If a max width can't be inferred from html this value will be passed to Sharp. If the image is smaller than this, the image file's width will be used instead.`
         )
