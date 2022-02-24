@@ -1,4 +1,4 @@
-const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
 const { isWebUri } = require(`valid-url`)
 const { createFileNode } = require(`./create-file-node`)
 
