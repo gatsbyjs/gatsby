@@ -574,8 +574,7 @@ export const replaceNodeHtmlImages = async ({
           maxWidth = configuredMaxWidth
         }
 
-        // @todo hook up quality to image data resolver
-        // const quality = pluginOptions?.html?.imageQuality
+        const quality = pluginOptions?.html?.imageQuality
 
         const { reporter } = helpers
 
@@ -612,6 +611,7 @@ export const replaceNodeHtmlImages = async ({
                   ? `none`
                   : pluginOptions?.html?.placeholderType || `blurred`,
                 placeholderUrl,
+                quality,
               },
               helpers.store
             )
