@@ -37,10 +37,10 @@ export function dispatchLocalFileServiceJob(
   const filename = publicUrl.pop()
   publicUrl.unshift(`public`)
 
-  const actions = importFrom(
+  const { actions } = importFrom(
     global.__GATSBY?.root ?? process.cwd(),
     `gatsby/dist/redux/actions`
-  )
+  ) as any
 
   // @ts-ignore - we dont have correct typings for this
   actions.createJobV2(
