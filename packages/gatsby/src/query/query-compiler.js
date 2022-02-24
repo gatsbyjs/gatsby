@@ -45,6 +45,7 @@ const {
   default: errorParser,
   locInGraphQlToLocInFile,
 } = require(`./error-parser`)
+const GatsbyCacheLmdbImpl = require(`../utils/cache-lmdb`).default
 
 const overlayErrorID = `graphql-compiler`
 
@@ -61,6 +62,12 @@ export default async function compile({ parentSpan } = {}): Promise<
 
   const errors = []
   const addError = errors.push.bind(errors)
+
+  // clear our query-result-hashes cache before we start workers
+  new GatsbyCacheLmdbImpl({
+    name: `query-result-hashes`,
+    encoding: `string`,
+  }).init({ reset: true })
 
   const parsedQueries = await parseQueries({
     base: program.directory,
