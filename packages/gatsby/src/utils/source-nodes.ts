@@ -6,6 +6,8 @@ import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
 import { IGatsbyState, IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
+import readline from "readline"
+import events from "events"
 
 const { deleteNode } = actions
 
@@ -106,14 +108,40 @@ export default async ({
   const traceId = isInitialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
-  await apiRunner(`sourceNodes`, {
-    traceId,
-    waitForCascadingActions: true,
-    deferNodeMutation,
-    parentSpan,
-    webhookBody: webhookBody || {},
-    pluginName,
-  })
+
+  if (process.env.GATSBY_CLOUD_DATALAYER) {
+    const got = require(`got`)
+    const rl = readline.createInterface({
+      input: got.stream(process.env.GATSBY_CLOUD_DATALAYER),
+      crlfDelay: Infinity,
+    })
+
+    rl.on(`line`, line => {
+      try {
+        const parsed = JSON.parse(line)
+        if (parsed.type === `CREATE_NODE`) {
+          actions.createNode(parsed.node, parsed.plugin)(store.dispatch)
+        }
+        if (parsed.type === `DELETE_NODE`) {
+          store.dispatch(actions.deleteNode(parsed.node, parsed.plugin))
+        }
+      } catch (err) {
+        console.log({ err })
+        // do nothing
+      }
+    })
+
+    await events.once(rl, `close`)
+  } else {
+    await apiRunner(`sourceNodes`, {
+      traceId,
+      waitForCascadingActions: true,
+      deferNodeMutation,
+      parentSpan,
+      webhookBody: webhookBody || {},
+      pluginName,
+    })
+  }
 
   await getDataStore().ready()
 
