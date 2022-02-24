@@ -25,11 +25,13 @@ jest.mock(`gatsby-core-utils/mutex`, () => {
   }
 })
 
-function parseSrcSet(srcSet: string): Array<{ src: string; viewport: string }> {
+function parseSrcSet(
+  srcSet: string
+): Array<{ src: string; descriptor: string }> {
   return srcSet.split(`,`).map(line => {
-    const [src, viewport] = line.split(` `)
+    const [src, descriptor] = line.split(` `)
 
-    return { src, viewport }
+    return { src, descriptor }
   })
 }
 
@@ -118,7 +120,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[0].viewport).toEqual(`1x`)
+    expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
@@ -126,7 +128,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[1].viewport).toEqual(`2x`)
+    expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
 
     expect(result).toEqual({
       height: 481,
@@ -176,7 +178,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[0].viewport).toEqual(`75w`)
+    expect(parsedSrcSet[0].descriptor).toEqual(`75w`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
@@ -184,7 +186,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[1].viewport).toEqual(`150w`)
+    expect(parsedSrcSet[1].descriptor).toEqual(`150w`)
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
@@ -192,7 +194,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[2].viewport).toEqual(`300w`)
+    expect(parsedSrcSet[2].descriptor).toEqual(`300w`)
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
@@ -200,7 +202,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[3].viewport).toEqual(`600w`)
+    expect(parsedSrcSet[3].descriptor).toEqual(`600w`)
 
     expect(result).toEqual({
       height: 481,
@@ -254,7 +256,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[0].viewport).toEqual(`750w`)
+    expect(parsedSrcSet[0].descriptor).toEqual(`750w`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
@@ -262,7 +264,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[1].viewport).toEqual(`1080w`)
+    expect(parsedSrcSet[1].descriptor).toEqual(`1080w`)
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
@@ -270,7 +272,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[2].viewport).toEqual(`1366w`)
+    expect(parsedSrcSet[2].descriptor).toEqual(`1366w`)
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
@@ -278,7 +280,7 @@ describe(`gatsbyImageData`, () => {
         portraitSource.basename
       }.webp`
     )
-    expect(parsedSrcSet[3].viewport).toEqual(`1920w`)
+    expect(parsedSrcSet[3].descriptor).toEqual(`1920w`)
 
     expect(result).toEqual({
       height: 3206,
@@ -425,19 +427,19 @@ describe(`gatsbyImageData`, () => {
 
     const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
     expect(parsedFixedSrcSet).toHaveLength(2)
-    expect(parsedFixedSrcSet[0].viewport).toEqual(`1x`)
+    expect(parsedFixedSrcSet[0].descriptor).toEqual(`1x`)
     const parsedConstrainedSrcSet = parseSrcSet(
       constrainedResult.images.sources[0].srcSet
     )
     expect(parsedConstrainedSrcSet).toHaveLength(4)
-    expect(parsedConstrainedSrcSet[0].viewport).toEqual(`75w`)
+    expect(parsedConstrainedSrcSet[0].descriptor).toEqual(`75w`)
 
     const parsedFullWidthSrcSet = parseSrcSet(
       fullWidthResult.images.sources[0].srcSet
     )
     expect(parsedFullWidthSrcSet).toHaveLength(2)
-    expect(parsedFullWidthSrcSet[0].viewport).toEqual(`350w`)
-    expect(parsedFullWidthSrcSet[1].viewport).toEqual(`700w`)
+    expect(parsedFullWidthSrcSet[0].descriptor).toEqual(`350w`)
+    expect(parsedFullWidthSrcSet[1].descriptor).toEqual(`700w`)
   })
 
   it(`should generate dominant color placeholder by default`, async () => {
