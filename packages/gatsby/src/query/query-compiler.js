@@ -33,6 +33,7 @@ const { store } = require(`../redux`)
 import { actions } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
+import { RESULT_HASH_CACHE_NAME } from "./query-runner"
 const { default: FileParser } = require(`./file-parser`)
 const {
   graphqlError,
@@ -65,7 +66,7 @@ export default async function compile({ parentSpan } = {}): Promise<
 
   // clear our query-result-hashes cache before we start workers
   new GatsbyCacheLmdbImpl({
-    name: `query-result-hashes`,
+    name: RESULT_HASH_CACHE_NAME,
     encoding: `string`,
   }).init({ reset: true })
 
