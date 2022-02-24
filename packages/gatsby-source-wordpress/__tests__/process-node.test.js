@@ -89,7 +89,7 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
     __typename: `Post`
   }
 
-  const gatsbyImageUrl = `/_gatsby/image/aHR0cDovL3dwZ2F0c2J5LmxvY2FsL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDIyLzAyL3Nhc2hhLXNldC1HVVJ6UXdPOExpMC11bnNwbGFzaC1zY2FsZWQuanBn/dz0yNTYmaD0xOTImZml0PWNvdmVyJmZtPWpwZw==.jpg`
+  const gatsbyImageUrl = `/_gatsby/image`
 
   const nodeString = JSON.stringify(node)
 
@@ -107,13 +107,12 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
     }
   })
 
+  expect(updatedNodeString).toInclude(gatsbyImageUrl)
   expect(updatedNodeString).not.toEqual(nodeString)
 
   const imageMatches = execall(/\/_gatsby\/image/gm, updatedNodeString)
-
   expect(imageMatches.length).toBe(39)
 
-  expect(updatedNodeString.includes(gatsbyImageUrl)).toBeTrue()
 
   const transformedNodeStringNoHtmlImages = await replaceNodeHtmlImages({
     nodeString,
@@ -135,5 +134,5 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
 
   expect(noImageMatches.length).toBe(0)
 
-  expect(transformedNodeStringNoHtmlImages.includes(gatsbyImageUrl)).toBeFalse()
+  expect(transformedNodeStringNoHtmlImages).not.toInclude(gatsbyImageUrl)
 })
