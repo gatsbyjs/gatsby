@@ -97,7 +97,6 @@ function addRemoteFilePolyfillInterface<
       }),
       schema.buildInterfaceType({
         name: `RemoteFile`,
-        interfaces: [`Node`],
         fields: getRemoteFileFields(
           enums,
           store
