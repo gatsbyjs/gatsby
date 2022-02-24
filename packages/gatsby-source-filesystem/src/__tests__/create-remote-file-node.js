@@ -22,7 +22,7 @@ jest.mock(`got`, () => {
   }
 })
 
-jest.mock(`gatsby-core-utils`, () => {
+jest.mock(`../create-remote-file-node`, () => {
   return {
     fetchRemoteFile: jest.fn(),
   }
