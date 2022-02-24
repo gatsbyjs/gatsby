@@ -1,4 +1,5 @@
 import { store } from "../../../redux"
+import { actions } from "../../../redux/actions"
 import { build } from "../../index"
 import {
   DEFAULT_PIXEL_DENSITIES,
@@ -68,6 +69,14 @@ describe(`remote-file`, () => {
       root: process.cwd(),
     }
 
+    store.dispatch(
+      actions.createTypes(`
+      type MyAsset implements Node & RemoteFile {
+        id: ID!
+      }
+    `)
+    )
+
     await build({})
     schema = store.getState().schema
   })
@@ -76,14 +85,17 @@ describe(`remote-file`, () => {
     let resize
     const remoteFile = {
       url: `https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640`,
-      contentType: `image/jpg`,
+      mimeType: `image/jpg`,
       filename: `pauline-loroy-U3aF7hgUSrk-unsplash.jpg`,
       width: 1200,
       height: 800,
+      internal: {
+        contentDigest: `1`,
+      },
     }
 
     beforeAll(() => {
-      const fields = schema.getType(`RemoteFile`).getFields()
+      const fields = schema.getType(`MyAsset`).getFields()
       resize = fields.resize.resolve
     })
 
@@ -97,13 +109,17 @@ describe(`remote-file`, () => {
         {},
         {}
       )
-      const { url, params } = extractImageChunks(data)
+      const { url, params } = extractImageChunks(data.src)
 
       expect(url).toEqual(remoteFile.url)
-      expect(params).toMatchInlineSnapshot(`"w=100&h=100&fm=jpg"`)
-      expect(data).toMatchInlineSnapshot(
-        `"/_gatsby/image/aHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1ODczMDAwMDMzODgtNTkyMDhjYzk2MmNiP2l4bGliPXJiLTEuMi4xJnE9ODAmZm09anBnJmNyb3A9ZW50cm9weSZjcz10aW55c3JnYiZ3PTY0MA==/dz0xMDAmaD0xMDAmZm09anBn"`
-      )
+      expect(params).toMatchInlineSnapshot(`"w=100&h=100&fm=jpg&q=75"`)
+      expect(data).toMatchInlineSnapshot(`
+        Object {
+          "height": 100,
+          "src": "/_gatsby/image/aHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1ODczMDAwMDMzODgtNTkyMDhjYzk2MmNiP2l4bGliPXJiLTEuMi4xJnE9ODAmZm09anBnJmNyb3A9ZW50cm9weSZjcz10aW55c3JnYiZ3PTY0MA==/dz0xMDAmaD0xMDAmZm09anBnJnE9NzU=/pauline-loroy-U3aF7hgUSrk-unsplash.jpg",
+          "width": 100,
+        }
+      `)
     })
   })
 
@@ -111,14 +127,17 @@ describe(`remote-file`, () => {
     let gatsbyImageData
     const remoteFile = {
       url: `https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=640`,
-      contentType: `image/jpg`,
+      mimeType: `image/jpg`,
       filename: `pauline-loroy-U3aF7hgUSrk-unsplash.jpg`,
       width: 1200,
       height: 800,
+      internal: {
+        contentDigest: `1`,
+      },
     }
 
     beforeAll(() => {
-      const fields = schema.getType(`RemoteFile`).getFields()
+      const fields = schema.getType(`MyAsset`).getFields()
       gatsbyImageData = fields.gatsbyImageData.resolve
     })
 
@@ -149,12 +168,12 @@ describe(`remote-file`, () => {
           {
             url: remoteFile.url,
             params: expect.stringContaining(`w=100&h=67`),
-            descriptor: `100w`,
+            descriptor: `1x`,
           },
           {
             url: remoteFile.url,
             params: expect.stringContaining(`w=200&h=133`),
-            descriptor: `200w`,
+            descriptor: `2x`,
           },
         ])
       )
