@@ -20,7 +20,22 @@ The [Gatsby User Collective](https://gatsbyuc.dev/)'s goal is to democratize the
 
 ### Areas for contribution
 
-TODO - Explain which parts of the code base can contribute to and which not
+As the core of Gatsby is a complex piece of software, it requires some onboarding before contributions can be made efficiently. We're clearly defining here in which areas we accept contributions at the moment and in which not. This is especially important for new features as they always have an inherent maintenance cost -- and making changes without the complete context around Gatsby are difficult here. _This list is not set in stone and can change when e.g. a "Core Maintainer (L3)" role is introduced._
+
+We accept any contribution to:
+
+- [`examples`](https://github.com/gatsbyjs/gatsby/tree/master/examples)
+- [`starters`](https://github.com/gatsbyjs/gatsby/tree/master/starters)
+- [`integration-tests`](https://github.com/gatsbyjs/gatsby/tree/master/integration-tests)
+- [`e2e-tests`](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests)
+- [`docs`](https://github.com/gatsbyjs/gatsby/tree/master/docs)
+
+We accept any contribution to [`packages`](https://github.com/gatsbyjs/gatsby/tree/master/packages) except for these items:
+
+- [`gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby)
+- [`gatsby-core-utils/remote-file-utils`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils/src/remote-file-utils)
+
+For the items above we only accept contributions like bug fixes, documentation updates etc. If you want to implement a new feature you have to open a [feature request](#feature-requests) first.
 
 ## Contributor levels
 
@@ -48,7 +63,7 @@ Have you done something (big or small) to contribute to the health, success, or 
 
 #### Privileges
 
-At this time we have no specific priviliges for this role. If you have ideas here please let us know!
+At this time we have no specific privileges for this role. If you have ideas here please let us know!
 
 #### Responsibilities
 
@@ -87,7 +102,7 @@ There is no strict minimum number of contributions needed to reach this level, a
 - New name color on Discord: **Blue**.
 - Invitation to the private `#maintainers` channel on Discord.
 - Ability to moderate Discord to remove spam, harmful speech, etc.
-- Ability to join the `@Mods` role on Discord (optional, opt-in).
+- Ability to join the `@Moderator` role on Discord (optional, opt-in).
 - Ability to review GitHub PRs.
 - Ability to vote on _some_ initiatives (see [Voting](#voting) below).
 
@@ -116,10 +131,10 @@ Team is a special designation for employees of [Gatsby, Inc.](https://www.gatsby
 - All privileges of the [Maintainer role](#TODO), plus...
 - `@Team` role on [Discord](https://gatsby.dev/discord)
 - New name color on Discord: **Purple**.
-- Invitation to the private #core channel on Discord.
 - `Team` on GitHub.
 - Ability to merge all GitHub PRs.
 - Ability to vote on all initiatives (see [Voting](#voting) below).
+- Publish access to all npm packages.
 
 #### Responsibilities
 
@@ -128,6 +143,8 @@ Team is a special designation for employees of [Gatsby, Inc.](https://www.gatsby
 - Maintaining and improving overall architecture.
 - Tracking and ensuring progress of open pull requests.
 - Reviewing and merging larger, non-trivial PRs.
+- Define project direction and planning.
+- Ability to decide on moderation decisions.
 
 #### Nomination
 
@@ -141,7 +158,22 @@ If that person wishes to continue working on Gatsby after leaving, they may requ
 
 ### Admin
 
-TODO
+Admin is an additional privilege inside the **Team** and is mainly an administrative one.
+
+#### Privileges
+
+- All privileges of the [Team](#TODO), plus...
+- `@Admin` role on [Discord](https://gatsby.dev/discord)
+- Administration privileges on GitHub.
+- Administration privileges on Discord (optional).
+
+#### Responsibilities
+
+- All of the responsibilities of Team
+
+#### Nomination
+
+n/a
 
 ## Decision-making process
 
@@ -151,17 +183,84 @@ If you’d like to learn more about how we approach the relationship between our
 
 ### Feature requests
 
-TODO
+Please open a [feature request on GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) to voice your ideas. The **Team** will review incoming requests and give a first assessment.
 
 ### RFCs
 
-TODO
+Please see the dedicated [RFC Process document](/contributing/rfc-process/) for more details.
+
+## Voting
+
+Certain project decisions (like membership nominations) require a vote. Below are the changes that require a vote, and the rules that govern that vote.
+
+One **Admin** may initiate a vote for any unlisted project decision. This person then will be the leading Admin for this vote and handle all necessary actions. General rules will apply, along with any addition rules provided at the admin's discretion. If this unlisted project decision is expected to be repeated in the future, voting rules should be agreed on and then added to this document.
+
+### General Voting Rules
+
+- Members may abstain from any vote.
+- Members who do not vote within 3 days will automatically abstain.
+- Admins may reduce the 3 day automatic abstain for urgent decisions.
+- Admins reserve the right to veto approval with a publicly disclosed reason.
+
+### Voting: Maintainer (L2) Nomination
+
+This process kicks off once a valid nomination has been made.
+
+**Who can vote:** All Maintainers (L2 and above).
+
+1. A vote thread should be created in Discord #maintainers channel (the private channel for all maintainers).
+2. A vote thread can be created by any maintainer, team member, or Admin.
+3. Once a vote thread is created, existing Maintainers can discuss the nomination in private.
+4. The normal 3 day voting & discussion window begins with the thread creation.
+5. Voting can be done in the thread (visible to other voters) or in a private DM to the leading Admin.
+6. Once the vote is complete, the thread is deleted.
+7. The vote must receive an overwhelming majority (70%+) to pass.
+8. **If the vote passes:** The nominee will be made a Maintainer and all privileges will be made available to them.
+9. **If the vote fails:** The leading Admin is responsible for informing the nominee with constructive, actionable feedback. (Note: This is not required if the nominee was otherwise not made aware of their nomination).
 
 ## Moderation
 
 Outlined below is the process for Code of Conduct violation reviews.
 
-TODO
+### Reporting
+
+Anyone may report a violation. Violations can be reported in the following ways:
+
+- In private, via email to [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com).
+- In private, via direct message to a team member on Discord.
+- In public, via a GitHub comment (mentioning `@gatsbyjs/team`).
+- In public, via the project Discord server.
+
+### Who gets involved?
+
+Each report will be assigned reviewers. These will initially be all team members.
+
+In the event of any conflict of interest - ie. team members who are personally connected to a situation, they must immediately recuse themselves.
+
+At request of the reporter and if deemed appropriate by the reviewers, another neutral third-party may be involved in the review and decision process.
+
+### Review
+
+If a report doesn’t contain enough information, the reviewers will strive to obtain all relevant data before acting.
+
+The reviewers will then review the incident and determine, to the best of their ability:
+
+- What happened.
+- Whether this event constitutes a Code of Conduct violation.
+- Who, if anyone, was involved in the violation.
+- Whether this is an ongoing situation.
+
+The reviewers should aim to have a resolution agreed very rapidly; if not agreed within a week, they will inform the parties of the planned date.
+
+### Resolution
+
+Responses will be determined by the reviewers on the basis of the information gathered and of the potential consequences. It may include:
+
+- taking no further action
+- issuing a reprimand (private or public)
+- asking for an apology (private or public)
+- permanent ban from the GitHub org and Discord server
+- revoked contributor status
 
 ---
 
