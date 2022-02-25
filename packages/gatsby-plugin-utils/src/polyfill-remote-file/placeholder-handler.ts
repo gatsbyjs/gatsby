@@ -18,10 +18,11 @@ interface IPlaceholderGenerationArgs {
   format: string
   width: number
   height: number
+  id: string
   contentDigest: string
 }
 
-const QUEUE_CONCURRENCY = 5
+const QUEUE_CONCURRENCY = 10
 
 let tmpDir: string
 
@@ -102,6 +103,7 @@ export async function generatePlaceholder(
     case PlaceholderType.BLURRED: {
       return {
         fallback: await placeholderToBase64({
+          id: source.id,
           placeholderUrl: source.placeholderUrl,
           originalUrl: source.url,
           format: getImageFormatFromMimeType(source.mimeType),
@@ -114,6 +116,7 @@ export async function generatePlaceholder(
     case PlaceholderType.DOMINANT_COLOR: {
       return {
         backgroundColor: await placeholderToDominantColor({
+          id: source.id,
           placeholderUrl: source.placeholderUrl,
           originalUrl: source.url,
           format: getImageFormatFromMimeType(source.mimeType),
@@ -131,16 +134,17 @@ async function placeholderToBase64({
   originalUrl,
   width,
   height,
+  id,
   contentDigest,
 }: IPlaceholderGenerationArgs): Promise<string> {
   const cache = getCache()
-  const cacheKey = `image-cdn:${contentDigest}:base64`
+  const cacheKey = `image-cdn:${id}-${contentDigest}:base64`
   let cachedValue = await cache.get(cacheKey)
   if (cachedValue) {
     return cachedValue
   }
 
-  const mutex = createMutex(getMutexKey(contentDigest))
+  const mutex = createMutex(getMutexKey(`${id}-${contentDigest}`))
   await mutex.acquire()
 
   try {
@@ -198,16 +202,17 @@ async function placeholderToDominantColor({
   originalUrl,
   width,
   height,
+  id,
   contentDigest,
 }: IPlaceholderGenerationArgs): Promise<string> {
   const cache = getCache()
-  const cacheKey = `image-cdn:${contentDigest}:dominantColor`
+  const cacheKey = `image-cdn:${id}-${contentDigest}:dominantColor`
   let cachedValue = await cache.get(cacheKey)
   if (cachedValue) {
     return cachedValue
   }
 
-  const mutex = createMutex(getMutexKey(contentDigest))
+  const mutex = createMutex(getMutexKey(`${id}-${contentDigest}`))
   await mutex.acquire()
 
   try {
