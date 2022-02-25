@@ -98,7 +98,7 @@ export function dispatchLocalImageServiceJob(
   publicUrl.unshift(`public`)
 
   // We need to use import-from to remove circular dependency
-  const actions = importFrom(
+  const { actions } = importFrom(
     global.__GATSBY?.root ?? process.cwd(),
     `gatsby/dist/redux/actions`
   )

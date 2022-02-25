@@ -172,8 +172,7 @@ describe(`resizeResolver`, () => {
     )
 
     const [, , , , args] = result?.src.split(`/`) ?? []
-    const [transformArgs] = args.split(`.`)
-    const transformAsArgs = Buffer.from(transformArgs, `base64`).toString()
+    const transformAsArgs = Buffer.from(args, `base64`).toString()
     expect(transformAsArgs).toContain(`fit=crop`)
     expect(transformAsArgs).toContain(`crop=top,left`)
   })
@@ -200,7 +199,7 @@ describe(`resizeResolver`, () => {
         store
       )
 
-      const [, , , url, args] = result?.src.split(`/`) ?? []
+      const [, , , url, args, filename] = result?.src.split(`/`) ?? []
       const [transformArgs] = args.split(`.`)
       expect(Buffer.from(url, `base64`).toString()).toBe(source.url)
       expect(Buffer.from(transformArgs, `base64`).toString()).toBe(
@@ -208,6 +207,7 @@ describe(`resizeResolver`, () => {
       )
       expect(result?.width).toBe(expected.widthOnly[0])
       expect(result?.height).toBe(expected.widthOnly[1])
+      expect(filename).toBe(source.filename)
     })
 
     it(`should resize an image when height is given`, async () => {
@@ -287,7 +287,9 @@ describe(`resizeResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
-    importFrom.mockImplementation(() => actions)
+    importFrom.mockImplementation(() => {
+      return { actions }
+    })
 
     resizeResolver(portraitSource, { width: 100 }, store)
     expect(actions.createJobV2).toHaveBeenCalledWith(
