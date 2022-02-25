@@ -84,7 +84,7 @@ interface RemoteFile {
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
   ): RemoteFileResize
-  gatsbyImageData(
+  gatsbyImage(
     \\"\\"\\"
     
     The layout for the image.
@@ -467,7 +467,7 @@ interface RemoteFile {
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
   ): RemoteFileResize
-  gatsbyImageData(
+  gatsbyImage(
     \\"\\"\\"
     
     The layout for the image.
@@ -860,7 +860,7 @@ interface RemoteFile {
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
   ): RemoteFileResize
-  gatsbyImageData(
+  gatsbyImage(
     \\"\\"\\"
     
     The layout for the image.
