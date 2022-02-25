@@ -168,7 +168,7 @@ async function fetchFile({
     await fs.ensureDir(path.join(fileDirectory, digest))
 
     const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
-    const filename = createFilePath(path.join(fileDirectory, digest), name, ext)
+    let filename = createFilePath(path.join(fileDirectory, digest), name, ext)
 
     // See if there's response headers for this url
     // from a previous request.
@@ -193,6 +193,8 @@ async function fetchFile({
         const filetype = await fileType.fromFile(tmpFilename)
         if (filetype) {
           ext = `.${filetype.ext}`
+
+          filename += ext
         }
       }
 
