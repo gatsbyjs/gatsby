@@ -72,9 +72,6 @@ export const pluginOptionsSchema = ({ Joi }) =>
 You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).`
         )
         .default(false),
-      disableImageCdn: Joi.boolean()
-        .description(`Disables the built-in Gatsby Cloud CDN for images.`)
-        .default(false),
       localeFilter: Joi.func()
         .description(
           `Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
