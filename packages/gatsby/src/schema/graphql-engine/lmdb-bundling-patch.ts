@@ -1,4 +1,5 @@
 /* eslint-disable @babel/no-invalid-this */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { createRequireFromPath } from "gatsby-core-utils"
 import path from "path"
 
@@ -18,8 +19,9 @@ import path from "path"
 //  - https://github.com/DoctorEvidence/lmdb-js/blob/544b3fda402f24a70a0e946921e4c9134c5adf85/open.js#L77
 // Reliance on `import.meta.url` + usage of `.replace` is what seems to cause problems currently.
 
-export default function (source: string): string {
-  let lmdbBinaryLocation
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function (this: any, source: string): string {
+  let lmdbBinaryLocation: string | undefined
   try {
     const lmdbRoot =
       this?._module.resourceResolveData?.descriptionFileRoot ||
