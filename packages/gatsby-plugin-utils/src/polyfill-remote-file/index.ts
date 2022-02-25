@@ -36,7 +36,7 @@ export function getRemoteFileFields(
     height: `Int`,
     publicUrl: generatePublicUrlFieldConfig(store),
     resize: generateResizeFieldConfig(enums, store),
-    gatsbyImageData: generateGatsbyImageDataFieldConfig(enums, store),
+    gatsbyImage: generateGatsbyImageDataFieldConfig(enums, store),
   }
 }
 
