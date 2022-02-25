@@ -531,4 +531,46 @@ describe(`data resolution`, () => {
       expect(wpMediaItem).toBeNull()
     }
   })
+
+  it(`Resolves Gatsby Image CDN data`, async () => {
+    const {
+      data: { allWpPost },
+    } = await fetchGraphql({
+      url,
+      query: /* GraphQL */ `
+        query {
+          allWpPost {
+            nodes {
+              featuredImage {
+                node {
+                  mediaItemUrl
+                  resize(width: 100, height: 100, quality: 100) {
+                    width
+                    height
+                    src
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+    })
+
+    allWpPost.nodes.forEach(node => {
+      if (!node.featuredImage?.node) {
+        return
+      }
+
+      const { resize } = node.featuredImage.node
+      const [, , , sourceUrl64, args64, filename] = resize.src.split(`/`)
+
+      const sourceUrl = Buffer.from(sourceUrl64, `base64`).toString(`ascii`)
+      const args = Buffer.from(args64, `base64`).toString(`ascii`)
+
+      expect(node.featuredImage.node.mediaItemUrl).toEqual(sourceUrl)
+      expect(node.featuredImage.node.mediaItemUrl).toContain(filename)
+      expect(args).toContain(`w=100&h=100&fm=jpg&q=100`)
+    })
+  })
 })
