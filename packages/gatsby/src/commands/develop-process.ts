@@ -71,7 +71,8 @@ onExit(() => {
   })
 })
 
-process.on(`message`, msg => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+process.on(`message`, (msg: any) => {
   if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
     process.exit(msg.action.payload)
   }
