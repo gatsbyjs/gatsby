@@ -54,17 +54,17 @@ export const pageQuery = graphql`
           width
           src
         }
-        fixed: gatsbyImageData(
+        fixed: gatsbyImage(
           layout: FIXED
           width: 100
           placeholder: DOMINANT_COLOR
         )
-        constrained: gatsbyImageData(
+        constrained: gatsbyImage(
           layout: CONSTRAINED
           width: 300
           placeholder: BLURRED
         )
-        full: gatsbyImageData(layout: FULL_WIDTH, width: 500, placeholder: NONE)
+        full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
       }
     }
   }

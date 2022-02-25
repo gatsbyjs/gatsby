@@ -75,7 +75,9 @@ describe(`remote-file`, () => {
       .should("have.prop", "tagName", "IMG")
     cy.get(".constrained [data-placeholder-image]")
       .first()
-      .should("contain.prop", "src", "data:image/jpg;base64")
+      .should($el => {
+        expect($el.src).to.contain("data:image/jpg;base64")
+      })
     cy.get(".full [data-placeholder-image]").first().should("be.empty")
   })
 })
