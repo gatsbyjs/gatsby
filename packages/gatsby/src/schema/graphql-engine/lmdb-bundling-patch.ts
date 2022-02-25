@@ -1,4 +1,6 @@
+/* eslint-disable @babel/no-invalid-this */
 import { createRequireFromPath } from "gatsby-core-utils"
+import path from "path"
 
 // This is hacky webpack loader that does string replacements to
 // allow lmdb@2 to be bundled by webpack for engines.
@@ -19,13 +21,13 @@ import { createRequireFromPath } from "gatsby-core-utils"
 export default function (source: string): string {
   let lmdbBinaryLocation
   try {
-    const lmdbRequire = createRequireFromPath(require.resolve(`lmdb`))
+    const lmdbRoot =
+      this?._module.resourceResolveData?.descriptionFileRoot ||
+      path.dirname(this.resourcePath).replace(`/dist`, ``)
+    const lmdbRequire = createRequireFromPath(lmdbRoot)
     const nodeGypBuild = lmdbRequire(`node-gyp-build`)
-    const path = require(`path`)
 
-    lmdbBinaryLocation = nodeGypBuild.path(
-      path.dirname(require.resolve(`lmdb`)).replace(`/dist`, ``)
-    )
+    lmdbBinaryLocation = nodeGypBuild.path(lmdbRoot)
   } catch (e) {
     return source
   }

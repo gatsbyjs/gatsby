@@ -71,7 +71,7 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
-          test: require.resolve(`lmdb`),
+          test: /node_modules[/\\]lmdb[/\\]/,
           parser: { amd: false },
           use: [
             {
