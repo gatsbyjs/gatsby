@@ -330,7 +330,7 @@ export async function initialize({
     `${program.directory}/gatsby-node.js`,
     `${program.directory}/gatsby-config.ts`,
     `${program.directory}/gatsby-node.ts`,
-  ].filter(Boolean) as Array<string>
+  ] as Array<string>
 
   const state = store.getState()
 

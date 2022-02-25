@@ -253,6 +253,7 @@ exports.createPages = () => {}
 
 Gatsby natively supports JavaScript and TypeScript, you can change files from `.js`/`.jsx` to `.ts`/ `tsx` at any point to start adding types and gaining the benefits of a type system. But you'll need to do a bit more to be able use Typescipt in `gatsby-*` files:
 
+- Run `gatsby clean` to remove any old artifacts
 - Convert your `.js`/`.jsx` files to `.ts/.tsx`
 - Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as `devDependencies`
 - Add a `tsconfig.json` file using `npx tsc init` or use the one from [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json)

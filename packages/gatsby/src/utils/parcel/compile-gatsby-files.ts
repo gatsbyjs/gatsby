@@ -48,7 +48,17 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
     await emptyDir(distDir)
     await parcel.run()
   } catch (error) {
-    handleErrors(error.diagnostics)
+    if (error.diagnostics) {
+      handleErrors(error.diagnostics)
+    } else {
+      reporter.panic({
+        id: `11903`,
+        error,
+        context: {
+          siteRoot,
+        },
+      })
+    }
   }
 }
 
