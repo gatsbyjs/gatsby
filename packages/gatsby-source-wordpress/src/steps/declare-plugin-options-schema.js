@@ -740,7 +740,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         placeholderSizeName: Joi.string()
           .default(`gatsby-image-placeholder`)
           .description(
-            `This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. If you create an image size in WP and name it "gatsby-image-placeholder" that size will be used automatically.`
+            `This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. To use, create a new image size in WP and name it "gatsby-image-placeholder" (or the name that you pass to this option) and that new size will be used automatically for placeholder images in the Gatsby build.
           ),
         createFileNodes: Joi.boolean()
           .default(true)
