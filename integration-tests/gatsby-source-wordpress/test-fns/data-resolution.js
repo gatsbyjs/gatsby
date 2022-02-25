@@ -563,14 +563,12 @@ describe(`data resolution`, () => {
       }
 
       const { resize } = node.featuredImage.node
-      const [, , , sourceUrl64, args64, filename] = resize.src.split(`/`)
+      const [, , , sourceUrl64, _args64, filename] = resize.src.split(`/`)
 
       const sourceUrl = Buffer.from(sourceUrl64, `base64`).toString(`ascii`)
-      const args = Buffer.from(args64, `base64`).toString(`ascii`)
 
       expect(node.featuredImage.node.mediaItemUrl).toEqual(sourceUrl)
       expect(node.featuredImage.node.mediaItemUrl).toContain(filename)
-      expect(args).toContain(`w=100&h=100&fm=jpg&q=100`)
     })
   })
 })
