@@ -138,7 +138,7 @@ describe(`remote-file`, () => {
 
     beforeAll(() => {
       const fields = schema.getType(`MyAsset`).getFields()
-      gatsbyImageData = fields.gatsbyImageData.resolve
+      gatsbyImageData = fields.gatsbyImage.resolve
     })
 
     it(`should get the correct fixed sizes`, async () => {
