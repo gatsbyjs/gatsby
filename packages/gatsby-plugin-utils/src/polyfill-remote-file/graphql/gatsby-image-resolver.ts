@@ -93,7 +93,9 @@ export async function gatsbyImageResolver(
   }
 
   if (!args.width && !args.height) {
-    throw new Error(`The "layout" argument is required for "${source.url}"`)
+    throw new Error(`
+      Either the "width" or "height" argument is required for "${source.url}"
+    `)
   }
 
   if (!args.formats) {
