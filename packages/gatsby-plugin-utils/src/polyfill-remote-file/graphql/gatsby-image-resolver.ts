@@ -72,7 +72,7 @@ const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 const DEFAULT_QUALITY = 75
 
-export async function gatsbyImageDataResolver(
+export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
   store: Store
@@ -233,7 +233,7 @@ export async function gatsbyImageDataResolver(
   }
 }
 
-export function generateGatsbyImageDataFieldConfig(
+export function generateGatsbyImageFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
   store: Store
 ): IGraphQLFieldConfigDefinition<

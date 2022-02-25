@@ -3,7 +3,6 @@ import type { Store } from "gatsby"
 import importFrom from "import-from"
 import { publicUrlResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
-// import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
 jest.mock(`import-from`)
@@ -56,7 +55,11 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
-    importFrom.mockImplementation(() => actions)
+    importFrom.mockImplementation(() => {
+      return {
+        actions,
+      }
+    })
 
     const source = {
       id: `1`,
@@ -94,7 +97,9 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
-    importFrom.mockImplementation(() => actions)
+    importFrom.mockImplementation(() => {
+      return { actions }
+    })
 
     const source = {
       id: `1`,

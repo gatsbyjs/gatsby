@@ -13,9 +13,9 @@ import {
   resizeResolver,
 } from "./graphql/resize-resolver"
 import {
-  generateGatsbyImageDataFieldConfig,
-  gatsbyImageDataResolver,
-} from "./graphql/gatsby-image-data-resolver"
+  generateGatsbyImageFieldConfig,
+  gatsbyImageResolver,
+} from "./graphql/gatsby-image-resolver"
 
 import type { Store } from "gatsby"
 import type { InterfaceTypeComposerAsObjectDefinition } from "graphql-compose"
@@ -36,7 +36,7 @@ export function getRemoteFileFields(
     height: `Int`,
     publicUrl: generatePublicUrlFieldConfig(store),
     resize: generateResizeFieldConfig(enums, store),
-    gatsbyImage: generateGatsbyImageDataFieldConfig(enums, store),
+    gatsbyImage: generateGatsbyImageFieldConfig(enums, store),
   }
 }
 
@@ -150,7 +150,7 @@ export { polyfillImageServiceDevRoutes, addImageRoutes } from "./http-routes"
 export {
   getRemoteFileEnums,
   addRemoteFilePolyfillInterface,
-  gatsbyImageDataResolver,
+  gatsbyImageResolver,
   resizeResolver,
   publicUrlResolver,
   isImageCdnEnabled,

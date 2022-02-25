@@ -2,7 +2,7 @@ import path from "path"
 import { ensureDir, remove } from "fs-extra"
 import importFrom from "import-from"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
-import { gatsbyImageDataResolver } from "../index"
+import { gatsbyImageResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
 import type { Store } from "gatsby"
 import { PlaceholderType } from "../placeholder-handler"
@@ -78,7 +78,7 @@ describe(`gatsbyImageData`, () => {
 
   it(`should return null when source is not an image`, async () => {
     expect(
-      await gatsbyImageDataResolver(
+      await gatsbyImageResolver(
         {
           id: `1`,
           url: `https://origin.com/my-pdf.pdf`,
@@ -101,7 +101,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should return proper image props for fixed layout`, async () => {
-    const result = await gatsbyImageDataResolver(
+    const result = await gatsbyImageResolver(
       portraitSource,
       {
         layout: `fixed`,
@@ -159,7 +159,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should return proper image props for constrained layout`, async () => {
-    const result = await gatsbyImageDataResolver(
+    const result = await gatsbyImageResolver(
       portraitSource,
       {
         layout: `constrained`,
@@ -233,7 +233,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should return proper image props for fullWidth layout`, async () => {
-    const result = await gatsbyImageDataResolver(
+    const result = await gatsbyImageResolver(
       {
         ...portraitSource,
         width: 2000,
@@ -311,7 +311,7 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should return proper srcSet from outputPixelDensities`, async () => {
-    const fixedResult = await gatsbyImageDataResolver(
+    const fixedResult = await gatsbyImageResolver(
       portraitSource,
       {
         layout: `fixed`,
@@ -321,7 +321,7 @@ describe(`gatsbyImageData`, () => {
       },
       store
     )
-    const constrainedResult = await gatsbyImageDataResolver(
+    const constrainedResult = await gatsbyImageResolver(
       portraitSource,
       {
         layout: `constrained`,
@@ -331,7 +331,7 @@ describe(`gatsbyImageData`, () => {
       },
       store
     )
-    const fullWidthResult = await gatsbyImageDataResolver(
+    const fullWidthResult = await gatsbyImageResolver(
       {
         ...portraitSource,
         width: 2000,
@@ -394,7 +394,7 @@ describe(`gatsbyImageData`, () => {
       width: 2000,
       height: 3206,
     }
-    const fixedResult = await gatsbyImageDataResolver(
+    const fixedResult = await gatsbyImageResolver(
       biggerPortraitSource,
       {
         layout: `fixed`,
@@ -404,7 +404,7 @@ describe(`gatsbyImageData`, () => {
       },
       store
     )
-    const constrainedResult = await gatsbyImageDataResolver(
+    const constrainedResult = await gatsbyImageResolver(
       biggerPortraitSource,
       {
         layout: `constrained`,
@@ -414,7 +414,7 @@ describe(`gatsbyImageData`, () => {
       },
       store
     )
-    const fullWidthResult = await gatsbyImageDataResolver(
+    const fullWidthResult = await gatsbyImageResolver(
       biggerPortraitSource,
       {
         layout: `fullWidth`,
@@ -444,9 +444,9 @@ describe(`gatsbyImageData`, () => {
 
   it(`should generate dominant color placeholder by default`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
-      path.join(__dirname, `..`, `__fixtures__`, `dog-portrait.jpg`)
+      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
-    const fixedResult = await gatsbyImageDataResolver(
+    const fixedResult = await gatsbyImageResolver(
       portraitSource,
       {
         layout: `fixed`,
@@ -461,9 +461,9 @@ describe(`gatsbyImageData`, () => {
 
   it(`should generate base64 placeholder`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
-      path.join(__dirname, `..`, `__fixtures__`, `dog-portrait.jpg`)
+      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
-    const fixedResult = await gatsbyImageDataResolver(
+    const fixedResult = await gatsbyImageResolver(
       portraitSource,
       {
         layout: `fixed`,
