@@ -64,3 +64,5 @@ The following configuration will give you a good start point in line with Gatsby
   "error_page": "404.html"
 }
 ```
+
+For redirects, you'll probably want to [use files with meta tags](/plugins/gatsby-plugin-meta-redirect/).
