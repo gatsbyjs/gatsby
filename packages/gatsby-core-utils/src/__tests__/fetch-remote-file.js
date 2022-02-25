@@ -130,6 +130,19 @@ const server = setupServer(
       ctx.body(content)
     )
   }),
+  rest.get(`http://external.com/dog`, async (req, res, ctx) => {
+    const { content, contentLength } = await getFileContent(
+      path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
+      req
+    )
+
+    return res(
+      ctx.set(`Content-Type`, `image/jpg`),
+      ctx.set(`Content-Length`, contentLength),
+      ctx.status(200),
+      ctx.body(content)
+    )
+  }),
   rest.get(
     `http://external.com/invalid:dog*name.jpg`,
     async (req, res, ctx) => {
@@ -291,6 +304,19 @@ describe(`fetch-remote-file`, () => {
   it(`downloads and create a jpg file`, async () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/dog.jpg`,
+      cache,
+    })
+
+    expect(path.basename(filePath)).toBe(`dog.jpg`)
+    expect(getFileSize(filePath)).resolves.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
+    expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`downloads and create a jpg file for unknown extension`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog`,
       cache,
     })
 
