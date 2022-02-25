@@ -238,7 +238,7 @@ export function generateGatsbyImageFieldConfig(
   store: Store
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode | IRemoteImageNode,
-  ReturnType<typeof gatsbyImageDataResolver>,
+  ReturnType<typeof gatsbyImageResolver>,
   IGatsbyImageDataArgs
 > {
   return {
@@ -339,8 +339,8 @@ export function generateGatsbyImageFieldConfig(
         defaultValue: DEFAULT_QUALITY,
       },
     },
-    resolve(source, args): ReturnType<typeof gatsbyImageDataResolver> {
-      return gatsbyImageDataResolver(source, args, store)
+    resolve(source, args): ReturnType<typeof gatsbyImageResolver> {
+      return gatsbyImageResolver(source, args, store)
     },
   }
 }
