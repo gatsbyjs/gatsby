@@ -12,6 +12,9 @@ const IndexPage = () => (
         <Link to="/gatsby-plugin-image">/gatsby-plugin-image</Link>
       </li>
       <li>
+        <Link to="/gatsby-image-cdn">/gatsby-image-cdn</Link>
+      </li>
+      <li>
         <Link to="/download-local">/download-local</Link>
       </li>
     </ul>
