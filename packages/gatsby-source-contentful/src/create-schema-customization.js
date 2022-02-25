@@ -96,12 +96,12 @@ export async function createSchemaCustomization(
     }),
   ]
 
-  if (pluginConfig.get(`disableImageCdn`)) {
-    const { getGatsbyImageFieldConfig } = await import(
-      `gatsby-plugin-image/graphql-utils`
-    )
+  const { getGatsbyImageFieldConfig } = await import(
+    `gatsby-plugin-image/graphql-utils`
+  )
 
-    contentfulTypes.push(
+  contentfulTypes.push(
+    addRemoteFilePolyfillInterface(
       schema.buildObjectType({
         name: `ContentfulAsset`,
         fields: {
@@ -124,8 +124,8 @@ export async function createSchemaCustomization(
                 type: `Int`,
                 defaultValue: 0,
                 description: stripIndent`
-               Desired corner radius in pixels. Results in an image with rounded corners.
-               Pass \`-1\` for a full circle/ellipse.`,
+                 Desired corner radius in pixels. Results in an image with rounded corners.
+                 Pass \`-1\` for a full circle/ellipse.`,
               },
               quality: {
                 type: `Int`,
@@ -147,38 +147,13 @@ export async function createSchemaCustomization(
             : {}),
         },
         interfaces: [`ContentfulReference`, `Node`],
-      })
+      }),
+      {
+        schema,
+        store,
+      }
     )
-  } else {
-    contentfulTypes.push(
-      addRemoteFilePolyfillInterface(
-        schema.buildObjectType({
-          name: `ContentfulAsset`,
-          fields: {
-            contentful_id: { type: `String!` },
-            id: { type: `ID!` },
-            ...(pluginConfig.get(`downloadLocal`)
-              ? {
-                  localFile: {
-                    type: `File`,
-                    extensions: {
-                      link: {
-                        from: `fields.localFile`,
-                      },
-                    },
-                  },
-                }
-              : {}),
-          },
-          interfaces: [`ContentfulReference`, `Node`],
-        }),
-        {
-          schema,
-          store,
-        }
-      )
-    )
-  }
+  )
 
   // Create types for each content type
   contentTypeItems.forEach(contentTypeItem =>
