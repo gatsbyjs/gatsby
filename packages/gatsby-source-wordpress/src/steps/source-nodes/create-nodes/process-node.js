@@ -454,15 +454,15 @@ export const getImgSrcRemoteFileMatchesFromNodeString = nodeString =>
     return !isInJSON
   })
 
-export const getImgTagMatchesWithUrl = ({ nodeString, wpUrl }) =>
+export const getImgTagMatches = ({ nodeString }) =>
   execall(
     /<img([\w\W]+?)[\/]?>/gim,
     nodeString
       // we don't want to match images inside pre
-      .replace(/<pre([\w\W]+?)[\/]?>.*(<\/pre>)/gim, ``)
+      .replace(/<pre([\w\W]+?)[\/]?>(?:(?!<\/pre>).)+(<\/pre>)/gim, ``)
       // and code tags, so temporarily remove those tags and everything inside them
-      .replace(/<code([\w\W]+?)[\/]?>.*(<\/code>)/gim, ``)
-  ).filter(filterMatches(wpUrl))
+      .replace(/<code([\w\W]+?)[\/]?>(?:(?!<\/code>).)+(<\/code>)/gim, ``)
+  )
 
 export const replaceNodeHtmlImages = async ({
   nodeString,
@@ -478,7 +478,7 @@ export const replaceNodeHtmlImages = async ({
 
   const imageUrlMatches = getImgSrcRemoteFileMatchesFromNodeString(nodeString)
 
-  const imgTagMatches = getImgTagMatchesWithUrl({ nodeString, wpUrl })
+  const imgTagMatches = getImgTagMatches({ nodeString })
 
   if (imageUrlMatches.length && imgTagMatches.length) {
     const cheerioImages = getCheerioElementsFromMatches({
