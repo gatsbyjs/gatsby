@@ -245,6 +245,7 @@ export function generateGatsbyImageFieldConfig(
 > {
   return {
     type: `JSON`,
+    description: `Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.`,
     args: {
       layout: {
         type: enums.layout.getTypeName(),
