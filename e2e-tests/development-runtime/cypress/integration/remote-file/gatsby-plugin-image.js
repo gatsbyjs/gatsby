@@ -2,14 +2,17 @@ before(() => {
   cy.exec(`npm run reset`)
 })
 
-after(() => {
-  cy.exec(`npm run reset`)
-})
-
 describe(`remote-file`, () => {
-  it(`should render correct dimensions`, () => {
+  beforeEach(() => {
     cy.visit(`/remote-file/`).waitForRouteChange()
 
+    // trigger intersection observer
+    cy.scrollTo("top")
+    cy.wait(100)
+    cy.scrollTo("bottom")
+  })
+
+  it(`should render correct dimensions`, () => {
     cy.get('[data-testid="public"]').then($urls => {
       const urls = Array.from($urls.map((_, $url) => $url.getAttribute("href")))
 
@@ -65,19 +68,20 @@ describe(`remote-file`, () => {
   })
 
   it(`should render a placeholder`, () => {
-    cy.visit(`/remote-file/`).waitForRouteChange()
-
     cy.get(".fixed [data-placeholder-image]")
       .first()
       .should("have.css", "background-color", "rgb(232, 184, 8)")
     cy.get(".constrained [data-placeholder-image]")
       .first()
-      .should("have.prop", "tagName", "IMG")
-    cy.get(".constrained [data-placeholder-image]")
+      .should($el => {
+        expect($el.prop("tagName")).to.be.equal("IMG")
+        expect($el.prop("src")).to.contain("data:image/jpg;base64")
+      })
+    cy.get(".full [data-placeholder-image]")
       .first()
       .should($el => {
-        expect($el.src).to.contain("data:image/jpg;base64")
+        expect($el.prop("tagName")).to.be.equal("DIV")
+        expect($el).to.be.empty
       })
-    cy.get(".full [data-placeholder-image]").first().should("be.empty")
   })
 })

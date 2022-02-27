@@ -71,7 +71,7 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
-          test: /node_modules[/\\]lmdb[/\\]/,
+          test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,
           parser: { amd: false },
           use: [
             {
@@ -108,7 +108,7 @@ export async function createGraphqlEngineBundle(
         },
         {
           // For node binary relocations, include ".node" files as well here
-          test: /\.(m?js|node)$/,
+          test: /\.([cm]?js|node)$/,
           // it is recommended for Node builds to turn off AMD support
           parser: { amd: false },
           use: {

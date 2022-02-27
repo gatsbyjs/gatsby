@@ -1,6 +1,7 @@
 /* eslint-disable @babel/no-invalid-this */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { createRequireFromPath } from "gatsby-core-utils"
+import { createRequireFromPath } from "gatsby-core-utils/create-require-from-path"
+import { slash } from "gatsby-core-utils/path"
 import path from "path"
 
 // This is hacky webpack loader that does string replacements to
@@ -29,11 +30,15 @@ export default function (this: any, source: string): string {
     const lmdbRequire = createRequireFromPath(lmdbRoot)
     const nodeGypBuild = lmdbRequire(`node-gyp-build`)
 
-    lmdbBinaryLocation = nodeGypBuild.path(lmdbRoot)
+    lmdbBinaryLocation = slash(
+      path.relative(
+        path.dirname(this.resourcePath),
+        nodeGypBuild.path(lmdbRoot)
+      )
+    )
   } catch (e) {
     return source
   }
-
   return source
     .replace(
       `require$1('node-gyp-build')(dirName)`,

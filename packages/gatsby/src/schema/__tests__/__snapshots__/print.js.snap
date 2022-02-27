@@ -84,6 +84,10 @@ interface RemoteFile {
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
   ): RemoteFileResize
+
+  \\"\\"\\"
+  Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.
+  \\"\\"\\"
   gatsbyImage(
     \\"\\"\\"
     
@@ -467,6 +471,10 @@ interface RemoteFile {
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
   ): RemoteFileResize
+
+  \\"\\"\\"
+  Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.
+  \\"\\"\\"
   gatsbyImage(
     \\"\\"\\"
     
@@ -860,6 +868,10 @@ interface RemoteFile {
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
   ): RemoteFileResize
+
+  \\"\\"\\"
+  Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.
+  \\"\\"\\"
   gatsbyImage(
     \\"\\"\\"
     
