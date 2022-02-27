@@ -25,7 +25,7 @@ export interface IGraphQLFieldConfigDefinition<
   TArgs = Record<string, unknown>
 > {
   type: string
-  description: string
+  description?: string
   args?: {
     [Property in keyof TArgs]:
       | GraphqlType<TArgs[Property]>
