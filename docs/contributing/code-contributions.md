@@ -23,7 +23,6 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 - Set up repo and install dependencies: `yarn run bootstrap`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
-
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
   - To watch just one package such as `gatsby`, run `yarn run watch --scope=gatsby`.
 
@@ -32,35 +31,32 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 ### Testing out changes in an example project
 
 - Install [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli):
-
   - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -v`
   - If not, install globally: `yarn global add gatsby-dev-cli`
   - Run `gatsby-dev --set-path-to-repo /path/to/my/forked/version/gatsby` to point `gatsby-dev-cli` to your fork
-
 - Run `yarn install` in each of the sites you're testing.
-
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](https://www.npmjs.com/package/gatsby-dev-cli) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
-
   - To copy files from just one package such as `gatsby`, run `gatsby-dev --packages gatsby`
-
   - Note: If you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
-
 - If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory, revert any changes to `package.json` and lockfiles, and reinstall modules with `npm install` or `yarn install` . Alternatively, you can run:
 
-```shell
-git checkout package.json; yarn --force
-```
+  ```shell
+  git checkout package.json; yarn --force
+  ```
 
 ### Add tests
 
 - Add tests and code for your changes.
-- Once you're done, make sure all tests still pass: `yarn test`.
-
+  - Begin by adding unit tests with Jest.
+  - If you want to test out this feature in a more real-world application you can also consider adding [integration tests](https://github.com/gatsbyjs/gatsby/tree/master/integration-tests) and [end-to-end tests](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests).
+  - If you're unsure on how to add tests or which types of test, ask in a comment in the pull request
+- Once you're done, make sure all unit tests still pass: `yarn test`.
   - To run tests for a single package you can run: `yarn jest <package-name>`.
   - To run a single test file you can run: `yarn jest <file-path>`.
+  - Once you push your changes to GitHub, the CI will run tests in a controlled environment and might uncover failures on e.g. different type of machines (Linux vs. Windows)
 
 If you're adding e2e tests and want to run them against local changes:
 
@@ -75,6 +71,10 @@ At any point during the contributing process the Gatsby team would love to help!
 - When you went through the initial setup some time ago and now want to contribute something new, you should make sure to [sync your fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork) with the latest changes from the primary branch on [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby). Otherwise, you might run into issues where files are not found as they were renamed, moved, or deleted.
 - After syncing your fork, run `yarn run bootstrap` to compile all packages. When files or tests depend on the build output (files in `/dist` directories) they might fail otherwise.
 - Make sure to run `yarn run watch` on the packages' source code you're changing.
+
+## How to open a pull request
+
+If you've made all your changes, added tests, and want to contribute your changes to Gatsby, you can head over to the [How to open a pull request documentation](/contributing/how-to-open-a-pull-request) to learn more.
 
 ## Other contributions
 
