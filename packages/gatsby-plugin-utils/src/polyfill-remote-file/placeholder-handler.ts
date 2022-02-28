@@ -163,6 +163,7 @@ async function placeholderToBase64({
       url = generatePlaceholderUrl({
         url: placeholderUrl,
         width: 20,
+        quality: 25,
         originalWidth: width,
         originalHeight: height,
       })
@@ -227,6 +228,7 @@ async function placeholderToDominantColor({
       url = generatePlaceholderUrl({
         url: placeholderUrl,
         width: 200,
+        quality: 25,
         originalWidth: width,
         originalHeight: height,
       })
@@ -264,11 +266,13 @@ async function placeholderToDominantColor({
 function generatePlaceholderUrl({
   url,
   width,
+  quality,
   originalWidth,
   originalHeight,
 }: {
   url: string
   width: number
+  quality: number
   originalWidth: number
   originalHeight: number
 }): string {
@@ -277,4 +281,5 @@ function generatePlaceholderUrl({
   return url
     .replace(`%width%`, String(width))
     .replace(`%height%`, Math.floor(width / aspectRatio).toString())
+    .replace(`%quality%`, String(quality))
 }
