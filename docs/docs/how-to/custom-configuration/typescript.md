@@ -85,6 +85,8 @@ export const query = graphql`
 
 ### `gatsby-browser.tsx` / `gatsby-ssr.tsx`
 
+> Support added in `gatsby@4.8.0` 
+
 You can also write `gatsby-browser` and `gatsby-ssr` in TypeScript. You have the types `GatsbyBrowser` and `GatsbySSR` available to type your API functions. Here are two examples:
 
 ```tsx:title=gatsby-browser.tsx
@@ -155,6 +157,8 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 
 ### `gatsby-config.ts`
 
+> Support added in `gatsby@4.9.0`
+
 You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config` file.
 
 ```ts:title=gatsby-config.ts
@@ -171,6 +175,8 @@ export default config
 ```
 
 ### `gatsby-node.ts`
+
+> Support added in `gatsby@4.9.0`
 
 You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node` file.
 
@@ -210,6 +216,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 ```
 
 ### Local Plugins
+
+> Support added in `gatsby@4.9.0`
 
 All the files mentioned above can also be written and used inside a [local plugin](/docs/creating-a-local-plugin/).
 
