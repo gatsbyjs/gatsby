@@ -122,6 +122,8 @@ To be nominated, a nominee is expected to already be performing some of the resp
 
 In some rare cases, this role may be revoked by an **Admin**. However, under normal circumstances this role is granted for as long as the contributor wishes to engage with the project.
 
+## Other roles
+
 ### Team
 
 Team is a special designation for employees of [Gatsby, Inc.](https://www.gatsbyjs.com/about/) that lives outside of our Governance model. The team role was designed to help those of us working full-time on Gatsby to work productively without "skipping the line" and circumventing our governance model entirely.
@@ -177,7 +179,7 @@ n/a
 
 ## Decision-making process
 
-Decisions about Gatsby open source software are ultimately made by Gatsby, Inc. leadership and the Team (L3). We believe that founding organizations built around open source software have a responsibility to build strong businesses to sustain those open source tools and the community that depends on them, which will sometimes require us to reserve high-demand tools and features for Gatsby commercial products. That said, we take our responsibility to the community very seriously and carefully consider community needs and concerns when determining our product roadmaps.
+Decisions about Gatsby open source software are ultimately made by Gatsby, Inc. leadership and the Team. We believe that founding organizations built around open source software have a responsibility to build strong businesses to sustain those open source tools and the community that depends on them, which will sometimes require us to reserve high-demand tools and features for Gatsby commercial products. That said, we take our responsibility to the community very seriously and carefully consider community needs and concerns when determining our product roadmaps.
 
 If you’d like to learn more about how we approach the relationship between our commercial and open source work, check out this blog post: [Founding Organizations: Creating a Company That Sustains Our Open-Source Community](/blog/2020-02-11-founding-organizations/).
 
