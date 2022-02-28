@@ -31,7 +31,7 @@ For any kind of change to files in the Gatsby repo, you can follow the below ste
 
 To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), fork the repo and install parts of it to run on your local machine.
 
-- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-instructions).
+- [Fork and clone the Gatsby repo](/contributing/code-contributions#setting-up-your-local-dev-environment/).
 - Follow the instructions for the part of the project you want to change. (See specific sections below.)
 - [Create a branch in Git](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) to isolate your changes:
   ```shell
@@ -69,7 +69,7 @@ Further instructions can be found on the [docs contributions](/contributing/docs
 
 ### Code changes
 
-Instructions for making changes to the Gatsby source code, tests, internals, APIs, packages, and more can be found in the contributing docs on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/).
+Instructions for making changes to the Gatsby source code, tests, internals, APIs, packages, and more can be found in the contributing docs on [setting up your local dev environment](/contributing/code-contributions#setting-up-your-local-dev-environment/).
 
 ## Preparing a PR for review
 
