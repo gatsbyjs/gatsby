@@ -38,6 +38,13 @@ export function dispatchLocalFileServiceJob(
     `gatsby/dist/redux/actions`
   ) as { actions: { createJobV2: (...args: any) => void } }
 
+  console.log({
+    output: path.join(
+      global.__GATSBY?.root || process.cwd(),
+      ...publicUrl.filter(Boolean)
+    ),
+    filename,
+  })
   // @ts-ignore - we dont have correct typings for this
   actions.createJobV2(
     {
@@ -99,6 +106,7 @@ export function dispatchLocalImageServiceJob(
     global.__GATSBY?.root ?? process.cwd(),
     `gatsby/dist/redux/actions`
   ) as { actions: { createJobV2: (...args: any) => void } }
+
   // @ts-ignore - importFrom doesn't work with types
   actions.createJobV2(
     {
