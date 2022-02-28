@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.1/packages/gatsby-core-utils) (2022-02-25)
+
+#### Bug Fixes
+
+- fix urls without extension fix [#34930](https://github.com/gatsbyjs/gatsby/issues/34930) fix [#34931](https://github.com/gatsbyjs/gatsby/issues/34931) ([b33fb35](https://github.com/gatsbyjs/gatsby/commit/b33fb3580e3dbde4f5179ab18540eb5f3ad7acb7))
+
 ## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.0/packages/gatsby-core-utils) (2022-02-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
