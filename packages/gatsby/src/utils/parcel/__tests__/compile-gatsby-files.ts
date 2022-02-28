@@ -13,6 +13,7 @@ import { readFile, remove, pathExists } from "fs-extra"
 const dir = {
   js: `${__dirname}/fixtures/js`,
   ts: `${__dirname}/fixtures/ts`,
+  tsOnlyInLocal: `${__dirname}/fixtures/ts-only-in-local-plugin`,
 }
 
 jest.mock(`@parcel/core`, () => {
@@ -60,6 +61,7 @@ describe(`gatsby file compilation`, () => {
   describe(`compileGatsbyFiles`, () => {
     describe(`js files are not touched`, () => {
       beforeAll(async () => {
+        process.chdir(dir.js)
         await remove(`${dir.js}/.cache`)
         await compileGatsbyFiles(dir.js)
       })
@@ -81,6 +83,7 @@ describe(`gatsby file compilation`, () => {
 
     describe(`ts files are compiled`, () => {
       beforeAll(async () => {
+        process.chdir(dir.ts)
         await remove(`${dir.ts}/.cache`)
         await compileGatsbyFiles(dir.ts)
       })
@@ -103,6 +106,32 @@ describe(`gatsby file compilation`, () => {
         )
 
         expect(compiledGatsbyNode).toContain(`I am working!`)
+      })
+    })
+
+    describe(`ts only in local plugin files are compiled and outputted where expected`, () => {
+      beforeAll(async () => {
+        process.chdir(dir.tsOnlyInLocal)
+        await remove(`${dir.tsOnlyInLocal}/.cache`)
+        await compileGatsbyFiles(dir.tsOnlyInLocal)
+      })
+
+      it(`should compile gatsby-config.ts`, async () => {
+        const compiledGatsbyConfig = await readFile(
+          `${dir.tsOnlyInLocal}/.cache/compiled/plugins/gatsby-plugin-local/gatsby-config.js`,
+          `utf-8`
+        )
+
+        expect(compiledGatsbyConfig).toContain(`gatsby-config is working`)
+      })
+
+      it(`should compile gatsby-node.ts`, async () => {
+        const compiledGatsbyNode = await readFile(
+          `${dir.tsOnlyInLocal}/.cache/compiled/plugins/gatsby-plugin-local/gatsby-node.js`,
+          `utf-8`
+        )
+
+        expect(compiledGatsbyNode).toContain(`gatsby-node is working`)
       })
     })
   })
