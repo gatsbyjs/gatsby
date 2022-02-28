@@ -667,8 +667,44 @@ const errors = {
     level: Level.WARNING,
     category: ErrorCategory.USER,
   },
-
   /** End Node Manifest warnings */
+  // Parcel Compilation Errors
+  "11901": {
+    text: (context): string =>
+      stripIndent(`
+    Failed to compile Gatsby files ${
+      context.origin ? `(${context.origin})` : ``
+    }:
+    
+    ${context.generalMessage}. ${context.specificMessage ?? ``}
+    ${
+      context.hints
+        ? context.hints.map(
+            h => `
+    Hints:
+    - ${h}\n`
+          )
+        : ``
+    }
+    ${context.filePath ? `File path: ${context.filePath}` : ``}`),
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
+  "11902": {
+    text: (context): string =>
+      `We encountered an error while trying to compile your site's ${context.configName}. Please fix the error and try again.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
+  "11903": {
+    text: (context): string =>
+      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
 }
 
 export type ErrorId = string | keyof typeof errors

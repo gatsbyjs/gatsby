@@ -16,6 +16,7 @@ import {
   incompatibleGatsbyCloudPlugin,
   GATSBY_CLOUD_PLUGIN_NAME,
 } from "./utils/handle-gatsby-cloud"
+import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files"
 
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
 
@@ -116,6 +117,7 @@ export function loadInternalPlugins(
     pluginOptions: {
       plugins: [],
     },
+    ...getResolvedFieldsForPlugin(rootDir, `default-site-plugin`),
   })
 
   const program = store.getState().program
