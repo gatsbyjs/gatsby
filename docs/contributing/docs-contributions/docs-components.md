@@ -3,15 +3,15 @@ title: Docs Components
 tableOfContentsDepth: 2
 ---
 
-The Gatsby docs site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
+The Gatsby docs site has a handful of components that have been developed to facilitate writing new content for the docs. There are also components that help organize and lay out content in various pages across the website.
 
-This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-blog-components.md) to see to how each component can be used, because they are all embedded here!
+This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-components.md) to see to how each component can be used, because they are all embedded here!
 
 Information about authoring in Markdown on the site is also listed.
 
 ## Globally available components
 
-A variety of components have been written to help with formatting code and content across the blog and the docs and don't need to be imported.
+A variety of components have been written to help with formatting code and content across the docs and don't need to be imported.
 
 ---
 
@@ -97,14 +97,13 @@ The `<Pullquote />` component is used to call out a quote. It applies borders an
 The Pull Quote component takes two optional props, and uses the children it wraps to populate its inner content:
 
 - `citation` - the reference of the person or entity that made the quoted statement
-- `narrow` - styles the pull quote by removing the left and right negative margins, keeping it inside the parent container. This prop is not used in the blog to help the quote stand out, but could be used in docs where it's necessary to keep content from overlapping with other sections of the layout, such as the Table of Contents.
+- `narrow` - styles the pull quote by removing the left and right negative margins, keeping it inside the parent container. This prop could be used in docs where it's necessary to keep content from overlapping with other sections of the layout, such as the Table of Contents.
 
 It is used like this:
 
-```markdown:title=blog/new-announcement.md
+```markdown:title=docs/some-doc.md
 ---
-title: Big News!
-author: Jay Gatsby
+title: Doc Name
 ---
 
 <!-- highlight-start -->
@@ -203,13 +202,13 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
 
 ### Frontmatter
 
-[Frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) is a set of key-value pairs in your Markdown and MDX files that defines the metadata for a page. While authoring new docs and blog posts for the Gatsby site, it may be helpful to understand what frontmatter is available to you.
+[Frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) is a set of key-value pairs in your Markdown and MDX files that defines the metadata for a page. While authoring new docs for the Gatsby site, it may be helpful to understand what frontmatter is available to you.
 
 #### General
 
 - `title` (string)
 
-  The title of the doc or blog post. Gatsby renders the value in `og:title`, `<title>` and `<h1>`.
+  The title of the doc. Gatsby renders the value in `og:title`, `<title>` and `<h1>`.
 
 - `excerpt` (string)
 

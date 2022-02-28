@@ -2,17 +2,11 @@
 title: Code Contributions
 ---
 
-The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
+The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! You get the opportunity to participate in a community while feeling a wizard doing it. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
 
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on [Lerna](https://lerna.js.org/) and [Yarn](https://yarnpkg.com/) to configure the repository for both active development and documentation infrastructure changes.
 
 Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/). While npm is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
-
-```json:title=package.json
-{
-  "workspaces": ["workspace-a", "workspace-b"]
-}
-```
 
 ## Setting up your local dev environment
 
@@ -33,9 +27,7 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
   - To watch just one package, run `yarn run watch --scope=gatsby`.
 
-### Docs only changes
-
-See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-instructions) for docs-only changes.
+> **Note:** Optionally you can run `git clone --depth=1 https://github.com/<your-username>/gatsby.git` to do a shallow clone (smaller download size) rather than a deep clone, however this sometimes leads to problems when you want to reference older upstream branches.
 
 ### Testing out changes in example project
 
@@ -51,6 +43,8 @@ See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-i
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](https://www.npmjs.com/package/gatsby-dev-cli) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
+
+  - To copy files from just one package such as `gatsby`, run `gatsby-dev --packages gatsby`
 
   - Note: If you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 
