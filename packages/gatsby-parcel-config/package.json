@@ -28,7 +28,8 @@
     "@parcel/transformer-js": "^2.3.1",
     "@parcel/transformer-json": "^2.3.1",
     "@parcel/transformer-raw": "^2.3.1",
-    "@parcel/transformer-react-refresh-wrap": "^2.3.1"
+    "@parcel/transformer-react-refresh-wrap": "^2.3.1",
+    "parcel-namer-relative-to-cwd": "0.0.0-alpha.0"
   },
   "parcelDependencies": {
     "@parcel/optimizer-data-url": "^2.3.1",
@@ -44,7 +45,8 @@
     "@parcel/transformer-webmanifest": "^2.3.1",
     "@parcel/transformer-worklet": "^2.3.1",
     "@parcel/transformer-xml": "^2.3.1",
-    "@parcel/transformer-yaml": "^2.3.1"
+    "@parcel/transformer-yaml": "^2.3.1",
+    "parcel-namer-relative-to-cwd": "0.0.0-alpha.0"
   },
   "peerDependencies": {
     "@parcel/core": "^2.3.1"

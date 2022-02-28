@@ -17830,6 +17830,14 @@ param-case@^3.0.3:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
+parcel-namer-relative-to-cwd@0.0.0-alpha.0:
+  version "0.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/parcel-namer-relative-to-cwd/-/parcel-namer-relative-to-cwd-0.0.0-alpha.0.tgz#3db0ea2c9adca3acc1c1eaff2a5c3e70ffde1446"
+  integrity sha512-a/JYhgNjqaNgwUA10s9Elc7KuiUAKGp7RcPG7COB7XOPdvF6YyfdG55pf0hK8bTFszQXA4vxSrQRbnK4PFiekg==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    "@parcel/plugin" "2.3.1"
+
 parent-module@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.0.tgz#df250bdc5391f4a085fb589dad761f5ad6b865b5"
