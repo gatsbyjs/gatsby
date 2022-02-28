@@ -6,7 +6,7 @@ title: Gatsby's Governance Model
 
 Gatsby is an [open source](https://opensource.org/) project supported by [Gatsby, Inc.](https://www.gatsbyjs.com/about/) employees and an active community of contributors.
 
-Our objectives for this document are to provide current information about the management and maintenance of Gatsby open source software (OSS) and present a variety of resources and avenues of communication between Gatsby’s leadership and community. It also includes a detailed description of contributor levels, code review process, pull request merge process and moderation. Furthermore, it outlines how you can get involved with Gatsby OSS. Establishing this governance models will help support active and productive communication/collaboration within the Gatsby community and between the community and the company.
+Our objectives for this document are to provide current information about the management and maintenance of Gatsby open source software (OSS) and present a variety of resources and avenues of communication between Gatsby’s leadership and community. It also includes a detailed description of contributor levels, accepted contribution types, the voting process, and moderation. Furthermore, it outlines how you can get involved with Gatsby OSS. Establishing this governance models will help support active and productive communication/collaboration within the Gatsby community and between the community and the company.
 
 **All community members must follow the [Code of Conduct (CoC)](/contributing/code-of-conduct/).** Consequences for CoC violations are detailed in [moderation](#moderation).
 
@@ -20,9 +20,9 @@ The [Gatsby User Collective](https://gatsbyuc.dev/)'s goal is to democratize the
 
 ### Areas for contribution
 
-As the core of Gatsby is a complex piece of software, it requires some onboarding before contributions can be made efficiently. We're clearly defining here in which areas we accept contributions at the moment and in which not. This is especially important for new features as they always have an inherent maintenance cost -- and making changes without the complete context around Gatsby are difficult here. _This list is not set in stone and can change when e.g. a "Core Maintainer (L3)" role is introduced._
+As the core of Gatsby is a complex piece of software, it requires some onboarding before contributions can be made efficiently. We're clearly defining here in which areas we accept contributions at the moment and in which not. This is especially important for new features as they always have an inherent maintenance cost -- and making changes without the complete context around Gatsby is difficult. _This list is not set in stone and can change when e.g. a "Core Maintainer (L3)" role is introduced._
 
-We accept any contribution to:
+We accept all types of contributions to:
 
 - [`examples`](https://github.com/gatsbyjs/gatsby/tree/master/examples)
 - [`starters`](https://github.com/gatsbyjs/gatsby/tree/master/starters)
@@ -30,12 +30,12 @@ We accept any contribution to:
 - [`e2e-tests`](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests)
 - [`docs`](https://github.com/gatsbyjs/gatsby/tree/master/docs)
 
-We accept any contribution to [`packages`](https://github.com/gatsbyjs/gatsby/tree/master/packages) except for these items:
+We accept all types of contributions to [`packages`](https://github.com/gatsbyjs/gatsby/tree/master/packages) with these exceptions:
 
 - [`gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby)
 - [`gatsby-core-utils/remote-file-utils`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils/src/remote-file-utils)
 
-For the items above we only accept contributions like bug fixes, documentation updates etc. If you want to implement a new feature you have to open a [feature request](#feature-requests) first.
+For the areas above we accept a limited set of contribution types, such as bug fixes and documentation updates. To implement new features in these areas you must open a [feature request](#feature-requests) first.
 
 ## Contributor levels
 
@@ -193,7 +193,7 @@ Please see the dedicated [RFC Process document](/contributing/rfc-process/) for 
 
 Certain project decisions (like membership nominations) require a vote. Below are the changes that require a vote, and the rules that govern that vote.
 
-One **Admin** may initiate a vote for any unlisted project decision. This person then will be the leading Admin for this vote and handle all necessary actions. General rules will apply, along with any addition rules provided at the admin's discretion. If this unlisted project decision is expected to be repeated in the future, voting rules should be agreed on and then added to this document.
+One **Admin** may initiate a vote for any unlisted project decision. This person then will be the leading Admin for this vote and handle all necessary actions. General rules will apply, along with any additional rules provided at the admin's discretion. If this unlisted project decision is expected to be repeated in the future, voting rules should be agreed on and then added to this document.
 
 ### General Voting Rules
 
