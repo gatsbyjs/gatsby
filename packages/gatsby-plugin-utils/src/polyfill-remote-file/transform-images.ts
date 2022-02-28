@@ -50,11 +50,11 @@ export async function transformImage({
     directory: cache.directory,
     url: url,
     name: basename,
-    ext: `.${ext}`,
+    ext,
     cacheKey: contentDigest,
   })
 
-  const outputPath = `${outputDir}/${filename}`
+  const outputPath = path.join(outputDir, filename)
   await mkdirp(path.dirname(outputPath))
 
   // if the queue already contains the url, we're going to add it to queue so, we can batch the transforms together.

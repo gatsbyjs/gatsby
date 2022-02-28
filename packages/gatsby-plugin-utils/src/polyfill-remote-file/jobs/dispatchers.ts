@@ -18,9 +18,10 @@ export function shouldDispatch(): boolean {
 export function dispatchLocalFileServiceJob(
   {
     url,
+    filename,
     mimeType,
     contentDigest,
-  }: { url: string; mimeType: string; contentDigest: string },
+  }: { url: string; filename: string; mimeType: string; contentDigest: string },
   store: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
@@ -32,9 +33,7 @@ export function dispatchLocalFileServiceJob(
     },
     false
   ).split(`/`)
-  const extension = getFileExtensionFromMimeType(mimeType)
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const filename = publicUrl.pop()
+
   publicUrl.unshift(`public`)
 
   const { actions } = importFrom(
@@ -42,6 +41,13 @@ export function dispatchLocalFileServiceJob(
     `gatsby/dist/redux/actions`
   ) as { actions: { createJobV2: (...args: any) => void } }
 
+  console.log({
+    output: path.join(
+      global.__GATSBY?.root || process.cwd(),
+      ...publicUrl.filter(Boolean)
+    ),
+    filename,
+  })
   // @ts-ignore - we dont have correct typings for this
   actions.createJobV2(
     {
@@ -50,11 +56,11 @@ export function dispatchLocalFileServiceJob(
       // we know it's an image so we just mimic an image
       outputDir: path.join(
         global.__GATSBY?.root || process.cwd(),
-        publicUrl.filter(Boolean).join(`/`)
+        ...publicUrl.filter(Boolean)
       ),
       args: {
         url,
-        filename: `${filename}.${extension}`,
+        filename,
         contentDigest,
       },
     },
@@ -102,6 +108,7 @@ export function dispatchLocalImageServiceJob(
     global.__GATSBY?.root ?? process.cwd(),
     `gatsby/dist/redux/actions`
   ) as { actions: { createJobV2: (...args: any) => void } }
+
   // @ts-ignore - importFrom doesn't work with types
   actions.createJobV2(
     {
@@ -109,7 +116,7 @@ export function dispatchLocalImageServiceJob(
       inputPaths: [],
       outputDir: path.join(
         global.__GATSBY?.root || process.cwd(),
-        publicUrl.filter(Boolean).join(`/`),
+        ...publicUrl.filter(Boolean),
         generateImageArgs({ width, height, format, quality })
       ),
       args: {

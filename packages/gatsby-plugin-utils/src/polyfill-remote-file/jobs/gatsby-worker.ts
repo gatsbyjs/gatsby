@@ -1,3 +1,4 @@
+import path from "path"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { cpuCoreCount } from "gatsby-core-utils/cpu-core-count"
 import Queue from "fastq"
@@ -30,11 +31,15 @@ export async function FILE_CDN({
   outputDir: string
   args: { url: string; filename: string; contentDigest: string }
 }): Promise<void> {
+  const ext = path.extname(filename)
+
   await fetchRemoteFile({
     directory: outputDir,
     url: url,
-    name: filename,
+    name: path.basename(filename, ext),
+    ext,
     cacheKey: contentDigest,
+    excludeDigest: true,
   })
 }
 

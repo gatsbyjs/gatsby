@@ -14,6 +14,7 @@ export function publicUrlResolver(
     dispatchLocalFileServiceJob(
       {
         url: source.url,
+        filename: source.filename,
         mimeType: source.mimeType,
         contentDigest: source.internal.contentDigest,
       },
