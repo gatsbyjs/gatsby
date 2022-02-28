@@ -202,7 +202,7 @@ async function fetchFile({
 
       await fs.move(tmpFilename, filename, { overwrite: true })
 
-      const slashedDirectory = slash(fileDirectory)
+      const slashedDirectory = slash(finalDirectory)
       await setInFlightObject(url, BUILD_ID, {
         cacheKey,
         extension: ext,
