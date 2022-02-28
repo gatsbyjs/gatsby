@@ -1,6 +1,7 @@
 {
   "name": "gatsby-theme-minimal",
   "version": "1.0.0",
+  "main": "index.js",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
   "peerDependencies": {
