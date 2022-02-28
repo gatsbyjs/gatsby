@@ -85,7 +85,7 @@ export const query = graphql`
 
 ### `gatsby-browser.tsx` / `gatsby-ssr.tsx`
 
-> Support added in `gatsby@4.8.0` 
+> Support added in `gatsby@4.8.0`
 
 You can also write `gatsby-browser` and `gatsby-ssr` in TypeScript. You have the types `GatsbyBrowser` and `GatsbySSR` available to type your API functions. Here are two examples:
 
