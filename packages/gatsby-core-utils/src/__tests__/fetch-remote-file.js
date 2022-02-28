@@ -13,6 +13,8 @@ import * as storage from "../utils/get-storage"
 jest.spyOn(storage, `getDatabaseDir`)
 jest.spyOn(got, `stream`)
 jest.spyOn(fs, `move`)
+jest.spyOn(fs, `copy`)
+jest.spyOn(fs, `pathExists`)
 
 const gotStream = got.stream
 const fsMove = fs.move
@@ -272,6 +274,8 @@ describe(`fetch-remote-file`, () => {
     }
     gotStream.mockClear()
     fsMove.mockClear()
+    fs.pathExists.mockClear()
+    fs.copy.mockClear()
     urlCount.clear()
 
     await fs.remove(cachePath)
@@ -450,6 +454,67 @@ Fetch details:
 }
 ---"
 `)
+  })
+
+  it(`should not re-download file if cache is set`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      cache,
+      cacheKey: `1`,
+    })
+    const cachedFilePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      cache,
+      cacheKey: `1`,
+    })
+
+    expect(filePath).toBe(cachedFilePath)
+    expect(gotStream).toBeCalledTimes(1)
+    expect(fs.pathExists).toBeCalledTimes(1)
+    expect(fs.copy).not.toBeCalled()
+  })
+
+  it(`should not re-download and use same path if ouputDir is not inside public folder`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      directory: cache.directory,
+      cacheKey: `2`,
+    })
+    const cachedFilePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      directory: path.join(cache.directory, `diff`),
+      cacheKey: `2`,
+    })
+
+    expect(filePath).toBe(cachedFilePath)
+    expect(gotStream).toBeCalledTimes(1)
+    expect(fs.pathExists).toBeCalledTimes(1)
+    expect(fs.copy).not.toBeCalled()
+  })
+
+  it(`should not re-download but copy file to public folder`, async () => {
+    const currentGlobal = global.__GATSBY
+    global.__GATSBY = {
+      root: cache.directory,
+    }
+    await fs.ensureDir(path.join(cache.directory, `public`))
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      directory: cache.directory,
+      cacheKey: `3`,
+    })
+    const cachedFilePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      directory: path.join(cache.directory, `public`),
+      cacheKey: `3`,
+    })
+
+    expect(filePath).not.toBe(cachedFilePath)
+    expect(cachedFilePath).toStartWith(path.join(cache.directory, `public`))
+    expect(gotStream).toBeCalledTimes(1)
+    expect(fs.pathExists).toBeCalledTimes(1)
+    expect(fs.copy).toBeCalled()
+    global.__GATSBY = currentGlobal
   })
 
   describe(`retries the download`, () => {
