@@ -12,30 +12,30 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 
 ### Install Node and Yarn
 
-- Ensure you have the latest **LTS** version of Node installed (`>= 14.15.0`). `node --version`
+- Ensure you have the latest **LTS** version of Node installed (`>= 14.15.0`) by executing `node --version`
 - [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
-- Ensure you have the version 1 of Yarn installed (`^1`). `yarn --version`. The Gatsby monorepo wasn't upgraded to Yarn 3 yet.
+- Ensure you have the version 1 of Yarn installed (`^1`) by executing `yarn --version`. The Gatsby monorepo does not yet support later versions of Yarn.
 
 ### Fork, clone, and branch the repository
 
 - [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [official `gatsbyjs/gatsby` repository](https://github.com/gatsbyjs/gatsby).
-- Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
+- Clone your fork: `git clone https://github.com/<your-username>/gatsby.git`
 - Set up repo and install dependencies: `yarn run bootstrap`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
 
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
-  - To watch just one package, run `yarn run watch --scope=gatsby`.
+  - To watch just one package such as `gatsby`, run `yarn run watch --scope=gatsby`.
 
 > **Note:** Optionally you can run `git clone --depth=1 https://github.com/<your-username>/gatsby.git` to do a shallow clone (smaller download size) rather than a deep clone, however this sometimes leads to problems when you want to reference older upstream branches.
 
-### Testing out changes in example project
+### Testing out changes in an example project
 
 - Install [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli):
 
   - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -v`
   - If not, install globally: `yarn global add gatsby-dev-cli`
-  - Set up the `--set-path-to-repo` option to point to your fork
+  - Run `gatsby-dev --set-path-to-repo /path/to/my/forked/version/gatsby` to point `gatsby-dev-cli` to your fork
 
 - Run `yarn install` in each of the sites you're testing.
 
@@ -48,7 +48,7 @@ Yarn is a package manager for your code, similar to [npm](https://www.npmjs.com/
 
   - Note: If you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
 
-- If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory or run:
+- If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory, revert any changes to `package.json` and lockfiles, and reinstall modules with `npm install` or `yarn install` . Alternatively, you can run:
 
 ```shell
 git checkout package.json; yarn --force

@@ -17,8 +17,8 @@ If you’ve contributed in other ways, such as giving talks about Gatsby, teachi
 ## Details about free swag
 
 - We will send one item from our [swag store](https://store.gatsbyjs.org/) per swag tier
-- Tier 1 swag includes most items 10 dollar and under
-- Tier 2 swag includes most items 31 dollar and under
+- Tier 1 swag includes most items valued 10 dollars or less
+- Tier 2 swag includes most items valued 31 dollars or less
 - Not all items are eligible due to high cost to create the swag. We’ll make it clear which items are not eligible
 - There’s a limit of one free swag item per swag tier
 - Shipping is free worldwide
