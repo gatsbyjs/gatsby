@@ -1,6 +1,5 @@
 import path from "path"
 import importFrom from "import-from"
-import { getFileExtensionFromMimeType } from "../utils/mime-type-helpers"
 import { getGatsbyVersion } from "../utils/get-gatsby-version"
 import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
 import type { Store } from "gatsby"
