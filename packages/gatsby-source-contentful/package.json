@@ -46,7 +46,7 @@
     "gatsby": "^4.0.0-next",
     "gatsby-plugin-image": "^2.0.0-next",
     "gatsby-plugin-sharp": "^4.0.0-next",
-    "sharp": "^0.29.3"
+    "sharp": "^0.30.1"
   },
   "repository": {
     "type": "git",

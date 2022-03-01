@@ -48,7 +48,16 @@ describe(`gatsby-node`, () => {
     }),
     touchNode: jest.fn(),
   }
-  const schema = { buildObjectType: jest.fn(), buildInterfaceType: jest.fn() }
+  const schema = {
+    buildObjectType: jest.fn(() => {
+      return {
+        config: {
+          interfaces: [],
+        },
+      }
+    }),
+    buildInterfaceType: jest.fn(),
+  }
   const store = {
     getState: jest.fn(() => {
       return { program: { directory: process.cwd() }, status: {} }
