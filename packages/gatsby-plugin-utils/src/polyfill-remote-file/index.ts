@@ -16,7 +16,7 @@ import {
   gatsbyImageResolver,
 } from "./graphql/gatsby-image-resolver"
 
-import type { Store, Actions } from "gatsby"
+import type { Actions } from "gatsby"
 import type { InterfaceTypeComposerAsObjectDefinition } from "graphql-compose"
 import type { SchemaBuilder, IRemoteFileNode } from "./types"
 
@@ -45,11 +45,9 @@ function addRemoteFilePolyfillInterface<
   type: T,
   {
     schema,
-    store,
     actions,
   }: {
     schema: SchemaBuilder
-    store: Store
     actions: Actions
   }
 ): T {

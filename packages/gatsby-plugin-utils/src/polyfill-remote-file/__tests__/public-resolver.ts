@@ -1,12 +1,12 @@
 import path from "path"
-import type { Store } from "gatsby"
+import type { Actions } from "gatsby"
 import { publicUrlResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
 
 describe(`publicResolver`, () => {
-  const store = {} as Store
+  const actions = {} as Actions
 
   it(`should return a file based url`, () => {
     const source = {
@@ -23,7 +23,7 @@ describe(`publicResolver`, () => {
       },
     }
 
-    expect(publicUrlResolver(source, store)).toEqual(
+    expect(publicUrlResolver(source, actions)).toEqual(
       `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}/file.pdf`
     )
   })
@@ -43,7 +43,7 @@ describe(`publicResolver`, () => {
       },
     }
 
-    expect(publicUrlResolver(source, store)).toEqual(
+    expect(publicUrlResolver(source, actions)).toEqual(
       `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}/image.jpg`
     )
   })

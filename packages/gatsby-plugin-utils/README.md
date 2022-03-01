@@ -95,7 +95,7 @@ const {
   polyfillImageServiceDevRoutes,
 } = require(`gatsby-plugin-utils/pollyfill-remote-file`)
 
-exports.createSchemaCustomization ({ actions, schema, store }) => {
+exports.createSchemaCustomization ({ actions, schema }) => {
   actions.createTypes([
     addRemoteFilePolyfillInterface(
       schema.buildObjectType({
@@ -107,7 +107,7 @@ exports.createSchemaCustomization ({ actions, schema, store }) => {
       }),
       {
         schema,
-        store,
+        actions,
       }
     )
   ]);
