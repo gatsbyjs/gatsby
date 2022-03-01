@@ -76,7 +76,7 @@ jest.mock(`../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.j
   return {
     __esModule: true,
     ...jest.requireActual(`../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`),
-    default: jest.fn(() => require(`./process-node.fixture`).referencedMediaItems)
+    default: jest.fn(() => require(`./fixtures/media`).referencedMediaItems)
   }
 })
 
