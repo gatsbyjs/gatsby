@@ -1,73 +1,84 @@
-import { graphql } from "gatsby"
-import React from "react"
+describe(`remote-file`, () => {
+  beforeEach(() => {
+    cy.visit(`/remote-file/`).waitForRouteChange()
 
-import { GatsbyImage } from "gatsby-plugin-image"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+    // trigger intersection observer
+    cy.scrollTo("top")
+    cy.scrollTo("bottom", {
+      duration: 500,
+    })
+  })
 
-const RemoteFile = ({ data }) => {
-  return (
-    <Layout>
-      <SEO title="Remote file" />
+  it(`should render correct dimensions`, () => {
+    cy.get('[data-testid="public"]').then($urls => {
+      const urls = Array.from($urls.map((_, $url) => $url.getAttribute("href")))
 
-      {data.allMyRemoteFile.nodes.map(node => {
-        return (
-          <div key={node.id}>
-            <h2>
-              <a href={node.publicUrl} data-testid="public">
-                {node.filename}
-              </a>
-            </h2>
-            <img
-              src={node.resize.src}
-              width={node.resize.width}
-              height={node.resize.height}
-              alt=""
-              className="resize"
-            />
-            <div>
-              <GatsbyImage className="fixed" image={node.fixed} alt="" />
-              <GatsbyImage
-                className="constrained"
-                image={node.constrained}
-                alt=""
-              />
-              <GatsbyImage className="full" image={node.full} alt="" />
-            </div>
-          </div>
-        )
-      })}
-    </Layout>
-  )
-}
+      expect(urls[0].endsWith(".jpg")).to.be.true
+      expect(urls[1].endsWith(".jpg")).to.be.true
+      expect(urls[2].endsWith(".jpg")).to.be.true
+    })
 
-export const pageQuery = graphql`
-  {
-    allMyRemoteFile {
-      nodes {
-        id
-        url
-        filename
-        publicUrl
-        resize(width: 100) {
-          height
-          width
-          src
-        }
-        fixed: gatsbyImageData(
-          layout: FIXED
-          width: 100
-          placeholder: DOMINANT_COLOR
-        )
-        constrained: gatsbyImageData(
-          layout: CONSTRAINED
-          width: 300
-          placeholder: BLURRED
-        )
-        full: gatsbyImageData(layout: FULL_WIDTH, width: 500, placeholder: NONE)
-      }
-    }
-  }
-`
+    cy.get(".resize").then($imgs => {
+      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
 
-export default RemoteFile
+      expect(imgDimensions[0].width).to.be.equal(100)
+      expect(imgDimensions[0].height).to.be.equal(133)
+      expect(imgDimensions[1].width).to.be.equal(100)
+      expect(imgDimensions[1].height).to.be.equal(160)
+      expect(imgDimensions[2].width).to.be.equal(100)
+      expect(imgDimensions[2].height).to.be.equal(67)
+    })
+
+    cy.get(".fixed").then($imgs => {
+      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
+
+      expect(imgDimensions[0].width).to.be.equal(100)
+      expect(imgDimensions[0].height).to.be.equal(133)
+      expect(imgDimensions[1].width).to.be.equal(100)
+      expect(imgDimensions[1].height).to.be.equal(160)
+      expect(imgDimensions[2].width).to.be.equal(100)
+      expect(imgDimensions[2].height).to.be.equal(67)
+    })
+
+    cy.get(".constrained").then($imgs => {
+      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
+
+      expect(imgDimensions[0].width).to.be.equal(300)
+      expect(imgDimensions[0].height).to.be.equal(400)
+      expect(imgDimensions[1].width).to.be.equal(300)
+      expect(imgDimensions[1].height).to.be.equal(481)
+      expect(imgDimensions[2].width).to.be.equal(300)
+      expect(imgDimensions[2].height).to.be.equal(200)
+    })
+
+    cy.get(".full").then($imgs => {
+      const parentWidth = $imgs[0].parentElement.getBoundingClientRect().width
+      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
+
+      expect(imgDimensions[0].width).to.be.equal(parentWidth)
+      expect(Math.ceil(imgDimensions[0].height)).to.be.equal(1229)
+      expect(imgDimensions[1].width).to.be.equal(parentWidth)
+      expect(Math.ceil(imgDimensions[1].height)).to.be.equal(1478)
+      expect(imgDimensions[2].width).to.be.equal(parentWidth)
+      expect(Math.ceil(imgDimensions[2].height)).to.be.equal(614)
+    })
+  })
+
+  it(`should render a placeholder`, () => {
+    cy.get(".fixed [data-placeholder-image]")
+      .first()
+      .should("have.css", "background-color", "rgb(232, 184, 8)")
+    cy.get(".constrained [data-placeholder-image]")
+      .first()
+      .should($el => {
+        expect($el.prop("tagName")).to.be.equal("IMG")
+        expect($el.prop("src")).to.contain("data:image/jpg;base64")
+      })
+    cy.get(".full [data-placeholder-image]")
+      .first()
+      .should($el => {
+        expect($el.prop("tagName")).to.be.equal("DIV")
+        expect($el).to.be.empty
+      })
+  })
+})
