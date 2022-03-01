@@ -33,12 +33,6 @@ export function dispatchLocalFileServiceJob(
   ).split(`/`)
   publicUrl.unshift(`public`)
 
-  const { actions } = importFrom(
-    global.__GATSBY?.root ?? process.cwd(),
-    `gatsby/dist/redux/actions`
-  ) as { actions: { createJobV2: (...args: any) => void } }
-
-  // @ts-ignore - we dont have correct typings for this
   actions.createJobV2(
     {
       name: `FILE_CDN`,
@@ -94,13 +88,6 @@ export function dispatchLocalImageServiceJob(
   }).split(`/`)
   publicUrl.unshift(`public`)
 
-  // We need to use import-from to remove circular dependency
-  const { actions } = importFrom(
-    global.__GATSBY?.root ?? process.cwd(),
-    `gatsby/dist/redux/actions`
-  ) as { actions: { createJobV2: (...args: any) => void } }
-
-  // @ts-ignore - importFrom doesn't work with types
   actions.createJobV2(
     {
       name: `IMAGE_CDN`,
