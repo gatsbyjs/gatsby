@@ -3,7 +3,6 @@ const fs = require(`fs-extra`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   addRemoteFilePolyfillInterface,
-  polyfillImageServiceDevRoutes,
 } = require("gatsby-plugin-utils/polyfill-remote-file")
 
 exports.onPreBootstrap = () => {
@@ -32,6 +31,7 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
       {
         store,
         schema,
+        actions,
       }
     )
   )

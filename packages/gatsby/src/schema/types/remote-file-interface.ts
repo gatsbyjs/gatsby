@@ -3,7 +3,9 @@ import {
   ObjectTypeComposer,
   InterfaceTypeComposer,
 } from "graphql-compose"
+import { bindActionCreators } from "redux"
 import { store } from "../../redux/index"
+import { actions } from "../../redux/actions/index"
 import {
   getRemoteFileEnums,
   getRemoteFileFields,
@@ -37,7 +39,9 @@ export function getOrCreateRemoteFileInterface(
   return schemaComposer.getOrCreateIFTC(`RemoteFile`, tc => {
     tc.setDescription(`Remote Interface`)
 
+    const boundActions = bindActionCreators(actions, store.dispatch)
+
     // @ts-ignore - types are messed up by schema composer maybe new version helps here
-    tc.addFields(getRemoteFileFields(enums, store))
+    tc.addFields(getRemoteFileFields(enums, boundActions))
   })
 }

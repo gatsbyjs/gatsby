@@ -10,7 +10,7 @@ import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
 import { ImageCropFocus, ImageFit, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
-import type { Store } from "gatsby"
+import type { Actions } from "gatsby"
 import type {
   IRemoteFileNode,
   IRemoteImageNode,
@@ -75,7 +75,7 @@ const DEFAULT_QUALITY = 75
 export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
-  store: Store
+  actions: Actions
 ): Promise<{
   images: IGatsbyImageData
   layout: string
@@ -167,7 +167,7 @@ export async function gatsbyImageResolver(
             contentDigest: source.internal.contentDigest,
             quality: args.quality as number,
           },
-          store
+          actions
         )
       }
 
@@ -236,7 +236,7 @@ export async function gatsbyImageResolver(
 
 export function generateGatsbyImageFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  store: Store
+  actions: Actions
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode | IRemoteImageNode,
   ReturnType<typeof gatsbyImageResolver>,
@@ -342,7 +342,7 @@ export function generateGatsbyImageFieldConfig(
       },
     },
     resolve(source, args): ReturnType<typeof gatsbyImageResolver> {
-      return gatsbyImageResolver(source, args, store)
+      return gatsbyImageResolver(source, args, actions)
     },
   }
 }

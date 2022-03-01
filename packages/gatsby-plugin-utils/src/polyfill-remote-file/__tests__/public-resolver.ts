@@ -1,11 +1,9 @@
 import path from "path"
 import type { Store } from "gatsby"
-import importFrom from "import-from"
 import { publicUrlResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
-jest.mock(`import-from`)
 
 describe(`publicResolver`, () => {
   const store = {} as Store
@@ -55,11 +53,6 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
-    importFrom.mockImplementation(() => {
-      return {
-        actions,
-      }
-    })
 
     const source = {
       id: `1`,
@@ -74,7 +67,7 @@ describe(`publicResolver`, () => {
         contentDigest: `1`,
       },
     }
-    publicUrlResolver(source, store)
+    publicUrlResolver(source, actions)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({
         args: {
@@ -97,9 +90,6 @@ describe(`publicResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
-    importFrom.mockImplementation(() => {
-      return { actions }
-    })
 
     const source = {
       id: `1`,
@@ -116,7 +106,7 @@ describe(`publicResolver`, () => {
         contentDigest: `1`,
       },
     }
-    publicUrlResolver(source, store)
+    publicUrlResolver(source, actions)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({
         args: {

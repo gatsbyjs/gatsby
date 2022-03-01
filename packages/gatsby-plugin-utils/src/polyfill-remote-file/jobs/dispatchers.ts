@@ -1,8 +1,7 @@
 import path from "path"
-import importFrom from "import-from"
 import { getGatsbyVersion } from "../utils/get-gatsby-version"
 import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
-import type { Store } from "gatsby"
+import type { Actions } from "gatsby"
 import type { ImageFit } from "../types"
 
 export function shouldDispatch(): boolean {
@@ -21,7 +20,7 @@ export function dispatchLocalFileServiceJob(
     mimeType,
     contentDigest,
   }: { url: string; filename: string; mimeType: string; contentDigest: string },
-  store: Store
+  actions: Actions
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
   const publicUrl = generatePublicUrl(
@@ -35,12 +34,6 @@ export function dispatchLocalFileServiceJob(
 
   publicUrl.unshift(`public`)
 
-  const { actions } = importFrom(
-    global.__GATSBY?.root ?? process.cwd(),
-    `gatsby/dist/redux/actions`
-  ) as { actions: { createJobV2: (...args: any) => void } }
-
-  // @ts-ignore - we dont have correct typings for this
   actions.createJobV2(
     {
       name: `FILE_CDN`,
@@ -58,10 +51,11 @@ export function dispatchLocalFileServiceJob(
     },
     {
       name: `gatsby`,
+      // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
       resolve: __dirname,
     }
-  )(store.dispatch, store.getState)
+  )
 }
 
 export function dispatchLocalImageServiceJob(
@@ -86,7 +80,7 @@ export function dispatchLocalImageServiceJob(
     contentDigest: string
     quality: number
   },
-  store: Store
+  actions: Actions
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
   const publicUrl = generatePublicUrl({
@@ -95,13 +89,6 @@ export function dispatchLocalImageServiceJob(
   }).split(`/`)
   publicUrl.unshift(`public`)
 
-  // We need to use import-from to remove circular dependency
-  const { actions } = importFrom(
-    global.__GATSBY?.root ?? process.cwd(),
-    `gatsby/dist/redux/actions`
-  ) as { actions: { createJobV2: (...args: any) => void } }
-
-  // @ts-ignore - importFrom doesn't work with types
   actions.createJobV2(
     {
       name: `IMAGE_CDN`,
@@ -124,8 +111,9 @@ export function dispatchLocalImageServiceJob(
     },
     {
       name: `gatsby`,
+      // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
       resolve: __dirname,
     }
-  )(store.dispatch, store.getState)
+  )
 }

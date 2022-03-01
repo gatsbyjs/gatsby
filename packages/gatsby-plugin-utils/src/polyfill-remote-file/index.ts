@@ -1,6 +1,5 @@
 import path from "path"
 import { SchemaComposer } from "graphql-compose"
-import importFrom from "import-from"
 import { getRemoteFileEnums } from "./graphql/get-remote-file-enums"
 import { getGatsbyVersion } from "./utils/get-gatsby-version"
 import { hasFeature } from "../has-feature"
@@ -17,7 +16,7 @@ import {
   gatsbyImageResolver,
 } from "./graphql/gatsby-image-resolver"
 
-import type { Store } from "gatsby"
+import type { Store, Actions } from "gatsby"
 import type { InterfaceTypeComposerAsObjectDefinition } from "graphql-compose"
 import type { SchemaBuilder, IRemoteFileNode } from "./types"
 
@@ -25,7 +24,7 @@ let enums: ReturnType<typeof getRemoteFileEnums> | undefined
 
 export function getRemoteFileFields(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  store: Store
+  actions: Actions
 ): Record<string, unknown> {
   return {
     id: `ID!`,
@@ -34,9 +33,9 @@ export function getRemoteFileFields(
     filesize: `Int`,
     width: `Int`,
     height: `Int`,
-    publicUrl: generatePublicUrlFieldConfig(store),
-    resize: generateResizeFieldConfig(enums, store),
-    gatsbyImage: generateGatsbyImageFieldConfig(enums, store),
+    publicUrl: generatePublicUrlFieldConfig(actions),
+    resize: generateResizeFieldConfig(enums, actions),
+    gatsbyImage: generateGatsbyImageFieldConfig(enums, actions),
   }
 }
 
@@ -47,9 +46,11 @@ function addRemoteFilePolyfillInterface<
   {
     schema,
     store,
+    actions,
   }: {
     schema: SchemaBuilder
     store: Store
+    actions: Actions
   }
 ): T {
   // When the image-cdn is part of Gatsby we will only add the RemoteFile interface if necessary
@@ -99,7 +100,7 @@ function addRemoteFilePolyfillInterface<
         name: `RemoteFile`,
         fields: getRemoteFileFields(
           enums,
-          store
+          actions
         ) as InterfaceTypeComposerAsObjectDefinition<
           IRemoteFileNode,
           unknown
@@ -107,19 +108,12 @@ function addRemoteFilePolyfillInterface<
       })
     )
 
-    // We need to use import-from to remove circular dependency
-    const actions = importFrom(
-      global.__GATSBY.root ?? process.cwd(),
-      `gatsby/dist/redux/actions`
-    )
-    store.dispatch(
-      // @ts-ignore - importFrom doesn't work with types
-      actions.createTypes(types, {
-        name: `gatsby`,
-        version: getGatsbyVersion(),
-        resolve: path.join(__dirname, `../`),
-      })
-    )
+    actions.createTypes(types, {
+      name: `gatsby`,
+      // @ts-ignore - version is allowed
+      version: getGatsbyVersion(),
+      resolve: path.join(__dirname, `../`),
+    })
   }
 
   // @ts-ignore - wrong typing by typecomposer
@@ -133,7 +127,7 @@ function addRemoteFilePolyfillInterface<
   type.config.fields = {
     // @ts-ignore - wrong typing by typecomposer
     ...type.config.fields,
-    ...getRemoteFileFields(enums, store),
+    ...getRemoteFileFields(enums, actions),
   }
 
   return type

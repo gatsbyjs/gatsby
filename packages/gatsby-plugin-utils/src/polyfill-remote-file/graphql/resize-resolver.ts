@@ -9,7 +9,7 @@ import {
 import { isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
-import type { Store } from "gatsby"
+import type { Actions } from "gatsby"
 import type {
   IRemoteFileNode,
   IGraphQLFieldConfigDefinition,
@@ -40,7 +40,7 @@ const allowedFormats: Array<ImageFormat> = [
 export async function resizeResolver(
   source: IRemoteFileNode,
   args: Partial<IResizeArgs> & WidthOrHeight,
-  store: Store
+  actions: Actions
 ): Promise<{
   width: number
   height: number
@@ -90,7 +90,7 @@ export async function resizeResolver(
         format,
         contentDigest: source.internal.contentDigest,
       },
-      store
+      actions
     )
   }
 
@@ -113,7 +113,7 @@ export async function resizeResolver(
 
 export function generateResizeFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  store: Store
+  actions: Actions
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode,
   ReturnType<typeof resizeResolver>,
@@ -146,7 +146,7 @@ export function generateResizeFieldConfig(
       },
     },
     resolve(source, args): ReturnType<typeof resizeResolver> {
-      return resizeResolver(source, args, store)
+      return resizeResolver(source, args, actions)
     },
   }
 }

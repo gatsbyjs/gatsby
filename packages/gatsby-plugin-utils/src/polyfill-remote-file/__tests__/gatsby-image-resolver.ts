@@ -4,7 +4,7 @@ import importFrom from "import-from"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { gatsbyImageResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
-import type { Store } from "gatsby"
+import type { Actions } from "gatsby"
 import { PlaceholderType } from "../placeholder-handler"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
@@ -58,7 +58,7 @@ describe(`gatsbyImageData`, () => {
     fetchRemoteFile.mockClear()
   })
 
-  const store = {} as Store
+  const actions = {} as Actions
   const portraitSource = {
     id: `1`,
     url: `https://images.unsplash.com/photo-1588795945-b9c8d9f9b9c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80`,
@@ -94,7 +94,7 @@ describe(`gatsbyImageData`, () => {
         },
         // @ts-ignore - don't care
         {},
-        store
+        actions
       )
     ).toBe(null)
     expect(dispatchers.shouldDispatch).not.toHaveBeenCalled()
@@ -108,7 +108,7 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
-      store
+      actions
     )
 
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
@@ -166,7 +166,7 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
-      store
+      actions
     )
 
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
@@ -244,7 +244,7 @@ describe(`gatsbyImageData`, () => {
         width: 2000,
         placeholder: `none`,
       },
-      store
+      actions
     )
 
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
@@ -319,7 +319,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
-      store
+      actions
     )
     const constrainedResult = await gatsbyImageResolver(
       portraitSource,
@@ -329,7 +329,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
-      store
+      actions
     )
     const fullWidthResult = await gatsbyImageResolver(
       {
@@ -343,7 +343,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
-      store
+      actions
     )
 
     const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
@@ -399,7 +399,7 @@ describe(`gatsbyImageData`, () => {
         layout: `constrained`,
         placeholder: `none`,
       },
-      store
+      actions
     )
 
     expect(result.images.fallback.src).not.toContain(` `)
@@ -420,7 +420,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
-      store
+      actions
     )
     const constrainedResult = await gatsbyImageResolver(
       biggerPortraitSource,
@@ -430,7 +430,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
-      store
+      actions
     )
     const fullWidthResult = await gatsbyImageResolver(
       biggerPortraitSource,
@@ -440,7 +440,7 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
-      store
+      actions
     )
 
     const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
@@ -470,7 +470,7 @@ describe(`gatsbyImageData`, () => {
         layout: `fixed`,
         width: 300,
       },
-      store
+      actions
     )
 
     expect(fetchRemoteFile).toHaveBeenCalledTimes(1)
@@ -488,7 +488,7 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: PlaceholderType.BLURRED,
       },
-      store
+      actions
     )
 
     expect(fetchRemoteFile).toHaveBeenCalledTimes(1)

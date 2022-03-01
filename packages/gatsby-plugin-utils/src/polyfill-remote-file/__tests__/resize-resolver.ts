@@ -1,19 +1,17 @@
 import path from "path"
-import importFrom from "import-from"
 import { resizeResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
-import type { Store } from "gatsby"
+import type { Actions } from "gatsby"
 import type { ImageFit, IRemoteImageNode } from "../types"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
-jest.mock(`import-from`)
 
 describe(`resizeResolver`, () => {
   beforeEach(() => {
     dispatchers.shouldDispatch.mockClear()
   })
 
-  const store = {} as Store
+  const actions = {} as Actions
   const portraitSource = {
     id: `1`,
     url: `https://images.unsplash.com/photo-1588795945-b9c8d9f9b9c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80`,
@@ -118,7 +116,7 @@ describe(`resizeResolver`, () => {
         {
           width: 100,
         },
-        store
+        actions
       )
     ).toBe(null)
     expect(dispatchers.shouldDispatch).not.toHaveBeenCalled()
@@ -132,7 +130,7 @@ describe(`resizeResolver`, () => {
         format: `webp`,
       },
 
-      store
+      actions
     )
     expect(result.src).toMatch(/\.webp$/)
   })
@@ -145,7 +143,7 @@ describe(`resizeResolver`, () => {
           width: 100,
           format: `unknown`,
         },
-        store
+        actions
       )
     ).rejects.toThrowError(
       `Unknown format "unknown" was given to resize ${portraitSource.url}`
@@ -154,7 +152,7 @@ describe(`resizeResolver`, () => {
 
   it(`should fail when no height or width is given`, async () => {
     await expect(
-      resizeResolver(portraitSource, {}, store)
+      resizeResolver(portraitSource, {}, actions)
     ).rejects.toThrowError(
       `No width or height is given to resize "${portraitSource.url}"`
     )
@@ -167,7 +165,7 @@ describe(`resizeResolver`, () => {
         width: 100,
         cropFocus: [`top`, `left`],
       },
-      store
+      actions
     )
 
     const [, , , , args] = result?.src.split(`/`) ?? []
@@ -195,7 +193,7 @@ describe(`resizeResolver`, () => {
         {
           width: 300,
         },
-        store
+        actions
       )
 
       const [, , , url, args, filename] = result?.src.split(`/`) ?? []
@@ -215,7 +213,7 @@ describe(`resizeResolver`, () => {
         {
           height: 300,
         },
-        store
+        actions
       )
 
       const [, , , url, args] = result?.src.split(`/`) ?? []
@@ -237,7 +235,7 @@ describe(`resizeResolver`, () => {
             width: 300,
             fit,
           },
-          store
+          actions
         )
 
         expect(result?.width).toBe(expectedWidth)
@@ -254,7 +252,7 @@ describe(`resizeResolver`, () => {
             height: 300,
             fit,
           },
-          store
+          actions
         )
 
         expect(result?.width).toBe(expectedWidth)
@@ -272,7 +270,7 @@ describe(`resizeResolver`, () => {
             height: 300,
             fit,
           },
-          store
+          actions
         )
 
         expect(result?.width).toBe(expectedWidth)
@@ -286,11 +284,8 @@ describe(`resizeResolver`, () => {
       createJobV2: jest.fn(() => jest.fn()),
     }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
-    importFrom.mockImplementation(() => {
-      return { actions }
-    })
 
-    resizeResolver(portraitSource, { width: 100 }, store)
+    resizeResolver(portraitSource, { width: 100 }, actions)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({
         args: {
