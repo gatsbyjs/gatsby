@@ -90,6 +90,11 @@ You can also check out the [using-typescript](https://github.com/gatsbyjs/gatsby
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [0xflotus](https://github.com/0xflotus)
+  - fix: small typo error [PR #34848](https://github.com/gatsbyjs/gatsby/pull/34848)
+  - chore(gatsby-plugin-image): update readme typo [PR #34847](https://github.com/gatsbyjs/gatsby/pull/34847)
+- [jamatz](https://github.com/jamatz): docs(gatsby): GatbsyImage -> GatsbyImage [PR #34914](https://github.com/gatsbyjs/gatsby/pull/34914)
+- [brherr](https://github.com/brherr): Update gatsby-config.js [PR #34924](https://github.com/gatsbyjs/gatsby/pull/34924)
+- [benackles](https://github.com/benackles): chore(docs): Update link to "How to create a Gatsby Starter" [PR #34937](https://github.com/gatsbyjs/gatsby/pull/34937)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.9.0-next.0...gatsby@4.9.0
