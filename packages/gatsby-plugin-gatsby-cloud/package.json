@@ -21,7 +21,7 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@testing-library/dom": "^8.11.3",
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.5.0",
     "babel-preset-gatsby-package": "^2.9.0-next.0",
