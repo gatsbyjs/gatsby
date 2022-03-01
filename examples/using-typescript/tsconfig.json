@@ -1,17 +1,14 @@
 {
-  "include": ["./src/**/*"],
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
-    "lib": ["dom", "es2017"],
-    // "allowJs": true,
-    // "checkJs": true,
+    "lib": ["dom", "esnext"],
     "jsx": "react",
-    "strict": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "skipLibCheck": true
-  }
+  },
+  "include": ["./src/**/*"]
 }

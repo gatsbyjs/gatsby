@@ -1,12 +1,6 @@
-import { PageProps } from "gatsby"
 import * as React from "react"
-import Layout from "../components/layout"
+import { PageProps } from "gatsby"
 
-const Error404Page: React.FC<PageProps> = () => (
-  <Layout>
-    <h1>You are here!</h1>
-    <h2>But nothing found for you #404</h2>
-  </Layout>
-)
+const NotFound = ({}: PageProps) => <h1>Page Not Found!</h1>
 
-export default Error404Page
+export default NotFound
