@@ -1,10 +1,6 @@
 import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { build } from "../../index"
-import {
-  DEFAULT_PIXEL_DENSITIES,
-  DEFAULT_BREAKPOINTS,
-} from "../remote-file-interface"
 
 interface ISrcsetImageChunk {
   url: string
@@ -148,7 +144,6 @@ describe(`remote-file`, () => {
           layout: `fixed`,
           formats: [`auto`],
           width: 100,
-          outputPixelDensities: DEFAULT_PIXEL_DENSITIES,
         },
         {},
         {}
@@ -187,7 +182,6 @@ describe(`remote-file`, () => {
           layout: `constrained`,
           formats: [`auto`],
           width: 100,
-          outputPixelDensities: DEFAULT_PIXEL_DENSITIES,
         },
         {},
         {}
@@ -236,8 +230,6 @@ describe(`remote-file`, () => {
           layout: `fullWidth`,
           formats: [`auto`],
           width: 100,
-          outputPixelDensities: DEFAULT_PIXEL_DENSITIES,
-          breakpoints: DEFAULT_BREAKPOINTS,
         },
         {},
         {}

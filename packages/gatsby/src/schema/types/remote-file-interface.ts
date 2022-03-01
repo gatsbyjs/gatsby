@@ -9,9 +9,6 @@ import {
   getRemoteFileFields,
 } from "gatsby-plugin-utils/polyfill-remote-file"
 
-export const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
-export const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
-
 export function addRemoteFileInterfaceFields<TContext = unknown>(
   schemaComposer: SchemaComposer<unknown>,
   typeComposer: ObjectTypeComposer<unknown, TContext>
