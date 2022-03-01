@@ -1,3 +1,7 @@
+---
+title: Choosing Analytics Systems
+---
+
 Website teams looking to collect insights on user behavior have a wide variety of options.
 
 **Basic Analytics**, which includes [Google Analytics](/plugins/gatsby-plugin-google-analytics/?=google%20analytics), focus on metrics like page views, sessions, bounce rate, entrances and exits, measured on a per-URL basis and tracked over time. They include UTM parameter tracking, in order to tie visitors to specific paid advertising or email campaigns.
