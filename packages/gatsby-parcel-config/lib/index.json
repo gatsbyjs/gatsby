@@ -23,7 +23,7 @@
     "*.{xml,rss,atom}": ["@parcel/transformer-xml"],
     "url:*": ["...", "@parcel/transformer-raw"]
   },
-  "namers": ["parcel-namer-relative-to-cwd", "@parcel/namer-default"],
+  "namers": ["@gatsbyjs/parcel-namer-relative-to-cwd", "@parcel/namer-default"],
   "runtimes": [
     "@parcel/runtime-js",
     "@parcel/runtime-browser-hmr",

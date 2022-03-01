@@ -13,6 +13,7 @@
     "parcel": "2.x"
   },
   "dependencies": {
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "0.0.1",
     "@parcel/bundler-default": "^2.3.1",
     "@parcel/compressor-raw": "^2.3.1",
     "@parcel/namer-default": "^2.3.1",
@@ -28,10 +29,10 @@
     "@parcel/transformer-js": "^2.3.1",
     "@parcel/transformer-json": "^2.3.1",
     "@parcel/transformer-raw": "^2.3.1",
-    "@parcel/transformer-react-refresh-wrap": "^2.3.1",
-    "parcel-namer-relative-to-cwd": "0.0.0-alpha.0"
+    "@parcel/transformer-react-refresh-wrap": "^2.3.1"
   },
   "parcelDependencies": {
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "0.0.1",
     "@parcel/optimizer-data-url": "^2.3.1",
     "@parcel/packager-raw-url": "^2.3.1",
     "@parcel/packager-ts": "^2.3.1",
@@ -45,8 +46,7 @@
     "@parcel/transformer-webmanifest": "^2.3.1",
     "@parcel/transformer-worklet": "^2.3.1",
     "@parcel/transformer-xml": "^2.3.1",
-    "@parcel/transformer-yaml": "^2.3.1",
-    "parcel-namer-relative-to-cwd": "0.0.0-alpha.0"
+    "@parcel/transformer-yaml": "^2.3.1"
   },
   "peerDependencies": {
     "@parcel/core": "^2.3.1"
