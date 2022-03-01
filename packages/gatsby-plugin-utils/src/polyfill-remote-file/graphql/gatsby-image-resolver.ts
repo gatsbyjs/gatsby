@@ -177,9 +177,8 @@ export async function gatsbyImageResolver(
         format,
         cropFocus: args.cropFocus,
         quality: args.quality as number,
-      })}/${path.basename(
-        source.filename,
-        path.extname(source.filename)
+      })}/${encodeURIComponent(
+        path.basename(source.filename, path.extname(source.filename))
       )}.${format}`
 
       if (!fallbackSrc) {
