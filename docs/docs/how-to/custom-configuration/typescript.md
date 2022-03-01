@@ -192,6 +192,7 @@ type Person = {
 export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
   actions,
   createNodeId,
+  createContentDigest,
 }) => {
   const { createNode } = actions
 
