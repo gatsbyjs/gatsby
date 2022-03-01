@@ -12,7 +12,7 @@ Google Analytics and Google Tag Manager are the most popular services used on Ga
 
 Gatsby teams have primarily reached for three categories of tools:
 
-**Customer Data Platforms** ([Segment](/plugins/gatsby-plugin-segment-js/?=segment), [Rudderstack](/plugins/gatsby-plugin-rudderstack/?=rudderstack)) are a tool to help teams manage and orchestrate multiple analytics systems. This includes centralizing data on visitors.
+**Customer Data Platforms** ([Segment](/plugins/gatsby-plugin-segment-js/?=segment), [Rudderstack](/plugins/gatsby-plugin-rudderstack/?=rudderstack)) are tools that help teams manage and orchestrate multiple analytics systems. This includes centralizing data on visitors.
 
 From an ananlytics perspective, using a CDP allows website teams to replace multiple pixels and trackers with a single tracker, which can significantly improve page performance. (The CDP will ping each service from their systems, rather than the user's browser). CDP includes event replay, so teams can switch marketing tools while preserving historical data.
 
