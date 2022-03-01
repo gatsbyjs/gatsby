@@ -27,7 +27,7 @@
     "@parcel/runtime-service-worker": "^2.3.1",
     "@parcel/transformer-js": "^2.3.1",
     "@parcel/transformer-json": "^2.3.1",
-    "@parcel/transformer-raw": "^2.3.1",
+    "@parcel/transformer-raw": "^2.3.2",
     "@parcel/transformer-react-refresh-wrap": "^2.3.1"
   },
   "parcelDependencies": {
