@@ -54,7 +54,7 @@ async function getContentTypesFromContentful({
 }
 
 export async function createSchemaCustomization(
-  { schema, actions, reporter, cache, store },
+  { schema, actions, reporter, cache },
   pluginOptions
 ) {
   const { createTypes } = actions
@@ -150,7 +150,7 @@ export async function createSchemaCustomization(
       }),
       {
         schema,
-        store,
+        actions,
       }
     )
   )
