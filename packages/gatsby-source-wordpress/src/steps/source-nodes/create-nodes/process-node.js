@@ -12,7 +12,7 @@ import fs from "fs-extra"
 import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions"
 import replaceAll from "replaceall"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
-import { gatsbyImageDataResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/gatsby-image-data-resolver"
+import { gatsbyImageResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/gatsby-image-resolver"
 
 import { formatLogMessage } from "~/utils/format-log-message"
 
@@ -593,7 +593,7 @@ export const replaceNodeHtmlImages = async ({
             imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
 
           try {
-            imageResize = await gatsbyImageDataResolver(
+            imageResize = await gatsbyImageResolver(
               {
                 url: imageUrl,
                 mimeType: imageNode.mimeType,
