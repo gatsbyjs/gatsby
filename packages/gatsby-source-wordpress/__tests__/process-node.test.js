@@ -4,7 +4,7 @@ import { replaceNodeHtmlImages } from "../dist/steps/source-nodes/create-nodes/p
 
 import {
   getImgSrcRemoteFileMatchesFromNodeString,
-  getImgTagMatchesWithUrl,
+  getImgTagMatches,
   getWpLinkRegex,
   searchAndReplaceNodeStrings,
 } from "../dist/steps/source-nodes/create-nodes/process-node"
@@ -22,7 +22,7 @@ test(`HTML image transformation regex matches images`, async () => {
 
   expect(matches.length).toBe(3)
 
-  const imgTagMatches = getImgTagMatchesWithUrl({
+  const imgTagMatches = getImgTagMatches({
     nodeString,
     wpUrl: `https://${wpUrl}`,
   })
