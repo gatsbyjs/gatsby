@@ -38,6 +38,15 @@ interface IMockedParcel extends Parcel {
   options: unknown
 }
 
+let cwdToRestore
+beforeAll(() => {
+  cwdToRestore = process.cwd()
+})
+
+afterAll(() => {
+  process.chdir(cwdToRestore)
+})
+
 describe(`gatsby file compilation`, () => {
   describe(`constructBundler`, () => {
     it(`should construct Parcel relative to passed directory`, () => {
