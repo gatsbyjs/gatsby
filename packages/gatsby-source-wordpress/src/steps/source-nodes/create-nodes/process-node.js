@@ -596,6 +596,7 @@ export const replaceNodeHtmlImages = async ({
             imageResize = await gatsbyImageResolver(
               {
                 url: imageUrl,
+                placeholderUrl,
                 mimeType: imageNode.mimeType,
                 width: imageNode.mediaDetails.width,
                 height: imageNode.mediaDetails.height,
@@ -610,7 +611,6 @@ export const replaceNodeHtmlImages = async ({
                 placeholder: !placeholderUrl
                   ? `none`
                   : pluginOptions?.html?.placeholderType || `blurred`,
-                placeholderUrl,
                 quality,
               },
               helpers.actions
