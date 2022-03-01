@@ -21,7 +21,7 @@
     "@parcel/packager-raw": "^2.3.1",
     "@parcel/reporter-dev-server": "^2.3.1",
     "@parcel/resolver-default": "^2.3.1",
-    "@parcel/runtime-browser-hmr": "^2.3.1",
+    "@parcel/runtime-browser-hmr": "^2.3.2",
     "@parcel/runtime-js": "^2.3.1",
     "@parcel/runtime-react-refresh": "^2.3.1",
     "@parcel/runtime-service-worker": "^2.3.1",
