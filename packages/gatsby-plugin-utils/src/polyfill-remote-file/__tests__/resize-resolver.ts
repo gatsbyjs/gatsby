@@ -4,7 +4,6 @@ import { resizeResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
 import type { Store } from "gatsby"
 import type { ImageFit, IRemoteImageNode } from "../types"
-// import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
 jest.mock(`import-from`)
