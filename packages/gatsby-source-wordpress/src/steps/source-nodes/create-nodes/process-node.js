@@ -613,7 +613,7 @@ export const replaceNodeHtmlImages = async ({
                 placeholderUrl,
                 quality,
               },
-              helpers.store
+              helpers.actions
             )
           } catch (e) {
             reporter.error(e)

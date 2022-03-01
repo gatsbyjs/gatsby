@@ -99,7 +99,7 @@ const customizeSchema = async ({ actions, schema }) => {
       }),
       {
         schema,
-        store,
+        actions,
       }
     )
   )
