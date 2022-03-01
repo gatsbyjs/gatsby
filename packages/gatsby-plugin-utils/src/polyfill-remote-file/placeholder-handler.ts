@@ -23,6 +23,8 @@ interface IPlaceholderGenerationArgs {
 }
 
 const QUEUE_CONCURRENCY = 10
+const PLACEHOLDER_BASE64_WIDTH = 20
+const PLACEHOLDER_QUALITY = 25
 
 let tmpDir: string
 
@@ -37,7 +39,6 @@ const queue = Queue<
     contentDigest: string
     width: number
     height: number
-    hasCorrectFormat: boolean
     type: PlaceholderType
   },
   string
@@ -68,8 +69,10 @@ const queue = Queue<
         const pipeline = sharp()
         fileStream.pipe(pipeline)
         buffer = await pipeline
-          .resize(20, Math.ceil(20 / (width / height)))
-          .toFormat(`jpg`)
+          .resize(
+            PLACEHOLDER_BASE64_WIDTH,
+            Math.ceil(PLACEHOLDER_BASE64_WIDTH / (width / height))
+          )
           .toBuffer()
       } catch (e) {
         buffer = await readFile(filePath)
@@ -155,15 +158,11 @@ async function placeholderToBase64({
     }
 
     let url = originalUrl
-    let hasWidthOrHeightAttr = false
     if (placeholderUrl) {
-      hasWidthOrHeightAttr =
-        placeholderUrl.includes(`%width%`) ||
-        placeholderUrl.includes(`%height%`)
       url = generatePlaceholderUrl({
         url: placeholderUrl,
-        width: 20,
-        quality: 25,
+        width: PLACEHOLDER_BASE64_WIDTH,
+        quality: PLACEHOLDER_QUALITY,
         originalWidth: width,
         originalHeight: height,
       })
@@ -176,7 +175,6 @@ async function placeholderToBase64({
           contentDigest,
           width,
           height,
-          hasCorrectFormat: hasWidthOrHeightAttr,
           type: PlaceholderType.BLURRED,
         },
         (err, result) => {
@@ -228,7 +226,7 @@ async function placeholderToDominantColor({
       url = generatePlaceholderUrl({
         url: placeholderUrl,
         width: 200,
-        quality: 25,
+        quality: PLACEHOLDER_QUALITY,
         originalWidth: width,
         originalHeight: height,
       })
@@ -241,7 +239,6 @@ async function placeholderToDominantColor({
           contentDigest,
           width,
           height,
-          hasCorrectFormat: true,
           type: PlaceholderType.DOMINANT_COLOR,
         },
         (err, result) => {
