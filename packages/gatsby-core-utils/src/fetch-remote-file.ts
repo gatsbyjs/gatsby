@@ -50,7 +50,7 @@ export async function fetchRemoteFile(
         // If the cached directory is not part of the public directory, we don't need to copy it
         // as it won't be part of the build.
         if (
-          !cachedPath.startsWith(
+          !downloadPath.startsWith(
             path.join(global.__GATSBY?.root ?? process.cwd(), `public`)
           )
         ) {
@@ -58,17 +58,19 @@ export async function fetchRemoteFile(
         }
 
         // Create a mutex to do our copy - we could do a md5 hash check as well but that's also expensive
-        if (alreadyCopiedFiles.has(downloadPath)) {
-          alreadyCopiedFiles.add(downloadPath)
-
+        if (!alreadyCopiedFiles.has(downloadPath)) {
           const copyFileMutex = createMutex(
             `gatsby-core-utils:copy-fetch:${downloadPath}`,
             200
           )
           await copyFileMutex.acquire()
-          await fs.copy(cachedPath, downloadPath, {
-            overwrite: true,
-          })
+          if (!alreadyCopiedFiles.has(downloadPath)) {
+            await fs.copy(cachedPath, downloadPath, {
+              overwrite: true,
+            })
+          }
+
+          alreadyCopiedFiles.add(downloadPath)
           await copyFileMutex.release()
         }
 
@@ -200,12 +202,13 @@ async function fetchFile({
 
       await fs.move(tmpFilename, filename, { overwrite: true })
 
+      const slashedDirectory = slash(fileDirectory)
       await setInFlightObject(url, BUILD_ID, {
         cacheKey,
         extension: ext,
         headers: response.headers.etag ? { etag: response.headers.etag } : {},
-        directory: slash(fileDirectory),
-        path: slash(filename.replace(fileDirectory, ``)),
+        directory: slashedDirectory,
+        path: slash(filename).replace(`${slashedDirectory}/`, ``),
       })
     } else if (response.statusCode === 304) {
       await fs.remove(tmpFilename)
