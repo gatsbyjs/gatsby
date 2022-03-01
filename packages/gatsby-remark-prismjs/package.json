@@ -18,7 +18,7 @@
     "cheerio": "^1.0.0-rc.10",
     "cross-env": "^7.0.3",
     "prismjs": "^1.21.0",
-    "remark": "^13.0.0"
+    "remark": "^14.0.2"
   },
   "peerDependencies": {
     "gatsby": "^4.0.0-next",
