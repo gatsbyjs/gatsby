@@ -13,7 +13,7 @@
     "npm-package-arg": "^8.1.5",
     "recursive-readdir": "^2.2.2",
     "unist-util-map": "^2.0.1",
-    "urijs": "^1.19.7"
+    "urijs": "^1.19.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
