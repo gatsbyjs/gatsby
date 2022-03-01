@@ -388,6 +388,24 @@ describe(`gatsbyImageData`, () => {
     expect(parsedFullWidthSrcSet).toHaveLength(4)
   })
 
+  it(`Should url encode filenames`, async () => {
+    const result = await gatsbyImageResolver(
+      {
+        ...portraitSource,
+        filename: `name with spaces.jpeg`,
+      },
+      {
+        width: 300,
+        layout: `constrained`,
+        placeholder: `none`,
+      },
+      store
+    )
+
+    expect(result.images.fallback.src).not.toContain(` `)
+    expect(result.images.fallback.src).toContain(`name%20with%20spaces`)
+  })
+
   it(`should return proper srcSet from breakpoints only for fullWidth`, async () => {
     const biggerPortraitSource = {
       ...portraitSource,
