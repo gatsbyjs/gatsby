@@ -89,7 +89,7 @@ body:
   - type: textarea
     attributes:
       label: Config Flags
-      description: Do you use any "flags" inside "gatsby-config.js"? If yes, please paste them here.
+      description: Do you use any "flags" inside "gatsby-config"? If yes, please paste them here.
       placeholder: |
         For example:
 

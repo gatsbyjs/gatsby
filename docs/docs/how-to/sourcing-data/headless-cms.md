@@ -56,4 +56,4 @@ The following CMSs have high popularity among Gatsby users and support key funct
 
 ## Integrating with other CMSs
 
-Other CMSs not on the list above can be found on the [plugins directory](/plugins/?=source). If your preferred CMS is integrated with Gatsby but not on this list, you can [open a pull request to add it](/contributing/how-to-contribute/). If your preferred CMS is not yet integrated with Gatsby, you can [write your own source plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
+Other CMSs not on the list above can be found on the [plugins directory](/plugins/?=source). If your preferred CMS is integrated with Gatsby but not on this list, you can [open a pull request to add it](/contributing#how-to-contribute). If your preferred CMS is not yet integrated with Gatsby, you can [write your own source plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
