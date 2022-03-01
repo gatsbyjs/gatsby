@@ -85,7 +85,7 @@ if (!hasFeature(`image-cdn`)) {
 
 Our new ImageCDN allows source plugins to lazily download and process images. if you're a plugin author please use this polyfill to add support for all Gatsby V4 versions.
 
-For more information check (TODO)[]
+For more information (see here)[https://gatsby.dev/img]
 
 #### Example
 
