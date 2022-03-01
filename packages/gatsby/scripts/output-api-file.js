@@ -40,7 +40,8 @@ async function outputFile() {
     return merged
   }, {})
 
-  output.features = [];
+  /** @type {Array<import("../index").AvailableFeatures>} */
+  output.features = ["image-cdn"];
 
   return fs.writeFile(
     path.resolve(OUTPUT_FILE_NAME),

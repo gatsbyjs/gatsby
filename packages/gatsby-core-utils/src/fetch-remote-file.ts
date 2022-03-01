@@ -128,6 +128,7 @@ async function fetchFile({
   ext,
   name,
   cacheKey,
+  excludeDigest,
 }: IFetchRemoteFileOptions): Promise<string> {
   // global introduced in gatsby 4.0.0
   const BUILD_ID = global.__GATSBY?.buildId ?? ``
@@ -167,10 +168,13 @@ async function fetchFile({
     }
 
     const digest = createContentDigest(url)
-    await fs.ensureDir(path.join(fileDirectory, digest))
+    const finalDirectory = excludeDigest
+      ? fileDirectory
+      : path.join(fileDirectory, digest)
+    await fs.ensureDir(finalDirectory)
 
     const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
-    let filename = createFilePath(path.join(fileDirectory, digest), name, ext)
+    let filename = createFilePath(finalDirectory, name, ext)
 
     // See if there's response headers for this url
     // from a previous request.
@@ -202,7 +206,7 @@ async function fetchFile({
 
       await fs.move(tmpFilename, filename, { overwrite: true })
 
-      const slashedDirectory = slash(fileDirectory)
+      const slashedDirectory = slash(finalDirectory)
       await setInFlightObject(url, BUILD_ID, {
         cacheKey,
         extension: ext,

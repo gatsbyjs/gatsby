@@ -4,7 +4,7 @@ const path = require("path")
 const fs = require("fs-extra")
 
 /** @type{import('gatsby').createSchemaCustomization} */
-exports.createSchemaCustomization = ({ actions, schema, cache, reporter }) => {
+exports.createSchemaCustomization = ({ actions, schema, cache }) => {
   actions.createTypes(
     schema.buildObjectType({
       name: "MyRemoteFile",
