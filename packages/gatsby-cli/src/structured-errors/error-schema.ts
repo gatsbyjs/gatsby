@@ -29,7 +29,8 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> =
       `CONFIG`,
       `WEBPACK`,
       `PLUGIN`,
-      `COMPILATION`
+      `COMPILATION`,
+      `SEGFAULT`
     ),
     filePath: Joi.string(),
     location: Joi.object({

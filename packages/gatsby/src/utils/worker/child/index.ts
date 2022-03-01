@@ -1,6 +1,10 @@
 import { isWorker } from "gatsby-worker"
 import { initJobsMessagingInWorker } from "../../jobs/worker-messaging"
 import { initReporterMessagingInWorker } from "../reporter"
+// import { listenForSegfaults } from "../../listen-for-segfaults"
+
+// TODO - Get program directory somehow
+// await listenForSegfaults()
 
 initJobsMessagingInWorker()
 initReporterMessagingInWorker()

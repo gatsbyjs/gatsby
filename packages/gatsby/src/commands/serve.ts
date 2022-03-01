@@ -26,6 +26,7 @@ import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
 import { configureTrailingSlash } from "../utils/express-middlewares"
 import { getDataStore, detectLmdbStore } from "../datastore"
+import { listenForSegfaults } from "../utils/listen-for-segfaults"
 
 process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
 detectLmdbStore()
@@ -99,6 +100,8 @@ const matchPathRouter =
   }
 
 module.exports = async (program: IServeProgram): Promise<void> => {
+  await listenForSegfaults(program.directory)
+
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
   await initTracer(

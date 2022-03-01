@@ -25,6 +25,7 @@ import { getSslCert } from "../utils/get-ssl-cert"
 import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
 import { flush as telemetryFlush } from "gatsby-telemetry"
+import { listenForSegfaults } from "../utils/listen-for-segfaults"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -199,6 +200,8 @@ const REGEX_IP =
   /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
+  await listenForSegfaults(program.directory)
+
   global.__GATSBY = {
     buildId: uuid.v4(),
     root: program.directory,

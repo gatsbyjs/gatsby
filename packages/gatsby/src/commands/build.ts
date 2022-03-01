@@ -62,12 +62,15 @@ import {
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
+import { listenForSegfaults } from "../utils/listen-for-segfaults"
 
 module.exports = async function build(
   program: IBuildArgs,
   // Let external systems running Gatsby to inject attributes
   externalTelemetryAttributes: Record<string, any>
 ): Promise<void> {
+  await listenForSegfaults(program.directory)
+
   // global gatsby object to use without store
   global.__GATSBY = {
     buildId: uuid.v4(),

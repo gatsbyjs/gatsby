@@ -60,4 +60,5 @@ export enum Type {
   WEBPACK = `WEBPACK`,
   PLUGIN = `PLUGIN`,
   COMPILATION = `COMPILATION`,
+  SEGFAULT = `SEGFAULT`,
 }
