@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.8.2](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-plugin-mdx) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ### [3.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.7.1/packages/gatsby-plugin-mdx) (2022-02-15)
 
 #### Chores
