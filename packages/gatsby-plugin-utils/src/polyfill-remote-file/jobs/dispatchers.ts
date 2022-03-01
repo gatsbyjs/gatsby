@@ -31,6 +31,7 @@ export function dispatchLocalFileServiceJob(
     },
     false
   ).split(`/`)
+
   publicUrl.unshift(`public`)
 
   actions.createJobV2(
@@ -87,6 +88,7 @@ export function dispatchLocalImageServiceJob(
     mimeType: `image/${extension}`,
   }).split(`/`)
   publicUrl.unshift(`public`)
+
   actions.createJobV2(
     {
       name: `IMAGE_CDN`,
