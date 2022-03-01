@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "exports": {
     ".": "./dist/index.js",
-    "./*.js": "./dist/*.js",
+    "./*": "./dist/*.js",
     "./dist/*": "./dist/*.js",
     "./dist/polyfill-remote-file": null,
     "./dist/utils": null,
