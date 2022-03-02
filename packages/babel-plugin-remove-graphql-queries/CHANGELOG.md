@@ -9,7 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Chores
 
-- Format changelog files  ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
 
 ### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@4.8.2/packages/babel-plugin-remove-graphql-queries) (2022-03-01)
 

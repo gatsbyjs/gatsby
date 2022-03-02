@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 #### Chores
 
 - update dependency @testing-library/jest-dom to ^5.16.2 [#34956](https://github.com/gatsbyjs/gatsby/issues/34956) ([d30979d](https://github.com/gatsbyjs/gatsby/commit/d30979dff6e78334626d7e4a7546849329da4525))
-- Format changelog files  ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
 
 ### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.8.2/packages/gatsby-plugin-gatsby-cloud) (2022-03-01)
 
