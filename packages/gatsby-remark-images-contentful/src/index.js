@@ -35,6 +35,7 @@ module.exports = async (
     linkImagesToOriginal: true,
     showCaptions: false,
     pathPrefix,
+    skipSvg: false,
     withWebp: false,
     loading: `lazy`,
   }
@@ -54,6 +55,10 @@ module.exports = async (
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const options = _.defaults({}, pluginOptions, defaults)
+
+    if (options.skipSvg && fileName.split(`.`).pop().toLowerCase() === `svg`) {
+      return
+    }
 
     const optionsHash = createContentDigest(options)
 
