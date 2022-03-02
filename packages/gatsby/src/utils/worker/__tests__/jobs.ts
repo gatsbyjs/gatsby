@@ -11,6 +11,8 @@ jest.mock(`gatsby-telemetry`, () => {
   return {
     decorateEvent: jest.fn(),
     trackCli: jest.fn(),
+    addSiteMeasurement: jest.fn(),
+    isTrackingEnabled: jest.fn(),
   }
 })
 
