@@ -3,8 +3,8 @@ import { initJobsMessagingInWorker } from "../../jobs/worker-messaging"
 import { initReporterMessagingInWorker } from "../reporter"
 import { listenForSegfaults } from "../../listen-for-segfaults"
 
-// Top level await not defined, alternatively could refactor this to individual
-// re-exported functions below. Better suggestions appreciated
+// Top level await not defined, alternatively could refactor this to listen in the
+// individual re-exported functions below. Better suggestions appreciated
 listenForSegfaults(process.cwd())
   .then(() => init())
   .catch(() => init())

@@ -1,0 +1,22 @@
+{
+  "name": "segfault-tests",
+  "description": "Segfault tests",
+  "license": "MIT",
+  "scripts": {
+    "clean": "gatsby clean",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "test": "yarn clean && jest --runInBand --forceExit",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "execa": "^5.1.1",
+    "jest": "^27.5.1",
+    "segfault-handler": "^1.3.0"
+  }
+}
