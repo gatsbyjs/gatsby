@@ -132,6 +132,8 @@ export async function createGraphqlEngineBundle(
         [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
           false,
         inquirer: false,
+        // only load one version of lmdb
+        lmdb: require.resolve(`lmdb`),
       },
     },
     plugins: [
