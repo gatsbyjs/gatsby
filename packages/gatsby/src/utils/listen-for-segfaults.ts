@@ -14,6 +14,10 @@ const GATSBY_SEGFAULT_LOG = `gatsby-segfault`
  * - Write the stack trace to `.cache/logs`
  */
 export async function listenForSegfaults(root: string): Promise<void> {
+  if (!process.env.GATSBY_EXPERIMENTAL_LISTEN_FOR_SEGFAULTS) {
+    return
+  }
+
   try {
     const cacheLogsDir = `${root}/${CACHE_LOGS_DIR}`
     const uuid = v4()

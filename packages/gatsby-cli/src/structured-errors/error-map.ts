@@ -708,7 +708,7 @@ const errors = {
   // Segfault handler
   "12000": {
     text: (context): string =>
-      `A segfault occurred, likely in a native dependency of Gatsby. There should be output above, otherwise see the stack trace here:\n${context?.relativeLogFilePath}`,
+      `A segfault occurred, likely in a Gatsby dependency with native addons. There should be output above, otherwise see the stack trace here:\n${context?.relativeLogFilePath}`,
     level: Level.ERROR,
     type: Type.SEGFAULT,
     category: ErrorCategory.SYSTEM,

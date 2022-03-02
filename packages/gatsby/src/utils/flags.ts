@@ -235,6 +235,15 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `LISTEN_FOR_SEGFAULTS`,
+    env: `GATSBY_EXPERIMENTAL_LISTEN_FOR_SEGFAULTS`,
+    command: `all`,
+    telemetryId: `ListenForSegfaults`,
+    description: `Attempt to listen for and log segfault errors. Helpful when dependencies with native addons throw cryptic segfaults.`,
+    experimental: true,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags
