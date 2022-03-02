@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 #### Chores
 
 - update dependency json2csv to ^5.0.7 for gatsby-transformer-csv [#34957](https://github.com/gatsbyjs/gatsby/issues/34957) ([574e04b](https://github.com/gatsbyjs/gatsby/commit/574e04bdde3548849630f1aaa383eca38cfd9d74))
-- Format changelog files  ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
 
 ## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.8.0/packages/gatsby-transformer-csv) (2022-02-22)
 

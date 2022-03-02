@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Chores
 
-- Format changelog files  ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
 
 ## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.8.0/packages/gatsby-remark-code-repls) (2022-02-22)
 

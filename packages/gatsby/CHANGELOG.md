@@ -21,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - stabilize ts compilation parcel output [#34943](https://github.com/gatsbyjs/gatsby/issues/34943) ([f2bce35](https://github.com/gatsbyjs/gatsby/commit/f2bce35acf38715d507f4a83870226b823888347))
 - Batch page dependency actions [#34856](https://github.com/gatsbyjs/gatsby/issues/34856) ([09a911e](https://github.com/gatsbyjs/gatsby/commit/09a911e68598d544e74a68423302e8f8b6a37407))
-- Format changelog files  ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
 - Cache date formatting in lmdb cache [#34834](https://github.com/gatsbyjs/gatsby/issues/34834) ([446f9ff](https://github.com/gatsbyjs/gatsby/commit/446f9ff91e61b6546ad26702b102e7c572e2e2d7))
 - Update North Star in README [#34855](https://github.com/gatsbyjs/gatsby/issues/34855) ([b8a44a4](https://github.com/gatsbyjs/gatsby/commit/b8a44a4a45dc43e56b7e6397a60a10716f6ee7ff))
 

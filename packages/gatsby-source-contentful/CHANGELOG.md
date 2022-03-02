@@ -14,7 +14,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 #### Chores
 
 - update dependency nock to ^13.2.4 for gatsby-source-contentful [#34958](https://github.com/gatsbyjs/gatsby/issues/34958) ([f65c076](https://github.com/gatsbyjs/gatsby/commit/f65c076a9b546380e5d9f15d691470bac2ed7592))
-- Format changelog files  ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
 
 ### [7.6.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.6.2/packages/gatsby-source-contentful) (2022-03-01)
 
