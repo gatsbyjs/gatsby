@@ -30,7 +30,7 @@ We accept all types of contributions to:
 - [`e2e-tests`](https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests)
 - [`docs`](https://github.com/gatsbyjs/gatsby/tree/master/docs)
 
-We accept all types of contributions to [`packages`](https://github.com/gatsbyjs/gatsby/tree/master/packages) with these exceptions:
+We accept all types of contributions to [`packages`](https://github.com/gatsbyjs/gatsby/tree/master/packages) but the following packages have extra requirements:
 
 - [`gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby)
 - [`gatsby-core-utils/remote-file-utils`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils/src/remote-file-utils)
