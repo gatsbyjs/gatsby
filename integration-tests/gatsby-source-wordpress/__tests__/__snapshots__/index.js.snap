@@ -3921,7 +3921,7 @@ Array [
       "height",
       "publicUrl",
       "resize",
-      "gatsbyImageData",
+      "gatsbyImage",
     ],
     "name": "WpMediaItem",
   },
