@@ -42,30 +42,32 @@ async function onCreateNode(api, pluginOptions) {
 
   /** @type string */
   const content = await api.loadNodeContent(api.node)
-  
-  /** Captures the import name when used on a file with an extension up to 4 chars long. e.g 
+
+  /** Captures the import name when used on a file with an extension up to 4 chars long. e.g
    * `import pic from file.jpeg` or `import * as pic from file.jpeg` */
   const importFinderRegexp = `import {?(?:\\*\\s+as\\s+)?(.*)(?:}?\\s*from\\s+['"].*\\.(?:avif|bmp|jpe?g|gif|png|svg|webp)['"])`
   /** An array of file imports, e.g. `import pic from file.jpeg`
    * @type RegExpMatchArray */
-  let fileImports = []
+  const fileImports = []
   /** @type string[] */
-  let namedImports = []
-  Array.from(content.matchAll(RegExp(importFinderRegexp, 'gm')), (search, idx) => {
+  const namedImports = []
+  Array.from(content.matchAll(RegExp(importFinderRegexp, `gm`)), (search, idx) => {
     fileImports[idx] = search[0]
     namedImports[idx] = search[1]
   })
-  const importId = api.node.id.replace(/-/g,'')
+  const importId = api.node.id.replace(/-/g, ``)
 
-  const renamedImports = fileImports?.map((fileImport, index) => {
-    return fileImport.replace(namedImports[index],  `${namedImports[index].trim()}_${importId} `)
-  })
+  const renamedImports = fileImports?.map((fileImport, index) => fileImport.replace(
+    namedImports[index], `${namedImports[index].trim()}_${importId} `
+  ))
 
   /** @type string */
   let fixedContent = content
   if (fileImports?.length !== renamedImports?.length) {
     // Throw error
-    api.reporter.error("Error: the number of namespaced imports and found imports do not match in gatsby-plugin-mdx's onCreateNode")
+    api.reporter.error(
+      `Error: the number of namespaced imports and found imports do not match in gatsby-plugin-mdx's onCreateNode`
+    )
   } else {
     try {
       fileImports.length > 0 && fileImports.forEach((item, index) => {
@@ -74,10 +76,10 @@ async function onCreateNode(api, pluginOptions) {
           // 1st replacement: replace given import, with uid postfixed imports
           .replace(item, renamedImports[index])
           // 2nd replacement: check for src={importName} and globally replace it regardless of surrounding space
-          .replace(RegExp(`src={ *?${namedImport} *?}`, 'gm'), `src={${namedImport}_${importId}}`)
+          .replace(RegExp(`src={ *?${namedImport} *?}`, `gm`), `src={${namedImport}_${importId}}`)
       })
-    } catch(err) {
-      api.reporter.error("Error when creating namespaced imports in gatsby-plugin-mdx")
+    } catch (err) {
+      api.reporter.error(`Error when creating namespaced imports in gatsby-plugin-mdx`)
     }
   }
 
