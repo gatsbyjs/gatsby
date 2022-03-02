@@ -113,10 +113,11 @@ export function applyFastFilters(
     // So if there's only one bucket in this list the next loop is skipped
 
     while (nodesPerValueArrs.length > 1) {
-      // TS limitation: cannot guard against .pop(), so we must double cast
-      const a = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodePartial>
-      const b = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNodePartial>
-      nodesPerValueArrs.push(intersectNodesByCounter(a, b))
+      const a = nodesPerValueArrs.pop() || []
+      const b = nodesPerValueArrs.pop() || []
+      nodesPerValueArrs.push(
+        intersectNodesByCounter(a, b, sortFields, resolvedFields)
+      )
     }
 
     const result = nodesPerValueArrs[0]
@@ -126,7 +127,9 @@ export function applyFastFilters(
       return null
     }
 
-    return result
+    return result.map(nodeId =>
+      getGatsbyNodePartial(nodeId, sortFields, resolvedFields)
+    )
   }
 }
 
@@ -215,7 +218,9 @@ function getBucketsForQueryFilter(
     filterCacheKey,
     filterValue as FilterValueNullable,
     filtersCache,
-    false
+    false,
+    sortFields,
+    resolvedFields
   )
 
   if (!nodesPerValue) {
@@ -272,7 +277,9 @@ function collectBucketForElemMatch(
     filterCacheKey,
     targetValue,
     filtersCache,
-    true
+    true,
+    sortFields,
+    resolvedFields
   )
 
   if (!nodesByValue) {
@@ -360,6 +367,8 @@ function convertAndApplyFastFilters(
     }
   }
 
+  const sortFields = sort?.fields || []
+
   if (filters.length === 0) {
     const filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
     if (!filtersCache.has(filterCacheKey)) {
@@ -367,7 +376,7 @@ function convertAndApplyFastFilters(
         filterCacheKey,
         nodeTypeNames,
         filtersCache,
-        sort?.fields || [],
+        sortFields,
         resolvedFields
       )
     }
@@ -375,8 +384,8 @@ function convertAndApplyFastFilters(
     // If there's a filter, there (now) must be an entry for this cache key
     const filterCache = filtersCache.get(filterCacheKey) as IFilterCache
     // If there is no filter then the ensureCache step will populate this:
-    const cache = filterCache.meta.orderedByCounter!.map(
-      nodeId => filterCache.partials.get(nodeId)!
+    const cache = filterCache.meta.orderedByCounter!.map(nodeId =>
+      getGatsbyNodePartial(nodeId, sortFields, resolvedFields)
     )
 
     return cache.slice(0)
@@ -386,7 +395,7 @@ function convertAndApplyFastFilters(
     filters,
     nodeTypeNames,
     filtersCache,
-    sort?.fields || [],
+    sortFields,
     resolvedFields
   )
 

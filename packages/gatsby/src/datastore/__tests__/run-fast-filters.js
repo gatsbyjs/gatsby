@@ -475,10 +475,20 @@ describe(`applyFastFilters`, () => {
 })
 
 describe(`edge cases (yay)`, () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     mockNodes().forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
+    )
+    await getDataStore().ready()
+  })
+
+  afterEach(async () => {
+    mockNodes().forEach(node =>
+      store.dispatch({
+        type: `DELETE_NODE`,
+        payload: node,
+      })
     )
     await getDataStore().ready()
   })
@@ -532,9 +542,14 @@ describe(`edge cases (yay)`, () => {
     expect(run).toThrow(
       `Invariant violation: inconsistent node counters detected`
     )
+
+    store.dispatch({
+      type: `DELETE_NODE`,
+      payload: badNode,
+    })
   })
 
-  it(`works with subsequent, different filters (issue #34910)`, () => {
+  it(`works with subsequent, different sorts (issue #34910)`, () => {
     // shared filter cache
     const filtersCache = new Map()
 
