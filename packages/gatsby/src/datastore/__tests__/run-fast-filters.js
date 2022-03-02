@@ -532,9 +532,14 @@ describe(`edge cases (yay)`, () => {
     expect(run).toThrow(
       `Invariant violation: inconsistent node counters detected`
     )
+
+    store.dispatch({
+      type: `DELETE_NODE`,
+      payload: badNode,
+    })
   })
 
-  it(`i34910`, () => {
+  it(`works with subsequent, different filters (issue #34910)`, () => {
     // shared filter cache
     const filtersCache = new Map()
 

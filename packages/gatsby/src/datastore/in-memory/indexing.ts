@@ -1141,7 +1141,7 @@ export function intersectNodesByCounter(
     } else if (counterA > counterB) {
       pointerB++
     } else {
-      if (a[pointerA] !== b[pointerB]) {
+      if (a[pointerA].id !== b[pointerB].id) {
         throw new Error(
           `Invariant violation: inconsistent node counters detected`
         )
