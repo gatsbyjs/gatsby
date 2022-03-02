@@ -1,5 +1,5 @@
 const { causeSegfault } = require("segfault-handler")
 
-exports.onCreatePage = () => {
+exports.onPreBuild = () => {
   causeSegfault()
 }

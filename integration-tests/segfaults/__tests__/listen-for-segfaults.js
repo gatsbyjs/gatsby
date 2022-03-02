@@ -12,7 +12,7 @@ const options = {
 
 jest.setTimeout(30000)
 
-describe(`build process`, () => {
+describe(`segfault in build process`, () => {
   beforeAll(() => {
     sync(`node`, [cli, `clean`]), options
   })
