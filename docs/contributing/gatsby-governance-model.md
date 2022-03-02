@@ -35,7 +35,7 @@ We accept all types of contributions to [`packages`](https://github.com/gatsbyjs
 - [`gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby)
 - [`gatsby-core-utils/remote-file-utils`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils/src/remote-file-utils)
 
-For these exceptions above, we ask you to open a [feature request](#feature-requests) (or for larger changes an [RFC](/contributing/rfc-process/)) before opening PRs for features. Contributions, such as bug fixes and documentation updates, can be made without any prior interaction with the team and don't require a feature request/RFC.
+For these two packages, we ask you to open a [feature request](#feature-requests) (or for larger changes an [RFC](/contributing/rfc-process/)) before opening PRs for features. Contributions, such as bug fixes and documentation updates, can be made without any prior interaction with the team and don't require a feature request/RFC.
 
 ## Contributor levels
 
