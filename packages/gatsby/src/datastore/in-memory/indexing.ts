@@ -24,7 +24,7 @@ export type FilterOp =  // TODO: merge with DbComparator ?
 // Note: `undefined` is an encoding for a property that does not exist
 
 export type FilterCacheKey = string
-type GatsbyNodeID = string
+export type GatsbyNodeID = string
 
 export interface IGatsbyNodePartial {
   id: GatsbyNodeID
@@ -120,9 +120,6 @@ export const getGatsbyNodePartial = (
   return partial
 }
 
-const sortByIds = (a: IGatsbyNodePartial, b: IGatsbyNodePartial): number =>
-  a.internal.counter - b.internal.counter
-
 export interface IFilterCache {
   op: FilterOp
   // In this map `undefined` values represent nodes that did not have the path
@@ -133,26 +130,37 @@ export interface IFilterCache {
   // last step.
   // TODO: We might decide to make sure these buckets _are_ deduped for eq perf
   byValue: Map<FilterValueNullable, Array<IGatsbyNodePartial>>
+  partials: Map<GatsbyNodeID, IGatsbyNodePartial>
   meta: {
     // Used by ne/nin, which will create a Set from this array and then remove another set(s) and sort
-    nodesUnordered?: Array<IGatsbyNodePartial>
+    nodesUnordered?: Array<GatsbyNodeID>
     // Flat list of all nodes by requested types, ordered by counter (cached for empty filters)
-    orderedByCounter?: Array<IGatsbyNodePartial>
+    orderedByCounter?: Array<GatsbyNodeID>
     // Ordered list of all values (by `<`) found by this filter. No null / undefs
     valuesAsc?: Array<FilterValue>
     // Flat list of nodes, ordered by valueAsc
-    nodesByValueAsc?: Array<IGatsbyNodePartial>
+    nodesByValueAsc?: Array<GatsbyNodeID>
     // Ranges of nodes per value, maps to the nodesByValueAsc array
     valueRangesAsc?: Map<FilterValue, [number, number]>
     // Ordered list of all values (by `>`) found by this filter. No null / undefs
     valuesDesc?: Array<FilterValue>
     // Flat list of nodes, ordered by valueDesc
-    nodesByValueDesc?: Array<IGatsbyNodePartial>
+    nodesByValueDesc?: Array<GatsbyNodeID>
     // Ranges of nodes per value, maps to the nodesByValueDesc array
     valueRangesDesc?: Map<FilterValue, [number, number]>
   }
 }
 export type FiltersCache = Map<FilterCacheKey, IFilterCache>
+
+const sortByPartialIds = (
+  a: IGatsbyNodePartial | undefined,
+  b: IGatsbyNodePartial | undefined
+): number => (a?.internal.counter || 0) - (b?.internal.counter || 0)
+
+const sortByIds =
+  (filterCache: IFilterCache) =>
+  (a: GatsbyNodeID, b: GatsbyNodeID): number =>
+    sortByPartialIds(filterCache.partials.get(a), filterCache.partials.get(b))
 
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
@@ -161,7 +169,7 @@ export function postIndexingMetaSetup(
   // Loop through byValue and make sure the buckets are sorted by counter
   // Since we don't do insertion sort, we have to do it afterwards
   for (const bucket of filterCache.byValue) {
-    bucket[1].sort(sortByIds)
+    bucket[1].sort(sortByPartialIds)
   }
 
   if (op === `$ne` || op === `$nin`) {
@@ -184,11 +192,11 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   // For `$ne` we will take the list of all targeted nodes and eliminate the
   // bucket of nodes with a particular value, if it exists at all..
 
-  const arr: Array<IGatsbyNodePartial> = []
+  const arr: Array<GatsbyNodeID> = []
   filterCache.meta.nodesUnordered = arr
   filterCache.byValue.forEach(v => {
     v.forEach(nodeId => {
-      arr.push(nodeId)
+      arr.push(nodeId.id)
     })
   })
 }
@@ -234,7 +242,7 @@ function postIndexingMetaSetupLtLteGtGte(
     entries.sort(([a], [b]) => (a > b ? -1 : a < b ? 1 : 0))
   }
 
-  const orderedNodes: Array<IGatsbyNodePartial> = []
+  const orderedNodes: Array<GatsbyNodeID> = []
   const orderedValues: Array<FilterValue> = []
   const offsets: Map<FilterValue, [number, number]> = new Map()
   entries.forEach(([v, bucket]: [FilterValue, Array<IGatsbyNodePartial>]) => {
@@ -244,7 +252,7 @@ function postIndexingMetaSetupLtLteGtGte(
     offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.length])
     // We could do `arr.push(...bucket)` here but that's not safe with very
     // large sets, so we use a regular loop
-    bucket.forEach(node => orderedNodes.push(node))
+    bucket.forEach(node => orderedNodes.push(node.id))
     orderedValues.push(v)
   })
 
@@ -286,9 +294,10 @@ export const ensureIndexByQuery = (
 
   const filterCache: IFilterCache = {
     op,
+    partials: new Map<GatsbyNodeID, IGatsbyNodePartial>(),
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
     meta: {},
-  } as IFilterCache
+  }
   filtersCache.set(filterCacheKey, filterCache)
 
   // We cache the subsets of nodes by type, but only one type. So if searching
@@ -345,15 +354,18 @@ export function ensureEmptyFilterCache(
 
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
-  const orderedByCounter: Array<IGatsbyNodePartial> = []
-
-  filtersCache.set(filterCacheKey, {
-    op: `$eq`, // Ignore.
+  const orderedByCounter: Array<GatsbyNodeID> = []
+  const partials = new Map<GatsbyNodeID, IGatsbyNodePartial>()
+  const filterCache = {
+    op: `$eq` as FilterOp, // Ignore.
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
+    partials: new Map<GatsbyNodeID, IGatsbyNodePartial>(),
     meta: {
       orderedByCounter, // This is what we want
     },
-  })
+  }
+
+  filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
     getDataStore()
@@ -367,9 +379,10 @@ export function ensureEmptyFilterCache(
             node.__gatsby_resolved = resolved
           }
         }
-        orderedByCounter.push(
-          getGatsbyNodePartial(node, indexFields, resolvedFields)
-        )
+
+        const partial = getGatsbyNodePartial(node, indexFields, resolvedFields)
+        partials.set(partial.id, partial)
+        orderedByCounter.push(node.id)
       })
   } else {
     // Here we must first filter for the node type
@@ -386,16 +399,21 @@ export function ensureEmptyFilterCache(
               node.__gatsby_resolved = resolved
             }
           }
-          orderedByCounter.push(
-            getGatsbyNodePartial(node, indexFields, resolvedFields)
+
+          const partial = getGatsbyNodePartial(
+            node,
+            indexFields,
+            resolvedFields
           )
+          partials.set(partial.id, partial)
+          orderedByCounter.push(node.id)
         }
       })
   }
 
   // Since each node can only have one type, we shouldn't have to be concerned
   // about duplicates in this array. Just make sure they're sorted.
-  orderedByCounter.sort(sortByIds)
+  orderedByCounter.sort(sortByIds(filterCache))
 }
 
 function addNodeToFilterCache({
@@ -474,6 +492,7 @@ function markNodeForValue(
   }
 
   const partial = getGatsbyNodePartial(node, indexFields, resolvedFields)
+  filterCache.partials.set(partial.id, partial)
   if (!arr.includes(partial)) {
     arr.push(partial)
   }
@@ -496,9 +515,10 @@ export const ensureIndexByElemMatch = (
 
   const filterCache: IFilterCache = {
     op,
+    partials: new Map<GatsbyNodeID, IGatsbyNodePartial>(),
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
     meta: {},
-  } as IFilterCache
+  }
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
@@ -701,7 +721,7 @@ export const getNodesFromCacheByValue = (
   filterValue: FilterValueNullable,
   filtersCache: FiltersCache,
   wasElemMatch
-): Array<IGatsbyNodePartial> | undefined => {
+): Array<GatsbyNodeID> | undefined => {
   const filterCache = filtersCache.get(filterCacheKey)
   if (!filterCache) {
     return undefined
@@ -722,10 +742,10 @@ export const getNodesFromCacheByValue = (
 
       // Merge the two (ordered) arrays and return an ordered deduped array
       // TODO: is there a reason left why we cant just cache this merged list?
-      return unionNodesByCounter(arrNull, arrUndef)
+      return unionNodesByCounter(arrNull, arrUndef)?.map(node => node.id)
     }
 
-    return filterCache.byValue.get(filterValue)
+    return filterCache.byValue.get(filterValue)?.map(node => node.id)
   }
 
   if (op === `$in`) {
@@ -744,7 +764,7 @@ export const getNodesFromCacheByValue = (
     )
 
     const arr = [...set] // this is bad for perf but will guarantee us a unique set :(
-    arr.sort(sortByIds)
+    arr.sort(sortByPartialIds)
 
     // Note: it's very unlikely that the list of filter values is big so .includes should be fine here
     if (filterValueArr.includes(null)) {
@@ -753,7 +773,7 @@ export const getNodesFromCacheByValue = (
       const nodes = filterCache.byValue.get(undefined)
       if (nodes) {
         // This will also dedupe so don't do that immediately
-        return unionNodesByCounter(nodes, arr)
+        return unionNodesByCounter(nodes, arr)?.map(node => node.id)
       }
     }
 
@@ -762,7 +782,7 @@ export const getNodesFromCacheByValue = (
       expensiveDedupeInline(arr)
     }
 
-    return arr
+    return arr?.map(node => node.id)
   }
 
   if (op === `$nin`) {
@@ -783,7 +803,7 @@ export const getNodesFromCacheByValue = (
 
     // TODO: there's probably a more efficient algorithm to do set
     //       subtraction in such a way that we don't have to re-sort
-    return [...set].sort(sortByIds)
+    return [...set].sort(sortByIds(filterCache))
   }
 
   if (op === `$ne`) {
@@ -793,7 +813,7 @@ export const getNodesFromCacheByValue = (
 
     // TODO: there's probably a more efficient algorithm to do set
     //       subtraction in such a way that we don't have to resort here
-    return [...set].sort(sortByIds)
+    return [...set].sort(sortByIds(filterCache))
   }
 
   if (op === `$regex`) {
@@ -822,14 +842,14 @@ export const getNodesFromCacheByValue = (
     // TODO: we _can_ cache this list as well. Might make sense if it turns out that $regex is mostly used with literals
     // TODO: it may make sense to first collect all buckets and then to .concat them, or merge sort them
 
-    arr.sort(sortByIds)
+    arr.sort(sortByPartialIds)
 
     // elemMatch can cause a node to appear in multiple buckets so we must dedupe
     if (wasElemMatch) {
       expensiveDedupeInline(arr)
     }
 
-    return arr
+    return arr?.map(node => node.id)
   }
 
   if (filterValue == null) {
@@ -840,7 +860,7 @@ export const getNodesFromCacheByValue = (
 
     // This is an edge case and this value should be directly indexed
     // For `lte`/`gte` this should only return nodes for `null`, not a "range"
-    return filterCache.byValue.get(filterValue)
+    return filterCache.byValue.get(filterValue)?.map(node => node.id)
   }
 
   if (Array.isArray(filterValue)) {
@@ -867,7 +887,7 @@ export const getNodesFromCacheByValue = (
     const range = ranges!.get(filterValue)
     if (range) {
       const arr = nodes!.slice(0, range[0])
-      arr.sort(sortByIds)
+      arr.sort(sortByIds(filterCache))
       // elemMatch can cause a node to appear in multiple buckets so we must dedupe
       if (wasElemMatch) {
         expensiveDedupeInline(arr)
@@ -907,7 +927,7 @@ export const getNodesFromCacheByValue = (
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue < filterValue ? inclPivot : exclPivot
     const arr = nodes!.slice(0, until)
-    arr.sort(sortByIds)
+    arr.sort(sortByIds(filterCache))
     // elemMatch can cause a node to appear in multiple buckets so we must dedupe
     if (wasElemMatch) {
       expensiveDedupeInline(arr)
@@ -925,7 +945,7 @@ export const getNodesFromCacheByValue = (
     const range = ranges!.get(filterValue)
     if (range) {
       const arr = nodes!.slice(0, range[1])
-      arr.sort(sortByIds)
+      arr.sort(sortByIds(filterCache))
       // elemMatch can cause a node to appear in multiple buckets so we must dedupe
       if (wasElemMatch) {
         expensiveDedupeInline(arr)
@@ -965,7 +985,7 @@ export const getNodesFromCacheByValue = (
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue <= filterValue ? inclPivot : exclPivot
     const arr = nodes!.slice(0, until)
-    arr.sort(sortByIds)
+    arr.sort(sortByIds(filterCache))
     // elemMatch can cause a node to appear in multiple buckets so we must dedupe
     if (wasElemMatch) {
       expensiveDedupeInline(arr)
@@ -983,7 +1003,7 @@ export const getNodesFromCacheByValue = (
     const range = ranges!.get(filterValue)
     if (range) {
       const arr = nodes!.slice(0, range[0]).reverse()
-      arr.sort(sortByIds)
+      arr.sort(sortByIds(filterCache))
       // elemMatch can cause a node to appear in multiple buckets so we must dedupe
       if (wasElemMatch) {
         expensiveDedupeInline(arr)
@@ -1023,7 +1043,7 @@ export const getNodesFromCacheByValue = (
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue > filterValue ? inclPivot : exclPivot
     const arr = nodes!.slice(0, until).reverse()
-    arr.sort(sortByIds)
+    arr.sort(sortByIds(filterCache))
     // elemMatch can cause a node to appear in multiple buckets so we must dedupe
     if (wasElemMatch) {
       expensiveDedupeInline(arr)
@@ -1041,7 +1061,7 @@ export const getNodesFromCacheByValue = (
     const range = ranges!.get(filterValue)
     if (range) {
       const arr = nodes!.slice(0, range[1]).reverse()
-      arr.sort(sortByIds)
+      arr.sort(sortByIds(filterCache))
       // elemMatch can cause a node to appear in multiple buckets so we must dedupe
       if (wasElemMatch) {
         expensiveDedupeInline(arr)
@@ -1081,7 +1101,7 @@ export const getNodesFromCacheByValue = (
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue >= filterValue ? inclPivot : exclPivot
     const arr = nodes!.slice(0, until).reverse()
-    arr.sort(sortByIds)
+    arr.sort(sortByIds(filterCache))
     // elemMatch can cause a node to appear in multiple buckets so we must dedupe
     if (wasElemMatch) {
       expensiveDedupeInline(arr)
@@ -1096,20 +1116,20 @@ export const getNodesFromCacheByValue = (
 function removeBucketFromSet(
   filterValue: FilterValueNullable,
   filterCache: IFilterCache,
-  set: Set<IGatsbyNodePartial>
+  set: Set<GatsbyNodeID>
 ): void {
   if (filterValue === null) {
     // Edge case: $ne with `null` returns only the nodes that contain the full
     // path and that don't resolve to null, so drop `undefined` as well.
     let cache = filterCache.byValue.get(undefined)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach(node => set.delete(node.id))
     cache = filterCache.byValue.get(null)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach(node => set.delete(node.id))
   } else {
     // Not excluding null so it should include undefined leafs or leafs where
     // only the partial path exists for whatever reason.
     const cache = filterCache.byValue.get(filterValue)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach(node => set.delete(node.id))
   }
 }
 
@@ -1121,9 +1141,13 @@ function removeBucketFromSet(
  * list that is also ordered by node.internal.counter
  */
 export function intersectNodesByCounter(
-  a: Array<IGatsbyNodePartial>,
-  b: Array<IGatsbyNodePartial>
+  a: Array<GatsbyNodeID>,
+  b: Array<GatsbyNodeID>
 ): Array<IGatsbyNodePartial> {
+  // TODO: types aren't correct here, as we need to convert node ID to node partials for comparisons
+  //       but to do this, we need the cache. we might have to split `partials` into it's own cache
+  //       separate from filtersCache
+
   let pointerA = 0
   let pointerB = 0
   // TODO: perf check: is it helpful to init the array to min(maxA,maxB) items?
@@ -1142,6 +1166,11 @@ export function intersectNodesByCounter(
       pointerB++
     } else {
       if (a[pointerA] !== b[pointerB]) {
+        console.log({ a: a[pointerA], b: b[pointerB] })
+        console.log({
+          a: a[pointerA].gatsbyNodePartialInternalData.indexFields,
+          b: b[pointerB].gatsbyNodePartialInternalData.indexFields,
+        })
         throw new Error(
           `Invariant violation: inconsistent node counters detected`
         )
@@ -1227,11 +1256,11 @@ export function unionNodesByCounter(
   return arr
 }
 
-function expensiveDedupeInline(arr: Array<IGatsbyNodePartial>): void {
+function expensiveDedupeInline<T>(arr: Array<T>): void {
   // An elemMatch filter may cause duplicates to appear in a bucket.
   // Since the bucket is sorted those should now be back to back
   // Worst case this is a fast O(n) loop that does nothing.
-  let prev: IGatsbyNodePartial | undefined = undefined
+  let prev: T | undefined = undefined
 
   // We copy-on-find because a splice is expensive and we can't use Sets
 

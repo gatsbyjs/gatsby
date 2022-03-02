@@ -534,7 +534,7 @@ describe(`edge cases (yay)`, () => {
     )
   })
 
-  it(`i34910`, () => {
+  it(`works with subsequent, different filters (issue #34910)`, () => {
     // shared filter cache
     const filtersCache = new Map()
 

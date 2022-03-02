@@ -22,6 +22,7 @@ import {
   IGatsbyNodePartial,
   getSortFieldIdentifierKeys,
   getGatsbyNodePartial,
+  GatsbyNodeID,
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
 import { IRunQueryArgs, IQueryResult } from "../types"
@@ -138,8 +139,8 @@ function getBucketsForFilters(
   filtersCache: FiltersCache,
   sortFields: Array<string>,
   resolvedFields: any
-): Array<Array<IGatsbyNodePartial>> | undefined {
-  const nodesPerValueArrs: Array<Array<IGatsbyNodePartial>> = []
+): Array<Array<GatsbyNodeID>> | undefined {
+  const nodesPerValueArrs: Array<Array<GatsbyNodeID>> = []
 
   // Fail fast while trying to create and get the value-cache for each path
   const every = filters.every(filter => {
@@ -188,7 +189,7 @@ function getBucketsForQueryFilter(
   filter: IDbQueryQuery,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<IGatsbyNodePartial>>,
+  nodesPerValueArrs: Array<Array<GatsbyNodeID>>,
   sortFields: Array<string>,
   resolvedFields: any
 ): boolean {
@@ -236,7 +237,7 @@ function collectBucketForElemMatch(
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
-  nodesPerValueArrs: Array<Array<IGatsbyNodePartial>>,
+  nodesPerValueArrs: Array<Array<GatsbyNodeID>>,
   sortFields: Array<string>,
   resolvedFields: any
 ): boolean {
@@ -374,7 +375,9 @@ function convertAndApplyFastFilters(
     // If there's a filter, there (now) must be an entry for this cache key
     const filterCache = filtersCache.get(filterCacheKey) as IFilterCache
     // If there is no filter then the ensureCache step will populate this:
-    const cache = filterCache.meta.orderedByCounter as Array<IGatsbyNodePartial>
+    const cache = filterCache.meta.orderedByCounter!.map(
+      nodeId => filterCache.partials.get(nodeId)!
+    )
 
     return cache.slice(0)
   }
