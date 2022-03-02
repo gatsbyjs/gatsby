@@ -51,15 +51,21 @@ async function onCreateNode(api, pluginOptions) {
   const fileImports = []
   /** @type string[] */
   const namedImports = []
-  Array.from(content.matchAll(RegExp(importFinderRegexp, `gm`)), (search, idx) => {
-    fileImports[idx] = search[0]
-    namedImports[idx] = search[1]
-  })
+  Array.from(
+    content.matchAll(RegExp(importFinderRegexp, `gm`)),
+    (search, idx) => {
+      fileImports[idx] = search[0]
+      namedImports[idx] = search[1]
+    }
+  )
   const importId = api.node.id.replace(/-/g, ``)
 
-  const renamedImports = fileImports?.map((fileImport, index) => fileImport.replace(
-    namedImports[index], `${namedImports[index].trim()}_${importId} `
-  ))
+  const renamedImports = fileImports?.map((fileImport, index) =>
+    fileImport.replace(
+      namedImports[index],
+      `${namedImports[index].trim()}_${importId} `
+    )
+  )
 
   /** @type string */
   let fixedContent = content
@@ -70,16 +76,22 @@ async function onCreateNode(api, pluginOptions) {
     )
   } else {
     try {
-      fileImports.length > 0 && fileImports.forEach((item, index) => {
-        const namedImport = namedImports[index].trim()
-        fixedContent = fixedContent
-          // 1st replacement: replace given import, with uid postfixed imports
-          .replace(item, renamedImports[index])
-          // 2nd replacement: check for src={importName} and globally replace it regardless of surrounding space
-          .replace(RegExp(`src={ *?${namedImport} *?}`, `gm`), `src={${namedImport}_${importId}}`)
-      })
+      fileImports.length > 0 &&
+        fileImports.forEach((item, index) => {
+          const namedImport = namedImports[index].trim()
+          fixedContent = fixedContent
+            // 1st replacement: replace given import, with uid postfixed imports
+            .replace(item, renamedImports[index])
+            // 2nd replacement: check for src={importName} and globally replace it regardless of surrounding space
+            .replace(
+              RegExp(`src={ *?${namedImport} *?}`, `gm`),
+              `src={${namedImport}_${importId}}`
+            )
+        })
     } catch (err) {
-      api.reporter.error(`Error when creating namespaced imports in gatsby-plugin-mdx`)
+      api.reporter.error(
+        `Error when creating namespaced imports in gatsby-plugin-mdx`
+      )
     }
   }
 
