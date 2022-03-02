@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.9.0/packages/gatsby-plugin-image) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- update readme typo [#34847](https://github.com/gatsbyjs/gatsby/issues/34847) ([b16d0f1](https://github.com/gatsbyjs/gatsby/commit/b16d0f13a6b3cbb956078ba11435fe268f5d4597))
+
+### [2.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.8.2/packages/gatsby-plugin-image) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
 ### [2.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.8.1/packages/gatsby-plugin-image) (2022-02-25)
 
 **Note:** Version bump only for package gatsby-plugin-image

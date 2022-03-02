@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.0/packages/gatsby) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Features
+
+- Compile Gatsby Config Files AOT [#34776](https://github.com/gatsbyjs/gatsby/issues/34776) [#34757](https://github.com/gatsbyjs/gatsby/issues/34757) [#34779](https://github.com/gatsbyjs/gatsby/issues/34779) [#34773](https://github.com/gatsbyjs/gatsby/issues/34773) [#34827](https://github.com/gatsbyjs/gatsby/issues/34827) [#34890](https://github.com/gatsbyjs/gatsby/issues/34890) [#34892](https://github.com/gatsbyjs/gatsby/issues/34892) fix [#34915](https://github.com/gatsbyjs/gatsby/issues/34915) [#34945](https://github.com/gatsbyjs/gatsby/issues/34945) ([04d1d37](https://github.com/gatsbyjs/gatsby/commit/04d1d37d53e28deb13ec46dd97fb79b2c6cc863e))
+
+#### Bug Fixes
+
+- update dependency eslint-plugin-react to ^7.29.2 [#34988](https://github.com/gatsbyjs/gatsby/issues/34988) ([78779ff](https://github.com/gatsbyjs/gatsby/commit/78779ff92094c8d778f9373af1de0a94049f2fe5))
+- wait for LMDB upserts to finish before emitting ENGINES_READY [#34853](https://github.com/gatsbyjs/gatsby/issues/34853) ([b4637c0](https://github.com/gatsbyjs/gatsby/commit/b4637c0983614d9ed6a126c8ab091fdf3ca5290c))
+- Remove double enhanced-resolve dep resolve [#34854](https://github.com/gatsbyjs/gatsby/issues/34854) ([2c141b8](https://github.com/gatsbyjs/gatsby/commit/2c141b86e3078245ea077b6ec41f55c29c7f1d9b))
+
+#### Chores
+
+- stabilize ts compilation parcel output [#34943](https://github.com/gatsbyjs/gatsby/issues/34943) ([f2bce35](https://github.com/gatsbyjs/gatsby/commit/f2bce35acf38715d507f4a83870226b823888347))
+- Batch page dependency actions [#34856](https://github.com/gatsbyjs/gatsby/issues/34856) ([09a911e](https://github.com/gatsbyjs/gatsby/commit/09a911e68598d544e74a68423302e8f8b6a37407))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+- Cache date formatting in lmdb cache [#34834](https://github.com/gatsbyjs/gatsby/issues/34834) ([446f9ff](https://github.com/gatsbyjs/gatsby/commit/446f9ff91e61b6546ad26702b102e7c572e2e2d7))
+- Update North Star in README [#34855](https://github.com/gatsbyjs/gatsby/issues/34855) ([b8a44a4](https://github.com/gatsbyjs/gatsby/commit/b8a44a4a45dc43e56b7e6397a60a10716f6ee7ff))
+
+### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.8.2/packages/gatsby) (2022-03-01)
+
+**Note:** Version bump only for package gatsby
+
 ### [4.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.8.1/packages/gatsby) (2022-02-25)
 
 **Note:** Version bump only for package gatsby

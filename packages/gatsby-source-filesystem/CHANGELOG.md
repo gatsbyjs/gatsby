@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.9.0/packages/gatsby-source-filesystem) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.8.2/packages/gatsby-source-filesystem) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ### [4.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.8.1/packages/gatsby-source-filesystem) (2022-02-25)
 
 **Note:** Version bump only for package gatsby-source-filesystem
