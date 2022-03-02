@@ -20,7 +20,7 @@ The [Gatsby User Collective](https://gatsbyuc.dev/)'s goal is to democratize the
 
 ### Areas for contribution
 
-As the core of Gatsby is a complex piece of software, it requires some onboarding before contributions can be made efficiently. We're clearly defining here in which areas we accept contributions at the moment and in which not. This is especially important for new features as they always have an inherent maintenance cost -- and making changes without the complete context around Gatsby is difficult. _This list is not set in stone and can change when e.g. a "Core Maintainer (L3)" role is introduced._
+As the core of Gatsby is a complex piece of software, it requires some onboarding before contributions can be made efficiently. We're clearly defining here in which areas we accept contributions without any prior interaction with the team at the moment and in which not. This is especially important for new features as they always have an inherent maintenance cost -- and making changes without the complete context around Gatsby is difficult. _This list is not set in stone and can change when e.g. a "Core Maintainer (L3)" role is introduced._
 
 We accept all types of contributions to:
 
@@ -35,7 +35,7 @@ We accept all types of contributions to [`packages`](https://github.com/gatsbyjs
 - [`gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby)
 - [`gatsby-core-utils/remote-file-utils`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils/src/remote-file-utils)
 
-For the areas above we accept a limited set of contribution types, such as bug fixes and documentation updates. To implement new features in these areas you must open a [feature request](#feature-requests) first.
+For these exceptions above, we ask you to open a [feature request](#feature-requests) (or for larger changes an [RFC](/contributing/rfc-process/)) before opening PRs for features. Contributions, such as bug fixes and documentation updates, can be made without any prior interaction with the team and don't require a feature request/RFC.
 
 ## Contributor levels
 
@@ -63,7 +63,7 @@ Have you done something (big or small) to contribute to the health, success, or 
 
 #### Privileges
 
-At this time we have no specific privileges for this role. If you have ideas here please let us know!
+At this time we have no specific privileges for this role except that you can claim yourself [free Gatsby swag](/contributing/contributor-swag/). If you have ideas here please let us know!
 
 #### Responsibilities
 
@@ -96,7 +96,7 @@ There is no strict minimum number of contributions needed to reach this level, a
 
 #### Privileges
 
-- All privileges of the [Contributor role](#TODO), plus...
+- All privileges of the [Contributor role](#level-1-l1---contributor), plus...
 - Invitation to the `@Maintainer` role on [Discord](https://gatsby.dev/discord)
 - Invitation to the `Maintainers` team on GitHub.
 - New name color on Discord: **Blue**.
@@ -118,7 +118,7 @@ There is no strict minimum number of contributions needed to reach this level, a
 
 #### Nomination
 
-To be nominated, a nominee is expected to already be performing some of the responsibilities of a Maintainer over the course of at least a couple of weeks.
+To be nominated, a nominee is expected to already be performing some of the responsibilities of a Maintainer over the course of at least a couple of weeks. You can apply through contacting one of the `@Team` members on Discord who then in turn will trigger a [Voting](#voting) process.
 
 In some rare cases, this role may be revoked by an **Admin**. However, under normal circumstances this role is granted for as long as the contributor wishes to engage with the project.
 
@@ -130,7 +130,7 @@ Team is a special designation for employees of [Gatsby, Inc.](https://www.gatsby
 
 #### Privileges
 
-- All privileges of the [Maintainer role](#TODO), plus...
+- All privileges of the [Maintainer role](#level-2-l2---maintainer), plus...
 - `@Team` role on [Discord](https://gatsby.dev/discord)
 - New name color on Discord: **Purple**.
 - `Team` on GitHub.
@@ -164,7 +164,7 @@ Admin is an additional privilege inside the **Team** and is mainly an administra
 
 #### Privileges
 
-- All privileges of the [Team](#TODO), plus...
+- All privileges of the [Team](#team), plus...
 - `@Admin` role on [Discord](https://gatsby.dev/discord)
 - Administration privileges on GitHub.
 - Administration privileges on Discord (optional).
@@ -185,7 +185,7 @@ If you’d like to learn more about how we approach the relationship between our
 
 ### Feature requests
 
-Please open a [feature request on GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) to voice your ideas. The **Team** will review incoming requests and give a first assessment.
+Please open a [feature request on GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions/categories/ideas-feature-requests) to voice your ideas. For larger changes please consider opening an [RFC](/contributing/rfc-process/). The **Team** will review incoming requests and give a first assessment.
 
 ### RFCs
 
