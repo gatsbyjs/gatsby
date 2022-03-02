@@ -76,7 +76,7 @@ async function onCreateNode(api, pluginOptions) {
     )
   } else {
     try {
-      fileImports.length > 0 &&
+      if (fileImports.length > 0) {
         fileImports.forEach((item, index) => {
           const namedImport = namedImports[index].trim()
           fixedContent = fixedContent
@@ -88,6 +88,7 @@ async function onCreateNode(api, pluginOptions) {
               `src={${namedImport}_${importId}}`
             )
         })
+      }
     } catch (err) {
       api.reporter.error(
         `Error when creating namespaced imports in gatsby-plugin-mdx`
