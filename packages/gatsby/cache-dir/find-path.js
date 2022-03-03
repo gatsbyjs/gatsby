@@ -8,9 +8,11 @@ let matchPaths = []
 
 const trimPathname = rawPathname => {
   let newRawPathname = rawPathname
+  const queryIndex = rawPathname.indexOf(`?`)
 
-  if (rawPathname.includes(`%25`)) {
-    newRawPathname = encodeURIComponent(rawPathname)
+  if (queryIndex !== -1) {
+    const [path, qs] = rawPathname.split(`?`)
+    newRawPathname = `${path}?${encodeURIComponent(qs)}`
   }
 
   const pathname = decodeURIComponent(newRawPathname)
