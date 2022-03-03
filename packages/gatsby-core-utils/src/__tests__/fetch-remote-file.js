@@ -513,7 +513,7 @@ Fetch details:
     expect(cachedFilePath).toStartWith(path.join(cache.directory, `public`))
     expect(gotStream).toBeCalledTimes(1)
     expect(fs.pathExists).toBeCalledTimes(1)
-    expect(fs.copy).toBeCalled()
+    expect(fs.copy).toBeCalledTimes(1)
     expect(await fs.pathExists(cachedFilePath)).toBe(true)
     global.__GATSBY = currentGlobal
   })
@@ -544,7 +544,7 @@ Fetch details:
     expect(cachedFilePath).toStartWith(path.join(cache.directory, `public`))
     expect(gotStream).toBeCalledTimes(1)
     expect(fs.pathExists).toBeCalledTimes(0)
-    expect(fs.copy).toBeCalled()
+    expect(fs.copy).toBeCalledTimes(1)
     global.__GATSBY = currentGlobal
   })
 
