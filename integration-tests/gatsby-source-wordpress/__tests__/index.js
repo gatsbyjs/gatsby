@@ -18,7 +18,7 @@ const {
   resetSchema,
 } = require(`../test-fns/test-utils/increment-remote-data`)
 
-jest.setTimeout(100000)
+jest.setTimeout(200000)
 
 // we run these tests twice in a row
 // to make sure everything passes on a warm cache build
