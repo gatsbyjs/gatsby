@@ -1,6 +1,6 @@
 const fetch = require("node-fetch")
 
-jest.setTimeout(100000)
+jest.setTimeout(200000)
 
 describe(`auth in gatsby-browser`, () => {
   test(`should not be present`, async () => {
