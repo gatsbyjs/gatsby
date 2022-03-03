@@ -265,7 +265,7 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
 - Run `gatsby clean` to remove any old artifacts
 - Convert your `.js`/`.jsx` files to `.ts/.tsx`
 - Install `@types/node`, `@types/react`, `@types/react-dom`, `typescript` as `devDependencies`
-- Add a `tsconfig.json` file using `npx tsc init` or use the one from [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json)
+- Add a `tsconfig.json` file using `npx tsc --init` or use the one from [gatsby-minimal-starter-ts](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/tsconfig.json)
 - Rename `gatsby-*` files:
   - `gatsby-node.js` to `gatsby-node.ts`
   - `gatsby-config.js` to `gatsby-config.ts`
