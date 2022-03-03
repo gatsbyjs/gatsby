@@ -41,7 +41,7 @@ export async function getConfigFile(
     const firstLineOfRequireStack = outerError?.requireStack?.[0]
     const shouldContinue =
       outerError.code === `MODULE_NOT_FOUND` &&
-      firstLineOfRequireStack.includes(`get-config-file`)
+      firstLineOfRequireStack?.includes(`get-config-file`)
 
     if (!shouldContinue) {
       report.panic({
