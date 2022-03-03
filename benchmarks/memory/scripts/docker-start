@@ -5,16 +5,21 @@ if [ -n "$DOCKER_ID" ]; then
   return 1
 fi
 
+MEMORY_LIMIT="${DOCKER_MEMORY_LIMIT:-2g}"
+
 DOCKER_ID=$(\
   docker run -td \
   --mount type=bind,source="$(pwd)/../..",target=/usr/src/gatsby \
   --mount type=bind,source="$(pwd)",target=/usr/src/app \
   --publish 9229:9229 \
   --publish 9000:9000 \
-  --memory="2g" \
-  --memory-swap="2g" \
+  --memory="${MEMORY_LIMIT}" \
+  --memory-swap="${MEMORY_LIMIT}" \
   gatsby-memory \
   | head -c 12 \
 )
 
-echo "\nStarted container id ${DOCKER_ID}! Run \`yarn docker:connect\` to connect to the container.\n"
+sleep 1
+docker exec $DOCKER_ID bash -c "/usr/src/app/scripts/docker-write-memory &"
+
+echo "\nStarted container id ${DOCKER_ID} with ${MEMORY_LIMIT} of memory! Run \`yarn docker:connect\` to connect to the container.\n"

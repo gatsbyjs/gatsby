@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.9.0/packages/gatsby-cli) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Features
+
+- Compile Gatsby Config Files AOT [#34776](https://github.com/gatsbyjs/gatsby/issues/34776) [#34757](https://github.com/gatsbyjs/gatsby/issues/34757) [#34779](https://github.com/gatsbyjs/gatsby/issues/34779) [#34773](https://github.com/gatsbyjs/gatsby/issues/34773) [#34827](https://github.com/gatsbyjs/gatsby/issues/34827) [#34890](https://github.com/gatsbyjs/gatsby/issues/34890) [#34892](https://github.com/gatsbyjs/gatsby/issues/34892) fix [#34915](https://github.com/gatsbyjs/gatsby/issues/34915) [#34945](https://github.com/gatsbyjs/gatsby/issues/34945) ([04d1d37](https://github.com/gatsbyjs/gatsby/commit/04d1d37d53e28deb13ec46dd97fb79b2c6cc863e))
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.8.2/packages/gatsby-cli) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+### [4.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.8.1/packages/gatsby-cli) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.8.0/packages/gatsby-cli) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Features
+
+- Match node manifest pages by page context slug [#34790](https://github.com/gatsbyjs/gatsby/issues/34790) ([ba8e21c](https://github.com/gatsbyjs/gatsby/commit/ba8e21c32b9acb4c209e1dd7cffbf8bff4da58dd))
+
 ## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.7.0/packages/gatsby-cli) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

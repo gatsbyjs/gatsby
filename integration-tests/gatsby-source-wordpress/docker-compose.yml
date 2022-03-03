@@ -2,6 +2,7 @@ version: "3.2"
 
 services:
   db:
+    platform: linux/x86_64
     image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: gtsb-wp-dckr

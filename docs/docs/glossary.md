@@ -50,7 +50,7 @@ A storage of information locally that might be used again, so computations and l
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
 
-Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-instructions), for those who contribute to the Gatsby project.
+Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/code-contributions#setting-up-your-local-dev-environment), for those who contribute to the Gatsby project.
 
 ### Client-side
 
@@ -380,6 +380,6 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ### [Yarn](/docs/glossary/yarn/)
 
-A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
+A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/code-contributions#setting-up-your-local-dev-environment).
 
 ## Z

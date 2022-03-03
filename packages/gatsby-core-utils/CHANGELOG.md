@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.9.0/packages/gatsby-core-utils) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Bug Fixes
+
+- fix caching when using remote-file fix [#34951](https://github.com/gatsbyjs/gatsby/issues/34951) ([98f2dfc](https://github.com/gatsbyjs/gatsby/commit/98f2dfc14f7c9484f590bc60fd6258b4929c6fe0))
+- fix urls without extension fix [#34930](https://github.com/gatsbyjs/gatsby/issues/34930) ([728af63](https://github.com/gatsbyjs/gatsby/commit/728af63f25378c516acb7ef9e8408f278074581c))
+- fix 304 when file does not exists fix [#34842](https://github.com/gatsbyjs/gatsby/issues/34842) ([1f3eee0](https://github.com/gatsbyjs/gatsby/commit/1f3eee04d1b09c23f885341382699ab91c15ea3e))
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [3.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.2/packages/gatsby-core-utils) (2022-03-01)
+
+#### Bug Fixes
+
+- fix caching when using remote-file fix [#34951](https://github.com/gatsbyjs/gatsby/issues/34951) fix [#34994](https://github.com/gatsbyjs/gatsby/issues/34994) ([4765950](https://github.com/gatsbyjs/gatsby/commit/47659500efa1cd05a1bc4dcfb042f071882bea34))
+
+### [3.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.1/packages/gatsby-core-utils) (2022-02-25)
+
+#### Bug Fixes
+
+- fix urls without extension fix [#34930](https://github.com/gatsbyjs/gatsby/issues/34930) fix [#34931](https://github.com/gatsbyjs/gatsby/issues/34931) ([b33fb35](https://github.com/gatsbyjs/gatsby/commit/b33fb3580e3dbde4f5179ab18540eb5f3ad7acb7))
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.8.0/packages/gatsby-core-utils) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Features
+
+- improve fetch-remote-file [#34758](https://github.com/gatsbyjs/gatsby/issues/34758) ([19b0304](https://github.com/gatsbyjs/gatsby/commit/19b0304e0a69df32d954659b674f0bb3fc525235))
+- create proper mutex [#34761](https://github.com/gatsbyjs/gatsby/issues/34761) ([f2d4830](https://github.com/gatsbyjs/gatsby/commit/f2d4830ef22666786e0020108d97379a853282b3))
+
+#### Bug Fixes
+
+- fix 304 when file does not exists fix [#34842](https://github.com/gatsbyjs/gatsby/issues/34842) fix [#34888](https://github.com/gatsbyjs/gatsby/issues/34888) ([9a579f1](https://github.com/gatsbyjs/gatsby/commit/9a579f1b248dc49ea053b962defcbc21f447ee18))
+
 ## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.7.0/packages/gatsby-core-utils) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

@@ -1,6 +1,6 @@
 // @ts-check
 import fs from "fs-extra"
-import { fetchRemoteFile } from "gatsby-core-utils"
+import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import path from "path"
 import {
   createUrl,
@@ -61,8 +61,9 @@ export const getBase64Image = (imageProps, cache) => {
 
     const absolutePath = await fetchRemoteFile({
       url: requestUrl,
-      cache,
+      directory: cache.directory,
       ext: extension,
+      cacheKey: imageProps.image.internal.contentDigest,
     })
 
     const base64 = (await fs.readFile(absolutePath)).toString(`base64`)
@@ -97,8 +98,9 @@ const getTracedSVG = async ({ image, options, cache }) => {
   const absolutePath = await fetchRemoteFile({
     url,
     name,
-    cache,
+    directory: cache.directory,
     ext: extension,
+    cacheKey: image.internal.contentDigest,
   })
 
   return traceSVG({
@@ -147,8 +149,9 @@ const getDominantColor = async ({ image, options, cache }) => {
     const absolutePath = await fetchRemoteFile({
       url,
       name,
-      cache,
+      directory: cache.directory,
       ext: extension,
+      cacheKey: image.internal.contentDigest,
     })
 
     if (!(`getDominantColor` in pluginSharp)) {
