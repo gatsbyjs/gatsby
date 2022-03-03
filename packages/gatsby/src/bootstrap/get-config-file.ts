@@ -38,10 +38,10 @@ export async function getConfigFile(
     // But the compiled file can also have an error like this:
     // "Cannot find module 'foobar'"
     // So this is trying to differentiate between an error we're fine ignoring and an error that we should throw
-    const errorFirstLine = outerError.message.split(`\n`, 1)[0]
+    const firstLineOfRequireStack = outerError?.requireStack?.[0]
     const shouldContinue =
       outerError.code === `MODULE_NOT_FOUND` &&
-      errorFirstLine.includes(path.join(COMPILED_CACHE_DIR, configName))
+      firstLineOfRequireStack.includes(`get-config-file`)
 
     if (!shouldContinue) {
       report.panic({
