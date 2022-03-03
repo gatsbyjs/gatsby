@@ -148,7 +148,21 @@ export async function gatsbyImageResolver(
     fallback: undefined,
   }
 
-  for (const format of formats) {
+  const getFormatValue = (format: ImageFormat): number => {
+    if (format === `avif`) {
+      return 3
+    }
+    if (format === `webp`) {
+      return 2
+    }
+
+    return 1
+  }
+  const sortedFormats = Array.from(formats).sort(
+    (a, b) => getFormatValue(b) - getFormatValue(a)
+  )
+
+  for (const format of sortedFormats) {
     let fallbackSrc: string | undefined = undefined
     const images = imageSizes.sizes.map(width => {
       if (shouldDispatch()) {
