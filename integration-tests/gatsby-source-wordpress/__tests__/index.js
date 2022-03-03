@@ -47,7 +47,10 @@ describe(`[gatsby-source-wordpress] Build default options`, () => {
     })
 
     const exitCode = await new Promise(resolve =>
-      gatsbyProcess.on(`exit`, resolve)
+      gatsbyProcess.on(`exit`, code => {
+        console.log(`Default options build process exited with code ${code}`)
+        resolve(code)
+      })
     )
 
     expect(exitCode).toEqual(0)
