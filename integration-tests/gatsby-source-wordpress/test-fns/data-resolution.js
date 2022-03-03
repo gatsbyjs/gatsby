@@ -13,7 +13,7 @@ const { queries } = require("./test-utils/queries")
 
 const { incrementalIt } = require(`./test-utils/incremental-it`)
 
-jest.setTimeout(100000)
+jest.setTimeout(200000)
 
 const isWarmCache = process.env.WARM_CACHE
 const url = `http://localhost:8000/___graphql`
