@@ -42,7 +42,7 @@ export async function getConfigFile(
     const isThisFileRequireError =
       outerError?.requireStack?.[0]?.includes(`get-config-file`) ?? true
 
-    if (isModuleNotFoundError && !isThisFileRequireError) {
+    if (!(isModuleNotFoundError && isThisFileRequireError)) {
       report.panic({
         id: `11902`,
         error: outerError,
