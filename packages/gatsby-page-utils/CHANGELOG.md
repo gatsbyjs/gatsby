@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.9.0/packages/gatsby-page-utils) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [2.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.8.2/packages/gatsby-page-utils) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+### [2.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.8.1/packages/gatsby-page-utils) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.8.0/packages/gatsby-page-utils) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.7.0/packages/gatsby-page-utils) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
+
+#### Chores
+
+- update dependency typescript to ^4.5.5 [#34641](https://github.com/gatsbyjs/gatsby/issues/34641) ([f7a7e1f](https://github.com/gatsbyjs/gatsby/commit/f7a7e1f642d91babb397156ab37cb28dcde19737))
+
 ## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.6.0/packages/gatsby-page-utils) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

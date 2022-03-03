@@ -15,22 +15,17 @@ This is useful in content-driven sites where you want the ability to introduce c
 
 If you already have a Gatsby site that you'd like to add MDX to, you can follow these steps for configuring the [gatsby-plugin-mdx](/plugins/gatsby-plugin-mdx/) plugin.
 
-> **Starting a new project?** Skip the setup and create a new project using the [MDX
-> starter](https://github.com/gatsbyjs/gatsby-starter-mdx-basic):
+> **Starting a new project?** Skip the setup and create a new project using `npm init gatsby`
 >
-> ```shell
-> gatsby new my-mdx-starter https://github.com/gatsbyjs/gatsby-starter-mdx-basic
-> ```
+> Choose the option "Add Markdown and MDX support" to add the necessary MDX dependencies.
 
 > **Already using Remark?** Check out the How-To Guide on [Migrating from Remark to MDX](/docs/how-to/routing/migrate-remark-to-mdx).
 
 1. **Add `gatsby-plugin-mdx`** and MDX as dependencies
 
    ```shell
-   npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+   npm install gatsby-plugin-mdx @mdx-js/mdx@v1 @mdx-js/react@v1
    ```
-
-   > **Note:** If you're upgrading from v0, additionally [check out the MDX migration guide](https://mdxjs.com/migrating/v1).
 
 2. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
 

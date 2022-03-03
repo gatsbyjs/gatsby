@@ -282,15 +282,10 @@ class LocalNodeModel {
         })
         runQueryActivity.start()
       }
-      let nodeFoundById = getDataStore().getNode(query.filter.id.eq)
-
-      // make sure our node is of compatible type
-      if (
-        nodeFoundById &&
-        !nodeTypeNames.includes(nodeFoundById.internal.type)
-      ) {
-        nodeFoundById = null
-      }
+      const nodeFoundById = this.getNodeById({
+        id: query.filter.id.eq,
+        type: gqlType,
+      })
 
       if (runQueryActivity) {
         runQueryActivity.end()

@@ -3,6 +3,10 @@ import _ from "lodash"
 import { fetchContentTypes } from "./fetch"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
+import { resolveGatsbyImageData } from "./gatsby-plugin-image"
+import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
+import { stripIndent } from "common-tags"
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
 async function getContentTypesFromContentful({
   cache,
@@ -90,27 +94,66 @@ export async function createSchemaCustomization(
       },
       extensions: { infer: false },
     }),
-    schema.buildObjectType({
-      name: `ContentfulAsset`,
-      fields: {
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-        ...(pluginConfig.get(`downloadLocal`)
-          ? {
-              localFile: {
-                type: `File`,
-                extensions: {
-                  link: {
-                    from: `fields.localFile`,
-                  },
-                },
+  ]
+
+  const { getGatsbyImageFieldConfig } = await import(
+    `gatsby-plugin-image/graphql-utils`
+  )
+
+  contentfulTypes.push(
+    addRemoteFilePolyfillInterface(
+      schema.buildObjectType({
+        name: `ContentfulAsset`,
+        fields: {
+          contentful_id: { type: `String!` },
+          id: { type: `ID!` },
+          gatsbyImageData: getGatsbyImageFieldConfig(
+            async (...args) => resolveGatsbyImageData(...args, { cache }),
+            {
+              jpegProgressive: {
+                type: `Boolean`,
+                defaultValue: true,
+              },
+              resizingBehavior: {
+                type: ImageResizingBehavior,
+              },
+              cropFocus: {
+                type: ImageCropFocusType,
+              },
+              cornerRadius: {
+                type: `Int`,
+                defaultValue: 0,
+                description: stripIndent`
+                 Desired corner radius in pixels. Results in an image with rounded corners.
+                 Pass \`-1\` for a full circle/ellipse.`,
+              },
+              quality: {
+                type: `Int`,
+                defaultValue: 50,
               },
             }
-          : {}),
-      },
-      interfaces: [`ContentfulReference`, `Node`],
-    }),
-  ]
+          ),
+          ...(pluginConfig.get(`downloadLocal`)
+            ? {
+                localFile: {
+                  type: `File`,
+                  extensions: {
+                    link: {
+                      from: `fields.localFile`,
+                    },
+                  },
+                },
+              }
+            : {}),
+        },
+        interfaces: [`ContentfulReference`, `Node`],
+      }),
+      {
+        schema,
+        actions,
+      }
+    )
+  )
 
   // Create types for each content type
   contentTypeItems.forEach(contentTypeItem =>
@@ -145,7 +188,7 @@ export async function createSchemaCustomization(
           id: { type: `ID!` },
         },
         interfaces: [`Node`],
-        extensions: { dontInfer: {} },
+        extensions: { infer: false },
       })
     )
   }

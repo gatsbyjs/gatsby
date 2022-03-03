@@ -35,10 +35,10 @@ Another option is to use an external search engine. This solution is much more s
 
 There are many options available, including both self-hosted and commercially hosted open source:
 
-- [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS and has commercial hosting available
+- [Algolia](https://www.algolia.com/) — SaaS, [has Gatsby plugin](/plugins/gatsby-plugin-algolia/)
+- [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS, commercial hosting available, [has Gatsby plugin](/plugins/@logilab/gatsby-plugin-elasticsearch/)
 - [Solr](https://solr.apache.org) — OSS and has commercial hosting available
-- [Algolia](https://www.algolia.com/) — Commercial
-- [MeiliSearch](https://www.meilisearch.com/) - OSS
+- [MeiliSearch](https://www.meilisearch.com/) - OSS, [has Gatsby plugin](/plugins/gatsby-plugin-meilisearch/)
 
 Of these, the most common solution is Algolia. The Gatsby docs include a guide to adding Algolia to your site:
 
@@ -48,4 +48,4 @@ When using Algolia, they host the search index and search engine for you. Your s
 
 If you're building a documentation website you can use [Algolia's DocSearch feature](https://community.algolia.com/docsearch/). It will automatically create a search index from the content of your pages.
 
-Elasticsearch also has several React component libraries for search, such as [ReactiveSearch](https://github.com/appbaseio/reactivesearch)
+Elasticsearch also has several React component libraries for search, such as [ReactiveSearch](https://github.com/appbaseio/reactivesearch).

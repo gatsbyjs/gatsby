@@ -65,7 +65,9 @@ export const removePageFiles = async (
   })
 }
 
-const FSisCaseInsensitive = platform() === `win32` || platform() === `darwin`
+const FSisCaseInsensitive = process.env.TEST_FORCE_CASE_FS
+  ? process.env.TEST_FORCE_CASE_FS === `INSENSITIVE`
+  : platform() === `win32` || platform() === `darwin`
 function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`

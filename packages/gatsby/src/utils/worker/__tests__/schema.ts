@@ -6,7 +6,8 @@ import { CombinedState } from "redux"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { savePartialStateToDisk, store } from "../../../redux"
-import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
+import { loadConfig } from "../../../bootstrap/load-config"
+import { loadPlugins } from "../../../bootstrap/load-plugins"
 import {
   createTestWorker,
   describeWhenLMDB,
@@ -14,6 +15,7 @@ import {
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
 import { IGatsbyState } from "../../../redux/types"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -56,7 +58,11 @@ describeWhenLMDB(`worker (schema)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
-    await loadConfigAndPlugins({ siteDirectory })
+    await compileGatsbyFiles(siteDirectory)
+    const config = await loadConfig({
+      siteDirectory,
+    })
+    await loadPlugins(config, siteDirectory)
     await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
     await getDataStore().ready()

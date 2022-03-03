@@ -727,6 +727,7 @@ exports.createResolvers = ({ createResolvers }) => {
   const resolvers = {
     Frontmatter: {
       author: {
+        type: "AuthorJson",
         resolve(source, args, context, info) {
           return context.nodeModel.getNodeById({
             id: source.author,

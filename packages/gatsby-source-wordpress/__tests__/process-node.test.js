@@ -1,8 +1,10 @@
 import execall from "execall"
 
+import { replaceNodeHtmlImages } from "../dist/steps/source-nodes/create-nodes/process-node"
+
 import {
   getImgSrcRemoteFileMatchesFromNodeString,
-  getImgTagMatchesWithUrl,
+  getImgTagMatches,
   getWpLinkRegex,
   searchAndReplaceNodeStrings,
 } from "../dist/steps/source-nodes/create-nodes/process-node"
@@ -20,7 +22,7 @@ test(`HTML image transformation regex matches images`, async () => {
 
   expect(matches.length).toBe(3)
 
-  const imgTagMatches = getImgTagMatchesWithUrl({
+  const imgTagMatches = getImgTagMatches({
     nodeString,
     wpUrl: `https://${wpUrl}`,
   })
@@ -68,4 +70,69 @@ test(`Search and replace node strings using regex matches`, async () => {
   A new line with some other thing!
 
   We need to test some <a href=\\"https://new-site.com/hi\\" />link</a> as well!`)
+})
+
+jest.mock(`../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`, () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual(`../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`),
+    default: jest.fn(() => require(`./fixtures/media`).referencedMediaItems)
+  }
+})
+
+
+test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, async () => {
+  const node = {
+    content: `\n<p>Welcome to WordPress. This is your first post. Edit or deleteit, then start writing!</p>\n\n\n\n<p></p>\n\n\n\n<figureclass="wp-block-image size-large"><img loading="lazy" width="1024" height="768" src="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg" alt=""class="wp-image-115" srcset="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg 1024w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-300x225.jpg 300w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-768x576.jpg 768w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1536x1152.jpg 1536w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-2048x1536.jpg 2048w"sizes="(max-width: 1024px) 100vw, 1024px" /></figure>\n`,
+    id: `cG9zdDox`,
+    modifiedGmt: `2022-02-18T23:18:00`,
+    __typename: `Post`
+  }
+
+  const gatsbyImageUrl = `/_gatsby/image`
+
+  const nodeString = JSON.stringify(node)
+
+  const updatedNodeString = await replaceNodeHtmlImages({
+    nodeString,
+    node,
+    helpers: {
+      reporter: console
+    },
+    wpUrl: `http://wpgatsby.local/`,
+    pluginOptions: {
+      html: {
+        useGatsbyImage: true
+      }
+    }
+  })
+
+  expect(updatedNodeString).toInclude(gatsbyImageUrl)
+  expect(updatedNodeString).not.toEqual(nodeString)
+
+  const imageMatches = execall(/\/_gatsby\/image/gm, updatedNodeString)
+  expect(imageMatches.length).toBe(39)
+
+
+  const transformedNodeStringNoHtmlImages = await replaceNodeHtmlImages({
+    nodeString,
+    node,
+    helpers: {
+      reporter: console
+    },
+    wpUrl: `http://wpgatsby.local/`,
+    pluginOptions: {
+      html: {
+        useGatsbyImage: false
+      }
+    }
+  })
+
+  expect(transformedNodeStringNoHtmlImages).toEqual(nodeString)
+
+  const noImageMatches = execall(/\/_gatsby\/image/gm, transformedNodeStringNoHtmlImages)
+
+  expect(noImageMatches.length).toBe(0)
+
+  expect(transformedNodeStringNoHtmlImages).not.toInclude(gatsbyImageUrl)
 })

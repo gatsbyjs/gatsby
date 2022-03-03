@@ -8,11 +8,7 @@ import { withPrefix } from "."
 const isAbsolutePath = path => path?.startsWith(`/`)
 
 const getGlobalTrailingSlash = () =>
-  process.env.NODE_ENV !== `production`
-    ? typeof __TRAILING_SLASH__ !== `undefined`
-      ? __TRAILING_SLASH__
-      : undefined
-    : __TRAILING_SLASH__
+  typeof __TRAILING_SLASH__ !== `undefined` ? __TRAILING_SLASH__ : undefined
 
 function absolutify(path, current) {
   // If it's already absolute, return as-is

@@ -157,7 +157,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
 3. **Display the image.**
 
-   You can then use the `GatbsyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
+   You can then use the `GatsbyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
 
    ```jsx:title=src/templates/blogpost.js
    import { graphql } from "gatsby"
@@ -243,6 +243,7 @@ These source plugins support using `gatsby-plugin-image` with images served from
 - [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
 - [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
 - [GraphCMS](/plugins/gatsby-source-graphcms/#usage-with-gatsby-plugin-image)
+- [Prismic](/plugins/gatsby-source-prismic)
 - [Sanity](/plugins/gatsby-source-sanity/#using-images)
 - [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
 

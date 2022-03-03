@@ -1,4 +1,4 @@
-import { fetchRemoteFile } from "gatsby-core-utils"
+import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import {
   generateImageData,
   getLowResolutionImageURL,
@@ -10,6 +10,7 @@ import {
 import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
 import { readFileSync } from "fs"
 import { IShopifyImage, urlBuilder } from "./get-shopify-image"
+import type { Node } from "gatsby"
 
 type IImageWithPlaceholder = IImage & {
   placeholder: string
@@ -17,15 +18,18 @@ type IImageWithPlaceholder = IImage & {
 
 async function getImageBase64({
   imageAddress,
-  cache,
+  directory,
+  contentDigest,
 }: {
   imageAddress: string
-  cache: any
+  directory: string
+  contentDigest: string
 }): Promise<string> {
   // Downloads file to the site cache and returns the file path for the given image (this is a path on the host system, not a URL)
   const filePath = await fetchRemoteFile({
     url: imageAddress,
-    cache,
+    directory,
+    cacheKey: contentDigest,
   })
   const buffer = readFileSync(filePath)
   return buffer.toString(`base64`)
@@ -99,7 +103,8 @@ export function makeResolveGatsbyImageData(cache: any) {
       })
       const imageBase64 = await getImageBase64({
         imageAddress: lowResImageURL,
-        cache,
+        directory: cache.directory as string,
+        contentDigest: image.internal.contentDigest,
       })
 
       // This would be your own function to download and generate a low-resolution placeholder

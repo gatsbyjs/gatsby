@@ -1408,11 +1408,13 @@ actions.createPageDependency = (
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: [
+      {
+        path,
+        nodeId,
+        connection,
+      },
+    ],
   }
 }
 

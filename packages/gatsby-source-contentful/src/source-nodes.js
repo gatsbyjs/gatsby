@@ -56,22 +56,22 @@ export async function sourceNodes(
     actions
   const online = await isOnline()
 
+  getNodes().forEach(node => {
+    if (node.internal.owner !== `gatsby-source-contentful`) {
+      return
+    }
+    touchNode(node)
+    if (node?.fields?.localFile) {
+      // Prevent GraphQL type inference from crashing on this property
+      touchNode(getNode(node.fields.localFile))
+    }
+  })
+
   if (
     !online &&
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes().forEach(node => {
-      if (node.internal.owner !== `gatsby-source-contentful`) {
-        return
-      }
-      touchNode(node)
-      if (node.localFile___NODE) {
-        // Prevent GraphQL type inference from crashing on this property
-        touchNode(getNode(node.localFile___NODE))
-      }
-    })
-
     return
   }
 
@@ -80,12 +80,9 @@ export async function sourceNodes(
     `environment`
   )}`
 
-  const fetchActivity = reporter.activityTimer(
-    `Contentful: Fetch data (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
+  const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
+    parentSpan,
+  })
 
   // If the user knows they are offline, serve them cached result
   // For prod builds though always fail if we can't get the latest data
@@ -173,7 +170,7 @@ export async function sourceNodes(
 
   // Process data fetch results and turn them into GraphQL entities
   const processingActivity = reporter.activityTimer(
-    `Contentful: Process data (${sourceId})`,
+    `Contentful: Process data`,
     {
       parentSpan,
     }
@@ -188,7 +185,6 @@ export async function sourceNodes(
         ? n.internal.type !== `ContentfulTag`
         : true)
   )
-  existingNodes.forEach(n => touchNode(n))
 
   // Report existing, new and updated nodes
   const nodeCounts = {
@@ -212,10 +208,14 @@ export async function sourceNodes(
   reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
   reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
   reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
-  reporter.info(`Contentful: ${nodeCounts.existingEntry} cached entries`)
+  reporter.info(
+    `Contentful: ${nodeCounts.existingEntry / locales.length} cached entries`
+  )
   reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
   reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
-  reporter.info(`Contentful: ${nodeCounts.existingAsset} cached assets`)
+  reporter.info(
+    `Contentful: ${nodeCounts.existingAsset / locales.length} cached assets`
+  )
   reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
   reporter.verbose(`Building Contentful reference map`)
@@ -254,8 +254,11 @@ export async function sourceNodes(
   existingNodes
     .filter(n => !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
     .forEach(n => {
-      if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
-        foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
+      if (
+        n.contentful_id &&
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
+      ) {
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
           foreignReference => {
             const { name, id } = foreignReference
 
@@ -305,7 +308,7 @@ export async function sourceNodes(
 
   if (deletedEntries.length || deletedAssets.length) {
     const deletionActivity = reporter.activityTimer(
-      `Contentful: Deleting ${deletedEntries.length} nodes and ${deletedAssets.length} assets (${sourceId})`,
+      `Contentful: Deleting nodes and assets`,
       {
         parentSpan,
       }
@@ -316,12 +319,9 @@ export async function sourceNodes(
     deletionActivity.end()
   }
 
-  const creationActivity = reporter.activityTimer(
-    `Contentful: Create nodes (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
+  const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
+    parentSpan,
+  })
   creationActivity.start()
 
   for (let i = 0; i < contentTypeItems.length; i++) {

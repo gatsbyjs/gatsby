@@ -1,5 +1,3 @@
-require(`v8-compile-cache`)
-
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -860,7 +858,11 @@ module.exports = async (
             .flattenedPlugins.filter(plugin =>
               plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
             )
-            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+            .map(
+              plugin =>
+                plugin.resolvedCompiledGatsbyNode ??
+                path.join(plugin.resolve, `gatsby-node.js`)
+            ),
         ],
       },
     }

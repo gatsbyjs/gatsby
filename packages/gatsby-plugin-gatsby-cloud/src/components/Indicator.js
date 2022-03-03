@@ -176,77 +176,73 @@ const Indicator = () => {
 
   const { orgId, siteId } = siteInfo || {}
 
-  const pollData = useCallback(
-    async function pollData() {
-      const prettyUrlRegex = /^preview-/
-      const host = window.location.hostname
+  const pollData = async function pollData() {
+    const prettyUrlRegex = /^preview-/
+    const host = window.location.hostname
 
-      // currentBuild is the most recent build that is not QUEUED.
-      // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
-      const isOnPrettyUrl = prettyUrlRegex.test(host)
-      const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
+    // currentBuild is the most recent build that is not QUEUED.
+    // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
+    const isOnPrettyUrl = prettyUrlRegex.test(host)
+    const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
 
-      if (!buildId) {
-        if (isOnPrettyUrl || host === `localhost`) {
-          buildId = latestBuild?.id
-        } else {
-          // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
-          const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
-          if (buildIdMatch) {
-            buildId = buildIdMatch[1]
-          }
+    if (!buildId) {
+      if (isOnPrettyUrl || host === `localhost`) {
+        buildId = latestBuild?.id
+      } else {
+        // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
+        const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
+        if (buildIdMatch) {
+          buildId = buildIdMatch[1]
         }
       }
+    }
 
-      const newBuildInfo = {
-        currentBuild,
-        latestBuild,
-        siteInfo,
-        isOnPrettyUrl,
-      }
+    const newBuildInfo = {
+      currentBuild,
+      latestBuild,
+      siteInfo,
+      isOnPrettyUrl,
+    }
 
-      if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
-      } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
-      } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
-      } else if (
-        buildId &&
-        buildId !== newBuildInfo?.latestBuild?.id &&
-        currentBuild?.buildStatus === BuildStatus.SUCCESS
-      ) {
-        if (refreshNeeded) {
+    if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+    } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
+    } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
+    } else if (
+      buildId &&
+      buildId !== newBuildInfo?.latestBuild?.id &&
+      currentBuild?.buildStatus === BuildStatus.SUCCESS
+    ) {
+      if (refreshNeeded) {
+        setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
+      } else if (!usingContentSync) {
+        const { hasPageChanged, errorMessage } = await hasPageDataChanged(
+          buildId
+        )
+
+        if (errorMessage) {
+          setBuildInfo({
+            ...newBuildInfo,
+            buildStatus: BuildStatus.ERROR,
+            errorMessage,
+          })
+        } else if (hasPageChanged) {
+          // Force a "This page has updated message" until a page is refreshed
+          refreshNeeded = true
+          // Build updated, data for this specific page has changed!
           setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
-        } else if (!usingContentSync) {
-          const { hasPageChanged, errorMessage } = await hasPageDataChanged(
-            buildId
-          )
-
-          if (errorMessage) {
-            setBuildInfo({
-              ...newBuildInfo,
-              buildStatus: BuildStatus.ERROR,
-              errorMessage,
-            })
-          } else if (hasPageChanged) {
-            // Force a "This page has updated message" until a page is refreshed
-            refreshNeeded = true
-            // Build updated, data for this specific page has changed!
-            setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
-          } else {
-            // Build updated, data for this specific page has NOT changed, no need to refresh content.
-            setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
-          }
-        }
-
-        if (shouldPoll.current) {
-          timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
+        } else {
+          // Build updated, data for this specific page has NOT changed, no need to refresh content.
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
         }
       }
-    },
-    [nodeManifestRedirectUrl]
-  )
+    }
+    if (shouldPoll.current) {
+      timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
+    }
+  }
 
   useEffect(() => {
     if (buildInfo?.siteInfo && !trackedInitialLoad.current) {

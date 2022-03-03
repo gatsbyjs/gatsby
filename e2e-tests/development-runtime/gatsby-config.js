@@ -28,6 +28,7 @@ module.exports = {
     `gatsby-source-fake-data`,
     `gatsby-source-pinc-data`,
     `gatsby-source-query-on-demand-data`,
+    `gatsby-browser-tsx`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {

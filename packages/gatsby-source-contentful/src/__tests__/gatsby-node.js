@@ -11,7 +11,9 @@ import restrictedContentTypeFixture from "../__fixtures__/restricted-content-typ
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
+  const originalModule = jest.requireActual(`gatsby-core-utils`)
   return {
+    ...originalModule,
     createContentDigest: () => `contentDigest`,
   }
 })
@@ -39,15 +41,23 @@ describe(`gatsby-node`, () => {
     setPluginStatus: jest.fn(),
     createNode: jest.fn(async node => {
       node.internal.owner = `gatsby-source-contentful`
-      // don't allow mutations (this isn't traversing so only top level is frozen)
-      currentNodeMap.set(node.id, Object.freeze(node))
+      currentNodeMap.set(node.id, node)
     }),
     deleteNode: jest.fn(node => {
       currentNodeMap.delete(node.id)
     }),
     touchNode: jest.fn(),
   }
-  const schema = { buildObjectType: jest.fn(), buildInterfaceType: jest.fn() }
+  const schema = {
+    buildObjectType: jest.fn(() => {
+      return {
+        config: {
+          interfaces: [],
+        },
+      }
+    }),
+    buildInterfaceType: jest.fn(),
+  }
   const store = {
     getState: jest.fn(() => {
       return { program: { directory: process.cwd() }, status: {} }
@@ -76,7 +86,7 @@ describe(`gatsby-node`, () => {
     pluginOptions = defaultPluginOptions
   ) {
     await createSchemaCustomization(
-      { schema, actions, reporter, cache },
+      { schema, actions, reporter, cache, store },
       pluginOptions
     )
 
@@ -462,7 +472,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 22 cached entries",
+          "Contentful: 11 cached entries",
         ],
         Array [
           "Contentful: 1 new assets",
@@ -471,7 +481,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 8 cached assets",
+          "Contentful: 4 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -552,7 +562,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -561,7 +571,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -654,7 +664,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 1 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -663,7 +673,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -740,7 +750,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -749,7 +759,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 1 deleted assets",

@@ -403,6 +403,13 @@ export const onCreateWebpackConfig = true
 
 /**
  * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
+ *
+ * @param {object} $0
+ * @param {object} $0.actions
+ * @example
+ * exports.onPreInit = ({ actions }) => {
+ *
+ * }
  */
 export const onPreInit = true
 
