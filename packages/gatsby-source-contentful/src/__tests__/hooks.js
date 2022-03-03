@@ -1,5 +1,12 @@
 import { useContentfulImage } from "../hooks"
 
+jest.mock(`react`, () => {
+  return {
+    ...jest.requireActual(`react`),
+    useMemo: jest.fn(v => v()),
+  }
+})
+
 describe(`useContentfulImage`, () => {
   const consoleWarnSpy = jest.spyOn(console, `warn`)
 
