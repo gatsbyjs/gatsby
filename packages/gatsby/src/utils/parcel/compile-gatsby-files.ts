@@ -57,8 +57,10 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
           compiledTSFilesCount = compiledTSFilesCount + 1
         }
       }
-      telemetry.addSiteMeasurement(`PARCEL_COMPILATION_END`, {
-        compiledTSFilesCount,
+      telemetry.trackCli(`PARCEL_COMPILATION_END`, {
+        siteMeasurements: {
+          compiledTSFilesCount,
+        },
       })
     }
   } catch (error) {
