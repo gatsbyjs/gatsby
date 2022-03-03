@@ -13,7 +13,7 @@ title: Query Extraction
 
 ## Extracting queries from files
 
-Up until now, Gatsby has [sourced all nodes](/docs/node-creation/) into Redux, [inferred a schema](/docs/schema-generation/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all GraphQL queries from your source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js), which immediately compiles all GraphQL queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-compiler.js).
+Up until now, Gatsby has [sourced all nodes](/docs/node-creation/) into Redux, [inferred a schema](/docs/schema-generation/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all GraphQL queries from your source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.ts), which immediately compiles all GraphQL queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-compiler.js).
 
 ### Query compilation
 
