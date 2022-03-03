@@ -132,6 +132,15 @@ export default async ({
     })
 
     await events.once(rl, `close`)
+
+    await apiRunner(`sourceNodes`, {
+      traceId,
+      waitForCascadingActions: true,
+      deferNodeMutation,
+      parentSpan,
+      webhookBody: webhookBody || {},
+      pluginName: `internal-data-bridge`,
+    })
   } else {
     await apiRunner(`sourceNodes`, {
       traceId,
