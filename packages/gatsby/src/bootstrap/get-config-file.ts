@@ -32,16 +32,24 @@ export async function getConfigFile(
     configPath = path.join(`${siteDirectory}/${COMPILED_CACHE_DIR}`, configName)
     configFilePath = require.resolve(configPath)
     configModule = require(configFilePath)
-  } catch (err) {
-    if (!(err.code === `MODULE_NOT_FOUND`)) {
-      // If it's not the MODULE_NOT_FOUND error (which can happen if we're looking for JS files)
-      // It means it's an error with the compiled file
+  } catch (outerError) {
+    // Not all plugins will have a compiled file, so the err.message can look like this:
+    // "Cannot find module '<root>/node_modules/gatsby-source-filesystem/.cache/compiled/gatsby-config'"
+    // But the compiled file can also have an error like this:
+    // "Cannot find module 'foobar'"
+    // So this is trying to differentiate between an error we're fine ignoring and an error that we should throw
+    const errorFirstLine = outerError.message.split(`\n`, 1)[0]
+    const shouldContinue =
+      outerError.code === `MODULE_NOT_FOUND` &&
+      errorFirstLine.includes(path.join(COMPILED_CACHE_DIR, configName))
+
+    if (!shouldContinue) {
       report.panic({
         id: `11902`,
-        error: err,
+        error: outerError,
         context: {
           configName,
-          message: err.message,
+          message: outerError.message,
         },
       })
     }
@@ -51,7 +59,7 @@ export async function getConfigFile(
     try {
       configFilePath = require.resolve(configPath)
       configModule = require(configFilePath)
-    } catch (err) {
+    } catch (innerError) {
       // Only then hard fail
       const nearMatch = await fs.readdir(siteDirectory).then(files =>
         files.find(file => {
@@ -59,19 +67,19 @@ export async function getConfigFile(
           return isNearMatch(fileName, configName, distance)
         })
       )
-      if (!testRequireError(configPath, err)) {
+      if (!testRequireError(configPath, innerError)) {
         report.panic({
           id: `10123`,
-          error: err,
+          error: innerError,
           context: {
             configName,
-            message: err.message,
+            message: innerError.message,
           },
         })
       } else if (nearMatch) {
         report.panic({
           id: `10124`,
-          error: err,
+          error: innerError,
           context: {
             configName,
             nearMatch,
