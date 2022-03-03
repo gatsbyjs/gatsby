@@ -513,7 +513,38 @@ Fetch details:
     expect(cachedFilePath).toStartWith(path.join(cache.directory, `public`))
     expect(gotStream).toBeCalledTimes(1)
     expect(fs.pathExists).toBeCalledTimes(1)
-    expect(fs.copy).toBeCalled()
+    expect(fs.copy).toBeCalledTimes(1)
+    expect(await fs.pathExists(cachedFilePath)).toBe(true)
+    global.__GATSBY = currentGlobal
+  })
+
+  it(`should not re-download but copy file to public folder when the same url is requested`, async () => {
+    const currentGlobal = global.__GATSBY
+    global.__GATSBY = {
+      root: cache.directory,
+    }
+    await fs.ensureDir(path.join(cache.directory, `public`))
+    const filePathPromise = fetchRemoteFile({
+      url: `http://external.com/dog.jpg?v=4`,
+      directory: cache.directory,
+      cacheKey: `4`,
+    })
+    const cachedFilePathPromise = fetchRemoteFile({
+      url: `http://external.com/dog.jpg?v=4`,
+      directory: path.join(cache.directory, `public`),
+      cacheKey: `4`,
+    })
+
+    const [filePath, cachedFilePath] = await Promise.all([
+      filePathPromise,
+      cachedFilePathPromise,
+    ])
+
+    expect(filePath).not.toBe(cachedFilePath)
+    expect(cachedFilePath).toStartWith(path.join(cache.directory, `public`))
+    expect(gotStream).toBeCalledTimes(1)
+    expect(fs.pathExists).toBeCalledTimes(0)
+    expect(fs.copy).toBeCalledTimes(1)
     global.__GATSBY = currentGlobal
   })
 

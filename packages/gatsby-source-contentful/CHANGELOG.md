@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.7.1/packages/gatsby-source-contentful) (2022-03-02)
+
+#### Bug Fixes
+
+- Restore recently removed code to fix build errors fix [#35006](https://github.com/gatsbyjs/gatsby/issues/35006) fix [#35021](https://github.com/gatsbyjs/gatsby/issues/35021) ([9f52dd9](https://github.com/gatsbyjs/gatsby/commit/9f52dd9d5c77d17c16176d14d57b40c01b3fa0e6))
+
 ## [7.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.7.0/packages/gatsby-source-contentful) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
