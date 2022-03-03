@@ -116,17 +116,17 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
 
@@ -146,12 +146,12 @@ describe(`gatsbyImageData`, () => {
           {
             sizes: `300px`,
             srcSet: expect.any(String),
-            type: `image/webp`,
+            type: `image/avif`,
           },
           {
             sizes: `300px`,
             srcSet: expect.any(String),
-            type: `image/avif`,
+            type: `image/webp`,
           },
         ],
       },
@@ -174,33 +174,33 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=75&h=120&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=75&h=120&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`75w`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=150&h=241&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=150&h=241&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`150w`)
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[2].descriptor).toEqual(`300w`)
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[3].descriptor).toEqual(`600w`)
 
@@ -220,12 +220,12 @@ describe(`gatsbyImageData`, () => {
           {
             sizes: `(min-width: 300px) 300px, 100vw`,
             srcSet: expect.any(String),
-            type: `image/webp`,
+            type: `image/avif`,
           },
           {
             sizes: `(min-width: 300px) 300px, 100vw`,
             srcSet: expect.any(String),
-            type: `image/avif`,
+            type: `image/webp`,
           },
         ],
       },
@@ -252,33 +252,33 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=750&h=1202&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=750&h=1202&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`750w`)
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1080&h=1731&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=1080&h=1731&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`1080w`)
     expect(parsedSrcSet[2].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1366&h=2190&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=1366&h=2190&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[2].descriptor).toEqual(`1366w`)
     expect(parsedSrcSet[3].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=1920&h=3078&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=1920&h=3078&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedSrcSet[3].descriptor).toEqual(`1920w`)
 
@@ -298,12 +298,12 @@ describe(`gatsbyImageData`, () => {
           {
             sizes: `100vw`,
             srcSet: expect.any(String),
-            type: `image/webp`,
+            type: `image/avif`,
           },
           {
             sizes: `100vw`,
             srcSet: expect.any(String),
-            type: `image/avif`,
+            type: `image/webp`,
           },
         ],
       },
@@ -351,16 +351,16 @@ describe(`gatsbyImageData`, () => {
     expect(parsedFixedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedFixedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
 
     const parsedConstrainedSrcSet = parseSrcSet(
@@ -370,16 +370,16 @@ describe(`gatsbyImageData`, () => {
     expect(parsedConstrainedSrcSet[0].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
     expect(parsedConstrainedSrcSet[1].src).toEqual(
       `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
         `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=webp&q=75`).toString(`base64`)}/${
+      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
         portraitSource.basename
-      }.webp`
+      }.avif`
     )
 
     const parsedFullWidthSrcSet = parseSrcSet(
@@ -502,5 +502,22 @@ describe(`gatsbyImageData`, () => {
         "fallback": "data:image/jpg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAhABQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAQGBwUI/8QAMBAAAQMDAgQEAwkAAAAAAAAAAQIDBAAFEQYhEhMxUSJBYYEHNLEIFTIzUnGCkcH/xAAYAQADAQEAAAAAAAAAAAAAAAABAwQABf/EABwRAAICAwEBAAAAAAAAAAAAAAABAgMREkFRMf/aAAwDAQACEQMRAD8Aol31vIuGk59kf8RfuCLgFpUTwE54k79ACQQK1L7Nj0mdp+7sR3gH48hKgeYErCVp8XX1TWD6WjNO3RlU5h19C1JHJRuXCr8I7gFWM48q07VF2nWlpKtKsuW+W6sx1LbYaBeS2CSNhgDGFAdeo3pKs1mkxsqdq3g1LUC9PxLktu46iksycBSkKYCyP3INK8vXTVWoJEsuzpzheUBuppAJH9UqjafCZUV9LnprTsmNqKJMajyuQy6JHG+sJARjYq2xnbp2PerBNtDmp7eiPDcZQpl4OuK4vMpI6d9xn2rqX+6PuWp2MzHcaSvwFx9QOAfMYPXt61G03aJMK5OyUEBC1LXy1rBJSrBwdtiCM5B9DUDjJyT8OkrIqLIEf4bW8ND7yadkyP1tqWBjyG1KtqVunJUGSSc+Ikke+KU3MvSdtZOPe/kZH8PrXdb+XZ9v8pSt0D+Igvfmq9vpSlKIs//Z",
       }
     `)
+  })
+
+  it(`should render avif, webp other format in this order`, async () => {
+    const constrainedResult = await gatsbyImageResolver(
+      portraitSource,
+      {
+        layout: `constrained`,
+        width: 300,
+        placeholder: `none`,
+        outputPixelDensities: [1, 2],
+      },
+      actions
+    )
+
+    expect(constrainedResult?.images.sources[0].type).toBe(`image/avif`)
+    expect(constrainedResult?.images.sources[1].type).toBe(`image/webp`)
+    expect(constrainedResult?.images.sources.length).toBe(2)
   })
 })
