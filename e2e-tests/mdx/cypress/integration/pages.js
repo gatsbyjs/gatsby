@@ -35,4 +35,14 @@ describe(`Pages`, () => {
         cy.visit(`/list`).waitForRouteChange()
         cy.getTestElement(`embed-slug`).contains(`about/embedded`)
     })
+
+    it (`generates a page with an image import for a jpg`, () => {
+        cy.visit(`/image_import1`).waitForRouteChange()
+        cy.getTestElement(`jpg-image`).should(`have.attr`, `src`).should(`include`, `.jpg`)
+    })
+
+    it (`generates a page with an image import for a png`, () => {
+        cy.visit(`/image_import2`).waitForRouteChange()
+        cy.getTestElement(`png-image`).should(`have.attr`, `src`).should(`include`, `.png`)
+    })
 })
