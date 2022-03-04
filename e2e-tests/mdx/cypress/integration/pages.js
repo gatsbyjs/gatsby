@@ -37,12 +37,12 @@ describe(`Pages`, () => {
     })
 
     it (`generates a page with an image import for a jpg`, () => {
-        cy.visit(`/image_import1`).waitForRouteChange()
-        cy.getTestElement(`jpg-image`).should(`have.attr`, `src`).should(`include`, `.jpg`)
+        cy.visit(`/mdx_import1`).waitForRouteChange()
+        cy.getTestElement(`purple-png-image`).invoke('height').should('eq', 512)
     })
 
     it (`generates a page with an image import for a png`, () => {
-        cy.visit(`/image_import2`).waitForRouteChange()
-        cy.getTestElement(`png-image`).should(`have.attr`, `src`).should(`include`, `.png`)
+        cy.visit(`/mdx_import2`).waitForRouteChange()
+        cy.getTestElement(`green-png-image`).invoke('height').should('eq', 1024)
     })
 })
