@@ -96,6 +96,32 @@ You can then update your query using `sourceInstanceName` and the value of the `
 }
 ```
 
+## Sourcing Files using Environment Variables
+
+You can also source files using environment variables. For context, you might decide to do this if you're sourcing a lot of files and local build times are taking too long, so you only source a smaller batch of files when in development.
+
+In the example below in `gatsby-config.js` if the environment variable `NODE_ENV` is set to development, only the content in the specified path will be sourced.
+
+```javascript:title=gatsby-config.js
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `markdown-pages`,
+        path: process.env.NODE_ENV === `development` ? `${__dirname}/src/content/2022` : `${__dirname}/src/content`,
+      },
+    },
+    `gatsby-transformer-remark`,
+  ],
+}
+```
+
+
 ## Transforming File nodes
 
 Once files have been sourced, various "transformer" plugins in the Gatsby ecosystem can then be used to transform File nodes into various other types of data. For example, a JSON file can be sourced using `gatsby-source-filesystem`, and then the resulting File nodes can be transformed into JSON nodes using `gatsby-transformer-json`.
