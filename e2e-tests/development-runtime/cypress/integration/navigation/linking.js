@@ -246,4 +246,24 @@ describe(`navigation`, () => {
       cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
     })
   })
+
+  describe(`Supports Query params with special characters`, () => {
+    beforeEach(() => {
+      cy.visit(`/query-params`)
+      cy.window().then(win => {
+        cy.wrap(cy.spy(win.console, `error`)).as(`consoleError`)
+      })
+    })
+
+    it(`renders pages when special charcter is used`, () => {
+      cy.visit(`/query-params?message=%25`).waitForRouteChange()
+      cy.getTestElement(`location.search`)
+        .invoke(`text`)
+        .should(`equal`, `?message=%25`)
+    })
+
+    it(`should not throw error when special charcter is used`, () => {
+      cy.get(`@consoleError`).should(`not.be.called`)
+    })
+  })
 })
