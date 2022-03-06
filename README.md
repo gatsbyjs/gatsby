@@ -66,7 +66,7 @@
 
 Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites.
 
-- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
+- **Go Beyond Static Websites.** Get all the benefits of static websites without any
   limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
   dynamic web apps, from blogs to e-commerce sites to user dashboards.
 
@@ -102,7 +102,7 @@ Gatsby helps professional developers efficiently create maintainable, highly-per
 
 ## 🚀 Get Up and Running in 5 Minutes
 
-You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
+You can get a new Gatsby site up and running on your local dev environment in less than 5 minutes with these four steps:
 
 1. **Install the Gatsby CLI.**
 
@@ -122,7 +122,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 3. **Start the site in `develop` mode.**
 
-   Next, move into your new site’s directory and start it up:
+   Now, move into your new site’s directory and start it up:
 
    ```shell
    cd my-gatsby-site/
@@ -131,7 +131,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 4. **Open the source code and start editing!**
 
-   Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
+   Your site is now running successfully at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/tutorial/).
 
