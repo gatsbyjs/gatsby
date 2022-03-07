@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.1/packages/gatsby) (2022-03-03)
+
+#### Bug Fixes
+
+- fix incorrect "inconsistent node counters" invariant #35020 fix [#35020](https://github.com/gatsbyjs/gatsby/issues/35020) fix [#35025](https://github.com/gatsbyjs/gatsby/issues/35025) fix [#35044](https://github.com/gatsbyjs/gatsby/issues/35044) ([7f1b73e](https://github.com/gatsbyjs/gatsby/commit/7f1b73e7012d8d88511f2791ea843c762e24f820))
+- Better compile error handling [#35038](https://github.com/gatsbyjs/gatsby/issues/35038) [#35042](https://github.com/gatsbyjs/gatsby/issues/35042) ([45aacf3](https://github.com/gatsbyjs/gatsby/commit/45aacf308201dcc357059f8e74404b14054308d6))
+
 ## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.0/packages/gatsby) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
