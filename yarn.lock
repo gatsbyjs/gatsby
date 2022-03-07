@@ -14976,10 +14976,10 @@ livereload-js@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-2.3.0.tgz#c3ab22e8aaf5bf3505d80d098cbad67726548c9a"
 
-lmdb@2.2.1, lmdb@^2.0.2, lmdb@^2.1.7:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/lmdb/-/lmdb-2.2.1.tgz#b7fd22ed2268ab74aa71108b793678314a7b94bb"
-  integrity sha512-tUlIjyJvbd4mqdotI9Xe+3PZt/jqPx70VKFDrKMYu09MtBWOT3y2PbuTajX+bJFDjbgLkQC0cTx2n6dithp/zQ==
+lmdb@^2.0.2, lmdb@^2.1.7, lmdb@^2.2.3:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/lmdb/-/lmdb-2.2.4.tgz#6494d5a1d1db152e0be759edcfa06893e4cbdb53"
+  integrity sha512-gto+BB2uEob8qRiTlOq+R3uX0YNHsX9mjxj9Sbdue/LIKqu6IlZjrsjKeGyOMquc/474GEqFyX2pdytpydp0rQ==
   dependencies:
     msgpackr "^1.5.4"
     nan "^2.14.2"
