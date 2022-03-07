@@ -532,5 +532,52 @@ describe(`edge cases (yay)`, () => {
     expect(run).toThrow(
       `Invariant violation: inconsistent node counters detected`
     )
+
+    store.dispatch({
+      type: `DELETE_NODE`,
+      payload: badNode,
+    })
+  })
+
+  it(`works with subsequent, different filters (issue #34910)`, () => {
+    // shared filter cache
+    const filtersCache = new Map()
+
+    {
+      const filter1 = {
+        slog: { $eq: `def` }, // matches id_2 and id_4
+      }
+
+      const result1 = applyFastFilters(
+        createDbQueriesFromObject(filter1),
+        [typeName],
+        filtersCache,
+        [],
+        []
+      )
+
+      expect(result1.length).toEqual(2)
+      expect(result1[0].id).toEqual(`id_2`)
+      expect(result1[1].id).toEqual(`id_4`)
+    }
+
+    {
+      const filter2 = {
+        slog: { $eq: `def` }, // matches id_2 and id_4
+        // important - new filter element
+        deep: { flat: { search: { chain: { $eq: 500 } } } }, // matches id_2
+      }
+
+      const result2 = applyFastFilters(
+        createDbQueriesFromObject(filter2),
+        [typeName],
+        filtersCache,
+        [`string`], // important - new sort field
+        []
+      )
+
+      expect(result2.length).toEqual(1)
+      expect(result2[0].id).toEqual(`id_2`)
+    }
   })
 })

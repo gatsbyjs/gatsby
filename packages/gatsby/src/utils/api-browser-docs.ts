@@ -115,7 +115,7 @@ export const shouldUpdateScroll = true
 export const registerServiceWorker = true
 
 /**
- * Allow a plugin to wrap the page element.
+ * Can be used to wrap each page element.
  *
  * This is useful for setting wrapper components around pages that won't get
  * unmounted on page changes. For setting Provider components, use [wrapRootElement](#wrapRootElement).
@@ -142,7 +142,7 @@ export const registerServiceWorker = true
 export const wrapPageElement = true
 
 /**
- * Allow a plugin to wrap the root element.
+ * Can be used to the wrap the root element.
  *
  * This is useful to set up any Provider components that will wrap your application.
  * For setting persistent UI elements around pages use [wrapPageElement](#wrapPageElement).
