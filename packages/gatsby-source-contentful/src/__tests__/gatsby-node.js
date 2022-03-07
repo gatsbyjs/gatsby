@@ -11,7 +11,9 @@ import restrictedContentTypeFixture from "../__fixtures__/restricted-content-typ
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
+  const originalModule = jest.requireActual(`gatsby-core-utils`)
   return {
+    ...originalModule,
     createContentDigest: () => `contentDigest`,
   }
 })
@@ -46,7 +48,16 @@ describe(`gatsby-node`, () => {
     }),
     touchNode: jest.fn(),
   }
-  const schema = { buildObjectType: jest.fn(), buildInterfaceType: jest.fn() }
+  const schema = {
+    buildObjectType: jest.fn(() => {
+      return {
+        config: {
+          interfaces: [],
+        },
+      }
+    }),
+    buildInterfaceType: jest.fn(),
+  }
   const store = {
     getState: jest.fn(() => {
       return { program: { directory: process.cwd() }, status: {} }
@@ -75,7 +86,7 @@ describe(`gatsby-node`, () => {
     pluginOptions = defaultPluginOptions
   ) {
     await createSchemaCustomization(
-      { schema, actions, reporter, cache },
+      { schema, actions, reporter, cache, store },
       pluginOptions
     )
 

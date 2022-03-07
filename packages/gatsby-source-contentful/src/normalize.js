@@ -383,6 +383,13 @@ export const createNodesForContentType = ({
           entryItem.sys.type
         )
 
+        const existingNode = getNode(entryNodeId)
+        if (existingNode?.internal?.contentDigest === entryItem.sys.updatedAt) {
+          // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+          // of an entry did not change, then we can trust that none of its children were changed either.
+          return null
+        }
+
         // Get localized fields.
         const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
           const fieldProps = contentTypeItem.fields.find(
@@ -717,6 +724,7 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
+    const file = assetItem.fields.file ? getField(assetItem.fields.file) : {}
     const assetNode = {
       contentful_id: assetItem.sys.id,
       spaceId: space.sys.id,
@@ -725,7 +733,7 @@ export const createAssetNodes = ({
       updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
-      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
+      file,
       title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
@@ -737,6 +745,12 @@ export const createAssetNodes = ({
       sys: {
         type: assetItem.sys.type,
       },
+      url: `https:${file.url}`,
+      placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
+      mimeType: file.contentType,
+      filename: file.fileName,
+      width: file.details?.image?.width,
+      height: file.details?.image?.height,
     }
 
     // Link tags

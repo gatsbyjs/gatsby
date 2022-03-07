@@ -5,6 +5,7 @@ import * as path from "path"
 import { waitUntilAllJobsComplete } from "../../jobs/manager"
 import type { MessagesFromChild, MessagesFromParent } from "../messaging"
 import { getReduxJobs, getJobsMeta } from "./test-helpers/child-for-tests"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 jest.mock(`gatsby-telemetry`, () => {
   return {
@@ -42,6 +43,7 @@ describe(`worker (jobs)`, () => {
     worker.onMessage(receivedMessageSpy)
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
+    await compileGatsbyFiles(siteDirectory)
 
     await Promise.all(
       worker.all.loadConfigAndPlugins({

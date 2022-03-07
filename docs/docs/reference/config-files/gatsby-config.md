@@ -166,7 +166,7 @@ See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path
 
 ## trailingSlash
 
-Configures the creation of URLs and whether to remove, append, or ignore trailing slashes.
+Configures the creation of URLs for pages, and whether to remove, append, or ignore trailing slashes.
 
 - `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
 - `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.

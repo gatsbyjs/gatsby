@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.9.0/packages/gatsby-remark-code-repls) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Bug Fixes
+
+- update dependency urijs to ^1.19.8 for gatsby-remark-code-repls [#34979](https://github.com/gatsbyjs/gatsby/issues/34979) ([77c32b0](https://github.com/gatsbyjs/gatsby/commit/77c32b0342ada5d7f940fa7a53c3ecb1e1ec61a5))
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
 ## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.8.0/packages/gatsby-remark-code-repls) (2022-02-22)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)

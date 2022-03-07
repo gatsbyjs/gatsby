@@ -10,10 +10,13 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^3.14.6",
-    "gatsby-theme-blog": "^3.0.0",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "@mdx-js/react": "^1.6.22",
+    "gatsby": "^4.9.2",
+    "gatsby-theme-blog": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "theme-ui": "0.12.1"
+    "theme-ui": "0.13.1"
   }
 }

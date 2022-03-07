@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
+import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
-import fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
 import del from "del"
@@ -24,6 +24,7 @@ import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
+import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
 
 interface IPluginResolution {
@@ -162,12 +163,19 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
+  const siteDirectory = program.directory
+
+  // Compile root gatsby files
+  let activity = reporter.activityTimer(`compile gatsby files`)
+  activity.start()
+  await compileGatsbyFiles(siteDirectory)
+  activity.end()
+
   // Load gatsby config
-  let activity = reporter.activityTimer(`load gatsby config`, {
+  activity = reporter.activityTimer(`load gatsby config`, {
     parentSpan,
   })
   activity.start()
-  const siteDirectory = program.directory
   const config = await loadConfig({
     siteDirectory,
     processFlags: true,
@@ -317,15 +325,21 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
+  const optionalFiles = [
+    `${program.directory}/gatsby-config.js`,
+    `${program.directory}/gatsby-node.js`,
+    `${program.directory}/gatsby-config.ts`,
+    `${program.directory}/gatsby-node.ts`,
+  ] as Array<string>
 
   const state = store.getState()
 
-  const hashes: any = await Promise.all([
-    md5File(`package.json`),
-    md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
-    md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
-    { trailingSlash: state.config.trailingSlash },
-  ])
+  const hashes = await Promise.all(
+    // Ignore optional files with .catch() as these are not required
+    [md5File(`package.json`), state.config.trailingSlash as string].concat(
+      optionalFiles.map(f => md5File(f).catch(() => ``))
+    )
+  )
 
   const pluginsHash = crypto
     .createHash(`md5`)
@@ -420,6 +434,7 @@ export async function initialize({
         `${cacheDirectory}/data/**`,
         `!${cacheDirectory}/data/gatsby-core-utils/`,
         `!${cacheDirectory}/data/gatsby-core-utils/**`,
+        `!${cacheDirectory}/compiled`,
       ]
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
@@ -496,9 +511,9 @@ export async function initialize({
     await fs.copy(srcDir, siteDir)
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
     if (lmdbStoreIsUsed) {
-      await fs.ensureDirSync(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
+      await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
     } else {
-      await fs.ensureDirSync(`${cacheDirectory}/json`)
+      await fs.ensureDir(`${cacheDirectory}/json`)
     }
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be

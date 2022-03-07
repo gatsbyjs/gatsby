@@ -15,6 +15,7 @@ import {
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
 import { IGatsbyState } from "../../../redux/types"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -57,6 +58,7 @@ describeWhenLMDB(`worker (schema)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
+    await compileGatsbyFiles(siteDirectory)
     const config = await loadConfig({
       siteDirectory,
     })

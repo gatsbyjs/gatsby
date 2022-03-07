@@ -2,12 +2,13 @@
 import _ from "lodash"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
+import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
+export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
 
 import { maskText } from "./plugin-options"
 
 export { createSchemaCustomization } from "./create-schema-customization"
 export { sourceNodes } from "./source-nodes"
-export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
 
 const fetch = fetchRetry(origFetch)
 
@@ -131,3 +132,8 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
       plugins: Joi.array(),
     })
     .external(validateContentfulAccess)
+
+/** @type {import('gatsby').GatsbyNode["onCreateDevServer"]} */
+export const onCreateDevServer = ({ app }) => {
+  polyfillImageServiceDevRoutes(app)
+}
