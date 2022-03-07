@@ -133,14 +133,29 @@ export default async ({
 
     await events.once(rl, `close`)
 
-    await apiRunner(`sourceNodes`, {
-      traceId,
-      waitForCascadingActions: true,
-      deferNodeMutation,
-      parentSpan,
-      webhookBody: webhookBody || {},
-      pluginName: `internal-data-bridge`,
-    })
+    const runAlwaysList = [`gatsby-source-filesystem`, `internal-data-bridge`]
+    for (const plugin of store.getState().flattenedPlugins) {
+      if (
+        !plugin.nodeAPIs.includes(`sourceNodes`) ||
+        !runAlwaysList.includes(plugin.name)
+      ) {
+        if (plugin.nodeAPIs.includes(`sourceNodes`)) {
+          report.verbose(`[source-nodes] ignore ${plugin.name}`)
+        }
+
+        continue
+      }
+
+      report.verbose(`[source-nodes] running ${plugin.name}`)
+      await apiRunner(`sourceNodes`, {
+        traceId,
+        waitForCascadingActions: true,
+        deferNodeMutation,
+        parentSpan,
+        webhookBody: webhookBody || {},
+        pluginName: plugin.name,
+      })
+    }
   } else {
     await apiRunner(`sourceNodes`, {
       traceId,
