@@ -996,19 +996,19 @@ Here are some things to keep in mind and some "gotchas" depending on how the CMS
 - When you click the "Open Preview" button in the CMS the `manifestId` in the URL should match the `manifestId` that the source plugin creates from that revision.
 - The node manifests get written out in the `public` dir of your gatsby site, so you can check to manifests on your local disk `/public/__node-manifests/<sourcePluginName>/<manifestId>.json` or you can navigate directly to that piece of content `https://<your-domain>/__node-manifests/<sourcePluginName>/<manifestId>`
 
-### Enabling Image CDN Support
+### Enabling Image CDN support
 
-Image CDN is a feature on Gatsby Cloud that provides edge network image processing by waiting to perform image processing until the very first user visit to a page. The processed image is then cached for super quick fetching on all subsequent user views. Enabling it will also speed up local development builds and production builds on other deployment platforms because images from your CMS or data source will only be downloaded if they are used in a created Gatsby page.
+Image CDN is a [feature on Gatsby Cloud](/products/cloud/image-cdn/) that provides edge network image processing by waiting to perform image processing until the very first user visit to a page. The processed image is then cached for super quick fetching on all subsequent user views. Enabling it will also speed up local development builds and production builds on other deployment platforms because images from your CMS or data source will only be downloaded if they are used in a created Gatsby page.
 
-Learn more [here](https://www.gatsbyjs.com/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud/)
+You can learn more about it in the announcement blogpost [Image CDN: Lightning Fast Image Processing for Gatsby Cloud](/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud/)
 
-## Integration with source plugins
+#### Integration with source plugins
 
-Starting with `gatsby@next`, image CDN is native in Gatsby Core and a polyfill is available to enable image CDN support down to Gatsby v2.
+Starting with `gatsby@4.10`, Image CDN and its helper functions are available inside `gatsby` and `gatsby-plugin-utils`. In addition to the `RemoteFile` interface you can also use the `addRemoteFilePolyfillInterface` and `polyfillImageServiceDevRoutes` functions to enable Image CDN support down to Gatsby 2 inside your plugin.
 
-### `createSchemaCustomization` Node API Additions
+#### `createSchemaCustomization` node API additions
 
-To add support to a source plugin, you will need to create a new object type that implements the `Node` and `RemoteFile` interfaces.
+To add support to a source plugin, you will need to create a new [GraphQL object type](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) that implements the `Node` and `RemoteFile` interfaces.
 
 ```js
 schema.buildObjectType({
@@ -1020,7 +1020,7 @@ schema.buildObjectType({
 })
 ```
 
-It is also recommended that you add a polyfill to provide support back through Gatsby v2. To do so, you simply wrap the `buildObjectType` call with the `addRemoteFilePolyfillInterface` polyfill like so.
+It is also recommended that you add a polyfill to provide support back through Gatsby 2. To do so, wrap the `buildObjectType` call with the `addRemoteFilePolyfillInterface` polyfill like so:
 
 ```js
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
@@ -1034,8 +1034,9 @@ addRemoteFilePolyfillInterface(
     interfaces: [`Node`, `RemoteFile`],
   }),
   {
-    schema, // schema you get as an argument from createSchemaCustomization
-    actions, // the redux actions of gatsby also part of createSchemaCustomization
+    schema,
+    actions,
+    // schema and actions are arguments on the `createSchemaCustomization` API
   }
 )
 ```
@@ -1051,13 +1052,13 @@ Implementing the `RemoteFile` interface adds the correct fields to your new Grap
 - `resize(width: Int, height: Int, fit: enum): String`
 - `gatsbyImage(args): String`
 
-You might notice that width, height, resize and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDF’s.
+You might notice that `width`, `height`, `resize`, and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDF’s.
 
-The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
+The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
 
-### `sourceNodes` Node API Additions
+### `sourceNodes` node API additions
 
-When creating nodes, you must add some fields to the node itself to match what the `RemoteFile` interface used above when creating your new type expects. You may have guessed it already, you will need `url`, `mimeType`, `filename` as mandatory fields. When you have an image type, `width` and `height` are required as well. The optional fields are `placeholderUrl` and `filesize`. `placeholderUrl` will be the url used to generate blurred or dominant color placeholder so it should contain `%width%` and `%height%` url params if possible.
+When creating nodes, you must add some fields to the node itself to match what the `RemoteFile` interface expects. You will need `url`, `mimeType`, `filename` as mandatory fields. When you have an image type, `width` and `height` are required as well. The optional fields are `placeholderUrl` and `filesize`. `placeholderUrl` will be the url used to generate blurred or dominant color placeholder so it should contain `%width%` and `%height%` url params if possible.
 
 ```js
 const assetNode = {
@@ -1074,9 +1075,9 @@ const assetNode = {
 }
 ```
 
-### `onCreateDevServer` Node API
+### `onCreateDevServer` node API
 
-You need one final polyfill to ensure that the dev server started with `gatsby develop` has the routes it needs to work with Image CDN.
+Add the polyfill, `polyfillImageServiceDevRoutes`, to ensure that the development server started with `gatsby develop` has the routes it needs to work with Image CDN.
 
 ```js
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
