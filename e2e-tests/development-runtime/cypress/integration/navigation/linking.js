@@ -256,6 +256,7 @@ describe(`navigation`, () => {
     })
 
     it(`renders page when percent encoded query string value is used on client navigation`, () => {
+      cy.visit(`/`).waitForRouteChange()
       cy.window()
         .then(win => win.___navigate(`/query-params?message=%25`))
         .waitForRouteChange()
