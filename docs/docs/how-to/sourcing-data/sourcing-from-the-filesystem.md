@@ -96,17 +96,13 @@ You can then update your query using `sourceInstanceName` and the value of the `
 }
 ```
 
-## Sourcing Files using Environment Variables
+## Conditionally sourcing files using environment variables
 
-You can also source files using environment variables. For context, you might decide to do this if you're sourcing a lot of files and local build times are taking too long, so you only source a smaller batch of files when in development.
+You can conditionally set the `path` option using environment variables. For context, you might decide to do this if you're sourcing a lot of files and you're interested in only sourcing a smaller batch of files during `gatsby develop`. This is also helpful when you e.g. have a staging and production environment (signaled through environment variables).
 
-In the example below in `gatsby-config.js` if the environment variable `NODE_ENV` is set to development, only the content in the specified path will be sourced.
+The example below shows how to use `NODE_ENV` (which is automatically set to `development` during `gatsby develop`) to only source a smaller portion of the content during development. For `gatsby build` the full dataset will be used.
 
 ```javascript:title=gatsby-config.js
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
-
 module.exports = {
   plugins: [
     {
