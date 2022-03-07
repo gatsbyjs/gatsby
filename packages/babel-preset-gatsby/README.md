@@ -27,7 +27,15 @@ npm install --dev babel-preset-gatsby
 
 ```json
 {
-  "presets": ["babel-preset-gatsby"]
+  "presets": [
+    [
+      "babel-preset-gatsby",
+      {
+        "reactRuntime": "automatic",
+        "reactImportSource": "@emotion/react"
+      }
+    ]
+  ]
 }
 ```
 
