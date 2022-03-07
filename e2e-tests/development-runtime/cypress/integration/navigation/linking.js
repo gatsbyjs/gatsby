@@ -247,7 +247,7 @@ describe(`navigation`, () => {
     })
   })
 
-  describe(`Supports Query params with special characters`, () => {
+  describe(`Supports percent encoded query string values`, () => {
     beforeEach(() => {
       cy.visit(`/query-params`)
       cy.window().then(win => {
@@ -255,14 +255,24 @@ describe(`navigation`, () => {
       })
     })
 
-    it(`renders pages when special charcter is used`, () => {
+    it(`renders page when percent encoded query string value is used on client navigation`, () => {
+      cy.window()
+        .then(win => win.___navigate(`/query-params?message=%25`))
+        .waitForRouteChange()
+
+      cy.getTestElement(`location.search`)
+        .invoke(`text`)
+        .should(`equal`, `?message=%25`)
+    })
+
+    it(`renders page when percent encoded query string value is used on direct visit `, () => {
       cy.visit(`/query-params?message=%25`).waitForRouteChange()
       cy.getTestElement(`location.search`)
         .invoke(`text`)
         .should(`equal`, `?message=%25`)
     })
 
-    it(`should not throw error when special charcter is used`, () => {
+    it(`should not throw error when percent encoded query string value is used`, () => {
       cy.get(`@consoleError`).should(`not.be.called`)
     })
   })
