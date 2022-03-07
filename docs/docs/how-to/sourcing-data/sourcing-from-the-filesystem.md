@@ -121,7 +121,6 @@ module.exports = {
 }
 ```
 
-
 ## Transforming File nodes
 
 Once files have been sourced, various "transformer" plugins in the Gatsby ecosystem can then be used to transform File nodes into various other types of data. For example, a JSON file can be sourced using `gatsby-source-filesystem`, and then the resulting File nodes can be transformed into JSON nodes using `gatsby-transformer-json`.
