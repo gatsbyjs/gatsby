@@ -1,7 +1,11 @@
 // @ts-check
 // This is more an integration test than it is a unit test. We try to mock as little as we can
 import _ from "lodash"
-import { createSchemaCustomization, sourceNodes } from "../gatsby-node"
+import {
+  createSchemaCustomization,
+  sourceNodes,
+  onPreInit,
+} from "../gatsby-node"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -326,6 +330,94 @@ describe(`gatsby-node`, () => {
     cache.set.mockClear()
     reporter.info.mockClear()
     reporter.panic.mockClear()
+  })
+
+  let hasImported = false
+  describe(`onPreInit`, () => {
+    it(`should pass when gatsby-plugin-image is installed and configured`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      await onPreInit({
+        store: {
+          getState: () => {
+            return {
+              flattenedPlugins: [
+                {
+                  name: `gatsby-plugin-image`,
+                },
+              ],
+            }
+          },
+        },
+        reporter,
+      })
+    })
+
+    it(`should throw when gatsby-plugin-image is not installed`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      jest.doMock(`gatsby-plugin-image/graphql-utils`, () => {
+        if (hasImported) {
+          return jest.requireActual(`gatsby-plugin-image/graphql-utils`)
+        }
+
+        // only throw once
+        hasImported = true
+        throw new Error(`not installed`)
+      })
+
+      expect.assertions(2)
+      try {
+        await onPreInit({ store: {}, reporter })
+      } catch (err) {
+        console.log(err)
+        expect(err.id).toBe(`111005`)
+        expect(err.context).toMatchInlineSnapshot(`
+          Object {
+            "sourceMessage": "gatsby-plugin-image is missing from your project.
+          Please install \\"gatsby-plugin-image\\".",
+          }
+        `)
+      }
+    })
+    it(`should throw when gatsby-plugin-image is not configured`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      expect.assertions(2)
+      try {
+        await onPreInit({
+          store: {
+            getState: () => {
+              return {
+                flattenedPlugins: [],
+              }
+            },
+          },
+          reporter,
+        })
+      } catch (err) {
+        console.log(err)
+        expect(err.id).toBe(`111005`)
+        expect(err.context).toMatchInlineSnapshot(`
+          Object {
+            "sourceMessage": "gatsby-plugin-image is missing from your gatsby-config file.
+          Please add \\"gatsby-plugin-image\\" to your plugins array.",
+          }
+        `)
+      }
+    })
   })
 
   it(`should create nodes from initial payload`, async () => {
