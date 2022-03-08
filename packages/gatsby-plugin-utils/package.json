@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "3.4.0-next.2",
+  "version": "3.4.0-next.3",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "exports": {
@@ -47,7 +47,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "gatsby-core-utils": "^3.10.0-next.2",
+    "gatsby-core-utils": "^3.10.0-next.3",
     "gatsby-sharp": "^0.4.0-next.2",
     "graphql-compose": "^9.0.7",
     "import-from": "^4.0.0",
