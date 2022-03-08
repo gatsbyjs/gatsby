@@ -15,10 +15,9 @@ import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
 import { pageDataExists, savePageQueryResult } from "../utils/page-data"
 
-export const RESULT_HASH_CACHE_NAME = `query-result-hashes`
 const GatsbyCacheLmdbImpl = require(`../utils/cache-lmdb`).default
 const resultHashCache = new GatsbyCacheLmdbImpl({
-  name: RESULT_HASH_CACHE_NAME,
+  name: `query-result-hashes`,
   encoding: `string`,
 }).init()
 

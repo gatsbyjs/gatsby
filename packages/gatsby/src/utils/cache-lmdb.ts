@@ -13,10 +13,6 @@ const cacheDbFile =
       }`
     : `caches-lmdb`
 
-interface IGatsbyCacheLmdbOptions {
-  reset?: boolean
-}
-
 export default class GatsbyCacheLmdb {
   private static store
   private db: Database | undefined
@@ -42,17 +38,8 @@ export default class GatsbyCacheLmdb {
     this.cache = this
   }
 
-  init({ reset }: IGatsbyCacheLmdbOptions = {}): GatsbyCacheLmdb {
+  init(): GatsbyCacheLmdb {
     fs.ensureDirSync(this.directory)
-
-    if (reset) {
-      const db = this.getDb()
-      if (db.getKeysCount({})) {
-        db.dropSync()
-        this.db = undefined
-      }
-    }
-
     return this
   }
 
