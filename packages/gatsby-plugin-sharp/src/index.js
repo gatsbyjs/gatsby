@@ -83,7 +83,8 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
 }
 
 function prepareQueue({ file, args }) {
-  const { pathPrefix, ...options } = args
+  const { pathPrefix, duotone, ...rest } = args
+  const options = Object.assign(rest, duotone)
   const argsDigestShort = createArgsDigest(options)
   const imgSrc = `/${file.name}.${options.toFormat}`
   const outputDir = path.join(

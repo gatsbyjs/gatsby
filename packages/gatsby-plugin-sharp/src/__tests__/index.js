@@ -615,6 +615,27 @@ describe(`gatsby-plugin-sharp`, () => {
       const result = await fluid({ file, args })
       expect(result).toMatchSnapshot()
     })
+
+    it(`creates two different images for different duotone settings`, async () => {
+      const firstImage = await fluid({
+        file,
+        args: {
+          maxWidth: 100,
+          width: 100,
+          duotone: { highlight: `#ffffff`, shadow: `#cccccc` },
+        },
+      })
+      const secondImage = await fluid({
+        file,
+        args: {
+          maxWidth: 100,
+          width: 100,
+          duotone: { highlight: `#000`, shadow: `#ffffff` },
+        },
+      })
+
+      expect(firstImage.src).not.toEqual(secondImage.src)
+    })
   })
 
   describe(`stats`, () => {
