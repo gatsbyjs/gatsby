@@ -42,7 +42,7 @@ This also downloads the files and initializes the site by running `npm install`.
 
 If you don't specify a custom starter, your site will be created from the [default starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
-> **Note:** If you work for an Enterprise-level company where you are unable to pull from public GitHub repositories, you can still set up Gatsby. Check out the [docs to learn more](/docs/using-gatsby-professionally/using-gatsby-professionally/setting-up-gatsby-without-gatsby-new/).
+> **Note:** If you work for an Enterprise-level company where you are unable to pull from public GitHub repositories, you can still set up Gatsby. Check out the [docs to learn more](/docs/using-gatsby-professionally/setting-up-gatsby-without-gatsby-new/).
 
 ### Using a local starter
 
