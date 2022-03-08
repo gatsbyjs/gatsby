@@ -278,21 +278,21 @@ function addPluginsToConfig({
  * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal/gatsby-config.js}
  * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/gatsby-config.ts}
  */
-export const BabelPluginAddPluginsToGatsbyConfig = declare(
-  function BabelPluginAddPluginsToGatsbyConfig(
+export default declare(
+  (
     api: ConfigAPI,
     args: {
       pluginOrThemeName: string
       options: unknown
       key: string
     }
-  ): PluginObj {
+  ): PluginObj => {
     api.assertVersion(7)
 
     return {
       visitor: {
         /**
-         * Handle `module.exports = { ..., plugins: [] }` `gatsby-config.js` in `gatsby-starter-minimal`.
+         * Handle `module.exports = { ..., plugins: [] }` from `gatsby-config.js` in `gatsby-starter-minimal`.
          * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal/gatsby-config.js}
          */
         ExpressionStatement(path): void {
@@ -306,12 +306,46 @@ export const BabelPluginAddPluginsToGatsbyConfig = declare(
             return
           }
 
-          const pluginNodes = right.properties.find(prop => {
-            if (t.isObjectProperty(prop) && t.isIdentifier(prop.key)) {
-              return prop.key.name === `plugins`
-            }
-            return false
-          })
+          const pluginNodes = right.properties.find(
+            prop =>
+              t.isObjectProperty(prop) &&
+              t.isIdentifier(prop.key) &&
+              prop.key.name === `plugins`
+          )
+
+          if (
+            !t.isObjectProperty(pluginNodes) ||
+            !t.isArrayExpression(pluginNodes.value)
+          ) {
+            return
+          }
+
+          addPluginsToConfig({ pluginNodes, ...args })
+
+          path.stop()
+        },
+
+        /**
+         * Handle `const config = { ..., plugins: [] }; export default config` in `gatsby-config.ts` in `gatsby-starter-minimal-ts`.
+         * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/gatsby-config.ts}
+         */
+        VariableDeclaration(path): void {
+          const { node } = path
+          const configDeclaration = node.declarations.find(
+            dec =>
+              t.isIdentifier(dec.id) && dec.id.name === `config` && dec.init
+          )
+          const config = configDeclaration?.init
+          if (!t.isObjectExpression(config)) {
+            return
+          }
+
+          const pluginNodes = config.properties.find(
+            prop =>
+              t.isObjectProperty(prop) &&
+              t.isIdentifier(prop.key) &&
+              prop.key.name === `plugins`
+          )
 
           if (
             !t.isObjectProperty(pluginNodes) ||
