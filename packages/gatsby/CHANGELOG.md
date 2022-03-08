@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.9.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.2/packages/gatsby) (2022-03-07)
+
+#### Other Changes
+
+- don't lock lmdb [#35065](https://github.com/gatsbyjs/gatsby/issues/35065) ([3da0811](https://github.com/gatsbyjs/gatsby/commit/3da0811052ee5f25c0109a33d3a240b7ae1ad13b))
+
 ### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.1/packages/gatsby) (2022-03-03)
 
 #### Bug Fixes
