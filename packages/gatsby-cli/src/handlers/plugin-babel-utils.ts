@@ -268,6 +268,17 @@ function addPluginsToConfig({
   }
 }
 
+function getPluginNodes(
+  properties: Array<t.ObjectProperty | t.ObjectMethod | t.SpreadElement>
+): t.ObjectProperty | undefined {
+  return properties.find(
+    prop =>
+      t.isObjectProperty(prop) &&
+      t.isIdentifier(prop.key) &&
+      prop.key.name === `plugins`
+  ) as t.ObjectProperty
+}
+
 /**
  * Insert plugins selected in create-gatsby questionnaire into `gatsby-config` files.
  *
@@ -306,12 +317,7 @@ export default declare(
             return
           }
 
-          const pluginNodes = right.properties.find(
-            prop =>
-              t.isObjectProperty(prop) &&
-              t.isIdentifier(prop.key) &&
-              prop.key.name === `plugins`
-          )
+          const pluginNodes = getPluginNodes(right.properties)
 
           if (
             !t.isObjectProperty(pluginNodes) ||
@@ -340,12 +346,7 @@ export default declare(
             return
           }
 
-          const pluginNodes = config.properties.find(
-            prop =>
-              t.isObjectProperty(prop) &&
-              t.isIdentifier(prop.key) &&
-              prop.key.name === `plugins`
-          )
+          const pluginNodes = getPluginNodes(config.properties)
 
           if (
             !t.isObjectProperty(pluginNodes) ||
