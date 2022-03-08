@@ -1056,7 +1056,7 @@ You might notice that `width`, `height`, `resize`, and `gatsbyImage` can be null
 
 The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
 
-### `sourceNodes` node API additions
+#### `sourceNodes` node API additions
 
 When creating nodes, you must add some fields to the node itself to match what the `RemoteFile` interface expects. You will need `url`, `mimeType`, `filename` as mandatory fields. When you have an image type, `width` and `height` are required as well. The optional fields are `placeholderUrl` and `filesize`. `placeholderUrl` will be the url used to generate blurred or dominant color placeholder so it should contain `%width%` and `%height%` url params if possible.
 
@@ -1075,7 +1075,7 @@ const assetNode = {
 }
 ```
 
-### `onCreateDevServer` node API
+#### `onCreateDevServer` node API
 
 Add the polyfill, `polyfillImageServiceDevRoutes`, to ensure that the development server started with `gatsby develop` has the routes it needs to work with Image CDN.
 
