@@ -111,7 +111,6 @@ export interface ITelemetryTagsPayload {
     SSRCount?: number
     DSGCount?: number
     SSGCount?: number
-    compiledTSFilesCount?: number
   }
   errorV2?: IStructuredErrorV2
   valueString?: string

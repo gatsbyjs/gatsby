@@ -58,9 +58,8 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
         }
       }
       telemetry.trackCli(`PARCEL_COMPILATION_END`, {
-        siteMeasurements: {
-          compiledTSFilesCount,
-        },
+        valueInteger: compiledTSFilesCount,
+        name: `count of compiled ts files`,
       })
     }
   } catch (error) {
