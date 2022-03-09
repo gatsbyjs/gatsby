@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`installPlugins write to gatsby-config.js should not write with no plugins 1`] = `
+exports[`addPlugins gatsby-config.js should not write with no plugins 1`] = `
 "module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`,
@@ -10,7 +10,7 @@ exports[`installPlugins write to gatsby-config.js should not write with no plugi
 "
 `;
 
-exports[`installPlugins write to gatsby-config.js should write a plugin with options 1`] = `
+exports[`addPlugins gatsby-config.js should write a plugin with options 1`] = `
 "module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
@@ -24,7 +24,7 @@ exports[`installPlugins write to gatsby-config.js should write a plugin with opt
 };"
 `;
 
-exports[`installPlugins write to gatsby-config.js should write a single plugin 1`] = `
+exports[`addPlugins gatsby-config.js should write a single plugin 1`] = `
 "module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
@@ -33,11 +33,72 @@ exports[`installPlugins write to gatsby-config.js should write a single plugin 1
 };"
 `;
 
-exports[`installPlugins write to gatsby-config.js should write multiple plugins 1`] = `
+exports[`addPlugins gatsby-config.js should write multiple plugins 1`] = `
 "module.exports = {
   siteMetadata: {
     siteUrl: \`https://www.yourdomain.tld\`
   },
   plugins: [\\"gatsby-plugin-hello\\", \\"gatsby-plugin-world\\"]
 };"
+`;
+
+exports[`addPlugins gatsby-config.ts should not write with no plugins 1`] = `
+"import type { GatsbyConfig } from \\"gatsby\\"
+
+const config: GatsbyConfig = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`,
+  },
+  plugins: [],
+}
+
+export default config
+"
+`;
+
+exports[`addPlugins gatsby-config.ts should write a plugin with options 1`] = `
+"import type { GatsbyConfig } from 'gatsby;'
+
+const config: GatsbyConfig = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`
+  },
+  plugins: [{
+    resolve: 'gatsby-plugin-hello',
+    options: {
+      \\"greet\\": true
+    }
+  }]
+};
+
+export default config;
+"
+`;
+
+exports[`addPlugins gatsby-config.ts should write a single plugin 1`] = `
+"import type { GatsbyConfig } from 'gatsby;'
+
+const config: GatsbyConfig = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`
+  },
+  plugins: [\\"gatsby-plugin-hello\\"]
+};
+
+export default config;
+"
+`;
+
+exports[`addPlugins gatsby-config.ts should write multiple plugins 1`] = `
+"import type { GatsbyConfig } from 'gatsby;'
+
+const config: GatsbyConfig = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`
+  },
+  plugins: [\\"gatsby-plugin-hello\\", \\"gatsby-plugin-world\\"]
+};
+
+export default config;
+"
 `;

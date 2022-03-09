@@ -48,12 +48,12 @@ const addPluginToConfig = (
 
     code = transform(src, transformOptions)?.code
 
-    // Add back stripped type import, do light formatting, remove added empty module export
+    // Add back stripped type import, do light formatting, remove added empty module export.
+    // Use semicolon since Babel does that anyway, and we might as well be consistent.
     if (srcPath.endsWith(`ts`)) {
-      code = `import type { GatsbyConfig } from 'gatsby'\n\n${code}`
-      code = code.replace(/;/g, ``)
-      code = code.replace(`export {}`, ``)
-      code = code.replace(`export default config`, `\nexport default config`)
+      code = `import type { GatsbyConfig } from 'gatsby;'\n\n${code}`
+      code = code.replace(`export {};`, ``)
+      code = code.replace(`export default config;`, `\nexport default config;`)
     }
   } catch (error) {
     console.error(`Failed to transform gatsby config`, error)
