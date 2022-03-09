@@ -3,7 +3,6 @@ import _ from "lodash"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
-export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
 import { CODES } from "./report"
 
 import { maskText } from "./plugin-options"

@@ -11,7 +11,11 @@ const createMockCache = () => {
 describe(`create-schema-customization`, () => {
   const actions = { createTypes: jest.fn() }
   const schema = {
-    buildObjectType: jest.fn(),
+    buildObjectType: jest.fn(config => {
+      return {
+        config,
+      }
+    }),
     buildInterfaceType: jest.fn(),
     buildUnionType: jest.fn(),
   }
