@@ -1,4 +1,10 @@
-import { createRequireFromPath } from "gatsby-core-utils"
+/* eslint-disable @babel/no-invalid-this */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { slash } from "gatsby-core-utils/path"
+import path from "path"
+
+// we need to require this module, we can't use import here
+const { createRequire } = require(`module`)
 
 // This is hacky webpack loader that does string replacements to
 // allow lmdb@2 to be bundled by webpack for engines.
@@ -16,20 +22,26 @@ import { createRequireFromPath } from "gatsby-core-utils"
 //  - https://github.com/DoctorEvidence/lmdb-js/blob/544b3fda402f24a70a0e946921e4c9134c5adf85/open.js#L77
 // Reliance on `import.meta.url` + usage of `.replace` is what seems to cause problems currently.
 
-export default function (source: string): string {
-  let lmdbBinaryLocation
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function (this: any, source: string): string {
+  let lmdbBinaryLocation: string | undefined
   try {
-    const lmdbRequire = createRequireFromPath(require.resolve(`lmdb`))
-    const nodeGypBuild = lmdbRequire(`node-gyp-build`)
-    const path = require(`path`)
+    const lmdbRoot =
+      this?._module.resourceResolveData?.descriptionFileRoot ||
+      path.dirname(this.resourcePath).replace(`/dist`, ``)
 
-    lmdbBinaryLocation = nodeGypBuild.path(
-      path.dirname(require.resolve(`lmdb`)).replace(`/dist`, ``)
+    const lmdbRequire = createRequire(this.resourcePath)
+    const nodeGypBuild = lmdbRequire(`node-gyp-build`)
+
+    lmdbBinaryLocation = slash(
+      path.relative(
+        path.dirname(this.resourcePath),
+        nodeGypBuild.path(lmdbRoot)
+      )
     )
   } catch (e) {
     return source
   }
-
   return source
     .replace(
       `require$1('node-gyp-build')(dirName)`,
