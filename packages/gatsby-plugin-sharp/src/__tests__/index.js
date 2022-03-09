@@ -617,20 +617,21 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`creates two different images for different duotone settings`, async () => {
+      const testName = `duotone-digest-test`
       const firstImage = await fluid({
-        file,
+        file: getFileObject(path.join(__dirname, `images/test.png`), testName),
         args: {
           maxWidth: 100,
           width: 100,
-          duotone: { highlight: `#ffffff`, shadow: `#cccccc` },
+          duotone: { highlight: `#BBFFE6`, shadow: `#51758D` },
         },
       })
       const secondImage = await fluid({
-        file,
+        file: getFileObject(path.join(__dirname, `images/test.png`), testName),
         args: {
           maxWidth: 100,
           width: 100,
-          duotone: { highlight: `#000`, shadow: `#ffffff` },
+          duotone: { highlight: `#F1D283`, shadow: `#000000` },
         },
       })
 
