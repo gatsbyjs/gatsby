@@ -1,6 +1,7 @@
 import { copyFile, readFile, rm } from "fs/promises"
-import { addPlugins } from "../../handlers/plugin-add"
+import { ensureDir } from "fs-extra"
 import { join } from "path"
+import { addPlugins } from "../../handlers/plugin-add"
 
 /**
  * Copy files from minimal starters instead of testing against static gatsby-configs
@@ -28,6 +29,10 @@ const plugin = {
 }
 
 describe(`addPlugins`, () => {
+  beforeAll(async () => {
+    await ensureDir(fixtures)
+  })
+
   describe(`gatsby-config.js`, () => {
     beforeEach(async () => {
       await copyFile(config.js.starter, config.js.fixture)
