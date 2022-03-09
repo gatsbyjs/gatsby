@@ -191,6 +191,7 @@ export async function gatsbyImageResolver(
         format,
         cropFocus: args.cropFocus,
         quality: args.quality as number,
+        aspectRatio: args.aspectRatio as number,
       })}/${encodeURIComponent(
         path.basename(source.filename, path.extname(source.filename))
       )}.${format}`

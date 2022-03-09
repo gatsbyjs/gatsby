@@ -28,10 +28,12 @@ export function generateImageArgs({
   format,
   cropFocus,
   quality,
+  aspectRatio,
 }: WidthOrHeight & {
   format: string
   cropFocus?: ImageCropFocus | Array<ImageCropFocus>
   quality: number
+  aspectRatio: number
 }): string {
   const args: Array<string> = []
   if (width) {
@@ -45,6 +47,16 @@ export function generateImageArgs({
     args.push(
       `crop=${Array.isArray(cropFocus) ? cropFocus.join(`,`) : cropFocus}`
     )
+  }
+  /**
+   * @todo does our resolver allow us to pass "standard" aspect ratio format like 4:3 or just floats?
+   */
+  if (aspectRatio) {
+    // crop must be set for aspectRatio to work
+    if (!cropFocus) {
+      args.push(`fit=crop`)
+    }
+    args.push(`ar=${aspectRatio}`)
   }
   args.push(`fm=${format}`)
   args.push(`q=${quality}`)
