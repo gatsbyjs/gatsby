@@ -1,6 +1,6 @@
 import { copyFile, readFile, rm } from "fs/promises"
-import { resolve } from "path"
 import { addPlugins } from "../../handlers/plugin-add"
+import { join } from "path"
 
 /**
  * Copy files from minimal starters instead of testing against static gatsby-configs
@@ -10,14 +10,15 @@ import { addPlugins } from "../../handlers/plugin-add"
  * @see {@link https://jestjs.io/docs/api#testeachtablename-fn-timeout}
  */
 
-const fixtures = resolve(`packages/gatsby-cli/src/__tests__/fixtures`)
+const root = join(__dirname, `../../../../..`)
+const fixtures = join(__dirname, `../fixtures`)
 const config = {
   js: {
-    starter: resolve(`starters/gatsby-starter-minimal/gatsby-config.js`),
+    starter: `${root}/starters/gatsby-starter-minimal/gatsby-config.js`,
     fixture: `${fixtures}/gatsby-config.js`,
   },
   ts: {
-    starter: resolve(`starters/gatsby-starter-minimal-ts/gatsby-config.ts`),
+    starter: `${root}/starters/gatsby-starter-minimal-ts/gatsby-config.ts`,
     fixture: `${fixtures}/gatsby-config.ts`,
   },
 }
@@ -29,11 +30,11 @@ const plugin = {
 describe(`addPlugins`, () => {
   describe(`gatsby-config.js`, () => {
     beforeEach(async () => {
-      await copyFile(resolve(config.js.starter), resolve(config.js.fixture))
+      await copyFile(config.js.starter, config.js.fixture)
     })
 
     afterEach(async () => {
-      await rm(resolve(config.js.fixture))
+      await rm(config.js.fixture)
     })
 
     it(`should not write with no plugins`, async () => {
@@ -72,11 +73,11 @@ describe(`addPlugins`, () => {
 
   describe(`gatsby-config.ts`, () => {
     beforeEach(async () => {
-      await copyFile(resolve(config.ts.starter), resolve(config.ts.fixture))
+      await copyFile(config.ts.starter, config.ts.fixture)
     })
 
     afterEach(async () => {
-      await rm(resolve(config.ts.fixture))
+      await rm(config.ts.fixture)
     })
 
     it(`should not write with no plugins`, async () => {
