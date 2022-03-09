@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`installPlugins write to gatsby-config.js should not write with no plugins 1`] = `
+"module.exports = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`,
+  },
+  plugins: [],
+}
+"
+`;
+
+exports[`installPlugins write to gatsby-config.js should write a plugin with options 1`] = `
+"module.exports = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`
+  },
+  plugins: [{
+    resolve: 'gatsby-plugin-hello',
+    options: {
+      \\"greet\\": true
+    }
+  }]
+};"
+`;
+
+exports[`installPlugins write to gatsby-config.js should write a single plugin 1`] = `
+"module.exports = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`
+  },
+  plugins: [\\"gatsby-plugin-hello\\"]
+};"
+`;
+
+exports[`installPlugins write to gatsby-config.js should write multiple plugins 1`] = `
+"module.exports = {
+  siteMetadata: {
+    siteUrl: \`https://www.yourdomain.tld\`
+  },
+  plugins: [\\"gatsby-plugin-hello\\", \\"gatsby-plugin-world\\"]
+};"
+`;
