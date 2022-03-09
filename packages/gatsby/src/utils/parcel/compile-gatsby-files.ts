@@ -51,6 +51,9 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
 
     if (telemetry.isTrackingEnabled()) {
       const bundles = bundleGraph.getBundles()
+
+      if (bundles.length === 0) return
+
       let compiledTSFilesCount = 0
       for (const bundle of bundles) {
         if (bundle?.getMainEntry()?.filePath?.endsWith(`.ts`)) {
