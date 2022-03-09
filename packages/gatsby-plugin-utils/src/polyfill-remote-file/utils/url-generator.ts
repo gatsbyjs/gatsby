@@ -48,9 +48,6 @@ export function generateImageArgs({
       `crop=${Array.isArray(cropFocus) ? cropFocus.join(`,`) : cropFocus}`
     )
   }
-  /**
-   * @todo does our resolver allow us to pass "standard" aspect ratio format like 4:3 or just floats?
-   */
   if (aspectRatio) {
     // crop must be set for aspectRatio to work
     if (!cropFocus) {
