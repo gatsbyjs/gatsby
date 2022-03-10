@@ -10,11 +10,11 @@ Using images in Gatsby components and pages requires four steps to take advantag
 
 <ImageModel initialLayer="Install" />
 
-`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/plugins/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.com/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) to power its image transformations.
+`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/plugins/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) to power its image transformations.
 
 > _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
-Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-image.gatsbyjs.com/)
+Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-image.gatsbyjs.org/)
 
 `gatsby-image` includes the tricks you’d expect from a modern image component. It:
 

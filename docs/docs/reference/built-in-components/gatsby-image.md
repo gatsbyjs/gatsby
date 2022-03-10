@@ -4,11 +4,11 @@ title: Gatsby Image API
 
 _This document talks about the deprecated image plugin. Please check out how to work with the new [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image)_
 
-Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.com/) capabilities powered by GraphQL and [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
+Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
 
 > _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
 
-Demo: https://using-gatsby-image.gatsbyjs.com/
+Demo: https://using-gatsby-image.gatsbyjs.org/
 
 ## Setting up Gatsby Image
 
@@ -310,11 +310,11 @@ GraphQL includes a concept called "query fragments", which are a part of a query
 
 #### About `noBase64`
 
-If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyjs.com/blur-up/), choose the fragment with `noBase64` at the end.
+If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyjs.org/blur-up/), choose the fragment with `noBase64` at the end.
 
 #### About `tracedSVG`
 
-If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.com/traced-svg/), choose the fragment with `tracedSVG` at the end.
+If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.org/traced-svg/), choose the fragment with `tracedSVG` at the end.
 
 #### About `withWebp`
 
@@ -333,7 +333,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-For more info on how these options work, check out the Gatsby Image demo: https://using-gatsby-image.gatsbyjs.com/
+For more info on how these options work, check out the Gatsby Image demo: https://using-gatsby-image.gatsbyjs.org/
 
 #### Additional plugin fragments
 

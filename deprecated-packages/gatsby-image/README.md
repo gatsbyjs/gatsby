@@ -8,7 +8,7 @@ Speedy, optimized images without the work.
 
 `gatsby-image` is a React component specially designed to work seamlessly with
 Gatsby's GraphQL queries. It combines
-[Gatsby's native image processing](https://image-processing.gatsbyjs.com/)
+[Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites. `gatsby-image` uses
 [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/)
@@ -18,7 +18,7 @@ _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It's
 optimized for fixed width/height images and images that stretch the full-width
 of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
-**[Demo](https://using-gatsby-image.gatsbyjs.com)**
+**[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
 ## Table of Contents
 

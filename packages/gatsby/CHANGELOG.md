@@ -7710,7 +7710,7 @@ Our first beta!!! 🎉
   https://www.gatsbyjs.com/docs/node-apis/
 - Add "duotone" image processing option to gatsby-plugin-sharp #1047 @fk
 - Add example site for image processing @fk
-  https://image-processing.gatsbyjs.com/
+  https://image-processing.gatsbyjs.org/
 - Add example site for css-in-js library Glamor @kyleamathews
   https://using-glamor.gatsbyjs.com/
 - Add example site for css-in-js library Styled Components @kyleamathews
