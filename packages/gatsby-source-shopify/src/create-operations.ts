@@ -33,23 +33,24 @@ interface IOperations {
 const finishedStatuses = [`COMPLETED`, `FAILED`, `CANCELED`, `EXPIRED`]
 const failedStatuses = [`FAILED`, `CANCELED`]
 
+export function createOperationObject(
+  graphqlClient: IGraphQLClient,
+  operationQuery: string,
+  name: string
+): IShopifyBulkOperation {
+  return {
+    execute: (): Promise<IBulkOperationRunQueryResponse> =>
+      graphqlClient.request<IBulkOperationRunQueryResponse>(operationQuery),
+    name,
+  }
+}
+
 export function createOperations(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
   lastBuildTime?: Date
 ): IOperations {
   const graphqlClient = createGraphqlClient(pluginOptions)
-
-  function createOperation(
-    operationQuery: string,
-    name: string
-  ): IShopifyBulkOperation {
-    return {
-      execute: (): Promise<IBulkOperationRunQueryResponse> =>
-        graphqlClient.request<IBulkOperationRunQueryResponse>(operationQuery),
-      name,
-    }
-  }
 
   function currentOperation(): Promise<ICurrentBulkOperationResponse> {
     return graphqlClient.request(OPERATION_STATUS_QUERY)
@@ -177,27 +178,32 @@ export function createOperations(
   }
 
   return {
-    productsOperation: createOperation(
+    productsOperation: exports.createOperationObject(
+      graphqlClient,
       new ProductsQuery(pluginOptions).query(lastBuildTime),
       `products`
     ),
 
-    productVariantsOperation: createOperation(
+    productVariantsOperation: exports.createOperationObject(
+      graphqlClient,
       new ProductVariantsQuery(pluginOptions).query(lastBuildTime),
       `variants`
     ),
 
-    ordersOperation: createOperation(
+    ordersOperation: exports.createOperationObject(
+      graphqlClient,
       new OrdersQuery(pluginOptions).query(lastBuildTime),
       `orders`
     ),
 
-    collectionsOperation: createOperation(
+    collectionsOperation: exports.createOperationObject(
+      graphqlClient,
       new CollectionsQuery(pluginOptions).query(lastBuildTime),
       `collections`
     ),
 
-    locationsOperation: createOperation(
+    locationsOperation: exports.createOperationObject(
+      graphqlClient,
       new LocationsQuery(pluginOptions).query(lastBuildTime),
       `locations`
     ),

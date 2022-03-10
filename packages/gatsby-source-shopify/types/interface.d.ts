@@ -146,3 +146,11 @@ interface IShopifyPluginOptions {
   salesChannel?: string
   prioritize?: boolean
 }
+
+interface IGraphQLClient {
+  request: <T>(query: string, variables?: Record<string, any>) => Promise<T>
+}
+
+interface IRestClient {
+  request: (path: string) => Promise<Response>
+}

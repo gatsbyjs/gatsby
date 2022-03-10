@@ -3,14 +3,6 @@ import { HttpError } from "./errors"
 
 const MAX_BACKOFF_MILLISECONDS = 60000
 
-interface IGraphQLClient {
-  request: <T>(query: string, variables?: Record<string, any>) => Promise<T>
-}
-
-interface IRestClient {
-  request: (path: string) => Promise<Response>
-}
-
 // TODO Update logic for handling errors (500 specifically) and update the
 // "hacky" code in createRestClient
 
