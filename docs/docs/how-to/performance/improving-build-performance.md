@@ -56,7 +56,7 @@ Sometimes your headless CMS is storing content types that you're not using in yo
 
 If you have a lot of content you're not using in your Gatsby site, check the options reference of the source plugin you use to see if you can exclude it from getting pulled in altogether!
 
-#### Check Your Headless CMS or other data source
+#### Check your headless CMS or other data source
 
 With similar amounts of pages and content, Gatsby builds work significantly faster with some headless CMSs than others (largely due to the way various source-plugins are implemented).
 
@@ -64,9 +64,9 @@ Note that generally popular and official source plugins have built in a number o
 
 If build speeds are sufficiently painful, your CMS is the primary contributor, and there are significantly faster alternative(s), you may want to consider migrating some or all content.
 
-#### Conditionally sourcing files using environment variables
+#### Conditionally applying plugin options using environment variables
 
-You may also conditionally source files by setting the `path` in `gatsby-config.js`. For example, to only source a smaller batch of files when using `gatsby develop` and only fetching the whole dataset when staging/building for production. To see an example and more information go to [Sourcing From the Filesystem](../sourcing-data/sourcing-from-the-filesystem/).
+Your source plugin may have options that control which or how many entries, files, etc. are sourced. In order to speed up sourcing for e.g. `gatsby develop` or your staging environment, you can use environment variables to apply different plugin options depending on the current environment. To see an example of this pattern using `gatsby-source-filesytem` you can visit the [sourcing from the filesystem](/docs/how-to/sourcing-data/sourcing-from-the-filesystem/) documentation.
 
 #### If your site is multi-language, consider breaking it into several sites
 
