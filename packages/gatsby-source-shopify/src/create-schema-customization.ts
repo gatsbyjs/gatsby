@@ -14,9 +14,13 @@ export function createSchemaCustomization(
   pluginOptions: IShopifyPluginOptions
 ): void {
   const { actions } = gatsbyApi
-  const { downloadImages, shopifyConnections: connections = [] } = pluginOptions
+  const {
+    downloadImages,
+    shopifyConnections: connections = [],
+    typePrefix = ``,
+  } = pluginOptions
 
-  const prefix = `${pluginOptions.typePrefix || ``}Shopify`
+  const prefix = `${typePrefix}Shopify`
 
   const typeDefs = [
     commonTypeBuilder(prefix),
