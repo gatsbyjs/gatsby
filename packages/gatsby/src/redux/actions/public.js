@@ -402,6 +402,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+    manifestId: ``,
 
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
