@@ -4,7 +4,7 @@
 > Contentful spaces. It creates links between entry types and asset so they can be
 > queried in Gatsby using GraphQL.
 >
-> An example site for using this plugin is at https://using-contentful.gatsbyjs.com/
+> An example site for using this plugin is at https://using-contentful.gatsbyjs.org/
 
 <details>
 <summary><strong>Table of contents</strong></summary>
@@ -206,7 +206,7 @@ You might query for **all** of a type of node:
 }
 ```
 
-You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https://next.gatsbyjs.com/docs/node-apis/#createPages) Node API.
+You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https://gatsbyjs.com/docs/node-apis/#createPages) Node API.
 
 ### Query for a single node
 
@@ -343,7 +343,7 @@ To get **all** the `CaseStudy` nodes with `ShortText` fields `id`, `slug`, `titl
 ### More on Queries with Contentful and Gatsby
 
 It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
-[using-contentful.gatsbyjs.com](https://using-contentful.gatsbyjs.com/).
+[using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
 
 ## Displaying responsive image with gatsby-plugin-image
 

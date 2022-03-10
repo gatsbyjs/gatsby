@@ -32,7 +32,7 @@ Let's try linking to the
 "[Code and Syntax Highlighting with PrismJS](/code-and-syntax-highlighting/)"
 article using a relative path.
 
-Also, let's link to "[Rendering math equations with KaTeX](https://using-remark.gatsbyjs.com/katex/)" article using an absolute path.
+Also, let's link to "[Rendering math equations with KaTeX](https://using-remark.gatsbyjs.org/katex/)" article using an absolute path.
 
 And this [link will be excluded](/excluded-link).
 

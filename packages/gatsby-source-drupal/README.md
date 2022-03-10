@@ -7,7 +7,7 @@ It pulls data from Drupal 8 sites with the
 
 An example site built with the headless Drupal distro
 [ContentaCMS](https://twitter.com/contentacms) is at
-https://using-drupal.gatsbyjs.com/
+https://using-drupal.gatsbyjs.org/
 
 `apiBase` Option allows changing the API entry point depending on the version of
 jsonapi used by your Drupal instance. The default value is `jsonapi`, which has

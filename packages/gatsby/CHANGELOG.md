@@ -7714,7 +7714,7 @@ Our first beta!!! 🎉
 - Add example site for css-in-js library Glamor @kyleamathews
   https://using-glamor.gatsbyjs.com/
 - Add example site for css-in-js library Styled Components @kyleamathews
-  https://using-styled-components.gatsbyjs.com/
+  https://using-styled-components.gatsbyjs.org/
 
 ### Changed
 

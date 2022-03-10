@@ -411,7 +411,7 @@ The available directives are:
 - `hide-start` hides the lines until the matching `hide-end`;
 - `hide-range{1, 4-6}` will hide the next line, and the fourth, fifth and sixth lines.
 
-The hide-line directives will always be hidden too. Check out [the using-remark example site](https://using-remark.gatsbyjs.com/embed-snippets/) to see how this looks on a live site.
+The hide-line directives will always be hidden too. Check out [the using-remark example site](https://using-remark.gatsbyjs.org/embed-snippets/) to see how this looks on a live site.
 
 ### Inline code blocks
 
