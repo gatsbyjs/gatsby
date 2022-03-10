@@ -1,6 +1,6 @@
 # Using Styled Components
 
-https://using-styled-components.gatsbyjs.org
+https://using-styled-components.gatsbyjs.com
 
 Example site that demonstrates how to build Gatsby sites with
 [Styled Components](https://styled-components.com/).

@@ -1,6 +1,6 @@
 # Gatsbygram
 
-https://gatsbygram.gatsbyjs.org/
+https://gatsbygram.gatsbyjs.com/
 
 Built with Gatsby 2.0 as a demo of Gatsby's new built-in image processing
 capabilities.

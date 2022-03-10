@@ -1,6 +1,6 @@
 # Image Processing
 
-https://image-processing.gatsbyjs.org
+https://image-processing.gatsbyjs.com
 
 Example site that demonstrates how to use [gatsby-plugin-sharp][1].
 

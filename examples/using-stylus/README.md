@@ -1,6 +1,6 @@
 # Using gatsby-plugin-stylus
 
-https://using-stylus.gatsbyjs.org
+https://using-stylus.gatsbyjs.com
 
 Example site that demonstrates how to build Gatsby sites using the Gatsby plugin
 `gatsby-plugin-stylus` which sets up webpack to run [Stylus][] code.

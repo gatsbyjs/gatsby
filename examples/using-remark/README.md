@@ -1,6 +1,6 @@
 # Using remark
 
-https://using-remark.gatsbyjs.org
+https://using-remark.gatsbyjs.com
 
 Example site that demonstrates how to use [gatsby-transformer-remark][1] and its
 various plugins. It uses [Typography.js][2] and self-hosted fonts via the

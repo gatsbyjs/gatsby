@@ -1,6 +1,6 @@
 # using-styled-jsx
 
-https://using-styled-jsx.gatsbyjs.org
+https://using-styled-jsx.gatsbyjs.com
 
 Demonstrates using [styled-jsx](https://github.com/vercel/styled-jsx) with the
 Gatsby plugin

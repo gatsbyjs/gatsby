@@ -7,7 +7,7 @@ It pulls data from Drupal 8 sites with the
 
 An example site built with the headless Drupal distro
 [ContentaCMS](https://twitter.com/contentacms) is at
-https://using-drupal.gatsbyjs.org/
+https://using-drupal.gatsbyjs.com/
 
 `apiBase` Option allows changing the API entry point depending on the version of
 jsonapi used by your Drupal instance. The default value is `jsonapi`, which has
@@ -402,4 +402,4 @@ You can query nodes created from Drupal like the following:
 ```
 
 [dotenv]: https://github.com/motdotla/dotenv
-[envvars]: https://www.gatsbyjs.org/docs/environment-variables
+[envvars]: https://www.gatsbyjs.com/docs/environment-variables

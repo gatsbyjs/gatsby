@@ -7635,7 +7635,7 @@ Our first beta!!! 🎉
 ### Added
 
 - Allow for gatsby-remark-smartypants options #1166 @mitchejj
-- New design (for gatsbyjs.org) + new home page #1170 @kyleamathews
+- New design (for gatsbyjs.com) + new home page #1170 @kyleamathews
 - Add ability to locally define plugins #1126 @0x80
 - Add rough draft for docs for creating source plugins #1159 @kyleamathews
 - Optimizations around prefetching page resources #1133 @kyleamathews
@@ -7705,45 +7705,45 @@ Our first beta!!! 🎉
 - Add new plugin for extracting JSDocs information from JavaScript files using
   documentation.js #1053 @kyleamathews
 - Add new API spec (rough draft) @kyleamathews
-  https://www.gatsbyjs.org/docs/api-specification/
+  https://www.gatsbyjs.com/docs/api-specification/
 - Add new API reference pages @kyleamathews e.g.
-  https://www.gatsbyjs.org/docs/node-apis/
+  https://www.gatsbyjs.com/docs/node-apis/
 - Add "duotone" image processing option to gatsby-plugin-sharp #1047 @fk
 - Add example site for image processing @fk
-  https://image-processing.gatsbyjs.org/
+  https://image-processing.gatsbyjs.com/
 - Add example site for css-in-js library Glamor @kyleamathews
-  https://using-glamor.gatsbyjs.org/
+  https://using-glamor.gatsbyjs.com/
 - Add example site for css-in-js library Styled Components @kyleamathews
-  https://using-styled-components.gatsbyjs.org/
+  https://using-styled-components.gatsbyjs.com/
 
 ### Changed
 
-#### Grand big API renaming based on our new API spec https://www.gatsbyjs.org/docs/api-specification/
+#### Grand big API renaming based on our new API spec https://www.gatsbyjs.com/docs/api-specification/
 
 API changes:
 
-[Action creators](https://www.gatsbyjs.org/docs/bound-action-creators/):
+[Action creators](https://www.gatsbyjs.com/docs/bound-action-creators/):
 
 - `upsertPage` is now `createPage`
 - `addFieldToNode` is now `createNodeField`
 - `deletePageByPath` is now `deletePage`
 - `addNodeToParent` is now `createParentChildLink`
 
-[gatsby-browser.js APIs](https://www.gatsbyjs.org/docs/browser-apis/):
+[gatsby-browser.js APIs](https://www.gatsbyjs.com/docs/browser-apis/):
 
 - `clientEntry` is now `onClientEntry`
 
-[gatsby-node.js APIs](https://www.gatsbyjs.org/docs/node-apis/):
+[gatsby-node.js APIs](https://www.gatsbyjs.com/docs/node-apis/):
 
 - `onNodeCreate` is now `onCreateNode`
 - `onUpsertPage` is now `onCreatePage`
 - `extendNodeType` is now `setFieldsOnGraphQLNodeType`
 
-[gatsby-ssr.js APIs](https://www.gatsbyjs.org/docs/ssr-apis/):
+[gatsby-ssr.js APIs](https://www.gatsbyjs.com/docs/ssr-apis/):
 
 - `modifyHeadComponents` and `modifyPostBodyComponents` were removed in favor of
   a new API
-  [`onRenderBody`](https://www.gatsbyjs.org/docs/ssr-apis/#onRenderBody).
+  [`onRenderBody`](https://www.gatsbyjs.com/docs/ssr-apis/#onRenderBody).
 - `replaceServerBodyRender` is now `replaceRenderer`
 
 ### Fixed
@@ -7873,7 +7873,7 @@ export const pageQuery = graphql`
 
 ### Added
 
-- Did the intitial build of the new gatsbyjs.org! It's in the `www` subdirectory
+- Did the intitial build of the new gatsbyjs.com! It's in the `www` subdirectory
   on the 1.0 branch and is built on each push! That's my kind of integration
   testing :-) You can see the early version of the site at
   https://gatsbyjs.netlify.app/. PRs welcome!

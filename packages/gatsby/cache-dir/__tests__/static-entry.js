@@ -497,15 +497,15 @@ describe(`sanitizeComponents`, () => {
   })
 
   it(`strips assetPrefix for manifest link`, () => {
-    global.__PATH_PREFIX__ = `https://gatsbyjs.org/blog`
+    global.__PATH_PREFIX__ = `https://gatsbyjs.com/blog`
     global.__BASE_PATH__ = `/blog`
-    global.__ASSET_PREFIX__ = `https://gatsbyjs.org`
+    global.__ASSET_PREFIX__ = `https://gatsbyjs.com`
 
     const sanitizedComponents = sanitizeComponents([
       <link
         key="manifest"
         rel="manifest"
-        href="https://gatsbyjs.org/blog/manifest.webmanifest"
+        href="https://gatsbyjs.com/blog/manifest.webmanifest"
       />,
     ])
     expect(sanitizedComponents[0].props.href).toBe(`/blog/manifest.webmanifest`)

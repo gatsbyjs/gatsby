@@ -34,4 +34,4 @@ plugins: [
 
 ## Example
 
-https://using-jss.gatsbyjs.org/
+https://using-jss.gatsbyjs.com/

@@ -4,7 +4,7 @@
 > Contentful spaces. It creates links between entry types and asset so they can be
 > queried in Gatsby using GraphQL.
 >
-> An example site for using this plugin is at https://using-contentful.gatsbyjs.org/
+> An example site for using this plugin is at https://using-contentful.gatsbyjs.com/
 
 <details>
 <summary><strong>Table of contents</strong></summary>
@@ -206,7 +206,7 @@ You might query for **all** of a type of node:
 }
 ```
 
-You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https://next.gatsbyjs.org/docs/node-apis/#createPages) Node API.
+You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https://next.gatsbyjs.com/docs/node-apis/#createPages) Node API.
 
 ### Query for a single node
 
@@ -247,7 +247,7 @@ To query for a single `CaseStudy` node with the short text properties `title` an
   }
 ```
 
-You might query for a **single** node inside a component in your `src/components` folder, using [Gatsby's `StaticQuery` component](https://www.gatsbyjs.org/docs/static-query/).
+You might query for a **single** node inside a component in your `src/components` folder, using [Gatsby's `StaticQuery` component](https://www.gatsbyjs.com/docs/static-query/).
 
 #### A note about LongText fields
 
@@ -263,7 +263,7 @@ On Contentful, a "Long text" field uses Markdown by default. The field is expose
 }
 ```
 
-Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [`gatsby-transformer-remark`](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a `childMarkdownRemark` on the "Long text" field and expose the generated html as a child node:
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [`gatsby-transformer-remark`](https://www.gatsbyjs.com/packages/gatsby-transformer-remark/). The transformer will create a `childMarkdownRemark` on the "Long text" field and expose the generated html as a child node:
 
 ```graphql
 {
@@ -343,7 +343,7 @@ To get **all** the `CaseStudy` nodes with `ShortText` fields `id`, `slug`, `titl
 ### More on Queries with Contentful and Gatsby
 
 It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
-[using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
+[using-contentful.gatsbyjs.com](https://using-contentful.gatsbyjs.com/).
 
 ## Displaying responsive image with gatsby-plugin-image
 

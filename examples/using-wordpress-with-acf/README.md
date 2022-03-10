@@ -1,6 +1,6 @@
 # Using WordPress With Advanced Custom Fields (ACF)
 
-https://using-wordpress.gatsbyjs.org/
+https://using-wordpress.gatsbyjs.com/
 
 Example site that extends the [using-wordpress](examples/using-wordpress/) example and demonstrates how to build Gatsby sites that pull data from the
 [WordPress CMS API](https://www.wordpress.com/) using Advanced Custom Fields.

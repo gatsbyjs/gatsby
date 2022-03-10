@@ -1,7 +1,7 @@
 # gatsby-remark-katex
 
 [gatsby-remark-katex][1] adds math equation support to gatsby using
-[remark-math][2] and [katex][3]. Live example at [using-remark.gatsbyjs.org/katex/](https://using-remark.gatsbyjs.org/katex/).
+[remark-math][2] and [katex][3]. Live example at [using-remark.gatsbyjs.com/katex/](https://using-remark.gatsbyjs.com/katex/).
 
 ## Install
 
@@ -58,7 +58,7 @@ a^2 + b^2 = c^2
 $$
 ```
 
-[1]: https://www.gatsbyjs.org/packages/gatsby-remark-katex/
+[1]: https://www.gatsbyjs.com/packages/gatsby-remark-katex/
 [2]: https://github.com/Rokt33r/remark-math
 [3]: https://github.com/KaTeX/KaTeX
 [4]: https://github.com/gatsbyjs/gatsby/blob/master/examples/using-remark/src/templates/template-blog-post.js
