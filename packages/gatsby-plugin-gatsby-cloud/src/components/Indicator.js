@@ -204,11 +204,7 @@ const Indicator = () => {
       isOnPrettyUrl,
     }
 
-    if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
-    } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
-    } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
+    if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (
       buildId &&
@@ -238,6 +234,8 @@ const Indicator = () => {
           setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
         }
       }
+    } else {
+      setBuildInfo({ ...newBuildInfo, buildStatus: currentBuild?.buildStatus })
     }
     if (shouldPoll.current) {
       timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
