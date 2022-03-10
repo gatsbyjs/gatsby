@@ -16,10 +16,6 @@ import { IExecutionResult, PageContext } from "./types"
 import { pageDataExists, savePageQueryResult } from "../utils/page-data"
 
 const GatsbyCacheLmdbImpl = require(`../utils/cache-lmdb`).default
-const resultHashCache = new GatsbyCacheLmdbImpl({
-  name: `query-result-hashes`,
-  encoding: `string`,
-}).init()
 
 export interface IQueryJob {
   id: string
@@ -174,6 +170,11 @@ export async function queryRunner(
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)
+
+  const resultHashCache = new GatsbyCacheLmdbImpl({
+    name: `query-result-hashes`,
+    encoding: `string`,
+  }).init()
 
   if (
     resultHash !== (await resultHashCache.get(queryJob.id)) ||
