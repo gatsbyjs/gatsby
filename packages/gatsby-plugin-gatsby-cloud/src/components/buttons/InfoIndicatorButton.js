@@ -222,7 +222,7 @@ const InfoIndicatorButton = ({
       [BuildStatus.BUILDING]: displaySimpleMessage(`Building your preview...`),
       [BuildStatus.QUEUED]: () =>
         displaySimpleMessage(`Kicking off your build...`),
-      [BuildStatus.UPLOADING]: () => displaySimpleMessage(`Deploying...`),
+      [BuildStatus.UPLOADING]: () => displaySimpleMessage(`Deploying.....`),
     }
 
     // this is because the build status enum is used for ui state - so we can't have 1 ui state that covers multiple build statuses.
