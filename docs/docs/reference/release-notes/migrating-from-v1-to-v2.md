@@ -509,7 +509,7 @@ export default function Routes() {
 ```
 
 Here's a more complex example of migrating a `<PrivateRoute>` component (used
-in store.gatsbyjs.com) from React Router to @reach/router.
+in store.gatsbyjs.org) from React Router to @reach/router.
 
 ```diff
  import * as React from 'react';
@@ -549,7 +549,7 @@ in store.gatsbyjs.com) from React Router to @reach/router.
 
 Here are links to diffs for three sites with client routes upgraded to @reach/router:
 
-- [store.gatsbyjs.com](https://github.com/gatsbyjs/store.gatsbyjs.com/pull/111)
+- [store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org/pull/111)
 - [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
 - [simple-auth](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-53ac112a4b2ec760b26a86c953df2339)
 
