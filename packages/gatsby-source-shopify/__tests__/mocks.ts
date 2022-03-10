@@ -3,7 +3,7 @@ import { createContentDigest } from "gatsby-core-utils"
 
 export function makeMockGatsbyApi({
   mockStoreValue = { status: { plugins: {} } },
-}): SourceNodesArgs {
+} = {}): SourceNodesArgs {
   return {
     actions: {
       createTypes: jest.fn(),
@@ -23,6 +23,7 @@ export function makeMockGatsbyApi({
     },
     createContentDigest,
     createNodeId: jest.fn(),
+    createResolvers: jest.fn(),
     cache: new Map(),
   } as unknown as SourceNodesArgs
 }
