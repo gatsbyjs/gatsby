@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import IndicatorProvider from "../context/indicatorProvider"
 import { BuildStatus } from "../models/enums"
 import { useTrackEvent, getBuildInfo } from "../utils"
