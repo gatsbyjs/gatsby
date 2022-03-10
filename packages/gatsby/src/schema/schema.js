@@ -23,7 +23,10 @@ const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
-const { overridableBuiltInTypeNames } = require(`./types/built-in-types`)
+const {
+  overridableBuiltInTypeNames,
+  builtInScalarTypeNames,
+} = require(`./types/built-in-types`)
 const { addInferredTypes } = require(`./infer`)
 const {
   addRemoteFileInterfaceFields,
@@ -609,7 +612,7 @@ const checkIsAllowedTypeName = name => {
       `reserved for internal use. Please rename \`${name}\`.`
   )
   invariant(
-    ![`Boolean`, `Date`, `Float`, `ID`, `Int`, `JSON`, `String`].includes(name),
+    !builtInScalarTypeNames.includes(name),
     `The GraphQL type \`${name}\` is reserved for internal use by ` +
       `built-in scalar types.`
   )
