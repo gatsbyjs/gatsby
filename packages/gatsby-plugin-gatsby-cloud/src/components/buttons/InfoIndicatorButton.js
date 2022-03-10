@@ -133,10 +133,10 @@ const InfoIndicatorButton = ({
           content: message,
           overrideShow: show,
           show,
-          hoverable: true,
+          hoverable: !show,
         },
         active: true,
-        hoverable: true,
+        hoverable: !show,
       })
     }
     const buildStatusActions = {
