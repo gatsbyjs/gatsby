@@ -131,7 +131,7 @@ const InfoIndicatorButton = ({
         tooltip: {
           testId: initialButtonProps.testId,
           content: message,
-          overrideShow: false,
+          overrideShow: show,
           show,
           hoverable: true,
         },
@@ -219,10 +219,8 @@ const InfoIndicatorButton = ({
           onClick: onTooltipToogle,
         })
       },
-      [BuildStatus.BUILDING]: displaySimpleMessage(
-        `Building your preview...`,
-        true
-      ),
+      [BuildStatus.BUILDING]: () =>
+        displaySimpleMessage(`Building your preview...`, true),
       [BuildStatus.QUEUED]: () =>
         displaySimpleMessage(`Kicking off your build...`, true),
       [BuildStatus.UPLOADING]: () => displaySimpleMessage(`Deploying...`, true),
