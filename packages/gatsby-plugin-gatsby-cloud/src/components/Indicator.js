@@ -204,9 +204,12 @@ const Indicator = () => {
       isOnPrettyUrl,
     }
     if (
-      [BuildStatus.BUILDING, BuildStatus.ERROR, BuildStatus.QUEUED].includes(
-        currentBuild?.buildStatus
-      )
+      [
+        BuildStatus.BUILDING,
+        BuildStatus.ERROR,
+        BuildStatus.QUEUED,
+        BuildStatus.UPLOADING,
+      ].includes(currentBuild?.buildStatus)
     ) {
       setBuildInfo({ ...newBuildInfo, buildStatus: currentBuild?.buildStatus })
     } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
