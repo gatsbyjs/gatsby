@@ -5,8 +5,6 @@ import { shopifyTypes } from "./shopify-types"
 
 const pattern = /^gid:\/\/shopify\/(\w+)\/(.+)$/
 
-const { CI, GATSBY_CLOUD, GATSBY_IS_PR_BUILD, NETLIFY, CONTEXT } = process.env
-
 export function createNodeId(
   shopifyId: string,
   gatsbyApi: NodePluginArgs,
@@ -49,6 +47,8 @@ export function setLastBuildTime(
 }
 
 export function isPriorityBuild(pluginOptions: IShopifyPluginOptions): boolean {
+  const { CI, GATSBY_CLOUD, GATSBY_IS_PR_BUILD, NETLIFY, CONTEXT } = process.env
+
   const isGatsbyCloudPriorityBuild =
     CI === `true` && GATSBY_CLOUD === `true` && GATSBY_IS_PR_BUILD !== `true`
 
