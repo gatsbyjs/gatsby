@@ -283,7 +283,7 @@ export default async function staticPage({
         if (renderToPipeableStream) {
           const writableStream = new WritableAsPromise()
           const { pipe } = renderToPipeableStream(bodyComponent, {
-            onCompleteAll() {
+            onAllReady() {
               pipe(writableStream)
             },
             onError() {},
