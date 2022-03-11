@@ -244,31 +244,6 @@ export async function sourceNodes(
       newOrUpdatedEntries.add(generateReferenceId(entry))
     })
   })
-  // const state = store.getState()
-  // console.log(
-  //   { schema, keys: Object.keys(schema) },
-  //   state
-  // )
-
-  // const typeMap = await schema.getTypeMap()
-
-  // console.log({ typeMap })
-
-  // const contentfulTypeDefinitions = new Map()
-  // store
-  //   .getState()
-  //   .schemaCustomization.types.filter(
-  //     ({ plugin }) => plugin.name === `gatsby-source-contentful`
-  //   )
-  //   .forEach(({ typeOrTypeDef }) => {
-  //     contentfulTypeDefinitions.set(
-  //       typeOrTypeDef.config.name,
-  //       typeOrTypeDef.config
-  //     )
-  //     // console.log(typeOrTypeDef.config.fields)
-  //   })
-
-  // console.log(contentfulTypeDefinitions)
 
   const { deletedEntries, deletedAssets } = currentSyncData
 

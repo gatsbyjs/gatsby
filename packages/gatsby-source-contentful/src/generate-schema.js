@@ -158,9 +158,10 @@ const translateFieldType = (field, schema, createTypes) => {
     fieldType = ContentfulDataTypes.get(field.type)(field)
   }
 
-  if (field.required) {
-    fieldType.type = `${fieldType.type}!`
-  }
+  // @todo what do we do when preview is enabled? Emptry required fields are valid for Contentfuls CP-API
+  // if (field.required) {
+  //   fieldType.type = `${fieldType.type}!`
+  // }
 
   return fieldType
 }
