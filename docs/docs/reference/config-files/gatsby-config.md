@@ -387,3 +387,9 @@ module.exports = {
   jsxImportSource: "@emotion/react",
 }
 ```
+Since Gatsby v4.1, gatsby-config.js has also accepted options jsxRuntime and jsxImportSource:
+https://www.gatsbyjs.com/docs/reference/release-notes/v4.1/#jsx-runtime-options-in-gatsby-configjs
+
+It is currently necessary to set jsxRuntime and jsxImportSource values to successfully opt into the automatic runtime with a custom import source. If you remove either one, gatsby build fails giving the following errors:
+JSX is invalid in components.
+Until the implementation can be further improved, it is necessary to set these values.
