@@ -14,8 +14,18 @@ import errorParser from "./error-parser"
 import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
 import { pageDataExists, savePageQueryResult } from "../utils/page-data"
+import GatsbyCacheLmdb from "../utils/cache-lmdb"
 
-const GatsbyCacheLmdbImpl = require(`../utils/cache-lmdb`).default
+let resultHashCache: GatsbyCacheLmdb | undefined
+function getResultHashCache(): GatsbyCacheLmdb {
+  if (!resultHashCache) {
+    resultHashCache = new GatsbyCacheLmdb({
+      name: `query-result-hashes`,
+      encoding: `string`,
+    }).init()
+  }
+  return resultHashCache
+}
 
 export interface IQueryJob {
   id: string
@@ -171,17 +181,13 @@ export async function queryRunner(
     .update(resultJSON)
     .digest(`base64`)
 
-  const resultHashCache = new GatsbyCacheLmdbImpl({
-    name: `query-result-hashes`,
-    encoding: `string`,
-  }).init()
-
+  const resultHashCache = getResultHashCache()
   if (
     resultHash !== (await resultHashCache.get(queryJob.id)) ||
     (queryJob.isPage &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
-    resultHashCache.set(queryJob.id, resultHash)
+    await resultHashCache.set(queryJob.id, resultHash)
 
     if (queryJob.isPage) {
       // We need to save this temporarily in cache because
