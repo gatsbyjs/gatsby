@@ -125,6 +125,20 @@ const InfoIndicatorButton = ({
   }
 
   useEffect(() => {
+    const displaySimpleMessage = (message, show = false) => {
+      setButtonProps({
+        ...initialButtonProps,
+        tooltip: {
+          testId: initialButtonProps.testId,
+          content: message,
+          overrideShow: show,
+          show,
+          hoverable: !show,
+        },
+        active: true,
+        hoverable: !show,
+      })
+    }
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
         if (shouldShowFeedback) {
@@ -151,22 +165,12 @@ const InfoIndicatorButton = ({
             hoverable: true,
           })
         } else {
-          setButtonProps({
-            ...initialButtonProps,
-            tooltip: {
-              testId: initialButtonProps.testId,
-              content: `Preview updated ${formatDistance(
-                Date.now(),
-                new Date(createdAt),
-                { includeSeconds: true }
-              )} ago`,
-              overrideShow: false,
-              show: false,
-              hoverable: true,
-            },
-            active: true,
-            hoverable: true,
-          })
+          const message = `Preview updated ${formatDistance(
+            Date.now(),
+            new Date(createdAt),
+            { includeSeconds: true }
+          )} ago`
+          displaySimpleMessage(message)
         }
       },
       [BuildStatus.SUCCESS]: () => {
@@ -215,13 +219,12 @@ const InfoIndicatorButton = ({
           onClick: onTooltipToogle,
         })
       },
+      [BuildStatus.BUILDING]: () =>
+        displaySimpleMessage(`Building your preview...`, true),
+      [BuildStatus.QUEUED]: () =>
+        displaySimpleMessage(`Kicking off your build...`, true),
+      [BuildStatus.UPLOADING]: () => displaySimpleMessage(`Deploying...`, true),
     }
-
-    // this is because the build status enum is used for ui state - so we can't have 1 ui state that covers multiple build statuses.
-    // If we don't have content sync info (pollForNodeManifest), we have to assume that a currently building build isn't applicable to the current user. So we default to the least noisy state which is UPTODATE.
-    // @todo refactor and decouple build states from UI states - this state should be something like uiState === `IDLE`
-    buildStatusActions[BuildStatus.BUILDING] =
-      buildStatusActions[BuildStatus.UPTODATE]
 
     const contentSyncSuccessAction = nodeManifestRedirectUrl
       ? () => {
