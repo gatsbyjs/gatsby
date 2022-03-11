@@ -1648,7 +1648,7 @@ export interface GatsbyFunctionResponse<T = any> extends ServerResponse {
 /**
  * Gatsby function route request
  */
-export interface GatsbyFunctionRequest<Body = unknown> extends IncomingMessage {
+export interface GatsbyFunctionRequest<ReqBody = any> extends IncomingMessage {
   /**
    * Object of values from URL query parameters (after the ? in the URL)
    */
@@ -1658,7 +1658,7 @@ export interface GatsbyFunctionRequest<Body = unknown> extends IncomingMessage {
    * Object of values from route parameters
    */
   params: Record<string, string>
-  body: Partial<Body>
+  body: ReqBody
   /**
    * Object of `cookies` from header
    */
