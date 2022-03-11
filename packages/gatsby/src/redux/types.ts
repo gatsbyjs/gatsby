@@ -707,6 +707,7 @@ export interface ICreatePageAction {
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
   contextModified?: boolean
+  componentModified?: boolean
 }
 
 export interface ICreateRedirectAction {

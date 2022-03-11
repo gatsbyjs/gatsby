@@ -429,6 +429,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const oldPage: Page = store.getState().pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+  const componentModified =
+    !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -496,6 +498,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       ...actionOptions,
       type: `CREATE_PAGE`,
       contextModified,
+      componentModified,
       plugin,
       payload: internalPage,
     },

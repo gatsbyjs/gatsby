@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.9.1/packages/gatsby-core-utils) (2022-03-09)
+
+#### Bug Fixes
+
+- multiple requests with different outputdir [#35039](https://github.com/gatsbyjs/gatsby/issues/35039) [#35043](https://github.com/gatsbyjs/gatsby/issues/35043) ([3c38128](https://github.com/gatsbyjs/gatsby/commit/3c3812844d7c4c263cf6afbfb67b725b9e3ff9c2))
+
 ## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.9.0/packages/gatsby-core-utils) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

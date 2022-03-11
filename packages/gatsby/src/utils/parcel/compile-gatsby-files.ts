@@ -2,6 +2,7 @@ import { Parcel } from "@parcel/core"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
 import { ensureDir, emptyDir, existsSync } from "fs-extra"
+import telemetry from "gatsby-telemetry"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
@@ -46,7 +47,24 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
     await ensureDir(distDir)
     await emptyDir(distDir)
-    await parcel.run()
+    const { bundleGraph } = await parcel.run()
+
+    if (telemetry.isTrackingEnabled()) {
+      const bundles = bundleGraph.getBundles()
+
+      if (bundles.length === 0) return
+
+      let compiledTSFilesCount = 0
+      for (const bundle of bundles) {
+        if (bundle?.getMainEntry()?.filePath?.endsWith(`.ts`)) {
+          compiledTSFilesCount = compiledTSFilesCount + 1
+        }
+      }
+      telemetry.trackCli(`PARCEL_COMPILATION_END`, {
+        valueInteger: compiledTSFilesCount,
+        name: `count of compiled ts files`,
+      })
+    }
   } catch (error) {
     if (error.diagnostics) {
       handleErrors(error.diagnostics)

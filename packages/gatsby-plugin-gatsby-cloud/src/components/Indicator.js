@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import IndicatorProvider from "../context/indicatorProvider"
 import { BuildStatus } from "../models/enums"
 import { useTrackEvent, getBuildInfo } from "../utils"
@@ -203,11 +203,15 @@ const Indicator = () => {
       siteInfo,
       isOnPrettyUrl,
     }
-
-    if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
-    } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
+    if (
+      [
+        BuildStatus.BUILDING,
+        BuildStatus.ERROR,
+        BuildStatus.QUEUED,
+        BuildStatus.UPLOADING,
+      ].includes(currentBuild?.buildStatus)
+    ) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: currentBuild?.buildStatus })
     } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
       setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (
