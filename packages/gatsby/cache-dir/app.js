@@ -1,3 +1,4 @@
+/* global HAS_REACT_18 */
 import React from "react"
 import ReactDOM from "react-dom"
 import io from "socket.io-client"
@@ -38,6 +39,19 @@ setLoader(loader)
 loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
+
+let reactRender
+let reactHydrate
+if (HAS_REACT_18) {
+  const reactDomClient = require(`react-dom/client`)
+  reactRender = (Component, el) =>
+    reactDomClient.createRoot(el).render(Component)
+  reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
+} else {
+  const reactDomClient = require(`react-dom`)
+  reactRender = reactDomClient.render
+  reactHydrate = reactDomClient.hydrate
+}
 
 // Do dummy dynamic import so the jsonp __webpack_require__.e is added to the commons.js
 // bundle. This ensures hot reloading doesn't break when someone first adds
@@ -132,13 +146,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   // Client only pages have any empty body so we just do a normal
   // render to avoid React complaining about hydration mis-matches.
-  let defaultRenderer = ReactDOM.render
+  let defaultRenderer = reactRender
   if (focusEl && focusEl.children.length) {
-    if (ReactDOM.hydrateRoot) {
-      defaultRenderer = ReactDOM.hydrateRoot
-    } else {
-      defaultRenderer = ReactDOM.hydrate
-    }
+    defaultRenderer = reactHydrate
   }
 
   const renderer = apiRunner(
@@ -159,7 +169,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         `first-render-loading-indicator`
       )
       document.body.append(indicatorMountElement)
-      ReactDOM.render(<Indicator />, indicatorMountElement)
+      renderer(<Indicator />, indicatorMountElement)
     }, 1000)
 
     dismissLoadingIndicator = () => {
@@ -193,16 +203,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         )
         document.body.append(indicatorMountElement)
 
-        if (renderer === ReactDOM.hydrateRoot) {
-          ReactDOM.createRoot(indicatorMountElement).render(
-            <LoadingIndicatorEventHandler />
-          )
-        } else {
-          ReactDOM.render(
-            <LoadingIndicatorEventHandler />,
-            indicatorMountElement
-          )
-        }
+        renderer(<LoadingIndicatorEventHandler />, indicatorMountElement)
       }
     }
 
@@ -225,11 +226,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         dismissLoadingIndicator()
       }
 
-      if (renderer === ReactDOM.hydrateRoot) {
-        renderer(rootElement, <App />)
-      } else {
-        renderer(<App />, rootElement)
-      }
+      renderer(<App />, rootElement)
     }
 
     // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450

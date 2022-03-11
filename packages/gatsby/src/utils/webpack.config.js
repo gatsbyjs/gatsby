@@ -229,6 +229,7 @@ module.exports = async (
         __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
+        HAS_REACT_18: JSON.stringify(true),
       }),
 
       plugins.virtualModules(),
