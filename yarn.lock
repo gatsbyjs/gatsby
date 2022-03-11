@@ -19218,10 +19218,6 @@ preval.macro@^5.0.0:
   dependencies:
     babel-plugin-preval "^5.0.0"
 
-printj@~1.1.0:
-  version "1.1.2"
-  resolved "http://registry.npmjs.org/printj/-/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"
-
 printj@~1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/printj/-/printj-1.2.3.tgz#2cfb2b192a1e5385dbbe5b46658ac34aa828508a"
