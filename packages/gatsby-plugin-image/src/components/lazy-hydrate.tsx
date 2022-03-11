@@ -1,5 +1,5 @@
+/* global HAS_REACT_18 */
 import React, { MutableRefObject } from "react"
-import ReactDOM from "react-dom"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
 import { Placeholder } from "./placeholder"
@@ -12,6 +12,37 @@ type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
   toggleIsLoaded: (toggle: boolean) => void
   ref: MutableRefObject<HTMLImageElement | undefined>
+}
+
+let reactRender
+let reactHydrate
+if (HAS_REACT_18) {
+  const reactDomClient = require(`react-dom/client`)
+  reactRender = (
+    Component: React.Component,
+    el: ReactDOM.Container,
+    root: any
+  ): unknown => {
+    if (!root) {
+      root = reactDomClient.createRoot(el)
+    }
+
+    // TODO fix typing
+    // @ts-ignore - React 18 typings
+    root.render(Component)
+
+    return root
+  }
+  reactHydrate = (
+    Component: React.Component,
+    el: ReactDOM.Container
+  ): unknown => reactDomClient.hydrateRoot(el, Component)
+} else {
+  const reactDomClient = require(`react-dom`)
+  reactRender = (Component: React.Component, el: ReactDOM.Container): void => {
+    reactDomClient.render(Component, el)
+  }
+  reactHydrate = reactDomClient.hydrate
 }
 
 export function lazyHydrate(
@@ -31,7 +62,8 @@ export function lazyHydrate(
   }: LazyHydrateProps,
   root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>,
-  forceHydrate: MutableRefObject<boolean>
+  forceHydrate: MutableRefObject<boolean>,
+  reactRootRef: MutableRefObject<unknown>
 ): (() => void) | null {
   const {
     width,
@@ -87,34 +119,27 @@ export function lazyHydrate(
 
   if (root.current) {
     // Force render to mitigate "Expected server HTML to contain a matching" in develop
-    // @ts-ignore react 18 typings
-    if (ReactDOM.createRoot) {
-      if (!hydrated.current) {
-        // @ts-ignore react 18 typings
-        hydrated.current = ReactDOM.createRoot(root.current)
-      }
-
-      // @ts-ignore react 18 typings
-      hydrated.current.render(component)
+    if (hydrated.current || forceHydrate.current || HAS_REACT_18) {
+      // TODO fix typing
+      // @ts-ignore - React 18 typings
+      reactRootRef.current = reactRender(
+        component,
+        root.current,
+        reactRootRef.current
+      )
     } else {
-      const doRender =
-        hydrated.current || forceHydrate.current
-          ? ReactDOM.render
-          : ReactDOM.hydrate
-      doRender(component, root.current)
-      hydrated.current = true
+      reactHydrate(component, root.current)
     }
+    hydrated.current = true
   }
 
   return (): void => {
     if (root.current) {
-      // @ts-ignore react 18 typings
-      if (ReactDOM.createRoot) {
-        // @ts-ignore react 18 typings
-        hydrated.current.render(null)
-      } else {
-        ReactDOM.render(null as unknown as ReactElement, root.current)
-      }
+      reactRender(
+        null as unknown as ReactElement,
+        root.current,
+        reactRootRef.current
+      )
     }
   }
 }

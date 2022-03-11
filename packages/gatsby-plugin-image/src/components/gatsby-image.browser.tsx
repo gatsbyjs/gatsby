@@ -1,3 +1,4 @@
+/* global HAS_REACT_18 */
 /* eslint-disable no-unused-expressions */
 import React, {
   Component,
@@ -22,7 +23,30 @@ import { Layout } from "../image-utils"
 import { getSizer } from "./layout-wrapper"
 import { propTypes } from "./gatsby-image.server"
 import { Unobserver } from "./intersection-observer"
-import { render } from "react-dom"
+
+let reactRender
+if (HAS_REACT_18) {
+  const reactDomClient = require(`react-dom/client`)
+  reactRender = (
+    Component: React.Component,
+    el: ReactDOM.Container,
+    root: any
+  ): unknown => {
+    if (!root) {
+      root = reactDomClient.createRoot(el)
+    }
+
+    // @ts-ignore - React 18 typings
+    root.render(Component)
+
+    return root
+  }
+} else {
+  const reactDomClient = require(`react-dom`)
+  reactRender = (Component: React.Component, el: ReactDOM.Container): void => {
+    reactDomClient.render(Component, el)
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
@@ -69,6 +93,9 @@ class GatsbyImageHydrator extends Component<
   lazyHydrator: () => void | null = null
   ref = createRef<HTMLImageElement>()
   unobserveRef: Unobserver
+  // TODO fix typing
+  // @ts-ignore - ignore
+  reactRootRef: MutableRefObject<unknown> = createRef<unknown>()
 
   constructor(props) {
     super(props)
@@ -108,7 +135,8 @@ class GatsbyImageHydrator extends Component<
         },
         this.root,
         this.hydrated,
-        this.forceRender
+        this.forceRender,
+        this.reactRootRef
       )
     })
   }
@@ -152,7 +180,11 @@ class GatsbyImageHydrator extends Component<
 
         // // on unmount, make sure we cleanup
         if (this.hydrated.current && this.lazyHydrator) {
-          render(null, this.root.current)
+          this.reactRootRef.current = reactRender(
+            null,
+            this.root.current,
+            this.reactRootRef.current
+          )
         }
       }
 
