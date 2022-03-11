@@ -1,5 +1,4 @@
-import { copyFile, readFile, rm } from "fs/promises"
-import { ensureDir } from "fs-extra"
+import { ensureDir, copyFile, readFile, rm } from "fs-extra"
 import { join } from "path"
 import { addPlugins } from "../../handlers/plugin-add"
 
