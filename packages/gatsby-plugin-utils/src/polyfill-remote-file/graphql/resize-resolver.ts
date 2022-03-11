@@ -25,6 +25,7 @@ interface IResizeArgs {
   format: ImageFormat
   cropFocus: Array<ImageCropFocus>
   quality: number
+  aspectRatio: number
 }
 
 const DEFAULT_QUALITY = 75
