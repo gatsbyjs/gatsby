@@ -57,7 +57,7 @@ export default config
 `;
 
 exports[`addPlugins gatsby-config.ts should write a plugin with options 1`] = `
-"import type { GatsbyConfig } from 'gatsby;'
+"import type { GatsbyConfig } from \\"gatsby\\";
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -76,7 +76,7 @@ export default config;
 `;
 
 exports[`addPlugins gatsby-config.ts should write a single plugin 1`] = `
-"import type { GatsbyConfig } from 'gatsby;'
+"import type { GatsbyConfig } from \\"gatsby\\";
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -90,7 +90,7 @@ export default config;
 `;
 
 exports[`addPlugins gatsby-config.ts should write multiple plugins 1`] = `
-"import type { GatsbyConfig } from 'gatsby;'
+"import type { GatsbyConfig } from \\"gatsby\\";
 
 const config: GatsbyConfig = {
   siteMetadata: {
