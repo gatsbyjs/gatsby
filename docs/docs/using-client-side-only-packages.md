@@ -50,37 +50,7 @@ class MyComponent extends Component {
 }
 ```
 
-## Workaround 3: Load client-side dependent components with loadable-components
-
-Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client-side only package.
-
-```shell
-npm install @loadable/component
-# or use yarn
-yarn add @loadable/component
-```
-
-```jsx
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-
-import Loadable from "@loadable/component"
-
-// these two libraries are client-side only
-import Client from "shopify-buy"
-import ShopifyBuy from "@shopify/buy-button-js"
-
-const ShopifyBuyButton = props => {
-  // custom component using shopify client-side libraries
-  return <div>etc</div>
-}
-
-const LoadableBuyButton = Loadable(() => import("./ShopifyBuyButton"))
-
-export default LoadableBuyButton
-```
-
-## Workaround 4: Use React.lazy and Suspense on client-side only
+## Workaround 3: Use React.lazy and Suspense on client-side only
 
 React.lazy and Suspense are still not ready for server-side rendering, but they can still be used by checking that the code is executed only on the client.
 While this solution is inferior to `loadable-components`, that works both on server side and client, it still provides an alternative for dealing with client-side only packages, without an added dependency.
@@ -110,3 +80,33 @@ const MyPage = () => {
 > **Note:** There are other potential workarounds than those listed here. If you've had success with another method, check out the [contributing docs](/contributing/docs-contributions/) and add yours!
 
 If all else fails, you may also want to check out the documentation on [Debugging HTML Builds](/docs/debugging-html-builds/).
+
+## Workaround 4: Load client-side dependent components with loadable-components
+
+Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client-side only package.
+
+```shell
+npm install @loadable/component
+# or use yarn
+yarn add @loadable/component
+```
+
+```jsx
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+
+import Loadable from "@loadable/component"
+
+// these two libraries are client-side only
+import Client from "shopify-buy"
+import ShopifyBuy from "@shopify/buy-button-js"
+
+const ShopifyBuyButton = props => {
+  // custom component using shopify client-side libraries
+  return <div>etc</div>
+}
+
+const LoadableBuyButton = Loadable(() => import("./ShopifyBuyButton"))
+
+export default LoadableBuyButton
+```
