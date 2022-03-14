@@ -1,12 +1,6 @@
 import { Node } from "gatsby"
-import {
-  getSrc,
-  getSrcSet,
-  getImage,
-  IGatsbyImageData,
-  IGetImageDataArgs,
-} from "../../"
-import { getImageData } from "../hooks"
+import { getImageData, getSrc, getSrcSet, getImage } from "../hooks"
+import type { IGatsbyImageData, IGetImageDataArgs } from "../../"
 
 const imageData: IGatsbyImageData = {
   images: {
