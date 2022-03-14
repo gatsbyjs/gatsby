@@ -48,7 +48,7 @@ Functions can be written in JavaScript or Typescript.
 ```ts:title=src/api/typescript.ts
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from "gatsby"
 
-interface RequestBody {
+interface ContactBody {
   message: string
 }
 
