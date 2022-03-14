@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`createResolvers when downloadImages is false and no connections are provided Sets the correct resolvers 1`] = `
+exports[`createSchemaCustomization when downloadImages is false and no connections are provided Creates the correct type definitions 1`] = `
 Array [
   Array [
     Array [
@@ -816,7 +816,7 @@ Array [
 ]
 `;
 
-exports[`createResolvers when downloadImages is true and all connections are provided Sets the correct resolvers 1`] = `
+exports[`createSchemaCustomization when downloadImages is true and all connections are provided Creates the correct type definitions 1`] = `
 Array [
   Array [
     Array [
