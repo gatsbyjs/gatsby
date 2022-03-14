@@ -474,7 +474,6 @@ export function commonTypeBuilder(prefix: string): string {
       type ${prefix}Image {
         altText: String
         height: Int
-        id: ID
         originalSrc: String!
         src: String!
         transformedSrc: String!
