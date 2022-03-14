@@ -7,58 +7,42 @@ import { createNodeId, parseShopifyId } from "./helpers"
 const deletionCounter: { [key: string]: number } = {}
 
 /**
- * validateNodes - Recursive function that returns an array of node ids that are validated
+ * invalidateNode - Recursive function that returns an array of node ids that are invalidated
  * @param gatsbyApi - Gatsby Helpers
  * @param pluginOptions - Plugin Options Object
  * @param nodeMap - Map Object of all nodes that haven't been deleted
- * @param nodes - Array of nodes to validate
+ * @param id - The root node to invalidate
  *
- * Note: This function is designed to receive all top-level nodes on the first pass
+ * Note: This function is designed to receive a single top-level node on the first pass
  * and then call itself recuresively afterwards for each nested layer of coupled nodes
  */
-function validateNodes(
+function invalidateNode(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
   nodeMap: IShopifyNodeMap,
-  nodes: Array<IShopifyNode>,
-  prevalidatedNodeIds?: Array<string>
+  id: string
 ): Array<string> {
-  let coupledNodeIds: Array<string> = []
-  let validatedNodeIds: Array<string> = []
+  const { typePrefix = `` } = pluginOptions
 
-  for (const node of nodes) {
-    if (
-      !validatedNodeIds.includes(node.id) &&
-      !prevalidatedNodeIds?.includes(node.id)
-    ) {
-      validatedNodeIds.push(node.id)
+  const node = nodeMap[id]
+  let invalidatedNodeIds: Array<string> = []
 
-      const type = parseShopifyId(node.shopifyId)[1]
-      const coupledNodeFields = shopifyTypes[type].coupledNodeFields
+  if (node) {
+    invalidatedNodeIds.push(node.id)
+    const type = node.internal.type.replace(`${typePrefix}Shopify`, ``)
 
-      if (coupledNodeFields) {
-        for (const field of coupledNodeFields) {
-          coupledNodeIds = coupledNodeIds.concat(node[field])
+    if (shopifyTypes[type].coupledNodeFields) {
+      for (const field of shopifyTypes[type].coupledNodeFields) {
+        for (const coupledNodeId of node[field]) {
+          invalidatedNodeIds = invalidatedNodeIds.concat(
+            invalidateNode(gatsbyApi, pluginOptions, nodeMap, coupledNodeId)
+          )
         }
       }
     }
   }
 
-  if (coupledNodeIds.length > 0) {
-    const coupledNodes = [...new Set(coupledNodeIds)].map(id => nodeMap[id])
-
-    validatedNodeIds = validatedNodeIds.concat(
-      validateNodes(
-        gatsbyApi,
-        pluginOptions,
-        nodeMap,
-        coupledNodes,
-        validatedNodeIds
-      )
-    )
-  }
-
-  return [...new Set(validatedNodeIds)]
+  return invalidatedNodeIds
 }
 
 function reportNodeDeletion(
@@ -100,39 +84,27 @@ export async function updateCache(
   const { fetchDestroyEventsSince } = eventsApi(pluginOptions)
   const destroyEvents = await fetchDestroyEventsSince(lastBuildTime)
 
-  destroyEvents.forEach(event => {
-    const shopifyId = `gid://shopify/${event.subject_type}/${event.subject_id}`
-    const id = createNodeId(shopifyId, gatsbyApi, pluginOptions)
-
-    if (nodeMap[id]) {
-      gatsbyApi.actions.deleteNode(nodeMap[id])
-      reportNodeDeletion(gatsbyApi, nodeMap[id])
-      delete nodeMap[id]
-    }
-  })
-
-  const topLevelNodes = Object.values(nodeMap).filter(node => {
-    const type = parseShopifyId(node.shopifyId)[1]
-    return !shopifyTypes[type].coupled
-  })
-
-  const validatedNodeIds = validateNodes(
-    gatsbyApi,
-    pluginOptions,
-    nodeMap,
-    topLevelNodes
+  const invalidatedNodeIds = destroyEvents.reduce<Array<string>>(
+    (acc, value) => {
+      const shopifyId = `gid://shopify/${value.subject_type}/${value.subject_id}`
+      const nodeId = createNodeId(shopifyId, gatsbyApi, pluginOptions)
+      return acc.concat(
+        invalidateNode(gatsbyApi, pluginOptions, nodeMap, nodeId)
+      )
+    },
+    []
   )
 
   for (const node of Object.values(nodeMap)) {
-    if (validatedNodeIds.includes(node.id)) {
-      gatsbyApi.actions.touchNode(node)
-    } else {
+    if (invalidatedNodeIds.includes(node.id)) {
       gatsbyApi.actions.deleteNode(node)
       reportNodeDeletion(gatsbyApi, node)
+    } else {
+      gatsbyApi.actions.touchNode(node)
     }
   }
 
-  if (Object.values(nodeMap).length > validatedNodeIds.length) {
+  if (invalidatedNodeIds.length > 0) {
     reportDeletionSummary(gatsbyApi)
   }
 }
