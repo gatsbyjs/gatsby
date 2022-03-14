@@ -4,17 +4,7 @@ import path from "path";
 import { NodePluginArgs } from "gatsby"
 import { createContentDigest } from "gatsby-core-utils"
 
-interface IMakeMockGatsbyApiArgs {
-  mockStoreValue?: {
-    status: {
-      plugins: { [key: string]: any }
-    }
-  }
-}
-
-export function makeMockGatsbyApi({
-  mockStoreValue = { status: { plugins: {} } },
-}: IMakeMockGatsbyApiArgs = {}): NodePluginArgs {
+export function makeMockGatsbyApi(): NodePluginArgs {
   return {
     actions: {
       createTypes: jest.fn(),
@@ -24,7 +14,7 @@ export function makeMockGatsbyApi({
       setPluginStatus: jest.fn(),
     },
     store: {
-      getState: jest.fn().mockReturnValue(mockStoreValue),
+      getState: jest.fn(),
     },
     reporter: {
       info: jest.fn(),
@@ -40,6 +30,7 @@ export function makeMockGatsbyApi({
     createNodeId: jest.fn(),
     createResolvers: jest.fn(),
     cache: new Map(),
+    getNodesByType: jest.fn(),
   } as unknown as NodePluginArgs
 }
 
