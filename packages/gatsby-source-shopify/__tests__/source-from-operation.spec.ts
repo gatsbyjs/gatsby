@@ -40,17 +40,20 @@ const cancelOperationInProgress = jest.fn()
 
 const lastBuildTime = undefined
 
-const priorities = [false, true]
-const types = [`products`, `variants`, `collections`, `orders`, `locations`]
-
 describe(`makeSourceFromOperation`, () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  for (const priority of priorities) {
+  for (const priority of [true, false]) {
     const pluginOptions = { prioritize: priority }
-    for (const type of types) {
+    for (const type of [
+      `products`,
+      `variants`,
+      `collections`,
+      `orders`,
+      `locations`,
+    ]) {
       it(`Returns the correct ${type} when running a ${
         priority ? `` : `non-`
       }priority build`, async () => {
