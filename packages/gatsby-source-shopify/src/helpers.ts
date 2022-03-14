@@ -80,6 +80,7 @@ export function decorateBulkObject(input: any): any {
       obj[key] = decorateBulkObject(obj[key])
     }
 
+    // We must convert ID to ShopifyID so that it doesn't collide with Gatsby's internal ID
     if (obj.id) {
       obj.shopifyId = obj.id
       delete obj.id
