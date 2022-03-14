@@ -28,7 +28,7 @@ export function makeMockGatsbyApi({
     },
     reporter: {
       info: jest.fn(),
-      panic: jest.fn(),
+      panic: jest.fn((e) => { throw(e) }),
       activityTimer: jest.fn(() => ({
         start: jest.fn(),
         end: jest.fn(),
