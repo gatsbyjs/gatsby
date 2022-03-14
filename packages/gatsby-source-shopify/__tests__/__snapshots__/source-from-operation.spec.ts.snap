@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`makeSourceFromOperation returns correctly when running a non-priority build 1`] = `Array []`;
