@@ -2,7 +2,7 @@ export function orderTypeBuilder(prefix: string): string {
   return `
       type ${prefix}LineItem implements Node @dontInfer {
         id: ID!
-        product: ${prefix}Product @link(from: "product.id", by: "shopifyId")
+        product: ${prefix}Product @link(from: "product.shopifyId", by: "shopifyId")
         shopifyId: String!
       }
 

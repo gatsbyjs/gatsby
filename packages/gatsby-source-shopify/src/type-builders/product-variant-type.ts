@@ -17,7 +17,7 @@ export function productVariantTypeBuilder(prefix: string): string {
         position: Int!
         presentmentPrices: [${prefix}ProductVariantPricePair!]!
         price: Float!
-        product: ${prefix}Product! @link(from: "product.id", by: "shopifyId")
+        product: ${prefix}Product! @link(from: "product.shopifyId", by: "shopifyId")
         requiresShipping: Boolean! @deprecated(reason: "Use \`InventoryItem.requiresShipping\` instead.")
         selectedOptions: [${prefix}SelectedOption!]!
         sellingPlanGroupCount: Int!

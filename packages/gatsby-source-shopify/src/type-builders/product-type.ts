@@ -5,7 +5,7 @@ export function productTypeBuilder(prefix: string): string {
         description: String!
         descriptionHtml: String!
         featuredImage: ${prefix}Image
-        featuredMedia: ${prefix}Media @link(from: "featuredMedia.id", by: "shopifyId")
+        featuredMedia: ${prefix}Media @link(from: "featuredMedia.shopifyId", by: "shopifyId")
         feedback: ${prefix}ResourceFeedback
         giftCardTemplateSuffix: String
         handle: String!
