@@ -70,6 +70,14 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     expect(manifestFileContents.foundPageBy).toBe(`context.id`)
   })
 
+  it(`Creates an accurate node manifest when ownerNodeId isn't present but there's a matching "slug" in pageContext`, async () => {
+    const manifestFileContents = await getManifestContents(5)
+
+    expect(manifestFileContents.node.id).toBe(`5`)
+    expect(manifestFileContents.page.path).toBe(`/slug-test-path`)
+    expect(manifestFileContents.foundPageBy).toBe(`context.slug`)
+  })
+
   if (gatsbyCommandName === `build`) {
     // this doesn't work in gatsby develop since query tracking
     // only runs when visiting a page in browser.

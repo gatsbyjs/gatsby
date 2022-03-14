@@ -1,0 +1,49 @@
+{
+  "bundler": "@parcel/bundler-default",
+  "transformers": {
+    "types:*.{ts,tsx}": ["@parcel/transformer-typescript-types"],
+    "bundle-text:*": ["...", "@parcel/transformer-inline-string"],
+    "data-url:*": ["...", "@parcel/transformer-inline-string"],
+    "worklet:*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
+      "@parcel/transformer-worklet",
+      "..."
+    ],
+    "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
+      "@parcel/transformer-js",
+      "@parcel/transformer-react-refresh-wrap"
+    ],
+    "*.{json,json5}": ["@parcel/transformer-json"],
+    "*.jsonld": ["@parcel/transformer-jsonld"],
+    "*.toml": ["@parcel/transformer-toml"],
+    "*.webmanifest": ["@parcel/transformer-webmanifest"],
+    "webmanifest:*.{json,webmanifest}": ["@parcel/transformer-webmanifest"],
+    "*.{yaml,yml}": ["@parcel/transformer-yaml"],
+    "*.{gql,graphql}": ["@parcel/transformer-graphql"],
+    "*.mdx": ["@parcel/transformer-mdx"],
+    "*.{xml,rss,atom}": ["@parcel/transformer-xml"],
+    "url:*": ["...", "@parcel/transformer-raw"]
+  },
+  "namers": ["@gatsbyjs/parcel-namer-relative-to-cwd", "@parcel/namer-default"],
+  "runtimes": [
+    "@parcel/runtime-js",
+    "@parcel/runtime-browser-hmr",
+    "@parcel/runtime-react-refresh",
+    "@parcel/runtime-service-worker"
+  ],
+  "optimizers": {
+    "data-url:*": ["...", "@parcel/optimizer-data-url"],
+    "*.{js,mjs,cjs}": ["@parcel/optimizer-terser"]
+  },
+  "packagers": {
+    "*.{js,mjs,cjs}": "@parcel/packager-js",
+    "*.{xml,rss,atom}": "@parcel/packager-xml",
+    "*.ts": "@parcel/packager-ts",
+    "*.{jsonld,svg,webmanifest}": "@parcel/packager-raw-url",
+    "*": "@parcel/packager-raw"
+  },
+  "compressors": {
+    "*": ["@parcel/compressor-raw"]
+  },
+  "resolvers": ["@parcel/resolver-default"],
+  "reporters": ["@parcel/reporter-dev-server"]
+}

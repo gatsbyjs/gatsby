@@ -166,13 +166,13 @@ See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path
 
 ## trailingSlash
 
-Configures the creation of URLs and whether to remove, append, or ignore trailing slashes.
+Configures the creation of URLs for pages, and whether to remove, append, or ignore trailing slashes.
 
 - `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
 - `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.
 - `ignore`: Don't automatically modify the URL
 
-Until Gatsby v4 it'll be set to `legacy` by default, in Gatsby v5 the default mode will be `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option, any other hosting provider (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
+The default setting for this option is `legacy` in order to preserve existing behavior for current users. In Gatsby v5 the default mode will be `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option. Alternate hosting providers (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
 
 ## polyfill
 

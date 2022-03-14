@@ -57,7 +57,7 @@ You can find the support plans for the major versions of Gatsby on the newly cre
 - `gatsby`: Test files inside the `src/api` (Gatsby Functions) directory are now excluded by default, via [PR #33834](https://github.com/gatsbyjs/gatsby/pull/33834)
 - `gatsby-source-wordpress`:
   - Fix for `'createRoot' is not exported from 'react-dom' (imported as 'ReactDOM').` warning, via [PR #33991](https://github.com/gatsbyjs/gatsby/pull/33991)
-  - Hydrate images in develop on first occurence, via [PR #33989](https://github.com/gatsbyjs/gatsby/pull/33989)
+  - Hydrate images in develop on first occurrence, via [PR #33989](https://github.com/gatsbyjs/gatsby/pull/33989)
 - `gatsby-core-utils`: Add retry on HTTP status codes to `fetchRemoteFile`, via [PR #33461](https://github.com/gatsbyjs/gatsby/pull/33461)
 - Content Sync:
   - Content Sync is a Gatsby Cloud feature for improving the Preview experience for content authors. You can read more about it in the [conceptual guide](/docs/conceptual/content-sync/)

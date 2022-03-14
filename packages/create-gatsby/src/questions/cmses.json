@@ -7,5 +7,12 @@
   },
   "gatsby-source-sanity": { "message": "Sanity" },
   "gatsby-source-shopify": { "message": "Shopify" },
-  "gatsby-source-wordpress": { "message": "WordPress" }
+  "gatsby-source-wordpress": {
+    "message": "WordPress",
+    "dependencies": [
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
+    ]
+  }
 }

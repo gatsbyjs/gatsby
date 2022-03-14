@@ -4,13 +4,17 @@ const createManifestId = nodeId => `${commandName}-${nodeId}`
 
 exports.sourceNodes = ({ actions }) => {
   // template nodes
-  for (let id = 1; id < 5; id++) {
+  for (let id = 1; id < 6; id++) {
     const node = {
       id: `${id}`,
       internal: {
         type: `TestNode`,
         contentDigest: `${id}`,
       },
+    }
+
+    if (id === 5) {
+      node.slug = `test-slug`
     }
 
     actions.createNode(node)
@@ -107,5 +111,13 @@ exports.createPages = ({ actions }) => {
   actions.createPage({
     path: `three-alternative`,
     component: require.resolve(`./src/templates/three.js`),
+  })
+
+  actions.createPage({
+    path: `slug-test-path`,
+    context: {
+      slug: `test-slug`,
+    },
+    component: require.resolve(`./src/templates/four.js`),
   })
 }
