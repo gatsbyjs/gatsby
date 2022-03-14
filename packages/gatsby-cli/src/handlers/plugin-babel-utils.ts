@@ -2,6 +2,7 @@ import * as t from "@babel/types"
 import generate from "@babel/generator"
 import template from "@babel/template"
 import { declare } from "@babel/helper-plugin-utils"
+import type { ConfigAPI, PluginObj } from "@babel/core"
 
 const getKeyNameFromAttribute = (node: any): any =>
   node.key.name || node.key.value
@@ -183,137 +184,182 @@ function buildPluginNode({ name, options, key }): any {
   return pluginWithOptions.declarations[0].init
 }
 
-export class BabelPluginAddPluginsToGatsbyConfig {
-  constructor({ pluginOrThemeName, shouldAdd, options, key }) {
-    // @ts-ignore - fix me
-    this.plugin = declare(api => {
-      api.assertVersion(7)
-
-      return {
-        visitor: {
-          ExpressionStatement(path): void {
-            const { node } = path
-            const { left, right } = node.expression
-
-            if (!isDefaultExport(left)) {
-              return
-            }
-
-            const pluginNodes = right.properties.find(
-              p => p.key.name === `plugins`
-            )
-
-            if (shouldAdd) {
-              if (t.isCallExpression(pluginNodes.value)) {
-                const plugins =
-                  pluginNodes.value.callee.object.elements.map(getPlugin)
-                const matches = plugins.filter(plugin => {
-                  if (!key) {
-                    return plugin.name === pluginOrThemeName
-                  }
-
-                  return plugin.key === key
-                })
-
-                if (!matches.length) {
-                  const pluginNode = buildPluginNode({
-                    name: pluginOrThemeName,
-                    options,
-                    key,
-                  })
-
-                  pluginNodes.value.callee.object.elements.push(pluginNode)
-                } else {
-                  pluginNodes.value.callee.object.elements =
-                    pluginNodes.value.callee.object.elements.map(node => {
-                      const plugin = getPlugin(node)
-
-                      if (plugin.key !== key) {
-                        return node
-                      }
-
-                      if (!plugin.key && plugin.name !== pluginOrThemeName) {
-                        return node
-                      }
-
-                      return buildPluginNode({
-                        name: pluginOrThemeName,
-                        options,
-                        key,
-                      })
-                    })
-                }
-              } else {
-                const plugins = pluginNodes.value.elements.map(getPlugin)
-                const matches = plugins.filter(plugin => {
-                  if (!key) {
-                    return plugin.name === pluginOrThemeName
-                  }
-
-                  return plugin.key === key
-                })
-
-                if (!matches.length) {
-                  const pluginNode = buildPluginNode({
-                    name: pluginOrThemeName,
-                    options,
-                    key,
-                  })
-
-                  pluginNodes.value.elements.push(pluginNode)
-                } else {
-                  pluginNodes.value.elements = pluginNodes.value.elements.map(
-                    node => {
-                      const plugin = getPlugin(node)
-
-                      if (plugin.key !== key) {
-                        return node
-                      }
-
-                      if (!plugin.key && plugin.name !== pluginOrThemeName) {
-                        return node
-                      }
-
-                      return buildPluginNode({
-                        name: pluginOrThemeName,
-                        options,
-                        key,
-                      })
-                    }
-                  )
-                }
-              }
-            } else {
-              if (t.isCallExpression(pluginNodes.value)) {
-                pluginNodes.value.callee.object.elements =
-                  pluginNodes.value.callee.object.elements.filter(node => {
-                    const plugin = getPlugin(node)
-
-                    if (key) {
-                      return plugin.key !== key
-                    }
-
-                    return plugin.name !== pluginOrThemeName
-                  })
-              } else {
-                pluginNodes.value.elements = pluginNodes.value.elements.filter(
-                  node => {
-                    const plugin = getPlugin(node)
-
-                    if (key) {
-                      return plugin.key !== key
-                    }
-
-                    return plugin.name !== pluginOrThemeName
-                  }
-                )
-              }
-            }
-
-            path.stop()
-          },
-        },
+function addPluginsToConfig({
+  pluginNodes,
+  pluginOrThemeName,
+  options,
+  key,
+}): void {
+  if (t.isCallExpression(pluginNodes.value)) {
+    const plugins = pluginNodes.value.callee.object.elements.map(getPlugin)
+    const matches = plugins.filter(plugin => {
+      if (!key) {
+        return plugin.name === pluginOrThemeName
       }
+
+      return plugin.key === key
     })
+
+    if (!matches.length) {
+      const pluginNode = buildPluginNode({
+        name: pluginOrThemeName,
+        options,
+        key,
+      })
+
+      pluginNodes.value.callee.object.elements.push(pluginNode)
+    } else {
+      pluginNodes.value.callee.object.elements =
+        pluginNodes.value.callee.object.elements.map(node => {
+          const plugin = getPlugin(node)
+
+          if (plugin.key !== key) {
+            return node
+          }
+
+          if (!plugin.key && plugin.name !== pluginOrThemeName) {
+            return node
+          }
+
+          return buildPluginNode({
+            name: pluginOrThemeName,
+            options,
+            key,
+          })
+        })
+    }
+  } else {
+    const plugins = pluginNodes.value.elements.map(getPlugin)
+    const matches = plugins.filter(plugin => {
+      if (!key) {
+        return plugin.name === pluginOrThemeName
+      }
+
+      return plugin.key === key
+    })
+
+    if (!matches.length) {
+      const pluginNode = buildPluginNode({
+        name: pluginOrThemeName,
+        options,
+        key,
+      })
+
+      pluginNodes.value.elements.push(pluginNode)
+    } else {
+      pluginNodes.value.elements = pluginNodes.value.elements.map(node => {
+        const plugin = getPlugin(node)
+
+        if (plugin.key !== key) {
+          return node
+        }
+
+        if (!plugin.key && plugin.name !== pluginOrThemeName) {
+          return node
+        }
+
+        return buildPluginNode({
+          name: pluginOrThemeName,
+          options,
+          key,
+        })
+      })
+    }
   }
 }
+
+function getPluginNodes(
+  properties: Array<t.ObjectProperty | t.ObjectMethod | t.SpreadElement>
+): t.ObjectProperty | undefined {
+  return properties.find(
+    prop =>
+      t.isObjectProperty(prop) &&
+      t.isIdentifier(prop.key) &&
+      prop.key.name === `plugins`
+  ) as t.ObjectProperty
+}
+
+/**
+ * Insert plugins selected in create-gatsby questionnaire into `gatsby-config` files.
+ *
+ * Scope is limited to the `gatsby-config` files in `gatsby-starter-minimal` and
+ * `gatsby-starter-minimal-ts`. Does not support general usage with other `gatsby-config` files.
+ * Changes to the config object in those files may require a change to this transformer.
+ *
+ * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal/gatsby-config.js}
+ * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/gatsby-config.ts}
+ */
+export default declare(
+  (
+    api: ConfigAPI,
+    args: {
+      pluginOrThemeName: string
+      options: unknown
+      key: string
+    }
+  ): PluginObj => {
+    api.assertVersion(7)
+
+    return {
+      visitor: {
+        /**
+         * Handle `module.exports = { ..., plugins: [] }` from `gatsby-config.js` in `gatsby-starter-minimal`.
+         * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal/gatsby-config.js}
+         */
+        ExpressionStatement(path): void {
+          const { node } = path
+          if (!t.isAssignmentExpression(node.expression)) {
+            return
+          }
+
+          const { left, right } = node.expression
+          if (!isDefaultExport(left) || !t.isObjectExpression(right)) {
+            return
+          }
+
+          const pluginNodes = getPluginNodes(right.properties)
+
+          if (
+            !t.isObjectProperty(pluginNodes) ||
+            !t.isArrayExpression(pluginNodes.value)
+          ) {
+            return
+          }
+
+          addPluginsToConfig({ pluginNodes, ...args })
+
+          path.stop()
+        },
+
+        /**
+         * Handle `const config = { ..., plugins: [] }; export default config` in `gatsby-config.ts` in `gatsby-starter-minimal-ts`.
+         * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-minimal-ts/gatsby-config.ts}
+         */
+        VariableDeclaration(path): void {
+          const { node } = path
+          const configDeclaration = node.declarations.find(
+            dec =>
+              t.isIdentifier(dec.id) && dec.id.name === `config` && dec.init
+          )
+          const config = configDeclaration?.init
+          if (!t.isObjectExpression(config)) {
+            return
+          }
+
+          const pluginNodes = getPluginNodes(config.properties)
+
+          if (
+            !t.isObjectProperty(pluginNodes) ||
+            !t.isArrayExpression(pluginNodes.value)
+          ) {
+            return
+          }
+
+          addPluginsToConfig({ pluginNodes, ...args })
+
+          path.stop()
+        },
+      },
+    }
+  }
+)
