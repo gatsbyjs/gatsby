@@ -23,27 +23,30 @@ import { Layout } from "../image-utils"
 import { getSizer } from "./layout-wrapper"
 import { propTypes } from "./gatsby-image.server"
 import { Unobserver } from "./intersection-observer"
+import type { Root } from "react-dom/client"
 
 let reactRender
 if (HAS_REACT_18) {
   const reactDomClient = require(`react-dom/client`)
   reactRender = (
-    Component: React.Component,
+    Component: React.ReactChild | Iterable<React.ReactNode>,
     el: ReactDOM.Container,
-    root: any
+    root: Root
   ): unknown => {
     if (!root) {
       root = reactDomClient.createRoot(el)
     }
 
-    // @ts-ignore - React 18 typings
     root.render(Component)
 
     return root
   }
 } else {
   const reactDomClient = require(`react-dom`)
-  reactRender = (Component: React.Component, el: ReactDOM.Container): void => {
+  reactRender = (
+    Component: React.ReactChild | Iterable<React.ReactNode>,
+    el: ReactDOM.Container
+  ): void => {
     reactDomClient.render(Component, el)
   }
 }
@@ -93,9 +96,7 @@ class GatsbyImageHydrator extends Component<
   lazyHydrator: () => void | null = null
   ref = createRef<HTMLImageElement>()
   unobserveRef: Unobserver
-  // TODO fix typing
-  // @ts-ignore - ignore
-  reactRootRef: MutableRefObject<unknown> = createRef<unknown>()
+  reactRootRef: MutableRefObject<Root> = createRef()
 
   constructor(props) {
     super(props)

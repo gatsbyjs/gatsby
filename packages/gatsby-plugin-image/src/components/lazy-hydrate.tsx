@@ -6,6 +6,7 @@ import { Placeholder } from "./placeholder"
 import { MainImageProps, MainImage } from "./main-image"
 import { getMainProps, getPlaceholderProps } from "./hooks"
 import { ReactElement } from "react"
+import type { Root } from "react-dom/client"
 
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoading: boolean
@@ -19,27 +20,28 @@ let reactHydrate
 if (HAS_REACT_18) {
   const reactDomClient = require(`react-dom/client`)
   reactRender = (
-    Component: React.Component,
+    Component: React.ReactChild | Iterable<React.ReactNode>,
     el: ReactDOM.Container,
-    root: any
-  ): unknown => {
+    root: Root
+  ): Root => {
     if (!root) {
       root = reactDomClient.createRoot(el)
     }
 
-    // TODO fix typing
-    // @ts-ignore - React 18 typings
     root.render(Component)
 
     return root
   }
   reactHydrate = (
-    Component: React.Component,
+    Component: React.ReactChild | Iterable<React.ReactNode>,
     el: ReactDOM.Container
-  ): unknown => reactDomClient.hydrateRoot(el, Component)
+  ): Root => reactDomClient.hydrateRoot(el, Component)
 } else {
   const reactDomClient = require(`react-dom`)
-  reactRender = (Component: React.Component, el: ReactDOM.Container): void => {
+  reactRender = (
+    Component: React.ReactChild | Iterable<React.ReactNode>,
+    el: ReactDOM.Container
+  ): void => {
     reactDomClient.render(Component, el)
   }
   reactHydrate = reactDomClient.hydrate
@@ -63,7 +65,7 @@ export function lazyHydrate(
   root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>,
   forceHydrate: MutableRefObject<boolean>,
-  reactRootRef: MutableRefObject<unknown>
+  reactRootRef: MutableRefObject<Root>
 ): (() => void) | null {
   const {
     width,
@@ -120,8 +122,6 @@ export function lazyHydrate(
   if (root.current) {
     // Force render to mitigate "Expected server HTML to contain a matching" in develop
     if (hydrated.current || forceHydrate.current || HAS_REACT_18) {
-      // TODO fix typing
-      // @ts-ignore - React 18 typings
       reactRootRef.current = reactRender(
         component,
         root.current,
