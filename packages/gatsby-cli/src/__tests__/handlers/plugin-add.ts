@@ -75,7 +75,7 @@ describe(`addPlugins`, () => {
     })
   })
 
-  describe(`gatsby-config.ts`, () => {
+  describe.skip(`gatsby-config.ts`, () => {
     beforeEach(async () => {
       await copyFile(config.ts.starter, config.ts.fixture)
     })

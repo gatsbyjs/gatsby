@@ -1,10 +1,7 @@
-import type { GatsbyConfig } from "gatsby"
-
-const config: GatsbyConfig = {
+/** @type {import('gatsby').GatsbyConfig} */
+module.exports = {
   siteMetadata: {
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [],
 }
-
-export default config
