@@ -1,3 +1,221 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`makeSourceFromOperation returns correctly when running a non-priority build 1`] = `Array []`;
+exports[`makeSourceFromOperation Returns the correct collections when running a non-priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/Collection/278407151822",
+    "collections___NODE": Array [],
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "24fcfa9b0a3fa09fd1322ca1a9ee1d57",
+      "type": "ShopifyProduct",
+    },
+    "media___NODE": Array [],
+    "metafields___NODE": Array [],
+    "shopifyId": "gid://shopify/Product/6950279086286",
+    "variants___NODE": Array [],
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct collections when running a priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/Collection/278407151822",
+    "collections___NODE": Array [],
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "24fcfa9b0a3fa09fd1322ca1a9ee1d57",
+      "type": "ShopifyProduct",
+    },
+    "media___NODE": Array [],
+    "metafields___NODE": Array [],
+    "shopifyId": "gid://shopify/Product/6950279086286",
+    "variants___NODE": Array [],
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct locations when running a non-priority build 1`] = `
+Array [
+  Object {
+    "activatable": true,
+    "address": Object {
+      "address1": "548 Market St #36791",
+      "address2": "",
+      "city": "San Francisco",
+      "country": "United States",
+      "countryCode": "US",
+      "formatted": Array [
+        "548 Market St #36791",
+        "San Francisco CA 36791",
+        "United States",
+      ],
+      "latitude": null,
+      "longitude": null,
+      "phone": "",
+      "province": "California",
+      "provinceCode": "CA",
+      "zip": "36791",
+    },
+    "addressVerified": false,
+    "deactivatable": false,
+    "deactivatedAt": null,
+    "deletable": false,
+    "fulfillmentService": null,
+    "fulfillsOnlineOrders": true,
+    "hasActiveInventory": true,
+    "hasUnfulfilledOrders": false,
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "5776f5e06841c1592a70c6bbb07bc391",
+      "type": "ShopifyLocation",
+    },
+    "isActive": true,
+    "legacyResourceId": "57173475534",
+    "name": "Gatsby Headquarters",
+    "shipsInventory": true,
+    "shopifyId": "gid://shopify/Location/57173475534",
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct locations when running a priority build 1`] = `
+Array [
+  Object {
+    "activatable": true,
+    "address": Object {
+      "address1": "548 Market St #36791",
+      "address2": "",
+      "city": "San Francisco",
+      "country": "United States",
+      "countryCode": "US",
+      "formatted": Array [
+        "548 Market St #36791",
+        "San Francisco CA 36791",
+        "United States",
+      ],
+      "latitude": null,
+      "longitude": null,
+      "phone": "",
+      "province": "California",
+      "provinceCode": "CA",
+      "zip": "36791",
+    },
+    "addressVerified": false,
+    "deactivatable": false,
+    "deactivatedAt": null,
+    "deletable": false,
+    "fulfillmentService": null,
+    "fulfillsOnlineOrders": true,
+    "hasActiveInventory": true,
+    "hasUnfulfilledOrders": false,
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "5776f5e06841c1592a70c6bbb07bc391",
+      "type": "ShopifyLocation",
+    },
+    "isActive": true,
+    "legacyResourceId": "57173475534",
+    "name": "Gatsby Headquarters",
+    "shipsInventory": true,
+    "shopifyId": "gid://shopify/Location/57173475534",
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct orders when running a non-priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/Order/3838572757198",
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "aac61e83a93a97a7a9abf72f4ad38a6d",
+      "type": "ShopifyLineItem",
+    },
+    "product": Object {
+      "shopifyId": "gid://shopify/Product/6950279086286",
+    },
+    "shopifyId": "gid://shopify/LineItem/9995073585358",
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct orders when running a priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/Order/3838572757198",
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "aac61e83a93a97a7a9abf72f4ad38a6d",
+      "type": "ShopifyLineItem",
+    },
+    "product": Object {
+      "shopifyId": "gid://shopify/Product/6950279086286",
+    },
+    "shopifyId": "gid://shopify/LineItem/9995073585358",
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct products when running a non-priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/Product/6950279086286",
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "d3531e9c6f08304e929396a262867da1",
+      "type": "ShopifyProductVariant",
+    },
+    "inventoryLevels___NODE": Array [],
+    "media___NODE": Array [],
+    "metafields___NODE": Array [],
+    "shopifyId": "gid://shopify/ProductVariant/41007759655118",
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct products when running a priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/Product/6950279086286",
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "d3531e9c6f08304e929396a262867da1",
+      "type": "ShopifyProductVariant",
+    },
+    "inventoryLevels___NODE": Array [],
+    "media___NODE": Array [],
+    "metafields___NODE": Array [],
+    "shopifyId": "gid://shopify/ProductVariant/41007759655118",
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct variants when running a non-priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/ProductVariant/41007759655118",
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "5c8b6c32a185ccc755c85358c52c48ee",
+      "type": "ShopifyMediaImage",
+    },
+    "shopifyId": "gid://shopify/MediaImage/22755647652046",
+  },
+]
+`;
+
+exports[`makeSourceFromOperation Returns the correct variants when running a priority build 1`] = `
+Array [
+  Object {
+    "__parentId": "gid://shopify/ProductVariant/41007759655118",
+    "id": undefined,
+    "internal": Object {
+      "contentDigest": "5c8b6c32a185ccc755c85358c52c48ee",
+      "type": "ShopifyMediaImage",
+    },
+    "shopifyId": "gid://shopify/MediaImage/22755647652046",
+  },
+]
+`;

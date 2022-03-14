@@ -75,6 +75,7 @@ describe(`makeSourceFromOperation`, () => {
           priority ? 1 : 0
         )
         expect(finishLastOperation.mock.calls.length).toEqual(priority ? 0 : 1)
+        expect(gatsbyApi.actions.createNode.mock.calls[0]).toMatchSnapshot()
         expect(processBulkResults.mock.calls[0][2]).toEqual(
           require(`./__data__/${type}.json`)
         )
