@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "4.10.0-next.2",
+  "version": "4.10.0-next.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
@@ -14,6 +14,7 @@
     "@babel/core": "^7.15.5",
     "@babel/generator": "^7.16.8",
     "@babel/helper-plugin-utils": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.15.4",
     "@babel/template": "^7.16.7",
     "@babel/types": "^7.16.8",
@@ -25,13 +26,13 @@
     "common-tags": "^1.8.2",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "create-gatsby": "^2.10.0-next.2",
+    "create-gatsby": "^2.10.0-next.3",
     "envinfo": "^7.8.1",
     "execa": "^5.1.1",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^10.0.0",
-    "gatsby-core-utils": "^3.10.0-next.2",
-    "gatsby-telemetry": "^3.10.0-next.2",
+    "gatsby-core-utils": "^3.10.0-next.3",
+    "gatsby-telemetry": "^3.10.0-next.3",
     "hosted-git-info": "^3.0.8",
     "is-valid-path": "^0.1.1",
     "joi": "^17.4.2",

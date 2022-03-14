@@ -74,6 +74,9 @@ export async function createSchemaCustomization(
       pluginConfig,
     })
   }
+  const { getGatsbyImageFieldConfig } = await import(
+    `gatsby-plugin-image/graphql-utils`
+  )
 
   const contentfulTypes = [
     schema.buildInterfaceType({
@@ -95,10 +98,6 @@ export async function createSchemaCustomization(
       extensions: { infer: false },
     }),
   ]
-
-  const { getGatsbyImageFieldConfig } = await import(
-    `gatsby-plugin-image/graphql-utils`
-  )
 
   contentfulTypes.push(
     addRemoteFilePolyfillInterface(

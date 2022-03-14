@@ -80,6 +80,7 @@ Map {
 
 exports[`Add pages allows you to add pages 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
@@ -124,6 +125,7 @@ Map {
 
 exports[`Add pages allows you to add pages with context 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
@@ -172,6 +174,7 @@ Map {
 
 exports[`Add pages allows you to add pages with matchPath 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",

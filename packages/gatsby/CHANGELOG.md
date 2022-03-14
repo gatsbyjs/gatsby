@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.9.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.3/packages/gatsby) (2022-03-09)
+
+#### Bug Fixes
+
+- make sure node-gyp gets replaced [#35076](https://github.com/gatsbyjs/gatsby/issues/35076) ([fba82a3](https://github.com/gatsbyjs/gatsby/commit/fba82a3e2e22487421001a06cf0303a575e75c40))
+
+### [4.9.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.2/packages/gatsby) (2022-03-07)
+
+#### Other Changes
+
+- don't lock lmdb [#35065](https://github.com/gatsbyjs/gatsby/issues/35065) ([3da0811](https://github.com/gatsbyjs/gatsby/commit/3da0811052ee5f25c0109a33d3a240b7ae1ad13b))
+
+### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.1/packages/gatsby) (2022-03-03)
+
+#### Bug Fixes
+
+- fix incorrect "inconsistent node counters" invariant #35020 fix [#35020](https://github.com/gatsbyjs/gatsby/issues/35020) fix [#35025](https://github.com/gatsbyjs/gatsby/issues/35025) fix [#35044](https://github.com/gatsbyjs/gatsby/issues/35044) ([7f1b73e](https://github.com/gatsbyjs/gatsby/commit/7f1b73e7012d8d88511f2791ea843c762e24f820))
+- Better compile error handling [#35038](https://github.com/gatsbyjs/gatsby/issues/35038) [#35042](https://github.com/gatsbyjs/gatsby/issues/35042) ([45aacf3](https://github.com/gatsbyjs/gatsby/commit/45aacf308201dcc357059f8e74404b14054308d6))
+
 ## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.0/packages/gatsby) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
