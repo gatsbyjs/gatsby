@@ -22,7 +22,7 @@ describe(`NodeModel`, () => {
     `SiteBuildMetadata`,
     `Author`,
     `Contributor`,
-    `RemoteFile`,
+    `ExternalFile`,
     `Post`,
   ]
 
@@ -37,7 +37,7 @@ describe(`NodeModel`, () => {
       )
 
       const types = `
-      union AllFiles = File | RemoteFile
+      union AllFiles = File | ExternalFile
 
       interface TeamMember {
         name: String!
@@ -164,7 +164,7 @@ describe(`NodeModel`, () => {
         })
         expect(result.length).toBe(3)
         expect(
-          result.every(r => [`File`, `RemoteFile`].includes(r.internal.type))
+          result.every(r => [`File`, `ExternalFile`].includes(r.internal.type))
         ).toBeTruthy()
       })
 
@@ -318,7 +318,7 @@ describe(`NodeModel`, () => {
             `Contributor`,
             `Post`,
             `File`,
-            `RemoteFile`,
+            `ExternalFile`,
           ])
         )
       })

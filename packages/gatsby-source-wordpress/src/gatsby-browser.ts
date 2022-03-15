@@ -1,11 +1,19 @@
 import type { GatsbyImageProps } from "gatsby-plugin-image"
-import * as React from "react"
-import * as ReactDOM from "react-dom"
+import React from "react"
+import ReactDOM from "react-dom"
 
 let hydrateRef
 let isFirstHydration = true
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
 export function onRouteUpdate(): void {
-  if (isFirstHydration) {
+  if (
+    process.env.NODE_ENV === `production` &&
+    isFirstHydration &&
+    // Safari has a bug that causes images to stay blank when directly loading a page (images load when client-side navigating)
+    // running this code on first hydration makes images load.
+    !isSafari
+  ) {
     isFirstHydration = false
     return
   }
@@ -31,6 +39,10 @@ function hydrateImages(): void {
   const inlineWPimages: Array<HTMLElement> = Array.from(
     doc.querySelectorAll(`[data-wp-inline-image]`)
   )
+
+  if (!inlineWPimages.length) {
+    return
+  }
 
   import(
     /* webpackChunkName: "gatsby-plugin-image" */ `gatsby-plugin-image`

@@ -2,11 +2,11 @@
 title: Free Swag for Gatsby Contributors!
 ---
 
-Gatsby relies on contributors from the open source community, and we want to make sure you know how much it means to us that you’re willing to put time and effort into [contributing to Gatsby](/contributing/how-to-contribute/).
+Gatsby relies on contributors from the open source community, and we want to make sure you know how much it means to us that you’re willing to put time and effort into [contributing to Gatsby](/contributing/#how-to-contribute).
 
 To show our appreciation, _**everyone who contributes to Gatsby is eligible to receive free swag!**_
 
-![Gatsby contributors wearing swag.](./images/gatsby-swag.jpg)
+![Gatsby contributors wearing swag. Left image shows a woman wearing a black T-Shirt with a light gray Gatsby logo on it. Middle image shows the Gatsby socks. Right image shows a man wearing a purple T-Shirt with a light purple Gatsby logo on it.](./images/gatsby-swag.jpg)
 
 ## How to claim your free swag
 
@@ -16,11 +16,9 @@ If you’ve contributed in other ways, such as giving talks about Gatsby, teachi
 
 ## Details about free swag
 
-<!-- The entire bulleted list must be prettier-ignored to prevent Prettier from escaping the dollar signs -->
-<!-- prettier-ignore -->
 - We will send one item from our [swag store](https://store.gatsbyjs.org/) per swag tier
-- Tier 1 swag includes most items $10 and under
-- Tier 2 swag includes most items $26 and under
+- Tier 1 swag includes most items valued 10 dollars or less
+- Tier 2 swag includes most items valued 31 dollars or less
 - Not all items are eligible due to high cost to create the swag. We’ll make it clear which items are not eligible
 - There’s a limit of one free swag item per swag tier
 - Shipping is free worldwide

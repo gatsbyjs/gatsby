@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.9.0/packages/gatsby-transformer-csv) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- update dependency json2csv to ^5.0.7 for gatsby-transformer-csv [#34957](https://github.com/gatsbyjs/gatsby/issues/34957) ([574e04b](https://github.com/gatsbyjs/gatsby/commit/574e04bdde3548849630f1aaa383eca38cfd9d74))
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.8.0/packages/gatsby-transformer-csv) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.7.0/packages/gatsby-transformer-csv) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.6.0/packages/gatsby-transformer-csv) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.5.0/packages/gatsby-transformer-csv) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.4.0/packages/gatsby-transformer-csv) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.3.0/packages/gatsby-transformer-csv) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.2.0/packages/gatsby-transformer-csv) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.1.0/packages/gatsby-transformer-csv) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.0.0/packages/gatsby-transformer-csv) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@3.14.0/packages/gatsby-transformer-csv) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

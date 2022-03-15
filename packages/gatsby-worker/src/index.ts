@@ -12,8 +12,12 @@ import {
 } from "./types"
 
 interface IWorkerOptions {
+  // number of workers to spawn, defaults to 1
   numWorkers?: number
+  // environmental variables specific to the worker(s)
   env?: Record<string, string>
+  // whether or not output should be ignored
+  silent?: boolean
 }
 
 type WrapReturnOfAFunctionInAPromise<
@@ -176,6 +180,7 @@ export class WorkerPool<
         },
         // Suppress --debug / --inspect flags while preserving others (like --harmony).
         execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
+        silent: options && options.silent,
       })
 
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {

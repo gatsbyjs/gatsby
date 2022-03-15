@@ -139,6 +139,14 @@ const globalPackageRules = [
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
+  {
+    groupName: `Parcel`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackagePatterns: [`^@parcel/`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
 ]
 
 // there is no excludeMatchSourceUrlPrefixes option so we force babel to be disabled

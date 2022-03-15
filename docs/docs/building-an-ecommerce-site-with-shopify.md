@@ -14,8 +14,12 @@ You can clone the starter, host it on Gatsby and connect it to your own Shopify 
 
 1. Create a new [Shopify account](https://www.shopify.com) and store if you don't have one.
 2. Create a private app in your store by navigating to `Apps`, then `Manage private apps`.
-3. Create a new private app, with any "Private app name" and leaving the default permissions as Read access under Admin API.
-4. Enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api) by checking the box that says "Allow this app to access your storefront data using Storefront API". Make sure to also grant access to `Read product tags` and `Read customer tags` by checking their corresponding boxes.
+3. Create a new private app, with any "Private app name" and add the following under the `Active Permissions for this App` section:
+   - `Read access` for `Products`
+   - `Read access` for `Product listings` if you want to use Shopify's Product Collections in your Gatsby site
+   - `Read access` for `Orders` if you want to use order information in your Gatsby site
+   - `Read access` for `Inventory` and `Locations` if you want to use location information in your Gatsby site
+4. Enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api) by checking the box that says "Allow this app to access your storefront data using Storefront API". Make sure to also grant access to `Read product tags`, `Read and modify checkouts`, and `Read customer tags` by checking their corresponding boxes.
 5. Copy the password, you'll need it to configure your plugin below.
 
 ## Set up the Gatsby Shopify plugin

@@ -17,6 +17,8 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
+export type AvailableFeatures = "image-cdn"
+
 export {
   default as Link,
   GatsbyLinkProps,
@@ -80,7 +82,8 @@ export const prefetchPathname: (path: string) => void
 export type PageProps<
   DataType = object,
   PageContextType = object,
-  LocationState = WindowLocation["state"]
+  LocationState = WindowLocation["state"],
+  ServerDataType = object
 > = {
   /** The path for this current page */
   path: string
@@ -141,8 +144,42 @@ export type PageProps<
    *   ..
    */
   pageContext: PageContextType
+  /** Data passed into the page via the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) SSR function. */
+  serverData: ServerDataType
 }
 
+/**
+ * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerDataProps = {
+  headers: Map<string, unknown>
+  method: string
+  url: string
+  query?: Record<string, unknown>
+  params?: Record<string, unknown>
+  pageContext: Record<string, unknown>
+}
+
+/**
+ * The return type (promise payload) from the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerDataReturn<ServerDataType = Record<string, unknown>> =
+  Promise<{
+    headers?: Map<string, unknown>
+    props?: ServerDataType
+    status?: number
+  }>
+
+/**
+ * A shorthand type for combining the props and return type for the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerData<ServerDataType> = (
+  props: GetServerDataProps
+) => GetServerDataReturn<ServerDataType>
+
+/**
+ * Constructor arguments for the PageRenderer.
+ */
 export interface PageRendererProps {
   location: WindowLocation
 }
@@ -202,6 +239,8 @@ export interface GatsbyConfig {
   flags?: Record<string, boolean>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
+  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `legacy` is used which is the behavior until v5. With Gatsby v5 "always" will be the default. */
+  trailingSlash?: "always" | "never" | "ignore" | "legacy"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
@@ -408,7 +447,7 @@ export interface GatsbyNode<
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreInit?(
-    args: ParentSpanPluginArgs,
+    args: PreInitArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
@@ -871,6 +910,9 @@ export interface NodePluginSchema {
   buildEnumType(config: ComposeEnumTypeConfig): GatsbyGraphQLEnumType
   buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
 }
+export interface PreInitArgs extends ParentSpanPluginArgs {
+  actions: Actions
+}
 
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
@@ -943,11 +985,22 @@ export interface ParentSpanPluginArgs extends NodePluginArgs {
 export interface NodePluginArgs {
   /**
    * Use to prefix resources URLs. `pathPrefix` will be either empty string or
-   * path that starts with slash and doesn't end with slash. Check
-   * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix/)
+   * path that starts with slash and doesn't end with slash. `pathPrefix` also
+   * becomes `<assetPrefix>/<pathPrefix>` when you pass both `assetPrefix` and
+   * `pathPrefix` in your `gatsby-config.js`.
+   *
+   * See [Adding a Path Prefix](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/)
    * page for details about path prefixing.
    */
   pathPrefix: string
+
+  /**
+   * This is the same as `pathPrefix` passed in `gatsby-config.js`.
+   * It's an empty string if you don't pass `pathPrefix`.
+   * When using assetPrefix, you can use this instead of pathPrefix to recieve the string you set in `gatsby-config.js`.
+   * It won't include the `assetPrefix`.
+   */
+  basePath: string
 
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
@@ -1037,6 +1090,13 @@ export interface NodePluginArgs {
    * tasks. All functions are async and return promises.
    */
   cache: GatsbyCache
+
+  /**
+   * Get cache instance by name - this should only be used by plugins that accept subplugins.
+   * @param id id of the node
+   * @returns See [cache](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#cache) section for reference.
+   */
+  getCache(this: void, id: string): GatsbyCache
 
   /**
    * Utility function useful to generate globally unique and stable node IDs.
@@ -1150,6 +1210,17 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
+  unstable_createNodeManifest(
+    this: void,
+    args: {
+      manifestId: string
+      node: Node
+      updatedAtUTC?: string | number
+    },
+    plugin?: ActionPlugin
+  ): void
+
   /** @see https://www.gatsbyjs.org/docs/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
@@ -1240,9 +1311,7 @@ export interface Actions {
       | string
       | GraphQLOutputType
       | GatsbyGraphQLType
-      | string[]
-      | GraphQLOutputType[]
-      | GatsbyGraphQLType[],
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
     plugin?: ActionPlugin,
     traceId?: string
   ): void
@@ -1530,6 +1599,7 @@ export interface Page<TContext = Record<string, unknown>> {
   matchPath?: string
   component: string
   context: TContext
+  defer?: boolean
 }
 
 export interface IPluginRefObject {
@@ -1578,7 +1648,7 @@ export interface GatsbyFunctionResponse<T = any> extends ServerResponse {
 /**
  * Gatsby function route request
  */
-export interface GatsbyFunctionRequest extends IncomingMessage {
+export interface GatsbyFunctionRequest<ReqBody = any> extends IncomingMessage {
   /**
    * Object of values from URL query parameters (after the ? in the URL)
    */
@@ -1588,7 +1658,7 @@ export interface GatsbyFunctionRequest extends IncomingMessage {
    * Object of values from route parameters
    */
   params: Record<string, string>
-  body: any
+  body: ReqBody
   /**
    * Object of `cookies` from header
    */

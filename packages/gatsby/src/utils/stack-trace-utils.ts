@@ -50,8 +50,18 @@ interface ICodeFrame {
 
 export const getNonGatsbyCodeFrame = ({
   highlightCode = true,
+  stack,
+}: {
+  highlightCode?: boolean
+  stack?: string
 } = {}): null | ICodeFrame => {
-  const callSite = getNonGatsbyCallSite()
+  let callSite
+  if (stack) {
+    callSite = stackTrace.parse({ stack, name: ``, message: `` })[0]
+  } else {
+    callSite = getNonGatsbyCallSite()
+  }
+
   if (!callSite) {
     return null
   }
@@ -80,11 +90,16 @@ export const getNonGatsbyCodeFrame = ({
   }
 }
 
-export const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}):
-  | null
-  | string => {
+export const getNonGatsbyCodeFrameFormatted = ({
+  highlightCode = true,
+  stack,
+}: {
+  highlightCode?: boolean
+  stack?: string
+} = {}): null | string => {
   const possibleCodeFrame = getNonGatsbyCodeFrame({
     highlightCode,
+    stack,
   })
 
   if (!possibleCodeFrame) {

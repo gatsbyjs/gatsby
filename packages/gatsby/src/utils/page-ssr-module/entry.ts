@@ -37,18 +37,20 @@ export interface ISSRData {
   templateDetails: ITemplateDetails
   potentialPagePath: string
   serverDataHeaders?: Record<string, string>
+  serverDataStatus?: number
   searchString: string
+}
+
+// just letting TypeScript know about injected data
+// with DefinePlugin
+declare global {
+  const INLINED_TEMPLATE_TO_DETAILS: Record<string, ITemplateDetails>
+  const WEBPACK_COMPILATION_HASH: string
 }
 
 const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
 )
-
-const pageTemplateDetailsMap: Record<
-  string,
-  ITemplateDetails
-  // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
-> = INLINED_TEMPLATE_TO_DETAILS
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -105,7 +107,7 @@ export async function getData({
       page = maybePage
 
       // 2. Lookup query used for a page (template)
-      templateDetails = pageTemplateDetailsMap[page.componentChunkName]
+      templateDetails = INLINED_TEMPLATE_TO_DETAILS[page.componentChunkName]
       if (!templateDetails) {
         throw new Error(
           `Page template details for "${page.componentChunkName}" not found`
@@ -222,6 +224,7 @@ export async function getData({
       templateDetails,
       potentialPagePath,
       serverDataHeaders: serverData?.headers,
+      serverDataStatus: serverData?.status,
       searchString,
     }
   } finally {
@@ -352,6 +355,7 @@ export async function renderHTML({
         pagePath: getPath(data),
         pageData,
         staticQueryContext,
+        webpackCompilationHash: WEBPACK_COMPILATION_HASH,
         ...data.templateDetails.assets,
         inlinePageData: data.page.mode === `SSR` && data.results.serverData,
       })

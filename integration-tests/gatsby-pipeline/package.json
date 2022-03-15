@@ -30,7 +30,7 @@
     "fs-extra": "^9.0.1",
     "md5-file": "^5.0.0",
     "node-fetch": "^2.6.0",
-    "jest": "^25.5.4",
+    "jest": "^27.2.1",
     "tree-kill": "^1.2.2"
   },
   "repository": {

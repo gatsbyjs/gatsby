@@ -79,6 +79,18 @@ describe(`gatsby-plugin-image`, () => {
   it(`blurred`, testConfig, () =>
     testGatsbyPluginImage(`blurred`, hasBase64Placeholder)
   )
+  it(`Custom Image Formats`, testConfig, () => {
+    cy.get(`[data-cy="customImageFormats"] picture source[type="image/webp"]`)
+      .invoke(`attr`, `srcset`)
+      .should("contain", "fm=webp")
+    cy.get(`[data-cy="customImageFormats"] picture source[type="image/avif"]`)
+      .invoke(`attr`, `srcset`)
+      .should("contain", "fm=avif")
+    cy.get(`[data-cy="customImageFormats"] picture img`)
+      .invoke(`attr`, `srcset`)
+      .should("not.contain", "fm=webp")
+      .should("not.contain", "fm=avif")
+  })
   it(`sqip`, testConfig, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
 
   it(`english`, testConfig, () => {

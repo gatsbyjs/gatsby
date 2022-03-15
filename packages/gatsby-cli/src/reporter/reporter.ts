@@ -19,6 +19,10 @@ import {
   ILogIntent,
   IRenderPageArgs,
 } from "./types"
+import {
+  registerAdditionalDiagnosticOutputHandler,
+  AdditionalDiagnosticsOutputHandler,
+} from "./redux/diagnostics"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
@@ -350,6 +354,12 @@ class Reporter {
 
   _renderPageTree(args: IRenderPageArgs): void {
     reporterActions.renderPageTree(args)
+  }
+
+  _registerAdditionalDiagnosticOutputHandler(
+    handler: AdditionalDiagnosticsOutputHandler
+  ): void {
+    registerAdditionalDiagnosticOutputHandler(handler)
   }
 }
 export type { Reporter }

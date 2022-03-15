@@ -50,6 +50,7 @@
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
   - [html.generateWebpImages](#htmlgeneratewebpimages)
+  - [html.placeholderType](#htmlplaceholdertype)
 - [type](#type)
   - [type.\_\_all](#type__all)
     - [type.\_\_all.where](#type__allwhere)
@@ -60,6 +61,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.placeholderSizeName](#typemediaitemplaceholdersizename)
     - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
     - [type.MediaItem.localFile](#typemediaitemlocalfile)
@@ -951,7 +953,7 @@ If a max width can't be inferred from html this value will be passed to Sharp. I
 
 **Field type**: `Number`
 
-**Default value**: `100`
+**Default value**: `1024`
 
 ```js
 {
@@ -1024,6 +1026,14 @@ When this is true, .webp images will be generated for images in html fields in a
 }
 
 ```
+
+### html.placeholderType
+
+This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.
+
+**Field type**: `String`
+
+**Default value**: `blurred`
 
 ## type
 
@@ -1178,6 +1188,14 @@ A special type which is applied to any non-node root fields that are ingested an
 ### type.MediaItem
 
 **Field type**: `Object`
+
+#### type.MediaItem.placeholderSizeName
+
+This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. To use, create a new image size in WP and name it "gatsby-image-placeholder" (or the name that you pass to this option) and that new size will be used automatically for placeholder images in the Gatsby build.
+
+**Field type**: `String`
+
+**Default value**: `gatsby-image-placeholder`
 
 #### type.MediaItem.createFileNodes
 

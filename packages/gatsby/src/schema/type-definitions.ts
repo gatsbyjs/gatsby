@@ -16,7 +16,7 @@ export interface IGatsbyResolverContext<TSource, TArgs> {
 
 export type GatsbyGraphQLResolveInfo = GraphQLResolveInfo & {
   from?: string
-  fromNode?: string
+  fromNode?: boolean
 }
 
 export type GatsbyResolver<TSource, TArgs = { [argName: string]: any }> = (

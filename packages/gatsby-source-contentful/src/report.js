@@ -6,6 +6,7 @@ export const CODES = {
   SelfSignedCertificate: `111002`,
   SyncError: `111003`,
   FetchContentTypes: `111004`,
+  GatsbyPluginMissing: `111005`,
 }
 
 export const ERROR_MAP = {
@@ -33,5 +34,15 @@ export const ERROR_MAP = {
     text: context => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,
+  },
+  [CODES.FetchTags]: {
+    text: context => context.sourceMessage,
+    level: `ERROR`,
+    category: `THIRD_PARTY`,
+  },
+  [CODES.GatsbyPluginMissing]: {
+    text: context => context.sourceMessage,
+    level: `ERROR`,
+    category: `USER`,
   },
 }

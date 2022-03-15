@@ -192,7 +192,7 @@ You can test your setup [using the Square sandbox](https://developer.squareup.co
 
 - [`SqPaymentForm` documentation](https://developer.squareup.com/docs/api/paymentform#navsection-paymentform)
 - [Square's tutorial for online payment options](https://developer.squareup.com/docs/online-payment-options)
-- [Sqaure's Payment Walkthrough](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough)
+- [Square's Payment Walkthrough](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough)
 - [Square's Test Cards](https://developer.squareup.com/docs/testing/test-values)
 - Square's blog post on [Online Payments with React + Square](https://developer.squareup.com/blog/online-payments-form-react/)
 - Example code for [using Square Payments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-square-payments)

@@ -7,7 +7,7 @@ async function run() {
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)
-  const diff = require(`jest-diff`)
+  const { diff } = require(`jest-diff`)
   const prettier = require(`prettier`)
   const cheerio = require(`cheerio`)
   const stripAnsi = require(`strip-ansi`)
@@ -47,7 +47,7 @@ async function run() {
     // Fetch once to trigger re-compilation.
     await fetch(`${devSiteBasePath}/${path}`)
 
-    // Then wait for 6 seconds to ensure it's ready to go.
+    // Then wait for six seconds to ensure it's ready to go.
     // Otherwise, tests are flaky depending on the speed of the testing machine.
     await new Promise(resolve => {
       setTimeout(() => resolve(), 6000)
@@ -103,7 +103,15 @@ async function run() {
     paths
   )
 
-  const results = await Promise.all(paths.map(p => comparePath(p)))
+  const results = []
+
+  // Run comparisons serially, otherwise recompilation fetches
+  // interfere with each other when run within Promise.all
+  for (const path of paths) {
+    const result = await comparePath(path)
+    results.push(result)
+  }
+
   // Test all true
   if (results.every(r => r)) {
     process.exit(0)

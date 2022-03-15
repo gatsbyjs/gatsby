@@ -1,4 +1,4 @@
-# create-gatsby (alpha)
+# create-gatsby
 
 Create Gatsby apps in an interactive CLI experience that does the plumbing for you.
 
@@ -18,7 +18,7 @@ yarn create gatsby
 
 It will ask you questions about what you're building, and set up a Gatsby project for you.
 
-_Note: this package is different from the Gatsby CLI, it is intended solely to create new sites._
+_Note: This package is different from `gatsby-cli`, it is intended solely to create new sites._
 
 ## Options
 
@@ -33,28 +33,34 @@ npm init gatsby -y <site-directory>
 If you're making changes to the create-gatsby package, you can follow the steps below to test out your changes locally:
 
 ```sh
-# Move into the create-gatsby package
-cd packages/create-gatsby
-
-# Install dependencies and build the package
-yarn && yarn build
-
-# Run the create-gatsby script
-node cli.js
-```
-
-Note that if you use the `build` script, you'll have to rebuild after each change. Alternatively, you can use the `watch` script to automatically rebuild after local changes. In that case, you'll need to run `cli.js` from the top-level directory of the `gatsby` repo:
-
-```sh
-# Move into the create-gatsby package
-cd packages/create-gatsby
-
-# Install dependencies and build the package
-yarn && yarn watch
-
-# Open another terminal window and get back to the gatsby monorepo
+# Move into the monorepo
 cd <path-to-gatsby-monorepo>
+
+# Install dependencies and build the package
+yarn bootstrap
 
 # Run the create-gatsby script
 node packages/create-gatsby/cli.js
+```
+
+Note that if you use the `bootstrap` script, you'll have to rebuild after each change. Alternatively, you can use the `watch` script to automatically rebuild after local changes:
+
+```sh
+# Move into the monorepo
+cd <path-to-gatsby-monorepo>
+
+# Install dependencies and build the package
+yarn bootstrap
+
+# Watch changes
+yarn watch --scope=create-gatsby
+```
+
+Open another terminal window and go to a folder where you can easily delete the test projects:
+
+```
+cd <path-to-playground>
+
+# Run the create-gatsby script
+node <some-path>/packages/create-gatsby/cli.js
 ```

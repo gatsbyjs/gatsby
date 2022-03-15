@@ -12,7 +12,7 @@ const {
   GraphQLBoolean,
 } = require(`gatsby/graphql`)
 const { queueImageResizing } = require(`gatsby-plugin-sharp`)
-const { fetchRemoteFile } = require(`gatsby-core-utils`)
+const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
 const {
   DuotoneGradientType,
   ImageCropFocusType,
@@ -192,7 +192,7 @@ async function sqipContentful({ type, cache, store }) {
         const {
           createUrl,
           mimeTypeExtensions,
-        } = require(`gatsby-source-contentful/extend-node-type`)
+        } = require(`gatsby-source-contentful/image-helpers`)
 
         const {
           file: { contentType, url: imgUrl, fileName },

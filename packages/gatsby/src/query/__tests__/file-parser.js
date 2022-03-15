@@ -305,8 +305,8 @@ export const config = async () => {
 
     // The second param is a "hint", see: https://jestjs.io/docs/en/expect#tomatchsnapshotpropertymatchers-hint
     expect(results).toMatchSnapshot({}, `results`)
-    expect(reporter.warn).toMatchSnapshot({}, `warn`)
-    expect(reporter.panicOnBuild).toMatchSnapshot({}, `panicOnBuild`)
+    expect(reporter.warn.mock.calls).toMatchSnapshot({}, `warn`)
+    expect(reporter.panicOnBuild.mock.calls).toMatchSnapshot({}, `panicOnBuild`)
     expect(errors.length).toEqual(1)
   })
 

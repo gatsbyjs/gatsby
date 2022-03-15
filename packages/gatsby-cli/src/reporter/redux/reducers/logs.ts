@@ -3,7 +3,6 @@ import { Actions } from "../../constants"
 
 export const reducer = (
   state: IGatsbyCLIState = {
-    messages: [],
     activities: {},
     status: ``,
   },
@@ -14,18 +13,6 @@ export const reducer = (
       return {
         ...state,
         status: action.payload,
-      }
-    }
-
-    case Actions.Log: {
-      if (!action.payload.text) {
-        // set empty character to fix ink
-        action.payload.text = `\u2800`
-      }
-
-      return {
-        ...state,
-        messages: [...state.messages, action.payload],
       }
     }
 

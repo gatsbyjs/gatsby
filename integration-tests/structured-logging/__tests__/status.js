@@ -10,7 +10,7 @@ describe(`Successful Build`, () => {
   let gatsbyProcess
   let events = []
 
-  beforeAll(async done => {
+  beforeAll(done => {
     gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
@@ -77,7 +77,7 @@ describe(`Failing Build`, () => {
   let gatsbyProcess
   let events = []
 
-  beforeAll(async done => {
+  beforeAll(done => {
     fs.writeFileSync(
       path.join(`src`, `pages`, `index.js`),
       `import React from "react"

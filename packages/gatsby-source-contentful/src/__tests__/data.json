@@ -2,16 +2,18 @@
   "currentSyncData": {
     "entries": [
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c7LAnCobuuWYSqks6wAwY2a",
+          "id": "7LAnCobuuWYSqks6wAwY2a",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:44.000Z",
           "updatedAt": "2020-06-30T11:22:54.201Z",
@@ -19,8 +21,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 4,
@@ -28,54 +29,24 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
-              "contentful_id": "6XwpTaSiiI2Ak2Ww0oi6qa"
+              "id": "6XwpTaSiiI2Ak2Ww0oi6qa"
             }
-          },
-          "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
+          }
         },
         "fields": {
-          "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
+          "title": {
+            "de": "Haus & Küche",
+            "en-US": "Home & Kitchen"
+          },
           "icon": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
-                "type": "Asset",
-                "createdAt": "2017-06-27T09:35:36.172Z",
-                "updatedAt": "2017-06-27T09:35:36.172Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 1,
-                "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "title": { "en-US": "Home and Kitchen" },
-                "description": { "en-US": "category icon" },
-                "file": {
-                  "en-US": {
-                    "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-                    "details": {
-                      "size": 2977,
-                      "image": { "width": 256, "height": 256 }
-                    },
-                    "fileName": "1418244847_Streamline-18-256.png",
-                    "contentType": "image/png"
-                  }
-                }
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "6m5AJ9vMPKc8OUoQeoCS4o"
               }
             }
           },
@@ -86,16 +57,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c71mfnH4QKsSsQmgoaQuq6O",
+          "id": "71mfnH4QKsSsQmgoaQuq6O",
           "type": "Entry",
           "createdAt": "2017-11-28T02:16:10.604Z",
           "updatedAt": "2018-08-13T14:27:12.458Z",
@@ -103,8 +76,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 4,
@@ -112,16 +84,16 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "jsonTest",
-              "contentful_id": "jsonTest"
+              "id": "jsonTest"
             }
-          },
-          "contentful_id": "71mfnH4QKsSsQmgoaQuq6O"
+          }
         },
         "fields": {
           "jsonTest": {
             "en-US": {
-              "engines": { "yarn": "^1.2.1" },
+              "engines": {
+                "yarn": "^1.2.1"
+              },
               "private": true,
               "scripts": {
                 "jest": "jest",
@@ -188,20 +160,24 @@
               }
             }
           },
-          "jsonStringTest": { "en-US": ["test"] }
+          "jsonStringTest": {
+            "en-US": ["test"]
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c4L2GhTsJtCseMYM8Wia64i",
+          "id": "4L2GhTsJtCseMYM8Wia64i",
           "type": "Entry",
           "createdAt": "2018-05-28T08:49:06.230Z",
           "updatedAt": "2018-05-28T08:49:06.230Z",
@@ -209,8 +185,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 1,
@@ -218,30 +193,32 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "remarkTest",
-              "contentful_id": "remarkTest"
+              "id": "remarkTest"
             }
-          },
-          "contentful_id": "4L2GhTsJtCseMYM8Wia64i"
+          }
         },
         "fields": {
-          "title": { "en-US": "Contentful images inlined in Markdown" },
+          "title": {
+            "en-US": "Contentful images inlined in Markdown"
+          },
           "content": {
             "en-US": "## Toys\n\n![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) \n\n## Chive\n\n![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) \n\n## Playsam Streamliner\n\n![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) \n\n## Whisk beaters\n\n![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) \n\n## SoSo Wall Clock\n\n![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) \n\n## Hudson Wall Cup\n\n![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)"
           }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c5KsDBWseXY6QegucYAoacS",
+          "id": "5KsDBWseXY6QegucYAoacS",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:43.996Z",
           "updatedAt": "2017-06-27T09:56:59.626Z",
@@ -249,8 +226,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -258,18 +234,18 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "c2PqfXUJwE8qSYKuM0U6w8M",
-              "contentful_id": "2PqfXUJwE8qSYKuM0U6w8M"
+              "id": "2PqfXUJwE8qSYKuM0U6w8M"
             }
-          },
-          "contentful_id": "5KsDBWseXY6QegucYAoacS"
+          }
         },
         "fields": {
           "productName": {
             "de": "Playsam Streamliner Klassisches Auto, Espresso",
             "en-US": "Playsam Streamliner Classic Car, Espresso"
           },
-          "slug": { "en-US": "playsam-streamliner-classic-car-espresso" },
+          "slug": {
+            "en-US": "playsam-streamliner-classic-car-espresso"
+          },
           "productDescription": {
             "de": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
             "en-US": "A classic Playsam design, the Streamliner Classic Car has been selected as Swedish Design Classic by the Swedish National Museum for its inventive style and sleek surface. It's no wonder that this wooden car has also been a long-standing favorite for children both big and small!"
@@ -280,241 +256,74 @@
           "image": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "wtrHxeu3zEoEce2MokCSi",
-                  "type": "Asset",
-                  "createdAt": "2017-06-27T09:35:36.037Z",
-                  "updatedAt": "2017-06-27T09:35:36.037Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 1,
-                  "contentful_id": "wtrHxeu3zEoEce2MokCSi"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "en-US": "Playsam Streamliner" },
-                  "description": { "en-US": "Merchandise photo" },
-                  "file": {
-                    "en-US": {
-                      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-                      "details": {
-                        "size": 27187,
-                        "image": { "width": 600, "height": 446 }
-                      },
-                      "fileName": "quwowooybuqbl6ntboz3.jpg",
-                      "contentType": "image/jpeg"
-                    }
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Asset",
+                  "id": "wtrHxeu3zEoEce2MokCSi"
                 }
               }
             ]
           },
-          "tags": { "en-US": ["wood", "toy", "car", "sweden", "design"] },
+          "tags": {
+            "en-US": ["wood", "toy", "car", "sweden", "design"]
+          },
           "categories": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
-                  "type": "Entry",
-                  "createdAt": "2017-06-27T09:35:44.992Z",
-                  "updatedAt": "2017-06-27T09:46:43.477Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 2,
-                  "contentType": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "ContentType",
-                      "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
-                      "contentful_id": "6XwpTaSiiI2Ak2Ww0oi6qa"
-                    }
-                  },
-                  "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "de": "Spielzeug", "en-US": "Toys" },
-                  "icon": {
-                    "en-US": {
-                      "sys": {
-                        "space": {
-                          "sys": {
-                            "type": "Link",
-                            "linkType": "Space",
-                            "id": "rocybtov1ozk",
-                            "contentful_id": "rocybtov1ozk"
-                          }
-                        },
-                        "id": "c6t4HKjytPi0mYgs240wkG",
-                        "type": "Asset",
-                        "createdAt": "2017-06-27T09:35:36.633Z",
-                        "updatedAt": "2017-06-27T09:35:36.633Z",
-                        "environment": {
-                          "sys": {
-                            "id": "master",
-                            "type": "Link",
-                            "linkType": "Environment",
-                            "contentful_id": "master"
-                          }
-                        },
-                        "revision": 1,
-                        "contentful_id": "6t4HKjytPi0mYgs240wkG"
-                      },
-                      "fields": {
-                        "title": { "en-US": "Toys" },
-                        "description": { "en-US": "Category icon set" },
-                        "file": {
-                          "en-US": {
-                            "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-                            "details": {
-                              "size": 6744,
-                              "image": { "width": 128, "height": 128 }
-                            },
-                            "fileName": "toys_512pxGREY.png",
-                            "contentType": "image/png"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "categoryDescription": {
-                    "de": "Spielzeugladen, Spiele, Lernhilfen",
-                    "en-US": "Shop for toys, games, educational aids"
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "24DPGBDeGEaYy8ms4Y8QMQ"
                 }
               }
             ]
           },
-          "price": { "de": 44, "en-US": 44 },
+          "price": {
+            "de": 44,
+            "en-US": 44
+          },
           "brand": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "JrePkDVYomE8AwcuCUyMi",
-                "type": "Entry",
-                "createdAt": "2017-06-27T09:35:44.988Z",
-                "updatedAt": "2017-06-27T09:50:36.937Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 2,
-                "contentType": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "ContentType",
-                    "id": "sFzTZbSuM8coEwygeUYes",
-                    "contentful_id": "sFzTZbSuM8coEwygeUYes"
-                  }
-                },
-                "contentful_id": "JrePkDVYomE8AwcuCUyMi"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "companyName": { "en-US": "Playsam" },
-                "logo": {
-                  "en-US": {
-                    "sys": {
-                      "space": {
-                        "sys": {
-                          "type": "Link",
-                          "linkType": "Space",
-                          "id": "rocybtov1ozk",
-                          "contentful_id": "rocybtov1ozk"
-                        }
-                      },
-                      "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
-                      "type": "Asset",
-                      "createdAt": "2017-06-27T09:35:36.168Z",
-                      "updatedAt": "2017-06-27T09:35:36.168Z",
-                      "environment": {
-                        "sys": {
-                          "id": "master",
-                          "type": "Link",
-                          "linkType": "Environment",
-                          "contentful_id": "master"
-                        }
-                      },
-                      "revision": 1,
-                      "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2"
-                    },
-                    "fields": {
-                      "title": { "en-US": "Playsam" },
-                      "description": { "en-US": "Brand logo" },
-                      "file": {
-                        "en-US": {
-                          "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-                          "details": {
-                            "size": 7003,
-                            "image": { "width": 100, "height": 100 }
-                          },
-                          "fileName": "playsam.jpg",
-                          "contentType": "image/jpeg"
-                        }
-                      }
-                    }
-                  }
-                },
-                "companyDescription": {
-                  "de": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
-                  "en-US": "Playsam is the leading Scandinavian design company for executive wooden toy gift. Scandinavian design playful creativity, integrity and sophistication are Playsam. Scandinavian design and wooden toy makes Playsam gift lovely to the world of design since 1984."
-                },
-                "website": { "en-US": "http://playsam.com/" }
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "JrePkDVYomE8AwcuCUyMi"
               }
             }
           },
-          "quantity": { "en-US": 56 },
-          "sku": { "en-US": "B001R6JUZ2" },
-          "website": { "en-US": "http://www.amazon.com/dp/B001R6JUZ2/" }
+          "quantity": {
+            "en-US": 56
+          },
+          "sku": {
+            "en-US": "B001R6JUZ2"
+          },
+          "website": {
+            "en-US": "http://www.amazon.com/dp/B001R6JUZ2/"
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c651CQ8rLoIYCeY6G0QG22q",
+          "id": "651CQ8rLoIYCeY6G0QG22q",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:43.997Z",
           "updatedAt": "2017-06-27T09:55:16.820Z",
@@ -522,8 +331,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -531,54 +339,23 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "sFzTZbSuM8coEwygeUYes",
-              "contentful_id": "sFzTZbSuM8coEwygeUYes"
+              "id": "sFzTZbSuM8coEwygeUYes"
             }
-          },
-          "contentful_id": "651CQ8rLoIYCeY6G0QG22q"
+          }
         },
         "fields": {
-          "companyName": { "en-US": "Normann Copenhagen" },
+          "companyName": {
+            "en-US": "Normann Copenhagen"
+          },
           "logo": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c3wtvPBbBjiMKqKKga8I2Cu",
-                "type": "Asset",
-                "createdAt": "2017-06-27T09:35:37.178Z",
-                "updatedAt": "2017-06-27T09:35:37.178Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 1,
-                "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "title": { "en-US": "Normann Copenhagen" },
-                "description": { "en-US": "Brand logo" },
-                "file": {
-                  "en-US": {
-                    "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-                    "details": {
-                      "size": 12302,
-                      "image": { "width": 353, "height": 353 }
-                    },
-                    "fileName": "zJYzDlGk.jpeg",
-                    "contentType": "image/jpeg"
-                  }
-                }
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "3wtvPBbBjiMKqKKga8I2Cu"
               }
             }
           },
@@ -586,23 +363,33 @@
             "de": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
             "en-US": "Normann Copenhagen is a way of living - a mindset. We love to challenge the conventional design rules. This is why you will find traditional materials put into untraditional use such as a Stone Hook made of Icelandic stones, a vase made out of silicon and last but not least a dog made out of plastic."
           },
-          "website": { "en-US": "http://www.normann-copenhagen.com/" },
-          "twitter": { "en-US": "https://twitter.com/NormannCPH" },
-          "email": { "en-US": "normann@normann-copenhagen.com" },
-          "phone": { "en-US": ["+45 35 55 44 59"] }
+          "website": {
+            "en-US": "http://www.normann-copenhagen.com/"
+          },
+          "twitter": {
+            "en-US": "https://twitter.com/NormannCPH"
+          },
+          "email": {
+            "en-US": "normann@normann-copenhagen.com"
+          },
+          "phone": {
+            "en-US": ["+45 35 55 44 59"]
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c3DVqIYj4dOwwcKu6sgqOgg",
+          "id": "3DVqIYj4dOwwcKu6sgqOgg",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:44.006Z",
           "updatedAt": "2017-06-27T09:54:51.159Z",
@@ -610,8 +397,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -619,261 +405,96 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "c2PqfXUJwE8qSYKuM0U6w8M",
-              "contentful_id": "2PqfXUJwE8qSYKuM0U6w8M"
+              "id": "2PqfXUJwE8qSYKuM0U6w8M"
             }
-          },
-          "contentful_id": "3DVqIYj4dOwwcKu6sgqOgg"
+          }
         },
         "fields": {
-          "productName": { "de": "Becher", "en-US": "Hudson Wall Cup" },
-          "slug": { "en-US": "hudson-wall-cup" },
+          "productName": {
+            "de": "Becher",
+            "en-US": "Hudson Wall Cup"
+          },
+          "slug": {
+            "en-US": "hudson-wall-cup"
+          },
           "productDescription": {
             "de": "Wand-hängende Glas-Blumen-Vase und Terrarium",
             "en-US": "Wall Hanging Glass Flower Vase and Terrarium"
           },
-          "sizetypecolor": { "en-US": "3 x 3 x 5 inches; 5.3 ounces" },
+          "sizetypecolor": {
+            "en-US": "3 x 3 x 5 inches; 5.3 ounces"
+          },
           "image": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "Xc0ny7GWsMEMCeASWO2um",
-                  "type": "Asset",
-                  "createdAt": "2017-06-27T09:35:37.027Z",
-                  "updatedAt": "2017-06-27T09:35:37.027Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 1,
-                  "contentful_id": "Xc0ny7GWsMEMCeASWO2um"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "en-US": "Hudson Wall Cup " },
-                  "description": { "en-US": "Merchandise image" },
-                  "file": {
-                    "en-US": {
-                      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-                      "details": {
-                        "size": 48751,
-                        "image": { "width": 600, "height": 600 }
-                      },
-                      "fileName": "jqvtazcyfwseah9fmysz.jpg",
-                      "contentType": "image/jpeg"
-                    }
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Asset",
+                  "id": "Xc0ny7GWsMEMCeASWO2um"
                 }
               }
             ]
           },
-          "tags": { "en-US": ["vase", "flowers", "accessories"] },
+          "tags": {
+            "en-US": ["vase", "flowers", "accessories"]
+          },
           "categories": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "c7LAnCobuuWYSqks6wAwY2a",
-                  "type": "Entry",
-                  "createdAt": "2017-06-27T09:35:44.000Z",
-                  "updatedAt": "2020-06-30T11:22:54.201Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 4,
-                  "contentType": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "ContentType",
-                      "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
-                      "contentful_id": "6XwpTaSiiI2Ak2Ww0oi6qa"
-                    }
-                  },
-                  "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
-                  "icon": {
-                    "en-US": {
-                      "sys": {
-                        "space": {
-                          "sys": {
-                            "type": "Link",
-                            "linkType": "Space",
-                            "id": "rocybtov1ozk",
-                            "contentful_id": "rocybtov1ozk"
-                          }
-                        },
-                        "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
-                        "type": "Asset",
-                        "createdAt": "2017-06-27T09:35:36.172Z",
-                        "updatedAt": "2017-06-27T09:35:36.172Z",
-                        "environment": {
-                          "sys": {
-                            "id": "master",
-                            "type": "Link",
-                            "linkType": "Environment",
-                            "contentful_id": "master"
-                          }
-                        },
-                        "revision": 1,
-                        "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o"
-                      },
-                      "fields": {
-                        "title": { "en-US": "Home and Kitchen" },
-                        "description": { "en-US": "category icon" },
-                        "file": {
-                          "en-US": {
-                            "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-                            "details": {
-                              "size": 2977,
-                              "image": { "width": 256, "height": 256 }
-                            },
-                            "fileName": "1418244847_Streamline-18-256.png",
-                            "contentType": "image/png"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "categoryDescription": {
-                    "de": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
-                    "en-US": "Shop for furniture, bedding, bath, vacuums, kitchen products, and more"
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "7LAnCobuuWYSqks6wAwY2a"
                 }
               }
             ]
           },
-          "price": { "de": 11, "en-US": 11 },
+          "price": {
+            "de": 11,
+            "en-US": 11
+          },
           "brand": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c651CQ8rLoIYCeY6G0QG22q",
-                "type": "Entry",
-                "createdAt": "2017-06-27T09:35:43.997Z",
-                "updatedAt": "2017-06-27T09:55:16.820Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 2,
-                "contentType": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "ContentType",
-                    "id": "sFzTZbSuM8coEwygeUYes",
-                    "contentful_id": "sFzTZbSuM8coEwygeUYes"
-                  }
-                },
-                "contentful_id": "651CQ8rLoIYCeY6G0QG22q"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "companyName": { "en-US": "Normann Copenhagen" },
-                "logo": {
-                  "en-US": {
-                    "sys": {
-                      "space": {
-                        "sys": {
-                          "type": "Link",
-                          "linkType": "Space",
-                          "id": "rocybtov1ozk",
-                          "contentful_id": "rocybtov1ozk"
-                        }
-                      },
-                      "id": "c3wtvPBbBjiMKqKKga8I2Cu",
-                      "type": "Asset",
-                      "createdAt": "2017-06-27T09:35:37.178Z",
-                      "updatedAt": "2017-06-27T09:35:37.178Z",
-                      "environment": {
-                        "sys": {
-                          "id": "master",
-                          "type": "Link",
-                          "linkType": "Environment",
-                          "contentful_id": "master"
-                        }
-                      },
-                      "revision": 1,
-                      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu"
-                    },
-                    "fields": {
-                      "title": { "en-US": "Normann Copenhagen" },
-                      "description": { "en-US": "Brand logo" },
-                      "file": {
-                        "en-US": {
-                          "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-                          "details": {
-                            "size": 12302,
-                            "image": { "width": 353, "height": 353 }
-                          },
-                          "fileName": "zJYzDlGk.jpeg",
-                          "contentType": "image/jpeg"
-                        }
-                      }
-                    }
-                  }
-                },
-                "companyDescription": {
-                  "de": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
-                  "en-US": "Normann Copenhagen is a way of living - a mindset. We love to challenge the conventional design rules. This is why you will find traditional materials put into untraditional use such as a Stone Hook made of Icelandic stones, a vase made out of silicon and last but not least a dog made out of plastic."
-                },
-                "website": { "en-US": "http://www.normann-copenhagen.com/" },
-                "twitter": { "en-US": "https://twitter.com/NormannCPH" },
-                "email": { "en-US": "normann@normann-copenhagen.com" },
-                "phone": { "en-US": ["+45 35 55 44 59"] }
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "651CQ8rLoIYCeY6G0QG22q"
               }
             }
           },
-          "quantity": { "en-US": 101 },
-          "sku": { "en-US": "B00E82D7I8" },
-          "website": { "en-US": "http://www.amazon.com/dp/B00E82D7I8/" }
+          "quantity": {
+            "en-US": 101
+          },
+          "sku": {
+            "en-US": "B00E82D7I8"
+          },
+          "website": {
+            "en-US": "http://www.amazon.com/dp/B00E82D7I8/"
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c6dbjWqNd9SqccegcqYq224",
+          "id": "6dbjWqNd9SqccegcqYq224",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:44.049Z",
           "updatedAt": "2017-06-27T09:53:23.179Z",
@@ -881,8 +502,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -890,61 +510,35 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "c2PqfXUJwE8qSYKuM0U6w8M",
-              "contentful_id": "2PqfXUJwE8qSYKuM0U6w8M"
+              "id": "2PqfXUJwE8qSYKuM0U6w8M"
             }
-          },
-          "contentful_id": "6dbjWqNd9SqccegcqYq224"
+          }
         },
         "fields": {
-          "productName": { "de": "Schneebesen", "en-US": "Whisk Beater" },
-          "slug": { "en-US": "whisk-beater" },
+          "productName": {
+            "de": "Schneebesen",
+            "en-US": "Whisk Beater"
+          },
+          "slug": {
+            "en-US": "whisk-beater"
+          },
           "productDescription": {
             "de": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
             "en-US": "A creative little whisk that comes in 8 different colors. Handy and easy to clean after use. A great gift idea."
           },
-          "sizetypecolor": { "en-US": "0.8 x 0.8 x 11.2 inches; 1.6 ounces" },
+          "sizetypecolor": {
+            "en-US": "0.8 x 0.8 x 11.2 inches; 1.6 ounces"
+          },
           "image": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "c10TkaLheGeQG6qQGqWYqUI",
-                  "type": "Asset",
-                  "createdAt": "2017-06-27T09:35:36.032Z",
-                  "updatedAt": "2017-06-27T09:35:36.032Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 1,
-                  "contentful_id": "10TkaLheGeQG6qQGqWYqUI"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "en-US": "Whisk beaters" },
-                  "description": { "en-US": "Merchandise photo" },
-                  "file": {
-                    "en-US": {
-                      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-                      "details": {
-                        "size": 28435,
-                        "image": { "width": 450, "height": 600 }
-                      },
-                      "fileName": "ryugj83mqwa1asojwtwb.jpg",
-                      "contentType": "image/jpeg"
-                    }
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Asset",
+                  "id": "10TkaLheGeQG6qQGqWYqUI"
                 }
               }
             ]
@@ -961,198 +555,57 @@
           "categories": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "c7LAnCobuuWYSqks6wAwY2a",
-                  "type": "Entry",
-                  "createdAt": "2017-06-27T09:35:44.000Z",
-                  "updatedAt": "2020-06-30T11:22:54.201Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 4,
-                  "contentType": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "ContentType",
-                      "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
-                      "contentful_id": "6XwpTaSiiI2Ak2Ww0oi6qa"
-                    }
-                  },
-                  "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
-                  "icon": {
-                    "en-US": {
-                      "sys": {
-                        "space": {
-                          "sys": {
-                            "type": "Link",
-                            "linkType": "Space",
-                            "id": "rocybtov1ozk",
-                            "contentful_id": "rocybtov1ozk"
-                          }
-                        },
-                        "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
-                        "type": "Asset",
-                        "createdAt": "2017-06-27T09:35:36.172Z",
-                        "updatedAt": "2017-06-27T09:35:36.172Z",
-                        "environment": {
-                          "sys": {
-                            "id": "master",
-                            "type": "Link",
-                            "linkType": "Environment",
-                            "contentful_id": "master"
-                          }
-                        },
-                        "revision": 1,
-                        "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o"
-                      },
-                      "fields": {
-                        "title": { "en-US": "Home and Kitchen" },
-                        "description": { "en-US": "category icon" },
-                        "file": {
-                          "en-US": {
-                            "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-                            "details": {
-                              "size": 2977,
-                              "image": { "width": 256, "height": 256 }
-                            },
-                            "fileName": "1418244847_Streamline-18-256.png",
-                            "contentType": "image/png"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "categoryDescription": {
-                    "de": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
-                    "en-US": "Shop for furniture, bedding, bath, vacuums, kitchen products, and more"
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "7LAnCobuuWYSqks6wAwY2a"
                 }
               }
             ]
           },
-          "price": { "de": 22, "en-US": 22 },
+          "price": {
+            "de": 22,
+            "en-US": 22
+          },
           "brand": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c651CQ8rLoIYCeY6G0QG22q",
-                "type": "Entry",
-                "createdAt": "2017-06-27T09:35:43.997Z",
-                "updatedAt": "2017-06-27T09:55:16.820Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 2,
-                "contentType": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "ContentType",
-                    "id": "sFzTZbSuM8coEwygeUYes",
-                    "contentful_id": "sFzTZbSuM8coEwygeUYes"
-                  }
-                },
-                "contentful_id": "651CQ8rLoIYCeY6G0QG22q"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "companyName": { "en-US": "Normann Copenhagen" },
-                "logo": {
-                  "en-US": {
-                    "sys": {
-                      "space": {
-                        "sys": {
-                          "type": "Link",
-                          "linkType": "Space",
-                          "id": "rocybtov1ozk",
-                          "contentful_id": "rocybtov1ozk"
-                        }
-                      },
-                      "id": "c3wtvPBbBjiMKqKKga8I2Cu",
-                      "type": "Asset",
-                      "createdAt": "2017-06-27T09:35:37.178Z",
-                      "updatedAt": "2017-06-27T09:35:37.178Z",
-                      "environment": {
-                        "sys": {
-                          "id": "master",
-                          "type": "Link",
-                          "linkType": "Environment",
-                          "contentful_id": "master"
-                        }
-                      },
-                      "revision": 1,
-                      "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu"
-                    },
-                    "fields": {
-                      "title": { "en-US": "Normann Copenhagen" },
-                      "description": { "en-US": "Brand logo" },
-                      "file": {
-                        "en-US": {
-                          "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-                          "details": {
-                            "size": 12302,
-                            "image": { "width": 353, "height": 353 }
-                          },
-                          "fileName": "zJYzDlGk.jpeg",
-                          "contentType": "image/jpeg"
-                        }
-                      }
-                    }
-                  }
-                },
-                "companyDescription": {
-                  "de": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
-                  "en-US": "Normann Copenhagen is a way of living - a mindset. We love to challenge the conventional design rules. This is why you will find traditional materials put into untraditional use such as a Stone Hook made of Icelandic stones, a vase made out of silicon and last but not least a dog made out of plastic."
-                },
-                "website": { "en-US": "http://www.normann-copenhagen.com/" },
-                "twitter": { "en-US": "https://twitter.com/NormannCPH" },
-                "email": { "en-US": "normann@normann-copenhagen.com" },
-                "phone": { "en-US": ["+45 35 55 44 59"] }
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "651CQ8rLoIYCeY6G0QG22q"
               }
             }
           },
-          "quantity": { "en-US": 89 },
-          "sku": { "en-US": "B0081F2CCK" },
-          "website": { "en-US": "http://www.amazon.com/dp/B0081F2CCK/" }
+          "quantity": {
+            "en-US": 89
+          },
+          "sku": {
+            "en-US": "B0081F2CCK"
+          },
+          "website": {
+            "en-US": "http://www.amazon.com/dp/B0081F2CCK/"
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c4BqrajvA8E6qwgkieoqmqO",
+          "id": "4BqrajvA8E6qwgkieoqmqO",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:44.130Z",
           "updatedAt": "2017-06-27T09:52:29.215Z",
@@ -1160,8 +613,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -1169,61 +621,35 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "c2PqfXUJwE8qSYKuM0U6w8M",
-              "contentful_id": "2PqfXUJwE8qSYKuM0U6w8M"
+              "id": "2PqfXUJwE8qSYKuM0U6w8M"
             }
-          },
-          "contentful_id": "4BqrajvA8E6qwgkieoqmqO"
+          }
         },
         "fields": {
-          "productName": { "de": "SoSo wanduhr", "en-US": "SoSo Wall Clock" },
-          "slug": { "en-US": "soso-wall-clock" },
+          "productName": {
+            "de": "SoSo wanduhr",
+            "en-US": "SoSo Wall Clock"
+          },
+          "slug": {
+            "en-US": "soso-wall-clock"
+          },
           "productDescription": {
             "de": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
             "en-US": "The newly released SoSo Clock from Lemnos marries simple, clean design and bold, striking features. Its saturated marigold face is a lively pop of color to white or grey walls, but would also pair nicely with navy and maroon. Where most clocks feature numbers at the border of the clock, the SoSo brings them in tight to the middle, leaving a wide space between the numbers and the slight frame. The hour hand provides a nice interruption to the black and yellow of the clock - it is featured in a brilliant white. Despite its bold color and contrast, the SoSo maintains a clean, pure aesthetic that is suitable to a variety of contemporary interiors."
           },
-          "sizetypecolor": { "en-US": "10\" x 2.2\"" },
+          "sizetypecolor": {
+            "en-US": "10\" x 2.2\""
+          },
           "image": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "KTRF62Q4gg60q6WCsWKw8",
-                  "type": "Asset",
-                  "createdAt": "2017-06-27T09:35:37.064Z",
-                  "updatedAt": "2017-06-27T09:35:37.064Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 1,
-                  "contentful_id": "KTRF62Q4gg60q6WCsWKw8"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "en-US": "SoSo Wall Clock" },
-                  "description": { "en-US": "by Lemnos" },
-                  "file": {
-                    "en-US": {
-                      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-                      "details": {
-                        "size": 66927,
-                        "image": { "width": 1000, "height": 1000 }
-                      },
-                      "fileName": "soso.clock.jpg",
-                      "contentType": "image/jpeg"
-                    }
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Asset",
+                  "id": "KTRF62Q4gg60q6WCsWKw8"
                 }
               }
             ]
@@ -1240,197 +666,57 @@
           "categories": {
             "en-US": [
               {
-                "sys": {
-                  "space": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "Space",
-                      "id": "rocybtov1ozk",
-                      "contentful_id": "rocybtov1ozk"
-                    }
-                  },
-                  "id": "c7LAnCobuuWYSqks6wAwY2a",
-                  "type": "Entry",
-                  "createdAt": "2017-06-27T09:35:44.000Z",
-                  "updatedAt": "2020-06-30T11:22:54.201Z",
-                  "environment": {
-                    "sys": {
-                      "id": "master",
-                      "type": "Link",
-                      "linkType": "Environment",
-                      "contentful_id": "master"
-                    }
-                  },
-                  "revision": 4,
-                  "contentType": {
-                    "sys": {
-                      "type": "Link",
-                      "linkType": "ContentType",
-                      "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
-                      "contentful_id": "6XwpTaSiiI2Ak2Ww0oi6qa"
-                    }
-                  },
-                  "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
+                "metadata": {
+                  "tags": []
                 },
-                "fields": {
-                  "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
-                  "icon": {
-                    "en-US": {
-                      "sys": {
-                        "space": {
-                          "sys": {
-                            "type": "Link",
-                            "linkType": "Space",
-                            "id": "rocybtov1ozk",
-                            "contentful_id": "rocybtov1ozk"
-                          }
-                        },
-                        "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
-                        "type": "Asset",
-                        "createdAt": "2017-06-27T09:35:36.172Z",
-                        "updatedAt": "2017-06-27T09:35:36.172Z",
-                        "environment": {
-                          "sys": {
-                            "id": "master",
-                            "type": "Link",
-                            "linkType": "Environment",
-                            "contentful_id": "master"
-                          }
-                        },
-                        "revision": 1,
-                        "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o"
-                      },
-                      "fields": {
-                        "title": { "en-US": "Home and Kitchen" },
-                        "description": { "en-US": "category icon" },
-                        "file": {
-                          "en-US": {
-                            "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-                            "details": {
-                              "size": 2977,
-                              "image": { "width": 256, "height": 256 }
-                            },
-                            "fileName": "1418244847_Streamline-18-256.png",
-                            "contentType": "image/png"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "categoryDescription": {
-                    "de": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
-                    "en-US": "Shop for furniture, bedding, bath, vacuums, kitchen products, and more"
-                  }
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "7LAnCobuuWYSqks6wAwY2a"
                 }
               }
             ]
           },
-          "price": { "de": 120, "en-US": 120 },
+          "price": {
+            "de": 120,
+            "en-US": 120
+          },
           "brand": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c4LgMotpNF6W20YKmuemW0a",
-                "type": "Entry",
-                "createdAt": "2017-06-27T09:35:44.396Z",
-                "updatedAt": "2017-06-27T09:51:15.647Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 2,
-                "contentType": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "ContentType",
-                    "id": "sFzTZbSuM8coEwygeUYes",
-                    "contentful_id": "sFzTZbSuM8coEwygeUYes"
-                  }
-                },
-                "contentful_id": "4LgMotpNF6W20YKmuemW0a"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "companyName": { "en-US": "Lemnos" },
-                "logo": {
-                  "en-US": {
-                    "sys": {
-                      "space": {
-                        "sys": {
-                          "type": "Link",
-                          "linkType": "Space",
-                          "id": "rocybtov1ozk",
-                          "contentful_id": "rocybtov1ozk"
-                        }
-                      },
-                      "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
-                      "type": "Asset",
-                      "createdAt": "2017-06-27T09:35:37.012Z",
-                      "updatedAt": "2017-06-27T09:35:37.012Z",
-                      "environment": {
-                        "sys": {
-                          "id": "master",
-                          "type": "Link",
-                          "linkType": "Environment",
-                          "contentful_id": "master"
-                        }
-                      },
-                      "revision": 1,
-                      "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI"
-                    },
-                    "fields": {
-                      "title": { "en-US": "Lemnos" },
-                      "description": { "en-US": "company logo" },
-                      "file": {
-                        "en-US": {
-                          "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-                          "details": {
-                            "size": 7149,
-                            "image": { "width": 175, "height": 32 }
-                          },
-                          "fileName": "lemnos-logo.jpg",
-                          "contentType": "image/jpeg"
-                        }
-                      }
-                    }
-                  }
-                },
-                "companyDescription": {
-                  "de": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.\n\nWir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \"Lemnos Brand\" wurde als globale Designuhr von einem Meisterwerk \"HOLA\" von Kazuo KAWASAKI entworfen, das 1989 erschien.\n\nDanach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.\n\nLemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.\n\nIn den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.\n\nUnsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
-                  "en-US": "TAKATA Lemnos Inc. was founded in 1947 as a brass casting manufacturing industry in Takaoka-city, Toyama Prefecture, Japan and we launched out into the full-scale business trade with Seiko Clock Co., Ltd. since 1966.\n\nWe entered into the development for the original planning from late 1980 and \"Lemnos Brand\" recognized as the global design clock by a masterpiece \"HOLA\" designed by Kazuo KAWASAKI which released in 1989.\n\nAfterwards, we made a lot of projects with well-known designers who took in active in Japan and overseas such as Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. and we made announcement of their fine works abounding in artistry and prominent designs. In addition, we realized to make a special project by the collaboration with Andrea Branzi, a well-known architect in the world.\n\nLemnos brand products are now highly praised from the design shops and the interior shops all over the world.\n\nIn recent years, we also have been given high priority to develop interior accessories making full use of our traditional techniques by the founding manufacturer and we always focus our minds on the development for the new Lemnos products in the new market.\n\nOur Lemnos products are made carefully by our craftsmen finely honed skillful techniques in Japan. They surely bring out the attractiveness of the materials to the maximum and create fine products not being influenced on the fashion trend accordingly. TAKATA Lemnos Inc. definitely would like to be innovative and continuously propose the beauty lasts forever."
-                },
-                "website": { "en-US": "http://www.lemnos.jp/en/" },
-                "email": { "en-US": "info@acgears.com" },
-                "phone": { "en-US": ["+1 212 260 2269"] }
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "4LgMotpNF6W20YKmuemW0a"
               }
             }
           },
-          "quantity": { "en-US": 3 },
-          "sku": { "en-US": "B00MG4ULK2" },
-          "website": { "en-US": "http://store.dwell.com/soso-wall-clock.html" }
+          "quantity": {
+            "en-US": 3
+          },
+          "sku": {
+            "en-US": "B00MG4ULK2"
+          },
+          "website": {
+            "en-US": "http://store.dwell.com/soso-wall-clock.html"
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c4LgMotpNF6W20YKmuemW0a",
+          "id": "4LgMotpNF6W20YKmuemW0a",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:44.396Z",
           "updatedAt": "2017-06-27T09:51:15.647Z",
@@ -1438,8 +724,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -1447,54 +732,23 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "sFzTZbSuM8coEwygeUYes",
-              "contentful_id": "sFzTZbSuM8coEwygeUYes"
+              "id": "sFzTZbSuM8coEwygeUYes"
             }
-          },
-          "contentful_id": "4LgMotpNF6W20YKmuemW0a"
+          }
         },
         "fields": {
-          "companyName": { "en-US": "Lemnos" },
+          "companyName": {
+            "en-US": "Lemnos"
+          },
           "logo": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
-                "type": "Asset",
-                "createdAt": "2017-06-27T09:35:37.012Z",
-                "updatedAt": "2017-06-27T09:35:37.012Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 1,
-                "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "title": { "en-US": "Lemnos" },
-                "description": { "en-US": "company logo" },
-                "file": {
-                  "en-US": {
-                    "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-                    "details": {
-                      "size": 7149,
-                      "image": { "width": 175, "height": 32 }
-                    },
-                    "fileName": "lemnos-logo.jpg",
-                    "contentType": "image/jpeg"
-                  }
-                }
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "2Y8LhXLnYAYqKCGEWG4EKI"
               }
             }
           },
@@ -1502,19 +756,27 @@
             "de": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.\n\nWir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \"Lemnos Brand\" wurde als globale Designuhr von einem Meisterwerk \"HOLA\" von Kazuo KAWASAKI entworfen, das 1989 erschien.\n\nDanach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.\n\nLemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.\n\nIn den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.\n\nUnsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
             "en-US": "TAKATA Lemnos Inc. was founded in 1947 as a brass casting manufacturing industry in Takaoka-city, Toyama Prefecture, Japan and we launched out into the full-scale business trade with Seiko Clock Co., Ltd. since 1966.\n\nWe entered into the development for the original planning from late 1980 and \"Lemnos Brand\" recognized as the global design clock by a masterpiece \"HOLA\" designed by Kazuo KAWASAKI which released in 1989.\n\nAfterwards, we made a lot of projects with well-known designers who took in active in Japan and overseas such as Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. and we made announcement of their fine works abounding in artistry and prominent designs. In addition, we realized to make a special project by the collaboration with Andrea Branzi, a well-known architect in the world.\n\nLemnos brand products are now highly praised from the design shops and the interior shops all over the world.\n\nIn recent years, we also have been given high priority to develop interior accessories making full use of our traditional techniques by the founding manufacturer and we always focus our minds on the development for the new Lemnos products in the new market.\n\nOur Lemnos products are made carefully by our craftsmen finely honed skillful techniques in Japan. They surely bring out the attractiveness of the materials to the maximum and create fine products not being influenced on the fashion trend accordingly. TAKATA Lemnos Inc. definitely would like to be innovative and continuously propose the beauty lasts forever."
           },
-          "website": { "en-US": "http://www.lemnos.jp/en/" },
-          "email": { "en-US": "info@acgears.com" },
-          "phone": { "en-US": ["+1 212 260 2269"] }
+          "website": {
+            "en-US": "http://www.lemnos.jp/en/"
+          },
+          "email": {
+            "en-US": "info@acgears.com"
+          },
+          "phone": {
+            "en-US": ["+1 212 260 2269"]
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
           "id": "JrePkDVYomE8AwcuCUyMi",
@@ -1525,8 +787,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -1534,54 +795,23 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "sFzTZbSuM8coEwygeUYes",
-              "contentful_id": "sFzTZbSuM8coEwygeUYes"
+              "id": "sFzTZbSuM8coEwygeUYes"
             }
-          },
-          "contentful_id": "JrePkDVYomE8AwcuCUyMi"
+          }
         },
         "fields": {
-          "companyName": { "en-US": "Playsam" },
+          "companyName": {
+            "en-US": "Playsam"
+          },
           "logo": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
-                "type": "Asset",
-                "createdAt": "2017-06-27T09:35:36.168Z",
-                "updatedAt": "2017-06-27T09:35:36.168Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 1,
-                "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "title": { "en-US": "Playsam" },
-                "description": { "en-US": "Brand logo" },
-                "file": {
-                  "en-US": {
-                    "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-                    "details": {
-                      "size": 7003,
-                      "image": { "width": 100, "height": 100 }
-                    },
-                    "fileName": "playsam.jpg",
-                    "contentType": "image/jpeg"
-                  }
-                }
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "4zj1ZOfHgQ8oqgaSKm4Qo2"
               }
             }
           },
@@ -1589,20 +819,24 @@
             "de": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
             "en-US": "Playsam is the leading Scandinavian design company for executive wooden toy gift. Scandinavian design playful creativity, integrity and sophistication are Playsam. Scandinavian design and wooden toy makes Playsam gift lovely to the world of design since 1984."
           },
-          "website": { "en-US": "http://playsam.com/" }
+          "website": {
+            "en-US": "http://playsam.com/"
+          }
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
+          "id": "24DPGBDeGEaYy8ms4Y8QMQ",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:44.992Z",
           "updatedAt": "2017-06-27T09:46:43.477Z",
@@ -1610,8 +844,7 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
           "revision": 2,
@@ -1619,54 +852,24 @@
             "sys": {
               "type": "Link",
               "linkType": "ContentType",
-              "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
-              "contentful_id": "6XwpTaSiiI2Ak2Ww0oi6qa"
+              "id": "6XwpTaSiiI2Ak2Ww0oi6qa"
             }
-          },
-          "contentful_id": "24DPGBDeGEaYy8ms4Y8QMQ"
+          }
         },
         "fields": {
-          "title": { "de": "Spielzeug", "en-US": "Toys" },
+          "title": {
+            "de": "Spielzeug",
+            "en-US": "Toys"
+          },
           "icon": {
             "en-US": {
-              "sys": {
-                "space": {
-                  "sys": {
-                    "type": "Link",
-                    "linkType": "Space",
-                    "id": "rocybtov1ozk",
-                    "contentful_id": "rocybtov1ozk"
-                  }
-                },
-                "id": "c6t4HKjytPi0mYgs240wkG",
-                "type": "Asset",
-                "createdAt": "2017-06-27T09:35:36.633Z",
-                "updatedAt": "2017-06-27T09:35:36.633Z",
-                "environment": {
-                  "sys": {
-                    "id": "master",
-                    "type": "Link",
-                    "linkType": "Environment",
-                    "contentful_id": "master"
-                  }
-                },
-                "revision": 1,
-                "contentful_id": "6t4HKjytPi0mYgs240wkG"
+              "metadata": {
+                "tags": []
               },
-              "fields": {
-                "title": { "en-US": "Toys" },
-                "description": { "en-US": "Category icon set" },
-                "file": {
-                  "en-US": {
-                    "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-                    "details": {
-                      "size": 6744,
-                      "image": { "width": 128, "height": 128 }
-                    },
-                    "fileName": "toys_512pxGREY.png",
-                    "contentType": "image/png"
-                  }
-                }
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "6t4HKjytPi0mYgs240wkG"
               }
             }
           },
@@ -1679,16 +882,18 @@
     ],
     "assets": [
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c3wtvPBbBjiMKqKKga8I2Cu",
+          "id": "3wtvPBbBjiMKqKKga8I2Cu",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:37.178Z",
           "updatedAt": "2017-06-27T09:35:37.178Z",
@@ -1696,22 +901,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Normann Copenhagen" },
-          "description": { "en-US": "Brand logo" },
+          "title": {
+            "en-US": "Normann Copenhagen"
+          },
+          "description": {
+            "en-US": "Brand logo"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
               "details": {
                 "size": 12302,
-                "image": { "width": 353, "height": 353 }
+                "image": {
+                  "width": 353,
+                  "height": 353
+                }
               },
               "fileName": "zJYzDlGk.jpeg",
               "contentType": "image/jpeg"
@@ -1720,13 +930,15 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
           "id": "KTRF62Q4gg60q6WCsWKw8",
@@ -1737,22 +949,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "KTRF62Q4gg60q6WCsWKw8"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "SoSo Wall Clock" },
-          "description": { "en-US": "by Lemnos" },
+          "title": {
+            "en-US": "SoSo Wall Clock"
+          },
+          "description": {
+            "en-US": "by Lemnos"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
               "details": {
                 "size": 66927,
-                "image": { "width": 1000, "height": 1000 }
+                "image": {
+                  "width": 1000,
+                  "height": 1000
+                }
               },
               "fileName": "soso.clock.jpg",
               "contentType": "image/jpeg"
@@ -1761,13 +978,15 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
           "id": "Xc0ny7GWsMEMCeASWO2um",
@@ -1778,22 +997,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "Xc0ny7GWsMEMCeASWO2um"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Hudson Wall Cup " },
-          "description": { "en-US": "Merchandise image" },
+          "title": {
+            "en-US": "Hudson Wall Cup "
+          },
+          "description": {
+            "en-US": "Merchandise image"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
               "details": {
                 "size": 48751,
-                "image": { "width": 600, "height": 600 }
+                "image": {
+                  "width": 600,
+                  "height": 600
+                }
               },
               "fileName": "jqvtazcyfwseah9fmysz.jpg",
               "contentType": "image/jpeg"
@@ -1802,16 +1026,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
+          "id": "2Y8LhXLnYAYqKCGEWG4EKI",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:37.012Z",
           "updatedAt": "2017-06-27T09:35:37.012Z",
@@ -1819,22 +1045,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Lemnos" },
-          "description": { "en-US": "company logo" },
+          "title": {
+            "en-US": "Lemnos"
+          },
+          "description": {
+            "en-US": "company logo"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
               "details": {
                 "size": 7149,
-                "image": { "width": 175, "height": 32 }
+                "image": {
+                  "width": 175,
+                  "height": 32
+                }
               },
               "fileName": "lemnos-logo.jpg",
               "contentType": "image/jpeg"
@@ -1843,16 +1074,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c6t4HKjytPi0mYgs240wkG",
+          "id": "6t4HKjytPi0mYgs240wkG",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:36.633Z",
           "updatedAt": "2017-06-27T09:35:36.633Z",
@@ -1860,22 +1093,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "6t4HKjytPi0mYgs240wkG"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Toys" },
-          "description": { "en-US": "Category icon set" },
+          "title": {
+            "en-US": "Toys"
+          },
+          "description": {
+            "en-US": "Category icon set"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
               "details": {
                 "size": 6744,
-                "image": { "width": 128, "height": 128 }
+                "image": {
+                  "width": 128,
+                  "height": 128
+                }
               },
               "fileName": "toys_512pxGREY.png",
               "contentType": "image/png"
@@ -1884,16 +1122,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c1MgbdJNTsMWKI0W68oYqkU",
+          "id": "1MgbdJNTsMWKI0W68oYqkU",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:36.182Z",
           "updatedAt": "2017-06-27T09:35:36.182Z",
@@ -1901,22 +1141,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "1MgbdJNTsMWKI0W68oYqkU"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Chive logo" },
-          "description": { "en-US": "Brand logo" },
+          "title": {
+            "en-US": "Chive logo"
+          },
+          "description": {
+            "en-US": "Brand logo"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
               "details": {
                 "size": 44089,
-                "image": { "width": 500, "height": 500 }
+                "image": {
+                  "width": 500,
+                  "height": 500
+                }
               },
               "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
               "contentType": "image/jpeg"
@@ -1925,16 +1170,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
+          "id": "6m5AJ9vMPKc8OUoQeoCS4o",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:36.172Z",
           "updatedAt": "2017-06-27T09:35:36.172Z",
@@ -1942,22 +1189,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Home and Kitchen" },
-          "description": { "en-US": "category icon" },
+          "title": {
+            "en-US": "Home and Kitchen"
+          },
+          "description": {
+            "en-US": "category icon"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
               "details": {
                 "size": 2977,
-                "image": { "width": 256, "height": 256 }
+                "image": {
+                  "width": 256,
+                  "height": 256
+                }
               },
               "fileName": "1418244847_Streamline-18-256.png",
               "contentType": "image/png"
@@ -1966,16 +1218,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
+          "id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:36.168Z",
           "updatedAt": "2017-06-27T09:35:36.168Z",
@@ -1983,22 +1237,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Playsam" },
-          "description": { "en-US": "Brand logo" },
+          "title": {
+            "en-US": "Playsam"
+          },
+          "description": {
+            "en-US": "Brand logo"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
               "details": {
                 "size": 7003,
-                "image": { "width": 100, "height": 100 }
+                "image": {
+                  "width": 100,
+                  "height": 100
+                }
               },
               "fileName": "playsam.jpg",
               "contentType": "image/jpeg"
@@ -2007,13 +1266,15 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
           "id": "wtrHxeu3zEoEce2MokCSi",
@@ -2024,22 +1285,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "wtrHxeu3zEoEce2MokCSi"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Playsam Streamliner" },
-          "description": { "en-US": "Merchandise photo" },
+          "title": {
+            "en-US": "Playsam Streamliner"
+          },
+          "description": {
+            "en-US": "Merchandise photo"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
               "details": {
                 "size": 27187,
-                "image": { "width": 600, "height": 446 }
+                "image": {
+                  "width": 600,
+                  "height": 446
+                }
               },
               "fileName": "quwowooybuqbl6ntboz3.jpg",
               "contentType": "image/jpeg"
@@ -2048,16 +1314,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c10TkaLheGeQG6qQGqWYqUI",
+          "id": "10TkaLheGeQG6qQGqWYqUI",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:36.032Z",
           "updatedAt": "2017-06-27T09:35:36.032Z",
@@ -2065,22 +1333,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "10TkaLheGeQG6qQGqWYqUI"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "Whisk beaters" },
-          "description": { "en-US": "Merchandise photo" },
+          "title": {
+            "en-US": "Whisk beaters"
+          },
+          "description": {
+            "en-US": "Merchandise photo"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
               "details": {
                 "size": 28435,
-                "image": { "width": 450, "height": 600 }
+                "image": {
+                  "width": 450,
+                  "height": 600
+                }
               },
               "fileName": "ryugj83mqwa1asojwtwb.jpg",
               "contentType": "image/jpeg"
@@ -2089,16 +1362,18 @@
         }
       },
       {
+        "metadata": {
+          "tags": []
+        },
         "sys": {
           "space": {
             "sys": {
               "type": "Link",
               "linkType": "Space",
-              "id": "rocybtov1ozk",
-              "contentful_id": "rocybtov1ozk"
+              "id": "rocybtov1ozk"
             }
           },
-          "id": "c6s3iG2OVmoUcosmA8ocqsG",
+          "id": "6s3iG2OVmoUcosmA8ocqsG",
           "type": "Asset",
           "createdAt": "2017-06-27T09:35:35.994Z",
           "updatedAt": "2017-06-27T09:35:35.994Z",
@@ -2106,22 +1381,27 @@
             "sys": {
               "id": "master",
               "type": "Link",
-              "linkType": "Environment",
-              "contentful_id": "master"
+              "linkType": "Environment"
             }
           },
-          "revision": 1,
-          "contentful_id": "6s3iG2OVmoUcosmA8ocqsG"
+          "revision": 1
         },
         "fields": {
-          "title": { "en-US": "House icon" },
-          "description": { "en-US": "Category icon set" },
+          "title": {
+            "en-US": "House icon"
+          },
+          "description": {
+            "en-US": "Category icon set"
+          },
           "file": {
             "en-US": {
               "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
               "details": {
                 "size": 4244,
-                "image": { "width": 250, "height": 250 }
+                "image": {
+                  "width": 250,
+                  "height": 250
+                }
               },
               "fileName": "1418244847_Streamline-18-256 (1).png",
               "contentType": "image/png"
@@ -2132,7 +1412,7 @@
     ],
     "deletedEntries": [],
     "deletedAssets": [],
-    "nextSyncToken": "FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw0gwoHCigbDssKxwq8FwqljTmnDhkzDgiIVbSnDkHfDnHBEwpfChcK8TcKsMjNlagJ9S8KXwpLDkcKrwrPCl2wlGcOlC8KI"
+    "nextSyncToken": "dDFSNcK6bMO7woHDuMK7A8O_KWQDPh9SwobDmsOmayXCocOVw5XDgMOJw6fDp2gUE8KuQBbCv2DCgMKuw6cnFsKTYsOdworDngbDhMONwo_Dl8KcMGHCrRZmfBTDq8KOOALChcKqZRTCgcOITsO_Z3zCucOhT8KeCg"
   },
   "contentTypeItems": [
     {
@@ -2141,11 +1421,10 @@
           "sys": {
             "type": "Link",
             "linkType": "Space",
-            "id": "rocybtov1ozk",
-            "contentful_id": "rocybtov1ozk"
+            "id": "rocybtov1ozk"
           }
         },
-        "id": "c6XwpTaSiiI2Ak2Ww0oi6qa",
+        "id": "6XwpTaSiiI2Ak2Ww0oi6qa",
         "type": "ContentType",
         "createdAt": "2017-06-27T09:35:31.492Z",
         "updatedAt": "2017-06-27T09:40:52.685Z",
@@ -2153,12 +1432,10 @@
           "sys": {
             "id": "master",
             "type": "Link",
-            "linkType": "Environment",
-            "contentful_id": "master"
+            "linkType": "Environment"
           }
         },
-        "revision": 2,
-        "contentful_id": "6XwpTaSiiI2Ak2Ww0oi6qa"
+        "revision": 2
       },
       "displayField": "title",
       "name": "Category",
@@ -2200,8 +1477,7 @@
           "sys": {
             "type": "Link",
             "linkType": "Space",
-            "id": "rocybtov1ozk",
-            "contentful_id": "rocybtov1ozk"
+            "id": "rocybtov1ozk"
           }
         },
         "id": "sFzTZbSuM8coEwygeUYes",
@@ -2212,12 +1488,10 @@
           "sys": {
             "id": "master",
             "type": "Link",
-            "linkType": "Environment",
-            "contentful_id": "master"
+            "linkType": "Environment"
           }
         },
-        "revision": 2,
-        "contentful_id": "sFzTZbSuM8coEwygeUYes"
+        "revision": 2
       },
       "displayField": "companyName",
       "name": "Brand",
@@ -2286,7 +1560,10 @@
           "required": false,
           "disabled": false,
           "omitted": false,
-          "items": { "type": "Symbol", "validations": [] }
+          "items": {
+            "type": "Symbol",
+            "validations": []
+          }
         }
       ]
     },
@@ -2296,11 +1573,10 @@
           "sys": {
             "type": "Link",
             "linkType": "Space",
-            "id": "rocybtov1ozk",
-            "contentful_id": "rocybtov1ozk"
+            "id": "rocybtov1ozk"
           }
         },
-        "id": "c2PqfXUJwE8qSYKuM0U6w8M",
+        "id": "2PqfXUJwE8qSYKuM0U6w8M",
         "type": "ContentType",
         "createdAt": "2017-06-27T09:35:31.538Z",
         "updatedAt": "2017-06-27T09:40:36.821Z",
@@ -2308,12 +1584,10 @@
           "sys": {
             "id": "master",
             "type": "Link",
-            "linkType": "Environment",
-            "contentful_id": "master"
+            "linkType": "Environment"
           }
         },
-        "revision": 2,
-        "contentful_id": "2PqfXUJwE8qSYKuM0U6w8M"
+        "revision": 2
       },
       "displayField": "productName",
       "name": "Product",
@@ -2363,7 +1637,11 @@
           "required": false,
           "disabled": false,
           "omitted": false,
-          "items": { "type": "Link", "validations": [], "linkType": "Asset" }
+          "items": {
+            "type": "Link",
+            "validations": [],
+            "linkType": "Asset"
+          }
         },
         {
           "id": "tags",
@@ -2373,7 +1651,10 @@
           "required": false,
           "disabled": false,
           "omitted": false,
-          "items": { "type": "Symbol", "validations": [] }
+          "items": {
+            "type": "Symbol",
+            "validations": []
+          }
         },
         {
           "id": "categories",
@@ -2385,7 +1666,11 @@
           "omitted": false,
           "items": {
             "type": "Link",
-            "validations": [{ "linkContentType": ["6XwpTaSiiI2Ak2Ww0oi6qa"] }],
+            "validations": [
+              {
+                "linkContentType": ["6XwpTaSiiI2Ak2Ww0oi6qa"]
+              }
+            ],
             "linkType": "Entry"
           }
         },
@@ -2406,7 +1691,12 @@
           "required": false,
           "disabled": false,
           "omitted": false,
-          "linkType": "Entry"
+          "linkType": "Entry",
+          "validations": [
+            {
+              "linkContentType": ["sFzTZbSuM8coEwygeUYes"]
+            }
+          ]
         },
         {
           "id": "quantity",
@@ -2443,8 +1733,7 @@
           "sys": {
             "type": "Link",
             "linkType": "Space",
-            "id": "rocybtov1ozk",
-            "contentful_id": "rocybtov1ozk"
+            "id": "rocybtov1ozk"
           }
         },
         "id": "jsonTest",
@@ -2455,12 +1744,10 @@
           "sys": {
             "id": "master",
             "type": "Link",
-            "linkType": "Environment",
-            "contentful_id": "master"
+            "linkType": "Environment"
           }
         },
-        "revision": 3,
-        "contentful_id": "jsonTest"
+        "revision": 3
       },
       "displayField": null,
       "name": "JSON-test",
@@ -2501,8 +1788,7 @@
           "sys": {
             "type": "Link",
             "linkType": "Space",
-            "id": "rocybtov1ozk",
-            "contentful_id": "rocybtov1ozk"
+            "id": "rocybtov1ozk"
           }
         },
         "id": "remarkTest",
@@ -2513,12 +1799,10 @@
           "sys": {
             "id": "master",
             "type": "Link",
-            "linkType": "Environment",
-            "contentful_id": "master"
+            "linkType": "Environment"
           }
         },
-        "revision": 1,
-        "contentful_id": "remarkTest"
+        "revision": 1
       },
       "displayField": "title",
       "name": "Remark Test",
@@ -2552,18 +1836,29 @@
       "name": "U.S. English",
       "default": true,
       "fallbackCode": null,
-      "sys": { "id": "6OG74dfhUB1fnFIDkbHG8C", "type": "Locale", "version": 1 }
+      "sys": {
+        "id": "6OG74dfhUB1fnFIDkbHG8C",
+        "type": "Locale",
+        "version": 1
+      }
     },
     {
       "code": "de",
       "name": "German",
       "default": false,
       "fallbackCode": "en-US",
-      "sys": { "id": "0tzsbfi28hdcgfczL6WzUq", "type": "Locale", "version": 1 }
+      "sys": {
+        "id": "0tzsbfi28hdcgfczL6WzUq",
+        "type": "Locale",
+        "version": 1
+      }
     }
   ],
   "space": {
-    "sys": { "type": "Space", "id": "rocybtov1ozk" },
+    "sys": {
+      "type": "Space",
+      "id": "rocybtov1ozk"
+    },
     "name": "gatsby-source-contentful",
     "locales": [
       {

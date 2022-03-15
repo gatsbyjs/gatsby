@@ -63,9 +63,10 @@ jest.mock(
 const pageDataMock = {
   componentChunkName: `page-component---src-pages-test-js`,
   path: `/about/`,
-  webpackCompilationHash: `1234567890abcdef1234`,
   staticQueryHashes: [],
 }
+
+const webpackCompilationHash = `1234567890abcdef1234`
 
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
@@ -73,7 +74,7 @@ const MOCK_FILE_INFO = {
   [join(process.cwd(), `/public/page-data/about/page-data.json`)]:
     JSON.stringify(pageDataMock),
   [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
-    webpackCompilationHash: `1234567890abcdef1234`,
+    webpackCompilationHash,
   }),
 }
 
@@ -173,11 +174,10 @@ const SSR_DEV_MOCK_FILE_INFO = {
   [join(publicDir, `page-data/about/page-data.json`)]: JSON.stringify({
     componentChunkName: `page-component---src-pages-about-js`,
     path: `/about/`,
-    webpackCompilationHash: `1234567890abcdef1234`,
     staticQueryHashes: [],
   }),
   [join(publicDir, `page-data/app-data.json`)]: JSON.stringify({
-    webpackCompilationHash: `1234567890abcdef1234`,
+    webpackCompilationHash,
   }),
 }
 
@@ -411,6 +411,7 @@ describe(`static-entry`, () => {
     styles: [],
     reversedStyles: [],
     reversedScripts: [],
+    webpackCompilationHash,
   }
 
   beforeEach(() => {

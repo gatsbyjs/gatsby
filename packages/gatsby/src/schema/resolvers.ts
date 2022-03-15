@@ -316,7 +316,7 @@ export function link<TSource, TArgs>(
     by: string
     type?: GraphQLType
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {
     by: `id`,
   },
@@ -454,7 +454,7 @@ export function link<TSource, TArgs>(
 export function fileByPath<TSource, TArgs>(
   options: {
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {},
   fieldConfig
 ): GatsbyResolver<TSource, TArgs> {
@@ -676,7 +676,7 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
-    if (context.telemetryResolverTimings) {
+    if (context?.telemetryResolverTimings) {
       time = process.hrtime.bigint()
     }
 
@@ -687,7 +687,7 @@ export function wrappingResolver<TSource, TArgs>(
     }
 
     const endActivity = (): void => {
-      if (context.telemetryResolverTimings) {
+      if (context?.telemetryResolverTimings) {
         context.telemetryResolverTimings.push({
           name: `${info.parentType}.${info.fieldName}`,
           duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,

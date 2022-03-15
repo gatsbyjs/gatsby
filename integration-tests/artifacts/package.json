@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "fs-extra": "^9.0.0",
-    "jest": "^24.0.0"
+    "jest": "^27.2.1"
   },
   "repository": {
     "type": "git",

@@ -14,8 +14,18 @@ import errorParser from "./error-parser"
 import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
 import { pageDataExists, savePageQueryResult } from "../utils/page-data"
+import GatsbyCacheLmdb from "../utils/cache-lmdb"
 
-const resultHashes = new Map()
+let resultHashCache: GatsbyCacheLmdb | undefined
+function getResultHashCache(): GatsbyCacheLmdb {
+  if (!resultHashCache) {
+    resultHashCache = new GatsbyCacheLmdb({
+      name: `query-result-hashes`,
+      encoding: `string`,
+    }).init()
+  }
+  return resultHashCache
+}
 
 export interface IQueryJob {
   id: string
@@ -29,7 +39,7 @@ export interface IQueryJob {
 
 function reportLongRunningQueryJob(queryJob): void {
   const messageParts = [
-    `Query takes too long:`,
+    `This query took more than 15s to run — which is unusually long and might indicate you're querying too much or have some unoptimized code:`,
     `File path: ${queryJob.componentPath}`,
   ]
 
@@ -171,12 +181,13 @@ export async function queryRunner(
     .update(resultJSON)
     .digest(`base64`)
 
+  const resultHashCache = getResultHashCache()
   if (
-    resultHash !== resultHashes.get(queryJob.id) ||
+    resultHash !== (await resultHashCache.get(queryJob.id)) ||
     (queryJob.isPage &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
-    resultHashes.set(queryJob.id, resultHash)
+    await resultHashCache.set(queryJob.id, resultHash)
 
     if (queryJob.isPage) {
       // We need to save this temporarily in cache because

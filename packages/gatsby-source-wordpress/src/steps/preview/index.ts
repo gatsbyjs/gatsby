@@ -298,16 +298,6 @@ export const sourcePreview = async ({
         node,
       })
     })
-
-    reporter.info(
-      formatLogMessage(
-        `Creating node manifests for ${
-          node.id
-        } with manifestIds: [${previewData.manifestIds
-          .map(id => `"${id}"`)
-          .join(`, `)}]`
-      )
-    )
   }
 }
 
@@ -367,12 +357,6 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     reporter.info(`Sourcing previews for the following webhook:`)
     dump(webhookBody)
   }
-
-  // in case there are preview callbacks from our last build
-  await invokeAndCleanupLeftoverPreviewCallbacks({
-    status: `GATSBY_PREVIEW_PROCESS_ERROR`,
-    context: `Starting sourcePreviews`,
-  })
 
   const wpGatsbyPreviewNodeManifestsAreSupported =
     await remoteSchemaSupportsFieldNameOnTypeName({
@@ -455,4 +439,10 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
   }
 
   await Promise.all([queue.onEmpty(), queue.onIdle()])
+
+  // clean up leftover callbacks at the end to clean up anything we didn't catch elsewhere
+  await invokeAndCleanupLeftoverPreviewCallbacks({
+    status: `GATSBY_PREVIEW_PROCESS_ERROR`,
+    context: `Starting sourcePreviews`,
+  })
 }

@@ -3,7 +3,7 @@ import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
-import { updateSiteMetadata, isTruthy, uuid } from "gatsby-core-utils"
+import { updateInternalSiteMetadata, isTruthy, uuid } from "gatsby-core-utils"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
@@ -61,8 +61,13 @@ import {
   preparePageTemplateConfigs,
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
+import { constructConfigObject } from "../utils/gatsby-cloud-config"
 
-module.exports = async function build(program: IBuildArgs): Promise<void> {
+module.exports = async function build(
+  program: IBuildArgs,
+  // Let external systems running Gatsby to inject attributes
+  externalTelemetryAttributes: Record<string, any>
+): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
     buildId: uuid.v4(),
@@ -80,7 +85,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  await updateSiteMetadata({
+  await updateInternalSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,
     lastRun: Date.now(),
@@ -90,9 +95,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  await initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
-  )
+  if (!externalTelemetryAttributes) {
+    await initTracer(
+      process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
+        program.openTracingConfigFile
+    )
+  }
+
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -105,6 +114,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
+
+  // Add external tags to buildSpan
+  if (externalTelemetryAttributes) {
+    Object.entries(externalTelemetryAttributes).forEach(([key, value]) => {
+      buildActivity.span.setTag(key, value)
+    })
+  }
 
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
@@ -178,6 +194,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
           rootDir: program.directory,
           components: state.components,
           staticQueriesByTemplate: state.staticQueriesByTemplate,
+          webpackCompilationHash: webpackCompilationHash as string, // we set webpackCompilationHash above
           reporter: report,
           isVerbose: program.verbose,
         })
@@ -269,6 +286,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
+  // Start saving page.mode in the main process (while queries run in workers in parallel)
+  const waitMaterializePageMode = materializePageMode()
+
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
@@ -305,6 +325,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   if (process.send && shouldGenerateEngines()) {
+    await waitMaterializePageMode
     process.send({
       type: `LOG_ACTION`,
       action: {
@@ -384,14 +405,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   await waitForWorkerPoolRestart
 
-  // Start saving page.mode in the main process (while HTML is generated in workers in parallel)
-  const waitMaterializePageMode = materializePageMode()
-
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
-      buildSpan,
+      parentSpan: buildSpan,
     })
 
   await waitMaterializePageMode
@@ -451,11 +469,25 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     root: state.program.directory,
   })
 
+  if (process.send) {
+    const gatsbyCloudConfig = constructConfigObject(state.config)
+
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `GATSBY_CONFIG_KEYS`,
+        payload: gatsbyCloudConfig,
+        timestamp: new Date().toJSON(),
+      },
+    })
+  }
+
   report.info(`Done building in ${process.uptime()} sec`)
 
-  buildSpan.finish()
-  await stopTracer()
   buildActivity.end()
+  if (!externalTelemetryAttributes) {
+    await stopTracer()
+  }
 
   if (program.logPages) {
     if (toRegenerate.length) {

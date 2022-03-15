@@ -60,13 +60,13 @@
   <a href="https://gatsby.dev/discord">Discord</a>
 </h2>
 
-Gatsby is a modern web framework for blazing fast websites.
+Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
   dynamic web apps, from blogs to e-commerce sites to user dashboards.
 
-- **Choose your Rendering Option.** You can choose alternative [rendering options](https://gatsbyjs.com/docs/conceptual/rendering-options/), namely Deferred Static Generation (DSG) and Server-Side Rendering (SSR), in addition to Static Site Generation (SSG) — on a per-page basis. This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
+- **Choose your Rendering Options.** You can choose alternative [rendering options](https://gatsbyjs.com/docs/conceptual/rendering-options/), namely Deferred Static Generation (DSG) and Server-Side Rendering (SSR), in addition to Static Site Generation (SSG) — on a per-page basis. This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
@@ -146,6 +146,8 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 ## 🚢 Release Notes
 
 Wondering what we've shipped recently? Check out our [release notes](https://www.gatsbyjs.com/docs/reference/release-notes) for key highlights, performance improvements, new features, and notable bugfixes.
+
+Also, read our [documentation on version support](https://www.gatsbyjs.com/docs/reference/release-notes/gatsby-version-support/) to understand our plans for each version of Gatsby.
 
 ## 💼 Migration Guides
 

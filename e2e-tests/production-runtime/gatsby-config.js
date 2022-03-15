@@ -20,6 +20,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-local-worker`,
+    `gatsby-ssr-tsx`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sass`,

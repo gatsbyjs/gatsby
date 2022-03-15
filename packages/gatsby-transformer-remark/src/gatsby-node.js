@@ -20,7 +20,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     ),
     plugins:
       _CFLAGS_.GATSBY_MAJOR === `4`
-        ? Joi.subPlugins({ entry: `index` }).description(
+        ? Joi.subPlugins().description(
             `A list of remark plugins. See also: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark for examples`
           )
         : Joi.array()

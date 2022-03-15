@@ -1,8 +1,10 @@
 const commandName = process.env.NODE_ENV === `development` ? `develop` : `build`
+const DEFAULT_MAX_DAYS_OLD = 30
+const createManifestId = nodeId => `${commandName}-${nodeId}`
 
 exports.sourceNodes = ({ actions }) => {
   // template nodes
-  for (let id = 1; id < 5; id++) {
+  for (let id = 1; id < 6; id++) {
     const node = {
       id: `${id}`,
       internal: {
@@ -11,10 +13,14 @@ exports.sourceNodes = ({ actions }) => {
       },
     }
 
+    if (id === 5) {
+      node.slug = `test-slug`
+    }
+
     actions.createNode(node)
 
     actions.unstable_createNodeManifest({
-      manifestId: `${commandName}-${id}`,
+      manifestId: createManifestId(id),
       node,
     })
   }
@@ -30,8 +36,44 @@ exports.sourceNodes = ({ actions }) => {
 
   actions.createNode(node)
   actions.unstable_createNodeManifest({
-    manifestId: `${commandName}-filesystem-1`,
+    manifestId: createManifestId(node.id),
     node,
+  })
+  const today = new Date()
+  const nodeTooOldToGetManifestCreated = new Date(
+    new Date().setDate(today.getDate() - (DEFAULT_MAX_DAYS_OLD + 1))
+  ).toISOString()
+
+  const nodeUpdated1 = {
+    id: `updatedAt-1`,
+    internal: {
+      type: `TestUpdatedAtType`,
+      contentDigest: `1`,
+    },
+    updatedAt: today.toISOString(),
+  }
+
+  const nodeUpdated2 = {
+    id: `updatedAt-2`,
+    internal: {
+      type: `TestUpdatedAtType`,
+      contentDigest: `1`,
+    },
+    updatedAt: nodeTooOldToGetManifestCreated,
+  }
+
+  actions.createNode(nodeUpdated1)
+  actions.createNode(nodeUpdated2)
+  actions.unstable_createNodeManifest({
+    manifestId: createManifestId(nodeUpdated1.id),
+    node: nodeUpdated1,
+    updatedAtUTC: nodeUpdated1.updatedAt,
+  })
+
+  actions.unstable_createNodeManifest({
+    manifestId: createManifestId(nodeUpdated2.id),
+    node: nodeUpdated2,
+    updatedAtUTC: nodeUpdated2.updatedAt,
   })
 }
 
@@ -69,5 +111,13 @@ exports.createPages = ({ actions }) => {
   actions.createPage({
     path: `three-alternative`,
     component: require.resolve(`./src/templates/three.js`),
+  })
+
+  actions.createPage({
+    path: `slug-test-path`,
+    context: {
+      slug: `test-slug`,
+    },
+    component: require.resolve(`./src/templates/four.js`),
   })
 }

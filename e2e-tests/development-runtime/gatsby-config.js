@@ -28,12 +28,16 @@ module.exports = {
     `gatsby-source-fake-data`,
     `gatsby-source-pinc-data`,
     `gatsby-source-query-on-demand-data`,
+    `gatsby-browser-tsx`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-subcache`],
+        plugins: [
+          `gatsby-remark-subcache`,
+          `gatsby-remark-images`
+        ],
       },
     },
     `gatsby-plugin-sharp`,

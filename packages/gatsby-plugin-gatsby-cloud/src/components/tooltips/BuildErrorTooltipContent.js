@@ -1,9 +1,9 @@
 import React from "react"
 import { logsIcon, failedIcon } from "../icons"
-import trackEvent from "../../utils/trackEvent"
+import { useTrackEvent } from "../../utils"
 
 const generateBuildLogUrl = ({ orgId, siteId, buildId }) => {
-  let pathToBuildLogs
+  let pathToBuildLogs = ``
 
   if (!buildId) {
     pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/cmsPreview`
@@ -16,17 +16,23 @@ const generateBuildLogUrl = ({ orgId, siteId, buildId }) => {
   return `${pathToBuildLogs}?returnTo=${returnTo}`
 }
 
-export default function BuildErrorTooltipContent({ siteId, orgId, buildId }) {
+const BuildErrorTooltipContent = ({
+  siteId,
+  orgId,
+  buildId,
+  errorMessage = `Unable to build preview`,
+}) => {
+  const { track } = useTrackEvent()
   return (
     <>
       {failedIcon}
-      {`Unable to build preview`}
+      {errorMessage}
       <a
         href={generateBuildLogUrl({ orgId, siteId, buildId })}
         target="_blank"
         rel="noreferrer"
         onClick={() => {
-          trackEvent({
+          track({
             eventType: `PREVIEW_INDICATOR_CLICK`,
             orgId,
             siteId,
@@ -42,3 +48,5 @@ export default function BuildErrorTooltipContent({ siteId, orgId, buildId }) {
     </>
   )
 }
+
+export default BuildErrorTooltipContent

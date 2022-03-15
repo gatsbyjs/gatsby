@@ -3,6 +3,108 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.9.1/packages/gatsby-plugin-page-creator) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.9.0/packages/gatsby-plugin-page-creator) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.8.2/packages/gatsby-plugin-page-creator) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+### [4.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.8.1/packages/gatsby-plugin-page-creator) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.8.0/packages/gatsby-plugin-page-creator) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.7.0/packages/gatsby-plugin-page-creator) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Features
+
+- `trailingSlash` config option [#34268](https://github.com/gatsbyjs/gatsby/issues/34268) ([d94c8e4](https://github.com/gatsbyjs/gatsby/commit/d94c8e48a3640b59423c37da1439531ab0c023ec))
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.6.0/packages/gatsby-plugin-page-creator) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.5.2/packages/gatsby-plugin-page-creator) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.5.1/packages/gatsby-plugin-page-creator) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.5.0/packages/gatsby-plugin-page-creator) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.4.0/packages/gatsby-plugin-page-creator) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.3.0/packages/gatsby-plugin-page-creator) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.2.0/packages/gatsby-plugin-page-creator) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.1.4/packages/gatsby-plugin-page-creator) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.1.3/packages/gatsby-plugin-page-creator) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.1.2/packages/gatsby-plugin-page-creator) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.1.1/packages/gatsby-plugin-page-creator) (2021-11-09)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.1.0/packages/gatsby-plugin-page-creator) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.0.0/packages/gatsby-plugin-page-creator) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@3.14.0/packages/gatsby-plugin-page-creator) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

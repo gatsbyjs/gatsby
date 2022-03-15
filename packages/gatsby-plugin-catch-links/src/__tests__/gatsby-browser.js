@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { onClientEntry } from "../gatsby-browser"
 import * as catchLinks from "../catch-links"
 describe(`gatsby-plugin-catch-links`, () => {

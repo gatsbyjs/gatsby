@@ -63,14 +63,27 @@ const createNode = content => {
   return markdownNode
 }
 
-const createPluginOptions = (content, imagePaths = `/`) => {
+const createPluginOptions = (
+  content,
+  imagePaths = `/`,
+  passGetRemarkFileDependency = false
+) => {
   const dirName = `not-a-real-dir`
+  const mockGetImageNode = imagePath => {
+    return {
+      absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
+    }
+  }
+
+  let getRemarkFileDependency
+  if (passGetRemarkFileDependency) {
+    getRemarkFileDependency = jest.fn(fileQuery =>
+      mockGetImageNode(fileQuery.absolutePath.eq)
+    )
+  }
+
   return {
-    files: [].concat(imagePaths).map(imagePath => {
-      return {
-        absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
-      }
-    }),
+    files: [].concat(imagePaths).map(mockGetImageNode),
     markdownNode: createNode(content),
     markdownAST: remark.parse(content),
     getNode: () => {
@@ -82,6 +95,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
       parseString: remark.parse.bind(remark),
       generateHTML: node => hastToHTML(toHAST(node)),
     },
+    getRemarkFileDependency,
   }
 }
 
@@ -117,6 +131,26 @@ test(`it leaves files with unsupported file extensions alone`, async () => {
   const result = await plugin(createPluginOptions(content, imagePath))
 
   expect(result).toEqual([])
+})
+
+test(`it transforms images in markdown and uses getRemarkFileDependency when given`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const pluginOptions = createPluginOptions(content, imagePath, true)
+  const nodes = await plugin(pluginOptions)
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+
+  expect(pluginOptions.getRemarkFileDependency.mock.calls.length).toBe(1)
 })
 
 test(`it transforms images in markdown`, async () => {

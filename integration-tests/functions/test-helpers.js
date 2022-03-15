@@ -282,6 +282,39 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`ignores files that match the pattern`, () => {
+      test(`dotfile`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/.config`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`.d.ts file`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/foo.d`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`test file`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/hello.test`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`test directory`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/__tests__/hello`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`test file in plugin`, async () => {
+        const result = await fetch(
+          `${host}/api/gatsby-plugin-cool/shadowed.test`
+        )
+        expect(result.status).toEqual(404)
+      })
+    })
+
     // TODO figure out why this gets into endless loops
     // describe.only(`hot reloading`, () => {
     // const fixturesDir = path.join(__dirname, `fixtures`)

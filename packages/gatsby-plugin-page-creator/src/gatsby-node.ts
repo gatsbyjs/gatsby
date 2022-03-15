@@ -15,6 +15,7 @@ import {
   createPath,
   watchDirectory,
   IPathIgnoreOptions,
+  applyTrailingSlashOption,
 } from "gatsby-page-utils"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createPage } from "./create-page-wrapper"
@@ -69,7 +70,8 @@ export async function createPagesStatefully(
 ): Promise<void> {
   try {
     const { deletePage } = actions
-    const { program } = store.getState()
+    const { program, config } = store.getState()
+    const { trailingSlash = `legacy` } = config
 
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
@@ -110,6 +112,7 @@ Please pick a path to an existing directory.`,
         actions,
         graphql,
         reporter,
+        trailingSlash,
         ignore,
         slugifyOptions
       )
@@ -129,6 +132,7 @@ Please pick a path to an existing directory.`,
               actions,
               graphql,
               reporter,
+              trailingSlash,
               ignore,
               slugifyOptions
             )
@@ -182,6 +186,7 @@ export function setFieldsOnGraphQLNodeType(
 ): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
+    const { trailingSlash = `legacy` } = store.getState().config
     const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
@@ -215,8 +220,17 @@ export function setFieldsOnGraphQLNodeType(
               reporter,
               slugifyOptions
             )
+            // TODO(v5): Remove legacy handling
+            const isLegacy = trailingSlash === `legacy`
+            const hasTrailingSlash = derivedPath.endsWith(`/`)
+            const path = createPath(
+              derivedPath,
+              isLegacy || hasTrailingSlash,
+              true
+            )
+            const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
-            return createPath(derivedPath)
+            return modifiedPath
           },
         },
       }

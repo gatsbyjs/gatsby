@@ -110,8 +110,8 @@ exports.sourceNodes = ({ actions, getNodesByType }) => {
 In case you only have an ID at hand (e.g. getting it from cache), you can use the `getNode()` API:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
-  const { touchNode, getNode } = actions
+exports.sourceNodes = async ({ actions, getNode, getNodesByType, cache }) => {
+  const { touchNode } = actions
   const myNodeId = await cache.get("some-key")
 
   touchNode(getNode(myNodeId)) // highlight-line
@@ -252,11 +252,60 @@ The recommended approach is to always create nodes in `sourceNodes`. We are goin
 this workaround that will work using `sourceNodes`. It is still being worked on, please post your use-cases and ideas
 in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discussioncomment-1262874) to help us shape this new APIs.
 
+If you've used this with `gatsby-source-graphql`, please switch to [Gatsby GraphQL Source Toolkit](https://github.com/gatsbyjs/gatsby-graphql-toolkit). Generally speaking you'll want to create your own source plugin to fully support such use cases.
+
 You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/#2-data-mutations-need-to-happen-during-sourcenodes-or-oncreatenode).
 
 ### Changes to built-in types
 
 The built-in type `SitePage` now returns the `pageContext` key as `JSON` and won't infer any other information anymore. The `SitePlugin` type now has two new keys: `pluginOptions: JSON` and `packageJson: JSON`.
+
+#### Field `SitePage.context` is no longer available in GraphQL queries
+
+Before v4 you could query specific fields of the page context object:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      context {
+        foo
+      }
+    }
+  }
+}
+```
+
+Starting with v4, `context` field is replaced with `pageContext` of type `JSON`.
+It means you can't query individual fields of the context. The new query would look like this:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      pageContext # returns full JS object passed to `page.context` in `createPages`
+    }
+  }
+}
+```
+
+If you still need to query individual `context` fields - you can workaround it by providing
+a schema for `SitePage.context` manually:
+
+```js
+// Workaround for missing sitePage.context:
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type SitePage implements Node {
+      context: SitePageContext
+    }
+    type SitePageContext {
+      foo: String
+    }
+  `)
+}
+```
 
 ### Removal of `gatsby-admin`
 
@@ -536,8 +585,7 @@ This was never an intended feature of Gatsby and is considered an anti-pattern (
 Starting with v4 Gatsby introduces a persisted storage for nodes and thus this pattern will no longer work
 because nodes are persisted after `createNode` call and all direct mutations after that will be lost.
 
-Unfortunately it is hard to detect it automatically (without sacrificing performance), so we recommend you to
-check your code to ensure you don't mutate nodes directly.
+Gatsby provides diagnostic mode to detect those direct mutations, unfortunately it has noticeable performance overhead so we don't enable it by default. See [Debugging missing data](/docs/how-to/local-development/debugging-missing-data/) for more details on it.
 
 Gatsby provides several actions available in `sourceNodes` and `onCreateNode` APIs to use instead:
 
@@ -556,6 +604,14 @@ Please note that the [deprecation of the `___NODE` convention](#___node-conventi
 The current state persistence mechanism supported circular references in nodes. With Gatsby 4 and LMDB this is no longer supported.
 
 This is just a theoretical problem that might arise in v4. Most source plugins already avoid circular dependencies in data.
+
+### Bundling external files
+
+In order for DSG & SSR to work Gatsby creates bundles with all the contents of the site, plugins, and data. When a plugin (or your own `gatsby-node.js`) requires an external file via `fs` module (e.g. `fs.readFile`) the engine won't be able to include the file. As a result you might see an error (when trying to run DSG) like `ENOENT: no such file or directory` in the CLI.
+
+This limitation applies to these lifecycle APIs: `setFieldsOnGraphQLNodeType`, `createSchemaCustomization`, and `createResolvers`.
+
+Instead you should move the contents to a JS/TS file and import the file as this way the bundler will be able to include the contents.
 
 ## Known Issues
 

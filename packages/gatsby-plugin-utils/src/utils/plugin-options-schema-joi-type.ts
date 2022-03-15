@@ -1160,7 +1160,7 @@ interface AnySchema extends SchemaInternals {
    * Warnings are reported separately from errors alongside the result value via the warning key (i.e. `{ value, warning }`).
    * Warning are always included when calling `any.validate()`.
    */
-  warning(code: string, context: Context): this
+  warning(code: string, context?: Context): this
 
   /**
    * Converts the type into an alternatives type where the conditions are merged into the type definition where:

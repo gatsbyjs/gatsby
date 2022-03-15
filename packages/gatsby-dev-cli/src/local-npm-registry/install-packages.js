@@ -118,10 +118,7 @@ const installPackages = async ({
 
     // package.json files are changed - so we just want to install
     // using verdaccio registry
-    installCmd = [
-      `yarn`,
-      [`install`, `--registry=${registryUrl}`, `--ignore-engines`],
-    ]
+    installCmd = [`yarn`, [`install`, `--registry=${registryUrl}`]]
   } else {
     installCmd = [
       `yarn`,
@@ -133,7 +130,6 @@ const installPackages = async ({
         }),
         `--registry=${registryUrl}`,
         `--exact`,
-        `--ignore-engines`,
       ],
     ]
   }

@@ -1,114 +1,37 @@
 import Enquirer from "enquirer"
-import cmses from "./cmses.json"
-import styles from "./styles.json"
-import features from "./features.json"
+import cmses from "./questions/cmses.json"
+import styles from "./questions/styles.json"
+import features from "./questions/features.json"
+import languages from "./questions/languages.json"
 import { initStarter, getPackageManager, gitSetup } from "./init-starter"
 import { installPlugins } from "./install-plugins"
-import c from "ansi-colors"
+import colors from "ansi-colors"
 import path from "path"
-import fs from "fs"
 import { plugin } from "./components/plugin"
 import { makePluginConfigQuestions } from "./plugin-options-form"
 import { center, wrap } from "./components/utils"
 import { stripIndent } from "common-tags"
 import { trackCli } from "./tracking"
-import crypto from "crypto"
-import { reporter } from "./reporter"
-import { setSiteMetadata } from "./site-metadata"
-import { makeNpmSafe } from "./utils"
+import { reporter } from "./utils/reporter"
+import { setSiteMetadata } from "./utils/site-metadata"
+import { makeNpmSafe } from "./utils/make-npm-safe"
+import {
+  generateQuestions,
+  validateProjectName,
+} from "./utils/question-helpers"
+import { sha256, md5 } from "./utils/hash"
+import { maybeUseEmoji } from "./utils/emoji"
+import { parseArgs } from "./utils/parse-args"
 
-const sha256 = (str: string): string =>
-  crypto.createHash(`sha256`).update(str).digest(`hex`)
-
-const md5 = (str: string): string =>
-  crypto.createHash(`md5`).update(str).digest(`hex`)
-
-/**
- * Hide string on windows (for emojis)
- */
-const w = (input: string): string => (process.platform === `win32` ? `` : input)
-
-// eslint-disable-next-line no-control-regex
-const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
-const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
-
-const DEFAULT_STARTER = `https://github.com/gatsbyjs/gatsby-starter-minimal.git`
-
-const makeChoices = (
-  options: Record<string, { message: string; dependencies?: Array<string> }>,
-  multi = false
-): Array<{ message: string; name: string; disabled?: boolean }> => {
-  const entries = Object.entries(options).map(([name, message]) => {
-    return { name, message: message.message }
-  })
-
-  if (multi) {
-    return entries
-  }
-  const none = { name: `none`, message: `No (or I'll add it later)` }
-  const divider = { name: `–`, role: `separator`, message: `–` }
-
-  return [none, divider, ...entries]
+export const DEFAULT_STARTERS: Record<keyof typeof languages, string> = {
+  js: `https://github.com/gatsbyjs/gatsby-starter-minimal.git`,
+  ts: `https://github.com/gatsbyjs/gatsby-starter-minimal-ts.git`,
 }
 
-export const validateProjectName = async (
-  value: string
-): Promise<string | boolean> => {
-  if (!value) {
-    return `You have not provided a directory name for your site. Please do so when running with the 'y' flag.`
-  }
-  value = value.trim()
-  if (INVALID_FILENAMES.test(value)) {
-    return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
-  }
-  if (process.platform === `win32` && INVALID_WINDOWS.test(value)) {
-    return `The destination "${value}" is not a valid Windows filename. Please try another name`
-  }
-  if (fs.existsSync(path.resolve(value))) {
-    return `The destination "${value}" already exists. Please choose a different name`
-  }
-  return true
-}
-
-// The enquirer types are not accurate
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const questions = (initialFolderName: string, skip: boolean): any => [
-  {
-    type: `textinput`,
-    name: `project`,
-    message: `What would you like to name the folder where your site will be created?`,
-    hint: path.basename(process.cwd()),
-    separator: `/`,
-    initial: initialFolderName,
-    format: (value: string): string => c.cyan(value),
-    validate: validateProjectName,
-    skip,
-  },
-  {
-    type: `selectinput`,
-    name: `cms`,
-    message: `Will you be using a CMS?`,
-    hint: `(Single choice) Arrow keys to move, enter to confirm`,
-    choices: makeChoices(cmses),
-  },
-  {
-    type: `selectinput`,
-    name: `styling`,
-    message: `Would you like to install a styling system?`,
-    hint: `(Single choice) Arrow keys to move, enter to confirm`,
-    choices: makeChoices(styles),
-  },
-  {
-    type: `multiselectinput`,
-    name: `features`,
-    message: `Would you like to install additional features with other plugins?`,
-    hint: `(Multiple choice) Use arrow keys to move, spacebar to select, and confirm with an enter on "Done"`,
-    choices: makeChoices(features, true),
-  },
-]
 interface IAnswers {
   name: string
   project: string
+  language: keyof typeof languages
   styling?: keyof typeof styles
   cms?: keyof typeof cmses
   features?: Array<keyof typeof features>
@@ -141,38 +64,33 @@ export type PluginMap = Record<string, IPluginEntry>
 
 export type PluginConfigMap = Record<string, Record<string, unknown>>
 
-const removeKey = (plugin: string): string => plugin.split(`:`)[0]
-
 export async function run(): Promise<void> {
-  const [flag, siteDirectory] = process.argv.slice(2)
-
-  let yesFlag = false
-  if (flag === `-y`) {
-    yesFlag = true
-  }
+  const { flags, dirName } = parseArgs(process.argv.slice(2))
 
   trackCli(`CREATE_GATSBY_START`)
 
   const { version } = require(`../package.json`)
 
-  reporter.info(c.grey(`create-gatsby version ${version}`))
+  reporter.info(colors.grey(`create-gatsby version ${version}`))
 
+  // Wecome message
   reporter.info(
     `
 
 
-${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
+${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
 
 `
   )
 
-  if (!yesFlag) {
+  // If we aren't skipping prompts, communicate we'll ask setup questions
+  if (!flags.yes) {
     reporter.info(
       wrap(
-        `This command will generate a new Gatsby site for you in ${c.bold(
+        `This command will generate a new Gatsby site for you in ${colors.bold(
           process.cwd()
-        )} with the setup you select. ${c.white.bold(
+        )} with the setup you select. ${colors.white.bold(
           `Let's answer some questions:\n\n`
         )}`,
         process.stdout.columns
@@ -181,55 +99,73 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   }
 
   const enquirer = new Enquirer<IAnswers>()
-
   enquirer.use(plugin)
 
-  let data
-  let siteName
-  if (!yesFlag) {
-    ;({ name: siteName } = await enquirer.prompt({
+  // If we aren't skipping prompts, get a site name first to use as a default folder name
+  let npmSafeSiteName
+
+  if (!flags.yes) {
+    const { name } = await enquirer.prompt({
       type: `textinput`,
       name: `name`,
       message: `What would you like to call your site?`,
       initial: `My Gatsby Site`,
-      format: (value: string): string => c.cyan(value),
-    } as any))
+      format: (value: string): string => colors.cyan(value),
+    } as any)
 
-    data = await enquirer.prompt(questions(makeNpmSafe(siteName), yesFlag))
+    npmSafeSiteName = makeNpmSafe(name)
   } else {
-    const warn = await validateProjectName(siteDirectory)
-    if (typeof warn === `string`) {
-      reporter.warn(warn)
+    const valid = validateProjectName(dirName)
+
+    if (!valid) {
       return
     }
-    siteName = siteDirectory
-    data = await enquirer.prompt(
-      questions(makeNpmSafe(siteDirectory), yesFlag)[0]
-    )
+
+    npmSafeSiteName = makeNpmSafe(dirName)
   }
 
-  data.project = data.project.trim()
+  // Prompt user with questions and gather answers
+  const questions = generateQuestions(npmSafeSiteName, flags)
+  const answers = await enquirer.prompt(questions)
 
+  answers.project = answers.project.trim()
+
+  // Language selection
+  if (flags.yes) {
+    answers.language = `js`
+  }
+  if (flags.ts) {
+    answers.language = `ts`
+  }
+
+  // Telemetry
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `project_name`,
-    valueString: sha256(data.project),
+    valueString: sha256(answers.project),
+  })
+  trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
+    name: `LANGUAGE`,
+    valueString: answers.language,
   })
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `CMS`,
-    valueString: data.cms || `none`,
+    valueString: answers.cms || `none`,
   })
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `CSS_TOOLS`,
-    valueString: data.styling || `none`,
+    valueString: answers.styling || `none`,
   })
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `PLUGIN`,
-    valueStringArray: data.features || [],
+    valueStringArray: answers.features || [],
   })
 
+  // Collect a report of things we will do to present to the user once the questions are complete
   const messages: Array<string> = [
-    `${w(`🛠  `)}Create a new Gatsby site in the folder ${c.magenta(
-      data.project
+    `${maybeUseEmoji(
+      `🛠  `
+    )}Create a new Gatsby site in the folder ${colors.magenta(
+      answers.project
     )}`,
   ]
 
@@ -237,47 +173,52 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
   const packages: Array<string> = []
   let pluginConfig: PluginConfigMap = {}
 
-  if (data.cms && data.cms !== `none`) {
+  // If a CMS is selected, ask CMS config questions after the main question set is complete
+  if (answers.cms && answers.cms !== `none`) {
     messages.push(
-      `${w(`📚 `)}Install and configure the plugin for ${c.magenta(
-        cmses[data.cms].message
+      `${maybeUseEmoji(
+        `📚 `
+      )}Install and configure the plugin for ${colors.magenta(
+        cmses[answers.cms].message
       )}`
     )
-    const extraPlugins = cmses[data.cms].plugins || []
-    plugins.push(data.cms, ...extraPlugins)
+    const extraPlugins = cmses[answers.cms].plugins || []
+    plugins.push(answers.cms, ...extraPlugins)
     packages.push(
-      data.cms,
-      ...(cmses[data.cms].dependencies || []),
+      answers.cms,
+      ...(cmses[answers.cms].dependencies || []),
       ...extraPlugins
     )
-    pluginConfig = { ...pluginConfig, ...cmses[data.cms].options }
+    pluginConfig = { ...pluginConfig, ...cmses[answers.cms].options }
   }
 
-  if (data.styling && data.styling !== `none`) {
+  // If a styling system is selected, ask styling config questions after the main question set is complete
+  if (answers.styling && answers.styling !== `none`) {
     messages.push(
-      `${w(`🎨 `)}Get you set up to use ${c.magenta(
-        styles[data.styling].message
+      `${maybeUseEmoji(`🎨 `)}Get you set up to use ${colors.magenta(
+        styles[answers.styling].message
       )} for styling your site`
     )
-    const extraPlugins = styles[data.styling].plugins || []
+    const extraPlugins = styles[answers.styling].plugins || []
 
-    plugins.push(data.styling, ...extraPlugins)
+    plugins.push(answers.styling, ...extraPlugins)
     packages.push(
-      data.styling,
-      ...(styles[data.styling].dependencies || []),
+      answers.styling,
+      ...(styles[answers.styling].dependencies || []),
       ...extraPlugins
     )
-    pluginConfig = { ...pluginConfig, ...styles[data.styling].options }
+    pluginConfig = { ...pluginConfig, ...styles[answers.styling].options }
   }
 
-  if (data.features?.length) {
+  // If additional features are selected, install required dependencies in install step
+  if (answers.features?.length) {
     messages.push(
-      `${w(`🔌 `)}Install ${data.features
-        ?.map((feat: string) => c.magenta(feat))
+      `${maybeUseEmoji(`🔌 `)}Install ${answers.features
+        ?.map((feat: string) => colors.magenta(feat))
         .join(`, `)}`
     )
-    plugins.push(...data.features)
-    const featureDependencies = data.features?.map(featureKey => {
+    plugins.push(...answers.features)
+    const featureDependencies = answers.features?.map(featureKey => {
       const extraPlugins = features[featureKey].plugins || []
       plugins.push(...extraPlugins)
       return [
@@ -292,14 +233,16 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       featureDependencies
     ) // here until we upgrade to node 11 and can use flatMap
 
-    packages.push(...data.features, ...flattenedDependencies)
+    packages.push(...answers.features, ...flattenedDependencies)
     // Merge plugin options
-    pluginConfig = data.features.reduce((prev, key) => {
+    pluginConfig = answers.features.reduce((prev, key) => {
       return { ...prev, ...features[key].options }
     }, pluginConfig)
   }
 
+  // Ask additional config questions if any
   const config = makePluginConfigQuestions(plugins)
+
   if (config.length) {
     reporter.info(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
@@ -314,10 +257,12 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
-  if (!yesFlag) {
+
+  // If we're not skipping prompts, give the user a report of what we're about to do
+  if (!flags.yes) {
     reporter.info(`
 
-${c.bold(`Thanks! Here's what we'll now do:`)}
+${colors.bold(`Thanks! Here's what we'll now do:`)}
 
     ${messages.join(`\n    `)}
   `)
@@ -327,7 +272,7 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
       name: `confirm`,
       initial: `Yes`,
       message: `Shall we do this?`,
-      format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
+      format: value => (value ? colors.greenBright(`Yes`) : colors.red(`No`)),
     })
 
     if (!confirm) {
@@ -338,46 +283,50 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     }
   }
 
+  // Decide starter
+  const starter = DEFAULT_STARTERS[answers.language || `js`]
+
+  // Do all the things
   await initStarter(
-    DEFAULT_STARTER,
-    data.project,
-    packages.map(removeKey),
-    siteName
+    starter,
+    answers.project,
+    packages.map((plugin: string) => plugin.split(`:`)[0]),
+    npmSafeSiteName
   )
 
-  reporter.success(`Created site in ${c.green(data.project)}`)
+  reporter.success(`Created site in ${colors.green(answers.project)}`)
 
-  const fullPath = path.resolve(data.project)
+  const fullPath = path.resolve(answers.project)
 
   if (plugins.length) {
-    reporter.info(`${w(`🔌 `)}Setting-up plugins...`)
+    reporter.info(`${maybeUseEmoji(`🔌 `)}Setting-up plugins...`)
     await installPlugins(plugins, pluginConfig, fullPath, [])
   }
-  await setSiteMetadata(fullPath, `title`, siteName)
+  await setSiteMetadata(fullPath, `title`, dirName)
 
-  await gitSetup(data.project)
+  await gitSetup(answers.project)
 
   const pm = await getPackageManager()
   const runCommand = pm === `npm` ? `npm run` : `yarn`
 
   reporter.info(
     stripIndent`
-    ${w(`🎉  `)}Your new Gatsby site ${c.bold(
-      siteName
+    ${maybeUseEmoji(`🎉  `)}Your new Gatsby site ${colors.bold(
+      dirName
     )} has been successfully created
-    at ${c.bold(fullPath)}.
+    at ${colors.bold(fullPath)}.
     `
   )
   reporter.info(`Start by going to the directory with\n
-  ${c.magenta(`cd ${data.project}`)}
+  ${colors.magenta(`cd ${answers.project}`)}
   `)
 
   reporter.info(`Start the local development server with\n
-  ${c.magenta(`${runCommand} develop`)}
+  ${colors.magenta(`${runCommand} develop`)}
   `)
 
   reporter.info(`See all commands at\n
-  ${c.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
+  ${colors.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
   `)
 
   const siteHash = md5(fullPath)

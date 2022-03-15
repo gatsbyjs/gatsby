@@ -1,7 +1,11 @@
 // @ts-check
 // This is more an integration test than it is a unit test. We try to mock as little as we can
 import _ from "lodash"
-import { createSchemaCustomization, sourceNodes } from "../gatsby-node"
+import {
+  createSchemaCustomization,
+  sourceNodes,
+  onPreInit,
+} from "../gatsby-node"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -11,7 +15,9 @@ import restrictedContentTypeFixture from "../__fixtures__/restricted-content-typ
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
+  const originalModule = jest.requireActual(`gatsby-core-utils`)
   return {
+    ...originalModule,
     createContentDigest: () => `contentDigest`,
   }
 })
@@ -34,8 +40,28 @@ const createMockCache = () => {
 }
 
 describe(`gatsby-node`, () => {
-  const actions = { createTypes: jest.fn(), setPluginStatus: jest.fn() }
-  const schema = { buildObjectType: jest.fn(), buildInterfaceType: jest.fn() }
+  const actions = {
+    createTypes: jest.fn(),
+    setPluginStatus: jest.fn(),
+    createNode: jest.fn(async node => {
+      node.internal.owner = `gatsby-source-contentful`
+      currentNodeMap.set(node.id, node)
+    }),
+    deleteNode: jest.fn(node => {
+      currentNodeMap.delete(node.id)
+    }),
+    touchNode: jest.fn(),
+  }
+  const schema = {
+    buildObjectType: jest.fn(() => {
+      return {
+        config: {
+          interfaces: [],
+        },
+      }
+    }),
+    buildInterfaceType: jest.fn(),
+  }
   const store = {
     getState: jest.fn(() => {
       return { program: { directory: process.cwd() }, status: {} }
@@ -56,7 +82,6 @@ describe(`gatsby-node`, () => {
   let currentNodeMap
   const getNodes = () => Array.from(currentNodeMap.values())
   const getNode = id => currentNodeMap.get(id)
-  const getNodesByType = jest.fn()
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
@@ -65,7 +90,7 @@ describe(`gatsby-node`, () => {
     pluginOptions = defaultPluginOptions
   ) {
     await createSchemaCustomization(
-      { schema, actions, reporter, cache },
+      { schema, actions, reporter, cache, store },
       pluginOptions
     )
 
@@ -74,7 +99,6 @@ describe(`gatsby-node`, () => {
         actions,
         getNode,
         getNodes,
-        getNodesByType,
         createNodeId,
         store,
         cache,
@@ -295,20 +319,105 @@ describe(`gatsby-node`, () => {
     // @ts-ignore
     fetchContentTypes.mockClear()
     currentNodeMap = new Map()
-    actions.createNode = jest.fn(async node => {
-      node.internal.owner = `gatsby-source-contentful`
-      // don't allow mutations (this isn't traversing so only top level is frozen)
-      currentNodeMap.set(node.id, Object.freeze(node))
-    })
-    actions.deleteNode = node => {
-      currentNodeMap.delete(node.id)
-    }
-    actions.touchNode = jest.fn()
-    actions.setPluginStatus = jest.fn()
+    actions.createTypes.mockClear()
+    actions.setPluginStatus.mockClear()
+    actions.createNode.mockClear()
+    actions.deleteNode.mockClear()
+    actions.touchNode.mockClear()
     store.getState.mockClear()
     cache.actualMap.clear()
     cache.get.mockClear()
     cache.set.mockClear()
+    reporter.info.mockClear()
+    reporter.panic.mockClear()
+  })
+
+  let hasImported = false
+  describe(`onPreInit`, () => {
+    it(`should pass when gatsby-plugin-image is installed and configured`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      await onPreInit({
+        store: {
+          getState: () => {
+            return {
+              flattenedPlugins: [
+                {
+                  name: `gatsby-plugin-image`,
+                },
+              ],
+            }
+          },
+        },
+        reporter,
+      })
+    })
+
+    it(`should throw when gatsby-plugin-image is not installed`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      jest.doMock(`gatsby-plugin-image/graphql-utils`, () => {
+        if (hasImported) {
+          return jest.requireActual(`gatsby-plugin-image/graphql-utils`)
+        }
+
+        // only throw once
+        hasImported = true
+        throw new Error(`not installed`)
+      })
+
+      expect.assertions(2)
+      try {
+        await onPreInit({ store: {}, reporter })
+      } catch (err) {
+        console.log(err)
+        expect(err.id).toBe(`111005`)
+        expect(err.context).toMatchInlineSnapshot(`
+          Object {
+            "sourceMessage": "gatsby-plugin-image is missing from your project.
+          Please install \\"gatsby-plugin-image\\".",
+          }
+        `)
+      }
+    })
+    it(`should throw when gatsby-plugin-image is not configured`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      expect.assertions(2)
+      try {
+        await onPreInit({
+          store: {
+            getState: () => {
+              return {
+                flattenedPlugins: [],
+              }
+            },
+          },
+          reporter,
+        })
+      } catch (err) {
+        console.log(err)
+        expect(err.id).toBe(`111005`)
+        expect(err.context).toMatchInlineSnapshot(`
+          Object {
+            "sourceMessage": "gatsby-plugin-image is missing from your gatsby-config file.
+          Please add \\"gatsby-plugin-image\\" to your plugins array.",
+          }
+        `)
+      }
+    })
   })
 
   it(`should create nodes from initial payload`, async () => {
@@ -331,18 +440,10 @@ describe(`gatsby-node`, () => {
 
     expect(store.getState).toHaveBeenCalled()
 
-    // Tries to load data from cache
-    expect(cache.get).toHaveBeenCalledWith(
-      `contentful-sync-data-testSpaceId-master`
-    )
-
     expect(cache.get.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
           "contentful-content-types-testSpaceId-master",
-        ],
-        Array [
-          "contentful-sync-data-testSpaceId-master",
         ],
       ]
     `)
@@ -353,23 +454,49 @@ describe(`gatsby-node`, () => {
         startersBlogFixture.initialSync().currentSyncData.nextSyncToken,
     })
 
-    // Check for valid cache data
-    const cacheCall = cache.set.mock.calls.filter(
-      args => args[0] === `contentful-sync-data-testSpaceId-master`
-    )
-
-    expect(cacheCall).toBeTruthy()
-    expect(cacheCall[0][1].entries).toHaveLength(
-      startersBlogFixture.initialSync().currentSyncData.entries.length
-    )
-    expect(cacheCall[0][1].assets).toHaveLength(
-      startersBlogFixture.initialSync().currentSyncData.assets.length
-    )
-
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`
       Array [
         "contentful-content-types-testSpaceId-master",
-        "contentful-sync-data-testSpaceId-master",
+      ]
+    `)
+    expect(actions.createNode).toHaveBeenCalledTimes(32)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Person nodes",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
       ]
     `)
   })
@@ -403,6 +530,7 @@ describe(`gatsby-node`, () => {
     })
 
     // add new blog post
+    reporter.info.mockClear()
     await simulateGatsbyBuild()
 
     testIfContentTypesExists(startersBlogFixture.contentTypeItems())
@@ -418,9 +546,46 @@ describe(`gatsby-node`, () => {
 
     createdBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
-      expect(blogEntry).toMatchSnapshot()
-      expect(getNode(blogEntry[`author___NODE`])).toMatchSnapshot()
+      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
+
+    expect(actions.createNode).toHaveBeenCalledTimes(42)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(32)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 1 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 11 cached entries",
+        ],
+        Array [
+          "Contentful: 1 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 4 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 1 Contentful asset nodes",
+        ],
+      ]
+    `)
   })
 
   it(`should update a blogpost`, async () => {
@@ -454,6 +619,7 @@ describe(`gatsby-node`, () => {
     })
 
     // updated blog post
+    reporter.info.mockClear()
     await simulateGatsbyBuild()
 
     testIfContentTypesExists(startersBlogFixture.contentTypeItems())
@@ -470,9 +636,43 @@ describe(`gatsby-node`, () => {
     updatedBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
       expect(blogEntry.title).toBe(`Hello world 1234`)
-      expect(blogEntry).toMatchSnapshot()
-      expect(getNode(blogEntry[`author___NODE`])).toMatchSnapshot()
+      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
+
+    expect(actions.createNode).toHaveBeenCalledTimes(50)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(72)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 1 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 14 cached entries",
+        ],
+        Array [
+          "Contentful: 0 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 5 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 1 Contentful Blog Post nodes",
+        ],
+      ]
+    `)
   })
 
   it(`should remove a blogpost and update linkedNodes`, async () => {
@@ -513,18 +713,65 @@ describe(`gatsby-node`, () => {
     })
 
     // remove blog post
+    reporter.info.mockClear()
     await simulateGatsbyBuild()
 
+    const { deletedEntries } =
+      startersBlogFixture.removeBlogPost().currentSyncData
+
     testIfContentTypesExists(startersBlogFixture.contentTypeItems())
-    testIfEntriesDeleted(
-      startersBlogFixture.removeBlogPost().currentSyncData.assets,
-      locales
+    testIfEntriesDeleted(deletedEntries, locales)
+
+    const deletedEntryIds = deletedEntries.map(entry =>
+      createNodeId(
+        makeId({
+          spaceId: entry.sys.space.sys.id,
+          currentLocale: entry.sys.locale,
+          defaultLocale: locales[0],
+          id: entry.sys.id,
+          type: entry.sys.type,
+        })
+      )
     )
 
     // check if references are gone
     authorIds.forEach(authorId => {
-      expect(getNode(authorId)).toMatchSnapshot()
+      expect(getNode(authorId)[`blog post___NODE`]).toEqual(
+        expect.not.arrayContaining(deletedEntryIds)
+      )
     })
+
+    expect(actions.createNode).toHaveBeenCalledTimes(44)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(2)
+    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 1 deleted entries",
+        ],
+        Array [
+          "Contentful: 14 cached entries",
+        ],
+        Array [
+          "Contentful: 0 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 5 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+      ]
+    `)
   })
 
   it(`should remove an asset`, async () => {
@@ -566,6 +813,7 @@ describe(`gatsby-node`, () => {
     )
 
     // remove asset
+    reporter.info.mockClear()
     await simulateGatsbyBuild()
 
     testIfContentTypesExists(startersBlogFixture.contentTypeItems())
@@ -578,6 +826,38 @@ describe(`gatsby-node`, () => {
       startersBlogFixture.removeAsset().currentSyncData.deletedAssets,
       locales
     )
+
+    expect(actions.createNode).toHaveBeenCalledTimes(44)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(2)
+    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 14 cached entries",
+        ],
+        Array [
+          "Contentful: 0 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 5 cached assets",
+        ],
+        Array [
+          "Contentful: 1 deleted assets",
+        ],
+      ]
+    `)
   })
 
   it(`stores rich text as raw with references attached`, async () => {
@@ -640,6 +920,35 @@ describe(`gatsby-node`, () => {
       expect.objectContaining({
         context: {
           sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
+        },
+      })
+    )
+  })
+
+  it(`panics when response contains content type Tag while enableTags is true`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(
+      restrictedContentTypeFixture.initialSync
+    )
+    const contentTypesWithTag = () => {
+      const manipulatedContentTypeItems =
+        restrictedContentTypeFixture.contentTypeItems()
+      manipulatedContentTypeItems[0].name = `Tag`
+      return manipulatedContentTypeItems
+    }
+    // @ts-ignore
+    fetchContentTypes.mockImplementationOnce(contentTypesWithTag)
+
+    await simulateGatsbyBuild({
+      spaceId: `mocked`,
+      enableTags: true,
+      useNameForId: true,
+    })
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Restricted ContentType name found. The name "tag" is not allowed.`,
         },
       })
     )

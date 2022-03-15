@@ -46,6 +46,12 @@ module.exports = {
     "^weak-lru-cache$": `<rootDir>/node_modules/weak-lru-cache/dist/index.cjs`,
     "^ordered-binary$": `<rootDir>/node_modules/ordered-binary/dist/index.cjs`,
     "^msgpackr$": `<rootDir>/node_modules/msgpackr/dist/node.cjs`,
+    "^gatsby-page-utils/(.*)$": `gatsby-page-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
+    "^gatsby-core-utils/(.*)$": `gatsby-core-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
+    "^gatsby-plugin-utils/(.*)$": [
+      `gatsby-plugin-utils/dist/$1`,
+      `gatsby-plugin-utils/$1`,
+    ], // Workaround for https://github.com/facebook/jest/issues/9771
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
@@ -54,7 +60,6 @@ module.exports = {
         useCoverage ? `jest-junit` : []
       )
     : [`default`].concat(useCoverage ? `jest-junit` : []),
-  testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
   setupFilesAfterEnv: [`jest-extended`],

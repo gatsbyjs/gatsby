@@ -1,13 +1,11 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@gatsbyjs/reach-router"
-import { resolve } from "@gatsbyjs/reach-router/lib/utils"
-
 import { parsePath } from "./parse-path"
+import { isLocalLink } from "./is-local-link"
+import { rewriteLinkPath } from "./rewrite-link-path"
 
 export { parsePath }
-
-const isAbsolutePath = path => path?.startsWith(`/`)
 
 export function withPrefix(path, prefix = getGlobalBasePrefix()) {
   if (!isLocalLink(path)) {
@@ -39,32 +37,8 @@ const getGlobalBasePrefix = () =>
       : undefined
     : __BASE_PATH__
 
-const isLocalLink = path =>
-  path &&
-  !path.startsWith(`http://`) &&
-  !path.startsWith(`https://`) &&
-  !path.startsWith(`//`)
-
 export function withAssetPrefix(path) {
   return withPrefix(path, getGlobalPathPrefix())
-}
-
-function absolutify(path, current) {
-  // If it's already absolute, return as-is
-  if (isAbsolutePath(path)) {
-    return path
-  }
-  return resolve(path, current)
-}
-
-const rewriteLinkPath = (path, relativeTo) => {
-  if (typeof path === `number`) {
-    return path
-  }
-  if (!isLocalLink(path)) {
-    return path
-  }
-  return isAbsolutePath(path) ? withPrefix(path) : absolutify(path, relativeTo)
 }
 
 const NavLinkPropTypes = {

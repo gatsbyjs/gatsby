@@ -45,7 +45,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
 built-in support for OpenTelemetry. The following is an example of configuring Gatsby to send build traces
 to [Honeycomb](https://www.honeycomb.io/).
 
-1. Install necesary dependencies
+1. Install necessary dependencies
 
 ```shell
 npm install @grpc/grpc-js @opentelemetry/api @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-collector-grpc @opentelemetry/sdk-node @opentelemetry/shim-opentracing opentracing

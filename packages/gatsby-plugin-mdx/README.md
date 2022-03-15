@@ -1,7 +1,7 @@
 ![Logo](./img/gatsby-mdx.png)
 
 > `gatsby-plugin-mdx` is the official integration for using [MDX](https://mdxjs.com)
-> with [Gatsby](https://www.gatsbyjs.org/).
+> with [Gatsby](https://www.gatsbyjs.com).
 
 # What’s MDX?
 
@@ -18,7 +18,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 ### Read more about MDX
 
-- [📚 Gatsby guide](https://www.gatsbyjs.org/docs/mdx/)
+- [📚 Gatsby guide](https://www.gatsbyjs.com/docs/mdx/)
 - [📣 Language](https://mdxjs.com)
 - [👩‍🔬 Specification](https://github.com/mdx-js/specification)
 
@@ -49,16 +49,10 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 ## Installation
 
-Install with npm:
+Install:
 
 ```shell
-npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
-```
-
-Install with yarn:
-
-```shell
-yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx@v1 @mdx-js/react@v1
 ```
 
 ## Usage

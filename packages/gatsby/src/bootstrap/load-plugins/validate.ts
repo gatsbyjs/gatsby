@@ -18,7 +18,7 @@ import {
   IPluginInfoOptions,
   ISiteConfig,
 } from "./types"
-import { resolvePlugin } from "./load"
+import { resolvePlugin } from "./resolve-plugin"
 
 interface IApi {
   version?: string
@@ -180,7 +180,7 @@ export async function handleBadExports({
 
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
-  rootDir: string | null
+  rootDir: string
 ): Promise<{
   errors: number
   plugins: Array<IPluginRefObject>
@@ -208,71 +208,87 @@ async function validatePluginsOptions(
       )({
         Joi: Joi.extend(joi => {
           return {
-            base: joi.any(),
             type: `subPlugins`,
-            args: (_, args: any): any => {
-              const entry = args?.entry ?? `index`
-
-              return joi
-                .array()
-                .items(
-                  joi
-                    .alternatives(
-                      joi.string(),
-                      joi.object({
-                        resolve: Joi.string(),
-                        options: Joi.object({}).unknown(true),
-                      })
-                    )
-                    .custom((value, helpers) => {
-                      if (typeof value === `string`) {
-                        value = { resolve: value }
-                      }
-
-                      try {
-                        const resolvedPlugin = resolvePlugin(value, rootDir)
-                        const modulePath = require.resolve(
-                          `${resolvedPlugin.resolve}/${entry}`
-                        )
-                        value.modulePath = modulePath
-                        value.module = require(modulePath)
-
-                        const normalizedPath = helpers.state.path
-                          .map((key, index) => {
-                            // if subplugin is part of an array - swap concrete index key with `[]`
-                            if (
-                              typeof key === `number` &&
-                              Array.isArray(
-                                helpers.state.ancestors[
-                                  helpers.state.path.length - index - 1
-                                ]
-                              )
-                            ) {
-                              if (index !== helpers.state.path.length - 1) {
-                                throw new Error(
-                                  `No support for arrays not at the end of path`
-                                )
-                              }
-                              return `[]`
-                            }
-
-                            return key
-                          })
-                          .join(`.`)
-
-                        subPluginPaths.add(normalizedPath)
-                      } catch (err) {
-                        console.log(err)
-                      }
-
-                      return value
-                    }, `Gatsby specific subplugin validation`)
+            base: joi
+              .array()
+              .items(
+                joi.alternatives(
+                  joi.string(),
+                  joi.object({
+                    resolve: Joi.string(),
+                    options: Joi.object({}).unknown(true),
+                  })
                 )
-                .default([])
+              )
+              .custom((arrayValue, helpers) => {
+                const entry = helpers.schema._flags.entry
+                return arrayValue.map(value => {
+                  if (typeof value === `string`) {
+                    value = { resolve: value }
+                  }
+
+                  try {
+                    const resolvedPlugin = resolvePlugin(value, rootDir)
+                    const modulePath = require.resolve(
+                      `${resolvedPlugin.resolve}${entry ? `/${entry}` : ``}`
+                    )
+                    value.modulePath = modulePath
+                    value.module = require(modulePath)
+
+                    const normalizedPath = helpers.state.path
+                      .map((key, index) => {
+                        // if subplugin is part of an array - swap concrete index key with `[]`
+                        if (
+                          typeof key === `number` &&
+                          Array.isArray(
+                            helpers.state.ancestors[
+                              helpers.state.path.length - index - 1
+                            ]
+                          )
+                        ) {
+                          if (index !== helpers.state.path.length - 1) {
+                            throw new Error(
+                              `No support for arrays not at the end of path`
+                            )
+                          }
+                          return `[]`
+                        }
+
+                        return key
+                      })
+                      .join(`.`)
+
+                    subPluginPaths.add(normalizedPath)
+                  } catch (err) {
+                    console.log(err)
+                  }
+
+                  return value
+                })
+              }, `Gatsby specific subplugin validation`)
+              .default([]),
+            args: (schema: any, args: any): any => {
+              if (
+                args?.entry &&
+                schema &&
+                typeof schema === `object` &&
+                schema.$_setFlag
+              ) {
+                return schema.$_setFlag(`entry`, args.entry, { clone: true })
+              }
+              return schema
             },
           }
         }),
       })
+
+      // If rootDir and plugin.parentDir are the same, i.e. if this is a plugin a user configured in their gatsby-config.js (and not a sub-theme that added it), this will be ""
+      // Otherwise, this will contain (and show) the relative path
+      const configDir =
+        (plugin.parentDir &&
+          rootDir &&
+          path.relative(rootDir, plugin.parentDir)) ||
+        null
 
       if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
         // Validate correct usage of pluginOptionsSchema
@@ -292,11 +308,39 @@ async function validatePluginsOptions(
           })
         }
 
-        plugin.options = await validateOptionsSchema(
+        const { value, warning } = await validateOptionsSchema(
           optionsSchema,
           (plugin.options as IPluginInfoOptions) || {}
         )
 
+        plugin.options = value
+
+        // Handle unknown key warnings
+        const validationWarnings = warning?.details
+
+        if (validationWarnings?.length > 0) {
+          reporter.warn(
+            stripIndent(`
+        Warning: there are unknown plugin options for "${plugin.resolve}"${
+              configDir ? `, configured by ${configDir}` : ``
+            }: ${validationWarnings
+              .map(error => error.path.join(`.`))
+              .join(`, `)}
+        Please open an issue at https://ghub.io/${
+          plugin.resolve
+        } if you believe this option is valid.
+      `)
+          )
+          trackCli(`UNKNOWN_PLUGIN_OPTION`, {
+            name: plugin.resolve,
+            valueString: validationWarnings
+              .map(error => error.path.join(`.`))
+              .join(`, `),
+          })
+          // We do not increment errors++ here as we do not want to process.exit if there are only warnings
+        }
+
+        // Validate subplugins
         if (plugin.options?.plugins) {
           const { errors: subErrors, plugins: subPlugins } =
             await validatePluginsOptions(
@@ -305,7 +349,7 @@ async function validatePluginsOptions(
             )
           plugin.options.plugins = subPlugins
           if (subPlugins.length > 0) {
-            subPluginPaths.add(`plugins.[]`)
+            subPluginPaths.add(`plugins`)
           }
           errors += subErrors
         }
@@ -314,21 +358,7 @@ async function validatePluginsOptions(
         }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {
-          // Show a small warning on unknown options rather than erroring
-          const validationWarnings = error.details.filter(
-            err => err.type === `object.unknown`
-          )
-          const validationErrors = error.details.filter(
-            err => err.type !== `object.unknown`
-          )
-
-          // If rootDir and plugin.parentDir are the same, i.e. if this is a plugin a user configured in their gatsby-config.js (and not a sub-theme that added it), this will be ""
-          // Otherwise, this will contain (and show) the relative path
-          const configDir =
-            (plugin.parentDir &&
-              rootDir &&
-              path.relative(rootDir, plugin.parentDir)) ||
-            null
+          const validationErrors = error.details
           if (validationErrors.length > 0) {
             reporter.error({
               id: `11331`,
@@ -340,31 +370,6 @@ async function validatePluginsOptions(
             })
             errors++
           }
-
-          if (validationWarnings.length > 0) {
-            reporter.warn(
-              stripIndent(`
-                Warning: there are unknown plugin options for "${
-                  plugin.resolve
-                }"${
-                configDir ? `, configured by ${configDir}` : ``
-              }: ${validationWarnings
-                .map(error => error.path.join(`.`))
-                .join(`, `)}
-                Please open an issue at ghub.io/${
-                  plugin.resolve
-                } if you believe this option is valid.
-              `)
-            )
-            trackCli(`UNKNOWN_PLUGIN_OPTION`, {
-              name: plugin.resolve,
-              valueString: validationWarnings
-                .map(error => error.path.join(`.`))
-                .join(`, `),
-            })
-            // We do not increment errors++ here as we do not want to process.exit if there are only warnings
-          }
-
           return plugin
         }
 
@@ -379,7 +384,7 @@ async function validatePluginsOptions(
 
 export async function validateConfigPluginsOptions(
   config: ISiteConfig = {},
-  rootDir: string | null
+  rootDir: string
 ): Promise<void> {
   if (!config.plugins) return
 
@@ -421,7 +426,7 @@ export function collatePluginAPIs({
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
     const pluginNodeExports = resolveModuleExports(
-      `${plugin.resolve}/gatsby-node`,
+      plugin.resolvedCompiledGatsbyNode ?? `${plugin.resolve}/gatsby-node`,
       {
         mode: `require`,
       }

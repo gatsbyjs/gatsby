@@ -13,7 +13,7 @@ gatsby new wordpress-tutorial-site
 cd wordpress-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](https://www.gatsbyjs.org/packages/gatsby-source-wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](https://www.gatsbyjs.com/packages/gatsby-source-wordpress).
 
 ```shell
 npm install gatsby-source-wordpress
@@ -176,7 +176,7 @@ To do this, you need to:
 1. Create pages for each blog post
 2. Link up the title on the index page with the post page.
 
-If you haven't already, please read through [Part 7](https://www.gatsbyjs.org/tutorial/part-7/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
+If you haven't already, please read through [Part 7](https://www.gatsbyjs.com/docs/tutorial/part-7/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
 
 ### Creating pages for each blog post
 
@@ -207,7 +207,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-Next, [stop and restart](https://www.gatsbyjs.org/tutorial/part-0/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal.
+Next, [stop and restart](https://www.gatsbyjs.com/docs/tutorial/part-0/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal.
 
 Excellent! As explained in Part 7 of the tutorial, this `createPages` export is one of the Gatsby "workhorses" and allows us to create your blog posts (or pages, or custom post types, etc.) from your WordPress install.
 

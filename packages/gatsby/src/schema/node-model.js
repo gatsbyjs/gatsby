@@ -22,6 +22,7 @@ import {
 } from "../datastore"
 import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
 import { reportOnce } from "../utils/report-once"
+import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -70,13 +71,18 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, schemaComposer, createPageDependency }) {
+  constructor({
+    schema,
+    schemaComposer,
+    createPageDependency,
+    _rootNodeMap,
+    _trackedRootNodes,
+  }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.createPageDependencyActionCreator = createPageDependency
-
-    this._rootNodeMap = new WeakMap()
-    this._trackedRootNodes = new WeakSet()
+    this._rootNodeMap = _rootNodeMap || new WeakMap()
+    this._trackedRootNodes = _trackedRootNodes || new WeakSet()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
@@ -149,7 +155,7 @@ class LocalNodeModel {
       this.trackInlineObjectsInRootNode(node)
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNode(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -180,7 +186,7 @@ class LocalNodeModel {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -221,7 +227,7 @@ class LocalNodeModel {
         typeof type === `string` ? type : type.name
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -261,6 +267,37 @@ class LocalNodeModel {
 
     const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
 
+    let runQueryActivity
+
+    // check if we can get node by id and skip
+    // more expensive query pipeline
+    if (
+      typeof query?.filter?.id?.eq !== `undefined` &&
+      Object.keys(query.filter).length === 1 &&
+      Object.keys(query.filter.id).length === 1
+    ) {
+      if (tracer) {
+        runQueryActivity = reporter.phantomActivity(`runQuerySimpleIdEq`, {
+          parentSpan: tracer.getParentActivity().span,
+        })
+        runQueryActivity.start()
+      }
+      const nodeFoundById = this.getNodeById({
+        id: query.filter.id.eq,
+        type: gqlType,
+      })
+
+      if (runQueryActivity) {
+        runQueryActivity.end()
+      }
+
+      return {
+        gqlType,
+        entries: new GatsbyIterable(nodeFoundById ? [nodeFoundById] : []),
+        totalCount: async () => (nodeFoundById ? 1 : 0),
+      }
+    }
+
     let materializationActivity
     if (tracer) {
       materializationActivity = reporter.phantomActivity(`Materialization`, {
@@ -277,6 +314,7 @@ class LocalNodeModel {
       min: query.min,
       sum: query.sum,
     })
+
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
       this.schema,
@@ -294,7 +332,6 @@ class LocalNodeModel {
       materializationActivity.end()
     }
 
-    let runQueryActivity
     if (tracer) {
       runQueryActivity = reporter.phantomActivity(`runQuery`, {
         parentSpan: tracer.getParentActivity().span,
@@ -346,7 +383,10 @@ class LocalNodeModel {
       pageDependencies.connectionType = gqlType.name
     }
     this.trackPageDependencies(result.entries, pageDependencies)
-    return result
+    return {
+      entries: wrapNodes(result.entries),
+      totalCount: result.totalCount,
+    }
   }
 
   /**
@@ -383,7 +423,7 @@ class LocalNodeModel {
       //  the query whenever any node of this type changes.
       pageDependencies.connectionType = gqlType.name
     }
-    return this.trackPageDependencies(first, pageDependencies)
+    return wrapNode(this.trackPageDependencies(first, pageDependencies))
   }
 
   prepareNodes(type, queryFields, fieldsToResolve) {

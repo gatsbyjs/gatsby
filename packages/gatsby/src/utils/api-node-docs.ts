@@ -403,6 +403,13 @@ export const onCreateWebpackConfig = true
 
 /**
  * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
+ *
+ * @param {object} $0
+ * @param {object} $0.actions
+ * @example
+ * exports.onPreInit = ({ actions }) => {
+ *
+ * }
  */
 export const onPreInit = true
 
@@ -437,6 +444,13 @@ export const onPreBuild = true
 /**
  * The last extension point called after all other parts of the build process
  * are complete.
+ *
+ * @example
+ * exports.onPostBuild = ({ reporter, basePath, pathPrefix }) => {
+ *  reporter.info(
+ *   `Site was built with basePath: ${basePath} & pathPrefix: ${pathPrefix}`
+ *  );
+ * };
  */
 export const onPostBuild = true
 

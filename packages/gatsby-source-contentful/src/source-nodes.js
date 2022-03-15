@@ -1,5 +1,4 @@
 // @ts-check
-import { createClient } from "contentful"
 import isOnline from "is-online"
 import _ from "lodash"
 
@@ -44,7 +43,6 @@ export async function sourceNodes(
     actions,
     getNode,
     getNodes,
-    getNodesByType,
     createNodeId,
     store,
     cache,
@@ -58,22 +56,22 @@ export async function sourceNodes(
     actions
   const online = await isOnline()
 
+  getNodes().forEach(node => {
+    if (node.internal.owner !== `gatsby-source-contentful`) {
+      return
+    }
+    touchNode(node)
+    if (node?.fields?.localFile) {
+      // Prevent GraphQL type inference from crashing on this property
+      touchNode(getNode(node.fields.localFile))
+    }
+  })
+
   if (
     !online &&
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes().forEach(node => {
-      if (node.internal.owner !== `gatsby-source-contentful`) {
-        return
-      }
-      touchNode(node)
-      if (node.localFile___NODE) {
-        // Prevent GraphQL type inference from crashing on this property
-        touchNode(getNode(node.localFile___NODE))
-      }
-    })
-
     return
   }
 
@@ -82,12 +80,9 @@ export async function sourceNodes(
     `environment`
   )}`
 
-  const fetchActivity = reporter.activityTimer(
-    `Contentful: Fetch data (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
+  const fetchActivity = reporter.activityTimer(`Contentful: Fetch data`, {
+    parentSpan,
+  })
 
   // If the user knows they are offline, serve them cached result
   // For prod builds though always fail if we can't get the latest data
@@ -112,7 +107,6 @@ export async function sourceNodes(
   fetchActivity.start()
 
   const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
-  const CACHE_SYNC_DATA = `contentful-sync-data-${sourceId}`
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
 
   /*
@@ -165,58 +159,9 @@ export async function sourceNodes(
     })
   }
 
-  // Create a map of up to date entries and assets
-  function mergeSyncData(previous, current, deletedEntities) {
-    const deleted = new Set(deletedEntities.map(e => e.sys.id))
-    const entryMap = new Map()
-    previous.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
-    current.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
-    return [...entryMap.values()]
-  }
-
-  let previousSyncData = {
-    assets: [],
-    entries: [],
-  }
-  const cachedData = await cache.get(CACHE_SYNC_DATA)
-
-  if (cachedData) {
-    previousSyncData = cachedData
-  }
-
-  const mergedSyncData = {
-    entries: mergeSyncData(
-      previousSyncData.entries,
-      currentSyncData.entries,
-      currentSyncData.deletedEntries
-    ),
-    assets: mergeSyncData(
-      previousSyncData.assets,
-      currentSyncData.assets,
-      currentSyncData.deletedAssets
-    ),
-  }
-
-  // @todo based on the sys metadata we should be able to differentiate new and updated entities
-  reporter.info(
-    `Contentful: ${currentSyncData.entries.length} new/updated entries`
-  )
-  reporter.info(
-    `Contentful: ${currentSyncData.deletedEntries.length} deleted entries`
-  )
-  reporter.info(`Contentful: ${previousSyncData.entries.length} cached entries`)
-  reporter.info(
-    `Contentful: ${currentSyncData.assets.length} new/updated assets`
-  )
-  reporter.info(`Contentful: ${previousSyncData.assets.length} cached assets`)
-  reporter.info(
-    `Contentful: ${currentSyncData.deletedAssets.length} deleted assets`
-  )
-
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
 
-  await cache.set(CACHE_SYNC_DATA, mergedSyncData)
   actions.setPluginStatus({
     [CACHE_SYNC_TOKEN]: nextSyncToken,
   })
@@ -225,76 +170,58 @@ export async function sourceNodes(
 
   // Process data fetch results and turn them into GraphQL entities
   const processingActivity = reporter.activityTimer(
-    `Contentful: Process data (${sourceId})`,
+    `Contentful: Process data`,
     {
       parentSpan,
     }
   )
   processingActivity.start()
 
-  // Store a raw and unresolved copy of the data for caching
-  const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
-
-  // Use the JS-SDK to resolve the entries and assets
-  const res = await createClient({
-    space: `none`,
-    accessToken: `fake-access-token`,
-  }).parseEntries({
-    items: mergedSyncData.entries,
-    includes: {
-      assets: mergedSyncData.assets,
-      entries: mergedSyncData.entries,
-    },
-  })
-
-  mergedSyncData.entries = res.items
-
-  // Inject raw API output to rich text fields
-  const richTextFieldMap = new Map()
-  contentTypeItems.forEach(contentType => {
-    richTextFieldMap.set(
-      contentType.sys.id,
-      contentType.fields
-        .filter(field => field.type === `RichText`)
-        .map(field => field.id)
-    )
-  })
-
-  const rawEntries = new Map()
-  mergedSyncDataRaw.entries.forEach(rawEntry =>
-    rawEntries.set(rawEntry.sys.id, rawEntry)
-  )
-
-  mergedSyncData.entries.forEach(entry => {
-    const contentTypeId = entry.sys.contentType.sys.id
-    const richTextFieldIds = richTextFieldMap.get(contentTypeId)
-    if (richTextFieldIds) {
-      richTextFieldIds.forEach(richTextFieldId => {
-        if (!entry.fields[richTextFieldId]) {
-          return
-        }
-        entry.fields[richTextFieldId] = rawEntries.get(entry.sys.id).fields[
-          richTextFieldId
-        ]
-      })
-    }
-  })
-
-  const { assets } = mergedSyncData
-
-  const entryList = buildEntryList({
-    mergedSyncData,
-    contentTypeItems,
-  })
-
+  // Array of all existing Contentful nodes
   const existingNodes = getNodes().filter(
     n =>
       n.internal.owner === `gatsby-source-contentful` &&
-      n.internal.type !== `ContentfulTag`
+      (pluginConfig.get(`enableTags`)
+        ? n.internal.type !== `ContentfulTag`
+        : true)
   )
-  existingNodes.forEach(n => touchNode(n))
+
+  // Report existing, new and updated nodes
+  const nodeCounts = {
+    newEntry: 0,
+    newAsset: 0,
+    updatedEntry: 0,
+    updatedAsset: 0,
+    existingEntry: 0,
+    existingAsset: 0,
+    deletedEntry: currentSyncData.deletedEntries.length,
+    deletedAsset: currentSyncData.deletedAssets.length,
+  }
+  existingNodes.forEach(node => nodeCounts[`existing${node.sys.type}`]++)
+  currentSyncData.entries.forEach(entry =>
+    entry.sys.revision === 1 ? nodeCounts.newEntry++ : nodeCounts.updatedEntry++
+  )
+  currentSyncData.assets.forEach(asset =>
+    asset.sys.revision === 1 ? nodeCounts.newAsset++ : nodeCounts.updatedAsset++
+  )
+
+  reporter.info(`Contentful: ${nodeCounts.newEntry} new entries`)
+  reporter.info(`Contentful: ${nodeCounts.updatedEntry} updated entries`)
+  reporter.info(`Contentful: ${nodeCounts.deletedEntry} deleted entries`)
+  reporter.info(
+    `Contentful: ${nodeCounts.existingEntry / locales.length} cached entries`
+  )
+  reporter.info(`Contentful: ${nodeCounts.newAsset} new assets`)
+  reporter.info(`Contentful: ${nodeCounts.updatedAsset} updated assets`)
+  reporter.info(
+    `Contentful: ${nodeCounts.existingAsset / locales.length} cached assets`
+  )
+  reporter.info(`Contentful: ${nodeCounts.deletedAsset} deleted assets`)
 
   reporter.verbose(`Building Contentful reference map`)
+
+  const entryList = buildEntryList({ contentTypeItems, currentSyncData })
+  const { assets } = currentSyncData
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
@@ -323,23 +250,27 @@ export async function sourceNodes(
     })
   })
 
-  // Update existing entry nodes that weren't updated but that need reverse
-  // links added.
+  // Update existing entry nodes that weren't updated but that need reverse links added.
   existingNodes
-    .filter(n => newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
+    .filter(n => !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
     .forEach(n => {
-      if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
-        foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
+      if (
+        n.contentful_id &&
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
+      ) {
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
           foreignReference => {
-            // Add reverse links
-            if (n[foreignReference.name]) {
-              n[foreignReference.name].push(foreignReference.id)
-              // It might already be there so we'll uniquify after pushing.
-              n[foreignReference.name] = _.uniq(n[foreignReference.name])
-            } else {
-              // If is one foreign reference, there can always be many.
-              // Best to be safe and put it in an array to start with.
-              n[foreignReference.name] = [foreignReference.id]
+            const { name, id } = foreignReference
+
+            // Create new reference field when none exists
+            if (!n[name]) {
+              n[name] = [id]
+              return
+            }
+
+            // Add non existing references to reference field
+            if (n[name] && !n[name].includes(id)) {
+              n[name].push(id)
             }
           }
         )
@@ -377,7 +308,7 @@ export async function sourceNodes(
 
   if (deletedEntries.length || deletedAssets.length) {
     const deletionActivity = reporter.activityTimer(
-      `Contentful: Deleting ${deletedEntries.length} nodes and ${deletedAssets.length} assets (${sourceId})`,
+      `Contentful: Deleting nodes and assets`,
       {
         parentSpan,
       }
@@ -388,12 +319,9 @@ export async function sourceNodes(
     deletionActivity.end()
   }
 
-  const creationActivity = reporter.activityTimer(
-    `Contentful: Create nodes (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
+  const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
+    parentSpan,
+  })
   creationActivity.start()
 
   for (let i = 0; i < contentTypeItems.length; i++) {
@@ -428,7 +356,6 @@ export async function sourceNodes(
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
-        syncToken,
         unstable_createNodeManifest,
       })
     )
@@ -438,17 +365,21 @@ export async function sourceNodes(
     reporter.info(`Creating ${assets.length} Contentful asset nodes`)
   }
 
+  const assetNodes = []
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
-    await Promise.all(
-      createAssetNodes({
-        assetItem: assets[i],
-        createNode,
-        createNodeId,
-        defaultLocale,
-        locales,
-        space,
-      })
+    assetNodes.push(
+      ...(await Promise.all(
+        createAssetNodes({
+          assetItem: assets[i],
+          createNode,
+          createNodeId,
+          defaultLocale,
+          locales,
+          space,
+          pluginConfig,
+        })
+      ))
     )
   }
 
@@ -474,13 +405,13 @@ export async function sourceNodes(
   // Download asset files to local fs
   if (pluginConfig.get(`downloadLocal`)) {
     await downloadContentfulAssets({
+      assetNodes,
       actions,
       createNodeId,
       store,
       cache,
       getCache,
       getNode,
-      getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })

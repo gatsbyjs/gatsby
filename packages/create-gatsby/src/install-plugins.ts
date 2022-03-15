@@ -1,7 +1,7 @@
-import { reporter } from "./reporter"
+import { reporter } from "./utils/reporter"
 import path from "path"
 import { PluginConfigMap } from "."
-import { requireResolve } from "./require-utils"
+import { requireResolve } from "./utils/require-utils"
 
 const resolveGatsbyPath = (rootPath: string): string | never => {
   try {

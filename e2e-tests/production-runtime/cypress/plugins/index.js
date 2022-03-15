@@ -1,4 +1,3 @@
-const compilationHash = require(`./compilation-hash`)
 const blockResources = require(`./block-resources`)
 
 module.exports = (on, config) => {
@@ -16,5 +15,5 @@ module.exports = (on, config) => {
     return args
   })
 
-  on(`task`, Object.assign({}, compilationHash, blockResources))
+  on(`task`, Object.assign({}, blockResources))
 }
