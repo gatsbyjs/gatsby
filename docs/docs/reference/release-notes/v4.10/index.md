@@ -32,9 +32,12 @@ https://github.com/gatsbyjs/gatsby/pull/34831
 ## Notable bugfixes & improvements
 
 - `gatsby`
-  - Fixed incorrect "inconsistent node counters" errors, via [PR #35025](https://github.com/gatsbyjs/gatsby/pull/35025)
+  - Fix handling of encoded query params, via [PR #34816](https://github.com/gatsbyjs/gatsby/pull/34816)
+  - Fix incorrect "inconsistent node counters" errors, via [PR #35025](https://github.com/gatsbyjs/gatsby/pull/35025)
+  - Use `gatsby-config.ts` file when creating new Gatsby project with TypeScript, via [PR #35128](https://github.com/gatsbyjs/gatsby/pull/35128)
   - Don't write out page-data file if query rerun but result didn't change, via [PR #34925](https://github.com/gatsbyjs/gatsby/pull/34925)
 - `gatsby-plugin-sharp`
+  - Fix MaxListenersExceededWarning messages, via [PR #35009](https://github.com/gatsbyjs/gatsby/pull/35009)
   - Fix generating multiple similar images with different `duotone` settings, via [PR #35075](https://github.com/gatsbyjs/gatsby/pull/35075)
 
 ## Contributors
