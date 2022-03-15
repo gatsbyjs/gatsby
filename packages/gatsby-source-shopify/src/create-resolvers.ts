@@ -34,7 +34,11 @@ export function createResolvers(
         createResolvers({
           [`${typePrefix}Shopify${type}`]: {
             metafield: {
-              resolve: async (source: any, args: any, context: any) =>
+              resolve: async (
+                source: IShopifyNode,
+                args: { key: string; namespace: string },
+                context: unknown
+              ) =>
                 context.nodeModel.findOne({
                   type: `${typePrefix}ShopifyMetafield`,
                   query: {

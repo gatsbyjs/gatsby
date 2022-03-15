@@ -40,28 +40,28 @@ const cancelOperationInProgress = jest.fn()
 
 const lastBuildTime = undefined
 
+const nodeTypes = [`products`, `variants`, `collections`, `orders`, `locations`]
+
+const generateTestName = (prioritize, type): string => {
+  const modifiers = [prioritize ? `priority` : `non-priority`]
+  return `Returns the correct ${type} when running a ${modifiers[0]} build`
+}
+
 describe(`makeSourceFromOperation`, () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  for (const priority of [true, false]) {
-    const pluginOptions = { prioritize: priority }
-    for (const type of [
-      `products`,
-      `variants`,
-      `collections`,
-      `orders`,
-      `locations`,
-    ]) {
-      it(`Returns the correct ${type} when running a ${
-        priority ? `` : `non-`
-      }priority build`, async () => {
+  for (const prioritize of [true, false]) {
+    for (const type of nodeTypes) {
+      it(generateTestName(prioritize, type), async () => {
         fetch.mockImplementationOnce(() => {
           return {
             body: mockBulkResults(type),
           }
         })
+
+        const pluginOptions = { prioritize }
 
         const sourceFromOperation = makeSourceFromOperation(
           finishLastOperation,
@@ -75,13 +75,13 @@ describe(`makeSourceFromOperation`, () => {
         await sourceFromOperation(operation)
 
         expect(cancelOperationInProgress.mock.calls.length).toEqual(
-          priority ? 1 : 0
+          prioritize ? 1 : 0
         )
-        expect(finishLastOperation.mock.calls.length).toEqual(priority ? 0 : 1)
-        expect(gatsbyApi.actions.createNode.mock.calls[0]).toMatchSnapshot()
-        expect(processBulkResults.mock.calls[0][2]).toEqual(
-          require(`./__data__/${type}.json`)
+        expect(finishLastOperation.mock.calls.length).toEqual(
+          prioritize ? 0 : 1
         )
+        expect(processBulkResults.mock.calls[0][2]).toMatchSnapshot()
+        expect(gatsbyApi.actions.createNode.mock.calls).toMatchSnapshot()
       })
     }
   }

@@ -4,7 +4,7 @@ import {
   IGatsbyImageData,
 } from "gatsby-plugin-image"
 
-const validFormats = new Set([`jpg`, `png`, `webp`, `auto`])
+const validFormats = new Set([`jpg`, `jpeg`, `png`, `webp`, `auto`])
 
 export function urlBuilder({
   width,

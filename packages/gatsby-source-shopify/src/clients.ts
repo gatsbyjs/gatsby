@@ -13,7 +13,7 @@ export function createGraphqlClient(
 
   async function graphqlFetch<T>(
     query: string,
-    variables?: Record<string, any>,
+    variables?: Record<string, unknown>,
     retries = 0
   ): Promise<T> {
     const response = await fetch(url, {

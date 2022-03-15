@@ -1,6 +1,6 @@
 import { PluginOptionsSchemaArgs } from "gatsby"
 
-export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): any {
+export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): unknown {
   // @ts-ignore TODO: When Gatsby updates Joi version, update type
   // Vague type error that we're not able to figure out related to isJoi missing
   // Probably related to Joi being outdated

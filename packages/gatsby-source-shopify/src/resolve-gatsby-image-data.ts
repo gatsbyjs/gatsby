@@ -22,7 +22,7 @@ async function getImageBase64({
   cache,
 }: {
   imageAddress: string
-  cache: any
+  cache: unknown
 }): Promise<string> {
   // Downloads file to the site cache and returns the file path for the given image (this is a path on the host system, not a URL)
   const filePath = await fetchRemoteFile({
@@ -42,7 +42,7 @@ function getBase64DataURI({ imageBase64 }: { imageBase64: string }): string {
   return `data:image/png;base64,${imageBase64}`
 }
 
-export function makeResolveGatsbyImageData(cache: any) {
+export function makeResolveGatsbyImageData(cache: unknown) {
   return async function resolveGatsbyImageData(
     image: Node & IShopifyImage,
     {
@@ -51,7 +51,7 @@ export function makeResolveGatsbyImageData(cache: any) {
       ...options
     }: IGatsbyImageFieldArgs
   ): Promise<IGatsbyImageData | null> {
-    const remainingOptions = options as Record<string, any>
+    const remainingOptions = options as Record<string, unknown>
     const ext = parseImageExtension(image.originalSrc)
 
     // Sharp cannot optimize GIFs so we must return null in that case

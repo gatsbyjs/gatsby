@@ -26,7 +26,7 @@ const updateCache = jest
   .spyOn(updateCacheModule, `updateCache`)
   .mockImplementation(() => undefined)
 
-const createOperations = jest
+jest
   .spyOn(createOperationsModule, `createOperations`)
   .mockImplementation(() => {
     return {
@@ -63,6 +63,21 @@ const createOperations = jest
     }
   })
 
+const connections = [`collections`, `orders`, `locations`]
+
+const generateTestName = (
+  prioritize,
+  lastBuildTime,
+  shopifyConnections
+): string => {
+  const modifiers = [
+    lastBuildTime ? `fresh` : `incremental`,
+    prioritize ? `priority` : `non-priority`,
+    shopifyConnections ? `with` : `without`,
+  ]
+  return `successfully runs a ${modifiers[0]} ${modifiers[1]} build ${modifiers[2]} connections`
+}
+
 const gatsbyApi = makeMockGatsbyApi()
 
 describe(`sourceNodes`, () => {
@@ -70,39 +85,36 @@ describe(`sourceNodes`, () => {
     jest.clearAllMocks()
   })
 
-  for (const shopifyConnections of [
-    [],
-    [`collections`, `orders`, `locations`],
-  ]) {
-    for (const prioritize of [true, false]) {
-      for (const lastBuildTime of [new Date(), undefined]) {
-        it(`successfully runs a ${lastBuildTime ? `fresh` : `incremental`} ${
-          prioritize ? `` : `non-`
-        }priority build ${
-          shopifyConnections.length ? `with` : `without`
-        } connections`, async () => {
-          getLastBuildTime.mockImplementationOnce(() => lastBuildTime)
+  for (const prioritize of [false, true]) {
+    for (const lastBuildTime of [undefined, new Date(0)]) {
+      for (const shopifyConnections of [undefined, connections]) {
+        it(
+          generateTestName(prioritize, lastBuildTime, shopifyConnections),
+          async () => {
+            getLastBuildTime.mockImplementationOnce(() => lastBuildTime)
+            setLastBuildTime.mockImplementationOnce(() => undefined)
 
-          for (const type of [
-            `products`,
-            `variants`,
-            `collections`,
-            `orders`,
-            `locations`,
-          ]) {
-            fetch.mockImplementationOnce(() => {
-              return {
-                body: mockBulkResults(type),
-              }
-            })
+            for (const type of [
+              `products`,
+              `variants`,
+              `collections`,
+              `orders`,
+              `locations`,
+            ]) {
+              fetch.mockImplementationOnce(() => {
+                return {
+                  body: mockBulkResults(type),
+                }
+              })
+            }
+
+            await sourceNodes(gatsbyApi, { prioritize, shopifyConnections })
+
+            expect(setLastBuildTime.mock.calls.length).toEqual(1)
+            expect(gatsbyApi.actions.createNode.mock.calls).toMatchSnapshot()
+            expect(updateCache.mock.calls.length).toEqual(lastBuildTime ? 1 : 0)
           }
-
-          await sourceNodes(gatsbyApi, { prioritize, shopifyConnections })
-
-          expect(setLastBuildTime.mock.calls.length).toEqual(1)
-          expect(gatsbyApi.actions.createNode.mock.calls).toMatchSnapshot()
-          expect(updateCache.mock.calls.length).toEqual(lastBuildTime ? 1 : 0)
-        })
+        )
       }
     }
   }

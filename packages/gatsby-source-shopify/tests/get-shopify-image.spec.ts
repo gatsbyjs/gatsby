@@ -6,9 +6,9 @@ const image = {
   height: 1535,
 }
 
-describe(`the getShopifyImage helper`, () => {
+describe(`getShopifyImage`, () => {
   it(`generates an imagedata object`, () => {
     const data = getShopifyImage({ image, layout: `fullWidth` })
-    expect(data?.images?.fallback?.srcSet).toMatchSnapshot()
+    expect(data).toMatchSnapshot()
   })
 })

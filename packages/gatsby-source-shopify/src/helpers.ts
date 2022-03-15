@@ -13,7 +13,7 @@ export function createNodeId(
   return gatsbyApi.createNodeId(`${typePrefix}${shopifyId}`)
 }
 
-export function getPluginStatus(gatsbyApi: NodePluginArgs): any {
+export function getPluginStatus(gatsbyApi: NodePluginArgs): unknown {
   return (
     gatsbyApi.store.getState().status.plugins?.[`gatsby-source-shopify`] || {}
   )
@@ -68,7 +68,7 @@ export function parseShopifyId(shopifyId: string): Array<string> {
   return shopifyId.match(pattern) || []
 }
 
-export function decorateBulkObject(input: any): any {
+export function decorateBulkObject(input: unknown): unknown {
   if (input && typeof input === `object`) {
     if (Array.isArray(input)) {
       return input.map(decorateBulkObject)
