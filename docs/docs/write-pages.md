@@ -66,7 +66,7 @@ This is a collection of page objects, created from Redux `pages` namespace. For 
 - [path](/docs/gatsby-internals-terminology/#path)
 - [matchPath](/docs/gatsby-internals-terminology/#matchpath)
 
-The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/gatsby-internals-terminology/#matchpath) for more info.
+The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-path.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-path.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/gatsby-internals-terminology/#matchpath) for more info.
 
 e.g
 
