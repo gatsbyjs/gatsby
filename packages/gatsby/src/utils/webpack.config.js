@@ -23,6 +23,7 @@ import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
+import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
@@ -229,6 +230,9 @@ module.exports = async (
         __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
+        HAS_REACT_18: JSON.stringify(
+          major(require(`react-dom/package.json`).version) >= 18
+        ),
       }),
 
       plugins.virtualModules(),

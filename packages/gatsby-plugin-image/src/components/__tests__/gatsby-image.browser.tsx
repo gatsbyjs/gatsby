@@ -3,9 +3,9 @@
  */
 
 import React from "react"
-import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
+import type { IGatsbyImageData } from "../gatsby-image.browser"
 
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(
@@ -20,15 +20,16 @@ jest.mock(
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
   let image: IGatsbyImageData
+  let GatsbyImage
 
   beforeEach(() => {
     console.warn = jest.fn()
     console.error = jest.fn()
     global.SERVER = true
     global.GATSBY___IMAGE = true
-  })
+    global.HAS_REACT_18 = false
 
-  beforeEach(() => {
+    GatsbyImage = require(`../gatsby-image.browser`).GatsbyImage
     image = {
       width: 100,
       height: 100,
@@ -80,6 +81,7 @@ describe(`GatsbyImage browser`, () => {
     jest.clearAllMocks()
     global.SERVER = undefined
     global.GATSBY___IMAGE = undefined
+    global.HAS_REACT_18 = undefined
     process.env.NODE_ENV = `test`
   })
 
