@@ -23,11 +23,9 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Image CDN
 
-todo
+Free your site from slow images forever. With the new Image CDN, we've added better support for remote files and images when building source plugins. Currenlty, WordPress & Contentful are using the new `RemoteFile` GraphQL interface to enable the new `GatsbyImage` resolver. The new resolver downloads images on demand and processes them during the build. Reducing build times and optimizing the user experience. What if we could remove image processing as a whole during the build step? Today with Image CDN on Gatsby Cloud, we defer all image processing at the edge, getting even faster builds!
 
-https://github.com/gatsbyjs/gatsby/pull/34825
-https://github.com/gatsbyjs/gatsby/pull/34832
-https://github.com/gatsbyjs/gatsby/pull/34831
+Checkout our [Enabling Image CDN support Guide](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-source-plugin/#enabling-image-cdn-support) and [Blog Post](https://www.gatsbyjs.com/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud)
 
 ## Notable bugfixes & improvements
 
