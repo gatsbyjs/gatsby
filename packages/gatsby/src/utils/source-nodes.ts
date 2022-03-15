@@ -111,6 +111,24 @@ export default async ({
 
   if (process.env.GATSBY_CLOUD_DATALAYER) {
     const got = require(`got`)
+
+    const sourcePlugins: Array<string> = []
+    const runAlwaysList = [`gatsby-source-filesystem`, `internal-data-bridge`]
+    for (const plugin of store.getState().flattenedPlugins) {
+      if (
+        plugin.nodeAPIs.includes(`sourceNodes`) &&
+        !runAlwaysList.includes(plugin.name)
+      ) {
+        sourcePlugins.push(plugin.name)
+      }
+    }
+
+    for (const node of getDataStore().iterateNodes()) {
+      if (sourcePlugins.includes(node.internal.owner)) {
+        store.dispatch(actions.touchNode(node, { name: node.internal.owner }))
+      }
+    }
+
     const rl = readline.createInterface({
       input: got.stream(process.env.GATSBY_CLOUD_DATALAYER),
       crlfDelay: Infinity,
@@ -133,7 +151,6 @@ export default async ({
 
     await events.once(rl, `close`)
 
-    const runAlwaysList = [`gatsby-source-filesystem`, `internal-data-bridge`]
     for (const plugin of store.getState().flattenedPlugins) {
       if (
         !plugin.nodeAPIs.includes(`sourceNodes`) ||
