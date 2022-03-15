@@ -84,7 +84,7 @@ You can also check out the [using-typescript](https://github.com/gatsbyjs/gatsby
 
 _This list is probably incomplete. If you've used another workaround in the past, add it to this document by using the "Edit on GitHub" button at the bottom._
 
-- [`ts-node`](https://typestrong.org/ts-node/): By having both a `gatsby-config.js` and `gatsby-config.ts` (where `gatsby-config.js` loads `ts-node`) you were able to use TypeScript. You'll need to remove the `gatsby-config.js` file, `ts-node` dependency, and address any of the [current limitations](/docs/how-to/custom-configuration/typescript/#current-limitations). When both a `gatsby-config.js` and `gatsby-config.ts` exist the `.ts` file will now always take precedence.
+- [`ts-node`](https://typestrong.org/ts-node/): By having both a `gatsby-config.js` and `gatsby-config.ts` (where `gatsby-config.js` registers `ts-node`) you were able to use TypeScript. You'll need to remove the `gatsby-config.js` file, `ts-node` dependency, and address any of the [current limitations](/docs/how-to/custom-configuration/typescript/#current-limitations). When both a `gatsby-config.js` and `gatsby-config.ts` exist the `.ts` file will now always take precedence.
 
 ## Notable bugfixes & improvements
 
