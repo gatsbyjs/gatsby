@@ -32,7 +32,7 @@ if (HAS_REACT_18) {
     Component: React.ReactChild | Iterable<React.ReactNode>,
     el: ReactDOM.Container,
     root: Root
-  ): unknown => {
+  ): Root => {
     if (!root) {
       root = reactDomClient.createRoot(el)
     }
