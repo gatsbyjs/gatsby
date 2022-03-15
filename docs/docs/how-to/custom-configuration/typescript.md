@@ -277,7 +277,7 @@ If you've used other ways of using TypeScript in the past, you'll also want to r
 
 ## Current limitations
 
-There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code, through documentation, or through contributions to upstream dependencies.
+There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code, through contributions to upstream dependencies, and updates to our documentation.
 
 ### Parcel TypeScript features
 
