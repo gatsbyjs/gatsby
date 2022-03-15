@@ -9,7 +9,7 @@ import {
   ImageFormat,
 } from "gatsby-plugin-image"
 
-import { IShopifyImage, urlBuilder } from "./get-shopify-image"
+import { urlBuilder } from "./get-shopify-image"
 import { parseImageExtension } from "./helpers"
 import { readFileSync } from "fs"
 

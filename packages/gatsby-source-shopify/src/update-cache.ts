@@ -30,10 +30,11 @@ function invalidateNode(
   if (node) {
     invalidatedNodeIds.push(node.id)
     const type = node.internal.type.replace(`${typePrefix}Shopify`, ``)
+    const { coupledNodeFields } = shopifyTypes[type]
 
-    if (shopifyTypes[type].coupledNodeFields) {
-      for (const field of shopifyTypes[type].coupledNodeFields) {
-        for (const coupledNodeId of node[field]) {
+    if (coupledNodeFields) {
+      for (const field of coupledNodeFields) {
+        for (const coupledNodeId of node[field] as Array<string>) {
           invalidatedNodeIds = invalidatedNodeIds.concat(
             invalidateNode(gatsbyApi, pluginOptions, nodeMap, coupledNodeId)
           )

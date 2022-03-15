@@ -13,7 +13,9 @@ export function createNodeId(
   return gatsbyApi.createNodeId(`${typePrefix}${shopifyId}`)
 }
 
-export function getPluginStatus(gatsbyApi: NodePluginArgs): unknown {
+export function getPluginStatus(
+  gatsbyApi: NodePluginArgs
+): Record<string, never> {
   return (
     gatsbyApi.store.getState().status.plugins?.[`gatsby-source-shopify`] || {}
   )
@@ -74,7 +76,7 @@ export function decorateBulkObject(input: unknown): unknown {
       return input.map(decorateBulkObject)
     }
 
-    const obj = { ...input }
+    const obj: Record<string, unknown> = { ...input }
 
     for (const key of Object.keys(obj)) {
       obj[key] = decorateBulkObject(obj[key])
@@ -109,7 +111,9 @@ export async function processShopifyImages(
     for (const fieldPath of imageFields) {
       const image = fieldPath
         .split(`.`)
-        .reduce((acc, value) => acc[value], node)
+        .reduce((acc, value) => acc[value] as never, node) as
+        | IShopifyImage
+        | undefined
 
       if (image && parseImageExtension(image.originalSrc) !== `gif`) {
         const fileNode = await createRemoteFileNode({

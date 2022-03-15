@@ -1,13 +1,14 @@
 interface IBulkResult {
   id: string
-  [key: string]: any
+  [key: string]: unknown
 }
 
-type BulkResults = IBulkResult[]
+type BulkResults = Array<IBulkResult>
 
 interface IDecoratedResult {
   shopifyId: string
-  [key: string]: any
+  __parentId?: string
+  [key: string]: unknown
 }
 
 type BulkOperationStatus =
@@ -44,13 +45,13 @@ interface ICurrentBulkOperationResponse {
 }
 
 interface IUserError {
-  field?: string[]
+  field?: Array<string>
   message: string
 }
 
 interface IBulkOperationRunQueryResponse {
   bulkOperationRunQuery: {
-    userErrors: IUserError[]
+    userErrors: Array<IUserError>
     bulkOperation: IBulkOperationNode
   }
 }
@@ -58,7 +59,7 @@ interface IBulkOperationRunQueryResponse {
 interface IBulkOperationCancelResponse {
   bulkOperationCancel: {
     bulkOperation: IBulkOperationNode
-    userErrors: UserError[]
+    userErrors: Array<UserError>
   }
 }
 
@@ -115,10 +116,11 @@ interface IShopifyBulkOperation {
 interface IImageData {
   id: string
   originalSrc: string
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   localFile___NODE: string | undefined
 }
 
-interface IShopifyImage {
+interface IShopifyImage extends IShopifyNode {
   width: number
   height: number
   originalSrc: string
@@ -134,14 +136,14 @@ interface IShopifyNode {
     contentDigest: string
     description?: string
   }
-  [key: string]: any
+  [key: string]: unknown
 }
 
 interface IShopifyPluginOptions {
   password: string
   storeUrl: string
   downloadImages?: boolean
-  shopifyConnections?: string[]
+  shopifyConnections?: Array<string>
   typePrefix?: string
   salesChannel?: string
   prioritize?: boolean
@@ -152,5 +154,5 @@ interface IGraphQLClient {
 }
 
 interface IRestClient {
-  request: (path: string) => Promise<Response>
+  request: (path: string) => Promise<import("node-fetch").Response>
 }

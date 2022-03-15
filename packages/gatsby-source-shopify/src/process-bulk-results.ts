@@ -9,8 +9,8 @@ import {
   processShopifyImages,
 } from "./helpers"
 
-interface IBulkResultChildren {
-  [key: string]: Array<string | IBulkResult>
+interface IDecoratedResultChildren {
+  [key: string]: Array<string | IDecoratedResult>
 }
 
 export async function processBulkResults(
@@ -20,10 +20,10 @@ export async function processBulkResults(
 ): Promise<number> {
   let nodeCount = 0
   const promises: Array<Promise<void>> = []
-  const children: IBulkResultChildren = {}
+  const children: IDecoratedResultChildren = {}
 
   for (let i = results.length - 1; i >= 0; i -= 1) {
-    const result = decorateBulkObject(results[i])
+    const result = decorateBulkObject(results[i]) as IDecoratedResult
     const resultIsNode = Boolean(
       result.shopifyId &&
         JSON.stringify(Object.keys(result)) !== `["__parentId","shopifyId"]`
@@ -50,7 +50,7 @@ export async function processBulkResults(
           const childType =
             typeof child === `string`
               ? parseShopifyId(child)[1]
-              : child.__typename
+              : (child.__typename as string)
           const field = shopifyTypes[childType].key
 
           if (field) {
@@ -58,7 +58,7 @@ export async function processBulkResults(
               typeof child === `string`
                 ? createNodeId(child, gatsbyApi, pluginOptions)
                 : child,
-              ...(result[field] || []),
+              ...((result[field] || []) as Array<unknown>),
             ]
           } else {
             throw new Error(
