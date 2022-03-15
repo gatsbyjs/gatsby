@@ -1,7 +1,11 @@
 // @ts-check
 // This is more an integration test than it is a unit test. We try to mock as little as we can
 import _ from "lodash"
-import { createSchemaCustomization, sourceNodes } from "../gatsby-node"
+import {
+  createSchemaCustomization,
+  sourceNodes,
+  onPreInit,
+} from "../gatsby-node"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -11,7 +15,9 @@ import restrictedContentTypeFixture from "../__fixtures__/restricted-content-typ
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
+  const originalModule = jest.requireActual(`gatsby-core-utils`)
   return {
+    ...originalModule,
     createContentDigest: () => `contentDigest`,
   }
 })
@@ -46,7 +52,16 @@ describe(`gatsby-node`, () => {
     }),
     touchNode: jest.fn(),
   }
-  const schema = { buildObjectType: jest.fn(), buildInterfaceType: jest.fn() }
+  const schema = {
+    buildObjectType: jest.fn(() => {
+      return {
+        config: {
+          interfaces: [],
+        },
+      }
+    }),
+    buildInterfaceType: jest.fn(),
+  }
   const store = {
     getState: jest.fn(() => {
       return { program: { directory: process.cwd() }, status: {} }
@@ -75,7 +90,7 @@ describe(`gatsby-node`, () => {
     pluginOptions = defaultPluginOptions
   ) {
     await createSchemaCustomization(
-      { schema, actions, reporter, cache },
+      { schema, actions, reporter, cache, store },
       pluginOptions
     )
 
@@ -317,6 +332,94 @@ describe(`gatsby-node`, () => {
     reporter.panic.mockClear()
   })
 
+  let hasImported = false
+  describe(`onPreInit`, () => {
+    it(`should pass when gatsby-plugin-image is installed and configured`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      await onPreInit({
+        store: {
+          getState: () => {
+            return {
+              flattenedPlugins: [
+                {
+                  name: `gatsby-plugin-image`,
+                },
+              ],
+            }
+          },
+        },
+        reporter,
+      })
+    })
+
+    it(`should throw when gatsby-plugin-image is not installed`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      jest.doMock(`gatsby-plugin-image/graphql-utils`, () => {
+        if (hasImported) {
+          return jest.requireActual(`gatsby-plugin-image/graphql-utils`)
+        }
+
+        // only throw once
+        hasImported = true
+        throw new Error(`not installed`)
+      })
+
+      expect.assertions(2)
+      try {
+        await onPreInit({ store: {}, reporter })
+      } catch (err) {
+        console.log(err)
+        expect(err.id).toBe(`111005`)
+        expect(err.context).toMatchInlineSnapshot(`
+          Object {
+            "sourceMessage": "gatsby-plugin-image is missing from your project.
+          Please install \\"gatsby-plugin-image\\".",
+          }
+        `)
+      }
+    })
+    it(`should throw when gatsby-plugin-image is not configured`, async () => {
+      const reporter = {
+        panic: jest.fn(err => {
+          throw err
+        }),
+      }
+
+      expect.assertions(2)
+      try {
+        await onPreInit({
+          store: {
+            getState: () => {
+              return {
+                flattenedPlugins: [],
+              }
+            },
+          },
+          reporter,
+        })
+      } catch (err) {
+        console.log(err)
+        expect(err.id).toBe(`111005`)
+        expect(err.context).toMatchInlineSnapshot(`
+          Object {
+            "sourceMessage": "gatsby-plugin-image is missing from your gatsby-config file.
+          Please add \\"gatsby-plugin-image\\" to your plugins array.",
+          }
+        `)
+      }
+    })
+  })
+
   it(`should create nodes from initial payload`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
@@ -461,7 +564,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 22 cached entries",
+          "Contentful: 11 cached entries",
         ],
         Array [
           "Contentful: 1 new assets",
@@ -470,7 +573,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 8 cached assets",
+          "Contentful: 4 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -551,7 +654,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -560,7 +663,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -653,7 +756,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 1 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -662,7 +765,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 0 deleted assets",
@@ -739,7 +842,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 28 cached entries",
+          "Contentful: 14 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -748,7 +851,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 updated assets",
         ],
         Array [
-          "Contentful: 10 cached assets",
+          "Contentful: 5 cached assets",
         ],
         Array [
           "Contentful: 1 deleted assets",

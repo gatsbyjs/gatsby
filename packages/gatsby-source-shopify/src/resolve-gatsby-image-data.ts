@@ -1,4 +1,5 @@
-import { fetchRemoteFile } from "gatsby-core-utils"
+import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
+import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import {
   generateImageData,
   getLowResolutionImageURL,
@@ -7,11 +8,10 @@ import {
   IImage,
   ImageFormat,
 } from "gatsby-plugin-image"
-import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
-import { urlBuilder } from "./get-shopify-image"
-import { readFileSync } from "fs"
 
+import { IShopifyImage, urlBuilder } from "./get-shopify-image"
 import { parseImageExtension } from "./helpers"
+import { readFileSync } from "fs"
 
 type IImageWithPlaceholder = IImage & {
   placeholder: string
@@ -19,15 +19,18 @@ type IImageWithPlaceholder = IImage & {
 
 async function getImageBase64({
   imageAddress,
-  cache,
+  directory,
+  contentDigest,
 }: {
   imageAddress: string
-  cache: unknown
+  directory: string
+  contentDigest: string
 }): Promise<string> {
   // Downloads file to the site cache and returns the file path for the given image (this is a path on the host system, not a URL)
   const filePath = await fetchRemoteFile({
     url: imageAddress,
-    cache,
+    directory,
+    cacheKey: contentDigest,
   })
   const buffer = readFileSync(filePath)
   return buffer.toString(`base64`)
@@ -44,7 +47,7 @@ function getBase64DataURI({ imageBase64 }: { imageBase64: string }): string {
 
 export function makeResolveGatsbyImageData(cache: unknown) {
   return async function resolveGatsbyImageData(
-    image: Node & IShopifyImage,
+    image: IShopifyImage,
     {
       formats = [`auto`],
       layout = `constrained`,
@@ -97,7 +100,8 @@ export function makeResolveGatsbyImageData(cache: unknown) {
       })
       const imageBase64 = await getImageBase64({
         imageAddress: lowResImageURL,
-        cache,
+        directory: cache.directory as string,
+        contentDigest: image.internal.contentDigest,
       })
 
       // This would be your own function to download and generate a low-resolution placeholder

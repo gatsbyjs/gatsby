@@ -139,7 +139,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
   - chore(gatsby-source-contentful): clean up code base and introduce es-module syntax [PR #33213](https://github.com/gatsbyjs/gatsby/pull/33213)
 - [fbuireu](https://github.com/fbuireu): chore(gatsby-source-contentful): Fix RichText example [PR #33261](https://github.com/gatsbyjs/gatsby/pull/33261)
 - [alvis](https://github.com/alvis): fix(gatsby): correct the definition for getNode [PR #33259](https://github.com/gatsbyjs/gatsby/pull/33259)
-- [Xenonym](https://github.com/Xenonym): chore(docs): fix typo in site perfomance guide [PR #33294](https://github.com/gatsbyjs/gatsby/pull/33294)
+- [Xenonym](https://github.com/Xenonym): chore(docs): fix typo in site performance guide [PR #33294](https://github.com/gatsbyjs/gatsby/pull/33294)
 - [labifrancis](https://github.com/labifrancis): chore(docs): Improve Shopify guide [PR #33298](https://github.com/gatsbyjs/gatsby/pull/33298)
 - [aaronadamsCA](https://github.com/aaronadamsCA): chore(gatsby): Fix static query types, document useStaticQuery [PR #33322](https://github.com/gatsbyjs/gatsby/pull/33322)
 - [crstnre](https://github.com/crstnre): docs: fix "(r)esource congestion" [PR #33392](https://github.com/gatsbyjs/gatsby/pull/33392)

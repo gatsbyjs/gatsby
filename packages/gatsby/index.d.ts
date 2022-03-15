@@ -17,7 +17,7 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = never // "image-service"
+export type AvailableFeatures = "image-cdn"
 
 export {
   default as Link,
@@ -1648,7 +1648,7 @@ export interface GatsbyFunctionResponse<T = any> extends ServerResponse {
 /**
  * Gatsby function route request
  */
-export interface GatsbyFunctionRequest extends IncomingMessage {
+export interface GatsbyFunctionRequest<ReqBody = any> extends IncomingMessage {
   /**
    * Object of values from URL query parameters (after the ? in the URL)
    */
@@ -1658,7 +1658,7 @@ export interface GatsbyFunctionRequest extends IncomingMessage {
    * Object of values from route parameters
    */
   params: Record<string, string>
-  body: any
+  body: ReqBody
   /**
    * Object of `cookies` from header
    */

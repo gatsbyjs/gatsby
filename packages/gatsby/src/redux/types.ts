@@ -534,14 +534,16 @@ interface IEndJobAction {
   plugin: IGatsbyIncompleteJob["plugin"]
 }
 
+export interface ICreatePageDependencyActionPayloadType {
+  path: string
+  nodeId?: string
+  connection?: string
+}
+
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
   plugin?: string
-  payload: {
-    path: string
-    nodeId?: string
-    connection?: string
-  }
+  payload: Array<ICreatePageDependencyActionPayloadType>
 }
 
 export interface IDeleteComponentDependenciesAction {
@@ -705,6 +707,7 @@ export interface ICreatePageAction {
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
   contextModified?: boolean
+  componentModified?: boolean
 }
 
 export interface ICreateRedirectAction {

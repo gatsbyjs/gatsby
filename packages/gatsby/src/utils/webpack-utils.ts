@@ -482,7 +482,7 @@ export const createWebpackUtils = (
         sourceMaps: false,
 
         cacheIdentifier: JSON.stringify({
-          browerslist: supportedBrowsers,
+          browsersList: supportedBrowsers,
           gatsbyPreset: require(`babel-preset-gatsby/package.json`).version,
         }),
       }

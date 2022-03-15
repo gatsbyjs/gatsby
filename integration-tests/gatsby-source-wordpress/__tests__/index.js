@@ -18,7 +18,7 @@ const {
   resetSchema,
 } = require(`../test-fns/test-utils/increment-remote-data`)
 
-jest.setTimeout(100000)
+jest.setTimeout(300000)
 
 // we run these tests twice in a row
 // to make sure everything passes on a warm cache build
@@ -60,6 +60,10 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
   let gatsbyDevelopProcess
 
   beforeAll(async () => {
+    if (process.env.SKIP_BEFORE_ALL) {
+      return
+    }
+
     if (!isWarmCache) {
       await gatsbyCleanBeforeAll()
     }
@@ -105,7 +109,10 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
   require(`../test-fns/index`)
 
   afterAll(done => {
-    gatsbyDevelopProcess.kill()
+    if (gatsbyDevelopProcess) {
+      gatsbyDevelopProcess.kill()
+    }
+
     done()
   })
 })

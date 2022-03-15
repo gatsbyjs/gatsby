@@ -14,7 +14,12 @@
   },
   "gatsby-plugin-theme-ui": {
     "message": "Theme UI",
-    "dependencies": ["theme-ui"]
+    "dependencies": [
+      "theme-ui",
+      "@emotion/react",
+      "@emotion/styled",
+      "@mdx-js/react@v1"
+    ]
   },
   "gatsby-plugin-vanilla-extract": {
     "message": "vanilla-extract",

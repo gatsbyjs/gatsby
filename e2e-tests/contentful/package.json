@@ -41,6 +41,7 @@
     "gatsby-cypress": "^1.3.0",
     "is-ci": "^3.0.0",
     "prettier": "2.2.1",
+    "srcset": "^5.0.0",
     "start-server-and-test": "^1.7.1"
   },
   "repository": {

@@ -1,7 +1,3 @@
-[![A dark purple background with hints of stars. On top of that it says "GatsbyConf 2022" and "March 2-3". The letters "2022" are big, playful, light purple, and have illustrations of stars, people in orbs around them.](https://user-images.githubusercontent.com/3477155/153261605-43e1075b-7889-435b-bd34-a5980b629843.jpg)](https://gatsbyconf.com?utm_source=github&utm_medium=readme-banner&utm_campaign=gatsbyconf22-repo-banner)
-
----
-
 <p align="center">
   <a href="https://www.gatsbyjs.com">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
@@ -64,7 +60,7 @@
   <a href="https://gatsby.dev/discord">Discord</a>
 </h2>
 
-Gatsby is a modern web framework for blazing fast websites.
+Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps, so you can create high-quality,

@@ -2,12 +2,14 @@
 import _ from "lodash"
 import origFetch from "node-fetch"
 import fetchRetry from "@vercel/fetch-retry"
+import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
+export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
+import { CODES } from "./report"
 
 import { maskText } from "./plugin-options"
 
 export { createSchemaCustomization } from "./create-schema-customization"
 export { sourceNodes } from "./source-nodes"
-export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
 
 const fetch = fetchRetry(origFetch)
 
@@ -39,6 +41,34 @@ const validateContentfulAccess = async pluginOptions => {
     })
 
   return undefined
+}
+
+export const onPreInit = async ({ store, reporter }) => {
+  // if gatsby-plugin-image is not installed
+  try {
+    await import(`gatsby-plugin-image/graphql-utils`)
+  } catch (err) {
+    reporter.panic({
+      id: CODES.GatsbyPluginMissing,
+      context: {
+        sourceMessage: `gatsby-plugin-image is missing from your project.\nPlease install "gatsby-plugin-image".`,
+      },
+    })
+  }
+
+  // if gatsby-plugin-image is not configured
+  if (
+    !store
+      .getState()
+      .flattenedPlugins.find(plugin => plugin.name === `gatsby-plugin-image`)
+  ) {
+    reporter.panic({
+      id: CODES.GatsbyPluginMissing,
+      context: {
+        sourceMessage: `gatsby-plugin-image is missing from your gatsby-config file.\nPlease add "gatsby-plugin-image" to your plugins array.`,
+      },
+    })
+  }
 }
 
 export const pluginOptionsSchema = ({ Joi }) =>
@@ -131,3 +161,8 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
       plugins: Joi.array(),
     })
     .external(validateContentfulAccess)
+
+/** @type {import('gatsby').GatsbyNode["onCreateDevServer"]} */
+export const onCreateDevServer = ({ app }) => {
+  polyfillImageServiceDevRoutes(app)
+}

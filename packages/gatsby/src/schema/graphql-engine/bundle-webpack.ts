@@ -71,7 +71,7 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
-          test: require.resolve(`lmdb`),
+          test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,
           parser: { amd: false },
           use: [
             {
@@ -97,8 +97,18 @@ export async function createGraphqlEngineBundle(
           },
         },
         {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: `babel-loader`,
+            options: {
+              presets: [`@babel/preset-typescript`],
+            },
+          },
+        },
+        {
           // For node binary relocations, include ".node" files as well here
-          test: /\.(m?js|node)$/,
+          test: /\.([cm]?js|node)$/,
           // it is recommended for Node builds to turn off AMD support
           parser: { amd: false },
           use: {
@@ -122,6 +132,8 @@ export async function createGraphqlEngineBundle(
         [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
           false,
         inquirer: false,
+        // only load one version of lmdb
+        lmdb: require.resolve(`lmdb`),
       },
     },
     plugins: [
