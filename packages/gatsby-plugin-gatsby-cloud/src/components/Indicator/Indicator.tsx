@@ -16,6 +16,8 @@ interface IContentSyncInfo {
   pluginName: string
 }
 
+interface IBuildInfo {}
+
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
   : 2000
