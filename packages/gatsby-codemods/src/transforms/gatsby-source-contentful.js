@@ -39,10 +39,72 @@ export function babelRecast(code, filePath) {
   return code
 }
 
+const CONTENT_TYPE_SELECTOR_REGEX = /^(allContentful|contentful)([A-Z0-9].+)/
+const CONTENT_TYPE_SELECTOR_BLACKLIST = [`Asset`, `Reference`, `Id`]
+const SYS_FIELDS_TRANSFORMS = new Map([
+  [`node_locale`, `locale`],
+  [`contentful_id`, `id`],
+  [`spaceId`, `spaceId`],
+  [`createdAt`, `firstPublishedAt`],
+  [`updatedAt`, `publishedAt`],
+  [`revision`, `publishedVersion`],
+  [`type`, `contentType`],
+])
+
+const isContentTypeSelector = selector => {
+  if (!selector) {
+    return false
+  }
+  const res = selector.match(CONTENT_TYPE_SELECTOR_REGEX)
+  return res && !CONTENT_TYPE_SELECTOR_BLACKLIST.includes(res[2])
+}
+const updateContentfulSelector = selector =>
+  selector.replace(`ontentful`, `ontentfulContentType`)
+
+const renderFilename = (path, state) =>
+  `${state.opts.filename} (Line ${path.node.loc.start.line})`
+
 export function updateImport(babel) {
   const { types: t, template } = babel
   return {
     visitor: {
+      Identifier(path, state) {
+        if (path.node.name === `contentfulId`) {
+          console.log(
+            `${renderFilename(
+              path,
+              state
+            )}: You should change "contentfulId" to "sys.id"`
+          )
+        }
+        if (path.node.name === `type`) {
+          console.log(
+            `${renderFilename(
+              path,
+              state
+            )}: You may change "type" to "sys.contentType.name"`
+          )
+        }
+      },
+      MemberExpression(path, state) {
+        if (isContentTypeSelector(path.node.property?.name)) {
+          if (
+            path.node.object?.name === `data` ||
+            path.node.object.property?.name === `data`
+          ) {
+            path.node.property.name = updateContentfulSelector(
+              path.node.property.name
+            )
+            state.opts.hasChanged = true
+          } else {
+            console.log(
+              `${renderFilename(path, state)}: You might need to change "${
+                path.node.property?.name
+              }" to "${updateContentfulSelector(path.node.property.name)}"`
+            )
+          }
+        }
+      },
       TaggedTemplateExpression({ node }, state) {
         if (node.tag.name !== `graphql`) {
           return
@@ -82,17 +144,6 @@ export function updateImport(babel) {
   }
 }
 
-const RENAME_BLACKLIST = [`Asset`, `Reference`]
-const SYS_FIELDS_TRANSFORMS = new Map([
-  [`node_locale`, `locale`],
-  [`contentful_id`, `id`],
-  [`spaceId`, `spaceId`],
-  [`createdAt`, `firstPublishedAt`],
-  [`updatedAt`, `publishedAt`],
-  [`revision`, `publishedVersion`],
-  [`type`, `contentType`],
-])
-
 function locateSubfield(node, fieldName) {
   return (
     node.selectionSet &&
@@ -108,17 +159,13 @@ function processGraphQLQuery(query, state) {
     graphql.visit(ast, {
       SelectionSet(node) {
         // Rename content type node selectors
-        const contentfulSelector = node.selections.find(({ name }) => {
-          const res = name?.value.match(
-            /^(allContentful|contentful)([A-Z0-9].+)/
-          )
-          return res && !RENAME_BLACKLIST.includes(res[2])
-        })
+        const contentfulSelector = node.selections.find(({ name }) =>
+          isContentTypeSelector(name?.value)
+        )
 
         if (contentfulSelector) {
-          contentfulSelector.name.value = contentfulSelector.name.value.replace(
-            `ontentful`,
-            `ontentfulContentType`
+          contentfulSelector.name.value = updateContentfulSelector(
+            contentfulSelector.name.value
           )
           hasChanged = true
           return
