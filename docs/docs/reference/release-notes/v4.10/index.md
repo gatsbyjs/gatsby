@@ -23,9 +23,32 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Image CDN
 
-Free your site from slow images forever. With the new Image CDN, we've added better support for remote files and images when building source plugins. Currenlty, WordPress & Contentful are using the new `RemoteFile` GraphQL interface to enable the new `GatsbyImage` resolver. The new resolver downloads images on demand and processes them during the build. Reducing build times and optimizing the user experience. What if we could remove image processing as a whole during the build step? Today with Image CDN on Gatsby Cloud, we defer all image processing at the edge, getting even faster builds!
+Free your site from slow images forever. With the new Image CDN, we've added better support for remote files and images when building source plugins. The source plugins for WordPress & Contentful are already using the new `RemoteFile` GraphQL interface to enable the new `GatsbyImage` resolver (so you can try it out today). Other popular CMS and support for local files will follow. The new `GatsbyImage` resolver downloads images on demand and processes them during the build. This results in reduced build times and better user experience. You can even remove image processing as a whole during the build step! With Image CDN on Gatsby Cloud, we defer all image processing at the edge, getting even faster builds!
 
-Checkout our [Enabling Image CDN support Guide](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/creating-a-source-plugin/#enabling-image-cdn-support) and [Blog Post](https://www.gatsbyjs.com/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud)
+If you're a source plugin author or written your custom source plugin, check out the [enabling Image CDN support guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/#enabling-image-cdn-support). You can also read the announcement blogpost [Image CDN: Lightning Fast Image Processing for Gatsby Cloud](/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud/) to learn more.
+
+Here's how you can use it in your queries:
+
+```graphql
+query {
+  speakerPage {
+    socialImage {
+      gatsbyImage(layout: FIXED, width: 440)
+    }
+    image {
+      gatsbyImage(layout: CONSTRAINED, width: 280, height: 280)
+    }
+  }
+}
+```
+
+So `gatsbyImage` replaces `gatsbyImageData` that you know from `gatsby-plugin-image` already. Feature parity for its arguments is not 100%, but the most common operations behave the same. Read [How to enable Image CDN](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171) to start using Image CDN today.
+
+Once Image CDN is enabled, images will be served from a relative URL similar to this:
+
+```
+/_gatsby/image/<base64-string>/<base64-string>/<original-file-name>.<file-extension>
+```
 
 ## Notable bugfixes & improvements
 
@@ -35,7 +58,7 @@ Checkout our [Enabling Image CDN support Guide](https://www.gatsbyjs.com/docs/ho
   - Use `gatsby-config.ts` file when creating new Gatsby project with TypeScript, via [PR #35128](https://github.com/gatsbyjs/gatsby/pull/35128)
   - Don't write out page-data file if query rerun but result didn't change, via [PR #34925](https://github.com/gatsbyjs/gatsby/pull/34925)
 - `gatsby-plugin-sharp`
-  - Fix MaxListenersExceededWarning messages, via [PR #35009](https://github.com/gatsbyjs/gatsby/pull/35009)
+  - Fix `MaxListenersExceededWarning` messages, via [PR #35009](https://github.com/gatsbyjs/gatsby/pull/35009)
   - Fix generating multiple similar images with different `duotone` settings, via [PR #35075](https://github.com/gatsbyjs/gatsby/pull/35075)
 
 ## Contributors
