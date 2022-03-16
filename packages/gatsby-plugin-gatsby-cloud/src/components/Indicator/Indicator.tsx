@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef, FC } from "react"
-import IndicatorProvider from "../context/indicatorProvider"
-import { BuildStatus } from "../models/enums"
-import { useTrackEvent, getBuildInfo } from "../utils"
+import IndicatorProvider from "../../context/indicatorProvider"
+import { BuildStatus } from "../../models/enums"
+import { useTrackEvent, getBuildInfo } from "../../utils"
 import {
   LinkIndicatorButton,
   InfoIndicatorButton,
   GatsbyIndicatorButton,
-} from "./buttons"
-import Style from "./Style"
+} from "../buttons"
+import Style from "../Style"
 
-import { usePollForNodeManifest } from "../utils/use-poll-for-node-manifest"
+import { usePollForNodeManifest } from "../../utils/use-poll-for-node-manifest"
+
+interface IContentSyncInfo {
+  manifestId: string
+  pluginName: string
+}
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
@@ -30,7 +35,7 @@ const PreviewIndicator: FC = ({ children }) => (
   </>
 )
 
-const getContentSyncInfoFromURL = () => {
+const getContentSyncInfoFromURL = (): IContentSyncInfo | null => {
   const urlSearchParams = new URLSearchParams(window.location.search)
 
   // mid and plgn are shortened to keep the url short
@@ -50,9 +55,10 @@ let pageData
 let latestCheckedBuild
 let refreshNeeded = false
 
-const Indicator = () => {
+const Indicator: FC = () => {
   const [buildInfo, setBuildInfo] = useState()
-  const [contentSyncInfo, setContentSyncInfo] = useState(null)
+  const [contentSyncInfo, setContentSyncInfo] =
+    useState<IContentSyncInfo | null>(null)
   const usingContentSync = !!contentSyncInfo
 
   const timeoutRef = useRef(null)
