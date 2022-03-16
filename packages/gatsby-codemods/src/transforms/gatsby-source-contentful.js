@@ -64,6 +64,22 @@ const updateContentfulSelector = selector =>
 const renderFilename = (path, state) =>
   `${state.opts.filename} (Line ${path.node.loc.start.line})`
 
+const injectNewFields = (selections, newFields, fieldToReplace) => {
+  if (!fieldToReplace) {
+    return [...selections, ...newFields]
+  }
+
+  const fieldIndex = selections.findIndex(
+    ({ name }) => name?.value === fieldToReplace
+  )
+
+  return [
+    ...selections.slice(0, fieldIndex),
+    ...newFields,
+    ...selections.slice(fieldIndex + 1),
+  ]
+}
+
 export function updateImport(babel) {
   const { types: t, template } = babel
   return {
@@ -145,10 +161,54 @@ export function updateImport(babel) {
 }
 
 function locateSubfield(node, fieldName) {
-  return (
-    node.selectionSet &&
-    node.selectionSet.selections.find(({ name }) => name?.value === fieldName)
-  )
+  const subFields = node.selectionSet?.selections || node.value?.fields
+  if (!subFields) {
+    return null
+  }
+  return subFields.find(({ name }) => name?.value === fieldName)
+}
+
+const flattenAssetFields = node => {
+  const flatAssetFields = []
+  // Flatten asset file field
+  const fileField = locateSubfield(node, `file`)
+  if (fileField) {
+    // Top level file fields
+    const urlField = locateSubfield(fileField, `url`)
+    if (urlField) {
+      flatAssetFields.push(urlField)
+    }
+    const fileNameField = locateSubfield(fileField, `fileName`)
+    if (fileNameField) {
+      flatAssetFields.push(fileNameField)
+    }
+    const contentTypeField = locateSubfield(fileField, `contentType`)
+    if (contentTypeField) {
+      flatAssetFields.push(contentTypeField)
+    }
+
+    // details subfield with size and dimensions
+    const detailsField = locateSubfield(fileField, `details`)
+    if (detailsField) {
+      const sizeField = locateSubfield(detailsField, `size`)
+      if (sizeField) {
+        flatAssetFields.push(sizeField)
+      }
+      // width & height from image subfield
+      const imageField = locateSubfield(detailsField, `image`)
+      if (imageField) {
+        const widthField = locateSubfield(imageField, `width`)
+        if (widthField) {
+          flatAssetFields.push(widthField)
+        }
+        const heightField = locateSubfield(imageField, `height`)
+        if (heightField) {
+          flatAssetFields.push(heightField)
+        }
+      }
+    }
+  }
+  return flatAssetFields
 }
 
 function processGraphQLQuery(query, state) {
@@ -157,6 +217,19 @@ function processGraphQLQuery(query, state) {
     const ast = graphql.parse(query)
 
     graphql.visit(ast, {
+      Argument(node) {
+        if (node.name.value === `filter`) {
+          const flatAssetFields = flattenAssetFields(node)
+          if (flatAssetFields.length) {
+            node.value.fields = injectNewFields(
+              node.value.fields,
+              flatAssetFields,
+              `file`
+            )
+            hasChanged = true
+          }
+        }
+      },
       SelectionSet(node) {
         // Rename content type node selectors
         const contentfulSelector = node.selections.find(({ name }) =>
@@ -217,18 +290,19 @@ function processGraphQLQuery(query, state) {
             },
           }
 
+          // Inject the new sys at the first occurence of any old sys field
           node.selections = node.selections
             .map(field => {
               if (SYS_FIELDS_TRANSFORMS.has(field.name?.value)) {
                 if (!sysInjected) {
-                  // inject for first occurence
+                  // Inject for first occurence of a sys field
                   sysInjected = true
                   return sysField
                 }
-                // remove all the others
+                // Remove all later fields
                 return null
               }
-              // keep non-sys fields as they are
+              // Keep non-sys fields as they are
               return field
             })
             .filter(Boolean)
@@ -237,8 +311,6 @@ function processGraphQLQuery(query, state) {
           return
         }
 
-        // @todo transform filters
-
         // @todo transform sorting
 
         // @todo text field: field.field -> field.raw
@@ -246,68 +318,15 @@ function processGraphQLQuery(query, state) {
         // @todo rich text
       },
       Field(node, index) {
-        // console.log(`entering field: `, { node, index })
-
         // Flatten asset file field
-        const fileField = locateSubfield(node, `file`)
-        if (fileField) {
-          // Top level file fields
-          const newFields = []
-          if (locateSubfield(fileField, `url`)) {
-            newFields.push({
-              kind: `Field`,
-              name: { kind: `Name`, value: `url` },
-            })
-          }
-          if (locateSubfield(fileField, `fileName`)) {
-            newFields.push({
-              kind: `Field`,
-              name: { kind: `Name`, value: `fileName` },
-            })
-          }
-          if (locateSubfield(fileField, `contentType`)) {
-            newFields.push({
-              kind: `Field`,
-              name: { kind: `Name`, value: `contentType` },
-            })
-          }
+        const flatAssetFields = flattenAssetFields(node)
 
-          // details subfield with size and dimensions
-          const detailsField = locateSubfield(fileField, `details`)
-          if (detailsField) {
-            if (locateSubfield(detailsField, `size`)) {
-              newFields.push({
-                kind: `Field`,
-                name: { kind: `Name`, value: `size` },
-              })
-            }
-            // width & height from image subfield
-            const imageField = locateSubfield(detailsField, `image`)
-            if (imageField) {
-              if (locateSubfield(imageField, `width`)) {
-                newFields.push({
-                  kind: `Field`,
-                  name: { kind: `Name`, value: `width` },
-                })
-              }
-              if (locateSubfield(imageField, `height`)) {
-                newFields.push({
-                  kind: `Field`,
-                  name: { kind: `Name`, value: `height` },
-                })
-              }
-            }
-          }
-
-          // Replace old file field with new fields
-          const fileFieldIndex = node.selectionSet.selections.findIndex(
-            ({ name }) => name?.value === `file`
+        if (flatAssetFields.length) {
+          node.selectionSet.selections = injectNewFields(
+            node.selectionSet.selections,
+            flatAssetFields,
+            `file`
           )
-          node.selectionSet.selections = [
-            ...node.selectionSet.selections.slice(0, fileFieldIndex),
-            ...newFields,
-            ...node.selectionSet.selections.slice(fileFieldIndex + 1),
-          ]
 
           hasChanged = true
         }
