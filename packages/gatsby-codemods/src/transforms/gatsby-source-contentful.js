@@ -98,7 +98,7 @@ export function updateImport(babel) {
             `${renderFilename(
               path,
               state
-            )}: You may change "type" to "sys.contentType.name"`
+            )}: You may need to change "type" to "sys.contentType.name"`
           )
         }
       },
@@ -228,21 +228,18 @@ function processGraphQLQuery(query, state) {
             )
             hasChanged = true
           }
+          // @todo sys field filters
         }
       },
       SelectionSet(node) {
         // Rename content type node selectors
-        const contentfulSelector = node.selections.find(({ name }) =>
-          isContentTypeSelector(name?.value)
-        )
-
-        if (contentfulSelector) {
-          contentfulSelector.name.value = updateContentfulSelector(
-            contentfulSelector.name.value
-          )
-          hasChanged = true
-          return
-        }
+        node.selections = node.selections.map(field => {
+          if (isContentTypeSelector(field.name?.value)) {
+            field.name.value = updateContentfulSelector(field.name.value)
+            hasChanged = true
+          }
+          return field
+        })
 
         // Move sys attributes into real sys
         const contentfulSysFields = node.selections.filter(({ name }) =>
@@ -335,7 +332,7 @@ function processGraphQLQuery(query, state) {
     return { ast, hasChanged }
   } catch (err) {
     throw new Error(
-      `GatsbyImageCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`
+      `GatsbySourceContentfulCodemod: GraphQL syntax error in query:\n\n${query}\n\nmessage:\n\n${err}`
     )
   }
 }
