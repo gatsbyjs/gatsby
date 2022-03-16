@@ -90,7 +90,7 @@ const SYS_FIELDS_TRANSFORMS = new Map([
   [`createdAt`, `firstPublishedAt`],
   [`updatedAt`, `publishedAt`],
   [`revision`, `publishedVersion`],
-  [`type`, `contentType`], // @todo special case, is now a link
+  [`type`, `contentType`],
 ])
 
 function locateSubfield(node, fieldName) {
@@ -132,13 +132,27 @@ function processGraphQLQuery(query, state) {
         if (contentfulSysFields.length) {
           const transformedSysFields = cloneDeep(contentfulSysFields).map(
             field => {
-              return {
+              const transformedField = {
                 ...field,
                 name: {
                   ...field.name,
                   value: SYS_FIELDS_TRANSFORMS.get(field.name.value),
                 },
               }
+
+              if (transformedField.name.value === `contentType`) {
+                transformedField.selectionSet = {
+                  kind: `SelectionSet`,
+                  selections: [
+                    {
+                      kind: `Field`,
+                      name: { kind: `Name`, value: `name` },
+                    },
+                  ],
+                }
+              }
+
+              return transformedField
             }
           )
 
