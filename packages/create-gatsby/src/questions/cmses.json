@@ -9,8 +9,7 @@
   "gatsby-source-datocms": {
     "message": "DatoCMS",
     "dependences": [
-      "gatsby-plugin-image",
-      "react-helmet"
+      "gatsby-plugin-image"
     ]
   },
   "gatsby-plugin-netlify-cms": {
