@@ -100,8 +100,6 @@ import {
 - `rem` values are based on a `font-size` of `16px` for the root element.
 - All tokens work in the context of [Theme UI's Theme Scales](https://theme-ui.com/theme-spec/#theme-scales), with the exception of `breakpoints`: Use `breakpointsArray` for `theme-ui` and its [responsive styles](https://theme-ui.com/getting-started/#responsive-styles) feature.
 
-Find a work-in-progress list of design tokens in the design tokens documentation at [gatsbyjs.com/guidelines/design-tokens](https://www.gatsbyjs.com/guidelines/design-tokens/).
-
 ## `theme-ui` themes 🎨
 
 ### `theme`

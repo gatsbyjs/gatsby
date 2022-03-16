@@ -263,7 +263,7 @@ On Contentful, a "Long text" field uses Markdown by default. The field is expose
 }
 ```
 
-Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [`gatsby-transformer-remark`](https://www.gatsbyjs.com/packages/gatsby-transformer-remark/). The transformer will create a `childMarkdownRemark` on the "Long text" field and expose the generated html as a child node:
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/). The transformer will create a `childMarkdownRemark` on the "Long text" field and expose the generated html as a child node:
 
 ```graphql
 {

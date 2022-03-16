@@ -400,7 +400,7 @@ You can specify language for `diff` code blocks by using `diff-[language]` to en
 
 ### Line hiding
 
-As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.com/packages/gatsby-remark-embed-snippet/).
+As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.com/plugins/gatsby-remark-embed-snippet/).
 
 As with highlighting lines, you can control which lines to hide by adding directives as comments in your source code.
 

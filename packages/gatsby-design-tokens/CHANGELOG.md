@@ -343,8 +343,8 @@ Here's all changes listed by "token group":
   - add `colors.whiteFade[5]`
 - BREAKING CHANGE: fix `colors.blackFade[80]`, `colors.whiteFade[80]`
   - both were set to an opacity of `.85`, adjusted to `.8`
-  - TODO: Adjust a couple of values for gatsbyjs.com; no clue about where we currently might use this in `gatsby-interface` and related (.com/Cloud dashboard).
-- feat: port `colors.code` from the gatsbyjs.com `theme-ui` theme to the `colors` tokens
+  - TODO: Adjust a couple of values for gatsbyjs.org; no clue about where we currently might use this in `gatsby-interface` and related (.com/Cloud dashboard).
+- feat: port `colors.code` from the gatsbyjs.org `theme-ui` theme to the `colors` tokens
   - 💚 This improves compliance with WCAG 2.0 AA color contrasts.
 - feat: add `colors.code.copyButton`
 - feat: add `colors.code.lineHighlightBackground`
@@ -384,7 +384,7 @@ Here's all changes listed by "token group":
 ##### `sizes`
 
 - BREAKING CHANGE: removed
-  - As discussed in https://github.com/gatsby-inc/gatsby-interface/issues/181, this moves the current gatsbyjs.com-centric `sizes` tokens to `theme-gatsbyjs-org` for clarity, until a clear pattern emerges.
+  - As discussed in https://github.com/gatsby-inc/gatsby-interface/issues/181, this moves the current gatsbyjs.org-centric `sizes` tokens to `theme-gatsbyjs-org` for clarity, until a clear pattern emerges.
 
 ##### `space`
 
@@ -402,11 +402,11 @@ Here's all changes listed by "token group":
 ##### `zIndices`
 
 - BREAKING CHANGE: removed
-  - As discussed in https://github.com/gatsby-inc/gatsby-interface/issues/181, this moves the current gatsbyjs.com-centric `zIndices` tokens to `theme-gatsbyjs-org`for clarity, until a clear pattern emerges.
+  - As discussed in https://github.com/gatsby-inc/gatsby-interface/issues/181, this moves the current gatsbyjs.org-centric `zIndices` tokens to `theme-gatsbyjs-org`for clarity, until a clear pattern emerges.
 
 #### Themes
 
-- feat: add base `theme-ui` Gatsby theme, gatsbyjs.com `theme-ui` theme
+- feat: add base `theme-ui` Gatsby theme, gatsbyjs.org `theme-ui` theme
   - Both themes don't tree-shake yet, so no `agadoo` yet in the corresponding `gatsby-design-tokens/package.json` scripts.
   - Both export the `theme-ui` theme as `theme` and also provide individual token group exports (because we require them in `www` for usage outside of the `theme-ui` context).
   - Example usage:
