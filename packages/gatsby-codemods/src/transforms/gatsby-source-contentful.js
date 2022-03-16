@@ -48,7 +48,6 @@ const SYS_FIELDS_TRANSFORMS = new Map([
   [`createdAt`, `firstPublishedAt`],
   [`updatedAt`, `publishedAt`],
   [`revision`, `publishedVersion`],
-  [`type`, `contentType`],
 ])
 
 const isContentTypeSelector = selector => {
@@ -100,6 +99,60 @@ export function updateImport(babel) {
               state
             )}: You may need to change "type" to "sys.contentType.name"`
           )
+        }
+        if (path.node.name === `contentType`) {
+          console.log(
+            `${renderFilename(
+              path,
+              state
+            )}: You may need to change "file.contentType" to "contentType"`
+          )
+        }
+      },
+      ObjectPattern(path, state) {
+        // rename sys.type to sys.contentType
+        path.node.properties.forEach(property => {
+          if (property.key?.name === `sys`) {
+            property.value.properties.forEach(sysProperty => {
+              if (sysProperty.key?.name === `type`) {
+                sysProperty.key.name = `contentType`
+              }
+            })
+          }
+        })
+
+        // renamed & moved sys properties
+        const transformedSysProperties = []
+        path.node.properties.forEach(property => {
+          if (SYS_FIELDS_TRANSFORMS.has(property.key?.name)) {
+            const transformedProp = {
+              ...property,
+              key: {
+                ...property.key,
+                name: SYS_FIELDS_TRANSFORMS.get(property.key.name),
+              },
+            }
+
+            transformedSysProperties.push(transformedProp)
+          }
+        })
+
+        if (transformedSysProperties.length) {
+          const sysField = {
+            type: `Property`,
+            key: {
+              type: `Identifier`,
+              name: `sys`,
+            },
+            value: {
+              type: `ObjectPattern`,
+              properties: transformedSysProperties,
+            },
+          }
+
+          path.node.properties = injectSysField(sysField, path.node.properties)
+
+          state.opts.hasChanged = true
         }
       },
       MemberExpression(path, state) {
@@ -160,6 +213,7 @@ export function updateImport(babel) {
   }
 }
 
+// Locate a subfield within a selection set or fields
 function locateSubfield(node, fieldName) {
   const subFields = node.selectionSet?.selections || node.value?.fields
   if (!subFields) {
@@ -168,6 +222,28 @@ function locateSubfield(node, fieldName) {
   return subFields.find(({ name }) => name?.value === fieldName)
 }
 
+// Replace first old field occurence with new sys field
+const injectSysField = (sysField, selections) => {
+  let sysInjected = false
+  return selections
+    .map(field => {
+      const fieldName = field.name?.value || field.key?.name
+      if (SYS_FIELDS_TRANSFORMS.has(fieldName)) {
+        if (!sysInjected) {
+          // Inject for first occurence of a sys field
+          sysInjected = true
+          return sysField
+        }
+        // Remove all later fields
+        return null
+      }
+      // Keep non-sys fields as they are
+      return field
+    })
+    .filter(Boolean)
+}
+
+// Flatten the old deeply nested Contentful asset structure
 const flattenAssetFields = node => {
   const flatAssetFields = []
   // Flatten asset file field
@@ -218,6 +294,7 @@ function processGraphQLQuery(query, state) {
 
     graphql.visit(ast, {
       Argument(node) {
+        // flatten Contentful Asset filters
         if (node.name.value === `filter`) {
           const flatAssetFields = flattenAssetFields(node)
           if (flatAssetFields.length) {
@@ -233,12 +310,22 @@ function processGraphQLQuery(query, state) {
       },
       SelectionSet(node) {
         // Rename content type node selectors
-        node.selections = node.selections.map(field => {
+        node.selections.forEach(field => {
           if (isContentTypeSelector(field.name?.value)) {
             field.name.value = updateContentfulSelector(field.name.value)
             hasChanged = true
           }
-          return field
+        })
+
+        // Rename sys.type to sys.contentType
+        node.selections.forEach(field => {
+          if (field.name?.value === `sys`) {
+            const typeField = locateSubfield(field, `type`)
+            if (typeField) {
+              typeField.name.value = `contentType`
+              hasChanged = true
+            }
+          }
         })
 
         // Move sys attributes into real sys
@@ -273,8 +360,6 @@ function processGraphQLQuery(query, state) {
             }
           )
 
-          // Replace first old field occurence with new sys field
-          let sysInjected = false
           const sysField = {
             kind: `Field`,
             name: {
@@ -288,21 +373,7 @@ function processGraphQLQuery(query, state) {
           }
 
           // Inject the new sys at the first occurence of any old sys field
-          node.selections = node.selections
-            .map(field => {
-              if (SYS_FIELDS_TRANSFORMS.has(field.name?.value)) {
-                if (!sysInjected) {
-                  // Inject for first occurence of a sys field
-                  sysInjected = true
-                  return sysField
-                }
-                // Remove all later fields
-                return null
-              }
-              // Keep non-sys fields as they are
-              return field
-            })
-            .filter(Boolean)
+          node.selections = injectSysField(sysField, node.selections)
 
           hasChanged = true
           return
