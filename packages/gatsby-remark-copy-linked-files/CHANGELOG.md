@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.10.0/packages/gatsby-remark-copy-linked-files) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Bug Fixes
+
+- Upgrade `probe-image-size` to fix memory leak warning fix [#35009](https://github.com/gatsbyjs/gatsby/issues/35009) ([f98c9ba](https://github.com/gatsbyjs/gatsby/commit/f98c9ba4a74cf4ba751daace911c90108f9b0343))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.9.0/packages/gatsby-remark-copy-linked-files) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

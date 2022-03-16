@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.10.0/packages/gatsby-cli) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- Allow write to gatsby-config.ts [#35074](https://github.com/gatsbyjs/gatsby/issues/35074) ([56fbf8d](https://github.com/gatsbyjs/gatsby/commit/56fbf8dd6a3f0a51f93786027b35e2720c6647cf))
+
 ### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.9.1/packages/gatsby-cli) (2022-03-09)
 
 **Note:** Version bump only for package gatsby-cli

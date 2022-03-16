@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.10.0/packages/gatsby) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- Capture number of compiled TS files in Telemetry [#35023](https://github.com/gatsbyjs/gatsby/issues/35023) ([5852dc8](https://github.com/gatsbyjs/gatsby/commit/5852dc8a50504c23f9553fa993011e1985397e81))
+- add support for image-cdn [#34825](https://github.com/gatsbyjs/gatsby/issues/34825) ([29b236b](https://github.com/gatsbyjs/gatsby/commit/29b236b7f2212d062a65d34781a612d715d936ef))
+
+#### Bug Fixes
+
+- use lmdb for resultHash cache so shared across workers [#34925](https://github.com/gatsbyjs/gatsby/issues/34925) ([a5cd72a](https://github.com/gatsbyjs/gatsby/commit/a5cd72a5adf4ce13ece5d14df1f3ae2f696fa8e3))
+- null check for context [#35096](https://github.com/gatsbyjs/gatsby/issues/35096) ([46e2902](https://github.com/gatsbyjs/gatsby/commit/46e2902b9d6130ddbc3b5cad0a8fe500e9610782))
+- fix schema printing for gatsby-transformer-json fix [#35098](https://github.com/gatsbyjs/gatsby/issues/35098) ([796800f](https://github.com/gatsbyjs/gatsby/commit/796800fe688831584753a6d445ca0b78c3d33418))
+- Misspelled cacheIdentifier key [#35070](https://github.com/gatsbyjs/gatsby/issues/35070) ([4b3a288](https://github.com/gatsbyjs/gatsby/commit/4b3a288251cf1c3511323ef6d9e51e0791bf063c))
+- fix issue with decoding URl fix [#34816](https://github.com/gatsbyjs/gatsby/issues/34816) ([93fd124](https://github.com/gatsbyjs/gatsby/commit/93fd124c5cdec68cbc94d48b171934b085cbc5e7))
+- fix incorrect "inconsistent node counters" invariant #35020 fix [#35020](https://github.com/gatsbyjs/gatsby/issues/35020) fix [#35025](https://github.com/gatsbyjs/gatsby/issues/35025) ([8644398](https://github.com/gatsbyjs/gatsby/commit/8644398fe8fad4d2e82a40396eadb42e05e45e86))
+- Better compile error handling [#35038](https://github.com/gatsbyjs/gatsby/issues/35038) ([c621381](https://github.com/gatsbyjs/gatsby/commit/c621381e4ba6fa055b2707c9e24e28ed517ae641))
+- fix pnp for lmdb fix [#35026](https://github.com/gatsbyjs/gatsby/issues/35026) ([75352b7](https://github.com/gatsbyjs/gatsby/commit/75352b744085207ac5c7861d4d48d3a8cfe39cb3))
+
+#### Chores
+
+- add generic to GatsbyFunctionRequest [#35029](https://github.com/gatsbyjs/gatsby/issues/35029) ([bf8392c](https://github.com/gatsbyjs/gatsby/commit/bf8392cc603ad070fbd216fed28866a24c1aaf13))
+- Revising scope of `wrapPageElement()` and `wrapRootElement()` [#35057](https://github.com/gatsbyjs/gatsby/issues/35057) ([011897f](https://github.com/gatsbyjs/gatsby/commit/011897f6b988d6fcd8a993840ffb3a19bc3299c4))
+
 ### [4.9.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.9.3/packages/gatsby) (2022-03-09)
 
 #### Bug Fixes
