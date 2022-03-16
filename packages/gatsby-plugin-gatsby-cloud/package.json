@@ -8,10 +8,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
+    "@vanilla-extract/css": "^1.6.8",
     "date-fns": "^2.28.0",
     "fs-extra": "^10.0.0",
-    "gatsby-core-utils": "^3.11.0-next.0",
-    "gatsby-telemetry": "^3.11.0-next.0",
+    "gatsby-core-utils": "^3.9.1",
+    "gatsby-telemetry": "^3.9.1",
     "js-cookie": "^3.0.1",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
@@ -52,11 +53,11 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\" && npm run clean && npm run copy-type-declarations",
-    "clean": "del-cli ./components/index.d.ts",
-    "copy-type-declarations": "cpy src/components/index.d.ts components",
+    "build": "babel src --out-dir ./dist --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\" && npm run clean && npm run copy-type-declarations",
+    "clean": "del-cli ./dist/components/index.d.ts",
+    "copy-type-declarations": "cpy src/components/index.d.ts dist/components",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
+    "watch": "babel -w src --out-dir ./dist --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\""
   },
   "engines": {
     "node": ">=14.15.0"

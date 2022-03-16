@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, FC } from "react"
 import IndicatorProvider from "../context/indicatorProvider"
 import { BuildStatus } from "../models/enums"
 import { useTrackEvent, getBuildInfo } from "../utils"
@@ -17,7 +17,7 @@ const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
 
 const PAGE_DATA_RETRY_LIMIT = 60
 
-const PreviewIndicator = ({ children }) => (
+const PreviewIndicator: FC = ({ children }) => (
   <>
     <Style />
     <div
@@ -203,7 +203,6 @@ const Indicator = () => {
       siteInfo,
       isOnPrettyUrl,
     }
-    console.log(`safasf`)
     if (
       [
         BuildStatus.BUILDING,
@@ -266,7 +265,7 @@ const Indicator = () => {
     shouldPoll.current = true
     pollData()
 
-    return function cleanup() {
+    return function cleanup(): void {
       shouldPoll.current = false
 
       if (timeoutRef.current) {
