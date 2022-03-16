@@ -67,6 +67,23 @@ Once Image CDN is enabled, images will be served from a relative URL similar to 
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-todo
+- [njbmartin](https://github.com/njbmartin): chore(docs): typo in typescript documentation [PR #35040](https://github.com/gatsbyjs/gatsby/pull/35040)
+- [baranbbr](https://github.com/baranbbr): chore(docs): Conditionally sourcing files using environment variables [PR #35056](https://github.com/gatsbyjs/gatsby/pull/35056)
+- [hasthamalp](https://github.com/hasthamalp): chore(docs): Update query-execution.md [PR #35115](https://github.com/gatsbyjs/gatsby/pull/35115)
+- [tcoopman](https://github.com/tcoopman): fix(gatsby): null check for context [PR #35096](https://github.com/gatsbyjs/gatsby/pull/35096)
+- [Dusch4593](https://github.com/Dusch4593): chore(docs): Revising scope of `wrapPageElement()` and `wrapRootElement()` [PR #35057](https://github.com/gatsbyjs/gatsby/pull/35057)
+- [mckelveygreg](https://github.com/mckelveygreg): chore(gatsby): add generic to GatsbyFunctionRequest [PR #35029](https://github.com/gatsbyjs/gatsby/pull/35029)
+- [benackles](https://github.com/benackles): chore(docs): Fix broken link [PR #35071](https://github.com/gatsbyjs/gatsby/pull/35071)
+- [tianheg](https://github.com/tianheg): chore(docs): Fix link to TS doc in tutorial [PR #35014](https://github.com/gatsbyjs/gatsby/pull/35014)
+- [reviewher](https://github.com/reviewher): fix(gatsby-transformer-excel): Use `readFile` Buffer [PR #35050](https://github.com/gatsbyjs/gatsby/pull/35050)
+- [jonohewitt](https://github.com/jonohewitt): fix(gatsby-plugin-sharp): Upgrade `probe-image-size` to fix memory leak warning [PR #35009](https://github.com/gatsbyjs/gatsby/pull/35009)
+- [cheru-dev](https://github.com/cheru-dev): chore(docs): Fix typos [PR #35119](https://github.com/gatsbyjs/gatsby/pull/35119)
+- [josephjosedev](https://github.com/josephjosedev)
+  - chore(docs): Update query-extraction link to relay [PR #35045](https://github.com/gatsbyjs/gatsby/pull/35045)
+  - chore(docs): Update query-extraction.md to point to TS file instead of old JS [PR #35067](https://github.com/gatsbyjs/gatsby/pull/35067)
+  - docs(gatsby): Update `query-watcher` to reference TS file [PR #35100](https://github.com/gatsbyjs/gatsby/pull/35100)
+- [keevan](https://github.com/keevan): docs(gh-pages): improve separate repository instructions [PR #35118](https://github.com/gatsbyjs/gatsby/pull/35118)
+- [adambaratz](https://github.com/adambaratz): fix(gatsby): Misspelled cacheIdentifier key [PR #35070](https://github.com/gatsbyjs/gatsby/pull/35070)
+- [natalyjazzviolin](https://github.com/natalyjazzviolin): chore(docs): Update migration guide to add more info about image resolvers [PR #35105](https://github.com/gatsbyjs/gatsby/pull/35105)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.10.0-next.0...gatsby@4.10.0
