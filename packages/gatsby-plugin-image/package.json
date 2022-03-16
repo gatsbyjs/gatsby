@@ -72,6 +72,14 @@
     "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
   },
+  "peerDependenciesMeta": {
+    "gatsby-plugin-sharp": {
+      "optional": true
+    },
+    "gatsby-source-filesystem": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
     "@babel/parser": "^7.15.5",
