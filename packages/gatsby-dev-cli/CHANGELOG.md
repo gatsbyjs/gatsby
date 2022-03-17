@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.10.0/packages/gatsby-dev-cli) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Chores
+
+- Deprecate create client paths plugin [#35124](https://github.com/gatsbyjs/gatsby/issues/35124) ([fb9c014](https://github.com/gatsbyjs/gatsby/commit/fb9c0144e53f5f514f87ab1f018b1975e9496987))
+
 ## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.9.0/packages/gatsby-dev-cli) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
