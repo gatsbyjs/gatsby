@@ -43,7 +43,7 @@ const addPluginToConfig = (
 
     // Use the Babel TS preset if we're operating on `gatsby-config.ts`
     if (srcPath.endsWith(`ts`)) {
-      transformOptions.presets = [`@babel/preset-typescript`]
+      transformOptions.presets = [require.resolve(`@babel/preset-typescript`)]
     }
 
     code = transform(src, transformOptions)?.code
