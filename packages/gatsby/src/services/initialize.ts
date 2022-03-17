@@ -4,7 +4,6 @@ import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import md5File from "md5-file"
 import crypto from "crypto"
-import { globby as glob } from "globby"
 import path from "path"
 import telemetry from "gatsby-telemetry"
 
@@ -270,6 +269,7 @@ export async function initialize({
     ? lmdbCacheDirExists
     : cacheJsonDirExists
 
+  const { globby: glob } = await import(`globby`)
   // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
   // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
