@@ -32,7 +32,7 @@ Many times, the information that needs to go in your document already exists som
 
 Avoid copying and pasting huge chunks of other people's work. Instead, use their work to learn so you can write your own document. If you do quote someone's work verbatim, reference where you got the information.
 
-If the content is already somewhere else on the .org site, feel free to copy and paste without quoting or referencing.
+If the content is already somewhere else on the site, feel free to copy and paste without quoting or referencing.
 
 Possible sources of great research materials:
 

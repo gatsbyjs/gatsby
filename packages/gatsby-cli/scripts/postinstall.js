@@ -3,7 +3,7 @@ const chalk = require(`chalk`);
 const showSuccessMessage = () => {
   console.log(chalk.green(`Success!\n`));
   console.log(chalk.cyan(`Welcome to the Gatsby CLI! Please visit `) +
-    chalk.underline(`https://www.gatsbyjs.org/docs/gatsby-cli/`) +
+    chalk.underline(`https://www.gatsbyjs.com/docs/gatsby-cli/`) +
     chalk.cyan(` for more information.\n`));
 }
 

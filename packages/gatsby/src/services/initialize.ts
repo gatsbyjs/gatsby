@@ -508,7 +508,9 @@ export async function initialize({
   const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
-    await fs.copy(srcDir, siteDir)
+    await fs.copy(srcDir, siteDir, {
+      overwrite: true,
+    })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
     if (lmdbStoreIsUsed) {
       await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)

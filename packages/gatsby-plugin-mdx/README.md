@@ -281,7 +281,7 @@ _**Note:** You should rerun your Gatsby development environment to update import
 
 If you want to allow usage of a component from anywhere (often referred to as a
 shortcode), you can pass it to the
-[MDXProvider](https://www.gatsbyjs.org/docs/mdx/customizing-components/).
+[MDXProvider](https://www.gatsbyjs.com/docs/mdx/customizing-components/).
 
 ```js
 // src/components/layout.js
@@ -315,14 +315,14 @@ Here's a YouTube embed
 #### Gatsby remark plugins
 
 This config option is used for compatibility with a set of plugins many people
-[use with remark](https://www.gatsbyjs.org/plugins/?=gatsby-remark-) that require
+[use with remark](https://www.gatsbyjs.com/plugins/?=gatsby-remark-) that require
 the gatsby environment to function properly. In some cases, like
-[gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/?=gatsby-remark-),
+[gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/?=gatsby-remark-),
 it makes more sense to use a library like
 [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
 to render codeblocks using a [React
 component](/api-reference/mdx-provider). In other cases, like
-[gatsby-remark-images](https://www.gatsbyjs.org/packages/gatsby-remark-images/?=gatsby-remark-),
+[gatsby-remark-images](https://www.gatsbyjs.com/plugins/gatsby-remark-images/?=gatsby-remark-),
 the interaction with the Gatsby APIs is well deserved because the
 images can be optimized by Gatsby and you should continue using it.
 
