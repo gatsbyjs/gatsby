@@ -98,14 +98,14 @@ describe(`gatsbyImageData`, () => {
 
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=300&h=481&fit=crop&ar=1.333333333&fm=avif&q=75`
+        `w=300&h=225&fm=avif&q=75`
       )}/${portraitSource.basename}.avif`
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
 
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=600&h=962&fit=crop&ar=1.333333333&fm=avif&q=75`
+        `w=600&h=450&fm=avif&q=75`
       )}/${portraitSource.basename}.avif`
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
@@ -127,14 +127,14 @@ describe(`gatsbyImageData`, () => {
 
     expect(parsedSrcSet[0].src).toEqual(
       `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=300&h=481&fit=crop&crop=entropy&ar=1.333333333&fm=avif&q=75`
+        `w=300&h=225&fit=crop&crop=entropy&fm=avif&q=75`
       )}/${portraitSource.basename}.avif`
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
 
     expect(parsedSrcSet[1].src).toEqual(
       `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=600&h=962&fit=crop&crop=entropy&ar=1.333333333&fm=avif&q=75`
+        `w=600&h=450&fit=crop&crop=entropy&fm=avif&q=75`
       )}/${portraitSource.basename}.avif`
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
