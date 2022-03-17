@@ -1,5 +1,6 @@
 import path from "path"
 import fs from "fs-extra"
+import md5 from "md5"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { hasFeature } from "../has-feature"
 import { getFileExtensionFromMimeType } from "./utils/mime-type-helpers"
@@ -80,7 +81,7 @@ export function addImageRoutes(app: Application): Application {
       `public`,
       `_gatsby`,
       `_image`,
-      url
+      md5(url)
     )
 
     const filePath = await transformImage({
