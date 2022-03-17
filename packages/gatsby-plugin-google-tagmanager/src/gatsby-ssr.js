@@ -1,5 +1,6 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
+import { checkIfActive } from "./internals"
 
 const generateGTM = ({
   id,
@@ -37,7 +38,7 @@ const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
 }
 
 exports.onRenderBody = (
-  { setHeadComponents, setPreBodyComponents, reporter },
+  { setHeadComponents, setPreBodyComponents, reporter, pathname },
   {
     id,
     includeInDevelopment = false,
@@ -47,9 +48,10 @@ exports.onRenderBody = (
     dataLayerName = `dataLayer`,
     enableWebVitalsTracking = false,
     selfHostedOrigin = `https://www.googletagmanager.com`,
+    excludedPaths = [],
   }
 ) => {
-  if (process.env.NODE_ENV === `production` || includeInDevelopment) {
+  if (checkIfActive(pathname, { includeInDevelopment, excludedPaths })) {
     const environmentParamStr =
       gtmAuth && gtmPreview
         ? oneLine`

@@ -1,3 +1,5 @@
+import { checkIfActive } from "./internals"
+
 const listOfMetricsSend = new Set()
 
 function debounce(fn, timeout) {
@@ -39,28 +41,27 @@ function sendWebVitals(dataLayerName = `dataLayer`) {
 }
 
 function sendToGTM({ name, value, id }, dataLayer) {
-  dataLayer.push({
-    event: `core-web-vitals`,
-    webVitalsMeasurement: {
-      name: name,
-      // The `id` value will be unique to the current page load. When sending
-      // multiple values from the same page (e.g. for CLS), Google Analytics can
-      // compute a total by grouping on this ID (note: requires `eventLabel` to
-      // be a dimension in your report).
-      id,
-      // Google Analytics metrics must be integers, so the value is rounded.
-      // For CLS the value is first multiplied by 1000 for greater precision
-      // (note: increase the multiplier for greater precision if needed).
-      value: Math.round(name === `CLS` ? value * 1000 : value),
-    },
-  })
+  if (dataLayer !== undefined) {
+    dataLayer.push({
+      event: `core-web-vitals`,
+      webVitalsMeasurement: {
+        name: name,
+        // The `id` value will be unique to the current page load. When sending
+        // multiple values from the same page (e.g. for CLS), Google Analytics can
+        // compute a total by grouping on this ID (note: requires `eventLabel` to
+        // be a dimension in your report).
+        id,
+        // Google Analytics metrics must be integers, so the value is rounded.
+        // For CLS the value is first multiplied by 1000 for greater precision
+        // (note: increase the multiplier for greater precision if needed).
+        value: Math.round(name === `CLS` ? value * 1000 : value),
+      },
+    })
+  }
 }
 
-export function onRouteUpdate(_, pluginOptions) {
-  if (
-    process.env.NODE_ENV === `production` ||
-    pluginOptions.includeInDevelopment
-  ) {
+export function onRouteUpdate({ location }, pluginOptions) {
+  if (checkIfActive(location?.pathname, pluginOptions)) {
     // wrap inside a timeout to ensure the title has properly been changed
     setTimeout(() => {
       const data = pluginOptions.dataLayerName

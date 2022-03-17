@@ -13,6 +13,7 @@ describe(`pluginOptionsSchema`, () => {
       routeChangeEventName: `YOUR_ROUTE_CHANGE_EVENT_NAME`,
       enableWebVitalsTracking: true,
       selfHostedOrigin: `YOUR_SELF_HOSTED_ORIGIN`,
+      excludedPaths: [`EXCLUDED_STRING`, /EXCLUDED_REGEX/],
     })
 
     expect(isValid).toEqual(true)

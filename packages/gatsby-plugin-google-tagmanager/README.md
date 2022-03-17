@@ -41,6 +41,12 @@ plugins: [
       enableWebVitalsTracking: true,
       // Defaults to https://www.googletagmanager.com
       selfHostedOrigin: "YOUR_SELF_HOSTED_ORIGIN",
+      // Paths to exclude
+      // In case of a string, will check if the string is included in the path
+      // In case of a regex, will check if the path matches it
+      //
+      // Defaults to []
+      excludedPaths: ["EXCLUDED_PATH", /EXCLUDED_REGEX/],
     },
   },
 ]

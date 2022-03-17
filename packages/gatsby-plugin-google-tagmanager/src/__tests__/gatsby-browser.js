@@ -142,6 +142,36 @@ describe(`onRouteUpdate`, () => {
     expect(window[dataLayerName]).toHaveLength(1)
   })
 
+  it(`does not register if pathname matches an excluded string path`, () => {
+    const { onRouteUpdate } = getAPI(() => {
+      process.env.NODE_ENV = `production`
+    })
+
+    onRouteUpdate(
+      { location: { pathname: `/excluded/` } },
+      { excludedPaths: [`excluded`] }
+    )
+
+    jest.runAllTimers()
+
+    expect(window.dataLayer).toHaveLength(0)
+  })
+
+  it(`does not register if pathname matches an excluded regex path`, () => {
+    const { onRouteUpdate } = getAPI(() => {
+      process.env.NODE_ENV = `production`
+    })
+
+    onRouteUpdate(
+      { location: { pathname: `/exclude/this/path/` } },
+      { excludedPaths: [/\/exclude\/.+\/path\//] }
+    )
+
+    jest.runAllTimers()
+
+    expect(window.dataLayer).toHaveLength(0)
+  })
+
   it(`sends core web vitals when enabled`, async () => {
     const { onInitialClientRender } = getAPI(() => {
       process.env.NODE_ENV = `production`
