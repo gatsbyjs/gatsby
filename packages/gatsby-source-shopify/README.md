@@ -86,6 +86,7 @@ module.exports = {
   ],
 }
 ```
+
 💡 Note: This plugin has a peer dependency on `gatsby-plugin-image` and will fail to build without it.
 
 <div id="retrieving-api-information-from-shopify"></div>
@@ -138,11 +139,15 @@ Now follow the second link to explore your Shopify data!
 Because of the limiations of the Shopify Bulk API we have included logic in this plugin to determine which builds are high priority for a given Shopify site. This allows us to pause deploy preview builds while production builds are running while using the same Shopify App. The following logic determines whether a build is priority or not:
 
 ```js
-const isGatsbyCloudPriorityBuild = CI === `true` && GATSBY_CLOUD === `true` && GATSBY_IS_PR_BUILD !== `true`
+const isGatsbyCloudPriorityBuild =
+  CI === `true` && GATSBY_CLOUD === `true` && GATSBY_IS_PR_BUILD !== `true`
 
-const isNetlifyPriorityBuild = CI === `true` && NETLIFY === `true` && CONTEXT === `production`
+const isNetlifyPriorityBuild =
+  CI === `true` && NETLIFY === `true` && CONTEXT === `production`
 
-return pluginOptions.prioritize !== undefined ? pluginOptions.prioritize : isGatsbyCloudPriorityBuild || isNetlifyPriorityBuild
+return pluginOptions.prioritize !== undefined
+  ? pluginOptions.prioritize
+  : isGatsbyCloudPriorityBuild || isNetlifyPriorityBuild
 ```
 
 This logic allows us to determine whether we are running a production build on either Gatsby Cloud or Netlify using environment variables, but you also have the option to override the logic by setting the `prioritize` option in `gatsby-config`.
@@ -179,8 +184,7 @@ Not set by default. If set to a string (example `MyStore`) node names will be `a
 
 Not set by default. If set to a string (example `My Sales Channel`), only products, variants, collections and locations that are published to that channel will be sourced. If you want to filter products by a Private App instead of Public App or default sales channel, you have to provide the App ID instead of sales channel name. You can find this in the same place as the Shopify App Password.
 
-💡 Note: The `salesChannel` plugin option defaults to the value of `process.env.GATBSY_SHOPIFY_SALES_CHANNEL`. If that value is not set the plugin will source only objects that are published to the `online store` sales channel. 
-
+💡 Note: The `salesChannel` plugin option defaults to the value of `process.env.GATBSY_SHOPIFY_SALES_CHANNEL`. If that value is not set the plugin will source only objects that are published to the `online store` sales channel.
 
 <div id="images"></div>
 
@@ -195,7 +199,9 @@ We offer two options for displaying Shopify images in your Gatsby site. The defa
 This is the default behavior and is intended to be used in conjunction with [gatsby-plugin-image][gatsby-plugin-image].
 
 #### Product Featured Media
+
 This query is commonly used on collection pages to only load necessary image data.
+
 ```graphql
 query {
   products: allShopifyProduct {
@@ -213,7 +219,9 @@ query {
 ```
 
 #### Product Media Previews
+
 This query is commonly used on product pages to display images for all media types.
+
 ```graphql
 query {
   products: allShopifyProduct {
@@ -233,7 +241,9 @@ query {
 💡 Note: This query will return images for all media types including videos.
 
 #### Product Media Previews and Videos
+
 This query is commonly used on product pages to display images alongside videos.
+
 ```graphql
 query {
   products: allShopifyProduct {
@@ -293,7 +303,9 @@ module.exports = {
 💡 Note: This will make the build take longer but will make images appear on your page faster at runtime.
 
 #### Media with local files
+
 The following fragment will work with any of the `preview` fields in the [runtime images](#use-run-time-images) section.
+
 ```graphql
 fragment MediaImageLocalFile on ShopifyMediaPreviewImage {
   image {
@@ -318,15 +330,15 @@ It expects an `image` object that contains the properties `width`, `height` and 
 import { getShopifyImage } from "gatsby-source-shopify"
 
 function getCartImage(storefrontProduct) {
-  const image = storefrontProduct.images.edges[0].node;
+  const image = storefrontProduct.images.edges[0].node
   const imageData = getShopifyImage({
     image,
     width: 200,
     height: 200,
     layout: "fixed",
-  });
+  })
 
-  return imageData;
+  return imageData
 }
 ```
 
@@ -335,42 +347,43 @@ function getCartImage(storefrontProduct) {
 ### Displaying images
 
 ```jsx
-import { GatsbyImage } from "gatsby-plugin-image";
-import { getShopifyImage } from "gatsby-source-shopify";
+import { GatsbyImage } from "gatsby-plugin-image"
+import { getShopifyImage } from "gatsby-source-shopify"
 
 const ShopifyProductImage = ({ product }) => (
   <GatsbyImage src={product.featuredMedia.preview.image.gatsbyImageData} />
-);
+)
 
 const DownloadedProductImage = ({ product }) => (
-  <GatsbyImage src={product.featuredMedia.preview.image.localFile.childImageSharp.gatsbyImageData} />
-);
+  <GatsbyImage
+    src={
+      product.featuredMedia.preview.image.localFile.childImageSharp
+        .gatsbyImageData
+    }
+  />
+)
 
 const RuntimeProductImage = ({ storefrontProduct }) => {
   const gatsbyImageData = getShopifyImage({
     image: storefrontProduct.images.edges[0],
     width: 800,
     height: 800,
-    layout: 'fixed',
-  });
- 
-  return (
-    <GatsbyImage src={gatsbyImageData} />
-  );
-};
+    layout: "fixed",
+  })
+
+  return <GatsbyImage src={gatsbyImageData} />
+}
 
 const RuntimeLineItemImage = ({ storefrontLineItem }) => {
   const gatsbyImageData = getShopifyImage({
     image: storefrontLineItem.variant.image,
     width: 800,
     height: 800,
-    layout: 'fixed',
-  });
- 
-  return (
-    <GatsbyImage src={gatsbyImageData} />
-  );
-};
+    layout: "fixed",
+  })
+
+  return <GatsbyImage src={gatsbyImageData} />
+}
 ```
 
 Please refer to the [gatsby-plugin-image docs](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#dynamic-images) for more information on how to display images on your Gatsby site.
