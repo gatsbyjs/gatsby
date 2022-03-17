@@ -148,7 +148,7 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
       }
     }
     const dispatcher = {
-      [BuildStatus.UPTODATE]: (): void => {
+      [BuildStatus.UP_TO_DATE]: (): void => {
         infoButtonProps.disabled = false
         if (showFeedback) {
           infoButtonProps.highlighted = true

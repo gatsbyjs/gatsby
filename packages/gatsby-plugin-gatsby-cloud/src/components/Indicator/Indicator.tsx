@@ -192,6 +192,7 @@ const Indicator: FC = () => {
     // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
     const isOnPrettyUrl = prettyUrlRegex.test(host)
     const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
+    console.log(await getBuildInfo())
 
     if (!buildId) {
       if (isOnPrettyUrl || host === `localhost`) {
@@ -247,7 +248,7 @@ const Indicator: FC = () => {
           setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
         } else {
           // Build updated, data for this specific page has NOT changed, no need to refresh content.
-          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
+          setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UP_TO_DATE })
         }
       }
     }

@@ -32,7 +32,7 @@ const LinkIndicatorButton: FC<ILinkIndicatorButtonProps> = ({
     }
     if (
       buildStatus === BuildStatus.BUILDING ||
-      buildStatus === BuildStatus.UPTODATE
+      buildStatus === BuildStatus.UP_TO_DATE
     ) {
       props.disabled = false
       props.tooltip = {

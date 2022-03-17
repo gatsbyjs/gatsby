@@ -165,6 +165,7 @@ const InfoIndicatorButton = ({
             hoverable: true,
           })
         } else {
+          console.log(createdAt)
           const message = `Preview updated ${formatDistance(
             Date.now(),
             new Date(createdAt),

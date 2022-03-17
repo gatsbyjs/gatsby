@@ -1,6 +1,6 @@
 export enum BuildStatus {
   SUCCESS = `SUCCESS`,
-  UPTODATE = `UPTODATE`,
+  UP_TO_DATE = `UPTODATE`,
   ERROR = `ERROR`,
   BUILDING = `BUILDING`,
   QUEUED = `QUEUED`,
