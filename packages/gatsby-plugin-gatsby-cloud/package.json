@@ -41,7 +41,7 @@
   ],
   "types": "./index.d.ts",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "peerDependencies": {
     "gatsby": "^4.0.0-next",
     "webpack": "*"
@@ -53,11 +53,11 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "babel src --out-dir ./dist --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\" && npm run clean && npm run copy-type-declarations",
+    "build": "GATSBY_PREVIEW_UI_APP_VERSION=$npm_package_version babel src --out-dir ./dist --ignore \"**/__tests__\" --extensions \".ts,.js\" && npm run clean && npm run copy-type-declarations",
     "clean": "del-cli ./dist/components/index.d.ts",
     "copy-type-declarations": "cpy src/components/index.d.ts dist/components",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir ./dist --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\""
+    "watch": "GATSBY_PREVIEW_UI_APP_VERSION=$npm_package_version babel -w src --out-dir ./dist --ignore \"**/__tests__\" --extensions \".ts,.js\""
   },
   "engines": {
     "node": ">=14.15.0"

@@ -51,7 +51,7 @@ let latestCheckedBuild
 let refreshNeeded = false
 
 const Indicator = () => {
-  const [buildInfo, setBuildInfo] = useState()
+  const [buildInfo, setBuildInfo] = useState({})
   const [contentSyncInfo, setContentSyncInfo] = useState(null)
   const usingContentSync = !!contentSyncInfo
 
@@ -184,6 +184,7 @@ const Indicator = () => {
     // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
     const isOnPrettyUrl = prettyUrlRegex.test(host)
     const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
+    console.log(`${process.env.GATSBY_PREVIEW_UI_APP_VERSION}`)
 
     if (!buildId) {
       if (isOnPrettyUrl || host === `localhost`) {
@@ -203,7 +204,6 @@ const Indicator = () => {
       siteInfo,
       isOnPrettyUrl,
     }
-    console.log(`safasf`)
     if (
       [
         BuildStatus.BUILDING,

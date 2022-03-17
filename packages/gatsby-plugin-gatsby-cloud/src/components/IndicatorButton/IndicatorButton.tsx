@@ -3,21 +3,21 @@ import { IndicatorButtonTooltip } from "../tooltips"
 import { spinnerIcon } from "../icons"
 import { buttonStyle, wrapperStyle } from "./indicator-button.css"
 
-interface IIndicatorButtonTooltip {
-  visible: boolean
+export interface IIndicatorButtonTooltip {
+  visible?: boolean
   content: React.ReactNode
-  trigger: `click` | `hover`
+  trigger: `click` | `hover` | `none`
   onOpen?: () => void
   onClose?: () => void
 }
 
-interface IIndicatorButtonProps {
-  testId?: string
+export interface IIndicatorButtonProps {
   icon: React.SVGProps<SVGSVGElement>
+  testId?: string
   tooltip?: IIndicatorButtonTooltip
-  disabled: boolean
-  highlighted: boolean
-  showSpinner: boolean
+  disabled?: boolean
+  highlighted?: boolean
+  showSpinner?: boolean
   onClick?: () => void
   onMouseEnter?: () => void
   onMouseLeave?: () => void
