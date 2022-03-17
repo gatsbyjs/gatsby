@@ -4,7 +4,7 @@ import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import md5File from "md5-file"
 import crypto from "crypto"
-import del from "del"
+import { globby as glob } from "globby"
 import path from "path"
 import telemetry from "gatsby-telemetry"
 
@@ -284,12 +284,18 @@ export async function initialize({
       }
     )
     activity.start()
-    await del([
-      `public/**/*.{html,css}`,
-      `!public/page-data/**/*`,
-      `!public/static`,
-      `!public/static/**/*.{html,css}`,
-    ])
+    const files = await glob(
+      [
+        `public/**/*.{html,css}`,
+        `!public/page-data/**/*`,
+        `!public/static`,
+        `!public/static/**/*.{html,css}`,
+      ],
+      {
+        cwd: program.directory,
+      }
+    )
+    await Promise.all(files.map(file => fs.remove(file)))
     activity.end()
   }
 
@@ -429,28 +435,30 @@ export async function initialize({
 
       const deleteGlobs = [
         // By default delete all files & subdirectories
-        `${cacheDirectory}/**`,
-        `!${cacheDirectory}/data`,
-        `${cacheDirectory}/data/**`,
-        `!${cacheDirectory}/data/gatsby-core-utils/`,
-        `!${cacheDirectory}/data/gatsby-core-utils/**`,
-        `!${cacheDirectory}/compiled`,
+        `.cache/**`,
+        `.cache/data/**`,
+        `!.cache/data/gatsby-core-utils/**`,
+        `!.cache/compiled`,
       ]
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
         // Stop the caches directory from being deleted, add all sub directories,
         // but remove gatsby-source-filesystem
-        deleteGlobs.push(`!${cacheDirectory}/caches`)
-        deleteGlobs.push(`${cacheDirectory}/caches/*`)
-        deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
+        deleteGlobs.push(`!.cache/caches`)
+        deleteGlobs.push(`.cache/caches/*`)
+        deleteGlobs.push(`!.cache/caches/gatsby-source-filesystem`)
       }
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
         // Add webpack
-        deleteGlobs.push(`!${cacheDirectory}/webpack`)
+        deleteGlobs.push(`!.cache/webpack`)
       }
 
-      await del(deleteGlobs)
+      const files = await glob(deleteGlobs, {
+        cwd: program.directory,
+      })
+
+      await Promise.all(files.map(file => fs.remove(file)))
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
