@@ -66,7 +66,7 @@ If build speeds are sufficiently painful, your CMS is the primary contributor, a
 
 #### Conditionally applying plugin options using environment variables
 
-Your source plugin may have options that control which or how many entries, files, etc. are sourced. In order to speed up sourcing for e.g. `gatsby develop` or your staging environment, you can use environment variables to apply different plugin options depending on the current environment. To see an example of this pattern using `gatsby-source-filesytem` you can visit the [sourcing from the filesystem](/docs/how-to/sourcing-data/sourcing-from-the-filesystem/) documentation.
+Your source plugin may have options that control which or how many entries, files, etc. are sourced. In order to speed up sourcing for e.g. `gatsby develop` or your staging environment, you can use environment variables to apply different plugin options depending on the current environment. To see an example of this pattern using `gatsby-source-filesystem` you can visit the [sourcing from the filesystem](/docs/how-to/sourcing-data/sourcing-from-the-filesystem/) documentation.
 
 #### If your site is multi-language, consider breaking it into several sites
 

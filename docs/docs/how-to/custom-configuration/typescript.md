@@ -273,9 +273,11 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
   - `gatsby-ssr.js` to `gatsby-ssr.tsx`
 - Address any of the [current limitations](#current-limitations)
 
+If you've used other ways of using TypeScript in the past, you'll also want to read [migrating away from old workarounds](/docs/reference/release-notes/v4.9/#migrating-away-from-old-workarounds).
+
 ## Current limitations
 
-There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code or through contributions to upstream dependencies.
+There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code, through contributions to upstream dependencies, and updates to our documentation.
 
 ### Parcel TypeScript features
 
@@ -324,7 +326,7 @@ Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/
 
 ### Other
 
-- Workspaces (e.g. Yarn) are not supported yet.
+- Workspaces (e.g. Yarn) are not supported. We'll add documentation on how to use this feature inside a workspace soon.
 - When changing `siteMetadata` in `gatsby-config` no hot-reloading will occur during `gatsby develop`. A restart is needed at the moment.
 
 ## Other Resources

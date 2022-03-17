@@ -26,8 +26,8 @@ describe(`site-metadata`, () => {
       expect(writeFileMock.mock.calls[0][1]).toMatchInlineSnapshot(`
         "module.exports = {
           siteMetadata: {
-              title: \`Arrakis\`,
-              siteUrl: \`https://www.yourdomain.tld\`,
+            title: \`Arrakis\`,
+            siteUrl: \`https://www.yourdomain.tld\`,
           },
           plugins: [
             \\"gatsby-transformer-remark\\",

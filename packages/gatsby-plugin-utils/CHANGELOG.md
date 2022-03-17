@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.4.0/packages/gatsby-plugin-utils) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- add support for image-cdn [#34825](https://github.com/gatsbyjs/gatsby/issues/34825) ([29b236b](https://github.com/gatsbyjs/gatsby/commit/29b236b7f2212d062a65d34781a612d715d936ef))
+
+#### Bug Fixes
+
+- make sure avif, webp are sorted correctly [#35024](https://github.com/gatsbyjs/gatsby/issues/35024) ([3b8710c](https://github.com/gatsbyjs/gatsby/commit/3b8710c2f9784800d89d6a80b77f53316f890e11))
+
 ## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.3.0/packages/gatsby-plugin-utils) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

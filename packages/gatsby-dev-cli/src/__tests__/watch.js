@@ -198,7 +198,6 @@ const monoRepoPackages = [
   `gatsby-plugin-canonical-urls`,
   `gatsby-plugin-catch-links`,
   `gatsby-plugin-coffeescript`,
-  `gatsby-plugin-create-client-paths`,
   `gatsby-plugin-cxs`,
   `gatsby-plugin-emotion`,
   `gatsby-plugin-facebook-analytics`,
