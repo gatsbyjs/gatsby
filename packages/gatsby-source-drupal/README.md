@@ -402,4 +402,4 @@ You can query nodes created from Drupal like the following:
 ```
 
 [dotenv]: https://github.com/motdotla/dotenv
-[envvars]: https://www.gatsbyjs.org/docs/environment-variables
+[envvars]: https://www.gatsbyjs.com/docs/environment-variables
