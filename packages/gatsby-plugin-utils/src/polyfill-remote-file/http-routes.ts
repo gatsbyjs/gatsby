@@ -2,6 +2,7 @@ import path from "path"
 import fs from "fs-extra"
 import md5 from "md5"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
+import { base64URLDecode } from "./utils/base64"
 import { hasFeature } from "../has-feature"
 import { getFileExtensionFromMimeType } from "./utils/mime-type-helpers"
 import { transformImage } from "./transform-images"
@@ -38,9 +39,7 @@ export function addImageRoutes(app: Application): Application {
   app.get(`/_gatsby/image/:url/:params/:filename`, async (req, res) => {
     const { params, url, filename } = req.params
 
-    const searchParams = new URLSearchParams(
-      Buffer.from(params, `base64`).toString()
-    )
+    const searchParams = new URLSearchParams(base64URLDecode(params))
 
     const resizeParams: {
       width: number
@@ -75,7 +74,7 @@ export function addImageRoutes(app: Application): Application {
       }
     }
 
-    const remoteUrl = Buffer.from(url, `base64`).toString()
+    const remoteUrl = base64URLDecode(url)
     const outputDir = path.join(
       global.__GATSBY?.root || process.cwd(),
       `public`,

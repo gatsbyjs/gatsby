@@ -1,5 +1,6 @@
 import path from "path"
 import { resizeResolver } from "../index"
+import { base64URLEncode, base64URLDecode } from "../utils/base64"
 import * as dispatchers from "../jobs/dispatchers"
 import type { Actions } from "gatsby"
 import type { ImageFit, IRemoteImageNode } from "../types"
@@ -169,7 +170,7 @@ describe(`resizeResolver`, () => {
     )
 
     const [, , , , args] = result?.src.split(`/`) ?? []
-    const transformAsArgs = Buffer.from(args, `base64`).toString()
+    const transformAsArgs = base64URLDecode(args)
     expect(transformAsArgs).toContain(`fit=crop`)
     expect(transformAsArgs).toContain(`crop=top,left`)
   })
@@ -198,8 +199,8 @@ describe(`resizeResolver`, () => {
 
       const [, , , url, args, filename] = result?.src.split(`/`) ?? []
       const [transformArgs] = args.split(`.`)
-      expect(Buffer.from(url, `base64`).toString()).toBe(source.url)
-      expect(Buffer.from(transformArgs, `base64`).toString()).toBe(
+      expect(base64URLDecode(url)).toBe(source.url)
+      expect(base64URLDecode(transformArgs)).toBe(
         `w=${expected.widthOnly[0]}&h=${expected.widthOnly[1]}&fm=jpg&q=75`
       )
       expect(result?.width).toBe(expected.widthOnly[0])
@@ -218,8 +219,8 @@ describe(`resizeResolver`, () => {
 
       const [, , , url, args] = result?.src.split(`/`) ?? []
       const [transformArgs] = args.split(`.`)
-      expect(Buffer.from(url, `base64`).toString()).toBe(source.url)
-      expect(Buffer.from(transformArgs, `base64`).toString()).toBe(
+      expect(base64URLDecode(url)).toBe(source.url)
+      expect(base64URLDecode(transformArgs)).toBe(
         `w=${expected.heightOnly[0]}&h=${expected.heightOnly[1]}&fm=jpg&q=75`
       )
       expect(result?.width).toBe(expected.heightOnly[0])
@@ -304,7 +305,7 @@ describe(`resizeResolver`, () => {
             `public`,
             `_gatsby`,
             `image`,
-            Buffer.from(portraitSource.url).toString(`base64`)
+            base64URLEncode(portraitSource.url)
           )
         ),
       }),

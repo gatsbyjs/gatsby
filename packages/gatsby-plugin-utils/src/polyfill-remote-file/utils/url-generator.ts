@@ -1,6 +1,6 @@
 import md5 from "md5"
 import { shouldDispatch } from "../jobs/dispatchers"
-import { base64EncodeURL } from "./base64url"
+import { base64URLEncode } from "./base64"
 import { isImage } from "../types"
 import type { ImageCropFocus, WidthOrHeight } from "../types"
 
@@ -14,7 +14,7 @@ export function generatePublicUrl(
   },
   checkMimeType: boolean = true
 ): string {
-  let remoteUrl = base64EncodeURL(url)
+  let remoteUrl = base64URLEncode(url)
   // if the image will be downloaded locally, then md5 the base64 encoded remote url to prevent path segments
   // that are longer than allowed
   if (shouldDispatch()) {
@@ -57,7 +57,7 @@ export function generateImageArgs({
   args.push(`fm=${format}`)
   args.push(`q=${quality}`)
 
-  let joinedArgs = base64EncodeURL(args.join(`&`))
+  let joinedArgs = base64URLEncode(args.join(`&`))
   if (shouldDispatch()) {
     joinedArgs = md5(joinedArgs)
   }
