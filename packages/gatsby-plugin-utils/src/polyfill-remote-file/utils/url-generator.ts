@@ -1,12 +1,15 @@
 import { basename, extname } from "path"
+import { URL } from "url"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
 import type { ImageCropFocus, WidthOrHeight } from "../types"
 
-// export enum ImageCDNKeys {
-//   url: 'u',
+const ORIGIN = `https://gatsbyjs.com`
 
-// }
+export enum ImageCDNUrlKeys {
+  URL = `u`,
+  ARGS = `a`,
+}
 
 export function generateFileUrl({
   url,
@@ -18,9 +21,15 @@ export function generateFileUrl({
   const fileExt = extname(filename)
   const filenameWithoutExt = basename(filename, fileExt)
 
-  return `${generatePublicUrl({ url })}/${encodeURIComponent(
-    filenameWithoutExt
-  )}${fileExt}`
+  const parsedURL = new URL(
+    `${ORIGIN}${generatePublicUrl({
+      url,
+    })}/${filenameWithoutExt}${fileExt}`
+  )
+
+  parsedURL.searchParams.append(ImageCDNUrlKeys.URL, url)
+
+  return `${parsedURL.pathname}${parsedURL.search}`
 }
 
 export function generateImageUrl(
@@ -29,13 +38,19 @@ export function generateImageUrl(
 ): string {
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
 
-  return `${generatePublicUrl(source)}/${createContentDigest(
+  const parsedURL = new URL(
+    `${ORIGIN}${generatePublicUrl(source)}/${createContentDigest(
+      generateImageArgs(imageArgs)
+    )}/${filenameWithoutExt}.${imageArgs.format}`
+  )
+
+  parsedURL.searchParams.append(ImageCDNUrlKeys.URL, source.url)
+  parsedURL.searchParams.append(
+    ImageCDNUrlKeys.ARGS,
     generateImageArgs(imageArgs)
-  )}/${encodeURIComponent(filenameWithoutExt)}.${
-    imageArgs.format
-  }?u=${encodeURIComponent(source.url)}&a=${encodeURIComponent(
-    generateImageArgs(imageArgs)
-  )}`
+  )
+
+  return `${parsedURL.pathname}${parsedURL.search}`
 }
 
 function generatePublicUrl({

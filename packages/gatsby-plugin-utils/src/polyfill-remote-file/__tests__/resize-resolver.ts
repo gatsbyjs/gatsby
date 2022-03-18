@@ -297,6 +297,12 @@ describe(`resizeResolver`, () => {
     const actions = {
       createJobV2: jest.fn(() => jest.fn()),
     }
+    const imageArgs = {
+      format: `jpg`,
+      width: 100,
+      height: 160,
+      quality: 75,
+    }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
 
     resizeResolver(portraitSource, { width: 100 }, actions)
@@ -306,10 +312,7 @@ describe(`resizeResolver`, () => {
           contentDigest: `1`,
           url: portraitSource.url,
           filename: `dog-portrait.jpg`,
-          format: `jpg`,
-          width: 100,
-          height: expect.any(Number),
-          quality: 75,
+          ...imageArgs,
         },
         inputPaths: [],
         name: `IMAGE_CDN`,
@@ -318,7 +321,8 @@ describe(`resizeResolver`, () => {
             `public`,
             `_gatsby`,
             `image`,
-            createContentDigest(portraitSource.url)
+            createContentDigest(portraitSource.url),
+            createContentDigest(`w=100&h=160&fm=jpg&q=75`)
           )
         ),
       }),
