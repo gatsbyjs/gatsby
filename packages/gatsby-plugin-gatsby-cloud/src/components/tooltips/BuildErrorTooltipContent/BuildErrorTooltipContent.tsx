@@ -3,36 +3,28 @@ import IndicatorContext from "../../../context/IndicatorContext"
 import { EventType } from "../../../models/enums"
 import { logsIcon, failedIcon } from "../../icons"
 
-interface IBuildErrorTooltipContent {
-  siteId: string
-  orgId: string
-  buildId: string
-  errorMessage: string
-}
-
-const BuildErrorTooltipContent: FC<IBuildErrorTooltipContent> = ({
-  siteId,
-  orgId,
-  buildId,
-  errorMessage = `Unable to build preview`,
-}) => {
-  const { trackEvent } = useContext(IndicatorContext)
+const BuildErrorTooltipContent: FC = () => {
+  const { buildInfo, currentBuildId, trackEvent } = useContext(IndicatorContext)
 
   const buildLogUrl = useMemo((): string => {
     let pathToBuildLogs = ``
-    if (!buildId) {
-      pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/cmsPreview`
-    } else {
-      pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${buildId}/details`
+    if (!currentBuildId && buildInfo?.siteInfo) {
+      const { orgId, siteId } = buildInfo.siteInfo
+      if (!currentBuildId) {
+        pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/cmsPreview`
+      } else {
+        pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${currentBuildId}/details`
+      }
+      const returnTo = encodeURIComponent(pathToBuildLogs)
+      return `${pathToBuildLogs}?returnTo=${returnTo}`
     }
-    const returnTo = encodeURIComponent(pathToBuildLogs)
-    return `${pathToBuildLogs}?returnTo=${returnTo}`
-  }, [orgId, siteId, buildId])
+    return pathToBuildLogs
+  }, [buildInfo?.siteInfo?.orgId, buildInfo?.siteInfo?.siteId, currentBuildId])
 
   return (
     <>
       {failedIcon}
-      {errorMessage}
+      {buildInfo?.errorMessage}
       <a
         href={buildLogUrl}
         target="_blank"
@@ -40,9 +32,6 @@ const BuildErrorTooltipContent: FC<IBuildErrorTooltipContent> = ({
         onClick={(): void => {
           trackEvent({
             eventType: EventType.PREVIEW_INDICATOR_CLICK,
-            orgId,
-            siteId,
-            buildId,
             name: `error logs`,
           })
         }}

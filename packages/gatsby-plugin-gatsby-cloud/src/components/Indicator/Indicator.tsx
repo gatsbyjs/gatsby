@@ -6,7 +6,7 @@ import {
   LinkIndicatorButton,
   InfoIndicatorButton,
   GatsbyIndicatorButton,
-} from "../indicatorButtons"
+} from "../IndicatorButtons"
 import { BuildStatus, EventType } from "../../models/enums"
 import { useBuildInfo, usePageData, useNodeManifestPoll } from "../../hooks"
 import { ContentSyncInfo } from "../../models/interfaces"
@@ -194,12 +194,8 @@ const Indicator: FC = () => {
       buildInfo?.latestBuild &&
       !trackedInitialLoad.current
     ) {
-      const { orgId, siteId } = buildInfo.siteInfo
       trackEvent({
         eventType: EventType.PREVIEW_INDICATOR_LOADED,
-        buildId: currentBuildId || buildInfo.latestBuild.id,
-        orgId,
-        siteId,
         name: `indicator loaded`,
       })
 
@@ -221,9 +217,9 @@ const Indicator: FC = () => {
   return (
     <div>
       <IndicatorProvider>
-        <InfoIndicatorButton {...buttonProps} />
+        <InfoIndicatorButton />
         <GatsbyIndicatorButton />,
-        <LinkIndicatorButton {...buttonProps} />,
+        <LinkIndicatorButton />,
       </IndicatorProvider>
     </div>
   )

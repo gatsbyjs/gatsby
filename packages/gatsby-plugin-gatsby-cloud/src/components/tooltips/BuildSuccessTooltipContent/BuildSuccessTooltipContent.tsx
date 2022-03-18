@@ -1,39 +1,17 @@
-import React from "react"
-import { useTrackEvent } from "../../utils"
+import React, { FC, useContext } from "react"
+import IndicatorContext from "../../../context/IndicatorContext"
+import { EventType } from "../../../models/enums"
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms || 50))
+const delay = (ms: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, ms || 50))
 
-interface IIBuildSuccessTooltipContentProps {
-  isOnPrettyUrl
-  sitePrefix
-  orgId
-  siteId
-  buildId
-  nodeManifestRedirectUrl
-}
+const BuildSuccessTooltipContent: FC = () => {
+  const { manifestInfo, buildInfo, isOnPrettyUrl, trackEvent } =
+    useContext(IndicatorContext)
 
-const BuildSuccessTooltipContent = ({
-  isOnPrettyUrl,
-  sitePrefix,
-  orgId,
-  siteId,
-  buildId,
-  nodeManifestRedirectUrl,
-}) => {
-  const { track } = useTrackEvent()
-
-  const newPreviewAvailableClick = async ({
-    isOnPrettyUrl,
-    sitePrefix,
-    orgId,
-    siteId,
-    buildId,
-  }) => {
-    track({
-      eventType: `PREVIEW_INDICATOR_CLICK`,
-      orgId,
-      siteId,
-      buildId,
+  const newPreviewAvailableClick = async (): Promise<void> => {
+    trackEvent({
+      eventType: EventType.PREVIEW_INDICATOR_CLICK,
       name: `new preview`,
     })
 
@@ -52,15 +30,15 @@ const BuildSuccessTooltipContent = ({
 
     const isLocalhost = window.location.hostname === `localhost`
 
-    if (nodeManifestRedirectUrl) {
+    if (manifestInfo?.redirectUrl) {
       window.location[isLocalhost ? `assign` : `replace`](
-        nodeManifestRedirectUrl
+        manifestInfo?.redirectUrl
       )
     } else if (isOnPrettyUrl || isLocalhost) {
       window.location.reload()
     } else {
       window.location.replace(
-        `https://preview-${sitePrefix}.${previewDomain}${window.location.pathname}`
+        `https://preview-${buildInfo?.siteInfo?.sitePrefix}.${previewDomain}${window.location.pathname}`
       )
     }
   }
@@ -69,15 +47,7 @@ const BuildSuccessTooltipContent = ({
     <>
       {`This page has been updated.`}
       <button
-        onClick={() => {
-          newPreviewAvailableClick({
-            isOnPrettyUrl,
-            sitePrefix,
-            orgId,
-            siteId,
-            buildId,
-          })
-        }}
+        onClick={newPreviewAvailableClick}
         data-gatsby-preview-indicator="tooltip-link"
       >
         <p data-gatsby-preview-indicator="tooltip-link-text">{`View Changes`}</p>
