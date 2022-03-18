@@ -1,36 +1,60 @@
-import md5 from "md5"
-import { shouldDispatch } from "../jobs/dispatchers"
-import { base64URLEncode } from "./base64"
+import { basename, extname } from "path"
+import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
 import type { ImageCropFocus, WidthOrHeight } from "../types"
 
-export function generatePublicUrl(
-  {
-    url,
-    mimeType,
-  }: {
-    url: string
-    mimeType: string
-  },
-  checkMimeType: boolean = true
+// export enum ImageCDNKeys {
+//   url: 'u',
+
+// }
+
+export function generateFileUrl({
+  url,
+  filename,
+}: {
+  url: string
+  filename: string
+}): string {
+  const fileExt = extname(filename)
+  const filenameWithoutExt = basename(filename, fileExt)
+
+  return `${generatePublicUrl({ url })}/${encodeURIComponent(
+    filenameWithoutExt
+  )}${fileExt}`
+}
+
+export function generateImageUrl(
+  source: { url: string; mimeType: string; filename: string },
+  imageArgs: Parameters<typeof generateImageArgs>[0]
 ): string {
-  let remoteUrl = base64URLEncode(url)
-  // if the image will be downloaded locally, then md5 the base64 encoded remote url to prevent path segments
-  // that are longer than allowed
-  if (shouldDispatch()) {
-    remoteUrl = md5(remoteUrl)
-  }
+  const filenameWithoutExt = basename(source.filename, extname(source.filename))
+
+  return `${generatePublicUrl(source)}/${createContentDigest(
+    generateImageArgs(imageArgs)
+  )}/${encodeURIComponent(filenameWithoutExt)}.${
+    imageArgs.format
+  }?u=${encodeURIComponent(source.url)}&a=${encodeURIComponent(
+    generateImageArgs(imageArgs)
+  )}`
+}
+
+function generatePublicUrl({
+  url,
+  mimeType,
+}: {
+  url: string
+  mimeType?: string
+}): string {
+  const remoteUrl = createContentDigest(url)
 
   let publicUrl =
-    checkMimeType && isImage({ mimeType })
-      ? `/_gatsby/image/`
-      : `/_gatsby/file/`
+    mimeType && isImage({ mimeType }) ? `/_gatsby/image/` : `/_gatsby/file/`
   publicUrl += `${remoteUrl}`
 
   return publicUrl
 }
 
-export function generateImageArgs({
+function generateImageArgs({
   width,
   height,
   format,
@@ -57,10 +81,5 @@ export function generateImageArgs({
   args.push(`fm=${format}`)
   args.push(`q=${quality}`)
 
-  let joinedArgs = base64URLEncode(args.join(`&`))
-  if (shouldDispatch()) {
-    joinedArgs = md5(joinedArgs)
-  }
-
-  return joinedArgs
+  return args.join(`&`)
 }
