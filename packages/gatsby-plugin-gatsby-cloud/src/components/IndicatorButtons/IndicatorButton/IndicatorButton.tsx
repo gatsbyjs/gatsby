@@ -1,15 +1,8 @@
 import React, { FC, useEffect, useState } from "react"
-import { IndicatorButtonTooltip } from "../../tooltips"
+import IndicatorButtonTooltip from "../../IndicatorButtonTooltip"
 import { spinnerIcon } from "../../icons"
 import { buttonStyle, wrapperStyle } from "./indicator-button.css"
-
-export interface IIndicatorButtonTooltip {
-  visible?: boolean
-  content: React.ReactNode
-  trigger: `click` | `hover` | `none`
-  onOpen?: () => void
-  onClose?: () => void
-}
+import { IIndicatorButtonTooltip } from "../../IndicatorButtonTooltip"
 
 export interface IIndicatorButtonProps {
   icon: React.SVGProps<SVGSVGElement>
@@ -55,7 +48,7 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
   }, [tooltip?.visible])
 
   return (
-    <div className={wrapperStyle}>
+    <div className={wrapperStyle} data-test-id={testId}>
       <button
         disabled={disabled}
         onMouseEnter={onButtonMouseEnter}
@@ -67,11 +60,7 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
         {showSpinner && spinnerIcon}
       </button>
       {tooltip && (
-        <IndicatorButtonTooltip
-          {...tooltip}
-          testId={testId}
-          show={tooltipVisible}
-        />
+        <IndicatorButtonTooltip {...tooltip} visible={tooltipVisible} />
       )}
     </div>
   )

@@ -1,6 +1,7 @@
 import React, { FC, useContext } from "react"
 import IndicatorContext from "../../../context/IndicatorContext"
 import { EventType } from "../../../models/enums"
+import { linkWrapperStyle, linkTextStyle } from "../tooltip-content.css"
 
 const delay = (ms: number): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, ms || 50))
@@ -46,11 +47,8 @@ const BuildSuccessTooltipContent: FC = () => {
   return (
     <>
       {`This page has been updated.`}
-      <button
-        onClick={newPreviewAvailableClick}
-        data-gatsby-preview-indicator="tooltip-link"
-      >
-        <p data-gatsby-preview-indicator="tooltip-link-text">{`View Changes`}</p>
+      <button onClick={newPreviewAvailableClick} className={linkWrapperStyle}>
+        <span className={linkTextStyle}>{`View Changes`}</span>
       </button>
     </>
   )

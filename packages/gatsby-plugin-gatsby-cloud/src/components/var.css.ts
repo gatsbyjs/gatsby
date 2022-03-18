@@ -5,6 +5,7 @@ export const vars = createGlobalTheme(`:host`, {
     black: `#000`,
     white: `#fff`,
     dimmedWhite: `rgba(255, 255, 255, 0.8)`,
+    africanViolet: `#a97ec7`,
     "purple-10": `#f6edfa`,
     "purple-20": `#f1defa`,
     "purple-40": `#b17acc`,

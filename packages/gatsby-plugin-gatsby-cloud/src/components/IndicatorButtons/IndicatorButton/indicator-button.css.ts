@@ -1,5 +1,10 @@
-import { style, styleVariants } from "@vanilla-extract/css"
-import { vars } from "../var.css"
+import { style, styleVariants, keyframes } from "@vanilla-extract/css"
+import { vars } from "../../var.css"
+
+const spin = keyframes({
+  "0%": { transform: `rotate(0deg)` },
+  "100%": { transform: `rotate(360deg)` },
+})
 
 export const wrapperStyle = style({
   position: `relative`,
@@ -11,6 +16,15 @@ export const spinner = {
   left: `50%`,
   transform: `translateX(-50%) translateY(-50%)`,
   height: `28px`,
+  animation: `1s linear infinite ${spin}`,
+  "@media": {
+    "(prefers-reduced-motion: reduce)": {
+      animation: `none`,
+    },
+    "(prefers-color-scheme: dark)": {
+      color: vars.color[`purple-20`],
+    },
+  },
 }
 
 const buttonStyleBase = style({
@@ -25,9 +39,11 @@ const buttonStyleBase = style({
   background: `none`,
   boxSizing: `border-box`,
   transition: `background opacity 0.3s ease-in-out`,
-  ":hover": {
-    background: vars.color[`gray-100`],
-    cursor: `pointer`,
+  selectors: {
+    "&:not(:disabled):hover": {
+      background: vars.color[`gray-100`],
+      cursor: `pointer`,
+    },
   },
   ":disabled": {
     opacity: 0.3,

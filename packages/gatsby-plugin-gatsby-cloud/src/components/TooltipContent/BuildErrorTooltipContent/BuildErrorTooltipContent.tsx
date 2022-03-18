@@ -2,6 +2,7 @@ import React, { FC, useContext, useMemo } from "react"
 import IndicatorContext from "../../../context/IndicatorContext"
 import { EventType } from "../../../models/enums"
 import { logsIcon, failedIcon } from "../../icons"
+import { linkWrapperStyle, linkTextStyle } from "../tooltip-content.css"
 
 const BuildErrorTooltipContent: FC = () => {
   const { buildInfo, currentBuildId, trackEvent } = useContext(IndicatorContext)
@@ -35,10 +36,10 @@ const BuildErrorTooltipContent: FC = () => {
             name: `error logs`,
           })
         }}
-        data-gatsby-preview-indicator="tooltip-link"
+        className={linkWrapperStyle}
       >
-        <p data-gatsby-preview-indicator="tooltip-link-text">{`View logs`}</p>
-        <div data-gatsby-preview-indicator="tooltip-svg">{logsIcon}</div>
+        <span className={linkTextStyle}>{`View logs`}</span>
+        {logsIcon}
       </a>
     </>
   )
