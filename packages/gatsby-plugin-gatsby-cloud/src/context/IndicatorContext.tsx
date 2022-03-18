@@ -7,36 +7,50 @@ import {
   INTERACTION_COOKIE_NAME,
   INTERACTIONS_BEFORE_FEEDBACK,
 } from "../constants"
-import { EventType } from "../models/enums"
-
-interface ITrackEventProps {
-  eventType: EventType
-  orgId: string
-  siteId: string
-  buildId: string
-  name: string
-}
+import {
+  BuildInfo,
+  ContentSyncInfo,
+  ManifestInfo,
+  TrackEventProps,
+} from "../models/interfaces"
+import { BuildStatus } from "../models/enums"
 
 interface IIndicatorContext {
+  isOnPrettyUrl: boolean
+  currentBuildId?: string | null
+  currentBuildStatus?: BuildStatus | null
   cookies: { [key: string]: string }
-  askForFeedback: boolean
-  showFeedback: boolean
+  buildInfo?: BuildInfo | null
+  contentSyncInfo?: ContentSyncInfo | null
+  manifestInfo?: ManifestInfo | null
+  askForFeedback?: boolean
+  showFeedback?: boolean
+  usingContentSync?: boolean
   checkForFeedback: () => void
-  trackEvent: (info: ITrackEventProps) => void
+  trackEvent: (info: TrackEventProps) => void
   setCookie: (name: string, value: string) => void
   getCookie: (name: string) => string
   removeCookie: (name: string) => void
+  setCurrentBuildStatus: (status: BuildStatus) => void
+  setBuildInfo: (info: BuildInfo | null) => void
+  setContentSyncInfo: (info: ContentSyncInfo | null) => void
+  setManifestInfo: (info: ManifestInfo | null) => void
 }
 
-const defaultState = {
+const isOnPrettyUrl = /^preview-/.test(window.location.hostname)
+
+const defaultState: IIndicatorContext = {
+  isOnPrettyUrl,
   cookies: Cookies.get(),
-  askForFeedback: false,
-  showFeedback: false,
   checkForFeedback: (): void => {},
   trackEvent: (): void => {},
   setCookie: (): void => {},
   getCookie: (): string => ``,
   removeCookie: (): void => {},
+  setCurrentBuildStatus: (): void => {},
+  setBuildInfo: (): void => {},
+  setContentSyncInfo: (): void => {},
+  setManifestInfo: (): void => {},
 }
 
 const IndicatorContext = createContext<IIndicatorContext>(defaultState)
@@ -49,9 +63,35 @@ const IndicatorProvider: FC = ({ children }) => {
     .reverse()
     .join(`.`)
   const [cookies, setCookies] = useState(defaultState.cookies)
-  const [askForFeedback, setAskForFeedback] = useState(
-    defaultState.askForFeedback
-  )
+  const [askForFeedback, setAskForFeedback] = useState(false)
+  const [currentBuildStatus, setCurrentBuildStatusData] =
+    useState<BuildStatus | null>(null)
+  const [buildInfo, setBuildData] = useState<BuildInfo | null>(null)
+  const [contentSyncInfo, setContentSyncData] =
+    useState<ContentSyncInfo | null>(null)
+  const [manifestInfo, setManifestData] = useState<ManifestInfo | null>(null)
+  const showFeedback = useMemo(() => {
+    const interactionCount = cookies[INTERACTION_COOKIE_NAME]
+      ? parseInt(cookies[INTERACTION_COOKIE_NAME])
+      : 0
+    return askForFeedback && interactionCount > INTERACTIONS_BEFORE_FEEDBACK
+  }, [askForFeedback, cookies[INTERACTION_COOKIE_NAME]])
+  const currentBuildId = useMemo(() => {
+    const host = window.location.hostname
+    if (isOnPrettyUrl || host === `localhost`) {
+      return buildInfo?.latestBuild?.id
+    } else {
+      // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
+      const buildIdMatch = host.match(/build-(.*?(?=\.))/)
+      if (buildIdMatch) {
+        return buildIdMatch[1]
+      }
+      return null
+    }
+  }, [buildInfo?.latestBuild?.id])
+  const usingContentSync = useMemo(() => !!contentSyncInfo, [contentSyncInfo])
+
+  // cookie methods
   const setCookie = (name: string, value: string): void => {
     Cookies.set(name, value, {
       domain: rootDomain,
@@ -61,6 +101,7 @@ const IndicatorProvider: FC = ({ children }) => {
   }
 
   const getCookie = (name: string): string => Cookies.get(name)
+
   const removeCookie = (name: string): void => {
     Cookies.remove(name, { domain: rootDomain })
     if (name in cookies) {
@@ -68,6 +109,27 @@ const IndicatorProvider: FC = ({ children }) => {
       setCookies(cookies)
     }
   }
+
+  // buildInfo methods
+  const setBuildInfo = (info: BuildInfo | null): void => {
+    setBuildData(info)
+  }
+
+  const setCurrentBuildStatus = (status: BuildStatus | null): void => {
+    setCurrentBuildStatusData(status)
+  }
+
+  // contentSyncInfo methods
+  const setContentSyncInfo = (info: ContentSyncInfo | null): void => {
+    setContentSyncData(info)
+  }
+
+  // manifestInfo methods
+  const setManifestInfo = (info: ManifestInfo | null): void => {
+    setManifestData(info)
+  }
+
+  // feedback methods
   const checkForFeedback = (): void => {
     const lastFeedback = getCookie(FEEDBACK_COOKIE_NAME)
     if (lastFeedback) {
@@ -80,20 +142,12 @@ const IndicatorProvider: FC = ({ children }) => {
       setAskForFeedback(true)
     }
   }
-  const showFeedback = useMemo(() => {
-    const interactionCount = cookies[INTERACTION_COOKIE_NAME]
-      ? parseInt(cookies[INTERACTION_COOKIE_NAME])
-      : 0
-    return askForFeedback && interactionCount > INTERACTIONS_BEFORE_FEEDBACK
-  }, [askForFeedback, cookies[INTERACTION_COOKIE_NAME]])
 
+  // track event methods
   const trackEvent = async ({
     eventType,
-    orgId,
-    siteId,
-    buildId,
     name,
-  }: ITrackEventProps): Promise<void> => {
+  }: TrackEventProps): Promise<void> => {
     checkForFeedback()
     if (askForFeedback) {
       const interactions = isNaN(parseInt(getCookie(INTERACTION_COOKIE_NAME)))
@@ -110,9 +164,9 @@ const IndicatorProvider: FC = ({ children }) => {
           version: 1,
           componentVersion:
             process.env.GATSBY_PREVIEW_UI_APP_VERSION || `4.11.0-next.0`,
-          organizationId: orgId,
-          siteId,
-          buildId,
+          organizationId: buildInfo?.siteInfo?.orgId,
+          siteId: buildInfo?.siteInfo?.siteId,
+          buildId: currentBuildId,
           name,
         }
 
@@ -133,14 +187,25 @@ const IndicatorProvider: FC = ({ children }) => {
   return (
     <IndicatorContext.Provider
       value={{
+        isOnPrettyUrl,
+        currentBuildId,
         cookies,
         askForFeedback,
         showFeedback,
+        buildInfo,
+        contentSyncInfo,
+        manifestInfo,
+        currentBuildStatus,
+        usingContentSync,
         checkForFeedback,
         trackEvent,
         setCookie,
         getCookie,
         removeCookie,
+        setCurrentBuildStatus,
+        setBuildInfo,
+        setContentSyncInfo,
+        setManifestInfo,
       }}
     >
       {children}

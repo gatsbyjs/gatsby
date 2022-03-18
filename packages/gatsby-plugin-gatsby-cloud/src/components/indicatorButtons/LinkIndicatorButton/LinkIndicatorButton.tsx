@@ -1,8 +1,8 @@
 import React, { FC, useContext, useEffect, useMemo, useState } from "react"
 import IndicatorButton, { IIndicatorButtonProps } from "../IndicatorButton"
-import { linkIcon, successIcon } from "../icons"
-import { BuildStatus, EventType } from "../../models/enums"
-import IndicatorContext from "../../context/IndicatorContext"
+import { linkIcon, successIcon } from "../../icons"
+import { BuildStatus, EventType } from "../../../models/enums"
+import IndicatorContext from "../../../context/IndicatorContext"
 
 const CopySuccessTooltipContent = (
   <>
@@ -11,28 +11,16 @@ const CopySuccessTooltipContent = (
   </>
 )
 
-export interface ILinkIndicatorButtonProps {
-  orgId: string
-  siteId: string
-  buildId: string
-  buildStatus: BuildStatus
-}
-
-const LinkIndicatorButton: FC<ILinkIndicatorButtonProps> = ({
-  orgId,
-  siteId,
-  buildId,
-  buildStatus,
-}) => {
-  const { trackEvent } = useContext(IndicatorContext)
+const LinkIndicatorButton: FC = () => {
+  const { currentBuildStatus, trackEvent } = useContext(IndicatorContext)
   const baseButtonProps = useMemo(() => {
     const props: IIndicatorButtonProps = {
       icon: linkIcon,
       testId: `link`,
     }
     if (
-      buildStatus === BuildStatus.BUILDING ||
-      buildStatus === BuildStatus.UP_TO_DATE
+      currentBuildStatus === BuildStatus.BUILDING ||
+      currentBuildStatus === BuildStatus.UP_TO_DATE
     ) {
       props.disabled = false
       props.tooltip = {
@@ -41,16 +29,13 @@ const LinkIndicatorButton: FC<ILinkIndicatorButtonProps> = ({
       }
     }
     return props
-  }, [buildStatus])
+  }, [currentBuildStatus])
   const [buttonProps, setButtonProps] =
     useState<IIndicatorButtonProps>(baseButtonProps)
 
   const onCopyLinkClick = (): void => {
     trackEvent({
       eventType: EventType.PREVIEW_INDICATOR_CLICK,
-      orgId,
-      siteId,
-      buildId,
       name: `copy link`,
     })
 
@@ -84,9 +69,6 @@ const LinkIndicatorButton: FC<ILinkIndicatorButtonProps> = ({
   const onMouseEnter = (): void => {
     trackEvent({
       eventType: EventType.PREVIEW_INDICATOR_HOVER,
-      orgId,
-      siteId,
-      buildId,
       name: `link hover`,
     })
   }
@@ -110,7 +92,7 @@ const LinkIndicatorButton: FC<ILinkIndicatorButtonProps> = ({
       }
       return newProps
     })
-  }, [buildStatus])
+  }, [currentBuildStatus])
 
   return (
     <IndicatorButton

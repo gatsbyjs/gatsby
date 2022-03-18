@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import IndicatorButton, { IIndicatorButtonProps } from "../IndicatorButton"
-import { gatsbyIcon } from "../icons"
+import { gatsbyIcon } from "../../icons"
 
 const GatsbyIndicatorButton: FC = () => {
   const buttonProps: IIndicatorButtonProps = {

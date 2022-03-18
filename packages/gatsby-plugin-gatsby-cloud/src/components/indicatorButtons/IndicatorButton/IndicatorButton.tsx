@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react"
-import { IndicatorButtonTooltip } from "../tooltips"
-import { spinnerIcon } from "../icons"
+import { IndicatorButtonTooltip } from "../../tooltips"
+import { spinnerIcon } from "../../icons"
 import { buttonStyle, wrapperStyle } from "./indicator-button.css"
 
 export interface IIndicatorButtonTooltip {
