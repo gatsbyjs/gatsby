@@ -66,7 +66,7 @@ const handleReferences = (
                 data.id,
                 data.type,
                 rootNodeLanguage,
-                data.meta?.target_version,
+                data.meta?.target_revision_id,
                 entityReferenceRevisions
               )
             )
@@ -268,7 +268,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
       nodeToUpdate.id,
       nodeToUpdate.type,
       getOptions().languageConfig ? nodeToUpdate.langcode : `und`,
-      nodeToUpdate.meta?.target_version,
+      nodeToUpdate.meta?.target_revision_id,
       getOptions().entityReferenceRevisions
     )
   )
