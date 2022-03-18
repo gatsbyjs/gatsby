@@ -1,5 +1,5 @@
 import { style, styleVariants } from "@vanilla-extract/css"
-import { vars } from "../var.css"
+import { vars } from "../theme.css"
 
 export const wrapperStyle = style({
   position: `absolute`,
@@ -52,16 +52,16 @@ export const closeButtonStyle = style({
   padding: 0,
   marginLeft: `0.8rem`,
   cursor: `pointer`,
-  selectors: {
-    "& > svg": {
-      color: vars.color.white,
-      opacity: `0.6`,
-      transitionProperty: `color, opacity`,
-      transitionDuration: `0.3s`,
-      transitionTimingFunction: `ease-in-out`,
-    },
-    "&:hover > svg": {
-      opacity: 1,
-    },
-  },
+  // selectors: {
+  //   "& > svg": {
+  //     color: vars.color.white,
+  //     opacity: `0.6`,
+  //     transitionProperty: `color, opacity`,
+  //     transitionDuration: `0.3s`,
+  //     transitionTimingFunction: `ease-in-out`,
+  //   },
+  //   "&:hover > svg": {
+  //     opacity: 1,
+  //   },
+  // },
 })

@@ -1,6 +1,6 @@
 import React from "react"
 import { createPortal } from "react-dom"
-import Indicator from "./components/Indicator"
+import Indicator from "./components/Indicator/Indicator"
 
 const ShadowPortal = ({ children, identifier }) => {
   const mountNode = React.useRef(null)

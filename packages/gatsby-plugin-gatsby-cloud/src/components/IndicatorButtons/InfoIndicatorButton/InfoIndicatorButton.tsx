@@ -13,7 +13,7 @@ import {
   INTERACTION_COOKIE_NAME,
 } from "../../../constants"
 import { BuildStatus, EventType } from "../../../models/enums"
-import IndicatorContext from "../../../context/IndicatorContext"
+import IndicatorContext from "../../../context/MainIndicatorContext"
 
 const InfoIndicatorButton: FC = () => {
   const {

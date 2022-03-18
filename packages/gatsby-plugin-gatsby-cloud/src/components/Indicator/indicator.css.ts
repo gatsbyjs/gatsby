@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css"
-import { vars } from "../var.css"
+import { vars } from "../theme.css"
 
 export const wrapperStyle = style({
   font: `14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important`,

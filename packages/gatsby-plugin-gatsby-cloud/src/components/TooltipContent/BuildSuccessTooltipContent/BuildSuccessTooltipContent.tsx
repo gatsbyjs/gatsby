@@ -1,5 +1,5 @@
 import React, { FC, useContext } from "react"
-import IndicatorContext from "../../../context/IndicatorContext"
+import IndicatorContext from "../../../context/MainIndicatorContext"
 import { EventType } from "../../../models/enums"
 import { linkWrapperStyle, linkTextStyle } from "../tooltip-content.css"
 

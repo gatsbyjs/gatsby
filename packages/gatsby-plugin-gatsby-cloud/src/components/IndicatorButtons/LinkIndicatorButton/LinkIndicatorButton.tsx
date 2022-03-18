@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from "react"
 import IndicatorButton, { IIndicatorButtonProps } from "../IndicatorButton"
 import { linkIcon, successIcon } from "../../icons"
 import { BuildStatus, EventType } from "../../../models/enums"
-import IndicatorContext from "../../../context/IndicatorContext"
+import IndicatorContext from "../../../context/MainIndicatorContext"
 
 const CopySuccessTooltipContent = (
   <>

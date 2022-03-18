@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, FC, useContext } from "react"
 import IndicatorContext, {
   IndicatorProvider,
-} from "../../context/IndicatorContext"
+} from "../../context/MainIndicatorContext"
 import {
   LinkIndicatorButton,
   InfoIndicatorButton,
@@ -10,6 +10,7 @@ import {
 import { BuildStatus, EventType } from "../../models/enums"
 import { useBuildInfo, usePageData, useNodeManifestPoll } from "../../hooks"
 import { ContentSyncInfo } from "../../models/interfaces"
+import { wrapperStyle } from "./indicator.css"
 
 interface IPageDataChangedResponse {
   changed: boolean
@@ -75,9 +76,8 @@ const Indicator: FC = () => {
     const urlSearchParams = new URLSearchParams(window.location.search)
 
     // manifestId and pluginName are shortened to keep the url concise
-    const buf = Buffer.from(urlSearchParams.get(`csync`) || ``) || `{}`
     const { mid: manifestId, plgn: pluginName } = JSON.parse(
-      buf.toString(`base64`)
+      window.atob(urlSearchParams.get(`csync`) || ``) || `{}`
     )
 
     if (!manifestId || !pluginName) {
@@ -215,14 +215,22 @@ const Indicator: FC = () => {
   }, [nodeManifestRedirectUrl, nodeManifestErrorMessage])
 
   return (
-    <div>
-      <IndicatorProvider>
-        <InfoIndicatorButton />
-        <GatsbyIndicatorButton />,
-        <LinkIndicatorButton />,
-      </IndicatorProvider>
+    <div
+      data-testid="preview-status-indicator"
+      aria-live="assertive"
+      className={wrapperStyle}
+    >
+      <InfoIndicatorButton />
+      <GatsbyIndicatorButton />
+      <LinkIndicatorButton />
     </div>
   )
 }
 
-export default Indicator
+const IndicatorWrapper: FC = () => (
+  <IndicatorProvider>
+    <Indicator />
+  </IndicatorProvider>
+)
+
+export default IndicatorWrapper

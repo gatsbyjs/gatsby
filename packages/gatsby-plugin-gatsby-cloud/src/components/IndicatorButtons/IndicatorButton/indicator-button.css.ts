@@ -1,5 +1,5 @@
 import { style, styleVariants, keyframes } from "@vanilla-extract/css"
-import { vars } from "../../var.css"
+import { vars } from "../../theme.css"
 
 const spin = keyframes({
   "0%": { transform: `rotate(0deg)` },
@@ -39,12 +39,12 @@ const buttonStyleBase = style({
   background: `none`,
   boxSizing: `border-box`,
   transition: `background opacity 0.3s ease-in-out`,
-  selectors: {
-    "&:not(:disabled):hover": {
-      background: vars.color[`gray-100`],
-      cursor: `pointer`,
-    },
-  },
+  // selectors: {
+  //   "&:not(:disabled):hover": {
+  //     background: vars.color[`gray-100`],
+  //     cursor: `pointer`,
+  //   },
+  // },
   ":disabled": {
     opacity: 0.3,
     cursor: `default`,
