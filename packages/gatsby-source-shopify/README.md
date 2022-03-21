@@ -396,6 +396,102 @@ The bulk API was chosen for resiliency, but it comes with some limitations, the 
 
 <div id="migration-guide"></div>
 
-## Migration guide
+## 🚌 V6 to V7 Migration Guide
 
-We don't currently have a migration guide for v7 of `gatsby-source-shopify`, but it is in the works and will be released shortly after the release of v7.
+Need help upgrading this source plugin from V6 to V7? We want this guide to be as useful as possible. Please open an issue and let us know if you see anything wrong here or find something missing from this guide 🙏
+
+The following breaking schema changes must be updated in your site in order to upgrade:
+
+### `ShopifyProduct` Images/Media
+
+It was previoulsy supported to query for videos or 3D models. In order to add support for these, the `ShopifyProduct` `images` field has been replaced by the `media` field.
+
+Instead of doing this:
+
+```graphql
+shopifyProduct {
+  images {
+    gatsbyImageData
+  }
+}
+```
+
+You'll now need to do this to get image data:
+
+```graphql
+shopifyProduct {
+  images {
+    media {
+      ... on ShopifyMediaImage {
+        image {
+          gatsbyImageData
+        }
+      }
+    }
+  }
+}
+```
+
+You can also query for
+
+### `ShopifyProduct` Options
+
+`ShopifyProductOption` is the type that backs `ShopifyProduct.options` field. Its `id` field has been changed to `shopifyId`.
+
+Before:
+
+```graphql
+shopifyProduct {
+  options {
+    id
+  }
+}
+```
+
+After:
+
+```graphql
+shopifyProduct {
+  options { # each of these options are of type "ShopifyProductOption"
+    shopifyId
+  }
+}
+```
+
+### Metafields
+
+Previously, the following metafield types used to be exist:
+
+- `ShopifyProductMetafield`
+- `ShopifyCollectionMetafield`
+- `ShopifyProductVariantMetafield`
+
+These have now been combined into one type field called `ShopifyMetafield`.
+
+Additionally, the `ownerType` field is type as an enum that matches [the Shopify API enum for the metafield `ownerType` field](https://shopify.dev/api/admin-graphql/2022-01/enums/)
+
+This means that any queries for metafields on a specific Shopify Owner Resource, need to be replaced like so:
+
+```graphql
+allShopifyProductMetafield {
+  nodes {
+    id
+    value
+    description
+    ownerType
+  }
+}
+```
+
+This will produce an equivalent to the previous example:
+
+```graphql
+allShopifyMetafield(filter: {ownerType: {eq: PRODUCT}}) {
+  nodes {
+    id
+    value
+    description
+    value
+  }
+}
+```
