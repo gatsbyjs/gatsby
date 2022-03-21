@@ -1,6 +1,6 @@
 import * as createOperationsModule from "../src/create-operations"
 
-import { makeMockGatsbyApi } from "./mocks"
+import { mockGatsbyApi, mockPluginOptions } from "./mocks"
 
 const createOperations = jest.spyOn(
   createOperationsModule,
@@ -16,7 +16,8 @@ const generateTestName = (salesChannel, lastBuildTime): string => {
   return `creates the proper queries and operations ${modifiers[0]} sales channel and ${modifiers[1]} lastBuildTime`
 }
 
-const gatsbyApi = makeMockGatsbyApi()
+const gatsbyApi = mockGatsbyApi()
+const pluginOptions = mockPluginOptions()
 
 describe(`createOperations`, () => {
   beforeEach(() => {
@@ -28,7 +29,7 @@ describe(`createOperations`, () => {
       it(generateTestName(salesChannel, lastBuildTime), () => {
         const result = createOperationsModule.createOperations(
           gatsbyApi,
-          { salesChannel },
+          { ...pluginOptions, salesChannel },
           lastBuildTime
         )
 

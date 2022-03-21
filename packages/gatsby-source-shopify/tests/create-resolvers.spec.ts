@@ -1,6 +1,6 @@
 import { createResolvers } from "../src/create-resolvers"
 
-import { makeMockGatsbyApi } from "./mocks"
+import { mockGatsbyApi, mockPluginOptions } from "./mocks"
 
 const connections = [`orders`, `collections`, `locations`]
 
@@ -13,7 +13,8 @@ const generateTestName = (downloadImages, shopifyConnections): string => {
   return `Sets the correct resolvers ${modifiers[0]} downloadImages and ${modifiers[1]} connections`
 }
 
-const gatsbyApi = makeMockGatsbyApi()
+const gatsbyApi = mockGatsbyApi()
+const pluginOptions = mockPluginOptions()
 
 describe(`createResolvers`, () => {
   beforeEach(() => {
@@ -23,13 +24,12 @@ describe(`createResolvers`, () => {
   for (const downloadImages of [false, true]) {
     for (const shopifyConnections of [undefined, connections]) {
       it(generateTestName(downloadImages, shopifyConnections), () => {
-        const pluginOptions = {
+        createResolvers(gatsbyApi, {
+          ...pluginOptions,
           downloadImages,
           shopifyConnections,
           typePrefix: `__PREFIX__`,
-        }
-
-        createResolvers(gatsbyApi, pluginOptions)
+        })
 
         const getExpectedValue = (): number => {
           if (!downloadImages && shopifyConnections) return 4

@@ -1,12 +1,13 @@
 import fs from "fs"
 import path from "path"
+import type { IShopifyPluginOptions } from "../types/interface"
 
 import { NodePluginArgs } from "gatsby"
 import { createContentDigest } from "gatsby-core-utils"
 
 import ids from "./__data__/ids.json"
 
-export function makeMockGatsbyApi(): NodePluginArgs {
+export function mockGatsbyApi(): NodePluginArgs {
   return {
     actions: {
       createTypes: jest.fn(),
@@ -40,6 +41,18 @@ export function makeMockGatsbyApi(): NodePluginArgs {
       require(`./__data__/shopify-nodes/${type}.json`)
     ),
   } as unknown as NodePluginArgs
+}
+
+export const mockPluginOptions = (): IShopifyPluginOptions => {
+  return {
+    password: `test-password`,
+    storeUrl: `test.myshopify.com`,
+    downloadImages: false,
+    shopifyConnections: [],
+    typePrefix: ``,
+    salesChannel: ``,
+    prioritize: undefined,
+  }
 }
 
 export function makeMockEnvironment(): (

@@ -6,7 +6,7 @@ import * as helpersModule from "../src/helpers"
 import * as updateCacheModule from "../src/update-cache"
 import * as createOperationsModule from "../src/create-operations"
 
-import { makeMockGatsbyApi, mockBulkResults } from "./mocks"
+import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./mocks"
 
 jest.mock(`node-fetch`)
 
@@ -78,7 +78,8 @@ const generateTestName = (
   return `successfully runs a ${modifiers[0]} ${modifiers[1]} build ${modifiers[2]} connections`
 }
 
-const gatsbyApi = makeMockGatsbyApi()
+const gatsbyApi = mockGatsbyApi()
+const pluginOptions = mockPluginOptions()
 
 describe(`sourceNodes`, () => {
   beforeEach(() => {
@@ -108,7 +109,11 @@ describe(`sourceNodes`, () => {
               })
             }
 
-            await sourceNodes(gatsbyApi, { prioritize, shopifyConnections })
+            await sourceNodes(gatsbyApi, {
+              ...pluginOptions,
+              prioritize,
+              shopifyConnections,
+            })
 
             expect(setLastBuildTime.mock.calls.length).toEqual(1)
             expect(gatsbyApi.actions.createNode.mock.calls).toMatchSnapshot()

@@ -142,10 +142,10 @@ interface IShopifyNode {
 interface IShopifyPluginOptions {
   password: string
   storeUrl: string
-  downloadImages?: boolean
-  shopifyConnections?: Array<string>
-  typePrefix?: string
-  salesChannel?: string
+  downloadImages: boolean
+  shopifyConnections: Array<string>
+  typePrefix: string
+  salesChannel: string
   prioritize?: boolean
 }
 

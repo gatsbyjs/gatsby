@@ -3,7 +3,7 @@ import fetch from "node-fetch"
 import { makeSourceFromOperation } from "../src/source-from-operation"
 import * as processBulkResultsModule from "../src/process-bulk-results"
 
-import { makeMockGatsbyApi, mockBulkResults } from "./mocks"
+import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./mocks"
 
 jest.mock(`node-fetch`)
 
@@ -12,7 +12,8 @@ const processBulkResults = jest.spyOn(
   `processBulkResults`
 )
 
-const gatsbyApi = makeMockGatsbyApi()
+const gatsbyApi = mockGatsbyApi()
+const pluginOptions = mockPluginOptions()
 
 const finishLastOperation = jest.fn()
 
@@ -61,14 +62,12 @@ describe(`makeSourceFromOperation`, () => {
           }
         })
 
-        const pluginOptions = { prioritize }
-
         const sourceFromOperation = makeSourceFromOperation(
           finishLastOperation,
           completedOperation,
           cancelOperationInProgress,
           gatsbyApi,
-          pluginOptions,
+          { ...pluginOptions, prioritize },
           lastBuildTime
         )
 
