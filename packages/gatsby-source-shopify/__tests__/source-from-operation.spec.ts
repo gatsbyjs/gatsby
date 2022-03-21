@@ -3,7 +3,7 @@ import fetch from "node-fetch"
 import { makeSourceFromOperation } from "../src/source-from-operation"
 import * as processBulkResultsModule from "../src/process-bulk-results"
 
-import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./mocks"
+import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./fixtures"
 
 jest.mock(`node-fetch`)
 

@@ -1,6 +1,6 @@
 import { createResolvers } from "../src/create-resolvers"
 
-import { mockGatsbyApi, mockPluginOptions } from "./mocks"
+import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
 
 const connections = [`orders`, `collections`, `locations`]
 

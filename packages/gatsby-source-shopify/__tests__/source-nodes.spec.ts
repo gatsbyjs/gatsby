@@ -6,7 +6,7 @@ import * as helpersModule from "../src/helpers"
 import * as updateCacheModule from "../src/update-cache"
 import * as createOperationsModule from "../src/create-operations"
 
-import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./mocks"
+import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./fixtures"
 
 jest.mock(`node-fetch`)
 
