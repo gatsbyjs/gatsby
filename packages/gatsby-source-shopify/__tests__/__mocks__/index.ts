@@ -4,7 +4,7 @@ import path from "path"
 import { NodePluginArgs } from "gatsby"
 import { createContentDigest } from "gatsby-core-utils"
 
-import ids from "./__data__/ids.json"
+import ids from "../fixtures/ids.json"
 
 export function mockGatsbyApi(): NodePluginArgs {
   return {
@@ -37,7 +37,7 @@ export function mockGatsbyApi(): NodePluginArgs {
     createResolvers: jest.fn(),
     cache: new Map(),
     getNodesByType: jest.fn((type: string) =>
-      require(`./__data__/shopify-nodes/${type}.json`)
+      require(`../fixtures/shopify-nodes/${type}.json`)
     ),
   } as unknown as NodePluginArgs
 }
@@ -106,10 +106,10 @@ export function makeMockEnvironment(): (
 
 export function mockBulkResults(type: string): ReadableStream {
   return fs.createReadStream(
-    path.join(__dirname, `./__data__/bulk-results/${type}.jsonl`)
+    path.join(__dirname, `../fixtures/bulk-results/${type}.jsonl`)
   )
 }
 
 export function mockShopifyEvents(type: string): Array<IEvent> {
-  return require(`./__data__/shopify-events/${type}.json`)
+  return require(`../fixtures/shopify-events/${type}.json`)
 }
