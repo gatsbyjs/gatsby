@@ -6,6 +6,7 @@ import md5File from "md5-file"
 import crypto from "crypto"
 import path from "path"
 import telemetry from "gatsby-telemetry"
+import glob from "globby"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
@@ -269,7 +270,6 @@ export async function initialize({
     ? lmdbCacheDirExists
     : cacheJsonDirExists
 
-  const { globby: glob } = await import(`globby`)
   // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
   // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
