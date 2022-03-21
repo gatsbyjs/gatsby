@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.4.1/packages/gatsby-plugin-utils) (2022-03-18)
+
+#### Bug Fixes
+
+- Add missing fs-extra dep [#35165](https://github.com/gatsbyjs/gatsby/issues/35165) [#35168](https://github.com/gatsbyjs/gatsby/issues/35168) ([3ac159f](https://github.com/gatsbyjs/gatsby/commit/3ac159f2c08ca18426d252d591486756e7d04c5c))
+
 ## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.4.0/packages/gatsby-plugin-utils) (2022-03-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
