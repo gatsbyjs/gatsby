@@ -182,9 +182,14 @@ class RouteAnnouncer extends React.Component {
       if (document.title) {
         pageName = document.title
       }
-      const pageHeadings = document.querySelectorAll(`#gatsby-focus-wrapper h1`)
-      if (pageHeadings && pageHeadings.length) {
-        pageName = pageHeadings[0].textContent
+      const routeToAnnounce = document.querySelector(`#gatsby-route-to-announce`)
+      if(routeToAnnounce) {
+        pageName = routeToAnnounce.textContent
+      } else {
+        const pageHeadings = document.querySelectorAll(`#gatsby-focus-wrapper h1`)
+        if (pageHeadings && pageHeadings.length) {
+          pageName = pageHeadings[0].textContent
+        }
       }
       const newAnnouncement = `Navigated to ${pageName}`
       if (this.announcementRef.current) {
