@@ -49,12 +49,7 @@ module.exports = async (
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const extensions = store.getState().program.extensions
-  const { rules, loaders, plugins } = createWebpackUtils(
-    stage,
-    program,
-    extensions
-  )
+  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
   const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 

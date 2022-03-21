@@ -174,8 +174,7 @@ const vendorRegex = /(node_modules|bower_components)/
  */
 export const createWebpackUtils = (
   stage: Stage,
-  program: IProgram,
-  extensions: Array<string>
+  program: IProgram
 ): IWebpackUtils => {
   const assetRelativeRoot = `static/`
   const supportedBrowsers = getBrowsersList(program.directory)
@@ -417,8 +416,7 @@ export const createWebpackUtils = (
       modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
     } = {}): RuleSetRule => {
       return {
-        // Get extensions and convert . into \.
-        test: new RegExp(`(${extensions.join(`|`).replace(/\./g, `\\.`)})$`),
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
         include: (modulePath: string): boolean => {
           // when it's not coming from node_modules we treat it as a source file.
           if (!vendorRegex.test(modulePath)) {
