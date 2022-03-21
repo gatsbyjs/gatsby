@@ -28,13 +28,9 @@ jest.mock(`autoprefixer`, () =>
 let config
 
 beforeAll(() => {
-  config = createWebpackUtils(
-    Stage.Develop,
-    {
-      directory: `${os.tmpdir()}/test`,
-    } as IProgram,
-    [`.js`, `.mjs`, `.jsx`]
-  )
+  config = createWebpackUtils(Stage.Develop, {
+    directory: `${os.tmpdir()}/test`,
+  } as IProgram)
 })
 
 describe(`webpack utils`, () => {
