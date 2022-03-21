@@ -11,8 +11,8 @@ export function createResolvers(
   const { createResolvers, cache } = gatsbyApi
   const {
     downloadImages,
-    typePrefix = ``,
-    shopifyConnections: connections = [],
+    typePrefix,
+    shopifyConnections: connections,
   } = pluginOptions
 
   if (!downloadImages) {

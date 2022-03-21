@@ -16,8 +16,8 @@ export function createSchemaCustomization(
   const { actions } = gatsbyApi
   const {
     downloadImages,
-    shopifyConnections: connections = [],
-    typePrefix = ``,
+    shopifyConnections: connections,
+    typePrefix,
   } = pluginOptions
 
   const prefix = `${typePrefix}Shopify`

@@ -166,9 +166,7 @@ Your Shopify store URL, e.g. some-shop.myshopify.com
 
 `shopifyConnections: string[]`
 
-An optional array of additional data types to source.
-
-Accepted values: `'orders'`, `'collections'`, `'locations'`
+An optional array of additional data types to source. Accepted values: `'orders'`, `'collections'`, `'locations'`
 
 `downloadImages: bool`
 
@@ -179,6 +177,10 @@ The plugin's default behavior is to fall back to Shopify's CDN.
 `typePrefix: string`
 
 Not set by default. If set to a string (example `MyStore`) node names will be `allMyStoreShopifyProducts` instead of `allShopifyProducts`.
+
+`prioritize: boolean`
+
+Not set by default. Allows you to override the priority status of a build. If set to undefined, the environment variables will determine priority status. If set to true or false, it will override the environment variables and set the priority status as such.
 
 `salesChannel: string`
 

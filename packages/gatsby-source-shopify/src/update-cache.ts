@@ -22,7 +22,7 @@ function invalidateNode(
   nodeMap: IShopifyNodeMap,
   id: string
 ): Array<string> {
-  const { typePrefix = `` } = pluginOptions
+  const { typePrefix } = pluginOptions
 
   const node = nodeMap[id]
   let invalidatedNodeIds: Array<string> = []
@@ -73,7 +73,7 @@ export async function updateCache(
   pluginOptions: IShopifyPluginOptions,
   lastBuildTime: Date
 ): Promise<void> {
-  const { typePrefix = `` } = pluginOptions
+  const { typePrefix } = pluginOptions
 
   const nodeMap: IShopifyNodeMap = Object.keys(shopifyTypes)
     .map(type => gatsbyApi.getNodesByType(`${typePrefix}Shopify${type}`))

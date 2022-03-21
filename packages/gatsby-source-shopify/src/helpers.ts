@@ -8,7 +8,7 @@ const pattern = /^gid:\/\/shopify\/(\w+)\/(.+)$/
 export function createNodeId(
   shopifyId: string,
   gatsbyApi: NodePluginArgs,
-  { typePrefix = `` }: IShopifyPluginOptions
+  { typePrefix }: IShopifyPluginOptions
 ): string {
   return gatsbyApi.createNodeId(`${typePrefix}${shopifyId}`)
 }
@@ -25,7 +25,7 @@ export function getLastBuildTime(
   gatsbyApi: NodePluginArgs,
   pluginOptions: IShopifyPluginOptions
 ): Date | undefined {
-  const { typePrefix = `` } = pluginOptions
+  const { typePrefix } = pluginOptions
   const status = getPluginStatus(gatsbyApi)
 
   return (
@@ -39,7 +39,7 @@ export function setLastBuildTime(
   pluginOptions: IShopifyPluginOptions,
   currentBuildTime: number
 ): void {
-  const { typePrefix = `` } = pluginOptions
+  const { typePrefix } = pluginOptions
   const status = getPluginStatus(gatsbyApi)
 
   gatsbyApi.actions.setPluginStatus({

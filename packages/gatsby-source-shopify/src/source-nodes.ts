@@ -9,7 +9,7 @@ export async function sourceNodes(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions
 ): Promise<void> {
-  const { shopifyConnections: connections = [] } = pluginOptions
+  const { shopifyConnections: connections } = pluginOptions
 
   gatsbyApi.reporter.info(
     `Running ${isPriorityBuild(pluginOptions) ? `` : `non-`}priority queries`
