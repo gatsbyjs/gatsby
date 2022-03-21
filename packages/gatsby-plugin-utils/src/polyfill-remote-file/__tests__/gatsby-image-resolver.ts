@@ -5,7 +5,6 @@ import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { gatsbyImageResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
 import { PlaceholderType } from "../placeholder-handler"
-import { base64URLEncode } from "../utils/base64"
 import { generateImageUrl } from "../utils/url-generator"
 import type { Actions } from "gatsby"
 
