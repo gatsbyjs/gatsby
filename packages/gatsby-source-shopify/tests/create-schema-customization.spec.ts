@@ -7,7 +7,7 @@ const connections = [`orders`, `collections`, `locations`]
 const generateTestName = (downloadImages, shopifyConnections): string => {
   const modifiers = [
     downloadImages ? `with` : `without`,
-    shopifyConnections ? `with` : `without`,
+    shopifyConnections.length > 0 ? `with` : `without`,
   ]
 
   return `Creates the correct definitions ${modifiers[0]} downloadImages and ${modifiers[1]} connections`
@@ -22,7 +22,7 @@ describe(`createSchemaCustomization`, () => {
   })
 
   for (const downloadImages of [false, true]) {
-    for (const shopifyConnections of [undefined, connections]) {
+    for (const shopifyConnections of [[], connections]) {
       it(generateTestName(downloadImages, shopifyConnections), () => {
         createSchemaCustomization(gatsbyApi, {
           ...pluginOptions,

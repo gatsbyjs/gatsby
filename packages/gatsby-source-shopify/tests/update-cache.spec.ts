@@ -4,7 +4,7 @@ import * as eventsModule from "../src/events"
 
 import { mockGatsbyApi, mockPluginOptions, mockShopifyEvents } from "./mocks"
 
-const gatsbyApi = makeMockGatsbyApi()
+const gatsbyApi = mockGatsbyApi()
 const pluginOptions = mockPluginOptions()
 
 jest.mock(`node-fetch`)

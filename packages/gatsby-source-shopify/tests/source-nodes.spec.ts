@@ -73,7 +73,7 @@ const generateTestName = (
   const modifiers = [
     lastBuildTime ? `fresh` : `incremental`,
     prioritize ? `priority` : `non-priority`,
-    shopifyConnections ? `with` : `without`,
+    shopifyConnections.length > 0 ? `with` : `without`,
   ]
   return `successfully runs a ${modifiers[0]} ${modifiers[1]} build ${modifiers[2]} connections`
 }
@@ -88,7 +88,7 @@ describe(`sourceNodes`, () => {
 
   for (const prioritize of [false, true]) {
     for (const lastBuildTime of [undefined, new Date(0)]) {
-      for (const shopifyConnections of [undefined, connections]) {
+      for (const shopifyConnections of [[], connections]) {
         it(
           generateTestName(prioritize, lastBuildTime, shopifyConnections),
           async () => {

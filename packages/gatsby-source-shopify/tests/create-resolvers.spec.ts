@@ -7,7 +7,7 @@ const connections = [`orders`, `collections`, `locations`]
 const generateTestName = (downloadImages, shopifyConnections): string => {
   const modifiers = [
     downloadImages ? `with` : `without`,
-    shopifyConnections ? `with` : `without`,
+    shopifyConnections.length > 0 ? `with` : `without`,
   ]
 
   return `Sets the correct resolvers ${modifiers[0]} downloadImages and ${modifiers[1]} connections`
@@ -22,7 +22,7 @@ describe(`createResolvers`, () => {
   })
 
   for (const downloadImages of [false, true]) {
-    for (const shopifyConnections of [undefined, connections]) {
+    for (const shopifyConnections of [[], connections]) {
       it(generateTestName(downloadImages, shopifyConnections), () => {
         createResolvers(gatsbyApi, {
           ...pluginOptions,
@@ -32,8 +32,8 @@ describe(`createResolvers`, () => {
         })
 
         const getExpectedValue = (): number => {
-          if (!downloadImages && shopifyConnections) return 4
-          if (downloadImages && !shopifyConnections) return 2
+          if (!downloadImages && shopifyConnections.length === 3) return 4
+          if (downloadImages && shopifyConnections.length === 0) return 2
           return 3
         }
 

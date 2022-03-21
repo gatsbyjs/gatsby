@@ -1,6 +1,5 @@
 import fs from "fs"
 import path from "path"
-import type { IShopifyPluginOptions } from "../types/interface"
 
 import { NodePluginArgs } from "gatsby"
 import { createContentDigest } from "gatsby-core-utils"
