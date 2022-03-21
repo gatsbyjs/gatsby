@@ -417,6 +417,7 @@ export const createWebpackUtils = (
       modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
     } = {}): RuleSetRule => {
       return {
+        // Get extensions and convert . into \.
         test: new RegExp(`(${extensions.join(`|`).replace(/\./g, `\\.`)})$`),
         include: (modulePath: string): boolean => {
           // when it's not coming from node_modules we treat it as a source file.
