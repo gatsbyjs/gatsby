@@ -89,7 +89,7 @@ module.exports = {
 
 ### Retrieving API Information from Shopify
 
-`GATSBY_MYSHOPIFY_URL` is the Store address you enter when logging into your Shopify account. This is in the format of `{store}.myshopify.com`.
+`GATSBY_MYSHOPIFY_URL` is the Store address you enter when logging into your Shopify account. This is in the format of `my-unique-store-name.myshopify.com`.
 
 Once logged into Shopify admin, navigate to the `Apps` page and click the link at the top to `Develop apps`. If you haven't yet, an admin on the Shopify store will need to enable private app development. This will allow you to create an app that Gatsby will use to access Shopify's Admin API.
 
@@ -126,7 +126,7 @@ Now follow the second link to explore your Shopify data!
 
 ### Priority builds
 
-Because of the limitations of the Shopify Bulk API, the plugin includes logic to determine which builds are high priority for a given Shopify site. This allows the plugin to pause deploy preview builds while production builds are running while using the same Shopify App. The following logic determines whether a build is priority or not:
+Because of the limitations of the Shopify Bulk API, the plugin includes logic to determine which builds are high priority for a given Shopify site. This allows the plugin to pause non-priority builds while priority builds are running while using the same Shopify App. The following logic determines whether a build is priority or not:
 
 ```js
 const isGatsbyCloudPriorityBuild =
@@ -182,7 +182,7 @@ You have two options for displaying Shopify images in your Gatsby site. The defa
 
 ### Use Shopify CDN
 
-This is the default behavior and is intended to be used in conjunction with [gatsby-plugin-image][gatsby-plugin-image].
+This is the default behavior and is intended to be used in conjunction with [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/).
 
 #### Product Featured Media
 
