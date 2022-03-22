@@ -81,7 +81,7 @@ export async function createPagesStatefully(
         context: {
           sourceMessage: `"path" is a required option for gatsby-plugin-page-creator
 
-See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`,
+See docs here - https://www.gatsbyjs.com/plugins/gatsby-plugin-page-creator/`,
         },
       })
     }

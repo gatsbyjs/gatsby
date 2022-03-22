@@ -81,12 +81,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 97,
         "line": 6,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 33,
+        "index": 66,
         "line": 2,
       },
     },
@@ -156,12 +158,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 94,
         "line": 6,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 26,
+        "index": 59,
         "line": 2,
       },
     },
@@ -231,12 +235,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 95,
         "line": 6,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 26,
+        "index": 59,
         "line": 2,
       },
     },
@@ -302,12 +308,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 81,
         "line": 6,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 31,
+        "index": 64,
         "line": 2,
       },
     },
@@ -377,12 +385,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 48,
+        "index": 121,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 19,
+        "index": 92,
         "line": 4,
       },
     },
@@ -448,12 +458,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 26,
+        "index": 99,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 19,
+        "index": 92,
         "line": 4,
       },
     },
@@ -523,12 +535,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 48,
+        "index": 131,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 19,
+        "index": 102,
         "line": 4,
       },
     },
@@ -594,12 +608,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 26,
+        "index": 99,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 19,
+        "index": 92,
         "line": 4,
       },
     },
@@ -669,12 +685,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 48,
+        "index": 131,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 19,
+        "index": 102,
         "line": 4,
       },
     },
@@ -744,12 +762,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 60,
+        "index": 244,
         "line": 8,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 33,
+        "index": 217,
         "line": 8,
       },
     },
@@ -891,12 +911,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 175,
         "line": 9,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 35,
+        "index": 68,
         "line": 2,
       },
     },
@@ -979,12 +1001,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 264,
         "line": 14,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 33,
+        "index": 210,
         "line": 10,
       },
     },
@@ -1104,12 +1128,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 170,
         "line": 12,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 22,
+        "index": 95,
         "line": 4,
       },
     },
@@ -1256,12 +1282,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 69,
+        "index": 142,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 22,
+        "index": 95,
         "line": 4,
       },
     },
@@ -1408,12 +1436,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 82,
+        "index": 216,
         "line": 5,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 33,
+        "index": 167,
         "line": 5,
       },
     },
@@ -1483,12 +1513,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 67,
+        "index": 139,
         "line": 3,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 38,
+        "index": 110,
         "line": 3,
       },
     },
@@ -1558,12 +1590,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 67,
+        "index": 165,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 38,
+        "index": 136,
         "line": 4,
       },
     },
@@ -1633,12 +1667,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 81,
+        "index": 137,
         "line": 3,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 52,
+        "index": 108,
         "line": 3,
       },
     },
@@ -1708,12 +1744,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 82,
+        "index": 154,
         "line": 3,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 53,
+        "index": 125,
         "line": 3,
       },
     },
@@ -1860,12 +1898,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 69,
+        "index": 145,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 22,
+        "index": 98,
         "line": 4,
       },
     },
@@ -1931,12 +1971,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 51,
+        "index": 123,
         "line": 3,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 38,
+        "index": 110,
         "line": 3,
       },
     },
@@ -2002,12 +2044,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 32,
+        "index": 105,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 19,
+        "index": 92,
         "line": 4,
       },
     },
@@ -2077,12 +2121,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 67,
+        "index": 146,
         "line": 3,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 38,
+        "index": 117,
         "line": 3,
       },
     },
@@ -2152,12 +2198,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 89,
+        "index": 183,
         "line": 4,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 45,
+        "index": 139,
         "line": 4,
       },
     },
@@ -2227,12 +2275,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 89,
         "line": 6,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 29,
+        "index": 62,
         "line": 2,
       },
     },
@@ -2302,12 +2352,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 56,
+        "index": 180,
         "line": 8,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 24,
+        "index": 148,
         "line": 8,
       },
     },
@@ -2377,12 +2429,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 0,
+        "index": 89,
         "line": 6,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 29,
+        "index": 62,
         "line": 2,
       },
     },
@@ -2448,12 +2502,14 @@ Array [
     "templateLoc": SourceLocation {
       "end": Position {
         "column": 38,
+        "index": 165,
         "line": 8,
       },
       "filename": undefined,
       "identifierName": undefined,
       "start": Position {
         "column": 24,
+        "index": 151,
         "line": 8,
       },
     },

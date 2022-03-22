@@ -59,17 +59,13 @@ export function onCreateWebpackConfig({ stage, actions, getConfig }) {
 
   actions.replaceWebpackConfig(webpackConfig)
 
-  const extension =
-    stage === `build-javascript` || stage === `develop` ? `.module.js` : `.js`
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        react: require.resolve(`preact/compat`).replace(`.js`, extension),
-        "react-dom/server": require.resolve(`preact/compat/server`),
-        "react-dom": require.resolve(`preact/compat`).replace(`.js`, extension),
-        "react/jsx-runtime": require
-          .resolve(`preact/jsx-runtime`)
-          .replace(`.js`, extension),
+        react: `preact/compat`,
+        "react-dom/test-utils": `preact/test-utils`,
+        "react-dom": `preact/compat`,
+        "react/jsx-runtime": `preact/jsx-runtime`,
       },
     },
     plugins: webpackPlugins,

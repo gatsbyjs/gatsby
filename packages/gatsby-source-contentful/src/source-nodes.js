@@ -17,7 +17,7 @@ import { CODES } from "./report"
 
 const conflictFieldPrefix = `contentful`
 
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+// restrictedNodeFields from here https://www.gatsbyjs.com/docs/node-interface/
 const restrictedNodeFields = [
   `children`,
   `contentful_id`,

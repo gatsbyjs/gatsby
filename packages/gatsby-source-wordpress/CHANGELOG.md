@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.10.1/packages/gatsby-source-wordpress) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.10.0/packages/gatsby-source-wordpress) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- enable image-cdn [#34832](https://github.com/gatsbyjs/gatsby/issues/34832) ([fe29c01](https://github.com/gatsbyjs/gatsby/commit/fe29c01c39962c31e3ae5a7262a3963cda4e40c1))
+
+#### Other Changes
+
+- fix tests ([cad7503](https://github.com/gatsbyjs/gatsby/commit/cad7503542917589c3175a05876dea825665293a))
+
 ### [6.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.9.1/packages/gatsby-source-wordpress) (2022-03-09)
 
 **Note:** Version bump only for package gatsby-source-wordpress

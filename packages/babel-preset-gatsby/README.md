@@ -2,7 +2,7 @@
 
 Gatsby uses the phenomenal project [Babel](https://babeljs.io/) to enable support for writing modern JavaScript — while still supporting older browsers. This package contains the default Babel setup for all Gatsby projects.
 
-For more information on how to customize the Babel configuration of your Gatsby site, check out [our documentation](https://www.gatsbyjs.org/docs/babel/).
+For more information on how to customize the Babel configuration of your Gatsby site, check out [our documentation](https://www.gatsbyjs.com/docs/babel/).
 
 ## Packages
 
@@ -37,4 +37,4 @@ npm install --dev babel-preset-gatsby
 
 `{ [string]: number | string }`, defaults to `{ "browsers": ["last 4 versions", "safari >= 7", "ie >= 9"] }` in production and `{ "browsers": ["last 2 versions", "not ie <= 11", "not android 4.4.3"] }` in development when targeting the browser and `{ "node": 6 }` in production and `{ "node": "current" }` in development when targeting Node.js.
 
-Use this option to configure [custom target browsers](https://www.gatsbyjs.org/docs/babel/).
+Use this option to configure [custom target browsers](https://www.gatsbyjs.com/docs/babel/).

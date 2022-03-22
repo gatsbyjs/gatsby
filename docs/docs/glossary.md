@@ -112,6 +112,10 @@ Decoupling describes the separation of different concerns. With [Gatsby](#gatsby
 
 Decoupling refers to the practice of using Drupal as a [headless CMS](#headless-cms). A decoupled Drupal instance functions as a content API that returns JSON for your [frontend](#frontend) to consume.
 
+### Deferred Static Generation (DSG)
+
+[Deferred Static Generation (DSG)](/docs/how-to/rendering-options/using-deferred-static-generation/) is one of [Gatsby’s rendering options](/docs/conceptual/rendering-options/) and allows you to defer non-critical page generation to user request, speeding up build times. Instead of generating every page at build time, you can decide to build certain pages up front and others only when a user accesses the page at run time.
+
 ### Deploy
 
 The process of [building](#build) your website or app and uploading onto a [hosting provider](#hosting).

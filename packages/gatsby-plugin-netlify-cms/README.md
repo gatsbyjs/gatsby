@@ -39,7 +39,7 @@ file](https://www.netlifycms.org/docs/add-to-your-site/#configuration) in
 
 Netlify CMS can be configured via the plugin options below. You can learn
 about how to pass options to plugins in the [Gatsby
-docs](https://www.gatsbyjs.org/docs/plugins/#how-to-use-gatsby-plugins).
+docs](https://www.gatsbyjs.com/docs/plugins/#how-to-use-gatsby-plugins).
 
 ### `modulePath`
 
@@ -195,7 +195,7 @@ Function to customize webpack configuration.
 Function parameters:
 
 - config: webpack configuration for NetlifyCMS
-- destructured object from onCreateWebpackConfig { store, stage, pathPrefix, getConfig, rules, loaders, plugins} as seen in https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
+- destructured object from onCreateWebpackConfig { store, stage, pathPrefix, getConfig, rules, loaders, plugins} as seen in https://www.gatsbyjs.com/docs/node-apis/#onCreateWebpackConfig
 
 ```javascript
 plugins: [
