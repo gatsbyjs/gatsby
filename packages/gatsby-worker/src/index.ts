@@ -7,6 +7,7 @@ import {
   ERROR,
   RESULT,
   CUSTOM_MESSAGE,
+  WORKER_READY,
   ParentMessageUnion,
   ChildMessageUnion,
 } from "./types"
@@ -87,6 +88,7 @@ interface IWorkerInfo<T> {
     signal: NodeJS.Signals | null
   }>
   currentTask?: TaskInfo<T>
+  ready: Promise<void>
 }
 
 export interface IPublicWorkerInfo {
@@ -183,9 +185,13 @@ export class WorkerPool<
         silent: options && options.silent,
       })
 
+      let workerReadyResolve: () => void
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
         workerId,
         worker,
+        ready: new Promise<void>(resolve => {
+          workerReadyResolve = resolve
+        }),
         exitedPromise: new Promise(resolve => {
           worker.on(`exit`, (code, signal) => {
             if (workerInfo.currentTask) {
@@ -247,6 +253,8 @@ export class WorkerPool<
           for (const listener of this.listeners) {
             listener(msg[1] as MessagesFromChild, workerId)
           }
+        } else if (msg[0] === WORKER_READY) {
+          workerReadyResolve()
         }
       })
 
@@ -322,13 +330,15 @@ export class WorkerPool<
     this.idleWorkers.add(workerInfo)
   }
 
-  private doWork<T extends keyof WorkerModuleExports>(
+  private async doWork<T extends keyof WorkerModuleExports>(
     taskInfo: TaskInfo<T>,
     workerInfo: IWorkerInfo<T>
-  ): void {
+  ): Promise<void> {
     // block worker
     workerInfo.currentTask = taskInfo
     this.idleWorkers.delete(workerInfo)
+
+    await workerInfo.ready
 
     const msg: ParentMessageUnion = [
       EXECUTE,
