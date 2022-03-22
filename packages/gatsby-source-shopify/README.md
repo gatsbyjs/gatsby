@@ -39,7 +39,7 @@
   - 🚥 [Use run-time images](#use-run-time-images)
   - 🖼️ [Displaying images](#displaying-images)
 - 🚨 [Limitations](#limitations)
-- 💾 [Migration guide](#migration-guide)
+- 💾 [V6 to V7 Migration Guide](#v6-to-V7-migration-guide)
 
 # gatsby-source-shopify
 
@@ -47,27 +47,27 @@ A scalable solution for sourcing data from Shopify.
 
 This plugin works by leveraging [Shopify's bulk operations API](https://shopify.dev/api/usage/bulk-operations/queries), which allows it to process large amounts of data at once. This gives it a more resilient and reliable build process. It also enables incremental builds so that your site can build quickly when you change your data in Shopify.
 
-<div id="getting-started"></div>
-
 ## Getting started
 
 This takes you through the minimal steps to see your Shopify data in your Gatsby site's GraphiQL explorer.
 
-<div id="install"></div>
-
 ### Install
 
-Install this plugin to your Gatsby site.
+Install this plugin and its required peer dependency, `gatsby-plugin-image`, to your Gatsby site:
 
 ```shell
-npm install gatsby-source-shopify
+npm install gatsby-source-shopify gatsby-plugin-image
 ```
 
-<div id="configure"></div>
+or
+
+```shell
+yarn add gatsby-source-shopify gatsby-plugin-image
+```
 
 ### Configure
 
-Add the plugin to your `gatsby-config.js`:
+Add the plugins to your `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 require("dotenv").config()
@@ -87,10 +87,6 @@ module.exports = {
 }
 ```
 
-💡 Note: This plugin has a peer dependency on `gatsby-plugin-image` and will fail to build without it.
-
-<div id="retrieving-api-information-from-shopify"></div>
-
 ### Retrieving API Information from Shopify
 
 `GATSBY_MYSHOPIFY_URL` is the Store address you enter when logging into your Shopify account. This is in the format of `{store}.myshopify.com`.
@@ -105,13 +101,9 @@ For the Private app name enter `Gatsby` (the name does not really matter). Add t
 - `Read access` for `Orders` if you enable `orders` in the plugin options
 - `Read access` for `Inventory` and `Locations` if you enable `locations` in the plugin options
 
-<div id="enabling-cart-and-checkout-features"></div>
-
 #### Enabling Cart and Checkout features
 
 If you are planning on managing your cart within Gatsby you will also need to check the box next to `Allow this app to access your storefront data using the Storefront API` and make sure to check `Read and modify checkouts`. This source plugin does not require Shopify Storefront API access to work, however, this is needed to add items to a Shopify checkout before passing the user to Shopify's managed checkout workflow. See [Gatsby Starter Shopify](https://github.com/gatsbyjs/gatsby-starter-shopify) for an example.
-
-<div id="fire-it-up"></div>
 
 ### Fire it up
 
@@ -132,11 +124,9 @@ To create a production build, use gatsby build
 
 Now follow the second link to explore your Shopify data!
 
-<div id="priority-builds"></div>
-
 ### Priority builds
 
-Because of the limiations of the Shopify Bulk API we have included logic in this plugin to determine which builds are high priority for a given Shopify site. This allows us to pause deploy preview builds while production builds are running while using the same Shopify App. The following logic determines whether a build is priority or not:
+Because of the limitations of the Shopify Bulk API, the plugin includes logic to determine which builds are high priority for a given Shopify site. This allows the plugin to pause deploy preview builds while production builds are running while using the same Shopify App. The following logic determines whether a build is priority or not:
 
 ```js
 const isGatsbyCloudPriorityBuild =
@@ -150,9 +140,7 @@ return pluginOptions.prioritize !== undefined
   : isGatsbyCloudPriorityBuild || isNetlifyPriorityBuild
 ```
 
-This logic allows us to determine whether we are running a production build on either Gatsby Cloud or Netlify using environment variables, but you also have the option to override the logic by setting the `prioritize` option in `gatsby-config`.
-
-<div id="plugin-options"></div>
+This logic allows the plugin to determine whether it's running a production build on either Gatsby Cloud or Netlify using environment variables, but you also have the option to override the logic by setting the `prioritize` option in `gatsby-config`.
 
 ## Plugin options
 
@@ -184,17 +172,13 @@ Not set by default. Allows you to override the priority status of a build. If se
 
 `salesChannel: string`
 
-Not set by default. If set to a string (example `My Sales Channel`), only products, variants, collections and locations that are published to that channel will be sourced. If you want to filter products by a Private App instead of Public App or default sales channel, you have to provide the App ID instead of sales channel name. You can find this in the same place as the Shopify App Password.
+Not set by default. If set to a string (example `My Sales Channel`), only products, variants, collections, and locations that are published to that channel will be sourced. If you want to filter products by a Private App instead of a Public App or default sales channel, you have to provide the App ID instead of sales channel name. You can find this in the same place as the Shopify App Password.
 
 💡 Note: The `salesChannel` plugin option defaults to the value of `process.env.GATBSY_SHOPIFY_SALES_CHANNEL`. If that value is not set the plugin will source only objects that are published to the `online store` sales channel.
 
-<div id="images"></div>
-
 ## Images
 
-We offer two options for displaying Shopify images in your Gatsby site. The default option is to use the Shopify CDN along with [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/), but you can also opt-in to downloading the images as part of the build process. Your choice will result in differences to the schema. Both options are explained below.
-
-<div id="use-shopify-cdn"></div>
+You have two options for displaying Shopify images in your Gatsby site. The default option is to use the Shopify CDN along with [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/), but you can also opt-in to downloading the images as part of the build process. Your choice will result in differences to the schema. Both options are explained below.
 
 ### Use Shopify CDN
 
@@ -274,10 +258,6 @@ query {
 }
 ```
 
-💡 Note: Previous versions of this plugin exposed the `images` field on products. Although it made the plugin easier to interact with, it made it impossible to add videos to your products. The new version of the plugin exposes the `media` field directly, allowing you to query for all of the images, videos and 3D renderings that Shopify supports.
-
-<div id="use-downloaded-images"></div>
-
 ### Use downloaded images
 
 If you wish to download your images during the build, you can specify `downloadImages: true` as a plugin option:
@@ -302,7 +282,7 @@ module.exports = {
 }
 ```
 
-💡 Note: This will make the build take longer but will make images appear on your page faster at runtime.
+💡 Note: This will increase your build time duration with the added benefit of faster images at runtime as they are served from the same origin and not Shopify's CDN.
 
 #### Media with local files
 
@@ -319,8 +299,6 @@ fragment MediaImageLocalFile on ShopifyMediaPreviewImage {
   }
 }
 ```
-
-<div id="use-run-time-images"></div>
 
 ### Use run-time images
 
@@ -343,8 +321,6 @@ function getCartImage(storefrontProduct) {
   return imageData
 }
 ```
-
-<div id="displaying-images"></div>
 
 ### Displaying images
 
@@ -390,21 +366,25 @@ const RuntimeLineItemImage = ({ storefrontLineItem }) => {
 
 Please refer to the [gatsby-plugin-image docs](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#dynamic-images) for more information on how to display images on your Gatsby site.
 
-<div id="limitations"></div>
-
 ## Limitations
 
 The bulk API was chosen for resiliency, but it comes with some limitations, the most important of which is that a given Shopify App can only have one bulk operation running at a time. Because of this we recommend that you have at least two Shopify Apps for each Shopify Store, one for production and another for local development, in order to avoid potential build issues.
 
-<div id="migration-guide"></div>
-
-## 🚌 V6 to V7 Migration Guide
+## V6 to V7 Migration Guide
 
 Need help upgrading this source plugin from V6 to V7? We want this guide to be as useful as possible. Please open an issue and let us know if you see anything wrong here or find something missing from this guide 🙏
 
+### Schema Changes
+
+All `id` fields that come back from the Shopify API have now been mapped to `shopifyId` so that `id` is always intrinsic to Gatsby.
+
+Additionally, the schema is now fully statically typed and matches the Shopify GraphQL API as closely as possible.
+
 The following breaking schema changes must be updated in your site in order to upgrade:
 
-### `ShopifyProduct` Images/Media
+#### `ShopifyProduct` Images/Media
+
+Previous versions of this plugin exposed the `ShopifyProduct.images` field on products. Although it made the plugin easier to interact with, it made it impossible to add videos or 3D renderings to your products. The new version of the plugin exposes the `ShopifyProduct.media` field directly, allowing you to query for all of the images, videos and 3D renderings that Shopify supports.
 
 It was previoulsy supported to query for videos or 3D models. In order to add support for these, the `ShopifyProduct` `images` field has been replaced by the `media` field.
 
@@ -422,7 +402,7 @@ You'll now need to do this to get image data:
 
 ```graphql
 shopifyProduct {
-  images {
+  nodes {
     media {
       ... on ShopifyMediaImage {
         image {
@@ -434,11 +414,13 @@ shopifyProduct {
 }
 ```
 
-You can also query for
+💡 The shape of the data returned from `media` field is different than that returned from `images` which will require changes to the component code that consumes these queries in most cases.
 
-### `ShopifyProduct` Options
+#### `ShopifyProduct` Options
 
-`ShopifyProductOption` is the type that backs `ShopifyProduct.options` field. Its `id` field has been changed to `shopifyId`.
+`ShopifyProductOption` is the type returned from `ShopifyProduct.options`.
+
+`ShopifyProductOption.id` has been renamed to `ShopifyProductOption.shopifyId`.
 
 Before:
 
@@ -460,17 +442,17 @@ shopifyProduct {
 }
 ```
 
-### Metafields
+#### Metafields
 
-Previously, the following metafield types used to be exist:
+Previously, the following metafield types used to exist:
 
 - `ShopifyProductMetafield`
 - `ShopifyCollectionMetafield`
 - `ShopifyProductVariantMetafield`
 
-These have now been combined into one type field called `ShopifyMetafield`.
+These have now been combined into a single `ShopifyMetafield` type.
 
-Additionally, the `ownerType` field is type as an enum that matches [the Shopify API enum for the metafield `ownerType` field](https://shopify.dev/api/admin-graphql/2022-01/enums/)
+Additionally, `Metafield.ownerType` has been changed from `string` to an `enum` type that matches [the Shopify API enum for the metafield `ownerType` field](https://shopify.dev/api/admin-graphql/2022-01/enums/)
 
 This means that any queries for metafields on a specific Shopify Owner Resource, need to be replaced like so:
 
@@ -494,6 +476,22 @@ allShopifyMetafield(filter: {ownerType: {eq: PRODUCT}}) {
     value
     description
     value
+  }
+}
+```
+
+#### Locations
+
+Due to a bug with the Shopify API legacy locations throw an error internally in the Shopify API, `ShopifyLocation.fulfillmentService.callbackUrl` has been removed. This field will be re-added once the bug has been fixed on the Shopify side.
+
+```graphql
+allShopifyLocation {
+  edges {
+    nodes {
+      fulfillmentService {
+        callbackUrl
+      }
+    }
   }
 }
 ```
