@@ -115,48 +115,7 @@ const Indicator: FC = () => {
   }
 
   const pollData = (): void => {
-    // currentBuild is the most recent build that is not QUEUED.
-    // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
-    // const oldBuildId = currentBuildId;
     refetchBuildInfo()
-    // console.log(`buildInfo`, buildInfo);
-    // if (buildInfo?.currentBuild) {
-    //   const { currentBuild } = buildInfo;
-    //   if (
-    //     [BuildStatus.BUILDING, BuildStatus.ERROR, BuildStatus.QUEUED, BuildStatus.UPLOADING].includes(
-    //       currentBuild.buildStatus
-    //     )
-    //   ) {
-    //     setCurrentBuildStatus(currentBuild.buildStatus);
-    //   } else if (oldBuildId) {
-    //     if (oldBuildId === currentBuild.id) {
-    //       setCurrentBuildStatus(BuildStatus.UP_TO_DATE);
-    //     } else if (
-    //       oldBuildId !== buildInfo?.latestBuild?.id &&
-    //       currentBuild.buildStatus === BuildStatus.SUCCESS
-    //     ) {
-    //       if (refreshNeeded.current) {
-    //         setCurrentBuildStatus(BuildStatus.SUCCESS);
-    //       } else if (!usingContentSync) {
-    //         const { changed: pageDataChanged, errorMessage } = await hasPageDataChanged();
-
-    //         if (errorMessage) {
-    //           setBuildInfo({ ...buildInfo, errorMessage });
-    //           setCurrentBuildStatus(BuildStatus.ERROR);
-    //         } else if (pageDataChanged) {
-    //           // Force a "This page has updated message" until a page is refreshed
-    //           refreshNeeded.current = true;
-    //           // Build updated, data for this specific page has changed!
-    //           setCurrentBuildStatus(BuildStatus.SUCCESS);
-    //         } else {
-    //           // Build updated, data for this specific page has NOT changed, no need to refresh content.
-    //           setCurrentBuildStatus(BuildStatus.UP_TO_DATE);
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
     if (shouldPoll.current) {
       timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
     }
