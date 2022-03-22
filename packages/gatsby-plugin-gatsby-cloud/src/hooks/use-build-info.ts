@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
-import { BuildInfo } from "../models/interfaces";
+import { useEffect, useState } from "react"
+import { BuildInfo } from "../models/interfaces"
 
 interface IUseBuildInfoProps {
-  buildInfo: BuildInfo | null;
-  refetch: () => Promise<void>;
+  buildInfo: BuildInfo | null
+  refetch: () => Promise<void>
 }
 
 const useBuildInfo = (): IUseBuildInfoProps => {
-  const [buildInfo, setBuildInfo] = useState<BuildInfo | null>(null);
-  const [count, setCount] = useState(0);
+  const [buildInfo, setBuildInfo] = useState<BuildInfo | null>(null)
   const refetch = async (): Promise<void> => {
     try {
-      const url = process.env.GATSBY_PREVIEW_API_URL || ``;
+      const url = process.env.GATSBY_PREVIEW_API_URL || ``
       const res = await fetch(url, {
         mode: `cors`,
         headers: new Headers({
@@ -23,23 +22,23 @@ const useBuildInfo = (): IUseBuildInfoProps => {
           Authorization: process.env.GATSBY_PREVIEW_AUTH_TOKEN || ``,
           "x-runner-type": `PREVIEW`,
         }),
-      });
-      const data: BuildInfo | null = await res.json();
-      setBuildInfo(data);
+      })
+      const data: BuildInfo | null = await res.json()
+      setBuildInfo(data)
     } catch (e) {
-      setBuildInfo(null);
-      console.log(e, e.message);
+      setBuildInfo(null)
+      console.log(e, e.message)
     }
-  };
+  }
 
   useEffect(() => {
-    refetch();
-  }, []);
+    refetch()
+  }, [])
 
   return {
     buildInfo,
     refetch,
-  };
-};
+  }
+}
 
-export default useBuildInfo;
+export default useBuildInfo
