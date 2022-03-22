@@ -48,7 +48,7 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
     }
   }
 
-  const onTooltipDisappear = () => {
+  const onTooltipDisappear = (): void => {
     setTooltipIsRemoved(true)
     tooltip?.onDisappear?.()
   }
