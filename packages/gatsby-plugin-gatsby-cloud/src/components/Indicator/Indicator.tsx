@@ -161,7 +161,7 @@ const Indicator: FC = () => {
   }, [buildInfo])
 
   useEffect(() => {
-    const updateBuildData = async () => {
+    const updateBuildData = async (): Promise<void> => {
       const oldBuildId = currentBuildId
       if (buildInfo?.currentBuild) {
         const { currentBuild } = buildInfo
