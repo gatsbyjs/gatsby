@@ -113,11 +113,12 @@ export default async ({
     const got = require(`got`)
 
     const sourcePlugins: Array<string> = []
-    const runAlwaysList = [`gatsby-source-filesystem`, `internal-data-bridge`]
+    const skipList = [`gatsby-source-contentful`, `gatsby-source-wordpress`]
+    // const runAlwaysList = [`gatsby-source-filesystem`, `internal-data-bridge`]
     for (const plugin of store.getState().flattenedPlugins) {
       if (
         plugin.nodeAPIs.includes(`sourceNodes`) &&
-        !runAlwaysList.includes(plugin.name)
+        skipList.includes(plugin.name)
       ) {
         sourcePlugins.push(plugin.name)
       }
@@ -154,7 +155,7 @@ export default async ({
     for (const plugin of store.getState().flattenedPlugins) {
       if (
         !plugin.nodeAPIs.includes(`sourceNodes`) ||
-        !runAlwaysList.includes(plugin.name)
+        skipList.includes(plugin.name)
       ) {
         if (plugin.nodeAPIs.includes(`sourceNodes`)) {
           report.verbose(`[source-nodes] ignore ${plugin.name}`)

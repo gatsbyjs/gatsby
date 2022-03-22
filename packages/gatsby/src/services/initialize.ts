@@ -427,6 +427,15 @@ export async function initialize({
       // }
       // }
 
+      if (process.send) {
+        process.send({
+          type: `LOG_ACTION`,
+          action: {
+            type: `DELETE_CACHE`,
+            payload: {},
+          },
+        })
+      }
       const deleteGlobs = [
         // By default delete all files & subdirectories
         `${cacheDirectory}/**`,
