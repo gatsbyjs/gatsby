@@ -1,19 +1,20 @@
-import React, { FC, useEffect, useState } from "react"
-import IndicatorButtonTooltip from "../../IndicatorButtonTooltip"
-import { spinnerIcon } from "../../icons"
-import { buttonStyle, wrapperStyle } from "./indicator-button.css"
-import { IIndicatorButtonTooltip } from "../../IndicatorButtonTooltip"
+import React, { FC, useEffect, useState } from "react";
+import IndicatorButtonTooltip from "../../IndicatorButtonTooltip";
+import { spinnerIcon } from "../../icons";
+import { buttonStyle, wrapperStyle, spinnerStyle } from "./indicator-button.css";
+import { IIndicatorButtonTooltip } from "../../IndicatorButtonTooltip";
 
 export interface IIndicatorButtonProps {
-  icon: React.SVGProps<SVGSVGElement>
-  testId?: string
-  tooltip?: IIndicatorButtonTooltip
-  disabled?: boolean
-  highlighted?: boolean
-  showSpinner?: boolean
-  onClick?: () => void
-  onMouseEnter?: () => void
-  onMouseLeave?: () => void
+  icon: React.SVGProps<SVGSVGElement>;
+  testId?: string;
+  tooltip?: IIndicatorButtonTooltip;
+  disabled?: boolean;
+  clickable?: boolean;
+  highlighted?: boolean;
+  showSpinner?: boolean;
+  onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 const IndicatorButton: FC<IIndicatorButtonProps> = ({
@@ -23,47 +24,61 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
   showSpinner,
   highlighted,
   disabled,
+  clickable = true,
   onClick,
   onMouseEnter,
   onMouseLeave,
 }) => {
-  const [tooltipVisible, setTooltipVisible] = useState(tooltip?.visible)
+  const [tooltipVisible, setTooltipVisible] = useState(tooltip?.visible);
+  const [tooltipIsRemoved, setTooltipIsRemoved] = useState(!tooltip?.visible);
 
   const onButtonMouseEnter = (): void => {
     if (!disabled && tooltip?.trigger === `hover`) {
-      setTooltipVisible(true)
-      onMouseEnter?.()
+      setTooltipIsRemoved(false);
+      setTooltipVisible(true);
+      onMouseEnter?.();
     }
-  }
+  };
 
   const onButtonMouseLeave = (): void => {
     if (!disabled && tooltip?.trigger === `hover`) {
-      setTooltipVisible(false)
-      onMouseLeave?.()
+      setTooltipVisible(false);
+      onMouseLeave?.();
     }
-  }
+  };
+
+  const onTooltipDisappear = () => {
+    setTooltipIsRemoved(true);
+    tooltip?.onDisappear?.();
+  };
 
   useEffect(() => {
-    setTooltipVisible(tooltip?.visible)
-  }, [tooltip?.visible])
+    setTooltipVisible(tooltip?.visible);
+    if (tooltip?.visible) {
+      setTooltipIsRemoved(false);
+    }
+  }, [tooltip?.visible]);
 
   return (
-    <div className={wrapperStyle} data-test-id={testId}>
+    <div
+      className={wrapperStyle}
+      data-test-id={testId}
+      onMouseEnter={onButtonMouseEnter}
+      onMouseLeave={onButtonMouseLeave}
+    >
       <button
         disabled={disabled}
-        onMouseEnter={onButtonMouseEnter}
-        onMouseLeave={onButtonMouseLeave}
         onClick={onClick}
-        className={buttonStyle[highlighted ? `highlighted` : `default`]}
+        className={buttonStyle[highlighted ? `highlighted` : clickable ? `clickable` : `default`]}
       >
         {icon}
-        {showSpinner && spinnerIcon}
+        {showSpinner && <span className={spinnerStyle}>{spinnerIcon}</span>}
       </button>
-      {tooltip && (
-        <IndicatorButtonTooltip {...tooltip} visible={tooltipVisible} />
+      {tooltip && !tooltipIsRemoved && (
+        <IndicatorButtonTooltip {...tooltip} visible={tooltipVisible} onDisappear={onTooltipDisappear} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default IndicatorButton
+export default IndicatorButton;

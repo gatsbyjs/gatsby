@@ -36,9 +36,9 @@ export const wrapRootElement = ({ element }, pluginOptions) => {
     return (
       <>
         {element}
-        <ShadowPortal identifier="gatsby-preview-indicator">
-          <Indicator />
-        </ShadowPortal>
+        {/* <ShadowPortal identifier="gatsby-preview-indicator"> */}
+        <Indicator />
+        {/* </ShadowPortal> */}
       </>
     )
   } else {

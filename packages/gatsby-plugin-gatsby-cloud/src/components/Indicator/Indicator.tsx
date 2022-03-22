@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, FC, useContext } from "react"
+import React, { useEffect, useRef, FC, useContext, useState } from "react"
 import IndicatorContext, {
   IndicatorProvider,
-} from "../../context/MainIndicatorContext"
+} from "../../context/IndicatorContext"
 import {
   LinkIndicatorButton,
   InfoIndicatorButton,
@@ -25,6 +25,7 @@ const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
 const PAGE_DATA_RETRY_LIMIT = 60
 
 const Indicator: FC = () => {
+  const [loaded, setLoaded] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const shouldPoll = useRef(false)
   const refreshNeeded = useRef(false)
@@ -113,52 +114,48 @@ const Indicator: FC = () => {
     return { changed: false, errorMessage: null }
   }
 
-  const pollData = async (): Promise<void> => {
+  const pollData = (): void => {
     // currentBuild is the most recent build that is not QUEUED.
     // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
-    const oldBuildId = currentBuildId
-    await refetchBuildInfo()
+    // const oldBuildId = currentBuildId;
+    refetchBuildInfo()
+    // console.log(`buildInfo`, buildInfo);
+    // if (buildInfo?.currentBuild) {
+    //   const { currentBuild } = buildInfo;
+    //   if (
+    //     [BuildStatus.BUILDING, BuildStatus.ERROR, BuildStatus.QUEUED, BuildStatus.UPLOADING].includes(
+    //       currentBuild.buildStatus
+    //     )
+    //   ) {
+    //     setCurrentBuildStatus(currentBuild.buildStatus);
+    //   } else if (oldBuildId) {
+    //     if (oldBuildId === currentBuild.id) {
+    //       setCurrentBuildStatus(BuildStatus.UP_TO_DATE);
+    //     } else if (
+    //       oldBuildId !== buildInfo?.latestBuild?.id &&
+    //       currentBuild.buildStatus === BuildStatus.SUCCESS
+    //     ) {
+    //       if (refreshNeeded.current) {
+    //         setCurrentBuildStatus(BuildStatus.SUCCESS);
+    //       } else if (!usingContentSync) {
+    //         const { changed: pageDataChanged, errorMessage } = await hasPageDataChanged();
 
-    if (buildInfo?.latestBuild && buildInfo.currentBuild) {
-      const { currentBuild, latestBuild } = buildInfo
-      if (
-        [
-          BuildStatus.BUILDING,
-          BuildStatus.ERROR,
-          BuildStatus.QUEUED,
-          BuildStatus.UPLOADING,
-        ].includes(currentBuild.buildStatus)
-      ) {
-        setCurrentBuildStatus(currentBuild.buildStatus)
-      } else if (oldBuildId) {
-        if (oldBuildId === currentBuild.id) {
-          setCurrentBuildStatus(BuildStatus.UP_TO_DATE)
-        } else if (
-          oldBuildId !== latestBuild.id &&
-          currentBuild.buildStatus === BuildStatus.SUCCESS
-        ) {
-          if (refreshNeeded.current) {
-            setCurrentBuildStatus(BuildStatus.SUCCESS)
-          } else if (!usingContentSync) {
-            const { changed: pageDataChanged, errorMessage } =
-              await hasPageDataChanged()
-
-            if (errorMessage) {
-              setBuildInfo({ ...buildInfo, errorMessage })
-              setCurrentBuildStatus(BuildStatus.ERROR)
-            } else if (pageDataChanged) {
-              // Force a "This page has updated message" until a page is refreshed
-              refreshNeeded.current = true
-              // Build updated, data for this specific page has changed!
-              setCurrentBuildStatus(BuildStatus.SUCCESS)
-            } else {
-              // Build updated, data for this specific page has NOT changed, no need to refresh content.
-              setCurrentBuildStatus(BuildStatus.UP_TO_DATE)
-            }
-          }
-        }
-      }
-    }
+    //         if (errorMessage) {
+    //           setBuildInfo({ ...buildInfo, errorMessage });
+    //           setCurrentBuildStatus(BuildStatus.ERROR);
+    //         } else if (pageDataChanged) {
+    //           // Force a "This page has updated message" until a page is refreshed
+    //           refreshNeeded.current = true;
+    //           // Build updated, data for this specific page has changed!
+    //           setCurrentBuildStatus(BuildStatus.SUCCESS);
+    //         } else {
+    //           // Build updated, data for this specific page has NOT changed, no need to refresh content.
+    //           setCurrentBuildStatus(BuildStatus.UP_TO_DATE);
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     if (shouldPoll.current) {
       timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
@@ -176,6 +173,7 @@ const Indicator: FC = () => {
 
     shouldPoll.current = true
     pollData()
+    setLoaded(true)
 
     return function cleanup(): void {
       shouldPoll.current = false
@@ -204,9 +202,55 @@ const Indicator: FC = () => {
   }, [buildInfo])
 
   useEffect(() => {
+    const updateBuildData = async () => {
+      const oldBuildId = currentBuildId
+      if (buildInfo?.currentBuild) {
+        const { currentBuild } = buildInfo
+        if (
+          [
+            BuildStatus.BUILDING,
+            BuildStatus.ERROR,
+            BuildStatus.QUEUED,
+            BuildStatus.UPLOADING,
+          ].includes(currentBuild.buildStatus)
+        ) {
+          setCurrentBuildStatus(currentBuild.buildStatus)
+        } else if (oldBuildId) {
+          if (oldBuildId === currentBuild.id) {
+            setCurrentBuildStatus(BuildStatus.UP_TO_DATE)
+          } else if (
+            oldBuildId !== buildInfo?.latestBuild?.id &&
+            currentBuild.buildStatus === BuildStatus.SUCCESS
+          ) {
+            if (refreshNeeded.current) {
+              setCurrentBuildStatus(BuildStatus.SUCCESS)
+            } else if (!usingContentSync) {
+              const { changed: pageDataChanged, errorMessage } =
+                await hasPageDataChanged()
+
+              if (errorMessage) {
+                setBuildInfo({ ...buildInfo, errorMessage })
+                setCurrentBuildStatus(BuildStatus.ERROR)
+              } else if (pageDataChanged) {
+                // Force a "This page has updated message" until a page is refreshed
+                refreshNeeded.current = true
+                // Build updated, data for this specific page has changed!
+                setCurrentBuildStatus(BuildStatus.SUCCESS)
+              } else {
+                // Build updated, data for this specific page has NOT changed, no need to refresh content.
+                setCurrentBuildStatus(BuildStatus.UP_TO_DATE)
+              }
+            }
+          }
+        }
+      }
+    }
+    updateBuildData()
+  }, [buildInfo?.currentBuild, buildInfo?.latestBuild])
+
+  useEffect(() => {
     if (nodeManifestErrorMessage) {
       setManifestInfo({ errorMessage: nodeManifestErrorMessage })
-      console.error(nodeManifestErrorMessage)
     } else if (nodeManifestRedirectUrl) {
       setManifestInfo({ redirectUrl: nodeManifestRedirectUrl })
       // Force a "This page has updated message" until the page is refreshed
@@ -218,10 +262,10 @@ const Indicator: FC = () => {
     <div
       data-testid="preview-status-indicator"
       aria-live="assertive"
-      className={wrapperStyle}
+      className={`${wrapperStyle[loaded ? `loaded` : `default`]}`}
     >
-      <InfoIndicatorButton />
       <GatsbyIndicatorButton />
+      <InfoIndicatorButton />
       <LinkIndicatorButton />
     </div>
   )

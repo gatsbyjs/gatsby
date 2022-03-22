@@ -1,12 +1,12 @@
-import { style, styleVariants } from "@vanilla-extract/css"
-import { vars } from "../theme.css"
+import { globalStyle, style, styleVariants } from "@vanilla-extract/css";
+import { vars } from "../theme.css";
 
 export const wrapperStyle = style({
   position: `absolute`,
-  paddingLeft: `35px`,
+  left: `40px`,
   top: `50%`,
   transform: `translateY(-50%)`,
-})
+});
 
 const wrapperInnerBaseStyle = style({
   position: `relative`,
@@ -36,12 +36,12 @@ const wrapperInnerBaseStyle = style({
       borderColor: `transparent black transparent transparent`,
     },
   },
-})
+});
 
 export const wrapperInnerStyle = styleVariants({
   default: [wrapperInnerBaseStyle, { opacity: 1 }],
   hidden: [wrapperInnerBaseStyle, { opacity: 0 }],
-})
+});
 
 export const closeButtonStyle = style({
   display: `flex`,
@@ -52,16 +52,16 @@ export const closeButtonStyle = style({
   padding: 0,
   marginLeft: `0.8rem`,
   cursor: `pointer`,
-  // selectors: {
-  //   "& > svg": {
-  //     color: vars.color.white,
-  //     opacity: `0.6`,
-  //     transitionProperty: `color, opacity`,
-  //     transitionDuration: `0.3s`,
-  //     transitionTimingFunction: `ease-in-out`,
-  //   },
-  //   "&:hover > svg": {
-  //     opacity: 1,
-  //   },
-  // },
-})
+});
+
+globalStyle(`${closeButtonStyle} > svg`, {
+  color: vars.color.white,
+  opacity: `0.6`,
+  transitionProperty: `color, opacity`,
+  transitionDuration: `0.3s`,
+  transitionTimingFunction: `ease-in-out`,
+});
+
+globalStyle(`${closeButtonStyle}:hover > svg`, {
+  opacity: 1,
+});

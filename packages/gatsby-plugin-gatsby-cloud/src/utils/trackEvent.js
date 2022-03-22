@@ -1,6 +1,6 @@
 import { useCookie, useFeedback } from "."
 import { INTERACTION_COOKIE_NAME } from "../constants"
-import pkgJSON from "../package.json"
+import pkgJSON from "../../package.json"
 
 const useTrackEvent = () => {
   const { setCookie, getCookie } = useCookie()

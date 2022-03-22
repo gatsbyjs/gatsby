@@ -1,17 +1,18 @@
-import { style } from "@vanilla-extract/css"
-import { vars } from "../theme.css"
+import { globalStyle, style } from "@vanilla-extract/css";
+import { vars } from "../theme.css";
 
 export const linkWrapperStyle = style({
   background: `none`,
   border: `none`,
   padding: 0,
-  // selectors: {
-  //   "& > svg": {
-  //     display: `inline`,
-  //     marginLeft: `5px`,
-  //   },
-  // },
-})
+  display: `flex`,
+  alignItems: `center`,
+});
+
+globalStyle(`${linkWrapperStyle} > svg`, {
+  display: `inline`,
+  marginLeft: `5px`,
+});
 
 export const linkTextStyle = style({
   color: vars.color.africanViolet,
@@ -26,4 +27,4 @@ export const linkTextStyle = style({
   ":hover": {
     textDecoration: `underline`,
   },
-})
+});

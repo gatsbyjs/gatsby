@@ -1,16 +1,16 @@
-import { style, styleVariants, keyframes } from "@vanilla-extract/css"
-import { vars } from "../../theme.css"
+import { style, styleVariants, keyframes } from "@vanilla-extract/css";
+import { vars } from "../../theme.css";
 
 const spin = keyframes({
-  "0%": { transform: `rotate(0deg)` },
-  "100%": { transform: `rotate(360deg)` },
-})
+  "0%": { transform: `translateX(-50%) translateY(-50%) rotate(0deg)` },
+  "100%": { transform: `translateX(-50%) translateY(-50%) rotate(360deg)` },
+});
 
 export const wrapperStyle = style({
   position: `relative`,
-})
+});
 
-export const spinner = {
+export const spinnerStyle = style({
   position: `absolute`,
   top: `50%`,
   left: `50%`,
@@ -25,7 +25,7 @@ export const spinner = {
       color: vars.color[`purple-20`],
     },
   },
-}
+});
 
 const buttonStyleBase = style({
   position: `relative`,
@@ -38,20 +38,29 @@ const buttonStyleBase = style({
   border: `none`,
   background: `none`,
   boxSizing: `border-box`,
-  transition: `background opacity 0.3s ease-in-out`,
-  // selectors: {
-  //   "&:not(:disabled):hover": {
-  //     background: vars.color[`gray-100`],
-  //     cursor: `pointer`,
-  //   },
-  // },
+  transitionProperty: `background opacity`,
+  transitionDuration: `0.3s`,
+  transitionTimingFunction: `ease-in-out`,
+  cursor: `default`,
   ":disabled": {
     opacity: 0.3,
     cursor: `default`,
   },
-})
+});
 
 export const buttonStyle = styleVariants({
   default: [buttonStyleBase, { background: vars.color[`white`] }],
   highlighted: [buttonStyleBase, { background: vars.color[`purple-10`] }],
-})
+  clickable: [
+    buttonStyleBase,
+    {
+      background: vars.color[`white`],
+      selectors: {
+        "&:hover:not(:disabled)": {
+          background: vars.color[`gray-10`],
+          cursor: `pointer`,
+        },
+      },
+    },
+  ],
+});

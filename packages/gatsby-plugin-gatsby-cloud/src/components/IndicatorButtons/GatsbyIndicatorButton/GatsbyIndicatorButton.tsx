@@ -1,13 +1,14 @@
-import React, { FC } from "react"
-import IndicatorButton, { IIndicatorButtonProps } from "../IndicatorButton"
-import { gatsbyIcon } from "../../icons"
+import React, { FC } from "react";
+import IndicatorButton, { IIndicatorButtonProps } from "../IndicatorButton";
+import { gatsbyIcon } from "../../icons";
 
 const GatsbyIndicatorButton: FC = () => {
   const buttonProps: IIndicatorButtonProps = {
     testId: `gatsby`,
     icon: gatsbyIcon,
-  }
-  return <IndicatorButton {...buttonProps} />
-}
+    clickable: false,
+  };
+  return <IndicatorButton {...buttonProps} />;
+};
 
-export default GatsbyIndicatorButton
+export default GatsbyIndicatorButton;
