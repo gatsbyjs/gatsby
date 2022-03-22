@@ -334,10 +334,11 @@ export class WorkerPool<
     taskInfo: TaskInfo<T>,
     workerInfo: IWorkerInfo<T>
   ): Promise<void> {
-    await workerInfo.ready
     // block worker
     workerInfo.currentTask = taskInfo
     this.idleWorkers.delete(workerInfo)
+
+    await workerInfo.ready
 
     const msg: ParentMessageUnion = [
       EXECUTE,
