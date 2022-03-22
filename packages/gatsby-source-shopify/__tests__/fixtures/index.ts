@@ -42,7 +42,7 @@ export function mockGatsbyApi(): NodePluginArgs {
   } as unknown as NodePluginArgs
 }
 
-export const mockPluginOptions = (): IShopifyPluginOptions => {
+export function mockPluginOptions() {
   return {
     password: `test-password`,
     storeUrl: `test.myshopify.com`,
@@ -51,6 +51,52 @@ export const mockPluginOptions = (): IShopifyPluginOptions => {
     typePrefix: ``,
     salesChannel: ``,
     prioritize: undefined,
+  }
+}
+
+export function mockExecute() {
+  return jest.fn(() => {
+    return {
+      bulkOperationRunQuery: {
+        userErrors: [],
+        bulkOperation: { id: `test-id` },
+      },
+    }
+  })
+}
+
+export function mockOperations() {
+  return {
+    productsOperation: {
+      execute: mockExecute(),
+      name: `products`,
+    },
+    productVariantsOperation: {
+      execute: mockExecute(),
+      name: `variants`,
+    },
+    ordersOperation: {
+      execute: mockExecute(),
+      name: `orders`,
+    },
+    collectionsOperation: {
+      execute: mockExecute(),
+      name: `collections`,
+    },
+    locationsOperation: {
+      execute: mockExecute(),
+      name: `locations`,
+    },
+    cancelOperationInProgress: jest.fn(),
+    cancelOperation: jest.fn(),
+    finishLastOperation: jest.fn(),
+    completedOperation: jest.fn(async () => {
+      return {
+        node: {
+          objectCount: `1`,
+        },
+      }
+    }),
   }
 }
 

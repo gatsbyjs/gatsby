@@ -1,67 +1,31 @@
-import fetch from "node-fetch"
-
 import { sourceNodes } from "../src/source-nodes"
 
 import * as helpersModule from "../src/helpers"
 import * as updateCacheModule from "../src/update-cache"
 import * as createOperationsModule from "../src/create-operations"
+import * as sourceFromOperationModule from "../src/source-from-operation"
 
-import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./fixtures"
-
-jest.mock(`node-fetch`)
-
-const execute = jest.fn(() => {
-  return {
-    bulkOperationRunQuery: {
-      userErrors: [],
-      bulkOperation: { id: `test-id` },
-    },
-  }
-})
+import { mockGatsbyApi, mockPluginOptions, mockOperations } from "./fixtures"
 
 const getLastBuildTime = jest.spyOn(helpersModule, `getLastBuildTime`)
-const setLastBuildTime = jest.spyOn(helpersModule, `setLastBuildTime`)
-
-const updateCache = jest
-  .spyOn(updateCacheModule, `updateCache`)
-  .mockImplementation(() => undefined)
 
 jest
   .spyOn(createOperationsModule, `createOperations`)
-  .mockImplementation(() => {
-    return {
-      productsOperation: {
-        execute,
-        name: `products`,
-      },
-      productVariantsOperation: {
-        execute,
-        name: `variants`,
-      },
-      ordersOperation: {
-        execute,
-        name: `orders`,
-      },
-      collectionsOperation: {
-        execute,
-        name: `collections`,
-      },
-      locationsOperation: {
-        execute,
-        name: `locations`,
-      },
-      cancelOperationInProgress: jest.fn(),
-      cancelOperation: jest.fn(),
-      finishLastOperation: jest.fn(),
-      completedOperation: jest.fn(async () => {
-        return {
-          node: {
-            objectCount: `1`,
-          },
-        }
-      }),
-    }
-  })
+  .mockImplementation(mockOperations)
+
+const sourceFromOperation = jest.fn()
+
+const makeSourceFromOperation = jest
+  .spyOn(sourceFromOperationModule, `makeSourceFromOperation`)
+  .mockImplementation(() => sourceFromOperation)
+
+const updateCache = jest
+  .spyOn(updateCacheModule, `updateCache`)
+  .mockReturnValue(undefined)
+
+const setLastBuildTime = jest
+  .spyOn(helpersModule, `setLastBuildTime`)
+  .mockReturnValue(undefined)
 
 const connections = [`collections`, `orders`, `locations`]
 
@@ -93,21 +57,6 @@ describe(`sourceNodes`, () => {
           generateTestName(prioritize, lastBuildTime, shopifyConnections),
           async () => {
             getLastBuildTime.mockImplementationOnce(() => lastBuildTime)
-            setLastBuildTime.mockImplementationOnce(() => undefined)
-
-            for (const type of [
-              `products`,
-              `variants`,
-              `collections`,
-              `orders`,
-              `locations`,
-            ]) {
-              fetch.mockImplementationOnce(() => {
-                return {
-                  body: mockBulkResults(type),
-                }
-              })
-            }
 
             await sourceNodes(gatsbyApi, {
               ...pluginOptions,
@@ -115,9 +64,12 @@ describe(`sourceNodes`, () => {
               shopifyConnections,
             })
 
-            expect(setLastBuildTime.mock.calls.length).toEqual(1)
-            expect(gatsbyApi.actions.createNode.mock.calls).toMatchSnapshot()
+            expect(makeSourceFromOperation.mock.calls.length).toEqual(1)
+            expect(sourceFromOperation.mock.calls.length).toEqual(
+              shopifyConnections.length > 0 ? 5 : 2
+            )
             expect(updateCache.mock.calls.length).toEqual(lastBuildTime ? 1 : 0)
+            expect(setLastBuildTime.mock.calls.length).toEqual(1)
           }
         )
       }
