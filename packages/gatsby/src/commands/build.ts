@@ -68,9 +68,12 @@ module.exports = async function build(
   // Let external systems running Gatsby to inject attributes
   externalTelemetryAttributes: Record<string, any>
 ): Promise<void> {
+  const buildId = uuid.v4()
+
   // global gatsby object to use without store
+
   global.__GATSBY = {
-    buildId: uuid.v4(),
+    buildId,
     root: program!.directory,
   }
 
@@ -127,17 +130,30 @@ module.exports = async function build(
     parentSpan: buildSpan,
   })
 
-  await apiRunnerNode(`onPreBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
-  })
-
   // writes sync and async require files to disk
   // used inside routing "html" + "javascript"
   await writeOutRequires({
     store,
     parentSpan: buildSpan,
   })
+
+  const graphqlRunner = new GraphQLRunner(store, {
+    collectStats: true,
+    graphqlTracing: program.graphqlTracing,
+  })
+
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  // Only run queries with mode SSG
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+      query => getPageMode(query) === `SSG`
+    )
+  }
+
+  /************
+   * Bundling *
+   ************/
 
   let closeJavascriptBundleCompilation: (() => Promise<void>) | undefined
   let closeHTMLBundleCompilation: (() => Promise<void>) | undefined
@@ -175,6 +191,15 @@ module.exports = async function build(
   } finally {
     buildActivityTimer.end()
   }
+
+  // Run Static Queries prior to building the Query Engine. Static Query Context
+  // is needed for engine creation
+  await runStaticQueries({
+    queryIds,
+    parentSpan: buildSpan,
+    store,
+    graphqlRunner,
+  })
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     const state = store.getState()
@@ -272,25 +297,38 @@ module.exports = async function build(
     cacheActivity.end()
   }
 
-  const graphqlRunner = new GraphQLRunner(store, {
-    collectStats: true,
-    graphqlTracing: program.graphqlTracing,
-  })
-
-  const { queryIds } = await calculateDirtyQueries({ store })
-
-  // Only run queries with mode SSG
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-      query => getPageMode(query) === `SSG`
-    )
-  }
-
   // Start saving page.mode in the main process (while queries run in workers in parallel)
   const waitMaterializePageMode = materializePageMode()
 
+  if (engineBundlingPromises.length) {
+    if (process.send) {
+      await waitMaterializePageMode
+      process.send({
+        type: `LOG_ACTION`,
+        action: {
+          type: `ENGINES_READY`,
+          timestamp: new Date().toJSON(),
+        },
+      })
+    }
+  }
+
+  const PQR_ENABLED = process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
+  const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
+
+  const externalJobsEnabled =
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
+
+  const pageGenerationJobsEnabled =
+    PAGE_GEN_ENABLED && externalJobsEnabled && process.send
+
   let waitForWorkerPoolRestart = Promise.resolve()
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+
+  if (pageGenerationJobsEnabled) {
+    // Jobs still might be running even though query running finished
+    await waitUntilAllJobsComplete()
+  } else if (PQR_ENABLED) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
     })
@@ -300,13 +338,6 @@ module.exports = async function build(
     waitForWorkerPoolRestart = workerPool.restart()
     await mergeWorkerState(workerPool, buildSpan)
   } else {
-    await runStaticQueries({
-      queryIds,
-      parentSpan: buildSpan,
-      store,
-      graphqlRunner,
-    })
-
     await runPageQueries({
       queryIds,
       graphqlRunner,
@@ -315,23 +346,17 @@ module.exports = async function build(
     })
   }
 
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
+    parentSpan: buildSpan,
+  })
+
   // create scope so we don't leak state object
   {
     const state = store.getState()
     await writeQueryContext({
       staticQueriesByTemplate: state.staticQueriesByTemplate,
       components: state.components,
-    })
-  }
-
-  if (process.send && shouldGenerateEngines()) {
-    await waitMaterializePageMode
-    process.send({
-      type: `LOG_ACTION`,
-      action: {
-        type: `ENGINES_READY`,
-        timestamp: new Date().toJSON(),
-      },
     })
   }
 
@@ -398,19 +423,26 @@ module.exports = async function build(
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
-    program.keepPageRenderer = true
-  }
+  let toRegenerate: Array<string> = []
+  let toDelete: Array<string> = []
 
-  await waitForWorkerPoolRestart
+  if (!pageGenerationJobsEnabled) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
+      program.keepPageRenderer = true
+    }
 
-  const { toRegenerate, toDelete } =
-    await buildHTMLPagesAndDeleteStaleArtifacts({
+    await waitForWorkerPoolRestart
+
+    const res = await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
       parentSpan: buildSpan,
     })
+
+    toRegenerate = res.toRegenerate
+    toDelete = res.toDelete
+  }
 
   await waitMaterializePageMode
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
