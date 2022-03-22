@@ -156,6 +156,8 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
         })
       )
 
+      console.error({ error, fileStr, filePath })
+
       addError({
         id: `85911`,
         filePath,
