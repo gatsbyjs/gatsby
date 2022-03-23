@@ -62,6 +62,14 @@
 
 Gatsby helps professional developers efficiently create maintainable, highly-performant, content-rich websites.
 
+- **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
+  files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
+  to load your data, then develop using Gatsby’s uniform GraphQL interface.
+
+- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
+  splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
+  and more to ensure your site is fast — no manual tuning required.
+
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
   limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
   dynamic web apps, from blogs to e-commerce sites to user dashboards.
@@ -72,19 +80,18 @@ Gatsby helps professional developers efficiently create maintainable, highly-per
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
   whether the data is coming from the same backend.
 
-- **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
-  files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
-  to load your data, then develop using Gatsby’s uniform GraphQL interface.
-
-- **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
-  splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
-  and more to ensure your site is fast — no manual tuning required.
-
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
   hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
 
 [**Learn how to use Gatsby for your next project.**](https://www.gatsbyjs.com/docs/)
+
+
+## 🚀 Deploy your first Gatsby site in 5 minutes
+
+Click the link below to try Gatsby on Gatsby Cloud. This allows you to quickly try the workflow of developing, building and deploying your sites with Gatsby and Gatsby Cloud.
+
+[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog)
 
 ## What’s In This Document
 
@@ -96,7 +103,7 @@ Gatsby helps professional developers efficiently create maintainable, highly-per
 - [License](#-license)
 - [Thanks to Our Contributors](#-thanks)
 
-## 🚀 Get Up and Running in 5 Minutes
+## 🚀 Get Up and Running locally in 5 Minutes
 
 You can get a new Gatsby site up and running on your local dev environment in 5 minutes with these four steps:
 
