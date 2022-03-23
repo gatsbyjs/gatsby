@@ -1,5 +1,5 @@
-import { style, styleVariants } from "@vanilla-extract/css";
-import { vars } from "../theme.css";
+import { style, styleVariants } from "@vanilla-extract/css"
+import { vars } from "../theme.css"
 
 export const wrapperStyleBase = style({
   font: `14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important`,
@@ -25,9 +25,15 @@ export const wrapperStyleBase = style({
       transition: `none`,
     },
   },
-});
+})
 
 export const wrapperStyle = styleVariants({
-  default: [wrapperStyleBase, { transform: `translateX(-100%) translateY(-50%)`, opacity: 0 }],
-  loaded: [wrapperStyleBase, { transform: `translateX(0) translateY(-50%)`, opacity: 1 }],
-});
+  default: [
+    wrapperStyleBase,
+    { transform: `translateX(-100%) translateY(-50%)`, opacity: 0 },
+  ],
+  loaded: [
+    wrapperStyleBase,
+    { transform: `translateX(0) translateY(-50%)`, opacity: 1 },
+  ],
+})

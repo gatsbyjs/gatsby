@@ -1,14 +1,14 @@
-import { style, styleVariants, keyframes } from "@vanilla-extract/css";
-import { vars } from "../../theme.css";
+import { style, styleVariants, keyframes } from "@vanilla-extract/css"
+import { vars } from "../../theme.css"
 
 const spin = keyframes({
   "0%": { transform: `translateX(-50%) translateY(-50%) rotate(0deg)` },
   "100%": { transform: `translateX(-50%) translateY(-50%) rotate(360deg)` },
-});
+})
 
 export const wrapperStyle = style({
   position: `relative`,
-});
+})
 
 export const spinnerStyle = style({
   position: `absolute`,
@@ -25,7 +25,7 @@ export const spinnerStyle = style({
       color: vars.color[`purple-20`],
     },
   },
-});
+})
 
 const buttonStyleBase = style({
   position: `relative`,
@@ -46,7 +46,7 @@ const buttonStyleBase = style({
     opacity: 0.3,
     cursor: `default`,
   },
-});
+})
 
 export const buttonStyle = styleVariants({
   default: [buttonStyleBase, { background: vars.color[`white`] }],
@@ -63,4 +63,4 @@ export const buttonStyle = styleVariants({
       },
     },
   ],
-});
+})
