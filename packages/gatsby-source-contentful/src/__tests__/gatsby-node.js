@@ -1176,6 +1176,24 @@ describe(`gatsby-node`, () => {
     )
   })
 
+  it(`panics when contentTypeFilter reduces content type list to 0`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      contentTypeFilter: () => false,
+    })
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Please check if your contentTypeFilter is configured properly. Content types were filtered down to none.`,
+        },
+      })
+    )
+  })
+
   it(`panics when response contains restricted content types`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(
