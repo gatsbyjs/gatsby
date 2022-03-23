@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.10.2/packages/gatsby) (2022-03-22)
+
+#### Bug Fixes
+
+- fix eperm when cache getting cleared fix [#35154](https://github.com/gatsbyjs/gatsby/issues/35154) fix [#35197](https://github.com/gatsbyjs/gatsby/issues/35197) ([9a087ec](https://github.com/gatsbyjs/gatsby/commit/9a087ece91267c847d98d5c6c2205ca65de07f85))
+- PnP fixes fixes [#35194](https://github.com/gatsbyjs/gatsby/issues/35194) fixes [#35199](https://github.com/gatsbyjs/gatsby/issues/35199) ([a56b652](https://github.com/gatsbyjs/gatsby/commit/a56b652d4370223082d54787fb274db8ad564687))
+- remove apis from ts,tsx [#35183](https://github.com/gatsbyjs/gatsby/issues/35183) [#35198](https://github.com/gatsbyjs/gatsby/issues/35198) ([0b6067a](https://github.com/gatsbyjs/gatsby/commit/0b6067ad23f878240d2ea898a2c66a6bca299a2c))
+
 ### [4.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.10.1/packages/gatsby) (2022-03-18)
 
 **Note:** Version bump only for package gatsby
