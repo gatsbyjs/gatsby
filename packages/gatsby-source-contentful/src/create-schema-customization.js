@@ -14,7 +14,10 @@ async function getContentTypesFromContentful({
   pluginConfig,
 }) {
   // Get content type items from Contentful
-  const allContentTypeItems = await fetchContentTypes({ pluginConfig, reporter })
+  const allContentTypeItems = await fetchContentTypes({
+    pluginConfig,
+    reporter
+  })
 
   const contentTypeFilter = pluginConfig.get(`contentTypeFilter`)
 
