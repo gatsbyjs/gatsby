@@ -126,7 +126,7 @@ module.exports = async (
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
       const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.substr(-1) === `/`) {
+      if (pubPath.slice(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
         hmrBasePath = withTrailingSlash(pubPath)
@@ -927,7 +927,7 @@ module.exports = async (
       // so loader rule test work well
       const queryParamStartIndex = modulePath.indexOf(`?`)
       if (queryParamStartIndex !== -1) {
-        modulePath = modulePath.substr(0, queryParamStartIndex)
+        modulePath = modulePath.slice(0, queryParamStartIndex)
       }
 
       return fastRefreshIncludes.some(re => re.test(modulePath))
