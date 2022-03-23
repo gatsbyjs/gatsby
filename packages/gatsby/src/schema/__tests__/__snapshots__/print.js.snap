@@ -68,6 +68,7 @@ interface RemoteFile {
   resize(
     width: Int
     height: Int
+    aspectRatio: Float
     fit: RemoteFileFit = COVER
 
     \\"\\"\\"
@@ -455,6 +456,7 @@ interface RemoteFile {
   resize(
     width: Int
     height: Int
+    aspectRatio: Float
     fit: RemoteFileFit = COVER
 
     \\"\\"\\"
@@ -852,6 +854,7 @@ interface RemoteFile {
   resize(
     width: Int
     height: Int
+    aspectRatio: Float
     fit: RemoteFileFit = COVER
 
     \\"\\"\\"
