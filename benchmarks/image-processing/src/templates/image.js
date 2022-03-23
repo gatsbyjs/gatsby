@@ -1,24 +1,24 @@
-import React from "react"
 import { Link, graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
+import * as React from "react"
 
 export default props => (
   <div>
     <Link to="/">Home</Link>
     <br />
-    <Img fixed={props.data.remoteImage.file.childImageSharp.fixed} />
+    <GatsbyImage
+      image={props.data.remoteImage.file.childImageSharp.gatsbyImageData}
+    />
   </div>
 )
 
 export const query = graphql`
-  query($id: String!) {
+  query ($id: String!) {
     remoteImage(id: { eq: $id }) {
       id
       file {
         childImageSharp {
-          fixed(width: 500, height: 500) {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(width: 300, layout: FIXED)
         }
       }
     }
