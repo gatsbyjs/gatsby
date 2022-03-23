@@ -65,16 +65,16 @@ Gatsby helps professional developers efficiently create maintainable, highly-per
 - **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
   files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins
   to load your data, then develop using Gatsby’s uniform GraphQL interface.
+  
+- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
+  limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
+  dynamic web apps, from blogs to e-commerce sites to user dashboards.
+  
+- **Choose your Rendering Options.** You can choose alternative [rendering options](https://gatsbyjs.com/docs/conceptual/rendering-options/), namely Deferred Static Generation (DSG) and Server-Side Rendering (SSR), in addition to Static Site Generation (SSG) — on a per-page basis. This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
 
 - **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
   splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
   and more to ensure your site is fast — no manual tuning required.
-
-- **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
-  limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
-  dynamic web apps, from blogs to e-commerce sites to user dashboards.
-
-- **Choose your Rendering Options.** You can choose alternative [rendering options](https://gatsbyjs.com/docs/conceptual/rendering-options/), namely Deferred Static Generation (DSG) and Server-Side Rendering (SSR), in addition to Static Site Generation (SSG) — on a per-page basis. This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
