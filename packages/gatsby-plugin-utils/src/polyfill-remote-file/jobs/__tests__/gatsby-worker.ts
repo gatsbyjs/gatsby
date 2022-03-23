@@ -6,7 +6,7 @@ import { IMAGE_CDN } from "../gatsby-worker"
 import getSharpInstance from "gatsby-sharp"
 
 const server = setupServer(
-  rest.get(`https://external.com/another-file.jpg`, async (req, res, ctx) => {
+  rest.get(`https://example.com/another-file.jpg`, async (req, res, ctx) => {
     const content = await fs.readFile(
       path.join(__dirname, `../../__tests__/__fixtures__/dog-portrait.jpg`)
     )
@@ -36,7 +36,7 @@ describe(`gatsby-worker`, () => {
           height: 100,
           width: 100,
           quality: 80,
-          url: `https://external.com/another-file.jpg`,
+          url: `https://example.com/another-file.jpg`,
         },
       })
 
