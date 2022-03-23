@@ -36,10 +36,6 @@ function parseSrcSet(
   })
 }
 
-function base64Encode(s: string): string {
-  return Buffer.from(s).toString(`base64`)
-}
-
 describe(`gatsbyImageData`, () => {
   const cacheDir = path.join(__dirname, `.cache`)
 
@@ -98,18 +94,20 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet.length).toBe(2)
 
     expect(parsedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=300&h=225&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 225,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
-    expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
-
-    expect(parsedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=600&h=450&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
-    )
-    expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
   })
 
   it(`should return proper image props for aspect ratio when "cropFocus" is also passed`, async () => {
@@ -125,20 +123,22 @@ describe(`gatsbyImageData`, () => {
       actions
     )
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
-
     expect(parsedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=300&h=225&fit=crop&crop=entropy&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 225,
+          format: `avif`,
+          quality: 75,
+          cropFocus: `entropy`,
+        }
+      )
     )
-    expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
-
-    expect(parsedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=600&h=450&fit=crop&crop=entropy&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
-    )
-    expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
   })
 
   it(`should return null when source is not an image`, async () => {
