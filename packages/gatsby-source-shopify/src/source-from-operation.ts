@@ -148,6 +148,8 @@ export function makeSourceFromOperation(
         })
       }
 
+      console.log(e)
+
       reporter.panic({
         id: errorCodes.unknownSourcingFailure,
         context: {

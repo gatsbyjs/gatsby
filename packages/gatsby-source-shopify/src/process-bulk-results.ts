@@ -24,10 +24,17 @@ export async function processBulkResults(
 
   for (let i = results.length - 1; i >= 0; i -= 1) {
     const result = decorateBulkObject(results[i]) as IDecoratedResult
+    /**
+     * @todo detect the following different as JSON.stringify order is not deterministic
+     */
     const resultIsNode = Boolean(
       result.shopifyId &&
         JSON.stringify(Object.keys(result)) !== `["__parentId","shopifyId"]`
     )
+
+    if (!resultIsNode) {
+      console.log(Object.keys(result), result)
+    }
 
     if (resultIsNode) {
       const type = parseShopifyId(result.shopifyId)[1]
