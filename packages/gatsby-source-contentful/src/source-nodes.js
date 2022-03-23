@@ -262,8 +262,7 @@ export async function sourceNodes(
           foreignReference => {
             const { name, id: contentfulId, type, spaceId } = foreignReference
 
-            // we actually need Gatsby's Node id, not Contentful one
-            const id = createNodeId(
+            const nodeId = createNodeId(
               makeId({
                 spaceId,
                 id: contentfulId,
@@ -275,13 +274,13 @@ export async function sourceNodes(
 
             // Create new reference field when none exists
             if (!n[name]) {
-              n[name] = [id]
+              n[name] = [nodeId]
               return
             }
 
             // Add non existing references to reference field
-            if (n[name] && !n[name].includes(id)) {
-              n[name].push(id)
+            if (n[name] && !n[name].includes(nodeId)) {
+              n[name].push(nodeId)
             }
           }
         )
