@@ -178,5 +178,5 @@ exports.processFile = async (file, transforms, options = {}) => {
 exports.createArgsDigest = args => {
   const argsDigest = createContentDigest(args)
 
-  return argsDigest.substr(argsDigest.length - 5)
+  return argsDigest.slice(-5)
 }
