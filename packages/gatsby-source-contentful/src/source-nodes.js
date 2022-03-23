@@ -260,7 +260,18 @@ export async function sourceNodes(
       ) {
         foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
           foreignReference => {
-            const { name, id } = foreignReference
+            const { name, id: contentfulId } = foreignReference
+
+            // we actually need Gatsby's Node id, not Contentful one
+            const id = createNodeId(
+              makeId({
+                spaceId: space.sys.id,
+                id: contentfulId,
+                type: `where can I get that?`,
+                currentLocale: n.node_locale,
+                defaultLocale,
+              })
+            )
 
             // Create new reference field when none exists
             if (!n[name]) {
