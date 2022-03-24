@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.10.1/packages/gatsby-worker) (2022-03-22)
+
+#### Bug Fixes
+
+- PnP fixes fixes [#35194](https://github.com/gatsbyjs/gatsby/issues/35194) fixes [#35199](https://github.com/gatsbyjs/gatsby/issues/35199) ([a56b652](https://github.com/gatsbyjs/gatsby/commit/a56b652d4370223082d54787fb274db8ad564687))
+
 ## [1.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.10.0/packages/gatsby-worker) (2022-03-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)

@@ -381,6 +381,7 @@ function calculateImageSizes(
     fit,
     outputPixelDensities,
     breakpoints,
+    aspectRatio,
   }: CalculateImageSizesArgs
 ): IImageSizes {
   if (width && Number(width) <= 0) {
@@ -403,6 +404,7 @@ function calculateImageSizes(
         fit,
         sourceMetadata,
         outputPixelDensities,
+        aspectRatio,
       })
     }
     case `constrained`: {
@@ -414,6 +416,7 @@ function calculateImageSizes(
         fit,
         outputPixelDensities,
         layout,
+        aspectRatio,
       })
     }
     case `fullWidth`: {
@@ -426,6 +429,7 @@ function calculateImageSizes(
         outputPixelDensities,
         layout,
         breakpoints,
+        aspectRatio,
       })
     }
   }
@@ -437,8 +441,14 @@ function calculateFixedImageSizes({
   height,
   fit = `cover`,
   outputPixelDensities,
+  aspectRatio: requestedAspectRatio,
 }: Omit<ImageSizeArgs, "layout" | "breakpoints">): IImageSizes {
-  let aspectRatio = sourceMetadata.width / sourceMetadata.height
+  let aspectRatio
+  if (requestedAspectRatio) {
+    aspectRatio = requestedAspectRatio
+  } else {
+    aspectRatio = sourceMetadata.width / sourceMetadata.height
+  }
 
   // make sure output outputPixelDensities has a value of 1
   outputPixelDensities.push(1)
@@ -452,6 +462,7 @@ function calculateFixedImageSizes({
       width,
       height,
       fit,
+      aspectRatio,
     })
     width = calculated.width
     height = calculated.height
@@ -517,9 +528,15 @@ function calculateResponsiveImageSizes({
   outputPixelDensities,
   breakpoints,
   layout,
+  aspectRatio: requestedAspectRatio,
 }: ImageSizeArgs): IImageSizes {
   let sizes: Array<number> = []
-  let aspectRatio = sourceMetadata.width / sourceMetadata.height
+  let aspectRatio
+  if (requestedAspectRatio) {
+    aspectRatio = requestedAspectRatio
+  } else {
+    aspectRatio = sourceMetadata.width / sourceMetadata.height
+  }
   // Sort, dedupe and ensure there's a 1
   const densities = new Set<number>(
     outputPixelDensities.sort(sortNumeric).filter(Boolean)
@@ -531,6 +548,7 @@ function calculateResponsiveImageSizes({
       width,
       height,
       fit,
+      aspectRatio,
     })
     width = calculated.width
     height = calculated.height

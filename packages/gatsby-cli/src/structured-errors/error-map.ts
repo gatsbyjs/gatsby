@@ -528,6 +528,14 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "11332": {
+    text: (): string =>
+      `Failed to compile Gatsby Functions. See the error below for more details.\nNote: The src/api folder is a reserved folder for Gatsby Functions and can't be used for any other files.`,
+    type: Type.COMPILATION,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>

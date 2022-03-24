@@ -25,6 +25,7 @@ interface IResizeArgs {
   format: ImageFormat
   cropFocus: Array<ImageCropFocus>
   quality: number
+  aspectRatio: number
 }
 
 const DEFAULT_QUALITY = 75
@@ -124,6 +125,7 @@ export function generateResizeFieldConfig(
     args: {
       width: `Int`,
       height: `Int`,
+      aspectRatio: `Float`,
       fit: {
         type: enums.fit.getTypeName(),
         defaultValue: enums.fit.getField(`COVER`).value,

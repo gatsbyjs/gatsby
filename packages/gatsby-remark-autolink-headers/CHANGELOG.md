@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.10.2/packages/gatsby-remark-autolink-headers) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+### [5.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.10.1/packages/gatsby-remark-autolink-headers) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
 ## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.10.0/packages/gatsby-remark-autolink-headers) (2022-03-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)

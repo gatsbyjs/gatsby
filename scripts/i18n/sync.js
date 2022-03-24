@@ -19,7 +19,7 @@ const syncLabelName = `sync`
 
 // get the git short hash
 function getShortHash(hash) {
-  return hash.substr(0, 7)
+  return hash.slice(0, 7)
 }
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
@@ -294,7 +294,7 @@ async function syncTranslationRepo(code) {
   // Message is of the form:
   // CONFLICT (content): Merge conflict in {file path}
   const conflictFiles = conflictLines.map(line =>
-    line.substr(line.lastIndexOf(` `) + 1)
+    line.slice(line.lastIndexOf(` `) + 1)
   )
   // Do a soft reset and unstage non-conflicted files
   shell.exec(`git reset`, { silent: true })
