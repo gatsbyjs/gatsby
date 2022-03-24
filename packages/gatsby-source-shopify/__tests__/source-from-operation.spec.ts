@@ -7,8 +7,8 @@ import os from "os"
 import { graphql, rest } from "msw"
 import { setupServer } from "msw/node"
 
-import { makeSourceFromOperation } from "../src/source-from-operation"
 import * as processBulkResultsModule from "../src/process-bulk-results"
+import { makeSourceFromOperation } from "../src/source-from-operation"
 import { createOperations } from "../src/create-operations"
 
 import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./fixtures"
@@ -16,9 +16,6 @@ import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./fixtures"
 const BULK_DATA_URL = `http://bulk-query-data.co`
 
 const server = setupServer()
-
-// @ts-ignore because these types will never match
-global.setTimeout = (fn: Promise<void>): Promise<void> => fn()
 
 const nodeTypes = [`products`, `variants`, `collections`, `orders`, `locations`]
 
@@ -52,34 +49,62 @@ function countJsonLRows(s: string): number {
   return matches.length
 }
 
+const testConfigs = [
+  {
+    bulkResults: [
+      {
+        id: `gid://shopify/Product/6950279086286`,
+      },
+      {
+        id: `gid://shopify/MediaImage/22755647652046`,
+      },
+      {
+        id: `gid://shopify/Metafield/21077562228942`,
+        __parentId: `gid://shopify/Product/6950279086286`,
+        ownerType: `PRODUCT`,
+      },
+      {
+        id: `gid://shopify/Product/6966721052878`,
+        ownerType: `PRODUCT`,
+      },
+      {
+        id: `gid://shopify/Metafield/21078060335310`,
+        __parentId: `gid://shopify/Product/6966721052878`,
+        ownerType: `PRODUCT`,
+      },
+    ],
+    prioritize: true,
+    type: `products`,
+  },
+  {
+    bulkResults: [
+      {
+        id: `gid://shopify/Product/6950279086286`,
+      },
+      {
+        id: `gid://shopify/MediaImage/22755647652046`,
+      },
+      {
+        id: `gid://shopify/Metafield/21077562228942`,
+        __parentId: `gid://shopify/Product/6950279086286`,
+        ownerType: `PRODUCT`,
+      },
+      {
+        id: `gid://shopify/Product/6966721052878`,
+        ownerType: `PRODUCT`,
+      },
+      {
+        id: `gid://shopify/Metafield/21078060335310`,
+        __parentId: `gid://shopify/Product/6966721052878`,
+        ownerType: `PRODUCT`,
+      },
+    ],
+    prioritize: false,
+    type: `products`,
+  },
+]
+
 describe(`makeSourceFromOperation`, () => {
-  const firstId = `gid://shopify/Collection/12345`
-  const secondId = `gid://shopify/Collection/54321`
-  const firstProductId = `gid://shopify/Product/22345`
-  const secondProductId = `gid://shopify/Product/32345`
-  const thirdProductId = `gid://shopify/Product/64321`
-
-  const bulkResults = [
-    {
-      id: firstId,
-    },
-    {
-      id: firstProductId,
-      __parentId: firstId,
-    },
-    {
-      id: secondId,
-    },
-    {
-      id: secondProductId,
-      __parentId: firstId,
-    },
-    {
-      id: thirdProductId,
-      __parentId: secondId,
-    },
-  ]
-
   afterEach(() => {
     server.resetHandlers()
   })
@@ -137,36 +162,11 @@ describe(`makeSourceFromOperation`, () => {
     )
   })
 
-  const config = [
-    {
-      bulkResults: [
-        {
-          id: `gid://shopify/Product/6950279086286`,
-        },
-        {
-          id: `gid://shopify/MediaImage/22755647652046`,
-        },
-        {
-          id: `gid://shopify/Metafield/21077562228942`,
-          __parentId: `gid://shopify/Product/6950279086286`,
-        },
-        {
-          id: `gid://shopify/Product/6966721052878`,
-        },
-        {
-          id: `gid://shopify/Metafield/21078060335310`,
-          __parentId: `gid://shopify/Product/6966721052878`,
-        },
-      ],
-      prioritize: true,
-      type: `products`,
-    },
-  ]
-
-  config.forEach(({ bulkResults, prioritize, type }) => {
+  testConfigs.forEach(({ bulkResults, prioritize, type }) => {
     it(`testing prioritize: ${prioritize}, type: ${type}`, async () => {
+      const jsonLData = bulkResults.map(d => JSON.stringify(d)).join(os.EOL)
       server.use(
-        rest.get(BULK_DATA_URL, (req, res, ctx) => res(ctx.json(bulkResults)))
+        rest.get(BULK_DATA_URL, (req, res, ctx) => res(ctx.text(jsonLData)))
       )
       const options = {
         password: ``,
@@ -201,6 +201,14 @@ describe(`makeSourceFromOperation`, () => {
         prioritize ? 1 : 0
       )
       expect(finishLastOperation.mock.calls.length).toEqual(prioritize ? 0 : 1)
+
+      bulkResults.forEach(({ id }) => {
+        expect(createNode).toHaveBeenCalledWith(
+          expect.objectContaining({
+            shopifyId: id,
+          })
+        )
+      })
     })
   })
 
@@ -227,6 +235,10 @@ describe(`makeSourceFromOperation`, () => {
         }
         const operations = createOperations(mockGatsbyApi(), options)
 
+        const processBulkResults = jest.spyOn(
+          processBulkResultsModule,
+          `processBulkResults`
+        )
         const finishLastOperation = jest.spyOn(
           operations,
           `finishLastOperation`
@@ -258,11 +270,8 @@ describe(`makeSourceFromOperation`, () => {
         expect(finishLastOperation.mock.calls.length).toEqual(
           prioritize ? 0 : 1
         )
-        // expect(createNode).toHaveBeenCalledWith(
-        //   expect.objectContaining({
-        //     id: `gid://shopify/Product/6950279086286`,
-        //   })
-        // )
+        expect(processBulkResults.mock.calls[0][2]).toMatchSnapshot()
+        expect(gatsbyApi.actions.createNode.mock.calls).toMatchSnapshot()
       })
     }
   }
