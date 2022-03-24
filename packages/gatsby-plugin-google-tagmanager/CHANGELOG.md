@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@4.10.2/packages/gatsby-plugin-google-tagmanager) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-google-tagmanager
+
 ### [4.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-tagmanager@4.10.1/packages/gatsby-plugin-google-tagmanager) (2022-03-18)
 
 **Note:** Version bump only for package gatsby-plugin-google-tagmanager
