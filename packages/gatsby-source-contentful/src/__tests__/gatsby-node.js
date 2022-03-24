@@ -40,14 +40,47 @@ const createMockCache = () => {
 }
 
 describe(`gatsby-node`, () => {
+  function deleteDescendants(node) {
+    if (!node) {
+      return
+    }
+
+    for (const childId of node.children ?? []) {
+      const child = currentNodeMap.get(childId)
+      if (child) {
+        deleteDescendants(child)
+        currentNodeMap.delete(child.id)
+      }
+    }
+  }
+
   const actions = {
     createTypes: jest.fn(),
     setPluginStatus: jest.fn(),
     createNode: jest.fn(async node => {
+      // similar checks as gatsby does
+      if (!_.isPlainObject(node)) {
+        throw new Error(
+          `The node passed to the "createNode" action creator must be an object`
+        )
+      }
+
+      if (node.internal.owner) {
+        throw new Error(
+          `The node internal.owner field is set automatically by Gatsby and not by plugins`
+        )
+      }
+
+      // recursively delete children of node if it existed already
+      deleteDescendants(currentNodeMap.get(node.id))
+
       node.internal.owner = `gatsby-source-contentful`
       currentNodeMap.set(node.id, node)
     }),
     deleteNode: jest.fn(node => {
+      // recursively delete children of deleted node same as gatsby
+      deleteDescendants(node)
+
       currentNodeMap.delete(node.id)
     }),
     touchNode: jest.fn(),
@@ -80,8 +113,12 @@ describe(`gatsby-node`, () => {
   const parentSpan = {}
   const createNodeId = jest.fn(value => value)
   let currentNodeMap
-  const getNodes = () => Array.from(currentNodeMap.values())
-  const getNode = id => currentNodeMap.get(id)
+
+  // returning clones of nodes to test if we are updating nodes correctly
+  // as it's not enough to mutate a node, we need to call an update function
+  // to actually update datastore
+  const getNodes = () => Array.from(currentNodeMap.values()).map(_.cloneDeep)
+  const getNode = id => _.cloneDeep(currentNodeMap.get(id))
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
@@ -179,7 +216,9 @@ describe(`gatsby-node`, () => {
                 const linkedNode = getNode(linkId)
                 reference[referenceKey] =
                   reference[referenceKey] || linkedNode[referenceKey] || []
-                reference[referenceKey].push(nodeId)
+                if (!reference[referenceKey].includes(nodeId)) {
+                  reference[referenceKey].push(nodeId)
+                }
                 references.set(linkId, reference)
               }
               break
@@ -549,7 +588,7 @@ describe(`gatsby-node`, () => {
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(42)
+    expect(actions.createNode).toHaveBeenCalledTimes(46)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(32)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
@@ -639,7 +678,7 @@ describe(`gatsby-node`, () => {
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(50)
+    expect(actions.createNode).toHaveBeenCalledTimes(54)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(72)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
@@ -701,6 +740,25 @@ describe(`gatsby-node`, () => {
     // initial sync
     await simulateGatsbyBuild()
 
+    {
+      for (const author of getNodes().filter(
+        n => n.internal.type === `ContentfulPerson`
+      )) {
+        expect(author[`blog post___NODE`].length).toEqual(3)
+        expect(author[`blog post___NODE`]).toEqual(
+          expect.not.arrayContaining([
+            makeId({
+              spaceId: removedBlogEntry.sys.space.sys.id,
+              currentLocale: author.node_locale,
+              defaultLocale: locales[0],
+              id: removedBlogEntry.sys.id,
+              type: normalizedType,
+            }),
+          ])
+        )
+      }
+    }
+
     // create blog post
     await simulateGatsbyBuild()
 
@@ -711,6 +769,25 @@ describe(`gatsby-node`, () => {
       authorIds.push(blogEntry[`author___NODE`])
       expect(blogEntry).not.toBeUndefined()
     })
+
+    {
+      for (const author of getNodes().filter(
+        n => n.internal.type === `ContentfulPerson`
+      )) {
+        expect(author[`blog post___NODE`].length).toEqual(4)
+        expect(author[`blog post___NODE`]).toEqual(
+          expect.arrayContaining([
+            makeId({
+              spaceId: removedBlogEntry.sys.space.sys.id,
+              currentLocale: author.node_locale,
+              defaultLocale: locales[0],
+              id: removedBlogEntry.sys.id,
+              type: normalizedType,
+            }),
+          ])
+        )
+      }
+    }
 
     // remove blog post
     reporter.info.mockClear()
@@ -734,6 +811,25 @@ describe(`gatsby-node`, () => {
       )
     )
 
+    {
+      for (const author of getNodes().filter(
+        n => n.internal.type === `ContentfulPerson`
+      )) {
+        expect(author[`blog post___NODE`].length).toEqual(3)
+        expect(author[`blog post___NODE`]).toEqual(
+          expect.not.arrayContaining([
+            makeId({
+              spaceId: removedBlogEntry.sys.space.sys.id,
+              currentLocale: author.node_locale,
+              defaultLocale: locales[0],
+              id: removedBlogEntry.sys.id,
+              type: normalizedType,
+            }),
+          ])
+        )
+      }
+    }
+
     // check if references are gone
     authorIds.forEach(authorId => {
       expect(getNode(authorId)[`blog post___NODE`]).toEqual(
@@ -741,7 +837,7 @@ describe(`gatsby-node`, () => {
       )
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(44)
+    expect(actions.createNode).toHaveBeenCalledTimes(52)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(74)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
@@ -772,7 +868,7 @@ describe(`gatsby-node`, () => {
         ],
       ]
     `)
-  })
+  }, 9999999)
 
   it(`should remove an asset`, async () => {
     const locales = [`en-US`, `nl`]
@@ -827,7 +923,7 @@ describe(`gatsby-node`, () => {
       locales
     )
 
-    expect(actions.createNode).toHaveBeenCalledTimes(44)
+    expect(actions.createNode).toHaveBeenCalledTimes(54)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(74)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`

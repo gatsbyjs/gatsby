@@ -295,12 +295,14 @@ export async function sourceNodes(
     deletionActivity.end()
   }
 
-  // Update existing entry nodes that weren't updated but that need reverse links added.
+  // Update existing entry nodes that weren't updated but that need reverse links added or removed.
+  const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
   existingNodes
     .filter(
       n =>
         n.sys.type === `Entry` &&
-        !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`)
+        !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`) &&
+        !deletedEntryGatsbyReferenceIds.has(n.id)
     )
     .forEach(n => {
       if (
@@ -323,12 +325,14 @@ export async function sourceNodes(
 
             // Create new reference field when none exists
             if (!n[name]) {
+              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
               n[name] = [nodeId]
               return
             }
 
             // Add non existing references to reference field
             if (n[name] && !n[name].includes(nodeId)) {
+              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
               n[name].push(nodeId)
             }
           }
@@ -336,24 +340,61 @@ export async function sourceNodes(
       }
 
       // Remove references to deleted nodes
-      if (deletedEntryGatsbyReferenceIds.size) {
+      if (n.contentful_id && deletedEntryGatsbyReferenceIds.size) {
         Object.keys(n).forEach(name => {
           // @todo Detect reference fields based on schema. Should be easier to achieve in the upcoming version.
-          if (name.length - name.indexOf(`___NODE`) !== 7) {
+          if (!name.endsWith(`___NODE`)) {
             return
           }
           if (Array.isArray(n[name])) {
-            n[name] = n[name].filter(
-              referenceId => !deletedEntryGatsbyReferenceIds.has(referenceId)
-            )
+            n[name] = n[name].filter(referenceId => {
+              const shouldRemove =
+                deletedEntryGatsbyReferenceIds.has(referenceId)
+              if (shouldRemove) {
+                existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
+              }
+              return !shouldRemove
+            })
           } else {
-            if (n[name] === deletedEntryGatsbyReferenceIds.has(n[name])) {
+            const referenceId = n[name]
+            if (deletedEntryGatsbyReferenceIds.has(referenceId)) {
+              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
               n[name] = null
             }
           }
         })
       }
     })
+
+  // We need to call `createNode` on nodes we modified reverse links on,
+  // otherwise changes won't actually persist
+  if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
+    for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
+      function addChildrenToList(node, nodeList = [node]) {
+        for (const childNodeId of node?.children ?? []) {
+          const childNode = getNode(childNodeId)
+          if (childNode) {
+            // important
+            nodeList.push(childNode)
+            addChildrenToList(childNode)
+          }
+        }
+        return nodeList
+      }
+
+      const nodeAndDescendants = addChildrenToList(node)
+      for (const nodeToUpdate of nodeAndDescendants) {
+        // we need to remove properties from existing fields
+        // that are reserved and managed by Gatsby.
+        delete nodeToUpdate.internal.owner
+
+        // TODO: we need to recalculate `internal.contentDigest`
+        // for now just modyfing it to ensure gatsby picks up data change
+        node.internal.contentDigest += `X`
+        createNode(nodeToUpdate)
+      }
+    }
+  }
 
   const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
     parentSpan,
