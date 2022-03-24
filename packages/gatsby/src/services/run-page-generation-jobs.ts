@@ -1,14 +1,20 @@
+import { chunk } from "lodash"
 import { store } from "../redux/index"
 import { createInternalJob } from "../utils/jobs/manager"
 import { createJobV2FromInternalJob } from "../redux/actions/internal"
 
+const pageGenChunkSize =
+  Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
+
 export function runPageGenerationJobs(queryIds): void {
-  queryIds.pageQueryIds.forEach(queryId => {
+  const pageChunks = chunk(queryIds?.pageQueryIds, pageGenChunkSize)
+
+  pageChunks.forEach(chunk => {
     const job = createInternalJob(
       {
         name: `GENERATE_PAGE`,
         args: {
-          path: queryId.path,
+          paths: chunk?.map(({ path }) => path),
         },
         inputPaths: [],
         outputDir: __dirname,

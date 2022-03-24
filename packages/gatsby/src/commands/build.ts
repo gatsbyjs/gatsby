@@ -62,6 +62,7 @@ import {
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
+import { runPageGenerationJobs } from "../services/run-page-generation-jobs"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -145,7 +146,6 @@ module.exports = async function build(
   // queryIds from this function represent the pages that need to be built
   const { queryIds } = await calculateDirtyQueries({ store })
 
-
   // Only run queries with mode SSG
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
@@ -203,21 +203,23 @@ module.exports = async function build(
     graphqlRunner,
   })
 
-
   const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
 
   const externalJobsEnabled =
     process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
     process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
 
+  const pageGenerationJobsEnabled =
+    PAGE_GEN_ENABLED && externalJobsEnabled && process.send
 
-  const pageGenerationJobsEnabled = PAGE_GEN_ENABLED && externalJobsEnabled && process.send
-  
   /**
    * Rendering Engine
    */
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && (shouldGenerateEngines() || pageGenerationJobsEnabled)) {
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    (shouldGenerateEngines() || pageGenerationJobsEnabled)
+  ) {
     const state = store.getState()
     const buildActivityTimer = report.activityTimer(
       `Building Rendering Engines`,
@@ -291,7 +293,10 @@ module.exports = async function build(
    * Engine Validation
    */
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && (shouldGenerateEngines() || pageGenerationJobsEnabled)) {
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    (shouldGenerateEngines() || pageGenerationJobsEnabled)
+  ) {
     const validateEnginesActivity = report.activityTimer(
       `Validating Rendering Engines`,
       {
@@ -347,7 +352,7 @@ module.exports = async function build(
 
   if (pageGenerationJobsEnabled) {
     // TODO RUN OUR JOB FUNCTION
-
+    runPageGenerationJobs(queryIds)
     // Jobs still might be running even though query running finished
     await waitUntilAllJobsComplete()
   } else if (PQR_ENABLED) {
@@ -449,7 +454,7 @@ module.exports = async function build(
   let toDelete: Array<string> = []
 
   /**
-   * HTML GENERATIOn
+   * HTML GENERATION
    */
 
   if (!pageGenerationJobsEnabled) {
