@@ -203,6 +203,7 @@ module.exports = async function build(
     graphqlRunner,
   })
 
+  // Page Gen
   const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
 
   const externalJobsEnabled =
