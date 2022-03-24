@@ -76,14 +76,14 @@ Gatsby helps professional developers efficiently create maintainable, highly-per
 
 [**Learn how to use Gatsby for your next project.**](https://www.gatsbyjs.com/docs/)
 
-
 ## 🚀 Ship your first Gatsby site in 5 Minutes
 
 Click the link below to quickly try the workflow of developing, building and deploying websites with Gatsby and Gatsby Cloud.
 
 [<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog&utm_source=github&utm_medium=link&utm_campaign=onboarding&utm_content=oss)
 
-At the end of this process, you'll have 
+At the end of this process, you'll have
+
 1. a site working on Gatsby Cloud
 2. a new repository that is linked to that new site
 3. as you push changes to your new repository, Gatsby Cloud will automatically rebuild and redeploy your site!
