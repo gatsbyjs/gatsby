@@ -4,7 +4,7 @@ import path from "path"
 import { NodePluginArgs } from "gatsby"
 import { createContentDigest } from "gatsby-core-utils"
 
-import ids from "../fixtures/ids.json"
+import ids from "./ids.json"
 
 export function mockGatsbyApi(): NodePluginArgs {
   return {

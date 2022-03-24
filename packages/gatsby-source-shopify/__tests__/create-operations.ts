@@ -1,5 +1,4 @@
 import * as createOperationsModule from "../src/create-operations"
-
 import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
 
 const createOperations = jest.spyOn(

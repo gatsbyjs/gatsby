@@ -1,10 +1,8 @@
 import { sourceNodes } from "../src/source-nodes"
-
 import * as helpersModule from "../src/helpers"
 import * as updateCacheModule from "../src/update-cache"
 import * as createOperationsModule from "../src/create-operations"
 import * as sourceFromOperationModule from "../src/source-from-operation"
-
 import { mockGatsbyApi, mockPluginOptions, mockOperations } from "./fixtures"
 
 const getLastBuildTime = jest.spyOn(helpersModule, `getLastBuildTime`)

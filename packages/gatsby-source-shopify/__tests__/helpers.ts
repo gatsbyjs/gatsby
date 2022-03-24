@@ -1,5 +1,4 @@
 import { isPriorityBuild } from "../src/helpers"
-
 import { mockPluginOptions, makeMockEnvironment } from "./fixtures"
 
 const generateTestName = (prioritize, environment): string =>

@@ -1,5 +1,4 @@
 import { createSchemaCustomization } from "../src/create-schema-customization"
-
 import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
 
 const connections = [`orders`, `collections`, `locations`]

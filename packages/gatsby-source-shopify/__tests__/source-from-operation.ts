@@ -6,17 +6,13 @@ import path from "path"
 import os from "os"
 import { graphql, rest } from "msw"
 import { setupServer } from "msw/node"
-
 import * as processBulkResultsModule from "../src/process-bulk-results"
 import { makeSourceFromOperation } from "../src/source-from-operation"
 import { createOperations } from "../src/create-operations"
-
-import { mockGatsbyApi, mockPluginOptions, mockBulkResults } from "./fixtures"
+import { mockGatsbyApi, mockPluginOptions } from "./fixtures"
 
 const BULK_DATA_URL = `http://bulk-query-data.co`
-
 const server = setupServer()
-
 const nodeTypes = [`products`, `variants`, `collections`, `orders`, `locations`]
 
 beforeAll(() => {
@@ -32,11 +28,11 @@ afterAll(() => {
 })
 
 function resolve(data) {
-  return (req, res, ctx): void => res(ctx.data(data))
+  return (_req, res, ctx): void => res(ctx.data(data))
 }
 
 function resolveOnce(data) {
-  return (req, res, ctx): void => res.once(ctx.data(data))
+  return (_req, res, ctx): void => res.once(ctx.data(data))
 }
 
 function generateTestName(prioritize, type): string {

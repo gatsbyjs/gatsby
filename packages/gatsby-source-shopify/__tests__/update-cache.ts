@@ -1,7 +1,5 @@
 import { updateCache } from "../src/update-cache"
-
 import * as eventsModule from "../src/events"
-
 import { mockGatsbyApi, mockPluginOptions, mockShopifyEvents } from "./fixtures"
 
 const gatsbyApi = mockGatsbyApi()
