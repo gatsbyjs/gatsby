@@ -186,7 +186,6 @@ Possibility to limit how many contentType/nodes are created in GraphQL. This can
 
 For example, to exclude content types starting with "page" `contentTypeFilter: contentType => !contentType.sys.id.startsWith('page')`
 
-
 ## How to query for nodes
 
 Two standard node types are available from Contentful: `Asset` and `ContentType`.
