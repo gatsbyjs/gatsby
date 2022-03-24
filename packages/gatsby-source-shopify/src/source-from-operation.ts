@@ -3,8 +3,8 @@ import { SourceNodesArgs } from "gatsby"
 import { createInterface } from "readline"
 import { shiftLeft } from "shift-left"
 
-import { nodeBuilder } from "./node-builder"
-import { IShopifyBulkOperation } from "./operations"
+import { isPriorityBuild } from "./helpers"
+import { processBulkResults } from "./process-bulk-results"
 import {
   OperationError,
   HttpError,
@@ -13,33 +13,30 @@ import {
 
 export function makeSourceFromOperation(
   finishLastOperation: () => Promise<void>,
-  completedOperation: (id: string) => Promise<{ node: BulkOperationNode }>,
+  completedOperation: (id: string) => Promise<{ node: IBulkOperationNode }>,
   cancelOperationInProgress: () => Promise<void>,
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: ShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions,
+  lastBuildTime?: Date
 ) {
   return async function sourceFromOperation(
-    op: IShopifyBulkOperation,
-    // A build on the main branch && a production build
-    isPriorityBuild = process.env.GATSBY_IS_PR_BUILD !== `true` &&
-      process.env.GATSBY_IS_PREVIEW !== `true`
+    op: IShopifyBulkOperation
   ): Promise<void> {
-    const { reporter, actions } = gatsbyApi
+    const { reporter } = gatsbyApi
 
     const operationTimer = reporter.activityTimer(
-      `Source from bulk operation ${op.name}`
+      `source ${lastBuildTime ? `changed ` : ``}shopify ${op.name}`
     )
 
     operationTimer.start()
 
     try {
-      if (isPriorityBuild) {
+      if (isPriorityBuild(pluginOptions)) {
         await cancelOperationInProgress()
       } else {
         await finishLastOperation()
       }
 
-      reporter.info(`Initiating bulk operation query ${op.name}`)
       const {
         bulkOperationRunQuery: { userErrors, bulkOperation },
       } = await op.execute()
@@ -63,49 +60,32 @@ export function makeSourceFromOperation(
       }
 
       const resp = await completedOperation(bulkOperation.id)
-      reporter.info(`Completed bulk operation ${op.name}: ${bulkOperation.id}`)
 
       if (parseInt(resp.node.objectCount, 10) === 0) {
-        reporter.info(`No data was returned for this operation`)
         operationTimer.end()
         return
       }
 
-      operationTimer.setStatus(
-        `Fetching ${resp.node.objectCount} results for ${op.name}: ${bulkOperation.id}`
-      )
+      const { body: jsonLines } = await fetch(resp.node.url)
 
-      const results = await fetch(resp.node.url)
-
-      operationTimer.setStatus(
-        `Processing ${resp.node.objectCount} results for ${op.name}: ${bulkOperation.id}`
-      )
       const rl = createInterface({
-        input: results.body,
+        input: jsonLines,
         crlfDelay: Infinity,
       })
 
-      reporter.info(`Creating nodes from bulk operation ${op.name}`)
-
-      const objects: BulkResults = []
+      const results: BulkResults = []
 
       for await (const line of rl) {
-        objects.push(JSON.parse(line))
+        results.push(JSON.parse(line))
       }
 
-      await Promise.all(
-        op
-          .process(
-            objects,
-            nodeBuilder(gatsbyApi, pluginOptions),
-            gatsbyApi,
-            pluginOptions
-          )
-          .map(async promise => {
-            const node = await promise
-            actions.createNode(node)
-          })
+      const nodeCount = await processBulkResults(
+        gatsbyApi,
+        pluginOptions,
+        results
       )
+
+      operationTimer.setStatus(`${nodeCount} nodes`)
 
       operationTimer.end()
     } catch (e) {
@@ -113,7 +93,7 @@ export function makeSourceFromOperation(
         const code = errorCodes.bulkOperationFailed
 
         if (e.node.status === `CANCELED`) {
-          if (isPriorityBuild) {
+          if (isPriorityBuild(pluginOptions)) {
             /**
              * There are at least two production sites for this Shopify
              * store trying to run an operation at the same time.
@@ -167,6 +147,8 @@ export function makeSourceFromOperation(
           error: e,
         })
       }
+
+      console.log(e)
 
       reporter.panic({
         id: errorCodes.unknownSourcingFailure,

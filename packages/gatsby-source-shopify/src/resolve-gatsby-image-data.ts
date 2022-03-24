@@ -1,3 +1,6 @@
+import { readFileSync } from "fs"
+import { GatsbyCache } from "gatsby"
+import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import {
   generateImageData,
@@ -7,10 +10,9 @@ import {
   IImage,
   ImageFormat,
 } from "gatsby-plugin-image"
-import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
-import { readFileSync } from "fs"
-import { IShopifyImage, urlBuilder } from "./get-shopify-image"
-import type { Node } from "gatsby"
+
+import { urlBuilder } from "./get-shopify-image"
+import { parseImageExtension } from "./helpers"
 
 type IImageWithPlaceholder = IImage & {
   placeholder: string
@@ -44,24 +46,20 @@ function getBase64DataURI({ imageBase64 }: { imageBase64: string }): string {
   return `data:image/png;base64,${imageBase64}`
 }
 
-export function makeResolveGatsbyImageData(cache: any) {
+export function makeResolveGatsbyImageData(cache: GatsbyCache) {
   return async function resolveGatsbyImageData(
-    image: Node & IShopifyImage,
+    image: IShopifyImage,
     {
       formats = [`auto`],
       layout = `constrained`,
-      ...options
+      ...remainingOptions
     }: IGatsbyImageFieldArgs
-  ): Promise<IGatsbyImageData> {
-    const remainingOptions = options as Record<string, any>
-    let [basename] = image.originalSrc.split(`?`)
+  ): Promise<IGatsbyImageData | null> {
+    // Sharp cannot optimize GIFs so we must return null in that case
+    const ext = parseImageExtension(image.originalSrc)
+    if (ext === `gif`) return null
 
-    const dot = basename.lastIndexOf(`.`)
-    let ext = ``
-    if (dot !== -1) {
-      ext = basename.slice(dot + 1)
-      basename = basename.slice(0, dot)
-    }
+    let placeholderURL
 
     const generateImageSource: IGatsbyImageHelperArgs["generateImageSource"] = (
       filename,
@@ -83,17 +81,17 @@ export function makeResolveGatsbyImageData(cache: any) {
         }),
       }
     }
+
     const sourceMetadata = {
       width: image.width,
       height: image.height,
       format: ext as ImageFormat,
     }
 
-    if (remainingOptions && remainingOptions.placeholder === `BLURRED`) {
+    if (remainingOptions && remainingOptions.placeholder === `blurred`) {
       // This function returns the URL for a 20px-wide image, to use as a blurred placeholder
       const lowResImageURL = getLowResolutionImageURL({
         ...remainingOptions,
-        aspectRatio: remainingOptions.width / remainingOptions.height, // Workaround - fixes height being NaN; we can remove this once gatsby-plugin-image is fixed
         formats,
         layout,
         sourceMetadata,
@@ -101,19 +99,18 @@ export function makeResolveGatsbyImageData(cache: any) {
         filename: image.originalSrc,
         generateImageSource,
       })
+
       const imageBase64 = await getImageBase64({
         imageAddress: lowResImageURL,
         directory: cache.directory as string,
         contentDigest: image.internal.contentDigest,
       })
 
-      // This would be your own function to download and generate a low-resolution placeholder
-      remainingOptions.placeholderURL = getBase64DataURI({
-        imageBase64,
-      })
+      placeholderURL = getBase64DataURI({ imageBase64 })
     }
     return generateImageData({
       ...remainingOptions,
+      placeholderURL,
       formats,
       layout,
       sourceMetadata,
