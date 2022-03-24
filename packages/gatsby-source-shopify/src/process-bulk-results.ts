@@ -13,6 +13,14 @@ interface IDecoratedResultChildren {
   [key: string]: Array<string | IDecoratedResult>
 }
 
+function isNode(result: IDecoratedResult): boolean {
+  const keys = Object.keys(result)
+  return Boolean(
+    result.shopifyId &&
+      !(keys.length === 2 && result.__parentId && result.shopifyId)
+  )
+}
+
 export async function processBulkResults(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: IShopifyPluginOptions,
@@ -27,14 +35,7 @@ export async function processBulkResults(
     /**
      * @todo detect the following different as JSON.stringify order is not deterministic
      */
-    const resultIsNode = Boolean(
-      result.shopifyId &&
-        JSON.stringify(Object.keys(result)) !== `["__parentId","shopifyId"]`
-    )
-
-    if (!resultIsNode) {
-      console.log(Object.keys(result), result)
-    }
+    const resultIsNode = isNode(result)
 
     if (resultIsNode) {
       const type = parseShopifyId(result.shopifyId)[1]
