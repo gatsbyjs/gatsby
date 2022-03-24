@@ -338,6 +338,10 @@ module.exports = async function build(
         action: {
           type: `ENGINES_READY`,
           timestamp: new Date().toJSON(),
+          payload: {
+            createPageGeneratorService: !!pageGenerationJobsEnabled,
+            createSSRService: shouldGenerateEngines(),
+          },
         },
       })
     }
