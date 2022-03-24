@@ -142,7 +142,9 @@ module.exports = async function build(
     graphqlTracing: program.graphqlTracing,
   })
 
+  // queryIds from this function represent the pages that need to be built
   const { queryIds } = await calculateDirtyQueries({ store })
+
 
   // Only run queries with mode SSG
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
@@ -201,7 +203,21 @@ module.exports = async function build(
     graphqlRunner,
   })
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+
+  const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
+
+  const externalJobsEnabled =
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
+
+
+  const pageGenerationJobsEnabled = PAGE_GEN_ENABLED && externalJobsEnabled && process.send
+  
+  /**
+   * Rendering Engine
+   */
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && (shouldGenerateEngines() || pageGenerationJobsEnabled)) {
     const state = store.getState()
     const buildActivityTimer = report.activityTimer(
       `Building Rendering Engines`,
@@ -231,6 +247,10 @@ module.exports = async function build(
       buildActivityTimer.end()
     }
   }
+
+  /**
+   * HTML Renderer
+   */
 
   const buildSSRBundleActivityProgress = report.activityTimer(
     `Building HTML renderer`,
@@ -267,7 +287,11 @@ module.exports = async function build(
     pageConfigActivity.end()
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+  /**
+   * Engine Validation
+   */
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && (shouldGenerateEngines() || pageGenerationJobsEnabled)) {
     const validateEnginesActivity = report.activityTimer(
       `Validating Rendering Engines`,
       {
@@ -313,19 +337,17 @@ module.exports = async function build(
     }
   }
 
+  /**
+   * Query Running
+   */
+
   const PQR_ENABLED = process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
-  const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
-
-  const externalJobsEnabled =
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
-
-  const pageGenerationJobsEnabled =
-    PAGE_GEN_ENABLED && externalJobsEnabled && process.send
 
   let waitForWorkerPoolRestart = Promise.resolve()
 
   if (pageGenerationJobsEnabled) {
+    // TODO RUN OUR JOB FUNCTION
+
     // Jobs still might be running even though query running finished
     await waitUntilAllJobsComplete()
   } else if (PQR_ENABLED) {
@@ -425,6 +447,10 @@ module.exports = async function build(
 
   let toRegenerate: Array<string> = []
   let toDelete: Array<string> = []
+
+  /**
+   * HTML GENERATIOn
+   */
 
   if (!pageGenerationJobsEnabled) {
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
@@ -564,6 +590,10 @@ module.exports = async function build(
   }
 
   showExperimentNotices()
+
+  /**
+   * User Feedback Survey
+   */
 
   if (await userGetsSevenDayFeedback()) {
     showSevenDayFeedbackRequest()
