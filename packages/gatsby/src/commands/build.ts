@@ -203,6 +203,15 @@ module.exports = async function build(
     graphqlRunner,
   })
 
+  // create scope so we don't leak state object
+  {
+    const state = store.getState()
+    await writeQueryContext({
+      staticQueriesByTemplate: state.staticQueriesByTemplate,
+      components: state.components,
+    })
+  }
+
   // Page Gen
   const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
 
@@ -382,15 +391,6 @@ module.exports = async function build(
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
-
-  // create scope so we don't leak state object
-  {
-    const state = store.getState()
-    await writeQueryContext({
-      staticQueriesByTemplate: state.staticQueriesByTemplate,
-      components: state.components,
-    })
-  }
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
