@@ -6,19 +6,19 @@ import { createJobV2FromInternalJob } from "../redux/actions/internal"
 const pageGenChunkSize =
   Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
 
-  interface QueryIds {
-    pageQueryIds: { path: string }[]
-  }
+interface IQueryIds {
+  pageQueryIds: Array<{ path: string }>
+}
 
-export function runPageGenerationJobs(queryIds: QueryIds): void {
+export function runPageGenerationJobs(queryIds: IQueryIds): void {
   const pageChunks = chunk(queryIds?.pageQueryIds, pageGenChunkSize)
 
-  pageChunks.forEach((items) => {
+  pageChunks.forEach(items => {
     const job = createInternalJob(
       {
         name: `GENERATE_PAGE`,
         args: {
-          paths: items?.map((item) => item?.path),
+          paths: items?.map(item => item?.path),
         },
         inputPaths: [],
         outputDir: __dirname,
