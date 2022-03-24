@@ -5,10 +5,12 @@ export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): unknown {
     storeUrl: Joi.string()
       .pattern(/^[a-z0-9-]+\.myshopify\.com$/)
       .message(
-        `The storeUrl value should be your store's myshopify.com URL in the form "my-site.myshopify.com", without https or slashes`
+        `The storeUrl value should be your store's myshopify.com URL in the form "my-unique-store-name.myshopify.com", without https or slashes`
       )
       .required()
-      .description(`Your Shopify store URL, e.g. some-shop.myshopify.com`),
+      .description(
+        `Your Shopify store URL, e.g. my-unique-store-name.myshopify.com`
+      ),
     password: Joi.string()
       .required()
       .description(

@@ -86,7 +86,7 @@ export async function processBulkResults(
         ...result,
         id: createNodeId(result.shopifyId, gatsbyApi, pluginOptions),
         internal: {
-          type: `${pluginOptions.typePrefix || ``}Shopify${type}`,
+          type: `${pluginOptions.typePrefix}Shopify${type}`,
           contentDigest: gatsbyApi.createContentDigest(result),
         },
       } as IShopifyNode

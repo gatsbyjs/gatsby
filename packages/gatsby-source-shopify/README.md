@@ -59,12 +59,6 @@ Install this plugin and its required peer dependency, `gatsby-plugin-image`, to 
 npm install gatsby-source-shopify gatsby-plugin-image
 ```
 
-or
-
-```shell
-yarn add gatsby-source-shopify gatsby-plugin-image
-```
-
 ### Configure
 
 Add the plugins to your `gatsby-config.js`:
@@ -109,20 +103,20 @@ If you are planning on managing your cart within Gatsby you will also need to ch
 
 Run your site with `gatsby develop`. When the site builds successfully, you should see output like this:
 
-```
+```shell
 You can now view test-site in the browser.
-⠀
+
   http://localhost:8000/
-⠀
+
 View GraphiQL, an in-browser IDE, to explore your site's data and schema
-⠀
+
   http://localhost:8000/___graphql
-⠀
+
 Note that the development build is not optimized.
 To create a production build, use gatsby build
 ```
 
-Now follow the second link to explore your Shopify data!
+Now follow the second link (`http://localhost:8000/___graphql`) to explore your Shopify data!
 
 ### Priority builds
 
@@ -150,7 +144,7 @@ The admin password for the Shopify store + app you're using
 
 `storeUrl: string`
 
-Your Shopify store URL, e.g. some-shop.myshopify.com
+Your Shopify store URL, e.g. my-unique-store-name.myshopify.com
 
 `shopifyConnections: string[]`
 
@@ -364,7 +358,7 @@ const RuntimeLineItemImage = ({ storefrontLineItem }) => {
 }
 ```
 
-Please refer to the [gatsby-plugin-image docs](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#dynamic-images) for more information on how to display images on your Gatsby site.
+Please refer to the [gatsby-plugin-image docs](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image#dynamic-images) for more information on how to display images on your Gatsby site.
 
 ## Limitations
 
