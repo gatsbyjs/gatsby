@@ -196,7 +196,7 @@ function prepareTextNode(id, node, key, text) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `TextNode`,
     },
   }
 
@@ -220,7 +220,7 @@ function prepareJSONNode(id, node, key, content) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `JsonNode`,
     },
   }
 

@@ -564,7 +564,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 11 cached entries",
+          "Contentful: 4 cached entries",
         ],
         Array [
           "Contentful: 1 new assets",
@@ -654,7 +654,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 14 cached entries",
+          "Contentful: 5 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -756,7 +756,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 1 deleted entries",
         ],
         Array [
-          "Contentful: 14 cached entries",
+          "Contentful: 5 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",
@@ -842,7 +842,7 @@ describe(`gatsby-node`, () => {
           "Contentful: 0 deleted entries",
         ],
         Array [
-          "Contentful: 14 cached entries",
+          "Contentful: 5 cached entries",
         ],
         Array [
           "Contentful: 0 new assets",

@@ -250,9 +250,58 @@ export async function sourceNodes(
     })
   })
 
+  const { deletedEntries, deletedAssets } = currentSyncData
+  const deletedEntryGatsbyReferenceIds = new Set()
+
+  function deleteContentfulNode(node) {
+    const normalizedType = node.sys.type.startsWith(`Deleted`)
+      ? node.sys.type.substring(`Deleted`.length)
+      : node.sys.type
+
+    const localizedNodes = locales
+      .map(locale => {
+        const nodeId = createNodeId(
+          makeId({
+            spaceId: space.sys.id,
+            id: node.sys.id,
+            type: normalizedType,
+            currentLocale: locale.code,
+            defaultLocale,
+          })
+        )
+        // Gather deleted node ids to remove them later on
+        deletedEntryGatsbyReferenceIds.add(nodeId)
+        return getNode(nodeId)
+      })
+      .filter(node => node)
+
+    localizedNodes.forEach(node => {
+      // touchNode first, to populate typeOwners & avoid erroring
+      touchNode(node)
+      deleteNode(node)
+    })
+  }
+
+  if (deletedEntries.length || deletedAssets.length) {
+    const deletionActivity = reporter.activityTimer(
+      `Contentful: Deleting nodes and assets`,
+      {
+        parentSpan,
+      }
+    )
+    deletionActivity.start()
+    deletedEntries.forEach(deleteContentfulNode)
+    deletedAssets.forEach(deleteContentfulNode)
+    deletionActivity.end()
+  }
+
   // Update existing entry nodes that weren't updated but that need reverse links added.
   existingNodes
-    .filter(n => !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
+    .filter(
+      n =>
+        n.sys.type === `Entry` &&
+        !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`)
+    )
     .forEach(n => {
       if (
         n.contentful_id &&
@@ -285,49 +334,26 @@ export async function sourceNodes(
           }
         )
       }
-    })
 
-  function deleteContentfulNode(node) {
-    const normalizedType = node.sys.type.startsWith(`Deleted`)
-      ? node.sys.type.substring(`Deleted`.length)
-      : node.sys.type
-
-    const localizedNodes = locales
-      .map(locale => {
-        const nodeId = createNodeId(
-          makeId({
-            spaceId: space.sys.id,
-            id: node.sys.id,
-            type: normalizedType,
-            currentLocale: locale.code,
-            defaultLocale,
-          })
-        )
-        return getNode(nodeId)
-      })
-      .filter(node => node)
-
-    localizedNodes.forEach(node => {
-      // touchNode first, to populate typeOwners & avoid erroring
-      touchNode(node)
-      deleteNode(node)
-    })
-  }
-
-  const { deletedEntries, deletedAssets } = currentSyncData
-
-  if (deletedEntries.length || deletedAssets.length) {
-    const deletionActivity = reporter.activityTimer(
-      `Contentful: Deleting nodes and assets`,
-      {
-        parentSpan,
+      // Remove references to deleted nodes
+      if (deletedEntryGatsbyReferenceIds.size) {
+        Object.keys(n).forEach(name => {
+          // @todo Detect reference fields based on schema. Should be easier to achieve in the upcoming version.
+          if (name.length - name.indexOf(`___NODE`) !== 7) {
+            return
+          }
+          if (Array.isArray(n[name])) {
+            n[name] = n[name].filter(
+              referenceId => !deletedEntryGatsbyReferenceIds.has(referenceId)
+            )
+          } else {
+            if (n[name] === deletedEntryGatsbyReferenceIds.has(n[name])) {
+              n[name] = null
+            }
+          }
+        })
       }
-    )
-    deletionActivity.start()
-    deletedEntries.forEach(deleteContentfulNode)
-    deletedAssets.forEach(deleteContentfulNode)
-    deletionActivity.end()
-  }
+    })
 
   const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {
     parentSpan,
