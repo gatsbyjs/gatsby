@@ -27,6 +27,8 @@ const restrictedNodeFields = [
   `parent`,
 ]
 
+const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
+
 /***
  * Localization algorithm
  *
@@ -395,9 +397,25 @@ export async function sourceNodes(
         delete nodeToUpdate.internal.owner
         delete nodeToUpdate.fields // plugin adds node field on asset nodes which don't have reverse links
 
-        // TODO: we need to recalculate `internal.contentDigest`
-        // for now just modyfing it to ensure gatsby picks up data change
-        nodeToUpdate.internal.contentDigest += `X`
+        // we add or modify counter postfix to contentDigest
+        // to make sure Gatsby treat this as data update
+        let counter
+        const [initialContentDigest, counterStr] =
+          nodeToUpdate.internal.contentDigest.split(
+            CONTENT_DIGEST_COUNTER_SEPARATOR
+          )
+
+        if (counterStr) {
+          counter = parseInt(counterStr, 10)
+        }
+
+        if (!counter || isNaN(counter)) {
+          counter = 1
+        } else {
+          counter++
+        }
+
+        nodeToUpdate.internal.contentDigest = `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`
         createNode(nodeToUpdate)
       }
     }
