@@ -215,7 +215,7 @@ Ignored if layout = FLUID.",
             },
           },
           "resolve": [Function],
-          "type": "JSON!",
+          "type": "JSON",
         },
         "height": Object {
           "type": "Int",

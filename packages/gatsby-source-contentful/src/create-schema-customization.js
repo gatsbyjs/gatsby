@@ -326,6 +326,33 @@ export async function createSchemaCustomization(
   )
 
   // Assets
+  const gatsbyImageData = getGatsbyImageFieldConfig(
+    async (...args) => resolveGatsbyImageData(...args, { cache }),
+    {
+      jpegProgressive: {
+        type: `Boolean`,
+        defaultValue: true,
+      },
+      resizingBehavior: {
+        type: ImageResizingBehavior,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+      },
+      cornerRadius: {
+        type: `Int`,
+        defaultValue: 0,
+        description: stripIndent`
+                 Desired corner radius in pixels. Results in an image with rounded corners.
+                 Pass \`-1\` for a full circle/ellipse.`,
+      },
+      quality: {
+        type: `Int`,
+        defaultValue: 50,
+      },
+    }
+  )
+  gatsbyImageData.type = `JSON`
   createTypes(
     addRemoteFilePolyfillInterface(
       schema.buildObjectType({
@@ -334,32 +361,7 @@ export async function createSchemaCustomization(
           id: { type: `ID!` },
           sys: { type: `ContentfulSys!` },
           metadata: { type: `ContentfulMetadata!` },
-          gatsbyImageData: getGatsbyImageFieldConfig(
-            async (...args) => resolveGatsbyImageData(...args, { cache }),
-            {
-              jpegProgressive: {
-                type: `Boolean`,
-                defaultValue: true,
-              },
-              resizingBehavior: {
-                type: ImageResizingBehavior,
-              },
-              cropFocus: {
-                type: ImageCropFocusType,
-              },
-              cornerRadius: {
-                type: `Int`,
-                defaultValue: 0,
-                description: stripIndent`
-                 Desired corner radius in pixels. Results in an image with rounded corners.
-                 Pass \`-1\` for a full circle/ellipse.`,
-              },
-              quality: {
-                type: `Int`,
-                defaultValue: 50,
-              },
-            }
-          ),
+          gatsbyImageData,
           ...(pluginConfig.get(`downloadLocal`)
             ? {
                 localFile: {
