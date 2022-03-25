@@ -429,7 +429,10 @@ module.exports = async function build(
     }
   }
 
-  await flushPendingPageDataWrites(buildSpan)
+  if (!pageGenerationJobsEnabled) {
+    await flushPendingPageDataWrites(buildSpan)
+  }
+
   markWebpackStatusAsDone()
 
   if (telemetry.isTrackingEnabled()) {
