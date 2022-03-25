@@ -431,9 +431,9 @@ module.exports = async function build(
 
   if (!pageGenerationJobsEnabled) {
     await flushPendingPageDataWrites(buildSpan)
-  }
 
-  markWebpackStatusAsDone()
+    markWebpackStatusAsDone()
+  }
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
@@ -523,10 +523,12 @@ module.exports = async function build(
   // This could occur due to queries being run which invoke sharp for instance
   await waitUntilAllJobsComplete()
 
-  try {
-    await waitWorkerPoolEnd
-  } catch (e) {
-    report.warn(`Error when closing WorkerPool: ${e.message}`)
+  if (!pageGenerationJobsEnabled) {
+    try {
+      await waitWorkerPoolEnd
+    } catch (e) {
+      report.warn(`Error when closing WorkerPool: ${e.message}`)
+    }
   }
 
   // Make sure we saved the latest state so we have all jobs cached
