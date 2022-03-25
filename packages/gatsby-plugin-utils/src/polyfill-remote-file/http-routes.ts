@@ -2,6 +2,7 @@ import path from "path"
 import fs from "fs-extra"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { hasFeature } from "../has-feature"
+import { ImageCDNUrlKeys } from "./utils/url-generator"
 import { getFileExtensionFromMimeType } from "./utils/mime-type-helpers"
 import { transformImage } from "./transform-images"
 
@@ -17,8 +18,6 @@ export function polyfillImageServiceDevRoutes(app: Application): void {
 
 export function addImageRoutes(app: Application): Application {
   app.get(`/_gatsby/file/:url/:filename`, async (req, res) => {
-    // remove the file extension
-    const url = req.params.url
     const outputDir = path.join(
       global.__GATSBY?.root || process.cwd(),
       `public`,
@@ -28,7 +27,7 @@ export function addImageRoutes(app: Application): Application {
 
     const filePath = await fetchRemoteFile({
       directory: outputDir,
-      url: url,
+      url: req.query[ImageCDNUrlKeys.URL] as string,
       name: req.params.filename,
     })
     fs.createReadStream(filePath).pipe(res)
@@ -36,9 +35,11 @@ export function addImageRoutes(app: Application): Application {
 
   app.get(`/_gatsby/image/:url/:params/:filename`, async (req, res) => {
     const { url, params, filename } = req.params
-    const remoteUrl = decodeURIComponent(req.query.u as string)
+    const remoteUrl = decodeURIComponent(
+      req.query[ImageCDNUrlKeys.URL] as string
+    )
     const searchParams = new URLSearchParams(
-      decodeURIComponent(req.query.a as string)
+      decodeURIComponent(req.query[ImageCDNUrlKeys.ARGS] as string)
     )
 
     const resizeParams: {
