@@ -10,15 +10,18 @@ interface IQueryIds {
   pageQueryIds: Array<{ path: string }>
 }
 
-export function runPageGenerationJobs(queryIds: IQueryIds): void {
+export async function runPageGenerationJobs(
+  queryIds: IQueryIds,
+  wait?: () => Promise<void>
+): Promise<void> {
   const pageChunks = chunk(queryIds?.pageQueryIds, pageGenChunkSize)
 
-  pageChunks.forEach(items => {
+  for (const pageChunk of pageChunks) {
     const job = createInternalJob(
       {
         name: `GENERATE_PAGE`,
         args: {
-          paths: items?.map(item => item?.path),
+          paths: pageChunk?.map(item => item?.path),
         },
         inputPaths: [],
         outputDir: __dirname,
@@ -36,5 +39,9 @@ export function runPageGenerationJobs(queryIds: IQueryIds): void {
     )
 
     createJobV2FromInternalJob(job)(store.dispatch, store.getState)
-  })
+
+    if (wait) {
+      await wait()
+    }
+  }
 }
