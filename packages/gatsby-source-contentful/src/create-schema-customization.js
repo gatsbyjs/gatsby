@@ -527,6 +527,13 @@ export async function createSchemaCustomization(
         if (field.disabled || field.omitted) {
           return
         }
+        if ([`id`, `sys`, `contentfulMetadata`].includes(field.id)) {
+          // Throw error on reserved field names as the Contenful GraphQL API does:
+          // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/fields
+          throw new Error(
+            `Unfortunately the field name ${field.id} is reserved. ${contentTypeItem.name}@${contentTypeItem.sys.id}`
+          )
+        }
         fields[field.id] = translateFieldType(field, schema, createTypes)
       })
 
