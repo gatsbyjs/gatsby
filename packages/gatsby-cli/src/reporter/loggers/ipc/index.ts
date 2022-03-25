@@ -36,9 +36,9 @@ export const initializeIPCLogger = (): void => {
 
     // we mutate sanitizedAction but this is already deep copy of action so we should be good
     if (sanitizedAction.type === Actions.Log) {
-      // Don't emit Debug over IPC
+      // Don't emit Debug or Metric over IPC
       if (
-        [LogLevels.Debug].includes(sanitizedAction.payload.level as LogLevels)
+        [LogLevels.Debug, LogLevels.Metric].includes(sanitizedAction.payload.level as LogLevels)
       ) {
         return
       }

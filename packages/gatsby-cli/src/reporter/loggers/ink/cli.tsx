@@ -86,7 +86,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
       })
     }
 
-    const parseMessage = (message): React.ReactElement | undefined => {
+    const parseMessage = (message): (React.ReactElement | undefined) => {
       if (message.level === `METRIC`) {
         // Metric logs don't need to be shown in the console
         return

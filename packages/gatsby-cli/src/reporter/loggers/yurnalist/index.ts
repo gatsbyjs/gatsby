@@ -148,7 +148,10 @@ export function initializeYurnalistLogger(): void {
     switch (action.type) {
       case Actions.Log: {
         const yurnalistMethod = levelToYurnalist[action.payload.level]
-        if (!yurnalistMethod) {
+        if (action.payload.level === LogLevels.Metric) {
+          // don't log out metrics
+          break
+        } else if (!yurnalistMethod) {
           process.stdout.write(`NO "${action.payload.level}" method\n`)
         } else {
           let message = action.payload.text
