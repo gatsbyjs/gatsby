@@ -25,7 +25,7 @@ describe(`gatsby-worker`, () => {
   afterAll(() => server.close())
 
   describe(`IMAGE_CDN`, () => {
-    it(`should download and transform an image`, async () => {
+    it.skip(`should download and transform an image`, async () => {
       const outputDir = path.join(__dirname, `.cache`)
       await IMAGE_CDN({
         outputDir,
