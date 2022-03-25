@@ -56,7 +56,7 @@ export interface ILog {
   timestamp: string
   stack: IStructuredError["stack"] | undefined
   pluginName: string | undefined
-  meta: {[k: string]: any} | undefined
+  meta: { [k: string]: any } | undefined
 }
 
 export interface ICreateLog {

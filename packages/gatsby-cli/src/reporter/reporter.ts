@@ -206,7 +206,7 @@ class Reporter {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   }
 
-  verbose = (text: string, meta?: {[k: string]: any}): void => {
+  verbose = (text: string, meta?: { [k: string]: any }): void => {
     if (isVerbose) {
       reporterActions.createLog({
         level: LogLevels.Debug,
@@ -216,15 +216,15 @@ class Reporter {
     }
   }
 
-  success = (text?: string, meta?: {[k: string]: any}): CreateLogAction =>
+  success = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Success, text, meta })
-  info = (text?: string, meta?: {[k: string]: any}): CreateLogAction =>
+  info = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Info, text, meta })
-  warn = (text?: string, meta?: {[k: string]: any}): CreateLogAction =>
+  warn = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Warning, text, meta })
-  log = (text?: string, meta?: {[k: string]: any}): CreateLogAction =>
+  log = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Log, text, meta })
-  metric = (text?: string, meta?: {[k: string]: any}): CreateLogAction =>
+  metric = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Metric, text, meta })
 
   // TODO add metadata for Activities as well
