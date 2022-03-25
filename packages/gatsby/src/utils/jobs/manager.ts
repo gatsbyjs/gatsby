@@ -108,8 +108,6 @@ function listenForJobMessages(): void {
     if (isJobsIPCMessage(msg)) {
       const { job, deferred } = externalJobsMap.get(msg.payload.id)!
 
-      console.log(`[DEBUG] - Job`, job)
-
       switch (msg.type) {
         case MESSAGE_TYPES.JOB_COMPLETED: {
           deferred.resolve(msg.payload.result)
