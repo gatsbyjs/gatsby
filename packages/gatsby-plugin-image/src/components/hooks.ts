@@ -1,28 +1,16 @@
-/* eslint-disable no-unused-expressions */
-import {
-  useState,
-  CSSProperties,
-  useEffect,
-  HTMLAttributes,
-  ImgHTMLAttributes,
-  ReactEventHandler,
-  SetStateAction,
-  Dispatch,
-  RefObject,
-} from "react"
-import { Node } from "gatsby"
-import { PlaceholderProps } from "./placeholder"
-import { MainImageProps } from "./main-image"
+/* global GATSBY___IMAGE */
+import { generateImageData, EVERY_BREAKPOINT } from "../image-utils"
+import type { CSSProperties, HTMLAttributes, ImgHTMLAttributes } from "react"
+import type { Node } from "gatsby"
+import type { PlaceholderProps } from "./placeholder"
+import type { MainImageProps } from "./main-image"
 import type { IGatsbyImageData } from "./gatsby-image.browser"
-import {
+import type {
   IGatsbyImageHelperArgs,
-  generateImageData,
   Layout,
-  EVERY_BREAKPOINT,
   IImage,
   ImageFormat,
 } from "../image-utils"
-const imageCache = new Set<string>()
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
 export const hasNativeLazyLoadSupport = (): boolean =>
@@ -33,15 +21,6 @@ export function gatsbyImageIsInstalled(): boolean {
   return typeof GATSBY___IMAGE !== `undefined` && GATSBY___IMAGE
 }
 
-export function storeImageloaded(cacheKey?: string): void {
-  if (cacheKey) {
-    imageCache.add(cacheKey)
-  }
-}
-
-export function hasImageLoaded(cacheKey: string): boolean {
-  return imageCache.has(cacheKey)
-}
 export type IGatsbyImageDataParent<T = never> = T & {
   gatsbyImageData: IGatsbyImageData
 }
@@ -111,18 +90,6 @@ export function getWrapperProps(
     "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
-}
-
-export async function applyPolyfill(
-  ref: RefObject<HTMLImageElement>
-): Promise<void> {
-  if (!(`objectFitPolyfill` in window)) {
-    await import(
-      // @ts-ignore typescript can't find the module for some reason ¯\_(ツ)_/¯
-      /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
-    )
-  }
-  ;(window as any).objectFitPolyfill(ref.current)
 }
 
 export interface IUrlBuilderArgs<OptionsType> {
@@ -234,43 +201,14 @@ export function getMainProps(
   isLoaded: boolean,
   images: IGatsbyImageData["images"],
   loading?: "eager" | "lazy",
-  toggleLoaded?: (loaded: boolean) => void,
-  cacheKey?: string,
-  ref?: RefObject<HTMLImageElement>,
   style: CSSProperties = {}
 ): Partial<MainImageProps> {
-  const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
-    if (isLoaded) {
-      return
-    }
-
-    storeImageloaded(cacheKey)
-
-    const target = e.currentTarget
-    const img = new Image()
-    img.src = target.currentSrc
-
-    if (img.decode) {
-      // Decode the image through javascript to support our transition
-      img
-        .decode()
-        .catch(() => {
-          // ignore error, we just go forward
-        })
-        .then(() => {
-          toggleLoaded(true)
-        })
-    } else {
-      toggleLoaded(true)
-    }
-  }
-
-  // Polyfill "object-fit" if unsupported (mostly IE)
-  if (ref?.current && !(`objectFit` in document.documentElement.style)) {
-    ref.current.dataset.objectFit = style.objectFit ?? `cover`
-    ref.current.dataset.objectPosition = `${style.objectPosition ?? `50% 50%`}`
-    applyPolyfill(ref)
-  }
+  // // Polyfill "object-fit" if unsupported (mostly IE)
+  // if (ref?.current && !(`objectFit` in document.documentElement.style)) {
+  //   ref.current.dataset.objectFit = style.objectFit ?? `cover`
+  //   ref.current.dataset.objectPosition = `${style.objectPosition ?? `50% 50%`}`
+  //   applyPolyfill(ref)
+  // }
 
   // fallback when it's not configured in gatsby-config.
   if (!gatsbyImageIsInstalled()) {
@@ -296,8 +234,6 @@ export function getMainProps(
       ...style,
       opacity: isLoaded ? 1 : 0,
     },
-    onLoad,
-    ref,
   }
 
   return result
@@ -373,58 +309,6 @@ export function getPlaceholderProps(
   }
 
   return result
-}
-
-export function useImageLoaded(
-  cacheKey: string,
-  loading: "lazy" | "eager",
-  ref: any
-): {
-  isLoaded: boolean
-  isLoading: boolean
-  toggleLoaded: Dispatch<SetStateAction<boolean>>
-} {
-  const [isLoaded, toggleLoaded] = useState(false)
-  const [isLoading, toggleIsLoading] = useState(loading === `eager`)
-
-  const rAF =
-    typeof window !== `undefined` && `requestAnimationFrame` in window
-      ? requestAnimationFrame
-      : function (cb: TimerHandler): number {
-          return setTimeout(cb, 16)
-        }
-  const cRAF =
-    typeof window !== `undefined` && `cancelAnimationFrame` in window
-      ? cancelAnimationFrame
-      : clearTimeout
-
-  useEffect(() => {
-    let interval: number
-    // @see https://stackoverflow.com/questions/44074747/componentdidmount-called-before-ref-callback/50019873#50019873
-    function toggleIfRefExists(): void {
-      if (ref.current) {
-        if (loading === `eager` && ref.current.complete) {
-          storeImageloaded(cacheKey)
-          toggleLoaded(true)
-        } else {
-          toggleIsLoading(true)
-        }
-      } else {
-        interval = rAF(toggleIfRefExists)
-      }
-    }
-    toggleIfRefExists()
-
-    return (): void => {
-      cRAF(interval)
-    }
-  }, [])
-
-  return {
-    isLoading,
-    isLoaded,
-    toggleLoaded,
-  }
 }
 
 export interface IArtDirectedImage {

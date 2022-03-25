@@ -6,9 +6,9 @@
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",
     "build:gatsby-ssr": "microbundle -i src/gatsby-ssr.tsx -f cjs -o ./[name].js --no-pkg-main --jsx React.createElement --no-compress --external=common-tags,react --no-sourcemap",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --define SERVER=true",
-    "build:browser": "microbundle -i src/index.browser.ts -f cjs,modern,es --jsx React.createElement -o dist/gatsby-image.browser --define SERVER=false",
-    "prepare": "yarn build",
-    "watch": "run-p watch:*",
+    "build:browser": "microbundle -i src/index.browser.ts -f cjs,modern --jsx React.createElement -o dist/gatsby-image.browser --define SERVER=false",
+    "prepare": "build",
+    "watch": "npm-run-all -s clean -p watch:*",
     "watch:gatsby-node": "yarn build:gatsby-node --watch",
     "watch:gatsby-ssr": "yarn build:gatsby-ssr watch",
     "watch:server": "yarn build:server --no-compress watch",
@@ -27,7 +27,6 @@
   "esmodule": "dist/gatsby-image.modern.js",
   "browser": {
     "./dist/gatsby-image.js": "./dist/gatsby-image.browser.js",
-    "./dist/gatsby-image.module.js": "./dist/gatsby-image.browser.module.js",
     "./dist/gatsby-image.modern.js": "./dist/gatsby-image.browser.modern.js"
   },
   "files": [
