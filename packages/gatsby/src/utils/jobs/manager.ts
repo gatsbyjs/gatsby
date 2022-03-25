@@ -108,7 +108,6 @@ function listenForJobMessages(): void {
     if (isJobsIPCMessage(msg)) {
       const { job, deferred } = externalJobsMap.get(msg.payload.id)!
 
-      console.log(`[DEBUG] - MSG`, msg)
       console.log(`[DEBUG] - Job`, job)
 
       switch (msg.type) {
@@ -128,7 +127,9 @@ function listenForJobMessages(): void {
 
       externalJobsMap.delete(msg.payload.id)
       console.log(
-        `[DEBUG] - External Jobs Remaining: ${[...externalJobsMap.keys()]}`
+        `[DEBUG] - External Jobs Remaining: ${
+          [...externalJobsMap.keys()]?.length
+        }`
       )
     }
   })
