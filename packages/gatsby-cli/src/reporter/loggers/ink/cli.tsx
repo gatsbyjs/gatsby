@@ -86,23 +86,32 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
       })
     }
 
+    const parseMessage = (message): React.ReactElement | undefined => {
+      if (message.level === `METRIC`) {
+        // Metric logs don't need to be shown in the console
+        return
+      } else if (message.level === `ERROR`) {
+        return (
+          <ErrorComponent
+            details={message as IStructuredError}
+            key={messages.indexOf(message)}
+          />
+        )
+      }
+
+      return (
+        <Message
+          key={messages.indexOf(message)}
+          {...(message as IMessageProps)}
+        />
+      ) 
+    }
+
     return (
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static items={messages}>
-            {(message): React.ReactElement =>
-              message.level === `ERROR` ? (
-                <ErrorComponent
-                  details={message as IStructuredError}
-                  key={messages.indexOf(message)}
-                />
-              ) : (
-                <Message
-                  key={messages.indexOf(message)}
-                  {...(message as IMessageProps)}
-                />
-              )
-            }
+            {parseMessage}
           </Static>
           {showPageTree && <PageTree />}
 
