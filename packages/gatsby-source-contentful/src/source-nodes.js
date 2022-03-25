@@ -373,8 +373,10 @@ export async function sourceNodes(
       function addChildrenToList(node, nodeList = [node]) {
         for (const childNodeId of node?.children ?? []) {
           const childNode = getNode(childNodeId)
-          if (childNode) {
-            // important
+          if (
+            childNode &&
+            childNode.internal.owner === `gatsby-source-contentful`
+          ) {
             nodeList.push(childNode)
             addChildrenToList(childNode)
           }
@@ -383,14 +385,19 @@ export async function sourceNodes(
       }
 
       const nodeAndDescendants = addChildrenToList(node)
-      for (const nodeToUpdate of nodeAndDescendants) {
+      for (const nodeToUpdateOriginal of nodeAndDescendants) {
+        // we should not mutate original node as Gatsby will still
+        // compare against what's in in-memory weak cache, so we
+        // clone original node to ensure reference identity is not possible
+        const nodeToUpdate = _.cloneDeep(nodeToUpdateOriginal)
         // we need to remove properties from existing fields
         // that are reserved and managed by Gatsby.
         delete nodeToUpdate.internal.owner
+        delete nodeToUpdate.fields // plugin adds node field on asset nodes which don't have reverse links
 
         // TODO: we need to recalculate `internal.contentDigest`
         // for now just modyfing it to ensure gatsby picks up data change
-        node.internal.contentDigest += `X`
+        nodeToUpdate.internal.contentDigest += `X`
         createNode(nodeToUpdate)
       }
     }
