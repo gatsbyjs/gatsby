@@ -7,7 +7,7 @@
     "build:gatsby-ssr": "microbundle -i src/gatsby-ssr.tsx -f cjs -o ./[name].js --no-pkg-main --jsx React.createElement --no-compress --external=common-tags,react --no-sourcemap",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --define SERVER=true",
     "build:browser": "microbundle -i src/index.browser.ts -f cjs,modern --jsx React.createElement -o dist/gatsby-image.browser --define SERVER=false",
-    "prepare": "build",
+    "prepare": "yarn build",
     "watch": "npm-run-all -s clean -p watch:*",
     "watch:gatsby-node": "yarn build:gatsby-node --watch",
     "watch:gatsby-ssr": "yarn build:gatsby-ssr watch",
