@@ -388,16 +388,22 @@ export async function sourceNodes(
 
       const nodeAndDescendants = addChildrenToList(node)
       for (const nodeToUpdateOriginal of nodeAndDescendants) {
-        // we should not mutate original node as Gatsby will still
+        // We should not mutate original node as Gatsby will still
         // compare against what's in in-memory weak cache, so we
         // clone original node to ensure reference identity is not possible
         const nodeToUpdate = _.cloneDeep(nodeToUpdateOriginal)
-        // we need to remove properties from existing fields
-        // that are reserved and managed by Gatsby.
+        // We need to remove properties from existing fields
+        // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
+        // Gatsby automatically will set `.owner` it back
         delete nodeToUpdate.internal.owner
+        // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
+        // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
+        // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
+        // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
+        // we would also need to restore that field ourselves after re-creating a node)
         delete nodeToUpdate.fields // plugin adds node field on asset nodes which don't have reverse links
 
-        // we add or modify counter postfix to contentDigest
+        // We add or modify counter postfix to contentDigest
         // to make sure Gatsby treat this as data update
         let counter
         const [initialContentDigest, counterStr] =
