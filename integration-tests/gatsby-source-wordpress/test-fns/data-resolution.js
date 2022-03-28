@@ -565,7 +565,7 @@ describe(`data resolution`, () => {
       const { resize, mediaItemUrl } = node.featuredImage.node
       const parsedUrl = new URL(resize.src, "https://www.gatsbyjs.com")
 
-      const sourceUrl = parsedUrl.searchParams.get("url")
+      const sourceUrl = parsedUrl.searchParams.get("u")
 
       expect(mediaItemUrl).toEqual(sourceUrl)
       expect(parsedUrl.pathname).toEndWith(node.featuredImage.node.filename)
