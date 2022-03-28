@@ -168,7 +168,7 @@ export async function gatsbyImageResolver(
         dispatchLocalImageServiceJob(
           {
             url: source.url,
-            mimeType: source.url,
+            mimeType: source.mimeType,
             filename: source.filename,
             contentDigest: source.internal.contentDigest,
           },

@@ -5,6 +5,7 @@
 const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { URL } = require("url")
 
 const gatsbyConfig = require("../gatsby-config")
 
@@ -541,6 +542,7 @@ describe(`data resolution`, () => {
             nodes {
               featuredImage {
                 node {
+                  filename
                   mediaItemUrl
                   resize(width: 100, height: 100, quality: 100) {
                     width
@@ -560,13 +562,13 @@ describe(`data resolution`, () => {
         return
       }
 
-      const { resize } = node.featuredImage.node
-      const [, , , sourceUrl64, _args64, filename] = resize.src.split(`/`)
+      const { resize, mediaItemUrl } = node.featuredImage.node
+      const parsedUrl = new URL(resize.src, "https://www.gatsbyjs.com")
 
-      const sourceUrl = Buffer.from(sourceUrl64, `base64`).toString(`ascii`)
+      const sourceUrl = parsedUrl.searchParams.get("url")
 
-      expect(node.featuredImage.node.mediaItemUrl).toEqual(sourceUrl)
-      expect(node.featuredImage.node.mediaItemUrl).toContain(filename)
+      expect(mediaItemUrl).toEqual(sourceUrl)
+      expect(parsedUrl.pathname).toEndWith(node.featuredImage.node.filename)
     })
   })
 })

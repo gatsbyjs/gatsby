@@ -27,6 +27,8 @@ export function dispatchLocalFileServiceJob(
   }).split(`/`)
 
   publicUrl.unshift(`public`)
+  // get filename and remove querystring
+  const outputFilename = publicUrl.pop()?.split(`?`)[0]
 
   actions.createJobV2(
     {
@@ -39,7 +41,7 @@ export function dispatchLocalFileServiceJob(
       ),
       args: {
         url,
-        filename,
+        filename: outputFilename,
         contentDigest,
       },
     },
