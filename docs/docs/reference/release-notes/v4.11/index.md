@@ -23,11 +23,13 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## `gatsby-source-shopify` v7
 
-TODO
-
 ## Notable bugfixes & improvements
 
-TODO
+- `gatsby`
+  - Fix compatibility issues with `react@18.0.0-rc.2`, via [PR #35108](https://github.com/gatsbyjs/gatsby/pull/35108)
+  - Fix eperm issue on windows when clearing cache, via [PR #35154](https://github.com/gatsbyjs/gatsby/pull/35154)
+- `gatsby-plugin-utils`
+  - Support aspect ratio for Image Service, via [PR #35087](https://github.com/gatsbyjs/gatsby/pull/35087)
 
 ## Contributors
 
