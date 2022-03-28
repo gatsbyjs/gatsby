@@ -148,6 +148,12 @@ module.exports = ({
     )
   }
 
+  if (parentNodeId === null) {
+    console.warn(
+      `It seems that you forgot to pass in 'parentNodeId' for a file you try to create with 'createFileNodeFromBuffer'. Not doing this is causing problems as a) when the server is restarted, if the parent of the created file node is loaded from the cache, the linked file node won't be recreated which means it will be garbage collected and b) if a parent node is deleted, the linked file node won't also be deleted.`
+    )
+  }
+
   if (!buffer) {
     return Promise.reject(`bad buffer: ${buffer}`)
   }
