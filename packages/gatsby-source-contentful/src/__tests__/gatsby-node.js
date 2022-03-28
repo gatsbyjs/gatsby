@@ -1176,7 +1176,7 @@ describe(`gatsby-node`, () => {
     )
   })
 
-  it(`panics when contentTypeFilter reduces content type list to 0`, async () => {
+  it(`panics when contentTypeFilter reduces content type list to none`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
 
