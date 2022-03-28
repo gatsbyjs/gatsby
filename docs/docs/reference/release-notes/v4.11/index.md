@@ -56,8 +56,11 @@ The Gatsby schema for the plugin matches the Shopify Admin API schema ~95%. This
 - `gatsby`
   - Fix compatibility issues with `react@18.0.0-rc.2`, via [PR #35108](https://github.com/gatsbyjs/gatsby/pull/35108)
   - Fix eperm issue on windows when clearing cache, via [PR #35154](https://github.com/gatsbyjs/gatsby/pull/35154)
-- `gatsby-plugin-utils`
-  - Support aspect ratio for Image Service, via [PR #35087](https://github.com/gatsbyjs/gatsby/pull/35087)
+  - Improve functions compilation error, via [PR #35196](https://github.com/gatsbyjs/gatsby/pull/35196)
+- `gatsby-plugin-utils`: Support aspect ratio for Image Service, via [PR #35087](https://github.com/gatsbyjs/gatsby/pull/35087)
+- `gatsby-source-mogodb`: Add optional `typePrefix` option to override dbName, via [PR #35087](https://github.com/gatsbyjs/gatsby/pull/35087)
+- `gatsby-cli`: Resolve babel preset ts explicitly, via [PR #35153](https://github.com/gatsbyjs/gatsby/pull/35153)
+- `gatsby-plugin-preact`: Fix preact alias via [PR #35196](https://github.com/gatsbyjs/gatsby/pull/35156)
 
 ## Contributors
 
