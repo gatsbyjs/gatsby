@@ -25,7 +25,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 Enjoy better Gatsby and Shopify intergration! In `gatsby-source-shopify` v7, we did a rewrite on major areas of the plugin while addressing issues on [product media](https://github.com/gatsbyjs/gatsby/discussions/32832), [presentmentPrices](https://github.com/gatsbyjs/gatsby/discussions/32090) among others. We also added support for `ProductCollectionSortKeys` and `ProductImageSortKeys`.
 
-Here's a list notable improvements in this release:
+Here's a list of notable improvements in this release:
 
 #### Product Media
 
