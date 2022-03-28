@@ -740,23 +740,21 @@ describe(`gatsby-node`, () => {
     // initial sync
     await simulateGatsbyBuild()
 
-    {
-      for (const author of getNodes().filter(
-        n => n.internal.type === `ContentfulPerson`
-      )) {
-        expect(author[`blog post___NODE`].length).toEqual(3)
-        expect(author[`blog post___NODE`]).toEqual(
-          expect.not.arrayContaining([
-            makeId({
-              spaceId: removedBlogEntry.sys.space.sys.id,
-              currentLocale: author.node_locale,
-              defaultLocale: locales[0],
-              id: removedBlogEntry.sys.id,
-              type: normalizedType,
-            }),
-          ])
-        )
-      }
+    for (const author of getNodes().filter(
+      n => n.internal.type === `ContentfulPerson`
+    )) {
+      expect(author[`blog post___NODE`].length).toEqual(3)
+      expect(author[`blog post___NODE`]).toEqual(
+        expect.not.arrayContaining([
+          makeId({
+            spaceId: removedBlogEntry.sys.space.sys.id,
+            currentLocale: author.node_locale,
+            defaultLocale: locales[0],
+            id: removedBlogEntry.sys.id,
+            type: normalizedType,
+          }),
+        ])
+      )
     }
 
     // create blog post
@@ -770,23 +768,21 @@ describe(`gatsby-node`, () => {
       expect(blogEntry).not.toBeUndefined()
     })
 
-    {
-      for (const author of getNodes().filter(
-        n => n.internal.type === `ContentfulPerson`
-      )) {
-        expect(author[`blog post___NODE`].length).toEqual(4)
-        expect(author[`blog post___NODE`]).toEqual(
-          expect.arrayContaining([
-            makeId({
-              spaceId: removedBlogEntry.sys.space.sys.id,
-              currentLocale: author.node_locale,
-              defaultLocale: locales[0],
-              id: removedBlogEntry.sys.id,
-              type: normalizedType,
-            }),
-          ])
-        )
-      }
+    for (const author of getNodes().filter(
+      n => n.internal.type === `ContentfulPerson`
+    )) {
+      expect(author[`blog post___NODE`].length).toEqual(4)
+      expect(author[`blog post___NODE`]).toEqual(
+        expect.arrayContaining([
+          makeId({
+            spaceId: removedBlogEntry.sys.space.sys.id,
+            currentLocale: author.node_locale,
+            defaultLocale: locales[0],
+            id: removedBlogEntry.sys.id,
+            type: normalizedType,
+          }),
+        ])
+      )
     }
 
     // remove blog post
@@ -811,23 +807,21 @@ describe(`gatsby-node`, () => {
       )
     )
 
-    {
-      for (const author of getNodes().filter(
-        n => n.internal.type === `ContentfulPerson`
-      )) {
-        expect(author[`blog post___NODE`].length).toEqual(3)
-        expect(author[`blog post___NODE`]).toEqual(
-          expect.not.arrayContaining([
-            makeId({
-              spaceId: removedBlogEntry.sys.space.sys.id,
-              currentLocale: author.node_locale,
-              defaultLocale: locales[0],
-              id: removedBlogEntry.sys.id,
-              type: normalizedType,
-            }),
-          ])
-        )
-      }
+    for (const author of getNodes().filter(
+      n => n.internal.type === `ContentfulPerson`
+    )) {
+      expect(author[`blog post___NODE`].length).toEqual(3)
+      expect(author[`blog post___NODE`]).toEqual(
+        expect.not.arrayContaining([
+          makeId({
+            spaceId: removedBlogEntry.sys.space.sys.id,
+            currentLocale: author.node_locale,
+            defaultLocale: locales[0],
+            id: removedBlogEntry.sys.id,
+            type: normalizedType,
+          }),
+        ])
+      )
     }
 
     // check if references are gone
@@ -868,7 +862,7 @@ describe(`gatsby-node`, () => {
         ],
       ]
     `)
-  }, 9999999)
+  })
 
   it(`should remove an asset`, async () => {
     const locales = [`en-US`, `nl`]
