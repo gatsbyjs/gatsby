@@ -23,6 +23,34 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## `gatsby-source-shopify` v7
 
+Enjoy better Gatsby and Shopify intergration! In `gatsby-source-shopify` v7, we did a rewrite on major areas of the plugin while addressing issues on [product media](https://github.com/gatsbyjs/gatsby/discussions/32832), [presentmentPrices](https://github.com/gatsbyjs/gatsby/discussions/32090) among others. We also added support for `ProductCollectionSortKeys` and `ProductImageSortKeys`.
+
+Here's a list notable improvements in this release:
+
+#### Product Media
+
+Previously, you could only get product images through the `product.images` field. This made it impossible to get product videos or 3D Models. In v7, you can now access product videos or 3D models via `product.media`
+
+#### Correct Reference Order
+
+Previously, because of the way that we were referencing child fields, we were unable to guarantee the correct order of children (variants, images, etc). We now fetch the order from Shopify to gurantee corretness.
+
+#### Single Metafield type
+
+To keep in line with the shopify Admin API Schema, we switched to having a single Metafield type as opposed to multiple "{parent}Metafield" types.
+
+#### Added presentmentPrices
+
+Previously, because of the way that we were parsing the results return by the Shopify Bulk API we were unable to fetch presentment prices. With the new method of parsing results we were able to, so that field is now available on product variants.
+
+#### Explicit TypeDefs
+
+We decided to add the complete schema to this plugin and disable schema inference, which allows us to account for the possibility that there are no products in Shopify or that a field is null without breaking every page on the site due to schema inference.
+
+#### Match API Schema
+
+The Gatsby schema for the plugin matches the Shopify Admin API schema ~95%. This allows us to refer to the Shopify documentation for the majority of fields rather than having to create separate documentation to consume the same data.
+
 ## Notable bugfixes & improvements
 
 - `gatsby`
