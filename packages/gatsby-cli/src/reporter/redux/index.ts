@@ -82,6 +82,7 @@ export const setStore = (s: GatsbyCLIStore): void => {
     type: Actions.SetLogs,
     payload: store.getState().logs,
   } as ISetLogs)
+  console.log({ x: store.getState() })
   store = s
   storeSwapListeners.forEach(fn => fn(store))
 }

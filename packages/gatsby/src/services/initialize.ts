@@ -112,6 +112,8 @@ export async function initialize({
       function logPendingJobs(): string {
         const outputs: Array<InternalJob> = []
 
+        console.log(`jobsV2`, store.getState().jobsV2)
+
         for (const [, { job }] of store.getState().jobsV2.incomplete) {
           outputs.push(job)
           if (outputs.length >= 5) {

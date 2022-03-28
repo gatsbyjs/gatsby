@@ -6,7 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "async-sema": "^3.1.0",
-    "gatsby": "^4.11.0-next.3",
+    "gatsby": "4.11.0-next.3-dev-1648022748600",
     "gatsby-plugin-image": "^2.10.0",
     "gatsby-plugin-sharp": "^4.11.0-next.3",
     "gatsby-source-filesystem": "^4.11.0-next.2",
@@ -19,6 +19,7 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "gatsby-plugin-benchmark-reporting": "*"
   },
   "keywords": [
@@ -28,6 +29,7 @@
   "scripts": {
     "bench": "set -x; gatsby clean; NUM_PAGES=${NUM_PAGES:-2000} gatsby build",
     "clean": "gatsby clean",
+    "debug": "cross-env GATSBY_WATCHDOG_STUCK_STATUS_TIMEOUT=2500 DEBUG=gatsby:gatsby-plugin-sharp NUM_IMAGES=3 npm run build",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",

@@ -76,7 +76,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
   const stuckStatusWatchdogTimeoutDelay = calculateTimeoutDelay(
     process.env.GATSBY_WATCHDOG_STUCK_STATUS_TIMEOUT,
     TEN_MINUTES, // default timeout
-    TEN_SECONDS // minimal timeout (this is mostly useful for debugging diagnostic code itself)
+    2000 // minimal timeout (this is mostly useful for debugging diagnostic code itself)
   )
 
   if (!stuckStatusDiagnosticTimeoutDelay && !stuckStatusWatchdogTimeoutDelay) {
