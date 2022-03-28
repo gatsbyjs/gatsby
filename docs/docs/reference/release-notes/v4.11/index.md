@@ -8,7 +8,7 @@ Welcome to `gatsby@4.11.0` release (March 2022 #3)
 
 Key highlights of this release:
 
--TBD
+- [`gatsby-source-shopify` v7](#gatsby-source-shopify-v7)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -21,10 +21,16 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
+## `gatsby-source-shopify` v7
+
+TODO
+
 ## Notable bugfixes & improvements
+
+TODO
 
 ## Contributors
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.11.0-next.0...gatsby@4.12.0
+[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.11.0-next.0...gatsby@4.11.0
