@@ -9,7 +9,7 @@ Welcome to `gatsby@4.11.0` release (March 2022 #3)
 Key highlights of this release:
 
 - [`gatsby-source-shopify` v7](#gatsby-source-shopify-v7)
-- [React 18 RC](#react-18-rc)
+- [React 18](#react-18)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -35,11 +35,11 @@ We released a new major version of `gatsby-source-shopify` 🎉 Thanks to the wo
 
 Check out the [V6 to V7 Migration Guide](/plugins/gatsby-source-shopify/#v6-to-V7-migration-guide) to learn more. Interested in contributing to Gatsby? Our [contributing section](/contributing/#how-to-contribute) has all the information you need.
 
-## React 18 RC
+## React 18
 
-The latest RC of React 18 introduced a breaking change in the SSR API. In this release we're at 100% compatibility again. Make sure to read [How to Try React 18 in Gatsby](https://www.gatsbyjs.com/blog/how-to-try-react-18-in-gatsby) to get started.
+The latest RC of React 18 introduced a breaking change in the SSR API. In this release we're at 100% compatibility again. Right on time for the official React 18 release. Make sure to read [How to Try React 18 in Gatsby](https://www.gatsbyjs.com/blog/how-to-try-react-18-in-gatsby) to get started.
 
-With React 18, you can start using Suspense, React.lazy and get your hands on the new concurrent mode to speed up your Gatsby website.
+With React 18, you can start using Suspense, React.lazy and get your hands on the new concurrent mode to speed up your Gatsby website. More information can be found on [the React blog](https://reactjs.org/blog/2022/03/29/react-v18.html)
 
 ## Notable bugfixes & improvements
 
