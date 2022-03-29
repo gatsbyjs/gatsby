@@ -36,6 +36,7 @@ describe(`remote-file`, () => {
       const urls = Array.from($urls.map((_, $url) => $url.getAttribute("href")))
 
       for (const url of urls) {
+        console.log(url)
         const res = await fetch(url, {
           method: "HEAD",
         })
