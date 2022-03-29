@@ -20,7 +20,7 @@ describe(`gatsby-image-cdn urls`, () => {
         $imgs.each(async $img => {
           cy.wrap($img).should("be.visible")
 
-          const res = await fetch($img.currentSrc, {
+          const res = await fetch($img[0].currentSrc, {
             method: "HEAD",
           })
           expect(res.ok).to.be.true

@@ -568,7 +568,9 @@ describe(`data resolution`, () => {
       const sourceUrl = parsedUrl.searchParams.get("u")
 
       expect(mediaItemUrl).toEqual(sourceUrl)
-      expect(parsedUrl.pathname).toEndWith(node.featuredImage.node.filename)
+      expect(
+        parsedUrl.pathname.endsWith(node.featuredImage.node.filename)
+      ).toBe(true)
     })
   })
 })
