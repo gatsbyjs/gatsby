@@ -63,7 +63,6 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 
   await new Promise((resolve, reject) =>
     pipeline.toFile(tmpFilePath, err => {
-      console.log(tmpFilePath)
       if (err) {
         return reject(err)
       }
