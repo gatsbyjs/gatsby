@@ -222,7 +222,7 @@ describe(`traceSVG memoization`, () => {
   it(`should work with long filenames`, async () => {
     const copyPath = path.join(
       __dirname,
-      `images/${`a`.repeat(10)} (1) ${`aaa`.repeat(100)}.png`
+      `images/${`a`.repeat(10)} (1) ${`a`.repeat(100)}.png`
     )
     await fs.copy(path.join(__dirname, `images/test.png`), copyPath)
     expect.assertions(1)
