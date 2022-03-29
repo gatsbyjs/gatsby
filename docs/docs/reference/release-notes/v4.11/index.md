@@ -55,4 +55,14 @@ With React 18, you can start using Suspense, React.lazy and get your hands on th
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
+- [seanparmelee](https://github.com/seanparmelee): feat(gatsby-source-graphql): upgrade apollo & graphql-tools deps [PR #34772](https://github.com/gatsbyjs/gatsby/pull/34772)
+- [seanho96](https://github.com/seanho96): chore(docs): Update prismic source graphql tutorial docs [PR #35218](https://github.com/gatsbyjs/gatsby/pull/35218)
+- [CommanderRoot](https://github.com/CommanderRoot): refactor: replace deprecated String.prototype.substr() [PR #35205](https://github.com/gatsbyjs/gatsby/pull/35205)
+- [benackles](https://github.com/benackles): chore(docs): Add Deferred Static Generation to glossary [PR #35172](https://github.com/gatsbyjs/gatsby/pull/35172)
+- [EdPike365](https://github.com/EdPike365): chore(docs): Add context to useScrollRestoration usage [PR #35163](https://github.com/gatsbyjs/gatsby/pull/35163)
+- [byronlanehill](https://github.com/byronlanehill): BREAKING CHANGE(gatsby-source-shopify): Rewrite for media, presentment, schema, etc. [PR #34049](https://github.com/gatsbyjs/gatsby/pull/34049)
+- [Aviatorscode2](https://github.com/Aviatorscode2): chore(docs): Move `loadable-components` instructions [PR #35116](https://github.com/gatsbyjs/gatsby/pull/35116)
+- [michael-proulx](https://github.com/michael-proulx): feat(gatsby-source-mongodb): Add option name to overwrite node middle… [PR #33820](https://github.com/gatsbyjs/gatsby/pull/33820)
+- [urre](https://github.com/urre): Update broken link [PR #35184](https://github.com/gatsbyjs/gatsby/pull/35184)
+
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.11.0-next.0...gatsby@4.11.0
