@@ -39,7 +39,7 @@ Check out the [V6 to V7 Migration Guide](/plugins/gatsby-source-shopify/#v6-to-V
 
 The latest RC of React 18 introduced a breaking change in the SSR API. In this release we're at 100% compatibility again. Make sure to read [How to Try React 18 in Gatsby](https://www.gatsbyjs.com/blog/how-to-try-react-18-in-gatsby) to get started.
 
-With React 18 you can start using Suspense, React.lazy and get your hands on the new concurrent mode to speed up your Gatsby website.
+With React 18, you can start using Suspense, React.lazy and get your hands on the new concurrent mode to speed up your Gatsby website.
 
 ## Notable bugfixes & improvements
 
