@@ -23,7 +23,16 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## `gatsby-source-shopify` v7
 
-TODO
+We released a new major version of `gatsby-source-shopify` 🎉 Thanks to the work of our community member [Byron Hill](https://github.com/byronlanehill) the new version features a bunch of improvements:
+
+- You can now query product videos or 3D models, in addition to product images.
+- Variants, Images, etc. now keep the order in which you define them in the Shopify backend.
+- Multiple metafield types were merged to one single metafield type (more alignment with Shopify's admin API schema).
+- You can now query presentment prices.
+- Explicit type definitions with disabled type inference. Or in other words: You can have no products in your store or a bunch of fields that are `null` without breaking your schema or builds.
+- The API schema nearly matches the Shopify admin API schema which means that for the most part you can refer to Shopify's documentation.
+
+Check out the [V6 to V7 Migration Guide](/plugins/gatsby-source-shopify/#v6-to-V7-migration-guide) to learn more. Interested in contributing to Gatsby? Our [contributing section](/contributing/#how-to-contribute) has all the information you need.
 
 ## Notable bugfixes & improvements
 
