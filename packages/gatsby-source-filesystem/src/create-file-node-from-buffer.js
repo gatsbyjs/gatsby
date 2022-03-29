@@ -124,7 +124,7 @@ module.exports = ({
   parentNodeId = null,
   createNodeId,
   ext,
-  name = hash,
+  name,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
