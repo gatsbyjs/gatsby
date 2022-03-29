@@ -7,8 +7,8 @@ const md5File = require(`md5-file`)
 const createDevServer = require(`../../utils/create-devserver`)
 const basePath = path.resolve(__dirname, `../../`)
 
-// 2 min
-jest.setTimeout(2000 * 60)
+// 5 min
+jest.setTimeout(5000 * 60)
 
 const cleanDirs = () =>
   Promise.all([
@@ -36,7 +36,7 @@ describe(`Lazy images`, () => {
     expect(response.status).toBe(200)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
-    expect(images.length).toBe(6)
+    expect(images.length).toBe(1)
   })
 
   test(`should process the rest of images on build`, async () => {
