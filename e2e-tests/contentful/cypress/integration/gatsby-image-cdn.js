@@ -16,17 +16,18 @@ describe(`gatsby-image-cdn urls`, () => {
     const type = "gatsby-image-cdn"
 
     cy.get(`[data-cy="${type}"] .gatsby-image-wrapper > picture > img`).then(
-      $imgs => {
-        $imgs.each(async $img => {
+      async $imgs => {
+        let i = 0
+        for (const $img of $imgs) {
           cy.wrap($img).should("be.visible")
 
-          const res = await fetch($img[0].currentSrc, {
+          const res = await fetch($img.currentSrc, {
             method: "HEAD",
           })
           expect(res.ok).to.be.true
 
-          cy.wrap($img).matchImageSnapshot(`${type}-${i}`)
-        })
+          cy.wrap($img).matchImageSnapshot(`${type}-${i++}`)
+        }
       }
     )
   })
