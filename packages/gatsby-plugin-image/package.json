@@ -27,7 +27,7 @@
   "esmodule": "dist/gatsby-image.modern.js",
   "browser": {
     "./dist/gatsby-image.js": "./dist/gatsby-image.browser.js",
-    "./dist/gatsby-image.module.js": "./dist/gatsby-image.browser.module.js"
+    "./dist/gatsby-image.module.js": "./dist/gatsby-image.browser.modern.js"
   },
   "files": [
     "dist/*",
