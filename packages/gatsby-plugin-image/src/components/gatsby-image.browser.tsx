@@ -6,7 +6,11 @@ import {
   useLayoutEffect,
   useRef,
 } from "react"
-import { getWrapperProps, gatsbyImageIsInstalled } from "./hooks"
+import {
+  getWrapperProps,
+  gatsbyImageIsInstalled,
+  hasNativeLazyLoadSupport,
+} from "./hooks"
 import { getSizer } from "./layout-wrapper"
 import { propTypes } from "./gatsby-image.server"
 import type {
@@ -56,25 +60,30 @@ export interface IGatsbyImageData {
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
 }
 
-const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator(
-  props
-) {
-  const { width, height, layout } = props.image
+const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
+  as = `div`,
+  image,
+  style,
+  backgroundColor,
+  className,
+  class: preactClass,
+  onStartLoad,
+  onLoad,
+  onError,
+  ...props
+}) {
+  const { width, height, layout } = image
   const {
     style: wStyle,
     className: wClass,
     ...wrapperProps
   } = getWrapperProps(width, height, layout)
   const root = useRef<HTMLElement>()
-  const cacheKey = useMemo(
-    () => JSON.stringify(props.image.images),
-    [props.image.images]
-  )
+  const cacheKey = useMemo(() => JSON.stringify(image.images), [image.images])
 
-  let className = props.className
   // Preact uses class instead of className so we need to check for both
-  if (props.class) {
-    className = props.class
+  if (preactClass) {
+    className = preactClass
   }
 
   const sizer = getSizer(layout, width, height)
@@ -98,23 +107,23 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator(
     const ssrImage = root.current.querySelector(
       `[data-gatsby-image-ssr]`
     ) as HTMLImageElement
-    if (ssrImage) {
+    if (ssrImage && hasNativeLazyLoadSupport()) {
       if (ssrImage.complete) {
         // Trigger onStartload and onLoad events
-        props?.onStartLoad?.({
+        onStartLoad?.({
           wasCached: true,
         })
-        props?.onLoad?.({
+        onLoad?.({
           wasCached: true,
         })
       } else {
-        document.addEventListener(`load`, function onLoad() {
-          document.removeEventListener(`load`, onLoad)
+        document.addEventListener(`load`, function onLoadListener() {
+          document.removeEventListener(`load`, onLoadListener)
 
-          props?.onStartLoad?.({
+          onStartLoad?.({
             wasCached: true,
           })
-          props?.onLoad?.({
+          onLoad?.({
             wasCached: true,
           })
         })
@@ -134,9 +143,9 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator(
     renderImageToStringPromise.then(
       ({ renderImageToString, swapPlaceholderImage }) => {
         root.current.innerHTML = renderImageToString({
-          image: props.image.images,
           isLoading: true,
           isLoaded: imageCache.has(cacheKey),
+          image,
           ...props,
         })
 
@@ -147,10 +156,10 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator(
                 root.current,
                 cacheKey,
                 imageCache,
-                props.style,
-                props.onStartLoad,
-                props.onLoad,
-                props.onError
+                style,
+                onStartLoad,
+                onLoad,
+                onError
               )
             }
           })
@@ -167,35 +176,35 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator(
         cleanupCallback()
       }
     }
-  }, [props.image.images])
+  }, [image])
 
-  // We need to run this effect before browser has paint to make sure our html is set so no flickering happens
-  //
+  // useLayoutEffect is ran before React commits to the DOM. This allows us to make sure our HTML is using our cached image version
   useLayoutEffect(() => {
     if (imageCache.has(cacheKey) && renderImage) {
       root.current.innerHTML = renderImage({
-        image: props.image.images,
         isLoading: imageCache.has(cacheKey),
         isLoaded: imageCache.has(cacheKey),
+        image,
         ...props,
       })
 
       // Trigger onStartload and onLoad events
-      props?.onStartLoad?.({
+      onStartLoad?.({
         wasCached: true,
       })
-      props?.onLoad?.({
+      onLoad?.({
         wasCached: true,
       })
     }
-  }, [props.image.images])
+  }, [image])
 
-  return createElement(props.as || `div`, {
+  // By keeping all props equal React will keep the component in the DOM
+  return createElement(as, {
     ...wrapperProps,
     style: {
       ...wStyle,
-      ...props.style,
-      backgroundColor: props.backgroundColor,
+      ...style,
+      backgroundColor,
     },
     className: `${wClass}${className ? ` ${className}` : ``}`,
     ref: root,

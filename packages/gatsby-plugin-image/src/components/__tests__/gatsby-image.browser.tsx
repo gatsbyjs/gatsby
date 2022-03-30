@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @jest-environment jsdom
  */
-
 import React from "react"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
@@ -145,10 +143,13 @@ describe(`GatsbyImage browser`, () => {
       { container: beforeHydrationContent, hydrate: true }
     )
 
-    const placeholder = await waitFor(() =>
-      container.querySelector(`[data-placeholder-image=""]`)
+    const placeholder = await waitFor(
+      () =>
+        container.querySelector(`[data-placeholder-image=""]`) as HTMLElement
     )
-    const mainImage = container.querySelector(`[data-main-image=""]`)
+    const mainImage = container.querySelector(
+      `[data-main-image=""]`
+    ) as HTMLElement
 
     expect(placeholder).toBeDefined()
     expect(mainImage).toBeDefined()
