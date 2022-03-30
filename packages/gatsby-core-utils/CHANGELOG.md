@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.11.0/packages/gatsby-core-utils) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- move package.json check to try catch [#35139](https://github.com/gatsbyjs/gatsby/issues/35139) ([bf5ff95](https://github.com/gatsbyjs/gatsby/commit/bf5ff95208b8eabd280a3ea0d9f1f6eeb3fc2da0))
+
 ### [3.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.10.1/packages/gatsby-core-utils) (2022-03-23)
 
 #### Bug Fixes

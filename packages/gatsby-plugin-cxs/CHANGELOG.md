@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.11.0/packages/gatsby-plugin-cxs) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- compatibility with react rc 2 [#35108](https://github.com/gatsbyjs/gatsby/issues/35108) ([0c61265](https://github.com/gatsbyjs/gatsby/commit/0c6126574d203c0e6fef173b76859cdcab2f13aa))
+
 ### [4.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.10.2/packages/gatsby-plugin-cxs) (2022-03-23)
 
 **Note:** Version bump only for package gatsby-plugin-cxs
