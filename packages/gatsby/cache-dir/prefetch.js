@@ -1,7 +1,7 @@
 import isbot from "isbot"
 
 // There are some bots that should still prefetch, such as performance analysis tools.
-const BOT_ALLOWLIST = [`chrome-lighthouse`]
+const BOT_ALLOWLIST = [`chrome-lighthouse`, `headlesschrome/`]
 
 const support = function (feature) {
   if (typeof document === `undefined`) {
