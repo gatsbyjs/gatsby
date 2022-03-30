@@ -40,6 +40,17 @@ describe(`url-generator`, () => {
         `"/_gatsby/file/6e41758c045f4509e19938d738d2a23c/file%20test.pdf?u=https%3A%2F%2Fexample.com%2Ffile+test.pdf"`
       )
     })
+
+    it(`should handle html encoded urls`, () => {
+      const source = {
+        url: `https://example.com/file%20test.pdf`,
+        filename: `file test.pdf`,
+      }
+
+      expect(generateFileUrl(source)).toMatchInlineSnapshot(
+        `"/_gatsby/file/799c0b15477311f5b8d9f635594671f2/file%20test.pdf?u=https%3A%2F%2Fexample.com%2Ffile%2520test.pdf"`
+      )
+    })
   })
 
   describe(`generateImageUrl`, () => {
@@ -100,6 +111,26 @@ describe(`url-generator`, () => {
         })
       ).toMatchInlineSnapshot(
         `"/_gatsby/image/4b2d785bb2f2b7d04e00cb15daeb1687/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage+test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+      )
+    })
+
+    it(`should handle encoded urls`, () => {
+      const source = {
+        url: `https://example.com/image%20test.jpg`,
+        filename: `image test.jpg`,
+        mimeType: `image/jpeg`,
+      }
+
+      expect(
+        generateImageUrl(source, {
+          width: 100,
+          height: 100,
+          cropFocus: `top`,
+          format: `webp`,
+          quality: 80,
+        })
+      ).toMatchInlineSnapshot(
+        `"/_gatsby/image/e204b74f97d4407c992c4c3a7c5c66c4/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage%2520test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
       )
     })
 

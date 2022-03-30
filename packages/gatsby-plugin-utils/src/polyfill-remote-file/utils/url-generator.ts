@@ -4,6 +4,7 @@ import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { isImage } from "../types"
 import type { ImageCropFocus, WidthOrHeight } from "../types"
 
+// this is an arbitrary origin that we use #branding so we can construct a full url for the URL constructor
 const ORIGIN = `https://gatsbyjs.com`
 
 export enum ImageCDNUrlKeys {

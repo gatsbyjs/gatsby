@@ -176,8 +176,7 @@ export async function gatsbyImageResolver(
             width,
             height: Math.round(width / imageSizes.aspectRatio),
             format,
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            cropFocus: args.cropFocus!,
+            cropFocus: args.cropFocus,
             quality: args.quality as number,
           },
           actions
