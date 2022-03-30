@@ -26,7 +26,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Chores
 
-- Update README  ([2071d65](https://github.com/gatsbyjs/gatsby/commit/2071d65e3e67c92b0d17b847c75ac4049196666c))
+- Update README ([2071d65](https://github.com/gatsbyjs/gatsby/commit/2071d65e3e67c92b0d17b847c75ac4049196666c))
 - Add quickstart & reorder value props [#35208](https://github.com/gatsbyjs/gatsby/issues/35208) ([83253b9](https://github.com/gatsbyjs/gatsby/commit/83253b92265c7dad34dc2870bfbfebd80aec9b4c))
 - Move `loadable-components` instructions [#35116](https://github.com/gatsbyjs/gatsby/issues/35116) ([6454eed](https://github.com/gatsbyjs/gatsby/commit/6454eedb1707ae093d9d7d65658a4c3f09b803c8))
 - cleanup yarn.lock [#35181](https://github.com/gatsbyjs/gatsby/issues/35181) ([937883e](https://github.com/gatsbyjs/gatsby/commit/937883e4c7d19596e45ae01eafcdb1a733aac575))
