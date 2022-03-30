@@ -1,3 +1,8 @@
+import isbot from "isbot"
+
+// There are some bots that should still prefetch, such as performance analysis tools.
+const BOT_ALLOWLIST = [`chrome-lighthouse`]
+
 const support = function (feature) {
   if (typeof document === `undefined`) {
     return false
@@ -66,6 +71,14 @@ const prefetch = function (url, options) {
     if (preFetched[url]) {
       resolve()
       return
+    }
+
+    if (typeof navigator !== `undefined`) {
+      // Return unsupported if this is a crawler bot
+      isbot.exclude(BOT_ALLOWLIST)
+      if (isbot(navigator.userAgent)) {
+        return
+      }
     }
 
     supportedPrefetchStrategy(url, options)
