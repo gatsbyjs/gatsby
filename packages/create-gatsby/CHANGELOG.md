@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.11.0/packages/create-gatsby) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- update deps for cms source plugins [#35144](https://github.com/gatsbyjs/gatsby/issues/35144) ([d314840](https://github.com/gatsbyjs/gatsby/commit/d3148405e9621fa63bcd1cc026fe450ac9d1686f))
+
 ### [2.10.2](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.10.2/packages/create-gatsby) (2022-03-23)
 
 **Note:** Version bump only for package create-gatsby
