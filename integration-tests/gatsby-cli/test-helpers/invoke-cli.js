@@ -11,18 +11,21 @@ const gatsbyBinLocation = join(
   `cli.js`
 )
 
+const getCommand = args => (Array.isArray(args) && args[0]) || args
+const isDevelop = args => getCommand(args) === "develop"
+
 // Use as `GatsbyCLI.cwd('execution-folder').invoke('new', 'foo')`
 export const GatsbyCLI = {
   from(relativeCwd) {
     return {
       invoke(args) {
-        const NODE_ENV = args[0] === `develop` ? `development` : `production`
+        const NODE_ENV = isDevelop(args) ? `development` : `production`
         try {
+          console.log(`execute ${getCommand(args)}`)
           const results = sync("node", [gatsbyBinLocation].concat(args), {
             cwd: join(__dirname, `../`, `./${relativeCwd}`),
             env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
           })
-
           return [
             results.exitCode,
             createLogsMatcher(strip(results.stdout.toString())),
@@ -37,6 +40,7 @@ export const GatsbyCLI = {
 
       invokeAsync: (args, onExit) => {
         const NODE_ENV = args[0] === `develop` ? `development` : `production`
+        console.log(`execute ${getCommand(args)}`)
         const res = execa("node", [gatsbyBinLocation].concat(args), {
           cwd: join(__dirname, `../`, `./${relativeCwd}`),
           env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },

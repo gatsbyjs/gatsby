@@ -10,7 +10,6 @@ jest.setTimeout(MAX_TIMEOUT)
 
 describe(`gatsby develop`, () => {
   const cwd = `gatsby-sites/gatsby-develop`
-
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
   afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
