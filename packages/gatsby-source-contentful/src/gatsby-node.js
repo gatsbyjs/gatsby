@@ -124,6 +124,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .default(50),
       proxy: Joi.object()
         .keys({
+          protocol: Joi.string(),
           host: Joi.string().required(),
           port: Joi.number().required(),
           auth: Joi.object().keys({
