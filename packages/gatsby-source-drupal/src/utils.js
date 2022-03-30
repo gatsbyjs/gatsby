@@ -243,13 +243,14 @@ const handleDeletedNode = async ({
   return deletedNode
 }
 
-function createNodeIfItDoesNotExist({
+async function createNodeIfItDoesNotExist({
   nodeToUpdate,
   actions,
   createNodeId,
   createContentDigest,
   getNode,
   reporter,
+  pluginOptions,
 }) {
   if (!nodeToUpdate) {
     reporter.warn(
@@ -276,10 +277,11 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   const oldNode = getNode(newNodeId)
   // Node doesn't yet exist so we'll create it now.
   if (!oldNode) {
-    const newNode = nodeFromData(
+    const newNode = await nodeFromData(
       nodeToUpdate,
       createNodeId,
-      getOptions().entityReferenceRevisions
+      getOptions().entityReferenceRevisions,
+      pluginOptions
     )
 
     newNode.internal.contentDigest = createContentDigest(newNode)
@@ -321,10 +323,11 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
   const { createNode, unstable_createNodeManifest } = actions
 
-  const newNode = nodeFromData(
+  const newNode = await nodeFromData(
     nodeToUpdate,
     createNodeId,
-    pluginOptions.entityReferenceRevisions
+    pluginOptions.entityReferenceRevisions,
+    pluginOptions
   )
 
   drupalCreateNodeManifest({

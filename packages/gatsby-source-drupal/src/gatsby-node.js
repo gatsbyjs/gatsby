@@ -6,6 +6,11 @@ import HttpAgent from "agentkeepalive"
 const opentracing = require(`opentracing`)
 const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
 
+const {
+  polyfillImageServiceDevRoutes,
+  addRemoteFilePolyfillInterface,
+} = require(`gatsby-plugin-utils/polyfill-remote-file`)
+
 const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
@@ -377,7 +382,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
               nodesToUpdate = [nodeSyncData.data]
             }
             for (const nodeToUpdate of nodesToUpdate) {
-              createNodeIfItDoesNotExist({
+              await createNodeIfItDoesNotExist({
                 nodeToUpdate,
                 actions,
                 createNodeId,
@@ -642,19 +647,32 @@ ${JSON.stringify(webhookBody, null, 4)}`
   const nodes = new Map()
 
   // first pass - create basic nodes
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (!datum) return
-      const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+  for (const contentType of allData) {
+    if (!contentType) {
+      continue
+    }
+
+    await asyncPool(concurrentFileRequests, contentType.data, async datum => {
+      if (!datum) {
+        return
+      }
+
+      const node = await nodeFromData(
+        datum,
+        createNodeId,
+        entityReferenceRevisions,
+        pluginOptions
+      )
+
       drupalCreateNodeManifest({
         attributes: datum?.attributes,
         gatsbyNode: node,
         unstable_createNodeManifest,
       })
+
       nodes.set(node.id, node)
     })
-  })
+  }
 
   createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
@@ -813,3 +831,23 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
   })
+
+exports.onCreateDevServer = async ({ app }) => {
+  polyfillImageServiceDevRoutes(app)
+}
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  actions.createTypes([
+    addRemoteFilePolyfillInterface(
+      schema.buildObjectType({
+        name: `file__file`,
+        fields: {},
+        interfaces: [`Node`, `RemoteFile`],
+      }),
+      {
+        schema,
+        actions,
+      }
+    ),
+  ])
+}

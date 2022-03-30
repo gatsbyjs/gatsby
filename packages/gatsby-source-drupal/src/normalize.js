@@ -1,6 +1,7 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const path = require(`path`)
+const probeImageSize = require(`probe-image-size`)
 
 const { getOptions } = require(`./plugin-options`)
 const getHref = link => {
@@ -12,11 +13,37 @@ const getHref = link => {
 
 exports.getHref = getHref
 
-const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
+const nodeFromData = async (
+  datum,
+  createNodeId,
+  entityReferenceRevisions = [],
+  pluginOptions
+) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
   const langcode = attributes.langcode || `und`
+  const type = datum.type.replace(/-|__|:|\.|\s/g, `_`)
+
+  const isFile = isFileNode(datum, type)
+
+  const url = isFile
+    ? pluginOptions.baseUrl + getFileUrl(datum.attributes)
+    : null
+
+  const imageSize = isFile ? await probeImageSize(url) : {}
+
+  const gatsbyImageCdnFields = isFile
+    ? {
+        filename: attributes?.filename,
+        url,
+        placeholderUrl: url,
+        width: imageSize.width,
+        height: imageSize.height,
+        mimeType: datum.attributes.filemime,
+      }
+    : {}
+
   return {
     id: createNodeId(
       createNodeIdWithVersion(
@@ -33,10 +60,11 @@ const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
     children: [],
     ...attributes,
     ...preservedId,
+    ...gatsbyImageCdnFields,
     drupal_relationships: datum.relationships,
     relationships: {},
     internal: {
-      type: datum.type.replace(/-|__|:|\.|\s/g, `_`),
+      type,
     },
   }
 }
@@ -80,10 +108,23 @@ const createNodeIdWithVersion = (
 
 exports.createNodeIdWithVersion = createNodeIdWithVersion
 
-const isFileNode = node =>
-  node.internal.type === `files` || node.internal.type === `file__file`
+const isFileNode = (node, inputType) => {
+  const type = inputType || node?.internal?.type
+  return type === `files` || type === `file__file`
+}
 
 exports.isFileNode = isFileNode
+
+const getFileUrl = node => {
+  let fileUrl = node.url
+
+  if (typeof node.uri === `object`) {
+    // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
+    fileUrl = node.uri.url
+  }
+
+  return fileUrl
+}
 
 exports.downloadFile = async (
   { node, store, cache, createNode, createNodeId, getCache, reporter },
@@ -93,16 +134,17 @@ exports.downloadFile = async (
   if (isFileNode(node)) {
     let fileType
 
-    let fileUrl = node.url
     if (typeof node.uri === `object`) {
-      // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
-      fileUrl = node.uri.url
       // get file type from uri prefix ("S3:", "public:", etc.)
       const uriPrefix = node.uri.value.match(/^\w*:/)
       fileType = uriPrefix ? uriPrefix[0] : null
     }
+
+    const fileUrl = getFileUrl(node, baseUrl)
+
     // Resolve w/ baseUrl if node.uri isn't absolute.
     const url = new URL(fileUrl, baseUrl)
+
     // If we have basicAuth credentials, add them to the request.
     const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
     const auth =
