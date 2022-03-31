@@ -1,6 +1,3 @@
-// Regex that matches common search crawlers
-const BOT_REGEX = /bot|crawler|spider|crawling/i
-
 const support = function (feature) {
   if (typeof document === `undefined`) {
     return false
@@ -65,18 +62,10 @@ const supportedPrefetchStrategy = support(`prefetch`)
 const preFetched = {}
 
 const prefetch = function (url, options) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     if (preFetched[url]) {
       resolve()
       return
-    }
-
-    if (typeof navigator !== `undefined`) {
-      // Reject if this is a crawler bot
-      if (BOT_REGEX.test(navigator.userAgent)) {
-        reject()
-        return
-      }
     }
 
     supportedPrefetchStrategy(url, options)
@@ -85,7 +74,7 @@ const prefetch = function (url, options) {
         preFetched[url] = true
       })
       .catch(() => {}) // 404s are logged to the console anyway
-  }).catch(() => {}) // this only rejects if it's a blocked crawler
+  })
 }
 
 export default prefetch
