@@ -102,7 +102,6 @@
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
     "is-relative-url": "^3.0.0",
-    "isbot": "^3.4.5",
     "joi": "^17.4.2",
     "json-loader": "^0.5.7",
     "latest-version": "5.1.0",

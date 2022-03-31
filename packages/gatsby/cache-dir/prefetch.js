@@ -1,7 +1,5 @@
-import isbot from "isbot"
-
-// There are some bots that should still prefetch, such as performance analysis tools.
-const BOT_ALLOWLIST = [`chrome-lighthouse`, `headlesschrome/`]
+// Regex that matches common search crawlers
+const BOT_REGEX = /bot|crawler|spider|crawling/i
 
 const support = function (feature) {
   if (typeof document === `undefined`) {
@@ -74,9 +72,8 @@ const prefetch = function (url, options) {
     }
 
     if (typeof navigator !== `undefined`) {
-      // Return unsupported if this is a crawler bot
-      isbot.exclude(BOT_ALLOWLIST)
-      if (isbot(navigator.userAgent)) {
+      // Reject if this is a crawler bot
+      if (BOT_REGEX.test(navigator.userAgent)) {
         reject()
         return
       }
