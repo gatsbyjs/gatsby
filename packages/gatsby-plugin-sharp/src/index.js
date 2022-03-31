@@ -1,7 +1,7 @@
 const sharp = require(`./safe-sharp`)
 const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
-const { isCI } = require(`gatsby-core-utils`)
+const { isCI } = require(`gatsby-core-utils/ci`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)

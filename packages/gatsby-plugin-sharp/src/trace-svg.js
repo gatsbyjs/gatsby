@@ -8,7 +8,9 @@ const filenamify = require(`filenamify`)
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { reportError } = require(`./report-error`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const {
+  createContentDigest,
+} = require(`gatsby-core-utils/create-content-digest`)
 
 exports.notMemoizedPrepareTraceSVGInputFile = async ({
   file,
@@ -114,9 +116,8 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 
   const tmpFilePath = path.join(
     tmpDir,
-    filenamify(
-      `${file.internal.contentDigest}-${file.name}-${optionsHash}.${file.extension}`
-    )
+    filenamify(`${file.internal.contentDigest}-${file.name}-${optionsHash}`) +
+      `.${file.extension}`
   )
 
   await exports.memoizedPrepareTraceSVGInputFile({

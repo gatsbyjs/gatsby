@@ -5,7 +5,9 @@ const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp`)
 const duotone = require(`./duotone`)
 const { healOptions } = require(`./plugin-options`)
 const { SharpError } = require(`./sharp-error`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const {
+  createContentDigest,
+} = require(`gatsby-core-utils/create-content-digest`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
