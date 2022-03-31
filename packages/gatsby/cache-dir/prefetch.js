@@ -67,7 +67,7 @@ const supportedPrefetchStrategy = support(`prefetch`)
 const preFetched = {}
 
 const prefetch = function (url, options) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if (preFetched[url]) {
       resolve()
       return
@@ -77,6 +77,7 @@ const prefetch = function (url, options) {
       // Return unsupported if this is a crawler bot
       isbot.exclude(BOT_ALLOWLIST)
       if (isbot(navigator.userAgent)) {
+        reject()
         return
       }
     }
@@ -87,7 +88,7 @@ const prefetch = function (url, options) {
         preFetched[url] = true
       })
       .catch(() => {}) // 404s are logged to the console anyway
-  })
+  }).catch(() => {}) // this only rejects if it's a blocked crawler
 }
 
 export default prefetch
