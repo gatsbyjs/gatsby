@@ -411,16 +411,10 @@ export class BaseLoader {
 
   prefetch(pagePath) {
     if (!this.shouldPrefetch(pagePath)) {
-      return {
-        then: resolve => resolve(false),
-        abort: () => {},
-      }
+      return Promise.resolve(false)
     }
     if (this.prefetchTriggered.has(pagePath)) {
-      return {
-        then: resolve => resolve(true),
-        abort: () => {},
-      }
+      return Promise.resolve(true)
     }
 
     const defer = {
