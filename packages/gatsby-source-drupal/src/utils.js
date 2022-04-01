@@ -171,57 +171,59 @@ const handleDeletedNode = async ({
   cache.del(makeRefNodesKey(deletedNode.id))
 
   // Remove relationships from other nodes and re-create them.
-  Object.keys(deletedNode.relationships).forEach(key => {
+  Object.keys(deletedNode.relationships).forEach(async key => {
     let ids = deletedNode.relationships[key]
     ids = [].concat(ids)
-    ids.forEach(async id => {
-      let node = getNode(id)
+    await Promise.all(
+      ids.map(async id => {
+        let node = getNode(id)
 
-      // The referenced node might have already been deleted.
-      if (node) {
-        // Clone node so we're not mutating the original node.
-        node = _.cloneDeep(node)
-        let referencedNodes = await cache.get(makeRefNodesKey(node.id))
+        // The referenced node might have already been deleted.
+        if (node) {
+          // Clone node so we're not mutating the original node.
+          node = _.cloneDeep(node)
+          let referencedNodes = await cache.get(makeRefNodesKey(node.id))
 
-        if (referencedNodes?.includes(deletedNode.id)) {
-          // Loop over relationships and cleanup references.
-          Object.entries(node.relationships).forEach(([key, value]) => {
-            // If a string ref matches, delete it.
-            if (_.isString(value) && value === deletedNode.id) {
-              delete node.relationships[key]
-            }
-
-            // If it's an array, filter, then check if the array is empty and then delete
-            // if so
-            if (_.isArray(value)) {
-              value = value.filter(v => v !== deletedNode.id)
-
-              if (value.length === 0) {
+          if (referencedNodes?.includes(deletedNode.id)) {
+            // Loop over relationships and cleanup references.
+            Object.entries(node.relationships).forEach(([key, value]) => {
+              // If a string ref matches, delete it.
+              if (_.isString(value) && value === deletedNode.id) {
                 delete node.relationships[key]
-              } else {
-                node.relationships[key] = value
               }
-            }
-          })
 
-          // Remove deleted node from array of referencedNodes
-          referencedNodes = referencedNodes.filter(
-            nId => nId !== deletedNode.id
-          )
-          await cache.set(makeRefNodesKey(node.id), referencedNodes)
-        }
+              // If it's an array, filter, then check if the array is empty and then delete
+              // if so
+              if (_.isArray(value)) {
+                value = value.filter(v => v !== deletedNode.id)
 
-        // Recreate the referenced node with its now cleaned-up relationships.
-        if (node.internal.owner) {
-          delete node.internal.owner
+                if (value.length === 0) {
+                  delete node.relationships[key]
+                } else {
+                  node.relationships[key] = value
+                }
+              }
+            })
+
+            // Remove deleted node from array of referencedNodes
+            referencedNodes = referencedNodes.filter(
+              nId => nId !== deletedNode.id
+            )
+            await cache.set(makeRefNodesKey(node.id), referencedNodes)
+          }
+
+          // Recreate the referenced node with its now cleaned-up relationships.
+          if (node.internal.owner) {
+            delete node.internal.owner
+          }
+          if (node.fields) {
+            delete node.fields
+          }
+          node.internal.contentDigest = createContentDigest(node)
+          actions.createNode(node)
         }
-        if (node.fields) {
-          delete node.fields
-        }
-        node.internal.contentDigest = createContentDigest(node)
-        actions.createNode(node)
-      }
-    })
+      })
+    )
   })
 
   actions.deleteNode(deletedNode)

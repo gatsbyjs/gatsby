@@ -654,7 +654,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
   // second pass - handle relationships and back references
   await Promise.all(
-    Array.from(nodes.values()).map(node => {
+    Array.from(nodes.values()).map(node =>
       handleReferences(node, {
         getNode: nodes.get.bind(nodes),
         mutateNode: true,
@@ -662,7 +662,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
         cache,
         entityReferenceRevisions,
       })
-    })
+    )
   )
 
   if (skipFileDownloads) {
