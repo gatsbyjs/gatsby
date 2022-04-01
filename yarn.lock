@@ -16573,10 +16573,10 @@ mini-css-extract-plugin@1.6.2:
     schema-utils "^3.0.0"
     webpack-sources "^1.1.0"
 
-mini-svg-data-uri@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.3.tgz#43177b2e93766ba338931a3e2a84a3dfd3a222b8"
-  integrity sha512-gSfqpMRC8IxghvMcxzzmMnWpXAChSA+vy4cia33RgerMS8Fex95akUyQZPbxJJmeBGiGmK7n/1OpUX8ksRjIdA==
+mini-svg-data-uri@^1.4.3, mini-svg-data-uri@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz#8ab0aabcdf8c29ad5693ca595af19dd2ead09939"
+  integrity sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==
 
 "minimatch@2 || 3", minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4, minimatch@^3.1.2:
   version "3.1.2"
