@@ -61,11 +61,11 @@
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
-    "@mdx-js/mdx": "^1.6.16",
-    "@mdx-js/react": "^1.6.16",
+    "@mdx-js/mdx": "^2.1.1",
+    "@mdx-js/react": "^2.1.1",
     "gatsby-plugin-utils": "^3.6.0-next.1",
     "js-combinatorics": "^1.4.5",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^18.0.0"
   },
   "jest": {
     "testEnvironment": "node"
