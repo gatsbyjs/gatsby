@@ -130,7 +130,7 @@ const pickNodeBySourceUrlOrCheerioImg = ({
     stripImageSizesFromUrl(url),
   ]
 
-  const imageNode = mediaItemNodes.find(
+  let imageNode = mediaItemNodes.find(
     mediaItemNode =>
       // either find our node by the source url
       possibleHtmlSrcs.includes(mediaItemNode.sourceUrl) ||
@@ -144,10 +144,14 @@ const pickNodeBySourceUrlOrCheerioImg = ({
           `-scaled`,
           ``
         )
-      ) ||
-      // or by id for cases where the src url didn't return a node
-      (!!cheerioImg && getCheerioImgRelayId(cheerioImg) === mediaItemNode.id)
+      )
   )
+
+  if (!imageNode && !!cheerioImg) {
+    imageNode = mediaItemNodes.find(
+      mediaItemNode => getCheerioImgRelayId(cheerioImg) === mediaItemNode.id
+    )
+  }
 
   return imageNode
 }
