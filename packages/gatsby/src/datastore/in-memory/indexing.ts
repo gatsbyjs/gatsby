@@ -11,7 +11,8 @@ import _ from "lodash"
 import { getValueAt } from "../../utils/get-value-at"
 
 // Only list supported ops here. "CacheableFilterOp"
-export type FilterOp =  // TODO: merge with DbComparator ?
+// TODO: merge with DbComparator ?
+export type FilterOp =
   | "$eq"
   | "$ne"
   | "$lt"
@@ -21,7 +22,6 @@ export type FilterOp =  // TODO: merge with DbComparator ?
   | "$in"
   | "$nin"
   | "$regex" // Note: this includes $glob
-// Note: `undefined` is an encoding for a property that does not exist
 
 export type FilterCacheKey = string
 type GatsbyNodeID = string
