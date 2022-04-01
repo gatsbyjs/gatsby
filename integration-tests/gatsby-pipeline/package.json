@@ -23,7 +23,8 @@
   "scripts": {
     "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "clean": "gatsby clean"
   },
   "devDependencies": {
     "execa": "^4.0.3",

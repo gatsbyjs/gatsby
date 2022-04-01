@@ -4,20 +4,13 @@
 
 const execa = require(`execa`)
 const path = require(`path`)
-const glob = require(`glob`)
-const fs = require(`fs-extra`)
 const md5File = require(`md5-file`)
+const { clean } = require("../../utils/create-devserver")
 const basePath = path.resolve(__dirname, `../../`)
-
-const cleanDirs = () =>
-  Promise.all([
-    fs.emptyDir(`${basePath}/public`),
-    fs.emptyDir(`${basePath}/.cache`),
-  ])
 
 describe(`fetch-remote-file`, () => {
   beforeAll(async () => {
-    await cleanDirs()
+    await clean()
     await execa(`yarn`, [`build`], {
       cwd: basePath,
       // we want to force 1 query per worker
