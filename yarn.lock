@@ -22174,10 +22174,10 @@ sift@^7.0.1:
   resolved "https://registry.yarnpkg.com/sift/-/sift-7.0.1.tgz#47d62c50b159d316f1372f8b53f9c10cd21a4b08"
   integrity sha512-oqD7PMJ+uO6jV9EQCl0LrRw1OwsiPsiFQR5AR30heR+4Dl7jBBbDLnNvWiak20tzZlSE1H7RB30SX/1j/YYT7g==
 
-signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.5, signal-exit@^3.0.6:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.6.tgz#24e630c4b0f03fea446a2bd299e62b4a6ca8d0af"
-  integrity sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ==
+signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.5, signal-exit@^3.0.6, signal-exit@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
+  integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
 simple-concat@^1.0.0:
   version "1.0.0"
