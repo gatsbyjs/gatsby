@@ -208,7 +208,7 @@ const handleDeletedNode = async ({
           referencedNodes = referencedNodes.filter(
             nId => nId !== deletedNode.id
           )
-          cache.set(makeRefNodesKey(node.id), referencedNodes)
+          await cache.set(makeRefNodesKey(node.id), referencedNodes)
         }
 
         // Recreate the referenced node with its now cleaned-up relationships.
