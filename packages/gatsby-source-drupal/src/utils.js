@@ -94,7 +94,7 @@ const handleReferences = async (
     })
 
     delete node.drupal_relationships
-    cache.set(makeRefNodesKey(node.id), referencedNodes)
+    await cache.set(makeRefNodesKey(node.id), referencedNodes)
     if (referencedNodes.length) {
       const nodeFieldName = `${node.internal.type}___NODE`
       await Promise.all(
