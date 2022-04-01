@@ -54,13 +54,4 @@ describe(`fetch-remote-file`, () => {
       )
     ).toEqual("4ba953ba27236727d7abe7d5b8916432")
   })
-
-  /**
-   * this is a bit of a cheeky test but we just want to make sure we're actually running on multiple workers
-   */
-  it("should have conflict between workers", async () => {
-    const files = await fs.readdir(path.join(__dirname, "../../.cache/workers"))
-
-    expect(files.length).toBeGreaterThan(1)
-  })
 })
