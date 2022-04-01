@@ -13,12 +13,83 @@ const getHref = link => {
 
 exports.getHref = getHref
 
+/**
+ * This FN takes in node data and returns Gatsby Image CDN fields that should be added to that node. If the input node isn't an image an empty object is returned.
+ */
+const getGatsbyImageCdnFields = async ({
+  node,
+  type,
+  pluginOptions,
+  fileNodesExtendedData,
+  reporter,
+}) => {
+  const isFile = isFileNode({
+    internal: {
+      type,
+    },
+  })
+
+  if (!isFile) {
+    return {}
+  }
+
+  const mimeType = node.attributes.filemime
+
+  if (!mimeType || !mimeType.includes(`image/`)) {
+    return {}
+  }
+
+  const url = pluginOptions.baseUrl + getFileUrl(node.attributes)
+
+  const extraNodeData = fileNodesExtendedData?.get(node.id) || null
+
+  try {
+    const imageSize = extraNodeData || (await probeImageSize(url))
+
+    const requiredData = imageSize && imageSize.width && imageSize.height && url
+
+    if (!requiredData) {
+      return {}
+    }
+
+    const gatsbyImageCdnFields = {
+      filename: node.attributes?.filename,
+      url,
+      placeholderUrl: url,
+      width: imageSize.width,
+      height: imageSize.height,
+      mimeType,
+    }
+
+    return gatsbyImageCdnFields
+  } catch (e) {
+    reporter.error(e)
+    reporter.info(
+      JSON.stringify(
+        {
+          extraNodeData,
+          url,
+          attributes: node.attributes,
+        },
+        null,
+        2
+      )
+    )
+    reporter.panic(
+      `Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
+    )
+  }
+
+  return {}
+}
+
 const nodeFromData = async (
   datum,
   createNodeId,
   entityReferenceRevisions = [],
   pluginOptions,
-  fileNodesExtendedData
+  fileNodesExtendedData,
+  reporter
 ) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
@@ -26,31 +97,13 @@ const nodeFromData = async (
   const langcode = attributes.langcode || `und`
   const type = datum.type.replace(/-|__|:|\.|\s/g, `_`)
 
-  const isFile = isFileNode(datum, type)
-
-  const url = isFile
-    ? pluginOptions.baseUrl + getFileUrl(datum.attributes)
-    : null
-
-  const extraNodeData = fileNodesExtendedData?.get(datum.id) || null
-  const imageSize = isFile ? extraNodeData || (await probeImageSize(url)) : null
-
-  const gatsbyImageCdnFields =
-    isFile &&
-    imageSize &&
-    imageSize.width &&
-    imageSize.height &&
-    url &&
-    datum.attributes.filemime
-      ? {
-          filename: attributes?.filename,
-          url,
-          placeholderUrl: url,
-          width: imageSize.width,
-          height: imageSize.height,
-          mimeType: datum.attributes.filemime,
-        }
-      : {}
+  const gatsbyImageCdnFields = getGatsbyImageCdnFields({
+    node: datum,
+    type,
+    pluginOptions,
+    fileNodesExtendedData,
+    reporter,
+  })
 
   return {
     id: createNodeId(
@@ -116,8 +169,8 @@ const createNodeIdWithVersion = (
 
 exports.createNodeIdWithVersion = createNodeIdWithVersion
 
-const isFileNode = (node, inputType) => {
-  const type = inputType || node?.internal?.type
+const isFileNode = node => {
+  const type = node?.internal?.type
   return type === `files` || type === `file__file`
 }
 

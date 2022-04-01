@@ -282,7 +282,8 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
       nodeToUpdate,
       createNodeId,
       getOptions().entityReferenceRevisions,
-      pluginOptions
+      pluginOptions,
+      reporter
     )
 
     newNode.internal.contentDigest = createContentDigest(newNode)
@@ -328,7 +329,8 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     nodeToUpdate,
     createNodeId,
     pluginOptions.entityReferenceRevisions,
-    pluginOptions
+    pluginOptions,
+    reporter
   )
 
   drupalCreateNodeManifest({

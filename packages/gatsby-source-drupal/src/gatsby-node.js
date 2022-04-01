@@ -664,7 +664,8 @@ ${JSON.stringify(webhookBody, null, 4)}`
         createNodeId,
         entityReferenceRevisions,
         pluginOptions,
-        fileNodesExtendedData
+        fileNodesExtendedData,
+        reporter
       )
 
       drupalCreateNodeManifest({
