@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
     "@babel/runtime": "^7.15.4",
-    "@turist/fetch": "^7.1.7",
+    "@turist/fetch": "^7.2.0",
     "@turist/time": "^0.0.2",
     "async-retry-ng": "^2.0.1",
     "boxen": "^4.2.0",
