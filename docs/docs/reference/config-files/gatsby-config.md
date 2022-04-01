@@ -370,7 +370,7 @@ See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
 
 ## jsxRuntime
 
-Setting to "automatic" allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
+Setting to `automatic` allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -380,17 +380,13 @@ module.exports = {
 
 ## jsxImportSource
 
-With the new jsxRuntime you can set which package React should use as underlying jsx transformer. For example you can set it to "@emotion/react" so by default @emotion/react is used instead of the react package.
+When `jsxRuntime` is set you can choose which package React should use as underlying JSX transformer with `jsxImportSource`. For example you can set it to `@emotion/react` so by default `@emotion/react` is used instead of the `react` package.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
+  jsxRuntime: "automatic",
   jsxImportSource: "@emotion/react",
 }
 ```
 
-Since Gatsby v4.1, gatsby-config.js has also accepted options jsxRuntime and jsxImportSource:
-https://www.gatsbyjs.com/docs/reference/release-notes/v4.1/#jsx-runtime-options-in-gatsby-configjs
-
-It is currently necessary to set jsxRuntime and jsxImportSource values to successfully opt into the automatic runtime with a custom import source. If you remove either one, gatsby build fails giving the following errors:
-JSX is invalid in components.
-Until the implementation can be further improved, it is necessary to set these values.
+**Please note:** For now you'll also need to set this configuration inside `babel-preset-gatsby`, see [its jsxImportSource documentation](https://github.com/gatsbyjs/gatsby/blob/master/packages/babel-preset-gatsby/README.md#reactImportSource).
