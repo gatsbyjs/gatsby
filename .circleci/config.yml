@@ -367,8 +367,8 @@ jobs:
     <<: *e2e-executor
     environment:
       <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
+      CYPRESS_PROJECT_ID: nusozx
+      CYPRESS_RECORD_KEY: 6500fa9b-7710-4968-b321-1a544c9a1fdc
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -382,7 +382,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=ec36ff6b-3db9-48a9-8f7b-2faf301ab800 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=2a4f4f31-0dfb-4a56-80e0-9ed42a1131a4 yarn test:offline
           react_version: "^18.0.0"
 
   themes_e2e_tests_development_runtime:
