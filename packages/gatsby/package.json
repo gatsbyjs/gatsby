@@ -243,7 +243,7 @@
     "@mdx-js/mdx": "^2.0.0-next.3",
     "@mdx-js/react": "^2.0.0-next.3",
     "@mdx-js/runtime": "^2.0.0-next.3",
-    "remark-mdx": "2.0.0-next.7",
+    "remark-mdx": "2.1.1",
     "remark-mdxjs": "^2.0.0-next.3"
   },
   "scripts": {
