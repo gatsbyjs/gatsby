@@ -10,7 +10,7 @@ showTopLevelSignatures: true
 
 The file `gatsby-browser.jsx`/`gatsby-browser.tsx` lets you respond to Gatsby-specific events within the browser, and wrap your page components in additional global components. The Gatsby Browser API gives you many options for interacting with the [client-side](/docs/glossary#client-side) of Gatsby.
 
-You can author the file in JavaScript and [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-browsertsx--gatsby-ssrtsx).
+You can author the file in JavaScript or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-browsertsx--gatsby-ssrtsx).
 
 ## Usage
 
