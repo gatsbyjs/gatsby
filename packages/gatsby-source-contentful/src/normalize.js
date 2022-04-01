@@ -196,7 +196,7 @@ function prepareTextNode(id, node, key, text) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `TextNode`,
     },
   }
 
@@ -220,7 +220,7 @@ function prepareJSONNode(id, node, key, content) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `JsonNode`,
     },
   }
 
@@ -384,7 +384,7 @@ export const createNodesForContentType = ({
         )
 
         const existingNode = getNode(entryNodeId)
-        if (existingNode?.internal?.contentDigest === entryItem.sys.updatedAt) {
+        if (existingNode?.updatedAt === entryItem.sys.updatedAt) {
           // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
           // of an entry did not change, then we can trust that none of its children were changed either.
           return null
@@ -552,9 +552,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(textNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const textNode = prepareTextNode(
                 textNodeId,
                 entryNode,
@@ -620,9 +618,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(jsonNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const jsonNode = prepareJSONNode(
                 jsonNodeId,
                 entryNode,
@@ -649,10 +645,7 @@ export const createNodesForContentType = ({
               // of an entry did not change, then we can trust that none of its children were changed either.
               // (That's why child nodes use the updatedAt of the parent node as their digest, too)
               const existingNode = getNode(jsonNodeId)
-              if (
-                existingNode?.internal?.contentDigest !==
-                entryItem.sys.updatedAt
-              ) {
+              if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
                 const jsonNode = prepareJSONNode(
                   jsonNodeId,
                   entryNode,

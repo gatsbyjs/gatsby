@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.11.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.11.1/packages/create-gatsby) (2022-03-31)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.11.0/packages/create-gatsby) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- update deps for cms source plugins [#35144](https://github.com/gatsbyjs/gatsby/issues/35144) ([d314840](https://github.com/gatsbyjs/gatsby/commit/d3148405e9621fa63bcd1cc026fe450ac9d1686f))
+
+### [2.10.2](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.10.2/packages/create-gatsby) (2022-03-23)
+
+**Note:** Version bump only for package create-gatsby
+
+### [2.10.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.10.1/packages/create-gatsby) (2022-03-18)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.10.0/packages/create-gatsby) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Bug Fixes
+
+- Update wordpress deps in schema [#35107](https://github.com/gatsbyjs/gatsby/issues/35107) ([c0f394d](https://github.com/gatsbyjs/gatsby/commit/c0f394d08ad7931430bd83597441aeebb9c1f2c7))
+
 ## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.9.0/packages/create-gatsby) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

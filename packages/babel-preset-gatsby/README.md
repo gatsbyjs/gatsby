@@ -2,7 +2,7 @@
 
 Gatsby uses the phenomenal project [Babel](https://babeljs.io/) to enable support for writing modern JavaScript — while still supporting older browsers. This package contains the default Babel setup for all Gatsby projects.
 
-For more information on how to customize the Babel configuration of your Gatsby site, check out [our documentation](https://www.gatsbyjs.org/docs/babel/).
+For more information on how to customize the Babel configuration of your Gatsby site, check out [our documentation](https://www.gatsbyjs.com/docs/babel/).
 
 ## Packages
 

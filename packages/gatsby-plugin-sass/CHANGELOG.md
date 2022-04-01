@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.11.1/packages/gatsby-plugin-sass) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.11.0/packages/gatsby-plugin-sass) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+### [5.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.10.2/packages/gatsby-plugin-sass) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+### [5.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.10.1/packages/gatsby-plugin-sass) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.10.0/packages/gatsby-plugin-sass) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.9.0/packages/gatsby-plugin-sass) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

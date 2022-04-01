@@ -48,7 +48,7 @@ git checkout package.json; npm install --force
 **[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
 
 More detailed instructions for setting up your Gatsby development environment can
-be found [here](https://www.gatsbyjs.org/contributing/how-to-contribute/).
+be found [here](https://www.gatsbyjs.com/contributing/how-to-contribute/).
 
 ### Other commands
 

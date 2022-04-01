@@ -142,10 +142,8 @@ module.exports = function createRemoteFileNode({
   }
 
   if (!url || isWebUri(url) === undefined) {
-    return Promise.reject(
-      new Error(
-        `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
-      )
+    throw new Error(
+      `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
     )
   }
 

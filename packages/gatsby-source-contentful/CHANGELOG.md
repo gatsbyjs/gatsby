@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.9.1/packages/gatsby-source-contentful) (2022-03-31)
+
+#### Bug Fixes
+
+- handle backreferences on data updates properly [#35214](https://github.com/gatsbyjs/gatsby/issues/35214) [#35269](https://github.com/gatsbyjs/gatsby/issues/35269) ([b5f0197](https://github.com/gatsbyjs/gatsby/commit/b5f01971d7572edf6733876251fca4c4f6fe4a36))
+
+## [7.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.9.0/packages/gatsby-source-contentful) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+### [7.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.8.2/packages/gatsby-source-contentful) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+### [7.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.8.1/packages/gatsby-source-contentful) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [7.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.8.0/packages/gatsby-source-contentful) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- improve gatsby-plugin-image errors [#35068](https://github.com/gatsbyjs/gatsby/issues/35068) ([c0d2eba](https://github.com/gatsbyjs/gatsby/commit/c0d2eba6efb2acce11050d8eda050849f8042a36))
+- enable image-cdn [#34831](https://github.com/gatsbyjs/gatsby/issues/34831) ([46fe418](https://github.com/gatsbyjs/gatsby/commit/46fe418d3f26659a0cc09ddaa1f0aa2347010812))
+- add support for image-cdn [#34825](https://github.com/gatsbyjs/gatsby/issues/34825) ([29b236b](https://github.com/gatsbyjs/gatsby/commit/29b236b7f2212d062a65d34781a612d715d936ef))
+
+#### Bug Fixes
+
+- Restore recently removed code to fix build errors fix [#35006](https://github.com/gatsbyjs/gatsby/issues/35006) ([57d4f9a](https://github.com/gatsbyjs/gatsby/commit/57d4f9a37b4fc13da321b7c0e57feb3cbb3b578f))
+
 ### [7.7.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.7.2/packages/gatsby-source-contentful) (2022-03-09)
 
 **Note:** Version bump only for package gatsby-source-contentful

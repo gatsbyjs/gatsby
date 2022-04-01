@@ -65,6 +65,7 @@ export type CalculateImageSizesArgs = {
   layout: ImageLayout
   outputPixelDensities: Array<number>
   breakpoints?: Array<number>
+  aspectRatio?: number
 } & WidthOrHeight
 
 export function isImage(node: {

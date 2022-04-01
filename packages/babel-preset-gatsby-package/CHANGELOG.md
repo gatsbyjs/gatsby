@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@2.11.0/packages/babel-preset-gatsby-package) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@2.10.0/packages/babel-preset-gatsby-package) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
 ## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@2.9.0/packages/babel-preset-gatsby-package) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

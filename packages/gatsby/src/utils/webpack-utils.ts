@@ -416,7 +416,7 @@ export const createWebpackUtils = (
       modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
     } = {}): RuleSetRule => {
       return {
-        test: /\.(js|mjs|jsx)$/,
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
         include: (modulePath: string): boolean => {
           // when it's not coming from node_modules we treat it as a source file.
           if (!vendorRegex.test(modulePath)) {
