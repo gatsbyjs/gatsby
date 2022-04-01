@@ -387,6 +387,7 @@ module.exports = {
   jsxImportSource: "@emotion/react",
 }
 ```
+
 Since Gatsby v4.1, gatsby-config.js has also accepted options jsxRuntime and jsxImportSource:
 https://www.gatsbyjs.com/docs/reference/release-notes/v4.1/#jsx-runtime-options-in-gatsby-configjs
 
