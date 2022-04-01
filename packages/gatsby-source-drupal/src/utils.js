@@ -57,6 +57,7 @@ const handleReferences = (
     const referencedNodes = []
     _.each(node.drupal_relationships, (v, k) => {
       if (!v.data) return
+
       const nodeFieldName = `${k}___NODE`
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
@@ -481,3 +482,50 @@ export function drupalCreateNodeManifest({
 exports.handleWebhookUpdate = handleWebhookUpdate
 exports.handleDeletedNode = handleDeletedNode
 exports.createNodeIfItDoesNotExist = createNodeIfItDoesNotExist
+
+/**
+ * This FN returns a Map with additional file node information that Drupal doesn't return on actual file nodes (namely the width/height of images)
+ */
+exports.getExtendedFileNodeData = allData => {
+  const fileNodesExtendedData = new Map()
+
+  for (const contentType of allData) {
+    if (!contentType) {
+      continue
+    }
+
+    contentType.data.forEach(node => {
+      if (!node) {
+        return
+      }
+
+      const { relationships } = node
+
+      if (relationships) {
+        for (const relationship of Object.values(relationships)) {
+          const relationshipNodes = Array.isArray(relationship.data)
+            ? relationship.data
+            : [relationship.data]
+
+          relationshipNodes.forEach(relationshipNode => {
+            if (!relationshipNode) {
+              return
+            }
+
+            if (
+              relationshipNode.type === `file--file` &&
+              relationshipNode.meta
+            ) {
+              fileNodesExtendedData.set(
+                relationshipNode.id,
+                relationshipNode.meta
+              )
+            }
+          })
+        }
+      }
+    })
+  }
+
+  return fileNodesExtendedData
+}

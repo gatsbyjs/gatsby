@@ -24,6 +24,7 @@ const {
   createNodeIfItDoesNotExist,
   handleDeletedNode,
   drupalCreateNodeManifest,
+  getExtendedFileNodeData,
 } = require(`./utils`)
 
 const agent = {
@@ -645,6 +646,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
   createNodesSpan.setTag(`sourceNodes.fetch.type`, `full`)
 
   const nodes = new Map()
+  const fileNodesExtendedData = getExtendedFileNodeData(allData)
 
   // first pass - create basic nodes
   for (const contentType of allData) {
@@ -661,7 +663,8 @@ ${JSON.stringify(webhookBody, null, 4)}`
         datum,
         createNodeId,
         entityReferenceRevisions,
-        pluginOptions
+        pluginOptions,
+        fileNodesExtendedData
       )
 
       drupalCreateNodeManifest({
@@ -683,6 +686,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       mutateNode: true,
       createNodeId,
       entityReferenceRevisions,
+      fileNodesExtendedData,
     })
   })
 

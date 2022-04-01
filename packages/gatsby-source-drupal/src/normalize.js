@@ -17,7 +17,8 @@ const nodeFromData = async (
   datum,
   createNodeId,
   entityReferenceRevisions = [],
-  pluginOptions
+  pluginOptions,
+  fileNodesExtendedData
 ) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
@@ -31,18 +32,25 @@ const nodeFromData = async (
     ? pluginOptions.baseUrl + getFileUrl(datum.attributes)
     : null
 
-  const imageSize = isFile ? await probeImageSize(url) : {}
+  const extraNodeData = fileNodesExtendedData?.get(datum.id) || null
+  const imageSize = isFile ? extraNodeData || (await probeImageSize(url)) : null
 
-  const gatsbyImageCdnFields = isFile
-    ? {
-        filename: attributes?.filename,
-        url,
-        placeholderUrl: url,
-        width: imageSize.width,
-        height: imageSize.height,
-        mimeType: datum.attributes.filemime,
-      }
-    : {}
+  const gatsbyImageCdnFields =
+    isFile &&
+    imageSize &&
+    imageSize.width &&
+    imageSize.height &&
+    url &&
+    datum.attributes.filemime
+      ? {
+          filename: attributes?.filename,
+          url,
+          placeholderUrl: url,
+          width: imageSize.width,
+          height: imageSize.height,
+          mimeType: datum.attributes.filemime,
+        }
+      : {}
 
   return {
     id: createNodeId(
