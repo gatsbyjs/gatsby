@@ -123,6 +123,7 @@ const handleReferences = async (
 
           if (!backRefsNames.includes(nodeFieldName)) {
             backRefsNames.push(nodeFieldName)
+            await cache.set(makeBackRefsKey(referencedNode.id), backRefsNames)
           }
           backReferencedNodes.push(referencedNode)
         })
