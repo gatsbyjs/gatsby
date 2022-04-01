@@ -29,14 +29,15 @@ export enum DbComparator {
   GLOB = `$glob`,
 }
 
-export type FilterValueNullable =  // TODO: merge with DbComparatorValue
-  | string
-  | number
-  | boolean
-  | null
-  | undefined
-  | RegExp // Only valid for $regex
-  | Array<string | number | boolean | null | undefined>
+export type FilterValueNullable = // TODO: merge with DbComparatorValue
+
+    | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | RegExp // Only valid for $regex
+    | Array<string | number | boolean | null | undefined>
 
 // This is filter value in most cases
 export type FilterValue =
