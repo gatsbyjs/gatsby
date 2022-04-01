@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.11.1/packages/gatsby-plugin-sharp) (2022-03-31)
+
+#### Bug Fixes
+
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) [#35268](https://github.com/gatsbyjs/gatsby/issues/35268) ([a527891](https://github.com/gatsbyjs/gatsby/commit/a5278911d9c69a2b6478d97776d506722a0ad3a6))
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.11.0/packages/gatsby-plugin-sharp) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

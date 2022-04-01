@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.11.1/packages/gatsby) (2022-03-31)
+
+#### Bug Fixes
+
+- use gatsby root instead of process.cwd [#35263](https://github.com/gatsbyjs/gatsby/issues/35263) [#35264](https://github.com/gatsbyjs/gatsby/issues/35264) ([c0da030](https://github.com/gatsbyjs/gatsby/commit/c0da030929fd3efa54866c3c6e8b4030fb4f4317))
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.11.0/packages/gatsby) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

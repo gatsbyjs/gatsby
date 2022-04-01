@@ -370,7 +370,7 @@ See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
 
 ## jsxRuntime
 
-Setting to "automatic" allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
+Setting to `automatic` allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -380,10 +380,13 @@ module.exports = {
 
 ## jsxImportSource
 
-With the new jsxRuntime you can set which package React should use as underlying jsx transformer. For example you can set it to "@emotion/react" so by default @emotion/react is used instead of the react package.
+When `jsxRuntime` is set you can choose which package React should use as underlying JSX transformer with `jsxImportSource`. For example you can set it to `@emotion/react` so by default `@emotion/react` is used instead of the `react` package.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
+  jsxRuntime: "automatic",
   jsxImportSource: "@emotion/react",
 }
 ```
+
+**Please note:** For now you'll also need to set this configuration inside `babel-preset-gatsby`, see [its jsxImportSource documentation](https://github.com/gatsbyjs/gatsby/blob/master/packages/babel-preset-gatsby/README.md#reactImportSource).
