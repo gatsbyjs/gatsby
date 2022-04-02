@@ -32,6 +32,11 @@ const RemoteFile = ({ data }) => {
                 image={node.constrained}
                 alt=""
               />
+              <GatsbyImage
+                className="constrained_traced"
+                image={node.constrained_traced}
+                alt=""
+              />
               <GatsbyImage className="full" image={node.full} alt="" />
             </div>
           </div>
@@ -63,6 +68,11 @@ export const pageQuery = graphql`
           layout: CONSTRAINED
           width: 300
           placeholder: BLURRED
+        )
+        constrained_traced: gatsbyImage(
+          layout: CONSTRAINED
+          width: 300
+          placeholder: TRACED_SVG
         )
         full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
       }

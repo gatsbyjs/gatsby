@@ -109,29 +109,12 @@ const queue = Queue<
         buffer = await readFile(filePath)
       }
 
-      const [{ trace, Potrace }, SVGO, svgToMiniDataURI] = await Promise.all([
-        import(`@gatsbyjs/potrace`),
-        import(`svgo`),
-        import(`mini-svg-data-uri`),
-      ])
-      const svgo = new SVGO({
-        multipass: true,
-        floatPrecision: 0,
-        plugins: [
-          {
-            removeViewBox: false,
-          },
-          {
-            addAttributesToSVGElement: {
-              attributes: [
-                {
-                  preserveAspectRatio: `none`,
-                },
-              ],
-            },
-          },
-        ],
-      })
+      const [{ trace, Potrace }, { optimize }, { default: svgToMiniDataURI }] =
+        await Promise.all([
+          import(`@gatsbyjs/potrace`),
+          import(`svgo`),
+          import(`mini-svg-data-uri`),
+        ])
 
       trace(
         buffer,
@@ -147,12 +130,32 @@ const queue = Queue<
           }
 
           try {
-            const { data } = await svgo.optimize(svg)
+            const { data } = await optimize(svg, {
+              multipass: true,
+              floatPrecision: 0,
+              plugins: [
+                {
+                  name: `preset-default`,
+                  params: {
+                    overrides: {
+                      // customize default plugin options
+                      removeViewBox: false,
 
-            return cb(
-              null,
-              svgToMiniDataURI.default(data).replace(/ /gi, `%20`)
-            )
+                      // or disable plugins
+                      addAttributesToSVGElement: {
+                        attributes: [
+                          {
+                            preserveAspectRatio: `none`,
+                          },
+                        ],
+                      },
+                    },
+                  },
+                },
+              ],
+            })
+
+            return cb(null, svgToMiniDataURI(data).replace(/ /gi, `%20`))
           } catch (err) {
             return cb(err)
           }
