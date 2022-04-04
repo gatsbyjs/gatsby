@@ -168,7 +168,7 @@ sudo apt-get install curl
 3. After it finishes installing, download the latest nvm version:
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 4. Confirm this has worked. The output should be a version number. (Note that you may have to reload your bash configuration. Close and restart the terminal or run `source ~/.bashrc`.)
@@ -190,7 +190,7 @@ sudo pacman -Syu
 2. These distros come installed with curl, so you can use that to download nvm:
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 3. Before using nvm, you need to install additional dependencies by running:
@@ -212,7 +212,7 @@ nvm --version
 1. These distros come installed with curl, so you can use that to download nvm:
 
 ```shell
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 2. Confirm this has worked. The output should be a version number.
@@ -225,11 +225,11 @@ nvm --version
 
 ##### Set default Node.js version
 
-When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the version 14 release, but more recent version numbers can be used instead.
+When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the version 16 release, but more recent version numbers can be used instead.
 
 ```shell
-nvm install 14
-nvm use 14
+nvm install 16
+nvm use 16
 ```
 
 Confirm that this worked. The output should be a version number.
