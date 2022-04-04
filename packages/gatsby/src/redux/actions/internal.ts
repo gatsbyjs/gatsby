@@ -1,6 +1,7 @@
 import {
   ICreatePageDependencyActionPayloadType,
   IDeleteNodeManifests,
+  IProcessGatsbyImageSourceURL,
 } from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
@@ -370,6 +371,15 @@ export const setFunctions = (
 export const deleteNodeManifests = (): IDeleteNodeManifests => {
   return {
     type: `DELETE_NODE_MANIFESTS`,
+  }
+}
+
+export const processGatsbyImageSourceUrl = (
+  sourceUrl: string
+): IProcessGatsbyImageSourceURL => {
+  return {
+    type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
+    payload: { sourceUrl },
   }
 }
 

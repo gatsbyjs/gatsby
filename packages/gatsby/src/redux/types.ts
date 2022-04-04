@@ -253,6 +253,7 @@ export interface IGatsbyState {
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
   requestHeaders: Map<string, { [header: string]: string }>
+  telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -356,6 +357,9 @@ export interface IGatsbyState {
 
 export type GatsbyStateKeys = keyof IGatsbyState
 
+/**
+ * @todo add telemetry to cached redux state
+ */
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
   status: IGatsbyState["status"]
@@ -969,6 +973,17 @@ export interface ISetDomainRequestHeaders {
       [header: string]: string
     }
   }
+}
+
+export interface IProcessGatsbyImageSourceURL {
+  type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`
+  payload: {
+    sourceUrl: string
+  }
+}
+
+export interface ITelemetry {
+  gatsbyImageResolver: Set<string>
 }
 
 export interface IMergeWorkerQueryState {
