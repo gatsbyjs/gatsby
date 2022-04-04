@@ -30,11 +30,15 @@ setLoader(loader)
 loader.setApiRunner(apiRunner)
 
 let reactHydrate
+let reactRender
 if (HAS_REACT_18) {
   const reactDomClient = require(`react-dom/client`)
+  reactRender = (Component, el) =>
+    reactDomClient.createRoot(el).render(Component)
   reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
 } else {
   const reactDomClient = require(`react-dom`)
+  reactRender = reactDomClient.render
   reactHydrate = reactDomClient.hydrate
 }
 
@@ -258,10 +262,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return <GatsbyRoot>{SiteRoot}</GatsbyRoot>
     }
 
+    const focusEl = document.getElementById(`gatsby-focus-wrapper`)
+
+    // Client only pages have any empty body so we just do a normal
+    // render to avoid React complaining about hydration mis-matches.
+    let defaultRenderer = reactRender
+    if (focusEl && focusEl.children.length) {
+      defaultRenderer = reactHydrate
+    }
+
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      reactHydrate
+      defaultRenderer
     )[0]
 
     function runRender() {
