@@ -12,7 +12,9 @@ export function waitForAPI(api) {
     // If the API has been marked as pre-resolved,
     // resolve immediately and reset the variables.
     awaitingAPI = null
-    this.___resolvedAPIs = []
+    this.___resolvedAPIs = this.___resolvedAPIs.slice(
+      this.___resolvedAPIs.lastIndexOf(api)
+    )
     resolve()
   }
   return promise
