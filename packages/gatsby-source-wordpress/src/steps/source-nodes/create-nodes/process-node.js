@@ -147,7 +147,7 @@ const pickNodeBySourceUrlOrCheerioImg = ({
       )
   )
 
-  if (!imageNode && !!cheerioImg) {
+  if (!imageNode && cheerioImg) {
     imageNode = mediaItemNodes.find(
       mediaItemNode => getCheerioImgRelayId(cheerioImg) === mediaItemNode.id
     )
