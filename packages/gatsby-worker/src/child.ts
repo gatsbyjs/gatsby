@@ -1,3 +1,5 @@
+import signalExit from "signal-exit"
+import fs from "fs-extra"
 import {
   ParentMessageUnion,
   ChildMessageUnion,
@@ -10,6 +12,7 @@ import {
 } from "./types"
 import { isPromise } from "./utils"
 
+let counter = 0
 export interface IGatsbyWorkerMessenger<
   MessagesFromParent = unknown,
   MessagesFromChild = MessagesFromParent
@@ -30,12 +33,35 @@ let getMessenger = function <
   return undefined
 }
 
-if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
+if (
+  process.send &&
+  process.env.GATSBY_WORKER_MODULE_PATH &&
+  process.env.GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION
+) {
+  const workerInFlightsDumpLocation =
+    process.env.GATSBY_WORKER_IN_FLIGHT_DUMP_LOCATION
   isWorker = true
   const listeners: Array<(msg: any) => void> = []
-  const ensuredSendToMain = process.send.bind(process) as (
-    msg: ChildMessageUnion
-  ) => void
+
+  const inFlightMessages = new Set<ChildMessageUnion>()
+  signalExit(() => {
+    if (inFlightMessages.size > 0) {
+      // this need to be sync
+      fs.outputJsonSync(
+        workerInFlightsDumpLocation,
+        Array.from(inFlightMessages)
+      )
+    }
+  })
+
+  function ensuredSendToMain(msg: ChildMessageUnion): void {
+    inFlightMessages.add(msg)
+    process.send!(msg, undefined, undefined, error => {
+      if (!error) {
+        inFlightMessages.delete(msg)
+      }
+    })
+  }
 
   function onError(error: Error): void {
     if (error == null) {
@@ -44,6 +70,7 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
 
     const msg: ChildMessageUnion = [
       ERROR,
+      ++counter,
       error.constructor && error.constructor.name,
       error.message,
       error.stack,
@@ -54,7 +81,7 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
   }
 
   function onResult(result: unknown): void {
-    const msg: ChildMessageUnion = [RESULT, result]
+    const msg: ChildMessageUnion = [RESULT, ++counter, result]
     ensuredSendToMain(msg)
   }
 
@@ -69,7 +96,7 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
         listeners.push(listener)
       },
       sendMessage(msg: MessagesFromChild): void {
-        const poolMsg: ChildMessageUnion = [CUSTOM_MESSAGE, msg]
+        const poolMsg: ChildMessageUnion = [CUSTOM_MESSAGE, ++counter, msg]
         ensuredSendToMain(poolMsg)
       },
       messagingVersion: MESSAGING_VERSION,
@@ -82,7 +109,7 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
     if (msg[0] === EXECUTE) {
       let result
       try {
-        result = child[msg[1]].call(child, ...msg[2])
+        result = child[msg[2]].call(child, ...msg[3])
       } catch (e) {
         onError(e)
         return
@@ -97,14 +124,14 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
       process.off(`message`, messageHandler)
     } else if (msg[0] === CUSTOM_MESSAGE) {
       for (const listener of listeners) {
-        listener(msg[1])
+        listener(msg[2])
       }
     }
   }
 
   process.on(`message`, messageHandler)
 
-  ensuredSendToMain([WORKER_READY])
+  ensuredSendToMain([WORKER_READY, ++counter])
 }
 
 export { isWorker, getMessenger }
