@@ -18,7 +18,7 @@ function InstrumentPage(Component) {
       return () => {
         addLogEntry(`componentWillUnmount`)
       }
-    })
+    }, [])
   
     addLogEntry(`render`)
   
