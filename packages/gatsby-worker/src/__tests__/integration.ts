@@ -51,6 +51,7 @@ describe(`gatsby-worker`, () => {
         "async100ms",
         "setupPingPongMessages",
         "getWasPonged",
+        "lotOfMessagesAndExit",
       ]
     `)
     // .all and .single should have same methods
@@ -425,6 +426,28 @@ describe(`gatsby-worker`, () => {
 
         workerPool.sendMessage({ type: `PONG` }, 9001)
       }).toThrowError(`There is no worker with "9001" id.`)
+    })
+
+    it(`messages are not lost if worker exits soon after sending a message`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+      const COUNT = 10000
+
+      let counter = 0
+      workerPool.onMessage(msg => {
+        if (msg.type === `LOT_OF_MESSAGES_TEST`) {
+          counter++
+        }
+      })
+
+      try {
+        await workerPool.single.lotOfMessagesAndExit(COUNT)
+      } catch (e) {
+        console.log(e)
+      }
+
+      expect(counter).toEqual(COUNT)
     })
   })
 })
