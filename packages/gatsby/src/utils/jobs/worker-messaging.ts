@@ -37,6 +37,7 @@ export function initJobsMessagingInMainProcess(
               payload: {
                 id: msg.payload.id,
                 error: error.message,
+                stack: error.stack,
               },
             },
             workerId
@@ -72,7 +73,7 @@ export function initJobsMessagingInWorker(): void {
         deferredPromise.resolve(result)
         deferredWorkerPromises.delete(id)
       } else if (msg.type === MESSAGE_TYPES.JOB_FAILED) {
-        const { id, error } = msg.payload
+        const { id, error, stack } = msg.payload
         const deferredPromise = deferredWorkerPromises.get(id)
 
         if (!deferredPromise) {
@@ -81,7 +82,11 @@ export function initJobsMessagingInWorker(): void {
           )
         }
 
-        deferredPromise.reject(new WorkerError(error))
+        const errorObject = new WorkerError(error)
+        if (stack) {
+          errorObject.stack = stack
+        }
+        deferredPromise.reject(errorObject)
         deferredWorkerPromises.delete(id)
       }
     })
