@@ -269,7 +269,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       app.get(
         `/page-data/:pagePath(*)/page-data.json`,
         async (req, res, next) => {
-          const requestedPagePath = decodeURIComponent(req.params.pagePath)
+          const requestedPagePath = req.params.pagePath
           if (!requestedPagePath) {
             return void next()
           }
