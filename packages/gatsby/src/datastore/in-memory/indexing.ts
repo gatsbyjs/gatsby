@@ -98,6 +98,18 @@ export const getGatsbyNodePartial = (
         fullNodeObject = getNode(node.id)!
       }
 
+      if (
+        dottedField.startsWith(`__gatsby_resolved.`) &&
+        !fullNodeObject.__gatsby_resolved
+      ) {
+        const typeName = fullNodeObject.internal.type
+        const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
+        const resolved = resolvedNodes?.get(fullNodeObject.id)
+        if (resolved !== undefined) {
+          fullNodeObject.__gatsby_resolved = resolved
+        }
+      }
+
       // use the full node object to fetch the value
       dottedFields[dottedField] = getValueAt(fullNodeObject, dottedField)
     }
