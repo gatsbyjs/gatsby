@@ -209,9 +209,10 @@ export async function getData({
     results.pageContext = page.context
 
     let searchString = ``
+
     if (req?.query) {
       const maybeQueryString = Object.entries(req.query)
-        .map(([k, v]) => `${k}=${v}`)
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
         .join(`&`)
       if (maybeQueryString) {
         searchString = `?${maybeQueryString}`
