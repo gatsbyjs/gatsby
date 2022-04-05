@@ -1,4 +1,4 @@
-import { fork, ChildProcess } from "child_process"
+import { fork } from "child_process"
 import fs from "fs-extra"
 import os from "os"
 import path from "path"
@@ -85,7 +85,8 @@ class TaskInfo<T> {
 
 interface IWorkerInfo<T> {
   workerId: number
-  worker: ChildProcess
+  send: (msg: ParentMessageUnion) => void
+  kill: (signal?: NodeJS.Signals | number) => boolean
   lastMessage: number
   exitedPromise: Promise<{
     code: number | null
@@ -205,7 +206,18 @@ export class WorkerPool<
 
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
         workerId,
-        worker,
+        send: (msg: ParentMessageUnion): void => {
+          if (!worker.connected) {
+            return
+          }
+
+          worker.send(msg, undefined, undefined, error => {
+            if (error && worker.connected) {
+              throw error
+            }
+          })
+        },
+        kill: worker.kill.bind(worker),
         ready: new Promise<void>(resolve => {
           workerReadyResolve = resolve
         }),
@@ -339,11 +351,11 @@ export class WorkerPool<
       // tell worker to end gracefully
       const endMessage: ParentMessageUnion = [END, ++this.counter]
 
-      workerInfo.worker.send(endMessage)
+      workerInfo.send(endMessage)
 
       // force exit if worker doesn't exit gracefully quickly
       const forceExitTimeout = setTimeout(() => {
-        workerInfo.worker.kill(`SIGKILL`)
+        workerInfo.kill(`SIGKILL`)
       }, 1000)
 
       const exitResult = await workerInfo.exitedPromise
@@ -413,7 +425,7 @@ export class WorkerPool<
       taskInfo.functionName,
       taskInfo.args,
     ]
-    workerInfo.worker.send(msg)
+    workerInfo.send(msg)
   }
 
   private scheduleWork<T extends keyof WorkerModuleExports>(
@@ -470,8 +482,8 @@ export class WorkerPool<
       throw new Error(`There is no worker with "${workerId}" id.`)
     }
 
-    const poolMsg = [CUSTOM_MESSAGE, ++this.counter, msg]
-    worker.worker.send(poolMsg)
+    const poolMsg: ParentMessageUnion = [CUSTOM_MESSAGE, ++this.counter, msg]
+    worker.send(poolMsg)
   }
 }
 
