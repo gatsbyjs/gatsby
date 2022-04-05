@@ -1,7 +1,9 @@
+/**
+ * @todo combine these with the below exports
+ */
 import {
   ICreatePageDependencyActionPayloadType,
   IDeleteNodeManifests,
-  IProcessGatsbyImageSourceURL,
 } from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
@@ -29,6 +31,7 @@ import {
   IApiFinishedAction,
   IQueryClearDirtyQueriesListToEmitViaWebsocket,
   ICreateJobV2FromInternalAction,
+  IProcessGatsbyImageSourceUrlAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -371,15 +374,6 @@ export const setFunctions = (
 export const deleteNodeManifests = (): IDeleteNodeManifests => {
   return {
     type: `DELETE_NODE_MANIFESTS`,
-  }
-}
-
-export const processGatsbyImageSourceUrl = (
-  sourceUrl: string
-): IProcessGatsbyImageSourceURL => {
-  return {
-    type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
-    payload: { sourceUrl },
   }
 }
 

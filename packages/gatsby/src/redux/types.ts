@@ -446,6 +446,7 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
+  | IProcessGatsbyImageSourceUrlAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -975,7 +976,7 @@ export interface ISetDomainRequestHeaders {
   }
 }
 
-export interface IProcessGatsbyImageSourceURL {
+export interface IProcessGatsbyImageSourceUrlAction {
   type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`
   payload: {
     sourceUrl: string
