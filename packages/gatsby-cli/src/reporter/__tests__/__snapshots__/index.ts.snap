@@ -140,7 +140,7 @@ Object {
   "context": Object {
     "someProp": "test123",
   },
-  "docsUrl": "https://www.gatsbyjs.org/docs/gatsby-cli/#new",
+  "docsUrl": "https://www.gatsbyjs.com/docs/gatsby-cli/#new",
   "level": "ERROR",
   "stack": Array [],
   "text": "Error text is test123",
@@ -153,7 +153,7 @@ Object {
   "context": Object {
     "someProp": "test123",
   },
-  "docsUrl": "https://www.gatsbyjs.org/docs/gatsby-cli/#new",
+  "docsUrl": "https://www.gatsbyjs.com/docs/gatsby-cli/#new",
   "level": "ERROR",
   "pluginName": "gatsby-plugin-foo-bar",
   "stack": Array [],

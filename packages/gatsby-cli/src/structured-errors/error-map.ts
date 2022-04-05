@@ -528,6 +528,14 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "11332": {
+    text: (): string =>
+      `Failed to compile Gatsby Functions. See the error below for more details.\nNote: The src/api folder is a reserved folder for Gatsby Functions and can't be used for any other files.`,
+    type: Type.COMPILATION,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>
@@ -667,8 +675,44 @@ const errors = {
     level: Level.WARNING,
     category: ErrorCategory.USER,
   },
-
   /** End Node Manifest warnings */
+  // Parcel Compilation Errors
+  "11901": {
+    text: (context): string =>
+      stripIndent(`
+    Failed to compile Gatsby files ${
+      context.origin ? `(${context.origin})` : ``
+    }:
+    
+    ${context.generalMessage}. ${context.specificMessage ?? ``}
+    ${
+      context.hints
+        ? context.hints.map(
+            h => `
+    Hints:
+    - ${h}\n`
+          )
+        : ``
+    }
+    ${context.filePath ? `File path: ${context.filePath}` : ``}`),
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
+  "11902": {
+    text: (context): string =>
+      `We encountered an error while trying to compile your site's ${context.configName}. Please fix the error and try again.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
+  "11903": {
+    text: (context): string =>
+      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
 }
 
 export type ErrorId = string | keyof typeof errors

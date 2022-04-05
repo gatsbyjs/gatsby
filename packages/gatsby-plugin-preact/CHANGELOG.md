@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.11.0/packages/gatsby-plugin-preact) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- fix preact alias fix [#35156](https://github.com/gatsbyjs/gatsby/issues/35156) ([b13ddff](https://github.com/gatsbyjs/gatsby/commit/b13ddff0b71f26e81adeefa339dbabe740f84a78))
+
+### [6.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.10.1/packages/gatsby-plugin-preact) (2022-03-18)
+
+#### Bug Fixes
+
+- fix preact alias fix [#35156](https://github.com/gatsbyjs/gatsby/issues/35156) fix [#35169](https://github.com/gatsbyjs/gatsby/issues/35169) ([0275fad](https://github.com/gatsbyjs/gatsby/commit/0275fad5dc2dcae0184eee0b0e1710a0b5b25b2e))
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.10.0/packages/gatsby-plugin-preact) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.9.0/packages/gatsby-plugin-preact) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.8.0/packages/gatsby-plugin-preact) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
 ## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.7.0/packages/gatsby-plugin-preact) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

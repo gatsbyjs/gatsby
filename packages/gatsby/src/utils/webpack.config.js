@@ -23,6 +23,7 @@ import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
+import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
@@ -125,7 +126,7 @@ module.exports = async (
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
       const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.substr(-1) === `/`) {
+      if (pubPath.slice(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
         hmrBasePath = withTrailingSlash(pubPath)
@@ -229,6 +230,9 @@ module.exports = async (
         __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
+        HAS_REACT_18: JSON.stringify(
+          major(require(`react-dom/package.json`).version) >= 18
+        ),
       }),
 
       plugins.virtualModules(),
@@ -858,7 +862,11 @@ module.exports = async (
             .flattenedPlugins.filter(plugin =>
               plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
             )
-            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+            .map(
+              plugin =>
+                plugin.resolvedCompiledGatsbyNode ??
+                path.join(plugin.resolve, `gatsby-node.js`)
+            ),
         ],
       },
     }
@@ -919,7 +927,7 @@ module.exports = async (
       // so loader rule test work well
       const queryParamStartIndex = modulePath.indexOf(`?`)
       if (queryParamStartIndex !== -1) {
-        modulePath = modulePath.substr(0, queryParamStartIndex)
+        modulePath = modulePath.slice(0, queryParamStartIndex)
       }
 
       return fastRefreshIncludes.some(re => re.test(modulePath))

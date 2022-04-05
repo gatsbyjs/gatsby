@@ -54,7 +54,7 @@ module.exports = babelLoader.custom(babel => {
         },
         loader: {
           cacheIdentifier: JSON.stringify({
-            browerslist: getBrowsersList(rootDir),
+            browsersList: getBrowsersList(rootDir),
             babel: babel.version,
             gatsbyPreset: require(`babel-preset-gatsby/package.json`).version,
             env: babel.getEnv(),

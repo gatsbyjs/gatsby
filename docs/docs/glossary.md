@@ -50,7 +50,7 @@ A storage of information locally that might be used again, so computations and l
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
 
-Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-instructions), for those who contribute to the Gatsby project.
+Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/code-contributions#setting-up-your-local-dev-environment), for those who contribute to the Gatsby project.
 
 ### Client-side
 
@@ -80,7 +80,7 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 ### Config
 
-The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
+The configuration file, `gatsby-config.js`/`gatsby-config.ts` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
 
 ### [Content Delivery Network](/docs/glossary/content-delivery-network/)
 
@@ -111,6 +111,10 @@ Decoupling describes the separation of different concerns. With [Gatsby](#gatsby
 ### [Decoupled Drupal](/docs/glossary/decoupled-drupal/)
 
 Decoupling refers to the practice of using Drupal as a [headless CMS](#headless-cms). A decoupled Drupal instance functions as a content API that returns JSON for your [frontend](#frontend) to consume.
+
+### Deferred Static Generation (DSG)
+
+[Deferred Static Generation (DSG)](/docs/how-to/rendering-options/using-deferred-static-generation/) is one of [Gatsby’s rendering options](/docs/conceptual/rendering-options/) and allows you to defer non-critical page generation to user request, speeding up build times. Instead of generating every page at build time, you can decide to build certain pages up front and others only when a user accesses the page at run time.
 
 ### Deploy
 
@@ -380,6 +384,6 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ### [Yarn](/docs/glossary/yarn/)
 
-A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
+A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/code-contributions#setting-up-your-local-dev-environment).
 
 ## Z

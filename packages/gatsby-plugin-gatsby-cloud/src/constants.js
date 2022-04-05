@@ -48,5 +48,5 @@ export const POLLING_INTERVAL = 5000
 export const FEEDBACK_COOKIE_NAME = `last_feedback`
 export const DAYS_BEFORE_FEEDBACK = 30
 export const INTERACTION_COOKIE_NAME = `interaction_count`
-export const INTERACTIONS_BEFORE_FEEDBACK = 10
+export const INTERACTIONS_BEFORE_FEEDBACK = 3
 export const FEEDBACK_URL = `https://gatsby.dev/zrx`

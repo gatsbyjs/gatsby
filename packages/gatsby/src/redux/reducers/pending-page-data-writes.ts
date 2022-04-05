@@ -7,6 +7,12 @@ export const pendingPageDataWritesReducer = (
   action: ActionsUnion
 ): IGatsbyState["pendingPageDataWrites"] => {
   switch (action.type) {
+    case `CREATE_PAGE`:
+      if (action.componentModified) {
+        state.pagePaths.add(action.payload.path)
+      }
+
+      return state
     case `ADD_PENDING_PAGE_DATA_WRITE`:
       state.pagePaths.add(action.payload.path)
       return state
@@ -15,6 +21,7 @@ export const pendingPageDataWritesReducer = (
       for (const page of action.payload.pages) {
         state.pagePaths.add(page)
       }
+
       return state
     }
 

@@ -6,7 +6,7 @@ const {
   RenameTypes,
 } = require(`@graphql-tools/wrap`)
 const { linkToExecutor } = require(`@graphql-tools/links`)
-const { createHttpLink } = require(`apollo-link-http`)
+const { createHttpLink } = require(`@apollo/client`)
 const { fetchWrapper } = require(`./fetch`)
 const { createDataloaderLink } = require(`./batching/dataloader-link`)
 

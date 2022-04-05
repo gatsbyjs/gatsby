@@ -1,7 +1,7 @@
 const sharp = require(`./safe-sharp`)
 const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
-const { isCI } = require(`gatsby-core-utils`)
+const { isCI } = require(`gatsby-core-utils/ci`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -83,9 +83,12 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
 }
 
 function prepareQueue({ file, args }) {
-  const { pathPrefix, ...options } = args
-  const argsDigestShort = createArgsDigest(options)
-  const imgSrc = `/${file.name}.${options.toFormat}`
+  const { pathPrefix, duotone, ...rest } = args
+  // Duotone is a nested object inside transformOptions and has a [Object: Null Prototype]
+  // So it's flattened into a new object so that createArgsDigest also takes duotone into account
+  const digestArgs = Object.assign(rest, duotone)
+  const argsDigestShort = createArgsDigest(digestArgs)
+  const imgSrc = `/${file.name}.${args.toFormat}`
   const outputDir = path.join(
     process.cwd(),
     `public`,
@@ -99,11 +102,11 @@ function prepareQueue({ file, args }) {
 
   const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,
-    options
+    args
   )
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${args.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`

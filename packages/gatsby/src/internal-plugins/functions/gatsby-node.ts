@@ -448,8 +448,12 @@ export async function onPreBootstrap({
           })
       }
     })
-  } catch (e) {
-    activity.panic(`Failed to compile Gatsby Functions.`, e)
+  } catch (error) {
+    activity.panic({
+      id: `11332`,
+      error,
+      context: {},
+    })
   }
 
   activity.end()

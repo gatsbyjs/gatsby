@@ -196,7 +196,7 @@ function prepareTextNode(id, node, key, text) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `TextNode`,
     },
   }
 
@@ -220,7 +220,7 @@ function prepareJSONNode(id, node, key, content) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `JsonNode`,
     },
   }
 
@@ -382,6 +382,13 @@ export const createNodesForContentType = ({
           entryItem.sys.id,
           entryItem.sys.type
         )
+
+        const existingNode = getNode(entryNodeId)
+        if (existingNode?.updatedAt === entryItem.sys.updatedAt) {
+          // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+          // of an entry did not change, then we can trust that none of its children were changed either.
+          return null
+        }
 
         // Get localized fields.
         const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
@@ -545,9 +552,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(textNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const textNode = prepareTextNode(
                 textNodeId,
                 entryNode,
@@ -613,9 +618,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(jsonNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const jsonNode = prepareJSONNode(
                 jsonNodeId,
                 entryNode,
@@ -642,10 +645,7 @@ export const createNodesForContentType = ({
               // of an entry did not change, then we can trust that none of its children were changed either.
               // (That's why child nodes use the updatedAt of the parent node as their digest, too)
               const existingNode = getNode(jsonNodeId)
-              if (
-                existingNode?.internal?.contentDigest !==
-                entryItem.sys.updatedAt
-              ) {
+              if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
                 const jsonNode = prepareJSONNode(
                   jsonNodeId,
                   entryNode,
@@ -717,6 +717,7 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
+    const file = assetItem.fields.file ? getField(assetItem.fields.file) : {}
     const assetNode = {
       contentful_id: assetItem.sys.id,
       spaceId: space.sys.id,
@@ -725,7 +726,7 @@ export const createAssetNodes = ({
       updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
-      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
+      file,
       title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
@@ -737,6 +738,12 @@ export const createAssetNodes = ({
       sys: {
         type: assetItem.sys.type,
       },
+      url: `https:${file.url}`,
+      placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
+      mimeType: file.contentType,
+      filename: file.fileName,
+      width: file.details?.image?.width,
+      height: file.details?.image?.height,
     }
 
     // Link tags

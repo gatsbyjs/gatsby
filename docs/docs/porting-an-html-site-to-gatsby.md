@@ -568,4 +568,4 @@ The [building with components doc](/docs/conceptual/building-with-components/) h
 
 Short guides can be found at the [recipes section](/docs/recipes) for adding functionality such as optimizing and querying local images, adding Markdown support and integrating various modern CSS tools. The [adding website functionality page](/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication, and fetching data with client-side JavaScript.
 
-Gatsby is dedicated to making you feel welcome! Learn more and engage with the community by starting a conversation or contributing yourself. The [community page](/contributing/community/) has further information and channels where you can get support.
+Gatsby is dedicated to making you feel welcome! Learn more and engage with the community by starting a conversation or contributing yourself. The [contributing page](/contributing/) has further information and channels where you can get support.

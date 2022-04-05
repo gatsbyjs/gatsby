@@ -14,6 +14,7 @@ export type IFetchRemoteFileOptions = {
   ext?: string
   name?: string
   cacheKey?: string
+  excludeDigest?: boolean
 } & (
   | {
       directory: string

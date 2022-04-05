@@ -1,6 +1,6 @@
 import fileType from "file-type"
 import path from "path"
-import fs, { pathExists } from "fs-extra"
+import fs from "fs-extra"
 import Queue from "fastq"
 import { createContentDigest } from "./create-content-digest"
 import {
@@ -49,35 +49,49 @@ export async function fetchRemoteFile(
       if (await fs.pathExists(cachedPath)) {
         // If the cached directory is not part of the public directory, we don't need to copy it
         // as it won't be part of the build.
-        if (
-          !cachedPath.startsWith(
-            path.join(global.__GATSBY?.root ?? process.cwd(), `public`)
-          )
-        ) {
-          return cachedPath
+        if (isPublicPath(downloadPath)) {
+          return copyCachedPathToDownloadPath({ cachedPath, downloadPath })
         }
 
-        // Create a mutex to do our copy - we could do a md5 hash check as well but that's also expensive
-        if (alreadyCopiedFiles.has(downloadPath)) {
-          alreadyCopiedFiles.add(downloadPath)
-
-          const copyFileMutex = createMutex(
-            `gatsby-core-utils:copy-fetch:${downloadPath}`,
-            200
-          )
-          await copyFileMutex.acquire()
-          await fs.copy(cachedPath, downloadPath, {
-            overwrite: true,
-          })
-          await copyFileMutex.release()
-        }
-
-        return downloadPath
+        return cachedPath
       }
     }
   }
 
   return pushTask({ args })
+}
+
+function isPublicPath(downloadPath: string): boolean {
+  return downloadPath.startsWith(
+    path.join(global.__GATSBY?.root ?? process.cwd(), `public`)
+  )
+}
+
+async function copyCachedPathToDownloadPath({
+  cachedPath,
+  downloadPath,
+}: {
+  cachedPath: string
+  downloadPath: string
+}): Promise<string> {
+  // Create a mutex to do our copy - we could do a md5 hash check as well but that's also expensive
+  if (!alreadyCopiedFiles.has(downloadPath)) {
+    const copyFileMutex = createMutex(
+      `gatsby-core-utils:copy-fetch:${downloadPath}`,
+      200
+    )
+    await copyFileMutex.acquire()
+    if (!alreadyCopiedFiles.has(downloadPath)) {
+      await fs.copy(cachedPath, downloadPath, {
+        overwrite: true,
+      })
+    }
+
+    alreadyCopiedFiles.add(downloadPath)
+    await copyFileMutex.release()
+  }
+
+  return downloadPath
 }
 
 const queue = Queue<null, ITask, string>(
@@ -126,6 +140,7 @@ async function fetchFile({
   ext,
   name,
   cacheKey,
+  excludeDigest,
 }: IFetchRemoteFileOptions): Promise<string> {
   // global introduced in gatsby 4.0.0
   const BUILD_ID = global.__GATSBY?.buildId ?? ``
@@ -141,20 +156,10 @@ async function fetchFile({
 
   // Fetch the file.
   try {
-    const inFlightValue = getInFlightObject(url, BUILD_ID)
-    if (inFlightValue) {
-      return inFlightValue
-    }
-
-    const cachedEntry = await storage.remoteFileInfo.get(url)
-
-    // Add htaccess authentication if passed in. This isn't particularly
-    // extensible. We should define a proper API that we validate.
-    const httpOptions: Options = {}
-    if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-      httpOptions.username = auth.htaccess_user
-      httpOptions.password = auth.htaccess_pass
-    }
+    const digest = createContentDigest(url)
+    const finalDirectory = excludeDigest
+      ? path.resolve(fileDirectory)
+      : path.join(fileDirectory, digest)
 
     if (!name) {
       name = getRemoteFileName(url)
@@ -164,16 +169,37 @@ async function fetchFile({
       ext = getRemoteFileExtension(url)
     }
 
-    const digest = createContentDigest(url)
-    await fs.ensureDir(path.join(fileDirectory, digest))
+    const cachedEntry = await storage.remoteFileInfo.get(url)
+
+    const inFlightValue = getInFlightObject(url, BUILD_ID)
+    if (inFlightValue) {
+      if (!isPublicPath(finalDirectory)) {
+        return inFlightValue
+      }
+
+      return await copyCachedPathToDownloadPath({
+        cachedPath: inFlightValue,
+        downloadPath: createFilePath(finalDirectory, name, ext),
+      })
+    }
+
+    // Add htaccess authentication if passed in. This isn't particularly
+    // extensible. We should define a proper API that we validate.
+    const httpOptions: Options = {}
+    if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
+      httpOptions.username = auth.htaccess_user
+      httpOptions.password = auth.htaccess_pass
+    }
+
+    await fs.ensureDir(finalDirectory)
 
     const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
-    const filename = createFilePath(path.join(fileDirectory, digest), name, ext)
+    let filename = createFilePath(finalDirectory, name, ext)
 
     // See if there's response headers for this url
     // from a previous request.
     const headers = { ...httpHeaders }
-    if (cachedEntry?.headers?.etag && (await pathExists(filename))) {
+    if (cachedEntry?.headers?.etag && (await fs.pathExists(filename))) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       headers[`If-None-Match`] = cachedEntry.headers.etag
     }
@@ -193,17 +219,20 @@ async function fetchFile({
         const filetype = await fileType.fromFile(tmpFilename)
         if (filetype) {
           ext = `.${filetype.ext}`
+
+          filename += ext
         }
       }
 
       await fs.move(tmpFilename, filename, { overwrite: true })
 
+      const slashedDirectory = slash(finalDirectory)
       await setInFlightObject(url, BUILD_ID, {
         cacheKey,
         extension: ext,
         headers: response.headers.etag ? { etag: response.headers.etag } : {},
-        directory: slash(fileDirectory),
-        path: slash(filename.replace(fileDirectory, ``)),
+        directory: slashedDirectory,
+        path: slash(filename).replace(`${slashedDirectory}/`, ``),
       })
     } else if (response.statusCode === 304) {
       await fs.remove(tmpFilename)

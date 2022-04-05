@@ -29,14 +29,10 @@ describe(`gatsby-plugin-preact`, () => {
       plugins: expect.arrayContaining([expect.any(PreactRefreshPlugin)]),
       resolve: {
         alias: {
-          react: expect.stringContaining(path.join(`preact`, `compat`)),
-          "react-dom": expect.stringContaining(path.join(`preact`, `compat`)),
-          "react-dom/server": expect.stringContaining(
-            path.join(`preact`, `compat`, `server`)
-          ),
-          "react/jsx-runtime": expect.stringContaining(
-            path.join(`preact`, `jsx-runtime`)
-          ),
+          react: `preact/compat`,
+          "react-dom/test-utils": `preact/test-utils`,
+          "react-dom": `preact/compat`,
+          "react/jsx-runtime": `preact/jsx-runtime`,
         },
       },
     })
@@ -100,14 +96,10 @@ describe(`gatsby-plugin-preact`, () => {
       plugins: [],
       resolve: {
         alias: {
-          react: expect.stringContaining(path.join(`preact`, `compat`)),
-          "react-dom": expect.stringContaining(path.join(`preact`, `compat`)),
-          "react-dom/server": expect.stringContaining(
-            path.join(`preact`, `compat`, `server`)
-          ),
-          "react/jsx-runtime": expect.stringContaining(
-            path.join(`preact`, `jsx-runtime`)
-          ),
+          react: `preact/compat`,
+          "react-dom/test-utils": `preact/test-utils`,
+          "react-dom": `preact/compat`,
+          "react/jsx-runtime": `preact/jsx-runtime`,
         },
       },
     })

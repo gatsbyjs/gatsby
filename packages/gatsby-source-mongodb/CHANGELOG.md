@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.11.0/packages/gatsby-source-mongodb) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Features
+
+- Add option name to overwrite node middle… [#33820](https://github.com/gatsbyjs/gatsby/issues/33820) ([fb082bc](https://github.com/gatsbyjs/gatsby/commit/fb082bcf48f5551a32100fdfd0dd08c3e17a2121))
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.10.0/packages/gatsby-source-mongodb) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.9.0/packages/gatsby-source-mongodb) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.8.0/packages/gatsby-source-mongodb) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
 ## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.7.0/packages/gatsby-source-mongodb) (2022-02-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)

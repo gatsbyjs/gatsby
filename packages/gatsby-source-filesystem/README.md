@@ -130,8 +130,6 @@ createFilePath({
 
 #### Example usage
 
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-7/) and is used to create URL slugs for markdown pages.
-
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
@@ -262,6 +260,8 @@ createRemoteFileNode({
 When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
 
 The `createFileNodeFromBuffer` helper accepts a `Buffer`, caches its contents to disk, and creates a file node that points to it.
+
+The name of the file can be passed to the `createFileNodeFromBuffer` helper. If no name is given, the content hash will be used to determine the name.
 
 ## Example usage
 

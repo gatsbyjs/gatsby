@@ -27,14 +27,13 @@
   },
   "devDependencies": {
     "dumper.js": "^1.3.1",
-    "prettier": "2.5.1"
+    "prettier": "2.6.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [
     "gatsby"
   ],
   "license": "0BSD",
-  "main": "n/a",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"

@@ -11,7 +11,8 @@ import _ from "lodash"
 import { getValueAt } from "../../utils/get-value-at"
 
 // Only list supported ops here. "CacheableFilterOp"
-export type FilterOp =  // TODO: merge with DbComparator ?
+// TODO: merge with DbComparator ?
+export type FilterOp =
   | "$eq"
   | "$ne"
   | "$lt"
@@ -21,7 +22,6 @@ export type FilterOp =  // TODO: merge with DbComparator ?
   | "$in"
   | "$nin"
   | "$regex" // Note: this includes $glob
-// Note: `undefined` is an encoding for a property that does not exist
 
 export type FilterCacheKey = string
 type GatsbyNodeID = string
@@ -96,6 +96,18 @@ export const getGatsbyNodePartial = (
       // if we haven't gotten the full node object, fetch it once
       if (!fullNodeObject) {
         fullNodeObject = getNode(node.id)!
+      }
+
+      if (
+        dottedField.startsWith(`__gatsby_resolved.`) &&
+        !fullNodeObject.__gatsby_resolved
+      ) {
+        const typeName = fullNodeObject.internal.type
+        const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
+        const resolved = resolvedNodes?.get(fullNodeObject.id)
+        if (resolved !== undefined) {
+          fullNodeObject.__gatsby_resolved = resolved
+        }
       }
 
       // use the full node object to fetch the value
@@ -1141,7 +1153,7 @@ export function intersectNodesByCounter(
     } else if (counterA > counterB) {
       pointerB++
     } else {
-      if (a[pointerA] !== b[pointerB]) {
+      if (a[pointerA].id !== b[pointerB].id) {
         throw new Error(
           `Invariant violation: inconsistent node counters detected`
         )

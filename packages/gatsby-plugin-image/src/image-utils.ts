@@ -138,7 +138,7 @@ export const getSrcSet = (images: Array<IImage>): string =>
 export function formatFromFilename(filename: string): ImageFormat | undefined {
   const dot = filename.lastIndexOf(`.`)
   if (dot !== -1) {
-    const ext = filename.substr(dot + 1)
+    const ext = filename.slice(dot + 1)
     if (ext === `jpeg`) {
       return `jpg`
     }
