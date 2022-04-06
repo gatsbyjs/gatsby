@@ -33,6 +33,11 @@ type FoundPageBy =
   | `none`
 
 /**
+ * This defines a limit to the number number of node manifest files that will be written to disk
+ */
+const NODE_MANIFEST_FILE_LIMIT = process.env.NODE_MANIFEST_FILE_LIMIT || 10000
+
+/**
  * Finds a final built page by nodeId or by node.slug as a fallback.
  *
  * Note that this function wont work properly in `gatsby develop`
@@ -331,6 +336,12 @@ export async function processNodeManifests(): Promise<Map<
 
   if (totalManifests === 0) {
     return null
+  }
+
+  if (totalManifests > NODE_MANIFEST_FILE_LIMIT) {
+    /**
+     * @todo limit the manifest written to disk, ideally sorting by date and prioritizing newer manifests over older manifests
+     */
   }
 
   let totalProcessedManifests = 0
