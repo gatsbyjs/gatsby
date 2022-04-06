@@ -1,8 +1,7 @@
 import path from "path"
 import { getGatsbyVersion } from "../utils/get-gatsby-version"
-import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
+import { generateFileUrl, generateImageUrl } from "../utils/url-generator"
 import type { Actions } from "gatsby"
-import type { ImageFit } from "../types"
 
 export function shouldDispatch(): boolean {
   return (
@@ -17,22 +16,19 @@ export function dispatchLocalFileServiceJob(
   {
     url,
     filename,
-    mimeType,
     contentDigest,
-  }: { url: string; filename: string; mimeType: string; contentDigest: string },
+  }: { url: string; filename: string; contentDigest: string },
   actions: Actions
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
-  const publicUrl = generatePublicUrl(
-    {
-      url,
-      // We always want file based url
-      mimeType,
-    },
-    false
-  ).split(`/`)
+  const publicUrl = generateFileUrl({
+    url,
+    filename,
+  }).split(`/`)
 
   publicUrl.unshift(`public`)
+  // get filename and remove querystring
+  const outputFilename = publicUrl.pop()?.split(`?`)[0]
 
   actions.createJobV2(
     {
@@ -45,7 +41,7 @@ export function dispatchLocalFileServiceJob(
       ),
       args: {
         url,
-        filename,
+        filename: outputFilename,
         contentDigest,
       },
     },
@@ -61,33 +57,26 @@ export function dispatchLocalFileServiceJob(
 export function dispatchLocalImageServiceJob(
   {
     url,
-    extension,
-    basename,
-    width,
-    height,
-    format,
-    fit,
+    filename,
+    mimeType,
     contentDigest,
-    quality,
   }: {
     url: string
-    extension: string
-    basename: string
-    width: number
-    height: number
-    format: string
-    fit: ImageFit
+    filename: string
+    mimeType: string
     contentDigest: string
-    quality: number
   },
+  imageArgs: Parameters<typeof generateImageUrl>[1],
   actions: Actions
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
-  const publicUrl = generatePublicUrl({
-    url,
-    mimeType: `image/${extension}`,
-  }).split(`/`)
+  const publicUrl = generateImageUrl(
+    { url, mimeType, filename },
+    imageArgs
+  ).split(`/`)
   publicUrl.unshift(`public`)
+  // get filename and remove querystring
+  const outputFilename = publicUrl.pop()?.split(`?`)[0]
 
   actions.createJobV2(
     {
@@ -95,18 +84,13 @@ export function dispatchLocalImageServiceJob(
       inputPaths: [],
       outputDir: path.join(
         global.__GATSBY?.root || process.cwd(),
-        ...publicUrl.filter(Boolean),
-        generateImageArgs({ width, height, format, quality })
+        ...publicUrl.filter(Boolean)
       ),
       args: {
         url,
-        filename: `${basename}.${extension}`,
-        width,
-        height,
-        format,
-        fit,
-        quality,
+        filename: outputFilename,
         contentDigest,
+        ...imageArgs,
       },
     },
     {
