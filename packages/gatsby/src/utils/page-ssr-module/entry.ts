@@ -212,7 +212,11 @@ export async function getData({
 
     if (req?.query) {
       const maybeQueryString = Object.entries(req.query)
-        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+        .map(
+          ([k, v]) =>
+            // Preserve QueryString encoding
+            `${encodeURIComponent(k)}=${encodeURIComponent(v as string)}`
+        )
         .join(`&`)
       if (maybeQueryString) {
         searchString = `?${maybeQueryString}`
