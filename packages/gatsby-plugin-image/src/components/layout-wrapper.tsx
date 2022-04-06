@@ -47,7 +47,7 @@ export function getSizer(
   width: number,
   height: number
 ): string {
-  let sizer: string | null = null
+  let sizer = ``
   if (layout === `fullWidth`) {
     sizer = `<div aria-hidden="true" style="padding-top: ${
       (height / width) * 100
