@@ -83,7 +83,6 @@ describe(
         cy.wait("@deepLinkPage")
         cy.waitForRouteChange()
 
-        // console.log("gogogo")
         // // we expect reload to happen so our window property shouldn't be set anymore
         cy.window().its(`notReloaded`).should(`not.equal`, true)
 
