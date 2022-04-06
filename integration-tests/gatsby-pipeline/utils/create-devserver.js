@@ -5,29 +5,34 @@ const basePath = path.resolve(__dirname, `../`)
 
 const killProcess = devProcess =>
   new Promise(resolve => {
+    let timeout = setTimeout(() => {
+      kill(devProcess.pid)
+    }, 3000)
+
     devProcess.on(`exit`, () => {
-      // give it some time to exit
+      clearTimeout(timeout)
+
       setTimeout(() => {
         resolve()
       }, 100)
     })
 
-    kill(devProcess.pid)
+    devProcess.cancel()
   })
 
 function runDevelop() {
   return new Promise((resolve, reject) => {
-    const devProcess = execa(`yarn`, [`develop`], {
-      cwd: basePath,
-      env: { NODE_ENV: `development` },
-    }).catch(err => {
-      killProcess(devProcess.pid)
-      reject(err)
-    })
+    const devProcess = execa(
+      process.execPath,
+      [`./node_modules/gatsby/cli.js`, `develop`],
+      {
+        cwd: basePath,
+        env: { NODE_ENV: `development` },
+      }
+    )
 
     devProcess.stdout.on(`data`, chunk => {
       if (chunk.toString().includes(`You can now view`)) {
-        devProcess.removeListener("exit", onExit)
         // We only need to expose a kill function, the rest is not needed
         resolve({ kill: () => killProcess(devProcess) })
       }
@@ -37,18 +42,10 @@ function runDevelop() {
 
 exports.clean = async function clean() {
   try {
-    await execa(`yarn`, [`clean`], {
+    await execa(process.execPath, [`./node_modules/gatsby/cli.js`, `clean`], {
       cwd: basePath,
     })
-  } catch (err) {
-    // ignore
-  }
+  } catch (err) {}
 }
 
-exports.createDevServer = async () => {
-  try {
-    await runDevelop()
-  } catch (err) {
-    await runDevelop()
-  }
-}
+exports.createDevServer = async () => runDevelop()
