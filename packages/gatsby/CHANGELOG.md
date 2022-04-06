@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.11.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.11.2/packages/gatsby) (2022-04-05)
+
+#### Bug Fixes
+
+- fix intermittent wrong sort results when sorting on materialized field fix [#35271](https://github.com/gatsbyjs/gatsby/issues/35271) fix [#35340](https://github.com/gatsbyjs/gatsby/issues/35340) ([3f703d1](https://github.com/gatsbyjs/gatsby/commit/3f703d14ae79bc81a0b3701da7e10d5d01f19d9c))
+- React 18 Hydration with offline plugin [#35319](https://github.com/gatsbyjs/gatsby/issues/35319) [#35343](https://github.com/gatsbyjs/gatsby/issues/35343) ([af78344](https://github.com/gatsbyjs/gatsby/commit/af783440ae60b8f562bb836d9dde7e23644529d5))
+
 ### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.11.1/packages/gatsby) (2022-03-31)
 
 #### Bug Fixes
