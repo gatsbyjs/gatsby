@@ -392,9 +392,7 @@ export class BaseLoader {
     }
 
     // Don't prefetch if this is a crawler bot
-    if (
-     navigator.userAgent && BOT_REGEX.test(navigator.userAgent)
-    ) {
+    if (navigator.userAgent && BOT_REGEX.test(navigator.userAgent)) {
       return false
     }
 
