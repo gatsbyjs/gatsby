@@ -1,4 +1,4 @@
-import { generatePublicUrl } from "../utils/url-generator"
+import { generateFileUrl } from "../utils/url-generator"
 import {
   dispatchLocalFileServiceJob,
   shouldDispatch,
@@ -15,22 +15,13 @@ export function publicUrlResolver(
       {
         url: source.url,
         filename: source.filename,
-        mimeType: source.mimeType,
         contentDigest: source.internal.contentDigest,
       },
       actions
     )
   }
 
-  return (
-    generatePublicUrl(
-      {
-        url: source.url,
-        mimeType: source.mimeType,
-      },
-      false
-    ) + `/${source.filename}`
-  )
+  return generateFileUrl({ url: source.url, filename: source.filename })
 }
 
 export function generatePublicUrlFieldConfig(
