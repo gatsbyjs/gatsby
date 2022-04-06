@@ -392,8 +392,6 @@ export async function processNodeManifests(): Promise<Map<
     nodeManifests.sort(nodeManifestSortComparerAscendingCreatedAt)
   }
 
-  console.log(`TOTAL MANIFESTS ${totalManifests}`)
-
   for (const [i, manifest] of nodeManifests.entries()) {
     if (i >= NODE_MANIFEST_FILE_LIMIT) {
       break
