@@ -316,6 +316,25 @@ export async function processNodeManifest(
   return finalManifest
 }
 
+function nodeManifestSortComparerAscendingCreatedAt(a, b): number {
+  /**
+   * Prioritize node manifests that do not have an updatedAtUTC
+   */
+  if (!a.updatedAtUTC && !b.updatedAtUTC) {
+    return 0
+  }
+
+  if (!a.updatedAtUTC) {
+    return -1
+  }
+
+  if (!b.updatedAtUTC) {
+    return 1
+  }
+
+  return Date.parse(a.updatedAtUTC) - Date.parse(b.updatedAtUTC)
+}
+
 /**
  * Grabs all pending node manifests, processes them, writes them to disk,
  * and then removes them from the store.
@@ -330,18 +349,12 @@ export async function processNodeManifests(): Promise<Map<
     process.env.VERBOSE_NODE_MANIFEST === `true`
 
   const startTime = Date.now()
-  const { nodeManifests } = store.getState()
+  let { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
 
   if (totalManifests === 0) {
     return null
-  }
-
-  if (totalManifests > NODE_MANIFEST_FILE_LIMIT) {
-    /**
-     * @todo limit the manifest written to disk, ideally sorting by date and prioritizing newer manifests over older manifests
-     */
   }
 
   let totalProcessedManifests = 0
@@ -374,7 +387,18 @@ export async function processNodeManifests(): Promise<Map<
 
   const processNodeManifestQueue = fastq(processNodeManifestTask, 25)
 
-  for (const manifest of nodeManifests) {
+  if (totalManifests > NODE_MANIFEST_FILE_LIMIT) {
+    nodeManifests = [...nodeManifests]
+    nodeManifests.sort(nodeManifestSortComparerAscendingCreatedAt)
+  }
+
+  console.log(`TOTAL MANIFESTS ${totalManifests}`)
+
+  for (const [i, manifest] of nodeManifests.entries()) {
+    if (i >= NODE_MANIFEST_FILE_LIMIT) {
+      break
+    }
+
     processNodeManifestQueue.push(manifest, () => {})
   }
 
