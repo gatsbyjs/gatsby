@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.11.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.2/packages/gatsby-source-wordpress) (2022-04-05)
+
+#### Bug Fixes
+
+- logic for matching image nodes [#35324](https://github.com/gatsbyjs/gatsby/issues/35324) [#35342](https://github.com/gatsbyjs/gatsby/issues/35342) ([35908f2](https://github.com/gatsbyjs/gatsby/commit/35908f2f96ff5eef85ca5a8c4f9f1391a5c26ed7))
+
 ### [6.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.1/packages/gatsby-source-wordpress) (2022-03-31)
 
 **Note:** Version bump only for package gatsby-source-wordpress
