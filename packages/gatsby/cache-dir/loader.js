@@ -393,12 +393,9 @@ export class BaseLoader {
 
     // Don't prefetch if this is a crawler bot
     if (
-      `userAgent` in navigator &&
-      typeof navigator.userAgent !== `undefined`
+     navigator.userAgent && BOT_REGEX.test(navigator.userAgent)
     ) {
-      if (BOT_REGEX.test(navigator.userAgent)) {
-        return false
-      }
+      return false
     }
 
     // Check if the page exists.
