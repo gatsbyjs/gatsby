@@ -318,18 +318,20 @@ export async function processNodeManifest(
 
 function nodeManifestSortComparerAscendingCreatedAt(a, b): number {
   /**
-   * Prioritize node manifests that do not have an updatedAtUTC
+   * Prioritize node manifests that have an updatedAtUTC so that manifests known to be
+   * knewest are written to disk first. If neither have an updatedAtUTC, there isn't
+   * anything to sort
    */
   if (!a.updatedAtUTC && !b.updatedAtUTC) {
     return 0
   }
 
   if (!a.updatedAtUTC) {
-    return -1
+    return 1
   }
 
   if (!b.updatedAtUTC) {
-    return 1
+    return -1
   }
 
   return Date.parse(a.updatedAtUTC) - Date.parse(b.updatedAtUTC)
