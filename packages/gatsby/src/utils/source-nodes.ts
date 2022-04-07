@@ -1,14 +1,21 @@
 import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
-import { store } from "../redux"
+import { store, emitter } from "../redux"
 import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
 import { IGatsbyState, IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
+import got from "got"
+import GatsbyCacheLmdb from "./cache-lmdb"
+
+const { chain } = require(`stream-chain`)
+const { parser } = require(`stream-json`)
+const { streamValues } = require(`stream-json/streamers/StreamValues`)
 
 const { deleteNode } = actions
 
+let cache
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
  * may create nodes, but which have not actually created any nodes.
@@ -106,14 +113,69 @@ export default async ({
   const traceId = isInitialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
-  await apiRunner(`sourceNodes`, {
-    traceId,
-    waitForCascadingActions: true,
-    deferNodeMutation,
-    parentSpan,
-    webhookBody: webhookBody || {},
-    pluginName,
-  })
+
+  if (process.env.DECOUPLED_SOURCING === `true`) {
+    cache =
+      cache ||
+      new GatsbyCacheLmdb({
+        name: `ledger-cache`,
+        encoding: `string`,
+      }).init()
+
+    const previousOffset = (await cache.get(`lastDecoupledOffset`)) || 0
+
+    const url = `${process.env.DECOUPLED_SOURCING_API}/ledger/${previousOffset}`
+
+    const httpStream = got.stream(url)
+
+    let offset
+    httpStream.on(`response`, response => {
+      offset = response.headers[`x-gatsby-decoupled-sourcing-offset`]
+      cache.set(`lastDecoupledOffset`, offset)
+    })
+    let counter = 0
+    const pipeline = chain([
+      httpStream,
+      parser({ jsonStreaming: true }),
+      streamValues(),
+      (entry: any): void => {
+        counter++
+        const action = entry.value
+
+        store.dispatch(action)
+        emitter.emit(action.type, action)
+      },
+    ])
+
+    pipeline.on(`data`, () => {})
+
+    await new Promise(res => {
+      pipeline.on(`end`, () => {
+        console.log(`Done! Offset is: ${offset}. Applied ${counter} actions.`)
+        res(null)
+      })
+    })
+
+    await apiRunner(`sourceNodes`, {
+      traceId,
+      waitForCascadingActions: true,
+      deferNodeMutation,
+      parentSpan,
+      webhookBody: {},
+      pluginName: `internal-data-bridge`,
+    })
+
+    console.log(`DONE with decoupled sourcing`)
+  } else {
+    await apiRunner(`sourceNodes`, {
+      traceId,
+      waitForCascadingActions: true,
+      deferNodeMutation,
+      parentSpan,
+      webhookBody: webhookBody || {},
+      pluginName,
+    })
+  }
 
   await getDataStore().ready()
 
