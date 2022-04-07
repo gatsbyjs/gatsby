@@ -146,6 +146,8 @@
     "source-map-support": "^0.5.20",
     "st": "^2.0.0",
     "stack-trace": "^0.0.10",
+    "stream-chain": "^2.2.5",
+    "stream-json": "^1.7.4",
     "string-similarity": "^1.2.2",
     "strip-ansi": "^6.0.1",
     "style-loader": "^2.0.0",
