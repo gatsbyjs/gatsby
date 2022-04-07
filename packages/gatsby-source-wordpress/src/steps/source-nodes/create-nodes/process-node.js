@@ -596,6 +596,14 @@ export const replaceNodeHtmlImages = async ({
           const imageUrl =
             imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
 
+          const formats = [`auto`]
+          if (pluginOptions.html.generateWebpImages) {
+            formats.push(`webp`)
+          }
+          if (pluginOptions.html.generateAvifImages) {
+            formats.push(`avif`)
+          }
+
           try {
             imageResize = await gatsbyImageResolver(
               {
@@ -614,8 +622,9 @@ export const replaceNodeHtmlImages = async ({
                 layout: `constrained`,
                 placeholder: !placeholderUrl
                   ? `none`
-                  : pluginOptions?.html?.placeholderType || `blurred`,
+                  : pluginOptions?.html?.placeholderType || `dominantColor`,
                 quality,
+                formats,
               },
               helpers.actions
             )

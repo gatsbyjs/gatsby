@@ -16,6 +16,10 @@ const wrapOptions = innerOptions =>
     .replace(`const something = `, ``)
     .replace(`;`, ``)
 
+const hasImageCDN =
+  process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
+  process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
+
 const pluginOptionsSchema = ({ Joi }) => {
   const getTypeOptions = () =>
     Joi.object({
@@ -644,7 +648,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         }),
       imageQuality: Joi.number()
         .integer()
-        .default(90)
+        .default(70)
         .allow(null)
         .description(
           `Determines the image quality that Sharp will use when generating inline html image thumbnails.`
@@ -670,7 +674,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       generateWebpImages: Joi.boolean()
-        .default(false)
+        .default(true)
         .allow(null)
         .description(
           `When this is true, .webp images will be generated for images in html fields in addition to the images gatsby-image normally generates.`
@@ -682,8 +686,21 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
               },
             `),
         }),
+      generateAvifImages: Joi.boolean()
+        .default(hasImageCDN)
+        .allow(null)
+        .description(
+          `When this is true, .avif images will be generated for images in html fields in addition to the images gatsby-image normally generates.`
+        )
+        .meta({
+          example: wrapOptions(`
+                html: {
+                  generateAvifImages: false,
+                },
+              `),
+        }),
       placeholderType: Joi.string()
-        .default(`blurred`)
+        .default(`dominantColor`)
         .description(
           `This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.`
         )
