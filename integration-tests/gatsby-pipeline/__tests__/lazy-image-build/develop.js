@@ -4,6 +4,7 @@ const glob = require(`glob`)
 const fetch = require(`node-fetch`)
 const md5File = require(`md5-file`)
 const { clean, createDevServer } = require(`../../utils/create-devserver`)
+const { isCI } = require("gatsby-core-utils")
 const basePath = path.resolve(__dirname, `../../`)
 
 // 5 min
@@ -29,7 +30,9 @@ describe(`Lazy images`, () => {
     expect(response.status).toBe(200)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
-    expect(images.length).toBe(1)
+    // we disable lazy images on CI
+    // https://github.com/gatsbyjs/gatsby/blob/b474dbb25518b51ca8cc1ce75fffb044e7d8609a/packages/gatsby-plugin-sharp/src/index.js#L150-L159
+    expect(images.length).toBe(isCI() ? 6 : 1)
   })
 
   it(`should process the rest of images on build`, async () => {
