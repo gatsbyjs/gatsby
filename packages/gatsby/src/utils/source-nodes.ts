@@ -147,7 +147,10 @@ export default async ({
       streamValues(),
       (entry: any): void => {
         counter++
-        const action = entry.value
+        const action = {
+          type: entry.value.type,
+          payload: JSON.parse(entry.value.payload),
+        }
 
         store.dispatch(action)
         emitter.emit(action.type, action)
