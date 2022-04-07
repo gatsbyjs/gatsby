@@ -122,17 +122,24 @@ export default async ({
         encoding: `string`,
       }).init()
 
-    const previousOffset = (await cache.get(`lastDecoupledOffset`)) || 0
+    const previousVersionId = (await cache.get(`previousVersionId`)) || 0
 
-    const url = `${process.env.DECOUPLED_SOURCING_API}/ledger/${previousOffset}`
+    const url = `${process.env.GATSBY_CLOUD_DATALAYER}/get-ledger-entries`
 
-    const httpStream = got.stream(url)
+    const versionHeaderKey = `x-sourcerer-versionid`
 
-    let offset
-    httpStream.on(`response`, response => {
-      offset = response.headers[`x-gatsby-decoupled-sourcing-offset`]
-      cache.set(`lastDecoupledOffset`, offset)
+    const httpStream = got.stream(url, {
+      headers: {
+        versionHeaderKey: previousVersionId,
+      },
     })
+
+    let versionId
+    httpStream.on(`response`, response => {
+      versionId = response.headers[versionHeaderKey]
+      cache.set(`previousVersionId`, versionId)
+    })
+
     let counter = 0
     const pipeline = chain([
       httpStream,
@@ -151,7 +158,9 @@ export default async ({
 
     await new Promise(res => {
       pipeline.on(`end`, () => {
-        console.log(`Done! Offset is: ${offset}. Applied ${counter} actions.`)
+        console.log(
+          `Done! versionId is: ${versionId}. Applied ${counter} actions.`
+        )
         res(null)
       })
     })
