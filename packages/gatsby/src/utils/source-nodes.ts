@@ -115,6 +115,8 @@ export default async ({
     : `sourceNodes #${sourcingCount}`
 
   if (process.env.DECOUPLED_SOURCING === `true`) {
+    console.log(`Decoupled sourcing running`)
+
     cache =
       cache ||
       new GatsbyCacheLmdb({
@@ -138,6 +140,12 @@ export default async ({
     httpStream.on(`response`, response => {
       versionId = response.headers[versionHeaderKey]
       cache.set(`previousVersionId`, versionId)
+    })
+
+    console.log({
+      url,
+      previousVersionId,
+      versionId,
     })
 
     let counter = 0
