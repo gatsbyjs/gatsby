@@ -126,7 +126,7 @@ export default async ({
 
     const previousVersionId = (await cache.get(`previousVersionId`)) || 0
 
-    const url = `${process.env.GATSBY_CLOUD_DATALAYER}/get-ledger-entries`
+    const url = String(process.env.GATSBY_CLOUD_DATALAYER)
 
     const versionHeaderKey = `x-sourcerer-versionid`
 
