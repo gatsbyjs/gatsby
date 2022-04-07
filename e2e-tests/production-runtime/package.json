@@ -44,10 +44,11 @@
     "start-server-and-test:offline": "start-server-and-test serve http://localhost:9000 cy:run:offline",
     "cy:open": "cypress open",
     "cy:open:offline": "npm run cy:open -- --env TEST_PLUGIN_OFFLINE=y",
-    "cy:run": "npm run cy:run:normal && npm run cy:run:slow",
+    "cy:run": "npm run cy:run:normal && npm run cy:run:slow && npm run cy:run:bot",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run:normal": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome",
-    "cy:run:slow": "cross-env CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
+    "cy:run:slow": "cross-env CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js",
+    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot cypress run --browser chrome --config testFiles=prefetching.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
