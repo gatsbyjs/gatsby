@@ -114,7 +114,10 @@ export default async ({
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
 
-  if (process.env.DECOUPLED_SOURCING === `true`) {
+  if (
+    process.env.DECOUPLED_SOURCING === `true` &&
+    process.env.GATSBY_CLOUD_DATALAYER
+  ) {
     console.log(`Decoupled sourcing running`)
 
     cache =
@@ -125,6 +128,12 @@ export default async ({
       }).init()
 
     const previousVersionId = (await cache.get(`previousVersionId`)) || 0
+
+    if (!process.env.GATSBY_CLOUD_DATALAYER) {
+      throw new Error(
+        `A process.env.GATSBY_CLOUD_DATALAYER is required when using decoupled sourcing`
+      )
+    }
 
     const url = String(process.env.GATSBY_CLOUD_DATALAYER)
 
