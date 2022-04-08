@@ -114,9 +114,16 @@ export default async ({
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
 
+  const definitelyLocallySourcedPlugins = [
+    `gatsby-source-filesystem`,
+    `gatsby-source-git`,
+    `internal-data-bridge`,
+  ]
+
   if (
     process.env.DECOUPLED_SOURCING === `true` &&
-    process.env.GATSBY_CLOUD_DATALAYER
+    process.env.GATSBY_CLOUD_DATALAYER &&
+    !definitelyLocallySourcedPlugins.includes(pluginName || ``)
   ) {
     console.log(`Decoupled sourcing running`)
 
@@ -190,14 +197,14 @@ export default async ({
       })
     })
 
-    await apiRunner(`sourceNodes`, {
-      traceId,
-      waitForCascadingActions: true,
-      deferNodeMutation,
-      parentSpan,
-      webhookBody: {},
-      pluginName: `internal-data-bridge`,
-    })
+    // await apiRunner(`sourceNodes`, {
+    //   traceId,
+    //   waitForCascadingActions: true,
+    //   deferNodeMutation,
+    //   parentSpan,
+    //   webhookBody: {},
+    //   pluginName: `internal-data-bridge`,
+    // })
 
     console.log(`DONE with decoupled sourcing`)
   } else {
