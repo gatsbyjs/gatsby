@@ -1,0 +1,46 @@
+{
+  "name": "gatsby-script",
+  "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
+  "version": "0.1.0",
+  "author": "Ty Hopp <hopp.ty.c@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^2.13.0-next.0",
+    "@babel/preset-typescript": "^7.16.7",
+    "cross-env": "^7.0.3"
+  },
+  "peerDependencies": {
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-script#readme",
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-script"
+  },
+  "scripts": {
+    "build": "babel src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
+    "watch": "babel -w src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "types": "index.d.ts",
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "files": [
+    "dist/",
+    "index.d.ts",
+    "!**/__tests__/"
+  ]
+}
