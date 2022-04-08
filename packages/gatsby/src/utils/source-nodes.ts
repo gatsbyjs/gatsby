@@ -175,6 +175,7 @@ export default async ({
       },
     ])
 
+    // this is needed for chain to start running, but we don't need the line by line data that comes back here. We're grabbing JSON objects above
     pipeline.on(`data`, () => {})
 
     await new Promise(res => {
