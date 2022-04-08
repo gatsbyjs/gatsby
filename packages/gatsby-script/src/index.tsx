@@ -1,28 +1,29 @@
 import React, { useEffect } from "react"
 import { ReactElement } from "react"
 
-export enum IScriptStrategy {
+export enum ScriptStrategy {
   preHydrate = `pre-hydrate`,
   postHydrate = `post-hydrate`,
   idle = `idle`,
 }
 
-export interface IScriptProps {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface ScriptProps {
   src: string
-  strategy?: IScriptStrategy
+  strategy?: ScriptStrategy
 }
 
-export default function Script(props: IScriptProps): ReactElement {
-  const { src, strategy = IScriptStrategy.postHydrate } = props || {}
+export function Script(props: ScriptProps): ReactElement {
+  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
 
   useEffect(() => {
     switch (strategy) {
-      case IScriptStrategy.postHydrate:
-        injectScript(src)
+      case ScriptStrategy.postHydrate:
+        injectScript(src, strategy)
         break
-      case IScriptStrategy.idle:
+      case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          injectScript(src)
+          injectScript(src, strategy)
         })
         break
       default:
@@ -30,15 +31,16 @@ export default function Script(props: IScriptProps): ReactElement {
     }
   }, [])
 
-  if (strategy === IScriptStrategy.preHydrate) {
-    return <script async src={src} />
+  if (strategy === ScriptStrategy.preHydrate) {
+    return <script async src={src} data-strategy={strategy} />
   }
 
   return <></>
 }
 
-function injectScript(src: string): void {
+function injectScript(src: string, strategy: ScriptStrategy): void {
   const script = document.createElement(`script`)
   script.src = src
+  script.dataset.strategy = strategy
   document.body.appendChild(script)
 }
