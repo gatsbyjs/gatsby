@@ -734,7 +734,7 @@ export const createAssetNodes = ({
       updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
-      file: Object.keys(file).length ? file : null,
+      file,
       title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
@@ -746,10 +746,8 @@ export const createAssetNodes = ({
       sys: {
         type: assetItem.sys.type,
       },
-      url: file.url ? `https:${file.url}` : null,
-      placeholderUrl: file.url
-        ? `https:${file.url}?w=%width%&h=%height%`
-        : null,
+      url: `https:${file.url}`,
+      placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
       mimeType: file.contentType ?? null,
       filename: file.fileName ?? null,
       width: file.details?.image?.width ?? null,
