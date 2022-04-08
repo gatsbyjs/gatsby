@@ -15,6 +15,9 @@ const shouldUpgradeGatsbyVersion =
   lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
 export const getLocalizedField = ({ field, locale, localesFallback }) => {
+  if (!field) {
+    return null
+  }
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -717,9 +720,11 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
-    const file = assetItem.fields.file
-      ? getField(assetItem.fields.file) ?? {}
-      : {}
+    const file = getField(assetItem.fields?.file) ?? null
+
+    if (!file) {
+      return
+    }
 
     const assetNode = {
       contentful_id: assetItem.sys.id,
