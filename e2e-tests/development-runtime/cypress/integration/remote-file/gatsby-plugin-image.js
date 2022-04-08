@@ -1,69 +1,115 @@
-before(() => {
-  cy.exec(`npm run reset`)
-})
-
 describe(`remote-file`, () => {
+  before(() => {
+    cy.exec(`npm run reset`)
+  })
+
   beforeEach(() => {
     cy.visit(`/remote-file/`).waitForRouteChange()
 
     // trigger intersection observer
     cy.scrollTo("top")
     cy.wait(100)
-    cy.scrollTo("bottom")
+    cy.scrollTo("bottom", {
+      duration: 500,
+    })
   })
 
+  async function testImages(images, expectations) {
+    for (let i = 0; i < images.length; i++) {
+      const expectation = expectations[i]
+
+      const res = await fetch(images[i].currentSrc, {
+        method: "HEAD",
+      })
+      expect(res.ok).to.be.true
+      if (expectation.width) {
+        expect(Math.ceil(images[i].getBoundingClientRect().width)).to.be.equal(
+          expectation.width
+        )
+      }
+      if (expectation.height) {
+        expect(Math.ceil(images[i].getBoundingClientRect().height)).to.be.equal(
+          expectation.height
+        )
+      }
+    }
+  }
+
   it(`should render correct dimensions`, () => {
-    cy.get('[data-testid="public"]').then($urls => {
+    cy.get('[data-testid="public"]').then(async $urls => {
       const urls = Array.from($urls.map((_, $url) => $url.getAttribute("href")))
 
-      expect(urls[0].endsWith(".jpg")).to.be.true
-      expect(urls[1].endsWith(".jpg")).to.be.true
-      expect(urls[2].endsWith(".jpg")).to.be.true
+      for (const url of urls) {
+        const res = await fetch(url, {
+          method: "HEAD",
+        })
+        expect(res.ok).to.be.true
+      }
     })
 
-    cy.get(".resize").then($imgs => {
-      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
-
-      expect(imgDimensions[0].width).to.be.equal(100)
-      expect(imgDimensions[0].height).to.be.equal(133)
-      expect(imgDimensions[1].width).to.be.equal(100)
-      expect(imgDimensions[1].height).to.be.equal(160)
-      expect(imgDimensions[2].width).to.be.equal(100)
-      expect(imgDimensions[2].height).to.be.equal(67)
+    cy.get(".resize").then(async $imgs => {
+      await testImages(Array.from($imgs), [
+        {
+          width: 100,
+          height: 133,
+        },
+        {
+          width: 100,
+          height: 160,
+        },
+        {
+          width: 100,
+          height: 67,
+        },
+      ])
     })
 
-    cy.get(".fixed").then($imgs => {
-      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
-
-      expect(imgDimensions[0].width).to.be.equal(100)
-      expect(imgDimensions[0].height).to.be.equal(133)
-      expect(imgDimensions[1].width).to.be.equal(100)
-      expect(imgDimensions[1].height).to.be.equal(160)
-      expect(imgDimensions[2].width).to.be.equal(100)
-      expect(imgDimensions[2].height).to.be.equal(67)
+    cy.get(".fixed").then(async $imgs => {
+      await testImages(Array.from($imgs), [
+        {
+          width: 100,
+          height: 133,
+        },
+        {
+          width: 100,
+          height: 160,
+        },
+        {
+          width: 100,
+          height: 67,
+        },
+      ])
     })
 
-    cy.get(".constrained").then($imgs => {
-      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
-
-      expect(imgDimensions[0].width).to.be.equal(300)
-      expect(imgDimensions[0].height).to.be.equal(400)
-      expect(imgDimensions[1].width).to.be.equal(300)
-      expect(imgDimensions[1].height).to.be.equal(481)
-      expect(imgDimensions[2].width).to.be.equal(300)
-      expect(imgDimensions[2].height).to.be.equal(200)
+    cy.get(".constrained").then(async $imgs => {
+      await testImages(Array.from($imgs), [
+        {
+          width: 300,
+          height: 400,
+        },
+        {
+          width: 300,
+          height: 481,
+        },
+        {
+          width: 300,
+          height: 200,
+        },
+      ])
     })
 
-    cy.get(".full").then($imgs => {
-      const parentWidth = $imgs[0].parentElement.getBoundingClientRect().width
-      const imgDimensions = $imgs.map((_, $img) => $img.getBoundingClientRect())
-
-      expect(imgDimensions[0].width).to.be.equal(parentWidth)
-      expect(Math.ceil(imgDimensions[0].height)).to.be.equal(1229)
-      expect(imgDimensions[1].width).to.be.equal(parentWidth)
-      expect(Math.ceil(imgDimensions[1].height)).to.be.equal(1478)
-      expect(imgDimensions[2].width).to.be.equal(parentWidth)
-      expect(Math.ceil(imgDimensions[2].height)).to.be.equal(614)
+    cy.get(".full").then(async $imgs => {
+      await testImages(Array.from($imgs), [
+        {
+          height: 1229,
+        },
+        {
+          height: 1478,
+        },
+        {
+          height: 614,
+        },
+      ])
     })
   })
 

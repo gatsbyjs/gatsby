@@ -1,5 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path"
+import { createContentDigest } from "gatsby-core-utils/create-content-digest"
+import { URL, URLSearchParams } from "url"
 import { resizeResolver } from "../index"
+import { generateImageUrl } from "../utils/url-generator"
 import * as dispatchers from "../jobs/dispatchers"
 import type { Actions } from "gatsby"
 import type { ImageFit, IRemoteImageNode } from "../types"
@@ -132,7 +137,7 @@ describe(`resizeResolver`, () => {
 
       actions
     )
-    expect(result.src).toMatch(/\.webp$/)
+    expect(result.src.split(`?`)[0]).toMatch(/\.webp$/)
   })
 
   it(`should fail when wrong format is given`, async () => {
@@ -168,10 +173,10 @@ describe(`resizeResolver`, () => {
       actions
     )
 
-    const [, , , , args] = result?.src.split(`/`) ?? []
-    const transformAsArgs = Buffer.from(args, `base64`).toString()
-    expect(transformAsArgs).toContain(`fit=crop`)
-    expect(transformAsArgs).toContain(`crop=top,left`)
+    const url = new URL(`https://www.example.com${result!.src}`)
+    const args = new URLSearchParams(url.searchParams.get(`a`) as string)
+    expect(args.get(`fit`)).toBe(`crop`)
+    expect(args.get(`crop`)).toBe(`top,left`)
   })
 
   describe.each([portrait, landscape] as Array<
@@ -196,15 +201,19 @@ describe(`resizeResolver`, () => {
         actions
       )
 
-      const [, , , url, args, filename] = result?.src.split(`/`) ?? []
-      const [transformArgs] = args.split(`.`)
-      expect(Buffer.from(url, `base64`).toString()).toBe(source.url)
-      expect(Buffer.from(transformArgs, `base64`).toString()).toBe(
-        `w=${expected.widthOnly[0]}&h=${expected.widthOnly[1]}&fm=jpg&q=75`
+      const url = new URL(`https://www.example.com${result!.src}`)
+      const args = new URLSearchParams(url.searchParams.get(`a`) as string)
+      expect(url.searchParams.get(`u`)).toBe(source.url)
+      expect(args.get(`w`)).toBe(`${expected.widthOnly[0]}`)
+      expect(args.get(`h`)).toBe(`${expected.widthOnly[1]}`)
+      expect(result.src).toBe(
+        generateImageUrl(source, {
+          width: expected.widthOnly[0],
+          height: expected.widthOnly[1],
+          format: `jpg`,
+          quality: 75,
+        })
       )
-      expect(result?.width).toBe(expected.widthOnly[0])
-      expect(result?.height).toBe(expected.widthOnly[1])
-      expect(filename).toBe(source.filename)
     })
 
     it(`should resize an image when height is given`, async () => {
@@ -216,14 +225,19 @@ describe(`resizeResolver`, () => {
         actions
       )
 
-      const [, , , url, args] = result?.src.split(`/`) ?? []
-      const [transformArgs] = args.split(`.`)
-      expect(Buffer.from(url, `base64`).toString()).toBe(source.url)
-      expect(Buffer.from(transformArgs, `base64`).toString()).toBe(
-        `w=${expected.heightOnly[0]}&h=${expected.heightOnly[1]}&fm=jpg&q=75`
+      const url = new URL(`https://www.example.com${result!.src}`)
+      const args = new URLSearchParams(url.searchParams.get(`a`) as string)
+      expect(url.searchParams.get(`u`)).toBe(source.url)
+      expect(args.get(`w`)).toBe(`${expected.heightOnly[0]}`)
+      expect(args.get(`h`)).toBe(`${expected.heightOnly[1]}`)
+      expect(result.src).toBe(
+        generateImageUrl(source, {
+          width: expected.heightOnly[0],
+          height: expected.heightOnly[1],
+          format: `jpg`,
+          quality: 75,
+        })
       )
-      expect(result?.width).toBe(expected.heightOnly[0])
-      expect(result?.height).toBe(expected.heightOnly[1])
     })
 
     it.each(expected.widthWithFit)(
@@ -283,6 +297,12 @@ describe(`resizeResolver`, () => {
     const actions = {
       createJobV2: jest.fn(() => jest.fn()),
     }
+    const imageArgs = {
+      format: `jpg`,
+      width: 100,
+      height: 160,
+      quality: 75,
+    }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
 
     resizeResolver(portraitSource, { width: 100 }, actions)
@@ -292,10 +312,7 @@ describe(`resizeResolver`, () => {
           contentDigest: `1`,
           url: portraitSource.url,
           filename: `dog-portrait.jpg`,
-          format: `jpg`,
-          width: 100,
-          height: expect.any(Number),
-          quality: 75,
+          ...imageArgs,
         },
         inputPaths: [],
         name: `IMAGE_CDN`,
@@ -304,7 +321,8 @@ describe(`resizeResolver`, () => {
             `public`,
             `_gatsby`,
             `image`,
-            Buffer.from(portraitSource.url).toString(`base64`)
+            createContentDigest(portraitSource.url),
+            createContentDigest(`w=100&h=160&fm=jpg&q=75`)
           )
         ),
       }),
