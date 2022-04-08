@@ -174,7 +174,6 @@ export default async ({
       streamValues(),
       (entry: any): void => {
         counter++
-        console.log(JSON.stringify({ entry }, null, 2))
         const action = {
           type: entry.value.type,
           payload: entry.value.payload,
