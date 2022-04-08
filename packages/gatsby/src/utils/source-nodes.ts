@@ -148,7 +148,10 @@ export default async ({
     let versionId
     httpStream.on(`response`, response => {
       versionId = response.headers[versionHeaderKey]
-      cache.set(`previousVersionId`, versionId)
+
+      if (versionId) {
+        cache.set(`previousVersionId`, versionId)
+      }
     })
 
     console.log({
