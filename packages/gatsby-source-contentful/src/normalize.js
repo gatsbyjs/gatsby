@@ -754,6 +754,7 @@ export const createAssetNodes = ({
       filename: file.fileName ?? null,
       width: file.details?.image?.width ?? null,
       height: file.details?.image?.height ?? null,
+      size: file.details?.size ?? null,
     }
 
     // Link tags
