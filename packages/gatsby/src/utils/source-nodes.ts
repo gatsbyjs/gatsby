@@ -167,7 +167,7 @@ export default async ({
         console.log(JSON.stringify({ entry }, null, 2))
         const action = {
           type: entry.value.type,
-          payload: JSON.parse(entry.value.payload),
+          payload: entry.value.payload,
         }
 
         store.dispatch(action)
