@@ -197,14 +197,14 @@ export default async ({
       })
     })
 
-    // await apiRunner(`sourceNodes`, {
-    //   traceId,
-    //   waitForCascadingActions: true,
-    //   deferNodeMutation,
-    //   parentSpan,
-    //   webhookBody: {},
-    //   pluginName: `internal-data-bridge`,
-    // })
+    await apiRunner(`sourceNodes`, {
+      traceId,
+      waitForCascadingActions: true,
+      deferNodeMutation,
+      parentSpan,
+      webhookBody: {},
+      pluginName: `internal-data-bridge`,
+    })
 
     console.log(`DONE with decoupled sourcing`)
   } else {
