@@ -46,104 +46,89 @@ function validHeaders(headers, reporter) {
   )
 }
 
-function linkTemplate(assetPath, type = `script`) {
-  return `Link: <${assetPath}>; rel=preload; as=${type}${
-    type === `fetch` ? `; crossorigin` : ``
-  }; nopush`
-}
+// function linkTemplate(assetPath, type = `script`) {
+//   return `Link: <${assetPath}>; rel=preload; as=${type}${
+//     type === `fetch` ? `; crossorigin` : ``
+//   }; nopush`
+// }
 
-function pathChunkName(path) {
-  const name = path === `/` ? `index` : kebabHash(path)
-  return `path---${name}`
-}
+// function pathChunkName(path) {
+//   const name = path === `/` ? `index` : kebabHash(path)
+//   return `path---${name}`
+// }
 
-function getPageDataPath(path) {
-  return posix.join(`page-data`, fixedPagePath(path), `page-data.json`)
-}
+// function getPageDataPath(path) {
+//   return posix.join(`page-data`, fixedPagePath(path), `page-data.json`)
+// }
 
-function getScriptPath(file, manifest) {
-  const chunk = manifest[file]
+// function getScriptPath(file, manifest) {
+//   const chunk = manifest[file]
 
-  if (!chunk) {
-    return []
-  }
+//   if (!chunk) {
+//     return []
+//   }
 
-  // convert to array if it's not already
-  const chunks = _.isArray(chunk) ? chunk : [chunk]
+//   // convert to array if it's not already
+//   const chunks = _.isArray(chunk) ? chunk : [chunk]
 
-  return chunks.filter(script => {
-    const parsed = parse(script)
-    // handle only .js, .css content is inlined already
-    // and doesn't need to be pushed
-    return parsed.ext === `.js`
-  })
-}
+//   return chunks.filter(script => {
+//     const parsed = parse(script)
+//     // handle only .js, .css content is inlined already
+//     // and doesn't need to be pushed
+//     return parsed.ext === `.js`
+//   })
+// }
 
-function linkHeaders(files, pathPrefix, assetPrefix) {
-  const linkHeaders = []
-  for (const resourceType in files) {
-    files[resourceType].forEach(file => {
-      linkHeaders.push(
-        linkTemplate(
-          `${assetPrefix ? assetPrefix + `/` : ``}${pathPrefix}/${file}`,
-          resourceType
-        )
-      )
-    })
-  }
+// function linkHeaders(files, pathPrefix) {
+//   const linkHeaders = []
+//   for (const resourceType in files) {
+//     files[resourceType].forEach(file => {
+//       linkHeaders.push(linkTemplate(`${pathPrefix}/${file}`, resourceType))
+//     })
+//   }
 
-  return linkHeaders
-}
+//   return linkHeaders
+// }
 
 function headersPath(pathPrefix, path) {
   return `${pathPrefix}${path}`
 }
 
-function preloadHeadersByPage({
-  pages,
-  manifest,
-  pathPrefix,
-  publicFolder,
-  assetPrefix,
-}) {
-  const linksByPage = {}
+// function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
+//   const linksByPage = {}
 
-  const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
-  const hasAppData = existsSync(appDataPath)
+//   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
+//   const hasAppData = existsSync(appDataPath)
 
-  pages.forEach(page => {
-    const scripts = _.flatMap(COMMON_BUNDLES, file =>
-      getScriptPath(file, manifest)
-    )
-    scripts.push(...getScriptPath(pathChunkName(page.path), manifest))
-    scripts.push(...getScriptPath(page.componentChunkName, manifest))
+//   pages.forEach(page => {
+//     // const scripts = _.flatMap(COMMON_BUNDLES, file =>
+//     //   getScriptPath(file, manifest)
+//     // )
+//     // scripts.push(...getScriptPath(pathChunkName(page.path), manifest))
+//     // scripts.push(...getScriptPath(page.componentChunkName, manifest))
 
-    const json = []
-    if (hasAppData) {
-      json.push(posix.join(PAGE_DATA_DIR, `app-data.json`))
-    }
+//     // const json = []
+//     // if (hasAppData) {
+//     //   json.push(posix.join(PAGE_DATA_DIR, `app-data.json`))
+//     // }
 
-    // page-data gets inline for SSR, so we won't be doing page-data request
-    // and we shouldn't add preload link header for it.
-    if (page.mode !== `SSR`) {
-      json.push(getPageDataPath(page.path))
-    }
+//     // page-data gets inline for SSR, so we won't be doing page-data request
+//     // and we shouldn't add preload link header for it.
+//     // if (page.mode !== `SSR`) {
+//     //   json.push(getPageDataPath(page.path))
+//     // }
 
-    const filesByResourceType = {
-      script: scripts.filter(Boolean),
-      fetch: json,
-    }
+//     // const filesByResourceType = {
+//     //   script: scripts.filter(Boolean),
+//     //   fetch: json,
+//     // }
 
-    const pathKey = headersPath(pathPrefix, page.path)
-    linksByPage[pathKey] = linkHeaders(
-      filesByResourceType,
-      pathPrefix,
-      assetPrefix
-    )
-  })
+//     const pathKey = headersPath(pathPrefix, page.path)
+//     linksByPage[pathKey] = linkHeaders(filesByResourceType, pathPrefix)
+//   })
 
-  return linksByPage
-}
+//   return linksByPage
+// }
 
 function defaultMerge(...headers) {
   function unionMerge(objValue, srcValue) {
@@ -249,23 +234,21 @@ const mapUserLinkAllPageHeaders =
 
 const applyLinkHeaders =
   (pluginData, { mergeLinkHeaders }) =>
-  headers => {
-    if (!mergeLinkHeaders) {
-      return headers
-    }
+  headers =>
+    // if (!mergeLinkHeaders) {
+    //   return headers
+    // }
 
-    const { pages, manifest, pathPrefix, publicFolder, assetPrefix } =
-      pluginData
-    const perPageHeaders = preloadHeadersByPage({
-      pages,
-      manifest,
-      pathPrefix,
-      publicFolder,
-      assetPrefix,
-    })
+    // const { pages, manifest, pathPrefix, publicFolder } = pluginData
+    // const perPageHeaders = preloadHeadersByPage({
+    //   pages,
+    //   manifest,
+    //   pathPrefix,
+    //   publicFolder,
+    // })
 
-    return defaultMerge(headers, perPageHeaders)
-  }
+    // return defaultMerge(headers, perPageHeaders)
+    headers
 
 const applySecurityHeaders =
   ({ mergeSecurityHeaders }) =>
@@ -371,7 +354,7 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
     applySecurityHeaders(pluginOptions),
     applyCachingHeaders(pluginData, pluginOptions),
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
-    applyLinkHeaders(pluginData, pluginOptions),
+    // applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),
     saveHeaders(pluginData)
   )(pluginOptions.headers)
