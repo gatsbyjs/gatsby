@@ -7,7 +7,17 @@ import multer from "multer"
 
 import type { IGatsbyFunction } from "../../redux/types"
 
-type IGatsbyRequest = Request
+interface IGatsbyRequestContext {
+  functionObj: IGatsbyFunction
+  fnToExecute: (req: Request, res: Response) => void | Promise<void>
+  // we massage params early in setContext middleware, but apparently other middlewares
+  // reset it, so we will store those on our context and restore later
+  params: Request["params"]
+}
+
+interface IGatsbyRequest extends Request {
+  context?: IGatsbyRequestContext
+}
 
 type IGatsbyMiddleware = (
   req: IGatsbyRequest,
@@ -20,23 +30,7 @@ interface ICreateMiddlewareConfig {
   prepareFn?: (functionObj: IGatsbyFunction) => Promise<void> | void
 }
 
-function setCookies(
-  req: IGatsbyRequest,
-  _res: Response,
-  next: NextFunction
-): void {
-  const cookies = req.headers.cookie
-
-  if (!cookies) {
-    return next()
-  }
-
-  req.cookies = cookie.parse(cookies)
-
-  return next()
-}
-
-function createExecuteFunctionMiddleware({
+function createSetContextFunctionMiddleware({
   getFunctions,
   prepareFn,
 }: ICreateMiddlewareConfig): IGatsbyMiddleware {
@@ -81,17 +75,13 @@ function createExecuteFunctionMiddleware({
         await prepareFn(functionObj)
       }
 
-      reporter.verbose(`Running ${functionObj.functionRoute}`)
-      const start = Date.now()
       const pathToFunction = functionObj.absoluteCompiledFilePath
-
+      let fnToExecute
       try {
         delete require.cache[require.resolve(pathToFunction)]
         const fn = require(pathToFunction)
 
-        const fnToExecute = (fn && fn.default) || fn
-
-        await Promise.resolve(fnToExecute(req, res))
+        fnToExecute = (fn && fn.default) || fn
       } catch (e) {
         {
           // TODO: this was only in develop - is it fine to have this in prod?
@@ -101,7 +91,6 @@ function createExecuteFunctionMiddleware({
           }
         }
         reporter.error(e)
-        // Don't send the error if that would cause another error.
         if (!res.headersSent) {
           res
             .status(500)
@@ -109,30 +98,93 @@ function createExecuteFunctionMiddleware({
             .send(
               `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
             )
+          return
         }
       }
 
-      const end = Date.now()
-      reporter.log(
-        `Executed function "/api/${functionObj.functionRoute}" in ${
-          end - start
-        }ms`
-      )
-    } else {
-      next()
+      if (fnToExecute) {
+        req.context = {
+          functionObj,
+          fnToExecute,
+          params: req.params,
+        }
+      }
     }
+
+    next()
+  }
+}
+
+function setCookies(
+  req: IGatsbyRequest,
+  _res: Response,
+  next: NextFunction
+): void {
+  const cookies = req.headers.cookie
+
+  if (!cookies) {
+    return next()
+  }
+
+  req.cookies = cookie.parse(cookies)
+
+  return next()
+}
+
+async function executeFunction(
+  req: IGatsbyRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  if (req.context) {
+    reporter.verbose(`Running ${req.context.functionObj.functionRoute}`)
+    req.params = req.context.params
+    const start = Date.now()
+    const context = req.context
+    delete req.context
+    try {
+      await Promise.resolve(context.fnToExecute(req, res))
+    } catch (e) {
+      {
+        // TODO: this was only in develop - is it fine to have this in prod?
+        // Override the default error with something more specific.
+        if (e.message.includes(`fnToExecute is not a function`)) {
+          e.message = `${context.functionObj.originalAbsoluteFilePath} does not export a function.`
+        }
+      }
+      reporter.error(e)
+      // Don't send the error if that would cause another error.
+      if (!res.headersSent) {
+        res
+          .status(500)
+          // TODO: custom body text only in develop - is it fine to have this in prod?
+          .send(
+            `Error when executing function "${context.functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
+          )
+      }
+    }
+
+    const end = Date.now()
+    reporter.log(
+      `Executed function "/api/${context.functionObj.functionRoute}" in ${
+        end - start
+      }ms`
+    )
+  } else {
+    next()
   }
 }
 
 export function functionMiddlewares(
   middlewareConfig: ICreateMiddlewareConfig
 ): Array<RequestHandler> {
-  const executeFunction = createExecuteFunctionMiddleware(middlewareConfig)
+  const setContext = createSetContextFunctionMiddleware(middlewareConfig)
 
   return [
+    setCookies,
+    setContext,
     multer().any(),
     urlencoded({ extended: true }),
-    setCookies,
     text(),
     json(),
     raw(),
