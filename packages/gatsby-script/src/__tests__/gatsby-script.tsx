@@ -4,7 +4,7 @@
 
 import React from "react"
 import { render } from "@testing-library/react"
-import { Script, ScriptStrategy } from "../index"
+import { Script, ScriptStrategy } from "../gatsby-script"
 
 const scripts = {
   react: `https://unpkg.com/react@18/umd/react.development.js`,
