@@ -5,7 +5,19 @@ import type { RequestHandler, Request, Response, NextFunction } from "express"
 import reporter from "gatsby-cli/lib/reporter"
 import multer from "multer"
 
+import {
+  createConfig,
+  IGatsbyFunctionConfigProcessed,
+  IGatsbyBodyParserConfigProcessed,
+} from "./config"
 import type { IGatsbyFunction } from "../../redux/types"
+
+const expressBuiltinMiddleware = {
+  urlencoded,
+  text,
+  json,
+  raw,
+}
 
 interface IGatsbyRequestContext {
   functionObj: IGatsbyFunction
@@ -13,14 +25,15 @@ interface IGatsbyRequestContext {
   // we massage params early in setContext middleware, but apparently other middlewares
   // reset it, so we will store those on our context and restore later
   params: Request["params"]
+  config: IGatsbyFunctionConfigProcessed
 }
 
-interface IGatsbyRequest extends Request {
+interface IGatsbyInternalRequest extends Request {
   context?: IGatsbyRequestContext
 }
 
 type IGatsbyMiddleware = (
-  req: IGatsbyRequest,
+  req: IGatsbyInternalRequest,
   res: Response,
   next: NextFunction
 ) => Promise<void> | void
@@ -35,7 +48,7 @@ function createSetContextFunctionMiddleware({
   prepareFn,
 }: ICreateMiddlewareConfig): IGatsbyMiddleware {
   return async function executeFunction(
-    req: IGatsbyRequest,
+    req: IGatsbyInternalRequest,
     res: Response,
     next: NextFunction
   ): Promise<void> {
@@ -71,6 +84,7 @@ function createSetContextFunctionMiddleware({
     }
 
     if (functionObj) {
+      let userConfig
       if (prepareFn) {
         await prepareFn(functionObj)
       }
@@ -80,6 +94,7 @@ function createSetContextFunctionMiddleware({
       try {
         delete require.cache[require.resolve(pathToFunction)]
         const fn = require(pathToFunction)
+        userConfig = fn?.config
 
         fnToExecute = (fn && fn.default) || fn
       } catch (e) {
@@ -107,6 +122,7 @@ function createSetContextFunctionMiddleware({
           functionObj,
           fnToExecute,
           params: req.params,
+          config: createConfig(userConfig, functionObj),
         }
       }
     }
@@ -116,7 +132,7 @@ function createSetContextFunctionMiddleware({
 }
 
 function setCookies(
-  req: IGatsbyRequest,
+  req: IGatsbyInternalRequest,
   _res: Response,
   next: NextFunction
 ): void {
@@ -131,8 +147,25 @@ function setCookies(
   return next()
 }
 
+function bodyParserMiddlewareWithConfig(
+  type: keyof IGatsbyBodyParserConfigProcessed
+): IGatsbyMiddleware {
+  return function (
+    req: IGatsbyInternalRequest,
+    res: Response,
+    next: NextFunction
+  ): void {
+    if (req.context && req.context.config.bodyParser) {
+      const bodyParserConfig = req.context.config.bodyParser[type]
+      expressBuiltinMiddleware[type](bodyParserConfig)(req, res, next)
+    } else {
+      next()
+    }
+  }
+}
+
 async function executeFunction(
-  req: IGatsbyRequest,
+  req: IGatsbyInternalRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> {
@@ -141,6 +174,7 @@ async function executeFunction(
     req.params = req.context.params
     const start = Date.now()
     const context = req.context
+    // we don't want to leak internal context to actual request handler
     delete req.context
     try {
       await Promise.resolve(context.fnToExecute(req, res))
@@ -184,10 +218,10 @@ export function functionMiddlewares(
     setCookies,
     setContext,
     multer().any(),
-    urlencoded({ extended: true }),
-    text(),
-    json(),
-    raw(),
+    bodyParserMiddlewareWithConfig(`text`),
+    bodyParserMiddlewareWithConfig(`urlencoded`),
+    bodyParserMiddlewareWithConfig(`json`),
+    bodyParserMiddlewareWithConfig(`raw`),
     executeFunction,
   ]
 }
