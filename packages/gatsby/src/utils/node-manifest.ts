@@ -32,10 +32,19 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
+function getNodeManifestFileLimit(): number {
+  const defaultLimit = 10000
+
+  const overrideLimit =
+    process.env.NODE_MANIFEST_FILE_LIMIT &&
+    Number(process.env.NODE_MANIFEST_FILE_LIMIT)
+
+  return overrideLimit || defaultLimit
+}
 /**
  * This defines a limit to the number number of node manifest files that will be written to disk
  */
-const NODE_MANIFEST_FILE_LIMIT = process.env.NODE_MANIFEST_FILE_LIMIT || 10000
+const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit()
 
 /**
  * Finds a final built page by nodeId or by node.slug as a fallback.
@@ -316,10 +325,10 @@ export async function processNodeManifest(
   return finalManifest
 }
 
-function nodeManifestSortComparerAscendingCreatedAt(a, b): number {
+function nodeManifestSortComparerAscendingUpdatedAt(a, b): number {
   /**
    * Prioritize node manifests that have an updatedAtUTC so that manifests known to be
-   * knewest are written to disk first. If neither have an updatedAtUTC, there isn't
+   * newest are written to disk first. If neither have an updatedAtUTC, there isn't
    * anything to sort
    */
   if (!a.updatedAtUTC && !b.updatedAtUTC) {
@@ -391,7 +400,7 @@ export async function processNodeManifests(): Promise<Map<
 
   if (totalManifests > NODE_MANIFEST_FILE_LIMIT) {
     nodeManifests = [...nodeManifests]
-    nodeManifests.sort(nodeManifestSortComparerAscendingCreatedAt)
+    nodeManifests.sort(nodeManifestSortComparerAscendingUpdatedAt)
   }
 
   for (const [i, manifest] of nodeManifests.entries()) {
