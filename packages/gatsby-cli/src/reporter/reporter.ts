@@ -224,8 +224,8 @@ class Reporter {
     reporterActions.createLog({ level: LogLevels.Warning, text, meta })
   log = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Log, text, meta })
-  metric = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Metric, text, meta })
+  silent = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
+    reporterActions.createLog({ level: LogLevels.Silent, text, meta })
 
   // TODO add metadata for Activities as well
 

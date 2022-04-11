@@ -20,7 +20,7 @@ export enum LogLevels {
   Warning = `WARNING`,
   Log = `LOG`,
   Error = `ERROR`,
-  Metric = `METRIC`,
+  Silent = `SILENT`,
 }
 
 export enum ActivityLogLevels {
