@@ -12,7 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
-    "@mdx-js/react": "^1.6.22",
+    "@mdx-js/react": "^2.1.1",
     "gatsby": "^4.11.2",
     "gatsby-theme-blog": "^4.0.0",
     "react": "^17.0.2",

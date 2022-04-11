@@ -29,8 +29,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
-    "typeface-merriweather": "0.0.72",
-    "typeface-montserrat": "0.0.75"
+    "typeface-merriweather": "1.1.13",
+    "typeface-montserrat": "1.1.13"
   },
   "devDependencies": {
     "prettier": "^2.6.2"

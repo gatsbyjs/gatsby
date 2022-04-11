@@ -10,7 +10,7 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "@mdx-js/react": "^1.6.22",
+    "@mdx-js/react": "^2.1.1",
     "gatsby": "^4.11.2",
     "gatsby-theme-blog-core": "^4.0.0",
     "react": "^17.0.2",
