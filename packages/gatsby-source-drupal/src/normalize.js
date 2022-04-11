@@ -35,20 +35,28 @@ const getGatsbyImageCdnFields = async ({
 
   const mimeType = node.attributes.filemime
 
-  if (!mimeType || !mimeType.includes(`image/`)) {
+  if (!mimeType) {
     return {}
   }
 
-  const url = pluginOptions.baseUrl + getFileUrl(node.attributes)
+  if (!mimeType.includes(`image/`)) {
+    return {
+      mimeType,
+    }
+  }
+
+  const url = getFileUrl(node.attributes, pluginOptions.baseUrl)?.href
 
   const extraNodeData = fileNodesExtendedData?.get(node.id) || null
 
   try {
-    const imageSize = extraNodeData || (await probeImageSize(url))
+    const hasRequiredData = input => input && input.width && input.height && url
 
-    const requiredData = imageSize && imageSize.width && imageSize.height && url
+    const imageSize = hasRequiredData(extraNodeData)
+      ? extraNodeData
+      : await probeImageSize(url)
 
-    if (!requiredData) {
+    if (!hasRequiredData(imageSize)) {
       return {}
     }
 
@@ -97,7 +105,7 @@ const nodeFromData = async (
   const langcode = attributes.langcode || `und`
   const type = datum.type.replace(/-|__|:|\.|\s/g, `_`)
 
-  const gatsbyImageCdnFields = getGatsbyImageCdnFields({
+  const gatsbyImageCdnFields = await getGatsbyImageCdnFields({
     node: datum,
     type,
     pluginOptions,
@@ -176,7 +184,7 @@ const isFileNode = node => {
 
 exports.isFileNode = isFileNode
 
-const getFileUrl = node => {
+const getFileUrl = (node, baseUrl) => {
   let fileUrl = node.url
 
   if (typeof node.uri === `object`) {
@@ -184,7 +192,10 @@ const getFileUrl = node => {
     fileUrl = node.uri.url
   }
 
-  return fileUrl
+  // Resolve w/ baseUrl if node.uri isn't absolute.
+  const url = new URL(fileUrl, baseUrl)
+
+  return url
 }
 
 exports.downloadFile = async (
@@ -201,10 +212,7 @@ exports.downloadFile = async (
       fileType = uriPrefix ? uriPrefix[0] : null
     }
 
-    const fileUrl = getFileUrl(node, baseUrl)
-
-    // Resolve w/ baseUrl if node.uri isn't absolute.
-    const url = new URL(fileUrl, baseUrl)
+    const url = getFileUrl(node, baseUrl)
 
     // If we have basicAuth credentials, add them to the request.
     const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
