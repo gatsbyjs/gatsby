@@ -81,6 +81,14 @@ const globalPackageRules = [
     dependencyDashboardApproval: false,
   },
   {
+    groupName: `cypress`,
+    matchPaths: [`e2e-tests/**/package.json`, `examples/**/package.json`],
+    matchPackageNames: [`cypress`, `cypress-image-snapshot`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
     groupName: `chalk`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
     matchPackageNames: [`chalk`],

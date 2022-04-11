@@ -4,8 +4,9 @@ import importFrom from "import-from"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { gatsbyImageResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
-import type { Actions } from "gatsby"
 import { PlaceholderType } from "../placeholder-handler"
+import { generateImageUrl } from "../utils/url-generator"
+import type { Actions } from "gatsby"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
 jest.mock(`import-from`)
@@ -33,10 +34,6 @@ function parseSrcSet(
 
     return { src, descriptor }
   })
-}
-
-function base64Encode(s: string): string {
-  return Buffer.from(s).toString(`base64`)
 }
 
 describe(`gatsbyImageData`, () => {
@@ -97,18 +94,20 @@ describe(`gatsbyImageData`, () => {
     expect(parsedSrcSet.length).toBe(2)
 
     expect(parsedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=300&h=225&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 225,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
-    expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
-
-    expect(parsedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=600&h=450&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
-    )
-    expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
   })
 
   it(`should return proper image props for aspect ratio when "cropFocus" is also passed`, async () => {
@@ -124,20 +123,22 @@ describe(`gatsbyImageData`, () => {
       actions
     )
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
-
     expect(parsedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=300&h=225&fit=crop&crop=entropy&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 225,
+          format: `avif`,
+          quality: 75,
+          cropFocus: `entropy`,
+        }
+      )
     )
-    expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
-
-    expect(parsedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${base64Encode(portraitSource.url)}/${base64Encode(
-        `w=600&h=450&fit=crop&crop=entropy&fm=avif&q=75`
-      )}/${portraitSource.basename}.avif`
-    )
-    expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
   })
 
   it(`should return null when source is not an image`, async () => {
@@ -178,19 +179,35 @@ describe(`gatsbyImageData`, () => {
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
     expect(parsedSrcSet.length).toBe(2)
     expect(parsedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 481,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`1x`)
     expect(parsedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 600,
+          height: 962,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`2x`)
 
@@ -236,35 +253,67 @@ describe(`gatsbyImageData`, () => {
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
     expect(parsedSrcSet.length).toBe(4)
     expect(parsedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=75&h=120&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 75,
+          height: 120,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`75w`)
     expect(parsedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=150&h=241&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 150,
+          height: 241,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`150w`)
     expect(parsedSrcSet[2].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 481,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[2].descriptor).toEqual(`300w`)
     expect(parsedSrcSet[3].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 600,
+          height: 962,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[3].descriptor).toEqual(`600w`)
 
@@ -314,35 +363,67 @@ describe(`gatsbyImageData`, () => {
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
     expect(parsedSrcSet).toHaveLength(4)
     expect(parsedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=750&h=1202&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 750,
+          height: 1202,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[0].descriptor).toEqual(`750w`)
     expect(parsedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=1080&h=1731&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 1080,
+          height: 1731,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[1].descriptor).toEqual(`1080w`)
     expect(parsedSrcSet[2].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=1366&h=2190&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 1366,
+          height: 2190,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[2].descriptor).toEqual(`1366w`)
     expect(parsedSrcSet[3].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=1920&h=3078&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 1920,
+          height: 3078,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedSrcSet[3].descriptor).toEqual(`1920w`)
 
@@ -413,18 +494,34 @@ describe(`gatsbyImageData`, () => {
     const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
     expect(parsedFixedSrcSet).toHaveLength(2)
     expect(parsedFixedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 481,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedFixedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 600,
+          height: 962,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
 
     const parsedConstrainedSrcSet = parseSrcSet(
@@ -432,18 +529,34 @@ describe(`gatsbyImageData`, () => {
     )
     expect(parsedConstrainedSrcSet).toHaveLength(2)
     expect(parsedConstrainedSrcSet[0].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=300&h=481&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 300,
+          height: 481,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
     expect(parsedConstrainedSrcSet[1].src).toEqual(
-      `/_gatsby/image/${Buffer.from(portraitSource.url).toString(
-        `base64`
-      )}/${Buffer.from(`w=600&h=962&fm=avif&q=75`).toString(`base64`)}/${
-        portraitSource.basename
-      }.avif`
+      generateImageUrl(
+        {
+          url: portraitSource.url,
+          filename: portraitSource.filename,
+          mimeType: portraitSource.mimeType,
+        },
+        {
+          width: 600,
+          height: 962,
+          format: `avif`,
+          quality: 75,
+        }
+      )
     )
 
     const parsedFullWidthSrcSet = parseSrcSet(
@@ -452,7 +565,7 @@ describe(`gatsbyImageData`, () => {
     expect(parsedFullWidthSrcSet).toHaveLength(4)
   })
 
-  it(`Should url encode filenames`, async () => {
+  it(`should url encode filenames`, async () => {
     const result = await gatsbyImageResolver(
       {
         ...portraitSource,

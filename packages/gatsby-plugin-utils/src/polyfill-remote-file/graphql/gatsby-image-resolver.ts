@@ -1,5 +1,4 @@
-import path from "path"
-import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
+import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
 import {
@@ -7,7 +6,7 @@ import {
   shouldDispatch,
 } from "../jobs/dispatchers"
 import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
-import { ImageCropFocus, ImageFit, isImage } from "../types"
+import { ImageCropFocus, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
 import type { Actions } from "gatsby"
@@ -169,31 +168,28 @@ export async function gatsbyImageResolver(
         dispatchLocalImageServiceJob(
           {
             url: source.url,
-            extension: format,
-            basename: path.basename(
-              source.filename,
-              path.extname(source.filename)
-            ),
+            mimeType: source.mimeType,
+            filename: source.filename,
+            contentDigest: source.internal.contentDigest,
+          },
+          {
             width,
             height: Math.round(width / imageSizes.aspectRatio),
             format,
-            fit: args.fit as ImageFit,
-            contentDigest: source.internal.contentDigest,
+            cropFocus: args.cropFocus,
             quality: args.quality as number,
           },
           actions
         )
       }
 
-      const src = `${generatePublicUrl(source)}/${generateImageArgs({
+      const src = generateImageUrl(source, {
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         format,
         cropFocus: args.cropFocus,
         quality: args.quality as number,
-      })}/${encodeURIComponent(
-        path.basename(source.filename, path.extname(source.filename))
-      )}.${format}`
+      })
 
       if (!fallbackSrc) {
         fallbackSrc = src

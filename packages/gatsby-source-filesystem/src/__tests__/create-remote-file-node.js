@@ -1,4 +1,3 @@
-import path from "path"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 
 const reporter = {}
