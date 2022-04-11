@@ -63,11 +63,19 @@ export async function getScriptsAndStylesForTemplate(
     }
   }
 
+  // console.log(componentChunkName)
+
   // Pick up scripts and styles that are used by a template using webpack.stats.json
   for (const chunkName of [`app`, componentChunkName]) {
-    const assets = webpackStats.assetsByChunkName[chunkName]
+    let assets = webpackStats.assetsByChunkName[chunkName]
+
     if (!assets) {
       continue
+    }
+
+    // Remove JS asset for templates
+    if (chunkName !== `app`) {
+      assets = assets.filter(asset => !asset.endsWith(`.js`))
     }
 
     for (const asset of assets) {
