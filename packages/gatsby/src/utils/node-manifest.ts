@@ -401,13 +401,10 @@ export async function processNodeManifests(): Promise<Map<
   if (totalManifests > NODE_MANIFEST_FILE_LIMIT) {
     nodeManifests = [...nodeManifests]
     nodeManifests.sort(nodeManifestSortComparerAscendingUpdatedAt)
+    nodeManifests = nodeManifests.slice(0, NODE_MANIFEST_FILE_LIMIT)
   }
 
-  for (const [i, manifest] of nodeManifests.entries()) {
-    if (i >= NODE_MANIFEST_FILE_LIMIT) {
-      break
-    }
-
+  for (const manifest of nodeManifests) {
     processNodeManifestQueue.push(manifest, () => {})
   }
 
