@@ -47,4 +47,11 @@ The Gatsby core team is running a collection of RFC's for new features coming to
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
+- [oneknucklehead](https://github.com/oneknucklehead): chore(babel-preset-gatsby): Updated README to include babel presets [PR #35069](https://github.com/gatsbyjs/gatsby/pull/35069)
+- [me4502](https://github.com/me4502): fix(gatsby): ignore crawlers when prefetching [PR #35260](https://github.com/gatsbyjs/gatsby/pull/35260)
+- [g00glen00b](https://github.com/g00glen00b): fix(gatsby-source-filesystem): use correct hash when using createFileNodeFromBuffer [PR #35243](https://github.com/gatsbyjs/gatsby/pull/35243)
+- [jasonbosco](https://github.com/jasonbosco): chore(docs): Add Typesense as a search engine option [PR #35257](https://github.com/gatsbyjs/gatsby/pull/35257)
+- [gmourier](https://github.com/gmourier): chore(docs): Fix Meilisearch spelling [PR #35275](https://github.com/gatsbyjs/gatsby/pull/35275)
+- [BrunoAderaldo](https://github.com/BrunoAderaldo): chore(docs): typo in 4.11 release notes [PR #35349](https://github.com/gatsbyjs/gatsby/pull/35349)
+
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.12.0-next.0...gatsby@4.12.0
