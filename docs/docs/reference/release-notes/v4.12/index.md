@@ -8,7 +8,7 @@ Welcome to `gatsby@4.12.0` release (April 2022 #1)
 
 Key highlights of this release:
 
--
+- [New RFCs](#new-rfcs)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -21,9 +21,12 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-## Feature
+## New RFCs
 
-Description
+The Gatsby core team is running a collection of RFC's for new features coming to Gatsby. Please review the open RFC's and share your perspective to help us deliver the best possible experience for Gatsby developers, like you!
+
+- [RFC for new Script component in Gatsby](https://github.com/gatsbyjs/gatsby/discussions/35404) - the script component will make it easier to incorporate 3rd party scripts without negatively impacting site performance
+- [RFC for new Bundler in Gatsby](https://github.com/gatsbyjs/gatsby/discussions/35357) - Gatsby is evaluating other bundlers in order to deliver faster local development and production build speeds
 
 ## Notable bugfixes & improvements
 
