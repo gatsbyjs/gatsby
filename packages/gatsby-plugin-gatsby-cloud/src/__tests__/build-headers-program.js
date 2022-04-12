@@ -218,7 +218,7 @@ describe(`build-headers-program`, () => {
       `utf8`
     )
     expect(output).toMatchSnapshot()
-    expect(output).toMatch(/app-data\.json/)
+    expect(output).not.toMatch(/app-data\.json/)
     expect(output).toMatch(/page-data\.json/)
     // we should only check app-data once which leads to 1 time
     expect(fs.existsSync).toBeCalledTimes(1)
@@ -254,7 +254,7 @@ describe(`build-headers-program`, () => {
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/\/pages-manifest-ab11f09e0ca7ecd3b43e\.js/g)
     expect(output).not.toMatch(/\/app-data\.json/g)
-    expect(output).toMatch(/\/page-data\.json/g)
+    expect(output).not.toMatch(/\/page-data\.json/g)
     expect(output).not.toMatch(/\/undefined/g)
   })
 
