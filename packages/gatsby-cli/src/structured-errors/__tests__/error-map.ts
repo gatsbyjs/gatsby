@@ -9,7 +9,7 @@ test(`it defaults to generic error`, () => {
 
   expect(defaultError.text({})).toEqual(
     // We could either delete this error, or edit the error warning, or don't show it if someone entered `gatsby`
-    `There was an unhandled error and we could not retrieve more information. Please run the command with the --verbose flag again.`
+    `There was an error which we can't fix and can't get more info about it, if the command which has been executed was "gatsby", you can kindly ignore this error.`
   )
 })
 
