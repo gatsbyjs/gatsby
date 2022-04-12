@@ -1,5 +1,6 @@
 import * as path from "path"
 import webpack from "webpack"
+import Parcel from "@parcel/core"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
@@ -41,21 +42,81 @@ export async function writeQueryContext({
   return Promise.all(waitingForWrites).then(() => {})
 }
 
-export async function createPageSSRBundle({
-  rootDir,
-  components,
-  staticQueriesByTemplate,
-  webpackCompilationHash,
-  reporter,
-  isVerbose = false,
-}: {
+interface CreatePageSSRBundle {
   rootDir: string
   components: IGatsbyState["components"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   reporter: Reporter
   isVerbose?: boolean
-}): Promise<webpack.Compilation | undefined> {
+}
+
+export async function createPageSSRBundle(args: CreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
+  return process.env.GATSBY_EXPERIMENTAL_BUNDLER ? bundleSSR(args) : webpackSSR(args)
+}
+
+async function bundleSSR({
+  // rootDir,
+  // components,
+  // staticQueriesByTemplate,
+  // webpackCompilationHash,
+  // reporter,
+  // isVerbose = false,
+}: CreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
+  // console.log({
+  //   rootDir,
+  //   components,
+  //   staticQueriesByTemplate,
+  //   webpackCompilationHash,
+  //   reporter,
+  //   isVerbose,
+  // })
+  
+  const entry = path.join(__dirname, `entry.js`)
+
+  const options = {
+    entries: entry,
+    outDir: outputDir,
+    outFile: 'index.js',
+    watch: false,
+    // cache: true,
+    cacheDir: cacheLocation,
+    contentHash: false,
+    global: 'moduleName',
+    minify: false,
+    scopeHoist: false,
+    target: 'node',
+    bundleNodeModules: false,
+    // logLevel: "warn",
+    hmr: false,
+    hmrPort: 0,
+    sourceMaps: false,
+    autoInstall: false,
+  }
+
+  return new Promise((resolve, reject) => {
+    const bundler = new Parcel(options)
+
+    bundler.watch((error, buildEvent) => {
+      if (buildEvent?.type === "buildSuccess") {
+        console.log(buildEvent)
+        return resolve(undefined)
+      }
+      if (buildEvent?.type === "buildFailure") {
+        reject(error)
+      }
+    })
+  })
+}
+
+async function webpackSSR({
+  rootDir,
+  components,
+  staticQueriesByTemplate,
+  webpackCompilationHash,
+  reporter,
+  isVerbose = false,
+}: CreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
   const webpackStats = await readWebpackStats(path.join(rootDir, `public`))
 
   const toInline: Record<string, ITemplateDetails> = {}

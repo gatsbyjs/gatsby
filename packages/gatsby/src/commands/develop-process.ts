@@ -71,7 +71,7 @@ onExit(() => {
   })
 })
 
-process.on(`message`, msg => {
+process.on(`message`, (msg: {type: string, action: {type: string, payload: any}}) => {
   if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
     process.exit(msg.action.payload)
   }
