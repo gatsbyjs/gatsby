@@ -18,6 +18,7 @@ jest.mock(`../create-file-node`, () => {
 })
 
 const { ensureDir, writeFile } = require(`fs-extra`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const { createFileNode } = require(`../create-file-node`)
 const createFileNodeFromBuffer = require(`../create-file-node-from-buffer`)
 
@@ -117,6 +118,44 @@ describe(`create-file-node-from-buffer`, () => {
         expect.any(Function),
         expect.any(Object)
       )
+    })
+
+    it(`uses hash as filename when no name is provided`, async () => {
+      expect.assertions(1)
+
+      let outputFilename
+      writeFile.mockImplementationOnce((filename, buf, cb) => {
+        outputFilename = filename
+        cb()
+      })
+
+      const buffer = createMockBuffer(`buffer-content`)
+      await setup({
+        hash: `a-given-hash`,
+        buffer: buffer,
+        getCache: () => createMockCache(),
+      })
+
+      expect(outputFilename).toContain(`a-given-hash.bin`)
+    })
+
+    it(`uses generated hash as filename when no name or hash is provided`, async () => {
+      expect.assertions(1)
+
+      let outputFilename
+      writeFile.mockImplementationOnce((filename, buf, cb) => {
+        outputFilename = filename
+        cb()
+      })
+
+      const buffer = createMockBuffer(`buffer-content`)
+      const expectedHash = createContentDigest(buffer)
+      await setup({
+        buffer: buffer,
+        getCache: () => createMockCache(),
+      })
+
+      expect(outputFilename).toContain(`${expectedHash}.bin`)
     })
   })
 

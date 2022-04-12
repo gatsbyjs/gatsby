@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.11.0/packages/gatsby-transformer-csv) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-csv@4.10.0/packages/gatsby-transformer-csv) (2022-03-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)

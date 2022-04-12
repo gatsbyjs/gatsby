@@ -1,3 +1,5 @@
+import path from "path"
+import os from "os"
 import Cache from "../cache"
 import fs from "fs-extra"
 import manager from "cache-manager"
@@ -93,6 +95,17 @@ describe(`cache`, () => {
 
       expect(cache.get).toEqual(expect.any(Function))
       expect(cache.set).toEqual(expect.any(Function))
+    })
+
+    it(`should use root directory`, () => {
+      const name = `__TEST_CACHE_NAME__`
+      global.__GATSBY = { root: os.tmpdir() }
+      getCache({ name })
+      delete global.__GATSBY
+
+      expect(fs.ensureDirSync).toHaveBeenCalledWith(
+        path.join(os.tmpdir(), `.cache`, `caches`, name)
+      )
     })
   })
 

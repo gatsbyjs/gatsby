@@ -50,6 +50,7 @@ cache:
     - public/
 
 pages:
+  stage: deploy
   script:
     - npm install
     - ./node_modules/.bin/gatsby build --prefix-paths
