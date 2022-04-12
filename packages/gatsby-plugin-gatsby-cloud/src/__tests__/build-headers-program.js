@@ -219,7 +219,7 @@ describe(`build-headers-program`, () => {
     )
     expect(output).toMatchSnapshot()
     expect(output).not.toMatch(/app-data\.json/)
-    expect(output).toMatch(/page-data\.json/)
+    expect(output).not.toMatch(/page-data\.json/)
     // we should only check app-data once which leads to 1 time
     expect(fs.existsSync).toBeCalledTimes(1)
   })
