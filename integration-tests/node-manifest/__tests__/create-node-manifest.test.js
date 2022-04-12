@@ -2,7 +2,7 @@
 jest.setTimeout(100000)
 const DEFAULT_MAX_DAYS_OLD = 30
 
-const { spawnGatsbyProcess } = require(`../utils/get-gatsby-process`)
+const { spawnGatsbyProcess, runGatsbyClean } = require(`../utils/get-gatsby-process`)
 const urling = require(`urling`)
 const rimraf = require(`rimraf`)
 const path = require(`path`)
@@ -144,13 +144,13 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
 describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
   let gatsbyProcess
-  
-  beforeAll(async () => {
-    await cleanNodeManifests()
-  
+
+  beforeEach(async () => {
+    await runGatsbyClean()
+
     gatsbyProcess = spawnGatsbyProcess(gatsbyCommandName, {
       DUMMY_NODE_MANIFEST_COUNT: 700,
-      NODE_MANIFEST_FILE_LIMIT: 500
+      NODE_MANIFEST_FILE_LIMIT: 500,
     })
   
     if (gatsbyCommandName === `develop`) {
@@ -169,7 +169,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
   
   afterAll(() => gatsbyProcess.kill())
 
-  it(`Limits the number of node manifest files written to disk to 10000`, async () => {
+  it(`Limits the number of node manifest files written to disk to 500`, async () => {
     const nodeManifestFiles = fs.readdirSync(manifestDir)
     expect(nodeManifestFiles).toHaveLength(500)
   })
