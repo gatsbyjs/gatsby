@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.11.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.11.3/packages/gatsby) (2022-04-11)
+
+#### Bug Fixes
+
+- only install 2.2.x patch versions of lmdb while 2.3.0 has a bug [#35397](https://github.com/gatsbyjs/gatsby/issues/35397) [#35398](https://github.com/gatsbyjs/gatsby/issues/35398) ([693ece7](https://github.com/gatsbyjs/gatsby/commit/693ece72a4152e5d650f5afa6506fd354d51a3e6))
+
 ### [4.11.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.11.2/packages/gatsby) (2022-04-05)
 
 #### Bug Fixes
