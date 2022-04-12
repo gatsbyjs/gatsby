@@ -723,7 +723,7 @@ export const createAssetNodes = ({
     const file = getField(assetItem.fields?.file) ?? null
 
     // Skip empty and unprocessed assets in Preview API
-    if (!file || !file.url) {
+    if (!file || !file.url || !file.contentType || !file.fileName) {
       return
     }
 
@@ -750,8 +750,8 @@ export const createAssetNodes = ({
       url: `https:${file.url}`,
       placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
       // These fields are optional for edge cases in the Preview API and Contentfuls asset processing
-      mimeType: file.contentType ?? null,
-      filename: file.fileName ?? null,
+      mimeType: file.contentType,
+      filename: file.fileName,
       width: file.details?.image?.width ?? null,
       height: file.details?.image?.height ?? null,
       size: file.details?.size ?? null,
