@@ -485,6 +485,7 @@ export async function onCreateDevServer({
         activeDevelopmentFunctions.add(functionObj)
         await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
       },
+      showDebugMessageInResponse: true,
     })
   )
 }

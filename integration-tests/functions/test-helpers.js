@@ -111,6 +111,35 @@ export function runTests(env, host) {
 
         expect(result.status).toEqual(200)
       })
+
+      test(`no handler function export`, async () => {
+        const result = await fetch(`${host}/api/no-function-export`)
+
+        expect(result.status).toEqual(500)
+        const body = await result.text()
+
+        if (env === `develop`) {
+          expect(body).toMatch(/Error when executing function/)
+          expect(body).toMatch(/does not export a function/)
+        } else {
+          // details are not exposed in `gatsby serve`
+          expect(body).toEqual(`Internal Server Error`)
+        }
+      })
+
+      test(`function throws`, async () => {
+        const result = await fetch(`${host}/api/function-throw`)
+
+        expect(result.status).toEqual(500)
+        const body = await result.text()
+        if (env === `develop`) {
+          expect(body).toMatch(/Error when executing function/)
+          expect(body).toMatch(/some error/)
+        } else {
+          // details are not exposed in `gatsby serve`
+          expect(body).toEqual(`Internal Server Error`)
+        }
+      })
     })
 
     describe(`response formats`, () => {

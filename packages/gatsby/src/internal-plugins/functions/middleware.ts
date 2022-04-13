@@ -26,6 +26,7 @@ interface IGatsbyRequestContext {
   // reset it, so we will store those on our context and restore later
   params: Request["params"]
   config: IGatsbyFunctionConfigProcessed
+  showDebugMessageInResponse: boolean
 }
 
 interface IGatsbyInternalRequest extends Request {
@@ -41,11 +42,13 @@ type IGatsbyMiddleware = (
 interface ICreateMiddlewareConfig {
   getFunctions: () => Array<IGatsbyFunction>
   prepareFn?: (functionObj: IGatsbyFunction) => Promise<void> | void
+  showDebugMessageInResponse?: boolean
 }
 
 function createSetContextFunctionMiddleware({
   getFunctions,
   prepareFn,
+  showDebugMessageInResponse,
 }: ICreateMiddlewareConfig): IGatsbyMiddleware {
   return async function executeFunction(
     req: IGatsbyInternalRequest,
@@ -98,23 +101,24 @@ function createSetContextFunctionMiddleware({
 
         fnToExecute = (fn && fn.default) || fn
       } catch (e) {
-        {
-          // TODO: this was only in develop - is it fine to have this in prod?
-          // Override the default error with something more specific.
-          if (e.message.includes(`fnToExecute is not a function`)) {
-            e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
-          }
+        if (e?.message?.includes(`fnToExecute is not a function`)) {
+          e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
         }
+
+        fnToExecute = undefined
         reporter.error(e)
         if (!res.headersSent) {
-          res
-            .status(500)
-            // TODO: custom body text only in develop - is it fine to have this in prod?
-            .send(
-              `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
-            )
-          return
+          if (showDebugMessageInResponse) {
+            res
+              .status(500)
+              .send(
+                `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
+              )
+          } else {
+            res.sendStatus(500)
+          }
         }
+        return
       }
 
       if (fnToExecute) {
@@ -123,6 +127,7 @@ function createSetContextFunctionMiddleware({
           fnToExecute,
           params: req.params,
           config: createConfig(userConfig, functionObj),
+          showDebugMessageInResponse: showDebugMessageInResponse ?? false,
         }
       }
     }
@@ -179,22 +184,22 @@ async function executeFunction(
     try {
       await Promise.resolve(context.fnToExecute(req, res))
     } catch (e) {
-      {
-        // TODO: this was only in develop - is it fine to have this in prod?
-        // Override the default error with something more specific.
-        if (e.message.includes(`fnToExecute is not a function`)) {
-          e.message = `${context.functionObj.originalAbsoluteFilePath} does not export a function.`
-        }
+      if (e?.message?.includes(`fnToExecute is not a function`)) {
+        e.message = `${context.functionObj.originalAbsoluteFilePath} does not export a function.`
       }
+
       reporter.error(e)
       // Don't send the error if that would cause another error.
       if (!res.headersSent) {
-        res
-          .status(500)
-          // TODO: custom body text only in develop - is it fine to have this in prod?
-          .send(
-            `Error when executing function "${context.functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
-          )
+        if (context.showDebugMessageInResponse) {
+          res
+            .status(500)
+            .send(
+              `Error when executing function "${context.functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
+            )
+        } else {
+          res.sendStatus(500)
+        }
       }
     }
 
