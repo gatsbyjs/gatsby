@@ -5,6 +5,7 @@ import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
+import { getParcelConfig } from "../parcel/util"
 
 import {
   getScriptsAndStylesForTemplate,
@@ -75,6 +76,7 @@ async function bundleSSR({
   const entry = path.join(__dirname, `entry.js`)
 
   const options = {
+    config: getParcelConfig(`page-ssr-module`),
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
@@ -93,6 +95,8 @@ async function bundleSSR({
     sourceMaps: false,
     autoInstall: false,
   }
+
+  console.log({options})
 
   return new Promise((resolve, reject) => {
     const bundler = new Parcel(options)
