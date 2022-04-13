@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.12.1/packages/create-gatsby) (2022-04-13)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.12.0/packages/create-gatsby) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- fix missing site title fix [#35272](https://github.com/gatsbyjs/gatsby/issues/35272) ([37a87ee](https://github.com/gatsbyjs/gatsby/commit/37a87ee736ab0b578a2cd6caa598bf87d8a167b8))
+
+#### Chores
+
+- update formatting & linting [#35302](https://github.com/gatsbyjs/gatsby/issues/35302) ([ac4fddb](https://github.com/gatsbyjs/gatsby/commit/ac4fddbd6e0368e19ed7ccfff0df8cce4e22f57e))
+
 ### [2.11.2](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.11.2/packages/create-gatsby) (2022-04-05)
 
 #### Bug Fixes
