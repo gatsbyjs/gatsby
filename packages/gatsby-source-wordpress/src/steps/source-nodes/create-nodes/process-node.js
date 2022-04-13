@@ -742,8 +742,8 @@ const replaceFileLinks = async ({
         if (node.internal.type === `File`) {
           fileNode = node
           mediaItemNode = await helpers.getNode(node.parent)
-        } else if (node.localFile?.id) {
-          fileNode = await helpers.getNode(node.localFile.id)
+        } else if (node.localFile?.id || typeof node.localFile === `string`) {
+          fileNode = await helpers.getNode(node.localFile?.id || node.localFile)
           mediaItemNode = node
         } else {
           return null
