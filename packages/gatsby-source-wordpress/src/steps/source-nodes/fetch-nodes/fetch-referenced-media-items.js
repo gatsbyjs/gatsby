@@ -210,13 +210,9 @@ export const createMediaItemNode = async ({
       }
 
       if (localFileNode?.id) {
-        node = {
-          ...node,
-          localFile: {
-            id: localFileNode?.id,
-          },
+        node.localFile = {
+          id: localFileNode?.id,
         }
-        // node.localFile = localFileNode?.id
       }
 
       const normalizedNode = normalizeNode({ node, nodeTypeName: `MediaItem` })
@@ -588,7 +584,6 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
 
     createdNodes = [...createdNodes, ...nodesSourcedByUrl]
   }
-  console.log(`created nodes`, createdNodes)
-  console.log(`created nodes filter`, createdNodes.filter(Boolean))
+
   return createdNodes.filter(Boolean)
 }
