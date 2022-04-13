@@ -96,18 +96,16 @@ async function bundleSSR({
     autoInstall: false,
   }
 
-  console.log({options})
-
   return new Promise((resolve, reject) => {
     const bundler = new Parcel(options)
 
     bundler.watch((error, buildEvent) => {
       if (buildEvent?.type === "buildSuccess") {
-        console.log(buildEvent)
         return resolve(undefined)
       }
       if (buildEvent?.type === "buildFailure") {
-        reject(error)
+        // TODO format this better, use codeframes
+        reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
       }
     })
   })

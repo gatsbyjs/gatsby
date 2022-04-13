@@ -3599,36 +3599,6 @@
     nullthrows "^1.1.1"
     semver "^5.7.1"
 
-"@parcel/core@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@parcel/core/-/core-2.3.2.tgz#1b9a79c1ff96dba5e0f53d4277bed4e7ab4590d0"
-  integrity sha512-gdJzpsgeUhv9H8T0UKVmyuptiXdduEfKIUx0ci+/PGhq8cCoiFnlnuhW6H7oLr79OUc+YJStabDJuG4U2A6ysw==
-  dependencies:
-    "@parcel/cache" "2.3.2"
-    "@parcel/diagnostic" "2.3.2"
-    "@parcel/events" "2.3.2"
-    "@parcel/fs" "2.3.2"
-    "@parcel/graph" "2.3.2"
-    "@parcel/hash" "2.3.2"
-    "@parcel/logger" "2.3.2"
-    "@parcel/package-manager" "2.3.2"
-    "@parcel/plugin" "2.3.2"
-    "@parcel/source-map" "^2.0.0"
-    "@parcel/types" "2.3.2"
-    "@parcel/utils" "2.3.2"
-    "@parcel/workers" "2.3.2"
-    abortcontroller-polyfill "^1.1.9"
-    base-x "^3.0.8"
-    browserslist "^4.6.6"
-    clone "^2.1.1"
-    dotenv "^7.0.0"
-    dotenv-expand "^5.1.0"
-    json-source-map "^0.6.1"
-    json5 "^2.2.0"
-    msgpackr "^1.5.1"
-    nullthrows "^1.1.1"
-    semver "^5.7.1"
-
 "@parcel/css-darwin-arm64@1.8.1":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@parcel/css-darwin-arm64/-/css-darwin-arm64-1.8.1.tgz#1d7694185626f956504cc6f099317455145bb880"
@@ -3777,14 +3747,6 @@
     "@parcel/utils" "2.4.1"
     "@parcel/watcher" "^2.0.0"
     "@parcel/workers" "2.4.1"
-
-"@parcel/graph@2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@parcel/graph/-/graph-2.3.2.tgz#4194816952ab322ab22a17f7d9ea17befbade64d"
-  integrity sha512-ltTBM3IEqumgmy4ABBFETT8NtAwSsjD9mY3WCyJ5P8rUshfVCg093rvBPbpuJYMaH/TV1AHVaWfZqaZ4JQDIQQ==
-  dependencies:
-    "@parcel/utils" "2.3.2"
-    nullthrows "^1.1.1"
 
 "@parcel/graph@2.4.1":
   version "2.4.1"
@@ -17415,7 +17377,7 @@ msgpackr-extract@^1.0.14:
     nan "^2.14.2"
     node-gyp-build "^4.2.3"
 
-msgpackr@^1.5.1, msgpackr@^1.5.4:
+msgpackr@^1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/msgpackr/-/msgpackr-1.5.4.tgz#2b6ea6cb7d79c0ad98fc76c68163c48eda50cf0d"
   integrity sha512-Z7w5Jg+2Q9z9gJxeM68d7tSuWZZGnFIRhZnyqcZCa/1dKkhOCNvR1TUV3zzJ3+vj78vlwKRzUgVDlW4jiSOeDA==
@@ -18573,7 +18535,7 @@ param-case@^3.0.3:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
-parcel@^2.4.1:
+parcel@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/parcel/-/parcel-2.4.1.tgz#e369d0c1a3f383df244eb546d0613d1df51f6b35"
   integrity sha512-H8n7cJ0rOt0AZZLuPuG6hvujUWiWz8kxx4pkqEDm31dijrbKb0pNgccXOllQ34em6r7elv6yH7lxox8jDCp0hw==
