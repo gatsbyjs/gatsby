@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 /**
  * Attempts to occupy the main thread with work so that the idle strategy can be observed.
  */
-export function OccupyMainThread({ seconds = 3000 }): JSX.Element {
+export function useOccupyMainThread(timeout: number = 3000) {
   useEffect(() => {
     const interval = setInterval(() => {
       console.log(`Occupying main thread`)
@@ -11,8 +11,6 @@ export function OccupyMainThread({ seconds = 3000 }): JSX.Element {
 
     setTimeout(() => {
       clearInterval(interval)
-    }, seconds)
+    }, timeout)
   }, [])
-
-  return <></>
 }
