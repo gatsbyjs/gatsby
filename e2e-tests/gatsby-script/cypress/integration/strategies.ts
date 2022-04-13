@@ -107,3 +107,47 @@ describe(`${ScriptStrategy.postHydrate} strategy`, () => {
     )
   })
 })
+
+describe(`${ScriptStrategy.idle} strategy`, () => {
+  it(`should load successfully`, () => {
+    const script = Script.marked
+    const alias = `@${script}`
+
+    cy.intercept(`GET`, scripts[script]).as(script)
+    cy.visit(`/`)
+    cy.wait(alias)
+
+    cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
+  })
+
+  it(`should load after other strategies`, () => {
+    const aliases: Array<string> = []
+
+    // Intercept all scripts
+    for (const script in scripts) {
+      cy.intercept(`GET`, scripts[script]).as(script)
+      aliases.push(`@${script}`)
+    }
+
+    cy.visit(`/`)
+
+    // Ensure all script requests have completed successfully
+    for (const alias of aliases) {
+      cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
+    }
+
+    cy.getResourceRecord(Script.marked, ResourceRecord.fetchStart).then(
+      markedFetchStart => {
+        cy.getResourceRecord(Script.dayjs, ResourceRecord.fetchStart).should(
+          `be.lessThan`,
+          markedFetchStart
+        )
+
+        cy.getResourceRecord(Script.three, ResourceRecord.fetchStart).should(
+          `be.lessThan`,
+          markedFetchStart
+        )
+      }
+    )
+  })
+})
