@@ -13,17 +13,14 @@
   "scripts": {
     "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
     "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
-    "format": "prettier --write '**/*.js'",
-    "test:build": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test:build",
-    "test:develop": "npm run start-server-and-test:develop || (npm run reset && exit 1)",
-    "test": "npm run test:build && npm run test:develop",
-    "start-server-and-test:develop": "start-server-and-test develop http://localhost:8000 cy:run:develop",
-    "start-server-and-test:build": "start-server-and-test serve http://localhost:9000 cy:run:build",
     "serve": "gatsby serve",
-    "cy:open:develop": "cypress open --config-file cypress-dev.json",
+    "format": "prettier --write '**/*.js'",
+    "test": "npm run test:build",
+    "test:locally": "npm run build && start-server-and-test serve http://localhost:9000 cy:open:build",
+    "test:build": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test:build",
+    "start-server-and-test:build": "start-server-and-test serve http://localhost:9000 cy:run:build",
     "cy:open:build": "cypress open",
-    "cy:run:build": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --group production",
-    "cy:run:develop": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file cypress-dev.json --group development"
+    "cy:run:build": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --group production"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
