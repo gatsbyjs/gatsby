@@ -6,20 +6,13 @@ import { ScriptStrategy } from "../../../../packages/gatsby-script"
 
 beforeEach(() => {
   // Force script requests to not return from cache
-  for (const script in scripts) {
-    cy.intercept(scripts[script], { middleware: true }, req => {
+  for (const script of [...Object.values(scripts), new RegExp(framework)]) {
+    cy.intercept(script, { middleware: true }, req => {
       req.on(`before:response`, res => {
         res.headers[`cache-control`] = `no-store`
       })
     })
   }
-
-  // Also disable cache for framework
-  cy.intercept(new RegExp(framework), { middleware: true }, req => {
-    req.on(`before:response`, res => {
-      res.headers[`cache-control`] = `no-store`
-    })
-  })
 })
 
 describe(`${ScriptStrategy.preHydrate} strategy`, () => {
