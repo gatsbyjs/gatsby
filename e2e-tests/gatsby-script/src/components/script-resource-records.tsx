@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { scriptUrls, scriptIndex } from "../../scripts"
+import { ResourceRecord } from "../../resource-records"
 
 /**
  * Displays performance resource records of scripts in a table.
@@ -7,6 +8,7 @@ import { scriptUrls, scriptIndex } from "../../scripts"
 export function ScriptResourceRecords(): JSX.Element {
   const [records, setRecords] = useState<Array<PerformanceResourceTiming>>([])
 
+  // Poll for the script resource records we care about
   function getResourceRecords(retries: number = 0): void {
     const resourceRecords = performance.getEntriesByType(
       `resource`
@@ -35,7 +37,8 @@ export function ScriptResourceRecords(): JSX.Element {
         <thead>
           <tr>
             <th>Script</th>
-            <th>Fetch start</th>
+            <th>Fetch start (ms)</th>
+            <th>Response end (ms)</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +47,12 @@ export function ScriptResourceRecords(): JSX.Element {
             return (
               <tr id={script} key={script}>
                 <td id="name">{script}</td>
-                <td id="fetch-start">{record.fetchStart}</td>
+                <td id={ResourceRecord.fetchStart}>
+                  {trim(record.fetchStart)}
+                </td>
+                <td id={ResourceRecord.responseEnd}>
+                  {trim(record.responseEnd)}
+                </td>
               </tr>
             )
           })}
@@ -52,4 +60,8 @@ export function ScriptResourceRecords(): JSX.Element {
       </table>
     </>
   )
+}
+
+function trim(number): number {
+  return Math.round(Number(number))
 }

@@ -1,4 +1,5 @@
 import { Script, scripts } from "../../scripts"
+import { ResourceRecord } from "../../resource-records"
 
 // TODO - Swap this with released package when available
 import { ScriptStrategy } from "../../../../packages/gatsby-script"
@@ -27,7 +28,7 @@ describe(`${ScriptStrategy.preHydrate} strategy`, () => {
   })
 
   it(`should load before other strategies`, () => {
-    const aliases = []
+    const aliases: Array<string> = []
 
     // Intercept all scripts
     for (const script in scripts) {
@@ -51,16 +52,18 @@ describe(`${ScriptStrategy.preHydrate} strategy`, () => {
      * @see {@link https://docs.cypress.io/faq/questions/using-cypress-faq#Can-I-use-the-new-ES7-async-await-syntax}
      */
 
-    cy.getFetchStartTimestamp(Script.dayjs).then(dayjsFetchStart => {
-      cy.getFetchStartTimestamp(Script.three).should(
-        `be.greaterThan`,
-        dayjsFetchStart
-      )
+    cy.getResourceRecord(Script.dayjs, ResourceRecord.fetchStart).then(
+      dayjsFetchStart => {
+        cy.getResourceRecord(Script.three, ResourceRecord.fetchStart).should(
+          `be.greaterThan`,
+          dayjsFetchStart
+        )
 
-      cy.getFetchStartTimestamp(Script.marked).should(
-        `be.greaterThan`,
-        dayjsFetchStart
-      )
-    })
+        cy.getResourceRecord(Script.marked, ResourceRecord.fetchStart).should(
+          `be.greaterThan`,
+          dayjsFetchStart
+        )
+      }
+    )
   })
 })
