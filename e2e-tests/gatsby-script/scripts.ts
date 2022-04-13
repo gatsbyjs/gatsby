@@ -20,3 +20,5 @@ export const scriptIndex: Record<string, Script> = {
 }
 
 export const scriptUrls = new Set(Object.values(scripts))
+
+export const framework = `framework` // Framework bundle that includes react, react-dom, etc.

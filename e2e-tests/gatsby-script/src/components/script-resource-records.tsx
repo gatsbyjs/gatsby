@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { scriptUrls, scriptIndex } from "../../scripts"
+import { scriptUrls, scriptIndex, framework } from "../../scripts"
 import { ResourceRecord } from "../../resource-records"
 
 /**
@@ -14,8 +14,8 @@ export function ScriptResourceRecords(): JSX.Element {
       `resource`
     ) as Array<PerformanceResourceTiming>
 
-    const scriptRecords = resourceRecords.filter(record =>
-      scriptUrls.has(record.name)
+    const scriptRecords = resourceRecords.filter(
+      record => scriptUrls.has(record.name) || isFrameworkRecord(record)
     )
 
     if (scriptRecords.length !== scriptUrls.size && retries < 10) {
@@ -43,7 +43,14 @@ export function ScriptResourceRecords(): JSX.Element {
         </thead>
         <tbody>
           {records.map(record => {
-            const script = scriptIndex[record.name]
+            let script: string
+
+            if (isFrameworkRecord(record)) {
+              script = framework
+            } else {
+              script = scriptIndex[record.name]
+            }
+
             return (
               <tr id={script} key={script}>
                 <td id="name">{script}</td>
@@ -62,6 +69,10 @@ export function ScriptResourceRecords(): JSX.Element {
   )
 }
 
-function trim(number): number {
+function trim(number: number): number {
   return Math.round(Number(number))
+}
+
+function isFrameworkRecord(record: PerformanceResourceTiming): boolean {
+  return record.name.includes(framework)
 }

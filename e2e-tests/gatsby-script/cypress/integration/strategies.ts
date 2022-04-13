@@ -1,11 +1,11 @@
-import { Script, scripts } from "../../scripts"
+import { Script, scripts, framework } from "../../scripts"
 import { ResourceRecord } from "../../resource-records"
 
 // TODO - Swap this with released package when available
 import { ScriptStrategy } from "../../../../packages/gatsby-script"
 
-// Force requests to not return from cache
 beforeEach(() => {
+  // Force script requests to not return from cache
   for (const script in scripts) {
     cy.intercept(scripts[script], { middleware: true }, req => {
       req.on(`before:response`, res => {
@@ -13,6 +13,13 @@ beforeEach(() => {
       })
     })
   }
+
+  // Also disable cache for framework
+  cy.intercept(new RegExp(framework), { middleware: true }, req => {
+    req.on(`before:response`, res => {
+      res.headers[`cache-control`] = `no-store`
+    })
+  })
 })
 
 describe(`${ScriptStrategy.preHydrate} strategy`, () => {
@@ -43,9 +50,6 @@ describe(`${ScriptStrategy.preHydrate} strategy`, () => {
       cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
     }
 
-    // Ensure we have all script resource records in the DOM
-    cy.get(`tbody`).children().should(`have.length`, 3)
-
     /**
      * Assert script fetch start order.
      * Cypress doesn't support async/await syntax so we'll use nested promises like they recommend.
@@ -62,6 +66,42 @@ describe(`${ScriptStrategy.preHydrate} strategy`, () => {
         cy.getResourceRecord(Script.marked, ResourceRecord.fetchStart).should(
           `be.greaterThan`,
           dayjsFetchStart
+        )
+      }
+    )
+  })
+})
+
+describe(`${ScriptStrategy.postHydrate} strategy`, () => {
+  it(`should load successfully`, () => {
+    const script = Script.three
+    const alias = `@${script}`
+
+    cy.intercept(`GET`, scripts[script]).as(script)
+    cy.visit(`/`)
+    cy.wait(alias)
+
+    cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
+  })
+
+  it(`should load after the framework bundle has loaded`, () => {
+    const script = Script.three
+
+    cy.intercept(`GET`, scripts[script]).as(script)
+    cy.intercept(`GET`, new RegExp(framework)).as(framework)
+
+    cy.visit(`/`)
+
+    // Ensure both script requests have completed successfully
+    cy.get(`@${script}`).its(`response.statusCode`).should(`equal`, 200)
+    cy.get(`@${framework}`).its(`response.statusCode`).should(`equal`, 200)
+
+    // Assert framework is loaded before three starts loading
+    cy.getResourceRecord(script, ResourceRecord.fetchStart).then(
+      threeFetchStart => {
+        cy.getResourceRecord(framework, ResourceRecord.responseEnd).should(
+          `be.lessThan`,
+          threeFetchStart
         )
       }
     )
