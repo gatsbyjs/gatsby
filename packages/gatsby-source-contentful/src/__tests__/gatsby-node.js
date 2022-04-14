@@ -657,7 +657,7 @@ describe(`gatsby-node`, () => {
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(46)
+    expect(actions.createNode).toHaveBeenCalledTimes(44)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(32)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
@@ -747,7 +747,7 @@ describe(`gatsby-node`, () => {
       expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(54)
+    expect(actions.createNode).toHaveBeenCalledTimes(52)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
     expect(actions.touchNode).toHaveBeenCalledTimes(72)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
@@ -900,7 +900,7 @@ describe(`gatsby-node`, () => {
       )
     })
 
-    expect(actions.createNode).toHaveBeenCalledTimes(52)
+    expect(actions.createNode).toHaveBeenCalledTimes(48)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(72)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
@@ -986,7 +986,7 @@ describe(`gatsby-node`, () => {
       locales
     )
 
-    expect(actions.createNode).toHaveBeenCalledTimes(54)
+    expect(actions.createNode).toHaveBeenCalledTimes(48)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
     expect(actions.touchNode).toHaveBeenCalledTimes(72)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`

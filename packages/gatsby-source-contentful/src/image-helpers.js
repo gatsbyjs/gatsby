@@ -52,5 +52,5 @@ export function createUrl(imgUrl, options = {}) {
     }
   }
 
-  return `${imgUrl}?${searchParams.toString()}`
+  return `https:${imgUrl}?${searchParams.toString()}`
 }

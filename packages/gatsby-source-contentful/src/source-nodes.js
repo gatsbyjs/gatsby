@@ -246,24 +246,6 @@ export async function sourceNodes(
   })
 
   const { deletedEntries, deletedAssets } = currentSyncData
-
-  const allDeletedNodes = [...deletedEntries, ...deletedAssets]
-  const deletedNodeIds = []
-
-  locales.forEach(locale => {
-    allDeletedNodes.forEach(n => {
-      deletedNodeIds.push(
-        makeId({
-          spaceId: n.sys.space.sys.id,
-          id: n.sys.id,
-          type: n.sys.type,
-          currentLocale: locale.code,
-          defaultLocale,
-        })
-      )
-    })
-  })
-
   const deletedEntryGatsbyReferenceIds = new Set()
 
   function deleteContentfulNode(node) {
@@ -316,7 +298,7 @@ export async function sourceNodes(
         !deletedEntryGatsbyReferenceIds.has(n.id)
     )
     .forEach(n => {
-      if (n.contentful_id && foreignReferenceMap[generateReferenceId(n)]) {
+      if (n.sys.id && foreignReferenceMap[generateReferenceId(n)]) {
         foreignReferenceMap[generateReferenceId(n)].forEach(
           foreignReference => {
             const { name, id, type, spaceId } = foreignReference
@@ -326,7 +308,7 @@ export async function sourceNodes(
                 spaceId,
                 id,
                 type,
-                currentLocale: n.node_locale,
+                currentLocale: n.sys.locale,
                 defaultLocale,
               })
             )
@@ -348,7 +330,7 @@ export async function sourceNodes(
       }
 
       // Remove references to deleted nodes
-      if (n.contentful_id && deletedEntryGatsbyReferenceIds.size) {
+      if (n.sys.id && deletedEntryGatsbyReferenceIds.size) {
         Object.keys(n).forEach(name => {
           // @todo Detect reference fields based on schema. Should be easier to achieve in the upcoming version.
           if (!name.endsWith(`___NODE`)) {
@@ -503,6 +485,7 @@ export async function sourceNodes(
       await createNode({
         id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
         name: tag.name,
+        // @todo update the structure of tags
         contentful_id: tag.sys.id,
         internal: {
           type: `ContentfulTag`,
