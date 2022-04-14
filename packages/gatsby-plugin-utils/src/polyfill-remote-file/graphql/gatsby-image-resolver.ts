@@ -246,7 +246,6 @@ export async function gatsbyImageResolver(
   }
 
   actions.processGatsbyImageSourceUrl(source.url)
-  // actions.processGatsbyImageSourceUrl(source.url)
 
   return {
     images: result as IGatsbyImageData,

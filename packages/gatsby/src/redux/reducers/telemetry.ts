@@ -15,6 +15,9 @@ export const telemetryReducer = (
 
       nextState.add(sourceUrl)
 
+      console.log(`next state:`, nextState)
+      console.log(...nextState)
+
       return {
         ...state,
         gatsbyImageResolver: nextState,

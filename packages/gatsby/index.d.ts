@@ -1279,6 +1279,12 @@ export interface Actions {
     plugin?: ActionPlugin
   ): Promise<unknown>
 
+  /** @todo add docs reference */
+  processGatsbyImageSourceUrl(
+    this: void,
+    sourceUrl: string,
+  ): void
+
   /** @see https://www.gatsbyjs.com/docs/actions/#setJob */
   setJob(
     this: void,

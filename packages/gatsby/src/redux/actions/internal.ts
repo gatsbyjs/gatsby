@@ -31,7 +31,7 @@ import {
   IApiFinishedAction,
   IQueryClearDirtyQueriesListToEmitViaWebsocket,
   ICreateJobV2FromInternalAction,
-  IProcessGatsbyImageSourceUrlAction,
+  // IProcessGatsbyImageSourceUrlAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
