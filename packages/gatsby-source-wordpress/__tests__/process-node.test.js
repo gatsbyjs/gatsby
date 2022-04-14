@@ -111,7 +111,7 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
   expect(updatedNodeString).not.toEqual(nodeString)
 
   const imageMatches = execall(/\/_gatsby\/image/gm, updatedNodeString)
-  expect(imageMatches.length).toBe(39)
+  expect(imageMatches.length).toBe(27)
 
 
   const transformedNodeStringNoHtmlImages = await replaceNodeHtmlImages({
