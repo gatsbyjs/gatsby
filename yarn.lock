@@ -11313,27 +11313,6 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
-gatsby-core-utils@^3.8.2:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-3.8.2.tgz#9c2869f93a740d20536b1e92c8020efd85d43e5f"
-  integrity sha512-UwANr9yd8ayLinPDoRbU/rRgoOBOS715qe2LYCxq6hAtRabHWTEM8Vj0wh7LmyVGexx8MFgvp2NKikG2TZ5pzQ==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    ci-info "2.0.0"
-    configstore "^5.0.1"
-    fastq "^1.13.0"
-    file-type "^16.5.3"
-    fs-extra "^10.0.0"
-    got "^11.8.3"
-    import-from "^4.0.0"
-    lmdb "^2.1.7"
-    lock "^1.1.0"
-    node-object-hash "^2.3.10"
-    proper-lockfile "^4.1.2"
-    resolve-from "^5.0.0"
-    tmp "^0.2.1"
-    xdg-basedir "^4.0.0"
-
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -15083,6 +15062,36 @@ livereload-js@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-2.3.0.tgz#c3ab22e8aaf5bf3505d80d098cbad67726548c9a"
 
+lmdb-darwin-arm64@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/lmdb-darwin-arm64/-/lmdb-darwin-arm64-2.3.2.tgz#edcd324e4693abfcd02e7c5ba44a7f0e209f7588"
+  integrity sha512-20lWWUPGKnSZRFY8FBm+vZEFx/5Deh0joz6cqJ8/0SuO/ejqRCppSsNqAxPqW87KUNR5rNfhaA2oRekMeb0cwQ==
+
+lmdb-darwin-x64@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/lmdb-darwin-x64/-/lmdb-darwin-x64-2.3.2.tgz#6561f37d0461c3128b92fb80996c54e6243af939"
+  integrity sha512-BsBnOfgK1B11Dh4RgcgBTmkmsPv3mjBPKsA4W4E+18SW9K2aRi86CAMPXqjfY/OJDUe1pSrpVf1A83b8N/C9rg==
+
+lmdb-linux-arm64@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/lmdb-linux-arm64/-/lmdb-linux-arm64-2.3.2.tgz#feb4a52a0030feb9520543c78919c30250a85107"
+  integrity sha512-DIibLZHpwwlIsP9cBRmw0xqDy6wZH+CDAnOTI+eihQ5PdWjTs+kaQs5O/x8l6/8fwCB0TPYKWTqfdUbvd/F7AA==
+
+lmdb-linux-arm@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/lmdb-linux-arm/-/lmdb-linux-arm-2.3.2.tgz#d8ee33547cc0f671efcf63ca381306df51f972f5"
+  integrity sha512-ofxfxVQqMbaC2Ygjzk8k6xgS5Dg/3cANeLcEx14T35GoU5pQKlLAWjypptyLQEeOboEmEOpZmHMoD7sWu/zakQ==
+
+lmdb-linux-x64@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/lmdb-linux-x64/-/lmdb-linux-x64-2.3.2.tgz#1c66a012199ab5235d3fcec8c3fdad573cf3eff4"
+  integrity sha512-HBUd013RRQ2KpiyBqqqSPSEwPpVUpTJZdTZGDVQFQZuxqyJumt4Wye3uh6ZgEiBtxzSelt4xvAeNjYPH0dcZSQ==
+
+lmdb-win32-x64@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/lmdb-win32-x64/-/lmdb-win32-x64-2.3.2.tgz#e65f79bfbb9f09ebfa53d3b03959bc581ebda55a"
+  integrity sha512-/hir5oU+GYm7/B6QirrpyOmIuzCKiIbWoKIJI2ebXeJlrs6Jj7UY9caPBYVkCzd79QzJnB7hIlX/F6Jx6gcUmg==
+
 lmdb@^2.0.2, lmdb@~2.2.3:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/lmdb/-/lmdb-2.2.6.tgz#a52ef533812b8abcbe0033fc9d74d215e7dfc0a0"
@@ -15094,16 +15103,24 @@ lmdb@^2.0.2, lmdb@~2.2.3:
     ordered-binary "^1.2.4"
     weak-lru-cache "^1.2.2"
 
-lmdb@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/lmdb/-/lmdb-2.2.4.tgz#6494d5a1d1db152e0be759edcfa06893e4cbdb53"
-  integrity sha512-gto+BB2uEob8qRiTlOq+R3uX0YNHsX9mjxj9Sbdue/LIKqu6IlZjrsjKeGyOMquc/474GEqFyX2pdytpydp0rQ==
+lmdb@^2.2.6:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/lmdb/-/lmdb-2.3.3.tgz#ee0c53a5f5c2509c566b891803b3322e5a59095f"
+  integrity sha512-CrooSvHOzd+jPXCXpiffu2+5m90Fe6L/cw90fg+4sCWNrw3W7/ad20CGuTkMVU7mAuwXEAJAfnUwvHN2pS9Rqg==
   dependencies:
     msgpackr "^1.5.4"
     nan "^2.14.2"
-    node-gyp-build "^4.2.3"
+    node-addon-api "^4.3.0"
+    node-gyp-build-optional-packages "^4.3.2"
     ordered-binary "^1.2.4"
     weak-lru-cache "^1.2.2"
+  optionalDependencies:
+    lmdb-darwin-arm64 "2.3.2"
+    lmdb-darwin-x64 "2.3.2"
+    lmdb-linux-arm "2.3.2"
+    lmdb-linux-arm64 "2.3.2"
+    lmdb-linux-x64 "2.3.2"
+    lmdb-win32-x64 "2.3.2"
 
 load-bmfont@^1.3.1, load-bmfont@^1.4.0:
   version "1.4.0"
@@ -17060,6 +17077,11 @@ node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.5, node
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
+
+node-gyp-build-optional-packages@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/node-gyp-build-optional-packages/-/node-gyp-build-optional-packages-4.3.2.tgz#82de9bdf9b1ad042457533afb2f67469dc2264bb"
+  integrity sha512-P5Ep3ISdmwcCkZIaBaQamQtWAG0facC89phWZgi5Z3hBU//J6S48OIvyZWSPPf6yQMklLZiqoosWAZUj7N+esA==
 
 node-gyp-build@^4.2.3, node-gyp-build@^4.3.0:
   version "4.3.0"
