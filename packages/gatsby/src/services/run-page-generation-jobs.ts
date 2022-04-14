@@ -2,6 +2,7 @@ import { chunk } from "lodash"
 import { store } from "../redux/index"
 import { createInternalJob } from "../utils/jobs/manager"
 import { createJobV2FromInternalJob } from "../redux/actions/internal"
+import { uuid } from "gatsby-core-utils"
 
 const pageGenChunkSize =
   Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
@@ -28,6 +29,7 @@ export async function runPageGenerationJobs(
         {
           name: `GENERATE_PAGE`,
           args: {
+            id: uuid.v4(),
             paths: pageChunk?.map(item => item?.path),
           },
           inputPaths: [],
