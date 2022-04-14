@@ -612,9 +612,8 @@ export const createAssetNodes = ({
         publishedVersion: assetItem.sys.revision,
       },
       placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
+      url: `https:${file.url}`,
       // These fields are optional for edge cases in the Preview API and Contentfuls asset processing
-      mimeType: file.contentType,
-      filename: file.fileName,
       width: file.details?.image?.width ?? null,
       height: file.details?.image?.height ?? null,
       size: file.details?.size ?? null,
@@ -627,7 +626,9 @@ export const createAssetNodes = ({
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
         : ``,
-      url: `https:${file.url}`,
+      // Satisfy the Gatsby ImageCDN feature
+      mimeType: file.contentType,
+      filename: file.fileName,
     }
 
     // if the node hasn't changed, createNode may return `undefined` instead of a Promise on some versions of Gatsby

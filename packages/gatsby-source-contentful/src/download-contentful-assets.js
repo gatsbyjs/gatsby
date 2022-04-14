@@ -1,6 +1,5 @@
 // @ts-check
 import { createRemoteFileNode } from "gatsby-source-filesystem"
-import { createUrl } from "./image-helpers"
 
 /**
  * @name distributeWorkload
@@ -52,15 +51,15 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
       let fileNodeID
       const {
         sys: { id, locale },
+        url,
       } = assetNode
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
 
-      if (!assetNode.url) {
+      if (!url) {
         reporter.warn(`The asset with id: ${id} has no url.`)
         return Promise.resolve()
       }
-      const url = createUrl(assetNode.url)
 
       // Avoid downloading the asset again if it's been cached
       // Note: Contentful Assets do not provide useful metadata

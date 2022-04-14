@@ -72,7 +72,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp",
+          "src": "//test.png?w=420&h=210&fm=webp",
           "width": 420,
         }
       `)
@@ -86,7 +86,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp&r=10",
+          "src": "//test.png?w=420&h=210&fm=webp&r=10",
           "width": 420,
         }
       `)
@@ -100,7 +100,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp&r=max",
+          "src": "//test.png?w=420&h=210&fm=webp&r=max",
           "width": 420,
         }
       `)
@@ -112,7 +112,7 @@ describe(`gatsby-plugin-image`, () => {
         Object {
           "format": "webp",
           "height": 210,
-          "src": "https://test.png?w=420&h=210&fm=webp",
+          "src": "//test.png?w=420&h=210&fm=webp",
           "width": 420,
         }
       `)

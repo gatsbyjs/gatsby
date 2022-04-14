@@ -121,16 +121,13 @@ Array [
       },
       "fields": Object {
         "contentType": Object {
-          "type": "String",
-        },
-        "contentful_id": Object {
           "type": "String!",
         },
         "description": Object {
           "type": "String",
         },
         "fileName": Object {
-          "type": "String",
+          "type": "String!",
         },
         "gatsbyImageData": Object {
           "args": Object {
@@ -229,6 +226,9 @@ Ignored if layout = FLUID.",
         "metadata": Object {
           "type": "ContentfulMetadata!",
         },
+        "mimeType": Object {
+          "type": "String!",
+        },
         "size": Object {
           "type": "Int",
         },
@@ -239,7 +239,7 @@ Ignored if layout = FLUID.",
           "type": "String",
         },
         "url": Object {
-          "type": "String",
+          "type": "String!",
         },
         "width": Object {
           "type": "Int",

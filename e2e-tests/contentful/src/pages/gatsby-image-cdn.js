@@ -22,15 +22,12 @@ export default GatsbyPluginImagePage
 export const pageQuery = graphql`
   query GatsbyImageCDNQuery {
     default: contentfulAsset(
-      contentful_id: { eq: "3BSI9CgDdAn1JchXmY5IJi" }
-      node_locale: { eq: "en-US" }
+      sys: { id: { eq: "3BSI9CgDdAn1JchXmY5IJi" }, locale: { eq: "en-US" } }
     ) {
       title
       description
-      file {
-        fileName
-        url
-      }
+      fileName
+      url
       gatsbyImage(width: 420)
     }
   }

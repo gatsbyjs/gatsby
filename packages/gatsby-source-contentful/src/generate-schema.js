@@ -279,7 +279,6 @@ export async function generateSchema({
       schema.buildObjectType({
         name: `ContentfulAsset`,
         fields: {
-          contentful_id: { type: `String!` },
           id: { type: `ID!` },
           sys: { type: `ContentfulSys!` },
           metadata: { type: `ContentfulMetadata!` },
@@ -322,9 +321,10 @@ export async function generateSchema({
             : {}),
           title: { type: `String` },
           description: { type: `String` },
-          contentType: { type: `String` },
-          fileName: { type: `String` },
-          url: { type: `String` },
+          contentType: { type: `String!` },
+          mimeType: { type: `String!` },
+          fileName: { type: `String!` },
+          url: { type: `String!` },
           size: { type: `Int` },
           width: { type: `Int` },
           height: { type: `Int` },

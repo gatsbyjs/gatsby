@@ -10,9 +10,7 @@ const DownloadLocalPage = ({ data }) => {
       <h1>Test downloadLocal feature</h1>
       <GatsbyImage
         id="gatsby-plugin-image-download-local"
-        image={
-          data.contentfulAsset.fields.localFile.childImageSharp.gatsbyImageData
-        }
+        image={data.contentfulAsset.localFile.childImageSharp.gatsbyImageData}
       />
     </Layout>
   )
@@ -23,12 +21,10 @@ export default DownloadLocalPage
 export const pageQuery = graphql`
   query DownloadLocalQuery {
     contentfulAsset(sys: { id: { eq: "3BSI9CgDdAn1JchXmY5IJi" } }) {
-      fields {
-        localFile {
-          absolutePath
-          childImageSharp {
-            gatsbyImageData
-          }
+      localFile {
+        absolutePath
+        childImageSharp {
+          gatsbyImageData
         }
       }
     }
