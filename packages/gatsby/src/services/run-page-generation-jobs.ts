@@ -2,7 +2,7 @@ import { chunk } from "lodash"
 import { store } from "../redux/index"
 import { createInternalJob } from "../utils/jobs/manager"
 import { createJobV2FromInternalJob } from "../redux/actions/internal"
-import { uuid } from "gatsby-core-utils"
+import { v4 as uuid } from "uuid"
 
 const pageGenChunkSize =
   Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
