@@ -11,7 +11,7 @@ import {
   buildResolvableSet,
   createAssetNodes,
   createNodesForContentType,
-  generateReferenceId,
+  createRefId,
   makeId,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
@@ -241,7 +241,7 @@ export async function sourceNodes(
   const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.add(generateReferenceId(entry))
+      newOrUpdatedEntries.add(createRefId(entry))
     })
   })
 
@@ -294,39 +294,37 @@ export async function sourceNodes(
     .filter(
       n =>
         n.sys.type === `Entry` &&
-        !newOrUpdatedEntries.has(generateReferenceId(n)) &&
+        !newOrUpdatedEntries.has(createRefId(n)) &&
         !deletedEntryGatsbyReferenceIds.has(n.id)
     )
     .forEach(n => {
-      if (n.sys.id && foreignReferenceMap[generateReferenceId(n)]) {
-        foreignReferenceMap[generateReferenceId(n)].forEach(
-          foreignReference => {
-            const { name, id, type, spaceId } = foreignReference
+      if (n.sys.id && foreignReferenceMap[createRefId(n)]) {
+        foreignReferenceMap[createRefId(n)].forEach(foreignReference => {
+          const { name, id, type, spaceId } = foreignReference
 
-            const nodeId = createNodeId(
-              makeId({
-                spaceId,
-                id,
-                type,
-                currentLocale: n.sys.locale,
-                defaultLocale,
-              })
-            )
+          const nodeId = createNodeId(
+            makeId({
+              spaceId,
+              id,
+              type,
+              currentLocale: n.sys.locale,
+              defaultLocale,
+            })
+          )
 
-            // Create new reference field when none exists
-            if (!n[name]) {
-              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
-              n[name] = [nodeId]
-              return
-            }
-
-            // Add non existing references to reference field
-            if (n[name] && !n[name].includes(nodeId)) {
-              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
-              n[name].push(nodeId)
-            }
+          // Create new reference field when none exists
+          if (!n[name]) {
+            existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
+            n[name] = [nodeId]
+            return
           }
-        )
+
+          // Add non existing references to reference field
+          if (n[name] && !n[name].includes(nodeId)) {
+            existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
+            n[name].push(nodeId)
+          }
+        })
       }
 
       // Remove references to deleted nodes

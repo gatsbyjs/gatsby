@@ -62,7 +62,7 @@ const makeMakeId =
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 // Generates an unique id per space for reference resolving
-export const generateReferenceId = nodeOrLink =>
+export const createRefId = nodeOrLink =>
   `${nodeOrLink.sys.id}___${nodeOrLink.sys.linkType || nodeOrLink.sys.type}`
 
 export const buildEntryList = ({ contentTypeItems, currentSyncData }) => {
@@ -91,15 +91,15 @@ export const buildResolvableSet = ({
     if (node.internal.owner === `gatsby-source-contentful` && node?.sys?.id) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(generateReferenceId(node))
+      resolvable.add(createRefId(node))
     }
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry => resolvable.add(generateReferenceId(entry)))
+    entries.forEach(entry => resolvable.add(createRefId(entry)))
   })
 
-  assets.forEach(assetItem => resolvable.add(generateReferenceId(assetItem)))
+  assets.forEach(assetItem => resolvable.add(createRefId(assetItem)))
 
   return resolvable
 }
@@ -140,7 +140,7 @@ export const buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
-                const key = generateReferenceId(v)
+                const key = createRefId(v)
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
                   return
@@ -161,7 +161,7 @@ export const buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = generateReferenceId(entryItemFieldValue)
+            const key = createRefId(entryItemFieldValue)
             // Don't create link to an unresolvable field.
             if (!resolvable.has(key)) {
               return
@@ -402,7 +402,7 @@ export const createNodesForContentType = ({
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
                 const resolvableEntryItemFieldValue = entryItemFieldValue
-                  .filter(v => resolvable.has(generateReferenceId(v)))
+                  .filter(v => resolvable.has(createRefId(v)))
                   .map(function (v) {
                     return mId(
                       space.sys.id,
@@ -418,7 +418,7 @@ export const createNodesForContentType = ({
                 delete entryItemFields[entryItemFieldKey]
               }
             } else if (entryItemFieldValue?.sys?.type === `Link`) {
-              if (resolvable.has(generateReferenceId(entryItemFieldValue))) {
+              if (resolvable.has(createRefId(entryItemFieldValue))) {
                 entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                   space.sys.id,
                   entryItemFieldValue.sys.id,
@@ -432,8 +432,7 @@ export const createNodesForContentType = ({
         })
 
         // Add reverse linkages if there are any for this node
-        const foreignReferences =
-          foreignReferenceMap[generateReferenceId(entryItem)]
+        const foreignReferences = foreignReferenceMap[createRefId(entryItem)]
         if (foreignReferences) {
           foreignReferences.forEach(foreignReference => {
             const existingReference = entryItemFields[foreignReference.name]
