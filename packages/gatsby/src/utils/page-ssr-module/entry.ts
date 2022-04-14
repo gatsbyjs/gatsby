@@ -107,7 +107,10 @@ export async function getData({
       page = maybePage
 
       // 2. Lookup query used for a page (template)
-      templateDetails = INLINED_TEMPLATE_TO_DETAILS[page.componentChunkName]
+      // templateDetails = INLINED_TEMPLATE_TO_DETAILS[page.componentChunkName]
+      const tempToInline = JSON.parse(fs.readFileSync(path.join(`public`, `parcel.toInline.json`)).toString())
+      templateDetails = tempToInline[page.componentChunkName]
+      
       if (!templateDetails) {
         throw new Error(
           `Page template details for "${page.componentChunkName}" not found`
@@ -360,7 +363,7 @@ export async function renderHTML({
         pagePath: getPath(data),
         pageData,
         staticQueryContext,
-        webpackCompilationHash: WEBPACK_COMPILATION_HASH,
+        webpackCompilationHash: 'beef',// TODO WEBPACK_COMPILATION_HASH,
         ...data.templateDetails.assets,
         inlinePageData: data.page.mode === `SSR` && data.results.serverData,
       })

@@ -1,11 +1,13 @@
 import * as path from "path"
 import webpack from "webpack"
 import Parcel from "@parcel/core"
+import { OutputFormat  } from "@parcel/types"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
-import { getParcelConfig } from "../parcel/util"
+import { getParcelFile, getParcelConfig } from "../parcel/util"
+import fs from "fs"
 
 import {
   getScriptsAndStylesForTemplate,
@@ -43,7 +45,7 @@ export async function writeQueryContext({
   return Promise.all(waitingForWrites).then(() => {})
 }
 
-interface CreatePageSSRBundle {
+interface ICreatePageSSRBundle {
   rootDir: string
   components: IGatsbyState["components"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
@@ -52,7 +54,7 @@ interface CreatePageSSRBundle {
   isVerbose?: boolean
 }
 
-export async function createPageSSRBundle(args: CreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
+export async function createPageSSRBundle(args: ICreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
   return process.env.GATSBY_EXPERIMENTAL_BUNDLER ? bundleSSR(args) : webpackSSR(args)
 }
 
@@ -63,20 +65,36 @@ async function bundleSSR({
   // webpackCompilationHash,
   // reporter,
   // isVerbose = false,
-}: CreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
-  // console.log({
-  //   rootDir,
-  //   components,
-  //   staticQueriesByTemplate,
-  //   webpackCompilationHash,
-  //   reporter,
-  //   isVerbose,
-  // })
+}: ICreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
+
+
+  // const toInline: Record<string, ITemplateDetails> = {}
+  // for (const pageTemplate of components.values()) {
+  //   const staticQueryHashes =
+  //     staticQueriesByTemplate.get(pageTemplate.componentPath) || []
+
+  //   toInline[pageTemplate.componentChunkName] = {
+  //     query: pageTemplate.query,
+  //     staticQueryHashes,
+  //     assets: await getScriptsAndStylesForTemplate(
+  //       pageTemplate.componentChunkName,
+  //       webpackStats
+  //     ),
+  //   }
+  // }
+  // TODO actually generate this
+  const toInline = JSON.parse(fs.readFileSync(getParcelFile("toInline.json")).toString())
+
+  fs.writeFileSync(
+    path.join(`public`, `parcel.toInline.json`),
+    JSON.stringify(toInline)
+  )
   
   const entry = path.join(__dirname, `entry.js`)
 
   const options = {
     config: getParcelConfig(`page-ssr-module`),
+    defaultConfig: require.resolve(`gatsby-parcel-config`),
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
@@ -87,27 +105,51 @@ async function bundleSSR({
     global: 'moduleName',
     minify: false,
     scopeHoist: false,
-    target: 'node',
+    target: 'commonjs',
     bundleNodeModules: false,
     // logLevel: "warn",
     hmr: false,
     hmrPort: 0,
     sourceMaps: false,
     autoInstall: false,
+    targets: {
+      root: {
+        outputFormat: `commonjs` as OutputFormat,
+        includeNodeModules: false,
+        sourceMap: false,
+        engines: {
+          node: `>= 14.15.0`,
+        },
+        distDir: outputDir,
+      },
+    },
   }
 
-  return new Promise((resolve, reject) => {
-    const bundler = new Parcel(options)
+  console.log(options)
+  return new Promise(async (resolve, reject) => {
+    // try {
+    //   const bundler = new Parcel(options)
+    // } catch (e) {
+    //   console.log(e)
+    // }
 
-    bundler.watch((error, buildEvent) => {
-      if (buildEvent?.type === "buildSuccess") {
-        return resolve(undefined)
-      }
-      if (buildEvent?.type === "buildFailure") {
-        // TODO format this better, use codeframes
-        reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
-      }
-    })
+    try {
+      const bundler = new Parcel(options)
+
+      await bundler.watch((error, buildEvent) => {
+        console.log(buildEvent)
+        if (buildEvent?.type === "buildSuccess") {
+          return resolve(undefined)
+        }
+        if (buildEvent?.type === "buildFailure") {
+          console.log(`ERROR`)
+          // TODO format this better, use codeframes
+          reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
+        }
+      })
+    } catch (e) {
+      reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
+    }
   })
 }
 
@@ -118,7 +160,7 @@ async function webpackSSR({
   webpackCompilationHash,
   reporter,
   isVerbose = false,
-}: CreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
+}: ICreatePageSSRBundle): Promise<webpack.Compilation | undefined> {
   const webpackStats = await readWebpackStats(path.join(rootDir, `public`))
 
   const toInline: Record<string, ITemplateDetails> = {}
