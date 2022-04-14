@@ -1280,7 +1280,7 @@ export interface Actions {
   ): Promise<unknown>
 
   /** @todo add docs reference */
-  processGatsbyImageSourceUrl(
+  addGatsbyImageSourceUrl(
     this: void,
     sourceUrl: string,
   ): void

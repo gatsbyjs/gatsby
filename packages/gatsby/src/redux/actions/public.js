@@ -1253,7 +1253,7 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 
-actions.processGatsbyImageSourceUrl = (sourceUrl: string) => dispatch => {
+actions.addGatsbyImageSourceUrl = (sourceUrl: string) => dispatch => {
   dispatch({
     type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
     payload: { sourceUrl },
