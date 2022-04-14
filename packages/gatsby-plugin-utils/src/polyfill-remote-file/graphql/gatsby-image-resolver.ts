@@ -210,13 +210,13 @@ export async function gatsbyImageResolver(
         srcSet: createSrcSetFromImages(images),
         sizes,
       }
-    } else {
-      result.sources.push({
-        srcSet: createSrcSetFromImages(images),
-        type: `image/${format}`,
-        sizes,
-      })
     }
+
+    result.sources.push({
+      srcSet: createSrcSetFromImages(images),
+      type: `image/${format}`,
+      sizes,
+    })
   }
 
   let placeholder: { fallback: string } | undefined
