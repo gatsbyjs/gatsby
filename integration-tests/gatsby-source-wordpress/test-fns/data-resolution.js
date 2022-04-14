@@ -32,7 +32,7 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpMediaItem`].nodes).toBeTruthy()
     expect(data[`allWpMediaItem`].nodes).toMatchSnapshot()
-    expect(data[`allWpMediaItem`].totalCount).toBe(17)
+    expect(data[`allWpMediaItem`].totalCount).toBe(16)
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
@@ -89,7 +89,7 @@ describe(`data resolution`, () => {
     expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(
       // we add a media item node before running our warm cache build.
       // so 30 before 31 after
-      isWarmCache ? 31 : 30
+      isWarmCache ? 30 : 29
     )
   })
 

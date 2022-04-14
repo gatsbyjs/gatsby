@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@5.12.1/packages/gatsby-react-router-scroll) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@5.12.0/packages/gatsby-react-router-scroll) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency prop-types to ^15.8.1 for gatsby-react-router-scroll [#35293](https://github.com/gatsbyjs/gatsby/issues/35293) ([564a1d9](https://github.com/gatsbyjs/gatsby/commit/564a1d961e93f4bc85791e4870727afa7867df07))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@5.11.0/packages/gatsby-react-router-scroll) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

@@ -9,8 +9,8 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-plugin-postcss": "next",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "tailwindcss": "^1.0.0"
   },
   "devDependencies": {
