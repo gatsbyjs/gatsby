@@ -1,10 +1,3 @@
-/**
- * @todo combine these with the below exports
- */
-import {
-  ICreatePageDependencyActionPayloadType,
-  IDeleteNodeManifests,
-} from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -31,7 +24,8 @@ import {
   IApiFinishedAction,
   IQueryClearDirtyQueriesListToEmitViaWebsocket,
   ICreateJobV2FromInternalAction,
-  // IProcessGatsbyImageSourceUrlAction,
+  ICreatePageDependencyActionPayloadType,
+  IDeleteNodeManifests,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
