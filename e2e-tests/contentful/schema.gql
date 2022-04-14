@@ -1,4 +1,172 @@
-### Type definitions saved at 2021-11-18T12:37:07.683Z ###
+### Type definitions saved at 2022-04-14T12:11:45.168Z ###
+
+enum RemoteFileFit {
+  COVER
+  FILL
+  OUTSIDE
+  CONTAIN
+}
+
+enum RemoteFileFormat {
+  AUTO
+  JPG
+  PNG
+  WEBP
+  AVIF
+}
+
+enum RemoteFileLayout {
+  FIXED
+  FULL_WIDTH
+  CONSTRAINED
+}
+
+enum RemoteFilePlaceholder {
+  DOMINANT_COLOR
+  BLURRED
+  NONE
+}
+
+enum RemoteFileCropFocus {
+  CENTER
+  TOP
+  RIGHT
+  BOTTOM
+  LEFT
+  ENTROPY
+  EDGES
+  FACES
+}
+
+type RemoteFileResize {
+  width: Int
+  height: Int
+  src: String
+}
+
+"""
+Remote Interface
+"""
+interface RemoteFile {
+  id: ID!
+  mimeType: String!
+  filename: String!
+  filesize: Int
+  width: Int
+  height: Int
+  publicUrl: String!
+  resize(
+    width: Int
+    height: Int
+    aspectRatio: Float
+    fit: RemoteFileFit = COVER
+
+    """
+    The image formats to generate. Valid values are AUTO (meaning the same
+    format as the source image), JPG, PNG, WEBP and AVIF.
+    The default value is [AUTO, WEBP, AVIF], and you should rarely need to
+    change this. Take care if you specify JPG or PNG when you do
+    not know the formats of the source images, as this could lead to unwanted
+    results such as converting JPEGs to PNGs. Specifying
+    both PNG and JPG is not supported and will be ignored.
+    """
+    format: RemoteFileFormat = AUTO
+    cropFocus: [RemoteFileCropFocus]
+    quality: Int = 75
+  ): RemoteFileResize
+
+  """
+  Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.
+  """
+  gatsbyImage(
+    """
+    The layout for the image.
+    FIXED: A static image sized, that does not resize according to the screen width
+    FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if
+    it isn't going to be the full width of the screen.
+    CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+    """
+    layout: RemoteFileLayout = CONSTRAINED
+
+    """
+    The display width of the generated image for layout = FIXED, and the display
+    width of the largest image for layout = CONSTRAINED.
+    The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
+    Ignored if layout = FLUID.
+    """
+    width: Int
+
+    """
+    If set, the height of the generated image. If omitted, it is calculated from
+    the supplied width, matching the aspect ratio of the source image.
+    """
+    height: Int
+
+    """
+    Format of generated placeholder image, displayed while the main image loads.
+    BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
+    DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
+    TRACED_SVG: a low-resolution traced SVG of the image.
+    NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.
+    """
+    placeholder: RemoteFilePlaceholder = DOMINANT_COLOR
+
+    """
+    If set along with width or height, this will set the value of the other
+    dimension to match the provided aspect ratio, cropping the image if needed.
+    If neither width or height is provided, height will be set based on the intrinsic width of the source image.
+    """
+    aspectRatio: Float
+
+    """
+    The image formats to generate. Valid values are AUTO (meaning the same
+    format as the source image), JPG, PNG, WEBP and AVIF.
+    The default value is [AUTO, WEBP, AVIF], and you should rarely need to
+    change this. Take care if you specify JPG or PNG when you do
+    not know the formats of the source images, as this could lead to unwanted
+    results such as converting JPEGs to PNGs. Specifying
+    both PNG and JPG is not supported and will be ignored.
+    """
+    formats: [RemoteFileFormat!] = [AUTO, WEBP, AVIF]
+
+    """
+    A list of image pixel densities to generate for FIXED and CONSTRAINED
+    images. You should rarely need to change this. It will never generate images
+    larger than the source, and will always include a 1x image.
+    Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, and [0.25, 0.5, 1, 2]
+    for fluid. In this case, an image with a fluid layout and width = 400 would
+    generate images at 100, 200, 400 and 800px wide.
+    """
+    outputPixelDensities: [Float] = [0.25, 0.5, 1, 2]
+
+    """
+    Specifies the image widths to generate. You should rarely need to change
+    this. For FIXED and CONSTRAINED images it is better to allow these to be
+    determined automatically,
+    based on the image size. For FULL_WIDTH images this can be used to override
+    the default, which is [750, 1080, 1366, 1920].
+    It will never generate any images larger than the source.
+    """
+    breakpoints: [Int] = [750, 1080, 1366, 1920]
+
+    """
+    The "sizes" property, passed to the img tag. This describes the display size of the image.
+    This does not affect the generated images, but is used by the browser to
+    decide which images to download. You can leave this blank for fixed images,
+    or if the responsive image
+    container will be the full width of the screen. In these cases we will generate an appropriate value.
+    """
+    sizes: String
+
+    """
+    Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.
+    """
+    backgroundColor: String
+    fit: RemoteFileFit = COVER
+    cropFocus: [RemoteFileCropFocus]
+    quality: Int = 75
+  ): JSON
+}
 
 type File implements Node @dontInfer {
   sourceInstanceName: String!
@@ -74,9 +242,12 @@ type Directory implements Node @dontInfer {
 type Site implements Node @dontInfer {
   buildTime: Date @dateformat
   siteMetadata: SiteSiteMetadata
+  port: Int
+  host: String
   polyfill: Boolean
   pathPrefix: String
   jsxRuntime: String
+  trailingSlash: String
 }
 
 type SiteSiteMetadata {
@@ -123,6 +294,7 @@ type SiteBuildMetadata implements Node @dontInfer {
 interface ContentfulEntity implements Node {
   id: ID!
   sys: ContentfulSys!
+  metadata: ContentfulMetadata!
 }
 
 type ContentfulSys implements Node @dontInfer {
@@ -142,12 +314,6 @@ type ContentfulContentType implements Node @dontInfer {
   description: String!
 }
 
-interface ContentfulEntry implements ContentfulEntity & Node {
-  id: ID!
-  sys: ContentfulSys!
-  metadata: ContentfulMetadata!
-}
-
 type ContentfulMetadata @dontInfer {
   tags: [ContentfulTag]! @link(by: "id", from: "tags___NODE")
 }
@@ -157,21 +323,187 @@ type ContentfulTag implements Node @dontInfer {
   contentful_id: String!
 }
 
-type ContentfulAssetFields @dontInfer {
-  localFile: File @link(by: "id")
+interface ContentfulEntry implements ContentfulEntity & Node {
+  id: ID!
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
 }
 
-type ContentfulAsset implements ContentfulEntity & Node @dontInfer {
+enum ImageResizingBehavior {
+  NO_CHANGE
+
+  """
+  Same as the default resizing, but adds padding so that the generated image has the specified dimensions.
+  """
+  PAD
+
+  """
+  Crop a part of the original image to match the specified size.
+  """
+  CROP
+
+  """
+  Crop the image to the specified dimensions, if the original image is smaller
+  than these dimensions, then the image will be upscaled.
+  """
+  FILL
+
+  """
+  When used in association with the f parameter below, creates a thumbnail from the image based on a focus area.
+  """
+  THUMB
+
+  """
+  Scale the image regardless of the original aspect ratio.
+  """
+  SCALE
+}
+
+enum ContentfulImageCropFocus {
+  TOP
+  TOP_LEFT
+  TOP_RIGHT
+  BOTTOM
+  BOTTOM_RIGHT
+  BOTTOM_LEFT
+  RIGHT
+  LEFT
+  FACE
+  FACES
+  CENTER
+}
+
+type ContentfulAsset implements ContentfulEntity & Node & RemoteFile
+  @dontInfer {
   sys: ContentfulSys!
+  metadata: ContentfulMetadata!
+  gatsbyImageData(
+    """
+    The layout for the image.
+    FIXED: A static image sized, that does not resize according to the screen width
+    FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if
+    it isn't going to be the full width of the screen.
+    CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+    """
+    layout: GatsbyImageLayout
+
+    """
+    The display width of the generated image for layout = FIXED, and the display
+    width of the largest image for layout = CONSTRAINED.
+    The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
+    Ignored if layout = FLUID.
+    """
+    width: Int
+
+    """
+    If set, the height of the generated image. If omitted, it is calculated from
+    the supplied width, matching the aspect ratio of the source image.
+    """
+    height: Int
+
+    """
+    If set along with width or height, this will set the value of the other
+    dimension to match the provided aspect ratio, cropping the image if needed.
+    If neither width or height is provided, height will be set based on the intrinsic width of the source image.
+    """
+    aspectRatio: Float
+
+    """
+    Format of generated placeholder image, displayed while the main image loads.
+    BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
+    DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
+    TRACED_SVG: a low-resolution traced SVG of the image.
+    NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.
+    """
+    placeholder: GatsbyImagePlaceholder
+
+    """
+    The image formats to generate. Valid values are AUTO (meaning the same
+    format as the source image), JPG, PNG, WEBP and AVIF.
+    The default value is [AUTO, WEBP], and you should rarely need to change
+    this. Take care if you specify JPG or PNG when you do
+    not know the formats of the source images, as this could lead to unwanted
+    results such as converting JPEGs to PNGs. Specifying
+    both PNG and JPG is not supported and will be ignored.
+    """
+    formats: [GatsbyImageFormat] = [NO_CHANGE, WEBP]
+
+    """
+    A list of image pixel densities to generate for FIXED and CONSTRAINED
+    images. You should rarely need to change this. It will never generate images
+    larger than the source, and will always include a 1x image.
+    Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1,
+    2] for fluid. In this case, an image with a fluid layout and width = 400
+    would generate images at 100, 200, 400 and 800px wide.
+    """
+    outputPixelDensities: [Float]
+
+    """
+    Specifies the image widths to generate. You should rarely need to change
+    this. For FIXED and CONSTRAINED images it is better to allow these to be
+    determined automatically,
+    based on the image size. For FULL_WIDTH images this can be used to override
+    the default, which is [750, 1080, 1366, 1920].
+    It will never generate any images larger than the source.
+    """
+    breakpoints: [Int]
+
+    """
+    The "sizes" property, passed to the img tag. This describes the display size of the image.
+    This does not affect the generated images, but is used by the browser to
+    decide which images to download. You can leave this blank for fixed images,
+    or if the responsive image
+    container will be the full width of the screen. In these cases we will generate an appropriate value.
+    """
+    sizes: String
+
+    """
+    Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.
+    """
+    backgroundColor: String
+    jpegProgressive: Boolean = true
+    resizingBehavior: ImageResizingBehavior
+    cropFocus: ContentfulImageCropFocus
+
+    """
+    Desired corner radius in pixels. Results in an image with rounded corners.
+    Pass `-1` for a full circle/ellipse.
+    """
+    cornerRadius: Int
+    quality: Int = 50
+  ): JSON!
+  localFile: File @link(from: "fields.localFile", by: "id")
   title: String
   description: String
-  contentType: String
-  fileName: String
-  url: String
+  contentType: String!
+  mimeType: String!
+  fileName: String!
+  url: String!
   size: Int
   width: Int
   height: Int
-  fields: ContentfulAssetFields
+}
+
+enum GatsbyImageLayout {
+  FIXED
+  FULL_WIDTH
+  CONSTRAINED
+}
+
+enum GatsbyImagePlaceholder {
+  DOMINANT_COLOR
+  TRACED_SVG
+  BLURRED
+  NONE
+}
+
+enum GatsbyImageFormat {
+  NO_CHANGE
+  AUTO
+  JPG
+  PNG
+  WEBP
+  AVIF
 }
 
 type ContentfulRichTextAssets {
@@ -505,10 +837,10 @@ input AVIFOptions {
 }
 
 input TransformOptions {
-  grayscale: Boolean = false
+  grayscale: Boolean
   duotone: DuotoneGradient
-  rotate: Int = 0
-  trim: Float = 0
+  rotate: Int
+  trim: Float
   cropFocus: ImageCropFocus = ATTENTION
   fit: ImageFit = COVER
 }
@@ -535,26 +867,26 @@ type ImageSharp implements Node @childOf(types: ["File"]) @dontInfer {
     base64Width: Int
     jpegProgressive: Boolean = true
     pngCompressionSpeed: Int = 4
-    grayscale: Boolean = false
+    grayscale: Boolean
     duotone: DuotoneGradient
     traceSVG: Potrace
     quality: Int
     jpegQuality: Int
     pngQuality: Int
     webpQuality: Int
-    toFormat: ImageFormat = AUTO
-    toFormatBase64: ImageFormat = AUTO
+    toFormat: ImageFormat
+    toFormatBase64: ImageFormat
     cropFocus: ImageCropFocus = ATTENTION
     fit: ImageFit = COVER
     background: String = "rgba(0,0,0,1)"
-    rotate: Int = 0
-    trim: Float = 0
+    rotate: Int
+    trim: Float
   ): ImageSharpFixed
   fluid(
     maxWidth: Int
     maxHeight: Int
     base64Width: Int
-    grayscale: Boolean = false
+    grayscale: Boolean
     jpegProgressive: Boolean = true
     pngCompressionSpeed: Int = 4
     duotone: DuotoneGradient
@@ -563,14 +895,14 @@ type ImageSharp implements Node @childOf(types: ["File"]) @dontInfer {
     jpegQuality: Int
     pngQuality: Int
     webpQuality: Int
-    toFormat: ImageFormat = AUTO
-    toFormatBase64: ImageFormat = AUTO
+    toFormat: ImageFormat
+    toFormatBase64: ImageFormat
     cropFocus: ImageCropFocus = ATTENTION
     fit: ImageFit = COVER
     background: String = "rgba(0,0,0,1)"
-    rotate: Int = 0
-    trim: Float = 0
-    sizes: String = ""
+    rotate: Int
+    trim: Float
+    sizes: String
 
     """
     A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]
@@ -714,55 +1046,15 @@ type ImageSharp implements Node @childOf(types: ["File"]) @dontInfer {
     jpegProgressive: Boolean = true
     pngCompressionLevel: Int = 9
     pngCompressionSpeed: Int = 4
-    grayscale: Boolean = false
+    grayscale: Boolean
     duotone: DuotoneGradient
-    base64: Boolean = false
+    base64: Boolean
     traceSVG: Potrace
-    toFormat: ImageFormat = AUTO
+    toFormat: ImageFormat
     cropFocus: ImageCropFocus = ATTENTION
     fit: ImageFit = COVER
     background: String = "rgba(0,0,0,1)"
-    rotate: Int = 0
-    trim: Float = 0
+    rotate: Int
+    trim: Float
   ): ImageSharpResize
-}
-
-enum GatsbyImageFormat {
-  NO_CHANGE
-  AUTO
-  JPG
-  PNG
-  WEBP
-  AVIF
-}
-
-enum GatsbyImageLayout {
-  FIXED
-  FULL_WIDTH
-  CONSTRAINED
-}
-
-enum GatsbyImagePlaceholder {
-  DOMINANT_COLOR
-  TRACED_SVG
-  BLURRED
-  NONE
-}
-
-type ContentfulContentTypeContentType implements Node @derivedTypes @dontInfer {
-  name: String
-  displayField: String
-  description: String
-  sys: ContentfulContentTypeContentTypeSys
-}
-
-type ContentfulContentTypeContentTypeSys {
-  type: String
-  id: String
-  locale: String
-  spaceId: String
-  environmentId: String
-  firstPublishedAt: Date @dateformat
-  publishedAt: Date @dateformat
-  publishedVersion: Int
 }
