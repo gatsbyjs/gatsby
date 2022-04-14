@@ -357,14 +357,12 @@ export interface IGatsbyState {
 
 export type GatsbyStateKeys = keyof IGatsbyState
 
-/**
- * @todo add telemetry to cached redux state
- */
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
   status: IGatsbyState["status"]
   components: IGatsbyState["components"]
   jobsV2: IGatsbyState["jobsV2"]
+  telemetry: IGatsbyState["telemetry"]
   staticQueryComponents: IGatsbyState["staticQueryComponents"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
