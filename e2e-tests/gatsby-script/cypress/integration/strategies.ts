@@ -1,8 +1,8 @@
 import { Script, scripts, framework } from "../../scripts"
 import { ResourceRecord } from "../../resource-records"
 
-// TODO - Swap this with released package when available
-import { ScriptStrategy } from "../../../../packages/gatsby-script"
+// TODO - Import from gatsby core after gatsby-script is in general availability
+import { ScriptStrategy } from "gatsby-script"
 
 beforeEach(() => {
   // Force script requests to not return from cache

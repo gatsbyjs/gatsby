@@ -4,8 +4,8 @@ import { useOccupyMainThread } from "../hooks/use-occupy-main-thread"
 import { scripts } from "../../scripts"
 import "../styles/global.css"
 
-// TODO - Swap this with released package when available
-import { Script, ScriptStrategy } from "../../../../packages/gatsby-script"
+// TODO - Import from gatsby core after gatsby-script is in general availability
+import { Script, ScriptStrategy } from "gatsby-script"
 
 function IndexPage() {
   useOccupyMainThread()

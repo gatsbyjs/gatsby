@@ -6,6 +6,7 @@
   "dependencies": {
     "cypress": "^9.1.1",
     "gatsby": "next",
+    "gatsby-script": "^1.0.0-next.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -23,14 +24,14 @@
     "cy:run:build": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --group production"
   },
   "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
     "cross-env": "^7.0.3",
     "gatsby-cypress": "^2.4.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "start-server-and-test": "^1.14.0",
-    "@types/node": "^17.0.23",
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14",
     "typescript": "^4.6.3"
   }
 }
