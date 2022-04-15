@@ -9,7 +9,7 @@ export default function bodyParserTextLimit(req, res) {
 export const config = {
   bodyParser: {
     text: {
-      limit: `100mb`,
+      limit: `5mb`,
     },
   },
 }
