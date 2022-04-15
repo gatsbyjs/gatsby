@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.2/packages/gatsby-source-wordpress) (2022-04-15)
+
+#### Bug Fixes
+
+- localFile id [#35423](https://github.com/gatsbyjs/gatsby/issues/35423) [#35429](https://github.com/gatsbyjs/gatsby/issues/35429) ([0e96737](https://github.com/gatsbyjs/gatsby/commit/0e96737bcdcdb45ccd5fa9236be1a69331ff907f))
+
 ### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.1/packages/gatsby-source-wordpress) (2022-04-13)
 
 **Note:** Version bump only for package gatsby-source-wordpress
