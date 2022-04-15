@@ -625,6 +625,8 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow
+      - e2e_tests_gatsby_script:
+          <<: *e2e-test-workflow
       - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
       - e2e_tests_visual-regression:
