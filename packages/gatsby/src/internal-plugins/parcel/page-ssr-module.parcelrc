@@ -1,5 +1,3 @@
 {
-  "resolvers": [
-    "parcel-resolver-render-page"
-  ]
+  "transformers": {}
 }

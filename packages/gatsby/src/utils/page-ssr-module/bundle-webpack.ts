@@ -93,8 +93,9 @@ async function bundleSSR({
   const entry = path.join(__dirname, `entry.js`)
 
   const options = {
-    config: getParcelConfig(`page-ssr-module`),
-    defaultConfig: require.resolve(`gatsby-parcel-config`),
+    // config: getParcelConfig(`page-ssr-module`),
+    // defaultConfig: require.resolve(`gatsby-parcel-config`),
+    config: require.resolve(`gatsby-parcel-config`),
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
