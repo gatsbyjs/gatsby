@@ -4,9 +4,8 @@ declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Get the performance record timestamp from a table cell and return it as a number.
-       * Not for general use, expects a certain table structure.
-       * @example cy.getResourceRecord(`@myRequestAlias`)
+       * Get a performance record timestamp from a table cell in `<ScriptResourceRecords />` and return it as a number.
+       * @example cy.getResourceRecord(Script.dayjs, ResourceRecord.fetchStart)
        */
       getResourceRecord(script: string, record: string): Chainable<number>
     }

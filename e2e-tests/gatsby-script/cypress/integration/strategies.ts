@@ -37,6 +37,7 @@ describe(`${ScriptStrategy.preHydrate} strategy`, () => {
     }
 
     cy.visit(`/`)
+    cy.wait(aliases)
 
     // Ensure all script requests have completed successfully
     for (const alias of aliases) {
@@ -79,15 +80,18 @@ describe(`${ScriptStrategy.postHydrate} strategy`, () => {
 
   it(`should load after the framework bundle has loaded`, () => {
     const script = Script.three
+    const aliases = [`@${script}`, `@${framework}`]
 
     cy.intercept(`GET`, scripts[script]).as(script)
     cy.intercept(`GET`, new RegExp(framework)).as(framework)
 
     cy.visit(`/`)
+    cy.wait(aliases)
 
     // Ensure both script requests have completed successfully
-    cy.get(`@${script}`).its(`response.statusCode`).should(`equal`, 200)
-    cy.get(`@${framework}`).its(`response.statusCode`).should(`equal`, 200)
+    for (const alias of aliases) {
+      cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
+    }
 
     // Assert framework is loaded before three starts loading
     cy.getResourceRecord(script, ResourceRecord.fetchStart).then(
@@ -123,6 +127,7 @@ describe(`${ScriptStrategy.idle} strategy`, () => {
     }
 
     cy.visit(`/`)
+    cy.wait(aliases)
 
     // Ensure all script requests have completed successfully
     for (const alias of aliases) {

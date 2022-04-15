@@ -18,7 +18,7 @@ export function ScriptResourceRecords(): JSX.Element {
       record => scriptUrls.has(record.name) || isFrameworkRecord(record)
     )
 
-    if (scriptRecords.length !== scriptUrls.size && retries < 10) {
+    if (scriptRecords.length !== scriptUrls.size + 1 && retries < 10) {
       setTimeout(() => {
         getResourceRecords(retries + 1)
       }, 1000)
