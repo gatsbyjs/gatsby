@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { ReactElement } from "react"
+import type { ReactElement } from "react"
 
 export enum ScriptStrategy {
   preHydrate = `pre-hydrate`,
@@ -9,8 +9,12 @@ export enum ScriptStrategy {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ScriptProps {
-  src: string
+  src?: string
   strategy?: ScriptStrategy
+  dangerouslySetInnerHTML?: {
+    __html: string
+  }
+  children?: string
 }
 
 export function Script(props: ScriptProps): ReactElement {
@@ -19,11 +23,11 @@ export function Script(props: ScriptProps): ReactElement {
   useEffect(() => {
     switch (strategy) {
       case ScriptStrategy.postHydrate:
-        injectScript(src, strategy)
+        injectScript(props)
         break
       case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          injectScript(src, strategy)
+          injectScript(props)
         })
         break
       default:
@@ -32,15 +36,41 @@ export function Script(props: ScriptProps): ReactElement {
   }, [])
 
   if (strategy === ScriptStrategy.preHydrate) {
+    const inlineScript = resolveInlineScript(props)
+
+    if (inlineScript) {
+      return (
+        <script async data-strategy={strategy}>
+          {resolveInlineScript(props)}
+        </script>
+      )
+    }
+
     return <script async src={src} data-strategy={strategy} />
   }
 
   return <></>
 }
 
-function injectScript(src: string, strategy: ScriptStrategy): void {
+function injectScript(props: ScriptProps): void {
+  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
+  const inlineScript = resolveInlineScript(props)
+
   const script = document.createElement(`script`)
-  script.src = src
+
   script.dataset.strategy = strategy
+  if (inlineScript) {
+    script.textContent = inlineScript
+  }
+  if (src) {
+    script.src = src
+  }
+
   document.body.appendChild(script)
+}
+
+function resolveInlineScript(props: ScriptProps): string {
+  const { dangerouslySetInnerHTML, children = `` } = props || {}
+  const { __html: dangerousHTML = `` } = dangerouslySetInnerHTML || {}
+  return dangerousHTML || children
 }

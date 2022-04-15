@@ -17,6 +17,10 @@ function IndexPage() {
       <Script src={scripts.dayjs} strategy={ScriptStrategy.preHydrate} />
       <Script src={scripts.three} strategy={ScriptStrategy.postHydrate} />
       <Script src={scripts.marked} strategy={ScriptStrategy.idle} />
+      <Script
+        dangerouslySetInnerHTML={{ __html: `console.log('Hello world 1')` }}
+      />
+      <Script>{`console.log('Hello world 2')`}</Script>
     </main>
   )
 }
