@@ -476,6 +476,19 @@ jobs:
       - store_test_results:
           path: e2e-tests/trailing-slash/cypress/results
 
+  e2e_tests_gatsby_script:
+    <<: *e2e-executor
+    environment:
+      <<: *e2e-executor-env
+      CYPRESS_PROJECT_ID: 3g7nyg
+      CYPRESS_RECORD_KEY: f8007925-dc92-4136-9e92-8b0842d54719
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-script
+          test_command: yarn test
+      - store_test_results:
+          path: e2e-tests/gatsby-script/cypress/results
+
   starters_validate:
     executor: node
     steps:
@@ -611,6 +624,8 @@ workflows:
       - e2e_tests_pnp:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby_script:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow

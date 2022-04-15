@@ -1,0 +1,37 @@
+{
+  "name": "e2e-gatsby-script",
+  "description": "An e2e-test validating gatsby-script runtime behavior",
+  "version": "1.0.0",
+  "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
+  "dependencies": {
+    "cypress": "^9.1.1",
+    "gatsby": "next",
+    "gatsby-script": "^1.0.0-next.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
+    "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
+    "serve": "gatsby serve",
+    "format": "prettier --write '**/*.js'",
+    "test": "npm run test:build",
+    "test:locally": "npm run build && start-server-and-test serve http://localhost:9000 cy:open:build",
+    "test:build": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test:build",
+    "start-server-and-test:build": "start-server-and-test serve http://localhost:9000 cy:run:build",
+    "cy:open:build": "cypress open",
+    "cy:run:build": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --group production"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
+    "cross-env": "^7.0.3",
+    "gatsby-cypress": "^2.4.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "start-server-and-test": "^1.14.0",
+    "typescript": "^4.6.3"
+  }
+}
