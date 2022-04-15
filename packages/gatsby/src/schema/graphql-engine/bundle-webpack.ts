@@ -7,6 +7,8 @@ import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
+import Parcel from "@parcel/core"
+import { OutputFormat  } from "@parcel/types"
 
 type Reporter = typeof reporter
 
@@ -21,6 +23,82 @@ const cacheLocation = path.join(
 )
 
 export async function createGraphqlEngineBundle(
+  rootDir: string,
+  reporter: Reporter,
+  isVerbose?: boolean
+): Promise<webpack.Compilation | undefined> {
+  return process.env.GATSBY_EXPERIMENTAL_BUNDLER 
+    ? createBundlerGraphqlEngineBundle(rootDir, reporter, isVerbose) 
+    : createWebpackGraphqlEngineBundle(rootDir, reporter, isVerbose)
+}
+
+export async function createBundlerGraphqlEngineBundle(
+  rootDir: string,
+  reporter: Reporter,
+  isVerbose?: boolean
+): Promise<webpack.Compilation | undefined> {
+  await printQueryEnginePlugins()
+
+  const entry = path.join(__dirname, `entry.js`)
+
+  const options = {
+    // config: getParcelConfig(`page-ssr-module`),
+    // defaultConfig: require.resolve(`gatsby-parcel-config`),
+    config: require.resolve(`gatsby-parcel-config`),
+    entries: entry,
+    outDir: outputDir,
+    outFile: 'index.js',
+    watch: false,
+    // cache: true,
+    cacheDir: cacheLocation,
+    contentHash: false,
+    global: 'moduleName',
+    minify: false,
+    scopeHoist: false,
+    target: 'commonjs',
+    bundleNodeModules: false,
+    // logLevel: "warn",
+    hmr: false,
+    hmrPort: 0,
+    sourceMaps: false,
+    autoInstall: false,
+    targets: {
+      root: {
+        outputFormat: `commonjs` as OutputFormat,
+        includeNodeModules: false,
+        sourceMap: false,
+        engines: {
+          node: `>= 14.15.0`,
+        },
+        distDir: outputDir,
+      },
+    },
+  }
+
+  console.log(options)
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const bundler = new Parcel(options)
+
+      await bundler.watch((error, buildEvent) => {
+        console.log(buildEvent)
+        if (buildEvent?.type === "buildSuccess") {
+          return resolve(undefined)
+        }
+        if (buildEvent?.type === "buildFailure") {
+          console.log(`ERROR`)
+          // TODO format this better, use codeframes
+          reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
+        }
+      })
+    } catch (e) {
+      reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
+    }
+  })
+}
+
+export async function createWebpackGraphqlEngineBundle(
   rootDir: string,
   reporter: Reporter,
   isVerbose?: boolean

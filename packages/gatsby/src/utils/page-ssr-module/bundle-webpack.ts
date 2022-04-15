@@ -126,7 +126,6 @@ async function bundleSSR({
     },
   }
 
-  console.log(options)
   return new Promise(async (resolve, reject) => {
     // try {
     //   const bundler = new Parcel(options)

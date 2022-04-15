@@ -22,7 +22,11 @@ if (global._fsWrapper) {
   global._actualFsWrapper = global._fsWrapper
 } else {
   // fs alternative not provided - falling back to regular fs
-  global._actualFsWrapper = __non_webpack_require__(`fs`)
+  if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+    global._actualFsWrapper = require(`fs`)
+  } else {
+    global._actualFsWrapper = __non_webpack_require__(`fs`)
+  }
 }
 
 // hydrate webpack module cache (consume global, so it's not lazy)

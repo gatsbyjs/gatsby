@@ -277,6 +277,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const potentialPagePath = reverseFixedPagePath(requestedPagePath)
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
+          if (page) page.mode = `SSR`
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const requestActivity = report.phantomActivity(
               `request for "${req.path}"`
@@ -326,6 +327,9 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         if (req.accepts(`html`)) {
           const potentialPagePath = req.path
           const page = graphqlEngine.findPageByPath(potentialPagePath)
+
+          console.log({page})
+          if (page) page.mode = `SSR`
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const requestActivity = report.phantomActivity(
               `request for "${req.path}"`
@@ -373,6 +377,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       })
     } catch (error) {
       // TODO: Handle case of engine not being generated
+      console.log(error)
     }
   }
 

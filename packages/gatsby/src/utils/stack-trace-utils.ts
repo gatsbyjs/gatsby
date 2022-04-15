@@ -22,24 +22,27 @@ const getDirName = (arg: unknown): string => {
   return `-cant-resolve-`
 }
 
-const gatsbyLocation = getDirName(require.resolve(`gatsby/package.json`))
-const reduxThunkLocation = getDirName(
-  require.resolve(`redux-thunk/package.json`)
-)
-const reduxLocation = getDirName(require.resolve(`redux/package.json`))
-
-const getNonGatsbyCallSite = (): StackFrame | undefined =>
-  stackTrace
-    .get()
-    .find(
-      callSite =>
-        callSite &&
-        callSite.getFileName() &&
-        !callSite.getFileName().includes(gatsbyLocation) &&
-        !callSite.getFileName().includes(reduxLocation) &&
-        !callSite.getFileName().includes(reduxThunkLocation) &&
-        !isNodeInternalModulePath(callSite.getFileName())
-    )
+let getNonGatsbyCallSite: () => StackFrame | undefined
+if (!process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+  const gatsbyLocation = getDirName(require.resolve(`gatsby/package.json`))
+  const reduxThunkLocation = getDirName(
+    require.resolve(`redux-thunk/package.json`)
+  )
+  const reduxLocation = getDirName(require.resolve(`redux/package.json`))
+  
+  getNonGatsbyCallSite = (): StackFrame | undefined =>
+    stackTrace
+      .get()
+      .find(
+        callSite =>
+          callSite &&
+          callSite.getFileName() &&
+          !callSite.getFileName().includes(gatsbyLocation) &&
+          !callSite.getFileName().includes(reduxLocation) &&
+          !callSite.getFileName().includes(reduxThunkLocation) &&
+          !isNodeInternalModulePath(callSite.getFileName())
+      )
+}
 
 interface ICodeFrame {
   fileName: string
@@ -59,6 +62,10 @@ export const getNonGatsbyCodeFrame = ({
   if (stack) {
     callSite = stackTrace.parse({ stack, name: ``, message: `` })[0]
   } else {
+    if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+      return null
+    }
+    
     callSite = getNonGatsbyCallSite()
   }
 

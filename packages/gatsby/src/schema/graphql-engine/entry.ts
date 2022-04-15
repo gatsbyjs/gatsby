@@ -17,12 +17,19 @@ import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
 import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
+
+// GATSBY_EXPERIMENTAL_BUNDLER
+import * as path from "path"
+import * as fs from "fs-extra"
 import {
   gatsbyNodes,
   gatsbyWorkers,
   flattenedPlugins,
   // @ts-ignore
-} from ".cache/query-engine-plugins"
+} from "/.cache/query-engine-plugins"
+// end import changes 
+// } from ".cache/query-engine-plugins"
+
 import { initTracer } from "../../utils/tracer"
 
 type MaybePhantomActivity =
@@ -49,8 +56,17 @@ export class GraphQLEngine {
     const wrapActivity = reporter.phantomActivity(`Initializing GraphQL Engine`)
     wrapActivity.start()
     try {
-      // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
-      store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
+      if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+        const schemaSnapshotString = await fs.readFile(
+          path.join(process.cwd(), `.cache`, `schema.gql`),
+          `utf-8`
+        )
+
+        store.dispatch(actions.createTypes(schemaSnapshotString))
+      } else {
+        // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
+        store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
+      }
 
       // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
       //  (as there might be non-serializable options, i.e. functions)
