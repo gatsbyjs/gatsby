@@ -69,7 +69,6 @@ export async function writeImages({
   sourceDir,
   createNodeId,
   createNode,
-  store,
   filename,
 }: {
   images: Map<string, IStaticImageProps>
@@ -80,7 +79,6 @@ export async function writeImages({
   sourceDir: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
-  store: Store
   filename: string
 }): Promise<void> {
   const promises = [...images.entries()].map(

@@ -95,13 +95,7 @@ export function decorateBulkObject(input: unknown): unknown {
 }
 
 export async function processShopifyImages(
-  {
-    actions: { createNode },
-    createNodeId,
-    cache,
-    store,
-    reporter,
-  }: SourceNodesArgs,
+  { actions: { createNode }, createNodeId, cache }: SourceNodesArgs,
   node: IShopifyNode
 ): Promise<void> {
   const type = parseShopifyId(node.shopifyId)[1]
