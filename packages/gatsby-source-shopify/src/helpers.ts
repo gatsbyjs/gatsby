@@ -122,8 +122,6 @@ export async function processShopifyImages(
           createNode,
           createNodeId,
           parentNodeId: node.id,
-          store,
-          reporter,
         })
 
         image.localFile___NODE = fileNode.id

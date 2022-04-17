@@ -115,14 +115,12 @@ exports.downloadFile = async (
     const fileNode = await createRemoteFileNode({
       url: url.href,
       name: path.parse(decodeURIComponent(url.pathname)).name,
-      store,
       cache,
       createNode,
       createNodeId,
       getCache,
       parentNodeId: node.id,
       auth,
-      reporter,
     })
     if (fileNode) {
       node.localFile___NODE = fileNode.id

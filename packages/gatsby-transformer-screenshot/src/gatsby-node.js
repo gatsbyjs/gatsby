@@ -163,13 +163,11 @@ const createScreenshotNode = async ({
 
       fileNode = await createRemoteFileNode({
         url: screenshotResponse.data.url,
-        store,
         cache,
         createNode,
         createNodeId,
         getCache,
         parentNodeId,
-        reporter,
       })
       expires = screenshotResponse.data.expires
 

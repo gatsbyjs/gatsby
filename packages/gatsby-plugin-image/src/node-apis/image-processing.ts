@@ -103,11 +103,9 @@ export async function writeImages({
         try {
           file = await createRemoteFileNode({
             url: src,
-            store,
             cache,
             createNode,
             createNodeId,
-            reporter,
           })
         } catch (err) {
           reporter.error(`Error loading image ${src}`, err)
