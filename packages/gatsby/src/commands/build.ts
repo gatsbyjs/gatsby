@@ -253,7 +253,11 @@ module.exports = async function build(
     try {
       await validateEngines(store.getState().program.directory)
     } catch (error) {
-      validateEnginesActivity.panic({ id: `98001`, context: {}, error })
+      if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+        reporter.error({ id: `98001`, context: {}, error })
+      } else {
+        validateEnginesActivity.panic({ id: `98001`, context: {}, error })
+      }
     } finally {
       validateEnginesActivity.end()
     }

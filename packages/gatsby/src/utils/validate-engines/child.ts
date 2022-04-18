@@ -32,7 +32,10 @@ export async function validate(directory: string): Promise<void> {
   // @ts-ignore TS doesn't like accessing `_load`
   mod._load = (request: string, parent: mod, isMain: boolean): any => {
     // Allow all node builtins
-    if (mod.builtinModules.includes(request)) {
+    if (
+      mod.builtinModules.includes(request) ||
+      process.env.GATSBY_EXPERIMENTAL_BUNDLER
+    ) {
       return originalModuleLoad(request, parent, isMain)
     }
 
