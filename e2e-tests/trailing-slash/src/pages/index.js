@@ -14,6 +14,7 @@ const IndexPage = ({ data }) => {
             Page Creator Without Trailing Slash
           </Link>
         </li>
+
         <li>
           <Link to="/page-2/" data-testid="page-creator-with">
             Page Creator With Trailing Slash
@@ -121,6 +122,12 @@ const IndexPage = ({ data }) => {
             </Link>
           </li>
         ))}
+
+        <li>
+        <Link to="page-2/" data-testid="path-with-ending-slash-alone">
+          Page path with ending slash alone
+        </Link>
+      </li>
       </ul>
     </main>
   )

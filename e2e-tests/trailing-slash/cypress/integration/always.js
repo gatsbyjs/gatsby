@@ -94,6 +94,10 @@ describe(`always`, () => {
     cy.waitForRouteChange().assertRoute(`/client-only-splat/with/with/`)
     cy.getTestElement(`title`).should(`have.text`, `with/with`)
   })
+  it("path with ending with slash alone", () => {
+    cy.getTestElement(`path-with-ending-slash-alone`).click()
+    cy.waitForRouteChange().assertRoute(`/page-2/`)
+  })
 })
 
 describe(`always (direct visits)`, () => {

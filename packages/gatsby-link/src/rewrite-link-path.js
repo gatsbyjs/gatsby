@@ -22,13 +22,21 @@ export const rewriteLinkPath = (path, relativeTo) => {
   if (typeof path === `number`) {
     return path
   }
+
   if (!isLocalLink(path)) {
     return path
   }
 
-  const { pathname, search, hash } = parsePath(path)
+  /*
+   * Put path in shape
+   * first-blog/ => /first-blog/
+   */
+
+  let adjustedPath =
+    path.endsWith(`/`) && !path.startsWith(`/`) ? `/${path}` : path
+
+  const { pathname, search, hash } = parsePath(adjustedPath)
   const option = getGlobalTrailingSlash()
-  let adjustedPath = path
 
   if (option === `always` || option === `never`) {
     const output = applyTrailingSlashOption(pathname, option)
