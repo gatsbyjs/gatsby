@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { PerformanceMarkWithDetails } from "../../records"
+import { PerformanceMarkWithDetails, MarkRecord } from "../../records"
 import { trim } from "../utils/trim"
 
 /**
@@ -52,7 +52,7 @@ export function ScriptMarkRecords(): JSX.Element {
               <tr id={key} key={key}>
                 <td id="strategy">{strategy}</td>
                 <td id="type">{type}</td>
-                <td id="execute-start">{trim(executeStart)}</td>
+                <td id={MarkRecord.executeStart}>{trim(executeStart)}</td>
               </tr>
             )
           })}

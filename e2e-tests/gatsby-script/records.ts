@@ -17,3 +17,7 @@ export interface PerformanceMarkWithDetails extends PerformanceMark {
     executeStart: DOMHighResTimeStamp
   }
 }
+
+export enum MarkRecord {
+  executeStart = `execute-start`,
+}
