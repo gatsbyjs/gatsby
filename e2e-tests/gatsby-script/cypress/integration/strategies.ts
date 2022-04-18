@@ -1,11 +1,12 @@
 import { Script, scripts, framework } from "../../scripts"
-import { ResourceRecord } from "../../resource-records"
+import { ResourceRecord } from "../../records"
 
 // TODO - Import from gatsby core after gatsby-script is in general availability
 import { ScriptStrategy } from "gatsby-script"
 
+// Force script requests to not return from cache
 beforeEach(() => {
-  // Force script requests to not return from cache
+  // @ts-ignore Object.values does exist, Cypress wants ES5 in tsconfig
   for (const script of [...Object.values(scripts), new RegExp(framework)]) {
     cy.intercept(script, { middleware: true }, req => {
       req.on(`before:response`, res => {

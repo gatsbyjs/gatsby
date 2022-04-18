@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { scriptUrls, scriptIndex, framework } from "../../scripts"
-import { ResourceRecord } from "../../resource-records"
+import { ResourceRecord } from "../../records"
+import { trim } from "../utils/trim"
 
 /**
  * Displays performance resource records of scripts in a table.
@@ -8,7 +9,10 @@ import { ResourceRecord } from "../../resource-records"
 export function ScriptResourceRecords(): JSX.Element {
   const [records, setRecords] = useState<Array<PerformanceResourceTiming>>([])
 
-  // Poll for the script resource records we care about
+  /**
+   * Poll for the resource records we care about.
+   * Use this approach since `PerformanceObserver` doesn't give us preload link records (e.g. framework)
+   */
   function getResourceRecords(retries: number = 0): void {
     const resourceRecords = performance.getEntriesByType(
       `resource`
@@ -21,7 +25,7 @@ export function ScriptResourceRecords(): JSX.Element {
     if (scriptRecords.length !== scriptUrls.size + 1 && retries < 10) {
       setTimeout(() => {
         getResourceRecords(retries + 1)
-      }, 1000)
+      }, 100)
     }
 
     setRecords(scriptRecords)
@@ -67,10 +71,6 @@ export function ScriptResourceRecords(): JSX.Element {
       </table>
     </>
   )
-}
-
-function trim(number: number): number {
-  return Math.round(Number(number))
 }
 
 function isFrameworkRecord(record: PerformanceResourceTiming): boolean {
