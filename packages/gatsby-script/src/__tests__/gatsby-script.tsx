@@ -6,9 +6,16 @@ import React from "react"
 import { render } from "@testing-library/react"
 import { Script, ScriptStrategy } from "../gatsby-script"
 
-const scripts = {
+const scripts: Record<string, string> = {
   react: `https://unpkg.com/react@18/umd/react.development.js`,
+  inline: `console.log('Hello world!')`,
 }
+
+const strategies: Array<ScriptStrategy> = [
+  ScriptStrategy.preHydrate,
+  ScriptStrategy.postHydrate,
+  ScriptStrategy.idle,
+]
 
 describe(`Script`, () => {
   beforeAll(() => {
@@ -64,5 +71,28 @@ describe(`Script`, () => {
     )
     const script = container.parentElement?.querySelector(`script`)
     expect(script?.getAttribute(`async`)).not.toBeNull()
+  })
+
+  it(`should work with inline scripts passed via the dangerouslySetInnerHTML prop`, () => {
+    for (const strategy of strategies) {
+      const { container } = render(
+        <Script
+          strategy={strategy}
+          dangerouslySetInnerHTML={{ __html: scripts.inline }}
+        />
+      )
+      const script = container.parentElement?.querySelector(`script`)
+      expect(script?.textContent).toBe(scripts.inline)
+    }
+  })
+
+  it(`should work with inline scripts passed as template literals`, () => {
+    for (const strategy of strategies) {
+      const { container } = render(
+        <Script strategy={strategy}>{scripts.inline}</Script>
+      )
+      const script = container.parentElement?.querySelector(`script`)
+      expect(script?.textContent).toBe(scripts.inline)
+    }
   })
 })
