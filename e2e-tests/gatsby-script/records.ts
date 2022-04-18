@@ -14,6 +14,6 @@ export interface PerformanceMarkWithDetails extends PerformanceMark {
   detail: {
     strategy: ScriptStrategy
     type: InlineScript
-    executeEnd: DOMHighResTimeStamp
+    executeStart: DOMHighResTimeStamp
   }
 }

@@ -15,15 +15,19 @@ export const scripts: Record<Script, string> = {
   [Script.marked]: `https://cdn.jsdelivr.net/npm/marked/marked.min.js`,
 }
 
-export const scriptIndex: Record<string, Script> = {
+export const scriptStrategyIndex: Record<Script, ScriptStrategy> = {
+  [Script.dayjs]: ScriptStrategy.preHydrate,
+  [Script.three]: ScriptStrategy.postHydrate,
+  [Script.marked]: ScriptStrategy.idle,
+}
+
+export const scriptUrlIndex: Record<string, Script> = {
   [scripts.dayjs]: Script.dayjs,
   [scripts.three]: Script.three,
   [scripts.marked]: Script.marked,
 }
 
 export const scriptUrls = new Set(Object.values(scripts))
-
-export const framework = `framework` // Framework bundle that includes react, react-dom, etc.
 
 export enum InlineScript {
   dangerouslySet = `dangerously-set`,
@@ -64,16 +68,16 @@ export const inlineScripts = {
 
 function constructInlineScript(type: string, strategy: ScriptStrategy): string {
   return `(function() {
+    performance.mark(\`inline-script\`, { detail: {
+      strategy: \`${strategy}\`,
+      type: \`${type}\`,
+      executeStart: performance.now()
+    }})
     const inlineScript = document.createElement(\`div\`);
     inlineScript.dataset.strategy = \`${strategy}\`;
     inlineScript.dataset.type = \`${type}\`;
     const container = document.getElementById(\`elements-appended-by-inline-scripts\`);
     container.appendChild(inlineScript);
-    performance.mark(\`inline-script\`, { detail: {
-      strategy: \`${strategy}\`,
-      type: \`${type}\`,
-      executeEnd: performance.now()
-    }})
   })();
   `
 }

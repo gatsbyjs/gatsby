@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react"
-import { scriptUrls, scriptIndex, framework } from "../../scripts"
+import {
+  scriptUrls,
+  scriptUrlIndex,
+  scriptStrategyIndex,
+  Script,
+} from "../../scripts"
 import { ResourceRecord } from "../../records"
 import { trim } from "../utils/trim"
 
@@ -41,29 +46,32 @@ export function ScriptResourceRecords(): JSX.Element {
         <thead>
           <tr>
             <th>Script</th>
+            <th>Strategy</th>
             <th>Fetch start (ms)</th>
             <th>Response end (ms)</th>
           </tr>
         </thead>
         <tbody>
           {records.map(record => {
-            let script: string
+            const { name: url, fetchStart, responseEnd } = record || {}
+
+            let name: Script | `framework`
+            let strategy: string
 
             if (isFrameworkRecord(record)) {
-              script = framework
+              name = `framework`
+              strategy = `N/A`
             } else {
-              script = scriptIndex[record.name]
+              name = scriptUrlIndex[url]
+              strategy = scriptStrategyIndex[name]
             }
 
             return (
-              <tr id={script} key={script}>
-                <td id="name">{script}</td>
-                <td id={ResourceRecord.fetchStart}>
-                  {trim(record.fetchStart)}
-                </td>
-                <td id={ResourceRecord.responseEnd}>
-                  {trim(record.responseEnd)}
-                </td>
+              <tr id={name} key={name}>
+                <td id="name">{name}</td>
+                <td id="strategy">{strategy}</td>
+                <td id={ResourceRecord.fetchStart}>{trim(fetchStart)}</td>
+                <td id={ResourceRecord.responseEnd}>{trim(responseEnd)}</td>
               </tr>
             )
           })}
@@ -74,5 +82,5 @@ export function ScriptResourceRecords(): JSX.Element {
 }
 
 function isFrameworkRecord(record: PerformanceResourceTiming): boolean {
-  return record.name.includes(framework)
+  return record.name.includes(`framework`)
 }

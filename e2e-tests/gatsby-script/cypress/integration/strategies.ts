@@ -1,4 +1,4 @@
-import { Script, scripts, framework } from "../../scripts"
+import { Script, scripts } from "../../scripts"
 import { ResourceRecord } from "../../records"
 
 // TODO - Import from gatsby core after gatsby-script is in general availability
@@ -7,7 +7,7 @@ import { ScriptStrategy } from "gatsby-script"
 // Force script requests to not return from cache
 beforeEach(() => {
   // @ts-ignore Object.values does exist, Cypress wants ES5 in tsconfig
-  for (const script of [...Object.values(scripts), new RegExp(framework)]) {
+  for (const script of [...Object.values(scripts), new RegExp(`framework`)]) {
     cy.intercept(script, { middleware: true }, req => {
       req.on(`before:response`, res => {
         res.headers[`cache-control`] = `no-store`
@@ -81,10 +81,10 @@ describe(`${ScriptStrategy.postHydrate} strategy`, () => {
 
   it(`should load after the framework bundle has loaded`, () => {
     const script = Script.three
-    const aliases = [`@${script}`, `@${framework}`]
+    const aliases = [`@${script}`, `@framework`]
 
     cy.intercept(`GET`, scripts[script]).as(script)
-    cy.intercept(`GET`, new RegExp(framework)).as(framework)
+    cy.intercept(`GET`, new RegExp(`framework`)).as(`framework`)
 
     cy.visit(`/`)
     cy.wait(aliases)
@@ -97,7 +97,7 @@ describe(`${ScriptStrategy.postHydrate} strategy`, () => {
     // Assert framework is loaded before three starts loading
     cy.getResourceRecord(script, ResourceRecord.fetchStart).then(
       threeFetchStart => {
-        cy.getResourceRecord(framework, ResourceRecord.responseEnd).should(
+        cy.getResourceRecord(`framework`, ResourceRecord.responseEnd).should(
           `be.lessThan`,
           threeFetchStart
         )
