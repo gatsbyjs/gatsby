@@ -328,8 +328,16 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const potentialPagePath = req.path
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
-          console.log({page})
-          if (page) page.mode = `SSR`
+          // quick fix for PoC
+          if (process.env.GATSBY_EXPERIMENTAL_BUNDLER && page) {
+            if (page.componentChunkName.indexOf(`ssr`) >= 0) {
+              page.mode = `SSR`
+            }
+            if (page.componentChunkName.indexOf(`dsg`) >= 0) {
+              page.mode = `DSG`
+            }
+          }
+
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const requestActivity = report.phantomActivity(
               `request for "${req.path}"`
