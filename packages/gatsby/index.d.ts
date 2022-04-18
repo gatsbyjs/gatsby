@@ -1279,7 +1279,7 @@ export interface Actions {
     plugin?: ActionPlugin
   ): Promise<unknown>
 
-  /** @todo add docs reference */
+  /** @see https://www.gatsbyjs.com/docs/actions/#addGatsbyImageSourceUrl */
   addGatsbyImageSourceUrl(
     this: void,
     sourceUrl: string,
