@@ -12,19 +12,19 @@ const container = `[id=elements-appended-by-inline-scripts]`
  * To keep the tests flat and easier to debug they are duplicated instead of iterated over.
  */
 
-describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
-  // Force framework script request to not return from cache
-  beforeEach(() => {
-    cy.intercept(new RegExp(`framework`), { middleware: true }, req => {
-      req.on(`before:response`, res => {
-        res.headers[`cache-control`] = `no-store`
-      })
+// Force framework script request to not return from cache
+beforeEach(() => {
+  cy.intercept(new RegExp(`framework`), { middleware: true }, req => {
+    req.on(`before:response`, res => {
+      res.headers[`cache-control`] = `no-store`
     })
   })
+})
 
+describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
   describe(`using the ${ScriptStrategy.preHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.get(
         `${container} [data-strategy=${ScriptStrategy.preHydrate}][data-type=${InlineScript.dangerouslySet}]`
@@ -32,7 +32,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.getRecord(
         `${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`,
@@ -53,7 +53,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
 
   describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.get(
         `${container} [data-strategy=${ScriptStrategy.postHydrate}][data-type=${InlineScript.dangerouslySet}]`
@@ -63,7 +63,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
     it(`should load after the framework bundle has loaded`, () => {
       cy.intercept(`GET`, new RegExp(`framework`)).as(`framework`)
 
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(`@framework`)
 
       // Ensure framework request has completed successfully
@@ -84,7 +84,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
 
   describe(`using the ${ScriptStrategy.idle} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.get(
         `${container} [data-strategy=${ScriptStrategy.idle}][data-type=${InlineScript.dangerouslySet}]`
@@ -92,7 +92,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.getRecord(
         `${ScriptStrategy.idle}-${InlineScript.dangerouslySet}`,
@@ -124,7 +124,7 @@ describe(`inline scripts set via template literals`, () => {
 
   describe(`using the ${ScriptStrategy.preHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.get(
         `${container} [data-strategy=${ScriptStrategy.preHydrate}][data-type=${InlineScript.templateLiteral}]`
@@ -132,7 +132,7 @@ describe(`inline scripts set via template literals`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.getRecord(
         `${ScriptStrategy.preHydrate}-${InlineScript.templateLiteral}`,
@@ -153,7 +153,7 @@ describe(`inline scripts set via template literals`, () => {
 
   describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.get(
         `${container} [data-strategy=${ScriptStrategy.postHydrate}][data-type=${InlineScript.templateLiteral}]`
@@ -163,7 +163,7 @@ describe(`inline scripts set via template literals`, () => {
     it(`should load after the framework bundle has loaded`, () => {
       cy.intercept(`GET`, new RegExp(`framework`)).as(`framework`)
 
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(`@framework`)
 
       // Ensure framework request has completed successfully
@@ -184,7 +184,7 @@ describe(`inline scripts set via template literals`, () => {
 
   describe(`using the ${ScriptStrategy.idle} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.get(
         `${container} [data-strategy=${ScriptStrategy.idle}][data-type=${InlineScript.templateLiteral}]`
@@ -192,7 +192,7 @@ describe(`inline scripts set via template literals`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
 
       cy.getRecord(
         `${ScriptStrategy.idle}-${InlineScript.templateLiteral}`,

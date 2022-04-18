@@ -9,6 +9,7 @@ declare global {
        * @example cy.getRecord(`${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`, MarkRecord.executeStart)
        */
       getRecord(key: string, metric: string): Chainable<number>
+      waitForRouteChange(): unknown
     }
   }
 }

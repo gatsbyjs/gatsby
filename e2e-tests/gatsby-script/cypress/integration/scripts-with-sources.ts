@@ -4,26 +4,26 @@ import { ResourceRecord } from "../../records"
 // TODO - Import from gatsby core after gatsby-script is in general availability
 import { ScriptStrategy } from "gatsby-script"
 
-describe(`scripts with sources`, () => {
-  // Force script requests to not return from cache
-  beforeEach(() => {
-    // @ts-ignore Object.values does exist, Cypress wants ES5 in tsconfig
-    for (const script of [...Object.values(scripts), new RegExp(`framework`)]) {
-      cy.intercept(script, { middleware: true }, req => {
-        req.on(`before:response`, res => {
-          res.headers[`cache-control`] = `no-store`
-        })
+// Force script requests to not return from cache
+beforeEach(() => {
+  // @ts-ignore Object.values does exist, Cypress wants ES5 in tsconfig
+  for (const script of [...Object.values(scripts), new RegExp(`framework`)]) {
+    cy.intercept(script, { middleware: true }, req => {
+      req.on(`before:response`, res => {
+        res.headers[`cache-control`] = `no-store`
       })
-    }
-  })
+    })
+  }
+})
 
+describe(`scripts with sources`, () => {
   describe(`using the ${ScriptStrategy.preHydrate} strategy`, () => {
     it(`should load successfully`, () => {
       const script = Script.dayjs
       const alias = `@${script}`
 
       cy.intercept(`GET`, scripts[script]).as(script)
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(alias)
 
       cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
@@ -38,7 +38,7 @@ describe(`scripts with sources`, () => {
         aliases.push(`@${script}`)
       }
 
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(aliases)
 
       // Ensure all script requests have completed successfully
@@ -74,7 +74,7 @@ describe(`scripts with sources`, () => {
       const alias = `@${script}`
 
       cy.intercept(`GET`, scripts[script]).as(script)
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(alias)
 
       cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
@@ -87,7 +87,7 @@ describe(`scripts with sources`, () => {
       cy.intercept(`GET`, scripts[script]).as(script)
       cy.intercept(`GET`, new RegExp(`framework`)).as(`framework`)
 
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(aliases)
 
       // Ensure both script requests have completed successfully
@@ -111,7 +111,7 @@ describe(`scripts with sources`, () => {
       const alias = `@${script}`
 
       cy.intercept(`GET`, scripts[script]).as(script)
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(alias)
 
       cy.get(alias).its(`response.statusCode`).should(`equal`, 200)
@@ -126,7 +126,7 @@ describe(`scripts with sources`, () => {
         aliases.push(`@${script}`)
       }
 
-      cy.visit(`/`)
+      cy.visit(`/`).waitForRouteChange()
       cy.wait(aliases)
 
       // Ensure all script requests have completed successfully
