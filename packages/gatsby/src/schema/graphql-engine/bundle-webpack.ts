@@ -28,14 +28,14 @@ export async function createGraphqlEngineBundle(
   isVerbose?: boolean
 ): Promise<webpack.Compilation | undefined> {
   return process.env.GATSBY_EXPERIMENTAL_BUNDLER 
-    ? createBundlerGraphqlEngineBundle(rootDir, reporter, isVerbose) 
+    ? createBundlerGraphqlEngineBundle() 
     : createWebpackGraphqlEngineBundle(rootDir, reporter, isVerbose)
 }
 
 export async function createBundlerGraphqlEngineBundle(
-  rootDir: string,
-  reporter: Reporter,
-  isVerbose?: boolean
+  // rootDir: string,
+  // reporter: Reporter,
+  // isVerbose?: boolean
 ): Promise<webpack.Compilation | undefined> {
   await printQueryEnginePlugins()
 

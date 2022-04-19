@@ -44,6 +44,6 @@
   "compressors": {
     "*": ["@parcel/compressor-raw"]
   },
-  "resolvers": ["@parcel/resolver-default"],
+  "resolvers": ["parcel-resolver-externals", "@parcel/resolver-default"],
   "reporters": ["@parcel/reporter-dev-server"]
 }

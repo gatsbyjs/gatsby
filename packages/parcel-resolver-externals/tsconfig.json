@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "outFile": "./dist/index.js",
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

@@ -6,7 +6,7 @@ import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
-import { getParcelFile, getParcelConfig } from "../parcel/util"
+import { getParcelFile } from "../parcel/util"
 import fs from "fs"
 
 import {
@@ -177,6 +177,8 @@ async function webpackSSR({
       ),
     }
   }
+
+  fs.writeFileSync("/home/josh/toInline.json", JSON.stringify(toInline))
 
   const compiler = webpack({
     name: `Page Engine`,
