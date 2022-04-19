@@ -10,7 +10,7 @@ beforeEach(() => {
     cy.intercept(script, { middleware: true }, req => {
       req.on(`before:response`, res => {
         res.headers[`cache-control`] = `no-store` // Do not cache responses
-        res.delay = 100 // Make sure Cypress can start waiting first
+        res.delay = 1000 // Make sure Cypress can start waiting first
       })
     })
   }
