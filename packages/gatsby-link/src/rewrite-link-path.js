@@ -17,7 +17,6 @@ function absolutify(path, current) {
   }
 
   const option = getGlobalTrailingSlash()
-
   const absolutePath = resolve(path, current)
 
   if (option === `always` || option === `never`) {
