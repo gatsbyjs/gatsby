@@ -15,7 +15,16 @@ function absolutify(path, current) {
   if (isAbsolutePath(path)) {
     return path
   }
-  return resolve(path, current)
+
+  const option = getGlobalTrailingSlash()
+
+  const absolutePath = resolve(path, current)
+
+  if (option === `always` || option === `never`) {
+    return applyTrailingSlashOption(absolutePath, option)
+  }
+
+  return absolutePath
 }
 
 export const rewriteLinkPath = (path, relativeTo) => {
@@ -27,16 +36,10 @@ export const rewriteLinkPath = (path, relativeTo) => {
     return path
   }
 
-  /*
-   * Put path in shape
-   * first-blog/ => /first-blog/
-   */
-
-  let adjustedPath =
-    path.endsWith(`/`) && !path.startsWith(`/`) ? `/${path}` : path
-
-  const { pathname, search, hash } = parsePath(adjustedPath)
+  const { pathname, search, hash } = parsePath(path)
   const option = getGlobalTrailingSlash()
+
+  let adjustedPath = path
 
   if (option === `always` || option === `never`) {
     const output = applyTrailingSlashOption(pathname, option)

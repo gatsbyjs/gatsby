@@ -124,10 +124,10 @@ const IndexPage = ({ data }) => {
         ))}
 
         <li>
-        <Link to="page-2/" data-testid="path-with-ending-slash-alone">
-          Page path with ending slash alone
-        </Link>
-      </li>
+          <Link to="page-2/" data-testid="relative-path-with-trailing-slash">
+            Relative path with trailing slash
+          </Link>
+        </li>
       </ul>
     </main>
   )
