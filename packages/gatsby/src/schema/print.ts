@@ -311,6 +311,16 @@ const printType = (tc: NamedTypeComposer<unknown>): string => {
   return ``
 }
 
+export const internalTypeNames = [
+  ...builtInScalarTypeNames,
+  `Buffer`,
+  `Internal`,
+  `InternalInput`,
+  `Node`,
+  `NodeInput`,
+  `Query`,
+]
+
 export const printTypeDefinitions = ({
   config,
   schemaComposer,
@@ -341,16 +351,6 @@ export const printTypeDefinitions = ({
     )
     return Promise.resolve()
   }
-
-  const internalTypes = [
-    ...builtInScalarTypeNames,
-    `Buffer`,
-    `Internal`,
-    `InternalInput`,
-    `Node`,
-    `NodeInput`,
-    `Query`,
-  ]
   const internalPlugins = [`internal-data-bridge`]
 
   const typesToExclude = exclude?.types || []
@@ -360,7 +360,7 @@ export const printTypeDefinitions = ({
 
   const isInternalType = (tc: NamedTypeComposer<unknown>): boolean => {
     const typeName = getName(tc)
-    if (internalTypes.includes(typeName)) {
+    if (internalTypeNames.includes(typeName)) {
       return true
     }
 

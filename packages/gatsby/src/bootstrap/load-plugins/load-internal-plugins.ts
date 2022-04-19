@@ -39,6 +39,10 @@ export function loadInternalPlugins(
     `../../internal-plugins/functions`,
   ].filter(Boolean) as Array<string>
 
+  if (process.env.GATSBY_GRAPHQL_TYPEGEN) {
+    internalPlugins.push(`../../internal-plugins/typegen`)
+  }
+
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
     plugins.push(processPlugin(absPath, rootDir))
