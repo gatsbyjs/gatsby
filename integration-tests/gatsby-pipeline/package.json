@@ -29,7 +29,7 @@
   "devDependencies": {
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
-    "gastby-core-utils": "latest",
+    "gatsby-core-utils": "latest",
     "md5-file": "^5.0.0",
     "node-fetch": "^2.6.0",
     "jest": "^27.2.1",
