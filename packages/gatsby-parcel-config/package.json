@@ -9,6 +9,7 @@
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-parcel-config"
   },
+  "license": "MIT",
   "engines": {
     "parcel": "2.x"
   },
