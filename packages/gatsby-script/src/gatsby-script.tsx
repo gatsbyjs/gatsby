@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useRef, useEffect } from "react"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 
 export enum ScriptStrategy {
@@ -18,25 +18,48 @@ const handledProps = new Set([
   `strategy`,
   `dangerouslySetInnerHTML`,
   `children`,
+  `onLoad`,
 ])
 
 export function Script(props: ScriptProps): ReactElement {
-  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
+  const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
+
+  const scriptRef = useRef<HTMLScriptElement>(null)
 
   useEffect(() => {
+    let script: HTMLScriptElement
+
     switch (strategy) {
       case ScriptStrategy.postHydrate:
-        injectScript(props)
+        script = injectScript(props)
         break
       case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          injectScript(props)
+          script = injectScript(props)
         })
         break
       default:
         return
     }
+
+    // eslint-disable-next-line consistent-return
+    return (): void => {
+      // @ts-ignore TODO - Fix type mismatch
+      script.removeEventListener(`load`, onLoad)
+    }
   }, [])
+
+  useEffect(() => {
+    if (scriptRef) {
+      // @ts-ignore TODO - Fix type mismatch
+      scriptRef?.current?.addEventListener(`load`, onLoad)
+    }
+    // eslint-disable-next-line consistent-return
+    return (): void => {
+      // @ts-ignore TODO - Fix type mismatch
+      scriptRef?.current?.removeEventListener(`load`, onLoad)
+    }
+  }, [scriptRef])
 
   if (strategy === ScriptStrategy.preHydrate) {
     const inlineScript = resolveInlineScript(props)
@@ -44,20 +67,28 @@ export function Script(props: ScriptProps): ReactElement {
 
     if (inlineScript) {
       return (
-        <script async data-strategy={strategy} {...attributes}>
+        <script ref={scriptRef} async data-strategy={strategy} {...attributes}>
           {resolveInlineScript(props)}
         </script>
       )
     }
 
-    return <script async src={src} data-strategy={strategy} {...attributes} />
+    return (
+      <script
+        ref={scriptRef}
+        async
+        src={src}
+        data-strategy={strategy}
+        {...attributes}
+      />
+    )
   }
 
   return <></>
 }
 
-function injectScript(props: ScriptProps): void {
-  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
+function injectScript(props: ScriptProps): HTMLScriptElement {
+  const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
   const inlineScript = resolveInlineScript(props)
   const attributes = resolveAttributes(props)
 
@@ -77,7 +108,14 @@ function injectScript(props: ScriptProps): void {
     script.src = src
   }
 
+  if (onLoad) {
+    // @ts-ignore TODO - Fix type mismatch
+    script.addEventListener(`load`, onLoad)
+  }
+
   document.body.appendChild(script)
+
+  return script
 }
 
 function resolveInlineScript(props: ScriptProps): string {
