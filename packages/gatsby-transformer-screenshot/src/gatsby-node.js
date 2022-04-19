@@ -105,15 +105,15 @@ exports.onCreateNode = async (
 
   try {
     const screenshotNode = await screenshotQueue.push({
-          url: node.url,
-          parent: node.id,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          getCache,
-          createContentDigest,
-          parentNodeId: node.id,
+      url: node.url,
+      parent: node.id,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      getCache,
+      createContentDigest,
+      parentNodeId: node.id,
     })
 
     createParentChildLink({
