@@ -31,8 +31,8 @@ describe(`Script`, () => {
 
   it(`should default to a post-hydrate strategy`, async () => {
     const { container } = render(<Script src={scripts.react} />)
-    const script = container.parentElement?.querySelector(`script`)
-    expect(script?.getAttribute(`data-strategy`)).toEqual(
+    const script = container.parentElement.querySelector(`script`)
+    expect(script.getAttribute(`data-strategy`)).toEqual(
       ScriptStrategy.postHydrate
     )
   })
@@ -41,8 +41,8 @@ describe(`Script`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.preHydrate} />
     )
-    const script = container.parentElement?.querySelector(`script`)
-    expect(script?.getAttribute(`data-strategy`)).toEqual(
+    const script = container.parentElement.querySelector(`script`)
+    expect(script.getAttribute(`data-strategy`)).toEqual(
       ScriptStrategy.preHydrate
     )
   })
@@ -51,8 +51,8 @@ describe(`Script`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.postHydrate} />
     )
-    const script = container.parentElement?.querySelector(`script`)
-    expect(script?.getAttribute(`data-strategy`)).toEqual(
+    const script = container.parentElement.querySelector(`script`)
+    expect(script.getAttribute(`data-strategy`)).toEqual(
       ScriptStrategy.postHydrate
     )
   })
@@ -61,19 +61,19 @@ describe(`Script`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.idle} />
     )
-    const script = container.parentElement?.querySelector(`script`)
-    expect(script?.getAttribute(`data-strategy`)).toEqual(ScriptStrategy.idle)
+    const script = container.parentElement.querySelector(`script`)
+    expect(script.getAttribute(`data-strategy`)).toEqual(ScriptStrategy.idle)
   })
 
   it(`should apply an async attribute when a pre-hydrate strategy is declared`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.preHydrate} />
     )
-    const script = container.parentElement?.querySelector(`script`)
-    expect(script?.getAttribute(`async`)).not.toBeNull()
+    const script = container.parentElement.querySelector(`script`)
+    expect(script.getAttribute(`async`)).not.toBeNull()
   })
 
-  it(`should work with inline scripts passed via the dangerouslySetInnerHTML prop`, () => {
+  it(`should include inline scripts passed via the dangerouslySetInnerHTML prop in the DOM`, () => {
     for (const strategy of strategies) {
       const { container } = render(
         <Script
@@ -81,18 +81,44 @@ describe(`Script`, () => {
           dangerouslySetInnerHTML={{ __html: scripts.inline }}
         />
       )
-      const script = container.parentElement?.querySelector(`script`)
-      expect(script?.textContent).toBe(scripts.inline)
+      const script = container.parentElement.querySelector(`script`)
+      expect(script.textContent).toBe(scripts.inline)
     }
   })
 
-  it(`should work with inline scripts passed as template literals`, () => {
+  it(`should include inline scripts passed via template literals in the DOM`, () => {
     for (const strategy of strategies) {
       const { container } = render(
         <Script strategy={strategy}>{scripts.inline}</Script>
       )
-      const script = container.parentElement?.querySelector(`script`)
-      expect(script?.textContent).toBe(scripts.inline)
+      const script = container.parentElement.querySelector(`script`)
+      expect(script.textContent).toBe(scripts.inline)
+    }
+  })
+
+  it(`should apply normal attributes`, () => {
+    const lines = {
+      first: `It's the bear necessities`,
+      second: `the simple bear necessities`,
+      third: `forget about your worries and your strife`,
+    }
+
+    for (const strategy of strategies) {
+      const { container } = render(
+        <Script
+          src={scripts.react}
+          strategy={strategy}
+          data-first={lines.first}
+          data-second={lines.second}
+          data-third={lines.third}
+        ></Script>
+      )
+
+      const script = container.parentElement.querySelector(`script`)
+
+      expect(script.dataset.first).toBe(lines.first)
+      expect(script.dataset.second).toBe(lines.second)
+      expect(script.dataset.third).toBe(lines.third)
     }
   })
 })

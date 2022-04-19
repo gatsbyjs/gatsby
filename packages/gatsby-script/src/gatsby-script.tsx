@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import type { ReactElement } from "react"
+import type { ReactElement, ScriptHTMLAttributes } from "react"
 
 export enum ScriptStrategy {
   preHydrate = `pre-hydrate`,
@@ -8,14 +8,17 @@ export enum ScriptStrategy {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export interface ScriptProps {
-  src?: string
+export interface ScriptProps extends ScriptHTMLAttributes<HTMLScriptElement> {
   strategy?: ScriptStrategy
-  dangerouslySetInnerHTML?: {
-    __html: string
-  }
   children?: string
 }
+
+const handledProps = new Set([
+  `src`,
+  `strategy`,
+  `dangerouslySetInnerHTML`,
+  `children`,
+])
 
 export function Script(props: ScriptProps): ReactElement {
   const { src, strategy = ScriptStrategy.postHydrate } = props || {}
@@ -37,16 +40,17 @@ export function Script(props: ScriptProps): ReactElement {
 
   if (strategy === ScriptStrategy.preHydrate) {
     const inlineScript = resolveInlineScript(props)
+    const attributes = resolveAttributes(props)
 
     if (inlineScript) {
       return (
-        <script async data-strategy={strategy}>
+        <script async data-strategy={strategy} {...attributes}>
           {resolveInlineScript(props)}
         </script>
       )
     }
 
-    return <script async src={src} data-strategy={strategy} />
+    return <script async src={src} data-strategy={strategy} {...attributes} />
   }
 
   return <></>
@@ -55,13 +59,20 @@ export function Script(props: ScriptProps): ReactElement {
 function injectScript(props: ScriptProps): void {
   const { src, strategy = ScriptStrategy.postHydrate } = props || {}
   const inlineScript = resolveInlineScript(props)
+  const attributes = resolveAttributes(props)
 
   const script = document.createElement(`script`)
 
   script.dataset.strategy = strategy
+
+  for (const [key, value] of Object.entries(attributes)) {
+    script.setAttribute(key, value)
+  }
+
   if (inlineScript) {
     script.textContent = inlineScript
   }
+
   if (src) {
     script.src = src
   }
@@ -73,4 +84,17 @@ function resolveInlineScript(props: ScriptProps): string {
   const { dangerouslySetInnerHTML, children = `` } = props || {}
   const { __html: dangerousHTML = `` } = dangerouslySetInnerHTML || {}
   return dangerousHTML || children
+}
+
+function resolveAttributes(props: ScriptProps): Record<string, string> {
+  const attributes: Record<string, string> = {}
+
+  for (const [key, value] of Object.entries(props)) {
+    if (handledProps.has(key)) {
+      continue
+    }
+    attributes[key] = value
+  }
+
+  return attributes
 }
