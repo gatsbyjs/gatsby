@@ -73,18 +73,21 @@ export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = ({
           reportEmitSchemaError: (_context, event) => {
             reporter.error(
               `error occurred while running emitSchema service`,
+              // @ts-ignore - FIXME
               event.data as Error
             )
           },
           reportEmitPluginDocumentError: (_context, event) => {
             reporter.error(
               `error occurred while running emitPluginDocument service`,
+              // @ts-ignore - FIXME
               event.data as Error
             )
           },
           reportCodegenError: (_context, event) => {
             reporter.error(
               `error occurred while running codegen service`,
+              // @ts-ignore - FIXME
               event.data as Error
             )
           },

@@ -254,10 +254,12 @@ export const typegenMachine = createMachine(
             context.trackedDefinitions &&
             context.thirdpartyFragments
         ),
+      // @ts-ignore - FIXME
       "hasSchemaChanged?": (context, event) => context.schema !== event.schema,
       "hasDefinitionsChanged?": (context, event) => {
         const changes = _.differenceWith(
           [...(context.trackedDefinitions?.values() || [])],
+          // @ts-ignore - FIXME
           extractTargetDefinitions(event.definitions),
           definitionIsEqual
         )
@@ -269,17 +271,22 @@ export const typegenMachine = createMachine(
         devMode: _context => true,
       }),
       assignSchema: actions.assign({
+        // @ts-ignore - FIXME
         schema: (_context, event) => stabilizeSchema(event.schema),
       }),
       assignThirdpartyDefinitions: actions.assign({
         thirdpartyFragments: (_context, event) =>
+          // @ts-ignore - FIXME
           extractThirdpartyDefinitions(event.definitions),
       }),
       assignDefinitions: actions.assign({
         trackedDefinitions: (_context, event) =>
+          // @ts-ignore - FIXME
           filterTargetDefinitions(event.definitions),
       }),
+      // @ts-ignore - FIXME
       onSchemaChange: actions.pure((_context, event) => {
+        // @ts-ignore - FIXME
         const { schema } = event
 
         const emitSchemaJobId = `SCHEDULED_emitSchema`
@@ -297,8 +304,10 @@ export const typegenMachine = createMachine(
           ),
         ]
       }),
+      // @ts-ignore - FIXME
       onDefinitionsChange: actions.pure((context, event) => {
         const { schema, debouncingDelay } = context
+        // @ts-ignore - FIXME
         const { definitions } = event
 
         const codegenJobId = `SCHEDULED_codegen`
