@@ -49,6 +49,6 @@
     "@parcel/transformer-yaml": "^2.3.1"
   },
   "peerDependencies": {
-    "@parcel/core": "^2.3.1"
+    "@parcel/core": "^2.4.1"
   }
 }
