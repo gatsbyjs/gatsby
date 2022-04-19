@@ -106,7 +106,7 @@ export async function getScriptsAndStylesForTemplate(
     for (const [rel, assets] of Object.entries(childAssets)) {
       let childNonTemplateJSAssets
       // Remove JS asset for templates
-      if (rel !== `app`) {
+      if (chunkName !== `app`) {
         // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
         childNonTemplateJSAssets = assets.filter(
           asset => !asset.endsWith(`.js`)
