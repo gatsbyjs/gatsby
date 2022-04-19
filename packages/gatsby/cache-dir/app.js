@@ -44,12 +44,18 @@ let reactRender
 let reactHydrate
 if (HAS_REACT_18) {
   const reactDomClient = require(`react-dom/client`)
-  reactRender = (Component, el) =>
-    reactDomClient.createRoot(el).render(Component)
+  reactRender = (Component, el) => {
+    const root = reactDomClient.createRoot(el)
+    root.render(Component)
+    return () => root.unmount()
+  }
   reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
 } else {
   const reactDomClient = require(`react-dom`)
-  reactRender = reactDomClient.render
+  reactRender = (Component, el) => {
+    reactDomClient.render(Component, el)
+    return () => ReactDOM.unmountComponentAtNode(el)
+  }
   reactHydrate = reactDomClient.hydrate
 }
 
@@ -163,19 +169,26 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     let indicatorMountElement
+    let cleanupFn
 
     const showIndicatorTimeout = setTimeout(() => {
       indicatorMountElement = document.createElement(
         `first-render-loading-indicator`
       )
       document.body.append(indicatorMountElement)
-      renderer(<Indicator />, indicatorMountElement)
+      cleanupFn = renderer(<Indicator />, indicatorMountElement)
     }, 1000)
 
     dismissLoadingIndicator = () => {
       clearTimeout(showIndicatorTimeout)
       if (indicatorMountElement) {
-        ReactDOM.unmountComponentAtNode(indicatorMountElement)
+        // If user defined replaceHydrateFunction themselves the cleanupFn return might not be there
+        // So fallback to unmountComponentAtNode for now
+        if (cleanupFn) {
+          cleanupFn()
+        } else {
+          ReactDOM.unmountComponentAtNode(indicatorMountElement)
+        }
         indicatorMountElement.remove()
       }
     }

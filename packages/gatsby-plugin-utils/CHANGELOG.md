@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.1/packages/gatsby-plugin-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.0/packages/gatsby-plugin-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+
+#### Chores
+
+- update dependency msw to ^0.39.2 for gatsby-plugin-utils [#35300](https://github.com/gatsbyjs/gatsby/issues/35300) ([aa0f61a](https://github.com/gatsbyjs/gatsby/commit/aa0f61ab40560183745e96bcef834577bc4be156))
+
 ### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.1/packages/gatsby-plugin-utils) (2022-03-31)
 
 **Note:** Version bump only for package gatsby-plugin-utils
