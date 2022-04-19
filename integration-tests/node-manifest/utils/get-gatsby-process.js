@@ -16,3 +16,14 @@ exports.spawnGatsbyProcess = (command = `develop`, env = {}) =>
       },
     }
   )
+
+  exports.runGatsbyClean = () => 
+    spawn(
+      gatsbyBin,
+      ['clean'],
+      {
+        stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+        env: { ...process.env },
+      },
+    )
+

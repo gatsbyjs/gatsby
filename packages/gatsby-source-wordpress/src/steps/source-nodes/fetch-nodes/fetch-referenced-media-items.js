@@ -209,8 +209,10 @@ export const createMediaItemNode = async ({
         },
       }
 
-      if (localFileNode) {
-        node.localFile = localFileNode?.id
+      if (localFileNode?.id) {
+        node.localFile = {
+          id: localFileNode?.id,
+        }
       }
 
       const normalizedNode = normalizeNode({ node, nodeTypeName: `MediaItem` })
