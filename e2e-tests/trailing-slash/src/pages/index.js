@@ -14,7 +14,6 @@ const IndexPage = ({ data }) => {
             Page Creator Without Trailing Slash
           </Link>
         </li>
-
         <li>
           <Link to="/page-2/" data-testid="page-creator-with">
             Page Creator With Trailing Slash

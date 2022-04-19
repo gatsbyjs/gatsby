@@ -31,14 +31,12 @@ export const rewriteLinkPath = (path, relativeTo) => {
   if (typeof path === `number`) {
     return path
   }
-
   if (!isLocalLink(path)) {
     return path
   }
 
   const { pathname, search, hash } = parsePath(path)
   const option = getGlobalTrailingSlash()
-
   let adjustedPath = path
 
   if (option === `always` || option === `never`) {
