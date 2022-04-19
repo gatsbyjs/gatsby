@@ -1027,19 +1027,18 @@ It is also recommended that you add a polyfill to provide support back through G
 ```js
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
-exports.createSchemaCustomization = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const imageAssetType = addRemoteFilePolyfillInterface(
     schema.buildObjectType({
       name: `YourImageAssetNodeType`,
       fields: {
-        // your fields
+        // your fields - see createSchemaCustomization docs - if you're using schema inference you can also leave this object empty
       },
       interfaces: [`Node`, `RemoteFile`],
     }),
     {
       schema,
       actions,
-      // schema and actions are arguments on the `createSchemaCustomization` API
     }
   )
 
