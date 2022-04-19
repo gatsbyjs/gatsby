@@ -5,6 +5,6 @@ This test only runs in build + serve mode since `develop` makes it challenging t
 To test locally:
 
 1. `npm install`
-2. `npm test:locally`
+2. `npm run test:locally`
 
 Then click on the suites you want to run in Cypress.
