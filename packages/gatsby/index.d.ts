@@ -1599,6 +1599,7 @@ export interface Page<TContext = Record<string, unknown>> {
   matchPath?: string
   component: string
   context: TContext
+  ownerNodeId?: string
   defer?: boolean
 }
 
