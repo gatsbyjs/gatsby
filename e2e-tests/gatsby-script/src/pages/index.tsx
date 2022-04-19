@@ -14,11 +14,6 @@ function IndexPage() {
   return (
     <main>
       <h1>Script component e2e test</h1>
-      <p>
-        Note - Response times are delayed in Cypress, so they're only relevant
-        compared to other delayed requests (e.g. asserting a post-hydrate script
-        loads after the framework loads).
-      </p>
 
       <br />
       <h2>Scripts with sources</h2>

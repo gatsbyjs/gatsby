@@ -21,6 +21,15 @@ export const scriptStrategyIndex: Record<Script, ScriptStrategy> = {
   [Script.marked]: ScriptStrategy.idle,
 }
 
+export const scriptSuccessIndex: Record<Script, () => boolean> = {
+  // @ts-ignore
+  [Script.dayjs]: () => typeof dayjs === `function`,
+  // @ts-ignore
+  [Script.three]: () => typeof THREE === `object`,
+  // @ts-ignore
+  [Script.marked]: () => typeof marked === `object`,
+}
+
 export const scriptUrlIndex: Record<string, Script> = {
   [scripts.dayjs]: Script.dayjs,
   [scripts.three]: Script.three,
@@ -73,11 +82,7 @@ function constructInlineScript(type: string, strategy: ScriptStrategy): string {
       type: \`${type}\`,
       executeStart: performance.now()
     }})
-    const inlineScript = document.createElement(\`div\`);
-    inlineScript.dataset.strategy = \`${strategy}\`;
-    inlineScript.dataset.type = \`${type}\`;
-    const container = document.getElementById(\`elements-appended-by-inline-scripts\`);
-    container.appendChild(inlineScript);
+    window[\`${strategy}-${type}\`] = true;
   })();
   `
 }

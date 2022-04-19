@@ -4,11 +4,15 @@ declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Get a record timestamp from a table cell in one of the test components and return it as a number.
+       * Get a record from a table cell in one of the test components.
        * @example cy.getRecord(Script.dayjs, ResourceRecord.fetchStart)
        * @example cy.getRecord(`${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`, MarkRecord.executeStart)
        */
-      getRecord(key: string, metric: string): Chainable<number>
+      getRecord(
+        key: string,
+        metric: string,
+        raw?: boolean
+      ): Chainable<number | string>
       waitForRouteChange(): unknown
     }
   }
@@ -16,9 +20,9 @@ declare global {
 
 import "gatsby-cypress"
 
-Cypress.Commands.add(`getRecord`, (key, metric) => {
+Cypress.Commands.add(`getRecord`, (key, metric, raw = false) => {
   return cy
     .get(`[id=${key}] [id=${metric}]`)
     .invoke(`text`)
-    .then(timestamp => Number(timestamp))
+    .then(value => (raw ? value : Number(value)))
 })

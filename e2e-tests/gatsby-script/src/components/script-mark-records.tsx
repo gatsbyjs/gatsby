@@ -39,8 +39,9 @@ export function ScriptMarkRecords(): JSX.Element {
       <table>
         <thead>
           <tr>
-            <th>Strategy</th>
             <th>Type</th>
+            <th>Strategy</th>
+            <th>Success</th>
             <th>Execute start (ms)</th>
           </tr>
         </thead>
@@ -48,10 +49,14 @@ export function ScriptMarkRecords(): JSX.Element {
           {records.map(record => {
             const { strategy, type, executeStart } = record.detail
             const key = `${strategy}-${type}`
+            // @ts-ignore
+            const success = `${typeof window[key] === `boolean`}`
             return (
               <tr id={key} key={key}>
-                <td id="strategy">{strategy}</td>
                 <td id="type">{type}</td>
+                <td id="strategy">{strategy}</td>
+                {/* @ts-ignore */}
+                <td id="success">{success}</td>
                 <td id={MarkRecord.executeStart}>{trim(executeStart)}</td>
               </tr>
             )

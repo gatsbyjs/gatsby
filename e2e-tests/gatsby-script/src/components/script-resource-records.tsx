@@ -3,6 +3,7 @@ import {
   scriptUrls,
   scriptUrlIndex,
   scriptStrategyIndex,
+  scriptSuccessIndex,
   Script,
 } from "../../scripts"
 import { ResourceRecord } from "../../records"
@@ -47,6 +48,7 @@ export function ScriptResourceRecords(): JSX.Element {
           <tr>
             <th>Script</th>
             <th>Strategy</th>
+            <th>Success</th>
             <th>Fetch start (ms)</th>
             <th>Response end (ms)</th>
           </tr>
@@ -57,19 +59,23 @@ export function ScriptResourceRecords(): JSX.Element {
 
             let name: Script | `framework`
             let strategy: string
+            let success: string
 
             if (isFrameworkRecord(record)) {
               name = `framework`
               strategy = `N/A`
+              success = `N/A`
             } else {
               name = scriptUrlIndex[url]
               strategy = scriptStrategyIndex[name]
+              success = `${scriptSuccessIndex[name]()}`
             }
 
             return (
               <tr id={name} key={name}>
                 <td id="name">{name}</td>
                 <td id="strategy">{strategy}</td>
+                <td id="success">{success}</td>
                 <td id={ResourceRecord.fetchStart}>{trim(fetchStart)}</td>
                 <td id={ResourceRecord.responseEnd}>{trim(responseEnd)}</td>
               </tr>
