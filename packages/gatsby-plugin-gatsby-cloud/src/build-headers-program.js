@@ -79,11 +79,16 @@ function getScriptPath(file, manifest) {
   })
 }
 
-function linkHeaders(files, pathPrefix) {
+function linkHeaders(files, pathPrefix, assetPrefix) {
   const linkHeaders = []
   for (const resourceType in files) {
     files[resourceType].forEach(file => {
-      linkHeaders.push(linkTemplate(`${pathPrefix}/${file}`, resourceType))
+      linkHeaders.push(
+        linkTemplate(
+          `${assetPrefix ? assetPrefix + `/` : ``}${pathPrefix}/${file}`,
+          resourceType
+        )
+      )
     })
   }
 
@@ -94,7 +99,13 @@ function headersPath(pathPrefix, path) {
   return `${pathPrefix}${path}`
 }
 
-function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
+function preloadHeadersByPage({
+  pages,
+  manifest,
+  pathPrefix,
+  publicFolder,
+  assetPrefix,
+}) {
   const linksByPage = {}
 
   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
@@ -124,7 +135,11 @@ function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
     }
 
     const pathKey = headersPath(pathPrefix, page.path)
-    linksByPage[pathKey] = linkHeaders(filesByResourceType, pathPrefix)
+    linksByPage[pathKey] = linkHeaders(
+      filesByResourceType,
+      pathPrefix,
+      assetPrefix
+    )
   })
 
   return linksByPage
@@ -239,12 +254,14 @@ const applyLinkHeaders =
       return headers
     }
 
-    const { pages, manifest, pathPrefix, publicFolder } = pluginData
+    const { pages, manifest, pathPrefix, publicFolder, assetPrefix } =
+      pluginData
     const perPageHeaders = preloadHeadersByPage({
       pages,
       manifest,
       pathPrefix,
       publicFolder,
+      assetPrefix,
     })
 
     return defaultMerge(headers, perPageHeaders)
