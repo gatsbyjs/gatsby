@@ -42,7 +42,7 @@ count in collection queries" `/admin/config/services/jsonapi/extras` as that
 
 ### Gatsby Image CDN
 
-Gatsby has an Image CDN feature which speeds up your builds as well as your frontend performance.
+Gatsby has an Image CDN feature which speeds up your build times as well as your frontend performance.
 
 Instead of fetching all image files during the Gatsby build and then transforming them for frontend performance and serving them as static files via your host, the new Image CDN feature allows images to be lazily processed when users visit the frontend of your site. The first frontend requestor of an image will transform that image and cache it for all other users.
 Note that Image CDN works for all hosts, but only speeds up your builds on Gatsby Cloud, as Gatsby Cloud has the tightest integration with the Gatsby framework.
