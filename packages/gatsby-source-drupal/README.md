@@ -72,7 +72,8 @@ When you're using Gatsby Image CDN you no longer need Gatsby to fetch all of the
 
 #### Local dev improvements
 
-Using Image CDN also speeds up your local development startup times when running `gatsby develop`. Instead of fetching all files locally, `gatsby develop` has a local Image CDN emulator so you only fetch and process images on your development machine when visiting your Gatsby site at `http://localhost:8000`.
+Using Image CDN also speeds up your local development startup times when running `gatsby develop`. Instead of fetching all files locally, `gatsby develop` has a local Image CDN emulator.
+This means Gatsby will only fetch and process the minimal amount of images required to render any page when you visit your Gatsby site at `http://localhost:8000`.
 
 #### Configuring placeholders for Gatsby Images
 
