@@ -47,6 +47,10 @@ const getGatsbyImageCdnFields = async ({
 
   const url = getFileUrl(node.attributes, pluginOptions.baseUrl)?.href
 
+  if (!url) {
+    return {}
+  }
+
   const extraNodeData = fileNodesExtendedData?.get(node.id) || null
 
   try {
@@ -56,13 +60,13 @@ const getGatsbyImageCdnFields = async ({
       extraNodeData?.imageDerivatives?.links?.placeholder?.href ||
       url
 
-    const hasRequiredData = input => input && input.width && input.height && url
+    const hasRequiredData = input => input && input.width && input.height
 
     const imageSize = hasRequiredData(extraNodeData)
       ? extraNodeData
       : await probeImageSize(url)
 
-    if (!hasRequiredData(imageSize)) {
+    if (!hasRequiredData(imageSize) || !placeholderUrl) {
       return {}
     }
 
