@@ -234,11 +234,6 @@ describe(`gatsbyImageData`, () => {
             srcSet: expect.any(String),
             type: `image/webp`,
           },
-          {
-            sizes: `300px`,
-            srcSet: expect.any(String),
-            type: `image/jpg`,
-          },
         ],
       },
     })
@@ -344,11 +339,6 @@ describe(`gatsbyImageData`, () => {
             sizes: `(min-width: 300px) 300px, 100vw`,
             srcSet: expect.any(String),
             type: `image/webp`,
-          },
-          {
-            sizes: `(min-width: 300px) 300px, 100vw`,
-            srcSet: expect.any(String),
-            type: `image/jpg`,
           },
         ],
       },
@@ -459,11 +449,6 @@ describe(`gatsbyImageData`, () => {
             sizes: `100vw`,
             srcSet: expect.any(String),
             type: `image/webp`,
-          },
-          {
-            sizes: `100vw`,
-            srcSet: expect.any(String),
-            type: `image/jpg`,
           },
         ],
       },
@@ -710,8 +695,8 @@ describe(`gatsbyImageData`, () => {
 
     expect(constrainedResult?.images.sources[0].type).toBe(`image/avif`)
     expect(constrainedResult?.images.sources[1].type).toBe(`image/webp`)
-    expect(constrainedResult?.images.sources[2].type).toBe(`image/jpg`)
+    expect(constrainedResult?.images.fallback.src).toContain(`dog-portrait.jpg`)
 
-    expect(constrainedResult?.images.sources.length).toBe(3)
+    expect(constrainedResult?.images.sources.length).toBe(2)
   })
 })
