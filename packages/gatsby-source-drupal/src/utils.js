@@ -518,10 +518,38 @@ exports.getExtendedFileNodeData = allData => {
               relationshipNode.type === `file--file` &&
               relationshipNode.meta
             ) {
-              fileNodesExtendedData.set(
-                relationshipNode.id,
-                relationshipNode.meta
+              const existingExtendedData = fileNodesExtendedData.get(
+                relationshipNode.id
               )
+
+              // if we already have extended data for this file node, we need to merge the new data with it
+              if (existingExtendedData) {
+                const existingImageDerivativeLinks =
+                  existingExtendedData?.imageDerivatives?.links || {}
+
+                const imageDerivativeLinks = {
+                  ...existingImageDerivativeLinks,
+                  ...(relationshipNode.meta?.imageDerivatives?.links || {}),
+                }
+
+                const newMeta = {
+                  ...existingExtendedData,
+                  ...relationshipNode.meta,
+                }
+
+                newMeta.imageDerivatives = {
+                  ...newMeta.imageDerivatives,
+                  links: imageDerivativeLinks,
+                }
+
+                fileNodesExtendedData.set(relationshipNode.id, newMeta)
+              } else {
+                // otherwise we just add the extended data to the map
+                fileNodesExtendedData.set(
+                  relationshipNode.id,
+                  relationshipNode.meta
+                )
+              }
             }
           })
         }
