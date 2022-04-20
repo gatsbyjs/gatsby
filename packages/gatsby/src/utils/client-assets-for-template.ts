@@ -65,8 +65,7 @@ export async function getScriptsAndStylesForTemplate(
 
   // Pick up scripts and styles that are used by a template using webpack.stats.json
   for (const chunkName of [`app`, componentChunkName]) {
-    const assets = webpackStats.assetsByChunkName[chunkName]
-    let nonTemplateJSAssets
+    let assets = webpackStats.assetsByChunkName[chunkName]
 
     if (!assets) {
       continue
@@ -74,10 +73,10 @@ export async function getScriptsAndStylesForTemplate(
 
     // Remove JS asset for templates
     if (chunkName !== `app`) {
-      nonTemplateJSAssets = assets.filter(asset => !asset.endsWith(`.js`))
+      assets = assets.filter(asset => !asset.endsWith(`.js`))
     }
 
-    for (const asset of nonTemplateJSAssets) {
+    for (const asset of assets) {
       if (asset === `/`) {
         continue
       }
@@ -103,18 +102,15 @@ export async function getScriptsAndStylesForTemplate(
       continue
     }
 
-    for (const [rel, assets] of Object.entries(childAssets)) {
-      let childNonTemplateJSAssets
+    for (let [rel, assets] of Object.entries(childAssets)) {
       // Remove JS asset for templates
       if (chunkName !== `app`) {
         // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
-        childNonTemplateJSAssets = assets.filter(
-          asset => !asset.endsWith(`.js`)
-        )
+        assets = assets.filter(asset => !asset.endsWith(`.js`))
       }
 
       // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
-      for (const asset of childNonTemplateJSAssets) {
+      for (const asset of assets) {
         handleAsset(asset, rel)
       }
     }
