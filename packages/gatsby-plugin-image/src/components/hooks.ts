@@ -203,13 +203,6 @@ export function getMainProps(
   loading?: "eager" | "lazy",
   style: CSSProperties = {}
 ): Partial<MainImageProps> {
-  // // Polyfill "object-fit" if unsupported (mostly IE)
-  // if (ref?.current && !(`objectFit` in document.documentElement.style)) {
-  //   ref.current.dataset.objectFit = style.objectFit ?? `cover`
-  //   ref.current.dataset.objectPosition = `${style.objectPosition ?? `50% 50%`}`
-  //   applyPolyfill(ref)
-  // }
-
   // fallback when it's not configured in gatsby-config.
   if (!gatsbyImageIsInstalled()) {
     style = {

@@ -4,23 +4,10 @@ import { Placeholder } from "./placeholder"
 import { MainImage, MainImageProps } from "./main-image"
 import { LayoutWrapper } from "./layout-wrapper"
 import PropTypes from "prop-types"
-import type {
-  ElementType,
-  FunctionComponent,
-  CSSProperties,
-  WeakValidationMap,
-} from "react"
+import type { FunctionComponent, WeakValidationMap } from "react"
 import type { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 
 const removeNewLines = (str: string): string => str.replace(/\n/g, ``)
-
-export const GatsbyImageHydrator: FunctionComponent<{
-  as?: ElementType
-  style?: CSSProperties
-  className?: string
-}> = function GatsbyImageHydrator({ as: Type = `div`, children, ...props }) {
-  return <Type {...props}>{children}</Type>
-}
 
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> =
   function GatsbyImage({
@@ -90,49 +77,48 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> =
       })
     }
 
-    return (
-      <GatsbyImageHydrator
-        {...wrapperProps}
-        as={as}
-        style={{
+    return React.createElement(
+      as,
+      {
+        ...wrapperProps,
+        style: {
           ...wStyle,
           ...style,
           backgroundColor,
-        }}
-        className={`${wClass}${className ? ` ${className}` : ``}`}
-      >
-        <LayoutWrapper layout={layout} width={width} height={height}>
-          <Placeholder
-            {...getPlaceholderProps(
-              placeholder,
-              false,
-              layout,
-              width,
-              height,
-              placeholderBackgroundColor,
-              objectFit,
-              objectPosition
-            )}
-          />
+        },
+        className: `${wClass}${className ? ` ${className}` : ``}`,
+      },
+      <LayoutWrapper layout={layout} width={width} height={height}>
+        <Placeholder
+          {...getPlaceholderProps(
+            placeholder,
+            false,
+            layout,
+            width,
+            height,
+            placeholderBackgroundColor,
+            objectFit,
+            objectPosition
+          )}
+        />
 
-          <MainImage
-            data-gatsby-image-ssr=""
-            className={imgClassName}
-            {...(props as Omit<
-              MainImageProps,
-              "images" | "fallback" | "onError" | "onLoad"
-            >)}
-            // When eager is set we want to start the isLoading state on true (we want to load the img without react)
-            {...getMainProps(
-              loading === `eager`,
-              false,
-              cleanedImages,
-              loading,
-              imgStyle
-            )}
-          />
-        </LayoutWrapper>
-      </GatsbyImageHydrator>
+        <MainImage
+          data-gatsby-image-ssr=""
+          className={imgClassName}
+          {...(props as Omit<
+            MainImageProps,
+            "images" | "fallback" | "onError" | "onLoad"
+          >)}
+          // When eager is set we want to start the isLoading state on true (we want to load the img without react)
+          {...getMainProps(
+            loading === `eager`,
+            false,
+            cleanedImages,
+            loading,
+            imgStyle
+          )}
+        />
+      </LayoutWrapper>
     )
   }
 

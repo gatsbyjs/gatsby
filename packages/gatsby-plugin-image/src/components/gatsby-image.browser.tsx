@@ -131,6 +131,9 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
 
       imageCache.add(cacheKey)
 
+      // remove ssr key for state updates
+      ssrImage.removeAttribute(`data-gatsby-image-ssr`)
+
       return
     }
 
