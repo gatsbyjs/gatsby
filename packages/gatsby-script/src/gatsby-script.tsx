@@ -8,9 +8,11 @@ export enum ScriptStrategy {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export interface ScriptProps extends ScriptHTMLAttributes<HTMLScriptElement> {
+export interface ScriptProps
+  extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad`> {
   strategy?: ScriptStrategy
   children?: string
+  onLoad?: (event: Event) => void
 }
 
 const handledProps = new Set([
@@ -38,26 +40,26 @@ export function Script(props: ScriptProps): ReactElement {
           script = injectScript(props)
         })
         break
-      default:
-        return
     }
 
-    // eslint-disable-next-line consistent-return
     return (): void => {
-      // @ts-ignore TODO - Fix type mismatch
-      script.removeEventListener(`load`, onLoad)
+      if (onLoad) {
+        script.removeEventListener(`load`, onLoad)
+      }
+      script.remove()
     }
   }, [])
 
   useEffect(() => {
-    if (scriptRef) {
-      // @ts-ignore TODO - Fix type mismatch
+    if (onLoad) {
       scriptRef?.current?.addEventListener(`load`, onLoad)
     }
-    // eslint-disable-next-line consistent-return
+
     return (): void => {
-      // @ts-ignore TODO - Fix type mismatch
-      scriptRef?.current?.removeEventListener(`load`, onLoad)
+      if (onLoad) {
+        scriptRef?.current?.removeEventListener(`load`, onLoad)
+      }
+      scriptRef?.current?.remove()
     }
   }, [scriptRef])
 
@@ -109,7 +111,6 @@ function injectScript(props: ScriptProps): HTMLScriptElement {
   }
 
   if (onLoad) {
-    // @ts-ignore TODO - Fix type mismatch
     script.addEventListener(`load`, onLoad)
   }
 
