@@ -898,7 +898,7 @@ This should be the full url of your GraphQL endpoint.`
                 example: wrapOptions(`
                     presets: [
                       {
-                        name: \`DEVELOP\`,
+                        presetName: \`DEVELOP\`,
                         useIf: () => process.env.NODE_ENV === \`development\`,
                         options: {
                           type: {
