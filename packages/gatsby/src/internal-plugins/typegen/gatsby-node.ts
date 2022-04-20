@@ -9,26 +9,6 @@ import { makeCodegenService } from "./services/codegen"
 
 let spawnedMachine: any = null
 
-/*
-  const {
-    namespace = `GatsbyTypes`,
-    autofix = true,
-    emitSchema: emitSchemaOptionMap = {},
-    emitPluginDocument: emitPluginDocumentsOptionMap = {},
-    scalars = {},
-  } = pluginOptions
-
-  language: `typescript`,
-    namespace,
-    outputPath,
-    autofix,
-    emitSchema,
-    emitPluginDocument,
-    scalars,
-
-    const outputPath = path.resolve(basePath, `.cache/typegen/gatsby-types.d.ts`)
-    */
-
 export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = ({
   store,
   emitter,
