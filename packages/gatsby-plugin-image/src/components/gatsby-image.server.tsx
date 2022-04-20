@@ -11,7 +11,7 @@ const removeNewLines = (str: string): string => str.replace(/\n/g, ``)
 
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> =
   function GatsbyImage({
-    as,
+    as = `div`,
     className,
     class: preactClass,
     style,
