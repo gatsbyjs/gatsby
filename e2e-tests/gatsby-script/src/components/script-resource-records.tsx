@@ -19,26 +19,21 @@ export function ScriptResourceRecords(): JSX.Element {
    * Poll for the resource records we care about.
    * Use this approach since `PerformanceObserver` doesn't give us preload link records (e.g. framework)
    */
-  function getResourceRecords(retries: number = 0): void {
-    const resourceRecords = performance.getEntriesByType(
-      `resource`
-    ) as Array<PerformanceResourceTiming>
-
-    const scriptRecords = resourceRecords.filter(
-      record => scriptUrls.has(record.name) || isFrameworkRecord(record)
-    )
-
-    if (scriptRecords.length !== scriptUrls.size + 1 && retries < 10) {
-      setTimeout(() => {
-        getResourceRecords(retries + 1)
-      }, 100)
-    }
-
-    setRecords(scriptRecords)
-  }
-
   useEffect(() => {
-    getResourceRecords()
+    const interval = setInterval(() => {
+      const resourceRecords = performance.getEntriesByType(
+        `resource`
+      ) as Array<PerformanceResourceTiming>
+
+      const scriptRecords = resourceRecords.filter(
+        record => scriptUrls.has(record.name) || isFrameworkRecord(record)
+      )
+
+      if (scriptRecords.length === 4 || performance.now() > 10000) {
+        setRecords(scriptRecords)
+        clearInterval(interval)
+      }
+    }, 100)
   }, [])
 
   return (
@@ -54,33 +49,35 @@ export function ScriptResourceRecords(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {records.map(record => {
-            const { name: url, fetchStart, responseEnd } = record || {}
+          {records
+            .sort((a, b) => a.fetchStart - b.fetchStart)
+            .map(record => {
+              const { name: url, fetchStart, responseEnd } = record || {}
 
-            let name: Script | `framework`
-            let strategy: string
-            let success: string
+              let name: Script | `framework`
+              let strategy: string
+              let success: string
 
-            if (isFrameworkRecord(record)) {
-              name = `framework`
-              strategy = `N/A`
-              success = `N/A`
-            } else {
-              name = scriptUrlIndex[url]
-              strategy = scriptStrategyIndex[name]
-              success = `${scriptSuccessIndex[name]()}`
-            }
+              if (isFrameworkRecord(record)) {
+                name = `framework`
+                strategy = `N/A`
+                success = `N/A`
+              } else {
+                name = scriptUrlIndex[url]
+                strategy = scriptStrategyIndex[name]
+                success = `${scriptSuccessIndex[name]()}`
+              }
 
-            return (
-              <tr id={name} key={name}>
-                <td id="name">{name}</td>
-                <td id="strategy">{strategy}</td>
-                <td id="success">{success}</td>
-                <td id={ResourceRecord.fetchStart}>{trim(fetchStart)}</td>
-                <td id={ResourceRecord.responseEnd}>{trim(responseEnd)}</td>
-              </tr>
-            )
-          })}
+              return (
+                <tr id={name} key={name}>
+                  <td id="name">{name}</td>
+                  <td id="strategy">{strategy}</td>
+                  <td id="success">{success}</td>
+                  <td id={ResourceRecord.fetchStart}>{trim(fetchStart)}</td>
+                  <td id={ResourceRecord.responseEnd}>{trim(responseEnd)}</td>
+                </tr>
+              )
+            })}
         </tbody>
       </table>
     </>
