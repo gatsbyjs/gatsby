@@ -50,6 +50,7 @@
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
   - [html.generateWebpImages](#htmlgeneratewebpimages)
+  - [html.generateAvifImages](#htmlgenerateavifimages)
   - [html.placeholderType](#htmlplaceholdertype)
 - [type](#type)
   - [type.\_\_all](#type__all)
@@ -973,7 +974,7 @@ Determines the image quality that Sharp will use when generating inline html ima
 
 **Field type**: `Number`
 
-**Default value**: `90`
+**Default value**: `70`
 
 ```js
 {
@@ -1013,7 +1014,7 @@ When this is true, .webp images will be generated for images in html fields in a
 
 **Field type**: `Boolean`
 
-**Default value**: `false`
+**Default value**: `true`
 
 ```js
 {
@@ -1027,13 +1028,33 @@ When this is true, .webp images will be generated for images in html fields in a
 
 ```
 
+### html.generateAvifImages
+
+When this is true, .avif images will be generated for images in html fields in addition to the images gatsby-image normally generates.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      generateAvifImages: false,
+    },
+  },
+}
+
+```
+
 ### html.placeholderType
 
 This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.
 
 **Field type**: `String`
 
-**Default value**: `blurred`
+**Default value**: `dominantColor`
 
 ## type
 

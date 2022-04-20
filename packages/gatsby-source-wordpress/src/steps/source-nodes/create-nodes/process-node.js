@@ -578,7 +578,7 @@ export const replaceNodeHtmlImages = async ({
           maxWidth = configuredMaxWidth
         }
 
-        const quality = pluginOptions?.html?.imageQuality
+        const quality = pluginOptions?.html?.imageQuality ?? 70
 
         const { reporter } = helpers
 
@@ -661,7 +661,10 @@ export const replaceNodeHtmlImages = async ({
       let ReactGatsbyImage
       // used to create hydration data for images
       let gatsbyImageHydrationData = null
-      if (imageResize && imageResize.images.sources.length > 0) {
+      if (
+        imageResize &&
+        (imageResize.images.sources.length > 0 || imageResize.images.fallback)
+      ) {
         gatsbyImageHydrationData = {
           image: imageResize,
           alt: cheerioImg?.attribs?.alt,
