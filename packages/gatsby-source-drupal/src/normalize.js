@@ -50,6 +50,12 @@ const getGatsbyImageCdnFields = async ({
   const extraNodeData = fileNodesExtendedData?.get(node.id) || null
 
   try {
+    const { placeholderStyleName } = getOptions()
+    const placeholderUrl =
+      extraNodeData?.imageDerivatives?.links?.[placeholderStyleName]?.href ||
+      extraNodeData?.imageDerivatives?.links?.placeholder?.href ||
+      url
+
     const hasRequiredData = input => input && input.width && input.height && url
 
     const imageSize = hasRequiredData(extraNodeData)
@@ -63,7 +69,7 @@ const getGatsbyImageCdnFields = async ({
     const gatsbyImageCdnFields = {
       filename: node.attributes?.filename,
       url,
-      placeholderUrl: url,
+      placeholderUrl,
       width: imageSize.width,
       height: imageSize.height,
       mimeType,
