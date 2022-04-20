@@ -40,6 +40,66 @@ count in collection queries" `/admin/config/services/jsonapi/extras` as that
 [speeds up fetching data from Drupal by around
 4x](https://github.com/gatsbyjs/gatsby/pull/32883).
 
+### Gatsby Image CDN
+
+Gatsby has an Image CDN feature which speeds up your builds as well as your frontend performance.
+
+Instead of fetching all image files during the Gatsby build and then transforming them for frontend performance and serving them as static files via your host, the new Image CDN feature allows images to be lazily processed when users visit the frontend of your site. The first frontend requestor of an image will transform that image and cache it for all other users.
+Note that Image CDN works for all hosts, but only speeds up your builds on Gatsby Cloud, as Gatsby Cloud has the tightest integration with the Gatsby framework.
+
+- [Image CDN blog post](https://www.gatsbyjs.com/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud/)
+- [What is Image CDN?](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-)
+- [How to enable Image CDN on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171-How-to-Enable-Image-CDN)
+
+#### Querying for Gatsby Image CDN fields
+
+Follow [this guide](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171-How-to-Enable-Image-CDN) to understand how to use the new `gatsbyImage` GraphQL field.
+
+#### Turning off file downloads
+
+When you're using Image CDN you no longer need Gatsby to fetch all of the files in your Drupal instance. Turn that off with the following plugin option.
+
+```js
+  {
+    resolve: `gatsby-source-drupal`,
+    options: {
+      skipFileDownloads: true,
+      // other plugin options go here
+    },
+  },
+```
+
+#### Local dev improvements
+
+Using Image CDN also speeds up your local development startup times when running `gatsby develop`. Instead of fetching all files locally, `gatsby develop` has a local Image CDN emulator so you only fetch and process images on your development machine when visiting your Gatsby site at `http://localhost:8000`.
+
+#### Configuring placeholders for Gatsby Images
+
+By default full size images are fetched and scaled down to be used for low quality image placeholders (for lazy loading images on the frontend).
+This can make your builds slower than necessary so follow these steps to configure a new smaller placeholder image size in Drupal. This will speed up your builds when using Gatsby Image CDN.
+
+1. Install the [Consumer image styles module](https://www.drupal.org/project/consumer_image_styles)
+2. Navigate to "Extend->Web Services" and turn on "Consumer Image Styles" by checking the box and hitting save.
+3. Navigate to "Configuration->Image Styles". and add an image style called "Gatsby Placeholder".
+4. Create a new scale effect and set its width and height to 20.
+5. If you already have a placeholder style you want to use, you can set the `gatsby-source-drupals` plugin option `placeholderStyleName` as the machine name of your style. \*\*
+6. For each entity that has an image field, navigate into "Configuration->Web Services->JSON:API->JSON:API Resource Overrides->Entity Type->(overwrite/edit)".
+7. Click on "advanced" for each image field you have, select "Image Styles (Image Field)" in the dropdown, then select the placeholder image style and save.
+8. Go to "Configuration->Web Services->Consumers" and add a default consumer if it doesn't already exist.
+9. Edit your default consumer and add the "Placeholder" image style by checking the box in the bottom section and saving.
+10. You may need to clear Drupal's cache under "Config->development->clear all caches".
+
+\*\* Example placeholder style plugin option
+
+```js
+{
+  resolve: `gatsby-source-drupal`,
+  options: {
+    placeholderStyleName: `custom_placeholder` // default is `placeholder`
+  }
+}
+```
+
 ### Filters
 
 You can use the `filters` option to limit the data that is retrieved from Drupal. Filters are applied per JSON API collection. You can use any [valid JSON API filter query](https://www.drupal.org/docs/8/modules/jsonapi/filtering). For large data sets this can reduce the build time of your application by allowing Gatsby to skip content you'll never use.
