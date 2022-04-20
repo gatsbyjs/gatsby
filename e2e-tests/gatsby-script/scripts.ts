@@ -76,13 +76,12 @@ export const inlineScripts = {
 }
 
 function constructInlineScript(type: string, strategy: ScriptStrategy): string {
-  return `(function() {
+  return `
     performance.mark(\`inline-script\`, { detail: {
       strategy: \`${strategy}\`,
       type: \`${type}\`,
       executeStart: performance.now()
     }})
     window[\`${strategy}-${type}\`] = true;
-  })();
   `
 }

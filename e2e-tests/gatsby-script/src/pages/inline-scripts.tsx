@@ -19,6 +19,7 @@ function IndexPage() {
       <ScriptMarkRecords />
 
       <Script
+        id={`${InlineScript.dangerouslySet}-${ScriptStrategy.preHydrate}`}
         strategy={ScriptStrategy.preHydrate}
         dangerouslySetInnerHTML={{
           __html:
@@ -28,6 +29,7 @@ function IndexPage() {
         }}
       />
       <Script
+        id={`${InlineScript.dangerouslySet}-${ScriptStrategy.postHydrate}`}
         strategy={ScriptStrategy.postHydrate}
         dangerouslySetInnerHTML={{
           __html:
@@ -37,6 +39,7 @@ function IndexPage() {
         }}
       />
       <Script
+        id={`${InlineScript.dangerouslySet}-${ScriptStrategy.idle}`}
         strategy={ScriptStrategy.idle}
         dangerouslySetInnerHTML={{
           __html:
@@ -44,17 +47,26 @@ function IndexPage() {
         }}
       />
 
-      <Script strategy={ScriptStrategy.preHydrate}>
+      <Script
+        id={`${InlineScript.templateLiteral}-${ScriptStrategy.preHydrate}`}
+        strategy={ScriptStrategy.preHydrate}
+      >
         {inlineScripts[InlineScript.templateLiteral][ScriptStrategy.preHydrate]}
       </Script>
-      <Script strategy={ScriptStrategy.postHydrate}>
+      <Script
+        id={`${InlineScript.templateLiteral}-${ScriptStrategy.postHydrate}`}
+        strategy={ScriptStrategy.postHydrate}
+      >
         {
           inlineScripts[InlineScript.templateLiteral][
             ScriptStrategy.postHydrate
           ]
         }
       </Script>
-      <Script strategy={ScriptStrategy.idle}>
+      <Script
+        id={`${InlineScript.templateLiteral}-${ScriptStrategy.idle}`}
+        strategy={ScriptStrategy.idle}
+      >
         {inlineScripts[InlineScript.templateLiteral][ScriptStrategy.idle]}
       </Script>
     </main>

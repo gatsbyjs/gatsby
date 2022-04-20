@@ -10,6 +10,7 @@ export enum ScriptStrategy {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ScriptProps
   extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad`> {
+  id?: string
   strategy?: ScriptStrategy
   children?: string
   onLoad?: (event: Event) => void
@@ -23,15 +24,23 @@ const handledProps = new Set([
   `onLoad`,
 ])
 
+const scriptCache = new Set()
+
 export function Script(props: ScriptProps): ReactElement {
   const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
 
-  const scriptRef = useRef<HTMLScriptElement>(null)
+  const ref = useRef<HTMLScriptElement>(null)
 
   useEffect(() => {
-    let script: HTMLScriptElement
+    let script: HTMLScriptElement | null
 
     switch (strategy) {
+      case ScriptStrategy.preHydrate:
+        // Handle gatsby-link navigation case
+        if (!performance.getEntriesByName(location.href).length) {
+          script = injectScript(props)
+        }
+        break
       case ScriptStrategy.postHydrate:
         script = injectScript(props)
         break
@@ -44,24 +53,25 @@ export function Script(props: ScriptProps): ReactElement {
 
     return (): void => {
       if (onLoad) {
-        script.removeEventListener(`load`, onLoad)
+        script?.removeEventListener(`load`, onLoad)
       }
-      script.remove()
+      script?.remove()
     }
   }, [])
 
+  // Handle events for non-inline pre-hydrate scripts
   useEffect(() => {
     if (onLoad) {
-      scriptRef?.current?.addEventListener(`load`, onLoad)
+      ref?.current?.addEventListener(`load`, onLoad)
     }
 
     return (): void => {
       if (onLoad) {
-        scriptRef?.current?.removeEventListener(`load`, onLoad)
+        ref?.current?.removeEventListener(`load`, onLoad)
       }
-      scriptRef?.current?.remove()
+      ref?.current?.remove()
     }
-  }, [scriptRef])
+  }, [ref])
 
   if (strategy === ScriptStrategy.preHydrate) {
     const inlineScript = resolveInlineScript(props)
@@ -69,7 +79,7 @@ export function Script(props: ScriptProps): ReactElement {
 
     if (inlineScript) {
       return (
-        <script ref={scriptRef} async data-strategy={strategy} {...attributes}>
+        <script async data-strategy={strategy} {...attributes}>
           {resolveInlineScript(props)}
         </script>
       )
@@ -77,7 +87,7 @@ export function Script(props: ScriptProps): ReactElement {
 
     return (
       <script
-        ref={scriptRef}
+        ref={ref}
         async
         src={src}
         data-strategy={strategy}
@@ -89,12 +99,21 @@ export function Script(props: ScriptProps): ReactElement {
   return <></>
 }
 
-function injectScript(props: ScriptProps): HTMLScriptElement {
-  const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
+function injectScript(props: ScriptProps): HTMLScriptElement | null {
+  const { id, src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
+
+  if (scriptCache.has(id || src)) {
+    return null
+  }
+
   const inlineScript = resolveInlineScript(props)
   const attributes = resolveAttributes(props)
 
   const script = document.createElement(`script`)
+
+  if (id) {
+    script.id = id
+  }
 
   script.dataset.strategy = strategy
 
@@ -115,6 +134,8 @@ function injectScript(props: ScriptProps): HTMLScriptElement {
   }
 
   document.body.appendChild(script)
+
+  scriptCache.add(id || src)
 
   return script
 }
