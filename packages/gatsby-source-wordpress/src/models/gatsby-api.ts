@@ -231,6 +231,7 @@ const defaultPluginOptions: IPluginOptions = {
       exclude: true,
     },
     MediaItem: {
+      exclude: false,
       placeholderSizeName: `gatsby-image-placeholder`,
       lazyNodes: false,
       createFileNodes: true,

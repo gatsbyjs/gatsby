@@ -476,7 +476,10 @@ export const replaceNodeHtmlImages = async ({
   pluginOptions,
 }) => {
   // this prevents fetching inline html images
-  if (!pluginOptions?.html?.useGatsbyImage) {
+  if (
+    !pluginOptions?.html?.useGatsbyImage ||
+    pluginOptions.type.MediaItem.exclude
+  ) {
     return nodeString
   }
 
@@ -713,7 +716,10 @@ const replaceFileLinks = async ({
   pluginOptions,
   node,
 }) => {
-  if (!pluginOptions?.html?.createStaticFiles) {
+  if (
+    !pluginOptions?.html?.createStaticFiles ||
+    pluginOptions.type.MediaItem.exclude
+  ) {
     return nodeString
   }
 
