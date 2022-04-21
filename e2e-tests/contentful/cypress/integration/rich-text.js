@@ -6,6 +6,8 @@ const styleAttrExp = /style="[^"]+"/g
 // Also gatsby-plugin-image might change their css styles.
 // These are already tested elsewhere.
 function testWithGatsbyPluginImage(elem) {
+  elem.get("[gatsby-main-image]").should("be.visible")
+
   elem.invoke("prop", "outerHTML").then(html => {
     // Check if we have a valid base64 data
     expect(html).to.match(base64ImageExp)
