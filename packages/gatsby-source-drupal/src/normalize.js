@@ -13,6 +13,13 @@ const getHref = link => {
 
 exports.getHref = getHref
 
+const imageCDNState = {
+  foundPlaceholderStyle: false,
+  hasLoggedNoPlaceholderStyle: false,
+}
+
+exports.imageCDNState = imageCDNState
+
 /**
  * This FN takes in node data and returns Gatsby Image CDN fields that should be added to that node. If the input node isn't an image an empty object is returned.
  */
@@ -59,6 +66,10 @@ const getGatsbyImageCdnFields = async ({
       extraNodeData?.imageDerivatives?.links?.[placeholderStyleName]?.href ||
       extraNodeData?.imageDerivatives?.links?.placeholder?.href ||
       url
+
+    if (placeholderUrl !== url) {
+      imageCDNState.foundPlaceholderStyle = true
+    }
 
     const hasRequiredData = input => input && input.width && input.height
 

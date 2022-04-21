@@ -82,9 +82,9 @@ This can make your builds slower than necessary so follow these steps to configu
 
 1. Install the [Consumer image styles module](https://www.drupal.org/project/consumer_image_styles)
 2. Navigate to "Extend->Web Services" and turn on "Consumer Image Styles" by checking the box and hitting save.
-3. Navigate to "Configuration->Image Styles". and add an image style called "Gatsby Placeholder".
+3. Navigate to "Configuration->Image Styles". and add an image style called "Placeholder".
 4. Create a new scale effect and set its width and height to 20.
-5. If you already have a placeholder style you want to use, you can set the `gatsby-source-drupals` plugin option `placeholderStyleName` as the machine name of your style. \*\* See example option below
+5. If you already have a placeholder style you want to use, you can set the `gatsby-source-drupal` plugin option `placeholderStyleName` as the machine name of your style. \*\* See example option below
 6. For each entity that has an image field, navigate into "Configuration->Web Services->JSON:API->JSON:API Resource Overrides->Entity Type->(overwrite/edit)".
 7. Click on "advanced" for each image field you have, select "Image Styles (Image Field)" in the dropdown, then select the placeholder image style and save.
 8. Go to "Configuration->Web Services->Consumers" and add a default consumer if it doesn't already exist.

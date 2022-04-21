@@ -15,7 +15,12 @@ const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  imageCDNState,
+} = require(`./normalize`)
 const {
   initRefsLookups,
   storeRefsLookups,
@@ -678,6 +683,16 @@ ${JSON.stringify(webhookBody, null, 4)}`
     })
   }
 
+  if (
+    !imageCDNState.foundPlaceholderStyle &&
+    !imageCDNState.hasLoggedNoPlaceholderStyle
+  ) {
+    imageCDNState.hasLoggedNoPlaceholderStyle = true
+    reporter.warn(
+      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\n\nhttps://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
+    )
+  }
+
   createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
@@ -739,7 +754,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
   createNodesSpan.finish()
   await storeRefsLookups({ cache, getNodes })
-  return
 }
 
 // This is maintained for legacy reasons and will eventually be removed.
@@ -838,12 +852,15 @@ exports.pluginOptionsSchema = ({ Joi }) =>
   })
 
 exports.onCreateDevServer = async ({ app }) => {
+  // this makes the gatsby develop image CDN emulator work on earlier versions of Gatsby.
   polyfillImageServiceDevRoutes(app)
 }
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   actions.createTypes([
+    // polyfill so image CDN works on older versions of Gatsby
     addRemoteFilePolyfillInterface(
+      // this type is merged in with the inferred file__file type, adding Image CDN support via the gatsbyImage GraphQL field. The `RemoteFile` interface as well as the polyfill above are what add the gatsbyImage field.
       schema.buildObjectType({
         name: `file__file`,
         fields: {},
