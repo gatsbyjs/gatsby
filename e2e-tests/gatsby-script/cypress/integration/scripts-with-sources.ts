@@ -70,6 +70,13 @@ describe(`scripts with sources`, () => {
         cy.get(`[data-on-load-result=${ScriptStrategy.postHydrate}]`)
       })
     })
+
+    it(`should call an on error callback if an error occurred`, () => {
+      cy.visit(page)
+      cy.getRecord(Script.three, ResourceRecord.responseEnd).then(() => {
+        cy.get(`[data-on-error-result=${ScriptStrategy.postHydrate}]`)
+      })
+    })
   })
 
   describe(`using the ${ScriptStrategy.idle} strategy`, () => {
@@ -100,6 +107,13 @@ describe(`scripts with sources`, () => {
       cy.visit(page)
       cy.getRecord(Script.marked, ResourceRecord.responseEnd).then(() => {
         cy.get(`[data-on-load-result=${ScriptStrategy.idle}]`)
+      })
+    })
+
+    it(`should call an on error callback if an error occurred`, () => {
+      cy.visit(page)
+      cy.getRecord(Script.marked, ResourceRecord.responseEnd).then(() => {
+        cy.get(`[data-on-error-result=${ScriptStrategy.idle}]`)
       })
     })
   })
