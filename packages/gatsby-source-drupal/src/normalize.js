@@ -50,16 +50,17 @@ const getGatsbyImageCdnFields = async ({
     return {}
   }
 
-  if (!mimeType.includes(`image/`)) {
-    return {
-      mimeType,
-    }
-  }
-
   const url = getFileUrl(node.attributes, pluginOptions.baseUrl)?.href
 
   if (!url) {
     return {}
+  }
+
+  if (!mimeType.includes(`image/`)) {
+    return {
+      mimeType,
+      url,
+    }
   }
 
   const extraNodeData = fileNodesExtendedData?.get(node.id) || null
