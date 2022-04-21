@@ -73,9 +73,7 @@ describe(`scripts with sources`, () => {
 
     it(`should call an on error callback if an error occurred`, () => {
       cy.visit(page)
-      cy.getRecord(Script.three, ResourceRecord.responseEnd).then(() => {
-        cy.get(`[data-on-error-result=${ScriptStrategy.postHydrate}]`)
-      })
+      cy.get(`[data-on-error-result=${ScriptStrategy.postHydrate}]`)
     })
   })
 
@@ -112,9 +110,7 @@ describe(`scripts with sources`, () => {
 
     it(`should call an on error callback if an error occurred`, () => {
       cy.visit(page)
-      cy.getRecord(Script.marked, ResourceRecord.responseEnd).then(() => {
-        cy.get(`[data-on-error-result=${ScriptStrategy.idle}]`)
-      })
+      cy.get(`[data-on-error-result=${ScriptStrategy.idle}]`)
     })
   })
 
