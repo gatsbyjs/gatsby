@@ -722,6 +722,8 @@ describe(`gatsbyImageData`, () => {
 
     expect(constrainedResult?.images.sources[0].type).toBe(`image/avif`)
     expect(constrainedResult?.images.sources[1].type).toBe(`image/webp`)
+    expect(constrainedResult?.images.fallback.src).toContain(`dog-portrait.jpg`)
+
     expect(constrainedResult?.images.sources.length).toBe(2)
   })
 })
