@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
+    "@gatsbyjs/potrace": "^2.2.0",
     "async": "^3.2.3",
     "bluebird": "^3.7.2",
     "debug": "^4.3.4",
@@ -19,7 +20,6 @@
     "got": "^11.8.3",
     "lodash": "^4.17.21",
     "mini-svg-data-uri": "^1.4.4",
-    "potrace": "^2.1.8",
     "probe-image-size": "^7.2.3",
     "progress": "^2.0.3",
     "semver": "^7.3.5",

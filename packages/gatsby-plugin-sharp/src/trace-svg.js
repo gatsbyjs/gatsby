@@ -128,7 +128,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
   })
 
   const svgToMiniDataURI = require(`mini-svg-data-uri`)
-  const potrace = require(`potrace`)
+  const potrace = require(`@gatsbyjs/potrace`)
   const trace = promisify(potrace.trace)
 
   const defaultArgs = {
