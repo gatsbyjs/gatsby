@@ -76,6 +76,7 @@ describe(`Client only paths`, () => {
     routes.forEach(({ path, marker, label, skipTestingExactLocation }) => {
       it(label, () => {
         cy.visit(path).waitForRouteChange()
+        cy.wait(100)
         cy.getTestElement(`dom-marker`).contains(marker)
 
         // `serve-static` (used by `gatsby serve`) is doing some redirects when
