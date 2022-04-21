@@ -3,8 +3,8 @@
  */
 
 import React from "react"
-import { render } from "@testing-library/react"
-import { Script, ScriptStrategy } from "../gatsby-script"
+import { render } from "@testing-library/react/pure"
+import { Script, ScriptStrategy, scriptCache } from "../gatsby-script"
 
 const scripts: Record<string, string> = {
   react: `https://unpkg.com/react@18/umd/react.development.js`,
@@ -21,9 +21,12 @@ describe(`Script`, () => {
   beforeAll(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     global.requestIdleCallback = jest.fn<any, any>(callback => callback())
+    // @ts-ignore Mock it out for now
+    performance.getEntriesByName = jest.fn(() => [])
   })
 
   afterEach(() => {
+    scriptCache.delete(scripts.react)
     while (document.body.hasChildNodes()) {
       document.body.lastElementChild?.remove()
     }

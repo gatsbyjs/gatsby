@@ -13,7 +13,6 @@ declare global {
         metric: string,
         raw?: boolean
       ): Chainable<number | string>
-      waitForRouteChange(): unknown
     }
   }
 }
