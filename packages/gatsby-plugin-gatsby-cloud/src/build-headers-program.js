@@ -85,7 +85,7 @@ function linkHeaders(files, pathPrefix, assetPrefix) {
     files[resourceType].forEach(file => {
       linkHeaders.push(
         linkTemplate(
-          `${assetPrefix && assetPrefix + `/`}${pathPrefix}/${file}`,
+          `${assetPrefix ? assetPrefix + `/` : ``}${pathPrefix}/${file}`,
           resourceType
         )
       )

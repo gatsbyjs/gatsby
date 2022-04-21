@@ -13,5 +13,5 @@ If you start up docker by running `npm run docker-clean-start` at `[gatsby-monor
 Alternatively, you can install the MySQL client cli for your particular OS/distribution and use the following command to create a dump in a file named `backup.sql` in your current working directory:
 
 ```bash
-mysqldump --user=wordpress --password=<redacted-password> --port=3306 --host=127.0.0.1 --no-tablespaces --databases wordpress > backup.sql
+mysqldump --user=wordpress --password=gtsb-wp-dckr-user --port=3306 --host=127.0.0.1 --no-tablespaces --databases wordpress > backup.sql
 ```
