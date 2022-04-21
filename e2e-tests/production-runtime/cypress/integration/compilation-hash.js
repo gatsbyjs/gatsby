@@ -83,10 +83,10 @@ describe(
         cy.wait("@deepLinkPage")
         cy.waitForRouteChange()
 
-        // // we expect reload to happen so our window property shouldn't be set anymore
+        // we expect reload to happen so our window property shouldn't be set anymore
         cy.window().its(`notReloaded`).should(`not.equal`, true)
 
-        // // let's make sure we actually see the content
+        // let's make sure we actually see the content
         cy.contains(
           `StaticQuery in wrapRootElement test (should show site title):Gatsby Default Starter`
         )
