@@ -46,7 +46,9 @@ function startLoading(
   onLoad: GatsbyImageProps["onLoad"],
   onError: GatsbyImageProps["onError"]
 ): () => void {
-  const mainImage = element.querySelector(`[data-main-image]`)
+  const mainImage = element.querySelector(
+    `[data-main-image]`
+  ) as HTMLImageElement
   const placeholderImage = element.querySelector<HTMLElement>(
     `[data-placeholder-image]`
   )
@@ -104,6 +106,15 @@ function startLoading(
   })
 
   imageCache.add(cacheKey)
+
+  // Load times not always fires - mostly when it's a 304
+  // We check if the image is already completed and if so we trigger onload.
+  if (mainImage.complete) {
+    onImageLoaded.call(mainImage, {
+      currentTarget: mainImage,
+    })
+    console.log(`already loaded`)
+  }
 
   return (): void => {
     if (mainImage) {
