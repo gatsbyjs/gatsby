@@ -3,13 +3,13 @@ import { Link } from "gatsby"
 import { ScriptResourceRecords } from "../components/script-resource-records"
 import { useOccupyMainThread } from "../hooks/use-occupy-main-thread"
 import { scripts, scriptUrls } from "../../scripts"
-import { onLoad } from "../utils/on-load"
+import { onLoad, onError } from "../utils/callbacks"
 import "../styles/global.css"
 
 // TODO - Import from gatsby core after gatsby-script is in general availability
 import { Script, ScriptStrategy } from "gatsby-script"
 
-function IndexPage() {
+function ScriptsWithSourcesPage() {
   useOccupyMainThread()
 
   return (
@@ -39,11 +39,7 @@ function IndexPage() {
         </li>
       </ul>
 
-      <Script
-        src={scripts.dayjs}
-        strategy={ScriptStrategy.preHydrate}
-        onLoad={() => onLoad(ScriptStrategy.preHydrate)}
-      />
+      <Script src={scripts.dayjs} strategy={ScriptStrategy.preHydrate} />
       <Script
         src={scripts.three}
         strategy={ScriptStrategy.postHydrate}
@@ -54,8 +50,19 @@ function IndexPage() {
         strategy={ScriptStrategy.idle}
         onLoad={() => onLoad(ScriptStrategy.idle)}
       />
+
+      <Script
+        src="/non-existent-script-b.js"
+        strategy={ScriptStrategy.postHydrate}
+        onError={() => onError(ScriptStrategy.postHydrate)}
+      />
+      <Script
+        src="/non-existent-script-c.js"
+        strategy={ScriptStrategy.idle}
+        onError={() => onError(ScriptStrategy.idle)}
+      />
     </main>
   )
 }
 
-export default IndexPage
+export default ScriptsWithSourcesPage
