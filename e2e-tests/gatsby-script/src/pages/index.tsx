@@ -5,6 +5,7 @@ import "../styles/global.css"
 const pages = [
   { name: `Scripts with sources`, path: `/scripts-with-sources` },
   { name: `Inline scripts`, path: `/inline-scripts` },
+  { name: `On error callback`, path: `/on-error-callback` },
 ]
 
 function IndexPage() {

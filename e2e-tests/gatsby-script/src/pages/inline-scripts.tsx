@@ -9,7 +9,7 @@ import "../styles/global.css"
 // TODO - Import from gatsby core after gatsby-script is in general availability
 import { Script, ScriptStrategy } from "gatsby-script"
 
-function IndexPage() {
+function InlineScriptsPage() {
   useOccupyMainThread()
 
   return (
@@ -96,4 +96,4 @@ function IndexPage() {
   )
 }
 
-export default IndexPage
+export default InlineScriptsPage

@@ -9,11 +9,12 @@ export enum ScriptStrategy {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ScriptProps
-  extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad`> {
+  extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad` | `onError`> {
   id?: string
   strategy?: ScriptStrategy
   children?: string
   onLoad?: (event: Event) => void
+  onError?: (event: ErrorEvent) => void
 }
 
 const handledProps = new Set([
@@ -22,12 +23,18 @@ const handledProps = new Set([
   `dangerouslySetInnerHTML`,
   `children`,
   `onLoad`,
+  `onError`,
 ])
 
 export const scriptCache = new Set()
 
 export function Script(props: ScriptProps): ReactElement {
-  const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
+  const {
+    src,
+    strategy = ScriptStrategy.postHydrate,
+    onLoad,
+    onError,
+  } = props || {}
 
   useEffect(() => {
     let script: HTMLScriptElement | null
@@ -55,6 +62,9 @@ export function Script(props: ScriptProps): ReactElement {
       if (onLoad) {
         script?.removeEventListener(`load`, onLoad)
       }
+      if (onError) {
+        script?.removeEventListener(`error`, onError)
+      }
       script?.remove()
     }
   }, [])
@@ -78,7 +88,13 @@ export function Script(props: ScriptProps): ReactElement {
 }
 
 function injectScript(props: ScriptProps): HTMLScriptElement | null {
-  const { id, src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
+  const {
+    id,
+    src,
+    strategy = ScriptStrategy.postHydrate,
+    onLoad,
+    onError,
+  } = props || {}
 
   if (scriptCache.has(id || src)) {
     return null
@@ -109,6 +125,10 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
 
   if (onLoad) {
     script.addEventListener(`load`, onLoad)
+  }
+
+  if (onError) {
+    script.addEventListener(`error`, onError)
   }
 
   document.body.appendChild(script)
