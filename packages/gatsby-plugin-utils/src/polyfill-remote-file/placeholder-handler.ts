@@ -11,6 +11,7 @@ import type { IRemoteImageNode } from "./types"
 export enum PlaceholderType {
   BLURRED = `blurred`,
   DOMINANT_COLOR = `dominantColor`,
+  TRACED_SVG = `tracedSVG`,
 }
 interface IPlaceholderGenerationArgs {
   placeholderUrl: string | undefined
@@ -25,12 +26,10 @@ interface IPlaceholderGenerationArgs {
 const QUEUE_CONCURRENCY = 10
 const PLACEHOLDER_BASE64_WIDTH = 20
 const PLACEHOLDER_QUALITY = 25
+const PLACEHOLDER_DOMINANT_WIDTH = 200
+const PLACEHOLDER_TRACED_WIDTH = 200
 
 let tmpDir: string
-
-function getMutexKey(contentDigest: string): string {
-  return `gatsby-plugin-utils:placeholder:${contentDigest}`
-}
 
 const queue = Queue<
   undefined,
@@ -93,6 +92,76 @@ const queue = Queue<
           : `rgba(0,0,0,0)`
       )
     }
+    case PlaceholderType.TRACED_SVG: {
+      let buffer: Buffer
+
+      try {
+        const fileStream = createReadStream(filePath)
+        const pipeline = sharp()
+        fileStream.pipe(pipeline)
+        buffer = await pipeline
+          .resize(
+            PLACEHOLDER_BASE64_WIDTH,
+            Math.ceil(PLACEHOLDER_BASE64_WIDTH / (width / height))
+          )
+          .toBuffer()
+      } catch (err) {
+        buffer = await readFile(filePath)
+      }
+
+      const [{ trace, Potrace }, { optimize }, { default: svgToMiniDataURI }] =
+        await Promise.all([
+          import(`@gatsbyjs/potrace`),
+          import(`svgo`),
+          import(`mini-svg-data-uri`),
+        ])
+
+      trace(
+        buffer,
+        {
+          color: `lightgray`,
+          optTolerance: 0.4,
+          turdSize: 100,
+          turnPolicy: Potrace.TURNPOLICY_MAJORITY,
+        },
+        async (err, svg) => {
+          if (err) {
+            return cb(err)
+          }
+
+          try {
+            const { data } = await optimize(svg, {
+              multipass: true,
+              floatPrecision: 0,
+              plugins: [
+                {
+                  name: `preset-default`,
+                  params: {
+                    overrides: {
+                      // customize default plugin options
+                      removeViewBox: false,
+
+                      // or disable plugins
+                      addAttributesToSVGElement: {
+                        attributes: [
+                          {
+                            preserveAspectRatio: `none`,
+                          },
+                        ],
+                      },
+                    },
+                  },
+                },
+              ],
+            })
+
+            return cb(null, svgToMiniDataURI(data).replace(/ /gi, `%20`))
+          } catch (err) {
+            return cb(err)
+          }
+        }
+      )
+    }
   }
 },
 QUEUE_CONCURRENCY)
@@ -105,7 +174,7 @@ export async function generatePlaceholder(
   switch (placeholderType) {
     case PlaceholderType.BLURRED: {
       return {
-        fallback: await placeholderToBase64({
+        fallback: await runPlaceholder({
           id: source.id,
           placeholderUrl: source.placeholderUrl,
           originalUrl: source.url,
@@ -113,12 +182,17 @@ export async function generatePlaceholder(
           width: source.width,
           height: source.height,
           contentDigest: source.internal.contentDigest,
+          type: PlaceholderType.BLURRED,
+          placeholderOptions: {
+            width: PLACEHOLDER_BASE64_WIDTH,
+            quality: PLACEHOLDER_QUALITY,
+          },
         }),
       }
     }
     case PlaceholderType.DOMINANT_COLOR: {
       return {
-        backgroundColor: await placeholderToDominantColor({
+        backgroundColor: await runPlaceholder({
           id: source.id,
           placeholderUrl: source.placeholderUrl,
           originalUrl: source.url,
@@ -126,28 +200,58 @@ export async function generatePlaceholder(
           width: source.width,
           height: source.height,
           contentDigest: source.internal.contentDigest,
+          type: PlaceholderType.DOMINANT_COLOR,
+          placeholderOptions: {
+            width: PLACEHOLDER_DOMINANT_WIDTH,
+            quality: PLACEHOLDER_QUALITY,
+          },
+        }),
+      }
+    }
+    case PlaceholderType.TRACED_SVG: {
+      return {
+        fallback: await runPlaceholder({
+          id: source.id,
+          placeholderUrl: source.placeholderUrl,
+          originalUrl: source.url,
+          format: getImageFormatFromMimeType(source.mimeType),
+          width: source.width,
+          height: source.height,
+          contentDigest: source.internal.contentDigest,
+          type: PlaceholderType.TRACED_SVG,
+          placeholderOptions: {
+            width: PLACEHOLDER_TRACED_WIDTH,
+            quality: PLACEHOLDER_QUALITY,
+          },
         }),
       }
     }
   }
 }
 
-async function placeholderToBase64({
+async function runPlaceholder({
   placeholderUrl,
   originalUrl,
   width,
   height,
   id,
   contentDigest,
-}: IPlaceholderGenerationArgs): Promise<string> {
+  type,
+  placeholderOptions,
+}: IPlaceholderGenerationArgs & {
+  type: PlaceholderType
+  placeholderOptions: { width: number; quality: number }
+}): Promise<string> {
   const cache = getCache()
-  const cacheKey = `image-cdn:${id}-${contentDigest}:base64`
+  const cacheKey = `image-cdn:${id}-${contentDigest}:${type}`
   let cachedValue = await cache.get(cacheKey)
   if (cachedValue) {
     return cachedValue
   }
 
-  const mutex = createMutex(getMutexKey(`${id}-${contentDigest}`))
+  const mutex = createMutex(
+    `gatsby-plugin-utils:placeholder:${id}-${contentDigest}`
+  )
   await mutex.acquire()
 
   try {
@@ -161,21 +265,20 @@ async function placeholderToBase64({
     if (placeholderUrl) {
       url = generatePlaceholderUrl({
         url: placeholderUrl,
-        width: PLACEHOLDER_BASE64_WIDTH,
-        quality: PLACEHOLDER_QUALITY,
         originalWidth: width,
         originalHeight: height,
+        ...placeholderOptions,
       })
     }
 
-    const base64Placeholder = await new Promise<string>((resolve, reject) => {
+    const result = await new Promise<string>((resolve, reject) => {
       queue.push(
         {
           url,
           contentDigest,
           width,
           height,
-          type: PlaceholderType.BLURRED,
+          type,
         },
         (err, result) => {
           if (err) {
@@ -188,73 +291,9 @@ async function placeholderToBase64({
       )
     })
 
-    await cache.set(cacheKey, base64Placeholder)
+    await cache.set(cacheKey, result)
 
-    return base64Placeholder
-  } finally {
-    await mutex.release()
-  }
-}
-
-async function placeholderToDominantColor({
-  placeholderUrl,
-  originalUrl,
-  width,
-  height,
-  id,
-  contentDigest,
-}: IPlaceholderGenerationArgs): Promise<string> {
-  const cache = getCache()
-  const cacheKey = `image-cdn:${id}-${contentDigest}:dominantColor`
-  let cachedValue = await cache.get(cacheKey)
-  if (cachedValue) {
-    return cachedValue
-  }
-
-  const mutex = createMutex(getMutexKey(`${id}-${contentDigest}`))
-  await mutex.acquire()
-
-  try {
-    // check cache again after mutex is acquired
-    cachedValue = await cache.get(cacheKey)
-    if (cachedValue) {
-      return cachedValue
-    }
-
-    let url = originalUrl
-    if (placeholderUrl) {
-      url = generatePlaceholderUrl({
-        url: placeholderUrl,
-        width: 200,
-        quality: PLACEHOLDER_QUALITY,
-        originalWidth: width,
-        originalHeight: height,
-      })
-    }
-
-    const dominantColor = await new Promise<string>((resolve, reject) => {
-      queue.push(
-        {
-          url,
-          contentDigest,
-          width,
-          height,
-          type: PlaceholderType.DOMINANT_COLOR,
-        },
-        (err, result) => {
-          if (err) {
-            reject(err)
-            return
-          }
-
-          resolve(result as string)
-        }
-      )
-    })
-
-    await cache.set(cacheKey, dominantColor)
-
-    return dominantColor
+    return result
   } finally {
     await mutex.release()
   }
