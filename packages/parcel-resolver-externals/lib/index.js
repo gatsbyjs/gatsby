@@ -12,7 +12,6 @@ module.exports = new Resolver({
     );
       
     if (matched) {
-      console.log(`IGNORED: ${specifier}`)
       return { isExcluded: true }
     };
 

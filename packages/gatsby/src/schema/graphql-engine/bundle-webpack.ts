@@ -9,6 +9,7 @@ import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-loggin
 import reporter from "gatsby-cli/lib/reporter"
 import Parcel from "@parcel/core"
 import { OutputFormat  } from "@parcel/types"
+import { createParcelConfig } from "../../utils/parcel"
 
 type Reporter = typeof reporter
 
@@ -42,9 +43,13 @@ export async function createBundlerGraphqlEngineBundle(
   const entry = path.join(__dirname, `entry.js`)
 
   const options = {
-    // config: getParcelConfig(`page-ssr-module`),
-    // defaultConfig: require.resolve(`gatsby-parcel-config`),
-    config: require.resolve(`gatsby-parcel-config`),
+    config: createParcelConfig(
+      outputDir, 
+      {
+        resolvers: ["parcel-resolver-externals"],
+      }
+    ),
+    // config: require.resolve(`gatsby-parcel-config`),
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
@@ -75,19 +80,16 @@ export async function createBundlerGraphqlEngineBundle(
     },
   }
 
-  console.log(options)
-
   return new Promise(async (resolve, reject) => {
     try {
       const bundler = new Parcel(options)
 
       await bundler.watch((error, buildEvent) => {
-        console.log(buildEvent)
         if (buildEvent?.type === "buildSuccess") {
           return resolve(undefined)
         }
         if (buildEvent?.type === "buildFailure") {
-          console.log(`ERROR`)
+          console.log(buildEvent)
           // TODO format this better, use codeframes
           reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
         }

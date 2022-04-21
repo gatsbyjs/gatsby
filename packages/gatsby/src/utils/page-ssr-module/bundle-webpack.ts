@@ -6,7 +6,7 @@ import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
-import { getParcelFile } from "../parcel/util"
+import { getParcelFile, createParcelConfig } from "../parcel"
 import fs from "fs"
 
 import {
@@ -93,9 +93,12 @@ async function bundleSSR({
   const entry = path.join(__dirname, `entry.js`)
 
   const options = {
-    // config: getParcelConfig(`page-ssr-module`),
-    // defaultConfig: require.resolve(`gatsby-parcel-config`),
-    config: require.resolve(`gatsby-parcel-config`),
+    config: createParcelConfig(
+      outputDir, 
+      {
+        resolvers: ["parcel-resolver-externals"],
+      }
+    ),
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
@@ -137,12 +140,10 @@ async function bundleSSR({
       const bundler = new Parcel(options)
 
       await bundler.watch((error, buildEvent) => {
-        console.log(buildEvent)
         if (buildEvent?.type === "buildSuccess") {
           return resolve(undefined)
         }
         if (buildEvent?.type === "buildFailure") {
-          console.log(`ERROR`)
           // TODO format this better, use codeframes
           reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
         }

@@ -29,8 +29,7 @@
     "@parcel/transformer-js": "^2.3.2",
     "@parcel/transformer-json": "^2.3.2",
     "@parcel/transformer-raw": "^2.3.2",
-    "@parcel/transformer-react-refresh-wrap": "^2.3.2",
-    "parcel-resolver-externals": "*"
+    "@parcel/transformer-react-refresh-wrap": "^2.3.2"
   },
   "parcelDependencies": {
     "@gatsbyjs/parcel-namer-relative-to-cwd": "0.0.2",
