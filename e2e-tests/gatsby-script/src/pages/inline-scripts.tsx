@@ -1,4 +1,5 @@
 import * as React from "react"
+import { ScriptResourceRecords } from "../components/script-resource-records"
 import { ScriptMarkRecords } from "../components/script-mark-records"
 import { useOccupyMainThread } from "../hooks/use-occupy-main-thread"
 import { inlineScripts, InlineScript } from "../../scripts"
@@ -13,6 +14,13 @@ function IndexPage() {
   return (
     <main>
       <h1>Script component e2e test</h1>
+
+      <br />
+      <h2>Framework script</h2>
+      <ScriptResourceRecords
+        check={record => record.name.includes(`framework`)}
+        count={1}
+      />
 
       <br />
       <h2>Inline scripts</h2>

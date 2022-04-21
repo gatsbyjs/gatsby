@@ -4,6 +4,9 @@ import { ResourceRecord, MarkRecord } from "../../records"
 // TODO - Import from gatsby core after gatsby-script is in general availability
 import { ScriptStrategy } from "gatsby-script"
 
+// The page that we will assert against
+const page = `/inline-scripts`
+
 /**
  * The two test suites below test the same thing, inline scripts via dangerouslySetInnerHTML and template literals.
  * To keep the tests flat and easier to debug they are duplicated instead of iterated over.
@@ -20,7 +23,7 @@ beforeEach(() => {
 describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
   describe(`using the ${ScriptStrategy.preHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`,
@@ -30,7 +33,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`,
@@ -51,7 +54,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
 
   describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.postHydrate}-${InlineScript.dangerouslySet}`,
@@ -61,7 +64,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
     })
 
     it(`should load after the framework bundle has loaded`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       // Assert framework is loaded before inline script is executed
       cy.getRecord(
@@ -78,7 +81,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
 
   describe(`using the ${ScriptStrategy.idle} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.idle}-${InlineScript.dangerouslySet}`,
@@ -88,7 +91,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.idle}-${InlineScript.dangerouslySet}`,
@@ -111,7 +114,7 @@ describe(`inline scripts set via dangerouslySetInnerHTML`, () => {
 describe(`inline scripts set via template literals`, () => {
   describe(`using the ${ScriptStrategy.preHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.preHydrate}-${InlineScript.templateLiteral}`,
@@ -121,7 +124,7 @@ describe(`inline scripts set via template literals`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.preHydrate}-${InlineScript.templateLiteral}`,
@@ -142,7 +145,7 @@ describe(`inline scripts set via template literals`, () => {
 
   describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.postHydrate}-${InlineScript.templateLiteral}`,
@@ -152,7 +155,7 @@ describe(`inline scripts set via template literals`, () => {
     })
 
     it(`should load after the framework bundle has loaded`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       // Assert framework is loaded before inline script is executed
       cy.getRecord(
@@ -169,7 +172,7 @@ describe(`inline scripts set via template literals`, () => {
 
   describe(`using the ${ScriptStrategy.idle} strategy`, () => {
     it(`should execute successfully`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.idle}-${InlineScript.templateLiteral}`,
@@ -179,7 +182,7 @@ describe(`inline scripts set via template literals`, () => {
     })
 
     it(`should load before other strategies`, () => {
-      cy.visit(`/`)
+      cy.visit(page)
 
       cy.getRecord(
         `${ScriptStrategy.idle}-${InlineScript.templateLiteral}`,

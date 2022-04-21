@@ -1,7 +1,7 @@
 import * as React from "react"
 import { ScriptResourceRecords } from "../components/script-resource-records"
 import { useOccupyMainThread } from "../hooks/use-occupy-main-thread"
-import { scripts } from "../../scripts"
+import { scripts, scriptUrls } from "../../scripts"
 import "../styles/global.css"
 
 // TODO - Import from gatsby core after gatsby-script is in general availability
@@ -16,7 +16,12 @@ function IndexPage() {
 
       <br />
       <h2>Scripts with sources</h2>
-      <ScriptResourceRecords />
+      <ScriptResourceRecords
+        check={record =>
+          scriptUrls.has(record.name) || record.name.includes(`framework`)
+        }
+        count={4}
+      />
 
       <Script src={scripts.dayjs} strategy={ScriptStrategy.preHydrate} />
       <Script src={scripts.three} strategy={ScriptStrategy.postHydrate} />

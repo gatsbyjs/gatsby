@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import {
-  scriptUrls,
   scriptUrlIndex,
   scriptStrategyIndex,
   scriptSuccessIndex,
@@ -9,10 +8,17 @@ import {
 import { ResourceRecord } from "../../records"
 import { trim } from "../utils/trim"
 
+interface Props {
+  check: (record: PerformanceResourceTiming) => boolean
+  count: number
+}
+
 /**
  * Displays performance resource records of scripts in a table.
  */
-export function ScriptResourceRecords(): JSX.Element {
+export function ScriptResourceRecords(props: Props): JSX.Element {
+  const { check, count } = props
+
   const [records, setRecords] = useState<Array<PerformanceResourceTiming>>([])
 
   /**
@@ -25,11 +31,9 @@ export function ScriptResourceRecords(): JSX.Element {
         `resource`
       ) as Array<PerformanceResourceTiming>
 
-      const scriptRecords = resourceRecords.filter(
-        record => scriptUrls.has(record.name) || isFrameworkRecord(record)
-      )
+      const scriptRecords = resourceRecords.filter(check)
 
-      if (scriptRecords.length === 4 || performance.now() > 10000) {
+      if (scriptRecords.length === count || performance.now() > 10000) {
         setRecords(scriptRecords)
         clearInterval(interval)
       }
@@ -58,7 +62,7 @@ export function ScriptResourceRecords(): JSX.Element {
               let strategy: string
               let success: string
 
-              if (isFrameworkRecord(record)) {
+              if (record.name.includes(`framework`)) {
                 name = `framework`
                 strategy = `N/A`
                 success = `N/A`
@@ -82,8 +86,4 @@ export function ScriptResourceRecords(): JSX.Element {
       </table>
     </>
   )
-}
-
-function isFrameworkRecord(record: PerformanceResourceTiming): boolean {
-  return record.name.includes(`framework`)
 }
