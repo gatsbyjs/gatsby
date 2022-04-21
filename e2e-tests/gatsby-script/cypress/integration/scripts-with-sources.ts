@@ -42,14 +42,6 @@ describe(`scripts with sources`, () => {
         }
       )
     })
-
-    it(`should call an on load callback once the script has loaded`, () => {
-      cy.visit(page)
-
-      cy.getRecord(Script.dayjs, ResourceRecord.responseEnd).then(() => {
-        cy.get(`[data-on-load-result=${ScriptStrategy.preHydrate}]`)
-      })
-    })
   })
 
   describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
