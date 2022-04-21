@@ -1347,7 +1347,7 @@ Amount of images to download concurrently. Try lowering this if wordpress server
 
 #### type.MediaItem.exclude
 
-Completely excludes MediaItem nodes from node sourcing and from the ingested schema.
+Completely excludes MediaItem nodes from node sourcing and from the ingested schema. Setting this to true also disables the html.createStaticFiles, html.useGatsbyImage, and type.MediaItem.createFileNodes options.
 
 **Field type**: `Boolean`
 
