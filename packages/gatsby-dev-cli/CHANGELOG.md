@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.12.1/packages/gatsby-dev-cli) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.12.0/packages/gatsby-dev-cli) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency signal-exit to ^3.0.7 for gatsby-dev-cli [#34978](https://github.com/gatsbyjs/gatsby/issues/34978) ([bf918c6](https://github.com/gatsbyjs/gatsby/commit/bf918c65859f188ccb19a911a4c5f952021a1891))
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.11.0/packages/gatsby-dev-cli) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.10.0/packages/gatsby-dev-cli) (2022-03-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)

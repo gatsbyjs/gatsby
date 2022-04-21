@@ -130,7 +130,7 @@ const pickNodeBySourceUrlOrCheerioImg = ({
     stripImageSizesFromUrl(url),
   ]
 
-  const imageNode = mediaItemNodes.find(
+  let imageNode = mediaItemNodes.find(
     mediaItemNode =>
       // either find our node by the source url
       possibleHtmlSrcs.includes(mediaItemNode.sourceUrl) ||
@@ -144,10 +144,14 @@ const pickNodeBySourceUrlOrCheerioImg = ({
           `-scaled`,
           ``
         )
-      ) ||
-      // or by id for cases where the src url didn't return a node
-      (!!cheerioImg && getCheerioImgRelayId(cheerioImg) === mediaItemNode.id)
+      )
   )
+
+  if (!imageNode && cheerioImg) {
+    imageNode = mediaItemNodes.find(
+      mediaItemNode => getCheerioImgRelayId(cheerioImg) === mediaItemNode.id
+    )
+  }
 
   return imageNode
 }
@@ -574,7 +578,7 @@ export const replaceNodeHtmlImages = async ({
           maxWidth = configuredMaxWidth
         }
 
-        const quality = pluginOptions?.html?.imageQuality
+        const quality = pluginOptions?.html?.imageQuality ?? 70
 
         const { reporter } = helpers
 
@@ -591,6 +595,14 @@ export const replaceNodeHtmlImages = async ({
 
           const imageUrl =
             imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
+
+          const formats = [`auto`]
+          if (pluginOptions.html.generateWebpImages) {
+            formats.push(`webp`)
+          }
+          if (pluginOptions.html.generateAvifImages) {
+            formats.push(`avif`)
+          }
 
           try {
             imageResize = await gatsbyImageResolver(
@@ -610,8 +622,9 @@ export const replaceNodeHtmlImages = async ({
                 layout: `constrained`,
                 placeholder: !placeholderUrl
                   ? `none`
-                  : pluginOptions?.html?.placeholderType || `blurred`,
+                  : pluginOptions?.html?.placeholderType || `dominantColor`,
                 quality,
+                formats,
               },
               helpers.actions
             )
@@ -648,7 +661,10 @@ export const replaceNodeHtmlImages = async ({
       let ReactGatsbyImage
       // used to create hydration data for images
       let gatsbyImageHydrationData = null
-      if (imageResize && imageResize.images.sources.length > 0) {
+      if (
+        imageResize &&
+        (imageResize.images.sources.length > 0 || imageResize.images.fallback)
+      ) {
         gatsbyImageHydrationData = {
           image: imageResize,
           alt: cheerioImg?.attribs?.alt,

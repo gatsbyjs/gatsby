@@ -2,9 +2,9 @@
 title: Gatsby Config API
 ---
 
-The file `gatsby-config.js` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site.
+The file `gatsby-config.js`/`gatsby-config.ts` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site. You can author the file in JavaScript or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-configts).
 
-If you created a Gatsby site with the `gatsby new` command, there should already be a sample configuration file in your site's directory.
+If you created a Gatsby site with the `npm init gatsby` command, there should already be a sample configuration file in your site's directory.
 _Note: There are many sample configs which may be helpful to reference in the different [Gatsby Example Websites](https://github.com/gatsbyjs/gatsby/tree/master/examples)._
 
 ## Set up the configuration file
@@ -36,6 +36,8 @@ module.exports = {
   ],
 }
 ```
+
+The [TypeScript and Gatsby documentation](/docs/how-to/custom-configuration/typescript/#gatsby-configts) shows how to set up a configuration file in TypeScript.
 
 ## Configuration options
 
@@ -69,7 +71,7 @@ module.exports = {
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
 
-See a full description and sample usage in [Gatsby.js Tutorial Part Four](/docs/tutorial/part-4/#data-in-gatsby).
+See a full description and sample usage in [Gatsby Tutorial Part Four](/docs/tutorial/part-4/#data-in-gatsby).
 
 ## plugins
 
@@ -147,7 +149,7 @@ Flags let sites enable experimental or upcoming changes that are still in testin
 ```javascript:title=gatsby-config.js
 module.exports = {
   flags: {
-    QUERY_ON_DEMAND: true,
+    DEV_SSR: true,
   },
 }
 ```
@@ -370,7 +372,7 @@ See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
 
 ## jsxRuntime
 
-Setting to "automatic" allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
+Setting to `automatic` allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -380,10 +382,13 @@ module.exports = {
 
 ## jsxImportSource
 
-With the new jsxRuntime you can set which package React should use as underlying jsx transformer. For example you can set it to "@emotion/react" so by default @emotion/react is used instead of the react package.
+When `jsxRuntime` is set you can choose which package React should use as underlying JSX transformer with `jsxImportSource`. For example you can set it to `@emotion/react` so by default `@emotion/react` is used instead of the `react` package.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
+  jsxRuntime: "automatic",
   jsxImportSource: "@emotion/react",
 }
 ```
+
+**Please note:** For now you'll also need to set this configuration inside `babel-preset-gatsby`, see [its jsxImportSource documentation](https://github.com/gatsbyjs/gatsby/blob/master/packages/babel-preset-gatsby/README.md#reactImportSource).

@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.12.1/packages/gatsby-core-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.12.0/packages/gatsby-core-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+- update dependency lmdb to ^2.2.6 for gatsby-core-utils [#35284](https://github.com/gatsbyjs/gatsby/issues/35284) ([2156937](https://github.com/gatsbyjs/gatsby/commit/215693750df99a6ef1f9866492ab4330acafd34c))
+- fix exports map fix [#35274](https://github.com/gatsbyjs/gatsby/issues/35274) ([6e4b3b5](https://github.com/gatsbyjs/gatsby/commit/6e4b3b5ca999219db1e61a332ef007aada4d2b3a))
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) ([392d6bc](https://github.com/gatsbyjs/gatsby/commit/392d6bc4300b9856e37a33291789e4dce5ac22d2))
+
+### [3.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.11.1/packages/gatsby-core-utils) (2022-03-31)
+
+#### Bug Fixes
+
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) [#35268](https://github.com/gatsbyjs/gatsby/issues/35268) ([a527891](https://github.com/gatsbyjs/gatsby/commit/a5278911d9c69a2b6478d97776d506722a0ad3a6))
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.11.0/packages/gatsby-core-utils) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- move package.json check to try catch [#35139](https://github.com/gatsbyjs/gatsby/issues/35139) ([bf5ff95](https://github.com/gatsbyjs/gatsby/commit/bf5ff95208b8eabd280a3ea0d9f1f6eeb3fc2da0))
+
 ### [3.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.10.1/packages/gatsby-core-utils) (2022-03-23)
 
 #### Bug Fixes

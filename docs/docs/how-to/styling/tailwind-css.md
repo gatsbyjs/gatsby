@@ -200,7 +200,9 @@ module.exports = {
 }
 ```
 
-Full documentation on this can be found on the Tailwind site - [Tailwind Content Configuration documentation](https://tailwindcss.com/docs/content-configuration)
+See Tailwind's documentation for [usage with Gatsby](https://tailwindcss.com/docs/guides/gatsby) and [extended content configuration options](https://tailwindcss.com/docs/content-configuration) for more information.
+
+> **Note:** It is **not recommended** that you include Gatsby's output directories (e.g. `public`, `.cache`) in your content array in your Tailwind config. You should only need to include your source files to have Tailwind work as expected.
 
 **Older versions**
 

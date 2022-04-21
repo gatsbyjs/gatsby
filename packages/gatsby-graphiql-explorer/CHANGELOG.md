@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.12.1/packages/gatsby-graphiql-explorer) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.12.0/packages/gatsby-graphiql-explorer) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.11.0/packages/gatsby-graphiql-explorer) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Refactoring
+
+- replace deprecated String.prototype.substr() [#35205](https://github.com/gatsbyjs/gatsby/issues/35205) ([21f7c65](https://github.com/gatsbyjs/gatsby/commit/21f7c654da647a949c83efb2e17b473eab4db3ed))
+
 ## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.10.0/packages/gatsby-graphiql-explorer) (2022-03-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)

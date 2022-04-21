@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.2/packages/gatsby-source-wordpress) (2022-04-15)
+
+#### Bug Fixes
+
+- localFile id [#35423](https://github.com/gatsbyjs/gatsby/issues/35423) [#35429](https://github.com/gatsbyjs/gatsby/issues/35429) ([0e96737](https://github.com/gatsbyjs/gatsby/commit/0e96737bcdcdb45ccd5fa9236be1a69331ff907f))
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.1/packages/gatsby-source-wordpress) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.0/packages/gatsby-source-wordpress) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- logic for matching image nodes [#35324](https://github.com/gatsbyjs/gatsby/issues/35324) ([7824e60](https://github.com/gatsbyjs/gatsby/commit/7824e60fc1bedecee59b4fd6923ea98173abd747))
+
+#### Chores
+
+- update sharp [#35303](https://github.com/gatsbyjs/gatsby/issues/35303) ([d267bb3](https://github.com/gatsbyjs/gatsby/commit/d267bb3d7547d08cfaabfbfc93199c785c50aec3))
+
+### [6.11.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.2/packages/gatsby-source-wordpress) (2022-04-05)
+
+#### Bug Fixes
+
+- logic for matching image nodes [#35324](https://github.com/gatsbyjs/gatsby/issues/35324) [#35342](https://github.com/gatsbyjs/gatsby/issues/35342) ([35908f2](https://github.com/gatsbyjs/gatsby/commit/35908f2f96ff5eef85ca5a8c4f9f1391a5c26ed7))
+
+### [6.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.1/packages/gatsby-source-wordpress) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.0/packages/gatsby-source-wordpress) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
 ### [6.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.10.2/packages/gatsby-source-wordpress) (2022-03-23)
 
 **Note:** Version bump only for package gatsby-source-wordpress

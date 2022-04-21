@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.1/packages/gatsby-plugin-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.0/packages/gatsby-plugin-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+
+#### Chores
+
+- update dependency msw to ^0.39.2 for gatsby-plugin-utils [#35300](https://github.com/gatsbyjs/gatsby/issues/35300) ([aa0f61a](https://github.com/gatsbyjs/gatsby/commit/aa0f61ab40560183745e96bcef834577bc4be156))
+
+### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.1/packages/gatsby-plugin-utils) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.0/packages/gatsby-plugin-utils) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Features
+
+- support aspect ratio for Image Service [#35087](https://github.com/gatsbyjs/gatsby/issues/35087) ([3f2bc25](https://github.com/gatsbyjs/gatsby/commit/3f2bc25532eb457ee3d607688eb6592bc8d0bc78))
+
+#### Bug Fixes
+
+- Add missing fs-extra dep [#35165](https://github.com/gatsbyjs/gatsby/issues/35165) ([55deac1](https://github.com/gatsbyjs/gatsby/commit/55deac16a654307bf6213239f1c6457413909ef0))
+
 ### [3.4.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.4.2/packages/gatsby-plugin-utils) (2022-03-23)
 
 **Note:** Version bump only for package gatsby-plugin-utils

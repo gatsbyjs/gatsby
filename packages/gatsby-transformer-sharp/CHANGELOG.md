@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.12.1/packages/gatsby-transformer-sharp) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.12.0/packages/gatsby-transformer-sharp) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency probe-image-size to ^7.2.3 for gatsby-transformer-sharp [#35290](https://github.com/gatsbyjs/gatsby/issues/35290) ([5d1a5e5](https://github.com/gatsbyjs/gatsby/commit/5d1a5e586eb50d5c150f759d3d98e6f902922ba2))
+
+#### Chores
+
+- update sharp [#35303](https://github.com/gatsbyjs/gatsby/issues/35303) ([d267bb3](https://github.com/gatsbyjs/gatsby/commit/d267bb3d7547d08cfaabfbfc93199c785c50aec3))
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.11.0/packages/gatsby-transformer-sharp) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.10.0/packages/gatsby-transformer-sharp) (2022-03-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
