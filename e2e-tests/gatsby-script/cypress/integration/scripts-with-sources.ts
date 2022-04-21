@@ -111,4 +111,122 @@ describe(`scripts with sources`, () => {
       })
     })
   })
+
+  describe(`when navigation occurs`, () => {
+    it(`should load only once on initial page load`, () => {
+      cy.visit(page)
+
+      cy.get(`tbody`).children().should(`have.length`, 4)
+      cy.getRecord(Script.dayjs, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.preHydrate
+      )
+      cy.getRecord(Script.three, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.postHydrate
+      )
+      cy.getRecord(Script.marked, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.idle
+      )
+    })
+
+    it(`should load only once after the page is refreshed`, () => {
+      cy.visit(page)
+      cy.reload()
+
+      cy.get(`tbody`).children().should(`have.length`, 4)
+      cy.getRecord(Script.dayjs, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.preHydrate
+      )
+      cy.getRecord(Script.three, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.postHydrate
+      )
+      cy.getRecord(Script.marked, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.idle
+      )
+    })
+
+    it(`should load only once after anchor link navigation`, () => {
+      cy.visit(`/`)
+      cy.get(`a[href="${page}"][id=anchor-link]`).click()
+
+      cy.get(`tbody`).children().should(`have.length`, 4)
+      cy.getRecord(Script.dayjs, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.preHydrate
+      )
+      cy.getRecord(Script.three, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.postHydrate
+      )
+      cy.getRecord(Script.marked, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.idle
+      )
+    })
+
+    it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
+      cy.visit(`/`)
+      cy.get(`a[href="${page}"][id=anchor-link]`).click()
+      cy.go(`back`)
+      cy.go(`forward`)
+
+      cy.get(`tbody`).children().should(`have.length`, 4)
+      cy.getRecord(Script.dayjs, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.preHydrate
+      )
+      cy.getRecord(Script.three, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.postHydrate
+      )
+      cy.getRecord(Script.marked, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.idle
+      )
+    })
+
+    it(`should load only once after Gatsby link navigation`, () => {
+      cy.visit(`/`)
+      cy.get(`a[href="${page}"][id=gatsby-link]`).click()
+      cy.get(`tbody`).children().should(`have.length`, 4)
+      cy.getRecord(Script.dayjs, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.preHydrate
+      )
+      cy.getRecord(Script.three, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.postHydrate
+      )
+      cy.getRecord(Script.marked, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.idle
+      )
+    })
+
+    it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
+      cy.visit(`/`)
+      cy.get(`a[href="${page}"][id=gatsby-link]`).click()
+      cy.go(`back`)
+      cy.go(`forward`)
+
+      cy.get(`tbody`).children().should(`have.length`, 4)
+      cy.getRecord(Script.dayjs, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.preHydrate
+      )
+      cy.getRecord(Script.three, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.postHydrate
+      )
+      cy.getRecord(Script.marked, `strategy`, true).should(
+        `equal`,
+        ScriptStrategy.idle
+      )
+    })
+  })
 })

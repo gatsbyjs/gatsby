@@ -17,7 +17,9 @@ function IndexPage() {
       <ul>
         {pages.map(({ name, path }) => (
           <li>
-            <a href={path}>{name}</a>
+            <a href={path} id="anchor-link">
+              {name}
+            </a>
           </li>
         ))}
       </ul>
@@ -26,7 +28,9 @@ function IndexPage() {
       <ul>
         {pages.map(({ name, path }) => (
           <li>
-            <Link to={path}>{name}</Link>
+            <Link to={path} id="gatsby-link">
+              {name}
+            </Link>
           </li>
         ))}
       </ul>
