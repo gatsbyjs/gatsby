@@ -731,7 +731,7 @@ describe(`gatsby-source-drupal`, () => {
           { baseUrl }
         )
 
-        expect(reporter.warn).toHaveBeenCalledTimes(1)
+        expect(reporter.warn).toHaveBeenCalledTimes(2)
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
