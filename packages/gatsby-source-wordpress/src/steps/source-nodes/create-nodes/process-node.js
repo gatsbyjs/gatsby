@@ -478,7 +478,7 @@ export const replaceNodeHtmlImages = async ({
   // this prevents fetching inline html images
   if (
     !pluginOptions?.html?.useGatsbyImage ||
-    pluginOptions.type.MediaItem.exclude
+    pluginOptions?.type?.MediaItem?.exclude
   ) {
     return nodeString
   }
