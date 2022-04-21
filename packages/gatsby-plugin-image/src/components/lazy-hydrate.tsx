@@ -113,7 +113,6 @@ function startLoading(
     onImageLoaded.call(mainImage, {
       currentTarget: mainImage,
     })
-    console.log(`already loaded`)
   }
 
   return (): void => {

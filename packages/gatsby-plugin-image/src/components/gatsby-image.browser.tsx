@@ -116,6 +116,11 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
         onLoad?.({
           wasCached: true,
         })
+
+        // remove ssr key for state updates but add delay to not fight with native code snippt of gatsby-ssr
+        setTimeout(() => {
+          ssrImage.removeAttribute(`data-gatsby-image-ssr`)
+        }, 0)
       } else {
         document.addEventListener(`load`, function onLoadListener() {
           document.removeEventListener(`load`, onLoadListener)
@@ -126,13 +131,14 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
           onLoad?.({
             wasCached: true,
           })
+          // remove ssr key for state updates but add delay to not fight with native code snippt of gatsby-ssr
+          setTimeout(() => {
+            ssrImage.removeAttribute(`data-gatsby-image-ssr`)
+          }, 0)
         })
       }
 
       imageCache.add(cacheKey)
-
-      // remove ssr key for state updates
-      ssrImage.removeAttribute(`data-gatsby-image-ssr`)
 
       return
     }
