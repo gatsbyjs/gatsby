@@ -718,7 +718,7 @@ const replaceFileLinks = async ({
 }) => {
   if (
     !pluginOptions?.html?.createStaticFiles ||
-    pluginOptions.type.MediaItem.exclude
+    pluginOptions?.type?.MediaItem?.exclude
   ) {
     return nodeString
   }
