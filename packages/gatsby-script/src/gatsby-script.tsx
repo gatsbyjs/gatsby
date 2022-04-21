@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useEffect } from "react"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 
 export enum ScriptStrategy {
@@ -28,8 +28,6 @@ export const scriptCache = new Set()
 
 export function Script(props: ScriptProps): ReactElement {
   const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
-
-  const ref = useRef<HTMLScriptElement>(null)
 
   useEffect(() => {
     let script: HTMLScriptElement | null
@@ -61,20 +59,6 @@ export function Script(props: ScriptProps): ReactElement {
     }
   }, [])
 
-  // Handle events for non-inline pre-hydrate scripts
-  useEffect(() => {
-    if (onLoad) {
-      ref?.current?.addEventListener(`load`, onLoad)
-    }
-
-    return (): void => {
-      if (onLoad) {
-        ref?.current?.removeEventListener(`load`, onLoad)
-      }
-      ref?.current?.remove()
-    }
-  }, [ref])
-
   if (strategy === ScriptStrategy.preHydrate) {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
@@ -87,15 +71,7 @@ export function Script(props: ScriptProps): ReactElement {
       )
     }
 
-    return (
-      <script
-        ref={ref}
-        async
-        src={src}
-        data-strategy={strategy}
-        {...attributes}
-      />
-    )
+    return <script async src={src} data-strategy={strategy} {...attributes} />
   }
 
   return <></>
