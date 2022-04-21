@@ -58,7 +58,7 @@ Follow [this guide](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171
 
 #### Turning off file downloads
 
-When you're using Gatsby Image CDN you no longer need Gatsby to fetch all of the files in your Drupal instance. Turn that off with the following plugin option.
+When you're using Gatsby Image CDN you no longer need Gatsby to fetch all of the files in your Drupal instance. Turn that off with the following plugin option. This is required for Image CDN to work.
 
 ```js
   {
