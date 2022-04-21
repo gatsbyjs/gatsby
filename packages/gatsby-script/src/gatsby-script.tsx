@@ -24,7 +24,7 @@ const handledProps = new Set([
   `onLoad`,
 ])
 
-const scriptCache = new Set()
+export const scriptCache = new Set()
 
 export function Script(props: ScriptProps): ReactElement {
   const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
