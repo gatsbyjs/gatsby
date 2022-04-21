@@ -1027,20 +1027,23 @@ It is also recommended that you add a polyfill to provide support back through G
 ```js
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
-addRemoteFilePolyfillInterface(
-  schema.buildObjectType({
-    name: `YourImageAssetNodeType`,
-    fields: {
-      // your fields
-    },
-    interfaces: [`Node`, `RemoteFile`],
-  }),
-  {
-    schema,
-    actions,
-    // schema and actions are arguments on the `createSchemaCustomization` API
-  }
-)
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const imageAssetType = addRemoteFilePolyfillInterface(
+    schema.buildObjectType({
+      name: `YourImageAssetNodeType`,
+      fields: {
+        // your fields - see createSchemaCustomization docs - if you're using schema inference you can also leave this object empty
+      },
+      interfaces: [`Node`, `RemoteFile`],
+    }),
+    {
+      schema,
+      actions,
+    }
+  )
+
+  actions.createTypes([imageAssetType])
+}
 ```
 
 Implementing the `RemoteFile` interface adds the correct fields to your new GraphQL type and adds the necessary resolvers to handle the type. `RemoteFile` holds the following properties:
