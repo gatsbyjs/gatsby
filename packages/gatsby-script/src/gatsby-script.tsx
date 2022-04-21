@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useRef, useEffect } from "react"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 
 export enum ScriptStrategy {
@@ -8,9 +8,12 @@ export enum ScriptStrategy {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export interface ScriptProps extends ScriptHTMLAttributes<HTMLScriptElement> {
+export interface ScriptProps
+  extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad`> {
+  id?: string
   strategy?: ScriptStrategy
   children?: string
+  onLoad?: (event: Event) => void
 }
 
 const handledProps = new Set([
@@ -18,25 +21,59 @@ const handledProps = new Set([
   `strategy`,
   `dangerouslySetInnerHTML`,
   `children`,
+  `onLoad`,
 ])
 
+export const scriptCache = new Set()
+
 export function Script(props: ScriptProps): ReactElement {
-  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
+  const { src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
+
+  const ref = useRef<HTMLScriptElement>(null)
 
   useEffect(() => {
+    let script: HTMLScriptElement | null
+
     switch (strategy) {
+      case ScriptStrategy.preHydrate:
+        // If the navigation is client-side (e.g. via gatsby-link), treat it like post-hydrate.
+        // We probably want to make the router write to history so we can compare that instead.
+        // The current approach doesn't solve the browser back/forward button use case.
+        if (!performance.getEntriesByName(location.href).length) {
+          script = injectScript(props)
+        }
+        break
       case ScriptStrategy.postHydrate:
-        injectScript(props)
+        script = injectScript(props)
         break
       case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          injectScript(props)
+          script = injectScript(props)
         })
         break
-      default:
-        return
+    }
+
+    return (): void => {
+      if (onLoad) {
+        script?.removeEventListener(`load`, onLoad)
+      }
+      script?.remove()
     }
   }, [])
+
+  // Handle events for non-inline pre-hydrate scripts
+  useEffect(() => {
+    if (onLoad) {
+      ref?.current?.addEventListener(`load`, onLoad)
+    }
+
+    return (): void => {
+      if (onLoad) {
+        ref?.current?.removeEventListener(`load`, onLoad)
+      }
+      ref?.current?.remove()
+    }
+  }, [ref])
 
   if (strategy === ScriptStrategy.preHydrate) {
     const inlineScript = resolveInlineScript(props)
@@ -50,18 +87,35 @@ export function Script(props: ScriptProps): ReactElement {
       )
     }
 
-    return <script async src={src} data-strategy={strategy} {...attributes} />
+    return (
+      <script
+        ref={ref}
+        async
+        src={src}
+        data-strategy={strategy}
+        {...attributes}
+      />
+    )
   }
 
   return <></>
 }
 
-function injectScript(props: ScriptProps): void {
-  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
+function injectScript(props: ScriptProps): HTMLScriptElement | null {
+  const { id, src, strategy = ScriptStrategy.postHydrate, onLoad } = props || {}
+
+  if (scriptCache.has(id || src)) {
+    return null
+  }
+
   const inlineScript = resolveInlineScript(props)
   const attributes = resolveAttributes(props)
 
   const script = document.createElement(`script`)
+
+  if (id) {
+    script.id = id
+  }
 
   script.dataset.strategy = strategy
 
@@ -77,7 +131,15 @@ function injectScript(props: ScriptProps): void {
     script.src = src
   }
 
+  if (onLoad) {
+    script.addEventListener(`load`, onLoad)
+  }
+
   document.body.appendChild(script)
+
+  scriptCache.add(id || src)
+
+  return script
 }
 
 function resolveInlineScript(props: ScriptProps): string {
