@@ -30,6 +30,10 @@ const getGatsbyImageCdnFields = async ({
   fileNodesExtendedData,
   reporter,
 }) => {
+  if (!pluginOptions.skipFileDownloads) {
+    return {}
+  }
+
   const isFile = isFileNode({
     internal: {
       type,
