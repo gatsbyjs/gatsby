@@ -36,7 +36,9 @@ export function Script(props: ScriptProps): ReactElement {
 
     switch (strategy) {
       case ScriptStrategy.preHydrate:
-        // Handle gatsby-link navigation case
+        // If the navigation is client-side (e.g. via gatsby-link), treat it like post-hydrate.
+        // We probably want to make the router write to history so we can compare that instead.
+        // The current approach doesn't solve the browser back/forward button use case.
         if (!performance.getEntriesByName(location.href).length) {
           script = injectScript(props)
         }

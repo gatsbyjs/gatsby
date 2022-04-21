@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Link } from "gatsby"
 import { ScriptResourceRecords } from "../components/script-resource-records"
 import { useOccupyMainThread } from "../hooks/use-occupy-main-thread"
 import { scripts, scriptUrls } from "../../scripts"
@@ -23,6 +24,20 @@ function IndexPage() {
         }
         count={4}
       />
+
+      <br />
+      <ul>
+        <li>
+          <a href="/" id="anchor-link-back-to-index">
+            Back to index (anchor)
+          </a>
+        </li>
+        <li>
+          <Link to="/" id="gatsby-link-back-to-index">
+            Back to index (gatsby-link)
+          </Link>
+        </li>
+      </ul>
 
       <Script
         src={scripts.dayjs}

@@ -13,23 +13,23 @@ function IndexPage() {
       <h1>Script component e2e test</h1>
       <p>Tests are on other pages, links below.</p>
 
-      <p>Links as regular anchor tags:</p>
+      <p>Links to pages (anchor):</p>
       <ul>
         {pages.map(({ name, path }) => (
           <li>
             <a href={path} id="anchor-link">
-              {name}
+              {`${name} (anchor)`}
             </a>
           </li>
         ))}
       </ul>
 
-      <p>Links as Gatsby link components:</p>
+      <p>Links to pages (gatsby-link):</p>
       <ul>
         {pages.map(({ name, path }) => (
           <li>
             <Link to={path} id="gatsby-link">
-              {name}
+              {`${name} (gatsby-link)`}
             </Link>
           </li>
         ))}

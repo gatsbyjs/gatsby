@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Link } from "gatsby"
 import { ScriptResourceRecords } from "../components/script-resource-records"
 import { ScriptMarkRecords } from "../components/script-mark-records"
 import { useOccupyMainThread } from "../hooks/use-occupy-main-thread"
@@ -25,6 +26,20 @@ function IndexPage() {
       <br />
       <h2>Inline scripts</h2>
       <ScriptMarkRecords />
+
+      <br />
+      <ul>
+        <li>
+          <a href="/" id="anchor-link-back-to-index">
+            Back to index (anchor)
+          </a>
+        </li>
+        <li>
+          <Link to="/" id="gatsby-link-back-to-index">
+            Back to index (gatsby-link)
+          </Link>
+        </li>
+      </ul>
 
       <Script
         id={`${InlineScript.dangerouslySet}-${ScriptStrategy.preHydrate}`}
