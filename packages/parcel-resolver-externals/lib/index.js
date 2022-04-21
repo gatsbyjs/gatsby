@@ -2,7 +2,7 @@ const { Resolver } = require('@parcel/plugin');
 
 // TODO pull this into a config
 const patterns = [
-  '\./routes/render-page',
+  'routes/render-page',
 ]
 
 module.exports = new Resolver({

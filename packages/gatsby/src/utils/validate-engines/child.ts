@@ -70,12 +70,12 @@ export async function validate(directory: string): Promise<void> {
   process.env.GATSBY_WORKER_MODULE_PATH = ``
 
   // import engines, initiate them, if there is any error thrown it will be handled in parent process
+  require(path.join(directory, `.cache`, `page-ssr`))
   const { GraphQLEngine } = require(path.join(
     directory,
     `.cache`,
     `query-engine`
   ))
-  require(path.join(directory, `.cache`, `page-ssr`))
   const graphqlEngine = new GraphQLEngine({
     dbPath: path.join(directory, `.cache`, `data`, `datastore`),
   })

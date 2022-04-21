@@ -1,1 +1,1 @@
-module.exports = require('./node_modules/gatsby/dist/schema/graphql-engine/entry.js')
+module.exports = require(`./entry.js`)

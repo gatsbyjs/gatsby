@@ -252,16 +252,18 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   // Handle SSR & DSG Pages
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     try {
-      const { GraphQLEngine } = require(path.join(
-        program.directory,
-        `.cache`,
-        `query-engine`
-      )) as typeof import("../schema/graphql-engine/entry")
       const { getData, renderPageData, renderHTML } = require(path.join(
         program.directory,
         `.cache`,
         `page-ssr`
       )) as typeof import("../utils/page-ssr-module/entry")
+
+      const { GraphQLEngine } = require(path.join(
+        program.directory,
+        `.cache`,
+        `query-engine`
+      )) as typeof import("../schema/graphql-engine/entry")
+
       const graphqlEngine = new GraphQLEngine({
         dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
       })
