@@ -78,7 +78,7 @@ export const typeDefinitionFilters = [
       objectType.fields.localFile = {
         type: `File`,
         extensions: {
-          link: { from: `localFile` },
+          link: { from: `localFile.id` },
         },
       }
 
