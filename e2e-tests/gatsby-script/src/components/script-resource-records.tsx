@@ -41,49 +41,47 @@ export function ScriptResourceRecords(props: Props): JSX.Element {
   }, [])
 
   return (
-    <>
-      <table>
-        <thead>
-          <tr>
-            <th>Script</th>
-            <th>Strategy</th>
-            <th>Success</th>
-            <th>Fetch start (ms)</th>
-            <th>Response end (ms)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {records
-            .sort((a, b) => a.fetchStart - b.fetchStart)
-            .map(record => {
-              const { name: url, fetchStart, responseEnd } = record || {}
+    <table id="script-resource-records">
+      <thead>
+        <tr>
+          <th>Script</th>
+          <th>Strategy</th>
+          <th>Success</th>
+          <th>Fetch start (ms)</th>
+          <th>Response end (ms)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {records
+          .sort((a, b) => a.fetchStart - b.fetchStart)
+          .map(record => {
+            const { name: url, fetchStart, responseEnd } = record || {}
 
-              let name: Script | `framework`
-              let strategy: string
-              let success: string
+            let name: Script | `framework`
+            let strategy: string
+            let success: string
 
-              if (record.name.includes(`framework`)) {
-                name = `framework`
-                strategy = `N/A`
-                success = `N/A`
-              } else {
-                name = scriptUrlIndex[url]
-                strategy = scriptStrategyIndex[name]
-                success = `${scriptSuccessIndex[name]()}`
-              }
+            if (record.name.includes(`framework`)) {
+              name = `framework`
+              strategy = `N/A`
+              success = `N/A`
+            } else {
+              name = scriptUrlIndex[url]
+              strategy = scriptStrategyIndex[name]
+              success = `${scriptSuccessIndex[name]()}`
+            }
 
-              return (
-                <tr id={name} key={name}>
-                  <td id="name">{name}</td>
-                  <td id="strategy">{strategy}</td>
-                  <td id="success">{success}</td>
-                  <td id={ResourceRecord.fetchStart}>{trim(fetchStart)}</td>
-                  <td id={ResourceRecord.responseEnd}>{trim(responseEnd)}</td>
-                </tr>
-              )
-            })}
-        </tbody>
-      </table>
-    </>
+            return (
+              <tr id={name} key={name}>
+                <td id="name">{name}</td>
+                <td id="strategy">{strategy}</td>
+                <td id="success">{success}</td>
+                <td id={ResourceRecord.fetchStart}>{trim(fetchStart)}</td>
+                <td id={ResourceRecord.responseEnd}>{trim(responseEnd)}</td>
+              </tr>
+            )
+          })}
+      </tbody>
+    </table>
   )
 }

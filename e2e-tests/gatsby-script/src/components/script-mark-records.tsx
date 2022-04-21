@@ -30,35 +30,33 @@ export function ScriptMarkRecords(): JSX.Element {
   }, [])
 
   return (
-    <>
-      <table>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Strategy</th>
-            <th>Success</th>
-            <th>Execute start (ms)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {records
-            .sort((a, b) => a.detail.executeStart - b.detail.executeStart)
-            .map(record => {
-              const { strategy, type, executeStart } = record.detail
-              const key = `${strategy}-${type}`
-              // @ts-ignore Do not complain about key not being a number
-              const success = `${typeof window[key] === `boolean`}`
-              return (
-                <tr id={key} key={key}>
-                  <td id="type">{type}</td>
-                  <td id="strategy">{strategy}</td>
-                  <td id="success">{success}</td>
-                  <td id={MarkRecord.executeStart}>{trim(executeStart)}</td>
-                </tr>
-              )
-            })}
-        </tbody>
-      </table>
-    </>
+    <table id="script-mark-records">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Strategy</th>
+          <th>Success</th>
+          <th>Execute start (ms)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {records
+          .sort((a, b) => a.detail.executeStart - b.detail.executeStart)
+          .map(record => {
+            const { strategy, type, executeStart } = record.detail
+            const key = `${strategy}-${type}`
+            // @ts-ignore Do not complain about key not being a number
+            const success = `${typeof window[key] === `boolean`}`
+            return (
+              <tr id={key} key={key}>
+                <td id="type">{type}</td>
+                <td id="strategy">{strategy}</td>
+                <td id="success">{success}</td>
+                <td id={MarkRecord.executeStart}>{trim(executeStart)}</td>
+              </tr>
+            )
+          })}
+      </tbody>
+    </table>
   )
 }
