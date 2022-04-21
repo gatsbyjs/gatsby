@@ -207,16 +207,34 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     startingDevServers: {
       invoke: {
         src: `startWebpackServer`,
-        onDone: {
-          target: `waiting`,
-          actions: [
-            `assignServers`,
-            `spawnWebpackListener`,
-            `markSourceFilesClean`,
-          ],
-        },
+        onDone: [
+          {
+            target: `graphQLTypegen`,
+            cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
+          },
+          {
+            target: `waiting`,
+            actions: [
+              `assignServers`,
+              `spawnWebpackListener`,
+              `markSourceFilesClean`,
+            ],
+          },
+        ],
         onError: {
           actions: `panic`,
+          target: `waiting`,
+        },
+      },
+    },
+    graphQLTypegen: {
+      invoke: {
+        src: `graphQLTypegen`,
+        onDone: {
+          target: `waiting`,
+        },
+        onError: {
+          actions: `logError`,
           target: `waiting`,
         },
       },
