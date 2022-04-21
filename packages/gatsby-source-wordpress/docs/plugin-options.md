@@ -69,6 +69,7 @@
       - [type.MediaItem.localFile.excludeByMimeTypes](#typemediaitemlocalfileexcludebymimetypes)
       - [type.MediaItem.localFile.maxFileSizeBytes](#typemediaitemlocalfilemaxfilesizebytes)
       - [type.MediaItem.localFile.requestConcurrency](#typemediaitemlocalfilerequestconcurrency)
+    - [type.MediaItem.exclude](#typemediaitemexclude)
 - [presets](#presets)
   - [presets[].presetName](#presetspresetname)
   - [presets[].useIf](#presetsuseif)
@@ -1344,6 +1345,26 @@ Amount of images to download concurrently. Try lowering this if wordpress server
 
 ```
 
+#### type.MediaItem.exclude
+
+Completely excludes MediaItem nodes from node sourcing and from the ingested schema. Setting this to true also disables the html.createStaticFiles, html.useGatsbyImage, and type.MediaItem.createFileNodes options.
+
+**Field type**: `Boolean`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    type: {
+      MediaItem: {
+        exclude: true,
+      },
+    },
+  },
+}
+
+```
+
 ## presets
 
 An array of plugin options presets that are applied if the useIf function on each returns true. The default includes an optimization for when in Gatsby Preview mode.
@@ -1441,7 +1462,7 @@ Any valid options except for `url` and `presets`.
   options: {
     presets: [
       {
-        name: `DEVELOP`,
+        presetName: `DEVELOP`,
         useIf: () => process.env.NODE_ENV === `development`,
         options: {
           type: {
