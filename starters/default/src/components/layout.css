@@ -48,6 +48,7 @@ template {
 }
 a {
   background-color: transparent;
+  color: rebeccapurple;
   -webkit-text-decoration-skip: objects;
 }
 a:active,
