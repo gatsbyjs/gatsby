@@ -20,7 +20,7 @@ export class Store {
 
   appendToBuffer(event: unknown): void {
     try {
-      appendFileSync(this.bufferFilePath, event, `utf8`)
+      appendFileSync(this.bufferFilePath, event as (string | Uint8Array), `utf8`)
     } catch (e) {
       // ignore
     }

@@ -1,15 +1,30 @@
-const { Transformer } = require('@parcel/plugin');
+const { Transformer } = require('@parcel/plugin')
+const path = require('path')
+const fs = require('fs')
 
 module.exports = new Transformer({
   async loadConfig({config, options}) {
-    let conf = await config.getConfigFrom(options.projectRoot + '/index', [], {
-      packageKey: 'parcel-transformer-define',
-    });
+    // TODO this is kinda weird, but it works for now
+    if (!process.env.PARCEL_CONFIG_LOCATION) {
+      return {}
+    }
 
-    return conf?.contents;
+    const confPath = path.join(process.env.PARCEL_CONFIG_LOCATION, 'bundle.config.json')
+    const confContents = fs.readFileSync(confPath)
+    const conf = JSON.parse(confContents)
+
+    return conf['define']
   },
 
-  async transform({ asset, config }) {
+  async transform({config, asset}) {
+    // TODO make this robust
+    let code = await asset.getCode()
+    Object.keys(config).forEach(replace => {
+      const re = new RegExp(replace, 'g');
+      code = code.replace(re, config[replace])
+    })
+
+    asset.setCode(code)
     return [asset]
   }
-});
+})

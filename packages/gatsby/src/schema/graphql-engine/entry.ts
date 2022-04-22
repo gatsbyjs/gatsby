@@ -58,22 +58,8 @@ export class GraphQLEngine {
     const wrapActivity = reporter.phantomActivity(`Initializing GraphQL Engine`)
     wrapActivity.start()
     try {
-      if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
-        // hack since we don't have Define in parcel yet
-        const gqlPath = path.join(this.dbPath, `..`, `..`, `schema.gql`)
-        let schemaSnapshotString = ""
-        
-        try {
-          schemaSnapshotString = fs.readFileSync(gqlPath).toString()
-        } catch (e) {
-          throw new Error(`${e.toString()}\n\n${gqlPath}\n${fs.readdirSync(path.join(this.dbPath, `..`, `..`)).join(", ")}`)
-        }
-
-        store.dispatch(actions.createTypes(schemaSnapshotString))
-      } else {
-        // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
-        store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
-      }
+      // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
+      store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
       // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
       //  (as there might be non-serializable options, i.e. functions)

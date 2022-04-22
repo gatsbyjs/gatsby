@@ -10,15 +10,16 @@ export function getParcelConfig(key: string) {
 }
 
 export function createParcelConfig(configDir: string, config: any, settings?: any) {
-  let rcPath = path.join(configDir, '.parcelrc')
-  let pkgPath = path.join(configDir, 'package.json')
+  let rcPath = path.join(configDir, 'bundle.parcelrc')
+  let pkgPath = path.join(configDir, 'bundle.config.json')
 
   // TODO merge nested properly
+  // TODO come up with way to define before/after defaults
   const fullConfig = {
     ...config,
     bundler: "@parcel/bundler-default",
     transformers: {
-      ...(config.transformers || []),
+      ...(config.transformers || []),  // this is after to let defaults handle things first
       "types:*.{ts,tsx}": [
         "@parcel/transformer-typescript-types",
       ],
@@ -37,6 +38,7 @@ export function createParcelConfig(configDir: string, config: any, settings?: an
       "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
         "@parcel/transformer-js",
         "@parcel/transformer-react-refresh-wrap",
+        "parcel-transformer-define",
       ],
       "*.{json,json5}": ["@parcel/transformer-json"],
       "*.jsonld": ["@parcel/transformer-jsonld"],
@@ -80,6 +82,7 @@ export function createParcelConfig(configDir: string, config: any, settings?: an
     resolvers: [
       ...(config.resolvers || []),
       "@parcel/resolver-default",
+      "@kkirbatski/parcel-resolver-require-resolve",
     ],
     reporters: [
       ...(config.reporters || []),
@@ -89,12 +92,14 @@ export function createParcelConfig(configDir: string, config: any, settings?: an
 
   fs.writeFileSync(rcPath, JSON.stringify(fullConfig, null, 2))
 
-  const fullSettings = {
-    ...settings,
-
+  if (settings) {
+    const fullSettings = {
+      name: path.basename(configDir),
+      ...settings,
+    }
+  
+    fs.writeFileSync(pkgPath, JSON.stringify(fullSettings, null, 2))
   }
-
-  fs.writeFileSync(pkgPath, JSON.stringify(fullSettings, null, 2))
   
   return rcPath
 }

@@ -29,33 +29,34 @@ export async function createGraphqlEngineBundle(
   isVerbose?: boolean
 ): Promise<webpack.Compilation | undefined> {
   return process.env.GATSBY_EXPERIMENTAL_BUNDLER 
-    ? createBundlerGraphqlEngineBundle() 
+    ? createBundlerGraphqlEngineBundle(rootDir) 
     : createWebpackGraphqlEngineBundle(rootDir, reporter, isVerbose)
 }
 
 export async function createBundlerGraphqlEngineBundle(
-  // rootDir: string,
+  rootDir: string,
   // reporter: Reporter,
   // isVerbose?: boolean
 ): Promise<webpack.Compilation | undefined> {
+  const schemaSnapshotString = await fs.readFile(
+    path.join(rootDir, `.cache`, `schema.gql`),
+    `utf-8`
+  )
   await printQueryEnginePlugins()
 
   const entry = path.join(__dirname, `entry.js`)
+
+  process.env.PARCEL_CONFIG_LOCATION = outputDir
 
   const options = {
     config: createParcelConfig(
       outputDir, 
       {
-        // resolvers: ["parcel-resolver-externals"],
-        transformers: {
-          "*.{js,mjs,jsm,jsx,es6,cjs,tsx,ts}": [
-            "parcel-transformer-define",
-          ],
-        },
+        resolvers: ["parcel-resolver-externals"],
       },
       {
-        "parcel-transformer-define": {
-          "test1": 'blah',
+        define: {
+          SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         }
       }
     ),
@@ -70,7 +71,7 @@ export async function createBundlerGraphqlEngineBundle(
     minify: false,
     scopeHoist: false,
     target: 'commonjs',
-    bundleNodeModules: false,
+    // bundleNodeModules: false,
     // logLevel: "warn",
     hmr: false,
     hmrPort: 0,
@@ -79,7 +80,7 @@ export async function createBundlerGraphqlEngineBundle(
     targets: {
       root: {
         outputFormat: `commonjs` as OutputFormat,
-        includeNodeModules: false,
+        includeNodeModules: false,   // TODO make this true and deal with validation errors
         sourceMap: false,
         engines: {
           node: `>= 14.15.0`,
