@@ -8,7 +8,9 @@ const UsingSSR = ({ serverData }) => {
   return (
     <Layout>
       <Seo title="Using SSR" />
-      <h1>SSR page</h1>
+      <h1>
+        This page is <b>rendered server-side</b>
+      </h1>
       <img
         style={{ width: "300px" }}
         alt="A random dog"

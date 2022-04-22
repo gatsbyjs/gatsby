@@ -51,6 +51,9 @@ h1 {
   padding: 0;
   line-height: 1.1;
 }
+h1 > b {
+  color: var(--color-primary);
+}
 img {
   border-style: none;
   max-width: 100%;
