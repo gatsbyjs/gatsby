@@ -15,6 +15,9 @@ const shouldUpgradeGatsbyVersion =
   lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
 export const getLocalizedField = ({ field, locale, localesFallback }) => {
+  if (!field) {
+    return null
+  }
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -717,7 +720,13 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
-    const file = assetItem.fields.file ? getField(assetItem.fields.file) : {}
+    const file = getField(assetItem.fields?.file) ?? null
+
+    // Skip empty and unprocessed assets in Preview API
+    if (!file || !file.url || !file.contentType || !file.fileName) {
+      return
+    }
+
     const assetNode = {
       contentful_id: assetItem.sys.id,
       spaceId: space.sys.id,
@@ -740,10 +749,12 @@ export const createAssetNodes = ({
       },
       url: `https:${file.url}`,
       placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
+      // These fields are optional for edge cases in the Preview API and Contentfuls asset processing
       mimeType: file.contentType,
       filename: file.fileName,
-      width: file.details?.image?.width,
-      height: file.details?.image?.height,
+      width: file.details?.image?.width ?? null,
+      height: file.details?.image?.height ?? null,
+      size: file.details?.size ?? null,
     }
 
     // Link tags

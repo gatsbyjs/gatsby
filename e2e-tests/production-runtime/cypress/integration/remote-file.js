@@ -119,6 +119,12 @@ describe(`remote-file`, () => {
         expect($el.prop("tagName")).to.be.equal("IMG")
         expect($el.prop("src")).to.contain("data:image/jpg;base64")
       })
+    cy.get(".constrained_traced [data-placeholder-image]")
+      .first()
+      .should($el => {
+        expect($el.prop("tagName")).to.be.equal("IMG")
+        expect($el.prop("src")).to.contain("data:image/svg+xml,%3csvg")
+      })
     cy.get(".full [data-placeholder-image]")
       .first()
       .should($el => {
