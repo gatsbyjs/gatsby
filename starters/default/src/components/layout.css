@@ -68,43 +68,14 @@ dfn {
   font-style: italic;
 }
 h1 {
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 0;
-  padding: 0;
+  margin: 0;
   margin-bottom: 1.45rem;
-  color: inherit;
-  font-weight: bold;
-  text-rendering: optimizeLegibility;
-  font-size: 2.25rem;
+  padding: 0;
   line-height: 1.1;
-}
-mark {
-  background-color: #ff0;
-  color: #000;
-}
-small {
-  font-size: 80%;
-}
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-sub {
-  bottom: -0.25em;
-}
-sup {
-  top: -0.5em;
 }
 img {
   border-style: none;
   max-width: 100%;
-}
-svg:not(:root) {
-  overflow: hidden;
 }
 code,
 kbd,
