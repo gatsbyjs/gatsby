@@ -43,8 +43,10 @@ const tracerReadyPromise = initTracer(
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runnerPromise?: Promise<GraphQLRunner>
+  private dbPath: string
 
   constructor({ dbPath }: { dbPath: string }) {
+    this.dbPath = dbPath
     setupLmdbStore({ dbPath })
     // start initializing runner ASAP
     this.getRunner()
@@ -57,10 +59,15 @@ export class GraphQLEngine {
     wrapActivity.start()
     try {
       if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
-        const schemaSnapshotString = await fs.readFile(
-          path.join(process.cwd(), `.cache`, `schema.gql`),
-          `utf-8`
-        )
+        // hack since we don't have Define in parcel yet
+        const gqlPath = path.join(this.dbPath, `..`, `..`, `schema.gql`)
+        let schemaSnapshotString = ""
+        
+        try {
+          schemaSnapshotString = fs.readFileSync(gqlPath).toString()
+        } catch (e) {
+          throw new Error(`${e.toString()}\n\n${gqlPath}\n${fs.readdirSync(path.join(this.dbPath, `..`, `..`)).join(", ")}`)
+        }
 
         store.dispatch(actions.createTypes(schemaSnapshotString))
       } else {

@@ -9,14 +9,14 @@ export function getParcelConfig(key: string) {
   return getParcelFile(`${key}.parcelrc`)
 }
 
-export function createParcelConfig(configPath: string, config: any) {
-  let finalPath = configPath
+export function createParcelConfig(configDir: string, config: any, settings?: any) {
+  let rcPath = path.join(configDir, '.parcelrc')
+  let pkgPath = path.join(configDir, 'package.json')
 
-  if (fs.lstatSync(configPath).isDirectory()) {
-    finalPath = path.join(finalPath, '.parcelrc')
-  }
-
+  console.log(config)
+  // TODO merge nested properly
   const fullConfig = {
+    ...config,
     bundler: "@parcel/bundler-default",
     transformers: {
       ...(config.transformers || []),
@@ -88,7 +88,14 @@ export function createParcelConfig(configPath: string, config: any) {
     ],
   }
 
-  fs.writeFileSync(finalPath, JSON.stringify(fullConfig, null, 2))
+  fs.writeFileSync(rcPath, JSON.stringify(fullConfig, null, 2))
+
+  const fullSettings = {
+    ...settings,
+
+  }
+
+  fs.writeFileSync(pkgPath, JSON.stringify(fullSettings, null, 2))
   
-  return finalPath
+  return rcPath
 }

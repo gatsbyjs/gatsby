@@ -47,9 +47,18 @@ export async function createBundlerGraphqlEngineBundle(
       outputDir, 
       {
         resolvers: ["parcel-resolver-externals"],
+        transformers: {
+          "*.{js,mjs,jsm,jsx,es6,cjs,tsx,ts}": [
+            "parcel-transformer-define",
+          ],
+        },
+      },
+      {
+        "parcel-transformer-define": {
+          "test1": 'blah',
+        }
       }
     ),
-    // config: require.resolve(`gatsby-parcel-config`),
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
