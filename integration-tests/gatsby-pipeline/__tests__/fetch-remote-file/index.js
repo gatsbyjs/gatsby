@@ -4,20 +4,13 @@
 
 const execa = require(`execa`)
 const path = require(`path`)
-const glob = require(`glob`)
-const fs = require(`fs-extra`)
 const md5File = require(`md5-file`)
+const { clean } = require("../../utils/create-devserver")
 const basePath = path.resolve(__dirname, `../../`)
-
-const cleanDirs = () =>
-  Promise.all([
-    fs.emptyDir(`${basePath}/public`),
-    fs.emptyDir(`${basePath}/.cache`),
-  ])
 
 describe(`fetch-remote-file`, () => {
   beforeAll(async () => {
-    await cleanDirs()
+    await clean()
     await execa(`yarn`, [`build`], {
       cwd: basePath,
       // we want to force 1 query per worker
@@ -53,14 +46,5 @@ describe(`fetch-remote-file`, () => {
         )
       )
     ).toEqual("4ba953ba27236727d7abe7d5b8916432")
-  })
-
-  /**
-   * this is a bit of a cheeky test but we just want to make sure we're actually running on multiple workers
-   */
-  it("should have conflict between workers", async () => {
-    const files = await fs.readdir(path.join(__dirname, "../../.cache/workers"))
-
-    expect(files.length).toBeGreaterThan(1)
   })
 })
