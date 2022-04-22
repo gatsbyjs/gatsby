@@ -1,4 +1,4 @@
-const { Potrace } = require(`potrace`)
+const { Potrace } = require(`@gatsbyjs/potrace`)
 
 exports.pluginOptionsSchema = function ({ Joi }) {
   return Joi.object({

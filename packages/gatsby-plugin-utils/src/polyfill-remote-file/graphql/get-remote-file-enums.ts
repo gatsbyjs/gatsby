@@ -49,6 +49,7 @@ export function getRemoteFileEnums(
     values: {
       DOMINANT_COLOR: { value: `dominantColor` },
       BLURRED: { value: `blurred` },
+      TRACED_SVG: { value: `tracedSVG` },
       NONE: { value: `none` },
     },
   })
