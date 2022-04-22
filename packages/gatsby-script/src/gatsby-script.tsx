@@ -10,7 +10,7 @@ export enum ScriptStrategy {
 export interface ScriptProps
   extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad` | `onError`> {
   id?: string
-  strategy?: ScriptStrategy
+  strategy?: ScriptStrategy | `post-hydrate` | `idle`
   children?: string
   onLoad?: (event: Event) => void
   onError?: (event: ErrorEvent) => void
