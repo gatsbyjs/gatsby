@@ -13,7 +13,11 @@ import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
-import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
+import type {
+  IGatsbyPage,
+  IGatsbyState,
+  DataTrackingActionsToReplay,
+} from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
 import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
@@ -24,6 +28,7 @@ import {
   // @ts-ignore
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
+import { createPageDependencyBatcher } from "../../redux/actions/add-page-dependency"
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -33,11 +38,17 @@ const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
 )
 
+export interface IDataTrackingResult {
+  actionsToReplay: DataTrackingActionsToReplay
+}
+
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runnerPromise?: Promise<GraphQLRunner>
+  private isCollectingDataTrackingActions: boolean
 
   constructor({ dbPath }: { dbPath: string }) {
+    this.isCollectingDataTrackingActions = false
     setupLmdbStore({ dbPath })
     // start initializing runner ASAP
     this.getRunner()
@@ -196,6 +207,50 @@ export class GraphQLEngine {
     } as unknown as IGatsbyState
 
     return findPageByPath(state, pathName, false)
+  }
+
+  public startCollectDataTrackingActions(
+    actionsToReplay: DataTrackingActionsToReplay
+  ): () => void {
+    if (this.isCollectingDataTrackingActions) {
+      throw new Error(
+        `Engine is already tracking data, multiple data tracking at the same time won't work correctly and seems like integration is wrong.`
+      )
+    }
+    this.isCollectingDataTrackingActions = true
+
+    // -- DEBUG START --
+    let counter = 0
+    const distinctActionTypes = new Set<string>()
+    // -- DEBUG END --
+
+    const unsubscribe = store.subscribe(() => {
+      const action = store.getState().lastAction
+      if (
+        action.type === `QUERY_START` ||
+        action.type === `PAGE_QUERY_RUN` ||
+        action.type === `ADD_PENDING_PAGE_DATA_WRITE` ||
+        action.type === `CREATE_COMPONENT_DEPENDENCY`
+      ) {
+        actionsToReplay.push(action)
+      }
+      counter++
+      distinctActionTypes.add(action.type)
+    })
+
+    return function finishCollectingDataTrackingActions(
+      this: GraphQLEngine
+    ): void {
+      createPageDependencyBatcher.flush()
+      unsubscribe()
+      this.isCollectingDataTrackingActions = false
+      // -- DEBUG START --
+      console.log(
+        `Collected ${actionsToReplay.length} data tracking actions of ${counter} total. Distinct action types:`,
+        distinctActionTypes
+      )
+      // -- DEBUG END --
+    }.bind(this)
   }
 }
 

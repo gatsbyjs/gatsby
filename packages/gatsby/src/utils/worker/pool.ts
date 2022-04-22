@@ -127,7 +127,7 @@ export async function mergeWorkerState(
   activity.end()
 }
 
-async function replayWorkerActions(
+export async function replayWorkerActions(
   actions: Array<ActionsUnion>
 ): Promise<void> {
   let i = 1

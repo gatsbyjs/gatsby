@@ -981,3 +981,10 @@ export interface IClearJobV2Context {
     requestId: string
   }
 }
+
+export type DataTrackingActionsToReplay = Array<
+  | IQueryStartAction
+  | IPageQueryRunAction
+  | IAddPendingPageDataWriteAction
+  | ICreatePageDependencyAction
+>

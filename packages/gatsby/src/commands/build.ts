@@ -215,12 +215,11 @@ module.exports = async function build(
   // Page Gen
   const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
 
-  const externalJobsEnabled =
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
-
-  const pageGenerationJobsEnabled =
-    PAGE_GEN_ENABLED && externalJobsEnabled && process.send
+  // const externalJobsEnabled =
+  //   process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
+  //   process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
+  // allow using local worker
+  const pageGenerationJobsEnabled = PAGE_GEN_ENABLED // && externalJobsEnabled && process.send
 
   /**
    * Rendering Engine
