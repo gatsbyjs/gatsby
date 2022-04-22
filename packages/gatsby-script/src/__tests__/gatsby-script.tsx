@@ -12,7 +12,6 @@ const scripts: Record<string, string> = {
 }
 
 const strategies: Array<ScriptStrategy> = [
-  ScriptStrategy.preHydrate,
   ScriptStrategy.postHydrate,
   ScriptStrategy.idle,
 ]
@@ -40,16 +39,6 @@ describe(`Script`, () => {
     )
   })
 
-  it(`should be possible to declare a pre-hydrate strategy`, () => {
-    const { container } = render(
-      <Script src={scripts.react} strategy={ScriptStrategy.preHydrate} />
-    )
-    const script = container.parentElement.querySelector(`script`)
-    expect(script.getAttribute(`data-strategy`)).toEqual(
-      ScriptStrategy.preHydrate
-    )
-  })
-
   it(`should be possible to declare a post-hydrate strategy`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.postHydrate} />
@@ -68,18 +57,11 @@ describe(`Script`, () => {
     expect(script.getAttribute(`data-strategy`)).toEqual(ScriptStrategy.idle)
   })
 
-  it(`should apply an async attribute when a pre-hydrate strategy is declared`, () => {
-    const { container } = render(
-      <Script src={scripts.react} strategy={ScriptStrategy.preHydrate} />
-    )
-    const script = container.parentElement.querySelector(`script`)
-    expect(script.getAttribute(`async`)).not.toBeNull()
-  })
-
   it(`should include inline scripts passed via the dangerouslySetInnerHTML prop in the DOM`, () => {
     for (const strategy of strategies) {
       const { container } = render(
         <Script
+          id="a"
           strategy={strategy}
           dangerouslySetInnerHTML={{ __html: scripts.inline }}
         />
@@ -92,7 +74,9 @@ describe(`Script`, () => {
   it(`should include inline scripts passed via template literals in the DOM`, () => {
     for (const strategy of strategies) {
       const { container } = render(
-        <Script strategy={strategy}>{scripts.inline}</Script>
+        <Script id="b" strategy={strategy}>
+          {scripts.inline}
+        </Script>
       )
       const script = container.parentElement.querySelector(`script`)
       expect(script.textContent).toBe(scripts.inline)
