@@ -11,12 +11,15 @@ const UsingSSR = ({ serverData }) => {
       <h1>
         This page is <b>rendered server-side</b>
       </h1>
+      <p>
+        This page is rendered server side every time the page is requested –
+        reload it to see a(nother) random dog photo.
+      </p>
       <img
         style={{ width: "300px" }}
         alt="A random dog"
         src={serverData.message}
       />
-      <p>Welcome to a server side rendered page with a random dog photo</p>
       <p>
         To learn more, head over to our{" "}
         <a href="https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/">
