@@ -6,11 +6,6 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 // styles
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
 const headingStyles = {
   marginTop: 0,
   marginBottom: 32,
@@ -104,8 +99,7 @@ const samplePageLinks = [
 const IndexPage = () => (
   <Layout>
     <Seo />
-    <main style={pageStyles}>
-      <title>Home Page</title>
+    <main>
       <h1 style={headingStyles}>
         Welcome to {` `} <font style={headingAccentStyles}>Gatsby!</font>{" "}
         <span role="img" aria-label="Party popper emojis">
