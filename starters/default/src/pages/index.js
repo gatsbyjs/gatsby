@@ -94,7 +94,7 @@ const samplePageLinks = [
 
 const IndexPage = () => (
   <Layout>
-    <Seo />
+    <Seo title="Home" />
     <StaticImage
       src="../images/example.png"
       width={96}
