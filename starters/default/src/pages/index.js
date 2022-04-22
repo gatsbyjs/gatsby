@@ -20,7 +20,6 @@ const codeStyles = {
   color: "#8A6534",
   padding: 4,
   backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
   borderRadius: 4,
 }
 const listStyles = {
@@ -28,7 +27,6 @@ const listStyles = {
   paddingLeft: 0,
 }
 const listItemStyles = {
-  fontWeight: 300,
   fontSize: 24,
   maxWidth: 560,
   marginBottom: 30,
@@ -42,11 +40,9 @@ const linkStyle = {
 }
 
 const descriptionStyle = {
-  color: "#232129",
+  color: "#000",
   fontSize: 14,
-  marginTop: 10,
   marginBottom: 0,
-  lineHeight: 1.25,
 }
 
 // data
