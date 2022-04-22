@@ -69,6 +69,11 @@ export async function validate(directory: string): Promise<void> {
   // env var so it's falsy.
   process.env.GATSBY_WORKER_MODULE_PATH = ``
 
+  if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+    // TODO fix this issue with reading the gql file in validation
+    process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE = `1`
+  }
+
   // import engines, initiate them, if there is any error thrown it will be handled in parent process
   require(path.join(directory, `.cache`, `page-ssr`))
   const { GraphQLEngine } = require(path.join(
@@ -79,6 +84,6 @@ export async function validate(directory: string): Promise<void> {
   const graphqlEngine = new GraphQLEngine({
     dbPath: path.join(directory, `.cache`, `data`, `datastore`),
   })
-  
+
   await graphqlEngine.ready()
 }
