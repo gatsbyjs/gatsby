@@ -8,7 +8,7 @@ import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript/config"
 import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations/config"
 import { AnyAction, Store } from "redux"
 import { IGatsbyState, IStateProgram } from "../../redux/types"
-import { filterTargetDefinitions } from "./utils"
+import { filterTargetDefinitions, stabilizeSchema } from "./utils"
 
 const OUTPUT_PATH = `src/gatsby-types.d.ts`
 const NAMESPACE = `Queries`
@@ -53,7 +53,7 @@ export async function writeTypeScriptTypes(
       {
         add: {
           placement: `prepend`,
-          content: `\ndeclare namespace ${NAMESPACE} {\n`,
+          content: `declare namespace ${NAMESPACE} {\n`,
         },
       },
       {
@@ -89,7 +89,7 @@ export async function writeTypeScriptTypes(
   const codegenOptions: Omit<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     // @ts-ignore - Incorrect types
     schema: undefined,
-    schemaAst: schema,
+    schemaAst: stabilizeSchema(schema, true),
     documents,
     filename,
     config: {

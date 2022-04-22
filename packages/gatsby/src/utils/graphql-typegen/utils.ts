@@ -21,11 +21,49 @@ const fieldFilterFromCoordinates =
     return !coords.includes(target)
   }
 
-export function filterPluginSchema(schema: GraphQLSchema): GraphQLSchema {
+const TYPE_NAME_EXCLUDES = [
+  `Internal`,
+  `InternalInput`,
+  `Node`,
+  `NodeInput`,
+  `Directory`,
+  `File`,
+  `PageInfo`,
+  `SiteFunction`,
+  `SiteFlags`,
+  `SitePage`,
+]
+
+function typeNameFilter(typeName: string): boolean {
+  if (TYPE_NAME_EXCLUDES.includes(typeName)) {
+    return false
+  }
+  if (typeName.startsWith(`SitePlugin`)) {
+    return false
+  }
+  if (
+    typeName.endsWith(`SortInput`) ||
+    typeName.endsWith(`FilterInput`) ||
+    typeName.endsWith(`OperatorInput`) ||
+    typeName.endsWith(`GroupConnection`) ||
+    typeName.endsWith(`Connection`) ||
+    typeName.endsWith(`Edge`) ||
+    typeName.endsWith(`Enum`)
+  ) {
+    return false
+  }
+  return true
+}
+
+export function filterPluginSchema(
+  schema: GraphQLSchema,
+  strict = false
+): GraphQLSchema {
   return mapSchema(
     filterSchema({
       schema,
-      typeFilter: typeName => !typeName.startsWith(`SitePlugin`),
+      typeFilter: typeName =>
+        strict ? typeNameFilter(typeName) : !typeName.startsWith(`SitePlugin`),
       fieldFilter: (typeName, fieldName) =>
         fieldFilterFromCoordinates([
           `Query.allSitePlugin`,
@@ -61,8 +99,11 @@ export function filterPluginSchema(schema: GraphQLSchema): GraphQLSchema {
   )
 }
 
-export function stabilizeSchema(schema: GraphQLSchema): GraphQLSchema {
-  return lexicographicSortSchema(filterPluginSchema(schema))
+export function stabilizeSchema(
+  schema: GraphQLSchema,
+  strict = false
+): GraphQLSchema {
+  return lexicographicSortSchema(filterPluginSchema(schema, strict))
 }
 
 function guessIfUnnnamedQuery({
