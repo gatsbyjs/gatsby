@@ -214,11 +214,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           },
           {
             target: `waiting`,
-            actions: [
-              `assignServers`,
-              `spawnWebpackListener`,
-              `markSourceFilesClean`,
-            ],
           },
         ],
         onError: {
@@ -226,6 +221,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           target: `waiting`,
         },
       },
+      exit: [`assignServers`, `spawnWebpackListener`, `markSourceFilesClean`],
     },
     graphQLTypegen: {
       invoke: {

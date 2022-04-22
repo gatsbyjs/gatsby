@@ -1,6 +1,12 @@
+import slugify from "slugify"
+import _ from "lodash"
 import { GraphQLEnumType, lexicographicSortSchema } from "graphql"
 import type { GraphQLSchema } from "graphql"
 import { filterSchema, mapSchema, MapperKind } from "@graphql-tools/utils"
+import { IDefinitionMeta } from "../../redux/types"
+
+type DefinitionName = string
+type DefinitionMap = Map<DefinitionName, IDefinitionMeta>
 
 const fieldFilterFromCoordinates =
   (coords: Array<string>) =>
@@ -15,10 +21,6 @@ const fieldFilterFromCoordinates =
     return !coords.includes(target)
   }
 
-/**
- * Remove the plugin options schema.
- * Almost all users do not use it, but it unnecessarily increases the schema output size.
- */
 export function filterPluginSchema(schema: GraphQLSchema): GraphQLSchema {
   return mapSchema(
     filterSchema({
@@ -61,4 +63,38 @@ export function filterPluginSchema(schema: GraphQLSchema): GraphQLSchema {
 
 export function stabilizeSchema(schema: GraphQLSchema): GraphQLSchema {
   return lexicographicSortSchema(filterPluginSchema(schema))
+}
+
+function guessIfUnnnamedQuery({
+  isStaticQuery,
+  name,
+  filePath,
+}: IDefinitionMeta): boolean {
+  const queryType = isStaticQuery ? `static` : `page`
+  const generatedQueryName = slugify(filePath, {
+    replacement: ` `,
+    lower: false,
+  })
+  const pattern = _.camelCase(`${queryType}-${generatedQueryName}`)
+  return name.startsWith(pattern)
+}
+
+function guessIfThirdpartyDefinition({ filePath }: IDefinitionMeta): boolean {
+  return /(node_modules|\.yarn|\.cache)/.test(filePath)
+}
+
+function isTargetDefinition(def: IDefinitionMeta): boolean {
+  return !(guessIfThirdpartyDefinition(def) || guessIfUnnnamedQuery(def))
+}
+
+export function filterTargetDefinitions(
+  defMap: DefinitionMap
+): Map<string, IDefinitionMeta> {
+  const defs: Array<[name: string, def: IDefinitionMeta]> = []
+  for (const [name, def] of defMap) {
+    if (isTargetDefinition(def)) {
+      defs.push([name, def])
+    }
+  }
+  return new Map(defs)
 }

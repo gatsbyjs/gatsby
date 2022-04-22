@@ -88,7 +88,7 @@ const directoryType = `
 
 const siteType = `
   type Site implements Node @infer {
-    buildTime: Date @dateformat
+    buildTime: Date! @dateformat
     siteMetadata: SiteSiteMetadata
   }
 `

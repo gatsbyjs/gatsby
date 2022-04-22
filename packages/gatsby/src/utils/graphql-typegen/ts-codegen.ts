@@ -1,36 +1,17 @@
 import * as fs from "fs-extra"
+import { join } from "path"
+import { slash } from "gatsby-core-utils"
 import { codegen } from "@graphql-codegen/core"
+import { Kind } from "graphql"
 import type { Types } from "@graphql-codegen/plugin-helpers"
 import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript/config"
 import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations/config"
-import { DocumentNode } from "graphql"
-import { GatsbyReduxStore } from "../../redux"
+import { AnyAction, Store } from "redux"
+import { IGatsbyState, IStateProgram } from "../../redux/types"
+import { filterTargetDefinitions } from "./utils"
 
-interface ISource {
-  document: DocumentNode
-  hash?: string
-}
-
-const DEFAULT_CONFIG = {
-  namingConvention: {
-    typeNames: `keep`,
-    enumValues: `keep`,
-    transformUnderscore: false,
-  },
-  addUnderscoreToArgsType: true,
-  skipTypename: true,
-  flattenGeneratedTypes: true,
-}
-
-const DEFAULT_TYPESCRIPT_SCALARS = {
-  // A date string, such as 2007-12-03, compliant with the ISO 8601 standard for
-  // representation of dates and times using the Gregorian calendar.
-  Date: `string`,
-
-  // The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-  // Note: This will never be used since this is reserved by GatsbyJS internal
-  JSON: `any`,
-}
+const OUTPUT_PATH = `src/gatsby-types.d.ts`
+const NAMESPACE = `Queries`
 
 const DEFAULT_TYPESCRIPT_CONFIG: Readonly<TypeScriptPluginConfig> = {
   avoidOptionals: true,
@@ -39,7 +20,10 @@ const DEFAULT_TYPESCRIPT_CONFIG: Readonly<TypeScriptPluginConfig> = {
   maybeValue: `T | undefined`,
   noExport: true,
   enumsAsTypes: true,
-  scalars: DEFAULT_TYPESCRIPT_SCALARS,
+  scalars: {
+    Date: `string`,
+    JSON: `any`,
+  },
   useTypeImports: true,
 }
 
@@ -49,20 +33,15 @@ const DEFAULT_TYPESCRIPT_OPERATIONS_CONFIG: Readonly<TypeScriptDocumentsPluginCo
     exportFragmentSpreadSubTypes: true,
   }
 
-export async function writeTypeScriptTypes({
-  outputPath,
-  namespace,
-  store,
-  documents,
-}: {
-  outputPath: string
-  namespace: string
-  store: GatsbyReduxStore
-  documents: Array<ISource>
-}): Promise<void> {
+export async function writeTypeScriptTypes(
+  directory: IStateProgram["directory"],
+  store: Store<IGatsbyState, AnyAction>
+): Promise<void> {
   const pluginConfig: Pick<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     pluginMap: {
       add: require(`@graphql-codegen/add`),
+      typescript: require(`@graphql-codegen/typescript`),
+      typescriptOperations: require(`@graphql-codegen/typescript-operations`),
     },
     plugins: [
       {
@@ -71,44 +50,57 @@ export async function writeTypeScriptTypes({
           content: `/* eslint-disable */\n`,
         },
       },
+      {
+        add: {
+          placement: `prepend`,
+          content: `\ndeclare namespace ${NAMESPACE} {\n`,
+        },
+      },
+      {
+        typescript: DEFAULT_TYPESCRIPT_CONFIG,
+      },
+      {
+        typescriptOperations: DEFAULT_TYPESCRIPT_OPERATIONS_CONFIG,
+      },
+      {
+        add: {
+          placement: `append`,
+          content: `\n}\n`,
+        },
+      },
     ],
   }
 
-  pluginConfig.pluginMap = {
-    ...pluginConfig.pluginMap,
-    typescript: require(`@graphql-codegen/typescript`),
-    typescriptOperations: require(`@graphql-codegen/typescript-operations`),
-  }
+  const { schema, definitions } = store.getState()
 
-  pluginConfig.plugins.push({
-    add: {
-      placement: `prepend`,
-      content: `\ndeclare namespace ${namespace} {\n`,
-    },
-  })
-  pluginConfig.plugins.push({
-    typescript: DEFAULT_TYPESCRIPT_CONFIG,
-  })
-  pluginConfig.plugins.push({
-    typescriptOperations: DEFAULT_TYPESCRIPT_OPERATIONS_CONFIG,
-  })
-  pluginConfig.plugins.push({
-    add: {
-      placement: `append`,
-      content: `\n}\n`,
-    },
-  })
-
-  const { schema } = store.getState()
+  const filename = slash(join(directory, OUTPUT_PATH))
+  const documents = [...filterTargetDefinitions(definitions).values()].map(
+    definitionMeta => {
+      return {
+        document: {
+          kind: Kind.DOCUMENT,
+          definitions: [definitionMeta.def],
+        },
+        hash: definitionMeta.hash.toString(),
+      }
+    }
+  )
 
   const codegenOptions: Omit<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     // @ts-ignore - Incorrect types
     schema: undefined,
     schemaAst: schema,
     documents,
-    filename: outputPath,
+    filename,
     config: {
-      ...DEFAULT_CONFIG,
+      namingConvention: {
+        typeNames: `keep`,
+        enumValues: `keep`,
+        transformUnderscore: false,
+      },
+      addUnderscoreToArgsType: true,
+      skipTypename: true,
+      flattenGeneratedTypes: true,
     },
   }
 
@@ -117,5 +109,5 @@ export async function writeTypeScriptTypes({
     ...codegenOptions,
   })
 
-  await fs.writeFile(outputPath, result)
+  await fs.outputFile(filename, result)
 }

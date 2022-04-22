@@ -1,12 +1,13 @@
 import * as fs from "fs-extra"
-import { resolve, join } from "path"
+import { join } from "path"
+import { slash } from "gatsby-core-utils"
 import { printSchema } from "graphql"
+import { Store, AnyAction } from "redux"
 import reporter from "gatsby-cli/lib/reporter"
-import type { GatsbyReduxStore } from "../../redux"
-import type { IStateProgram } from "../../redux/types"
+import type { IGatsbyState, IStateProgram } from "../../redux/types"
 import { stabilizeSchema } from "./utils"
 
-export const OUTPUT_PATHS = {
+const OUTPUT_PATHS = {
   schema: `.cache/typegen/schema.graphql`,
   fragments: `.cache/typegen/fragments.graphql`,
   config: `.cache/typegen/graphql.config.json`,
@@ -35,7 +36,7 @@ export async function writeGraphQLConfig(
       2
     )
 
-    const outputPath = resolve(base, OUTPUT_PATHS.config)
+    const outputPath = slash(join(base, OUTPUT_PATHS.config))
 
     await fs.outputFile(outputPath, configJSONString)
     reporter.verbose(`Successfully created graphql.config.json`)
@@ -46,7 +47,7 @@ export async function writeGraphQLConfig(
 
 export async function writeGraphQLFragments(
   directory: IStateProgram["directory"],
-  store: GatsbyReduxStore
+  store: Store<IGatsbyState, AnyAction>
 ): Promise<void> {
   try {
     const currentDefinitions = store.getState().definitions
@@ -56,7 +57,10 @@ export async function writeGraphQLFragments(
       .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
       .join(`\n`)
 
-    await fs.outputFile(join(directory, OUTPUT_PATHS.fragments), fragmentString)
+    await fs.outputFile(
+      slash(join(directory, OUTPUT_PATHS.fragments)),
+      fragmentString
+    )
     reporter.verbose(`Wrote fragments.graphql file to .cache`)
   } catch (err) {
     reporter.error(`Failed to write fragments.graphql to .cache`, err)
@@ -65,7 +69,7 @@ export async function writeGraphQLFragments(
 
 export async function writeGraphQLSchema(
   directory: IStateProgram["directory"],
-  store: GatsbyReduxStore
+  store: Store<IGatsbyState, AnyAction>
 ): Promise<void> {
   try {
     const { schema } = store.getState()
@@ -73,7 +77,10 @@ export async function writeGraphQLSchema(
       commentDescriptions: true,
     })
 
-    await fs.outputFile(join(directory, OUTPUT_PATHS.schema), schemaSDLString)
+    await fs.outputFile(
+      slash(join(directory, OUTPUT_PATHS.schema)),
+      schemaSDLString
+    )
     reporter.verbose(`Successfully created schema.graphql`)
   } catch (err) {
     reporter.error(`Failed to write schema.graphql to .cache`, err)
