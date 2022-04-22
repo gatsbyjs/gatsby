@@ -27,7 +27,7 @@ const handledProps = new Set([
 
 export const scriptCache = new Set()
 
-export function Script(props: ScriptProps): ReactElement {
+export function Script(props: ScriptProps): ReactElement | null {
   const { strategy = ScriptStrategy.postHydrate, onLoad, onError } = props || {}
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function Script(props: ScriptProps): ReactElement {
     }
   }, [])
 
-  return <></>
+  return null
 }
 
 function injectScript(props: ScriptProps): HTMLScriptElement | null {
