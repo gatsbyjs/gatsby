@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react"
 import { PerformanceMarkWithDetails, MarkRecord } from "../../records"
 import { trim } from "../utils/trim"
 
+interface Props {
+  check: (record: PerformanceMarkWithDetails) => boolean
+  count: number
+}
+
 /**
  * Displays performance mark records of scripts in a table.
  */
-export function ScriptMarkRecords(): JSX.Element {
+export function ScriptMarkRecords(props: Props): JSX.Element {
+  const { check, count } = props
+
   const [records, setRecords] = useState<Array<PerformanceMarkWithDetails>>([])
 
   /**
@@ -18,11 +25,9 @@ export function ScriptMarkRecords(): JSX.Element {
         `mark`
       ) as Array<PerformanceMarkWithDetails>
 
-      const scriptRecords = markRecords.filter(
-        markRecord => markRecord.name === `inline-script`
-      )
+      const scriptRecords = markRecords.filter(check)
 
-      if (scriptRecords.length === 6 || performance.now() > 10000) {
+      if (scriptRecords.length === count || performance.now() > 10000) {
         setRecords(scriptRecords)
         clearInterval(interval)
       }

@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 
 export enum ScriptStrategy {
-  preHydrate = `pre-hydrate`,
   postHydrate = `post-hydrate`,
   idle = `idle`,
 }
@@ -29,25 +28,12 @@ const handledProps = new Set([
 export const scriptCache = new Set()
 
 export function Script(props: ScriptProps): ReactElement {
-  const {
-    src,
-    strategy = ScriptStrategy.postHydrate,
-    onLoad,
-    onError,
-  } = props || {}
+  const { strategy = ScriptStrategy.postHydrate, onLoad, onError } = props || {}
 
   useEffect(() => {
     let script: HTMLScriptElement | null
 
     switch (strategy) {
-      case ScriptStrategy.preHydrate:
-        // If the navigation is client-side (e.g. via gatsby-link), treat it like post-hydrate.
-        // We probably want to make the router write to history so we can compare that instead.
-        // The current approach doesn't solve the browser back/forward button use case.
-        if (!performance.getEntriesByName(location.href).length) {
-          script = injectScript(props)
-        }
-        break
       case ScriptStrategy.postHydrate:
         script = injectScript(props)
         break
@@ -68,21 +54,6 @@ export function Script(props: ScriptProps): ReactElement {
       script?.remove()
     }
   }, [])
-
-  if (strategy === ScriptStrategy.preHydrate) {
-    const inlineScript = resolveInlineScript(props)
-    const attributes = resolveAttributes(props)
-
-    if (inlineScript) {
-      return (
-        <script async data-strategy={strategy} {...attributes}>
-          {resolveInlineScript(props)}
-        </script>
-      )
-    }
-
-    return <script async src={src} data-strategy={strategy} {...attributes} />
-  }
 
   return <></>
 }

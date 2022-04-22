@@ -19,31 +19,6 @@ beforeEach(() => {
 })
 
 describe(`scripts with sources`, () => {
-  describe(`using the ${ScriptStrategy.preHydrate} strategy`, () => {
-    it(`should load successfully`, () => {
-      cy.visit(page)
-      cy.getRecord(Script.dayjs, `success`, true).should(`equal`, `true`)
-    })
-
-    it(`should load before other strategies`, () => {
-      cy.visit(page)
-
-      cy.getRecord(Script.dayjs, ResourceRecord.fetchStart).then(
-        dayjsFetchStart => {
-          cy.getRecord(Script.three, ResourceRecord.fetchStart).should(
-            `be.greaterThan`,
-            dayjsFetchStart
-          )
-
-          cy.getRecord(Script.marked, ResourceRecord.fetchStart).should(
-            `be.greaterThan`,
-            dayjsFetchStart
-          )
-        }
-      )
-    })
-  })
-
   describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
     it(`should load successfully`, () => {
       cy.visit(page)
@@ -88,11 +63,6 @@ describe(`scripts with sources`, () => {
 
       cy.getRecord(Script.marked, ResourceRecord.fetchStart).then(
         markedFetchStart => {
-          cy.getRecord(Script.dayjs, ResourceRecord.fetchStart).should(
-            `be.lessThan`,
-            markedFetchStart
-          )
-
           cy.getRecord(Script.three, ResourceRecord.fetchStart).should(
             `be.lessThan`,
             markedFetchStart
@@ -120,11 +90,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 4)
-      cy.getRecord(Script.dayjs, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.preHydrate
-      )
+        .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
         ScriptStrategy.postHydrate
@@ -141,11 +107,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 4)
-      cy.getRecord(Script.dayjs, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.preHydrate
-      )
+        .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
         ScriptStrategy.postHydrate
@@ -163,11 +125,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 4)
-      cy.getRecord(Script.dayjs, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.preHydrate
-      )
+        .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
         ScriptStrategy.postHydrate
@@ -186,11 +144,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 4)
-      cy.getRecord(Script.dayjs, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.preHydrate
-      )
+        .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
         ScriptStrategy.postHydrate
@@ -208,11 +162,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 4)
-      cy.getRecord(Script.dayjs, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.preHydrate
-      )
+        .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
         ScriptStrategy.postHydrate
@@ -223,8 +173,7 @@ describe(`scripts with sources`, () => {
       )
     })
 
-    // TODO - Fix
-    it.skip(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
+    it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
       cy.visit(`/`)
       cy.get(`a[href="${page}"][id=gatsby-link]`).click()
       cy.go(`back`)
@@ -232,11 +181,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 4)
-      cy.getRecord(Script.dayjs, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.preHydrate
-      )
+        .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
         ScriptStrategy.postHydrate
