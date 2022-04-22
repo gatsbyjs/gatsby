@@ -95,6 +95,14 @@ const samplePageLinks = [
 const IndexPage = () => (
   <Layout>
     <Seo />
+    <StaticImage
+      src="../images/example.png"
+      width={96}
+      quality={95}
+      formats={["auto", "webp", "avif"]}
+      alt="A Gatsby astronaut"
+      style={{ marginBottom: `1.45rem` }}
+    />
     <main>
       <h1 style={headingStyles}>
         Welcome to {` `} <font style={headingAccentStyles}>Gatsby!</font>{" "}
