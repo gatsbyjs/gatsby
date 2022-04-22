@@ -15,18 +15,16 @@ const Header = ({ siteTitle }) => (
         padding: `1.45rem 1.0875rem`,
       }}
     >
-      <h1 style={{ margin: 0 }}>
         <Link
           to="/"
           style={{
-            fontSize: "1rem",
+          fontSize: 14,
             fontWeight: "normal",
             textDecoration: `none`,
           }}
         >
           {siteTitle}
         </Link>
-      </h1>
     </div>
   </header>
 )
