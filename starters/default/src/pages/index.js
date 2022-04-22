@@ -5,22 +5,14 @@ import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-// styles
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 32,
-}
 const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
+  color: "var(--color-primary)",
 }
 const codeStyles = {
+  backgroundColor: "var(--color-code-bg)",
+  borderRadius: 4,
   color: "#8A6534",
   padding: 4,
-  backgroundColor: "#FFF4DB",
-  borderRadius: 4,
 }
 const listStyles = {
   marginBottom: 48,
@@ -28,20 +20,18 @@ const listStyles = {
 }
 const listItemStyles = {
   fontSize: 24,
-  maxWidth: 560,
   marginBottom: 30,
+  maxWidth: 520,
 }
-
 const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
+  color: "var(--color-primary)",
   fontSize: 16,
+  fontWeight: "bold",
   verticalAlign: "5%",
 }
-
 const descriptionStyle = {
   color: "#000",
-  fontSize: 14,
+  fontSize: "1rem",
   marginBottom: 0,
 }
 
