@@ -25,7 +25,10 @@ function InlineScriptsPage() {
 
       <br />
       <h2>Inline scripts</h2>
-      <ScriptMarkRecords />
+      <ScriptMarkRecords
+        check={record => record.name === `inline-script`}
+        count={4}
+      />
 
       <br />
       <ul>
@@ -41,16 +44,6 @@ function InlineScriptsPage() {
         </li>
       </ul>
 
-      <Script
-        id={`${InlineScript.dangerouslySet}-${ScriptStrategy.preHydrate}`}
-        strategy={ScriptStrategy.preHydrate}
-        dangerouslySetInnerHTML={{
-          __html:
-            inlineScripts[InlineScript.dangerouslySet][
-              ScriptStrategy.preHydrate
-            ],
-        }}
-      />
       <Script
         id={`${InlineScript.dangerouslySet}-${ScriptStrategy.postHydrate}`}
         strategy={ScriptStrategy.postHydrate}
@@ -70,12 +63,6 @@ function InlineScriptsPage() {
         }}
       />
 
-      <Script
-        id={`${InlineScript.templateLiteral}-${ScriptStrategy.preHydrate}`}
-        strategy={ScriptStrategy.preHydrate}
-      >
-        {inlineScripts[InlineScript.templateLiteral][ScriptStrategy.preHydrate]}
-      </Script>
       <Script
         id={`${InlineScript.templateLiteral}-${ScriptStrategy.postHydrate}`}
         strategy={ScriptStrategy.postHydrate}

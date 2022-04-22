@@ -33,37 +33,6 @@ beforeEach(() => {
 
 for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
   describe(`inline scripts set via ${descriptor}`, () => {
-    describe(`using the ${ScriptStrategy.preHydrate} strategy`, () => {
-      it(`should execute successfully`, () => {
-        cy.visit(page)
-
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          `success`,
-          true
-        ).should(`equal`, `true`)
-      })
-
-      it(`should load before other strategies`, () => {
-        cy.visit(page)
-
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          MarkRecord.executeStart
-        ).then(dangerouslySetExecuteStart => {
-          cy.getRecord(
-            `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
-            MarkRecord.executeStart
-          ).should(`be.greaterThan`, dangerouslySetExecuteStart)
-
-          cy.getRecord(
-            `${ScriptStrategy.idle}-${inlineScriptType}`,
-            MarkRecord.executeStart
-          ).should(`be.greaterThan`, dangerouslySetExecuteStart)
-        })
-      })
-    })
-
     describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
       it(`should execute successfully`, () => {
         cy.visit(page)
@@ -110,11 +79,6 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
           MarkRecord.executeStart
         ).then(dangerouslySetExecuteStart => {
           cy.getRecord(
-            `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-            MarkRecord.executeStart
-          ).should(`be.lessThan`, dangerouslySetExecuteStart)
-
-          cy.getRecord(
             `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
             MarkRecord.executeStart
           ).should(`be.lessThan`, dangerouslySetExecuteStart)
@@ -128,12 +92,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
-          .should(`have.length`, 6)
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.preHydrate)
+          .should(`have.length`, 4)
         cy.getRecord(
           `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
           `strategy`,
@@ -152,12 +111,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
-          .should(`have.length`, 6)
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.preHydrate)
+          .should(`have.length`, 4)
         cy.getRecord(
           `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
           `strategy`,
@@ -177,12 +131,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
-          .should(`have.length`, 6)
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.preHydrate)
+          .should(`have.length`, 4)
         cy.getRecord(
           `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
           `strategy`,
@@ -203,12 +152,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
-          .should(`have.length`, 6)
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.preHydrate)
+          .should(`have.length`, 4)
         cy.getRecord(
           `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
           `strategy`,
@@ -221,20 +165,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
         ).should(`equal`, ScriptStrategy.idle)
       })
 
-      // TODO - Fix
-      it.skip(`should load only once after Gatsby link navigation`, () => {
+      it(`should load only once after Gatsby link navigation`, () => {
         cy.visit(page)
         cy.get(`a[id=gatsby-link-back-to-index]`).click()
         cy.get(`a[href="${page}"][id=gatsby-link]`).click()
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
-          .should(`have.length`, 6)
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.preHydrate)
+          .should(`have.length`, 4)
         cy.getRecord(
           `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
           `strategy`,
@@ -247,8 +185,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
         ).should(`equal`, ScriptStrategy.idle)
       })
 
-      // TODO - Fix
-      it.skip(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
+      it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
         cy.visit(`/`)
         cy.get(`a[href="${page}"][id=gatsby-link]`).click()
         cy.go(`back`)
@@ -256,12 +193,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
-          .should(`have.length`, 6)
-        cy.getRecord(
-          `${ScriptStrategy.preHydrate}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.preHydrate)
+          .should(`have.length`, 4)
         cy.getRecord(
           `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
           `strategy`,

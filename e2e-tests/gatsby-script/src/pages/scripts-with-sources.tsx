@@ -22,7 +22,7 @@ function ScriptsWithSourcesPage() {
         check={record =>
           scriptUrls.has(record.name) || record.name.includes(`framework`)
         }
-        count={4}
+        count={3}
       />
 
       <br />
@@ -39,7 +39,6 @@ function ScriptsWithSourcesPage() {
         </li>
       </ul>
 
-      <Script src={scripts.dayjs} strategy={ScriptStrategy.preHydrate} />
       <Script
         src={scripts.three}
         strategy={ScriptStrategy.postHydrate}
