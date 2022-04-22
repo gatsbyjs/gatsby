@@ -46,7 +46,7 @@ export async function createBundlerGraphqlEngineBundle(
     config: createParcelConfig(
       outputDir, 
       {
-        resolvers: ["parcel-resolver-externals"],
+        // resolvers: ["parcel-resolver-externals"],
         transformers: {
           "*.{js,mjs,jsm,jsx,es6,cjs,tsx,ts}": [
             "parcel-transformer-define",

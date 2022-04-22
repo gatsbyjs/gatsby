@@ -253,7 +253,12 @@ module.exports = async function build(
     try {
       await validateEngines(store.getState().program.directory)
     } catch (error) {
-      validateEnginesActivity.panic({ id: `98001`, context: {}, error })
+      if (process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+        reporter.error({ id: `98001`, context: {}, error })
+        reporter.warn("Error occurred during validateEngines, ignoring for now")
+      } else {
+        validateEnginesActivity.panic({ id: `98001`, context: {}, error })
+      }
     } finally {
       validateEnginesActivity.end()
     }
@@ -371,6 +376,8 @@ module.exports = async function build(
       })
     }
   }
+
+  // TODO SEG FAULT IS HAPPENING SOMEWHERE BELOW HERE
 
   await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()

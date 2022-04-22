@@ -79,5 +79,6 @@ export async function validate(directory: string): Promise<void> {
   const graphqlEngine = new GraphQLEngine({
     dbPath: path.join(directory, `.cache`, `data`, `datastore`),
   })
+  
   await graphqlEngine.ready()
 }

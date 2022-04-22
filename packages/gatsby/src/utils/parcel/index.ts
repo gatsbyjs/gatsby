@@ -13,7 +13,6 @@ export function createParcelConfig(configDir: string, config: any, settings?: an
   let rcPath = path.join(configDir, '.parcelrc')
   let pkgPath = path.join(configDir, 'package.json')
 
-  console.log(config)
   // TODO merge nested properly
   const fullConfig = {
     ...config,
