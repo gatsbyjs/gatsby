@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 
 export enum ScriptStrategy {
