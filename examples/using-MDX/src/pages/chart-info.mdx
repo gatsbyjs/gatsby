@@ -1,79 +1,57 @@
-import { Chart } from "react-charts"
-import Form from "../components/form.js"
+import { ResponsiveBar } from "@nivo/bar"
 
-## React Charts examples in MDX
+## Nivo Charts examples in MDX
 
 This file is written in MDX and has a live React component you can interact with; try hovering over the data to get more granular information.
 
 ### Data represented in BarChart
 
-<figure style={{ height: 300 }}>
-  <Chart
-    data={data}
-    series={{ type: "bar" }}
-    axes={[
-      { primary: true, type: "ordinal", position: "left" },
-      { position: "bottom", type: "linear", stacked: true },
-    ]}
-    tooltip
+<div id="bar" style={{ height: "80vh" }}>
+  <ResponsiveBar
+    data={nivoData}
+    keys={["InApp", "Advertising"]}
+    indexBy="year"
   />
-</figure>
+</div>
 
 ### Data represented in ColumnChart
 
-<figure style={{ height: 300 }}>
-  <Chart
-    data={data}
-    series={{ type: "bar" }}
-    axes={[
-      { primary: true, type: "ordinal", position: "bottom" },
-      { position: "left", type: "linear", stacked: false },
-    ]}
-    tooltip
-  />
-</figure>
-
 ### Data represented in AreaChart
 
-<figure style={{ height: 300 }}>
-  <Chart
-    data={data}
-    series={{ type: "bar" }}
-    axes={[
-      { primary: true, position: "bottom", type: "time" },
-      { position: "left", type: "linear", stacked: true },
-    ]}
-    tooltip
-  />
-</figure>
-
-Want to be informed about updates to this data? Sign up here:
-
-<Form />
-
-export const data = [
+export const nivoData = [
   {
-    label: "In App Purchase Income",
-    datums: [
-      { x: "2020", y: 9 },
-      { x: "2019", y: 32 },
-      { x: "2018", y: 35 },
-      { x: "2017", y: 36 },
-      { x: "2016", y: 38 },
-      { x: "2015", y: 30 },
-      { x: "2014", y: 29 },
-    ],
+    year: "2014",
+    InApp: 29,
+    Advertising: 17,
   },
   {
-    label: "Advertising Income",
-    datums: [
-      { x: "2020", y: 4 },
-      { x: "2019", y: 3 },
-      { x: "2018", y: 12 },
-      { x: "2017", y: 14 },
-      { x: "2016", y: 10 },
-      { x: "2015", y: 9 },
-      { x: "2014", y: 17 },
-    ],
+    year: "2015",
+    InApp: 30,
+    Advertising: 9,
+  },
+  {
+    year: "2016",
+    InApp: 38,
+    Advertising: 10,
+  },
+  {
+    year: "2017",
+    InApp: 36,
+    Advertising: 14,
+  },
+  {
+    year: "2018",
+    InApp: 35,
+    Advertising: 12,
+  },
+  {
+    year: "2019",
+    InApp: 32,
+    Advertising: 3,
+  },
+  {
+    year: "2020",
+    InApp: 9,
+    Advertising: 4,
   },
 ]

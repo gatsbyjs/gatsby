@@ -7,6 +7,8 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.18",
     "@mdx-js/react": "^1.6.18",
+    "@nivo/bar": "^0.79.1",
+    "@nivo/core": "^0.79.0",
     "gatsby": "next",
     "gatsby-image": "next",
     "gatsby-plugin-manifest": "next",
@@ -17,10 +19,10 @@
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-sharp": "next",
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
+    "react": "^18.0.0",
     "react-charts": "^2.0.1",
     "react-chat-elements": "^10.10.2",
-    "react-dom": "^16.12.0",
+    "react-dom": "^18.0.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
