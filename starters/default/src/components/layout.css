@@ -141,13 +141,13 @@ p {
   max-width: 680px;
 }
 code {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
 }
 kbd {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
 }
 samp {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
 }
 abbr {
   border-bottom: 1px dotted hsla(0, 0%, 0%, 0.5);
