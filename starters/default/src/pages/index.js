@@ -67,7 +67,7 @@ const links = [
 
 const samplePageLinks = [
   {
-    text: "Go to page 2",
+    text: "Page 2",
     url: "page-2",
     badge: false,
     description:
