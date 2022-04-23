@@ -104,7 +104,7 @@ pre {
   font-size: 0.875rem;
   line-height: 1.5;
   background: hsla(0, 0%, 0%, 0.04);
-  border-radius: 3px;
+  border-radius: var(--border-radius);
   overflow: auto;
   word-wrap: normal;
   padding: 1.45rem;
