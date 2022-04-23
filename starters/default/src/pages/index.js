@@ -39,6 +39,13 @@ const links = [
     color: "#E95800",
   },
   {
+    text: "Examples",
+    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
+    description:
+      "Example websites sit on one or the other end of the spectrum from very basic to complex/complete.",
+    color: "#159BF3",
+  },
+  {
     text: "Plugin Library",
     url: "https://www.gatsbyjs.com/plugins",
     description:
