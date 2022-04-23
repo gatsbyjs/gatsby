@@ -50,6 +50,7 @@ h1 {
   margin-bottom: 3rem;
   padding: 0;
   line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 h1 > b {
   color: var(--color-primary);
