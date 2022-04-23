@@ -17,7 +17,7 @@ const UsingSSR = ({ serverData }) => {
         <code>dog.ceo/api/breed/shiba/images/random</code>:
       </p>
       <img
-        style={{ width: "320px" }}
+        style={{ width: "320px", borderRadius: "var(--border-radius)" }}
         alt="A random dog"
         src={serverData.message}
       />
