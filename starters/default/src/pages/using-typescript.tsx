@@ -30,7 +30,7 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({ data, path }) => (
       and run <code>tsc --init</code> to create a <code>tsconfig</code> file.
     </p>
     <p>
-      You're currently on the page "{path}" which was built on{" "}
+      You're currently on the page <code>{path}</code> which was built on{" "}
       {data.site.buildTime}.
     </p>
     <p>
