@@ -6,27 +6,31 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 const listStyles = {
-  marginBottom: 64,
-  marginTop: 64,
+  margin: 0,
+  marginBottom: 48,
+  marginTop: 48,
+  maxWidth: 860,
   padding: 0,
-  display: "flex",
-  gap: 32,
+  display: "grid",
+  // https://css-tricks.com/responsive-layouts-fewer-media-queries/
+  "--w": "300px",
+  "--n": "2",
+  gridTemplateColumns:
+    "repeat(auto-fit,minmax(max(var(--w), 100%/(var(--n) + 1) + 0.1%),1fr))",
+  gap: 48,
 }
 const listItemStyles = {
-  fontSize: 24,
-  marginBottom: 32,
-  maxWidth: 520,
+  margin: 0,
 }
 const linkStyle = {
   color: "var(--color-primary)",
   fontSize: 16,
   fontWeight: "bold",
-  verticalAlign: "5%",
 }
 const descriptionStyle = {
-  color: "#000",
-  fontSize: 14,
+  color: "var(--text-color)",
   marginBottom: 0,
+  marginTop: "0.25rem",
 }
 
 // data
@@ -112,15 +116,14 @@ const IndexPage = () => (
       <ul style={listStyles}>
         {links.map(link => (
           <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
               <a
                 style={linkStyle}
                 href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
               >
-                {link.text} ↗
-              </a>
+              {link.text}
+            </a>{" "}
+            <small>↗</small>
               <p style={descriptionStyle}>{link.description}</p>
-            </span>
           </li>
         ))}
       </ul>
