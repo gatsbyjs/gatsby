@@ -64,7 +64,7 @@ const samplePageLinks = [
   },
   { text: "TypeScript", url: "using-typescript" },
   { text: "Server Side Rendering", url: "using-ssr" },
-  { text: "Deferred Static Geneation", url: "using-dsg" },
+  { text: "Deferred Static Generation", url: "using-dsg" },
 ]
 
 const IndexPage = () => (
