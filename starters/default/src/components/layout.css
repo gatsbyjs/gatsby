@@ -19,7 +19,6 @@ body {
   color: var(--text-color);
   font-family: sans-serif;
   font-family: var(--fonts-sans);
-  font-kerning: normal;
   font-weight: normal;
   margin: 0;
   word-wrap: break-word;
@@ -47,7 +46,7 @@ dfn {
 }
 h1 {
   margin: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
   padding: 0;
   line-height: 1.1;
 }
@@ -109,35 +108,18 @@ pre {
   word-wrap: normal;
   padding: 1.45rem;
 }
-b {
-  font-weight: bold;
-}
-strong {
-  font-weight: bold;
-}
-dt {
-  font-weight: bold;
-}
-th {
+b, strong, dt, th {
   font-weight: bold;
 }
 li {
   margin-bottom: calc(1.45rem / 2);
 }
-ol li {
+ol li, ul li {
   padding-left: 0;
 }
-ul li {
-  padding-left: 0;
-}
-li > ol {
-  margin-left: 1.45rem;
+li > ol, li > ul {
   margin-bottom: calc(1.45rem / 2);
-  margin-top: calc(1.45rem / 2);
-}
-li > ul {
   margin-left: 1.45rem;
-  margin-bottom: calc(1.45rem / 2);
   margin-top: calc(1.45rem / 2);
 }
 blockquote *:last-child {
@@ -151,6 +133,9 @@ p *:last-child {
 }
 li > p {
   margin-bottom: calc(1.45rem / 2);
+}
+p {
+  max-width: 680px;
 }
 code {
   font-size: 0.85rem;
@@ -172,12 +157,11 @@ acronym {
 tt,
 code {
   background-color: var(--color-code-bg);
-  color: #8A6534;
   border-radius: var(--border-radius);
+  color: #8A6534;
   font-family: var(--fonts-mono);
-  padding: 0;
-  padding-top: 0.2em;
   padding-bottom: 0.2em;
+  padding-top: 0.2em;
 }
 pre code {
   background: none;
@@ -186,8 +170,9 @@ code:before,
 code:after,
 tt:before,
 tt:after {
-  letter-spacing: -0.2em;
   content: " ";
+  letter-spacing: -0.2em;
+  word-break: normal;
 }
 pre code:before,
 pre code:after,
