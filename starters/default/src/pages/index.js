@@ -5,22 +5,16 @@ import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-const headingAccentStyles = {
-  color: "var(--color-primary)",
-}
-const codeStyles = {
-  backgroundColor: "var(--color-code-bg)",
-  borderRadius: 4,
-  color: "#8A6534",
-  padding: 4,
-}
 const listStyles = {
-  marginBottom: 48,
-  paddingLeft: 0,
+  marginBottom: 64,
+  marginTop: 64,
+  padding: 0,
+  display: "flex",
+  gap: 32,
 }
 const listItemStyles = {
   fontSize: 24,
-  marginBottom: 30,
+  marginBottom: 32,
   maxWidth: 520,
 }
 const linkStyle = {
@@ -31,7 +25,7 @@ const linkStyle = {
 }
 const descriptionStyle = {
   color: "#000",
-  fontSize: "1rem",
+  fontSize: 14,
   marginBottom: 0,
 }
 
@@ -68,44 +62,42 @@ const samplePageLinks = [
     description:
       "A simple example of linking to another page within a Gatsby site",
   },
-  {
-    text: "Using TypeScript",
-    url: "using-typescript",
-  },
-  {
-    text: "Using Server Side Rendering",
-    url: "using-ssr",
-  },
-  {
-    text: "Using Deferred Static Geneation",
-    url: "using-dsg",
-  },
+  { text: "TypeScript", url: "using-typescript" },
+  { text: "Server Side Rendering", url: "using-ssr" },
+  { text: "Deferred Static Geneation", url: "using-dsg" },
 ]
 
 const IndexPage = () => (
   <Layout>
     <Seo title="Home" />
-    <StaticImage
-      src="../images/example.png"
-      width={96}
-      quality={95}
-      formats={["auto", "webp", "avif"]}
-      alt="A Gatsby astronaut"
-      style={{ marginBottom: `1.45rem` }}
-    />
     <main>
-      <h1 style={headingStyles}>
-        Welcome to {` `} <font style={headingAccentStyles}>Gatsby!</font>{" "}
-        <span role="img" aria-label="Party popper emojis">
-          🎉🎉🎉
+      <h1>
+        <StaticImage
+          src="../images/example.png"
+          width={64}
+          quality={95}
+          formats={["auto", "webp", "avif"]}
+          alt="A Gatsby dial"
+          style={{ marginBottom: `0.5rem` }}
+        />
+        <br />
+        Welcome to
+        <br />
+        <b>Gatsby!</b>{" "}
+        <span role="img" aria-label="Party popper emoji">
+          🎉
         </span>
       </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
-        update in real-time.{" "}
-        <span role="img" aria-label="Sunglasses smiley emoji">
-          😎
-        </span>
+      <p>
+        Edit <code>src/pages/index.js</code> to see this page update in
+        real-time.
+        <br />
+        <b>Example pages:</b>{" "}
+        {samplePageLinks.map(link => (
+          <Link to={link.url} key={link.url}>
+            {link.text}
+          </Link>
+        ))}
       </p>
       <ul style={listStyles}>
         {links.map(link => (
@@ -115,29 +107,8 @@ const IndexPage = () => (
                 style={linkStyle}
                 href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
               >
-                {link.text}
+                {link.text} ↗
               </a>
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <span>Sample pages</span>
-      <ul style={listStyles}>
-        {samplePageLinks.map(link => (
-          <li>
-            <Link
-              to={link.url}
-              key={link.url}
-              style={{ ...listItemStyles, color: link.color }}
-            />
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-              >
-                {link.text}
-              </a>{" "}
               <p style={descriptionStyle}>{link.description}</p>
             </span>
           </li>
