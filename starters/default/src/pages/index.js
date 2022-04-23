@@ -93,10 +93,13 @@ const IndexPage = () => (
         real-time.
         <br />
         <b>Example pages:</b>{" "}
-        {samplePageLinks.map(link => (
+        {samplePageLinks.map((link, i) => (
+          <>
           <Link to={link.url} key={link.url}>
             {link.text}
           </Link>
+            {i !== samplePageLinks.length - 1 && <> &middot; </>}
+          </>
         ))}
       </p>
       <ul style={listStyles}>
