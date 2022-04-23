@@ -63,6 +63,7 @@ pre,
 samp {
   font-family: var(--fonts-mono);
   font-size: 1em;
+  line-height: inherit;
 }
 hr {
   box-sizing: content-box;
@@ -160,8 +161,9 @@ code {
   border-radius: var(--border-radius);
   color: #8A6534;
   font-family: var(--fonts-mono);
-  padding-bottom: 0.2em;
-  padding-top: 0.2em;
+  padding-bottom: 0.25em;
+  padding-top: 0.25em;
+  word-break: normal;
 }
 pre code {
   background: none;
@@ -170,14 +172,13 @@ code:before,
 code:after,
 tt:before,
 tt:after {
-  content: " ";
+  content: "\00a0";
   letter-spacing: -0.2em;
-  word-break: normal;
 }
 pre code:before,
 pre code:after,
 pre tt:before,
 pre tt:after {
-  content: "";
+  content: none;
 }
 
