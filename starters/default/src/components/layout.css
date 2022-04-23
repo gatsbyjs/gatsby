@@ -90,10 +90,10 @@ hr {
 hgroup, img, figure, fieldset, ul, ol, dl, dd, p {
   margin: 0;
   padding: 0;
-  margin-bottom: 1.45rem;
+  margin-bottom: 1.5rem;
 }
 ul, ol {
-  margin-left: 1.45rem;
+  margin-left: 1.5rem;
   list-style-position: outside;
   list-style-image: none;
 }
@@ -101,28 +101,28 @@ pre {
   margin-left: 0;
   margin-right: 0;
   margin-top: 0;
-  margin-bottom: 1.45rem;
+  margin-bottom: 1.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
   background: hsla(0, 0%, 0%, 0.04);
   border-radius: var(--border-radius);
   overflow: auto;
   word-wrap: normal;
-  padding: 1.45rem;
+  padding: 1.5rem;
 }
 b, strong, dt, th {
   font-weight: bold;
 }
 li {
-  margin-bottom: calc(1.45rem / 2);
+  margin-bottom: calc(1.5rem / 2);
 }
 ol li, ul li {
   padding-left: 0;
 }
 li > ol, li > ul {
-  margin-bottom: calc(1.45rem / 2);
-  margin-left: 1.45rem;
-  margin-top: calc(1.45rem / 2);
+  margin-bottom: calc(1.5rem / 2);
+  margin-left: 1.5rem;
+  margin-top: calc(1.5rem / 2);
 }
 blockquote *:last-child {
   margin-bottom: 0;
@@ -134,7 +134,7 @@ p *:last-child {
   margin-bottom: 0;
 }
 li > p {
-  margin-bottom: calc(1.45rem / 2);
+  margin-bottom: calc(1.5rem / 2);
 }
 p {
   max-width: 680px;
