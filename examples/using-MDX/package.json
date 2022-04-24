@@ -7,8 +7,9 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.18",
     "@mdx-js/react": "^1.6.18",
-    "@nivo/bar": "^0.79.1",
-    "@nivo/core": "^0.79.0",
+    "@nivo/bar": "0.78.0",
+    "@nivo/core": "0.78.0",
+    "@nivo/line": "0.78.0",
     "gatsby": "next",
     "gatsby-image": "next",
     "gatsby-plugin-manifest": "next",
