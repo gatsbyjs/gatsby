@@ -6,11 +6,36 @@ This file is written in MDX and has a live React component you can interact with
 
 ### Data represented in BarChart
 
-<div id="bar" style={{ height: "80vh" }}>
+<div id="bar" style={{ height: "40vh" }}>
   <ResponsiveBar
     data={nivoData}
     keys={["InApp", "Advertising"]}
     indexBy="year"
+    colors={{ scheme: "nivo" }}
+    margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+    legends={[
+      {
+        dataFrom: "keys",
+        anchor: "bottom-right",
+        direction: "column",
+        justify: false,
+        itemsSpacing: 2,
+        itemWidth: 100,
+        itemHeight: 20,
+        itemDirection: "left-to-right",
+        itemOpacity: 0.85,
+        symbolSize: 20,
+        translateX: 100,
+        effects: [
+          {
+            on: "hover",
+            style: {
+              itemOpacity: 1,
+            },
+          },
+        ],
+      },
+    ]}
   />
 </div>
 
