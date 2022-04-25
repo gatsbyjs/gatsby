@@ -140,7 +140,6 @@ const watch = async (rootDir: string): Promise<void> => {
       { ignoreInitial: true, ignored: [`**/*.d.ts`] }
     )
     .on(`change`, path => {
-      console.log(path)
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
     .on(`add`, path => {

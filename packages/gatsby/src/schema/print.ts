@@ -27,7 +27,7 @@ import {
 import { printBlockString } from "graphql/language/blockString"
 import { internalExtensionNames } from "./extensions"
 import _ from "lodash"
-import { builtInScalarTypeNames } from "./types/built-in-types"
+import { internalTypeNames } from "./types/built-in-types"
 
 export interface ISchemaPrintConfig {
   path?: string
@@ -310,16 +310,6 @@ const printType = (tc: NamedTypeComposer<unknown>): string => {
 
   return ``
 }
-
-export const internalTypeNames = [
-  ...builtInScalarTypeNames,
-  `Buffer`,
-  `Internal`,
-  `InternalInput`,
-  `Node`,
-  `NodeInput`,
-  `Query`,
-]
 
 export const printTypeDefinitions = ({
   config,

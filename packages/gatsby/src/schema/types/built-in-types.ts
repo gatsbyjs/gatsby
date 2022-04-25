@@ -88,7 +88,7 @@ const directoryType = `
 
 const siteType = `
   type Site implements Node @infer {
-    buildTime: Date! @dateformat
+    buildTime: Date @dateformat
     siteMetadata: SiteSiteMetadata
   }
 `
@@ -156,4 +156,14 @@ export const builtInScalarTypeNames = [
   `Int`,
   `JSON`,
   `String`,
+]
+
+export const internalTypeNames = [
+  ...builtInScalarTypeNames,
+  `Buffer`,
+  `Internal`,
+  `InternalInput`,
+  `Node`,
+  `NodeInput`,
+  `Query`,
 ]
