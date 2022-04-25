@@ -114,12 +114,10 @@ const IndexPage = () => (
       >
         <b>Example pages:</b>{" "}
         {samplePageLinks.map((link, i) => (
-          <>
-            <Link to={link.url} key={link.url}>
-              {link.text}
-            </Link>
+          <React.Fragment key={link.url}>
+            <Link to={link.url}>{link.text}</Link>
             {i !== samplePageLinks.length - 1 && <> &middot; </>}
-          </>
+          </React.Fragment>
         ))}
         <br />
         Edit <code>src/pages/index.js</code> to update this page.
@@ -139,12 +137,10 @@ const IndexPage = () => (
       ))}
     </ul>
     {moreLinks.map((link, i) => (
-      <>
-        <a href={link.url} key={link.url}>
-          {link.text}
-        </a>
+      <React.Fragment key={link.url}>
+        <a href={link.url}>{link.text}</a>
         {i !== moreLinks.length - 1 && <> &middot; </>}
-      </>
+      </React.Fragment>
     ))}
   </Layout>
 )
