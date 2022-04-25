@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby",
-  "version": "2.14.0-next.0",
+  "version": "2.14.0-next.1",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
     "@babel/preset-react": "^7.14.0",
     "@babel/runtime": "^7.15.4",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "babel-plugin-macros": "^2.8.0",
+    "babel-plugin-macros": "^3.1.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "gatsby-core-utils": "^3.14.0-next.0",
+    "gatsby-core-utils": "^3.14.0-next.1",
     "gatsby-legacy-polyfills": "^2.14.0-next.0"
   },
   "peerDependencies": {
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
-    "babel-preset-gatsby-package": "^2.14.0-next.0",
+    "babel-preset-gatsby-package": "^2.14.0-next.1",
     "cross-env": "^7.0.3",
     "slash": "^3.0.0"
   },
