@@ -315,6 +315,20 @@ export default async function staticPage({
       pathPrefix: __PATH_PREFIX__,
     })
 
+    reversedScripts.forEach(script => {
+      // Add preload/prefetch <link>s magic comments
+      if (script.shouldGenerateLink) {
+        headComponents.push(
+          <link
+            as="script"
+            rel={script.rel}
+            key={script.name}
+            href={`${__PATH_PREFIX__}/${script.name}`}
+          />
+        )
+      }
+    })
+
     reversedStyles.forEach(style => {
       // Add <link>s for styles that should be prefetched
       // otherwise, inline as a <style> tag

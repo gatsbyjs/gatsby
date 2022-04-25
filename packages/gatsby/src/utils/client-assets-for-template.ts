@@ -15,6 +15,7 @@ interface IChunk {
   name: string
   rel: string
   content?: string
+  shouldGenerateLink?: boolean
 }
 
 const inlineCssPromiseCache = new Map<string, Promise<string>>()
@@ -36,7 +37,11 @@ export async function getScriptsAndStylesForTemplate(
   /**
    * Add script or style to correct bucket. Make sure those are unique (no duplicates) and that "preload" will win over any other "rel"
    */
-  function handleAsset(name: string, rel: string): void {
+  function handleAsset(
+    name: string,
+    rel: string,
+    shouldGenerateLink: boolean = false
+  ): void {
     let uniqueAssetsMap: Map<string, IChunk> | undefined
 
     // pick correct map depending on asset type
@@ -58,7 +63,7 @@ export async function getScriptsAndStylesForTemplate(
         // as it has higher priority
         existingAsset.rel = `preload`
       } else if (!existingAsset) {
-        uniqueAssetsMap.set(name, { name, rel })
+        uniqueAssetsMap.set(name, { name, rel, shouldGenerateLink })
       }
     }
   }
@@ -103,7 +108,7 @@ export async function getScriptsAndStylesForTemplate(
     }
 
     for (let [rel, assets] of Object.entries(childAssets)) {
-      // Remove JS asset for templates
+      // Remove JS asset for templates(magic comments)
       if (chunkName !== `app`) {
         // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
         assets = assets.filter(asset => !asset.endsWith(`.js`))
@@ -111,7 +116,9 @@ export async function getScriptsAndStylesForTemplate(
 
       // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
       for (const asset of assets) {
-        handleAsset(asset, rel)
+        // Use shouldGenerateLink to determines if  we should append link for magic comment asset(preload|prefetch) to head
+        const shouldGenerateLink = chunkName == `app` ? true : false
+        handleAsset(asset, rel, shouldGenerateLink)
       }
     }
   }
