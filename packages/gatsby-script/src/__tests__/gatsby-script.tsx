@@ -57,6 +57,17 @@ describe(`Script`, () => {
     expect(script.getAttribute(`data-strategy`)).toEqual(ScriptStrategy.idle)
   })
 
+  it(`should be possible to declare an off-main-thread strategy`, () => {
+    const { container } = render(
+      <Script src={scripts.react} strategy={ScriptStrategy.offMainThread} />
+    )
+    const script = container.parentElement.querySelector(`script`)
+    expect(script.getAttribute(`data-strategy`)).toEqual(
+      ScriptStrategy.offMainThread
+    )
+    expect(script.getAttribute(`type`)).toEqual(`text/partytown`)
+  })
+
   it(`should include inline scripts passed via the dangerouslySetInnerHTML prop in the DOM`, () => {
     for (const strategy of strategies) {
       const { container } = render(
