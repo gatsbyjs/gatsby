@@ -14,8 +14,8 @@ Note: Future time ranges are listed when a specific target date is not yet deter
 
 | Version | Status                        | As Of            | Until       |
 | ------- | ----------------------------- | ---------------- | ----------- |
-| 4       | Active Long-term support      | October 21, 2021 | Q4 2022 |
-| 3       | Maintenance Long-term support | October 21, 2021 | Q4 2022 |
+| 4       | Active Long-term support      | October 21, 2021 | Q4 2022     |
+| 3       | Maintenance Long-term support | October 21, 2021 | Q4 2022     |
 | 2       | Unsupported                   | January 1, 2022  | -           |
 
 ## Terminology
