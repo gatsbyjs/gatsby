@@ -335,15 +335,7 @@ describe(`build-headers-program`, () => {
       mergeSecurityHeaders: true,
     }
     const buildHeadersProgram = require(`../build-headers-program`).default
-
     await buildHeadersProgram(pluginData, pluginOptions)
-
-    const file = await fs.readFile(
-      pluginData.publicFolder(HEADERS_FILENAME),
-      `utf8`
-    )
-
-    console.log(file)
 
     expect(
       await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
