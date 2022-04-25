@@ -16,7 +16,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@parcel/plugin": "^2.4.1",
+    "@parcel/plugin": "^2.5.0",
     "@babel/runtime": "^7.15.4"
   },
   "devDependencies": {
@@ -26,7 +26,7 @@
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "@parcel/namer-default": "^2.4.1"
+    "@parcel/namer-default": "^2.5.0"
   },
   "scripts": {
     "build": "babel src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\"",
@@ -34,6 +34,6 @@
     "watch": "babel -w src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\""
   },
   "files": [
-    "lib/*.js"
+    "lib/index.js"
   ]
 }
