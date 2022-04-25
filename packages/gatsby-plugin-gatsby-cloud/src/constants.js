@@ -25,12 +25,8 @@ export const SECURITY_HEADERS = {
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
     `Referrer-Policy: same-origin`,
+    `X-Frame-Options: DENY`,
   ],
-}
-
-// It is a common use case to want to iframe preview
-if (process.env.GATSBY_IS_PREVIEW !== `true`) {
-  SECURITY_HEADERS[`/*`].push(`X-Frame-Options: DENY`)
 }
 
 export const IMMUTABLE_CACHING_HEADER = `Cache-Control: public, max-age=31536000, immutable`
