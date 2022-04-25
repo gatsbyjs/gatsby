@@ -44,14 +44,14 @@ const links = [
     text: "Examples",
     url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
     description:
-      "Example websites sit on one or the other end of the spectrum from very basic to complex/complete.",
+      "A collection of websites ranging from very basic to complex/complete that illustrate how to accomplish specific tasks within your Gatsby sites.",
     color: "#159BF3",
   },
   {
     text: "Plugin Library",
     url: "https://www.gatsbyjs.com/plugins",
     description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
+      "Learn how to add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
     color: "#8EB814",
   },
   {
