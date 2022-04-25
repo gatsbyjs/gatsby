@@ -94,7 +94,7 @@ const moreLinks = [
 const IndexPage = () => (
   <Layout>
     <Seo title="Home" />
-    <h1 style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center" }}>
       <StaticImage
         src="../images/example.png"
         width={64}
@@ -103,28 +103,28 @@ const IndexPage = () => (
         alt=""
         style={{ marginBottom: `var(--space-3)` }}
       />
-      <br />
-      Welcome to <b>Gatsby!</b>
-    </h1>
-    <p
-      style={{
-        textAlign: `center`,
-        maxWidth: `none`,
-        lineHeight: `var(--line-height-loose)`,
-      }}
-    >
-      <b>Example pages:</b>{" "}
-      {samplePageLinks.map((link, i) => (
-        <>
-          <Link to={link.url} key={link.url}>
-            {link.text}
-          </Link>
-          {i !== samplePageLinks.length - 1 && <> &middot; </>}
-        </>
-      ))}
-      <br />
-      Edit <code>src/pages/index.js</code> to update this page.
-    </p>
+      <h1>
+        Welcome to <b>Gatsby!</b>
+      </h1>
+      <p
+        style={{
+          maxWidth: `none`,
+          lineHeight: `var(--line-height-loose)`,
+        }}
+      >
+        <b>Example pages:</b>{" "}
+        {samplePageLinks.map((link, i) => (
+          <>
+            <Link to={link.url} key={link.url}>
+              {link.text}
+            </Link>
+            {i !== samplePageLinks.length - 1 && <> &middot; </>}
+          </>
+        ))}
+        <br />
+        Edit <code>src/pages/index.js</code> to update this page.
+      </p>
+    </div>
     <ul style={listStyles}>
       {links.map(link => (
         <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
@@ -132,7 +132,7 @@ const IndexPage = () => (
             style={linkStyle}
             href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
           >
-            {link.text} <small>↗</small>
+            {link.text} ↗
           </a>
           <p style={descriptionStyle}>{link.description}</p>
         </li>
