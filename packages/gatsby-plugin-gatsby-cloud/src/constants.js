@@ -13,7 +13,7 @@ export const CACHE_FUNCTIONS_FILENAME = `manifest.json`
 
 export const DEFAULT_OPTIONS = {
   headers: {},
-  mergeSecurityHeaders: process.env.GATSBY_IS_PREVIEW === `true` ? false : true,
+  mergeSecurityHeaders: true,
   mergeLinkHeaders: true,
   mergeCachingHeaders: true,
   transformHeaders: _.identity, // optional transform for manipulating headers for sorting, etc
@@ -22,11 +22,15 @@ export const DEFAULT_OPTIONS = {
 
 export const SECURITY_HEADERS = {
   "/*": [
-    `X-Frame-Options: DENY`,
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
     `Referrer-Policy: same-origin`,
   ],
+}
+
+// It is a common use case to want to iframe preview
+if (process.env.GATSBY_IS_PREVIEW !== `true`) {
+  SECURITY_HEADERS[`/*`].push(`X-Frame-Options: DENY`)
 }
 
 export const IMMUTABLE_CACHING_HEADER = `Cache-Control: public, max-age=31536000, immutable`
