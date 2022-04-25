@@ -1,27 +1,21 @@
 const execa = require(`execa`)
 const path = require(`path`)
-const fs = require(`fs-extra`)
 const glob = require(`glob`)
 const fetch = require(`node-fetch`)
 const md5File = require(`md5-file`)
-const createDevServer = require(`../../utils/create-devserver`)
+const { clean, createDevServer } = require(`../../utils/create-devserver`)
+const { isCI } = require("gatsby-core-utils")
 const basePath = path.resolve(__dirname, `../../`)
 
-// 2 min
-jest.setTimeout(2000 * 60)
-
-const cleanDirs = () =>
-  Promise.all([
-    fs.emptyDir(`${basePath}/public`),
-    fs.emptyDir(`${basePath}/.cache`),
-  ])
+// 5 min
+jest.setTimeout(5000 * 60)
 
 describe(`Lazy images`, () => {
   beforeAll(async () => {
-    await cleanDirs()
+    await clean()
   })
 
-  test(`should process images on demand`, async () => {
+  it(`should process images on demand`, async () => {
     const { kill } = await createDevServer()
     const contentDigest = await md5File(
       path.resolve("./src/images/gatsby-astronaut.png")
@@ -36,10 +30,12 @@ describe(`Lazy images`, () => {
     expect(response.status).toBe(200)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
-    expect(images.length).toBe(6)
+    // we disable lazy images on CI
+    // https://github.com/gatsbyjs/gatsby/blob/b474dbb25518b51ca8cc1ce75fffb044e7d8609a/packages/gatsby-plugin-sharp/src/index.js#L150-L159
+    expect(images.length).toBe(isCI() ? 6 : 1)
   })
 
-  test(`should process the rest of images on build`, async () => {
+  it(`should process the rest of images on build`, async () => {
     await execa(`yarn`, [`build`], {
       cwd: basePath,
       env: { NODE_ENV: `production` },
@@ -49,8 +45,8 @@ describe(`Lazy images`, () => {
     expect(images.length).toBe(6)
   })
 
-  test(`should process all images from a clean build`, async () => {
-    await cleanDirs()
+  it(`should process all images from a clean build`, async () => {
+    await clean()
     await execa(`yarn`, [`build`], {
       cwd: basePath,
       env: { NODE_ENV: `production` },
