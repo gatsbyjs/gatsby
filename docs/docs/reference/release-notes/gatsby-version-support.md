@@ -12,11 +12,11 @@ Generally, you can expect **1 major version per calendar year**. Although, there
 
 Note: Future time ranges are listed when a specific target date is not yet determined.
 
-| Version | Status                        | As Of            | Until       |
-| ------- | ----------------------------- | ---------------- | ----------- |
-| 4       | Active Long-term support      | October 21, 2021 | Q4 2022     |
-| 3       | Maintenance Long-term support | October 21, 2021 | Q4 2022     |
-| 2       | Unsupported                   | January 1, 2022  | -           |
+| Version | Status                        | As Of            | Until   |
+| ------- | ----------------------------- | ---------------- | ------- |
+| 4       | Active Long-term support      | October 21, 2021 | Q4 2022 |
+| 3       | Maintenance Long-term support | October 21, 2021 | Q4 2022 |
+| 2       | Unsupported                   | January 1, 2022  | -       |
 
 ## Terminology
 
