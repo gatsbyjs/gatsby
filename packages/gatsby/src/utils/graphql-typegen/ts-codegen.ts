@@ -7,6 +7,8 @@ import type { Types } from "@graphql-codegen/plugin-helpers"
 import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript/config"
 import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations/config"
 import { AnyAction, Store } from "redux"
+import { CodeFileLoader } from "@graphql-tools/code-file-loader"
+import { loadDocuments } from "@graphql-tools/load"
 import { IGatsbyState, IStateProgram } from "../../redux/types"
 import { filterTargetDefinitions, stabilizeSchema } from "./utils"
 
@@ -72,25 +74,32 @@ export async function writeTypeScriptTypes(
   }
 
   const { schema, definitions } = store.getState()
-
   const filename = slash(join(directory, OUTPUT_PATH))
-  const documents = [...filterTargetDefinitions(definitions).values()].map(
-    definitionMeta => {
-      return {
-        document: {
-          kind: Kind.DOCUMENT,
-          definitions: [definitionMeta.def],
-        },
-        hash: definitionMeta.hash.toString(),
-      }
+
+  const gatsbyNodeDocuments: Array<Types.DocumentFile> = await loadDocuments(
+    [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
+    {
+      loaders: [new CodeFileLoader()],
     }
   )
+
+  const documents: Array<Types.DocumentFile> = [
+    ...filterTargetDefinitions(definitions).values(),
+  ].map(definitionMeta => {
+    return {
+      document: {
+        kind: Kind.DOCUMENT,
+        definitions: [definitionMeta.def],
+      },
+      hash: definitionMeta.hash.toString(),
+    }
+  })
 
   const codegenOptions: Omit<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     // @ts-ignore - Incorrect types
     schema: undefined,
     schemaAst: stabilizeSchema(schema, true),
-    documents,
+    documents: documents.concat(gatsbyNodeDocuments),
     filename,
     config: {
       namingConvention: {

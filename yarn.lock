@@ -688,7 +688,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.3.tgz#b07702b982990bf6fdc1da5049a23fece4c5c3d0"
   integrity sha512-7yJPvPV+ESz2IUTPbOL+YkIGyCqOyNIzdguKQuJGnH7bg1WTIifuM21YqokFt/THWh1AkCRn9IgoykTRCBVpzA==
 
-"@babel/parser@^7.14.0", "@babel/parser@^7.17.9":
+"@babel/parser@^7.14.0", "@babel/parser@^7.16.8", "@babel/parser@^7.17.9":
   version "7.17.9"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.9.tgz#9c94189a6062f0291418ca021077983058e171ef"
   integrity sha512-vqUSBLP8dQHFPdPi9bc5GK9vRkYHJ49fsZdtoJ8EQ8ibpwk5rPKfvNIwChB0KVXcIjcepEBBd2VHC5r9Gy8ueg==
@@ -1803,7 +1803,7 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
-"@babel/traverse@^7.14.0", "@babel/traverse@^7.17.3", "@babel/traverse@^7.17.9":
+"@babel/traverse@^7.14.0", "@babel/traverse@^7.16.8", "@babel/traverse@^7.17.3", "@babel/traverse@^7.17.9":
   version "7.17.9"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.17.9.tgz#1f9b207435d9ae4a8ed6998b2b82300d83c37a0d"
   integrity sha512-PQO8sDIJ8SIwipTPiR71kJQCKQYB5NGImbOviK8K+kg5xkNSYXLBupuX9QhatFowrsvo9Hj8WgArg3W7ijNAQw==
@@ -2147,6 +2147,17 @@
     tslib "~2.3.0"
     value-or-promise "1.0.11"
 
+"@graphql-tools/code-file-loader@^7.2.14":
+  version "7.2.14"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/code-file-loader/-/code-file-loader-7.2.14.tgz#b43ce0c682040b3969f1f785b18fc33c79341084"
+  integrity sha512-ajNET8XO2e3SgIXXAskc/Dv/M/+Z35TgXopf3axt1e9TboG/KkQxIE0Mi84XqCYDMtF5UqmIWqQ2gVdwFPfjiw==
+  dependencies:
+    "@graphql-tools/graphql-tag-pluck" "7.2.6"
+    "@graphql-tools/utils" "8.6.9"
+    globby "^11.0.3"
+    tslib "~2.3.0"
+    unixify "^1.0.0"
+
 "@graphql-tools/delegate@8.7.1", "@graphql-tools/delegate@^8.4.2":
   version "8.7.1"
   resolved "https://registry.yarnpkg.com/@graphql-tools/delegate/-/delegate-8.7.1.tgz#f30b9d035a76dc7a8e9292f31bb073fb4d6d9d83"
@@ -2181,6 +2192,17 @@
     "@graphql-tools/utils" "^6.2.4"
     fs-extra "9.0.1"
     tslib "~2.0.1"
+
+"@graphql-tools/graphql-tag-pluck@7.2.6":
+  version "7.2.6"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/graphql-tag-pluck/-/graphql-tag-pluck-7.2.6.tgz#0bddc23b354c2912e17b15209ad1e7117f9fa4da"
+  integrity sha512-TWF+0MTdWIfETYt2Pm1+jg608aIavgGkjJuN3f2Z4iWhPNvupHkHexAzV4GNkrQa0yXzIl6bQF8uNRjz4v31SA==
+  dependencies:
+    "@babel/parser" "^7.16.8"
+    "@babel/traverse" "^7.16.8"
+    "@babel/types" "^7.16.8"
+    "@graphql-tools/utils" "8.6.9"
+    tslib "~2.3.0"
 
 "@graphql-tools/import@^6.2.4":
   version "6.2.4"
@@ -2227,6 +2249,24 @@
     unixify "1.0.0"
     valid-url "1.0.9"
 
+"@graphql-tools/load@^7.5.10":
+  version "7.5.10"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/load/-/load-7.5.10.tgz#6e53dd62ec081b3a2966ab9d93e8b991f06501b3"
+  integrity sha512-I9b9Md1DdB7Du//+x8CtBAKUW21jyuENCPssvlBjHZjvmx5cIGrTftqwGzuDBgR0Zm72tkmat/FTu6/SQPiyeQ==
+  dependencies:
+    "@graphql-tools/schema" "8.3.10"
+    "@graphql-tools/utils" "8.6.9"
+    p-limit "3.1.0"
+    tslib "~2.3.0"
+
+"@graphql-tools/merge@8.2.10":
+  version "8.2.10"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-8.2.10.tgz#fe2fe5ad33dc2d1b0af8751c0c08d18bb6bb6d88"
+  integrity sha512-wpg22seOTNfkIO8jFAgo8w1BsT3IS2OTMpkCNf+dvcKSP09SVidYCOliyWHgjDCmpCrvvSjOX855NUKDx/Biew==
+  dependencies:
+    "@graphql-tools/utils" "8.6.9"
+    tslib "~2.3.0"
+
 "@graphql-tools/merge@8.2.6":
   version "8.2.6"
   resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-8.2.6.tgz#7fb615fa9c143c3151ff025e501d52bd48186d19"
@@ -2267,6 +2307,16 @@
     "@graphql-tools/utils" "8.6.8"
     relay-compiler "12.0.0"
     tslib "~2.3.0"
+
+"@graphql-tools/schema@8.3.10":
+  version "8.3.10"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-8.3.10.tgz#c3e373e6ad854f533fc7e55859dd8f9e81de30dd"
+  integrity sha512-tfhjSTi3OzheDrVzG7rkPZg2BbQjmZRLM2vvQoM2b1TnUwgUIbpAgcnf+AWDLRsoCOWlezeLgij1BLeAR0Q0jg==
+  dependencies:
+    "@graphql-tools/merge" "8.2.10"
+    "@graphql-tools/utils" "8.6.9"
+    tslib "~2.3.0"
+    value-or-promise "1.0.11"
 
 "@graphql-tools/schema@8.3.6", "@graphql-tools/schema@^8.3.1":
   version "8.3.6"
@@ -2322,6 +2372,13 @@
   version "8.6.8"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.6.8.tgz#a0824ed5810f66c504df4e97c5900786ac0c260e"
   integrity sha512-EdUUeKi/wp/UvuknyINpQ/uXDqTM3qxPPPDIq5RpfW0zQOeCvbZcx8xHoMox0TYKvKtg3zoB7aprUtoW+iZLxw==
+  dependencies:
+    tslib "~2.3.0"
+
+"@graphql-tools/utils@8.6.9":
+  version "8.6.9"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.6.9.tgz#fe1b81df29c9418b41b7a1ffe731710b93d3a1fe"
+  integrity sha512-Z1X4d4GCT81+8CSt6SgU4t1w1UAUsAIRb67mI90k/zAs+ArkB95iE3bWXuJCUmd1+r8DGGtmUNOArtd6wkt+OQ==
   dependencies:
     tslib "~2.3.0"
 
@@ -18331,6 +18388,13 @@ p-limit@3.0.2:
   dependencies:
     p-try "^2.0.0"
 
+p-limit@3.1.0, p-limit@^3.0.2, p-limit@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
+  integrity sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==
+  dependencies:
+    yocto-queue "^0.1.0"
+
 p-limit@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-1.3.0.tgz#b86bd5f0c25690911c7590fcbfc2010d54b3ccb8"
@@ -18343,13 +18407,6 @@ p-limit@^2.0.0, p-limit@^2.1.0, p-limit@^2.2.0:
   integrity sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==
   dependencies:
     p-try "^2.0.0"
-
-p-limit@^3.0.2, p-limit@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
-  integrity sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==
-  dependencies:
-    yocto-queue "^0.1.0"
 
 p-locate@^2.0.0:
   version "2.0.0"
@@ -25175,7 +25232,7 @@ unix-crypt-td-js@1.1.4:
   resolved "https://registry.yarnpkg.com/unix-crypt-td-js/-/unix-crypt-td-js-1.1.4.tgz#4912dfad1c8aeb7d20fa0a39e4c31918c1d5d5dd"
   integrity sha512-8rMeVYWSIyccIJscb9NdCfZKSRBKYTeVnwmiRYT2ulE3qd1RaDQ0xQDP+rI3ccIWbhu/zuo5cgN8z73belNZgw==
 
-unixify@1.0.0:
+unixify@1.0.0, unixify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unixify/-/unixify-1.0.0.tgz#3a641c8c2ffbce4da683a5c70f03a462940c2090"
   integrity sha1-OmQcjC/7zk2mg6XHDwOkYpQMIJA=
