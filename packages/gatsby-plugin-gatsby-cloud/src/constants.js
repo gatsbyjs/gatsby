@@ -13,7 +13,7 @@ export const CACHE_FUNCTIONS_FILENAME = `manifest.json`
 
 export const DEFAULT_OPTIONS = {
   headers: {},
-  mergeSecurityHeaders: true,
+  mergeSecurityHeaders: process.env.GATSBY_IS_PREVIEW === `true` ? false : true,
   mergeLinkHeaders: true,
   mergeCachingHeaders: true,
   transformHeaders: _.identity, // optional transform for manipulating headers for sorting, etc
