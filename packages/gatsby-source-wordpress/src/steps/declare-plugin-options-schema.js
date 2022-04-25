@@ -844,6 +844,20 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             }
           }`),
           }),
+        exclude: Joi.boolean()
+          .allow(null)
+          .description(
+            `Completely excludes MediaItem nodes from node sourcing and from the ingested schema. Setting this to true also disables the html.createStaticFiles, html.useGatsbyImage, and type.MediaItem.createFileNodes options.`
+          )
+          .meta({
+            example: wrapOptions(`
+              type: {
+                MediaItem: {
+                  exclude: true,
+                },
+              },
+            `),
+          }),
       }),
     })
       .pattern(Joi.string(), getTypeOptions())
