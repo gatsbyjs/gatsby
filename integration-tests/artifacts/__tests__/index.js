@@ -533,7 +533,7 @@ describe(`First run (baseline)`, () => {
       )
     })
 
-    describe(`should add <link> for webpack's magic comments`, () => {
+    describe(`should add <link> for webpack's magic comments inside "app" bundle`, () => {
       let htmlContent
       beforeAll(() => {
         htmlContent = fs.readFileSync(
@@ -547,14 +547,26 @@ describe(`First run (baseline)`, () => {
         )
       })
 
-      it(`has prefetch link`, () => {
+      it(`has prefetch link (imported in "app")`, () => {
         expect(htmlContent).toMatch(
+          /<link\s+as="script"\s+rel="prefetch"\s+href="\/magic-comment-app-prefetch-\w+.js"\s*\/>/g
+        )
+      })
+
+      it(`has preload link (imported in "app")`, () => {
+        expect(htmlContent).toMatch(
+          /<link\s+as="script"\s+rel="preload"\s+href="\/magic-comment-app-preload-\w+.js"\s*\/>/g
+        )
+      })
+
+      it(`doesn't have prefetch link (imported in template)`, () => {
+        expect(htmlContent).not.toMatch(
           /<link\s+as="script"\s+rel="prefetch"\s+href="\/magic-comment-prefetch-\w+.js"\s*\/>/g
         )
       })
 
-      it(`has preload link`, () => {
-        expect(htmlContent).toMatch(
+      it(`doesn't have preload link (imported in template)`, () => {
+        expect(htmlContent).not.toMatch(
           /<link\s+as="script"\s+rel="preload"\s+href="\/magic-comment-preload-\w+.js"\s*\/>/g
         )
       })
