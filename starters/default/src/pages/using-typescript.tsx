@@ -19,9 +19,8 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({ data, path }) => (
     </h1>
     <p>
       This means that you can create and write <code>.ts/.tsx</code> files for
-      your pages, components etc. Please note that the <code>gatsby-*.js</code>{" "}
-      files (like <code>gatsby-node.js</code>) currently don't support
-      TypeScript yet.
+      your pages, components, and <code>gatsby-*</code> configuration files (for
+      example <code>gatsby-config.ts</code>).
     </p>
     <p>
       For type checking you'll want to install <code>typescript</code> via npm
