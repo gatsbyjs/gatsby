@@ -321,6 +321,24 @@ describe(`build-headers-program`, () => {
     ).toMatchSnapshot()
   })
 
+  it(`with security headers in preview mode`, async () => {
+    process.env.GATSBY_IS_PREVIEW = `true`
+    const pluginData = await createPluginData()
+
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+      mergeSecurityHeaders: true,
+    }
+
+    await buildHeadersProgram(pluginData, pluginOptions)
+
+    expect(
+      await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
+    ).toMatchSnapshot()
+
+    process.env.GATSBY_IS_PREVIEW = undefined
+  })
+
   it(`should emit headers via ipc`, async () => {
     const pluginData = await createPluginData()
     const pluginOptions = {
