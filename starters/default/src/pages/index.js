@@ -7,37 +7,31 @@ import Seo from "../components/seo"
 
 const listStyles = {
   margin: 0,
-  maxWidth: 740,
+  maxWidth: `var(--size-content)`,
   padding: 0,
-  display: "grid",
+  display: `grid`,
   // https://css-tricks.com/responsive-layouts-fewer-media-queries/
-  "--w": "300px",
-  "--n": "2",
-  "--g": "64px",
-  gridTemplateColumns:
-    "repeat(auto-fit,minmax(max(var(--w), 100%/(var(--n) + 1) + 0.1%),1fr))",
-  marginBottom: "var(--g)",
-  marginTop: "var(--g)",
-  gap: "var(--g)",
+  "--w": `280px`,
+  "--n": `2`,
+  gridTemplateColumns: `repeat(auto-fit,minmax(max(var(--w), 100%/(var(--n) + 1) + 0.1%),1fr))`,
+  marginBottom: `var(--size-gap)`,
+  marginTop: `var(--size-gap)`,
+  gap: `var(--size-gap)`,
 }
 const listItemStyles = {
   margin: 0,
 }
 const linkStyle = {
-  color: "var(--color-primary)",
-  fontSize: 16,
-  fontWeight: "bold",
+  color: `var(--color-primary)`,
+  fontSize: `var(--font-md)`,
+  fontWeight: `bold`,
 }
 const descriptionStyle = {
-  color: "var(--text-color)",
+  color: `var(--color-text)`,
   marginBottom: 0,
-  marginTop: "0.25rem",
-}
-const foo = {
-  color: "var(--color-primary)",
+  marginTop: `var(--space-1)`,
 }
 
-// data
 const links = [
   {
     text: "Tutorial",
@@ -67,6 +61,12 @@ const links = [
       "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
     color: "#663399",
   },
+  // {
+  //   text: "Documentation",
+  //   url: "https://www.gatsbyjs.com/docs",
+  //   description: "TK",
+  //   color: "#663399",
+  // },
 ]
 
 const samplePageLinks = [
@@ -100,14 +100,18 @@ const IndexPage = () => (
         quality={95}
         formats={["auto", "webp", "avif"]}
         alt=""
-        style={{ marginBottom: `1rem` }}
+        style={{ marginBottom: `var(--space-3)` }}
       />
       <br />
       Welcome to <b>Gatsby!</b>
     </h1>
-    <p style={{ textAlign: "center", maxWidth: "none" }}>
-      Edit <code>src/pages/index.js</code> to update this page.
-      <br />
+    <p
+      style={{
+        textAlign: `center`,
+        maxWidth: `none`,
+        lineHeight: `var(--line-height-loose)`,
+      }}
+    >
       <b>Example pages:</b>{" "}
       {samplePageLinks.map((link, i) => (
         <>
@@ -117,6 +121,8 @@ const IndexPage = () => (
           {i !== samplePageLinks.length - 1 && <> &middot; </>}
         </>
       ))}
+      <br />
+      Edit <code>src/pages/index.js</code> to update this page.
     </p>
     <ul style={listStyles}>
       {links.map(link => (
@@ -125,7 +131,7 @@ const IndexPage = () => (
             style={linkStyle}
             href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
           >
-            <span style={foo}>{link.text}</span> <small>↗</small>
+            {link.text} <small>↗</small>
           </a>
           <p style={descriptionStyle}>{link.description}</p>
         </li>
