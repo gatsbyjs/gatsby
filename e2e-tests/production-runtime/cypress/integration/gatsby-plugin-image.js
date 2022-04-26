@@ -69,7 +69,7 @@ describe(`gatsby-plugin-image`, () => {
     })
   })
 
-  it(`rerenders when image src changed`, () => {
+  it.only(`rerenders when image src changed`, () => {
     const mutationStub = cy.stub()
     let cleanup
 
@@ -81,17 +81,37 @@ describe(`gatsby-plugin-image`, () => {
     // start watching mutations in the image-wrapper
     cy.get("#image-wrapper").then($element => {
       cleanup = observeDOM($element[0], {}, mutations => {
+        const normalizedMutations = []
         mutationStub(
-          mutations.map(mutation => ({
-            type: mutation.type,
-            addedNodes: !!mutation.addedNodes.length,
-            removedNodes: !!mutation.removedNodes.length,
-          }))
+          mutations.map(mutation => {
+            normalizedMutations.push({
+              addedNodes: mutation.addedNodes,
+              removedNodes: mutation.removedNodes,
+            })
+
+            return {
+              type: mutation.type,
+              addedNodes: !!mutation.addedNodes.length,
+              removedNodes: !!mutation.removedNodes.length,
+            }
+          })
         )
+
+        Cypress.log({
+          name: "MutationObserver",
+          message: `${normalizedMutations.length} mutations`,
+          consoleProps: () => {
+            return {
+              mutations: normalizedMutations,
+            }
+          },
+        })
       })
     })
 
     cy.get("#click").click()
+
+    cy.wait(100)
 
     cy.get("[data-main-image]", {
       timeout: 5000,
