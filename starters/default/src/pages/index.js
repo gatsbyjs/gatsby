@@ -35,28 +35,28 @@ const descriptionStyle = {
 const links = [
   {
     text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/",
+    url: "https://www.gatsbyjs.com/docs/tutorial/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
     description:
       "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
     color: "#E95800",
   },
   {
     text: "Examples",
-    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
+    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
     description:
       "A collection of websites ranging from very basic to complex/complete that illustrate how to accomplish specific tasks within your Gatsby sites.",
     color: "#159BF3",
   },
   {
     text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
+    url: "https://www.gatsbyjs.com/plugins/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
     description:
       "Learn how to add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
     color: "#8EB814",
   },
   {
     text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
+    url: "https://www.gatsbyjs.com/cloud/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
     description:
       "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
     color: "#663399",
@@ -78,10 +78,22 @@ const samplePageLinks = [
 
 const moreLinks = [
   { text: "Join us on Discord", url: "https://gatsby.dev/discord" },
-  { text: "Documentation", url: "https://gatsbyjs.com/docs/" },
-  { text: "Starters", url: "https://gatsbyjs.com/starters/" },
-  { text: "Showcase", url: "https://gatsbyjs.com/showcase/" },
-  { text: "Contributing", url: "https://www.gatsbyjs.com/contributing" },
+  {
+    text: "Documentation",
+    url: "https://gatsbyjs.com/docs/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+  },
+  {
+    text: "Starters",
+    url: "https://gatsbyjs.com/starters/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+  },
+  {
+    text: "Showcase",
+    url: "https://gatsbyjs.com/showcase/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+  },
+  {
+    text: "Contributing",
+    url: "https://www.gatsbyjs.com/contributing/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+  },
   { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
 ]
 
