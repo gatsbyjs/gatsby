@@ -139,7 +139,9 @@ const applyCachingHeaders =
 
     const cachingHeaders = {}
 
-    console.log(require(`util`).inspect(files, { depth: Infinity }))
+    console.log(
+      require(`util`).inspect(pluginData.manifest, { depth: Infinity })
+    )
 
     files.forEach(file => {
       if (typeof file === `string`) {
