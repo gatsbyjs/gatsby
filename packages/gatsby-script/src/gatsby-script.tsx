@@ -1,4 +1,5 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
+import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import type { PartytownProps } from "@builder.io/partytown/react"
 
@@ -68,6 +69,11 @@ export function Script(props: ScriptProps): ReactElement | null {
   if (strategy === ScriptStrategy.offMainThread) {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
+
+    const { collectScript } = useContext(PartytownContext)
+    if (collectScript) {
+      collectScript(attributes)
+    }
 
     if (inlineScript) {
       return (
