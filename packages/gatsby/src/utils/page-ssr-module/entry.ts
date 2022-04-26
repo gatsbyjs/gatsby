@@ -125,6 +125,12 @@ export async function getData({
     // query-runner handles case when query is not there - so maybe we should consider using that somehow
     let results: IExecutionResult = {}
     let serverData: IServerData | undefined
+
+    graphqlEngine.startQuery({
+      path: page.path,
+      componentPath: page.componentPath,
+    })
+
     if (templateDetails.query) {
       let runningQueryActivity: MaybePhantomActivity
       if (getDataWrapperActivity) {
@@ -174,6 +180,12 @@ export async function getData({
           })
       )
     }
+
+    graphqlEngine.endQuery({
+      path: page.path,
+      componentPath: page.componentPath,
+      result: results as Record<string, unknown>,
+    })
 
     // 4. (if SSR) run getServerData
     if (page.mode === `SSR`) {

@@ -201,6 +201,7 @@ type BabelStageKeys =
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
   browserslist: Array<string>
+  firstRun?: boolean
 }
 
 export interface IQueryState {
@@ -981,3 +982,10 @@ export interface IClearJobV2Context {
     requestId: string
   }
 }
+
+export type DataTrackingActionsToReplay = Array<
+  | IQueryStartAction
+  | IPageQueryRunAction
+  | IAddPendingPageDataWriteAction
+  | ICreatePageDependencyAction
+>

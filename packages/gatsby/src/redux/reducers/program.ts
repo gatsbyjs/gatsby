@@ -22,8 +22,16 @@ export const programReducer = (
   action: ActionsUnion
 ): IStateProgram => {
   switch (action.type) {
+    case `DELETE_CACHE`: {
+      return {
+        ...state,
+        firstRun: true,
+      }
+    }
+
     case `SET_PROGRAM`:
       return {
+        firstRun: false,
         ...action.payload,
       }
 

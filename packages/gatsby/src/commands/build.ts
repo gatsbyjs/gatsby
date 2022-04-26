@@ -220,7 +220,10 @@ module.exports = async function build(
     process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
 
   const pageGenerationJobsEnabled =
-    PAGE_GEN_ENABLED && externalJobsEnabled && process.send
+    PAGE_GEN_ENABLED &&
+    store.getState().program.firstRun &&
+    externalJobsEnabled &&
+    process.send
 
   /**
    * Rendering Engine

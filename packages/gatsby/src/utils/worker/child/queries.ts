@@ -8,13 +8,7 @@ import { GraphQLRunner } from "../../../query/graphql-runner"
 import { getDataStore } from "../../../datastore"
 import { setState } from "./state"
 import { buildSchema } from "./schema"
-import {
-  IAddPendingPageDataWriteAction,
-  ICreatePageDependencyAction,
-  IGatsbyState,
-  IPageQueryRunAction,
-  IQueryStartAction,
-} from "../../../redux/types"
+import { IGatsbyState, DataTrackingActionsToReplay } from "../../../redux/types"
 import { DeepPartial } from "redux"
 import { waitUntilPageQueryResultsAreStored } from "../../page-data"
 
@@ -53,17 +47,10 @@ function getGraphqlRunner(): GraphQLRunner {
   return gqlRunner
 }
 
-type ActionsToReplay = Array<
-  | IQueryStartAction
-  | IPageQueryRunAction
-  | IAddPendingPageDataWriteAction
-  | ICreatePageDependencyAction
->
-
 export async function runQueries(
   queryIds: IGroupedQueryIds
-): Promise<ActionsToReplay> {
-  const actionsToReplay: ActionsToReplay = []
+): Promise<DataTrackingActionsToReplay> {
+  const actionsToReplay: DataTrackingActionsToReplay = []
 
   const unsubscribe = store.subscribe(() => {
     const action = store.getState().lastAction
