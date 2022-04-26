@@ -1,4 +1,10 @@
-import { MachineConfig, AnyEventObject, forwardTo, Machine } from "xstate"
+import {
+  MachineConfig,
+  AnyEventObject,
+  forwardTo,
+  createMachine,
+  assign,
+} from "xstate"
 import { IDataLayerContext } from "../data-layer/types"
 import { IQueryRunningContext } from "../query-running/types"
 import { IWaitingContext } from "../waiting/types"
@@ -126,6 +132,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           graphqlRunner,
           websocketManager,
           pendingQueryRuns,
+          isFirstRun,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -135,6 +142,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             graphqlRunner,
             websocketManager,
             pendingQueryRuns,
+            isFirstRun,
           }
         },
         onDone: [
@@ -185,6 +193,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           target: `waiting`,
         },
       },
+      exit: assign<IBuildContext>({ isFirstRun: false }),
     },
     // Recompile the JS bundle
     recompiling: {
@@ -364,7 +373,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
   },
 }
 
-export const developMachine = Machine(developConfig, {
+export const developMachine = createMachine(developConfig, {
   services: developServices,
   actions: buildActions,
 })
