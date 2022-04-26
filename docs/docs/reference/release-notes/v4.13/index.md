@@ -65,6 +65,12 @@ We continue to have ongoing RFCs that we'd like your input on. Give it a read, i
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TBD
+- [critesjm](https://github.com/critesjm): fix(gatsby): add missing `ownerNodeId` prop to Page type [PR #35367](https://github.com/gatsbyjs/gatsby/pull/35367)
+- [inbreaks](https://github.com/inbreaks): chore(docs): Update `.gitlab-ci.yml` deploy [PR #35371](https://github.com/gatsbyjs/gatsby/pull/35371)
+- [doxsch](https://github.com/doxsch): fix(gatsby-transformer-screenshot): finished migration from better-queue to fastq [PR #35425](https://github.com/gatsbyjs/gatsby/pull/35425)
+- [axe312ger](https://github.com/axe312ger): chore: renovate - add cypress [PR #35375](https://github.com/gatsbyjs/gatsby/pull/35375)
+- [tackc](https://github.com/tackc): chore(docs):Update Link URL [PR #35462](https://github.com/gatsbyjs/gatsby/pull/35462)
+- [dofbi](https://github.com/dofbi): chore(gatsby-source-wordpress): Fix typo in `presets[].options` [PR #35455](https://github.com/gatsbyjs/gatsby/pull/35455)
+- [kspeyanski](https://github.com/kspeyanski): fix(gatsby-plugin-netlify-cms): react18-compatible require resolve [PR #35365](https://github.com/gatsbyjs/gatsby/pull/35365)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.13.0-next.0...gatsby@4.13.0
