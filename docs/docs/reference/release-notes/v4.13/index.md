@@ -9,7 +9,7 @@ Welcome to `gatsby@4.13.0` release (April 2022 #2)
 Key highlights of this release:
 
 - [Traced SVG option for Image CDN](#traced-svg-option-for-image-cdn)
-- [Open RFCs][#open-rfcs]
+- [Open RFCs](#open-rfcs)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
