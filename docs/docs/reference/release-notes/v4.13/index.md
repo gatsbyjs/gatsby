@@ -34,6 +34,14 @@ The change spans four separate packages:
 
 See [PR #35328](https://github.com/gatsbyjs/gatsby/pull/35328) for full details.
 
+## Open RFCs
+
+We continue to have ongoing RFCs that we'd like your input on. Give it a read, if applicable a try, and leave feedback. Thanks!
+
+- [New Bundler in Gatsby](https://github.com/gatsbyjs/gatsby/discussions/35357): We're looking at changing the underlying bundler at Gatsby. See the "How can I help?" section to see what we're looking to get from you, our community!
+- [Script Component](https://github.com/gatsbyjs/gatsby/discussions/35404): We would like to introduce a new API in Gatsby that aids in loading third-party scripts performantly.
+- [GraphQL TypeScript Generation](https://github.com/gatsbyjs/gatsby/discussions/35420): A built-in way for automatic TypeScript type generation and better GraphQL IntelliSense.
+
 ## Notable bugfixes & improvements
 
 - `gatsby`
