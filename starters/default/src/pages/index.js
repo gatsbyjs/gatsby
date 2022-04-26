@@ -105,6 +105,7 @@ const IndexPage = () => (
     <div style={{ textAlign: "center" }}>
       <StaticImage
         src="../images/example.png"
+        loading="eager"
         width={64}
         quality={95}
         formats={["auto", "webp", "avif"]}
