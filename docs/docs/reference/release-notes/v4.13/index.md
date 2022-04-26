@@ -49,6 +49,8 @@ See [PR #35328](https://github.com/gatsbyjs/gatsby/pull/35328) for full details.
   - Modify relative links based on trailing slash option via [PR #35444](https://github.com/gatsbyjs/gatsby/pull/35444)
 - `gatsby-transformer-screenshot`
   - Complete migration from better-queue to fastq via [PR #35425](https://github.com/gatsbyjs/gatsby/pull/35425)
+- `gatsby-source-contentful`
+  - Prevents null pointers when creating asset nodes that are not configured on some languages via [PR #35244](https://github.com/gatsbyjs/gatsby/pull/35244)
 
 ## Contributors
 
