@@ -25,5 +25,6 @@ export const developServices: Record<string, ServiceConfig<IBuildContext>> = {
   startWebpackServer,
   recompile,
   postBootstrap,
+  // @ts-ignore - TODO
   graphQLTypegen,
 }

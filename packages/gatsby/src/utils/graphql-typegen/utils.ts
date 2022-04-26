@@ -46,7 +46,6 @@ function typeNameFilter(typeName: string): boolean {
     typeName.endsWith(`FilterInput`) ||
     typeName.endsWith(`OperatorInput`) ||
     typeName.endsWith(`GroupConnection`) ||
-    typeName.endsWith(`Connection`) ||
     typeName.endsWith(`Edge`) ||
     typeName.endsWith(`Enum`)
   ) {

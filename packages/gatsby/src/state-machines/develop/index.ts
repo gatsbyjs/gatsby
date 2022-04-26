@@ -225,7 +225,10 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     graphQLTypegen: {
       invoke: {
-        src: `graphQLTypegen`,
+        src: {
+          type: `graphQLTypegen`,
+          compile: `all`,
+        },
         onDone: {
           target: `waiting`,
         },
@@ -335,10 +338,15 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       invoke: {
         id: `recreate-pages`,
         src: `recreatePages`,
-        data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
+        data: ({
+          parentSpan,
+          store,
+          program,
+        }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
             store,
+            program,
             deferNodeMutation: true,
             shouldRunCreatePagesStatefully: false,
           }

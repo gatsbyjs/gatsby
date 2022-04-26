@@ -69,6 +69,24 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
     invoke: {
       id: `building-schema`,
       src: `buildSchema`,
+      onDone: [
+        {
+          target: `graphQLTypegen`,
+          cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
+        },
+        {
+          target: `creatingPages`,
+          actions: `assignGraphQLRunners`,
+        },
+      ],
+    },
+  },
+  graphQLTypegen: {
+    invoke: {
+      src: {
+        type: `graphQLTypegen`,
+        compile: `schema`,
+      },
       onDone: {
         target: `creatingPages`,
         actions: `assignGraphQLRunners`,

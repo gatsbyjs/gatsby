@@ -5,6 +5,7 @@ import {
   buildSchema,
   sourceNodes,
   writeOutRedirects as writeOutRedirectsAndWatch,
+  graphQLTypegen,
 } from "../../services"
 import { IDataLayerContext } from "./types"
 
@@ -17,4 +18,6 @@ export const dataLayerServices: Record<
   createPages,
   buildSchema,
   writeOutRedirectsAndWatch,
+  // @ts-ignore - TODO
+  graphQLTypegen,
 }
