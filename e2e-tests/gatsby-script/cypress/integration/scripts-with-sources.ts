@@ -1,8 +1,6 @@
+import { ScriptStrategy } from "gatsby"
 import { Script, scripts } from "../../scripts"
 import { ResourceRecord } from "../../records"
-
-// TODO - Import from gatsby core after gatsby-script is in general availability
-import { ScriptStrategy } from "gatsby-script"
 
 // The page that we will assert against
 const page = `/scripts-with-sources`

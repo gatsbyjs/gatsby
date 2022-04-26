@@ -1,4 +1,4 @@
-import { ScriptStrategy } from "gatsby-script"
+import { ScriptStrategy } from "gatsby"
 import { InlineScript } from "./scripts"
 
 /**
