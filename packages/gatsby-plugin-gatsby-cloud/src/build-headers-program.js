@@ -139,10 +139,6 @@ const applyCachingHeaders =
 
     const cachingHeaders = {}
 
-    console.log(
-      require(`util`).inspect(pluginData.manifest, { depth: Infinity })
-    )
-
     files.forEach(file => {
       if (typeof file === `string`) {
         cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
