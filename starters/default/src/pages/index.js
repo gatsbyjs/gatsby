@@ -35,28 +35,28 @@ const descriptionStyle = {
 const links = [
   {
     text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+    url: "https://www.gatsbyjs.com/docs/tutorial",
     description:
       "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
     color: "#E95800",
   },
   {
     text: "Examples",
-    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
     description:
       "A collection of websites ranging from very basic to complex/complete that illustrate how to accomplish specific tasks within your Gatsby sites.",
     color: "#159BF3",
   },
   {
     text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+    url: "https://www.gatsbyjs.com/plugins",
     description:
       "Learn how to add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
     color: "#8EB814",
   },
   {
     text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud/?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter",
+    url: "https://www.gatsbyjs.com/cloud",
     description:
       "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
     color: "#663399",
@@ -97,6 +97,8 @@ const moreLinks = [
   { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
 ]
 
+const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
+
 const IndexPage = () => (
   <Layout>
     <Seo title="Home" />
@@ -132,10 +134,7 @@ const IndexPage = () => (
     <ul style={listStyles}>
       {links.map(link => (
         <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-          <a
-            style={linkStyle}
-            href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-          >
+          <a style={linkStyle} href={`${link.url}?${utmParameters}`}>
             {link.text} ↗
           </a>
           <p style={descriptionStyle}>{link.description}</p>
@@ -144,7 +143,7 @@ const IndexPage = () => (
     </ul>
     {moreLinks.map((link, i) => (
       <React.Fragment key={link.url}>
-        <a href={link.url}>{link.text}</a>
+        <a href={`${link.url}?${utmParameters}`}>{link.text}</a>
         {i !== moreLinks.length - 1 && <> &middot; </>}
       </React.Fragment>
     ))}
