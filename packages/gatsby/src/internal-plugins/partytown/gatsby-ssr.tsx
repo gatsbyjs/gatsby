@@ -9,7 +9,6 @@ const collectedScripts: Array<PartytownProps> = []
 export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({ element }) => (
   <PartytownContext.Provider
     value={{
-      collectedScripts,
       collectScript: (newScript: PartytownProps): void => {
         collectedScripts.push(newScript)
       },
