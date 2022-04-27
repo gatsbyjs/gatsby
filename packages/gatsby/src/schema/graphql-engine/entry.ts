@@ -19,8 +19,6 @@ import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
 
 // GATSBY_EXPERIMENTAL_BUNDLER
-import * as path from "path"
-import * as fs from "fs-extra"
 import {
   gatsbyNodes,
   gatsbyWorkers,
@@ -43,10 +41,8 @@ const tracerReadyPromise = initTracer(
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runnerPromise?: Promise<GraphQLRunner>
-  private dbPath: string
 
   constructor({ dbPath }: { dbPath: string }) {
-    this.dbPath = dbPath
     setupLmdbStore({ dbPath })
     // start initializing runner ASAP
     this.getRunner()

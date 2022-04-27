@@ -17,6 +17,10 @@ module.exports = new Transformer({
   },
 
   async transform({config, asset}) {
+    if (!config) {
+      return [asset]
+    }
+    
     // TODO make this robust
     let code = await asset.getCode()
     Object.keys(config).forEach(replace => {

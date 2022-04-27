@@ -10,6 +10,8 @@ export function getParcelConfig(key: string) {
 }
 
 export function createParcelConfig(configDir: string, config: any, settings?: any) {
+  fs.mkdirSync(configDir, { recursive: true });
+
   let rcPath = path.join(configDir, 'bundle.parcelrc')
   let pkgPath = path.join(configDir, 'bundle.config.json')
 
@@ -82,7 +84,7 @@ export function createParcelConfig(configDir: string, config: any, settings?: an
     resolvers: [
       ...(config.resolvers || []),
       "@parcel/resolver-default",
-      "@kkirbatski/parcel-resolver-require-resolve",
+      "parcel-resolver-require-resolve",
     ],
     reporters: [
       ...(config.reporters || []),
@@ -92,14 +94,12 @@ export function createParcelConfig(configDir: string, config: any, settings?: an
 
   fs.writeFileSync(rcPath, JSON.stringify(fullConfig, null, 2))
 
-  if (settings) {
-    const fullSettings = {
-      name: path.basename(configDir),
-      ...settings,
-    }
-  
-    fs.writeFileSync(pkgPath, JSON.stringify(fullSettings, null, 2))
+  const fullSettings = {
+    name: path.basename(configDir),
+    ...settings,
   }
+
+  fs.writeFileSync(pkgPath, JSON.stringify(fullSettings, null, 2))
   
   return rcPath
 }
