@@ -91,7 +91,7 @@ export function Script(props: ScriptProps): ReactElement | null {
       <script
         type="text/partytown"
         async
-        src={src}
+        src={proxyPartytownUrl(src)}
         data-strategy={strategy}
         {...attributes}
       />
@@ -169,4 +169,11 @@ function resolveAttributes(props: ScriptProps): Record<string, string> {
   }
 
   return attributes
+}
+
+function proxyPartytownUrl(url: string | undefined): string | undefined {
+  if (!url) {
+    return undefined
+  }
+  return `/__partytown-proxy?url=${encodeURIComponent(url)}`
 }
