@@ -6,7 +6,7 @@ exports.onPreBootstrap = async ({ store }): Promise<void> => {
   await copyLibFiles(path.join(program.directory, `public`, `~partytown`))
 }
 
-exports.onPostBuild = ({ actions }): void => {
+exports.createPages = ({ actions }): void => {
   const { createRedirect } = actions
 
   createRedirect({
@@ -17,5 +17,10 @@ exports.onPostBuild = ({ actions }): void => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       "/__partytown-proxy": [`Access-Control-Allow-Origin: *`],
     },
+  })
+
+  createRedirect({
+    fromPath: `/some-page`,
+    toPath: `/second`,
   })
 }
