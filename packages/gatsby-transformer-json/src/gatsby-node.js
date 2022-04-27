@@ -6,6 +6,8 @@ function unstable_shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `application/json`
 }
 
+const typeCache = new Map()
+
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
@@ -20,11 +22,31 @@ async function onCreateNode(
     } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
       return pluginOptions.typeName
     } else if (node.internal.type !== `File`) {
-      return _.upperFirst(_.camelCase(`${node.internal.type} Json`))
+      if (typeCache.has(node.internal.type)) {
+        return typeCache.get(node.internal.type)
+      } else {
+        const type = _.upperFirst(_.camelCase(`${node.internal.type} Json`))
+        typeCache.set(node.internal.type, type)
+        return type
+      }
     } else if (isArray) {
-      return _.upperFirst(_.camelCase(`${node.name} Json`))
+      if (typeCache.has(node.name)) {
+        return typeCache.get(node.name)
+      } else {
+        const type = _.upperFirst(_.camelCase(`${node.name} Json`))
+        typeCache.set(node.name, type)
+        return type
+      }
     } else {
-      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
+      if (typeCache.has(node.dir)) {
+        return typeCache.get(node.dir)
+      } else {
+        const type = _.upperFirst(
+          _.camelCase(`${path.basename(node.dir)} Json`)
+        )
+        typeCache.set(node.dir, type)
+        return type
+      }
     }
   }
 
