@@ -16,9 +16,24 @@
   margin: 0;
 }
 
+.listItem::marker {
+  color: #E95800;
+}
+
+.listItem:nth-child(2)::marker {
+  color: #159BF3;
+}
+
+.listItem:nth-child(3)::marker {
+  color: #8EB814;
+}
+
+.listItem:nth-child(4)::marker {
+  color: #663399;
+}
+
 .listItemLink {
   color: var(--color-primary);
-  font-size: var(--font-md);
   font-weight: bold;
 }
 

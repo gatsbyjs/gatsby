@@ -12,28 +12,24 @@ const links = [
     url: "https://www.gatsbyjs.com/docs/tutorial",
     description:
       "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
   },
   {
     text: "Examples",
     url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
     description:
       "A collection of websites ranging from very basic to complex/complete that illustrate how to accomplish specific tasks within your Gatsby sites.",
-    color: "#159BF3",
   },
   {
     text: "Plugin Library",
     url: "https://www.gatsbyjs.com/plugins",
     description:
       "Learn how to add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
   },
   {
     text: "Build and Host",
     url: "https://www.gatsbyjs.com/cloud",
     description:
       "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
   },
 ]
 
@@ -108,11 +104,7 @@ const IndexPage = () => (
     </div>
     <ul className={styles.list}>
       {links.map(link => (
-        <li
-          key={link.url}
-          className={styles.listItem}
-          style={{ color: link.color }}
-        >
+        <li key={link.url} className={styles.listItem}>
           <a
             className={styles.listItemLink}
             href={`${link.url}${utmParameters}`}
