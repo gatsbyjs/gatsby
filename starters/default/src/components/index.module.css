@@ -40,3 +40,12 @@
   margin-bottom: 0;
   margin-top: var(--space-1);
 }
+
+.textCenter {
+  text-align: center;
+}
+
+.intro {
+  max-width: none;
+  line-height: var(--line-height-loose);
+}
