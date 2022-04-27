@@ -80,7 +80,7 @@ async function onCreateNode(
   }
 
   if (_.isArray(parsedContent)) {
-    for (const chunk of _.chunk(parsedContent, 1000)) {
+    for (const chunk of _.chunk(parsedContent, 100)) {
       await transformArrayChunk(chunk)
     }
   } else if (_.isPlainObject(parsedContent)) {
