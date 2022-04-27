@@ -21,6 +21,14 @@ import { PackageJson } from "../.."
 import { IPageDataWithQueryResult } from "../utils/page-data"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+
+
+import { createParcelConfig } from "../utils/parcel"
+import { OutputFormat  } from "@parcel/types"
+import Parcel from "@parcel/core"
+import { withBasePath } from "../utils/path"
+
+
 type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -151,9 +159,106 @@ const doBuildRenderer = async (
     stats,
     close,
   }
-}
+}  
+
 
 export const buildRenderer = async (
+  program: IProgram,
+  stage: Stage,
+  parentSpan?: IActivity
+): Promise<IBuildRendererResult> => {
+  return process.env.GATSBY_EXPERIMENTAL_BUNDLER 
+    ? buildBundlerRenderer(program) //, stage, parentSpan) 
+    : buildWebpackRenderer(program, stage, parentSpan)
+}
+
+const buildBundlerRenderer = async (
+  program: IProgram,
+  // stage: Stage,
+  // parentSpan?: IActivity
+): Promise<IBuildRendererResult> => {
+  // const config = await webpackConfig(program, program.directory, stage, null, {
+  //   parentSpan,
+  // })
+  const directoryPath = withBasePath(program.directory)
+
+  const cacheLocation = path.join(
+    process.cwd(),
+    `.cache`,
+    `parcel`,
+    `build-html`
+  )
+
+  const configLocation = `${cacheLocation}-config`
+  process.env.PARCEL_CONFIG_LOCATION = configLocation
+  const config = createParcelConfig(configLocation, {
+
+  })
+
+  const entryFileName = `static-entry.js`
+  const entry = directoryPath(`.cache/${entryFileName}`)
+  const outDir = directoryPath(ROUTES_DIRECTORY)
+  const outFile = path.join(outDir, `render-page.js`)
+
+  const options = {
+    config,
+    entries: entry,
+    outDir: outDir,
+    watch: false,
+    cacheDir: cacheLocation,
+    contentHash: false,
+    global: 'moduleName',
+    minify: false,
+    scopeHoist: false,
+    target: 'commonjs',
+    hmr: false,
+    hmrPort: 0,
+    sourceMaps: false,
+    autoInstall: false,
+    targets: {
+      root: {
+        outputFormat: `commonjs` as OutputFormat,
+        includeNodeModules: false,
+        sourceMap: false,
+        engines: {
+          node: `>= 14.15.0`,
+        },
+        distDir: outDir,
+      },
+    },
+  }
+
+  const promise = new Promise(async (resolve, reject) => {
+    try {
+      const bundler = new Parcel(options)
+
+      await bundler.watch((error, buildEvent) => {
+        if (buildEvent?.type === "buildSuccess") {
+          // move from entry file name to our desired file
+          fs.moveSync(path.join(outDir, entryFileName), outFile, {overwrite: true})
+          return resolve(undefined)
+        }
+        if (buildEvent?.type === "buildFailure") {
+          console.log(buildEvent)
+          // TODO format this better, use codeframes
+          reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
+        }
+      })
+    } catch (e) {
+      reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
+    }
+  })
+
+  await promise
+
+  return {
+    rendererPath: outFile,
+    stats: {} as webpack.Stats,
+    close: async () => {},
+  }
+}
+
+const buildWebpackRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan?: IActivity

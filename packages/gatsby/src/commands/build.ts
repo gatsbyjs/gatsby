@@ -62,6 +62,7 @@ import {
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
+import { exit } from "process"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -224,7 +225,13 @@ module.exports = async function build(
 
     await close()
   } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+    if (process.env.GATSBY_EXPERIMENTAL_BUNDLER ) {
+      // TODO format parcel errors
+      reporter.error(err)
+      exit(1)
+    } else {
+      buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+    }
   } finally {
     buildSSRBundleActivityProgress.end()
   }

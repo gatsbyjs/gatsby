@@ -111,7 +111,102 @@ const truncateObjStrings = (obj): IPageDataWithQueryResult => {
   return obj
 }
 
-export const renderHTMLProd = async ({
+export const renderHTMLProd = async (args: {
+  htmlComponentRendererPath: string
+  paths: Array<string>
+  envVars: Array<[string, string | undefined]>
+  sessionId: number
+  webpackCompilationHash: string
+}): Promise<IRenderHtmlResult> => {
+  
+  return process.env.GATSBY_EXPERIMENTAL_BUNDLER 
+    ? renderBundlerHTMLProd(args) 
+    : renderWebpackHTMLProd(args)
+}
+
+export const renderBundlerHTMLProd = async ({
+  // htmlComponentRendererPath,
+  paths,
+  // envVars,
+  // sessionId,
+  webpackCompilationHash,
+}: {
+  htmlComponentRendererPath: string
+  paths: Array<string>
+  envVars: Array<[string, string | undefined]>
+  sessionId: number
+  webpackCompilationHash: string
+}): Promise<IRenderHtmlResult> => {
+  const publicDir = join(process.cwd(), `public`)
+  const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
+
+  const unsafeBuiltinsUsageByPagePath = {}
+  const previewErrors = {}
+
+  await Bluebird.map(
+    paths,
+    async pagePath => {
+      try {
+
+        const pageData = await readPageData(publicDir, pagePath)
+        const resourcesForTemplate = await getResourcesForTemplate(pageData)
+
+        const { html, unsafeBuiltinsUsage } =
+          await htmlComponentRenderer.default({
+            pagePath,
+            pageData,
+            webpackCompilationHash,
+            ...resourcesForTemplate,
+          })
+
+        if (unsafeBuiltinsUsage.length > 0) {
+          unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
+        }
+
+        await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+      } catch (e) {
+        if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
+          unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
+        }
+        // add some context to error so we can display more helpful message
+        e.context = {
+          path: pagePath,
+          unsafeBuiltinsUsageByPagePath,
+        }
+
+        // If we're in Preview-mode, write out a simple error html file.
+        if (isPreview) {
+          const pageData = await readPageData(publicDir, pagePath)
+          const truncatedPageData = truncateObjStrings(pageData)
+
+          const html = `<h1>Preview build error</h1>
+        <p>There was an error when building the preview page for this page ("${pagePath}").</p>
+        <h3>Error</h3>
+        <pre><code>${e.stack}</code></pre>
+        <h3>Page component id</h3>
+        <p><code>${pageData.componentChunkName}</code></p>
+        <h3>Page data</h3>
+        <pre><code>${JSON.stringify(truncatedPageData, null, 4)}</code></pre>`
+
+          await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+          previewErrors[pagePath] = {
+            e,
+            message: e.message,
+            code: e.code,
+            stack: e.stack,
+            name: e.name,
+          }
+        } else {
+          throw e
+        }
+      }
+    }
+  )
+
+  return { unsafeBuiltinsUsageByPagePath, previewErrors }
+}
+
+export const renderWebpackHTMLProd = async ({
   htmlComponentRendererPath,
   paths,
   envVars,
