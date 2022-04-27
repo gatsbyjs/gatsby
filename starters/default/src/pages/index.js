@@ -99,7 +99,7 @@ const IndexPage = () => (
         {samplePageLinks.map((link, i) => (
           <React.Fragment key={link.url}>
             <Link to={link.url}>{link.text}</Link>
-            {i !== samplePageLinks.length - 1 && <> &middot; </>}
+            {i !== samplePageLinks.length - 1 && <> · </>}
           </React.Fragment>
         ))}
         <br />
@@ -126,7 +126,7 @@ const IndexPage = () => (
     {moreLinks.map((link, i) => (
       <React.Fragment key={link.url}>
         <a href={`${link.url}${utmParameters}`}>{link.text}</a>
-        {i !== moreLinks.length - 1 && <> &middot; </>}
+        {i !== moreLinks.length - 1 && <> · </>}
       </React.Fragment>
     ))}
   </Layout>
