@@ -22,6 +22,6 @@ export const queryRunningServices: Record<
   runPageQueries,
   waitUntilAllJobsComplete,
   writeOutRedirects,
-  // @ts-ignore - TODO
+  // @ts-ignore - No clue how to fix this
   graphQLTypegen,
 }

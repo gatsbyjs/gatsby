@@ -1,6 +1,7 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { EventObject } from "xstate"
 import { IBuildContext } from "../internal"
+import { IDataLayerContext, IQueryRunningContext } from "../state-machines"
 import {
   writeGraphQLFragments,
   writeGraphQLSchema,
@@ -8,12 +9,22 @@ import {
 import { writeTypeScriptTypes } from "../utils/graphql-typegen/ts-codegen"
 
 export async function graphQLTypegen(
-  { program, store, parentSpan }: Partial<IBuildContext>,
+  {
+    program,
+    store,
+    parentSpan,
+  }:
+    | Partial<IBuildContext>
+    | Partial<IQueryRunningContext>
+    | Partial<IDataLayerContext>,
   _: EventObject,
   {
     src: { compile },
   }: {
-    src: { type: "graphQLTypegen"; compile: "all" | "schema" | "definitions" }
+    src: {
+      type: "graphQLTypegen"
+      compile: "all" | "schema" | "definitions"
+    }
   }
 ): Promise<void> {
   if (!program || !store) {
