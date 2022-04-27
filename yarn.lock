@@ -11357,6 +11357,13 @@ gatsby-core-utils@^3.8.2:
     tmp "^0.2.1"
     xdg-basedir "^4.0.0"
 
+gatsby-script@1.0.0-alpha-gatsby-script.20093:
+  version "1.0.0-alpha-gatsby-script.20093"
+  resolved "https://registry.yarnpkg.com/gatsby-script/-/gatsby-script-1.0.0-alpha-gatsby-script.20093.tgz#d4a61ee1547e952b5b9699206229c88cf90361b0"
+  integrity sha512-MafHc//G8nX/3Qv0g6f5okrApFVMoACCtRHBcXZU5e+PZNfRl8NvaqgSWU4rfrADnx3bRiXPfDRCwqpMyMKBKQ==
+  dependencies:
+    "@builder.io/partytown" "^0.5.2"
+
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
