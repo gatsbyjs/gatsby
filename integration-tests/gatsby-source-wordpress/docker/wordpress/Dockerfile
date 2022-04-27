@@ -28,6 +28,9 @@ RUN unzip -a -d ${WP_CONTENT_DIR} /tmp/archive.zip
 RUN rm -rf ${WP_CONTENT_DIR}/__MACOSX && mv ${WP_CONTENT_DIR}/gatsby-source-wordpress-test-uploads/wp-content/uploads ${UPLOADS_DIR}
 RUN rm /tmp/archive.zip
 
+COPY wp-content /tmp/wp-content
+RUN cp -R /tmp/wp-content/* ${WP_CONTENT_DIR} && rm -Rf /tmp/wp-content
+
 COPY install-plugin.sh /usr/local/bin/install-plugin
 RUN chmod +x  /usr/local/bin/install-plugin
 
