@@ -13,6 +13,7 @@ import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensio
 import replaceAll from "replaceall"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 import { gatsbyImageResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/gatsby-image-resolver"
+import { publicUrlResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/public-url-resolver"
 
 import { formatLogMessage } from "~/utils/format-log-message"
 
@@ -226,7 +227,6 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
     await fetchReferencedMediaItemsAndCreateNodes({
       mediaItemUrls,
     })
-
   // images that have been edited from the media library that were previously
   // uploaded to a post/page will have a different sourceUrl so they can't be fetched by it
   // in many cases we have data-id or data-image-id as attributes on the img
@@ -589,6 +589,7 @@ export const replaceNodeHtmlImages = async ({
           supportedExtensions[extension] || extension === `gif`
 
         let imageResize = null
+        let publicUrl
 
         if (gatsbyTransformerSharpSupportsThisFileType) {
           const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
@@ -640,6 +641,8 @@ export const replaceNodeHtmlImages = async ({
             )
             return null
           }
+        } else {
+          publicUrl = publicUrlResolver(imageNode, helpers.actions)
         }
 
         return {
@@ -648,6 +651,7 @@ export const replaceNodeHtmlImages = async ({
           fileNode,
           imageResize,
           maxWidth,
+          publicUrl,
         }
       })
     )
@@ -659,7 +663,7 @@ export const replaceNodeHtmlImages = async ({
         continue
       }
 
-      const { match, imageResize, cheerioImg } = matchResize
+      const { match, imageResize, cheerioImg, publicUrl } = matchResize
 
       let ReactGatsbyImage
       // used to create hydration data for images
@@ -679,6 +683,18 @@ export const replaceNodeHtmlImages = async ({
         ReactGatsbyImage = React.createElement(
           GatsbyImage,
           gatsbyImageHydrationData,
+          null
+        )
+      } else if (publicUrl) {
+        ReactGatsbyImage = React.createElement(
+          `img`,
+          {
+            src: publicUrl,
+            alt: cheerioImg?.attribs?.alt,
+            className: `${
+              cheerioImg?.attribs?.class || ``
+            } inline-gatsby-image-wrapper`,
+          },
           null
         )
       }
