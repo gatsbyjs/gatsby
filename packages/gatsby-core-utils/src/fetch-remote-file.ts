@@ -74,6 +74,10 @@ async function copyCachedPathToDownloadPath({
   cachedPath: string
   downloadPath: string
 }): Promise<string> {
+  if (cachedPath === downloadPath) {
+    return cachedPath
+  }
+
   // Create a mutex to do our copy - we could do a md5 hash check as well but that's also expensive
   if (!alreadyCopiedFiles.has(downloadPath)) {
     const copyFileMutex = createMutex(
