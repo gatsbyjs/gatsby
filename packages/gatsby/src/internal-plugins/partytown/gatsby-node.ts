@@ -19,6 +19,7 @@ exports.createPages = ({ actions }): void => {
     },
   })
 
+  // TODO - Remove this once we have determined that redirects are actually applied in Cloud, this is just a test
   createRedirect({
     fromPath: `/some-page`,
     toPath: `/second`,

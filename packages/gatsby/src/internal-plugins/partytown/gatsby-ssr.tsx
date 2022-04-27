@@ -28,6 +28,10 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
   pathname,
   setHeadComponents,
 }) => {
+  if (!collectedScripts?.[pathname]?.length) {
+    return
+  }
+
   const collectedForwards: Array<string> = collectedScripts?.[pathname]?.reduce(
     (forwards: Array<string>, script: PartytownProps) => {
       if (script?.forward) {
@@ -37,5 +41,6 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
     },
     []
   )
+
   setHeadComponents([<Partytown key="partytown" forward={collectedForwards} />])
 }
