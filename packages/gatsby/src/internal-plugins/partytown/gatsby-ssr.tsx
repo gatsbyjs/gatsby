@@ -4,13 +4,19 @@ import { Partytown } from "@builder.io/partytown/react"
 import { PartytownContext } from "gatsby-script"
 import type { PartytownProps } from "@builder.io/partytown/react"
 
-const collectedScripts: Array<PartytownProps> = []
+const collectedScripts: Record<string, Array<PartytownProps>> = {}
 
-export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({ element }) => (
+export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({
+  element,
+  pathname,
+}) => (
   <PartytownContext.Provider
     value={{
       collectScript: (newScript: PartytownProps): void => {
-        collectedScripts.push(newScript)
+        collectedScripts[pathname] = [
+          ...(collectedScripts?.[pathname] || []),
+          newScript,
+        ]
       },
     }}
   >
@@ -19,9 +25,10 @@ export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({ element }) => (
 )
 
 export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
+  pathname,
   setHeadComponents,
 }) => {
-  const collectedForwards: Array<string> = collectedScripts.reduce(
+  const collectedForwards: Array<string> = collectedScripts?.[pathname]?.reduce(
     (forwards: Array<string>, script: PartytownProps) => {
       if (script?.forward) {
         forwards = [...forwards, ...script?.forward]
