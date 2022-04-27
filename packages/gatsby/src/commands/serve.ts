@@ -26,6 +26,7 @@ import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
 import { configureTrailingSlash } from "../utils/express-middlewares"
 import { getDataStore, detectLmdbStore } from "../datastore"
+import proxy from "express-http-proxy"
 
 process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
 detectLmdbStore()
@@ -120,6 +121,18 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const root = path.join(program.directory, `public`)
 
   const app = express()
+
+  // Proxy gatsby-script using off-main-thread strategy
+  app.use(
+    `/__partytown-proxy`,
+    proxy(req => new URL(req.query.url as string).host as string, {
+      proxyReqPathResolver: req => {
+        const { pathname = ``, search = `` } = new URL(req.query.url as string)
+        return pathname + search
+      },
+    })
+  )
+
   // eslint-disable-next-line new-cap
   const router = express.Router()
 
