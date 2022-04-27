@@ -90,7 +90,7 @@
     "gatsby-plugin-typescript": "^4.13.0-next.0",
     "gatsby-plugin-utils": "^3.7.0-next.0",
     "gatsby-react-router-scroll": "^5.13.0-next.0",
-    "gatsby-script": "1.0.0-alpha-gatsby-script.20093",
+    "gatsby-script": "1.0.0-alpha-gatsby-script.20098",
     "gatsby-telemetry": "^3.13.0-next.0",
     "gatsby-worker": "^1.13.0-next.0",
     "glob": "^7.2.0",
