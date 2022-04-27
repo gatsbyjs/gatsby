@@ -982,7 +982,7 @@ export interface IProcessGatsbyImageSourceUrlAction {
 }
 
 export interface ITelemetry {
-  gatsbyImageResolver: Set<string>
+  gatsbyImageSourceUrls: Set<string>
 }
 
 export interface IMergeWorkerQueryState {
