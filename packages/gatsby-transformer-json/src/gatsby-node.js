@@ -28,7 +28,7 @@ async function onCreateNode(
     }
   }
 
-  async function transformObject(obj, id, type) {
+  function transformObject(obj, id, type) {
     const jsonNode = {
       ...obj,
       id,
@@ -42,7 +42,7 @@ async function onCreateNode(
     if (obj.id) {
       jsonNode[`jsonId`] = obj.id
     }
-    await createNode(jsonNode)
+    createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
   }
 
@@ -59,18 +59,32 @@ async function onCreateNode(
     throw new Error(`Unable to parse JSON: ${hint}`)
   }
 
-  if (_.isArray(parsedContent)) {
-    for (let i = 0, l = parsedContent.length; i < l; i++) {
-      const obj = parsedContent[i]
-
-      await transformObject(
+  async function transformArrayChunk(chunk) {
+    for (let i = 0, l = chunk.length; i < l; i++) {
+      const obj = chunk[i]
+      transformObject(
         obj,
         createNodeId(`${node.id} [${i}] >>> JSON`),
-        getType({ node, object: obj, isArray: true })
+        getType({
+          node,
+          object: obj,
+          isArray: true,
+        })
+      )
+      await new Promise(resolve =>
+        setImmediate(() => {
+          resolve()
+        })
       )
     }
+  }
+
+  if (_.isArray(parsedContent)) {
+    for (const chunk of _.chunk(parsedContent, 1000)) {
+      await transformArrayChunk(chunk)
+    }
   } else if (_.isPlainObject(parsedContent)) {
-    await transformObject(
+    transformObject(
       parsedContent,
       createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
