@@ -4,33 +4,7 @@ import { StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-
-const listStyles = {
-  margin: 0,
-  maxWidth: `var(--size-content)`,
-  padding: 0,
-  display: `grid`,
-  // https://css-tricks.com/responsive-layouts-fewer-media-queries/
-  "--w": `280px`,
-  "--n": `2`,
-  gridTemplateColumns: `repeat(auto-fit,minmax(max(var(--w), 100%/(var(--n) + 1) + 0.1%),1fr))`,
-  marginBottom: `var(--size-gap)`,
-  marginTop: `var(--size-gap)`,
-  gap: `var(--size-gap)`,
-}
-const listItemStyles = {
-  margin: 0,
-}
-const linkStyle = {
-  color: `var(--color-primary)`,
-  fontSize: `var(--font-md)`,
-  fontWeight: `bold`,
-}
-const descriptionStyle = {
-  color: `var(--color-text)`,
-  marginBottom: 0,
-  marginTop: `var(--space-1)`,
-}
+import * as styles from "../components/index.module.css"
 
 const links = [
   {
@@ -132,13 +106,20 @@ const IndexPage = () => (
         Edit <code>src/pages/index.js</code> to update this page.
       </p>
     </div>
-    <ul style={listStyles}>
+    <ul className={styles.list}>
       {links.map(link => (
-        <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-          <a style={linkStyle} href={`${link.url}${utmParameters}`}>
+        <li
+          key={link.url}
+          className={styles.listItem}
+          style={{ color: link.color }}
+        >
+          <a
+            className={styles.listItemLink}
+            href={`${link.url}${utmParameters}`}
+          >
             {link.text} ↗
           </a>
-          <p style={descriptionStyle}>{link.description}</p>
+          <p className={styles.listItemDescription}>{link.description}</p>
         </li>
       ))}
     </ul>
