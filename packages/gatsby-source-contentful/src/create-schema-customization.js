@@ -14,7 +14,23 @@ async function getContentTypesFromContentful({
   pluginConfig,
 }) {
   // Get content type items from Contentful
-  const contentTypeItems = await fetchContentTypes({ pluginConfig, reporter })
+  const allContentTypeItems = await fetchContentTypes({
+    pluginConfig,
+    reporter,
+  })
+
+  const contentTypeFilter = pluginConfig.get(`contentTypeFilter`)
+
+  const contentTypeItems = allContentTypeItems.filter(contentTypeFilter)
+
+  if (contentTypeItems.length === 0) {
+    reporter.panic({
+      id: CODES.ContentTypesMissing,
+      context: {
+        sourceMessage: `Please check if your contentTypeFilter is configured properly. Content types were filtered down to none.`,
+      },
+    })
+  }
 
   // Check for restricted content type names and set id based on useNameForId
   const useNameForId = pluginConfig.get(`useNameForId`)
