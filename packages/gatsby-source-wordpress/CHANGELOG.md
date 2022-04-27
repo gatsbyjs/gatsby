@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.13.0/packages/gatsby-source-wordpress) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- bring back defaults before image_cdn [#35370](https://github.com/gatsbyjs/gatsby/issues/35370) ([027acf8](https://github.com/gatsbyjs/gatsby/commit/027acf8e44ad649c6e4d7a46946d3dfe1baa501a))
+
+#### Bug Fixes
+
+- localFile id [#35423](https://github.com/gatsbyjs/gatsby/issues/35423) ([d50457f](https://github.com/gatsbyjs/gatsby/commit/d50457fa9c529df05c514c807a54a4ca6d89da52))
+- fix integration tests fix [#35399](https://github.com/gatsbyjs/gatsby/issues/35399) ([9b8aadc](https://github.com/gatsbyjs/gatsby/commit/9b8aadcde64c699d6c4c364d3035eb91f87140b3))
+
+#### Chores
+
+- Fix typo in `presets[].options` Fix [#35455](https://github.com/gatsbyjs/gatsby/issues/35455) ([dfa5991](https://github.com/gatsbyjs/gatsby/commit/dfa59916815587ad4a5dd597b0ad586ed77e44fe))
+
 ### [6.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.2/packages/gatsby-source-wordpress) (2022-04-15)
 
 #### Bug Fixes
