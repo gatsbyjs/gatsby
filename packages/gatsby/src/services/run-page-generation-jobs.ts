@@ -66,7 +66,7 @@ export async function runPageGenerationJobs(
               global.__GATSBY.root,
               `public`,
               `page-data`,
-              item.path,
+              item.path === `/` ? `index` : item.path,
               `page-data.json`
             )
           )
