@@ -20,7 +20,7 @@ COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 COPY wp-content /tmp/wp-content
-RUN cp -R /tmp/wp-content/* ${WP_CONTENT_DIR} && rm -Rf /tmp/wp-content
+RUN cp -R /tmp/wp-content/* ${WP_CONTENT_DIR} && cp -R /tmp/wp-content/* /usr/src/wordpress/wp-content && rm -Rf /tmp/wp-content
 
 COPY plugins/* ${PLUGIN_DIR}/
 
