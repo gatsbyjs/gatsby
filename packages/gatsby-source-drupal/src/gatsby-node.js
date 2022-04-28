@@ -413,23 +413,25 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 nodesToUpdate = [nodeSyncData.data]
               }
 
-              for (const nodeToUpdate of nodesToUpdate) {
-                await handleWebhookUpdate(
-                  {
-                    nodeToUpdate,
-                    actions,
-                    cache,
-                    createNodeId,
-                    createContentDigest,
-                    getCache,
-                    getNode,
-                    reporter,
-                    store,
-                    languageConfig,
-                  },
-                  pluginOptions
+              await Promise.all(
+                nodesToUpdate.map(nodeToUpdate =>
+                  handleWebhookUpdate(
+                    {
+                      nodeToUpdate,
+                      actions,
+                      cache,
+                      createNodeId,
+                      createContentDigest,
+                      getCache,
+                      getNode,
+                      reporter,
+                      store,
+                      languageConfig,
+                    },
+                    pluginOptions
+                  )
                 )
-              }
+              )
             }
           }
 
