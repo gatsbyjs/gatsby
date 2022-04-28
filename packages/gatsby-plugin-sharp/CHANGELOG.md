@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.13.0/packages/gatsby-plugin-sharp) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- enable tracedsvg [#35328](https://github.com/gatsbyjs/gatsby/issues/35328) ([a246011](https://github.com/gatsbyjs/gatsby/commit/a246011dafdba0230847b02c2812b6bda298f8e1))
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.12.1/packages/gatsby-plugin-sharp) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.12.0/packages/gatsby-plugin-sharp) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-sharp [#35296](https://github.com/gatsbyjs/gatsby/issues/35296) ([6f088aa](https://github.com/gatsbyjs/gatsby/commit/6f088aa809549890ad1126df00fe40ab74870711))
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) ([392d6bc](https://github.com/gatsbyjs/gatsby/commit/392d6bc4300b9856e37a33291789e4dce5ac22d2))
+
+#### Chores
+
+- update sharp [#35303](https://github.com/gatsbyjs/gatsby/issues/35303) ([d267bb3](https://github.com/gatsbyjs/gatsby/commit/d267bb3d7547d08cfaabfbfc93199c785c50aec3))
+
+### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.11.1/packages/gatsby-plugin-sharp) (2022-03-31)
+
+#### Bug Fixes
+
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) [#35268](https://github.com/gatsbyjs/gatsby/issues/35268) ([a527891](https://github.com/gatsbyjs/gatsby/commit/a5278911d9c69a2b6478d97776d506722a0ad3a6))
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.11.0/packages/gatsby-plugin-sharp) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Refactoring
+
+- replace deprecated String.prototype.substr() [#35205](https://github.com/gatsbyjs/gatsby/issues/35205) ([21f7c65](https://github.com/gatsbyjs/gatsby/commit/21f7c654da647a949c83efb2e17b473eab4db3ed))
+
+### [4.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.10.2/packages/gatsby-plugin-sharp) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [4.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.10.1/packages/gatsby-plugin-sharp) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.10.0/packages/gatsby-plugin-sharp) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Bug Fixes
+
+- Handle diff duotone settings [#35075](https://github.com/gatsbyjs/gatsby/issues/35075) ([9690c7c](https://github.com/gatsbyjs/gatsby/commit/9690c7cf0beceff5211e7b27bf9985ea5eadb741))
+- Upgrade `probe-image-size` to fix memory leak warning fix [#35009](https://github.com/gatsbyjs/gatsby/issues/35009) ([f98c9ba](https://github.com/gatsbyjs/gatsby/commit/f98c9ba4a74cf4ba751daace911c90108f9b0343))
+
+### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.9.1/packages/gatsby-plugin-sharp) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.9.0/packages/gatsby-plugin-sharp) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

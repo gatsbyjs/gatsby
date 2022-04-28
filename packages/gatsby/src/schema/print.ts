@@ -27,6 +27,7 @@ import {
 import { printBlockString } from "graphql/language/blockString"
 import { internalExtensionNames } from "./extensions"
 import _ from "lodash"
+import { builtInScalarTypeNames } from "./types/built-in-types"
 
 export interface ISchemaPrintConfig {
   path?: string
@@ -342,20 +343,13 @@ export const printTypeDefinitions = ({
   }
 
   const internalTypes = [
-    `Boolean`,
+    ...builtInScalarTypeNames,
     `Buffer`,
-    `Date`,
-    `Float`,
-    `ID`,
-    `Int`,
     `Internal`,
     `InternalInput`,
-    `JSON`,
-    `Json`,
     `Node`,
     `NodeInput`,
     `Query`,
-    `String`,
   ]
   const internalPlugins = [`internal-data-bridge`]
 

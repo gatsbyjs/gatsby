@@ -19,30 +19,6 @@ export class CollectionsQuery extends BulkQuery {
         collections(query: "${queryString}") {
           edges {
             node {
-              products {
-                edges {
-                  node {
-                    id
-                  }
-                }
-              }
-              metafields {
-                edges {
-                  node {
-                    createdAt
-                    description
-                    id
-                    key
-                    legacyResourceId
-                    namespace
-                    ownerType
-                    updatedAt
-                    value
-                    type
-                    valueType: type
-                  }
-                }
-              }
               description
               descriptionHtml
               feedback {
@@ -64,14 +40,39 @@ export class CollectionsQuery extends BulkQuery {
               handle
               id
               image {
-                id
                 altText
                 height
-                width
+                id
                 originalSrc
+                src
                 transformedSrc
+                width
               }
               legacyResourceId
+              metafields {
+                edges {
+                  node {
+                    createdAt
+                    description
+                    id
+                    key
+                    legacyResourceId
+                    namespace
+                    ownerType
+                    updatedAt
+                    value
+                    type
+                    valueType: type
+                  }
+                }
+              }
+              products {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
               productsCount
               ruleSet {
                 appliedDisjunctively

@@ -50,7 +50,7 @@ Once the plugin is added, you don't need to manually wrap your pages with the La
 
 There are a few scenarios where it makes sense to reimplement the V1 layout handling:
 
-1.  You have a large or complex V1 site and [refactoring to the new layout component](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components) is not feasible
+1.  You have a large or complex V1 site and [refactoring to the new layout component](https://www.gatsbyjs.com/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components) is not feasible
 2.  Your site uses page transitions or other transitions that break if the layout component is unmounted and remounted when routes change
 3.  Your site attaches global state in the layout that doesn't persist if the component is unmounted and remounted
 
@@ -82,7 +82,7 @@ In version 2, the layout component is no longer special, and it's included in ev
 </Root>
 ```
 
-This can make it complicated to support transitions or state without using the [`wrapPageElement` browser API](https://gatsbyjs.org/docs/browser-apis/#wrapPageElement) (and the [SSR equivalent](https://gatsbyjs.org/docs/ssr-apis/#wrapPageElement)). This plugin implements those APIs for you, which reimplements the behavior of Gatsby V1.
+This can make it complicated to support transitions or state without using the [`wrapPageElement` browser API](https://gatsbyjs.com/docs/browser-apis/#wrapPageElement) (and the [SSR equivalent](https://gatsbyjs.com/docs/ssr-apis/#wrapPageElement)). This plugin implements those APIs for you, which reimplements the behavior of Gatsby V1.
 
 ## Troubleshooting
 

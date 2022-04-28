@@ -36,6 +36,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -68,6 +69,7 @@ interface RemoteFile {
   resize(
     width: Int
     height: Int
+    aspectRatio: Float
     fit: RemoteFileFit = COVER
 
     \\"\\"\\"
@@ -423,6 +425,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -455,6 +458,7 @@ interface RemoteFile {
   resize(
     width: Int
     height: Int
+    aspectRatio: Float
     fit: RemoteFileFit = COVER
 
     \\"\\"\\"
@@ -820,6 +824,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -852,6 +857,7 @@ interface RemoteFile {
   resize(
     width: Int
     height: Int
+    aspectRatio: Float
     fit: RemoteFileFit = COVER
 
     \\"\\"\\"

@@ -20,7 +20,7 @@ const {
 } = require(`./data.json`)
 
 const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+// restrictedNodeFields from here https://www.gatsbyjs.com/docs/node-interface/
 const restrictedNodeFields = [
   `id`,
   `children`,

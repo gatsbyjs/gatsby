@@ -371,7 +371,7 @@ export const preprocessSource = true
 export const onCreateBabelConfig = true
 
 /**
- * Let plugins extend/mutate the site's webpack configuration.
+ * Let plugins extend/mutate the site's webpack configuration. This method can be used by any Gatsby site, app, or plugin, not just plugins.
  *
  * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
  *

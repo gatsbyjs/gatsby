@@ -113,24 +113,13 @@ aliases:
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
-    parameters:
-      nightly:
-        type: boolean
-        default: false
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
-          skip_file_change_test: << parameters.nightly >>
-      - notify-status:
-          condition: << parameters.nightly >>
 
   e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
     <<: *e2e-executor
-    parameters:
-      nightly:
-        type: boolean
-        default: false
     environment:
       <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: s3j3qj
@@ -138,23 +127,8 @@ aliases:
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
-          skip_file_change_test: << parameters.nightly >>
-      - notify-status:
-          condition: << parameters.nightly >>
 
 commands:
-  notify-status:
-    parameters:
-      condition:
-        type: boolean
-        default: false
-    steps:
-      - when:
-          condition: << parameters.condition >>
-          steps:
-            - slack/status:
-                channel: eng-react-integration-status
-
   e2e-test:
     parameters:
       skip_file_change_test:
@@ -168,6 +142,9 @@ commands:
       test_command:
         type: string
         default: "yarn test"
+      react_version:
+        type: string
+        default: ""
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
@@ -180,6 +157,14 @@ commands:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
 
       - <<: *attach_to_bootstrap
+      - when:
+          condition:
+            not:
+              equal: ["", << parameters.react_version >>]
+          steps:
+            - run:
+                name: Upgrade React to << parameters.react_version >>
+                command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
       - run:
           name: Install gatsby-dev
           command: yarn global add gatsby-dev-cli
@@ -350,9 +335,6 @@ jobs:
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
           working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # TODO: remove pinned version
-          command: yarn set version 3.1.1
-          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Explicitly set nodeLinker to avoid Yarn selecting node_modules due to the Yarn 1.x lockfile
           command: yarn config set nodeLinker pnp
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -381,20 +363,27 @@ jobs:
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
 
-  e2e_tests_development_runtime_with_experimental_react:
-    <<: *e2e_tests_development_runtime_alias
-
-  e2e_tests_development_runtime_with_next_react:
-    <<: *e2e_tests_development_runtime_alias
+  e2e_tests_development_runtime_with_react_18:
+    <<: *e2e-executor
+    environment:
+      <<: *e2e-executor-env
+      CYPRESS_PROJECT_ID: nusozx
+      CYPRESS_RECORD_KEY: 6500fa9b-7710-4968-b321-1a544c9a1fdc
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+          react_version: "^18.0.0"
 
   e2e_tests_production_runtime:
     <<: *e2e_tests_production_runtime_alias
 
-  e2e_tests_production_runtime_with_experimental_react:
-    <<: *e2e_tests_production_runtime_alias
-
-  e2e_tests_production_runtime_with_next_react:
-    <<: *e2e_tests_production_runtime_alias
+  e2e_tests_production_runtime_with_react_18:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=ec36ff6b-3db9-48a9-8f7b-2faf301ab800 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=2a4f4f31-0dfb-4a56-80e0-9ed42a1131a4 yarn test:offline
+          react_version: "^18.0.0"
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -559,68 +548,8 @@ jobs:
       - store_test_results:
           path: ./test-results/jest-node/
 
-  bootstrap-with-experimental-react:
-    executor: node
-    parameters:
-      version:
-        type: string
-        default: "next"
-    steps:
-      - checkout
-      # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: sudo apt-get update && sudo apt-get install python -y
-      - run:
-          name: "Update React to prerelease"
-          command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
-      - run: yarn install
-      - run: yarn bootstrap -- concurrency=2
-      - run: yarn list react
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - "*"
-
 workflows:
   version: 2
-
-  nightly-react-next:
-    triggers:
-      - schedule:
-          cron: "0 0 * * 1,2,3,4,5"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - bootstrap-with-experimental-react:
-          version: "next"
-      - e2e_tests_development_runtime_with_next_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
-      - e2e_tests_production_runtime_with_next_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
-  nightly-react-experimental:
-    triggers:
-      - schedule:
-          cron: "0 0 * * 1,2,3,4,5"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - bootstrap-with-experimental-react:
-          version: "experimental"
-      - e2e_tests_development_runtime_with_experimental_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
-      - e2e_tests_production_runtime_with_experimental_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
 
   # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
   # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
@@ -694,6 +623,10 @@ workflows:
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime_with_react_18:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime_with_react_18:
           <<: *e2e-test-workflow
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow

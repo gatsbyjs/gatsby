@@ -159,7 +159,7 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 
 > Support added in `gatsby@4.9.0`
 
-You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config` file.
+You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config.ts` file.
 
 ```ts:title=gatsby-config.ts
 import type { GatsbyConfig } from "gatsby"
@@ -174,11 +174,13 @@ const config: GatsbyConfig = {
 export default config
 ```
 
+Read the [Gatsby Config API documentation](/docs/reference/config-files/gatsby-config/) to learn more about its different options.
+
 ### `gatsby-node.ts`
 
 > Support added in `gatsby@4.9.0`
 
-You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node` file.
+You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node.ts` file.
 
 ```ts:title=gatsby-node.ts
 import type { GatsbyNode } from "gatsby"
@@ -215,6 +217,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
   })
 }
 ```
+
+Read the [Gatsby Node APIs documentation](/docs/reference/config-files/gatsby-node/) to learn more about its different APIs.
 
 ### Local Plugins
 
@@ -273,9 +277,11 @@ Gatsby natively supports JavaScript and TypeScript, you can change files from `.
   - `gatsby-ssr.js` to `gatsby-ssr.tsx`
 - Address any of the [current limitations](#current-limitations)
 
+If you've used other ways of using TypeScript in the past, you'll also want to read [migrating away from old workarounds](/docs/reference/release-notes/v4.9/#migrating-away-from-old-workarounds).
+
 ## Current limitations
 
-There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code or through contributions to upstream dependencies.
+There are some limitations currently that you need to be aware of. We'll do our best to mitigate them in our code, through contributions to upstream dependencies, and updates to our documentation.
 
 ### Parcel TypeScript features
 
@@ -324,7 +330,7 @@ Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/
 
 ### Other
 
-- Workspaces (e.g. Yarn) are not supported yet.
+- Workspaces (e.g. Yarn) are not supported. We'll add documentation on how to use this feature inside a workspace soon.
 - When changing `siteMetadata` in `gatsby-config` no hot-reloading will occur during `gatsby develop`. A restart is needed at the moment.
 
 ## Other Resources

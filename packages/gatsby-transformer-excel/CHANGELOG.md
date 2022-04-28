@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.13.0/packages/gatsby-transformer-excel) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.12.1/packages/gatsby-transformer-excel) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.12.0/packages/gatsby-transformer-excel) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.11.0/packages/gatsby-transformer-excel) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.10.0/packages/gatsby-transformer-excel) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Bug Fixes
+
+- Use `readFile` Buffer [#35050](https://github.com/gatsbyjs/gatsby/issues/35050) ([aada85e](https://github.com/gatsbyjs/gatsby/commit/aada85e7aaff4c8f718758fb328e551a6933dec8))
+
 ## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.9.0/packages/gatsby-transformer-excel) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

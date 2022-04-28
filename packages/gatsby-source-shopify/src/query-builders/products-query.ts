@@ -12,8 +12,6 @@ export class ProductsQuery extends BulkQuery {
       filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
 
-    const ProductImageSortKey = `POSITION`
-
     const queryString = filters.map(f => `(${f})`).join(` AND `)
 
     const query = `
@@ -21,37 +19,38 @@ export class ProductsQuery extends BulkQuery {
         products(query: "${queryString}") {
           edges {
             node {
-              id
-              storefrontId
               createdAt
+              collections {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
               description
               descriptionHtml
               featuredImage {
-                id
                 altText
                 height
-                width
+                id
                 originalSrc
+                src
                 transformedSrc
+                width
               }
               featuredMedia {
-                alt
-                mediaContentType
-                mediaErrors {
-                  details
+                ... on ExternalVideo {
+                  id
                 }
-                preview {
-                  image {
-                    id
-                    altText
-                    height
-                    width
-                    originalSrc
-                    transformedSrc
-                  }
-                  status
+                ... on MediaImage {
+                  id
                 }
-                status
+                ... on Model3d {
+                  id
+                }
+                ... on Video {
+                  id
+                }
               }
               feedback {
                 details {
@@ -73,9 +72,112 @@ export class ProductsQuery extends BulkQuery {
               handle
               hasOnlyDefaultVariant
               hasOutOfStockVariants
+              id
               isGiftCard
               legacyResourceId
+              media {
+                edges {
+                  node {
+                    alt
+                    mediaContentType
+                    mediaErrors {
+                      code
+                      details
+                      message
+                    }
+                    preview {
+                      image {
+                        altText
+                        height
+                        id
+                        originalSrc
+                        src
+                        transformedSrc
+                        width
+                      }
+                      status
+                    }
+                    status
+                    ... on ExternalVideo {
+                      embeddedUrl
+                      host
+                      id
+                    }
+                    ... on MediaImage {
+                      createdAt
+                      fileErrors {
+                        code
+                        details
+                        message
+                      }
+                      fileStatus
+                      id
+                      image {
+                        altText
+                        height
+                        id
+                        originalSrc
+                        src
+                        transformedSrc
+                        width
+                      }
+                      mimeType
+                    }
+                    ... on Model3d {
+                      filename
+                      id
+                      originalSource {
+                        filesize
+                        format
+                        mimeType
+                        url
+                      }
+                      sources {
+                        filesize
+                        format
+                        mimeType
+                        url
+                      }
+                    }
+                    ... on Video {
+                      filename
+                      id
+                      originalSource {
+                        format
+                        height
+                        mimeType
+                        url
+                        width
+                      }
+                      sources {
+                        format
+                        height
+                        mimeType
+                        url
+                        width
+                      }
+                    }
+                  }
+                }
+              }
               mediaCount
+              metafields {
+                edges {
+                  node {
+                    createdAt
+                    description
+                    id
+                    key
+                    legacyResourceId
+                    namespace
+                    ownerType
+                    type
+                    updatedAt
+                    value
+                    valueType: type
+                  }
+                }
+              }
               onlineStorePreviewUrl
               onlineStoreUrl
               options {
@@ -83,6 +185,16 @@ export class ProductsQuery extends BulkQuery {
                 name
                 position
                 values
+              }
+              priceRange {
+                maxVariantPrice {
+                  amount
+                  currencyCode
+                }
+                minVariantPrice {
+                  amount
+                  currencyCode
+                }
               }
               priceRangeV2 {
                 maxVariantPrice {
@@ -103,6 +215,7 @@ export class ProductsQuery extends BulkQuery {
                 title
               }
               status
+              storefrontId
               tags
               templateSuffix
               title
@@ -110,19 +223,6 @@ export class ProductsQuery extends BulkQuery {
               totalVariants
               tracksInventory
               updatedAt
-              vendor
-              images(sortKey: ${ProductImageSortKey}) {
-                edges {
-                  node {
-                    id
-                    altText
-                    src
-                    originalSrc
-                    width
-                    height
-                  }
-                }
-              }
               variants {
                 edges {
                   node {
@@ -130,23 +230,7 @@ export class ProductsQuery extends BulkQuery {
                   }
                 }
               }
-              metafields {
-                edges {
-                  node {
-                    createdAt
-                    description
-                    id
-                    key
-                    legacyResourceId
-                    namespace
-                    ownerType
-                    updatedAt
-                    value
-                    type
-                    valueType: type
-                  }
-                }
-              }
+              vendor
             }
           }
         }

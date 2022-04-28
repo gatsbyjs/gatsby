@@ -51,6 +51,7 @@ jest.mock(`../../utils/cache-lmdb`, () => {
       get = jest.fn(() => Promise.resolve())
       set = jest.fn(() => Promise.resolve())
     },
+    __esModule: true,
   }
 })
 

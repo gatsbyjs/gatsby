@@ -38,9 +38,6 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
 - Copy the RFC template into your clipboard:
 
   ```md
-  - Start Date: (fill me in with today's date, YYYY-MM-DD)
-  - Gatsby Issue: (leave this empty)
-
   # Summary
 
   Brief explanation of the feature.

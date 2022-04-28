@@ -1,6 +1,6 @@
+/* global HAS_REACT_18 */
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
-import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import { StaticQueryContext } from "gatsby"
@@ -28,6 +28,19 @@ import matchPaths from "$virtual/match-paths.json"
 const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
+
+let reactHydrate
+let reactRender
+if (HAS_REACT_18) {
+  const reactDomClient = require(`react-dom/client`)
+  reactRender = (Component, el) =>
+    reactDomClient.createRoot(el).render(Component)
+  reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
+} else {
+  const reactDomClient = require(`react-dom`)
+  reactRender = reactDomClient.render
+  reactHydrate = reactDomClient.hydrate
+}
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -249,10 +262,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return <GatsbyRoot>{SiteRoot}</GatsbyRoot>
     }
 
+    const focusEl = document.getElementById(`gatsby-focus-wrapper`)
+
+    // Client only pages have any empty body so we just do a normal
+    // render to avoid React complaining about hydration mis-matches.
+    let defaultRenderer = reactRender
+    if (focusEl && focusEl.children.length) {
+      defaultRenderer = reactHydrate
+    }
+
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      ReactDOM.hydrateRoot ? ReactDOM.hydrateRoot : ReactDOM.hydrate
+      defaultRenderer
     )[0]
 
     function runRender() {
@@ -261,11 +283,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : null
 
-      if (renderer === ReactDOM.hydrateRoot) {
-        renderer(rootElement, <App />)
-      } else {
-        renderer(<App />, rootElement)
-      }
+      renderer(<App />, rootElement)
     }
 
     // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450

@@ -72,7 +72,6 @@ async function processBufferNode({
       const filetype = await fileType.fromBuffer(buffer)
       ext = filetype ? `.${filetype.ext}` : `.bin`
     }
-
     filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
     await fs.ensureDir(path.dirname(filename))
 
@@ -125,7 +124,7 @@ module.exports = ({
   parentNodeId = null,
   createNodeId,
   ext,
-  name = hash,
+  name,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -154,6 +153,10 @@ module.exports = ({
 
   if (!hash) {
     hash = createContentDigest(buffer)
+  }
+
+  if (!name) {
+    name = hash
   }
 
   // Check if we already requested node for this remote file

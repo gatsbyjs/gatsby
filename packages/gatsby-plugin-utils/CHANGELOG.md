@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.7.0/packages/gatsby-plugin-utils) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- bring back defaults before image_cdn [#35370](https://github.com/gatsbyjs/gatsby/issues/35370) ([027acf8](https://github.com/gatsbyjs/gatsby/commit/027acf8e44ad649c6e4d7a46946d3dfe1baa501a))
+- enable tracedsvg [#35328](https://github.com/gatsbyjs/gatsby/issues/35328) ([a246011](https://github.com/gatsbyjs/gatsby/commit/a246011dafdba0230847b02c2812b6bda298f8e1))
+
+### [3.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.1/packages/gatsby-plugin-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.0/packages/gatsby-plugin-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+
+#### Chores
+
+- update dependency msw to ^0.39.2 for gatsby-plugin-utils [#35300](https://github.com/gatsbyjs/gatsby/issues/35300) ([aa0f61a](https://github.com/gatsbyjs/gatsby/commit/aa0f61ab40560183745e96bcef834577bc4be156))
+
+### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.1/packages/gatsby-plugin-utils) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.0/packages/gatsby-plugin-utils) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Features
+
+- support aspect ratio for Image Service [#35087](https://github.com/gatsbyjs/gatsby/issues/35087) ([3f2bc25](https://github.com/gatsbyjs/gatsby/commit/3f2bc25532eb457ee3d607688eb6592bc8d0bc78))
+
+#### Bug Fixes
+
+- Add missing fs-extra dep [#35165](https://github.com/gatsbyjs/gatsby/issues/35165) ([55deac1](https://github.com/gatsbyjs/gatsby/commit/55deac16a654307bf6213239f1c6457413909ef0))
+
+### [3.4.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.4.2/packages/gatsby-plugin-utils) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+### [3.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.4.1/packages/gatsby-plugin-utils) (2022-03-18)
+
+#### Bug Fixes
+
+- Add missing fs-extra dep [#35165](https://github.com/gatsbyjs/gatsby/issues/35165) [#35168](https://github.com/gatsbyjs/gatsby/issues/35168) ([3ac159f](https://github.com/gatsbyjs/gatsby/commit/3ac159f2c08ca18426d252d591486756e7d04c5c))
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.4.0/packages/gatsby-plugin-utils) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Features
+
+- add support for image-cdn [#34825](https://github.com/gatsbyjs/gatsby/issues/34825) ([29b236b](https://github.com/gatsbyjs/gatsby/commit/29b236b7f2212d062a65d34781a612d715d936ef))
+
+#### Bug Fixes
+
+- make sure avif, webp are sorted correctly [#35024](https://github.com/gatsbyjs/gatsby/issues/35024) ([3b8710c](https://github.com/gatsbyjs/gatsby/commit/3b8710c2f9784800d89d6a80b77f53316f890e11))
+
 ## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.3.0/packages/gatsby-plugin-utils) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

@@ -53,10 +53,20 @@ function WrappedAccordionItem({ error, open }) {
 }
 
 export function RuntimeErrors({ errors, dismiss }) {
-  const deduplicatedErrors = React.useMemo(
-    () => Array.from(new Set(errors)),
-    [errors]
-  )
+  const deduplicatedErrors = React.useMemo(() => {
+    const errorCache = new Set()
+    const errorList = []
+    errors.forEach(error => {
+      // Second line contains the exact location
+      const secondLine = error.stack.split(`\n`)[1]
+      if (!errorCache.has(secondLine)) {
+        errorList.push(error)
+        errorCache.add(secondLine)
+      }
+    })
+
+    return errorList
+  }, [errors])
   const hasMultipleErrors = deduplicatedErrors.length > 1
 
   return (
@@ -65,7 +75,7 @@ export function RuntimeErrors({ errors, dismiss }) {
         <div data-gatsby-overlay="header__cause-file">
           <h1 id="gatsby-overlay-labelledby">
             {hasMultipleErrors
-              ? `${errors.length} Unhandled Runtime Errors`
+              ? `${deduplicatedErrors.length} Unhandled Runtime Errors`
               : `Unhandled Runtime Error`}
           </h1>
         </div>

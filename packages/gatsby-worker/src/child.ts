@@ -6,6 +6,7 @@ import {
   ERROR,
   RESULT,
   CUSTOM_MESSAGE,
+  WORKER_READY,
 } from "./types"
 import { isPromise } from "./utils"
 
@@ -102,6 +103,8 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
   }
 
   process.on(`message`, messageHandler)
+
+  ensuredSendToMain([WORKER_READY])
 }
 
 export { isWorker, getMessenger }

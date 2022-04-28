@@ -505,12 +505,14 @@ Now in your plugin's `gatsby-node.js` file, you can implement a new API, called 
 Import the `createRemoteFileNode` helper from `gatsby-source-filesystem`, which will download a file from a remote location and create a `File` node for you.
 
 ```javascript:title=source-plugin/gatsby-node.js
-const { ApolloClient } = require("apollo-client")
-const { InMemoryCache } = require("apollo-cache-inmemory")
-const { split } = require("apollo-link")
-const { HttpLink } = require("apollo-link-http")
-const { WebSocketLink } = require("apollo-link-ws")
-const { getMainDefinition } = require("apollo-utilities")
+const {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+} = require("@apollo/client")
+const { WebSocketLink } = require("@apollo/client/link/ws")
+const { getMainDefinition } = require("@apollo/client/utilities")
 const fetch = require("node-fetch")
 const gql = require("graphql-tag")
 const WebSocket = require("ws")
@@ -1025,20 +1027,23 @@ It is also recommended that you add a polyfill to provide support back through G
 ```js
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
-addRemoteFilePolyfillInterface(
-  schema.buildObjectType({
-    name: `YourImageAssetNodeType`,
-    fields: {
-      // your fields
-    },
-    interfaces: [`Node`, `RemoteFile`],
-  }),
-  {
-    schema,
-    actions,
-    // schema and actions are arguments on the `createSchemaCustomization` API
-  }
-)
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const imageAssetType = addRemoteFilePolyfillInterface(
+    schema.buildObjectType({
+      name: `YourImageAssetNodeType`,
+      fields: {
+        // your fields - see createSchemaCustomization docs - if you're using schema inference you can also leave this object empty
+      },
+      interfaces: [`Node`, `RemoteFile`],
+    }),
+    {
+      schema,
+      actions,
+    }
+  )
+
+  actions.createTypes([imageAssetType])
+}
 ```
 
 Implementing the `RemoteFile` interface adds the correct fields to your new GraphQL type and adds the necessary resolvers to handle the type. `RemoteFile` holds the following properties:
