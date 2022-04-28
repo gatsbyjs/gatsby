@@ -123,6 +123,7 @@
     "opentracing": "^0.14.5",
     "p-defer": "^3.0.0",
     "parcel": "2.4.1",
+    "parcel-resolver-aliases": "*",
     "parcel-resolver-externals": "*",
     "parcel-resolver-require-resolve": "*",
     "parcel-transformer-define": "*",

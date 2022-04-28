@@ -27,6 +27,7 @@ import { createParcelConfig } from "../utils/parcel"
 import { OutputFormat  } from "@parcel/types"
 import Parcel from "@parcel/core"
 import { withBasePath } from "../utils/path"
+import { getAbsolutePathForVirtualModule } from "../utils/gatsby-webpack-virtual-modules"
 
 
 type IActivity = any // TODO
@@ -191,9 +192,17 @@ const buildBundlerRenderer = async (
 
   const configLocation = `${cacheLocation}-config`
   process.env.PARCEL_CONFIG_LOCATION = configLocation
-  const config = createParcelConfig(configLocation, {
-
-  })
+  const config = createParcelConfig(
+    configLocation, 
+    {
+      resolvers: [`parcel-resolver-aliases`],
+    },
+    {
+      aliases: {
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`)
+      }
+    }
+  )
 
   const entryFileName = `static-entry.js`
   const entry = directoryPath(`.cache/${entryFileName}`)

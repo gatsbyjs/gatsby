@@ -1,0 +1,9 @@
+{
+  "name": "parcel-resolver-aliases",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "parcel": "^2.4.1"
+  }
+}
