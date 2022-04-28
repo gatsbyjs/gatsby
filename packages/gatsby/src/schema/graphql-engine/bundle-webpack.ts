@@ -57,7 +57,10 @@ export async function createBundlerGraphqlEngineBundle(
       {
         define: {
           SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
-        }
+        },
+        externals: [
+          'routes/render-page',
+        ]
       }
     ),
     entries: entry,

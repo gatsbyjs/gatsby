@@ -97,6 +97,11 @@ async function bundleSSR({
       outputDir, 
       {
         resolvers: ["parcel-resolver-externals"],
+      },
+      {
+        externals: [
+          'routes/render-page',
+        ]
       }
     ),
     entries: entry,

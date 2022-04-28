@@ -14,12 +14,7 @@ const { WritableAsPromise } = require(`./server-utils/writable-as-promise`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
-
-// TODO make alias for $virtual
-const asyncRequires = process.env.GATSBY_EXPERIMENTAL_BUNDLER 
-  ? require(path.join(process.cwd(), `.cache/_this_is_virtual_fs_path_`, '$virtual') + `/async-requires`)
-  : require('$virtual/async-requires')
-
+const asyncRequires = require('$virtual/async-requires')
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 
