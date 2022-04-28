@@ -18,6 +18,5 @@ export const dataLayerServices: Record<
   createPages,
   buildSchema,
   writeOutRedirectsAndWatch,
-  // @ts-ignore - No clue how to fix this
   graphQLTypegen,
 }

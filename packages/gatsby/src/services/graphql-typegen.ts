@@ -22,13 +22,13 @@ export async function graphQLTypegen(
     src: { compile },
   }: {
     src: {
-      type: "graphQLTypegen"
-      compile: "all" | "schema" | "definitions"
+      type: string
+      compile?: "all" | "schema" | "definitions"
     }
   }
 ): Promise<void> {
-  if (!program || !store) {
-    reporter.panic(`Missing required params "program" or "store"`)
+  if (!program || !store || !compile) {
+    reporter.panic(`Missing required params "program" or "store" or "compile"`)
   }
   const directory = program.directory
 
