@@ -267,6 +267,17 @@ describe(`build-headers-program`, () => {
     expect(output).toMatchSnapshot()
     expect(output).not.toMatch(/app-data\.json/)
     expect(output).not.toMatch(/page-data\.json/)
+
+    const parsedOutput = JSON.parse(output)
+    // Making sure split chunk get caching headers
+    // even if manifest doesn't indicate it should
+    // be part of app or page-template group.
+    expect(parsedOutput?.[`/231-b2d35ff9bb1952aa22d1.js`])
+      .toMatchInlineSnapshot(`
+      Array [
+        "Cache-Control: public, max-age=31536000, immutable",
+      ]
+    `)
   })
 
   it(`with manifest['pages-manifest']`, async () => {
