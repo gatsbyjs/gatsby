@@ -16,8 +16,6 @@ When someone wants to contribute to Gatsby, they open a request to _pull_ their 
 
 - [Documentation](#documentation-prs)
 - [Code](#code-changes)
-- [Starters or Site Showcase](#starters-or-site-showcase)
-- [Blog posts](#blog-posts)
 
 Recommendations for different kinds of contributions will follow in this guide and throughout the contributing docs.
 
@@ -25,9 +23,7 @@ Recommendations for different kinds of contributions will follow in this guide a
 
 We typically recommend [opening an issue](/contributing/how-to-file-an-issue/) before a pull request if there isn't already an issue for the problem you'd like to solve. This helps facilitate a discussion before deciding on an implementation.
 
-For some changes, such as typo fixes or broken links, it may be appropriate to open a small PR by itself. This is somewhat subjective so if you have any questions, [feel free to ask us](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).
-
-The Gatsby core team uses a triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests/), if you're interested in learning more about how that works.
+For some changes, such as typo fixes or broken links, it may be appropriate to open a small PR by itself.
 
 ## Opening PRs in Gatsby
 
@@ -35,46 +31,30 @@ For any kind of change to files in the Gatsby repo, you can follow the below ste
 
 To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), fork the repo and install parts of it to run on your local machine.
 
-- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
-
-- Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
-
+- [Fork and clone the Gatsby repo](/contributing/code-contributions#setting-up-your-local-dev-environment/).
 - Follow the instructions for the part of the project you want to change. (See specific sections below.)
-
 - [Create a branch in Git](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) to isolate your changes:
-
   ```shell
   git checkout -b some-change
   ```
-
 - Once you have changes in Git you want to push, [add them and create a commit](https://help.github.com/en/articles/adding-a-file-to-a-repository-using-the-command-line). For information on how to structure your commits, check out the [Managing PRs](/contributing/managing-pull-requests/#commit-and-pr-title) doc.
-
   - Using a dot character `.` will add all untracked files in the current directory and subdirectories.
-
   ```shell
   git add .
   ```
-
   - Using a visual tool like [GitHub Desktop](https://desktop.github.com/) or [GitX](https://rowanj.github.io/gitx/) can help for choosing which files and lines to commit.
-
 - Committing code will run the automated linter using [Prettier](https://prettier.io). To run the linter manually, run an npm script in the project's base directory:
-
   ```shell
   npm run format
   ```
-
 - Commit any linting changes before pushing by [amending the previous commit](https://help.github.com/en/articles/changing-a-commit-message) or by adding a new commit. For more on linting and tests, visit the [Managing PRs](/contributing/managing-pull-requests/#automated-checks) doc.
-
   ```shell
   git commit --amend
   ```
-
 - Push your changes to your fork, assuming it is set up as [`origin`](https://www.git-tower.com/learn/git/glossary/origin):
-
   ```shell
   git push origin head
   ```
-
 - To open a PR with your changes against the Gatsby repo, you can use the [GitHub Pull Request UI](https://help.github.com/en/articles/creating-a-pull-request). Alternatively, you can use the command line: we recommend [hub](https://github.com/github/hub) for that.
 
 ### Documentation PRs
@@ -89,21 +69,41 @@ Further instructions can be found on the [docs contributions](/contributing/docs
 
 ### Code changes
 
-Instructions for making changes to the Gatsby source code, tests, internals, APIs, packages, and more can be found in the contributing docs on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/). There are also additional details on the [Code contributions](/contributing/code-contributions/) page.
+Instructions for making changes to the Gatsby source code, tests, internals, APIs, packages, and more can be found in the contributing docs on [setting up your local dev environment](/contributing/code-contributions#setting-up-your-local-dev-environment/).
 
-### Starters or Site Showcase
+## Preparing a PR for review
 
-**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
+When preparing and merging a PR for the [monorepo](https://github.com/gatsbyjs/gatsby) you’ll need to follow a couple of conventions:
 
-### Blog posts
+- A bot automatically adds a `status: triage needed` label to your PR. A team member will remove this label and add appropriate ones
+- Format the PR title to follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format (more details below)
+- Make sure that all required tests pass — if you think that a test is flaky and you’re not sure, ask about it in the pull request
+- Put the PR into _Draft_ mode if it’s still a work in progress
+- Fill out the PR template (Description, Docs, Related Issues)
 
-For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog contributions](/contributing/blog-contributions/), including how to propose an idea and setting up the blog to run locally.
+### Conventional Commits Examples
+
+_When referring to folders/folder structures the root of the monorepo is assumed._
+
+- If solely something inside `/docs` is changed, e.g. someone fixes a typo in one of our docs or you’re updating the tutorial, the PR title should be `chore(docs): $TEXT`
+- If you’re updating something in `/.github` or `.circleci` it’ll be `chore: $TEXT`
+- If you’re only updating something in one package, e.g. in `/packages/gatsby-plugin-utils` the [scope](https://www.conventionalcommits.org/en/v1.0.0/#commit-message-with-scope) is the package name `gatsby-plugin-utils`
+  - If only docs or README is updated inside the package, the title should be `chore(gatsby-plugin-utils: $TEXT`
+  - If any other _chore_ changes like bumping a patch version of a dependency is done, it’s `chore(gatsby-plugin-utils): $TEXT`
+  - If you’re fixing a bug: `fix(gatsby-plugin-utils): $TEXT`
+  - Adding a new feature: `feat(gatsby-plugin-utils): $TEXT`
+  - Making a breaking change for the package: `BREAKING CHANGE(gatsby-plugin-utils): $TEXT` — please note that in this case you’ll need to coordinate this with team members as this requires a closer look & a special release process
+  - Improving the performance: `perf(gatsby-plugin-utils): $TEXT`
+- If you’re updating two packages, you could combine it like so: `feat(gatsby,gatsby-plugin-utils): $TEXT`
+- If you’re updating multiple packages but the main gist of the change is in one package (e.g. you add a feature to `gatsby` and had to update some signatures in other packages) the rules of the “one package” example still apply, so e.g. `feat(gatsby): $TEXT`
+- If you’re updating multiple packages and there’s not a clear package that it all relates to, you can skip the _scope_ and only do `fix: $TEXT` , `feat: $TEXT`, etc.
+- If you’re updating dependencies in multiple packages you can use `chore(deps): $TEXT`
 
 ## Follow up with reviews and suggestions
 
 After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
 
-Depending on what type of change is proposed, some combination of the Gatsby Core, Themes, Developer Relations, and Product Marketing teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+The Gatsby teams reviews and approves every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
 
 These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
 
@@ -156,5 +156,4 @@ For more information on working with upstream repos, [visit the GitHub docs](htt
 - [Git Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
-- [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
 - [Guide on Markdown Syntax](/docs/reference/markdown-syntax/)

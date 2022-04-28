@@ -1,105 +1,23 @@
-import _ from "lodash"
-
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
-import { loadPlugins as loadPluginsInternal } from "./load"
+import { loadInternalPlugins } from "./load-internal-plugins"
 import {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
-  ExportType,
-  ICurrentAPIs,
   validateConfigPluginsOptions,
 } from "./validate"
-import {
-  IPluginInfo,
-  IFlattenedPlugin,
-  ISiteConfig,
-  IRawSiteConfig,
-} from "./types"
-import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
-
-const getAPI = (api: {
-  [exportType in ExportType]: { [api: string]: boolean }
-}): ICurrentAPIs =>
-  _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
-    merged[key] = _.keys(api[key])
-    return merged
-  }, {}) as ICurrentAPIs
-
-// Create a "flattened" array of plugins with all subplugins
-// brought to the top-level. This simplifies running gatsby-* files
-// for subplugins.
-const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
-  const flattened: Array<IPluginInfo> = []
-  const extractPlugins = (plugin: IPluginInfo): void => {
-    if (plugin.subPluginPaths) {
-      for (const subPluginPath of plugin.subPluginPaths) {
-        // @pieh:
-        // subPluginPath can look like someOption.randomFieldThatIsMarkedAsSubplugins
-        // Reason for doing stringified path with . separator was that it was just easier to prevent duplicates
-        // in subPluginPaths array (as each subplugin in the gatsby-config would add subplugin path).
-        const segments = subPluginPath.split(`.`)
-        let roots: Array<any> = [plugin.pluginOptions]
-        for (const segment of segments) {
-          if (segment === `[]`) {
-            roots = roots.flat()
-          } else {
-            roots = roots.map(root => root[segment])
-          }
-        }
-        roots = roots.flat()
-
-        roots.forEach(subPlugin => {
-          flattened.push(subPlugin)
-          extractPlugins(subPlugin)
-        })
-      }
-    }
-  }
-
-  plugins.forEach(plugin => {
-    flattened.push(plugin)
-    extractPlugins(plugin)
-  })
-
-  return flattened
-}
-
-function normalizePlugin(plugin): IPluginRefObject {
-  if (typeof plugin === `string`) {
-    return {
-      resolve: plugin,
-      options: {},
-    }
-  }
-
-  if (plugin.options?.plugins) {
-    plugin.options = {
-      ...plugin.options,
-      plugins: normalizePlugins(plugin.options.plugins),
-    }
-  }
-
-  return plugin
-}
-
-function normalizePlugins(plugins?: Array<PluginRef>): Array<IPluginRefObject> {
-  return (plugins || []).map(normalizePlugin)
-}
-
-const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
-  return {
-    ...config,
-    plugins: (config.plugins || []).map(normalizePlugin),
-  }
-}
+import { IFlattenedPlugin } from "./types"
+import { normalizeConfig } from "./utils/normalize"
+import { getAPI } from "./utils/get-api"
+import { flattenPlugins } from "./utils/flatten-plugins"
+import { IGatsbyConfig } from "../../internal"
 
 export async function loadPlugins(
-  rawConfig: IRawSiteConfig = {},
+  rawConfig: IGatsbyConfig,
   rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
@@ -115,7 +33,7 @@ export async function loadPlugins(
   })
 
   // Collate internal plugins, site config plugins, site default plugins
-  const pluginInfos = loadPluginsInternal(config, rootDir)
+  const pluginInfos = loadInternalPlugins(config, rootDir)
 
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)

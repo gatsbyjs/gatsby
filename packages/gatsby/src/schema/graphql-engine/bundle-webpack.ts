@@ -71,6 +71,21 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
+          test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,
+          parser: { amd: false },
+          use: [
+            {
+              loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
+              options: {
+                outputAssetBase: `assets`,
+              },
+            },
+            {
+              loader: require.resolve(`./lmdb-bundling-patch`),
+            },
+          ],
+        },
+        {
           test: /\.m?js$/,
           type: `javascript/auto`,
           resolve: {
@@ -82,8 +97,18 @@ export async function createGraphqlEngineBundle(
           },
         },
         {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: `babel-loader`,
+            options: {
+              presets: [`@babel/preset-typescript`],
+            },
+          },
+        },
+        {
           // For node binary relocations, include ".node" files as well here
-          test: /\.(m?js|node)$/,
+          test: /\.([cm]?js|node)$/,
           // it is recommended for Node builds to turn off AMD support
           parser: { amd: false },
           use: {
@@ -107,6 +132,8 @@ export async function createGraphqlEngineBundle(
         [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
           false,
         inquirer: false,
+        // only load one version of lmdb
+        lmdb: require.resolve(`lmdb`),
       },
     },
     plugins: [

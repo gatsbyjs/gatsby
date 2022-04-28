@@ -136,7 +136,7 @@ function getPosition({
       line: frame.getLineNumber(),
       source: frame
         .getFileName()
-        .substr(frame.getFileName().indexOf(`webpack:`))
+        .slice(frame.getFileName().indexOf(`webpack:`))
         .replace(/webpack:\/+/g, `webpack://`),
       name: null,
     }

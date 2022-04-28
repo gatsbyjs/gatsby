@@ -1,3 +1,4 @@
+import type { TrailingSlash } from "gatsby-page-utils"
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
@@ -97,6 +98,7 @@ export interface IGatsbyConfig {
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
+  trailingSlash?: TrailingSlash
 }
 
 export interface IGatsbyNode {
@@ -532,14 +534,16 @@ interface IEndJobAction {
   plugin: IGatsbyIncompleteJob["plugin"]
 }
 
+export interface ICreatePageDependencyActionPayloadType {
+  path: string
+  nodeId?: string
+  connection?: string
+}
+
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
   plugin?: string
-  payload: {
-    path: string
-    nodeId?: string
-    connection?: string
-  }
+  payload: Array<ICreatePageDependencyActionPayloadType>
 }
 
 export interface IDeleteComponentDependenciesAction {
@@ -703,6 +707,7 @@ export interface ICreatePageAction {
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
   contextModified?: boolean
+  componentModified?: boolean
 }
 
 export interface ICreateRedirectAction {

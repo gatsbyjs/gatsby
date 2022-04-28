@@ -1,6 +1,6 @@
 name: Documentation
 description: Did you find an error in our documentation? Report your findings here.
-labels: "type: documentation"
+labels: ["type: documentation"]
 body:
   - type: markdown
     attributes:

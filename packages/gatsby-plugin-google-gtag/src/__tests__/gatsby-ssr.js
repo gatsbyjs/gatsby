@@ -81,3 +81,49 @@ describe(`respectDNT`, () => {
     )
   })
 })
+
+describe(`selfHostedOrigin`, () => {
+  it(`should set selfHostedOrigin as googletagmanager.com by default`, () => {
+    const mocks = {
+      setHeadComponents: jest.fn(),
+      setPostBodyComponents: jest.fn(),
+    }
+    const pluginOptions = {
+      trackingIds: [`GA_TRACKING_ID`],
+    }
+
+    onRenderBody(mocks, pluginOptions)
+    const [bodyConfig] = mocks.setPostBodyComponents.mock.calls[0][0]
+    const headConfig = mocks.setHeadComponents.mock.calls[0][0]
+
+    expect(bodyConfig.props.src).toContain(`https://www.googletagmanager.com`)
+    expect(headConfig[0].props.href).toContain(
+      `https://www.googletagmanager.com`
+    )
+    expect(headConfig[1].props.href).toContain(
+      `https://www.googletagmanager.com`
+    )
+  })
+
+  it(`should set selfHostedOrigin`, () => {
+    const origin = `YOUR_SELF_HOSTED_ORIGIN`
+    const mocks = {
+      setHeadComponents: jest.fn(),
+      setPostBodyComponents: jest.fn(),
+    }
+    const pluginOptions = {
+      trackingIds: [`GA_TRACKING_ID`],
+      pluginConfig: {
+        origin: origin,
+      },
+    }
+
+    onRenderBody(mocks, pluginOptions)
+    const [bodyConfig] = mocks.setPostBodyComponents.mock.calls[0][0]
+    const headConfig = mocks.setHeadComponents.mock.calls[0][0]
+
+    expect(bodyConfig.props.src).toContain(origin)
+    expect(headConfig[0].props.href).toContain(origin)
+    expect(headConfig[1].props.href).toContain(origin)
+  })
+})

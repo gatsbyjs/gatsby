@@ -43,15 +43,25 @@ jest.doMock(
 
 describe(`traversePackageDeps`, () => {
   it(`handles deep dependency chains`, () => {
+    const monoRepoPackages = [
+      `package-a`,
+      `package-a-dep1`,
+      `package-a-dep1-dep1`,
+      `package-not-used`,
+    ]
+    const packageNameToPath = new Map()
+    for (const packageName of monoRepoPackages) {
+      packageNameToPath.set(
+        packageName,
+        path.join(...`<monorepo-path>/packages/${packageName}`.split(`/`))
+      )
+    }
+
     const { seenPackages, depTree } = traversePackagesDeps({
       root: `<monorepo-path>`,
       packages: [`package-a`, `doesnt-exist`],
-      monoRepoPackages: [
-        `package-a`,
-        `package-a-dep1`,
-        `package-a-dep1-dep1`,
-        `package-not-used`,
-      ],
+      monoRepoPackages,
+      packageNameToPath,
     })
 
     expect(seenPackages).toEqual([

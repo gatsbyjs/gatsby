@@ -140,6 +140,12 @@ const tagOverrides = new Map([
     `gatsby-source-wordpress@4.0.0-next.0`,
     `7797522184600284a44929cad5b27f2388eb13ee`,
   ],
+  [
+    // https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils%403.0.0/packages/gatsby-plugin-utils
+    // (gatsby-plugin-utils@3.0.0-next.0 published after commit with a breaking change)
+    `gatsby-plugin-utils@3.0.0-next.0`,
+    `05f971929f68eccc14686ef556f7f577e3771c0d`,
+  ],
 ])
 
 async function generateChangelog(packageName, fromVersion = null) {
@@ -231,7 +237,7 @@ function addChangelogEntries(packageName, entries, contents) {
   const updatedChangelogParts = [
     header,
     entries.trimRight(),
-    contents.substr(header.length),
+    contents.slice(header.length).trimStart(),
   ]
   fs.writeFileSync(
     changelogPath(packageName),

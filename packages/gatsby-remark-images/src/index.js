@@ -43,6 +43,7 @@ module.exports = (
     reporter,
     cache,
     compiler,
+    getRemarkFileDependency,
   },
   pluginOptions
 ) => {
@@ -150,12 +151,22 @@ module.exports = (
       return null
     }
 
-    const imageNode = _.find(files, file => {
-      if (file && file.absolutePath) {
-        return file.absolutePath === imagePath
-      }
-      return null
-    })
+    let imageNode
+    if (getRemarkFileDependency) {
+      imageNode = await getRemarkFileDependency({
+        absolutePath: {
+          eq: imagePath,
+        },
+      })
+    } else {
+      // Legacy: no context, slower version of image query
+      imageNode = _.find(files, file => {
+        if (file && file.absolutePath) {
+          return file.absolutePath === imagePath
+        }
+        return null
+      })
+    }
 
     if (!imageNode || !imageNode.absolutePath) {
       return resolve()
@@ -319,7 +330,7 @@ module.exports = (
       let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
 
       // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
-      const { Potrace } = require(`potrace`)
+      const { Potrace } = require(`@gatsbyjs/potrace`)
       const argsKeys = Object.keys(args)
       args = argsKeys.reduce((result, key) => {
         const value = args[key]

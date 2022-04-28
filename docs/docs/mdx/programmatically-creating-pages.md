@@ -93,7 +93,7 @@ Gatsby is the best
 
 ## Create pages from sourced MDX files
 
-`gatsby-plugin-mdx` automatically adds a `slug` field to each MDX node derived from the corresponding filename. You can use special characters, whitespaces, or uppercase in the filenames, and `gastby-plugin-mdx` will "slugify" it, making the slug safe for serving over the internet and human readable.
+`gatsby-plugin-mdx` automatically adds a `slug` field to each MDX node derived from the corresponding filename. You can use special characters, whitespaces, or uppercase in the filenames, and `gatsby-plugin-mdx` will "slugify" it, making the slug safe for serving over the internet and human readable.
 
 In order to create pages from the sourced MDX files, you need
 to construct a query that finds all MDX nodes and pulls out

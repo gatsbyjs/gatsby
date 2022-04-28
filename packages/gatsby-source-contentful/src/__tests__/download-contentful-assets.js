@@ -1,6 +1,9 @@
 // @ts-check
 import { downloadContentfulAssets } from "../download-contentful-assets"
 import { createAssetNodes } from "../normalize"
+import { createPluginConfig } from "../plugin-options"
+
+const pluginConfig = createPluginConfig({})
 
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
@@ -71,6 +74,7 @@ describe(`downloadContentfulAssets`, () => {
             defaultLocale,
             locales,
             space,
+            pluginConfig,
           })
         ))
       )

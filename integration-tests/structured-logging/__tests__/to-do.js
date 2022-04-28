@@ -137,6 +137,12 @@ const commonAssertions = events => {
       }),
 
       joi.object({
+        type: joi.string().required().valid(`GATSBY_CONFIG_KEYS`),
+        payload: joi.object().required(),
+        timestamp: joi.string().required(),
+      }),
+
+      joi.object({
         type: joi.string().required().valid(`RENDER_PAGE_TREE`),
         payload: joi.object(),
         timestamp: joi.string().required(),

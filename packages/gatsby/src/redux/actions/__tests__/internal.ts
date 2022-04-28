@@ -27,6 +27,7 @@ describe(`setSiteConfig`, () => {
           "siteMetadata": Object {
             "hi": true,
           },
+          "trailingSlash": "legacy",
         },
         "type": "SET_SITE_CONFIG",
       }
@@ -41,6 +42,7 @@ describe(`setSiteConfig`, () => {
           "jsxRuntime": "classic",
           "pathPrefix": "",
           "polyfill": true,
+          "trailingSlash": "legacy",
         },
         "type": "SET_SITE_CONFIG",
       }

@@ -493,7 +493,7 @@ If you're using any other process properties, you want to polyfill process.
 1. Install `process` library - `npm install process`
 2. Configure webpack to use the process polyfill.
 
-```diff:title=gatby-node.js
+```diff:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
   if (stage === 'build-javascript' || stage === 'develop') {
     actions.setWebpackConfig({
@@ -755,8 +755,8 @@ exports.sourceNodes = ({ actions, getNodesByType }) => {
 In case you only have an ID at hand (e.g. getting it from cache or as `__NODE`), you can use the `getNode()` API:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
-  const { touchNode, getNode } = actions
+exports.sourceNodes = async ({ actions, getNode, getNodesByType, cache }) => {
+  const { touchNode } = actions
   const myNodeId = await cache.get("some-key")
 
   touchNode(getNode(myNodeId))

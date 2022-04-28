@@ -354,7 +354,7 @@ const Product = ({ data }) => {
     <div>
       <h1>{product.title}</h1>
       <GatsbyImage
-        images={product.image.childImageSharp.gatsbyImageData}
+        image={product.image.childImageSharp.gatsbyImageData}
         alt={product.title}
         style={{ float: "left", marginRight: "1rem" }}
       />

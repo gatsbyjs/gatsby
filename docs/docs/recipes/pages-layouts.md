@@ -153,7 +153,7 @@ export default function Home() {
 
 ### Additional resources
 
-- Create a layout component in [tutorial part three](/docs/tutorial/part-3/#your-first-layout-component)
+- Create a layout component in [tutorial part three](/docs/tutorial/part-2/#create-a-reusable-layout-component)
 - Styling with [Layout Components](/docs/how-to/routing/layout-components/)
 
 ## Creating pages programmatically with createPage

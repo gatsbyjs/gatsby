@@ -505,12 +505,14 @@ Now in your plugin's `gatsby-node.js` file, you can implement a new API, called 
 Import the `createRemoteFileNode` helper from `gatsby-source-filesystem`, which will download a file from a remote location and create a `File` node for you.
 
 ```javascript:title=source-plugin/gatsby-node.js
-const { ApolloClient } = require("apollo-client")
-const { InMemoryCache } = require("apollo-cache-inmemory")
-const { split } = require("apollo-link")
-const { HttpLink } = require("apollo-link-http")
-const { WebSocketLink } = require("apollo-link-ws")
-const { getMainDefinition } = require("apollo-utilities")
+const {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+} = require("@apollo/client")
+const { WebSocketLink } = require("@apollo/client/link/ws")
+const { getMainDefinition } = require("@apollo/client/utilities")
 const fetch = require("node-fetch")
 const gql = require("graphql-tag")
 const WebSocket = require("ws")
@@ -935,7 +937,7 @@ The CMS will need to send a preview webhook to Gatsby Cloud when content is chan
 
 ##### Using the Gatsby preview extension
 
-We are currently in process of creating an open source package to handle most of this functionality for you. In the meantime, you will need to create a button in your CMS that does the following...
+You will need to create a button in your CMS that does the following:
 
 1. `POST` to the preview webhook url in Gatsby Cloud
 2. Open the Content Sync waiting room
@@ -945,9 +947,9 @@ The button might look something like this:
 
 ##### Configuration
 
-You will need to store the Content Sync URL from a given Gatsby Cloud site. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the CMS plugin extension configuration, this will differ from CMS to CMS depending on how they handle their plugin ecosystem.
+You will need to store the Content Sync URL from a given Gatsby Cloud site as a CMS extension option. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the CMS plugin extension configuration, this will differ from CMS to CMS depending on how extension settings are stored.
 
-Depending on the CMS you will also need to store the preview webhook URL. This might also be stored in the plugin extension configuration, but often is stored in a separate webhooks configuration. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
+You will also need to store the preview webhook URL. This might also be stored in the plugin extension settings, but often is stored in a separate CMS webhooks settings page if your CMS supports webhooks already. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
 
 Both of these need to be user configurable in the CMS.
 
@@ -967,13 +969,24 @@ In the CMS extension, we should have access to
 - the content id
 - the timestamp that the content was updated at (or some other piece of data that is tied to a very specific state of saved content)
 
+##### Enabling "Eager Redirects" with Content ID's
+
+Eager Redirects is a Content Sync feature which causes the user to be redirected to their site frontend as soon as possible.
+When they first preview a piece of content, they will stay in the Content Sync loading screen until their preview is ready. On subsequent previews of that same piece of content, they will be redirected as soon as the page loads. This is done by storing a "content ID" in local storage. The content ID should be a unique identifier for that piece of content which is consistent across all previews.
+
+```javascript
+const contentId = project.id
+```
+
+This content ID should be appended to the end of the Content Sync URL. See the sections below for more information.
+
 ##### Starting the preview build (optional)
 
 If the CMS does not handle this part automatically we will need to tell Gatsby cloud to build a preview by `POST`ing to the Gatsby Cloud preview build webhook url.
 
 ##### Opening the Content Sync waiting room
 
-Once we've built a `manifestId` and `POST`ed to the preview build webhook url, we need to open a new tab/window with a modified version of the Content Sync URL. You get that by grabbing the Content Sync URL you stored in the CMS extension earlier and appending the Gatsby source plugin name and the content's `manifestId` that you just created, `https://gatsbyjs.com/content-sync/<siteId>/<sourcePluginName>/<manifestId>`.
+Once we've built a `manifestId` and `POST`ed to the preview build webhook url, we need to open a new tab/window with a modified version of the Content Sync URL. You get that by grabbing the Content Sync URL you stored in the CMS extension earlier and appending the Gatsby source plugin name, the content ID, and the content's `manifestId` that you just created, `https://gatsbyjs.com/content-sync/<siteId>/<sourcePluginName>/<manifestId>/<contentId>/`.
 
 #### Useful Content Sync development tips
 
@@ -984,6 +997,102 @@ Here are some things to keep in mind and some "gotchas" depending on how the CMS
 - While developing, you can set the Gatsby `VERBOSE` env variable to `"true"` to see additional logs that will help you debug what's happening in the source plugin.
 - When you click the "Open Preview" button in the CMS the `manifestId` in the URL should match the `manifestId` that the source plugin creates from that revision.
 - The node manifests get written out in the `public` dir of your gatsby site, so you can check to manifests on your local disk `/public/__node-manifests/<sourcePluginName>/<manifestId>.json` or you can navigate directly to that piece of content `https://<your-domain>/__node-manifests/<sourcePluginName>/<manifestId>`
+
+### Enabling Image CDN support
+
+Image CDN is a [feature on Gatsby Cloud](/products/cloud/image-cdn/) that provides edge network image processing by waiting to perform image processing until the very first user visit to a page. The processed image is then cached for super quick fetching on all subsequent user views. Enabling it will also speed up local development builds and production builds on other deployment platforms because images from your CMS or data source will only be downloaded if they are used in a created Gatsby page.
+
+You can learn more about it in the announcement blogpost [Image CDN: Lightning Fast Image Processing for Gatsby Cloud](/blog/image-cdn-lightning-fast-image-processing-for-gatsby-cloud/)
+
+#### Integration with source plugins
+
+Starting with `gatsby@4.10`, Image CDN and its helper functions are available inside `gatsby` and `gatsby-plugin-utils`. In addition to the `RemoteFile` interface you can also use the `addRemoteFilePolyfillInterface` and `polyfillImageServiceDevRoutes` functions to enable Image CDN support down to Gatsby 2 inside your plugin.
+
+#### `createSchemaCustomization` node API additions
+
+To add support to a source plugin, you will need to create a new [GraphQL object type](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) that implements the `Node` and `RemoteFile` interfaces.
+
+```js
+schema.buildObjectType({
+  name: `YourImageAssetNodeType`,
+  fields: {
+    // .. your fields
+  },
+  interfaces: [`Node`, `RemoteFile`],
+})
+```
+
+It is also recommended that you add a polyfill to provide support back through Gatsby 2. To do so, wrap the `buildObjectType` call with the `addRemoteFilePolyfillInterface` polyfill like so:
+
+```js
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const imageAssetType = addRemoteFilePolyfillInterface(
+    schema.buildObjectType({
+      name: `YourImageAssetNodeType`,
+      fields: {
+        // your fields - see createSchemaCustomization docs - if you're using schema inference you can also leave this object empty
+      },
+      interfaces: [`Node`, `RemoteFile`],
+    }),
+    {
+      schema,
+      actions,
+    }
+  )
+
+  actions.createTypes([imageAssetType])
+}
+```
+
+Implementing the `RemoteFile` interface adds the correct fields to your new GraphQL type and adds the necessary resolvers to handle the type. `RemoteFile` holds the following properties:
+
+- `mimeType: String!`
+- `filename: String!`
+- `filesize: Int`
+- `width: Int`
+- `height: Int`
+- `publicUrl: String!`
+- `resize(width: Int, height: Int, fit: enum): String`
+- `gatsbyImage(args): String`
+
+You might notice that `width`, `height`, `resize`, and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDF’s.
+
+The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
+
+#### `sourceNodes` node API additions
+
+When creating nodes, you must add some fields to the node itself to match what the `RemoteFile` interface expects. You will need `url`, `mimeType`, `filename` as mandatory fields. When you have an image type, `width` and `height` are required as well. The optional fields are `placeholderUrl` and `filesize`. `placeholderUrl` will be the url used to generate blurred or dominant color placeholder so it should contain `%width%` and `%height%` url params if possible.
+
+```js
+const assetNode = {
+  id: `an id`,
+  internal: {
+    type: `PrefixAsset`,
+  },
+  url: `${file.url}`,
+  placeholderUrl: `${file.url}?w=%width%&h=%height%`,
+  mimeType: file.contentType,
+  filename: file.fileName,
+  width: file.details?.image?.width,
+  height: file.details?.image?.height,
+}
+```
+
+#### `onCreateDevServer` node API
+
+Add the polyfill, `polyfillImageServiceDevRoutes`, to ensure that the development server started with `gatsby develop` has the routes it needs to work with Image CDN.
+
+```js
+import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
+
+export const onCreateDevServer = ({ app }) => {
+  polyfillImageServiceDevRoutes(app)
+}
+```
+
+Now you're all set up to use Image CDN! 🙌
 
 ## Publishing a plugin
 

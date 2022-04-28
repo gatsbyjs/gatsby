@@ -5,7 +5,9 @@ import { IPluginInfoOptions } from "./types"
 
 interface ITestPluginOptionsSchemaReturnType {
   errors: Array<string>
+  warnings: Array<string>
   isValid: boolean
+  hasWarnings: boolean
 }
 
 export async function testPluginOptionsSchema(
@@ -44,11 +46,22 @@ export async function testPluginOptionsSchema(
   })
 
   try {
-    await validateOptionsSchema(pluginSchema, pluginOptions)
+    const { warning } = await validateOptionsSchema(pluginSchema, pluginOptions)
+
+    const warnings = warning?.details?.map(detail => detail.message) ?? []
+
+    if (warnings?.length > 0) {
+      return {
+        isValid: true,
+        errors: [],
+        hasWarnings: true,
+        warnings,
+      }
+    }
   } catch (e) {
-    const errors = e.details.map(detail => detail.message)
-    return { isValid: false, errors }
+    const errors = e?.details?.map(detail => detail.message) ?? []
+    return { isValid: false, errors, hasWarnings: false, warnings: [] }
   }
 
-  return { isValid: true, errors: [] }
+  return { isValid: true, errors: [], hasWarnings: false, warnings: [] }
 }

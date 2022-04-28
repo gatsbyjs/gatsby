@@ -1,16 +1,12 @@
 import * as fs from "fs"
 import * as path from "path"
-import sharp from "./safe-sharp"
+// TODO(v5): use gatsby/sharp
+import getSharpInstance from "./safe-sharp"
 import { createContentDigest, slash } from "gatsby-core-utils"
 import { defaultIcons, addDigestToPath, favicons } from "./common"
 import { doesIconExist } from "./node-helpers"
 
 import pluginOptionsSchema from "./pluginOptionsSchema"
-
-sharp.simd(true)
-
-// force it to be 1 as we only resize one image
-sharp.concurrency(1)
 
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
@@ -28,6 +24,7 @@ async function generateIcon(icon, srcIcon) {
   // Sharp accept density from 1 to 2400
   const density = Math.min(2400, Math.max(1, size))
 
+  const sharp = await getSharpInstance()
   return sharp(srcIcon, { density })
     .resize({
       width: size,
@@ -194,6 +191,7 @@ const makeManifest = async ({
       )
     }
 
+    const sharp = await getSharpInstance()
     const sharpIcon = sharp(icon)
 
     const metadata = await sharpIcon.metadata()
@@ -220,11 +218,9 @@ const makeManifest = async ({
     async function processIconSet(iconSet) {
       // if cacheBusting is being done via url query icons must be generated before cache busting runs
       if (cacheMode === `query`) {
-        await Promise.all(
-          iconSet.map(dstIcon =>
-            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-          )
-        )
+        for (const dstIcon of iconSet) {
+          await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+        }
       }
 
       if (cacheMode !== `none`) {
@@ -237,11 +233,9 @@ const makeManifest = async ({
 
       // if file names are being modified by cacheBusting icons must be generated after cache busting runs
       if (cacheMode !== `query`) {
-        await Promise.all(
-          iconSet.map(dstIcon =>
-            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-          )
-        )
+        for (const dstIcon of iconSet) {
+          await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+        }
       }
 
       return iconSet

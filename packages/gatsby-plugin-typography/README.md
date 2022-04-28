@@ -2,9 +2,6 @@
 
 A Gatsby plugin for utilizing the [Typography](https://kyleamathews.github.io/typography.js/) library with minimal configuration.
 
-See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-3/)
-([source](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography))
-
 ## Install
 
 `npm install gatsby-plugin-typography react-typography typography`

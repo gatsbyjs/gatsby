@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.13.0/packages/gatsby-transformer-documentationjs) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.12.1/packages/gatsby-transformer-documentationjs) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.12.0/packages/gatsby-transformer-documentationjs) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.11.0/packages/gatsby-transformer-documentationjs) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.10.0/packages/gatsby-transformer-documentationjs) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.9.0/packages/gatsby-transformer-documentationjs) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.8.0/packages/gatsby-transformer-documentationjs) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.7.0/packages/gatsby-transformer-documentationjs) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.6.0/packages/gatsby-transformer-documentationjs) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.5.0/packages/gatsby-transformer-documentationjs) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.4.0/packages/gatsby-transformer-documentationjs) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

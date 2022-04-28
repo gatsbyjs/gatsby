@@ -110,8 +110,8 @@ exports.sourceNodes = ({ actions, getNodesByType }) => {
 In case you only have an ID at hand (e.g. getting it from cache), you can use the `getNode()` API:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
-  const { touchNode, getNode } = actions
+exports.sourceNodes = async ({ actions, getNode, getNodesByType, cache }) => {
+  const { touchNode } = actions
   const myNodeId = await cache.get("some-key")
 
   touchNode(getNode(myNodeId)) // highlight-line
@@ -251,6 +251,8 @@ with plugins and prevents us from running queries in parallel and makes other us
 The recommended approach is to always create nodes in `sourceNodes`. We are going to come up with alternatives to
 this workaround that will work using `sourceNodes`. It is still being worked on, please post your use-cases and ideas
 in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discussioncomment-1262874) to help us shape this new APIs.
+
+If you've used this with `gatsby-source-graphql`, please switch to [Gatsby GraphQL Source Toolkit](https://github.com/gatsbyjs/gatsby-graphql-toolkit). Generally speaking you'll want to create your own source plugin to fully support such use cases.
 
 You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/#2-data-mutations-need-to-happen-during-sourcenodes-or-oncreatenode).
 

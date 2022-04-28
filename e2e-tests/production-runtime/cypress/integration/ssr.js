@@ -1,6 +1,7 @@
 const staticPath = `/ssr/static-path/`
 const paramPath = `/ssr/param-path/`
 const wildcardPath = `/ssr/wildcard-path/`
+const pathRaking = `/ssr/path-ranking/`
 
 describe(`Static path ('${staticPath}')`, () => {
   it(`Direct visit no query params`, () => {
@@ -34,6 +35,14 @@ describe(`Static path ('${staticPath}')`, () => {
       .waitForRouteChange()
     cy.getTestElement(`query`).contains(`{}`)
     cy.getTestElement(`params`).contains(`{}`)
+  })
+
+  it("Preserves window.location.search as querystring passed", () => {
+    const queryString = `?a=b%23&x=y%25&j=`
+    cy.visit(staticPath + queryString).waitForRouteChange()
+    cy.window().then(win => {
+      expect(win.location.search).to.equal(queryString)
+    })
   })
 })
 
@@ -69,6 +78,32 @@ describe(`Param path ('${paramPath}:param')`, () => {
       .waitForRouteChange()
     cy.getTestElement(`query`).contains(`{}`)
     cy.getTestElement(`params`).contains(`{"param":"baz"}`)
+  })
+})
+
+describe(`Path ranking resolution ('${pathRaking}*')`, () => {
+  it(`Resolves to [...].js template at ${pathRaking}p1`, () => {
+    cy.visit(pathRaking + `p1/`).waitForRouteChange()
+    cy.getTestElement(`query`).contains(`{}`)
+    cy.getTestElement(`params`).contains(`{"*":"p1"}`)
+  })
+
+  it(`Resolves to [p1]/[p2].js template at ${pathRaking}p1/p2`, () => {
+    cy.visit(pathRaking + `p1/p2/`).waitForRouteChange()
+    cy.getTestElement(`query`).contains(`{}`)
+    cy.getTestElement(`params`).contains(`{"p1":"p1","p2":"p2"}`)
+  })
+
+  it(`Resolves to [p1]/page.js template at ${pathRaking}p1/page`, () => {
+    cy.visit(pathRaking + `p1/page/`).waitForRouteChange()
+    cy.getTestElement(`query`).contains(`{}`)
+    cy.getTestElement(`params`).contains(`{"p1":"p1"}`)
+  })
+
+  it(`Resolves to [...].js template at ${pathRaking}p1/p2/p3`, () => {
+    cy.visit(pathRaking + `p1/p2/p3/`).waitForRouteChange()
+    cy.getTestElement(`query`).contains(`{}`)
+    cy.getTestElement(`params`).contains(`{"*":"p1/p2/p3"}`)
   })
 })
 

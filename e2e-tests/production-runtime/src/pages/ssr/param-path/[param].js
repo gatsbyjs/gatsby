@@ -13,7 +13,7 @@ export default function Params({ serverData }) {
   )
 }
 
-export function getServerData(arg) {
+export async function getServerData(arg) {
   return {
     props: {
       arg,

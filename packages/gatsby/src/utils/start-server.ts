@@ -38,7 +38,6 @@ import {
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
 import apiRunnerNode from "../utils/api-runner-node"
-import { Express } from "express"
 import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
@@ -52,6 +51,9 @@ import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
+import { configureTrailingSlash } from "./express-middlewares"
+import type { Express } from "express"
+import { addImageRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -173,6 +175,7 @@ export async function startServer(
    */
   const graphqlEndpoint = `/_+graphi?ql`
 
+  // TODO(v5): Remove GraphQL Playground (GraphiQL will be more future-proof)
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
       graphqlEndpoint,
@@ -278,11 +281,15 @@ export async function startServer(
   })
 
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
-    const fileName = path.resolve(process.cwd(), req.query.fileName)
-    const lineNumber = parseInt(req.query.lineNumber, 10)
-    launchEditor(fileName, isNaN(lineNumber) ? 1 : lineNumber)
+    if (req.query.fileName) {
+      const fileName = path.resolve(process.cwd(), req.query.fileName as string)
+      const lineNumber = parseInt(req.query.lineNumber as string, 10)
+      launchEditor(fileName, isNaN(lineNumber) ? 1 : lineNumber)
+    }
     res.end()
   })
+
+  addImageRoutes(app)
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -412,9 +419,9 @@ export async function startServer(
       return
     }
 
-    const moduleId = req?.query?.moduleId
-    const lineNumber = parseInt(req.query.lineNumber, 10)
-    const columnNumber = parseInt(req.query.columnNumber, 10)
+    const moduleId = req.query?.moduleId
+    const lineNumber = parseInt((req.query?.lineNumber as string) ?? 1, 10)
+    const columnNumber = parseInt((req.query?.columnNumber as string) ?? 1, 10)
 
     let fileModule
     for (const module of compilation.modules) {
@@ -488,9 +495,9 @@ export async function startServer(
       sourceContent: null,
     }
 
-    const filePath = req?.query?.filePath
-    const lineNumber = parseInt(req.query.lineNumber, 10)
-    const columnNumber = parseInt(req.query.columnNumber, 10)
+    const filePath: string | undefined = req.query?.filePath as string
+    const lineNumber = parseInt(req.query?.lineNumber as string, 10)
+    const columnNumber = parseInt(req.query?.columnNumber as string, 10)
 
     if (!filePath) {
       res.json(emptyResponse)
@@ -523,6 +530,10 @@ export async function startServer(
     developMiddleware(app, program)
   }
 
+  const { proxy, trailingSlash } = store.getState().config
+
+  app.use(configureTrailingSlash(() => store.getState(), trailingSlash))
+
   // Disable directory indexing i.e. serving index.html from a directory.
   // This can lead to serving stale html files during development.
   //
@@ -530,7 +541,6 @@ export async function startServer(
   app.use(developStatic(`public`, { index: false }))
 
   // Set up API proxy.
-  const { proxy } = store.getState().config
   if (proxy) {
     proxy.forEach(({ prefix, url }) => {
       app.use(`${prefix}/*`, (req, res) => {
@@ -598,7 +608,7 @@ export async function startServer(
         const renderResponse = await renderDevHTML({
           path: pathObj.path,
           page: pathObj,
-          skipSsr: req.query[`skip-ssr`] || false,
+          skipSsr: Object.prototype.hasOwnProperty.call(req.query, `skip-ssr`),
           store,
           htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,

@@ -1,4 +1,6 @@
 import "@testing-library/cypress/add-commands"
+import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command"
+import "gatsby-cypress"
 
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy
@@ -113,3 +115,12 @@ Cypress.Commands.add(`getFastRefreshOverlay`, () => (
 Cypress.Commands.add(`assertNoFastRefreshOverlay`, () => (
   cy.get('gatsby-fast-refresh').should('not.exist')
 ))
+
+addMatchImageSnapshotCommand({
+  customDiffDir: `/__diff_output__`,
+  customDiffConfig: {
+    threshold: 0.1,
+  },
+  failureThreshold: 0.08,
+  failureThresholdType: `percent`,
+})

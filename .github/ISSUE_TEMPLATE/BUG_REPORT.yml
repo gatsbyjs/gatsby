@@ -1,6 +1,6 @@
 name: Bug Report
 description: Something isn't working as expected? Report your bugs here.
-labels: "type: bug"
+labels: ["type: bug"]
 body:
   - type: markdown
     attributes:
@@ -89,7 +89,7 @@ body:
   - type: textarea
     attributes:
       label: Config Flags
-      description: Do you use any "flags" inside "gatsby-config.js"? If yes, please paste them here.
+      description: Do you use any "flags" inside "gatsby-config"? If yes, please paste them here.
       placeholder: |
         For example:
 

@@ -40,6 +40,8 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 
 ## Files
 
+You can also author all these files in TypeScript, see [TypeScript and Gatsby](/docs/how-to/custom-configuration/typescript/) for more details.
+
 - **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](/docs/reference/config-files/gatsby-browser/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
 
 - **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. Check out the [config docs](/docs/reference/config-files/gatsby-config/) for more detail.

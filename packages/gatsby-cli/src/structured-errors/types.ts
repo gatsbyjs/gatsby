@@ -59,4 +59,5 @@ export enum Type {
   CONFIG = `CONFIG`,
   WEBPACK = `WEBPACK`,
   PLUGIN = `PLUGIN`,
+  COMPILATION = `COMPILATION`,
 }

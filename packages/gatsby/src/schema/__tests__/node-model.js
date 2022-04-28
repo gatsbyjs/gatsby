@@ -22,7 +22,7 @@ describe(`NodeModel`, () => {
     `SiteBuildMetadata`,
     `Author`,
     `Contributor`,
-    `RemoteFile`,
+    `ExternalFile`,
     `Post`,
   ]
 
@@ -37,7 +37,7 @@ describe(`NodeModel`, () => {
       )
 
       const types = `
-      union AllFiles = File | RemoteFile
+      union AllFiles = File | ExternalFile
 
       interface TeamMember {
         name: String!
@@ -164,7 +164,7 @@ describe(`NodeModel`, () => {
         })
         expect(result.length).toBe(3)
         expect(
-          result.every(r => [`File`, `RemoteFile`].includes(r.internal.type))
+          result.every(r => [`File`, `ExternalFile`].includes(r.internal.type))
         ).toBeTruthy()
       })
 
@@ -318,7 +318,7 @@ describe(`NodeModel`, () => {
             `Contributor`,
             `Post`,
             `File`,
-            `RemoteFile`,
+            `ExternalFile`,
           ])
         )
       })
@@ -708,6 +708,24 @@ describe(`NodeModel`, () => {
             contentDigest: `7`,
           },
         },
+        {
+          id: `id8`,
+          toBeResolvedInAnotherField: 2,
+          enabled: true,
+          internal: {
+            type: `Test6`,
+            contentDigest: `8`,
+          },
+        },
+        {
+          id: `id9`,
+          toBeResolvedInAnotherField: 1,
+          enabled: true,
+          internal: {
+            type: `Test6`,
+            contentDigest: `9`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -832,6 +850,16 @@ describe(`NodeModel`, () => {
                 resolve(source) {
                   return source.Category
                 },
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test6`,
+            interfaces: [`Node`],
+            fields: {
+              sort_order: {
+                type: `Int!`,
+                resolve: source => source.toBeResolvedInAnotherField,
               },
             },
           }),
@@ -1098,6 +1126,58 @@ describe(`NodeModel`, () => {
 
       expect(Array.isArray(result2)).toBeTruthy()
       expect(result2.map(node => node.id)).toEqual([`id7`, `id6`])
+    })
+
+    it(`sorts correctly by fields with custom resolvers if GC happen mid query`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      // populate filters cache
+      await nodeModel.findAll(
+        {
+          query: {},
+          type: `Test6`,
+        },
+        { path: `/` }
+      )
+
+      // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+      const v8 = require(`v8`)
+      const vm = require(`vm`)
+      v8.setFlagsFromString(`--expose_gc`)
+      const gc = vm.runInNewContext(`gc`)
+
+      const { clearKeptObjects } = require(`lmdb`)
+
+      const actualOrderBy = jest.requireActual(`lodash`).orderBy
+      const spy = jest.spyOn(require(`lodash`), `orderBy`)
+      spy.mockImplementationOnce((...args) => {
+        // very implementation specific case:
+        // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+        // GCed mid execution of query. For this test we force all weakly held nodes to be
+        // dropped
+        clearKeptObjects()
+        gc()
+        return actualOrderBy(...args)
+      })
+
+      // query will use same filters cache as previous query (important)
+      // but will use sorting that requires Materialization (sort_order has custom resolver)
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            sort: {
+              fields: [`sort_order`],
+              order: [`asc`],
+            },
+          },
+          type: `Test6`,
+        },
+        { path: `/` }
+      )
+      const result = Array.from(entries)
+      expect(result.length).toEqual(2)
+      expect(result[0].id).toEqual(`id9`)
+      expect(result[1].id).toEqual(`id8`)
     })
 
     it(`handles nulish values within array of interface type`, async () => {
