@@ -5,7 +5,10 @@
   --w: 280px;
   --n: 2;
   gap: var(--size-gap);
-  grid-template-columns: repeat(auto-fit,minmax(max(var(--w), 100%/(var(--n) + 1) + 0.1%),1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(max(var(--w), 100%/ (var(--n) + 1) + 0.1%), 1fr)
+  );
   margin-bottom: var(--size-gap);
   margin-top: var(--size-gap);
 }
@@ -15,15 +18,15 @@
 }
 
 .listItem::marker {
-  color: #E95800;
+  color: #e95800;
 }
 
 .listItem:nth-child(2)::marker {
-  color: #159BF3;
+  color: #159bf3;
 }
 
 .listItem:nth-child(3)::marker {
-  color: #8EB814;
+  color: #8eb814;
 }
 
 .listItem:nth-child(4)::marker {

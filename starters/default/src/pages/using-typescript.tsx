@@ -11,7 +11,10 @@ type DataProps = {
   }
 }
 
-const UsingTypescript: React.FC<PageProps<DataProps>> = ({ data, location }) => (
+const UsingTypescript: React.FC<PageProps<DataProps>> = ({
+  data,
+  location,
+}) => (
   <Layout>
     <Seo title="Using TypeScript" />
     <h1>
@@ -27,8 +30,8 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({ data, location }) => 
       and run <code>tsc --init</code> to create a <code>tsconfig</code> file.
     </p>
     <p>
-      You're currently on the page <code>{location.pathname}</code> which was built on{" "}
-      {data.site.buildTime}.
+      You're currently on the page <code>{location.pathname}</code> which was
+      built on {data.site.buildTime}.
     </p>
     <p>
       To learn more, head over to our{" "}

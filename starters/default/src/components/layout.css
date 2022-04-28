@@ -1,15 +1,17 @@
 :root {
   --border-radius: 4px;
   --color-text: #333;
-  --color-primary: #7026B9;
-  --color-code-bg: #FFF4DB;
-  --color-code: #8A6534;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-primary: #7026b9;
+  --color-code-bg: #fff4db;
+  --color-code: #8a6534;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   --font-lg: 18px;
   --font-md: 16px;
   --font-sm: 14px;
-  --font-sx: 12px; 
+  --font-sx: 12px;
   --line-height-loose: 1.75;
   --line-height-normal: 1.5;
   --line-height-dense: 1.1;
@@ -54,7 +56,6 @@ a:active,
 a:hover {
   outline-width: 0;
   text-decoration: none;
-
 }
 abbr[title] {
   border-bottom: 1px dotted hsla(0, 0%, 0%, 0.5);
@@ -112,12 +113,21 @@ hr {
 *:after {
   box-sizing: inherit;
 }
-hgroup, img, figure, fieldset, ul, ol, dl, dd, p {
+hgroup,
+img,
+figure,
+fieldset,
+ul,
+ol,
+dl,
+dd,
+p {
   margin: 0;
   padding: 0;
   margin-bottom: var(--space-4);
 }
-ul, ol {
+ul,
+ol {
   margin-left: var(--space-4);
   list-style-position: outside;
   list-style-image: none;
@@ -135,16 +145,21 @@ pre {
   word-wrap: normal;
   padding: var(--space-4);
 }
-b, strong, dt, th {
+b,
+strong,
+dt,
+th {
   font-weight: bold;
 }
 li {
   margin-bottom: calc(var(--space-4) / 2);
 }
-ol li, ul li {
+ol li,
+ul li {
   padding-left: 0;
 }
-li > ol, li > ul {
+li > ol,
+li > ul {
   margin-bottom: calc(var(--space-4) / 2);
   margin-left: var(--space-4);
   margin-top: calc(var(--space-4) / 2);
@@ -207,4 +222,3 @@ pre tt:before,
 pre tt:after {
   content: none;
 }
-
