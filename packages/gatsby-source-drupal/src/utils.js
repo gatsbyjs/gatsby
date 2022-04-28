@@ -456,6 +456,7 @@ export function drupalCreateNodeManifest({
 
   const updatedAt = attributes?.revision_timestamp
   const id = attributes?.drupal_internal__nid
+  const langcode = attributes?.langcode ?? 'und'
 
   const supportsContentSync = typeof unstable_createNodeManifest === `function`
   const shouldCreateNodeManifest =
@@ -468,7 +469,7 @@ export function drupalCreateNodeManifest({
       )
       warnOnceToUpgradeGatsby = true
     }
-    const manifestId = `${id}-${updatedAt}`
+    const manifestId = `${id}-${langcode}-${updatedAt}`
 
     unstable_createNodeManifest({
       manifestId,
