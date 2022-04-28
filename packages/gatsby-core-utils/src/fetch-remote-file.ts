@@ -49,7 +49,6 @@ export async function fetchRemoteFile(
       if (await fs.pathExists(cachedPath)) {
         // If the cached directory is not part of the public directory, we don't need to copy it
         // as it won't be part of the build.
-        console.log({ cachedPath, downloadPath })
         if (isPublicPath(downloadPath) && cachedPath !== downloadPath) {
           return copyCachedPathToDownloadPath({ cachedPath, downloadPath })
         }
