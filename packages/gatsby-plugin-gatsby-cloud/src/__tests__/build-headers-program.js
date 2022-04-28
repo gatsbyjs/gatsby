@@ -368,6 +368,30 @@ describe(`build-headers-program`, () => {
     ).toMatchSnapshot()
   })
 
+  it(`with security headers in preview mode`, async () => {
+    const OLD_ENV = process.env
+    process.env = {
+      ...OLD_ENV,
+      GATSBY_IS_PREVIEW: `true`,
+    }
+
+    const pluginData = await createPluginData()
+
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+      mergeSecurityHeaders: true,
+    }
+    const buildHeadersProgram = require(`../build-headers-program`).default
+    await buildHeadersProgram(pluginData, pluginOptions)
+
+    expect(
+      await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
+    ).toMatchSnapshot()
+
+    jest.resetModules()
+    process.env = { ...OLD_ENV }
+  })
+
   it(`should emit headers via ipc`, async () => {
     const pluginData = await createPluginData()
     const pluginOptions = {

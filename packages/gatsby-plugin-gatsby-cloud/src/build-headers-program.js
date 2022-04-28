@@ -113,6 +113,13 @@ const applySecurityHeaders =
       return headers
     }
 
+    // It is a common use case to want to iframe preview
+    if (process.env.GATSBY_IS_PREVIEW === `true`) {
+      SECURITY_HEADERS[`/*`] = SECURITY_HEADERS[`/*`].filter(
+        headers => headers !== `X-Frame-Options: DENY`
+      )
+    }
+
     return headersMerge(headers, SECURITY_HEADERS)
   }
 

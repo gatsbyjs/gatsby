@@ -151,7 +151,7 @@ sudo apt install -y build-essential
 Following the install instructions on nodejs.org leaves a slightly broken install (i.e. permission errors when trying to `npm install`). Instead try installing node versions using [n](https://github.com/tj/n) which you can install with [n-install](https://github.com/mklement0/n-install):
 
 ```shell
-curl -L https://git.io/n-install | bash
+curl -L https://raw.githubusercontent.com/mklement0/n-install/stable/bin/n-install | bash
 ```
 
 There are other alternatives for managing your node versions such as [nvm](https://github.com/creationix/nvm) but this is known to slow down [bash startup](https://github.com/Microsoft/WSL/issues/776#issuecomment-266112578) on WSL.

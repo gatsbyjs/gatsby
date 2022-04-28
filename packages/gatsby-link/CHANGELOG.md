@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.13.0/packages/gatsby-link) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- modify relative links based on trailing slash option [#35444](https://github.com/gatsbyjs/gatsby/issues/35444) ([e30be3e](https://github.com/gatsbyjs/gatsby/commit/e30be3ebc1dedd75222a9b228043109d8c68c186))
+
 ### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.12.1/packages/gatsby-link) (2022-04-13)
 
 **Note:** Version bump only for package gatsby-link

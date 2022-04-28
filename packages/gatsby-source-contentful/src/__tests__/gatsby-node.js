@@ -1176,6 +1176,88 @@ describe(`gatsby-node`, () => {
     )
   })
 
+  it(`filters content type with contentTypeFilter`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      contentTypeFilter: contentTypeItem => contentTypeItem.sys.id !== `person`,
+    })
+
+    expect(actions.createNode).toHaveBeenCalledTimes(27)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
+      ]
+    `)
+    expect(getNode(createNodeId(`Person`))).toBeUndefined()
+    expect(getNode(createNodeId(`Blog Post`))).not.toBeUndefined()
+    const fixtureData = startersBlogFixture.initialSync()
+    const personEntry = fixtureData.currentSyncData.entries.find(
+      entry => entry.sys.contentType.sys.id === `person`
+    )
+    const personId = createNodeId(
+      makeId({
+        spaceId: personEntry.sys.space.sys.id,
+        currentLocale: fixtureData.locales[0].code,
+        defaultLocale: fixtureData.locales[0].code,
+        id: personEntry.sys.id,
+        type: personEntry.sys.type,
+      })
+    )
+    expect(getNode(personId)).toBeUndefined()
+  })
+
+  it(`panics when contentTypeFilter reduces content type list to none`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      contentTypeFilter: () => false,
+    })
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Please check if your contentTypeFilter is configured properly. Content types were filtered down to none.`,
+        },
+      })
+    )
+  })
+
   it(`panics when response contains restricted content types`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(
