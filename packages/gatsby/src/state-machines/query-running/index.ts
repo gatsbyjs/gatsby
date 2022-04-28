@@ -30,7 +30,8 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
           {
             target: `graphQLTypegen`,
             cond: (ctx): boolean =>
-              !!process.env.GATSBY_GRAPHQL_TYPEGEN && !ctx.isFirstRun,
+              !!process.env.GATSBY_GRAPHQL_TYPEGEN &&
+              !ctx.shouldRunInitialTypegen,
           },
           {
             target: `waitingPendingQueries`,

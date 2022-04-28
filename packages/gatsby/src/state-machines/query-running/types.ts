@@ -8,7 +8,7 @@ import { IGroupedQueryIds } from "../../services/types"
 import { WebsocketManager } from "../../utils/websocket-manager"
 
 export interface IQueryRunningContext {
-  isFirstRun?: boolean
+  shouldRunInitialTypegen?: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span

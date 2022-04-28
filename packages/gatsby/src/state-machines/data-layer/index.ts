@@ -76,10 +76,10 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
         },
         {
           target: `creatingPages`,
-          actions: `assignGraphQLRunners`,
         },
       ],
     },
+    exit: `assignGraphQLRunners`,
   },
   graphQLTypegen: {
     invoke: {
@@ -89,7 +89,6 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       },
       onDone: {
         target: `creatingPages`,
-        actions: `assignGraphQLRunners`,
       },
     },
   },

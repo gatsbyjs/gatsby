@@ -23,7 +23,7 @@ export interface IMutationAction {
 }
 
 export interface IBuildContext {
-  isFirstRun?: boolean
+  shouldRunInitialTypegen?: boolean
   program: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span

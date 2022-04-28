@@ -73,12 +73,9 @@ export async function writeGraphQLSchema(
 ): Promise<void> {
   try {
     const { schema } = store.getState()
-    const schemaSDLString = printSchema(
-      stabilizeSchema(schema, typeName => !typeName.startsWith(`SitePlugin`)),
-      {
-        commentDescriptions: true,
-      }
-    )
+    const schemaSDLString = printSchema(stabilizeSchema(schema), {
+      commentDescriptions: true,
+    })
 
     await fs.outputFile(
       slash(join(directory, OUTPUT_PATHS.schema)),

@@ -238,7 +238,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `GRAPHQL_TYPEGEN`,
     env: `GATSBY_GRAPHQL_TYPEGEN`,
-    command: `all`,
+    command: `develop`,
     telemetryId: `GraphQLTypegen`,
     description: `A built-in way for automatic TypeScript type generation and better GraphQL IntelliSense. See https://github.com/gatsbyjs/gatsby/discussions/35420 for more details.`,
     experimental: true,

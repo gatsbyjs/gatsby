@@ -132,7 +132,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           graphqlRunner,
           websocketManager,
           pendingQueryRuns,
-          isFirstRun,
+          shouldRunInitialTypegen,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -142,7 +142,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             graphqlRunner,
             websocketManager,
             pendingQueryRuns,
-            isFirstRun,
+            shouldRunInitialTypegen,
           }
         },
         onDone: [
@@ -193,7 +193,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           target: `waiting`,
         },
       },
-      exit: assign<IBuildContext>({ isFirstRun: false }),
+      exit: assign<IBuildContext>({ shouldRunInitialTypegen: false }),
     },
     // Recompile the JS bundle
     recompiling: {
