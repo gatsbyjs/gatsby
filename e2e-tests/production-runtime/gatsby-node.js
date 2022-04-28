@@ -106,6 +106,12 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
   })
 
   createPage({
+    path: `/한글-URL`,
+    component: path.resolve(`src/pages/page-2.js`),
+    defer: true,
+  })
+
+  createPage({
     path: `/foo/@something/bar`,
     component: path.resolve(`src/pages/page-2.js`),
   })

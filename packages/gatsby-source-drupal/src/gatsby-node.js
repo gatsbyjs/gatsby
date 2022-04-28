@@ -6,17 +6,28 @@ import HttpAgent from "agentkeepalive"
 const opentracing = require(`opentracing`)
 const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
 
+const {
+  polyfillImageServiceDevRoutes,
+  addRemoteFilePolyfillInterface,
+} = require(`gatsby-plugin-utils/polyfill-remote-file`)
+
 const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  imageCDNState,
+} = require(`./normalize`)
 const {
   handleReferences,
   handleWebhookUpdate,
   createNodeIfItDoesNotExist,
   handleDeletedNode,
   drupalCreateNodeManifest,
+  getExtendedFileNodeData,
 } = require(`./utils`)
 
 const agent = {
@@ -372,7 +383,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
               nodesToUpdate = [nodeSyncData.data]
             }
             for (const nodeToUpdate of nodesToUpdate) {
-              createNodeIfItDoesNotExist({
+              await createNodeIfItDoesNotExist({
                 nodeToUpdate,
                 actions,
                 createNodeId,
@@ -634,21 +645,47 @@ ${JSON.stringify(webhookBody, null, 4)}`
   createNodesSpan.setTag(`sourceNodes.fetch.type`, `full`)
 
   const nodes = new Map()
+  const fileNodesExtendedData = getExtendedFileNodeData(allData)
 
   // first pass - create basic nodes
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (!datum) return
-      const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+  for (const contentType of allData) {
+    if (!contentType) {
+      continue
+    }
+
+    await asyncPool(concurrentFileRequests, contentType.data, async datum => {
+      if (!datum) {
+        return
+      }
+
+      const node = await nodeFromData(
+        datum,
+        createNodeId,
+        entityReferenceRevisions,
+        pluginOptions,
+        fileNodesExtendedData,
+        reporter
+      )
+
       drupalCreateNodeManifest({
         attributes: datum?.attributes,
         gatsbyNode: node,
         unstable_createNodeManifest,
       })
+
       nodes.set(node.id, node)
     })
-  })
+  }
+
+  if (
+    !imageCDNState.foundPlaceholderStyle &&
+    !imageCDNState.hasLoggedNoPlaceholderStyle
+  ) {
+    imageCDNState.hasLoggedNoPlaceholderStyle = true
+    reporter.warn(
+      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\n\nhttps://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
+    )
+  }
 
   createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
@@ -809,3 +846,26 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
   })
+
+exports.onCreateDevServer = async ({ app }) => {
+  // this makes the gatsby develop image CDN emulator work on earlier versions of Gatsby.
+  polyfillImageServiceDevRoutes(app)
+}
+
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  actions.createTypes([
+    // polyfill so image CDN works on older versions of Gatsby
+    addRemoteFilePolyfillInterface(
+      // this type is merged in with the inferred file__file type, adding Image CDN support via the gatsbyImage GraphQL field. The `RemoteFile` interface as well as the polyfill above are what add the gatsbyImage field.
+      schema.buildObjectType({
+        name: `file__file`,
+        fields: {},
+        interfaces: [`Node`, `RemoteFile`],
+      }),
+      {
+        schema,
+        actions,
+      }
+    ),
+  ])
+}

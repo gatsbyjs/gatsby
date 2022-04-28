@@ -25,7 +25,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 })
 
 const Remark = require(`remark`)
-const { Potrace } = require(`potrace`)
+const { Potrace } = require(`@gatsbyjs/potrace`)
 const queryString = require(`query-string`)
 const cheerio = require(`cheerio`)
 const toHAST = require(`mdast-util-to-hast`)

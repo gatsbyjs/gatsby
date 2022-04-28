@@ -1,5 +1,4 @@
-import path from "path"
-import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
+import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
 import {
@@ -7,7 +6,7 @@ import {
   shouldDispatch,
 } from "../jobs/dispatchers"
 import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
-import { ImageCropFocus, ImageFit, isImage } from "../types"
+import { ImageCropFocus, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
 import type { Actions } from "gatsby"
@@ -158,10 +157,16 @@ export async function gatsbyImageResolver(
 
     return 1
   }
+
   const sortedFormats = Array.from(formats).sort(
     (a, b) => getFormatValue(b) - getFormatValue(a)
   )
 
+  // Result will be used like this
+  // <picture>
+  // for each result.sources we create a <source srcset="..." /> tag
+  // <img src="fallbacksrc" srcset="fallbacksrcset" />
+  // </picture>
   for (const format of sortedFormats) {
     let fallbackSrc: string | undefined = undefined
     const images = imageSizes.sizes.map(width => {
@@ -169,31 +174,28 @@ export async function gatsbyImageResolver(
         dispatchLocalImageServiceJob(
           {
             url: source.url,
-            extension: format,
-            basename: path.basename(
-              source.filename,
-              path.extname(source.filename)
-            ),
+            mimeType: source.mimeType,
+            filename: source.filename,
+            contentDigest: source.internal.contentDigest,
+          },
+          {
             width,
             height: Math.round(width / imageSizes.aspectRatio),
             format,
-            fit: args.fit as ImageFit,
-            contentDigest: source.internal.contentDigest,
+            cropFocus: args.cropFocus,
             quality: args.quality as number,
           },
           actions
         )
       }
 
-      const src = `${generatePublicUrl(source)}/${generateImageArgs({
+      const src = generateImageUrl(source, {
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         format,
         cropFocus: args.cropFocus,
         quality: args.quality as number,
-      })}/${encodeURIComponent(
-        path.basename(source.filename, path.extname(source.filename))
-      )}.${format}`
+      })
 
       if (!fallbackSrc) {
         fallbackSrc = src
@@ -208,7 +210,8 @@ export async function gatsbyImageResolver(
       }
     })
 
-    if (format === sourceMetadata.format && fallbackSrc) {
+    // The latest format (by default will be jpg/png) is the fallback and doesn't need sources
+    if (format === sortedFormats[sortedFormats.length - 1] && fallbackSrc) {
       result.fallback = {
         src: fallbackSrc,
         srcSet: createSrcSetFromImages(images),

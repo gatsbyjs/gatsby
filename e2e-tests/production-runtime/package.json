@@ -19,8 +19,8 @@
     "gatsby-seo": "^0.1.0",
     "gatsby-source-filesystem": "^4.1.3",
     "glob": "^7.1.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-helmet": "^5.2.0",
     "sass": "^1.32.8",
     "typeface-merriweather": "^1.1.13"
@@ -44,10 +44,11 @@
     "start-server-and-test:offline": "start-server-and-test serve http://localhost:9000 cy:run:offline",
     "cy:open": "cypress open",
     "cy:open:offline": "npm run cy:open -- --env TEST_PLUGIN_OFFLINE=y",
-    "cy:run": "npm run cy:run:normal && npm run cy:run:slow",
+    "cy:run": "npm run cy:run:normal && npm run cy:run:slow && npm run cy:run:bot",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run:normal": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome",
-    "cy:run:slow": "cross-env CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
+    "cy:run:slow": "cross-env CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js",
+    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot cypress run --browser chrome --config testFiles=prefetching.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

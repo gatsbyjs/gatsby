@@ -2,6 +2,17 @@ const commandName = process.env.NODE_ENV === `development` ? `develop` : `build`
 const DEFAULT_MAX_DAYS_OLD = 30
 const createManifestId = nodeId => `${commandName}-${nodeId}`
 
+const DUMMY_NODE_MANIFEST_COUNT = process.env.DUMMY_NODE_MANIFEST_COUNT || 0
+const ONE_DAY = 1000 * 60 * 60 * 24
+const THIRTY_DAYS = ONE_DAY * 30
+const YESTERDAY = new Date() - ONE_DAY
+const LOWER_CREATED_AT_TIME_LIMIT = YESTERDAY - THIRTY_DAYS
+const UPPER_CREATED_AT_TIME_LIMIT = YESTERDAY
+
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 exports.sourceNodes = ({ actions }) => {
   // template nodes
   for (let id = 1; id < 6; id++) {
@@ -22,6 +33,33 @@ exports.sourceNodes = ({ actions }) => {
     actions.unstable_createNodeManifest({
       manifestId: createManifestId(id),
       node,
+    })
+  }
+
+  // These nodes are intended to be added when running tests for the node manifest creation limit logic
+  for (let i = 0; i < DUMMY_NODE_MANIFEST_COUNT; i++) {
+    const id = `dummy-${i}`
+    const node = {
+      id,
+      internal: {
+        type: `TestNode`,
+        contentDigest: id,
+      },
+    }
+
+    const updatedAtUTC = new Date(
+      randomIntFromInterval(
+        LOWER_CREATED_AT_TIME_LIMIT,
+        UPPER_CREATED_AT_TIME_LIMIT,
+      )
+    ).toUTCString()
+
+    actions.createNode(node)
+
+    actions.unstable_createNodeManifest({
+      manifestId: createManifestId(id),
+      node,
+      updatedAtUTC,
     })
   }
 
