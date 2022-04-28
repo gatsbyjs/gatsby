@@ -438,7 +438,7 @@ gif
 GIFs
 Gitalk
 Gitee
-GitHub
+Github
 GitLab
 GitLab's
 Gitpod
@@ -545,7 +545,7 @@ Jamstack
 JAMstack
 JAMStack
 jankiness
-JavaScript
+Javascript
 jbampton
 joi
 Joi
@@ -1096,7 +1096,7 @@ whacky
 WhatsApp
 whitespace
 WooCommerce
-WordPress
+Wordpress
 Workbox
 workspaces
 wp-graphql
