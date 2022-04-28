@@ -63,7 +63,7 @@ const getGatsbyImageCdnFields = async ({
     }
   }
 
-  const extraNodeData = fileNodesExtendedData?.get(node.id) || null
+  const extraNodeData = fileNodesExtendedData?.get?.(node.id) || null
 
   try {
     const { placeholderStyleName } = getOptions()

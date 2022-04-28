@@ -283,6 +283,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
       createNodeId,
       getOptions().entityReferenceRevisions,
       pluginOptions,
+      null,
       reporter
     )
 
@@ -330,6 +331,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     createNodeId,
     pluginOptions.entityReferenceRevisions,
     pluginOptions,
+    null,
     reporter
   )
 
