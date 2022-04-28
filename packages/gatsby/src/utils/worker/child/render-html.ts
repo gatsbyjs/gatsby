@@ -141,7 +141,10 @@ export const renderHTMLProd = async ({
 
     htmlComponentRenderer = require(htmlComponentRendererPath)
 
-    webpackStats = await readWebpackStats(publicDir)
+    if (!process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
+      // TODO get these stats with parcel
+      webpackStats = await readWebpackStats(publicDir)
+    }
 
     lastSessionId = sessionId
 
