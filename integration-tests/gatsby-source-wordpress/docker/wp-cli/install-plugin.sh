@@ -22,6 +22,6 @@ then
   exit;
 fi
 
-mkdir -p /usr/src/wordpress/wp-content/plugins/${PLUGIN} \
+mkdir -p /var/www/html/wp-content/plugins/${PLUGIN} \
     && curl -L https://github.com/${REPO}/archive/${VERSION}.tar.gz \
-    | tar xvz -C /usr/src/wordpress/wp-content/plugins/${PLUGIN} --strip-components=1 
+    | tar xvz -C /var/www/html/wp-content/plugins/${PLUGIN} --strip-components=1
