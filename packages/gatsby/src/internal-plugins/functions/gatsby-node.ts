@@ -15,6 +15,7 @@ import cookie from "cookie"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
 import { IGatsbyFunction } from "../../redux/types"
+import apiRunnerNode from "../../utils/api-runner-node"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -281,7 +282,7 @@ const createWebpackConfig = async ({
     ? `functions-production`
     : `functions-development`
 
-  return {
+  let config = {
     entry: entries,
     output: {
       path: compiledFunctionsDir,
@@ -330,6 +331,34 @@ const createWebpackConfig = async ({
     },
     plugins: [new webpack.DefinePlugin(processEnvVars)],
   }
+
+  await apiRunnerNode(`onCreateWebpackConfig`, {
+    getConfig: () => config,
+    actions: {
+      setWebpackConfig: (newConfig: any) => {
+        config = {
+          ...config,
+          ...newConfig,
+        }
+      },
+    },
+    stage: `build-functions`,
+    plugins: {
+      define: (x: Record<string, any>) => new webpack.DefinePlugin(x),
+    },
+    loaders: {
+      js: () => {
+        return {
+          loader: `babel-loader`,
+          options: {
+            presets: [`@babel/typescript`],
+          },
+        }
+      },
+    },
+  })
+
+  return config as any
 }
 
 let isFirstBuild = true
