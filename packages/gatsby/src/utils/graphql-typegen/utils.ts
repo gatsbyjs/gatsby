@@ -23,7 +23,7 @@ const fieldFilterFromCoordinates =
 
 export function filterPluginSchema(
   schema: GraphQLSchema,
-  typeFilter = (): boolean => true
+  typeFilter = (_: string): boolean => true
 ): GraphQLSchema {
   return mapSchema(
     filterSchema({
@@ -66,7 +66,7 @@ export function filterPluginSchema(
 
 export function stabilizeSchema(
   schema: GraphQLSchema,
-  typeFilter = (): boolean => true
+  typeFilter = (_: string): boolean => true
 ): GraphQLSchema {
   return lexicographicSortSchema(filterPluginSchema(schema, typeFilter))
 }
