@@ -76,12 +76,17 @@ export async function writeTypeScriptTypes(
   const { schema, definitions } = store.getState()
   const filename = slash(join(directory, OUTPUT_PATH))
 
-  const gatsbyNodeDocuments: Array<Types.DocumentFile> = await loadDocuments(
-    [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
-    {
-      loaders: [new CodeFileLoader()],
-    }
-  )
+  let gatsbyNodeDocuments: Array<Types.DocumentFile> = []
+  try {
+    gatsbyNodeDocuments = await loadDocuments(
+      [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
+      {
+        loaders: [new CodeFileLoader()],
+      }
+    )
+  } catch (e) {
+    // These files might not exist, so just skip this
+  }
 
   const documents: Array<Types.DocumentFile> = [
     ...filterTargetDefinitions(definitions).values(),
@@ -95,10 +100,12 @@ export async function writeTypeScriptTypes(
     }
   })
 
+  const isVerbose = process.env.gatsby_log_level === `verbose`
+
   const codegenOptions: Omit<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     // @ts-ignore - Incorrect types
     schema: undefined,
-    schemaAst: stabilizeSchema(schema, true),
+    schemaAst: stabilizeSchema(schema),
     documents: documents.concat(gatsbyNodeDocuments),
     filename,
     config: {
@@ -111,6 +118,7 @@ export async function writeTypeScriptTypes(
       skipTypename: true,
       flattenGeneratedTypes: true,
     },
+    skipDocumentsValidation: !isVerbose,
   }
 
   const result = await codegen({
