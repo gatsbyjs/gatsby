@@ -28,7 +28,9 @@ export async function graphQLTypegen(
   }
 ): Promise<void> {
   if (!program || !store || !compile) {
-    reporter.panic(`Missing required params "program" or "store" or "compile"`)
+    reporter.panic(
+      `Missing required params in graphQLTypegen. program: ${!!program}. store: ${!!store}. compile: ${!!compile}`
+    )
   }
   const directory = program.directory
 

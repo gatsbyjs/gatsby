@@ -77,6 +77,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           parentSpan,
           store,
           webhookBody,
+          program,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -84,6 +85,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             webhookBody,
             shouldRunCreatePagesStatefully: true,
             deferNodeMutation: true,
+            program,
           }
         },
         onDone: {
@@ -311,6 +313,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           store,
           webhookBody,
           webhookSourcePluginName,
+          program,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -320,6 +323,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             refresh: true,
             deferNodeMutation: true,
             shouldRunCreatePagesStatefully: false,
+            program,
           }
         },
         onDone: {
