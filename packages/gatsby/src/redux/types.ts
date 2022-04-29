@@ -362,7 +362,6 @@ export interface ICachedReduxState {
   status: IGatsbyState["status"]
   components: IGatsbyState["components"]
   jobsV2: IGatsbyState["jobsV2"]
-  telemetry: IGatsbyState["telemetry"]
   staticQueryComponents: IGatsbyState["staticQueryComponents"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
