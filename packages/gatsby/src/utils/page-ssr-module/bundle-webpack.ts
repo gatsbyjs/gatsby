@@ -91,6 +91,8 @@ async function bundleSSR({
   )
   
   const entry = path.join(__dirname, `entry.js`)
+  
+  process.env.PARCEL_CONFIG_LOCATION = outputDir
 
   const options = {
     config: createParcelConfig(
