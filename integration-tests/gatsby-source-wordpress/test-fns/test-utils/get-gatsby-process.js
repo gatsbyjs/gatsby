@@ -30,7 +30,7 @@ exports.spawnGatsbyProcess = (command = `develop`, env = {}) => {
       ...(command === `develop` ? ["-H", "localhost", "--port", "8000"] : []),
     ],
     {
-      stdio: [`pipe`, `pipe`, `pipe`],
+      stdio: `inherit`,
       env: {
         ...process.env,
         NODE_ENV: command === `develop` ? `development` : `production`,
