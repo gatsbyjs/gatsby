@@ -10,6 +10,7 @@ export const config = {
   bodyParser: {
     urlencoded: {
       type: `*/*`,
+      extended: true
     },
   },
 }
