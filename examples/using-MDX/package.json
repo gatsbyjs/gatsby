@@ -8,6 +8,7 @@
     "@mdx-js/mdx": "^1.6.18",
     "@mdx-js/react": "^1.6.18",
     "@nivo/bar": "0.78.0",
+    "@nivo/bump": "^0.79.1",
     "@nivo/core": "0.78.0",
     "@nivo/line": "0.78.0",
     "gatsby": "next",
