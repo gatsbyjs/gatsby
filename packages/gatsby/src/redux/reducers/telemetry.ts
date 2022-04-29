@@ -27,7 +27,7 @@ export const telemetryReducer = (
       }
     }
     default: {
-      return { ...state }
+      return state
     }
   }
 }
