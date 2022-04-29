@@ -10,6 +10,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import Parcel from "@parcel/core"
 import { OutputFormat  } from "@parcel/types"
 import { createParcelConfig } from "../../utils/parcel"
+import { getAbsolutePathForVirtualModule } from "../../utils/gatsby-webpack-virtual-modules"
 
 type Reporter = typeof reporter
 
@@ -52,7 +53,7 @@ export async function createBundlerGraphqlEngineBundle(
     config: createParcelConfig(
       outputDir, 
       {
-        resolvers: ["parcel-resolver-externals", "parcel-resolver-aliases"],
+        resolvers: ["parcel-resolver-aliases", "parcel-resolver-externals"],
       },
       {
         define: {
@@ -62,7 +63,8 @@ export async function createBundlerGraphqlEngineBundle(
           'routes/render-page',
         ],
         aliases: {
-          ".cache": path.join(process.cwd(), `.cache`)
+          ".cache": path.join(process.cwd(), `.cache`),
+          $virtual: getAbsolutePathForVirtualModule(`$virtual`)
         }
       }
     ),
@@ -95,25 +97,28 @@ export async function createBundlerGraphqlEngineBundle(
       },
     },
   }
+  const bundler = new Parcel(options)
+  const result = await bundler.run()
+  return undefined
 
-  return new Promise(async (resolve, reject) => {
-    try {
-      const bundler = new Parcel(options)
+  // return new Promise(async (resolve, reject) => {
+  //   try {
+  //     const bundler = new Parcel(options)
 
-      await bundler.watch((error, buildEvent) => {
-        if (buildEvent?.type === "buildSuccess") {
-          return resolve(undefined)
-        }
-        if (buildEvent?.type === "buildFailure") {
-          console.log(buildEvent)
-          // TODO format this better, use codeframes
-          reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
-        }
-      })
-    } catch (e) {
-      reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
-    }
-  })
+  //     await bundler.watch((error, buildEvent) => {
+  //       if (buildEvent?.type === "buildSuccess") {
+  //         return resolve(undefined)
+  //       }
+  //       if (buildEvent?.type === "buildFailure") {
+  //         console.log(buildEvent)
+  //         // TODO format this better, use codeframes
+  //         reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
+  //       }
+  //     })
+  //   } catch (e) {
+  //     reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
+  //   }
+  // })
 }
 
 export async function createWebpackGraphqlEngineBundle(

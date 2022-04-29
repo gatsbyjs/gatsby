@@ -237,28 +237,29 @@ const buildBundlerRenderer = async (
     },
   }
 
-  const promise = new Promise(async (resolve, reject) => {
-    try {
-      const bundler = new Parcel(options)
+  // const promise = new Promise(async (resolve, reject) => {
+  //   try {
+  //     const bundler = new Parcel(options)
 
-      await bundler.watch((error, buildEvent) => {
-        if (buildEvent?.type === "buildSuccess") {
-          // move from entry file name to our desired file
-          fs.moveSync(path.join(outDir, entryFileName), outFile, {overwrite: true})
-          return resolve(undefined)
-        }
-        if (buildEvent?.type === "buildFailure") {
-          console.log(buildEvent)
-          // TODO format this better, use codeframes
-          reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
-        }
-      })
-    } catch (e) {
-      reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
-    }
-  })
+  //     await bundler.watch((error, buildEvent) => {
+  //       if (buildEvent?.type === "buildSuccess") {
+  //         // move from entry file name to our desired file
+  //         fs.moveSync(path.join(outDir, entryFileName), outFile, {overwrite: true})
+  //         return resolve(undefined)
+  //       }
+  //       if (buildEvent?.type === "buildFailure") {
+  //         console.log(buildEvent)
+  //         // TODO format this better, use codeframes
+  //         reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
+  //       }
+  //     })
+  //   } catch (e) {
+  //     reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
+  //   }
+  // })
 
-  await promise
+  const bundler = new Parcel(options)
+  const result = await bundler.run()
 
   return {
     rendererPath: outFile,

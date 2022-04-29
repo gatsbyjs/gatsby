@@ -15,6 +15,7 @@ import {
 } from "../client-assets-for-template"
 import { writeStaticQueryContext } from "../static-query-utils"
 import { IGatsbyState } from "../../redux/types"
+import { getAbsolutePathForVirtualModule } from "../gatsby-webpack-virtual-modules"
 
 type Reporter = typeof reporter
 
@@ -98,12 +99,16 @@ async function bundleSSR({
     config: createParcelConfig(
       outputDir, 
       {
-        resolvers: ["parcel-resolver-externals"],
+        resolvers: ["parcel-resolver-externals", "parcel-resolver-aliases"],
       },
       {
         externals: [
           'routes/render-page',
-        ]
+        ],
+        aliases: {
+          ".cache": path.join(process.cwd(), `.cache`),
+          $virtual: getAbsolutePathForVirtualModule(`$virtual`)
+        }
       }
     ),
     entries: entry,
@@ -136,29 +141,35 @@ async function bundleSSR({
     },
   }
 
-  return new Promise(async (resolve, reject) => {
-    // try {
-    //   const bundler = new Parcel(options)
-    // } catch (e) {
-    //   console.log(e)
-    // }
+  const bundler = new Parcel(options)
+  const result = await bundler.run()
+  return undefined
 
-    try {
-      const bundler = new Parcel(options)
+  // return new Promise(async (resolve, reject) => {
+  //   // try {
+  //   //   const bundler = new Parcel(options)
+  //   // } catch (e) {
+  //   //   console.log(e)
+  //   // }
 
-      await bundler.watch((error, buildEvent) => {
-        if (buildEvent?.type === "buildSuccess") {
-          return resolve(undefined)
-        }
-        if (buildEvent?.type === "buildFailure") {
-          // TODO format this better, use codeframes
-          reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
-        }
-      })
-    } catch (e) {
-      reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
-    }
-  })
+  //   try {
+  //     const bundler = new Parcel(options)
+  //     const result = await bundler.run()
+  //     resolve(undefined)
+
+  //     // await bundler.watch((error, buildEvent) => {
+  //     //   if (buildEvent?.type === "buildSuccess") {
+  //     //     return resolve(undefined)
+  //     //   }
+  //     //   if (buildEvent?.type === "buildFailure") {
+  //     //     // TODO format this better, use codeframes
+  //     //     reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
+  //     //   }
+  //     // })
+  //   } catch (e) {
+  //     reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
+  //   }
+  // })
 }
 
 async function webpackSSR({
