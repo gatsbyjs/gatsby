@@ -11,18 +11,18 @@ import { internalActions } from "../../redux/actions"
 import { GatsbyWorkerPool } from "../worker/types"
 import { isWorker, getMessenger } from "../worker/messaging"
 
-let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
-let activeJobs = 0
+let hasActiveWorkerJobs: pDefer.DeferredPromise<void> | null = null
+let activeWorkerJobs = 0
 
 export function initJobsMessagingInMainProcess(
   workerPool: GatsbyWorkerPool
 ): void {
   workerPool.onMessage((msg, workerId) => {
     if (msg.type === MESSAGE_TYPES.JOB_CREATED) {
-      if (activeJobs === 0) {
-        hasActiveJobs = pDefer<void>()
+      if (activeWorkerJobs === 0) {
+        hasActiveWorkerJobs = pDefer<void>()
       }
-      activeJobs++
+      activeWorkerJobs++
       store
         .dispatch(internalActions.createJobV2FromInternalJob(msg.payload))
         .then(result => {
@@ -50,8 +50,9 @@ export function initJobsMessagingInMainProcess(
           )
         })
         .finally(() => {
-          if (--activeJobs === 0) {
-            hasActiveJobs?.resolve()
+          if (--activeWorkerJobs === 0) {
+            hasActiveWorkerJobs?.resolve()
+            hasActiveWorkerJobs = null
           }
         })
     }
@@ -59,7 +60,7 @@ export function initJobsMessagingInMainProcess(
 }
 
 export const waitUntilWorkerJobsAreComplete = (): Promise<void> =>
-  hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
+  hasActiveWorkerJobs ? hasActiveWorkerJobs.promise : Promise.resolve()
 
 /**
  * This map is ONLY used in worker. It's purpose is to keep track of promises returned to plugins
