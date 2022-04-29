@@ -52,7 +52,7 @@ export async function createBundlerGraphqlEngineBundle(
     config: createParcelConfig(
       outputDir, 
       {
-        resolvers: ["parcel-resolver-externals"],
+        resolvers: ["parcel-resolver-externals", "parcel-resolver-aliases"],
       },
       {
         define: {
@@ -60,7 +60,10 @@ export async function createBundlerGraphqlEngineBundle(
         },
         externals: [
           'routes/render-page',
-        ]
+        ],
+        aliases: {
+          ".cache": path.join(process.cwd(), `.cache`)
+        }
       }
     ),
     entries: entry,

@@ -18,15 +18,12 @@ import { findPageByPath } from "../../utils/find-page-by-path"
 import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
 
-// GATSBY_EXPERIMENTAL_BUNDLER
 import {
   gatsbyNodes,
   gatsbyWorkers,
   flattenedPlugins,
   // @ts-ignore
-} from "/.cache/query-engine-plugins"
-// end import changes 
-// } from ".cache/query-engine-plugins"
+} from ".cache/query-engine-plugins"
 
 import { initTracer } from "../../utils/tracer"
 

@@ -14,7 +14,7 @@ const { WritableAsPromise } = require(`./server-utils/writable-as-promise`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
-const asyncRequires = require('$virtual/async-requires')
+const asyncRequires = require(`$virtual/async-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 
