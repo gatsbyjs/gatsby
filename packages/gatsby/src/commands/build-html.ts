@@ -260,6 +260,7 @@ const buildBundlerRenderer = async (
 
   const bundler = new Parcel(options)
   const result = await bundler.run()
+  fs.moveSync(path.join(outDir, entryFileName), outFile, {overwrite: true})
 
   return {
     rendererPath: outFile,
