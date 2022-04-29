@@ -1260,6 +1260,12 @@ actions.addGatsbyImageSourceUrl = (sourceUrl: string) => dispatch => {
   })
 }
 
+actions.clearGatsbyImageSourceUrls = () => dispatch => {
+  dispatch({
+    type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
+  })
+}
+
 /**
  * DEPRECATED. Use createJobV2 instead.
  *

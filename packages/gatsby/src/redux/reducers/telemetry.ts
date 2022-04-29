@@ -20,6 +20,12 @@ export const telemetryReducer = (
         gatsbyImageSourceUrls: nextState,
       }
     }
+    case `CLEAR_GATSBY_IMAGE_SOURCE_URL`: {
+      return {
+        ...state,
+        gatsbyImageSourceUrls: new Set<string>(),
+      }
+    }
     default: {
       return { ...state }
     }
