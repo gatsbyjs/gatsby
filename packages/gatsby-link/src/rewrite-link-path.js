@@ -15,7 +15,15 @@ function absolutify(path, current) {
   if (isAbsolutePath(path)) {
     return path
   }
-  return resolve(path, current)
+
+  const option = getGlobalTrailingSlash()
+  const absolutePath = resolve(path, current)
+
+  if (option === `always` || option === `never`) {
+    return applyTrailingSlashOption(absolutePath, option)
+  }
+
+  return absolutePath
 }
 
 export const rewriteLinkPath = (path, relativeTo) => {

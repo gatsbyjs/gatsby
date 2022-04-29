@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.13.0/packages/gatsby-plugin-image) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.12.1/packages/gatsby-plugin-image) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.12.0/packages/gatsby-plugin-image) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency prop-types to ^15.8.1 for gatsby-plugin-image [#35292](https://github.com/gatsbyjs/gatsby/issues/35292) ([c662a39](https://github.com/gatsbyjs/gatsby/commit/c662a3931dc38bd819e75539e52b1346fbb95b70))
+
+#### Chores
+
+- update dependency semver to ^7.3.5 [#35279](https://github.com/gatsbyjs/gatsby/issues/35279) ([1d5d4a6](https://github.com/gatsbyjs/gatsby/commit/1d5d4a6ff6e376476b2a7db6dd2f5f7ce61f4483))
+
 ### [2.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.11.1/packages/gatsby-plugin-image) (2022-03-31)
 
 **Note:** Version bump only for package gatsby-plugin-image

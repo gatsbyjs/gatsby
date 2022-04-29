@@ -36,6 +36,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -424,6 +425,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -822,6 +824,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
