@@ -106,14 +106,14 @@ const functionConfigSchema: Joi.ObjectSchema<IGatsbyFunctionConfigProcessed> =
             .keys({
               type: Joi.string(),
               limit: Joi.alternatives(Joi.string(), Joi.number()),
-              extended: Joi.boolean(),
+              extended: Joi.boolean().required(),
             })
             .unknown(false)
             .default(defaultConfig.bodyParser.urlencoded)
             .failover(
               bodyParserConfigFailover(
                 `urlencoded`,
-                `{\n  type?: string\n  limit: string | number\n  extended?: boolean\n}`
+                `{\n  type?: string\n  limit: string | number\n  extended: boolean\n}`
               )
             ),
         })

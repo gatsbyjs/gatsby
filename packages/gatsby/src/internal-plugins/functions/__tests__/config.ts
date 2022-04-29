@@ -632,6 +632,7 @@ describe(`createConfig`, () => {
       it(`limit`, () => {
         const customTextConfig = {
           limit: `1mb`,
+          extended: true,
         }
         const generatedConfig = createConfig(
           {
@@ -642,16 +643,18 @@ describe(`createConfig`, () => {
           testFunction
         )
         expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
-                  Object {
-                    "limit": "1mb",
-                  }
-              `)
+          Object {
+            "extended": true,
+            "limit": "1mb",
+          }
+        `)
         expect(reporterWarnSpy).toBeCalledTimes(0)
       })
 
       it(`type`, () => {
         const customTextConfig = {
           type: `lorem/*`,
+          extended: true,
         }
         const generatedConfig = createConfig(
           {
@@ -662,10 +665,11 @@ describe(`createConfig`, () => {
           testFunction
         )
         expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
-                  Object {
-                    "type": "lorem/*",
-                  }
-              `)
+          Object {
+            "extended": true,
+            "type": "lorem/*",
+          }
+        `)
         expect(reporterWarnSpy).toBeCalledTimes(0)
       })
 
@@ -694,7 +698,7 @@ describe(`createConfig`, () => {
           {
             type?: string
             limit: string | number
-            extended?: boolean
+            extended: boolean
           }
 
           Got:
@@ -735,12 +739,53 @@ describe(`createConfig`, () => {
           {
             type?: string
             limit: string | number
-            extended?: boolean
+            extended: boolean
           }
 
           Got:
 
           {\\"wat\\":true}
+
+          Using default:
+
+          {
+            \\"limit\\": \\"100kb\\",
+            \\"extended\\": true
+          }"
+        `)
+      })
+
+      it(`input not matching schema (fallback to default) - "extended" is required"`, () => {
+        const customTextConfig = { limit: `200kb` }
+        const generatedConfig = createConfig(
+          {
+            bodyParser: {
+              urlencoded: customTextConfig,
+            },
+          },
+          testFunction
+        )
+        expect(generatedConfig.bodyParser.urlencoded).toMatchInlineSnapshot(`
+                  Object {
+                    "extended": true,
+                    "limit": "100kb",
+                  }
+              `)
+
+        expect(reporterWarnSpy).toBeCalledTimes(1)
+        expect(reporterWarnSpy.mock.calls[0][0]).toMatchInlineSnapshot(`
+          "\`bodyParser.urlencoded\` property of exported config in \`a-directory/function.js\` is misconfigured.
+          Expected object:
+
+          {
+            type?: string
+            limit: string | number
+            extended: boolean
+          }
+
+          Got:
+
+          {\\"limit\\":\\"200kb\\"}
 
           Using default:
 

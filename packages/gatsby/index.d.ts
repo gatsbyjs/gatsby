@@ -1673,7 +1673,7 @@ export interface GatsbyFunctionBodyParserCommonMiddlewareConfig {
 
 export interface GatsbyFunctionBodyParserUrlencodedConfig
   extends GatsbyFunctionBodyParserCommonMiddlewareConfig {
-  extended?: boolean
+  extended: boolean
 }
 
 export interface GatsbyFunctionBodyParserConfig {
