@@ -21,7 +21,7 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Available options
 
-In `gatsby-plugin-offline` 3.x, the following options are available:
+In `gatsby-plugin-offline`, the following options are available:
 
 - `precachePages` lets you specify pages whose resources should be precached by the service worker, using an array of globs. For example:
 
@@ -102,13 +102,13 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
 
 - `additionalManifestEntries`, `manifestTransforms`, `maximumFileSizeToCacheInBytes`, `dontCacheBustURLsMatching`, `modifyURLPrefix` Options passed to [workbox's InjectManifest webpack plugin](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest)
 
-## Upgrading to 5.x
+## Upgrading to 6.x
 
-Version 5.x of this plugin no longer uses the `workbox-build`/`generateSW` tool to generate the service worker.
+Version 6.x of this plugin no longer uses the `workbox-build`/`generateSW` tool to generate the service worker.
 Instead, it uses the `InjectManifest` webpack plugin.
 This means that some options are no longer supported (although it should be possible to implement the same features via a custom `swSrc` -> see above).
 
-To upgrade from a version prior to 5.x (3.x, 4.x), you'll need to perform the following steps:
+To upgrade from a version prior to 6.x (3.x, 4.x, 5.x), you'll need to perform the following steps:
 
 1. Remove no longer supported options `importWorkboxFrom` and `globDirectory`
 
@@ -147,7 +147,7 @@ plugins: [
 ]
 ```
 
-3. The `runtimeCaching` option is no longer supported in 5.x.
+3. The `runtimeCaching` option is no longer supported in 6.x.
    If you previously used custom `runtimeCaching` handlers, you'll need to create a custom `swSrc` file to archive the same effect.
 
    <br />
@@ -200,7 +200,7 @@ plugins: [
 ```
 
 ```javascript:title=new-gatsby-config.js
-// 5.x
+// 6.x
 plugins: [
   {
     resolve: `gatsby-plugin-offline`,
@@ -260,7 +260,7 @@ plugins: [
 ```
 
 ```javascript:title=new-gatsby-config.js
-// 5.x
+// 6.x
 plugins: [
   {
     resolve: `gatsby-plugin-offline`,

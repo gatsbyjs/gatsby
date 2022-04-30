@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (UNRELEASED)
+
+- Upgraded workbox from v4.x to v6.x
+- No longer uses workbox-build/generateSW. public/sw.js is now generated during the build-javascript stage via the workbox-webpack-plugin
+- precache resources gathered from built pages is no longer inlined in the sw.js itself, but written after the build to a separate file that gets included via importScripts in the service worker. The file name contains a content hash to ensure that a service worker update is triggered it it's content changes
+- default runtime caching handlers: only cache successful (HTTP status 200) responses
+- added deletePreviousCacheVersionsOnUpdate for cleaning up old cache versions in case cacheId changes
+- ⚠️ breaking changes to the structure of the options of this plugin due to workbox upgrade -> see [Upgrading to 6.x](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-offline/README.md#upgrading-to-6x)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.13.0/packages/gatsby-plugin-offline) (2022-04-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
