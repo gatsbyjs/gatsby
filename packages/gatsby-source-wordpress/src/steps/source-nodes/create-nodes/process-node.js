@@ -160,8 +160,8 @@ const pickNodeBySourceUrlOrCheerioImg = ({
 let displayedFailedToRestoreMessage = false
 
 const fetchNodeHtmlImageMediaItemNodes = async ({
+  // node, // for inspecting nodes while debugging
   cheerioImages,
-  node,
   helpers,
   wpUrl,
 }) => {
@@ -414,26 +414,6 @@ const copyFileToStaticAndReturnUrlPath = async (fileNode, helpers) => {
   return relativeUrl
 }
 
-const filterMatches =
-  wpUrl =>
-  ({ match }) => {
-    const { hostname: wpHostname } = url.parse(wpUrl)
-
-    // @todo make it a plugin option to fetch non-wp images
-    // here we're filtering out image tags that don't contain our site url
-    const isHostedInWp =
-      // if it has the full WP url
-      match.includes(wpHostname) ||
-      // or it's an absolute path
-      match.includes(`src=\\"/wp-content`)
-
-    // six backslashes means we're looking for three backslashes
-    // since we're looking for JSON encoded strings inside of our JSON encoded string
-    const isInJSON = match.includes(`src=\\\\\\"`)
-
-    return isHostedInWp && !isInJSON
-  }
-
 const cacheCreatedFileNodeBySrc = ({ node, src }) => {
   if (node) {
     // save any fetched media items in our global media item cache
@@ -576,7 +556,7 @@ export const replaceNodeHtmlImages = async ({
         const configuredMaxWidth = pluginOptions?.html?.imageMaxWidth
 
         // if the configured html.maxWidth property is less than the result, then
-        // override the resultant width
+        // override the resulting width
         if (configuredMaxWidth && configuredMaxWidth < maxWidth) {
           maxWidth = configuredMaxWidth
         }
