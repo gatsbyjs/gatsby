@@ -67,6 +67,10 @@ Array [
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/giphy.mp4",
   },
   Object {
+    "id": "cG9zdDoxMTgzNg==",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2022/04/gaussian2.svg",
+  },
+  Object {
     "id": "cG9zdDozNjI=",
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
   },
@@ -399,6 +403,21 @@ Object {
             "nodes": Array [],
           },
         },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Inline SVG image CDN test",
+          "uri": "/inline-svg-image-cdn-test/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
       ],
     },
     "testPage": Object {
@@ -485,6 +504,21 @@ Object {
           },
           "title": "Featured Image Too Big",
           "uri": "/featured-image-too-big/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Inline SVG image CDN test",
+          "uri": "/inline-svg-image-cdn-test/",
           "wpChildren": Object {
             "nodes": Array [],
           },
@@ -727,6 +761,9 @@ Object {
           "pages": Object {
             "nodes": Array [
               Object {
+                "title": "Inline SVG image CDN test",
+              },
+              Object {
                 "title": "Featured Image Too Big",
               },
               Object {
@@ -783,6 +820,9 @@ Object {
           "name": "admin",
           "pages": Object {
             "nodes": Array [
+              Object {
+                "title": "Inline SVG image CDN test",
+              },
               Object {
                 "title": "Featured Image Too Big",
               },
