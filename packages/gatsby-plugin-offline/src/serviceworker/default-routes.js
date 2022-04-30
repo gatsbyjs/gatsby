@@ -1,3 +1,4 @@
+/* global __GATSBY_PLUGIN_OFFLINE_SETTINGS */
 import { registerRoute } from "workbox-routing"
 import {
   CacheFirst,

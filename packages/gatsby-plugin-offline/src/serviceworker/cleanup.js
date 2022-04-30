@@ -18,7 +18,9 @@ export function cleanup() {
         __GATSBY_PLUGIN_OFFLINE_SETTINGS.deletePreviousCacheVersionsOnUpdate
       ) {
         await Promise.all(
-          (await caches.keys()).map(async key => {
+          (
+            await caches.keys()
+          ).map(async key => {
             if (key.indexOf(previousCachePrefix) === 0) {
               await caches.delete(key)
             }
