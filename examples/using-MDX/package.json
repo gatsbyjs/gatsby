@@ -13,6 +13,7 @@
     "@nivo/line": "0.78.0",
     "gatsby": "next",
     "gatsby-image": "next",
+    "gatsby-plugin-image": "^2.13.0",
     "gatsby-plugin-manifest": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-offline": "next",
