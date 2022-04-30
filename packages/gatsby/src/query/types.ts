@@ -32,4 +32,5 @@ export type PageContext = Record<string, any>
 
 export interface IExecutionResult extends ExecutionResult {
   pageContext?: PageContext
+  serverData?: unknown
 }

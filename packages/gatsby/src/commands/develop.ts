@@ -16,8 +16,9 @@ import {
   slash,
   createServiceLock,
   getService,
-  updateSiteMetadata,
+  updateInternalSiteMetadata,
   UnlockFn,
+  uuid,
 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
@@ -113,7 +114,10 @@ class ControllableScript {
     }
 
     this.process = execa.node(tmpFileName, args, {
-      env: process.env,
+      env: {
+        ...process.env,
+        GATSBY_NODE_GLOBALS: JSON.stringify(global.__GATSBY ?? {}),
+      },
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
@@ -130,13 +134,20 @@ class ControllableScript {
       if (signal) {
         this.process.kill(signal)
       } else {
-        this.process.send({
-          type: `COMMAND`,
-          action: {
-            type: `EXIT`,
-            payload: code,
+        this.process.send(
+          {
+            type: `COMMAND`,
+            action: {
+              type: `EXIT`,
+              payload: code,
+            },
           },
-        })
+          () => {
+            // The try/catch won't suffice for this process.send
+            // So use the callback to manually catch the Error, otherwise it'll be thrown
+            // Ref: https://nodejs.org/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback
+          }
+        )
       }
     } catch (err) {
       // Ignore error if process has crashed or already quit.
@@ -184,9 +195,15 @@ class ControllableScript {
 let isRestarting
 
 // checks if a string is a valid ip
-const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
+const REGEX_IP =
+  /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
+  global.__GATSBY = {
+    buildId: uuid.v4(),
+    root: program.directory,
+  }
+
   // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
   // So we want to early just force it to a number to ensure we always act on a correct type.
   program.port = parseInt(program.port + ``, 10)
@@ -214,7 +231,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   // Require gatsby-config.js before accessing process.env, to enable the user to change
   // environment variables from the config file.
-  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+  let lastConfig = requireUncached(rootFile(`gatsby-config`))
 
   // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
   // when the browser should prompt the user to restart the develop process.
@@ -222,15 +239,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   // It is exposed for environments where port access needs to be explicit, such as with Docker.
   // As the port is meant for internal usage only, any attempt to interface with features
   // it exposes via third-party software is not supported.
-  const [
-    statusServerPort,
-    developPort,
-    telemetryServerPort,
-  ] = await Promise.all([
-    getRandomPort(process.env.INTERNAL_STATUS_PORT),
-    getRandomPort(),
-    getRandomPort(),
-  ])
+  const [statusServerPort, developPort, telemetryServerPort] =
+    await Promise.all([
+      getRandomPort(process.env.INTERNAL_STATUS_PORT),
+      getRandomPort(),
+      getRandomPort(),
+    ])
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
@@ -324,7 +338,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: telemetryServerPort,
       }
     )
-    await updateSiteMetadata({
+    await updateInternalSiteMetadata({
       name: program.sitePackageJson.name,
       sitePath: program.directory,
       pid: process.pid,
@@ -426,15 +440,21 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   )
 
-  const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
+  const files = [
+    rootFile(`gatsby-config.js`),
+    rootFile(`gatsby-node.js`),
+    rootFile(`gatsby-config.ts`),
+    rootFile(`gatsby-node.ts`),
+  ]
+  const GATSBY_CONFIG_REGEX = /^gatsby-config\.[jt]s$/
   let watcher: chokidar.FSWatcher
 
   if (!isCI()) {
     watcher = chokidar.watch(files).on(`change`, filePath => {
       const file = path.basename(filePath)
 
-      if (file === `gatsby-config.js`) {
-        const newConfig = requireUncached(rootFile(`gatsby-config.js`))
+      if (file.match(GATSBY_CONFIG_REGEX)) {
+        const newConfig = requireUncached(rootFile(`gatsby-config`))
 
         if (!doesConfigChangeRequireRestart(lastConfig, newConfig)) {
           lastConfig = newConfig

@@ -1,5 +1,5 @@
 import { ActionsUnion, IGatsbyNode } from "../../../redux/types"
-import { Database } from "lmdb-store"
+import type { Database } from "lmdb"
 
 type NodeId = string
 
@@ -17,7 +17,17 @@ export function updateNodes(
       if (action.payload) {
         return nodesDb.remove(action.payload.id)
       }
+
       return false
+    }
+    case `MATERIALIZE_PAGE_MODE`: {
+      const id = `SitePage ${action.payload.path}`
+      const node = nodesDb.get(id)
+      if (!node) {
+        throw new Error(`Could not find SitePage node by id: ${id}`)
+      }
+      node.mode = action.payload.pageMode
+      return nodesDb.put(id, node)
     }
   }
   return false

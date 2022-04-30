@@ -4,8 +4,6 @@ require(`dotenv`).config({
 
 console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
-const requestConcurrency = 1
-
 const mediaItemTypeSettings = {
   localFile: {
     excludeByMimeTypes: ["video/mp4"],
@@ -40,6 +38,7 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
         Page: {
           excludeFieldNames: [`enclosure`],
+          beforeChangeNode: `./src/before-change-page.js`,
         },
         DatabaseIdentifier: {
           exclude: true,

@@ -599,14 +599,15 @@ const transformFields = ({
         })
 
         if (transformedField?.inlineFragments?.length) {
-          transformedField.inlineFragments = transformedField.inlineFragments.filter(
-            fieldInlineFragment =>
-              // yes this is a horrible use of .find(). @todo refactor this for better perf
-              !fragment.inlineFragments.find(
-                fragmentInlineFragment =>
-                  fragmentInlineFragment.name === fieldInlineFragment.name
-              )
-          )
+          transformedField.inlineFragments =
+            transformedField.inlineFragments.filter(
+              fieldInlineFragment =>
+                // yes this is a horrible use of .find(). @todo refactor this for better perf
+                !fragment.inlineFragments.find(
+                  fragmentInlineFragment =>
+                    fragmentInlineFragment.name === fieldInlineFragment.name
+                )
+            )
         }
       }
 

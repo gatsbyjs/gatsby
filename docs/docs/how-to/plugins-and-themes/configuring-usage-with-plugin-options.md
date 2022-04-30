@@ -74,7 +74,7 @@ module.exports = {
       resolve: `gatsby-plugin-console-log`,
       options: {
         optionA: true,
-        message: "Hello world"
+        message: "Hello world",
         optionB: false, // Optional.
       },
     },

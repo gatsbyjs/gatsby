@@ -29,7 +29,8 @@ export enum DbComparator {
   GLOB = `$glob`,
 }
 
-export type FilterValueNullable =  // TODO: merge with DbComparatorValue
+// TODO: merge with DbComparatorValue
+export type FilterValueNullable =
   | string
   | number
   | boolean
@@ -86,34 +87,31 @@ function createDbQueriesFromObjectNested(
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
-  return _.flatMap(
-    keys,
-    (key: string): Array<DbQuery> => {
-      if (key === `$elemMatch`) {
-        const queries = createDbQueriesFromObjectNested(filter[key])
-        return queries.map(query => {
-          return {
-            type: `elemMatch`,
-            path: path,
-            nestedQuery: query,
-          }
-        })
-      } else if (isDbComparator(key)) {
-        return [
-          {
-            type: `query`,
-            path,
-            query: {
-              comparator: key,
-              value: filter[key],
-            },
+  return _.flatMap(keys, (key: string): Array<DbQuery> => {
+    if (key === `$elemMatch`) {
+      const queries = createDbQueriesFromObjectNested(filter[key])
+      return queries.map(query => {
+        return {
+          type: `elemMatch`,
+          path: path,
+          nestedQuery: query,
+        }
+      })
+    } else if (isDbComparator(key)) {
+      return [
+        {
+          type: `query`,
+          path,
+          query: {
+            comparator: key,
+            value: filter[key],
           },
-        ]
-      } else {
-        return createDbQueriesFromObjectNested(filter[key], path.concat([key]))
-      }
+        },
+      ]
+    } else {
+      return createDbQueriesFromObjectNested(filter[key], path.concat([key]))
     }
-  )
+  })
 }
 
 /**

@@ -66,9 +66,8 @@ const recursivelyAliasFragments = field =>
       // if any subfields have conflicting types, alias them
 
       if (updatedFragmentField.inlineFragments) {
-        updatedFragmentField.inlineFragments = recursivelyAliasFragments(
-          updatedFragmentField
-        )
+        updatedFragmentField.inlineFragments =
+          recursivelyAliasFragments(updatedFragmentField)
       }
 
       return updatedFragmentField

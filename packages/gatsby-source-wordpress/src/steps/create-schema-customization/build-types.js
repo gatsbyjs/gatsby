@@ -47,13 +47,8 @@ const unionType = typeBuilderApi => {
 }
 
 const interfaceType = typeBuilderApi => {
-  const {
-    type,
-    schema,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
-  } = typeBuilderApi
+  const { type, schema, gatsbyNodeTypes, fieldAliases, fieldBlacklist } =
+    typeBuilderApi
 
   const state = store.getState()
   const { ingestibles, typeMap } = state.remoteSchema

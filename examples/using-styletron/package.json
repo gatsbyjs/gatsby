@@ -8,7 +8,9 @@
     "gatsby": "next",
     "gatsby-plugin-styletron": "next",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "styletron-engine-atomic": "^1.4.8",
+    "styletron-react": "^6.0.1"
   },
   "keywords": [
     "gatsby"

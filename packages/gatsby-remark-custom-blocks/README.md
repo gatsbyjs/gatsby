@@ -11,7 +11,7 @@
 
 Adds custom blocks to `MarkdownRemark` using [remark-custom-blocks](https://github.com/zestedesavoir/zmarkdown/tree/master/packages/remark-custom-blocks).
 
-Unlike in [gatsby-remark-component](https://www.gatsbyjs.org/packages/gatsby-remark-component/) where you can only use HTML within the custom component tag, custom blocks allow you to use markdown within the block.
+Unlike in [gatsby-remark-component](https://www.gatsbyjs.com/plugins/gatsby-remark-component/) where you can only use HTML within the custom component tag, custom blocks allow you to use markdown within the block.
 
 ## Install
 

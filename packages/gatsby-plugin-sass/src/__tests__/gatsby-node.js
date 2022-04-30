@@ -170,10 +170,14 @@ describe(`pluginOptionsSchema`, () => {
   })
 
   it(`should allow unknown options`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      webpackImporter: `unknown option`,
-    })
+    const { isValid, hasWarnings } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        webpackImporter: `unknown option`,
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(hasWarnings).toBe(true)
   })
 })

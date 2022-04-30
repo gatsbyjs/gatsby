@@ -39,6 +39,9 @@ async function onCreateNode(
         type,
       },
     }
+    if (obj.id) {
+      yamlNode[`yamlId`] = obj.id
+    }
     createNode(yamlNode)
     createParentChildLink({ parent: node, child: yamlNode })
   }
@@ -52,14 +55,14 @@ async function onCreateNode(
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
-        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
+        createNodeId(`${node.id} [${i}] >>> YAML`),
         getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
-      parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> YAML`),
+      createNodeId(`${node.id} >>> YAML`),
       getType({ node, object: parsedContent, isArray: false })
     )
   }

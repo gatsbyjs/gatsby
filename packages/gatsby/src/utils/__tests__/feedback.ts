@@ -17,9 +17,10 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-jest.mock(`latest-version`, (): (() => Promise<string>) => (): Promise<
-  string
-> => Promise.resolve(`2.1.1`))
+jest.mock(
+  `latest-version`,
+  (): (() => Promise<string>) => (): Promise<string> => Promise.resolve(`2.1.1`)
+)
 
 const dateFromSixMonthsAgo = new Date()
 dateFromSixMonthsAgo.setMonth(dateFromSixMonthsAgo.getMonth() - 6)

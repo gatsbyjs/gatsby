@@ -1,4 +1,5 @@
 const { promisify } = require(`bluebird`)
+const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
 const path = require(`path`)
@@ -7,7 +8,9 @@ const filenamify = require(`filenamify`)
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { reportError } = require(`./report-error`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const {
+  createContentDigest,
+} = require(`gatsby-core-utils/create-content-digest`)
 
 exports.notMemoizedPrepareTraceSVGInputFile = async ({
   file,
@@ -17,11 +20,12 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 }) => {
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath)
+    pipeline = sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return
@@ -112,9 +116,8 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 
   const tmpFilePath = path.join(
     tmpDir,
-    filenamify(
-      `${file.internal.contentDigest}-${file.name}-${optionsHash}.${file.extension}`
-    )
+    filenamify(`${file.internal.contentDigest}-${file.name}-${optionsHash}`) +
+      `.${file.extension}`
   )
 
   await exports.memoizedPrepareTraceSVGInputFile({
@@ -125,7 +128,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
   })
 
   const svgToMiniDataURI = require(`mini-svg-data-uri`)
-  const potrace = require(`potrace`)
+  const potrace = require(`@gatsbyjs/potrace`)
   const trace = promisify(potrace.trace)
 
   const defaultArgs = {
@@ -149,10 +152,11 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 let memoizedPrepareTraceSVGInputFile
 let memoizedTraceSVG
 const createMemoizedFunctions = () => {
-  exports.memoizedPrepareTraceSVGInputFile = memoizedPrepareTraceSVGInputFile = _.memoize(
-    exports.notMemoizedPrepareTraceSVGInputFile,
-    ({ tmpFilePath }) => tmpFilePath
-  )
+  exports.memoizedPrepareTraceSVGInputFile = memoizedPrepareTraceSVGInputFile =
+    _.memoize(
+      exports.notMemoizedPrepareTraceSVGInputFile,
+      ({ tmpFilePath }) => tmpFilePath
+    )
 
   exports.memoizedTraceSVG = memoizedTraceSVG = _.memoize(
     exports.notMemoizedtraceSVG,

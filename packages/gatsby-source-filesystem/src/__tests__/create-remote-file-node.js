@@ -1,248 +1,127 @@
-jest.mock(`fs-extra`, () => {
-  return {
-    createWriteStream: jest.fn(() => {
-      return {
-        on: jest.fn((type, cb) => {
-          if (type === `finish`) {
-            cb()
-          }
-        }),
-        close: jest.fn(),
-      }
-    }),
-    ensureDir: jest.fn(),
-    removeSync: jest.fn(),
-    move: jest.fn(),
-    stat: jest.fn(),
-  }
-})
-jest.mock(`got`, () => {
-  return {
-    stream: jest.fn(),
-  }
-})
+import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 
-jest.mock(`../create-file-node`, () => {
-  return {
-    createFileNode: jest.fn(),
-  }
-})
-const reporter = require(`gatsby/reporter`)
+const reporter = {}
 
-const got = require(`got`)
 const createRemoteFileNode = require(`../create-remote-file-node`)
-const { createFileNode } = require(`../create-file-node`)
 
-const createMockCache = () => {
+jest.mock(`gatsby-core-utils/fetch-remote-file`, () => {
+  const path = require(`path`)
+
   return {
-    get: jest.fn(),
-    set: jest.fn(),
-    directory: __dirname,
+    fetchRemoteFile: jest.fn(() =>
+      path.join(__dirname, `fixtures`, `dog-thumbnail.jpg`)
+    ),
   }
-}
+})
 
 describe(`create-remote-file-node`, () => {
   const cache = createMockCache()
+  let uuid = 0
+
+  beforeEach(async () => {
+    uuid = 1
+    fetchRemoteFile.mockClear()
+  })
+
+  function createMockCache() {
+    return {
+      get: jest.fn(),
+      set: jest.fn(),
+      directory: __dirname,
+    }
+  }
 
   const defaultArgs = {
-    url: ``,
+    url: `https://external.com/dog.jpg`,
     store: {},
     getCache: () => cache,
     createNode: jest.fn(),
-    createNodeId: jest.fn(),
+    createNodeId: jest.fn(() => String(uuid++)),
     reporter,
+    ext: `.jpg`,
+    name: `dog-thumbnail`,
   }
 
-  describe(`basic functionality`, () => {
-    describe(`non-url`, () => {
-      it(`short-circuits and resolves`, () => {
-        const value = createRemoteFileNode({
-          ...defaultArgs,
-          url: ``,
-        })
-
-        expect(value).rejects.toMatch(
-          `url passed to createRemoteFileNode is either missing or not a proper web uri: `
-        )
+  it(`should throw an error when an invalid url is given`, () => {
+    expect(() =>
+      createRemoteFileNode({
+        ...defaultArgs,
+        url: ``,
       })
-
-      it(`does not increment progress bar total`, () => {
-        const value = createRemoteFileNode({
-          ...defaultArgs,
-          url: ``,
-        })
-
-        expect(value).rejects.toMatch(
-          `url passed to createRemoteFileNode is either missing or not a proper web uri: `
-        )
-      })
-    })
+    ).toThrowError(
+      `url passed to createRemoteFileNode is either missing or not a proper web uri: `
+    )
   })
 
-  describe(`valid url`, () => {
-    let uuid = 0
+  it(`should download and create file node`, async () => {
+    const node = await createRemoteFileNode(defaultArgs)
 
-    const setup = (args = {}, response = { statusCode: 200 }) => {
-      const url = `https://images.whatever.com/real-image-trust-me-${uuid}.png`
-
-      const gotMock = {
-        pipe: jest.fn(),
-        on: jest.fn(),
-      }
-
-      createFileNode.mockImplementationOnce(() => {
-        return {
-          internal: {},
-        }
-      })
-
-      got.stream.mockReturnValueOnce({
-        pipe: jest.fn(() => gotMock),
-        on: jest.fn((mockType, mockCallback) => {
-          if (mockType === `response`) {
-            // got throws on 404/500 so we mimic this behaviour
-            if (response.statusCode === 404) {
-              throw new Error(`Response code 404 (Not Found)`)
-            }
-
-            mockCallback(response)
-          }
-          if (mockType === `downloadProgress`) {
-            mockCallback({
-              progress: 1,
-              transferred: 1,
-              total: 1,
-            })
-          }
-
-          return gotMock
+    expect(node).toMatchObject(
+      expect.objectContaining({
+        id: `1`,
+        extension: `jpg`,
+        name: `dog-thumbnail`,
+        base: `dog-thumbnail.jpg`,
+        url: defaultArgs.url,
+        internal: expect.objectContaining({
+          type: `File`,
         }),
       })
+    )
+  })
 
-      uuid += 1
+  it(`passes headers`, async () => {
+    await createRemoteFileNode({
+      ...defaultArgs,
+      // bypass cache
+      url: `${defaultArgs.url}?header`,
+      httpHeaders: {
+        "x-test": `test`,
+      },
+    })
 
-      return createRemoteFileNode({
-        ...defaultArgs,
-        store: {
-          getState: jest.fn(() => {
-            return {
-              program: {
-                directory: `__whatever__`,
-              },
-            }
-          }),
+    expect(fetchRemoteFile).toHaveBeenCalledWith(
+      expect.objectContaining({
+        httpHeaders: {
+          "x-test": `test`,
         },
-        url,
-        ...args,
       })
+    )
+  })
+
+  it(`passes custom auth header, if defined`, async () => {
+    const auth = {
+      htaccess_user: `hunter2`,
+      htaccess_pass: `*******`,
     }
-
-    it(`invokes ProgressBar tick`, async () => {
-      await setup()
+    await createRemoteFileNode({
+      ...defaultArgs,
+      // bypass cache
+      url: `${defaultArgs.url}?auth`,
+      auth,
     })
 
-    describe(`requesting remote image`, () => {
-      it(`passes correct url`, async () => {
-        const url = `https://hello.com/image.png`
-        await setup({
-          url,
-        })
-
-        expect(got.stream).toHaveBeenCalledWith(url, expect.any(Object))
+    expect(fetchRemoteFile).toHaveBeenCalledWith(
+      expect.objectContaining({
+        auth,
       })
+    )
+  })
 
-      it(`passes headers`, async () => {
-        await setup()
-
-        expect(got.stream).toHaveBeenCalledWith(
-          expect.any(String),
-          expect.objectContaining({
-            headers: {},
-          })
-        )
+  it(`fails when fetchRemoteFile throws an error`, async () => {
+    expect.assertions(1)
+    try {
+      fetchRemoteFile.mockImplementationOnce(({ url }) =>
+        Promise.reject(new Error(`failed to process ${url}`))
+      )
+      await createRemoteFileNode({
+        ...defaultArgs,
+        // bypass cache
+        url: `${defaultArgs.url}?error`,
       })
-
-      it(`passes custom auth header, if defined`, async () => {
-        const auth = {
-          htaccess_user: `hunter2`,
-          htaccess_pass: `*******`,
-        }
-        await setup({
-          auth,
-        })
-
-        expect(got.stream).toHaveBeenCalledWith(
-          expect.any(String),
-          expect.objectContaining({
-            auth: [auth.htaccess_user, auth.htaccess_pass].join(`:`),
-          })
-        )
-      })
-
-      it(`passes custom http header, if defined`, async () => {
-        await setup({
-          httpHeaders: {
-            Authorization: `Bearer foobar`,
-          },
-        })
-
-        expect(got.stream).toHaveBeenCalledWith(
-          expect.any(String),
-          expect.objectContaining({
-            headers: expect.objectContaining({
-              Authorization: `Bearer foobar`,
-            }),
-          })
-        )
-      })
-
-      it(`fails when 404 is given`, async () => {
-        expect.assertions(1)
-        try {
-          await setup({}, `response`, { statusCode: 404 })
-        } catch (err) {
-          expect(err).toEqual(
-            expect.stringContaining(
-              `failed to process https://images.whatever.com/real-image-trust-me`
-            )
-          )
-        }
-      })
-
-      it(`retries if stalled`, done => {
-        const fs = require(`fs-extra`)
-
-        fs.createWriteStream.mockReturnValue({
-          on: jest.fn(),
-          close: jest.fn(),
-        })
-        jest.useFakeTimers()
-        got.stream.mockReset()
-        got.stream.mockReturnValueOnce({
-          pipe: jest.fn(() => {
-            return {
-              pipe: jest.fn(),
-              on: jest.fn(),
-            }
-          }),
-          on: jest.fn((mockType, mockCallback) => {
-            if (mockType === `response`) {
-              mockCallback({ statusCode: 200 })
-
-              expect(got.stream).toHaveBeenCalledTimes(1)
-              jest.advanceTimersByTime(1000)
-              expect(got.stream).toHaveBeenCalledTimes(1)
-              jest.advanceTimersByTime(30000)
-
-              expect(got.stream).toHaveBeenCalledTimes(2)
-              done()
-            }
-          }),
-        })
-        setup()
-        jest.runAllTimers()
-      })
-    })
+    } catch (err) {
+      expect(err.message).toEqual(`failed to process ${defaultArgs.url}?error`)
+    }
   })
 
   describe(`validation`, () => {
@@ -269,33 +148,33 @@ describe(`create-remote-file-node`, () => {
     })
 
     it(`throws on invalid inputs: cache and getCache undefined`, () => {
-      expect(() => {
+      expect(() =>
         createRemoteFileNode({
           ...defaultArgs,
           cache: undefined,
           getCache: undefined,
         })
-      }).toThrowErrorMatchingInlineSnapshot(
+      ).toThrowErrorMatchingInlineSnapshot(
         `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
       )
     })
 
     it(`doesn't throw when getCache is defined`, () => {
-      expect(() => {
+      expect(() =>
         createRemoteFileNode({
           ...defaultArgs,
           getCache: () => createMockCache(),
         })
-      }).not.toThrow()
+      ).not.toThrow()
     })
 
     it(`doesn't throw when cache is defined`, () => {
-      expect(() => {
+      expect(() =>
         createRemoteFileNode({
           ...defaultArgs,
           cache: createMockCache(),
         })
-      }).not.toThrow()
+      ).not.toThrow()
     })
   })
 })

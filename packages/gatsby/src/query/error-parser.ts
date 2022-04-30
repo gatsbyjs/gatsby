@@ -36,7 +36,8 @@ const errorParser = ({
       },
     },
     {
-      regex: /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"\./m,
+      regex:
+        /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"\./m,
       cb: (match): IMatch => {
         return {
           id: `85921`,
@@ -50,7 +51,8 @@ const errorParser = ({
       },
     },
     {
-      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields\./m,
+      regex:
+        /Field "(.+)" must not have a selection since type "(.+)" has no subfields\./m,
       cb: (match): IMatch => {
         return {
           id: `85922`,

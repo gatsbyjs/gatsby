@@ -41,7 +41,8 @@ export const pluginOptionsSchema = ({ Joi }) =>
           }
         }`
       )
-      .external(({ query }) => {
+      .external(pluginOptions => {
+        const query = pluginOptions?.query
         if (query) {
           try {
             parseGraphql(query)

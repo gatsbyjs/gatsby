@@ -10,7 +10,7 @@ import { allowFileDownloaderProgressBarToClear } from "./create-nodes/create-rem
 import { sourcePreviews } from "~/steps/preview"
 
 const sourceNodes: Step = async helpers => {
-  const { cache, webhookBody } = helpers
+  const { cache, webhookBody, refetchAll } = helpers
 
   // if this is a preview we want to process it and return early
   if (webhookBody.preview) {
@@ -35,14 +35,13 @@ const sourceNodes: Step = async helpers => {
       ? webhookBody.since
       : await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  const {
-    schemaWasChanged,
-    foundUsableHardCachedData,
-  } = store.getState().remoteSchema
+  const { schemaWasChanged, foundUsableHardCachedData } =
+    store.getState().remoteSchema
 
   const fetchEverything =
     foundUsableHardCachedData ||
     !lastCompletedSourceTime ||
+    refetchAll ||
     // don't refetch everything in development
     (process.env.NODE_ENV !== `development` &&
       // and the schema was changed

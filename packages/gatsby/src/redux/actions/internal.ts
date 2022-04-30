@@ -1,4 +1,7 @@
-import { IDeleteNodeManifests } from "./../types"
+import {
+  ICreatePageDependencyActionPayloadType,
+  IDeleteNodeManifests,
+} from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -35,30 +38,41 @@ import {
   removeInProgressJob,
   getInProcessJobPromise,
 } from "../../utils/jobs/manager"
+import { getEngineContext } from "../../utils/engine-context"
 
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.
  * @private
  */
-export const createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string; nodeId?: string; connection?: string },
+export const createPageDependencies = (
+  payload: Array<ICreatePageDependencyActionPayloadType>,
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: payload.map(({ path, nodeId, connection }) => {
+      return {
+        path,
+        nodeId,
+        connection,
+      }
+    }),
   }
 }
+
+/**
+ * Create a dependency between a page and data. Probably for
+ * internal use only.
+ *
+ * Shorthand for createPageDependencies.
+ * @private
+ */
+export const createPageDependency = (
+  payload: ICreatePageDependencyActionPayloadType,
+  plugin = ``
+): ICreatePageDependencyAction => createPageDependencies([payload], plugin)
 
 /**
  * Delete dependencies between an array of pages and data. Probably for
@@ -266,11 +280,12 @@ export const queryStart = (
   }
 }
 
-export const clearDirtyQueriesListToEmitViaWebsocket = (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
-  return {
-    type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
+export const clearDirtyQueriesListToEmitViaWebsocket =
+  (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
+    return {
+      type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
+    }
   }
-}
 
 /**
  * Remove jobs which are marked as stale (inputPath doesn't exists)
@@ -358,56 +373,69 @@ export const deleteNodeManifests = (): IDeleteNodeManifests => {
   }
 }
 
-export const createJobV2FromInternalJob = (
-  internalJob: InternalJob
-): ICreateJobV2FromInternalAction => (
-  dispatch,
-  getState
-): Promise<Record<string, unknown>> => {
-  const jobContentDigest = internalJob.contentDigest
-  const currentState = getState()
+export const createJobV2FromInternalJob =
+  (internalJob: InternalJob): ICreateJobV2FromInternalAction =>
+  (dispatch, getState): Promise<Record<string, unknown>> => {
+    const jobContentDigest = internalJob.contentDigest
+    const currentState = getState()
 
-  // Check if we already ran this job before, if yes we return the result
-  // We have an inflight (in progress) queue inside the jobs manager to make sure
-  // we don't waste resources twice during the process
-  if (
-    currentState.jobsV2 &&
-    currentState.jobsV2.complete.has(jobContentDigest)
-  ) {
-    return Promise.resolve(
-      currentState.jobsV2.complete.get(jobContentDigest)!.result
-    )
-  }
+    // Check if we already ran this job before, if yes we return the result
+    // We have an inflight (in progress) queue inside the jobs manager to make sure
+    // we don't waste resources twice during the process
+    if (
+      currentState.jobsV2 &&
+      currentState.jobsV2.complete.has(jobContentDigest)
+    ) {
+      return Promise.resolve(
+        currentState.jobsV2.complete.get(jobContentDigest)!.result
+      )
+    }
+    const engineContext = getEngineContext()
 
-  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
-  if (inProgressJobPromise) {
-    return inProgressJobPromise
-  }
-
-  dispatch({
-    type: `CREATE_JOB_V2`,
-    payload: {
-      job: internalJob,
-    },
-    plugin: { name: internalJob.plugin.name },
-  })
-
-  const enqueuedJobPromise = enqueueJob(internalJob)
-  return enqueuedJobPromise.then(result => {
-    // store the result in redux so we have it for the next run
+    // Always set context, even if engineContext is undefined.
+    // We do this because the final list of jobs for a given engine request includes both:
+    //  - jobs with the same requestId
+    //  - jobs without requestId (technically with requestId === "")
+    //
+    // See https://nodejs.org/dist/latest-v16.x/docs/api/async_context.html#async_context_troubleshooting_context_loss
+    // on cases when async context could be lost.
     dispatch({
-      type: `END_JOB_V2`,
-      plugin: { name: internalJob.plugin.name },
+      type: `SET_JOB_V2_CONTEXT`,
       payload: {
-        jobContentDigest,
-        result,
+        job: internalJob,
+        requestId: engineContext?.requestId ?? ``,
       },
     })
 
-    // remove the job from our inProgressJobQueue as it's available in our done state.
-    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-    removeInProgressJob(jobContentDigest)
+    const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
+    if (inProgressJobPromise) {
+      return inProgressJobPromise
+    }
 
-    return result
-  })
-}
+    dispatch({
+      type: `CREATE_JOB_V2`,
+      payload: {
+        job: internalJob,
+      },
+      plugin: { name: internalJob.plugin.name },
+    })
+
+    const enqueuedJobPromise = enqueueJob(internalJob)
+    return enqueuedJobPromise.then(result => {
+      // store the result in redux so we have it for the next run
+      dispatch({
+        type: `END_JOB_V2`,
+        plugin: { name: internalJob.plugin.name },
+        payload: {
+          jobContentDigest,
+          result,
+        },
+      })
+
+      // remove the job from our inProgressJobQueue as it's available in our done state.
+      // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
+      removeInProgressJob(jobContentDigest)
+
+      return result
+    })
+  }

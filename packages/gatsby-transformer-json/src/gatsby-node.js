@@ -28,7 +28,7 @@ async function onCreateNode(
     }
   }
 
-  function transformObject(obj, id, type) {
+  async function transformObject(obj, id, type) {
     const jsonNode = {
       ...obj,
       id,
@@ -39,7 +39,10 @@ async function onCreateNode(
         type,
       },
     }
-    createNode(jsonNode)
+    if (obj.id) {
+      jsonNode[`jsonId`] = obj.id
+    }
+    await createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
   }
 
@@ -57,19 +60,19 @@ async function onCreateNode(
   }
 
   if (_.isArray(parsedContent)) {
-    parsedContent.forEach((obj, i) => {
-      transformObject(
+    for (let i = 0, l = parsedContent.length; i < l; i++) {
+      const obj = parsedContent[i]
+
+      await transformObject(
         obj,
-        obj.id ? String(obj.id) : createNodeId(`${node.id} [${i}] >>> JSON`),
+        createNodeId(`${node.id} [${i}] >>> JSON`),
         getType({ node, object: obj, isArray: true })
       )
-    })
+    }
   } else if (_.isPlainObject(parsedContent)) {
-    transformObject(
+    await transformObject(
       parsedContent,
-      parsedContent.id
-        ? String(parsedContent.id)
-        : createNodeId(`${node.id} >>> JSON`),
+      createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
     )
   }

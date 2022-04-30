@@ -38,3 +38,13 @@ options: {
 ```
 
 Note: The `ssr` option will be ignored. Gatsby will apply it automatically when needed.
+
+### Disabling vendor prefixing
+
+If you don't require vendor prefixes for adding legacy CSS properties then this can be disabled by supplying the `disableVendorPrefixes` option:
+
+```js
+options: {
+  disableVendorPrefixes: true
+}
+```

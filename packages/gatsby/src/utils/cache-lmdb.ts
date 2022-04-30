@@ -1,4 +1,4 @@
-import { open, RootDatabase, Database, DatabaseOptions } from "lmdb-store"
+import { open, RootDatabase, Database, DatabaseOptions } from "lmdb"
 import fs from "fs-extra"
 import path from "path"
 
@@ -75,6 +75,6 @@ export default class GatsbyCacheLmdb {
   }
 
   async del(key: string): Promise<void> {
-    return (this.getDb().remove(key) as unknown) as Promise<void>
+    return this.getDb().remove(key) as unknown as Promise<void>
   }
 }

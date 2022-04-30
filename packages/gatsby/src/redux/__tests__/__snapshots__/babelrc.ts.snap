@@ -189,6 +189,7 @@ Array [
     Array [
       "/path/to/module/babel-preset-gatsby",
       Object {
+        "reactImportSource": undefined,
         "reactRuntime": undefined,
         "stage": "test",
       },

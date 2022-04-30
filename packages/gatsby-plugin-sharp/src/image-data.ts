@@ -2,10 +2,15 @@
 import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby/reporter"
+import fs from "fs-extra"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
-import { createTransformObject, mergeDefaults } from "./plugin-options"
+import {
+  createTransformObject,
+  getPluginOptions,
+  mergeDefaults,
+} from "./plugin-options"
 import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
@@ -15,7 +20,7 @@ const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 
 export type FileNode = Node & {
-  absolutePath?: string
+  absolutePath: string
   extension: string
 }
 
@@ -44,7 +49,9 @@ export async function getImageMetadata(
   }
 
   try {
-    const pipeline = sharp(file.absolutePath)
+    const pipeline = sharp({ failOnError: !!getPluginOptions().failOnError })
+
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
 
     const { width, height, density, format } = await pipeline.metadata()
 

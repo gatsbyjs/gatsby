@@ -2,7 +2,7 @@
 title: Debugging HTML Builds
 ---
 
-Errors while building static HTML files (the build-time React SSR process) generally happen for one of the following reasons:
+Errors while building static HTML files (the build-time React SSR process) or while using `getServerData` (the [runtime SSR](/docs/reference/rendering-options/server-side-rendering/) process) generally happen for one of the following reasons:
 
 1. Some of your code references "browser globals" like `window` or `document`
    that aren't available in Node.js. If this is your problem you should see an
@@ -80,7 +80,7 @@ const module = typeof window !== `undefined` ? require("module") : null
 
 So, the worst has happened and you're using an npm module that expects `window`
 to be defined. You may be able to file an issue and get the module patched, but
-what to do in the mean time?
+what to do in the meantime?
 
 One solution is to [customize](/docs/how-to/custom-configuration/add-custom-webpack-config) your webpack
 configuration to replace the offending module with a dummy module during server

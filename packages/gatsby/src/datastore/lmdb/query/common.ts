@@ -38,35 +38,35 @@ export function resolveFieldValue(
   return getValueAt(node, dottedFieldPath)
 }
 
-export function shouldFilter(
+export function matchesFilter(
   filter: IDbFilterStatement,
   fieldValue: unknown
 ): boolean {
-  const value = filter.value
-
   switch (filter.comparator) {
     case DbComparator.EQ:
-      return value === null ? value == fieldValue : value === fieldValue
+      return filter.value === null
+        ? filter.value == fieldValue
+        : filter.value === fieldValue
     case DbComparator.IN: {
-      const arr = Array.isArray(value) ? value : [value]
+      const arr = Array.isArray(filter.value) ? filter.value : [filter.value]
       return arr.some(v => (v === null ? v == fieldValue : v === fieldValue))
     }
     case DbComparator.GT:
-      return compareKey(value, fieldValue) > 0
+      return compareKey(fieldValue, filter.value) > 0
     case DbComparator.GTE:
-      return compareKey(value, fieldValue) >= 0
+      return compareKey(fieldValue, filter.value) >= 0
     case DbComparator.LT:
-      return compareKey(value, fieldValue) < 0
+      return compareKey(fieldValue, filter.value) < 0
     case DbComparator.LTE:
-      return compareKey(value, fieldValue) <= 0
+      return compareKey(fieldValue, filter.value) <= 0
     case DbComparator.NE:
     case DbComparator.NIN: {
-      const arr = Array.isArray(value) ? value : [value]
+      const arr = Array.isArray(filter.value) ? filter.value : [filter.value]
       return arr.every(v => (v === null ? v != fieldValue : v !== fieldValue))
     }
     case DbComparator.REGEX: {
-      if (typeof fieldValue !== `undefined` && value instanceof RegExp) {
-        return value.test(String(fieldValue))
+      if (typeof fieldValue !== `undefined` && filter.value instanceof RegExp) {
+        return filter.value.test(String(fieldValue))
       }
       return false
     }

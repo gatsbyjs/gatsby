@@ -17,6 +17,7 @@ const Style = () => (
           --gatsby: var(--purple-60);
           --purple-40: #b17acc;
           --purple-20: #f1defa;
+          --purple-10: #f6edfa;
           --dimmedWhite: rgba(255, 255, 255, 0.8);
           --white: #ffffff;
           --black: #000000;
@@ -53,20 +54,28 @@ const Style = () => (
         }
 
         [data-gatsby-preview-indicator="button"] {
+          position: relative;
           width: 32px;
           height: 32px;
           padding: 4px;
           border-radius: 4px;
           box-sizing: border-box;
+          border: none;
+          background: none;
         }
 
         [data-gatsby-preview-indicator-hoverable="true"]:hover {
           background: #f3f3f3;
+          cursor: pointer;
         }
 
         [data-gatsby-preview-indicator-active-button="true"] {
           opacity: 1;
           transition: all 0.3s ease-in-out;
+        }
+
+        [data-gatsby-preview-indicator-highlighted-button="true"] {
+          background: var(--purple-10);
         }
 
         [data-gatsby-preview-indicator-active-button="false"] {
@@ -76,49 +85,110 @@ const Style = () => (
 
         [data-gatsby-preview-indicator="spinner"] {
           position: absolute;
-          top: 10px;
-          left: 10px;
-          animation: spin 1s linear infinite;
+          top: 50%;
+          left: 50%;
+          transform: translateX(-50%) translateY(-50%);
           height: 28px;
+        }
+        [data-gatsby-preview-indicator="spinner"] svg {
+          animation: spin 1s linear infinite;
+        }
+        [data-gatsby-preview-indicator="tooltip"] {
+          position: absolute;
+          padding-left: 35px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        [data-gatsby-preview-indicator="tooltip-inner"] {
+          position: relative;
+          line-height: 12px;
+          background: black;
+          opacity: 1;
+          color: white;
+          display: flex;
+          align-items: center;
+          padding: 10px 13px;
+          border-radius: 4px;
+          user-select: none;
+          white-space: nowrap;
+          cursor: default;
+        }
+        [data-gatsby-preview-indicator="tooltip-inner"]:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: -6px;
+          width: 0;
+          height: 0;
+          transform: translateY(-50%);
+          border-style: solid;
+          border-width: 10px 10px 10px 0;
+          border-color: transparent black transparent transparent;
         }
 
         [data-gatsby-preview-indicator-visible="false"] {
           opacity: 0;
-          visibility: hidden;
           will-change: opacity;
           transition: all 0.2s ease-in-out;
         }
 
         [data-gatsby-preview-indicator-visible="true"] {
           opacity: 1;
-          visibility: visible;
           will-change: opacity;
           transition: all 0.2s ease-in-out;
         }
 
-        [data-gatsby-preview-indicator="tooltip"] {
-          margin-left: 48px;
-          line-height: 12px;
-          background: black;
-          opacity: 1;
-          color: white;
-          position: fixed;
+        [data-gatsby-preview-indicator-removed="false"] {
           display: inline;
-          padding: 10px 13px;
-          margin-top: -4px;
-          border-radius: 4px;
-          user-select: none;
-          white-space: nowrap;
+        }
+        [data-gatsby-preview-indicator-removed="true"] {
+          display: none;
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {
+          background: none;
+          border: none;
+          padding: 0;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-link-text"] {
           color: #a97ec7;
           font-weight: bold;
+          margin-bottom: 0;
           margin-left: 5px;
           line-height: 12px;
           font-size: 0.8rem;
           display: inline;
           cursor: pointer;
+          text-decoration: none;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-link-text"]:hover {
+          text-decoration: underline;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-close-btn"] {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: none;
+          border: none;
+          padding: 0;
+          margin-left: 0.8rem;
+          cursor: pointer;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-close-btn"] svg {
+          color: white;
+          opacity: 0.6;
+          transition-property: color, opacity;
+          transition-duration: 0.3s;
+          transition-easing-function: ease-in-out;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-close-btn"]:hover svg {
+          opacity: 1;
         }
 
         [data-gatsby-preview-indicator="tooltip-svg"] {
@@ -159,7 +229,7 @@ const Style = () => (
         }
       `,
     }}
-  />
+  ></style>
 )
 
 export default Style

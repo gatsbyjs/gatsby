@@ -37,7 +37,7 @@ Last but not least you add additional scripts to your `package.json` to run Cypr
 
 Type `npm run test:e2e` in your command line and see Cypress running for the first time. A folder named `cypress` will be created at the root of your project and a new application window will pop up. [Cypress' getting started guide](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#) is a good start to learn how to write tests!
 
-_Important note_: If you are running Gatsby with the `--https` flag, whether using your own or automatically generated certificates, you will also need to tell `start-server-and-test` to disable HTTPS certificate checks (otherwise it will wait forever and never actually launch Cypress. You do this by passing in an environmental variable: `START_SERVER_AND_TEST_INSECURE=1`. [start-server-and-test docs](https://github.com/bahmutov/start-server-and-test#disable-https-certificate-checks).
+_Important note_: If you are running Gatsby with the `--https` flag, whether using your own or automatically generated certificates, you will also need to tell `start-server-and-test` to disable HTTPS certificate checks (otherwise it will wait forever and never actually launch Cypress. You do this by passing in an environmental variable: `START_SERVER_AND_TEST_INSECURE=1`. [start-server-and-test docs](https://github.com/bahmutov/start-server-and-test#disable-https-certificate-checks)).
 
 This means your `test:e2e` script would look like this:
 
@@ -61,7 +61,7 @@ If you want to run Cypress in Continuous Integration (CI), you have to use `cypr
 }
 ```
 
-Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or GitLab with Cypress. You can also use a GitHub Action to implement basic CI directly in GitHub with the official [Cypress GitHub action](https://github.com/cypress-io/github-action).
+Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to set up Travis or GitLab with Cypress. You can also use a GitHub Action to implement basic CI directly in GitHub with the official [Cypress GitHub action](https://github.com/cypress-io/github-action).
 
 ## Writing tests
 

@@ -7,7 +7,9 @@ examples:
 
 The Gatsby team is passionate about helping you create websites that work for everyone, with helpful defaults that bake in web accessibility as well as performance optimizations. By making your website accessible to people with disabilities, you can make more inclusive sites that reach and remove barriers for more people on the Internet.
 
-## What is accessibility?
+## What is web accessibility?
+
+[Web accessibility](https://www.w3.org/WAI/fundamentals/accessibility-intro/#what) means that websites, tools, and technologies are designed and developed so that people with disabilities can use them. But not only people with permanent disabilities benefit from it. Accessibility also benefits people with temporary disabilities. For example, imagine being in an environment where you cannot listen to audio or you can't use a computer because of a broken arm.
 
 Back in the early days of the Web, Tim Berners-Lee, inventor of the World Wide Web, [said](https://www.w3.org/Press/IPO-announce):
 
@@ -16,11 +18,9 @@ Back in the early days of the Web, Tim Berners-Lee, inventor of the World Wide W
 
 The web of today is an important resource in many aspects of life such as health care, education, or commerce. Accessibility is an important consideration when building for the web.
 
-[Web accessibility](https://www.w3.org/WAI/fundamentals/accessibility-intro/#what) means that websites, tools, and technologies are designed and developed so that people with disabilities can use them. But not only people with permanent disabilities benefit from it. Accessibility also benefits people with temporary disabilities. For example, imagine being in an environment where you cannot listen to audio or you can't use a computer because of a broken arm.
-
 Accessibility supports [social inclusion for everyone](https://www.w3.org/standards/webdesign/accessibility#case), and has a strong [business case](https://www.w3.org/WAI/business-case/).
 
-## Gatsby helps build in accessibility
+## Gatsby makes accessibility easier
 
 While ultimately it's up to you to develop your site with accessibility in mind, Gatsby aims to provide as much out-of-the-box support as possible.
 
@@ -56,7 +56,7 @@ Note: Including a local `.eslintrc` file will [override](/docs/how-to/custom-con
 
 This is a start to testing for accessibility: [further recommendations](#how-to-improve-accessibility) can be found below.
 
-## How to improve accessibility?
+## Tips for improving web accessibility
 
 Accessibility by default is a win for everyone. Here's a starting point for accessibility testing when making a Gatsby site or theme:
 

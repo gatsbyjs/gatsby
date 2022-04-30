@@ -25,6 +25,7 @@ const globalPackageRules = [
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     commitMessageTopic: `dependencies for Gatsby monorepo`,
+    excludePackagePatterns: [`^@babel`],
   },
 
   // group eslint & prettier
@@ -80,6 +81,14 @@ const globalPackageRules = [
     dependencyDashboardApproval: false,
   },
   {
+    groupName: `cypress`,
+    matchPaths: [`e2e-tests/**/package.json`, `examples/**/package.json`],
+    matchPackageNames: [`cypress`, `cypress-image-snapshot`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
     groupName: `chalk`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
     matchPackageNames: [`chalk`],
@@ -103,6 +112,49 @@ const globalPackageRules = [
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
+  {
+    groupName: `cheerio`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`cheerio`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `semver`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`semver`, `@types/semver`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `core-js`,
+    matchPaths: [
+      `+(package.json)`,
+      `packages/!(gatsby-legacy-polyfills)/**/package.json`,
+    ],
+    matchPackageNames: [`core-js`, `core-js-compat`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `chokidar`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`chokidar`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `Parcel`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackagePatterns: [`^@parcel/`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
 ]
 
 // there is no excludeMatchSourceUrlPrefixes option so we force babel to be disabled
@@ -119,9 +171,9 @@ globalPackageRules.forEach(group => {
 
 // our default rules
 const defaultPackageRules = [
-  // disable engine upgrades
+  // disable engine upgrades & types/node
   {
-    matchDepTypes: [`engines`],
+    matchDepTypes: [`engines`, `@types/node`],
     enabled: false,
   },
   // host-error on renovate :shrug:
@@ -307,6 +359,7 @@ const renovateConfig = {
   postUpdateOptions: [`yarnDedupeHighest`],
   timezone: `GMT`,
   schedule: [`before 7am on the first day of the month`],
+  updateNotScheduled: false,
   packageRules: defaultPackageRules.concat(
     Array.from(packageRules.values()).flat()
   ),

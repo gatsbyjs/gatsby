@@ -28,10 +28,14 @@ module.exports = {
 
 ## Build
 
-The final step is to build your application with the `--prefix-paths` flag, like so:
+The final step is to build your application with either the `--prefix-paths` flag or `PREFIX_PATHS` environment variable, like so:
 
 ```shell
 gatsby build --prefix-paths
+```
+
+```shell
+PREFIX_PATHS=true gatsby build
 ```
 
 If this flag is not passed, Gatsby will ignore your `pathPrefix` and build the site as if hosted from the root domain.
@@ -97,4 +101,4 @@ For pathnames you construct manually, there’s a helper function, [`withPrefix`
 
 The [`assetPrefix`](/docs/how-to/previews-deploys-hosting/asset-prefix/) feature can be thought of as semi-related to this feature. That feature allows your assets (non-HTML files, e.g. images, JavaScript, etc.) to be hosted on a separate domain, for example a CDN.
 
-This feature works seamlessly with `assetPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix.
+This feature works seamlessly with `assetPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix. If you use `assetPrefix`, your `pathPrefix` will be changed to <code>&lt;assetPrefix&gt;/&lt;pathPrefix&gt;</code>. If you need to access the same `pathPrefix` as in your `gatsby-config.js`, consider using [`basePath`](/docs/reference/config-files/node-api-helpers/#basePath).

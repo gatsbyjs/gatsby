@@ -180,5 +180,53 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       expect(mocks.setHeadComponents.mock.calls[0].length).toBe(1)
       expect(headConfig.key).toBe(`plugin-google-tagmanager`)
     })
+
+    it(`should set selfHostedOrigin as googletagmanager.com by default`, () => {
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        id: `123`,
+        includeInDevelopment: true,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      const [preBodyConfig] = mocks.setPreBodyComponents.mock.calls[0][0]
+
+      // eslint-disable-next-line no-useless-escape
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        `https://www.googletagmanager.com/gtm.js`
+      )
+      expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        `https://www.googletagmanager.com/ns.html`
+      )
+    })
+
+    it(`should set selfHostedOrigin`, () => {
+      const selfHostedOrigin = `YOUR_SELF_HOSTED_ORIGIN`
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        id: `123`,
+        includeInDevelopment: true,
+        selfHostedOrigin: selfHostedOrigin,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      const [preBodyConfig] = mocks.setPreBodyComponents.mock.calls[0][0]
+
+      // eslint-disable-next-line no-useless-escape
+      expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        `${selfHostedOrigin}/gtm.js`
+      )
+      expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).toContain(
+        `${selfHostedOrigin}/ns.html`
+      )
+    })
   })
 })

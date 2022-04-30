@@ -1,4 +1,6 @@
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+// @ts-check
+import { createRemoteFileNode } from "gatsby-source-filesystem"
+import { createUrl } from "./image-helpers"
 
 /**
  * @name distributeWorkload
@@ -25,23 +27,21 @@ async function distributeWorkload(workers, count = 50) {
  * @param gatsbyFunctions - Gatsby's internal helper functions
  */
 
-const downloadContentfulAssets = async gatsbyFunctions => {
+export async function downloadContentfulAssets(gatsbyFunctions) {
   const {
-    actions: { createNode, touchNode },
+    actions: { createNode, touchNode, createNodeField },
     createNodeId,
     store,
     cache,
-    getCache,
-    getNodesByType,
     reporter,
     assetDownloadWorkers,
     getNode,
+    assetNodes,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
 
-  const assetNodes = getNodesByType(`ContentfulAsset`)
   const bar = reporter.createProgress(
     `Downloading Contentful Assets`,
     assetNodes.length
@@ -64,7 +64,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
         )
         return Promise.resolve()
       }
-      const url = `https://${node.file.url.slice(2)}`
+      const url = createUrl(node.file.url)
 
       // Avoid downloading the asset again if it's been cached
       // Note: Contentful Assets do not provide useful metadata
@@ -82,7 +82,6 @@ const downloadContentfulAssets = async gatsbyFunctions => {
           cache,
           createNode,
           createNodeId,
-          getCache,
           reporter,
         })
 
@@ -95,7 +94,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       }
 
       if (fileNodeID) {
-        node.localFile___NODE = fileNodeID
+        createNodeField({ node, name: `localFile`, value: fileNodeID })
       }
 
       return node
@@ -103,4 +102,3 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     assetDownloadWorkers
   )
 }
-exports.downloadContentfulAssets = downloadContentfulAssets

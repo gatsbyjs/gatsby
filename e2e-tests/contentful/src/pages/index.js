@@ -9,10 +9,13 @@ const IndexPage = () => (
     <h2>Media Rendering</h2>
     <ul>
       <li>
-        <Link to="/gatsby-image">/gatsby-image</Link>
+        <Link to="/gatsby-plugin-image">/gatsby-plugin-image</Link>
       </li>
       <li>
-        <Link to="/gatsby-plugin-image">/gatsby-plugin-image</Link>
+        <Link to="/gatsby-image-cdn">/gatsby-image-cdn</Link>
+      </li>
+      <li>
+        <Link to="/download-local">/download-local</Link>
       </li>
     </ul>
     <h2>Content Rendering</h2>

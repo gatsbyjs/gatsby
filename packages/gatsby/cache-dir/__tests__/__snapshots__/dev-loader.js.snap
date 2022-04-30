@@ -8,6 +8,7 @@ Object {
   },
   "page": Object {
     "componentChunkName": "chunk",
+    "getServerDataError": undefined,
     "matchPath": undefined,
     "path": "/mypage/",
     "staticQueryHashes": Array [],

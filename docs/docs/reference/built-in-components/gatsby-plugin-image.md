@@ -253,14 +253,14 @@ These values are passed in as an object to `transformOptions`, either as a prop 
 | ----------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `grayscale` | `false`                   | Convert image to grayscale                                                                                                                                    |
 | `duotone`   | `false`                   | Add duotone effect. Pass `false`, or options object containing `{highlight: string, shadow: string, opacity: number}`                                         |
-| `rotate`    | `0`                       | Rotate the image. Value in degrees.                                                                                                                           |
-| `trim`      | `false`                   | Trim "boring" pixels. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                                         |
+| `rotate`    | `auto`                    | Rotate the image. Value in degrees.                                                                                                                           |
+| `trim`      | `10`                      | Trim "boring" pixels. Value is the threshold. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#trim).                                 |
 | `cropFocus` | `"attention"`/`ATTENTION` | Controls crop behavior. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#resize) for strategy, position and gravity.                  |
 | `fit`       | `"cover"`/`COVER`         | Controls behavior when resizing an image and proving both width and height. See [the sharp documentation.](https://sharp.pixelplumbing.com/api-resize#resize) |
 
 ## All options
 
-The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
+The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.com) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
 
 | Option                                  | Default                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

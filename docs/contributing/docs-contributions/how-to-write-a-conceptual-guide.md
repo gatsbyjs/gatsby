@@ -25,6 +25,6 @@ Because of the open-ended nature of a Conceptual Guide, it's difficult to create
 Instead, here's a list of questions to consider as you're writing:
 
 - What is the central, underlying concept for this topic? Why is that something worth learning about?
-- What historical background or past decisions would be helpful for newcomers trying to understanding this concept?
+- What historical background or past decisions would be helpful for newcomers trying to understand this concept?
 - Are there any other solutions or approaches? What are the pros and cons of each approach?
 - What other viewpoints should be considered?

@@ -1,8 +1,16 @@
 import { registerRoute } from "workbox-routing"
-import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies"
+import {
+  CacheFirst,
+  StaleWhileRevalidate,
+  NetworkOnly,
+} from "workbox-strategies"
 import { CacheableResponsePlugin } from "workbox-cacheable-response"
 
 export function registerDefaultRoutes() {
+  if (__GATSBY_PLUGIN_OFFLINE_SETTINGS.__cypressSupport) {
+    registerRoute(/\/__cypress\//, new NetworkOnly(), `GET`)
+  }
+
   registerRoute(
     /(\.js$|\.css$|static\/)/,
     new CacheFirst({

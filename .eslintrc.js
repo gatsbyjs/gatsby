@@ -36,6 +36,9 @@ module.exports = {
     __PATH_PREFIX__: true,
     __BASE_PATH__: true,
     __ASSET_PREFIX__: true,
+    _CFLAGS_: true,
+    __GATSBY: true,
+    __TRAILING_SLASH__: true,
   },
   rules: {
     "@babel/no-unused-expressions": [

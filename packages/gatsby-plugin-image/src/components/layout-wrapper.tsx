@@ -93,19 +93,17 @@ const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
   return null
 }
 
-export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
-  children,
-  ...props
-}) {
-  return (
-    <Fragment>
-      <Sizer {...props} />
-      {children}
+export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> =
+  function LayoutWrapper({ children, ...props }) {
+    return (
+      <Fragment>
+        <Sizer {...props} />
+        {children}
 
-      {
-        // eslint-disable-next-line no-undef
-        SERVER && <NativeScriptLoading />
-      }
-    </Fragment>
-  )
-}
+        {
+          // eslint-disable-next-line no-undef
+          SERVER && <NativeScriptLoading />
+        }
+      </Fragment>
+    )
+  }

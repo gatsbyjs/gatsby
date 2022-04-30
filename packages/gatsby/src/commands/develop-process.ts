@@ -48,9 +48,25 @@ if (process.send) {
 }
 
 onExit(() => {
+  let SSGCount = 0
+  let DSGCount = 0
+  let SSRCount = 0
+  for (const page of store.getState().pages.values()) {
+    if (page.mode === `SSR`) {
+      SSRCount++
+    } else if (page.mode === `DSG`) {
+      DSGCount++
+    } else {
+      SSGCount++
+    }
+  }
+
   telemetry.trackCli(`DEVELOP_STOP`, {
     siteMeasurements: {
       totalPagesCount: store.getState().pages.size,
+      SSRCount,
+      DSGCount,
+      SSGCount,
     },
   })
 })
@@ -80,6 +96,11 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  // provide global Gatsby object
+  global.__GATSBY = process.env.GATSBY_NODE_GLOBALS
+    ? JSON.parse(process.env.GATSBY_NODE_GLOBALS)
+    : {}
+
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }
@@ -92,19 +113,18 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
-  process.on(
-    `SIGINT`,
-    async (): Promise<void> => {
-      if (await userGetsSevenDayFeedback()) {
-        showSevenDayFeedbackRequest()
-      } else if (await userPassesFeedbackRequestHeuristic()) {
-        showFeedbackRequest()
-      }
-      process.exit(0)
+  process.on(`SIGINT`, async (): Promise<void> => {
+    if (await userGetsSevenDayFeedback()) {
+      showSevenDayFeedbackRequest()
+    } else if (await userPassesFeedbackRequestHeuristic()) {
+      showFeedbackRequest()
     }
-  )
+    process.exit(0)
+  })
 
-  initTracer(program.openTracingConfigFile)
+  await initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)

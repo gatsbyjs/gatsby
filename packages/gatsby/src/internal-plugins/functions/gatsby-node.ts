@@ -3,20 +3,15 @@ import glob from "glob"
 import path from "path"
 import webpack from "webpack"
 import _ from "lodash"
-import multer from "multer"
-import * as express from "express"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
 import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
-// We use an ancient version of path-to-regexp as it has breaking changes to express v4
-// see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
-import pathToRegexp from "path-to-regexp"
-import cookie from "cookie"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
 import { IGatsbyFunction } from "../../redux/types"
+import { functionMiddlewares } from "./middleware"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -27,14 +22,8 @@ interface IGlobPattern {
   rootPath: string
   /** The glob pattern **/
   globPattern: string
-}
-
-interface IPathToRegexpKey {
-  name: string | number
-  prefix: string
-  suffix: string
-  pattern: string
-  modifier: string
+  /** The glob ignore pattern */
+  ignorePattern: Array<string>
 }
 
 // During development, we lazily compile functions only when they're requested.
@@ -80,9 +69,23 @@ async function ensureFunctionIsCompiled(
 const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   const globs: Array<IGlobPattern> = []
 
+  function globIgnorePatterns(
+    root: string,
+    pluginName?: string
+  ): Array<string> {
+    const nestedFolder = pluginName ? `/${pluginName}/**/` : `/**/`
+
+    return [
+      `${root}/src/api${nestedFolder}__tests__/**/*.+(js|ts)`, // Jest tests
+      `${root}/src/api${nestedFolder}+(*.)+(spec|test).+(js|ts)`,
+      `${root}/src/api${nestedFolder}+(*.)+(d).ts`, // .d.ts files
+    ]
+  }
+
   // Add the default site src/api directory.
   globs.push({
     globPattern: `${siteDirectoryPath}/src/api/**/*.{js,ts}`,
+    ignorePattern: globIgnorePatterns(siteDirectoryPath),
     rootPath: path.join(siteDirectoryPath, `src/api`),
     pluginName: `default-site-plugin`,
   })
@@ -109,6 +112,7 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
 
     const glob = {
       globPattern: `${plugin.resolve}/src/api/${plugin.name}/**/*.{js,ts}`,
+      ignorePattern: globIgnorePatterns(plugin.resolve, plugin.name),
       rootPath: path.join(plugin.resolve, `src/api`),
       pluginName: plugin.name,
     } as IGlobPattern
@@ -153,37 +157,37 @@ const createWebpackConfig = async ({
   // Glob and return object with relative/absolute paths + which plugin
   // they belong to.
   const allFunctions = await Promise.all(
-    globs.map(
-      async (glob): Promise<Array<IGatsbyFunction>> => {
-        const knownFunctions: Array<IGatsbyFunction> = []
-        const files = await globAsync(glob.globPattern)
-        files.map(file => {
-          const originalAbsoluteFilePath = file
-          const originalRelativeFilePath = path.relative(glob.rootPath, file)
+    globs.map(async (glob): Promise<Array<IGatsbyFunction>> => {
+      const knownFunctions: Array<IGatsbyFunction> = []
+      const files = await globAsync(glob.globPattern, {
+        ignore: glob.ignorePattern,
+      })
+      files.map(file => {
+        const originalAbsoluteFilePath = file
+        const originalRelativeFilePath = path.relative(glob.rootPath, file)
 
-          const { dir, name } = path.parse(originalRelativeFilePath)
-          // Ignore the original extension as all compiled functions now end with js.
-          const compiledFunctionName = path.join(dir, name + `.js`)
-          const compiledPath = path.join(
-            compiledFunctionsDir,
-            compiledFunctionName
-          )
-          const finalName = urlResolve(dir, name === `index` ? `` : name)
+        const { dir, name } = path.parse(originalRelativeFilePath)
+        // Ignore the original extension as all compiled functions now end with js.
+        const compiledFunctionName = path.join(dir, name + `.js`)
+        const compiledPath = path.join(
+          compiledFunctionsDir,
+          compiledFunctionName
+        )
+        const finalName = urlResolve(dir, name === `index` ? `` : name)
 
-          knownFunctions.push({
-            functionRoute: finalName,
-            pluginName: glob.pluginName,
-            originalAbsoluteFilePath,
-            originalRelativeFilePath,
-            relativeCompiledFilePath: compiledFunctionName,
-            absoluteCompiledFilePath: compiledPath,
-            matchPath: getMatchPath(finalName),
-          })
+        knownFunctions.push({
+          functionRoute: finalName,
+          pluginName: glob.pluginName,
+          originalAbsoluteFilePath,
+          originalRelativeFilePath,
+          relativeCompiledFilePath: compiledFunctionName,
+          absoluteCompiledFilePath: compiledPath,
+          matchPath: getMatchPath(finalName),
         })
+      })
 
-        return knownFunctions
-      }
-    )
+      return knownFunctions
+    })
   )
 
   // Combine functions by the route name so that functions in the default
@@ -199,7 +203,7 @@ const createWebpackConfig = async ({
     JSON.stringify(knownFunctions, null, 4)
   )
 
-  // Load environment variables from process.env.GATSBY_* and .env.* files.
+  // Load environment variables from process.env.* and .env.* files.
   // Logic is shared with webpack.config.js
 
   // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
@@ -247,9 +251,16 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  const functionsList = isProductionEnv
+
+  const precompileDevFunctions =
+    isProductionEnv ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `true` ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `1`
+
+  const functionsList = precompileDevFunctions
     ? knownFunctions
     : activeDevelopmentFunctions
+
   functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
@@ -322,8 +333,11 @@ let isFirstBuild = true
 export async function onPreBootstrap({
   reporter,
   store,
+  parentSpan,
 }: ParentSpanPluginArgs): Promise<void> {
-  const activity = reporter.activityTimer(`Compiling Gatsby Functions`)
+  const activity = reporter.activityTimer(`Compiling Gatsby Functions`, {
+    parentSpan,
+  })
   activity.start()
 
   const {
@@ -431,8 +445,12 @@ export async function onPreBootstrap({
           })
       }
     })
-  } catch (e) {
-    activity.panic(`Failed to compile Gatsby Functions.`, e)
+  } catch (error) {
+    activity.panic({
+      id: `11332`,
+      error,
+      context: {},
+    })
   }
 
   activity.end()
@@ -457,100 +475,17 @@ export async function onCreateDevServer({
 
   app.use(
     `/api/*`,
-    multer().any(),
-    express.urlencoded({ extended: true }),
-    (req, _, next) => {
-      const cookies = req.headers.cookie
-
-      if (!cookies) {
-        return next()
-      }
-
-      req.cookies = cookie.parse(cookies)
-
-      return next()
-    },
-    express.text(),
-    express.json(),
-    express.raw(),
-    async (req, res, next) => {
-      const { "0": pathFragment } = req.params
-
-      const {
-        functions,
-      }: { functions: Array<IGatsbyFunction> } = store.getState()
-
-      // Check first for exact matches.
-      let functionObj = functions.find(
-        ({ functionRoute }) => functionRoute === pathFragment
-      )
-
-      if (!functionObj) {
-        // Check if there's any matchPaths that match.
-        // We loop until we find the first match.
-        functions.some(f => {
-          let exp
-          const keys: Array<IPathToRegexpKey> = []
-          if (f.matchPath) {
-            exp = pathToRegexp(f.matchPath, keys)
-          }
-          if (exp && exp.exec(pathFragment) !== null) {
-            functionObj = f
-            const matches = [...pathFragment.match(exp)].slice(1)
-            const newParams = {}
-            matches.forEach(
-              (match, index) => (newParams[keys[index].name] = match)
-            )
-            req.params = newParams
-
-            return true
-          } else {
-            return false
-          }
-        })
-      }
-
-      if (functionObj) {
+    ...functionMiddlewares({
+      getFunctions(): Array<IGatsbyFunction> {
+        const { functions }: { functions: Array<IGatsbyFunction> } =
+          store.getState()
+        return functions
+      },
+      async prepareFn(functionObj: IGatsbyFunction): Promise<void> {
         activeDevelopmentFunctions.add(functionObj)
-
         await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
-
-        reporter.verbose(`Running ${functionObj.functionRoute}`)
-        const start = Date.now()
-        const pathToFunction = functionObj.absoluteCompiledFilePath
-
-        try {
-          delete require.cache[require.resolve(pathToFunction)]
-          const fn = require(pathToFunction)
-
-          const fnToExecute = (fn && fn.default) || fn
-
-          await Promise.resolve(fnToExecute(req, res))
-        } catch (e) {
-          // Override the default error with something more specific.
-          if (e.message.includes(`fnToExecute is not a function`)) {
-            e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
-          }
-          reporter.error(e)
-          // Don't send the error if that would cause another error.
-          if (!res.headersSent) {
-            res
-              .status(500)
-              .send(
-                `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
-              )
-          }
-        }
-
-        const end = Date.now()
-        reporter.log(
-          `Executed function "/api/${functionObj.functionRoute}" in ${
-            end - start
-          }ms`
-        )
-      } else {
-        next()
-      }
-    }
+      },
+      showDebugMessageInResponse: true,
+    })
   )
 }

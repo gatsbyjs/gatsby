@@ -5,6 +5,7 @@
 const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { URL } = require("url")
 
 const gatsbyConfig = require("../gatsby-config")
 
@@ -12,8 +13,6 @@ const { testResolvedData } = require("./test-utils/test-resolved-data")
 const { queries } = require("./test-utils/queries")
 
 const { incrementalIt } = require(`./test-utils/incremental-it`)
-
-jest.setTimeout(100000)
 
 const isWarmCache = process.env.WARM_CACHE
 const url = `http://localhost:8000/___graphql`
@@ -217,6 +216,27 @@ describe(`data resolution`, () => {
     expect(result).toMatchSnapshot()
 
     expect(result.data.testUser.name).toEqual(`admin`)
+  })
+
+  it(`resolves data added via a fn file in onBeforeChangeNode type option`, async () => {
+    const result = await fetchGraphql({
+      url,
+      query: /* GraphQL */ `
+        {
+          # fn as a file path
+          allWpPage {
+            nodes {
+              id
+              beforeChangeNodeTest
+            }
+          }
+        }
+      `,
+    })
+
+    result.data.allWpPage.nodes.forEach(node => {
+      expect(node.beforeChangeNodeTest).toBe(`TEST-${node.id}`)
+    })
   })
 
   it(`resolves root fields`, async () => {
@@ -509,5 +529,48 @@ describe(`data resolution`, () => {
     else {
       expect(wpMediaItem).toBeNull()
     }
+  })
+
+  it(`Resolves Gatsby Image CDN data`, async () => {
+    const {
+      data: { allWpPost },
+    } = await fetchGraphql({
+      url,
+      query: /* GraphQL */ `
+        query {
+          allWpPost {
+            nodes {
+              featuredImage {
+                node {
+                  filename
+                  mediaItemUrl
+                  resize(width: 100, height: 100, quality: 100) {
+                    width
+                    height
+                    src
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+    })
+
+    allWpPost.nodes.forEach(node => {
+      if (!node.featuredImage?.node) {
+        return
+      }
+
+      const { resize, mediaItemUrl } = node.featuredImage.node
+      const parsedUrl = new URL(resize.src, "https://www.gatsbyjs.com")
+
+      const sourceUrl = parsedUrl.searchParams.get("u")
+
+      expect(mediaItemUrl).toEqual(sourceUrl)
+      expect(
+        parsedUrl.pathname.endsWith(node.featuredImage.node.filename)
+      ).toBe(true)
+    })
   })
 })

@@ -40,10 +40,9 @@ export function findOne<TSource, TArgs>(
     if (context.stats) {
       context.stats.totalRunQuery++
     }
-    return context.nodeModel.runQuery(
+    return context.nodeModel.findOne(
       {
         query: { filter: args },
-        firstOnly: true,
         type: info.schema.getType(typeName),
         stats: context.stats,
         tracer: context.tracer,
@@ -317,7 +316,7 @@ export function link<TSource, TArgs>(
     by: string
     type?: GraphQLType
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {
     by: `id`,
   },
@@ -404,25 +403,33 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const resultOrPromise = context.nodeModel.runQuery(
-      {
-        query: runQueryArgs,
-        firstOnly,
-        type,
-        stats: context.stats,
-        tracer: context.tracer,
-      },
-      { path: context.path }
-    )
-
-    // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (typeof resultOrPromise?.then === `function`) {
-      return resultOrPromise.then(result =>
-        linkResolverQueryResult(fieldValue, result, returnType)
-      )
+    if (firstOnly) {
+      return context.nodeModel
+        .findOne(
+          {
+            query: runQueryArgs,
+            type,
+            stats: context.stats,
+            tracer: context.tracer,
+          },
+          { path: context.path }
+        )
+        .then(result => linkResolverQueryResult(fieldValue, result, returnType))
     }
 
-    return linkResolverQueryResult(fieldValue, resultOrPromise, returnType)
+    return context.nodeModel
+      .findAll(
+        {
+          query: runQueryArgs,
+          type,
+          stats: context.stats,
+          tracer: context.tracer,
+        },
+        { path: context.path }
+      )
+      .then(({ entries }) =>
+        linkResolverQueryResult(fieldValue, Array.from(entries), returnType)
+      )
   }
 
   function linkResolverQueryResult(
@@ -447,7 +454,7 @@ export function link<TSource, TArgs>(
 export function fileByPath<TSource, TArgs>(
   options: {
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {},
   fieldConfig
 ): GatsbyResolver<TSource, TArgs> {
@@ -493,7 +500,7 @@ export function fileByPath<TSource, TArgs>(
     }
 
     function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
-      return context.nodeModel.runQuery({
+      return context.nodeModel.findOne({
         query: {
           filter: {
             absolutePath: {
@@ -501,7 +508,6 @@ export function fileByPath<TSource, TArgs>(
             },
           },
         },
-        firstOnly: true,
         type: `File`,
       })
     }
@@ -598,31 +604,29 @@ function getFieldNodeByNameInSelectionSet(
   )
 }
 
-export const defaultFieldResolver: GatsbyResolver<
-  any,
-  any
-> = function defaultFieldResolver(source, args, context, info) {
-  if (
-    (typeof source == `object` && source !== null) ||
-    typeof source === `function`
-  ) {
-    if (info.from) {
-      if (info.fromNode) {
-        const node = context.nodeModel.findRootNodeAncestor(source)
-        if (!node) return null
-        return getValueAt(node, info.from)
+export const defaultFieldResolver: GatsbyResolver<any, any> =
+  function defaultFieldResolver(source, args, context, info) {
+    if (
+      (typeof source == `object` && source !== null) ||
+      typeof source === `function`
+    ) {
+      if (info.from) {
+        if (info.fromNode) {
+          const node = context.nodeModel.findRootNodeAncestor(source)
+          if (!node) return null
+          return getValueAt(node, info.from)
+        }
+        return getValueAt(source, info.from)
       }
-      return getValueAt(source, info.from)
+      const property = source[info.fieldName]
+      if (typeof property === `function`) {
+        return source[info.fieldName](args, context, info)
+      }
+      return property
     }
-    const property = source[info.fieldName]
-    if (typeof property === `function`) {
-      return source[info.fieldName](args, context, info)
-    }
-    return property
-  }
 
-  return null
-}
+    return null
+  }
 
 let WARNED_ABOUT_RESOLVERS = false
 function badResolverInvocationMessage(missingVar: string, path?: Path): string {
@@ -643,7 +647,11 @@ export function wrappingResolver<TSource, TArgs>(
   //       it does not return a promise and this makes a significant difference at scale.
   //       GraphQL will gracefully handle the resolver result of a promise or non-promise.
 
-  return function wrappedTracingResolver(
+  if (resolver[`isTracingResolver`]) {
+    return resolver
+  }
+
+  const wrappedTracingResolver = function wrappedTracingResolver(
     parent,
     args,
     context,
@@ -660,6 +668,7 @@ export function wrappingResolver<TSource, TArgs>(
     }
 
     let activity
+    let time
     if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
@@ -667,13 +676,23 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
+    if (context?.telemetryResolverTimings) {
+      time = process.hrtime.bigint()
+    }
+
     const result = resolver(parent, args, context, info)
 
-    if (!activity) {
+    if (!activity && !time) {
       return result
     }
 
     const endActivity = (): void => {
+      if (context?.telemetryResolverTimings) {
+        context.telemetryResolverTimings.push({
+          name: `${info.parentType}.${info.fieldName}`,
+          duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,
+        })
+      }
       if (activity) {
         activity.end()
       }
@@ -685,6 +704,10 @@ export function wrappingResolver<TSource, TArgs>(
     }
     return result
   }
+
+  wrappedTracingResolver.isTracingResolver = true
+
+  return wrappedTracingResolver
 }
 
 export const defaultResolver = wrappingResolver(defaultFieldResolver)

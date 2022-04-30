@@ -8,6 +8,7 @@ export const BUILD_CSS_STAGE = `build-css`
 export const HEADERS_FILENAME = `_headers.json`
 export const REDIRECTS_FILENAME = `_redirects.json`
 export const PUBLIC_FUNCTIONS_FILENAME = `_functions.json`
+export const SITE_CONFIG_FILENAME = `_gatsby-config.json`
 export const CACHE_FUNCTIONS_FILENAME = `manifest.json`
 
 export const DEFAULT_OPTIONS = {
@@ -21,10 +22,10 @@ export const DEFAULT_OPTIONS = {
 
 export const SECURITY_HEADERS = {
   "/*": [
-    `X-Frame-Options: DENY`,
     `X-XSS-Protection: 1; mode=block`,
     `X-Content-Type-Options: nosniff`,
     `Referrer-Policy: same-origin`,
+    `X-Frame-Options: DENY`,
   ],
 }
 
@@ -43,3 +44,9 @@ export const COMMON_BUNDLES = [`commons`, `app`]
 export const PAGE_DATA_DIR = `page-data/`
 
 export const POLLING_INTERVAL = 5000
+
+export const FEEDBACK_COOKIE_NAME = `last_feedback`
+export const DAYS_BEFORE_FEEDBACK = 30
+export const INTERACTION_COOKIE_NAME = `interaction_count`
+export const INTERACTIONS_BEFORE_FEEDBACK = 3
+export const FEEDBACK_URL = `https://gatsby.dev/zrx`

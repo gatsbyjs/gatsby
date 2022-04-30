@@ -66,6 +66,7 @@ exports.onCreateWebpackConfig = (
         ? `{}`
         : JSON.stringify(options.offlineAnalyticsConfig)
       : false,
+    __cypressSupport: !!process.env.CYPRESS_SUPPORT,
   }
 
   webpackConfig.plugins.push(

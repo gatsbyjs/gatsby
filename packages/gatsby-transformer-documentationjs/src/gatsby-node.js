@@ -42,7 +42,7 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
   return descriptionNode
 }
 
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node

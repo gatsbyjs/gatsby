@@ -2,7 +2,7 @@
 
 ## Code Contributions
 
-Refer to the [main Gatsby docs on code contributions](https://www.gatsbyjs.com/contributing/setting-up-your-local-dev-environment/) to get started. The gist of it is that you'll run `gatsby-dev-cli` in one terminal window, which will copy changed files into your development Gatsby site, and in another terminal window you'll run `gatsby develop` to see your changes in action. Make sure you run `yarn bootstrap` in the root of this repo first, though.
+Refer to the [main Gatsby docs on code contributions](https://www.gatsbyjs.com/contributing/code-contributions#setting-up-your-local-dev-environment/) to get started. The gist of it is that you'll run `gatsby-dev-cli` in one terminal window, which will copy changed files into your development Gatsby site, and in another terminal window you'll run `gatsby develop` to see your changes in action. Make sure you run `yarn bootstrap` in the root of this repo first, though.
 
 ## Plugin Architecture
 

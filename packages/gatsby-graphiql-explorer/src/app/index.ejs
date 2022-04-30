@@ -2,16 +2,14 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>GraphiQL</title>
+    <title>Gatsby - GraphiQL</title>
     <meta name="robots" content="noindex" />
     <meta name="referrer" content="origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <%= htmlWebpackPlugin.tags.headTags %>
   </head>
   <body>
     <div id="root" class="graphiql-container">Loading...</div>
-    <script
-      type="text/javascript"
-      src="/___graphql/<%= htmlWebpackPlugin.files.chunks.main.entry %>?<%= htmlWebpackPlugin.files.chunks.main.hash %>"
-    ></script>
+    <%= htmlWebpackPlugin.tags.bodyTags %>
   </body>
 </html>

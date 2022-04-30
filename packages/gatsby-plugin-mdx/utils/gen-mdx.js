@@ -112,8 +112,8 @@ export const _frontmatter = ${JSON.stringify(data)}`
    *   cache
    * }); */
 
-  const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
-    {
+  const gatsbyRemarkPluginsAsremarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode: node,
       //          files,
@@ -128,8 +128,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
         generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
-    }
-  )
+    })
 
   debug(`running mdx`)
   const code = await mdx(content, {
@@ -213,8 +212,8 @@ async function findImports({
 }) {
   const { content } = grayMatter(node.rawBody)
 
-  const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
-    {
+  const gatsbyRemarkPluginsAsremarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode: node,
       getNode,
@@ -228,8 +227,7 @@ async function findImports({
         generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
-    }
-  )
+    })
 
   const compilerOptions = {
     filepath: node.fileAbsolutePath,
@@ -293,8 +291,8 @@ async function findImportsExports({
 }) {
   const { data: frontmatter, content } = grayMatter(rawInput)
 
-  const gatsbyRemarkPluginsAsRemarkPlugins = await getSourcePluginsAsRemarkPlugins(
-    {
+  const gatsbyRemarkPluginsAsRemarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode,
       getNode,
@@ -308,8 +306,7 @@ async function findImportsExports({
         generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
-    }
-  )
+    })
 
   const compilerOptions = {
     filepath: absolutePath,

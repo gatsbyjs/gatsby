@@ -10,7 +10,8 @@ import {
   emitter,
   loadPartialStateFromDisk,
 } from "../../../redux"
-import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
+import { loadConfig } from "../../../bootstrap/load-config"
+import { loadPlugins } from "../../../bootstrap/load-plugins"
 import {
   createTestWorker,
   describeWhenLMDB,
@@ -21,6 +22,7 @@ import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
 import { runQueriesInWorkersQueue } from "../pool"
 import { readPageQueryResult } from "../../page-data"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -42,6 +44,15 @@ jest.mock(`chokidar`, () => {
   }
 
   return chokidar
+})
+
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
+  }
 })
 
 const dummyKeys = `a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z`.split(
@@ -116,7 +127,11 @@ describeWhenLMDB(`worker (queries)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
-    await loadConfigAndPlugins({ siteDirectory })
+    await compileGatsbyFiles(siteDirectory)
+    const config = await loadConfig({
+      siteDirectory,
+    })
+    await loadPlugins(config, siteDirectory)
     await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
     await getDataStore().ready()
@@ -184,6 +199,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should save worker "queries" state to disk`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueriesDependencies())
     // Pass "1" as workerId as the test only have one worker
@@ -226,6 +242,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should execute static queries`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
@@ -245,6 +262,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should execute page queries`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
@@ -253,7 +271,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/foo`
     )
 
-    expect(pageQueryResult.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -263,7 +281,9 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should execute page queries with context variables`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
+    await Promise.all(worker.all.saveQueriesDependencies())
     const stateFromWorker = await worker.single.getState()
 
     const pageQueryResult = await readPageQueryResult(
@@ -271,7 +291,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/bar`
     )
 
-    expect(pageQueryResult.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
         default: `You are not cool`,
         fieldWithArg: `You are cool`,
@@ -285,7 +305,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     const spy = jest.spyOn(worker.single, `runQueries`)
 
     // @ts-ignore - worker is defined
-    await runQueriesInWorkersQueue(worker, queryIdsBig, 10)
+    await runQueriesInWorkersQueue(worker, queryIdsBig, { chunkSize: 10 })
     const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a
@@ -294,7 +314,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/a`
     )
 
-    expect(pageQueryResultA.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResultA).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -305,7 +325,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/z`
     )
 
-    expect(pageQueryResultZ.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResultZ).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -335,6 +355,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   })
 
   it(`should return actions occurred in worker to replay in the main process`, async () => {
+    await Promise.all(worker.all.setComponents())
     const result = await worker.single.runQueries(queryIdsSmall)
 
     const expectedActionShapes = {

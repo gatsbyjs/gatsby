@@ -45,7 +45,7 @@ If no parameters are passed, they return a random node of that type (if any exis
 
 Gatsby uses a common pattern in GraphQL called [Connections](https://relay.dev/graphql/connections.htm). This pattern has nothing to do with connecting anything, but rather is an abstraction over pagination. When you query a connection, you get a slice of the resulting data based on passed `skip` and `limit` parameters. It also allows doing additional operations on a list, like doing grouping or distinct operations.
 
-- `edges` - edge is the actual Node object together with additional metadata regarding it's location in the page. `edge` contains `node` - the actual object, and `next`/`prev` objects to get next or previous object from the current one.
+- `edges` - edge is the actual Node object together with additional metadata regarding its location in the page. `edge` contains `node` - the actual object, and `next`/`prev` objects to get next or previous object from the current one.
 - `nodes` - a flat list of Node objects
 - `pageInfo` - additional pagination metadata
 - `pageInfo.totalCount` - (also available as `totalCount` number of all nodes that match the filter, before pagination

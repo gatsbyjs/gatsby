@@ -28,7 +28,7 @@ export interface IIndexMetadata {
   }
 }
 
-export const undefinedSymbol = Symbol(`undef`)
+export const undefinedSymbol = Symbol.for(`undef`)
 
 export type IndexFieldValue =
   | number

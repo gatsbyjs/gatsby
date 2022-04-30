@@ -34,11 +34,14 @@ jest.mock(
 )
 
 jest.mock(
-  `$virtual/sync-requires`,
+  `$virtual/async-requires`,
   () => {
     return {
       components: {
-        "page-component---src-pages-test-js": () => null,
+        "page-component---src-pages-test-js": () =>
+          Promise.resolve({
+            default: () => null,
+          }),
       },
     }
   },
@@ -60,19 +63,18 @@ jest.mock(
 const pageDataMock = {
   componentChunkName: `page-component---src-pages-test-js`,
   path: `/about/`,
-  webpackCompilationHash: `1234567890abcdef1234`,
   staticQueryHashes: [],
 }
+
+const webpackCompilationHash = `1234567890abcdef1234`
 
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
-  [join(
-    process.cwd(),
-    `/public/page-data/about/page-data.json`
-  )]: JSON.stringify(pageDataMock),
+  [join(process.cwd(), `/public/page-data/about/page-data.json`)]:
+    JSON.stringify(pageDataMock),
   [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
-    webpackCompilationHash: `1234567890abcdef1234`,
+    webpackCompilationHash,
   }),
 }
 
@@ -172,11 +174,10 @@ const SSR_DEV_MOCK_FILE_INFO = {
   [join(publicDir, `page-data/about/page-data.json`)]: JSON.stringify({
     componentChunkName: `page-component---src-pages-about-js`,
     path: `/about/`,
-    webpackCompilationHash: `1234567890abcdef1234`,
     staticQueryHashes: [],
   }),
   [join(publicDir, `page-data/app-data.json`)]: JSON.stringify({
-    webpackCompilationHash: `1234567890abcdef1234`,
+    webpackCompilationHash,
   }),
 }
 
@@ -193,6 +194,7 @@ describe(`develop-static-entry`, () => {
     global.__BASE_PATH__ = ``
     global.__ASSET_PREFIX__ = ``
     global.BROWSER_ESM_ONLY = false
+    global.HAS_REACT_18 = false
   })
 
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
@@ -410,6 +412,7 @@ describe(`static-entry`, () => {
     styles: [],
     reversedStyles: [],
     reversedScripts: [],
+    webpackCompilationHash,
   }
 
   beforeEach(() => {
@@ -495,15 +498,15 @@ describe(`sanitizeComponents`, () => {
   })
 
   it(`strips assetPrefix for manifest link`, () => {
-    global.__PATH_PREFIX__ = `https://gatsbyjs.org/blog`
+    global.__PATH_PREFIX__ = `https://gatsbyjs.com/blog`
     global.__BASE_PATH__ = `/blog`
-    global.__ASSET_PREFIX__ = `https://gatsbyjs.org`
+    global.__ASSET_PREFIX__ = `https://gatsbyjs.com`
 
     const sanitizedComponents = sanitizeComponents([
       <link
         key="manifest"
         rel="manifest"
-        href="https://gatsbyjs.org/blog/manifest.webmanifest"
+        href="https://gatsbyjs.com/blog/manifest.webmanifest"
       />,
     ])
     expect(sanitizedComponents[0].props.href).toBe(`/blog/manifest.webmanifest`)

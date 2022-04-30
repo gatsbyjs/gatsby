@@ -1,4 +1,4 @@
-const webpack = require(`webpack`)
+const webpack = require(`gatsby/webpack`)
 const path = require(`path`)
 const evaluate = require(`eval`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:render-html`)
@@ -64,8 +64,10 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
                 reporter.warn(`gatsby-plugin-mdx\n` + info.warnings)
               }
 
-              const renderMdxBody = require(path.join(outputPath, `output.js`))
-                .default
+              const renderMdxBody = require(path.join(
+                outputPath,
+                `output.js`
+              )).default
 
               resolve(
                 keys.map(({ body }) =>

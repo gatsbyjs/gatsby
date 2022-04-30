@@ -1,12 +1,11 @@
-require(`v8-compile-cache`)
-
-const { isCI } = require(`gatsby-core-utils`)
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
-const { CacheFolderResolver } = require(`./webpack/cache-folder-resolver`)
+const { CoreJSResolver } = require(`./webpack/plugins/corejs-resolver`)
+const {
+  CacheFolderResolver,
+} = require(`./webpack/plugins/cache-folder-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -18,10 +17,14 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
-import { StaticQueryMapper } from "./webpack/static-query-mapper"
-import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
+import { StaticQueryMapper } from "./webpack/plugins/static-query-mapper"
+import { ForceCssHMRForEdgeCases } from "./webpack/plugins/force-css-hmr-for-edge-cases"
+import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
+import { shouldGenerateEngines } from "./engines-helpers"
+import { major } from "semver"
+import { ROUTES_DIRECTORY } from "../constants"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
@@ -43,14 +46,12 @@ module.exports = async (
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
-  process.env.GATSBY_BUILD_STAGE = suppliedStage
-
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
   const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
-  const { assetPrefix, pathPrefix } = store.getState().config
+  const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 
   const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
@@ -75,13 +76,16 @@ module.exports = async (
       }
     }
 
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+
     const envObject = Object.keys(parsed).reduce((acc, key) => {
       acc[key] = JSON.stringify(parsed[key])
       return acc
     }, {})
 
     const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-      if (key.match(/^GATSBY_/)) {
+      if (target === `node` || key.match(/^GATSBY_/)) {
         acc[key] = JSON.stringify(process.env[key])
       }
       return acc
@@ -122,7 +126,7 @@ module.exports = async (
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
       const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.substr(-1) === `/`) {
+      if (pubPath.slice(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
         hmrBasePath = withTrailingSlash(pubPath)
@@ -154,9 +158,12 @@ module.exports = async (
         // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
-          filename: `render-page.js`,
-          libraryTarget: `commonjs`,
+          path: directoryPath(ROUTES_DIRECTORY),
+          filename: `[name].js`,
+          chunkFilename: `[name].js`,
+          library: {
+            type: `commonjs`,
+          },
           publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
@@ -184,14 +191,15 @@ module.exports = async (
             }
       case `develop-html`:
         return {
-          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+          "render-page": process.env.GATSBY_EXPERIMENTAL_DEV_SSR
             ? directoryPath(`.cache/ssr-develop-static-entry`)
             : directoryPath(`.cache/develop-static-entry`),
         }
-      case `build-html`:
+      case `build-html`: {
         return {
-          main: directoryPath(`.cache/static-entry`),
+          "render-page": directoryPath(`.cache/static-entry`),
         }
+      }
       case `build-javascript`:
         return hasES6ModuleSupport(directory)
           ? {
@@ -219,13 +227,19 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
+        HAS_REACT_18: JSON.stringify(
+          major(require(`react-dom/package.json`).version) >= 18
+        ),
       }),
 
       plugins.virtualModules(),
       new BabelConfigItemsCacheInvalidatorPlugin(),
-    ]
+      process.env.GATSBY_WEBPACK_LOGGING?.split(`,`)?.includes(stage) &&
+        new WebpackLoggingPlugin(program.directory, report, program.verbose),
+    ].filter(Boolean)
 
     switch (stage) {
       case `develop`: {
@@ -280,6 +294,17 @@ module.exports = async (
         ])
         break
       }
+      case `develop-html`:
+      case `build-html`: {
+        // Add global fetch in node environments
+        configPlugins.push(
+          plugins.provide({
+            fetch: require.resolve(`node-fetch`),
+            "global.fetch": require.resolve(`node-fetch`),
+          })
+        )
+        break
+      }
     }
 
     return configPlugins
@@ -302,12 +327,11 @@ module.exports = async (
 
   function getMode() {
     switch (stage) {
-      case `build-javascript`:
-        return `production`
       case `develop`:
       case `develop-html`:
+        return `development`
+      case `build-javascript`:
       case `build-html`:
-        return `development` // So we don't uglify the html bundle
       default:
         return `production`
     }
@@ -503,6 +527,7 @@ module.exports = async (
   }
 
   const config = {
+    name: stage,
     // Context is the base directory for resolving the entry option.
     context: directory,
     entry: getEntry(),
@@ -525,12 +550,13 @@ module.exports = async (
 
   if (stage === `build-html` || stage === `develop-html`) {
     const [major, minor] = process.version.replace(`v`, ``).split(`.`)
-    config.target = `node12.13`
+    config.target = `node14.15`
   } else {
     config.target = [`web`, `es5`]
   }
 
   const isCssModule = module => module.type === `css/mini-extract`
+
   if (stage === `develop`) {
     config.optimization = {
       splitChunks: {
@@ -564,7 +590,19 @@ module.exports = async (
           },
         },
       },
-      minimizer: [],
+      minimize: false,
+    }
+  }
+
+  if (stage === `build-html` || stage === `develop-html`) {
+    config.optimization = {
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          defaultVendors: false,
+        },
+      },
+      minimize: false,
     }
   }
 
@@ -683,31 +721,46 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
+    // externalize react, react-dom when develop-html or build-html(when not generating engines)
+    const shouldMarkPackagesAsExternal =
+      stage === `develop-html` ||
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+
+    // tracking = build-html (when not generating engines)
+    const shouldTrackBuiltins =
+      stage === `build-html` &&
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets
     config.externalsPresets = {
-      node: stage === `build-html` ? false : true,
+      // use it only when not tracking builtins (tracking builtins provide their own fallbacks)
+      node: !shouldTrackBuiltins,
     }
+    config.externals = []
 
-    // Packages we want to externalize to save some build time
-    // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
-    // const externalList = [`common-tags`, `lodash`, `semver`, /^lodash\//]
+    if (shouldMarkPackagesAsExternal) {
+      // Packages we want to externalize to save some build time
+      // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
+      // const externalList = [`common-tags`, `lodash`, `semver`, /^lodash\//]
 
-    // Packages we want to externalize because meant to be user-provided
-    const userExternalList = [`react`, /^react-dom\//]
+      // Packages we want to externalize because meant to be user-provided
+      const userExternalList = [`react`, /^react-dom\//]
 
-    const checkItem = (item, request) => {
-      if (typeof item === `string` && item === request) {
-        return true
-      } else if (item instanceof RegExp && item.test(request)) {
-        return true
+      const checkItem = (item, request) => {
+        if (typeof item === `string` && item === request) {
+          return true
+        } else if (item instanceof RegExp && item.test(request)) {
+          return true
+        }
+
+        return false
       }
 
-      return false
-    }
-
-    config.externals = [
-      function ({ context, getResolve, request }, callback) {
+      config.externals.push(function (
+        { context, getResolve, request },
+        callback
+      ) {
         // allows us to resolve webpack aliases from our config
         // helpful for when react is aliased to preact-compat
         // Force commonjs as we're in node land
@@ -744,35 +797,37 @@ module.exports = async (
         // }
 
         callback()
-      },
-    ]
+      })
+    }
 
-    if (stage === `build-html`) {
-      const builtinModulesToTrack = [
-        `fs`,
-        `http`,
-        `http2`,
-        `https`,
-        `child_process`,
-      ]
-      const builtinsExternalsDictionary = builtinModules.reduce(
-        (acc, builtinModule) => {
-          if (builtinModulesToTrack.includes(builtinModule)) {
-            acc[builtinModule] = `commonjs ${path.join(
-              program.directory,
-              `.cache`,
-              `ssr-builtin-trackers`,
-              builtinModule
-            )}`
-          } else {
-            acc[builtinModule] = `commonjs ${builtinModule}`
-          }
-          return acc
-        },
-        {}
-      )
+    if (shouldTrackBuiltins) {
+      if (stage === `build-html`) {
+        const builtinModulesToTrack = [
+          `fs`,
+          `http`,
+          `http2`,
+          `https`,
+          `child_process`,
+        ]
+        const builtinsExternalsDictionary = builtinModules.reduce(
+          (acc, builtinModule) => {
+            if (builtinModulesToTrack.includes(builtinModule)) {
+              acc[builtinModule] = `commonjs ${path.join(
+                program.directory,
+                `.cache`,
+                `ssr-builtin-trackers`,
+                builtinModule
+              )}`
+            } else {
+              acc[builtinModule] = `commonjs ${builtinModule}`
+            }
+            return acc
+          },
+          {}
+        )
 
-      config.externals.unshift(builtinsExternalsDictionary)
+        config.externals.unshift(builtinsExternalsDictionary)
+      }
     }
   }
 
@@ -807,7 +862,11 @@ module.exports = async (
             .flattenedPlugins.filter(plugin =>
               plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
             )
-            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+            .map(
+              plugin =>
+                plugin.resolvedCompiledGatsbyNode ??
+                path.join(plugin.resolve, `gatsby-node.js`)
+            ),
         ],
       },
     }
@@ -820,6 +879,7 @@ module.exports = async (
 
   await apiRunnerNode(`onCreateWebpackConfig`, {
     getConfig,
+    // we will converge to build-html later on but for now this was the fastest way to get SSR to work
     stage,
     rules,
     loaders,
@@ -839,11 +899,17 @@ module.exports = async (
         continue
       }
 
-      const ruleLoaders = Array.isArray(rule.use)
-        ? rule.use.map(useEntry =>
+      let use = rule.use
+
+      if (typeof use === `function`) {
+        use = rule.use({})
+      }
+
+      const ruleLoaders = Array.isArray(use)
+        ? use.map(useEntry =>
             typeof useEntry === `string` ? useEntry : useEntry.loader
           )
-        : [rule.use?.loader ?? rule.loader]
+        : [use?.loader ?? rule.loader]
 
       const hasBabelLoader = ruleLoaders.some(
         loader => loader === babelLoaderLoc
@@ -861,7 +927,7 @@ module.exports = async (
       // so loader rule test work well
       const queryParamStartIndex = modulePath.indexOf(`?`)
       if (queryParamStartIndex !== -1) {
-        modulePath = modulePath.substr(0, queryParamStartIndex)
+        modulePath = modulePath.slice(0, queryParamStartIndex)
       }
 
       return fastRefreshIncludes.some(re => re.test(modulePath))

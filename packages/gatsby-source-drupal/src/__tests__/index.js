@@ -1,11 +1,24 @@
 jest.mock(`got`, () =>
   jest.fn(path => {
-    const last = path.split(`/`).pop()
+    let last = ``
+    if (path.includes(`i18n-test`)) {
+      last = `i18n-test-`
+    }
+    last += path.split(`/`).pop()
     try {
-      return { body: require(`./fixtures/${last}.json`) }
+      return { body: require(`./fixtures/${last}.json`.replace(`?`, `___`)) }
     } catch (e) {
       console.log(`Error`, e)
       return null
+    }
+  })
+)
+
+jest.mock(`probe-image-size`, () =>
+  jest.fn(() => {
+    return {
+      width: 100,
+      height: 100,
     }
   })
 )
@@ -16,12 +29,22 @@ jest.mock(`gatsby-source-filesystem`, () => {
   }
 })
 
+function makeCache() {
+  const store = new Map()
+  return {
+    get: async id => store.get(id),
+    set: async (key, value) => store.set(key, value),
+    del: async key => store.delete(key),
+    store,
+  }
+}
+
 const normalize = require(`../normalize`)
 const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const { sourceNodes } = require(`../gatsby-node`)
+const { sourceNodes, onPreBootstrap } = require(`../gatsby-node`)
 const { handleWebhookUpdate } = require(`../utils`)
 
 describe(`gatsby-source-drupal`, () => {
@@ -32,6 +55,7 @@ describe(`gatsby-source-drupal`, () => {
   const { objectContaining } = expect
   const actions = {
     createNode: jest.fn(node => (nodes[node.id] = node)),
+    deleteNode: jest.fn(node => delete nodes[node.id]),
     setPluginStatus: jest.fn(),
     touchNode: jest.fn(),
   }
@@ -47,8 +71,14 @@ describe(`gatsby-source-drupal`, () => {
   }
   const reporter = {
     info: jest.fn(),
+    warn: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: jest.fn(() => activity),
     log: jest.fn(),
+    error: console.error,
+    panic: input => {
+      throw new Error(input)
+    },
   }
   const store = {
     getState: jest.fn(() => {
@@ -68,6 +98,7 @@ describe(`gatsby-source-drupal`, () => {
     store,
     getNode: id => nodes[id],
     getNodes,
+    cache: makeCache(),
   }
 
   beforeAll(async () => {
@@ -123,6 +154,10 @@ describe(`gatsby-source-drupal`, () => {
     expect(
       nodes[createNodeId(`und.article-3`)].relationships.field_main_image___NODE
     ).toEqual(createNodeId(`und.file-1`))
+
+    expect(nodes[createNodeId(`und.paragraph-image-1`)].relationships).toEqual({
+      field_gallery___NODE: createNodeId(`und.article-2`),
+    })
   })
 
   it(`Handles 1:N relationship`, () => {
@@ -334,6 +369,26 @@ describe(`gatsby-source-drupal`, () => {
         })
       })
     })
+    describe(`multiple entities in webhook body`, () => {
+      let resp
+      beforeAll(async () => {
+        const webhookBody = require(`./fixtures/webhook-body-multiple-nodes.json`)
+        await sourceNodes(
+          {
+            ...args,
+            webhookBody,
+          },
+          { baseUrl }
+        )
+      })
+
+      it(`Relationships`, async () => {
+        expect(
+          nodes[createNodeId(`und.article-10`)].relationships.field_tags___NODE
+            .length
+        ).toBe(1)
+      })
+    })
 
     describe(`Insert content`, () => {
       it(`Node doesn't exist before webhook`, () => {
@@ -423,6 +478,67 @@ describe(`gatsby-source-drupal`, () => {
     )
   })
 
+  describe(`supports JSON:API extras meta.count to parallelize fetches`, () => {
+    it(`for non-translated content`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const apiBase = `jsonapi-meta.count`
+      await sourceNodes(args, {
+        baseUrl,
+        apiBase,
+      })
+      expect(Object.keys(nodes).length).toEqual(3)
+    })
+
+    it(`for translated content`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const apiBase = `jsonapi-meta.count-i18n`
+      const options = {
+        baseUrl,
+        apiBase,
+        languageConfig: {
+          defaultLanguage: `en_US`,
+          enabledLanguages: [`en_US`, `i18n-test`],
+          translatableEntities: [`node--article`],
+          nonTranslatableEntities: [],
+        },
+      }
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+      expect(Object.keys(nodes).length).toEqual(4)
+      expect(
+        Object.values(nodes).filter(n => n.langcode === `i18n-test`).length
+      ).toEqual(2)
+    })
+  })
+
+  describe(`Image CDN`, () => {
+    it(`should generate required Image CDN node data`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+
+      const options = {
+        baseUrl,
+        skipFileDownloads: true,
+      }
+
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+
+      const fileNode = nodes[createNodeId(`und.file-1`)]
+      expect(fileNode).toBeDefined()
+      expect(fileNode.url).toEqual(
+        `http://fixture/sites/default/files/main-image.png`
+      )
+      expect(fileNode.mimeType).toEqual(`image/png`)
+      expect(fileNode.width).toEqual(100)
+      expect(fileNode.height).toEqual(100)
+    })
+  })
+
   describe(`Fastbuilds sync`, () => {
     describe(`Before sync with expired timestamp`, () => {
       beforeAll(async () => {
@@ -430,17 +546,26 @@ describe(`gatsby-source-drupal`, () => {
         Object.keys(nodes).forEach(key => delete nodes[key])
 
         const fastBuilds = true
-        await sourceNodes(args, { baseUrl, fastBuilds })
+        const options = { baseUrl, fastBuilds }
+        await onPreBootstrap(args, options)
+        await sourceNodes(args, options)
       })
+
       it(`Attributes`, () => {
         expect(nodes[createNodeId(`und.article-3`)].title).toBe(`Article #3`)
       })
+
       it(`Relationships`, () => {
         expect(nodes[createNodeId(`und.article-3`)].relationships).toEqual({
           field_main_image___NODE: createNodeId(`und.file-1`),
           field_tags___NODE: [createNodeId(`und.tag-1`)],
         })
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_secondary_image___NODE
+        ).toEqual([createNodeId(`und.file-4`)])
       })
+
       it(`Back references`, () => {
         expect(
           nodes[createNodeId(`und.file-1`)].relationships[
@@ -472,17 +597,41 @@ describe(`gatsby-source-drupal`, () => {
         })
         await sourceNodes(args, { baseUrl, fastBuilds })
       })
+
       it(`Attributes`, () => {
         expect(nodes[createNodeId(`und.article-3`)].title).toBe(
           `Article #3 - Synced`
         )
       })
+
       it(`Relationships`, () => {
         // removed `field_main_image`, changed `field_tags`
         expect(nodes[createNodeId(`und.article-3`)].relationships).toEqual({
           field_tags___NODE: [createNodeId(`und.tag-2`)],
         })
+        expect(
+          nodes[createNodeId(`und.paragraph-image-1`)].relationships
+        ).toEqual({
+          field_gallery___NODE: createNodeId(`und.article-1`),
+        })
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_secondary_image___NODE
+        ).toBe(undefined)
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_secondary_multiple_image___NODE.length
+        ).toBe(1)
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_tertiary_image___NODE_image___NODE
+        ).toBe(undefined)
+        expect(
+          nodes[createNodeId(`und.article-10`)].relationships.field_tags___NODE
+            .length
+        ).toBe(1)
       })
+
       it(`Back references`, () => {
         // removed `field_main_image`, `file-1` no longer has back reference to `article-3`
         expect(
@@ -498,6 +647,10 @@ describe(`gatsby-source-drupal`, () => {
         expect(
           nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
         ).toContain(createNodeId(`und.article-3`))
+        // Created a new node article-9 with reference to tag-2
+        expect(
+          nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
+        ).toContain(createNodeId(`und.article-9`))
       })
     })
   })
@@ -529,7 +682,8 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch all data from Drupal`
+          `Fetch all data from Drupal`,
+          { parentSpan: undefined }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(1)
@@ -552,11 +706,13 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(2)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch all data from Drupal`
+          `Fetch all data from Drupal`,
+          { parentSpan: undefined }
         )
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           2,
-          `Remote file download`
+          `Remote file download`,
+          { parentSpan: undefined }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(2)
@@ -566,20 +722,17 @@ describe(`gatsby-source-drupal`, () => {
       it(`during refresh webhook handling`, async () => {
         expect.assertions(5)
 
-        try {
-          await sourceNodes(
-            {
-              ...args,
-              webhookBody: {
-                malformattedPayload: true,
-              },
+        await sourceNodes(
+          {
+            ...args,
+            webhookBody: {
+              malformattedPayload: true,
             },
-            { baseUrl }
-          )
-        } catch (e) {
-          expect(e).toBeTruthy()
-        }
+          },
+          { baseUrl }
+        )
 
+        expect(reporter.warn).toHaveBeenCalledTimes(2)
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
@@ -615,7 +768,8 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch incremental changes from Drupal`
+          `Fetch incremental changes from Drupal`,
+          { parentSpan: {} }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(1)

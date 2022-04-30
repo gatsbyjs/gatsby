@@ -203,6 +203,50 @@ const siteMetaQuery = \\"504726680\\";
 const query = \\"3211238532\\";"
 `;
 
+exports[`babel-plugin-remove-graphql-queries Replaces graphql query inside config with global call 1`] = `
+"import * as React from 'react';
+
+const Test = () => /*#__PURE__*/React.createElement(\\"div\\", null);
+
+export default Test;
+export async function config() {
+  const data = await global.__gatsbyGraphql(\`{ __typename }\`);
+  return () => {
+    return {
+      defer: true
+    };
+  };
+}"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Replaces graphql query inside config with global call 2`] = `
+"\\"use strict\\";
+
+exports.__esModule = true;
+exports.config = config;
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const Test = () => /*#__PURE__*/React.createElement(\\"div\\", null);
+
+var _default = Test;
+exports.default = _default;
+
+async function config() {
+  const data = await global.__gatsbyGraphql(\`{ __typename }\`);
+  return () => {
+    return {
+      defer: true
+    };
+  };
+}"
+`;
+
 exports[`babel-plugin-remove-graphql-queries Transformation does not break custom hooks 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import React from \\"react\\";

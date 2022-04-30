@@ -19,7 +19,7 @@ export const writeRedirects = async (): Promise<void> => {
 
   for (const redirect of redirects) {
     const alternativePath = redirect.fromPath.endsWith(`/`)
-      ? redirect.fromPath.substr(0, redirect.fromPath.length - 1)
+      ? redirect.fromPath.slice(0, -1)
       : redirect.fromPath + `/`
 
     let hasSamePage: boolean
@@ -47,7 +47,7 @@ export const writeRedirects = async (): Promise<void> => {
 
   if (redirectMatchingPageWarnings.length > 0) {
     reporter.warn(
-      `There are routes that match both page and redirect. It will result in page not being accessible; this is probably not intentional:\n${redirectMatchingPageWarnings.join(
+      `There are routes that match both page and redirect. Pages take precedence over redirects so the redirect will not work:\n${redirectMatchingPageWarnings.join(
         `\n`
       )}`
     )

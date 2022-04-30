@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`develop dynamic routes param routes 1`] = `
+Object {
+  "super": "additional",
+  "userId": "23",
+}
+`;
+
+exports[`develop dynamic routes unnamed wildcard routes 1`] = `
+Object {
+  "*": "super",
+  "0": "super",
+}
+`;
+
 exports[`develop functions can parse different ways of sending data file in multipart/form 1`] = `
 Array [
   Object {
@@ -90,35 +104,22 @@ Object {
 }
 `;
 
-exports[`develop routing dynamic routes 1`] = `
-Object {
-  "super": "additional",
-  "userId": "23",
-}
-`;
+exports[`develop routes with special characters 1`] = `"I-Am-Capitalized.js"`;
 
-exports[`develop routing dynamic routes 2`] = `
-Object {
-  "0": "super",
-}
-`;
+exports[`develop routes with special characters 2`] = `"some whitespace.js"`;
 
-exports[`develop routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
+exports[`develop routes with special characters 3`] = `"with-äöü-umlaut.js"`;
 
-exports[`develop routing routes with special characters 2`] = `"some whitespace.js"`;
+exports[`develop routes with special characters 4`] = `"some-àè-french.js"`;
 
-exports[`develop routing routes with special characters 3`] = `"with-äöü-umlaut.js"`;
+exports[`develop routes with special characters 5`] = `"some-אודות.js"`;
 
-exports[`develop routing routes with special characters 4`] = `"some-àè-french.js"`;
+exports[`develop secondary-level API 1`] = `"I am at a secondary-level"`;
 
-exports[`develop routing routes with special characters 5`] = `"some-אודות.js"`;
+exports[`develop secondary-level API 2`] = `"I am another sub-directory function"`;
 
-exports[`develop routing secondary-level API 1`] = `"I am at a secondary-level"`;
+exports[`develop secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
 
-exports[`develop routing secondary-level API 2`] = `"I am another sub-directory function"`;
-
-exports[`develop routing secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
-
-exports[`develop routing top-level API 1`] = `"I am at the top-level"`;
+exports[`develop top-level API 1`] = `"I am at the top-level"`;
 
 exports[`develop typescript typescript functions work 1`] = `"I am typescript"`;

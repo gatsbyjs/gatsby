@@ -3,13 +3,31 @@ import { testPluginOptionsSchema, Joi } from "gatsby-plugin-utils"
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
-    const expectedErrors = [`"wrong" is not allowed`]
+    const expectedErrors = [`"output" must be a string`]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      wrong: `test`,
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        output: 123,
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
+  })
+
+  it(`should provide warning for deprecated "exclude" option`, async () => {
+    const expectedWarnings = [`"exclude" is not allowed`]
+
+    const { warnings, hasWarnings } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        exclude: [`test`],
+      }
+    )
+
+    expect(hasWarnings).toBe(true)
+    expect(warnings).toEqual(expectedWarnings)
   })
 
   it(`creates correct defaults`, async () => {
@@ -36,7 +54,7 @@ describe(`pluginOptionsSchema`, () => {
     ${undefined}
     ${{}}
   `(`should validate the schema: $options`, async ({ options }) => {
-    const { isValid } = await testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )

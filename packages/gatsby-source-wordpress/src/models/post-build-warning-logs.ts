@@ -8,13 +8,13 @@ interface IPostBuildWarningLogState {
   [StateKey.maxFileSizeBytesExceeded]: number
 }
 
-const incrementReducerCreator = (stateKey: StateKey) => (
-  state: IPostBuildWarningLogState
-): IPostBuildWarningLogState => {
-  state[stateKey]++
+const incrementReducerCreator =
+  (stateKey: StateKey) =>
+  (state: IPostBuildWarningLogState): IPostBuildWarningLogState => {
+    state[stateKey]++
 
-  return state
-}
+    return state
+  }
 
 const postBuildWarningCounts = {
   state: {

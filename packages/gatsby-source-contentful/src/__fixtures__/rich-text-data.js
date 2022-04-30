@@ -1,3 +1,61 @@
+exports.contentTypeItems = () => [
+  {
+    sys: {
+      space: {
+        sys: {
+          type: `Link`,
+          linkType: `Space`,
+          id: `ahntqop9oi7x`,
+        },
+      },
+      id: `page`,
+      type: `ContentType`,
+      createdAt: `2020-10-16T11:43:48.221Z`,
+      updatedAt: `2020-10-16T11:44:25.392Z`,
+      environment: {
+        sys: {
+          id: `master`,
+          type: `Link`,
+          linkType: `Environment`,
+        },
+      },
+      revision: 2,
+    },
+    displayField: `title`,
+    name: `Page`,
+    description: ``,
+    fields: [
+      {
+        id: `title`,
+        name: `Title`,
+        type: `Symbol`,
+        localized: false,
+        required: false,
+        disabled: false,
+        omitted: false,
+      },
+      {
+        id: `slug`,
+        name: `Slug`,
+        type: `Symbol`,
+        localized: false,
+        required: true,
+        disabled: false,
+        omitted: false,
+      },
+      {
+        id: `content`,
+        name: `Content`,
+        type: `RichText`,
+        localized: true,
+        required: false,
+        disabled: false,
+        omitted: false,
+      },
+    ],
+  },
+]
+
 exports.initialSync = () => {
   return {
     currentSyncData: {
@@ -692,63 +750,7 @@ exports.initialSync = () => {
       deletedAssets: [],
       nextSyncToken: `FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CmxolIsOxF10EMMOGCXM-IFrCrhc0LUPDvkjDkms7w5gLw4sqw4_CvxsiZMOFFsOawpM8R8OVPAhMJ8O1w6zCmg`,
     },
-    contentTypeItems: [
-      {
-        sys: {
-          space: {
-            sys: {
-              type: `Link`,
-              linkType: `Space`,
-              id: `ahntqop9oi7x`,
-            },
-          },
-          id: `page`,
-          type: `ContentType`,
-          createdAt: `2020-10-16T11:43:48.221Z`,
-          updatedAt: `2020-10-16T11:44:25.392Z`,
-          environment: {
-            sys: {
-              id: `master`,
-              type: `Link`,
-              linkType: `Environment`,
-            },
-          },
-          revision: 2,
-        },
-        displayField: `title`,
-        name: `Page`,
-        description: ``,
-        fields: [
-          {
-            id: `title`,
-            name: `Title`,
-            type: `Symbol`,
-            localized: false,
-            required: false,
-            disabled: false,
-            omitted: false,
-          },
-          {
-            id: `slug`,
-            name: `Slug`,
-            type: `Symbol`,
-            localized: false,
-            required: true,
-            disabled: false,
-            omitted: false,
-          },
-          {
-            id: `content`,
-            name: `Content`,
-            type: `RichText`,
-            localized: true,
-            required: false,
-            disabled: false,
-            omitted: false,
-          },
-        ],
-      },
-    ],
+
     defaultLocale: `en-US`,
     locales: [
       {
@@ -792,6 +794,8 @@ exports.initialSync = () => {
     tagItems: [],
   }
 }
+
+// @todo this fixture is unused
 exports.deleteLinkedPage = () => {
   return {
     currentSyncData: {
@@ -826,63 +830,6 @@ exports.deleteLinkedPage = () => {
       deletedAssets: [],
       nextSyncToken: `FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw3CqcO3w6XCrMKuITDDiEoQSMKvIMOYwrzCn3sHPH3CvsK3w4A9w6LCjsOVwrjCjGwbw4rCl0fDl8OhU8Oqw67DhMOCwozDmxrChsOtRD4`,
     },
-    contentTypeItems: [
-      {
-        sys: {
-          space: {
-            sys: {
-              type: `Link`,
-              linkType: `Space`,
-              id: `ahntqop9oi7x`,
-            },
-          },
-          id: `page`,
-          type: `ContentType`,
-          createdAt: `2020-10-16T11:43:48.221Z`,
-          updatedAt: `2020-10-16T11:44:25.392Z`,
-          environment: {
-            sys: {
-              id: `master`,
-              type: `Link`,
-              linkType: `Environment`,
-            },
-          },
-          revision: 2,
-        },
-        displayField: `title`,
-        name: `Page`,
-        description: ``,
-        fields: [
-          {
-            id: `title`,
-            name: `Title`,
-            type: `Symbol`,
-            localized: false,
-            required: false,
-            disabled: false,
-            omitted: false,
-          },
-          {
-            id: `slug`,
-            name: `Slug`,
-            type: `Symbol`,
-            localized: false,
-            required: true,
-            disabled: false,
-            omitted: false,
-          },
-          {
-            id: `content`,
-            name: `Content`,
-            type: `RichText`,
-            localized: true,
-            required: false,
-            disabled: false,
-            omitted: false,
-          },
-        ],
-      },
-    ],
     defaultLocale: `en-US`,
     locales: [
       {

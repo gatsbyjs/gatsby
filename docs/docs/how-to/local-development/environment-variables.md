@@ -87,11 +87,11 @@ export default App
 
 Environment variable files should not be committed to Git as they often contain secrets
 which are not safe to add to Git. Instead, add `.env.*` to your `.gitignore` file and
-setup the environment variables manually on Gatsby Cloud and locally.
+set up the environment variables manually on Gatsby Cloud and locally.
 
 ## Environment variables on Gatsby Cloud
 
-In Gatsby Cloud you can configure environment variables in each site's "Site Settings".
+In Gatsby Cloud you can configure environment variables in each site's "Site Settings". You can read more about [managing environment variables in Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360053096753-Managing-Environment-Variables) and [environment variables specific to Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052322954-Environment-Variables-Specific-to-Gatsby-Cloud).
 
 ## Additional Environments (Staging, Test, etc.)
 

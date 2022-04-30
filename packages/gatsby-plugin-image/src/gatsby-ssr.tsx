@@ -21,6 +21,9 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     position: relative;
     overflow: hidden;
   }
+  .gatsby-image-wrapper picture.object-fit-polyfill {
+    position: static !important;
+  }
   .gatsby-image-wrapper img {
     bottom: 0;
     height: 100%;

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const { onRouteUpdate } = require(`../gatsby-browser`)
 
 describe(`gatsby-plugin-canonical-urls`, () => {

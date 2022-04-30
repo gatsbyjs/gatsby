@@ -21,7 +21,7 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Available options
 
-In `gatsby-plugin-offline` 5.x, the following options are available:
+In `gatsby-plugin-offline` 3.x, the following options are available:
 
 - `precachePages` lets you specify pages whose resources should be precached by the service worker, using an array of globs. For example:
 

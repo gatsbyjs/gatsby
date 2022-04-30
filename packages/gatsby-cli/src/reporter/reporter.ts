@@ -1,7 +1,7 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
-import { globalTracer, Span } from "opentracing"
+import { globalTracer, Span, SpanContext } from "opentracing"
 
 import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
@@ -13,7 +13,16 @@ import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
 import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter, IProgressReporter } from "./reporter-progress"
-import { ErrorMeta, CreateLogAction, ILogIntent } from "./types"
+import {
+  ErrorMeta,
+  CreateLogAction,
+  ILogIntent,
+  IRenderPageArgs,
+} from "./types"
+import {
+  registerAdditionalDiagnosticOutputHandler,
+  AdditionalDiagnosticsOutputHandler,
+} from "./redux/diagnostics"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
@@ -22,7 +31,7 @@ let reporterActions = reduxReporterActions
 
 export interface IActivityArgs {
   id?: string
-  parentSpan?: Span
+  parentSpan?: Span | SpanContext
   tags?: { [key: string]: any }
 }
 
@@ -148,9 +157,9 @@ class Reporter {
       //    reporter.error([Error]);
     } else if (Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
-      return errorMeta.map(errorItem => this.error(errorItem)) as Array<
-        IStructuredError
-      >
+      return errorMeta.map(errorItem =>
+        this.error(errorItem)
+      ) as Array<IStructuredError>
       // 4.
       //    reporter.error(errorMeta);
     } else if (typeof errorMeta === `object`) {
@@ -341,6 +350,16 @@ class Reporter {
         )
       }
     })
+  }
+
+  _renderPageTree(args: IRenderPageArgs): void {
+    reporterActions.renderPageTree(args)
+  }
+
+  _registerAdditionalDiagnosticOutputHandler(
+    handler: AdditionalDiagnosticsOutputHandler
+  ): void {
+    registerAdditionalDiagnosticOutputHandler(handler)
   }
 }
 export type { Reporter }

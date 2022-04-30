@@ -1,12 +1,6 @@
 import { Node } from "gatsby"
-import {
-  getSrc,
-  getSrcSet,
-  getImage,
-  IGatsbyImageData,
-  IGetImageDataArgs,
-} from "../../"
-import { getImageData } from "../hooks"
+import { getImageData, getSrc, getSrcSet, getImage } from "../hooks"
+import type { IGatsbyImageData, IGetImageDataArgs } from "../../"
 
 const imageData: IGatsbyImageData = {
   images: {
@@ -166,11 +160,11 @@ describe(`The image helper functions`, () => {
     })
 
     it(`returns undefined when passed a number`, () => {
-      expect(getImage((1 as any) as Node)).toBeUndefined()
+      expect(getImage(1 as any as Node)).toBeUndefined()
     })
 
     it(`returns undefined when passed undefined`, () => {
-      expect(getImage((undefined as any) as Node)).toBeUndefined()
+      expect(getImage(undefined as any as Node)).toBeUndefined()
     })
   })
 
@@ -191,11 +185,11 @@ describe(`The image helper functions`, () => {
       expect(getSrc(node)).toBeUndefined()
     })
     it(`returns undefined when passed undefined`, () => {
-      expect(getSrc((undefined as any) as Node)).toBeUndefined()
+      expect(getSrc(undefined as any as Node)).toBeUndefined()
     })
 
     it(`returns undefined when passed a number`, () => {
-      expect(getSrc((1 as any) as Node)).toBeUndefined()
+      expect(getSrc(1 as any as Node)).toBeUndefined()
     })
   })
 
@@ -217,11 +211,11 @@ describe(`The image helper functions`, () => {
     })
 
     it(`returns undefined when passed undefined`, () => {
-      expect(getSrcSet((undefined as any) as Node)).toBeUndefined()
+      expect(getSrcSet(undefined as any as Node)).toBeUndefined()
     })
 
     it(`returns undefined when passed a number`, () => {
-      expect(getSrcSet((1 as any) as Node)).toBeUndefined()
+      expect(getSrcSet(1 as any as Node)).toBeUndefined()
     })
   })
 })

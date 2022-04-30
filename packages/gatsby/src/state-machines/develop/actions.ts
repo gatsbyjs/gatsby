@@ -57,13 +57,28 @@ export const markQueryFilesDirty = assign<IBuildContext>({
   queryFilesDirty: true,
 })
 
-export const markSourceFilesDirty = assign<IBuildContext>({
-  sourceFilesDirty: true,
-})
+export const markSourceFilesDirty = assign<IBuildContext, AnyEventObject>(
+  (context, event) => {
+    const prev = context.changedSourceFiles ?? new Set()
+    return {
+      sourceFilesDirty: true,
+      changedSourceFiles: prev.add(event.payload ?? event.file),
+    }
+  }
+)
 
 export const markSourceFilesClean = assign<IBuildContext>({
   sourceFilesDirty: false,
+  changedSourceFiles: () => new Set(),
 })
+
+export const setRecompiledFiles = assign<IBuildContext, AnyEventObject>(
+  context => {
+    return {
+      recompiledFiles: context.changedSourceFiles,
+    }
+  }
+)
 
 export const markNodesDirty = assign<IBuildContext>({
   nodesMutatedDuringQueryRun: true,
@@ -99,6 +114,7 @@ export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
  * This spawns the service that listens to the `emitter` for various mutation events
  */
 export const spawnMutationListener = assign<IBuildContext>({
+  // @ts-ignore - TODO: Fixing this seems more involved: https://xstate.js.org/docs/guides/typescript.html#troubleshooting & https://github.com/statelyai/xstate/issues/2664
   mutationListener: () => spawn(listenForMutations, `listen-for-mutations`),
 })
 
@@ -111,6 +127,7 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
 )
 
 export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
+  // @ts-ignore - TODO: Fixing this seems more involved: https://xstate.js.org/docs/guides/typescript.html#troubleshooting & https://github.com/statelyai/xstate/issues/2664
   webpackListener: ({ compiler }) => {
     if (!compiler) {
       return undefined
@@ -191,6 +208,7 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   spawnWebpackListener,
   markSourceFilesDirty,
   markSourceFilesClean,
+  setRecompiledFiles,
   markNodesClean,
   incrementRecompileCount,
   resetRecompileCount,

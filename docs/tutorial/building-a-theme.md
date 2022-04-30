@@ -2,13 +2,13 @@
 title: Building a Theme
 ---
 
-In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring).
+In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring). **Note:** The video instructions are slightly outdated at times, thus the written instructions here are the source of truth.
 
 ## Set up yarn workspaces
 
 In this section, you'll learn how to structure folders and configure yarn workspaces to develop Gatsby themes. You'll create two workspaces, `gatsby-theme-events` and `site`.
 
-Each workspace can be run separately, as well as one depending on the other. In this example, `gatsby-theme-events` will be a dependency of `site`.
+In this example, `gatsby-theme-events` will be a dependency of `site` so you'll run `site` to see everything working.
 
 ### Create a new empty folder
 
@@ -47,12 +47,7 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
   "name": "gatsby-theme-events",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "clean": "gatsby clean",
-    "develop": "gatsby develop"
-  }
+  "license": "MIT"
 }
 ```
 
@@ -154,19 +149,30 @@ The `gatsby-theme-events/package.json` file should now include the following:
 }
 ```
 
-### Run `site` and `gatsby-theme-events`
+### Set up `site/gatsby-config.js`
 
-Run both `site` and `gatsby-theme-events` to verify that they're working.
+Create a `gatsby-config.js` file inside `site`:
+
+```javascript:title=site/gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-theme-events",
+      options: {},
+    },
+  ],
+}
+```
+
+### Run `site`
+
+Run `site` to verify that it's working.
 
 ```shell
 yarn workspace site develop
 ```
 
-```shell
-yarn workspace gatsby-theme-events develop
-```
-
-In both cases, you should see a Gatsby site successfully running in development mode. Since there's no content, visiting the site should serve a default Gatsby 404 page.
+You should see a Gatsby site successfully running in development mode. Since there's no content, visiting the site should serve a default Gatsby 404 page.
 
 ## Add static data to a theme
 
@@ -231,10 +237,10 @@ module.exports = {
 }
 ```
 
-With this saved, restart the dev server:
+With this saved, restart the development server:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 Open up the GraphiQL explorer for the site, and make a test query on `allEvent`:
@@ -467,10 +473,10 @@ exports.createResolvers = ({ createResolvers }) => {
 
 > 💡 The resolver function receives the `source`, which in this case is the `Event` node.
 
-Test that this is working by running `gatsby-theme-events` again:
+Test that this is working by running `site` again:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 If you query this time for `allEvent`, you'll see the `Event` data, including the new slugs:
@@ -613,10 +619,10 @@ export default EventTemplate
 
 ### Test that pages are building
 
-To test that the root path (`"/"`) and individual event pages are building successfully, run `gatsby-theme-events` in develop mode again:
+To test that the root path (`"/"`) and individual event pages are building successfully, run `site` in develop mode again:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 You should see the placeholder `events.js` component at `http://localhost:8000/`.
@@ -1036,13 +1042,13 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 
 Note that the example above sets default values for `options`. This behavior was also included in the prior `gatsby-config.js` example. You only need to set default values once, but both mechanisms for doing so are valid.
 
-> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because you've converted the theme to use a function export, you can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
+> 💡 The function export in `gatsby-config.js` is only supported for themes. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
 
-### Set up `site/gatsby-config.js`
+### Update `site/gatsby-config.js`
 
-Create a `gatsby-config.js` file inside `site`:
+Update the `gatsby-config.js` file inside `site`:
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {

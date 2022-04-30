@@ -1,13 +1,15 @@
 import Joi from "joi"
 import { ILocationPosition, IStructuredError } from "./types"
 
-export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object().keys({
-  line: Joi.number(),
-  column: Joi.number(),
-})
+export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object()
+  .keys({
+    line: Joi.number(),
+    column: Joi.number(),
+  })
+  .unknown()
 
-export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys(
-  {
+export const errorSchema: Joi.ObjectSchema<IStructuredError> =
+  Joi.object().keys({
     code: Joi.string(),
     text: Joi.string(),
     stack: Joi.array()
@@ -22,12 +24,18 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
       .allow(null),
     category: Joi.string().valid(`USER`, `SYSTEM`, `THIRD_PARTY`),
     level: Joi.string().valid(`ERROR`, `WARNING`, `INFO`, `DEBUG`),
-    type: Joi.string().valid(`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`),
+    type: Joi.string().valid(
+      `GRAPHQL`,
+      `CONFIG`,
+      `WEBPACK`,
+      `PLUGIN`,
+      `COMPILATION`
+    ),
     filePath: Joi.string(),
     location: Joi.object({
       start: Position.required(),
       end: Position,
-    }),
+    }).unknown(),
     docsUrl: Joi.string().uri({
       allowRelative: false,
       relativeOnly: false,
@@ -37,5 +45,4 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     group: Joi.string(),
     panicOnBuild: Joi.boolean(),
     pluginName: Joi.string(),
-  }
-)
+  })

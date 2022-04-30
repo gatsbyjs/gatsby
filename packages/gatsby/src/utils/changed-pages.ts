@@ -17,8 +17,7 @@ export function deleteUntouchedPages(
     if (
       (shouldRunCreatePagesStatefully ||
         !page.isCreatedByStatefulCreatePages) &&
-      page.updatedAt < timeBeforeApisRan &&
-      page.path !== `/404.html`
+      page.updatedAt < timeBeforeApisRan
     ) {
       store.dispatch(deletePage(page))
       deletedPages.push(page.path, `/page-data${page.path}`)

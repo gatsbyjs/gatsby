@@ -3,7 +3,7 @@ import { BulkQuery } from "./bulk-query"
 export class ProductVariantsQuery extends BulkQuery {
   query(date?: Date): string {
     const publishedStatus = this.pluginOptions.salesChannel
-      ? encodeURIComponent(`${this.pluginOptions.salesChannel}=visible`)
+      ? `'${encodeURIComponent(this.pluginOptions.salesChannel)}:visible'`
       : `published`
 
     const filters = [`status:active`, `published_status:${publishedStatus}`]
@@ -12,101 +12,137 @@ export class ProductVariantsQuery extends BulkQuery {
       filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
 
-    const ProductVariantSortKey = `POSITION`
+    const includeLocations =
+      !!this.pluginOptions.shopifyConnections?.includes(`locations`)
 
     const queryString = filters.map(f => `(${f})`).join(` AND `)
 
     const query = `
       {
-        products(query: "${queryString}") {
+        productVariants(query: "${queryString}") {
           edges {
             node {
+              availableForSale
+              barcode
+              compareAtPrice
+              createdAt
+              displayName
               id
-              variants(sortKey: ${ProductVariantSortKey}) {
+              image {
+                altText
+                height
+                id
+                originalSrc
+                src
+                transformedSrc
+                width
+              }
+              inventoryItem @include(if: ${includeLocations}) {
+                countryCodeOfOrigin
+                createdAt
+                duplicateSkuCount
+                harmonizedSystemCode
+                id
+                inventoryHistoryUrl
+                inventoryLevels {
+                  edges {
+                    node {
+                      available
+                      id
+                      location {
+                        id
+                      }
+                    }
+                  }
+                }
+                legacyResourceId
+                locationsCount
+                provinceCodeOfOrigin
+                requiresShipping
+                sku
+                tracked
+                trackedEditable {
+                  locked
+                  reason
+                }
+                unitCost {
+                  amount
+                  currencyCode
+                }
+                updatedAt
+                variant {
+                  id
+                }
+              }
+              inventoryPolicy
+              inventoryQuantity
+              legacyResourceId
+              media {
                 edges {
                   node {
-                    availableForSale
-                    barcode
-                    compareAtPrice
+                    ... on ExternalVideo {
+                      id
+                    }
+                    ... on MediaImage {
+                      id
+                    }
+                    ... on Model3d {
+                      id
+                    }
+                    ... on Video {
+                      id
+                    }
+                  }
+                }
+              }
+              position
+              presentmentPrices {
+                edges {
+                  node {
+                    compareAtPrice {
+                      amount
+                      currencyCode
+                    }
+                    price {
+                      amount
+                      currencyCode
+                    }
+                    __typename
+                  }
+                }
+              }
+              price
+              product {
+                id
+              }
+              requiresShipping
+              selectedOptions {
+                name
+                value
+              }
+              sellingPlanGroupCount
+              sku
+              storefrontId
+              taxCode
+              taxable
+              title
+              updatedAt
+              weight
+              weightUnit
+              metafields {
+                edges {
+                  node {
                     createdAt
-                    displayName
+                    description
                     id
-                    image {
-                      id
-                      altText
-                      height
-                      width
-                      originalSrc
-                      transformedSrc
-                    }
-                    inventoryItem {
-                      id
-                      countryCodeOfOrigin
-                      createdAt
-                      duplicateSkuCount
-                      harmonizedSystemCode
-                      inventoryHistoryUrl
-                      inventoryLevels {
-                        edges {
-                          node {
-                            id
-                            available
-                            location {
-                              id
-                            }
-                          }
-                        }
-                      }
-                      legacyResourceId
-                      locationsCount
-                      provinceCodeOfOrigin
-                      requiresShipping
-                      sku
-                      tracked
-                      trackedEditable {
-                        locked
-                        reason
-                      }
-                      unitCost {
-                        amount
-                        currencyCode
-                      }
-                      updatedAt
-                    }
-                    inventoryPolicy
-                    inventoryQuantity
+                    key
                     legacyResourceId
-                    position
-                    price
-                    selectedOptions {
-                      name
-                      value
-                    }
-                    sellingPlanGroupCount
-                    sku
-                    storefrontId
-                    taxCode
-                    taxable
-                    title
+                    namespace
+                    ownerType
+                    type
                     updatedAt
-                    weight
-                    weightUnit
-                    metafields {
-                      edges {
-                        node {
-                          createdAt
-                          description
-                          id
-                          key
-                          legacyResourceId
-                          namespace
-                          ownerType
-                          updatedAt
-                          value
-                          valueType
-                        }
-                      }
-                    }
+                    value
+                    valueType: type
                   }
                 }
               }

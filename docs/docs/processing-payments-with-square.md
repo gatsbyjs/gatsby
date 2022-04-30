@@ -16,7 +16,7 @@ You've got two options for integrating Square payments: redirecting to a hosted 
 
 ### Redirecting to a hosted checkout page
 
-Redirecting to a Square-hosted page takes some of the pressure off since you don't need to build a checkout page. However, getting that functionality "for free" does come with some restrictions. You will not be able to customize the UI of the page users are sent to once they're ready to checkout. Square only recommends this option for situations where accepting payments on your own site isn't feasible.
+Redirecting to a Square-hosted page takes some of the pressure off since you don't need to build a checkout page. However, getting that functionality "for free" does come with some restrictions. You will not be able to customize the UI of the page users are sent to once they're ready to check out. Square only recommends this option for situations where accepting payments on your own site isn't feasible.
 
 To use the Square [Checkout API](https://developer.squareup.com/docs/checkout-api-overview), you'll need to send a request that includes the relevant order information. In response, you'll get a URL with the format `https://connect.squareup.com/v2/checkout?c={{CHECKOUT_ID}}&l={{LOCATION_ID}}` which you'll redirect your user to. From there, Square handles the payment form UI and processing.
 
@@ -192,7 +192,7 @@ You can test your setup [using the Square sandbox](https://developer.squareup.co
 
 - [`SqPaymentForm` documentation](https://developer.squareup.com/docs/api/paymentform#navsection-paymentform)
 - [Square's tutorial for online payment options](https://developer.squareup.com/docs/online-payment-options)
-- [Sqaure's Payment Walkthrough](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough)
+- [Square's Payment Walkthrough](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough)
 - [Square's Test Cards](https://developer.squareup.com/docs/testing/test-values)
 - Square's blog post on [Online Payments with React + Square](https://developer.squareup.com/blog/online-payments-form-react/)
 - Example code for [using Square Payments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-square-payments)

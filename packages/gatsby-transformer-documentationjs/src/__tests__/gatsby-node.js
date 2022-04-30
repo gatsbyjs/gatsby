@@ -195,13 +195,10 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
         expect(nestedNode.name).toBe(`nested`)
         expect(nestedNode.properties___NODE).toBeDefined()
         expect(nestedNode.properties___NODE.length).toBe(3)
-        ;[
-          nestedFooNode,
-          nestedOptionalNode,
-          nestedCallbackNode,
-        ] = nestedNode.properties___NODE.map(paramID =>
-          createdNodes.find(node => node.id === paramID)
-        )
+        ;[nestedFooNode, nestedOptionalNode, nestedCallbackNode] =
+          nestedNode.properties___NODE.map(paramID =>
+            createdNodes.find(node => node.id === paramID)
+          )
       })
 
       it(`should strip prefixes from nested nodes`, () => {
@@ -386,7 +383,6 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
     })
   })
 
-  it(`doesn't cause a stack overflow for nodes of the same name`, () => {
-    expect(run(getFileNode(`same-name.ts`))).resolves.toBeUndefined()
-  })
+  it(`doesn't cause a stack overflow for nodes of the same name`, () =>
+    expect(run(getFileNode(`same-name.ts`))).resolves.toBeUndefined())
 })

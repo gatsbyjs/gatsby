@@ -1,4 +1,5 @@
 import sharp from "./safe-sharp"
+import fs from "fs-extra"
 
 export function rgbToHex(red, green, blue) {
   return `#${(blue | (green << 8) | (red << 16) | (1 << 24))
@@ -39,6 +40,7 @@ export function calculateImageSizes(args) {
     return []
   }
 }
+
 export function fixedImageSizes({
   file,
   imgDimensions,
@@ -288,7 +290,10 @@ export const getDominantColor = async absolutePath => {
     return dominantColor
   }
 
-  const pipeline = sharp(absolutePath)
+  const pipeline = sharp()
+
+  fs.createReadStream(absolutePath).pipe(pipeline)
+
   const { dominant } = await pipeline.stats()
 
   // Fallback in case sharp doesn't support dominant

@@ -13,6 +13,21 @@ Array [
           "name": "test",
         },
       },
+      "requestId": "",
+    },
+    "type": "SET_JOB_V2_CONTEXT",
+  },
+  Object {
+    "payload": Object {
+      "job": Object {
+        "contentDigest": "1234",
+        "inputPaths": Array [
+          "/src/myfile.js",
+        ],
+        "plugin": Object {
+          "name": "test",
+        },
+      },
     },
     "plugin": Object {
       "name": "test",

@@ -1,5 +1,5 @@
 const waitForAPIOptions = {
-  timeout: 10000,
+  timeout: 5000,
 }
 
 function runTests(testNameSuffix) {

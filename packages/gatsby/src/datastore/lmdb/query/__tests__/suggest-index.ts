@@ -55,13 +55,15 @@ describe(`suggestIndex`, () => {
       }
     )
 
-    it(`adds at most 4 filter fields to index`, () => {
+    it(`adds at most 6 filter fields to index`, () => {
       const filter = {
         a: { eq: 1 },
         b: { eq: 2 },
         c: { eq: 3 },
         d: { eq: 4 },
         e: { eq: 5 },
+        f: { eq: 6 },
+        g: { eq: 7 },
       }
       // expected specificity: eq, in, gte, lte, gt, lt
       expect(suggestIndex({ filter, sort })).toEqual([
@@ -69,6 +71,8 @@ describe(`suggestIndex`, () => {
         [`b`, 1],
         [`c`, 1],
         [`d`, 1],
+        [`e`, 1],
+        [`f`, 1],
       ])
     })
   })
@@ -105,9 +109,9 @@ describe(`suggestIndex`, () => {
       ])
     })
 
-    it(`adds at most 4 sort fields to index`, () => {
+    it(`adds at most 6 sort fields to index`, () => {
       const sort = {
-        fields: [`a`, `b`, `c`, `d`, `e`],
+        fields: [`a`, `b`, `c`, `d`, `e`, `f`, `g`],
         order: [],
       }
       expect(suggestIndex({ filter, sort })).toEqual([
@@ -115,6 +119,8 @@ describe(`suggestIndex`, () => {
         [`b`, 1],
         [`c`, 1],
         [`d`, 1],
+        [`e`, 1],
+        [`f`, 1],
       ])
     })
 
@@ -233,19 +239,14 @@ describe(`suggestIndex`, () => {
     })
 
     describe(`single "in" filter`, () => {
-      it(`prefers "in" filter to "sort" fields`, () => {
-        // TODO: maybe it's actually possible to support this scenario.
-        //  As each entry of "in" array runs a separate range query anyway.
-        //  So
-        //  { a: 1, b: 100, id: 1 }, { a: 1, b: 500, id: 2 } and
-        //  { a: 2, b: 1, id: 3 }, { a: 2, b: 600, id: 4 }
-        //  can potentially exploit the fact that they are sorted within each bucket and use mergeSorted to
-        //  traverse in order: 3, 1, 2, 4
-        //  it doesn't require deduplication (unless it is a MultiKey index)
-        //  Can be costly if "in" has too many values (but probably not costlier than in-memory sort anyway)
+      it(`prefers "sort" fields to "in" filter`, () => {
         const filter = { a: { in: [1, 2] } }
         const sort = { fields: [`b`, `c`], order: [] }
-        expect(suggestIndex({ filter, sort })).toEqual([[`a`, 1]]) // TODO: .toEqual([[`a`, 1], [`b`, 1], [`c`, 1]]])
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`b`, 1],
+          [`c`, 1],
+          [`a`, 1],
+        ])
       })
 
       it(`merges "in" filter with sibling "sort" field`, () => {
@@ -257,10 +258,14 @@ describe(`suggestIndex`, () => {
         ])
       })
 
-      it(`discards "sort" fields that do not overlap with "in" filter`, () => {
+      it(`discards "in" filters that do not overlap with "sort" fields`, () => {
         const filter = { b: { in: [`foo`] } }
         const sort: Sort = { fields: [`a`, `b`, `c`], order: [] }
-        expect(suggestIndex({ filter, sort })).toEqual([[`b`, 1]])
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`a`, 1],
+          [`b`, 1],
+          [`c`, 1],
+        ])
       })
     })
 
@@ -273,6 +278,7 @@ describe(`suggestIndex`, () => {
           expect(suggestIndex({ filter, sort })).toEqual([
             [`b`, 1],
             [`c`, 1],
+            [`a`, 1],
           ])
         })
 
@@ -294,10 +300,14 @@ describe(`suggestIndex`, () => {
       [`lte`, `gt`],
       [`lt`, `gt`],
     ])(`single enclosed "%s - %s" filter`, (left, right) => {
-      it(`prefers enclosed filter to non-overlapping "sort" fields`, () => {
+      it(`prefers "sort" fields to non-overlapping enclosed range filter`, () => {
         const filter = { a: { [left]: `foo`, [right]: `bar` } }
         const sort = { fields: [`b`, `c`], order: [] }
-        expect(suggestIndex({ filter, sort })).toEqual([[`a`, 1]])
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`b`, 1],
+          [`c`, 1],
+          [`a`, 1],
+        ])
       })
 
       it(`merges field with enclosed filter with sibling "sort" field`, () => {

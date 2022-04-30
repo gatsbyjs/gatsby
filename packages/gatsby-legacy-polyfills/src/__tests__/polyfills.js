@@ -30,21 +30,26 @@ describe(`polyfills`, () => {
 
   afterAll(() => fs.remove(path.join(packageRoot, tmpDir)))
 
-  it(`has the correct polyfills`, () => {
+  it(`has the correct polyfills`, done => {
     const polyfills = require(`../exclude`).LEGACY_POLYFILLS
     const polyfillMap = path.join(packageRoot, tmpDir, `polyfills.js.map`)
     expect(fs.existsSync(polyfillMap)).toBe(true)
 
-    const fileMap = polyfills.map(
-      polyfill =>
-        `core-js/modules/${polyfill
-          .replace(/^(features|modules)\//, `es.`)
-          .replace(`/`, `.`)}`
-    )
+    const fileMap = polyfills.map(polyfill => {
+      if (polyfill === `features/dom-collections`) {
+        return `core-js/modules/web.dom-collections`
+      }
+
+      return `core-js/modules/${polyfill
+        .replace(/^(features|modules)\//, `es.`)
+        .replace(`/`, `.`)}`
+    })
 
     const polyfillMapSource = fs.readFileSync(polyfillMap, `utf8`)
     SourceMapConsumer.with(polyfillMapSource, null, consumer => {
-      const sources = consumer.sources
+      const sources = consumer.sources.map(source =>
+        source.replace(/.*\/node_modules\//, ``)
+      )
 
       // check if all polyfills are in the bundle
       expect(sources).toEqual(
@@ -52,6 +57,7 @@ describe(`polyfills`, () => {
           fileMap.map(file => expect.stringContaining(file))
         )
       )
+      done()
     })
   })
 })

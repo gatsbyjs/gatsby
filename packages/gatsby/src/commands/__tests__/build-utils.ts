@@ -5,10 +5,10 @@ import {
   IStaticQueryResultState,
 } from "../../redux/types"
 
-const platformSpy = jest.spyOn(require(`os`), `platform`)
 interface IMinimalStateSliceForTest {
   html: IGatsbyState["html"]
   pages: IGatsbyState["pages"]
+  components: IGatsbyState["components"]
 }
 
 describe(`calcDirtyHtmlFiles`, () => {
@@ -37,7 +37,16 @@ describe(`calcDirtyHtmlFiles`, () => {
         unsafeBuiltinWasUsedInSSR: false,
         trackedStaticQueryResults: new Map<string, IStaticQueryResultState>(),
       },
+      components: new Map(),
     }
+    state.components.set(`/foo`, {
+      componentPath: `/foo`,
+      componentChunkName: `foo`,
+      pages: new Set(),
+      isInBootstrap: false,
+      query: ``,
+      serverData: false,
+    })
 
     for (const pagePath in pages) {
       const page = pages[pagePath]
@@ -56,6 +65,9 @@ describe(`calcDirtyHtmlFiles`, () => {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           pluginCreator___NODE: `foo`,
           updatedAt: 1,
+          mode: `SSG`,
+          defer: false,
+          ownerNodeId: ``,
         })
       }
 
@@ -232,16 +244,13 @@ describe(`calcDirtyHtmlFiles`, () => {
   })
 
   describe(`onCreatePage + deletePage + createPage that change path casing of a page`, () => {
-    afterAll(() => {
-      platformSpy.mockRestore()
-    })
-
     it(`linux (case sensitive file system)`, () => {
       let isolatedCalcDirtyHtmlFiles
       jest.isolateModules(() => {
-        platformSpy.mockImplementation(() => `linux`)
-        isolatedCalcDirtyHtmlFiles = require(`../build-utils`)
-          .calcDirtyHtmlFiles
+        process.env.TEST_FORCE_CASE_FS = `SENSITIVE`
+        isolatedCalcDirtyHtmlFiles =
+          require(`../build-utils`).calcDirtyHtmlFiles
+        delete process.env.TEST_FORCE_CASE_FS
       })
 
       const state = generateStateToTestHelper({
@@ -267,9 +276,10 @@ describe(`calcDirtyHtmlFiles`, () => {
     it(`windows / mac (case insensitive file system)`, () => {
       let isolatedCalcDirtyHtmlFiles
       jest.isolateModules(() => {
-        platformSpy.mockImplementation(() => `win32`)
-        isolatedCalcDirtyHtmlFiles = require(`../build-utils`)
-          .calcDirtyHtmlFiles
+        process.env.TEST_FORCE_CASE_FS = `INSENSITIVE`
+        isolatedCalcDirtyHtmlFiles =
+          require(`../build-utils`).calcDirtyHtmlFiles
+        delete process.env.TEST_FORCE_CASE_FS
       })
 
       const state = generateStateToTestHelper({

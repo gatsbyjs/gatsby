@@ -7,13 +7,18 @@ import {
   ERROR,
   RESULT,
   CUSTOM_MESSAGE,
+  WORKER_READY,
   ParentMessageUnion,
   ChildMessageUnion,
 } from "./types"
 
 interface IWorkerOptions {
+  // number of workers to spawn, defaults to 1
   numWorkers?: number
+  // environmental variables specific to the worker(s)
   env?: Record<string, string>
+  // whether or not output should be ignored
+  silent?: boolean
 }
 
 type WrapReturnOfAFunctionInAPromise<
@@ -38,18 +43,17 @@ type WrapReturnInArray<MaybeFunction> = MaybeFunction extends (
   ? (...a: Parameters<MaybeFunction>) => Array<ReturnType<MaybeFunction>>
   : never
 
-export type CreateWorkerPoolType<ExposedFunctions> = WorkerPool &
-  {
-    [FunctionName in keyof ExposedFunctions]: EnsureFunctionReturnsAPromise<
-      ExposedFunctions[FunctionName]
+export type CreateWorkerPoolType<ExposedFunctions> = WorkerPool & {
+  [FunctionName in keyof ExposedFunctions]: EnsureFunctionReturnsAPromise<
+    ExposedFunctions[FunctionName]
+  >
+} & {
+  all: {
+    [FunctionName in keyof ExposedFunctions]: WrapReturnInArray<
+      EnsureFunctionReturnsAPromise<ExposedFunctions[FunctionName]>
     >
-  } & {
-    all: {
-      [FunctionName in keyof ExposedFunctions]: WrapReturnInArray<
-        EnsureFunctionReturnsAPromise<ExposedFunctions[FunctionName]>
-      >
-    }
   }
+}
 
 const childWrapperPath = require.resolve(`./child`)
 
@@ -84,6 +88,7 @@ interface IWorkerInfo<T> {
     signal: NodeJS.Signals | null
   }>
   currentTask?: TaskInfo<T>
+  ready: Promise<void>
 }
 
 export interface IPublicWorkerInfo {
@@ -124,9 +129,8 @@ export class WorkerPool<
   private workers: Array<IWorkerInfo<keyof WorkerModuleExports>> = []
   private taskQueue = new TaskQueue<TaskInfo<keyof WorkerModuleExports>>()
   private idleWorkers: Set<IWorkerInfo<keyof WorkerModuleExports>> = new Set()
-  private listeners: Array<
-    (msg: MessagesFromChild, workerId: number) => void
-  > = []
+  private listeners: Array<(msg: MessagesFromChild, workerId: number) => void> =
+    []
 
   constructor(private workerPath: string, private options?: IWorkerOptions) {
     const single: Partial<WorkerPool<WorkerModuleExports>["single"]> = {}
@@ -153,12 +157,10 @@ export class WorkerPool<
           exportName
         ) as WorkerPool<WorkerModuleExports>["single"][typeof exportName]
 
-        all[exportName] = (this.scheduleWorkAll.bind(
+        all[exportName] = this.scheduleWorkAll.bind(
           this,
           exportName
-        ) as unknown) as WorkerPool<
-          WorkerModuleExports
-        >["all"][typeof exportName]
+        ) as unknown as WorkerPool<WorkerModuleExports>["all"][typeof exportName]
       }
     }
 
@@ -180,11 +182,16 @@ export class WorkerPool<
         },
         // Suppress --debug / --inspect flags while preserving others (like --harmony).
         execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
+        silent: options && options.silent,
       })
 
+      let workerReadyResolve: () => void
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
         workerId,
         worker,
+        ready: new Promise<void>(resolve => {
+          workerReadyResolve = resolve
+        }),
         exitedPromise: new Promise(resolve => {
           worker.on(`exit`, (code, signal) => {
             if (workerInfo.currentTask) {
@@ -246,6 +253,8 @@ export class WorkerPool<
           for (const listener of this.listeners) {
             listener(msg[1] as MessagesFromChild, workerId)
           }
+        } else if (msg[0] === WORKER_READY) {
+          workerReadyResolve()
         }
       })
 
@@ -321,13 +330,15 @@ export class WorkerPool<
     this.idleWorkers.add(workerInfo)
   }
 
-  private doWork<T extends keyof WorkerModuleExports>(
+  private async doWork<T extends keyof WorkerModuleExports>(
     taskInfo: TaskInfo<T>,
     workerInfo: IWorkerInfo<T>
-  ): void {
+  ): Promise<void> {
     // block worker
     workerInfo.currentTask = taskInfo
     this.idleWorkers.delete(workerInfo)
+
+    await workerInfo.ready
 
     const msg: ParentMessageUnion = [
       EXECUTE,

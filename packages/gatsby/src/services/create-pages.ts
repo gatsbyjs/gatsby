@@ -24,10 +24,30 @@ export async function createPages({
   activity.start()
   const timestamp = Date.now()
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+
+  // Wrap the GraphQL function so we can measure how long it takes to run.
+  const originalGraphQL = gatsbyNodeGraphQLFunction
+  // eslint-disable-next-line
+  async function wrappedGraphQL() {
+    const start = Date.now()
+    // @ts-ignore not sure how to type the following
+    const returnValue = await originalGraphQL.apply(this, arguments) // eslint-disable-line
+    const end = Date.now()
+    const totalMS = end - start
+    if (totalMS > 10000) {
+      reporter.warn(
+        `Your GraphQL query in createPages took ${
+          totalMS / 1000
+        } seconds which is an unexpectedly long time. See https://gatsby.dev/create-pages-performance for tips on how to improve this.`
+      )
+    }
+    return returnValue
+  }
+
   await apiRunnerNode(
     `createPages`,
     {
-      graphql: gatsbyNodeGraphQLFunction,
+      graphql: wrappedGraphQL,
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
@@ -87,7 +107,9 @@ export async function createPages({
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
   )
 
-  const tim = reporter.activityTimer(`Checking for changed pages`)
+  const tim = reporter.activityTimer(`Checking for changed pages`, {
+    parentSpan,
+  })
   tim.start()
 
   const { changedPages } = findChangedPages(

@@ -203,8 +203,8 @@ describe(`Load plugins`, () => {
     })
   })
 
-  describe(`Gatsby-plugin-gatsby-cloud support`, () => {
-    it(`doesn't gatsby-plugin-gatsby-cloud if not installed`, async () => {
+  describe(`gatsby-plugin-gatsby-cloud support`, () => {
+    it(`doesn't load gatsby-plugin-gatsby-cloud if not installed`, async () => {
       resolveFrom.mockImplementation(() => undefined)
       const config = {
         plugins: [],
@@ -223,7 +223,7 @@ describe(`Load plugins`, () => {
       )
     })
 
-    it(`doesn't loads gatsby-plugin-gatsby-cloud if not provided and installed`, async () => {
+    it(`doesn't load gatsby-plugin-gatsby-cloud if not provided and installed`, async () => {
       resolveFrom.mockImplementation(
         (rootDir, pkg) => rootDir + `/node_modules/` + pkg
       )
@@ -454,7 +454,7 @@ describe(`Load plugins`, () => {
       expect((reporter.warn as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
         Array [
           "Warning: there are unknown plugin options for \\"gatsby-plugin-google-analytics\\": doesThisExistInTheSchema
-        Please open an issue at ghub.io/gatsby-plugin-google-analytics if you believe this option is valid.",
+        Please open an issue at https://ghub.io/gatsby-plugin-google-analytics if you believe this option is valid.",
         ]
       `)
       expect(mockProcessExit).not.toHaveBeenCalled()
@@ -543,6 +543,51 @@ describe(`Load plugins`, () => {
         ]
       `)
       expect(mockProcessExit).toHaveBeenCalledWith(1)
+    })
+
+    it(`subplugins are resolved using "main" in package.json`, async () => {
+      // in fixtures/subplugins/node_modules/gatsby-plugin-child-with-main/package.json
+      // "main" field points to "lib/index.js"
+      const plugins = await loadPlugins(
+        {
+          plugins: [
+            {
+              resolve: `gatsby-plugin-parent`,
+              options: {
+                testSubplugins: [
+                  `gatsby-plugin-child-no-main`,
+                  `gatsby-plugin-child-with-main`,
+                ],
+              },
+            },
+          ],
+        },
+        __dirname + `/fixtures/subplugins`
+      )
+
+      // "module.exports" in entry files for subplugins contain just a string
+      // for tests purposes (so we can assert "module" field on subplugins items)
+      expect(
+        plugins.find(plugin => plugin.name === `gatsby-plugin-parent`)
+          ?.pluginOptions?.testSubplugins
+      ).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            name: `gatsby-plugin-child-with-main`,
+            module: `export-test-gatsby-plugin-child-with-main`,
+            modulePath: expect.stringMatching(
+              /gatsby-plugin-child-with-main[/\\]lib[/\\]index\.js$/
+            ),
+          }),
+          expect.objectContaining({
+            name: `gatsby-plugin-child-no-main`,
+            module: `export-test-gatsby-plugin-child-no-main`,
+            modulePath: expect.stringMatching(
+              /gatsby-plugin-child-no-main[/\\]index\.js$/
+            ),
+          }),
+        ])
+      )
     })
 
     it(`validates local plugin schemas using require.resolve`, async () => {
