@@ -571,24 +571,24 @@ export const replaceNodeHtmlImages = async ({
         let imageResize = null
         let publicUrl
 
-        if (gatsbyTransformerSharpSupportsThisFileType) {
-          const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
-            imageNode,
-            pluginOptions
-          )
+        const imageUrl =
+          imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
 
-          const imageUrl =
-            imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
+        try {
+          if (gatsbyTransformerSharpSupportsThisFileType) {
+            const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
+              imageNode,
+              pluginOptions
+            )
 
-          const formats = [`auto`]
-          if (pluginOptions.html.generateWebpImages) {
-            formats.push(`webp`)
-          }
-          if (pluginOptions.html.generateAvifImages) {
-            formats.push(`avif`)
-          }
+            const formats = [`auto`]
+            if (pluginOptions.html.generateWebpImages) {
+              formats.push(`webp`)
+            }
+            if (pluginOptions.html.generateAvifImages) {
+              formats.push(`avif`)
+            }
 
-          try {
             imageResize = await gatsbyImageResolver(
               {
                 url: imageUrl,
@@ -612,17 +612,27 @@ export const replaceNodeHtmlImages = async ({
               },
               helpers.actions
             )
-          } catch (e) {
-            reporter.error(e)
-            reporter.warn(
-              formatLogMessage(
-                `${node.__typename} ${node.id} couldn't process inline html image ${imageUrl}`
-              )
+          } else {
+            publicUrl = publicUrlResolver(
+              {
+                url: imageUrl,
+                mimeType: imageNode.mimeType,
+                filename: path.basename(imageNode.sourceUrl || imageNode.url),
+                internal: {
+                  contentDigest: imageNode.modifiedGmt,
+                },
+              },
+              helpers.actions
             )
-            return null
           }
-        } else {
-          publicUrl = publicUrlResolver(imageNode, helpers.actions)
+        } catch (e) {
+          reporter.error(e)
+          reporter.warn(
+            formatLogMessage(
+              `${node.__typename} ${node.id} couldn't process inline html image ${imageUrl}`
+            )
+          )
+          return null
         }
 
         return {
