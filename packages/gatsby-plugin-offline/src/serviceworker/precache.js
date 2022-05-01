@@ -1,4 +1,5 @@
-/* global importScripts, __GATSBY_PLUGIN_OFFLINE_SETTINGS */
+/* global importScripts */
+/* global __GATSBY_PLUGIN_OFFLINE_SETTINGS */
 import uniqBy from "lodash/uniqBy"
 import { precacheAndRoute } from "workbox-precaching"
 import { setCacheNameDetails } from "workbox-core"

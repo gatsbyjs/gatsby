@@ -92,6 +92,10 @@ In `gatsby-plugin-offline`, the following options are available:
 
 - `cacheId` lets you specify a custom cache prefix used by workbox. See [Configure Workbox Documentation](https://developers.google.com/web/tools/workbox/guides/configure-workbox)
 
+- `define` Object passed to webpack's DefinePlugin to define values that get replaced in the compiled service worker. See [DefinePlugin](https://webpack.js.org/plugins/define-plugin/)
+
+- `webpackCompilationPlugins` Optional webpack plugins that will be used when compiling the swSrc input file. See [InjectManifest options](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest#InjectManifest)
+
 - `chunks` additional webpack chunk names that shall be precached. See [InjectManifest](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest) for more information
 
 - `offlineAnalyticsConfig` If specified, these options get passed to the [workbox-google-analytics](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-google-analytics) plugin. You can also set this option to just enable this plugin with the default options
@@ -99,6 +103,10 @@ In `gatsby-plugin-offline`, the following options are available:
 - `deletePreviousCacheVersionsOnUpdate` If set to true, automatically attempts to delete previous caches on service worker update if `cacheId` has changed. Useful if you're `chacheId` might change, and you want to avoid old, unused caches form taking up space on the user's device.
 
 - `cleanupOutdatedCaches` If set to true, automatically cleans up outdated caches from older workbox versions. See [workbox's documentation](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-precaching?hl=en#.cleanupOutdatedCaches)
+
+- `globPatterns` A set of optional glob patterns to include in precaching.
+
+- `lodashWebpackPluginFeatures` Configuration of enabled lodash feature sets. See [lodash-webpack-plugin](https://github.com/lodash/lodash-webpack-plugin#feature-sets)
 
 - `additionalManifestEntries`, `manifestTransforms`, `maximumFileSizeToCacheInBytes`, `dontCacheBustURLsMatching`, `modifyURLPrefix` Options passed to [workbox's InjectManifest webpack plugin](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest)
 

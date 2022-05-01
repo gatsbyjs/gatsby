@@ -7,11 +7,11 @@ import {
 } from "workbox-strategies"
 import { CacheableResponsePlugin } from "workbox-cacheable-response"
 
-export function registerDefaultRoutes() {
-  if (__GATSBY_PLUGIN_OFFLINE_SETTINGS.__cypressSupport) {
-    registerRoute(/\/__cypress\//, new NetworkOnly(), `GET`)
-  }
+export function registerCypressRoute() {
+  registerRoute(/\/__cypress\//, new NetworkOnly(), `GET`)
+}
 
+export function registerStaticBuildAssetsRoute() {
   registerRoute(
     /(\.js$|\.css$|static\/)/,
     new CacheFirst({
@@ -19,6 +19,9 @@ export function registerDefaultRoutes() {
     }),
     `GET`
   )
+}
+
+export function registerPageDataRoute() {
   registerRoute(
     /^https?:.*\/page-data\/.*\.json/,
     new StaleWhileRevalidate({
@@ -26,6 +29,9 @@ export function registerDefaultRoutes() {
     }),
     `GET`
   )
+}
+
+export function registerDefaultAssetsRoute() {
   registerRoute(
     /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
     new StaleWhileRevalidate({
@@ -33,6 +39,9 @@ export function registerDefaultRoutes() {
     }),
     `GET`
   )
+}
+
+export function registerGoogleFontsRoute() {
   registerRoute(
     /^https?:\/\/fonts\.googleapis\.com\/css/,
     new StaleWhileRevalidate({
@@ -40,4 +49,15 @@ export function registerDefaultRoutes() {
     }),
     `GET`
   )
+}
+
+export function registerDefaultRoutes() {
+  if (__GATSBY_PLUGIN_OFFLINE_SETTINGS.__cypressSupport) {
+    registerCypressRoute()
+  }
+
+  registerStaticBuildAssetsRoute()
+  registerPageDataRoute()
+  registerDefaultAssetsRoute()
+  registerGoogleFontsRoute()
 }

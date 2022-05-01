@@ -1,6 +1,7 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
 /* eslint-disable prefer-const */
 let fs = require(`fs`)
+let fsp = require(`fs/promises`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
@@ -8,6 +9,7 @@ const _ = require(`lodash`)
 const md5File = require(`md5-file`)
 let webpack = require(`webpack`)
 let { InjectManifest } = require(`workbox-webpack-plugin`)
+let LodashWebpackPlugin = require(`lodash-webpack-plugin`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
@@ -77,13 +79,27 @@ exports.onCreateWebpackConfig = (
       dontCacheBustURLsMatching,
       modifyURLPrefix,
       maximumFileSizeToCacheInBytes: options.maximumFileSizeToCacheInBytes,
-      manifestTransforms: options.manifestTransforms,
+      manifestTransforms:
+        typeof options.manifestTransforms !== `undefined`
+          ? options.manifestTransforms
+          : [],
       additionalManifestEntries: options.additionalManifestEntries,
       chunks,
       webpackCompilationPlugins: [
+        new LodashWebpackPlugin({
+          collections: true,
+          shorthands: true,
+          ...(options.lodashWebpackPluginFeatures
+            ? options.lodashWebpackPluginFeatures
+            : {}),
+        }),
         new webpack.DefinePlugin({
+          ...(options.define ? options.define : {}),
           __GATSBY_PLUGIN_OFFLINE_SETTINGS: JSON.stringify(settings),
         }),
+        ...(options.webpackCompilationPlugins
+          ? options.webpackCompilationPlugins
+          : []),
       ],
     })
   )
@@ -257,8 +273,23 @@ exports.onPostBuild = async (
     .replace(/%appFile%/g, appFile)
   fs.writeFileSync(swPublicPath, swText)
 
+  const totalPrecacheSize = _.sum(
+    await Promise.all(
+      globedFiles.map(async file => {
+        if (fs.existsSync(path.resolve(publicDir, file))) {
+          const stats = await fsp.stat(path.resolve(publicDir, file))
+          return stats.size
+        }
+        return 0
+      })
+    )
+  )
+
   reporter.info(
-    `Generated public/${SW_DESTINATION_NAME}.\n` +
+    `Generated public/${SW_DESTINATION_NAME}.\nTotal size of precached resources: ${(
+      totalPrecacheSize /
+      (1024 * 1024)
+    ).toFixed(2)} MB\n\n` +
       `The following pages will be precached:\n` +
       precachePages
         .map(path => path.replace(`${process.cwd()}/public`, ``))
@@ -285,6 +316,12 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     maximumFileSizeToCacheInBytes: Joi.number(),
     skipWaiting: Joi.boolean(),
     clientsClaim: Joi.boolean(),
+    define: Joi.object().description(
+      `Object passed to webpack's DefinePlugin to define values that get replaced in the compiled service worker. See https://webpack.js.org/plugins/define-plugin/`
+    ),
+    webpackCompilationPlugins: Joi.array().description(
+      `Optional webpack plugins that will be used when compiling the swSrc input file. See https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest#InjectManifest`
+    ),
     manifestTransforms: Joi.array()
       .items(Joi.function())
       .description(
@@ -324,5 +361,24 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Configuration for offline google analytics feature. See also https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-google-analytics. If not set, this feature is disabled by default`
       ),
+    lodashWebpackPluginFeatures: Joi.object({
+      cloning: Joi.boolean(),
+      currying: Joi.boolean(),
+      caching: Joi.boolean(),
+      collections: Joi.boolean(),
+      exotics: Joi.boolean(),
+      guards: Joi.boolean(),
+      metadata: Joi.boolean(),
+      deburring: Joi.boolean(),
+      unicode: Joi.boolean(),
+      chaining: Joi.boolean(),
+      memoizing: Joi.boolean(),
+      coercions: Joi.boolean(),
+      flattening: Joi.boolean(),
+      paths: Joi.boolean(),
+      placeholders: Joi.boolean(),
+    }).description(
+      `Configuration of enabled lodash feature sets. See https://github.com/lodash/lodash-webpack-plugin#feature-sets`
+    ),
   })
 }

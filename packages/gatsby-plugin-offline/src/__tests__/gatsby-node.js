@@ -165,6 +165,7 @@ describe(`onCreateWebpackConfig`, () => {
       clientsClaim: false,
       cleanupOutdatedCaches: false,
       offlineAnalyticsConfigString: JSON.stringify({ foo: `bar` }),
+      __cypressSupport: false,
     }
 
     expect(webpackMock.DefinePlugin).toHaveBeenCalledWith(
