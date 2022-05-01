@@ -48,7 +48,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@gatsbyjs/potrace": "^2.2.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "gatsby-core-utils": "^3.14.0-next.2",
     "gatsby-sharp": "^0.8.0-next.0",
     "graphql-compose": "^9.0.7",
