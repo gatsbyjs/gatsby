@@ -13,7 +13,7 @@
     "common-tags": "^1.8.2",
     "fs-extra": "^10.0.0",
     "probe-image-size": "^7.2.3",
-    "semver": "^7.3.5",
+    "semver": "^7.3.7",
     "sharp": "^0.30.3"
   },
   "devDependencies": {
