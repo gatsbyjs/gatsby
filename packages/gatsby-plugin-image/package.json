@@ -62,7 +62,7 @@
     "postcss": "^8.2.9",
     "semver": "^7.3.5",
     "terser": "^5.3.8",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.4"
   },
   "peerDependencies": {
     "@babel/core": "^7.12.3",
