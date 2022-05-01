@@ -4,7 +4,7 @@ import { Runner } from "../../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../../query/graphql-runner"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../../redux/types"
-import { IGroupedQueryIds } from "../data-layer/types"
+import { IGroupedQueryIds } from "../../services/types"
 import { WebsocketManager } from "../../utils/websocket-manager"
 
 export interface IQueryRunningContext {

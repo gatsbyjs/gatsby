@@ -179,6 +179,129 @@ describe(`actual compiling`, () => {
     })
   })
 
+  describe(`config queries`, () => {
+    // config query is kept as is (at least for now)
+    // it is validated but not extracted
+    it(`validates config query`, async () => {
+      const nodes = [
+        createGatsbyDoc(
+          `mockFile`,
+          `query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 nonExistingField
+               }
+            }
+          }`,
+          {
+            isConfigQuery: true,
+          }
+        ),
+      ]
+      const errors = []
+      const result = processQueries({
+        schema,
+        parsedQueries: nodes,
+        addError: e => {
+          errors.push(e)
+        },
+      })
+      expect(errors.length).toEqual(1)
+      expect(errors[0]).toMatchInlineSnapshot(`
+        Object {
+          "context": Object {
+            "field": "nonExistingField",
+            "sourceMessage": "Cannot query field \\"nonExistingField\\" on type \\"PostsJson\\".",
+            "type": "PostsJson",
+          },
+          "filePath": "mockFile",
+          "id": "85923",
+          "location": Object {
+            "end": Object {
+              "column": 18,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 18,
+              "line": 4,
+            },
+          },
+        }
+      `)
+      expect(result).toEqual(new Map())
+    })
+
+    it(`doesn't extract config query`, async () => {
+      const nodes = [
+        createGatsbyDoc(
+          `mockFile`,
+          `query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 id
+               }
+            }
+          }`,
+          {
+            isConfigQuery: true,
+          }
+        ),
+      ]
+      const errors = []
+      const result = processQueries({
+        schema,
+        parsedQueries: nodes,
+        addError: e => {
+          errors.push(e)
+        },
+      })
+      expect(errors).toEqual([])
+      expect(result.get(`mockFile`)).toBeUndefined()
+    })
+
+    it(`supports page and config query in one file`, () => {
+      const nodes = [
+        createGatsbyDoc(
+          `mockFile`,
+          `query page { allPostsJson { nodes { id } } }`
+        ),
+        createGatsbyDoc(
+          `mockFile`,
+          `query config { allPostsJson { nodes { id } } }`,
+          { isConfigQuery: true }
+        ),
+      ]
+      const errors = []
+      const result = processQueries({
+        schema,
+        parsedQueries: nodes,
+        addError: e => {
+          errors.push(e)
+        },
+      })
+      expect(errors).toEqual([])
+      expect(result.get(`mockFile`)).toMatchInlineSnapshot(`
+        Object {
+          "hash": "hash",
+          "isConfigQuery": false,
+          "isHook": false,
+          "isStaticQuery": false,
+          "name": "page",
+          "originalText": "query page { allPostsJson { nodes { id } } }",
+          "path": "mockFile",
+          "text": "query page {
+          allPostsJson {
+            nodes {
+              id
+            }
+          }
+        }
+        ",
+        }
+      `)
+    })
+  })
+
   it(`adds fragments from same documents`, async () => {
     const nodes = [
       createGatsbyDoc(
@@ -325,6 +448,7 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile1`)).toMatchInlineSnapshot(`
       Object {
         "hash": "hash",
+        "isConfigQuery": false,
         "isHook": false,
         "isStaticQuery": false,
         "name": "mockFileQuery1",
@@ -343,7 +467,6 @@ describe(`actual compiling`, () => {
 
       fragment Bar on Directory {
         parent {
-          __typename
           ...Foo
         }
       }
@@ -362,6 +485,7 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile2`)).toMatchInlineSnapshot(`
       Object {
         "hash": "hash",
+        "isConfigQuery": false,
         "isHook": false,
         "isStaticQuery": false,
         "name": "mockFileQuery2",
@@ -375,7 +499,6 @@ describe(`actual compiling`, () => {
         "path": "mockFile2",
         "text": "fragment Bar on Directory {
         parent {
-          __typename
           ...Foo
         }
       }
@@ -438,7 +561,7 @@ describe(`actual compiling`, () => {
       `
       Object {
         "context": Object {
-          "sourceMessage": "Cannot spread fragment \\"Foo\\" within itself via Bar.
+          "sourceMessage": "Cannot spread fragment \\"Foo\\" within itself via \\"Bar\\".
 
       GraphQL request:17:13
       16 |           children {
@@ -452,7 +575,7 @@ describe(`actual compiling`, () => {
          |             ^
       12 |           }",
         },
-        "error": [GraphQLError: Cannot spread fragment "Foo" within itself via Bar.],
+        "error": [GraphQLError: Cannot spread fragment "Foo" within itself via "Bar".],
         "filePath": "mockFile",
         "id": "85901",
         "location": Any<Object>,
@@ -616,8 +739,7 @@ describe(`actual compiling`, () => {
       },
     })
 
-    expect(errors).toMatchInlineSnapshot(
-      `
+    expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
           "context": Object {
@@ -630,9 +752,7 @@ describe(`actual compiling`, () => {
          5 |                }
          6 |             }
          7 |           }
-         8 |` +
-        ` ` +
-        `
+         8 |
          9 |           fragment PostsJsonFragment on PostsJson {
         10 |             id
         11 |           }",
@@ -642,8 +762,7 @@ describe(`actual compiling`, () => {
           "id": "85908",
         },
       ]
-    `
-    )
+    `)
     expect(result).toEqual(new Map())
   })
 
@@ -729,7 +848,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
          9 |         fragment PostsJsonFragment on PostsJson {
         10 |           id
         11 |           node
@@ -757,7 +876,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
       >  9 |         fragment PostsJsonFragment on PostsJson {
            |                  ^^^^^^^^^^^^^^^^^
         10 |           id
@@ -995,6 +1114,7 @@ describe(`actual compiling`, () => {
       Map {
         "mockFile" => Object {
           "hash": "hash",
+          "isConfigQuery": false,
           "isHook": false,
           "isStaticQuery": false,
           "name": "mockFileQuery",
@@ -1078,234 +1198,10 @@ describe(`actual compiling`, () => {
   })
 })
 
-describe(`Extra fields`, () => {
-  let schema
-  beforeAll(async () => {
-    const sdl = await fs.readFile(
-      path.join(__dirname, `./fixtures/query-compiler-schema.graphql`),
-      { encoding: `utf-8` }
-    )
-    schema = buildSchema(sdl)
-  })
-
-  const transformQuery = queryString => {
-    const nodes = [createGatsbyDoc(`mockFile`, queryString)]
-    const errors = []
-    const result = processQueries({
-      schema,
-      parsedQueries: nodes,
-      addError: e => {
-        errors.push(e)
-      },
-    })
-    return [result, errors]
-  }
-
-  it(`adds __typename field to abstract types`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            contents {
-              ... on File {
-                id
-              }
-            }
-            children {
-              id
-            }
-          }
-        }
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`adds __typename field to abstract types within inline fragments`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            ... on Directory {
-              contents {
-                ... on File {
-                  id
-                }
-              }
-              children {
-                id
-              }
-            }
-          }
-        }
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`adds __typename field to abstract types within fragments`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            ...DirectoryContents
-          }
-        }
-      }
-      fragment DirectoryContents on Directory {
-        contents {
-          ... on File {
-            id
-          }
-        }
-        children {
-          id
-        }
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`adds __typename field to abstract types in the query of arbitrary depth`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            contents {
-              ... on Directory {
-                contents {
-                  ... on Directory {
-                    contents {
-                      ... on Directory {
-                        id
-                      }
-                    }
-                    children {
-                      id
-                    }
-                  }
-                }
-              }
-            }
-            children {
-              children {
-                children {
-                  id
-                }
-                ... on Directory {
-                  contents {
-                    ... on File {
-                      id
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`doesn't add __typename field to abstract types twice`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            contents {
-              __typename
-              ... on File {
-                id
-              }
-              ... FileOrDirectory
-            }
-            children {
-              __typename
-              ... Node
-            }
-            ... on Directory {
-              contents {
-                __typename
-              }
-              children {
-                __typename
-              }
-            }
-            ...DirectoryContents
-          }
-        }
-      }
-
-      fragment DirectoryContents on Directory {
-        contents {
-          __typename
-        }
-        children {
-          __typename
-        }
-      }
-
-      fragment FileOrDirectory on FileOrDirectory {
-        __typename
-      }
-
-      fragment Node on Node {
-        __typename
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-
-  it(`doesn't add __typename field when alias exists`, async () => {
-    const [result, errors] = transformQuery(`
-      query mockFileQuery {
-        allDirectory {
-          nodes {
-            __typename: id
-            contents {
-              ... on File {
-                __typename: id
-              }
-            }
-            children {
-              __typename: id
-              ... Node
-            }
-            ... on Directory {
-              children {
-                __typename: id
-              }
-            }
-            ...DirectoryContents
-          }
-        }
-      }
-
-      fragment DirectoryContents on Directory {
-        children {
-          __typename: id
-        }
-      }
-
-      fragment Node on Node {
-        __typename: id
-      }
-    `)
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
-  })
-})
-
 const createGatsbyDoc = (
   filePath,
   query,
-  { isHook, isStaticQuery } = { isHook: false, isStaticQuery: false }
+  { isHook = false, isStaticQuery = false, isConfigQuery = false } = {}
 ) => {
   const doc = parse(query)
   return {
@@ -1314,6 +1210,7 @@ const createGatsbyDoc = (
     text: query,
     isHook,
     isStaticQuery,
+    isConfigQuery,
     hash: `hash`,
     templateLoc: {
       start: {

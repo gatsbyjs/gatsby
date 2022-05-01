@@ -88,7 +88,7 @@ describe(`Kitchen sink schema test`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        interface Post @nodeInterface {
+        interface Post implements Node {
           id: ID!
           code: String
         }
@@ -201,10 +201,13 @@ describe(`Kitchen sink schema test`, () => {
               text
             }
           }
+          builtIntPage: sitePage(id: { eq: "SitePage /1685001452849004065/" }) {
+            pageContext
+          }
         }
       `)
     ).toMatchSnapshot()
-  })
+  }, 30000)
 
   it(`correctly resolves nested Query types from third-party types`, () => {
     const queryFields = schema.getQueryType().getFields()
@@ -342,9 +345,11 @@ const mockCreateResolvers = ({ createResolvers }) => {
       likedEnough: {
         type: `[PostsJson]`,
         async resolve(parent, args, context) {
-          const result = await context.nodeModel.runQuery({
+          const { entries } = await context.nodeModel.findAll({
             type: `PostsJson`,
             query: {
+              limit: 2,
+              skip: 0,
               filter: {
                 likes: {
                   ne: null,
@@ -356,9 +361,8 @@ const mockCreateResolvers = ({ createResolvers }) => {
                 order: [`DESC`],
               },
             },
-            firstOnly: false,
           })
-          return result.slice(0, 2)
+          return entries
         },
       },
     },

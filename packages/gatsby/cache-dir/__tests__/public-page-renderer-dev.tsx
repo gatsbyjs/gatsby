@@ -1,14 +1,22 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
 
 jest.mock(`../loader`, () => {
   return {
-    loadPageSync: jest.fn((path: string): {
-      loadPageSync: boolean
-      path: string
-    } => {
-      return { loadPageSync: true, path }
-    }),
+    loadPageSync: jest.fn(
+      (
+        path: string
+      ): {
+        loadPageSync: boolean
+        path: string
+      } => {
+        return { loadPageSync: true, path }
+      }
+    ),
     loadPage: function loadPage(
       path: string
     ): Promise<{ loadPage: boolean; path: string }> {

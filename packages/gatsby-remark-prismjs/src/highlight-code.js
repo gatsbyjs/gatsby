@@ -48,7 +48,7 @@ module.exports = (
     try {
       loadPrismLanguage(diffLanguage)
     } catch (e) {
-      let message = `unable to find prism language '${diffLanguage}' for highlighting.`
+      const message = `unable to find prism language '${diffLanguage}' for highlighting.`
 
       const lang = diffLanguage.toLowerCase()
       if (!unsupportedLanguages.has(lang)) {

@@ -256,7 +256,7 @@ Then, below the component we created, add the following:
 
 ```js
 export const query = graphql`
-  query($id: String) {
+  query ($id: String) {
     wpPost(id: { eq: $id }) {
       id
       title
@@ -307,7 +307,7 @@ For this, we would want to query for the Post's author, in addition to whatever 
 We might end up with a query like so:
 
 ```graphql
-query($id: String) {
+query ($id: String) {
   wpPost(id: { eq: $id }) {
     id
     title
@@ -359,7 +359,7 @@ GraphQL Fragment.
 
 This allows the component that renders the data to be responsible for HTML needed to render the output,
 and declaring the data that it needs from GraphQL, which allows components to have smaller
-responsiblities. This can help greatly with building re-usable components and scaling applications.
+responsibilities. This can help greatly with building re-usable components and scaling applications.
 
 This AuthorBio component can now be used anywhere a WpUser is asked for. Here, we'll use it within
 the Post component to show the Post's author. We'll change the WpPost Component like so:
@@ -383,7 +383,7 @@ const WpPost = ({ data }) => {
 }
 
 export const query = graphql`
-  query($id: String) {
+  query ($id: String) {
     wpPost(id: { eq: $id }) {
       id
       title

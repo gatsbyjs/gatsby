@@ -1,7 +1,7 @@
 # gatsby-plugin-manifest
 
 The web app manifest (part of the [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) specification) enabled by this plugin allows users to add your site to their home screen on most mobile browsers —
-[see here](http://caniuse.com/#feat=web-app-manifest). The manifest provides configuration and icons to the phone.
+[see here](https://caniuse.com/web-app-manifest). The manifest provides configuration and icons to the phone.
 
 This plugin provides several features beyond manifest configuration to make your life easier, they are:
 
@@ -44,11 +44,11 @@ module.exports = {
 }
 ```
 
-If you're using this plugin together with [`gatsby-plugin-offline`](https://www.gatsbyjs.org/packages/gatsby-plugin-offline) (recommended),
+If you're using this plugin together with [`gatsby-plugin-offline`](https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/) (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created `manifest.webmanifest`.
 
-For more information on configuring your web app [see here](https://developers.google.com/web/fundamentals/web-app-manifest/).
+For more information on configuring your web app [see here](https://web.dev/add-manifest/).
 
 ### Configure icons and their generations - **Required**
 
@@ -134,7 +134,7 @@ icons: [
 ], // Add or remove icon sizes as desired
 ```
 
-In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
+In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.com/docs/how-to/images-and-media/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
 
 ### Feature configuration - **Optional**
 
@@ -144,7 +144,7 @@ Localization allows you to create unique manifests for each localized version of
 
 The default site language should be configured in your root plugin options. Any additional languages should be defined in the `localize` array. The root settings will be used as defaults if not overridden in a locale. Any configuration option available in the root is also available in the `localize` array.
 
-`lang` and `start_url` are the only _required_ options in the array objects. `name`, `short_name`, and `description` are [recommended](https://www.w3.org/TR/appmanifest/#dfn-directionality-capable-members) to be translated if being used in the default language. All other config options are optional. This is helpful if you want to provide unique icons for each locale.
+`lang` and `start_url` are the only _required_ options in the array objects. `name`, `short_name`, and `description` are [recommended](https://www.w3.org/TR/appmanifest/#dir-member) to be translated if being used in the default language. All other config options are optional. This is helpful if you want to provide unique icons for each locale.
 
 The [`lang` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
 
@@ -358,7 +358,7 @@ Add a `crossorigin` attribute to the manifest `<link rel="manifest" crossorigin=
 
 You can set `crossOrigin` plugin option to `'use-credentials'` to enable sharing resources via cookies. Any invalid keyword or empty string will fallback to `'anonymous'`.
 
-You can find more information about `crossorigin` on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes).
+You can find more information about `crossorigin` on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin).
 
 ```js
 // in gatsby-config.js

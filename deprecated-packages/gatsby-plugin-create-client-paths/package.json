@@ -1,0 +1,41 @@
+{
+  "name": "gatsby-plugin-create-client-paths",
+  "description": "Gatsby-plugin for creating paths that exist only on the client",
+  "version": "4.10.0-next.1",
+  "author": "scott.eckenthal@gmail.com",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.15.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^2.10.0-next.1",
+    "cross-env": "^7.0.3"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-create-client-paths#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": "^4.0.0-next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-create-client-paths"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  }
+}

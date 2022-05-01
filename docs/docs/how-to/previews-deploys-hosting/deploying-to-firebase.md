@@ -24,7 +24,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
    npm install -g firebase-tools
    ```
 
-2. Sign into Firebase using your Google account by running the following command:
+2. Sign in to Firebase using your Google account by running the following command:
 
    ```shell
    firebase login
@@ -40,7 +40,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
 
    This command will prompt you to:
 
-   - select the Firebase products you wish to setup. Be sure to select **Firebase Hosting**.
+   - select the Firebase products you wish to set up. Be sure to select **Firebase Hosting**.
    - select the Firebase Project you wish to use or create a new one, if you haven't done it previously.
 
    When prompted to select your public directory, press <kbd>enter</kbd>. It will default to `public`, which is also Gatsby's default public directory.

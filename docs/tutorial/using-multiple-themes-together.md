@@ -144,7 +144,7 @@ The first component to update is `bio-content.js` which provides the content use
 
 > 💡 Don't forget to stop and restart your development server when adding a shadowed component for the first time.
 
-In order to shadow the file you need to place it in the same location it exists within the theme. In this case, that means `src/gatsby-theme-blog/components/bio-content.js`. So you'll create a file structure that looks look like this:
+In order to shadow the file, you need to place it in the same location it exists within the theme. In this case, that means `src/gatsby-theme-blog/components/bio-content.js`. So you'll create a file structure that looks like this:
 
 ```text
 └── src

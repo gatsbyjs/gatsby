@@ -130,8 +130,6 @@ createFilePath({
 
 #### Example usage
 
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
-
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
@@ -161,6 +159,8 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
 
 The `createRemoteFileNode` helper makes it easy to download remote files and add them to your site's GraphQL schema.
+
+While downloading the assets, special characters (regex: `/:|\/|\*|\?|"|<|>|\||\\/g`) in filenames are replaced with a hyphen "-". When special characters are found a file hash is added to keep files unique e.g `a:file.jpg` becomes `a-file-73hd.jpg` (as otherwise `a:file.jpg` and `a*file.jpg` would overwrite themselves).
 
 ```javascript
 createRemoteFileNode({
@@ -261,6 +261,8 @@ When working with data that isn't already stored in a file, such as when queryin
 
 The `createFileNodeFromBuffer` helper accepts a `Buffer`, caches its contents to disk, and creates a file node that points to it.
 
+The name of the file can be passed to the `createFileNodeFromBuffer` helper. If no name is given, the content hash will be used to determine the name.
+
 ## Example usage
 
 The following example is adapted from the source of [`gatsby-source-mysql`](https://github.com/malcolm-kee/gatsby-source-mysql):
@@ -341,6 +343,6 @@ module.exports = createMySqlNodes
 
 In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
 
-- `STALL_RETRY_LIMIT`, default: `3`
-- `STALL_TIMEOUT`, default: `30000`
-- `CONNECTION_TIMEOUT`, default: `30000`
+- `GATSBY_STALL_RETRY_LIMIT`, default: `3`
+- `GATSBY_STALL_TIMEOUT`, default: `30000`
+- `GATSBY_CONNECTION_TIMEOUT`, default: `30000`

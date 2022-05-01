@@ -21,7 +21,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 ### 1. Install Tailwind
 
 ```shell
-npm install tailwindcss --save-dev
+npm install tailwindcss autoprefixer
 ```
 
 ### 2. Generate Tailwind config file (optional)
@@ -143,7 +143,7 @@ plugins: [
 **Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-### 3. Add custom CSS/SCSS files
+### 3. Add base CSS/SCSS files
 
 **Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and `@apply` rules directly from your `.js` files.
 
@@ -173,36 +173,36 @@ This will be your 'master' CSS file, which you will import all other CSS within.
 }
 ```
 
-3. Apply these additional styles to the browser
+Tailwind will swap these directives out at build-time with all of the styles it generates based on your configured design system.
 
-In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS so that they are accounted for in build.
+3. Import this file into your `gatsby-browser.js`
+
+In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS to pull them into your site.
 
 ```js:title=gatsby-browser.js
 import "./src/css/index.css"
 ```
 
-### 4. Purging your CSS
+### 4. Configuring your content path
 
-Now we've fully configured Tailwind CSS, we want to make sure that only the classes we need are delivered to the browser. By default, Tailwind is a very large library because it includes every combination of every class you might think of. Most of these you won't need, so we use PurgeCSS to remove any unused classes.
+By default, Tailwind ensures that only the classes we need are delivered to the browser. Rather than including every combination of every class you might think of, Tailwind automatically removes unused classes. Because of this, it requires a configuration file to tell it which content to scan.
 
-**Note**: By default, PurgeCSS only runs on the build command as it is a relatively slow process. The development server will include all Tailwind classes, so it's highly recommended you test on a build server before deploying.
+**3.0.0 and above**
 
-From v1.4.0 onwards PurgeCSS is built into Tailwind CSS, but the approaches needed are very similar.
-
-**1.4.0 and above**
-
-In 1.4.0 you can purge your CSS directly from your Tailwind config. You need to provide an array of strings telling it which files to process.
+You can mark files to process directly from your Tailwind config. You need to provide an array of strings telling it which files to process.
 
 ```js:title=tailwind.config.js
 module.exports = {
-  purge: ["./src/**/*.js", "./src/**/*.jsx", "./src/**/*.ts", "./src/**/*.tsx"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {},
   variants: {},
   plugins: [],
 }
 ```
 
-Full documentation on this can now be found on the Tailwind site - [Tailwind PurgeCSS documentation](https://tailwindCSS.com/docs/controlling-file-size/#app)
+See Tailwind's documentation for [usage with Gatsby](https://tailwindcss.com/docs/guides/gatsby) and [extended content configuration options](https://tailwindcss.com/docs/content-configuration) for more information.
+
+> **Note:** It is **not recommended** that you include Gatsby's output directories (e.g. `public`, `.cache`) in your content array in your Tailwind config. You should only need to include your source files to have Tailwind work as expected.
 
 **Older versions**
 

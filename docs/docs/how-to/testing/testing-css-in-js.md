@@ -6,7 +6,7 @@ Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-c
 
 _Snapshot serializers_ like `jest-styled-components` or `@emotion/jest` modify the standard output to a more meaningful and readable snapshot, e.g. by removing unnecessary information or displaying data in another format. Which ultimately leads to more comparable and effective snapshot tests.
 
-By default snapshots of your styled components show the generated class names (which you didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names (hashes). That's why you should use the above mentioned _snapshot serializers_. They remove the hashes and format the CSS in style elements.
+By default snapshots of your styled components show the generated class names (which you didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names (hashes). That's why you should use the above-mentioned _snapshot serializers_. They remove the hashes and format the CSS in style elements.
 
 For this example you'll use emotion. The testing utilities of emotion and glamor are largely based on [jest-styled-components](https://github.com/styled-components/jest-styled-components) so they have a similar usage. Please have a look at the testing section of your library to follow along.
 

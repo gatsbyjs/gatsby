@@ -1,5 +1,8 @@
 ---
 title: Sourcing from Drupal
+examples:
+  - label: Using Drupal
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal"
 ---
 
 ## Why use Drupal + Gatsby together?

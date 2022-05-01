@@ -8,7 +8,7 @@ This guide will walk you through sourcing data from the filesystem.
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](/docs/quick-start/).
 
-It will also be useful if you are familiar with [GraphiQL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
+It will also be useful if you are familiar with [GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/), a tool that helps you structure your queries correctly.
 
 ## Using `gatsby-source-filesystem`
 
@@ -93,6 +93,27 @@ You can then update your query using `sourceInstanceName` and the value of the `
       }
     }
   }
+}
+```
+
+## Conditionally sourcing files using environment variables
+
+You can conditionally set the `path` option using environment variables. For context, you might decide to do this if you're sourcing a lot of files and you're interested in only sourcing a smaller batch of files during `gatsby develop`. This is also helpful when you e.g. have a staging and production environment (signaled through environment variables).
+
+The example below shows how to use `NODE_ENV` (which is automatically set to `development` during `gatsby develop`) to only source a smaller portion of the content during development. For `gatsby build` the full dataset will be used.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `markdown-pages`,
+        path: process.env.NODE_ENV === `development` ? `${__dirname}/src/content/2022` : `${__dirname}/src/content`,
+      },
+    },
+    `gatsby-transformer-remark`,
+  ],
 }
 ```
 

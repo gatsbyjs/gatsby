@@ -13,6 +13,7 @@ const initialState: IStateProgram = {
   host: `localhost`,
   sitePackageJson: {},
   extensions: [],
+  browserslist: [],
   report: reporter,
 }
 

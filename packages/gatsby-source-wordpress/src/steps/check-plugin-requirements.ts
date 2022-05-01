@@ -87,6 +87,7 @@ const areRemotePluginVersionsSatisfied = async ({
       },
       panicOnError: false,
       throwGqlErrors: true,
+      isFirstRequest: true,
     })
 
     wpgqlIsSatisfied = data.wpGatsbyCompatibility.satisfies.wpGQL
@@ -262,6 +263,7 @@ const prettyPermalinksAreEnabled = async ({
         }
       `,
       throwGqlErrors: true,
+      isFirstRequest: true,
     })
 
     if (!data.wpGatsby.arePrettyPermalinksEnabled) {
@@ -283,7 +285,12 @@ ${data.generalSettings.url}/wp-admin/options-permalink.php.
 const ensurePluginRequirementsAreMet = async (
   helpers: NodePluginArgs
 ): Promise<void> => {
-  if (helpers.traceId === `refresh-createSchemaCustomization`) {
+  if (
+    helpers.traceId === `refresh-createSchemaCustomization` ||
+    // PQR doesn't have a trace id.
+    // By the time this runs in PQR we don't need it to run again.
+    !helpers.traceId
+  ) {
     return
   }
 

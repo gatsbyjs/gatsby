@@ -2,6 +2,7 @@ import * as PropTypes from "prop-types"
 import React from "react"
 import { rhythm } from "../utils/typography"
 import { graphql } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 const propTypes = {
   user: PropTypes.shape({
@@ -12,8 +13,8 @@ const propTypes = {
 
 function Avatar({ user }) {
   return (
-    <img
-      src={user.avatar}
+    <StaticImage
+      src="https://via.placeholder.com/250"
       alt={user.username}
       css={{
         display: `block`,

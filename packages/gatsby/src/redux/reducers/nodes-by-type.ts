@@ -53,24 +53,6 @@ export const nodesByTypeReducer = (
       return state
     }
 
-    // Deprecated, will be removed in Gatsby v3.
-    case `DELETE_NODES`: {
-      const ids = action.payload
-      ids.forEach(id => {
-        Array.from(state).some(([type, nodes]) => {
-          if (nodes.has(id)) {
-            nodes.delete(id)
-            if (!nodes.size) {
-              state.delete(type)
-            }
-            return true
-          }
-          return false
-        })
-      })
-      return state
-    }
-
     default:
       return state
   }

@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    ["@babel/plugin-transform-modules-commonjs"]
+  ],
+  "overrides": [
+    {
+      "test": ["**/*.ts", "**/*.tsx"],
+      "plugins": [["@babel/plugin-transform-typescript", { "isTSX": true }]],
+    }
+  ]
+}

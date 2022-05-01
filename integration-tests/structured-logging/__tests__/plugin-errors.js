@@ -3,13 +3,7 @@ const path = require(`path`)
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 describe(`Plugin Errors`, () => {
   let gatsbyProcess
@@ -62,10 +56,10 @@ describe(`Plugin Errors`, () => {
               level: `ERROR`,
               category: `SYSTEM`,
               text: `Error text is MORE ERROR!`,
-              code: `structured-plugin-errors_12345`
-            })
-          })
-        })
+              code: `structured-plugin-errors_12345`,
+            }),
+          }),
+        }),
       ])
     )
 

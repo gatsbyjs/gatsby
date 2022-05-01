@@ -1,13 +1,6 @@
-const ProgressBar = require(`progress`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-
-const bar = new ProgressBar(
-  `Downloading Contentful Assets [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
+// @ts-check
+import { createRemoteFileNode } from "gatsby-source-filesystem"
+import { createUrl } from "./image-helpers"
 
 /**
  * @name distributeWorkload
@@ -34,24 +27,26 @@ async function distributeWorkload(workers, count = 50) {
  * @param gatsbyFunctions - Gatsby's internal helper functions
  */
 
-const downloadContentfulAssets = async gatsbyFunctions => {
+export async function downloadContentfulAssets(gatsbyFunctions) {
   const {
-    actions: { createNode, touchNode },
+    actions: { createNode, touchNode, createNodeField },
     createNodeId,
     store,
     cache,
-    getCache,
-    getNodesByType,
     reporter,
     assetDownloadWorkers,
+    getNode,
+    assetNodes,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
 
-  const assetNodes = getNodesByType(`ContentfulAsset`)
-  bar.total = assetNodes.length
-
+  const bar = reporter.createProgress(
+    `Downloading Contentful Assets`,
+    assetNodes.length
+  )
+  bar.start()
   await distributeWorkload(
     assetNodes.map(node => async () => {
       let fileNodeID
@@ -59,6 +54,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
       if (!node.file) {
+        reporter.log(id, locale)
         reporter.warn(`The asset with id: ${id}, contains no file.`)
         return Promise.resolve()
       }
@@ -68,42 +64,37 @@ const downloadContentfulAssets = async gatsbyFunctions => {
         )
         return Promise.resolve()
       }
-      const url = `https://${node.file.url.slice(2)}`
+      const url = createUrl(node.file.url)
 
       // Avoid downloading the asset again if it's been cached
       // Note: Contentful Assets do not provide useful metadata
       // to compare a modified asset to a cached version?
       if (cacheRemoteData) {
         fileNodeID = cacheRemoteData.fileNodeID // eslint-disable-line prefer-destructuring
-        touchNode({ nodeId: cacheRemoteData.fileNodeID })
+        touchNode(getNode(cacheRemoteData.fileNodeID))
       }
 
       // If we don't have cached data, download the file
       if (!fileNodeID) {
-        try {
-          const fileNode = await createRemoteFileNode({
-            url,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-            getCache,
-            reporter,
-          })
+        const fileNode = await createRemoteFileNode({
+          url,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          reporter,
+        })
 
-          if (fileNode) {
-            bar.tick()
-            fileNodeID = fileNode.id
+        if (fileNode) {
+          bar.tick()
+          fileNodeID = fileNode.id
 
-            await cache.set(remoteDataCacheKey, { fileNodeID })
-          }
-        } catch (err) {
-          // Ignore
+          await cache.set(remoteDataCacheKey, { fileNodeID })
         }
       }
 
       if (fileNodeID) {
-        node.localFile___NODE = fileNodeID
+        createNodeField({ node, name: `localFile`, value: fileNodeID })
       }
 
       return node
@@ -111,4 +102,3 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     assetDownloadWorkers
   )
 }
-exports.downloadContentfulAssets = downloadContentfulAssets

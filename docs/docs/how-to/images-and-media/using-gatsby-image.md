@@ -4,6 +4,8 @@ title: Using Gatsby Image to Prevent Image Bloat
 
 import ImageModel from "@components/layer-model/image-model"
 
+_This doc is for the deprecated `gatsby-image` package. See [Using the Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image) for the new image plugin._
+
 Using images in Gatsby components and pages requires four steps to take advantage of performance benefits.
 
 <ImageModel initialLayer="Install" />

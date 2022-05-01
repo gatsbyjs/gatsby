@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { Link, StaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
-import { css } from "emotion"
+import { css } from "@emotion/css"
 import { Helmet } from "react-helmet"
 
 import { rhythm } from "../utils/typography"

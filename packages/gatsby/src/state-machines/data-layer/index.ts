@@ -49,25 +49,8 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       id: `creating-pages`,
       src: `createPages`,
       onDone: {
-        target: `creatingPagesStatefully`,
-        actions: `assignChangedPages`,
-      },
-    },
-  },
-  creatingPagesStatefully: {
-    invoke: {
-      src: `createPagesStatefully`,
-      id: `creating-pages-statefully`,
-      onDone: {
-        target: `rebuildingSchemaWithSitePage`,
-      },
-    },
-  },
-  rebuildingSchemaWithSitePage: {
-    invoke: {
-      src: `rebuildSchemaWithSitePage`,
-      onDone: {
         target: `writingOutRedirects`,
+        actions: `assignChangedPages`,
       },
     },
   },
@@ -97,16 +80,8 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       id: `creating-pages`,
       src: `createPages`,
       onDone: {
-        target: `rebuildingSchemaWithSitePage`,
-        actions: `assignChangedPages`,
-      },
-    },
-  },
-  rebuildingSchemaWithSitePage: {
-    invoke: {
-      src: `rebuildSchemaWithSitePage`,
-      onDone: {
         target: `done`,
+        actions: `assignChangedPages`,
       },
     },
   },

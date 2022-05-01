@@ -29,6 +29,7 @@ module.exports = {
     // images with the NPM package “sharp”. It's used by
     // several other plugins.
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
     // This plugin identifies file nodes that are images and
     // transforms these to create new “ImageSharp” nodes.
     // With them you can resize images and
@@ -53,6 +54,7 @@ module.exports = {
         background_color: `#f7f7f7`,
         theme_color: `#191919`,
         display: `minimal-ui`,
+        icon: `./static/images/logo.png`,
       },
     },
     // This plugin generates a service worker and AppShell

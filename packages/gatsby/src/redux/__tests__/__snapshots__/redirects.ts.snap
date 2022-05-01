@@ -4,6 +4,7 @@ exports[`Add redirects allows you to add redirects 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/new/hello-world",
@@ -16,6 +17,7 @@ exports[`Add redirects create redirects as permanent 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world",
+    "ignoreCase": true,
     "isPermanent": true,
     "redirectInBrowser": false,
     "toPath": "/new/hello-world",
@@ -28,6 +30,7 @@ exports[`Add redirects creates redirects from the URL starts with // 1`] = `
 Object {
   "payload": Object {
     "fromPath": "//example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/new/hello-world-2",
@@ -40,6 +43,7 @@ exports[`Add redirects creates redirects from the URL starts with ftp 1`] = `
 Object {
   "payload": Object {
     "fromPath": "ftp://example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/new/hello-world-3",
@@ -52,6 +56,7 @@ exports[`Add redirects creates redirects from the URL starts with http 1`] = `
 Object {
   "payload": Object {
     "fromPath": "http://example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/new/hello-world-1",
@@ -64,6 +69,7 @@ exports[`Add redirects creates redirects from the URL starts with https 1`] = `
 Object {
   "payload": Object {
     "fromPath": "https://example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/new/hello-world-0",
@@ -76,6 +82,7 @@ exports[`Add redirects creates redirects from the URL starts with mailto 1`] = `
 Object {
   "payload": Object {
     "fromPath": "mailto:example@email.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/new/hello-world-4",
@@ -88,6 +95,7 @@ exports[`Add redirects creates redirects to the URL starts with // 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world-2",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "//example.com",
@@ -100,6 +108,7 @@ exports[`Add redirects creates redirects to the URL starts with ftp 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world-3",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "ftp://example.com",
@@ -112,6 +121,7 @@ exports[`Add redirects creates redirects to the URL starts with http 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world-1",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "http://example.com",
@@ -124,6 +134,7 @@ exports[`Add redirects creates redirects to the URL starts with https 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world-0",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "https://example.com",
@@ -136,6 +147,7 @@ exports[`Add redirects creates redirects to the URL starts with mailto 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world-4",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "mailto:example@email.com",
@@ -148,6 +160,7 @@ exports[`Add redirects creates redirects with in-browser redirect option 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/old/hello-world",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": true,
     "toPath": "/new/hello-world",
@@ -160,6 +173,7 @@ exports[`Add redirects with path prefixs allows you to add redirects 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/blog/new/hello-world",
@@ -172,6 +186,7 @@ exports[`Add redirects with path prefixs create redirects as permanent 1`] = `
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world",
+    "ignoreCase": true,
     "isPermanent": true,
     "redirectInBrowser": false,
     "toPath": "/blog/new/hello-world",
@@ -184,6 +199,7 @@ exports[`Add redirects with path prefixs creates redirects from the URL starts w
 Object {
   "payload": Object {
     "fromPath": "//example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/blog/new/hello-world-2",
@@ -196,6 +212,7 @@ exports[`Add redirects with path prefixs creates redirects from the URL starts w
 Object {
   "payload": Object {
     "fromPath": "ftp://example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/blog/new/hello-world-3",
@@ -208,6 +225,7 @@ exports[`Add redirects with path prefixs creates redirects from the URL starts w
 Object {
   "payload": Object {
     "fromPath": "http://example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/blog/new/hello-world-1",
@@ -220,6 +238,7 @@ exports[`Add redirects with path prefixs creates redirects from the URL starts w
 Object {
   "payload": Object {
     "fromPath": "https://example.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/blog/new/hello-world-0",
@@ -232,6 +251,7 @@ exports[`Add redirects with path prefixs creates redirects from the URL starts w
 Object {
   "payload": Object {
     "fromPath": "mailto:example@email.com",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "/blog/new/hello-world-4",
@@ -244,6 +264,7 @@ exports[`Add redirects with path prefixs creates redirects to the URL starts wit
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world-2",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "//example.com",
@@ -256,6 +277,7 @@ exports[`Add redirects with path prefixs creates redirects to the URL starts wit
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world-3",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "ftp://example.com",
@@ -268,6 +290,7 @@ exports[`Add redirects with path prefixs creates redirects to the URL starts wit
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world-1",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "http://example.com",
@@ -280,6 +303,7 @@ exports[`Add redirects with path prefixs creates redirects to the URL starts wit
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world-0",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "https://example.com",
@@ -292,6 +316,7 @@ exports[`Add redirects with path prefixs creates redirects to the URL starts wit
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world-4",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": false,
     "toPath": "mailto:example@email.com",
@@ -304,6 +329,7 @@ exports[`Add redirects with path prefixs creates redirects with in-browser redir
 Object {
   "payload": Object {
     "fromPath": "/blog/old/hello-world",
+    "ignoreCase": true,
     "isPermanent": false,
     "redirectInBrowser": true,
     "toPath": "/blog/new/hello-world",

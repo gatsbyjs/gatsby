@@ -7,7 +7,7 @@
 5. [Working with Nav Menus](./using-wordpress-menus.md)
 6. [Using Advanced Custom Fields](./using-advanced-custom-fields.md)
 7. [Using Self-Signed Certificates](./using-self-signed-certificates.md)
-8. [Tranforming Node Data](./transforming-data.md)
+8. [Transforming Node Data](./transforming-data.md)
 
 # Up Next :point_right:
 
@@ -19,4 +19,4 @@
 - :medal_sports: [Usage with popular WPGraphQL extensions](../usage-with-popular-wp-graphql-extensions.md)
 - :hammer_and_wrench: [Debugging and troubleshooting](../debugging-and-troubleshooting.md)
 - :national_park: [Community and Support](../community-and-support.md)
-- :point_left: [Back to README.md](../README.md)
+- :point_left: [Back to README.md](../../README.md)

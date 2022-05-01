@@ -24,7 +24,7 @@ Passing `nodeId` tells Gatsby that the page depends specifically on this node. S
 
 #### `getNodeAndSavePathDependency` helper
 
-[`getNodeAndSavePathDependency`](/docs/reference/config-files/node-api-helpers/#getNodeAndSavePathDependency) is a convenience wrapper around `getNode` and `createPageDependency`. It is not used internally. It's a legacy API for plugins to record data dependencies and is equivalent to `nodeModel.getNodeById`. The Node Model variant should be used instead as its API is less error prone. (Node Model is `path` aware and doesn't require you to pass it.)
+[`getNodeAndSavePathDependency`](/docs/reference/config-files/node-api-helpers/#getNodeAndSavePathDependency) is a convenience wrapper around `getNode` and `createPageDependency`. It is not used internally. It's a legacy API for plugins to record data dependencies and is equivalent to `nodeModel.getNodeById`. The Node Model variant should be used instead as its API is less error-prone. (Node Model is `path` aware and doesn't require you to pass it.)
 
 ## How dependencies are stored
 

@@ -40,7 +40,7 @@ The only exception to this is the file `/sw.js`, which needs to be revalidated u
 
 ## Setting up caching on different hosts
 
-How you setup your caching depends on how you host your site. We encourage people to create Gatsby plugins per host to automate the creation of caching headers.
+How you set up your caching depends on how you host your site. We encourage people to create Gatsby plugins per host to automate the creation of caching headers.
 
 The following plugins have been created:
 

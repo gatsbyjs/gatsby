@@ -1,4 +1,4 @@
-import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/create-remote-media-item-node"
+import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-local-file-node"
 
 // @todo move this to plugin options
 export const typeDefinitionFilters = [
@@ -77,28 +77,8 @@ export const typeDefinitionFilters = [
 
       objectType.fields.localFile = {
         type: `File`,
-        resolve: (mediaItemNode, _, context) => {
-          if (!mediaItemNode) {
-            return null
-          }
-
-          const localMediaNodeId = mediaItemNode?.localFile?.id
-
-          if (localMediaNodeId) {
-            const node = context.nodeModel.getNodeById({
-              id: mediaItemNode.localFile.id,
-              type: `File`,
-            })
-
-            if (node) {
-              return node
-            }
-          }
-
-          return createRemoteMediaItemNode({
-            mediaItemNode,
-            parentName: `Creating File node while resolving missing MediaItem.localFile`,
-          })
+        extensions: {
+          link: { from: `localFile.id` },
         },
       }
 

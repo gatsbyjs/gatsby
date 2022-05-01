@@ -21,8 +21,10 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     position: relative;
     overflow: hidden;
   }
+  .gatsby-image-wrapper picture.object-fit-polyfill {
+    position: static !important;
+  }
   .gatsby-image-wrapper img {
-    all: inherit;
     bottom: 0;
     height: 100%;
     left: 0;
@@ -43,6 +45,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   }
   .gatsby-image-wrapper-constrained {
     display: inline-block;
+    vertical-align: top;
   }
     `)}
     />,
@@ -90,7 +93,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
         parentElement = parentElement.parentNode;
       }
       const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
-
 
       const img = new Image();
       img.src = target.currentSrc;

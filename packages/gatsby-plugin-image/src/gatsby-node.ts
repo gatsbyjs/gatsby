@@ -1,7 +1,22 @@
 import { GatsbyNode } from "gatsby"
 import { getCacheDir } from "./node-apis/node-utils"
+import {
+  ImageFormatType,
+  ImageLayoutType,
+  ImagePlaceholderType,
+} from "./resolver-utils"
+import { major } from "semver"
 
 export * from "./node-apis/preprocess-source"
+
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
+  ({ actions, schema }) => {
+    actions.createTypes([
+      schema.buildEnumType(ImageFormatType),
+      schema.buildEnumType(ImageLayoutType),
+      schema.buildEnumType(ImagePlaceholderType),
+    ])
+  }
 
 export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
   actions,
@@ -35,7 +50,11 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   actions.setWebpackConfig({
     plugins: [
       plugins.define({
-        [`global.GATSBY___IMAGE`]: true,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        GATSBY___IMAGE: true,
+        HAS_REACT_18: JSON.stringify(
+          major(require(`react-dom/package.json`).version) >= 18
+        ),
       }),
     ],
   })

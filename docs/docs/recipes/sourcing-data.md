@@ -57,7 +57,7 @@ query MyPokemonQuery {
 
 ### Additional resources
 
-- Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/docs/tutorial/part-five/#source-plugins)
+- Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/docs/tutorial/part-5/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [source plugin tutorial](/docs/how-to/plugins-and-themes/creating-a-source-plugin/)
 - The createNode function [documentation](/docs/reference/config-files/actions/#createNode)
@@ -202,7 +202,7 @@ export const pageQuery = graphql`
 
 ### Additional resources
 
-- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-seven/)
+- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-7/)
 - [Creating and modifying pages](/docs/creating-and-modifying-pages/)
 - [Adding Markdown pages](/docs/how-to/routing/adding-markdown-pages/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
@@ -401,7 +401,7 @@ plugins: [
 
 7. Run `gatsby develop` and make sure the site compiled successfully.
 
-8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+8. Query data with the [GraphiQL editor](/docs/how-to/querying-data/running-queries-with-graphiql/) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
 ![The GraphQL interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
 
@@ -633,4 +633,4 @@ export const query = graphql`
 
 - [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
 - [More on sourcing from Drupal](/docs/how-to/sourcing-data/sourcing-from-drupal)
-- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-seven/)
+- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-7/)

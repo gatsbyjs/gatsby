@@ -2,7 +2,6 @@ import { getConfigStore } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
-import terminalLink from "terminal-link"
 
 type CancelExperimentNoticeCallback = () => void
 
@@ -57,9 +56,9 @@ flags (samples below)`
     notice =>
       (message += `
 
-${chalk.bgBlue.bold(
-  terminalLink(notice.experimentIdentifier, notice.umbrellaLink)
-)}, ${notice.noticeText}\n`)
+${chalk.bgBlue.bold(notice.experimentIdentifier)} (${notice.umbrellaLink}), ${
+        notice.noticeText
+      }\n`)
   )
 
   return message

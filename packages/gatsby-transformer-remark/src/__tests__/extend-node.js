@@ -4,7 +4,40 @@ const extendNodeType = require(`../extend-node-type`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+/**
+ * @see https://github.com/facebook/jest/issues/10529#issuecomment-904608475
+ */
+function itAsyncDone(name, cb, timeout) {
+  it(
+    name,
+    done => {
+      let doneCalled = false
+      const wrappedDone = (...args) => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+        done(...args)
+      }
+
+      wrappedDone.fail = err => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+
+        done(err)
+      }
+
+      cb(wrappedDone).catch(wrappedDone)
+    },
+    timeout
+  )
+}
+
+jest.mock(`gatsby/reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -26,14 +59,16 @@ async function queryResult(
   fragment,
   { additionalParameters = {}, pluginOptions = {} }
 ) {
+  const cache = {
+    // GatsbyCache
+    get: async () => null,
+    set: async () => null,
+  }
   const extendNodeTypeFields = await extendNodeType(
     {
       type: { name: `MarkdownRemark` },
-      cache: {
-        // GatsbyCache
-        get: async () => null,
-        set: async () => null,
-      },
+      cache,
+      getCache: () => cache,
       getNodesByType: type => [],
       ...additionalParameters,
     },
@@ -103,7 +138,7 @@ const bootstrapTest = (
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
-  it(label, async done => {
+  itAsyncDone(label, async done => {
     node.content = content
     async function createNode(markdownNode) {
       const result = await queryResult([markdownNode], query, {
@@ -112,14 +147,14 @@ const bootstrapTest = (
       })
 
       if (result.errors) {
-        done.fail(result.errors)
+        done(result.errors)
       }
 
       try {
         test(result.data.listNode[0])
         done()
       } catch (err) {
-        done.fail(err)
+        done(err)
       }
     }
 
@@ -935,7 +970,7 @@ some text
 
 some other text
 `,
-    `tableOfContents
+    `tableOfContents(absolute: true, pathToSlugField: "fields.slug")
     frontmatter {
         title
     }`,
@@ -963,7 +998,7 @@ some other text
 
 final text
 `,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -990,7 +1025,7 @@ some other text
 
 final text
 `,
-    `tableOfContents(absolute: false)
+    `tableOfContents
     frontmatter {
         title
     }`,
@@ -1012,7 +1047,7 @@ some text
 ## second title
 
 some other text`,
-    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1)
+    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1, absolute: true)
     frontmatter {
         title
     }`,
@@ -1036,7 +1071,7 @@ some text
 ## second title
 
 some other text`,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1071,7 +1106,7 @@ some other text
 # third title
 
 final text`,
-    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1101,7 +1136,7 @@ Content - content
 ### Embedding \`<code>\` Tags
 
 It's easier than you may imagine`,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1125,7 +1160,7 @@ Content - content
 ### Embedding \`<code>\` Tags
 
 It's easier than you may imagine`,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1141,6 +1176,7 @@ It's easier than you may imagine`,
               showLineNumbers: false,
               noInlineHighlight: false,
             },
+            module: require(`gatsby-remark-prismjs`),
           },
         ],
       },
@@ -1231,9 +1267,9 @@ console.log('hello world')
     `htmlAst`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(
-        node.htmlAst.children[0].children[0].properties.className
-      ).toEqual([`language-js`])
+      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
+        [`language-js`]
+      )
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
         `foo bar`
       )
@@ -1333,6 +1369,7 @@ describe(`Headings are generated correctly from schema`, () => {
           {
             resolve: require.resolve(`gatsby-remark-autolink-headers/src`),
             pluginOptions: {},
+            module: require(`gatsby-remark-autolink-headers/src`),
           },
         ],
       },

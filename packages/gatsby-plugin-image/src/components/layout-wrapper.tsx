@@ -29,6 +29,12 @@ if (hasNativeLazyLoadSupport) {
       mainImage.removeAttribute('data-srcset')
     }
 
+    const sources = mainImage.parentNode.querySelectorAll('source[data-srcset]');
+    for (let source of sources) {
+      source.setAttribute('srcset', source.dataset.srcset)
+      source.removeAttribute('data-srcset')
+    }
+
     if (mainImage.complete) {
       mainImage.style.opacity = 1;
     }
@@ -56,20 +62,18 @@ export function getSizer(
   return sizer
 }
 
-export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
+const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
   layout,
   width,
   height,
-  children,
 }) {
-  let sizer: JSX.Element | null = null
   if (layout === `fullWidth`) {
-    sizer = (
+    return (
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
   }
   if (layout === `constrained`) {
-    sizer = (
+    return (
       <div style={{ maxWidth: width, display: `block` }}>
         <img
           alt=""
@@ -85,15 +89,21 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
       </div>
     )
   }
-  return (
-    <Fragment>
-      {sizer}
-      {children}
 
-      {
-        // eslint-disable-next-line no-undef
-        SERVER && <NativeScriptLoading />
-      }
-    </Fragment>
-  )
+  return null
 }
+
+export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> =
+  function LayoutWrapper({ children, ...props }) {
+    return (
+      <Fragment>
+        <Sizer {...props} />
+        {children}
+
+        {
+          // eslint-disable-next-line no-undef
+          SERVER && <NativeScriptLoading />
+        }
+      </Fragment>
+    )
+  }

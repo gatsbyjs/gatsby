@@ -29,7 +29,7 @@ const app = express()
 app.use(cors())
 
 // Overview over all possible routes at /
-app.get(`/`, (req, res) => {
+app.get(`/`, (_, res) => {
   res.set(`Content-Type`, `text/html`)
   res.send(
     `<ul>

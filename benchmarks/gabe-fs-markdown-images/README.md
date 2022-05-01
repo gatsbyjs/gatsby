@@ -40,7 +40,7 @@ When you run the benchmark, or generate the random content files, it will first 
 
 Once the pool contains enough images for a given type/dimension, the random `.md` files are generated and for each file an image is copied from the pool as well. The copying of images is a lot faster.
 
-It's important to note that the pool will persist between benchamrk runs, while the randomly generated content does not.
+It's important to note that the pool will persist between benchmark runs, while the randomly generated content does not.
 
 ### Running the benchmark
 

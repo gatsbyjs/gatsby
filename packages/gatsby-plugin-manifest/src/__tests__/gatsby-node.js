@@ -16,7 +16,7 @@ jest.mock(`fs`, () => {
  */
 
 jest.mock(`sharp`, () => {
-  let sharp = jest.fn(
+  const sharp = jest.fn(
     () =>
       new (class {
         resize() {
@@ -104,11 +104,6 @@ describe(`Test plugin manifest options`, () => {
     fs.existsSync.mockReset()
     fs.copyFileSync.mockReset()
     sharp.mockClear()
-  })
-
-  // the require of gatsby-node performs the invoking
-  it(`invokes sharp.simd for optimization`, () => {
-    expect(sharp.simd).toHaveBeenCalledTimes(1)
   })
 
   it(`correctly works with default parameters`, async () => {
@@ -532,12 +527,11 @@ describe(`Test plugin manifest options`, () => {
 
 describe(`pluginOptionsSchema`, () => {
   it(`validates options correctly`, async () => {
-    expect(await testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
-      .toMatchInlineSnapshot(`
-      Object {
-        "errors": Array [],
-        "isValid": true,
-      }
-    `)
+    const { isValid } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      manifestOptions
+    )
+
+    expect(isValid).toBe(true)
   })
 })

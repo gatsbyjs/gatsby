@@ -1,6 +1,6 @@
 # Preview
 
-This plugin supports [Preview](https://www.gatsbyjs.com/preview/) and has been designed to replicate the normal WordPress admin preview experience as closely as possible.
+This plugin supports [Preview](https://www.gatsbyjs.com/preview/) and has been designed to make the WordPress admin preview experience as seamless as possible.
 
 ## How Preview works
 
@@ -10,30 +10,13 @@ When configured properly by a developer, preview should function almost identica
 
 You can find our tutorial on setting up WPGatsby [here](../tutorials/configuring-wp-gatsby.md#setting-up-preview). Part-way down the page there are instructions you can follow on setting up Preview.
 
-## Gutenberg and ACF
-
-Note that if you use these two together, you cannot preview ACF data. This is a core WordPress Gutenberg issue. Follow https://github.com/WordPress/gutenberg/issues/16006 for more information. If you use ACF and would like to preview data changes, use the Classic Editor plugin for now.
-
-## Template safety
-
-Be sure to guard against missing data in your templates using optional chaining so that missing data doesn't cause template errors. Trying to access properties on undefined will break your preview. For example, if you try to access `wpPost.acfFieldGroup.hero.content` but your Preview template receives `null` for `wpPost.acfFieldGroup`, your preview template will break.
-
-To guard against this you can use optional chaining by writing `wpPost?.acfFieldGroup?.hero?.content` instead.
-
-## Debugging Previews in React
-
-Since a Previewed post might have a lot less data attached to it than what you're testing with during development, you might get errors in previews when that data is missing. You can debug your previews by running Gatsby in preview mode locally.
-
-- Run Gatsby in refresh mode with `ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop`
-- Install ngrok with `npm i -g ngrok`
-- In a new terminal window run `ngrok http 8000`
-- In your WP instance's GatsbyJS settings, set your Preview instance URL to `https://your-ngrok-url.ngrok.io` and your Preview webhook to `https://your-ngrok-url.ngrok.io/__refresh`
-
-Now when you click the preview button in `wp-admin` it will use your local instance of Gatsby. You can inspect the preview template to see which Gatsby page is being loaded in the preview iframe and open it directly to do further debugging.
-
 ## Debugging the build process of Previews
 
 If you enable the plugin option `options.debug.preview` by setting it to `true`, you will see additional logging through the Preview build process with information such as the contents of the webhook body that was sent to Gatsby, the preview node data, and the list of preview actions that were pulled from WordPress. See the [plugin options](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debugpreview) documentation for more info.
+
+## Gutenberg and ACF
+
+Note that if you use these two together, you cannot preview ACF data. This is a core WordPress Gutenberg issue. Follow https://github.com/WordPress/gutenberg/issues/16006 for more information. If you use ACF and would like to preview data changes, use the Classic Editor plugin for now.
 
 ## Common gatsby-node.js problems that break previews
 
@@ -81,36 +64,9 @@ exports.createPages = async ({ graphql }) => {
 }
 ```
 
-### 2. Not including the node id in pageContext
+### 2. Using createPagesStatefully
 
-It is currently a hard requirement that the node id is added to pageContext.
-
-```js
-exports.createPages = async ({ graphql, actions }) => {
-  const graphqlResult = await graphql(/* GraphQL */ `
-    query {
-      allWpPost {
-        edges {
-          node {
-            id
-            uri
-          }
-        }
-      }
-    }
-  `)
-
-  graphqlResult.data.allWpPost.edges.map(({ node }) => {
-    actions.createPage({
-      path: node.uri,
-      component: require.resolve(`./src/components/dog.js`),
-      context: {
-        id: node.id, // if this is not included, previews will not work.
-      },
-    })
-  })
-}
-```
+The correct Node API for creating pages is [`createPages`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createPages), using `createPagesStatefully` will prevent previews from working.
 
 ## Built in Preview plugin options preset
 
@@ -168,7 +124,7 @@ The preset (as found in src/models/gatsby-api.ts) is:
 
 ## How Preview works behind the scenes
 
-When the WP "preview" button is pressed, a JWT is generated (with an expiry time of 1 hour) and POST'ed to the Gatsby Preview instance webhook. The Preview instance then uses this short-lived JWT to request a list of pending previews for all users. Gatsby starts processing each pending preview. At the same time, WordPress automatically opens the WP preview template which has been overridden by WPGatsby. Within the WP preview template you will see the admin bar at the top of the page as usual. The WordPress preview template displays a loader and waits for Gatsby to send back the preview status for the preview you're observing - it will receive a response when the preview has been processed on the Gatsby side. On the Gatsby side, it matches up the node being previewed with the Gatsby page that was created from it, once that page has been updated or created, it sends back the Gatsby page path for that page. WordPress then starts watching for the changed page to be deployed. Once it's deployed, the WordPress preview template loads the right Gatsby page in an iframe and removes the loader. In the case that there are errors on the Gatsby side, or no page is created for the node that's being previewed, Gatsby will send back an appropriate status and WPGatsby will display an error in the browser with instructions on how to resolve the issue.
+When the WP "preview" button is pressed, a JWT is generated (with an expiry time of 1 hour) and POST'ed to the Gatsby Preview instance webhook. The Preview instance then uses this short-lived JWT to request a list of pending previews for all users. Gatsby starts processing each pending preview. At the same time, WordPress automatically opens the WP preview template which has been overridden by WPGatsby to redirect to Gatsby Cloud's Content Sync service. This service handles the loading/error states and will redirect the user to the right page when it's been built.
 
 ## Preview Security Considerations
 

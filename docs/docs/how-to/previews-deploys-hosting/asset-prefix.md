@@ -20,12 +20,16 @@ module.exports = {
 
 One more step - when you build out this application, you need to add a flag so that Gatsby picks up this option.
 
-### The `--prefix-paths` flag
+### Enable prefixing for builds
 
-When building with an `assetPrefix`, you require a `--prefix-paths` flag. If this flag is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure you build out successfully, use the following command:
+You must explicitly enable prefixing for a build by either adding the `--prefix-paths` flag or setting the `PREFIX_PATHS` environment variable. If this flag or env variable is not specified, the build will ignore this option, and build out content as if it was hosted on the same domain. To ensure you build out successfully, do one of the following:
 
 ```shell
 gatsby build --prefix-paths
+```
+
+```shell
+PREFIX_PATHS=true gatsby build
 ```
 
 That's it! You have an application that is ready to have its assets deployed from a CDN and its core files (e.g. HTML files) can be hosted on a separate domain.
@@ -76,7 +80,7 @@ Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild
 
 The [`pathPrefix`](/docs/how-to/previews-deploys-hosting/path-prefix/) feature can be thought of as semi-related to this feature. That feature allows _all_ your website content to be prefixed with some constant prefix, for example you may want your blog to be hosted from `/blog` rather than the project root.
 
-This feature works seamlessly with `pathPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix.
+This feature works seamlessly with `assetPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix.
 
 ### Usage with `gatsby-plugin-offline`
 

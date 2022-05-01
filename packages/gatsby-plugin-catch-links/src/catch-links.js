@@ -105,76 +105,76 @@ export const hashShouldBeFollowed = (origin, destination) =>
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
-export const routeThroughBrowserOrApp = (
-  hrefHandler,
-  pluginOptions
-) => event => {
-  if (window.___failedResources) return true
+export const routeThroughBrowserOrApp =
+  (hrefHandler, pluginOptions) => event => {
+    if (window.___failedResources) return true
 
-  if (userIsForcingNavigation(event)) return true
+    if (userIsForcingNavigation(event)) return true
 
-  if (navigationWasHandledElsewhere(event)) return true
+    if (navigationWasHandledElsewhere(event)) return true
 
-  const clickedAnchor = findClosestAnchor(event.target)
-  if (clickedAnchor == null) return true
+    const clickedAnchor = findClosestAnchor(event.target)
+    if (clickedAnchor == null) return true
 
-  if (authorIsForcingNavigation(clickedAnchor)) return true
+    if (authorIsForcingNavigation(clickedAnchor)) return true
 
-  // IE clears the host value if the anchor href changed after creation, e.g.
-  // in React. Creating a new anchor element to ensure host value is present
-  const destination = document.createElement(`a`)
+    // IE clears the host value if the anchor href changed after creation, e.g.
+    // in React. Creating a new anchor element to ensure host value is present
+    const destination = document.createElement(`a`)
 
-  // https://html.spec.whatwg.org/multipage/links.html#concept-hyperlink-url-set
-  // If clickedAnchor has no href attribute like `<a>example</a>`, the href getter returns empty string.
-  if (clickedAnchor.href !== ``) {
-    destination.href = clickedAnchor.href
-  }
-
-  if (
-    `SVGAnimatedString` in window &&
-    clickedAnchor.href instanceof SVGAnimatedString
-  ) {
-    destination.href = clickedAnchor.href.animVal
-  }
-
-  // In IE, the default port is included in the anchor host but excluded from
-  // the location host.  This affects the ability to directly compare
-  // location host to anchor host.  For example: http://example.com would
-  // have a location.host of 'example.com' and an destination.host of
-  // 'example.com:80' Creating anchor from the location.href to normalize the
-  // host value.
-  const origin = document.createElement(`a`)
-  origin.href = window.location.href
-
-  if (urlsAreOnSameOrigin(origin, destination) === false) return true
-
-  // Regex to test pathname against pathPrefix
-  const pathStartRegEx = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
-
-  if (pathIsNotHandledByApp(destination, pathStartRegEx)) return true
-
-  if (hashShouldBeFollowed(origin, destination)) return true
-
-  if (pluginOptions.excludePattern) {
-    const excludeRegex = new RegExp(pluginOptions.excludePattern)
-    if (excludeRegex.test(destination.pathname)) {
-      return true
+    // https://html.spec.whatwg.org/multipage/links.html#concept-hyperlink-url-set
+    // If clickedAnchor has no href attribute like `<a>example</a>`, the href getter returns empty string.
+    if (clickedAnchor.href !== ``) {
+      destination.href = clickedAnchor.href
     }
+
+    if (
+      `SVGAnimatedString` in window &&
+      clickedAnchor.href instanceof SVGAnimatedString
+    ) {
+      destination.href = clickedAnchor.href.animVal
+    }
+
+    // In IE, the default port is included in the anchor host but excluded from
+    // the location host.  This affects the ability to directly compare
+    // location host to anchor host.  For example: http://example.com would
+    // have a location.host of 'example.com' and an destination.host of
+    // 'example.com:80' Creating anchor from the location.href to normalize the
+    // host value.
+    const origin = document.createElement(`a`)
+    origin.href = window.location.href
+
+    if (urlsAreOnSameOrigin(origin, destination) === false) return true
+
+    // Regex to test pathname against pathPrefix
+    const pathStartRegEx = new RegExp(`^${escapeStringRegexp(withPrefix(`/`))}`)
+
+    if (pathIsNotHandledByApp(destination, pathStartRegEx)) return true
+
+    if (hashShouldBeFollowed(origin, destination)) return true
+
+    if (pluginOptions.excludePattern) {
+      const excludeRegex = new RegExp(pluginOptions.excludePattern)
+      if (excludeRegex.test(destination.pathname)) {
+        return true
+      }
+    }
+
+    event.preventDefault()
+
+    // See issue #8907: destination.pathname already includes pathPrefix added
+    // by gatsby-transformer-remark but gatsby-link.navigate needs href without
+    const destinationPathname = slashedPathname(destination.pathname).replace(
+      pathStartRegEx,
+      `/`
+    )
+
+    hrefHandler(
+      `${destinationPathname}${destination.search}${destination.hash}`
+    )
+
+    return false
   }
-
-  event.preventDefault()
-
-  // See issue #8907: destination.pathname already includes pathPrefix added
-  // by gatsby-transformer-remark but gatsby-link.navigate needs href without
-  const destinationPathname = slashedPathname(destination.pathname).replace(
-    pathStartRegEx,
-    `/`
-  )
-
-  hrefHandler(`${destinationPathname}${destination.search}${destination.hash}`)
-
-  return false
-}
 
 export default function (root, pluginOptions, cb) {
   const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)

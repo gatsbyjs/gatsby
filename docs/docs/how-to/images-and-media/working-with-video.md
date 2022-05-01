@@ -1,5 +1,8 @@
 ---
 title: Working with Video
+examples:
+  - label: Using video
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-video"
 ---
 
 ## Sourcing video from a host

@@ -63,7 +63,7 @@ const removeEmptyFields = (
     const fields = itc.getFields()
     const nonEmptyFields = {}
     Object.keys(fields).forEach(fieldName => {
-      const fieldITC = fields[fieldName]
+      const fieldITC = fields[fieldName].type
       if (fieldITC instanceof InputTypeComposer) {
         const convertedITC = convert(fieldITC)
         if (convertedITC.getFieldNames().length) {
@@ -179,7 +179,7 @@ const convert = ({
     )
   }
 
-  schemaComposer.addAsComposer(convertedITC)
+  schemaComposer.add(convertedITC)
 
   const fieldNames = inputTypeComposer.getFieldNames()
   const convertedFields = {}
@@ -254,8 +254,6 @@ export const getFilterInput = ({
   )
   const inputTypeComposer = typeComposer.getInputTypeComposer()
 
-  // TODO: In Gatsby v2, the NodeInput.id field is of type String, not ID.
-  // Remove this workaround for v3.
   if (
     inputTypeComposer?.hasField(`id`) &&
     getNamedType(inputTypeComposer.getFieldType(`id`)).name === `ID`

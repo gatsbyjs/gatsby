@@ -76,6 +76,7 @@ module.exports = (
               options: {
                 cache: cache,
                 actions: actions,
+                isolateMDXComponent: stage === `develop`,
                 ...other,
                 pluginOptions: options,
               },

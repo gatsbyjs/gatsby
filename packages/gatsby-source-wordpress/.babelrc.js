@@ -39,4 +39,10 @@ module.exports = {
       },
     ],
   ],
+  "overrides": [
+    {
+      "test": ["**/src/gatsby-browser.ts"],
+      "presets": [["babel-preset-gatsby-package", { "browser": true, "esm": true }]]
+    }
+  ]
 }

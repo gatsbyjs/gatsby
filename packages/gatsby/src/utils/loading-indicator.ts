@@ -9,14 +9,14 @@ import { writeModule } from "./gatsby-webpack-virtual-modules"
 // to not cause problems for users when they iterate on their E2E tests
 // this check could be expanded in the future to add support for more scenarios
 // like that.
-let indicatorEnabled: "initial" | true | false | undefined = undefined
+let indicatorEnabled: "auto" | true | false | undefined = undefined
 
 export function writeVirtualLoadingIndicatorModule(): void {
   if (indicatorEnabled === undefined) {
     indicatorEnabled =
       process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
       process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
-        ? `initial`
+        ? `auto`
         : false
   }
 
@@ -25,7 +25,7 @@ export function writeVirtualLoadingIndicatorModule(): void {
     `
     export function isLoadingIndicatorEnabled() {
     return ${
-      indicatorEnabled === `initial`
+      indicatorEnabled === `auto`
         ? `\`Cypress\` in window
           ? false
           : true`
@@ -43,10 +43,18 @@ export function routeLoadingIndicatorRequests(app: Express): void {
     } else if (req.params.method === `disable` && indicatorEnabled !== false) {
       indicatorEnabled = false
       writeVirtualLoadingIndicatorModule()
+    } else if (req.params.method === `auto` && indicatorEnabled !== `auto`) {
+      indicatorEnabled = `auto`
+      writeVirtualLoadingIndicatorModule()
     }
 
-    res.send({
-      status: indicatorEnabled ? `enabled` : `disabled`,
+    res.status(200).send({
+      status:
+        indicatorEnabled === `auto`
+          ? `auto`
+          : indicatorEnabled
+          ? `enabled`
+          : `disabled`,
     })
   })
 }

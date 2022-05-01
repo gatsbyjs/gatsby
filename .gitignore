@@ -51,6 +51,7 @@ __diff_output__/
 # misc
 .serverless/
 .eslintcache
+scripts/.env
 
 # lock files
 yarn.lock
@@ -64,3 +65,5 @@ package-lock.json
 !themes/gatsby-starter-notes-theme/package-lock.json
 !themes/gatsby-starter-theme/package-lock.json
 !themes/gatsby-starter-theme-workspace/package-lock.json
+
+.parcel-cache

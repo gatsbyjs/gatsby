@@ -3,6 +3,11 @@
 exports[`Kitchen sink schema test passes kitchen sink query 1`] = `
 Object {
   "data": Object {
+    "builtIntPage": Object {
+      "pageContext": Object {
+        "id": "1685001452849004065",
+      },
+    },
     "createResolvers": Array [
       Object {
         "code": "BdiU-TTFP4h",

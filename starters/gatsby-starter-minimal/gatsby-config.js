@@ -1,5 +1,6 @@
 module.exports = {
-    plugins: [
-
-    ]
+  siteMetadata: {
+    siteUrl: `https://www.yourdomain.tld`,
+  },
+  plugins: [],
 }

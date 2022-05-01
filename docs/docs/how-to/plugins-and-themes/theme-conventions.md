@@ -150,7 +150,7 @@ export default function useSiteMetadata() {
 }
 ```
 
-Then use it in components like the a header:
+Then use it in components like a header:
 
 ```jsx:title=src/components/header.js
 import React from "react"
@@ -212,7 +212,7 @@ backwards-compatible way. This means that _existing_ public facing APIs are unaf
 Major versions are any bugfixes or new features that have been added without full
 backwards-compatibility. These are often called "breaking changes".
 
-These changes should be accompanied with a migration guide that users can follow along
+These changes should be accompanied by a migration guide that users can follow along
 for performing a theme upgrade.
 
 #### Examples of major versions

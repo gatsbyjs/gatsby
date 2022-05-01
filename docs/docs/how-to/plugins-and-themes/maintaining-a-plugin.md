@@ -36,6 +36,10 @@ It would be great for users to be able to reference several versions of the plug
 
 - Try not to push every iterative change from Git live
 
+## Subscribe to updates from the Gatsby team
+
+Please subscribe to the [For Community Plugin Authors and Maintainers](https://github.com/gatsbyjs/gatsby/discussions/30955) discussion on GitHub. This is where the Gatsby Core team will be communicating information regarding upcoming / in-process changes to Gatsby that may require updates to the plugins you maintain.
+
 ## Tools for dependency version maintenance
 
 There are a couple of useful tools that can help with keeping dependencies up to date.

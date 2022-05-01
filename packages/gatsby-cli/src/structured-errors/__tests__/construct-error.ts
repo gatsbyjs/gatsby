@@ -6,10 +6,9 @@ let log
 let processExit
 beforeEach(() => {
   log = jest.spyOn(console, `log`).mockImplementation(() => {})
-  processExit = ((jest.spyOn(
-    process,
-    `exit`
-  ) as unknown) as jest.Mock).mockImplementation(() => {})
+  processExit = (
+    jest.spyOn(process, `exit`) as unknown as jest.Mock
+  ).mockImplementation(() => {})
 
   log.mockReset()
   processExit.mockReset()
@@ -17,7 +16,7 @@ beforeEach(() => {
 
 afterAll(() => {
   ;(console.log as jest.Mock).mockClear()
-  ;((process.exit as unknown) as jest.Mock).mockClear()
+  ;(process.exit as unknown as jest.Mock).mockClear()
 })
 
 test(`it exits on invalid error schema`, () => {
@@ -48,13 +47,13 @@ test(`it constructs an error from the supplied errorMap`, () => {
       "1337": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     }
   )
 
   expect(error.code).toBe(`1337`)
-  expect(error.docsUrl).toBe(`https://www.gatsbyjs.org/docs/gatsby-cli/#new`)
+  expect(error.docsUrl).toBe(`https://www.gatsbyjs.com/docs/gatsby-cli/#new`)
 })
 
 test(`it does not overwrite internal error map`, () => {
@@ -64,7 +63,7 @@ test(`it does not overwrite internal error map`, () => {
       "95312": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     }
   )

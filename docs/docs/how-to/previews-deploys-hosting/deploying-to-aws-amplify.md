@@ -10,7 +10,7 @@ AWS Amplify is a combination of client library, CLI toolchain, and a Console for
 
 1. [Sign up for an AWS Account](https://portal.aws.amazon.com/billing/signup?redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation). There are no upfront charges or any term commitments to create an AWS account and signing up gives you immediate access to the AWS Free Tier
 
-2. This guide assumes that you have setup a Gatsby project. If you need to set up a project, start with the [Gatsby Auth starter with AWS Amplify](https://github.com/dabit3/gatsby-auth-starter-aws-amplify) then come back. The starter implements a basic authentication flow for signing up signing in users as well as protected client side routing.
+2. This guide assumes that you have set up a Gatsby project. If you need to set up a project, start with the [Gatsby Auth starter with AWS Amplify](https://github.com/dabit3/gatsby-auth-starter-aws-amplify) then come back. The starter implements a basic authentication flow for signing up signing in users as well as protected client side routing.
 
 ![Gatsby Amplify](../../images/amplify-gatsby-auth.gif)
 

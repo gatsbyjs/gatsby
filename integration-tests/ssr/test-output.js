@@ -2,12 +2,12 @@
 // - build the site first
 // - start the develop server
 // - run this script
-;(async function () {
-  const { getPageHtmlFilePath } = require(`gatsby/dist/utils/page-html`)
+async function run() {
+  const { generateHtmlPath } = require(`gatsby-core-utils`)
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)
-  const diff = require(`jest-diff`)
+  const { diff } = require(`jest-diff`)
   const prettier = require(`prettier`)
   const cheerio = require(`cheerio`)
   const stripAnsi = require(`strip-ansi`)
@@ -22,7 +22,7 @@
       // There are many script tag differences
       $(`script`).remove()
       // Only added in production
-      $(`#gatsby-global-css`).remove()
+      $(`style[data-identity="gatsby-global-css"]`).remove()
       // Only added in development
       $(`link[data-identity='gatsby-dev-css']`).remove()
       // Only in prod
@@ -38,7 +38,7 @@
     const builtHtml = format(
       filterHtml(
         fs.readFileSync(
-          getPageHtmlFilePath(join(process.cwd(), `public`), path),
+          generateHtmlPath(join(process.cwd(), `public`), path),
           `utf-8`
         )
       )
@@ -47,7 +47,7 @@
     // Fetch once to trigger re-compilation.
     await fetch(`${devSiteBasePath}/${path}`)
 
-    // Then wait for 6 seconds to ensure it's ready to go.
+    // Then wait for six seconds to ensure it's ready to go.
     // Otherwise, tests are flaky depending on the speed of the testing machine.
     await new Promise(resolve => {
       setTimeout(() => resolve(), 6000)
@@ -103,11 +103,24 @@
     paths
   )
 
-  const results = await Promise.all(paths.map(p => comparePath(p)))
+  const results = []
+
+  // Run comparisons serially, otherwise recompilation fetches
+  // interfere with each other when run within Promise.all
+  for (const path of paths) {
+    const result = await comparePath(path)
+    results.push(result)
+  }
+
   // Test all true
   if (results.every(r => r)) {
     process.exit(0)
   } else {
     process.exit(1)
   }
-})()
+}
+
+run().catch(e => {
+  console.error(e)
+  process.exit(1)
+})

@@ -14,7 +14,7 @@ const dispatchWithThunk = actionOrThunk =>
 describe(`Restricted actions`, () => {
   it(`handles actions allowed in API`, () => {
     const action = dispatchWithThunk(
-      availableActionsByAPI.sourceNodes.createTypes()
+      availableActionsByAPI.createSchemaCustomization.createTypes()
     )
     expect(action).toEqual({ type: `CREATE_TYPES` })
     expect(report.warn).not.toHaveBeenCalled()
@@ -22,9 +22,14 @@ describe(`Restricted actions`, () => {
   })
 
   it(`handles actions deprecated in API`, () => {
-    const action = dispatchWithThunk(
+    let action = dispatchWithThunk(
       availableActionsByAPI.onPreBootstrap.createTypes()
     )
+    expect(action).toEqual({ type: `CREATE_TYPES` })
+    expect(report.warn).toHaveBeenCalled()
+    expect(report.error).not.toHaveBeenCalled()
+
+    action = dispatchWithThunk(availableActionsByAPI.sourceNodes.createTypes())
     expect(action).toEqual({ type: `CREATE_TYPES` })
     expect(report.warn).toHaveBeenCalled()
     expect(report.error).not.toHaveBeenCalled()

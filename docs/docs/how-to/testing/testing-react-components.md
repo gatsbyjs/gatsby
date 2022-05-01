@@ -2,7 +2,7 @@
 title: Testing React Components
 ---
 
-_The recommended testing framework is [Jest](https://jestjs.io/). This guide assumes that you followed the [Unit testing](/docs/how-to/testing/unit-testing) guide to setup Jest._
+_The recommended testing framework is [Jest](https://jestjs.io/). This guide assumes that you followed the [Unit testing](/docs/how-to/testing/unit-testing) guide to set up Jest._
 
 The [@testing-library/react](https://github.com/testing-library/react-testing-library) by Kent C. Dodds has risen in popularity since its release and is a great replacement for [enzyme](https://github.com/airbnb/enzyme). You can write unit and integration tests and it encourages you to query the DOM in the same way the user would. Hence the guiding principle:
 
@@ -30,9 +30,13 @@ Lastly you need to tell Jest where to find this file. Open your `jest.config.js`
 
 ```js:title=jest.config.js
 module.exports = {
+  testEnvironment: `jsdom`,
   setupFilesAfterEnv: ["<rootDir>/setup-test-env.js"],
 }
 ```
+
+> **Note:** The [Jest 27](https://jestjs.io/blog/2021/05/25/jest-27#flipping-defaults) configuration `testEnvironment` default value changed to `node`,
+> you need to change it to `jsdom` for React Testing Library to work properly
 
 ## Usage
 

@@ -5,7 +5,7 @@ import Img from "gatsby-image"
 import Layout from "../../components/layout"
 
 /*
-  1. write query 
+  1. write query
   2. pass data into img component
 */
 

@@ -1,0 +1,42 @@
+{
+  "name": "trailing-slash",
+  "description": "E2E Tests for trailingSlash config option",
+  "version": "1.0.0",
+  "author": "LekoArts",
+  "dependencies": {
+    "cypress": "^9.1.1",
+    "gatsby": "next",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "license": "MIT",
+  "scripts": {
+    "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
+    "clean": "gatsby clean",
+    "serve": "gatsby serve",
+    "format": "prettier --write '**/*.js' --ignore-path .gitignore",
+    "cy:open:develop": "cypress open --config baseUrl=http://localhost:8000",
+    "cy:open:build": "cypress open --config baseUrl=http://localhost:9000 --env IS_BUILD=y",
+    "debug:develop": "start-server-and-test develop http://localhost:8000 cy:open:develop",
+    "debug:build": "start-server-and-test serve http://localhost:9000 cy:open:build",
+    "cy:develop:option": "cross-env-shell node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file \"cypress-$OPTION.json\" --config baseUrl=http://localhost:8000",
+    "cy:build:option": "cross-env-shell node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file \"cypress-$OPTION.json\" --config baseUrl=http://localhost:9000 --env IS_BUILD=y",
+    "develop:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby develop",
+    "build:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby build",
+    "t:opt:develop": "cross-env-shell OPTION=$OPTION start-server-and-test develop:option http://localhost:8000 cy:develop:option",
+    "t:opt:build": "cross-env-shell OPTION=$OPTION TRAILING_SLASH=$OPTION start-server-and-test serve http://localhost:9000 cy:build:option",
+    "test:always": "cross-env OPTION=always npm run build:option && cross-env OPTION=always npm run t:opt:build && npm run clean && cross-env OPTION=always npm run t:opt:develop",
+    "test:never": "cross-env OPTION=never npm run build:option && cross-env OPTION=never npm run t:opt:build && npm run clean && cross-env OPTION=never npm run t:opt:develop",
+    "test:ignore": "cross-env OPTION=ignore npm run build:option && cross-env OPTION=ignore npm run t:opt:build && npm run clean && cross-env OPTION=ignore npm run t:opt:develop",
+    "test:legacy": "cross-env OPTION=legacy npm run build:option && cross-env OPTION=legacy npm run t:opt:build && npm run clean && cross-env OPTION=legacy npm run t:opt:develop",
+    "test": "npm-run-all -c -s test:always test:never test:ignore test:legacy"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "gatsby-cypress": "^2.4.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "start-server-and-test": "^1.14.0"
+  }
+}

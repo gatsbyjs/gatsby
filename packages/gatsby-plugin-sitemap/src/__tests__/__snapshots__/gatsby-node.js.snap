@@ -1,25 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test plugin sitemap custom query runs 1`] = `
-"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-<urlset xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:news=\\"http://www.google.com/schemas/sitemap-news/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\" xmlns:mobile=\\"http://www.google.com/schemas/sitemap-mobile/1.0\\" xmlns:image=\\"http://www.google.com/schemas/sitemap-image/1.1\\" xmlns:video=\\"http://www.google.com/schemas/sitemap-video/1.1\\">
-<url> <loc>http://dummy.url/post/page-1</loc> <changefreq>weekly</changefreq> <priority>0.8</priority> </url>
-</urlset>"
+exports[`gatsby-plugin-sitemap Node API should accept a custom query 1`] = `
+Array [
+  Object {
+    "changefreq": "weekly",
+    "priority": 0.8,
+    "url": "http://dummy.url/page-1",
+  },
+]
 `;
 
-exports[`Test plugin sitemap default settings work properly 1`] = `
-"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-<urlset xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:news=\\"http://www.google.com/schemas/sitemap-news/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\" xmlns:mobile=\\"http://www.google.com/schemas/sitemap-mobile/1.0\\" xmlns:image=\\"http://www.google.com/schemas/sitemap-image/1.1\\" xmlns:video=\\"http://www.google.com/schemas/sitemap-video/1.1\\">
-<url> <loc>http://dummy.url/page-1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>http://dummy.url/page-2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-</urlset>"
+exports[`gatsby-plugin-sitemap Node API should succeed with default options 1`] = `
+Array [
+  Object {
+    "changefreq": "daily",
+    "priority": 0.7,
+    "url": "http://dummy.url/page-1",
+  },
+  Object {
+    "changefreq": "daily",
+    "priority": 0.7,
+    "url": "http://dummy.url/page-2",
+  },
+]
 `;
-
-exports[`Test plugin sitemap sitemap index set sitemap size and urls are less than it. 1`] = `
-"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-<urlset xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:news=\\"http://www.google.com/schemas/sitemap-news/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\" xmlns:mobile=\\"http://www.google.com/schemas/sitemap-mobile/1.0\\" xmlns:image=\\"http://www.google.com/schemas/sitemap-image/1.1\\" xmlns:video=\\"http://www.google.com/schemas/sitemap-video/1.1\\">
-<url> <loc>http://dummy.url/page-1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>http://dummy.url/page-2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-</urlset>"
-`;
-

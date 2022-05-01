@@ -22,13 +22,13 @@ When users and plugins add types using `createTypes`, those types are added to t
 
 ## 3. Legacy schema customization
 
-Before schema customization was added, there were several ways that one could modify the schema. Those were the `createNodeField` action, `setFieldsOnGraphQLType` API and `graphql-config.js` mappings.
+Before schema customization was added, there were several ways that one could modify the schema. Those were the `createNodeField` action, `setFieldsOnGraphQLNodeType` API and `graphql-config.js` mappings.
 
 ### `createNodeField`
 
 This adds a field under the `fields` field. Plugins can't modify types that they haven't created, so you can use this method to add data to nodes that your plugin doesn't own. This doesn't modify the schema directly. Instead, those fields are picked by inference. There are no plans to deprecate this API at the moment.
 
-### `setFieldsOnGraphQLType`
+### `setFieldsOnGraphQLNodeType`
 
 This allows adding GraphQL Fields to any node type. This operates on GraphQL types itself and the syntax matches `graphql-js` field definitions. This API will be marked as deprecated in Gatsby v3, moved under a flag in Gatsby v4, and removed from Gatsby v5. `createTypes` and `addResolvers` should solve all the use cases for this API.
 

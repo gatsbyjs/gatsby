@@ -2,9 +2,9 @@
 title: Gatsby Config API
 ---
 
-The file `gatsby-config.js` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site.
+The file `gatsby-config.js`/`gatsby-config.ts` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site. You can author the file in JavaScript or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-configts).
 
-If you created a Gatsby site with the `gatsby new` command, there should already be a sample configuration file in your site's directory.
+If you created a Gatsby site with the `npm init gatsby` command, there should already be a sample configuration file in your site's directory.
 _Note: There are many sample configs which may be helpful to reference in the different [Gatsby Example Websites](https://github.com/gatsbyjs/gatsby/tree/master/examples)._
 
 ## Set up the configuration file
@@ -37,18 +37,23 @@ module.exports = {
 }
 ```
 
+The [TypeScript and Gatsby documentation](/docs/how-to/custom-configuration/typescript/#gatsby-configts) shows how to set up a configuration file in TypeScript.
+
 ## Configuration options
 
 Options available to set within `gatsby-config.js` include:
 
 1. [siteMetadata](#sitemetadata) (object)
-2. [plugins](#plugins) (array)
-3. [flags](#flags) (object)
-4. [pathPrefix](#pathprefix) (string)
-5. [polyfill](#polyfill) (boolean)
-6. [mapping](#mapping-node-types) (object)
-7. [proxy](#proxy) (object)
-8. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
+1. [plugins](#plugins) (array)
+1. [flags](#flags) (object)
+1. [pathPrefix](#pathprefix) (string)
+1. [trailingSlash](#trailingslash) (string)
+1. [polyfill](#polyfill) (boolean)
+1. [mapping](#mapping-node-types) (object)
+1. [proxy](#proxy) (object)
+1. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
+1. [jsxRuntime](#jsxruntime) (string)
+1. [jsxImportSource](#jsximportsource) (string)
 
 ## siteMetadata
 
@@ -66,9 +71,9 @@ module.exports = {
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
 
-See a full description and sample usage in [Gatsby.js Tutorial Part Four](/docs/tutorial/part-four/#data-in-gatsby).
+See a full description and sample usage in [Gatsby Tutorial Part Four](/docs/tutorial/part-4/#data-in-gatsby).
 
-## Plugins
+## plugins
 
 Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options (see the docs for individual plugins).
 
@@ -135,7 +140,7 @@ module.exports = {
 
 See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to see available official and community plugins.
 
-## Flags
+## flags
 
 Flags let sites enable experimental or upcoming changes that are still in testing or waiting for the next major release.
 
@@ -144,7 +149,7 @@ Flags let sites enable experimental or upcoming changes that are still in testin
 ```javascript:title=gatsby-config.js
 module.exports = {
   flags: {
-    QUERY_ON_DEMAND: true,
+    DEV_SSR: true,
   },
 }
 ```
@@ -161,7 +166,17 @@ module.exports = {
 
 See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path-prefix/).
 
-## Polyfill
+## trailingSlash
+
+Configures the creation of URLs for pages, and whether to remove, append, or ignore trailing slashes.
+
+- `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
+- `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.
+- `ignore`: Don't automatically modify the URL
+
+The default setting for this option is `legacy` in order to preserve existing behavior for current users. In Gatsby v5 the default mode will be `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option. Alternate hosting providers (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
+
+## polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
 
@@ -177,9 +192,9 @@ See more about [Browser Support](/docs/how-to/custom-configuration/browser-suppo
 
 ## Mapping node types
 
-Gatsby includes an advanced feature that lets you create "mappings" between node types.
+**Please note:** We strongly recommend using the [`@link` GraphQL directive](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) instead. It supports more use cases and will be the preferred method for foreign-keys in the future.
 
-> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields).
+Gatsby includes a feature that lets you create "mappings" between node types.
 
 For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a YAML file named `author.yaml`:
 
@@ -193,18 +208,18 @@ A treatise on the efficacy of bezoar for treating agricultural pesticide poisoni
 ```
 
 ```yaml:title=author.yaml
-- id: Kyle Mathews
+- name: Kyle Mathews
   bio: Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
   twitter: "@kylemathews"
 ```
 
-You can map between the `author` field in `frontmatter` to the id in the `author.yaml` objects by adding to your `gatsby-config.js`:
+You can map between the `author` field in `frontmatter` to the `name` in the `author.yaml` objects by adding to your `gatsby-config.js`:
 
 ```javascript
 module.exports = {
   plugins: [...],
   mapping: {
-    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
+    "MarkdownRemark.frontmatter.author": `AuthorYaml.name`,
   },
 }
 ```
@@ -214,7 +229,7 @@ You may need to install the appropriate file transformer (in this case [YAML](/p
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 
 ```graphql
-query($slug: String!) {
+query ($slug: String!) {
   markdownRemark(fields: { slug: { eq: $slug } }) {
     html
     fields {
@@ -224,7 +239,7 @@ query($slug: String!) {
       title
       author {
         # This now links to the author object
-        id
+        name
         bio
         twitter
       }
@@ -233,8 +248,7 @@ query($slug: String!) {
 }
 ```
 
-Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files
-`experience.json` and `tech.json` as follows:
+Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files `experience.json` and `tech.json` as follows:
 
 ```json:title=experience.json
 [
@@ -261,13 +275,13 @@ Mapping can also be used to map an array of ids to any other collection of data.
 ```json:title=tech.json
 [
   {
-    "id": "REACT",
+    "name": "REACT",
     "icon": "facebook",
     "color": "teal",
     "label": "React"
   },
   {
-    "id": "NODE",
+    "name": "NODE",
     "icon": "server",
     "color": "green",
     "label": "NodeJS"
@@ -281,16 +295,16 @@ And then add the following rule to your `gatsby-config.js`:
 module.exports = {
   plugins: [...],
   mapping: {
-    'ExperienceJson.items.tech': `TechJson`
+    'ExperienceJson.items.tech': `TechJson.name`
   },
 }
 ```
 
-You can query the `tech` object via the referred ids in `experience`:
+You can query the `tech` object via the referred items in `experience`:
 
 ```graphql
 query {
-  experience: allExperienceJson {
+  allExperienceJson {
     edges {
       node {
         company
@@ -355,3 +369,26 @@ See more about [Proxying API Requests in Develop](/docs/api-proxy/).
 ## Advanced proxying with `developMiddleware`
 
 See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
+
+## jsxRuntime
+
+Setting to `automatic` allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  jsxRuntime: "automatic",
+}
+```
+
+## jsxImportSource
+
+When `jsxRuntime` is set you can choose which package React should use as underlying JSX transformer with `jsxImportSource`. For example you can set it to `@emotion/react` so by default `@emotion/react` is used instead of the `react` package.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  jsxRuntime: "automatic",
+  jsxImportSource: "@emotion/react",
+}
+```
+
+**Please note:** For now you'll also need to set this configuration inside `babel-preset-gatsby`, see [its jsxImportSource documentation](https://github.com/gatsbyjs/gatsby/blob/master/packages/babel-preset-gatsby/README.md#reactImportSource).

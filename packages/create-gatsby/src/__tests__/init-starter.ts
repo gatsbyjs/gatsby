@@ -4,20 +4,21 @@ import execa from "execa"
 import fs from "fs-extra"
 import path from "path"
 import { initStarter } from "../init-starter"
-import { reporter } from "../reporter"
+import { reporter } from "../utils/reporter"
 
 jest.mock(`tiny-spin`, () => {
   return {
     spin: (): (() => void) => jest.fn(),
   }
 })
-jest.mock(`../utils`)
+jest.mock(`../utils/clear-line`)
+jest.mock(`../utils/make-npm-safe`)
 jest.mock(`execa`)
 jest.mock(`child_process`)
 jest.mock(`fs-extra`)
 jest.mock(`path`)
-jest.mock(`../reporter`)
-jest.mock(`../get-config-store`, () => {
+jest.mock(`../utils/reporter`)
+jest.mock(`../utils/get-config-store`, () => {
   return {
     getConfigStore: (): unknown => {
       return {
@@ -153,7 +154,15 @@ describe(`init-starter`, () => {
       )
       expect(execa).toBeCalledWith(
         `npm`,
-        [`install`, `--loglevel`, `error`, `--color`, `always`, `one-package`],
+        [
+          `install`,
+          `--loglevel`,
+          `error`,
+          `--color`,
+          `always`,
+          `--legacy-peer-deps`,
+          `one-package`,
+        ],
         { stderr: `inherit` }
       )
     })

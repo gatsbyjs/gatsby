@@ -1,4 +1,4 @@
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 
 export const CODES = {
   Generic: `12101`,

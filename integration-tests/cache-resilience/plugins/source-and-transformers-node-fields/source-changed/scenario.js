@@ -137,23 +137,25 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
             Object {
+    -         \\"name\\": \\"children\\",
+    +         \\"name\\": \\"bar\\",
+            },
+            Object {
+    -         \\"name\\": \\"fields\\",
+    +         \\"name\\": \\"children\\",
+            },
+            Object {
+    -         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"fields\\",
+            },
+            Object {
               \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
-            Object {
-              \\"name\\": \\"children\\",
             },
             Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-    -         \\"name\\": \\"foo\\",
-    +         \\"name\\": \\"bar\\",
-            },
-            Object {
-              \\"name\\": \\"fields\\",
+              \\"name\\": \\"parent\\",
             },
           ],
         },

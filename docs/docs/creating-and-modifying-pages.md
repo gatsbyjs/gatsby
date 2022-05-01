@@ -19,7 +19,7 @@ Pages can also be modified by you after their creation. For example, you could c
 To see what pages are being created by your code or plugins, you can query for
 page information while developing in Graph<em>i</em>QL. Paste the following query in
 the Graph<em>i</em>QL IDE for your site. The Graph<em>i</em>QL IDE is available when running
-your sites development server at `HOST:PORT/___graphql` e.g.
+your site's development server at `HOST:PORT/___graphql` e.g.
 `http://localhost:8000/___graphql`.
 
 ```graphql
@@ -125,7 +125,7 @@ Using the `id` as an access point to query for other properties in the template 
 const path = require("path")
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
   const queryResults = await graphql(`
     query AllProducts {
       allProducts {
@@ -137,21 +137,20 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `);
+  `)
 
-  const productTemplate = path.resolve(`src/templates/product.js`);
+  const productTemplate = path.resolve(`src/templates/product.js`)
   queryResults.data.allProducts.nodes.forEach(node => {
     createPage({
       path: `/products/${node.id}`,
       component: productTemplate,
       context: {
         // This time the entire product is passed down as context
-        product: node
-      }
-    });
-  });
-};
-};
+        product: node,
+      },
+    })
+  })
+}
 ```
 
 > You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query).
@@ -263,6 +262,23 @@ export default Page
 ```
 
 Page context is serialized before being passed to pages. This means it can't be used to pass functions into components and `Date` objects will be serialized into strings.
+
+## Optimizing pages for Content Sync
+
+When using the [Content Sync](/docs/conceptual/content-sync) feature on Gatsby Cloud, an optional parameter, `ownerNodeId`, can be passed to the `createPage` action to allow greater control over where content is previewed. By passing a value to `ownerNodeId`, you can ensure that Content Sync will redirect content authors to the page they intend to preview their content on. The value of `ownerNodeId` should be set to the id of the node that's the preferred node to preview for each page. This is typically the id of the node that's used to create the page path for each page.
+
+```javascript:title=gatsby-node.js
+const posts = result.data.allPosts.nodes
+
+posts.forEach((post) => {
+  createPage({
+    path: `/blog/${post.slug}/`,
+    component: blogPost,
+    context: {},
+    ownerNodeId: post.id, // highlight-line
+  })
+})
+```
 
 ## Creating client-only routes
 

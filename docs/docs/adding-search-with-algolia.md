@@ -313,7 +313,7 @@ You now need to hook up the two components to each other and perform the actual 
 
 ```jsx:title=src/components/search/index.js
 import algoliasearch from "algoliasearch/lite"
-import { createRef, default as React, useState } from "react"
+import { createRef, default as React, useState, useMemo } from "react"
 import { InstantSearch } from "react-instantsearch-dom"
 import { ThemeProvider } from "styled-components"
 import StyledSearchBox from "./styled-search-box"
@@ -331,9 +331,13 @@ export default function Search({ indices }) {
   const rootRef = createRef()
   const [query, setQuery] = useState()
   const [hasFocus, setFocus] = useState(false)
-  const searchClient = algoliasearch(
-    process.env.GATSBY_ALGOLIA_APP_ID,
-    process.env.GATSBY_ALGOLIA_SEARCH_KEY
+  const searchClient = useMemo(
+    () =>
+      algoliasearch(
+        process.env.GATSBY_ALGOLIA_APP_ID,
+        process.env.GATSBY_ALGOLIA_SEARCH_KEY
+      ),
+    []
   )
 
   useClickOutside(rootRef, () => setFocus(false))
@@ -361,6 +365,8 @@ export default function Search({ indices }) {
 The `ThemeProvider` exports variables for the CSS to use (this is the [theming](https://styled-components.com/docs/advanced#theming) functionality of `styled-components`). If you are using `styled-components` elsewhere in your project you probably want to place it at the root of your widget hierarchy rather than in the search widget itself.
 
 The `hasFocus` variable tracks whether the search box is currently in focus. When it is, it should display the input field (if not, only the search icon button is visible).
+
+The `searchClient` variable is [memoized](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid re-creating the Algolia search client when the `Search` component is re-rendered. This is important for performance, as the client caches searches to minimise the number of requests made to Algolia.
 
 `StyledSearchRoot` is the root of the whole component. The React hook `useClickOutside` provides a callback if the user clicks anywhere else on the page, in which case it should close.
 
@@ -582,7 +588,7 @@ You can also play around with it at [https://janosh.io/blog](https://janosh.io/b
 
 ## Deploying to Netlify
 
-If you try to deploy the project to Netlify, the deployment will fail with the error `AlgoliaSearchError: Please provide an application ID`. This is because Netlify does does not have access to the Algolia configuration. Remember, it is kept in the `.env` file which is not checked in.
+If you try to deploy the project to Netlify, the deployment will fail with the error `AlgoliaSearchError: Please provide an application ID`. This is because Netlify does not have access to the Algolia configuration. Remember, it is kept in the `.env` file which is not checked in.
 
 You therefore need to declare the same environment variables you put in `.env` in Netlify. Go to your Netlify site dashboard under **Settings > Build & deploy > Environment > Environment variables** and enter the keys `GATSBY_ALGOLIA_APP_ID`, `GATSBY_ALGOLIA_SEARCH_KEY` and `ALGOLIA_ADMIN_KEY` with the same values as you used in the `.env` file. After a redeploy, the search should now work!
 

@@ -8,7 +8,6 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const { createProgress } = require(`gatsby-source-filesystem/utils`)
 
 const { createFileNode } = require(`gatsby-source-filesystem/create-file-node`)
 const {
@@ -22,7 +21,7 @@ let bar
 // Keep track of the total number of jobs we push in the queue
 let totalJobs = 0
 
-/** ******************
+/********************
  * Type Definitions *
  ********************/
 
@@ -56,13 +55,18 @@ let totalJobs = 0
  * @param  {Reporter} [options.reporter]
  */
 
-const STALL_RETRY_LIMIT = 3
-const STALL_TIMEOUT = 30000
+const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT
+  ? parseInt(process.env.GATSBY_STALL_RETRY_LIMIT, 10)
+  : 3
+const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT
+  ? parseInt(process.env.GATSBY_STALL_TIMEOUT, 10)
+  : 30000
 
-const CONNECTION_RETRY_LIMIT = 5
-const CONNECTION_TIMEOUT = 30000
+const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT
+  ? parseInt(process.env.GATSBY_CONNECTION_TIMEOUT, 10)
+  : 30000
 
-/** ******************
+/********************
  * Queue Management *
  ********************/
 
@@ -135,7 +139,7 @@ async function pushToQueue(task, cb) {
   }
 }
 
-/** ****************
+/******************
  * Core Functions *
  ******************/
 
@@ -155,7 +159,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
   new Promise((resolve, reject) => {
     let timeout
 
-    // Called if we stall for 30s without receiving any data
+    // Called if we stall without receiving any data
     const handleTimeout = async () => {
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
@@ -185,8 +189,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
 
     const responseStream = got.stream(url, {
       headers,
-      timeout: CONNECTION_TIMEOUT,
-      retries: CONNECTION_RETRY_LIMIT,
+      timeout: { send: CONNECTION_TIMEOUT },
       ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
@@ -351,7 +354,7 @@ const pushTask = task =>
       })
   })
 
-/** *************
+/***************
  * Entry Point *
  ***************/
 
@@ -431,7 +434,7 @@ module.exports = ({
   }
 
   if (totalJobs === 0) {
-    bar = createProgress(`Downloading remote files`, reporter)
+    bar = reporter.createProgress(`Downloading remote files`)
     bar.start()
   }
 

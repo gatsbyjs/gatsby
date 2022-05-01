@@ -4,14 +4,14 @@ If you've had previous experience with Gatsby or you like to move fast, you can 
 
 ## Quick start
 
-1. [Install Node, Gatsby, and gatsby-cli](https://www.gatsbyjs.org/docs/)
+1. [Install Node, Gatsby, and gatsby-cli](https://www.gatsbyjs.com/docs/)
 2. Install [a starter](https://github.com/gatsbyjs/gatsby-starter-wordpress-blog) `gatsby new my-wordpress-gatsby-site https://github.com/gatsbyjs/gatsby-starter-wordpress-blog`
 3. Install and activate both of the following plugins in a live WordPress instance.
 
    - [WPGraphQL](https://wordpress.org/plugins/wp-graphql/)
    - [WPGatsby](https://wordpress.org/plugins/wp-gatsby/)
 
-4. In the `gatsby-config.js` of the starter you just set up, update the plugin options for `gatsby-source-wordpress`. Change the `url` option so that it points to your WordPress instance GraphQL url. This should be the full url of your GraphQL endpoint. Eg `https://yoursite.com/graphql`
+4. In the `gatsby-config.js` of the starter you just set up, update the plugin options for `gatsby-source-wordpress`. Change the `url` option so that it points to your WordPress instance GraphQL url. This should be the full url of your GraphQL endpoint. E.g. `https://yoursite.com/graphql`
 5. Run `gatsby develop` and experience the magic :star2:
 6. Create your beautiful and accessible app :nail_care:
 7. Build with [Gatsby Cloud](https://www.gatsbyjs.com/) & deploy to [Netlify](https://www.gatsbyjs.com/guides/netlify/) for a fast, wonderful, _and_ affordable CI/CD experience :boom: :rocket:

@@ -16,12 +16,10 @@ export const transformUnion = ({ field, fieldName }) => {
 
         if (gatsbyNode) {
           return gatsbyNode
-        } else {
-          return null
         }
       }
 
-      return resolvedField
+      return resolvedField ?? null
     },
   }
 }
@@ -44,9 +42,7 @@ export const transformListOfUnions = ({ field, fieldName }) => {
       }
 
       return resolvedField.reduce((accumulator, item) => {
-        // @todo use our list of Gatsby node types to do a more performant check
-        // on wether this is a Gatsby node or not.
-        const node = item.id
+        const node = item?.id
           ? context.nodeModel.getNodeById({
               id: item.id,
               type: buildTypeName(item.__typename),
@@ -55,7 +51,7 @@ export const transformListOfUnions = ({ field, fieldName }) => {
 
         if (node) {
           accumulator.push(node)
-        } else if (!item.id) {
+        } else if (item && !item.id) {
           accumulator.push(item)
         }
 

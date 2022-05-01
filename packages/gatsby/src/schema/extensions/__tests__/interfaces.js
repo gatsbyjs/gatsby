@@ -9,8 +9,10 @@ const { createTypes, createFieldExtension } = actions
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.panic = jest.fn()
+report.warn = jest.fn()
 afterEach(() => {
   report.panic.mockClear()
+  report.warn.mockClear()
 })
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -35,7 +37,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-describe(`Queryable Node interfaces`, () => {
+describe(`Queryable Node interfaces with interface inheritance`, () => {
   beforeEach(() => {
     dispatch({ type: `DELETE_CACHE` })
     const nodes = [
@@ -73,7 +75,7 @@ describe(`Queryable Node interfaces`, () => {
     )
     dispatch(
       createTypes(`
-        interface TestInterface @nodeInterface {
+        interface TestInterface implements Node {
           id: ID!
           foo: String
           date: Date @dateformat
@@ -92,7 +94,7 @@ describe(`Queryable Node interfaces`, () => {
     )
   })
 
-  it(`adds root query fields for interface with @nodeInterface extension`, async () => {
+  it(`adds root query fields for interface with Node interface`, async () => {
     const { schema } = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
     expect(rootQueryFields.testInterface).toBeDefined()
@@ -101,7 +103,7 @@ describe(`Queryable Node interfaces`, () => {
     expect(rootQueryFields.allTestInterface.resolve).toBeDefined()
   })
 
-  it(`does not add root query fields for interface without @nodeInterface extension`, async () => {
+  it(`does not add root query fields for interface without Node inheritance`, async () => {
     dispatch(
       createTypes(`
         interface WrongInterface {
@@ -122,10 +124,10 @@ describe(`Queryable Node interfaces`, () => {
     expect(rootQueryFields.allWrongInterface).toBeUndefined()
   })
 
-  it(`shows error when not all types implementing the queryable interface als implement the Node interface`, async () => {
+  it(`shows error when not all types implementing the queryable interface implement the Node interface`, async () => {
     dispatch(
       createTypes(`
-        interface WrongInterface @nodeInterface {
+        interface WrongInterface implements Node {
           id: ID!
           foo: String
         }
@@ -139,20 +141,17 @@ describe(`Queryable Node interfaces`, () => {
     )
     await buildSchema()
     expect(report.panic).toBeCalledWith(
-      `Interfaces with the \`nodeInterface\` extension must only be implemented ` +
-        `by types which also implement the \`Node\` interface. Check the type ` +
-        `definition of \`Wrong\`, \`WrongAgain\`.`
+      `Types implementing queryable interfaces must also implement the \`Node\` interface. ` +
+        `Check the type definition of \`Wrong\`, \`WrongAgain\`.`
     )
   })
 
-  it(`adds root query fields for interface with @nodeInterface extension (type builder)`, async () => {
+  it(`adds root query fields for interface extending Node interface (type builder)`, async () => {
     dispatch(
       createTypes([
         buildInterfaceType({
           name: `TypeBuilderInterface`,
-          extensions: {
-            nodeInterface: true,
-          },
+          interfaces: [`Node`],
           fields: {
             id: `ID!`,
             foo: `String`,
@@ -338,14 +337,14 @@ describe(`Queryable Node interfaces`, () => {
     expect(results).toEqual(expected)
   })
 
-  it(`shows error when interface with @nodeInterface extension does not have id field`, async () => {
+  it(`shows error when interface implementing Node interface does not have id field`, async () => {
     dispatch(
       createTypes(`
-        interface NotWrongInterface @nodeInterface {
+        interface NotWrongInterface implements Node {
           id: ID!
           foo: String
         }
-        interface WrongInterface @nodeInterface {
+        interface WrongInterface implements Node {
           foo: String
         }
       `)
@@ -426,7 +425,7 @@ describe(`Queryable Node interfaces`, () => {
     )
     dispatch(
       createTypes(`
-        interface Post @nodeInterface {
+        interface Post implements Node {
           id: ID!
           author: Author @link
         }
@@ -436,7 +435,7 @@ describe(`Queryable Node interfaces`, () => {
         type ThatPost implements Node & Post {
           author: Author @link
         }
-        interface Author @nodeInterface {
+        interface Author implements Node {
           id: ID!
           name: String
           echo: String @echo(value: "Interface")
@@ -504,6 +503,7 @@ describe(`Queryable Node interfaces`, () => {
         internal: {
           type: `FooConcrete`,
           contentDigest: `0`,
+          counter: 0,
         },
       },
     ]
@@ -514,7 +514,7 @@ describe(`Queryable Node interfaces`, () => {
 
     dispatch(
       createTypes(`
-        interface FooInterface @nodeInterface {
+        interface FooInterface implements Node {
           id: ID!
           title: String
           slug: String

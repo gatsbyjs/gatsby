@@ -1,3 +1,4 @@
+/* eslint-disable @babel/no-invalid-this */
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
 const fsExtra = require(`fs-extra`)
@@ -62,9 +63,9 @@ const newLinkURL = (linkNode, options, pathPrefix) => {
 }
 
 function toArray(buf) {
-  var arr = new Array(buf.length)
+  const arr = new Array(buf.length)
 
-  for (var i = 0; i < buf.length; i++) {
+  for (let i = 0; i < buf.length; i++) {
     arr[i] = buf[i]
   }
 
@@ -88,10 +89,7 @@ module.exports = (
   // Copy linked files to the destination directory and modify the AST to point
   // to new location of the files.
   const visitor = link => {
-    if (
-      isRelativeUrl(link.url) &&
-      getNode(markdownNode.parent).internal.type === `File`
-    ) {
+    if (isRelativeUrl(link.url) && getNode(markdownNode.parent).dir) {
       const linkPath = path.posix.join(
         getNode(markdownNode.parent).dir,
         link.url
@@ -192,11 +190,8 @@ module.exports = (
       return
     }
 
-    // since dir will be undefined on non-files
-    if (
-      markdownNode.parent &&
-      getNode(markdownNode.parent).internal.type !== `File`
-    ) {
+    // Just make sure the parent node has dir
+    if (markdownNode.parent && !getNode(markdownNode.parent).dir) {
       return
     }
 
@@ -276,11 +271,9 @@ module.exports = (
     ).forEach(processUrl)
 
     // Handle video poster.
-    extractUrlAttributeAndElement(
-      $(`video[poster]`),
-      `poster`
-    ).forEach(extractedUrlAttributeAndElement =>
-      processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
+    extractUrlAttributeAndElement($(`video[poster]`), `poster`).forEach(
+      extractedUrlAttributeAndElement =>
+        processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
     )
 
     // Handle audio tags.

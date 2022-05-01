@@ -13,7 +13,7 @@ describe(`The GraphQL endpoint`, () => {
     it(`Should appear on ${endpoint}`, () => {
       cy.visit(endpoint)
       cy.get(`.graphiql-container`).should(`be.visible`)
-      cy.title().should(`eq`, `GraphiQL`)
+      cy.title().should(`eq`, `Gatsby - GraphiQL`)
     })
 
     it(`Should execute queries from query string on ${endpoint}`, () => {

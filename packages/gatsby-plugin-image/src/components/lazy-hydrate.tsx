@@ -1,16 +1,12 @@
+/* global HAS_REACT_18 */
 import React, { MutableRefObject } from "react"
-import { hydrate, render } from "react-dom"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
 import { Placeholder } from "./placeholder"
 import { MainImageProps, MainImage } from "./main-image"
-import {
-  getMainProps,
-  getPlaceholderProps,
-  hasNativeLazyLoadSupport,
-  hasImageLoaded,
-} from "./hooks"
+import { getMainProps, getPlaceholderProps } from "./hooks"
 import { ReactElement } from "react"
+import type { Root } from "react-dom/client"
 
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoading: boolean
@@ -19,7 +15,37 @@ type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   ref: MutableRefObject<HTMLImageElement | undefined>
 }
 
-const IS_DEV = process.env.NODE_ENV === `development`
+let reactRender
+let reactHydrate
+if (HAS_REACT_18) {
+  const reactDomClient = require(`react-dom/client`)
+  reactRender = (
+    Component: React.ReactChild | Iterable<React.ReactNode>,
+    el: ReactDOM.Container,
+    root: Root
+  ): Root => {
+    if (!root) {
+      root = reactDomClient.createRoot(el)
+    }
+
+    root.render(Component)
+
+    return root
+  }
+  reactHydrate = (
+    Component: React.ReactChild | Iterable<React.ReactNode>,
+    el: ReactDOM.Container
+  ): Root => reactDomClient.hydrateRoot(el, Component)
+} else {
+  const reactDomClient = require(`react-dom`)
+  reactRender = (
+    Component: React.ReactChild | Iterable<React.ReactNode>,
+    el: ReactDOM.Container
+  ): void => {
+    reactDomClient.render(Component, el)
+  }
+  reactHydrate = reactDomClient.hydrate
+}
 
 export function lazyHydrate(
   {
@@ -37,7 +63,9 @@ export function lazyHydrate(
     ...props
   }: LazyHydrateProps,
   root: MutableRefObject<HTMLElement | undefined>,
-  hydrated: MutableRefObject<boolean>
+  hydrated: MutableRefObject<boolean>,
+  forceHydrate: MutableRefObject<boolean>,
+  reactRootRef: MutableRefObject<Root>
 ): (() => void) | null {
   const {
     width,
@@ -48,18 +76,7 @@ export function lazyHydrate(
     backgroundColor: wrapperBackgroundColor,
   } = image
 
-  if (!root.current) {
-    return null
-  }
-
-  const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
-  // On first server hydration do nothing
-  if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
-    return null
-  }
-
   const cacheKey = JSON.stringify(images)
-  const hasLoaded = hasImageLoaded(cacheKey)
 
   imgStyle = {
     objectFit,
@@ -70,24 +87,27 @@ export function lazyHydrate(
 
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
-      {!hasLoaded && (
-        <Placeholder
-          {...getPlaceholderProps(
-            placeholder,
-            isLoaded,
-            layout,
-            width,
-            height,
-            wrapperBackgroundColor
-          )}
-        />
-      )}
+      <Placeholder
+        {...getPlaceholderProps(
+          placeholder,
+          isLoaded,
+          layout,
+          width,
+          height,
+          wrapperBackgroundColor,
+          objectFit,
+          objectPosition
+        )}
+      />
+
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
+        width={width}
+        height={height}
         className={imgClassName}
         {...getMainProps(
           isLoading,
-          hasLoaded || isLoaded,
+          isLoaded,
           images,
           loading,
           toggleIsLoaded,
@@ -99,14 +119,27 @@ export function lazyHydrate(
     </LayoutWrapper>
   )
 
-  // Force render to mitigate "Expected server HTML to contain a matching" in develop
-  const doRender = hydrated.current || IS_DEV ? render : hydrate
-  doRender(component, root.current)
-  hydrated.current = true
+  if (root.current) {
+    // Force render to mitigate "Expected server HTML to contain a matching" in develop
+    if (hydrated.current || forceHydrate.current || HAS_REACT_18) {
+      reactRootRef.current = reactRender(
+        component,
+        root.current,
+        reactRootRef.current
+      )
+    } else {
+      reactHydrate(component, root.current)
+    }
+    hydrated.current = true
+  }
 
   return (): void => {
     if (root.current) {
-      render((null as unknown) as ReactElement, root.current)
+      reactRender(
+        null as unknown as ReactElement,
+        root.current,
+        reactRootRef.current
+      )
     }
   }
 }

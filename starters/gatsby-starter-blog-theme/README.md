@@ -35,6 +35,12 @@ Quickly get started using the Gatsby blog theme! This starter creates a new Gats
 
     To get started, check out the guide to [using the Gatsby blog theme starter](https://gatsbyjs.com/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](https://gatsbyjs.com/tutorial/using-a-theme).
 
+## 🚀 Quick start (Gatsby Cloud)
+
+Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
+
+[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog-theme)
+
 ## 🧐 What's inside?
 
 Here are the top-level files and directories you'll see in a site created using the blog theme starter:
@@ -49,10 +55,8 @@ gatsby-starter-blog-theme
 │       └── my-second-post.mdx
 ├── src
 │   └── gatsby-theme-blog
-│       ├── components
-│       │   └── bio-content.js
-│       └── gatsby-theme-ui
-│           └── colors.js
+│       └── components
+│           └── bio-content.js
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js
