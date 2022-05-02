@@ -25,8 +25,6 @@
     "@graphql-codegen/plugin-helpers": "^2.4.2",
     "@graphql-codegen/typescript": "^2.4.8",
     "@graphql-codegen/typescript-operations": "^2.3.5",
-    "@graphql-codegen/typescript-resolvers": "^2.6.1",
-    "@graphql-codegen/visitor-plugin-common": "^2.7.4",
     "@graphql-tools/code-file-loader": "^7.2.14",
     "@graphql-tools/load": "^7.5.10",
     "@nodelib/fs.walk": "^1.2.8",
