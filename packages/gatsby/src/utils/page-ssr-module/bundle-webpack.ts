@@ -92,31 +92,31 @@ async function bundleSSR({
   )
   
   const entry = path.join(__dirname, `entry.js`)
-  
-  process.env.PARCEL_CONFIG_LOCATION = outputDir
+
+  const config = createParcelConfig(
+    'page-ssr', 
+    {
+      resolvers: ["parcel-resolver-externals", "parcel-resolver-aliases"],
+    },
+    {
+      externals: [
+        'routes/render-page',
+      ],
+      aliases: {
+        ".cache": path.join(process.cwd(), `.cache`),
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`)
+      }
+    }
+  )
 
   const options = {
-    config: createParcelConfig(
-      outputDir, 
-      {
-        resolvers: ["parcel-resolver-externals", "parcel-resolver-aliases"],
-      },
-      {
-        externals: [
-          'routes/render-page',
-        ],
-        aliases: {
-          ".cache": path.join(process.cwd(), `.cache`),
-          $virtual: getAbsolutePathForVirtualModule(`$virtual`)
-        }
-      }
-    ),
+    config: config.rc,
+    cacheDir: config.cache,
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
     watch: false,
     // cache: true,
-    cacheDir: cacheLocation,
     contentHash: false,
     global: 'moduleName',
     minify: false,

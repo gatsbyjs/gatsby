@@ -47,33 +47,33 @@ export async function createBundlerGraphqlEngineBundle(
 
   const entry = path.join(__dirname, `entry.js`)
 
-  process.env.PARCEL_CONFIG_LOCATION = outputDir
+  const config = createParcelConfig(
+    'graphql-engine', 
+    {
+      resolvers: ["parcel-resolver-aliases", "parcel-resolver-externals"],
+    },
+    {
+      define: {
+        SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
+      },
+      externals: [
+        'routes/render-page',
+      ],
+      aliases: {
+        ".cache": path.join(process.cwd(), `.cache`),
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`)
+      }
+    }
+  )
 
   const options = {
-    config: createParcelConfig(
-      outputDir, 
-      {
-        resolvers: ["parcel-resolver-aliases", "parcel-resolver-externals"],
-      },
-      {
-        define: {
-          SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
-        },
-        externals: [
-          'routes/render-page',
-        ],
-        aliases: {
-          ".cache": path.join(process.cwd(), `.cache`),
-          $virtual: getAbsolutePathForVirtualModule(`$virtual`)
-        }
-      }
-    ),
+    config: config.rc,
+    cacheDir: config.cache,
     entries: entry,
     outDir: outputDir,
     outFile: 'index.js',
     watch: false,
     // cache: true,
-    cacheDir: cacheLocation,
     contentHash: false,
     global: 'moduleName',
     minify: false,

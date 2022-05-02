@@ -1,6 +1,8 @@
 import * as path from "path"
 import * as fs from "fs"
 
+const parcelDir = path.join(process.cwd(), `.cache`, `parcel`)
+
 export function getParcelFile(file: string) {
   return path.join(__dirname, `..`, `..`, `internal-plugins`, `parcel`, file)
 }
@@ -9,7 +11,8 @@ export function getParcelConfig(key: string) {
   return getParcelFile(`${key}.parcelrc`)
 }
 
-export function createParcelConfig(configDir: string, config: any, settings?: any) {
+export function createParcelConfig(name: string, config: any, settings?: any) {
+  const configDir = path.join(parcelDir, name)
   fs.mkdirSync(configDir, { recursive: true });
 
   let rcPath = path.join(configDir, 'bundle.parcelrc')
@@ -101,5 +104,12 @@ export function createParcelConfig(configDir: string, config: any, settings?: an
 
   fs.writeFileSync(pkgPath, JSON.stringify(fullSettings, null, 2))
   
-  return rcPath
+  // TODO this is bad, but it works for PoC
+  // this is used in our custom plugins for dynamic values
+  process.env.PARCEL_CONFIG_LOCATION = configDir
+
+  return {
+    rc: rcPath,
+    cache: path.join(configDir, 'cache')
+  }
 }

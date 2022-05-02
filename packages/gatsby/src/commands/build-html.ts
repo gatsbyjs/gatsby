@@ -187,17 +187,8 @@ const buildBundlerRenderer = async (
   // })
   const directoryPath = withBasePath(program.directory)
 
-  const cacheLocation = path.join(
-    process.cwd(),
-    `.cache`,
-    `parcel`,
-    `build-html`
-  )
-
-  const configLocation = `${cacheLocation}-config`
-  process.env.PARCEL_CONFIG_LOCATION = configLocation
   const config = createParcelConfig(
-    configLocation, 
+    'build-html', 
     {
       resolvers: [`parcel-resolver-aliases`],
     },
@@ -229,11 +220,11 @@ const buildBundlerRenderer = async (
   const outFile = path.join(outDir, `render-page.js`)
 
   const options = {
-    config,
+    config: config.rc,
+    cacheDir: config.cache,
     entries: entry,
     outDir: outDir,
     watch: false,
-    cacheDir: cacheLocation,
     contentHash: false,
     global: 'moduleName',
     minify: false,
