@@ -141,10 +141,7 @@ export const renderHTMLProd = async ({
 
     htmlComponentRenderer = require(htmlComponentRendererPath)
 
-    if (!process.env.GATSBY_EXPERIMENTAL_BUNDLER) {
-      // TODO get these stats with parcel
-      webpackStats = await readWebpackStats(publicDir)
-    }
+    webpackStats = await readWebpackStats(publicDir)
 
     lastSessionId = sessionId
 
@@ -161,6 +158,7 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
+        console.log(`Rendering ${pagePath}`)
         const { html, unsafeBuiltinsUsage } =
           await htmlComponentRenderer.default({
             pagePath,

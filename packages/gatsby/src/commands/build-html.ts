@@ -173,6 +173,10 @@ export const buildRenderer = async (
     : buildWebpackRenderer(program, stage, parentSpan)
 }
 
+function getPackageRoot(pkg) {
+  return path.dirname(require.resolve(`${pkg}/package.json`))
+}
+
 const buildBundlerRenderer = async (
   program: IProgram,
   // stage: Stage,
@@ -199,7 +203,22 @@ const buildBundlerRenderer = async (
     },
     {
       aliases: {
-        $virtual: getAbsolutePathForVirtualModule(`$virtual`)
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`),
+        // "react/jsx-runtime": "react/jsx-runtime.js",
+        // react: path.resolve(process.cwd(), './node_modules/react')
+        // gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        // "@babel/runtime": getPackageRoot(`@babel/runtime`),
+        // "@reach/router": getPackageRoot(`@gatsbyjs/reach-router`),
+        // "react-lifecycles-compat": directoryPath(
+        //   `.cache/react-lifecycles-compat.js`
+        // ),
+        // "@pmmmwh/react-refresh-webpack-plugin": getPackageRoot(
+        //   `@pmmmwh/react-refresh-webpack-plugin`
+        // ),
+        // "socket.io-client": getPackageRoot(`socket.io-client`),
+        // "webpack-hot-middleware": getPackageRoot(
+        //   `@gatsbyjs/webpack-hot-middleware`
+        // ),
       }
     }
   )
