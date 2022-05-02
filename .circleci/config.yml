@@ -510,6 +510,7 @@ jobs:
 
   windows_unit_tests:
     parallelism: 4
+    no_output_timeout: 15m
     executor:
       name: win/default
       shell: powershell.exe
