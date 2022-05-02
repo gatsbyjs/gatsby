@@ -330,7 +330,7 @@ module.exports = (
       let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
 
       // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
-      const { Potrace } = require(`potrace`)
+      const { Potrace } = require(`@gatsbyjs/potrace`)
       const argsKeys = Object.keys(args)
       args = argsKeys.reduce((result, key) => {
         const value = args[key]

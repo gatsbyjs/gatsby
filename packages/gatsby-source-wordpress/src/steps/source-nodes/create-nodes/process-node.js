@@ -476,7 +476,10 @@ export const replaceNodeHtmlImages = async ({
   pluginOptions,
 }) => {
   // this prevents fetching inline html images
-  if (!pluginOptions?.html?.useGatsbyImage) {
+  if (
+    !pluginOptions?.html?.useGatsbyImage ||
+    pluginOptions?.type?.MediaItem?.exclude
+  ) {
     return nodeString
   }
 
@@ -578,7 +581,7 @@ export const replaceNodeHtmlImages = async ({
           maxWidth = configuredMaxWidth
         }
 
-        const quality = pluginOptions?.html?.imageQuality
+        const quality = pluginOptions?.html?.imageQuality ?? 70
 
         const { reporter } = helpers
 
@@ -595,6 +598,14 @@ export const replaceNodeHtmlImages = async ({
 
           const imageUrl =
             imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
+
+          const formats = [`auto`]
+          if (pluginOptions.html.generateWebpImages) {
+            formats.push(`webp`)
+          }
+          if (pluginOptions.html.generateAvifImages) {
+            formats.push(`avif`)
+          }
 
           try {
             imageResize = await gatsbyImageResolver(
@@ -614,8 +625,9 @@ export const replaceNodeHtmlImages = async ({
                 layout: `constrained`,
                 placeholder: !placeholderUrl
                   ? `none`
-                  : pluginOptions?.html?.placeholderType || `blurred`,
+                  : pluginOptions?.html?.placeholderType || `dominantColor`,
                 quality,
+                formats,
               },
               helpers.actions
             )
@@ -652,7 +664,10 @@ export const replaceNodeHtmlImages = async ({
       let ReactGatsbyImage
       // used to create hydration data for images
       let gatsbyImageHydrationData = null
-      if (imageResize && imageResize.images.sources.length > 0) {
+      if (
+        imageResize &&
+        (imageResize.images.sources.length > 0 || imageResize.images.fallback)
+      ) {
         gatsbyImageHydrationData = {
           image: imageResize,
           alt: cheerioImg?.attribs?.alt,
@@ -701,7 +716,10 @@ const replaceFileLinks = async ({
   pluginOptions,
   node,
 }) => {
-  if (!pluginOptions?.html?.createStaticFiles) {
+  if (
+    !pluginOptions?.html?.createStaticFiles ||
+    pluginOptions?.type?.MediaItem?.exclude
+  ) {
     return nodeString
   }
 

@@ -50,6 +50,7 @@
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
   - [html.generateWebpImages](#htmlgeneratewebpimages)
+  - [html.generateAvifImages](#htmlgenerateavifimages)
   - [html.placeholderType](#htmlplaceholdertype)
 - [type](#type)
   - [type.\_\_all](#type__all)
@@ -68,6 +69,7 @@
       - [type.MediaItem.localFile.excludeByMimeTypes](#typemediaitemlocalfileexcludebymimetypes)
       - [type.MediaItem.localFile.maxFileSizeBytes](#typemediaitemlocalfilemaxfilesizebytes)
       - [type.MediaItem.localFile.requestConcurrency](#typemediaitemlocalfilerequestconcurrency)
+    - [type.MediaItem.exclude](#typemediaitemexclude)
 - [presets](#presets)
   - [presets[].presetName](#presetspresetname)
   - [presets[].useIf](#presetsuseif)
@@ -973,7 +975,7 @@ Determines the image quality that Sharp will use when generating inline html ima
 
 **Field type**: `Number`
 
-**Default value**: `90`
+**Default value**: `70`
 
 ```js
 {
@@ -1013,7 +1015,7 @@ When this is true, .webp images will be generated for images in html fields in a
 
 **Field type**: `Boolean`
 
-**Default value**: `false`
+**Default value**: `true`
 
 ```js
 {
@@ -1027,13 +1029,33 @@ When this is true, .webp images will be generated for images in html fields in a
 
 ```
 
+### html.generateAvifImages
+
+When this is true, .avif images will be generated for images in html fields in addition to the images gatsby-image normally generates.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      generateAvifImages: false,
+    },
+  },
+}
+
+```
+
 ### html.placeholderType
 
 This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.
 
 **Field type**: `String`
 
-**Default value**: `blurred`
+**Default value**: `dominantColor`
 
 ## type
 
@@ -1323,6 +1345,26 @@ Amount of images to download concurrently. Try lowering this if wordpress server
 
 ```
 
+#### type.MediaItem.exclude
+
+Completely excludes MediaItem nodes from node sourcing and from the ingested schema. Setting this to true also disables the html.createStaticFiles, html.useGatsbyImage, and type.MediaItem.createFileNodes options.
+
+**Field type**: `Boolean`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    type: {
+      MediaItem: {
+        exclude: true,
+      },
+    },
+  },
+}
+
+```
+
 ## presets
 
 An array of plugin options presets that are applied if the useIf function on each returns true. The default includes an optimization for when in Gatsby Preview mode.
@@ -1420,7 +1462,7 @@ Any valid options except for `url` and `presets`.
   options: {
     presets: [
       {
-        name: `DEVELOP`,
+        presetName: `DEVELOP`,
         useIf: () => process.env.NODE_ENV === `development`,
         options: {
           type: {

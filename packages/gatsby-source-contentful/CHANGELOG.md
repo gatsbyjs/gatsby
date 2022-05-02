@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.11.0/packages/gatsby-source-contentful) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- Prevent null pointer exception [#35244](https://github.com/gatsbyjs/gatsby/issues/35244) [#35492](https://github.com/gatsbyjs/gatsby/issues/35492) ([dc25387](https://github.com/gatsbyjs/gatsby/commit/dc25387f4e23ea13cd48817420c733085848807d))
+
+### [7.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.10.1/packages/gatsby-source-contentful) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.10.0/packages/gatsby-source-contentful) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- handle backreferences on data updates properly [#35214](https://github.com/gatsbyjs/gatsby/issues/35214) ([cf98027](https://github.com/gatsbyjs/gatsby/commit/cf980279eabc6ad5b4a001666b69f7497c21bed1))
+
 ### [7.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.9.1/packages/gatsby-source-contentful) (2022-03-31)
 
 #### Bug Fixes
