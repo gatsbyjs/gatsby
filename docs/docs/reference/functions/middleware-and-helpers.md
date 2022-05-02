@@ -51,7 +51,41 @@ export default async function corsHandler(req, res) {
 
 ## Custom body parsing
 
-Generally useful for file upload support.
+Generally useful for file upload support or raw bodies.
 
-This is not yet supported. [Add a comment in the discussion if this is an
-important use case for you](https://github.com/gatsbyjs/gatsby/discussions/30735).
+Each function can export an object named `config`. This object will allow you to control the `body-parser` middleware used by Gatsby Functions. The `limit` property will allow configuration of payload size up to **_32mb_**.
+
+### Examples
+
+```js
+// raw body (string)
+export const config = {
+  bodyParser: {
+    text: {
+      type: "*/*",
+    },
+  },
+}
+```
+
+```js
+// raw body (buffer)
+export const config = {
+  bodyParser: {
+    raw: {
+      type: "*/*",
+    },
+  },
+}
+```
+
+```js
+// limit payload to 10kb
+export const config = {
+  bodyParser: {
+    json: {
+      limit: "10kb",
+    },
+  },
+}
+```
