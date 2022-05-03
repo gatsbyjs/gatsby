@@ -659,6 +659,7 @@ export async function initialize({
 
   const workerPool = WorkerPool.create()
 
+  // This is only run during `gatsby develop`
   if (process.env.GATSBY_GRAPHQL_TYPEGEN) {
     writeGraphQLConfig(program)
   }

@@ -1,6 +1,5 @@
 import * as fs from "fs-extra"
 import { join } from "path"
-import { slash } from "gatsby-core-utils"
 import { printSchema } from "graphql"
 import { Store, AnyAction } from "redux"
 import reporter from "gatsby-cli/lib/reporter"
@@ -36,7 +35,7 @@ export async function writeGraphQLConfig(
       2
     )
 
-    const outputPath = slash(join(base, OUTPUT_PATHS.config))
+    const outputPath = join(base, OUTPUT_PATHS.config)
 
     await fs.outputFile(outputPath, configJSONString)
     reporter.verbose(`Successfully created graphql.config.json`)
@@ -57,10 +56,7 @@ export async function writeGraphQLFragments(
       .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
       .join(`\n`)
 
-    await fs.outputFile(
-      slash(join(directory, OUTPUT_PATHS.fragments)),
-      fragmentString
-    )
+    await fs.outputFile(join(directory, OUTPUT_PATHS.fragments), fragmentString)
     reporter.verbose(`Wrote fragments.graphql file to .cache`)
   } catch (err) {
     reporter.error(`Failed to write fragments.graphql to .cache`, err)
@@ -77,10 +73,7 @@ export async function writeGraphQLSchema(
       commentDescriptions: true,
     })
 
-    await fs.outputFile(
-      slash(join(directory, OUTPUT_PATHS.schema)),
-      schemaSDLString
-    )
+    await fs.outputFile(join(directory, OUTPUT_PATHS.schema), schemaSDLString)
     reporter.verbose(`Successfully created schema.graphql`)
   } catch (err) {
     reporter.error(`Failed to write schema.graphql to .cache`, err)

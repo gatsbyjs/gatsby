@@ -1,4 +1,3 @@
-import reporter from "gatsby-cli/lib/reporter"
 import { EventObject } from "xstate"
 import { IBuildContext } from "../internal"
 import { IDataLayerContext, IQueryRunningContext } from "../state-machines"
@@ -13,10 +12,8 @@ export async function graphQLTypegen(
     program,
     store,
     parentSpan,
-  }:
-    | Partial<IBuildContext>
-    | Partial<IQueryRunningContext>
-    | Partial<IDataLayerContext>,
+    reporter,
+  }: IBuildContext | IQueryRunningContext | IDataLayerContext,
   _: EventObject,
   {
     src: { compile },
@@ -29,8 +26,8 @@ export async function graphQLTypegen(
 ): Promise<void> {
   // TypeScript requires null/undefined checks for these
   // But this should never happen unless e.g. the state machine doesn't receive this information from a parent state machine
-  if (!program || !store || !compile) {
-    reporter.panic(
+  if (!program || !store || !compile || !reporter) {
+    throw new Error(
       `Missing required params in graphQLTypegen. program: ${!!program}. store: ${!!store}. compile: ${!!compile}`
     )
   }

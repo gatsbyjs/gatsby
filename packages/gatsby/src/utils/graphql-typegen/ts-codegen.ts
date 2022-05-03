@@ -1,6 +1,5 @@
 import * as fs from "fs-extra"
 import { join } from "path"
-import { slash } from "gatsby-core-utils"
 import { codegen } from "@graphql-codegen/core"
 import { Kind } from "graphql"
 import type { Types } from "@graphql-codegen/plugin-helpers"
@@ -15,17 +14,24 @@ import { filterTargetDefinitions, stabilizeSchema } from "./utils"
 const OUTPUT_PATH = `src/gatsby-types.d.ts`
 const NAMESPACE = `Queries`
 
+// These override the defaults from
+// https://www.graphql-code-generator.com/plugins/typescript
 const DEFAULT_TYPESCRIPT_CONFIG: Readonly<TypeScriptPluginConfig> = {
+  // <Maybe> Type is enough
   avoidOptionals: true,
+  // Types come from the data layer so they can't be modified
   immutableTypes: true,
   // TODO: Better maybeValue
   maybeValue: `T | undefined`,
+  // We'll want to re-export ourselves
   noExport: true,
+  // Recommended for .d.ts files
   enumsAsTypes: true,
   scalars: {
     Date: `string`,
-    JSON: `any`,
+    JSON: `Record<string, unknown>`,
   },
+  // import type {} syntax is nicer
   useTypeImports: true,
 }
 
@@ -80,9 +86,12 @@ export async function writeTypeScriptTypes(
   }
 
   const { schema, definitions } = store.getState()
-  const filename = slash(join(directory, OUTPUT_PATH))
+  const filename = join(directory, OUTPUT_PATH)
 
   let gatsbyNodeDocuments: Array<Types.DocumentFile> = []
+  // The loadDocuments + CodeFileLoader looks for graphql(``) functions inside the gatsby-node.ts files
+  // And then extracts the queries into documents
+  // The behavior can be modified: https://www.graphql-tools.com/docs/graphql-tag-pluck
   try {
     gatsbyNodeDocuments = await loadDocuments(
       [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],

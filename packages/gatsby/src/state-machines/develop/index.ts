@@ -78,6 +78,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           store,
           webhookBody,
           program,
+          reporter,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -86,6 +87,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             shouldRunCreatePagesStatefully: true,
             deferNodeMutation: true,
             program,
+            reporter,
           }
         },
         onDone: {
@@ -135,6 +137,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           websocketManager,
           pendingQueryRuns,
           shouldRunInitialTypegen,
+          reporter,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -145,6 +148,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             websocketManager,
             pendingQueryRuns,
             shouldRunInitialTypegen,
+            reporter,
           }
         },
         onDone: [
@@ -314,6 +318,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           webhookBody,
           webhookSourcePluginName,
           program,
+          reporter,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -324,6 +329,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             deferNodeMutation: true,
             shouldRunCreatePagesStatefully: false,
             program,
+            reporter,
           }
         },
         onDone: {
@@ -355,6 +361,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           parentSpan,
           store,
           program,
+          reporter,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -362,6 +369,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             program,
             deferNodeMutation: true,
             shouldRunCreatePagesStatefully: false,
+            reporter,
           }
         },
         onDone: {

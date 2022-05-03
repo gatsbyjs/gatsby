@@ -7,10 +7,18 @@ import { IDefinitionMeta } from "../../redux/types"
 type DefinitionName = string
 type DefinitionMap = Map<DefinitionName, IDefinitionMeta>
 
+/**
+ * Makes the schema deterministic by sorting it (so on new saves the whole file doesn't change, only the change that was made). It can be used for e.g. tests when two schema diffs should be compared.
+ */
 export function stabilizeSchema(schema: GraphQLSchema): GraphQLSchema {
   return lexicographicSortSchema(schema)
 }
 
+/**
+ * Internally in Gatsby we use the function generateQueryName:
+ * packages/gatsby/src/query/file-parser.js
+ * This function re-implements this partially to guess if a query is unnamed
+ */
 function guessIfUnnnamedQuery({
   isStaticQuery,
   name,
@@ -37,6 +45,10 @@ function isThirdpartyFragment(def: IDefinitionMeta): boolean {
   return isFragmentDefinition(def) && guessIfThirdpartyDefinition(def)
 }
 
+/**
+ * We don't want third-party definitions/queries unless it's a fragment.
+ * We also don't want unnamed queries ending up in the TS types.
+ */
 function isTargetDefinition(def: IDefinitionMeta): boolean {
   if (isThirdpartyFragment(def)) {
     return true
