@@ -55,6 +55,21 @@ Generally useful for file upload support or raw bodies.
 
 Each function can export an object named `config`. This object will allow you to control the `body-parser` middleware used by Gatsby Functions. The `limit` property will allow configuration of payload size up to **_32mb_**.
 
+```js
+ // Config object
+ {
+   bodyParser: {
+     json: {},
+     raw: {},
+     text: {},
+     urlencoded: {}
+   }
+ }
+```
+
+The properties of bodyParser currently allow for two properties: `limit` and `type`, which are documented by
+[body-parser](https://expressjs.com/en/resources/middleware/body-parser.html)
+
 ### Examples
 
 ```js
