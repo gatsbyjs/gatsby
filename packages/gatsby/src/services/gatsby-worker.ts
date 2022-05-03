@@ -2,33 +2,39 @@ import { outputFile } from "fs-extra"
 import * as path from "path"
 import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { generateHtmlPath } from "gatsby-core-utils/page-html"
+import { v4 } from "gatsby-core-utils/uuid"
+import type { GraphQLEngine } from "../schema/graphql-engine/entry"
 
-import type { IDataTrackingResult } from "../schema/graphql-engine/entry"
+let graphqlEngine: GraphQLEngine
+function getGraphqlEngine(): GraphQLEngine {
+  if (!graphqlEngine) {
+    const root = global.__GATSBY?.root ?? process.cwd()
+    const { GraphQLEngine } = require(`${root}/.cache/query-engine`) as {
+      GraphQLEngine
+    }
+    graphqlEngine = new GraphQLEngine({
+      dbPath: `${root}/.cache/data/datastore`,
+      trackActions: true,
+    })
+  }
 
-exports.GENERATE_PAGE = async ({ args }): Promise<IDataTrackingResult> => {
+  return graphqlEngine
+}
+
+exports.GENERATE_PAGE = async ({ args }): Promise<void> => {
   let hadError = false
-  let stopCollectingAndGetActionsToReplay = (): void => {}
-  const actionsToReplay: IDataTrackingResult["actionsToReplay"] = []
-
   try {
     const root = global.__GATSBY?.root ?? process.cwd()
     const publicDir = path.join(root, `public`)
 
-    const { GraphQLEngine } =
-      require(`${root}/.cache/query-engine`) as typeof import("../schema/graphql-engine/entry")
-
-    const graphqlEngine = new GraphQLEngine({
-      dbPath: `${root}/.cache/data/datastore`,
-    })
+    const graphqlEngine = getGraphqlEngine()
 
     const { getData, renderHTML, renderPageData } =
       require(`${root}/.cache/page-ssr`) as typeof import("../utils/page-ssr-module/entry")
 
     await graphqlEngine.ready()
 
-    stopCollectingAndGetActionsToReplay =
-      graphqlEngine.startCollectDataTrackingActions(actionsToReplay)
-
+    const requestId = v4()
     for (const requestPath of args.paths) {
       try {
         const data = await getData({
@@ -36,6 +42,7 @@ exports.GENERATE_PAGE = async ({ args }): Promise<IDataTrackingResult> => {
           pathName: requestPath,
           // spanContext: span.spanContext(),
           // telemetryResolverTimings: resolverTimings,
+          requestId,
         })
         const pageData = await renderPageData({
           data,
@@ -55,6 +62,10 @@ exports.GENERATE_PAGE = async ({ args }): Promise<IDataTrackingResult> => {
         hadError = true
       }
     }
+
+    console.log(
+      `${requestId} with ${graphqlEngine.getTrackedActions(requestId).length}`
+    )
   } catch (e) {
     console.error(e)
     hadError = true
@@ -63,8 +74,4 @@ exports.GENERATE_PAGE = async ({ args }): Promise<IDataTrackingResult> => {
   if (hadError) {
     throw new Error(`There was a problem (see errors before this message)`)
   }
-
-  stopCollectingAndGetActionsToReplay()
-
-  return { actionsToReplay }
 }

@@ -19,8 +19,8 @@ export async function runPageGenerationJobs(
   const pageChunks = chunk(queryIds?.pageQueryIds, pageGenChunkSize)
 
   console.log(
-    `Total Page Chunks ${pageChunks?.length}`,
-    pageChunks.map(pageChunk => pageChunk.map(page => page.path))
+    `Total Page Chunks ${pageChunks?.length}`
+    // pageChunks.map(pageChunk => pageChunk.map(page => page.path))
   )
 
   const publishChunks = chunk(pageChunks, publishChunkSize)

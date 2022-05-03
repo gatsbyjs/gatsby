@@ -213,15 +213,17 @@ module.exports = async function build(
   }
 
   // Page Gen
-  const PAGE_GEN_ENABLED = process.env.GATSBY_EXPERIMENTAL_PAGE_GENERATION
+  const GATSBY_PARALLEL_PAGE_GENERATION_ENABLED =
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `1` ||
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `true`
 
   const externalJobsEnabled =
     process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
     process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
 
   const pageGenerationJobsEnabled =
-    PAGE_GEN_ENABLED &&
-    store.getState().program.firstRun &&
+    GATSBY_PARALLEL_PAGE_GENERATION_ENABLED &&
+    store.getState().program.firstRun && // &&
     externalJobsEnabled &&
     process.send
 

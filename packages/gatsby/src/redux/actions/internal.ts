@@ -59,6 +59,7 @@ export const createPageDependencies = (
         connection,
       }
     }),
+    requestId: getEngineContext()?.requestId,
   }
 }
 

@@ -49,8 +49,8 @@ function getGraphqlRunner(): GraphQLRunner {
 
 export async function runQueries(
   queryIds: IGroupedQueryIds
-): Promise<DataTrackingActionsToReplay> {
-  const actionsToReplay: DataTrackingActionsToReplay = []
+): Promise<Array<DataTrackingActionsToReplay>> {
+  const actionsToReplay: Array<DataTrackingActionsToReplay> = []
 
   const unsubscribe = store.subscribe(() => {
     const action = store.getState().lastAction

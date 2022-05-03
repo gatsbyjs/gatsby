@@ -545,6 +545,7 @@ export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
   plugin?: string
   payload: Array<ICreatePageDependencyActionPayloadType>
+  requestId?: string
 }
 
 export interface IDeleteComponentDependenciesAction {
@@ -983,9 +984,8 @@ export interface IClearJobV2Context {
   }
 }
 
-export type DataTrackingActionsToReplay = Array<
+export type DataTrackingActionsToReplay =
   | IQueryStartAction
   | IPageQueryRunAction
   | IAddPendingPageDataWriteAction
   | ICreatePageDependencyAction
->
