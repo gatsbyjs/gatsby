@@ -369,7 +369,10 @@ module.exports = async function build(
 
   if (pageGenerationJobsEnabled) {
     // TODO RUN OUR JOB FUNCTION
-    await runPageGenerationJobs(queryIds, waitUntilAllJobsComplete)
+    await runPageGenerationJobs(queryIds)
+
+    // Jobs still might be running even though query running finished
+    await waitUntilAllJobsComplete()
   } else if (PQR_ENABLED) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
