@@ -40,6 +40,16 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     QUERY_RUN_REQUESTED: {
       actions: `trackRequestedQueryRun`,
     },
+    SET_SCHEMA: {
+      actions: `schemaTypegen`,
+      cond: (ctx: IBuildContext): boolean =>
+        !!process.env.GATSBY_GRAPHQL_TYPEGEN && !ctx.shouldRunInitialTypegen,
+    },
+    SET_GRAPHQL_DEFINITIONS: {
+      actions: `definitionsTypegen`,
+      cond: (ctx: IBuildContext): boolean =>
+        !!process.env.GATSBY_GRAPHQL_TYPEGEN && !ctx.shouldRunInitialTypegen,
+    },
   },
   states: {
     // Here we handle the initial bootstrap
@@ -136,7 +146,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           graphqlRunner,
           websocketManager,
           pendingQueryRuns,
-          shouldRunInitialTypegen,
           reporter,
         }: IBuildContext): IQueryRunningContext => {
           return {
@@ -147,7 +156,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             graphqlRunner,
             websocketManager,
             pendingQueryRuns,
-            shouldRunInitialTypegen,
             reporter,
           }
         },
@@ -224,7 +232,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         src: `startWebpackServer`,
         onDone: [
           {
-            target: `graphQLTypegen`,
+            target: `initialGraphQLTypegen`,
             cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
           },
           {
@@ -238,12 +246,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       },
       exit: [`assignServers`, `spawnWebpackListener`, `markSourceFilesClean`],
     },
-    graphQLTypegen: {
+    initialGraphQLTypegen: {
       invoke: {
-        src: {
-          type: `graphQLTypegen`,
-          compile: `all`,
-        },
+        src: `graphQLTypegen`,
         onDone: {
           target: `waiting`,
         },

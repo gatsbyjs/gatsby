@@ -1,14 +1,13 @@
 import * as fs from "fs-extra"
 import { join } from "path"
 import { codegen } from "@graphql-codegen/core"
-import { Kind } from "graphql"
+import { GraphQLSchema, Kind } from "graphql"
 import type { Types } from "@graphql-codegen/plugin-helpers"
 import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript/config"
 import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations/config"
-import { AnyAction, Store } from "redux"
 import { CodeFileLoader } from "@graphql-tools/code-file-loader"
 import { loadDocuments } from "@graphql-tools/load"
-import { IGatsbyState, IStateProgram } from "../../redux/types"
+import { IDefinitionMeta, IStateProgram } from "../../redux/types"
 import { filterTargetDefinitions, stabilizeSchema } from "./utils"
 
 const OUTPUT_PATH = `src/gatsby-types.d.ts`
@@ -43,7 +42,8 @@ const DEFAULT_TYPESCRIPT_OPERATIONS_CONFIG: Readonly<TypeScriptDocumentsPluginCo
 
 export async function writeTypeScriptTypes(
   directory: IStateProgram["directory"],
-  store: Store<IGatsbyState, AnyAction>
+  schema: GraphQLSchema,
+  definitions: Map<string, IDefinitionMeta>
 ): Promise<void> {
   const pluginConfig: Pick<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     pluginMap: {
@@ -85,7 +85,6 @@ export async function writeTypeScriptTypes(
     ],
   }
 
-  const { schema, definitions } = store.getState()
   const filename = join(directory, OUTPUT_PATH)
 
   let gatsbyNodeDocuments: Array<Types.DocumentFile> = []

@@ -1,9 +1,8 @@
 import * as fs from "fs-extra"
 import { join } from "path"
-import { printSchema } from "graphql"
-import { Store, AnyAction } from "redux"
+import { GraphQLSchema, printSchema } from "graphql"
 import reporter from "gatsby-cli/lib/reporter"
-import type { IGatsbyState, IStateProgram } from "../../redux/types"
+import type { IDefinitionMeta, IStateProgram } from "../../redux/types"
 import { stabilizeSchema } from "./utils"
 
 const OUTPUT_PATHS = {
@@ -51,12 +50,10 @@ export async function writeGraphQLConfig(
 
 export async function writeGraphQLFragments(
   directory: IStateProgram["directory"],
-  store: Store<IGatsbyState, AnyAction>
+  definitions: Map<string, IDefinitionMeta>
 ): Promise<void> {
   try {
-    const currentDefinitions = store.getState().definitions
-
-    const fragmentString = Array.from(currentDefinitions.entries())
+    const fragmentString = Array.from(definitions.entries())
       .filter(([_, def]) => def.isFragment)
       .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
       .join(`\n`)
@@ -70,10 +67,9 @@ export async function writeGraphQLFragments(
 
 export async function writeGraphQLSchema(
   directory: IStateProgram["directory"],
-  store: Store<IGatsbyState, AnyAction>
+  schema: GraphQLSchema
 ): Promise<void> {
   try {
-    const { schema } = store.getState()
     const schemaSDLString = printSchema(stabilizeSchema(schema), {
       commentDescriptions: true,
     })

@@ -16,6 +16,11 @@ import { store } from "../../redux"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
 import { callRealApi } from "../../utils/call-deferred-api"
+import {
+  writeGraphQLFragments,
+  writeGraphQLSchema,
+} from "../../utils/graphql-typegen/file-writes"
+import { writeTypeScriptTypes } from "../../utils/graphql-typegen/ts-codegen"
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
  * Instead of queueing, we call it right away
@@ -193,6 +198,28 @@ export const clearPendingQueryRuns = assign<IBuildContext>(() => {
   }
 })
 
+export const schemaTypegen: ActionFunction<
+  IBuildContext,
+  AnyEventObject
+> = async (context, event) => {
+  const schema = event.payload.payload
+  const directory = context.program.directory
+
+  await writeGraphQLSchema(directory, schema)
+}
+
+export const definitionsTypegen: ActionFunction<
+  IBuildContext,
+  AnyEventObject
+> = async (context, event) => {
+  const definitions = event.payload.payload
+  const { schema } = context.store!.getState()
+  const directory = context.program.directory
+
+  await writeGraphQLFragments(directory, definitions)
+  await writeTypeScriptTypes(directory, schema, definitions)
+}
+
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   callApi,
   markNodesDirty,
@@ -219,4 +246,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   logError,
   trackRequestedQueryRun,
   clearPendingQueryRuns,
+  schemaTypegen,
+  definitionsTypegen,
 }
