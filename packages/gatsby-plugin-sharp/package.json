@@ -13,7 +13,7 @@
     "bluebird": "^3.7.2",
     "debug": "^4.3.4",
     "filenamify": "^4.3.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "gatsby-core-utils": "^3.14.0-next.2",
     "gatsby-plugin-utils": "^3.8.0-next.2",
     "gatsby-telemetry": "^3.14.0-next.2",

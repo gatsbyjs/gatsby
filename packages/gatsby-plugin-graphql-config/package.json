@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "fs-extra": "^10.0.0"
+    "fs-extra": "^10.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
