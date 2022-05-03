@@ -68,7 +68,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
     "eslint-webpack-plugin": "^2.6.0",
-    "event-source-polyfill": "^1.0.25",
+    "event-source-polyfill": "1.0.25",
     "execa": "^5.1.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
