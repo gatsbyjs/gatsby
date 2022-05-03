@@ -39,19 +39,35 @@ const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
 )
 
-export interface IDataTrackingResult {
-  actionsToReplay: DataTrackingActionsToReplay
-}
-
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runnerPromise?: Promise<GraphQLRunner>
-  private isCollectingDataTrackingActions = false
+  private shouldTrackActions = false
+  private trackedActions = new Map<string, Array<DataTrackingActionsToReplay>>()
 
-  constructor({ dbPath }: { dbPath: string }) {
+  constructor({
+    dbPath,
+    trackActions = false,
+  }: {
+    dbPath: string
+    trackActions?: boolean
+  }) {
+    this.shouldTrackActions = trackActions
     setupLmdbStore({ dbPath })
     // start initializing runner ASAP
     this.getRunner()
+  }
+
+  private subscribeToDataTrackingActions(requestId: string): () => void {
+    return store.subscribe(() => {
+      const action = store.getState().lastAction
+      if (
+        action.type === `CREATE_COMPONENT_DEPENDENCY` &&
+        action.requestId === requestId
+      ) {
+        this.addTrackedAction(requestId, action as DataTrackingActionsToReplay)
+      }
+    })
   }
 
   private async _doGetRunner(): Promise<GraphQLRunner> {
@@ -126,7 +142,7 @@ export class GraphQLEngine {
     opts?: IQueryOptions
   ): Promise<ExecutionResult> {
     const engineContext = {
-      requestId: uuid.v4(),
+      requestId: context.requestId || uuid.v4(),
     }
 
     const doRunQuery = async (): Promise<ExecutionResult> => {
@@ -135,6 +151,11 @@ export class GraphQLEngine {
           queryName: `GraphQL Engine query`,
           parentSpan: undefined,
         }
+      }
+
+      let unsubscribe
+      if (this.shouldTrackActions && context.requestId) {
+        unsubscribe = this.subscribeToDataTrackingActions(context.requestId)
       }
 
       let gettingRunnerActivity: MaybePhantomActivity
@@ -170,6 +191,10 @@ export class GraphQLEngine {
         }
         await waitJobsByRequest(engineContext.requestId)
       } finally {
+        if (unsubscribe) {
+          unsubscribe()
+        }
+
         if (waitingForJobsCreatedByCurrentRequestActivity) {
           waitingForJobsCreatedByCurrentRequestActivity.end()
         }
@@ -178,7 +203,10 @@ export class GraphQLEngine {
     }
 
     try {
-      return await runWithEngineContext(engineContext, doRunQuery)
+      const data = await runWithEngineContext(engineContext, doRunQuery)
+      createPageDependencyBatcher.flush()
+
+      return data
     } finally {
       // Reset job-to-request mapping
       store.dispatch({
@@ -209,85 +237,79 @@ export class GraphQLEngine {
     return findPageByPath(state, pathName, false)
   }
 
-  public startCollectDataTrackingActions(
-    actionsToReplay: DataTrackingActionsToReplay
-  ): () => void {
-    if (this.isCollectingDataTrackingActions) {
-      throw new Error(
-        `Engine is already tracking data, multiple data tracking at the same time won't work correctly and seems like integration is wrong.`
-      )
-    }
-    this.isCollectingDataTrackingActions = true
-
-    // -- DEBUG START --
-    let counter = 0
-    const distinctActionTypes = new Set<string>()
-    // -- DEBUG END --
-
-    const unsubscribe = store.subscribe(() => {
-      const action = store.getState().lastAction
-      if (
-        action.type === `QUERY_START` ||
-        action.type === `PAGE_QUERY_RUN` ||
-        action.type === `ADD_PENDING_PAGE_DATA_WRITE` ||
-        action.type === `CREATE_COMPONENT_DEPENDENCY`
-      ) {
-        actionsToReplay.push(action)
-      }
-
-      counter++
-      distinctActionTypes.add(action.type)
-    })
-
-    return function finishCollectingDataTrackingActions(
-      this: GraphQLEngine
-    ): void {
-      createPageDependencyBatcher.flush()
-      unsubscribe()
-      this.isCollectingDataTrackingActions = false
-
-      // -- DEBUG START --
-      console.log(
-        `Collected ${actionsToReplay.length} data tracking actions of ${counter} total. Distinct action types:`,
-        distinctActionTypes
-      )
-      // -- DEBUG END --
-    }.bind(this)
-  }
-
-  public startQuery(payload: {
+  public startQuery({
+    requestId,
+    ...payload
+  }: {
     path: string
     componentPath: string
     isPage?: boolean
+    requestId?: string
   }): void {
-    store.dispatch(
-      actions.queryStart({
-        path: payload.path,
-        componentPath: payload.componentPath,
-        isPage: payload.isPage ?? true,
-      })
-    )
+    const action = actions.queryStart({
+      path: payload.path,
+      componentPath: payload.componentPath,
+      isPage: payload.isPage ?? true,
+    })
+
+    this.addTrackedAction(requestId, action)
+    store.dispatch(action)
   }
 
-  public endQuery(payload: {
+  public endQuery({
+    requestId,
+    ...payload
+  }: {
     path: string
     componentPath: string
     result: Record<string, unknown>
     isPage?: boolean
+    requestId?: string
   }): void {
     const resultHash = crypto
       .createHash(`sha1`)
       .update(JSON.stringify(payload.result))
       .digest(`base64`)
 
-    store.dispatch(
-      actions.pageQueryRun({
-        path: payload.path,
-        componentPath: payload.componentPath,
-        isPage: payload.isPage ?? true,
-        resultHash,
-      })
-    )
+    const action = actions.pageQueryRun({
+      path: payload.path,
+      componentPath: payload.componentPath,
+      isPage: payload.isPage ?? true,
+      resultHash,
+    })
+    this.addTrackedAction(requestId, action)
+
+    store.dispatch(action)
+  }
+
+  public getTrackedActions(
+    requestId: string
+  ): Array<DataTrackingActionsToReplay> {
+    if (!requestId) {
+      return []
+    }
+
+    const actions = this.trackedActions?.get(requestId) ?? []
+
+    // clear trackedActions to save memory
+    this.trackedActions.delete(requestId)
+
+    return actions
+  }
+
+  private addTrackedAction(
+    requestId: string | undefined,
+    action: DataTrackingActionsToReplay
+  ): void {
+    if (!this.shouldTrackActions || !requestId) {
+      return
+    }
+
+    if (!this.trackedActions.has(requestId)) {
+      this.trackedActions.set(requestId, [])
+    }
+
+    this.trackedActions?.get(requestId)?.push(action)
   }
 }
 

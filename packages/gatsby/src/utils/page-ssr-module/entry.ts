@@ -62,12 +62,14 @@ export async function getData({
   req,
   spanContext,
   telemetryResolverTimings,
+  requestId,
 }: {
   graphqlEngine: GraphQLEngine
   pathName: string
   req?: Partial<Pick<Request, "query" | "method" | "url" | "headers">>
   spanContext?: Span | SpanContext
   telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
+  requestId?: string
 }): Promise<ISSRData> {
   await tracerReadyPromise
 
@@ -129,6 +131,7 @@ export async function getData({
     graphqlEngine.startQuery({
       path: page.path,
       componentPath: page.componentPath,
+      requestId,
     })
 
     if (templateDetails.query) {
@@ -153,6 +156,7 @@ export async function getData({
               parentSpan: runningQueryActivity?.span,
               forceGraphqlTracing: !!runningQueryActivity,
               telemetryResolverTimings,
+              requestId,
             }
           )
           .then(queryResults => {
@@ -185,6 +189,7 @@ export async function getData({
       path: page.path,
       componentPath: page.componentPath,
       result: results as Record<string, unknown>,
+      requestId,
     })
 
     // 4. (if SSR) run getServerData
