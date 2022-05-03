@@ -17,6 +17,13 @@ export async function writeGraphQLConfig(
 ): Promise<void> {
   try {
     const base = program.directory
+    const outputPath = join(base, OUTPUT_PATHS.config)
+
+    if (fs.existsSync(outputPath)) {
+      reporter.verbose(`graphql.config.json already exists. Skipping...`)
+      return
+    }
+
     const configJSONString = JSON.stringify(
       {
         schema: OUTPUT_PATHS.schema,
@@ -34,8 +41,6 @@ export async function writeGraphQLConfig(
       null,
       2
     )
-
-    const outputPath = join(base, OUTPUT_PATHS.config)
 
     await fs.outputFile(outputPath, configJSONString)
     reporter.verbose(`Successfully created graphql.config.json`)
