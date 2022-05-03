@@ -1,4 +1,4 @@
-import { Machine, StatesConfig, MachineOptions } from "xstate"
+import { createMachine, StatesConfig, MachineOptions } from "xstate"
 import { dataLayerActions } from "./actions"
 import { IDataLayerContext } from "./types"
 import { dataLayerServices } from "./services"
@@ -69,9 +69,26 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
     invoke: {
       id: `building-schema`,
       src: `buildSchema`,
+      onDone: [
+        {
+          target: `graphQLTypegen`,
+          cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
+        },
+        {
+          target: `creatingPages`,
+        },
+      ],
+    },
+    exit: `assignGraphQLRunners`,
+  },
+  graphQLTypegen: {
+    invoke: {
+      src: {
+        type: `graphQLTypegen`,
+        compile: `schema`,
+      },
       onDone: {
         target: `creatingPages`,
-        actions: `assignGraphQLRunners`,
       },
     },
   },
@@ -115,7 +132,7 @@ const options: Partial<MachineOptions<IDataLayerContext, any>> = {
  * Machine used during first run
  */
 
-export const initializeDataMachine = Machine(
+export const initializeDataMachine = createMachine(
   {
     id: `initializeDataMachine`,
     context: {},
@@ -133,7 +150,7 @@ export const initializeDataMachine = Machine(
  * Machine used when we need to source nodes again
  */
 
-export const reloadDataMachine = Machine(
+export const reloadDataMachine = createMachine(
   {
     id: `reloadDataMachine`,
     context: {},
@@ -151,7 +168,7 @@ export const reloadDataMachine = Machine(
  * Machine used when we need to re-create pages after a
  * node mutation outside of sourceNodes
  */
-export const recreatePagesMachine = Machine(
+export const recreatePagesMachine = createMachine(
   {
     id: `recreatePagesMachine`,
     context: {},

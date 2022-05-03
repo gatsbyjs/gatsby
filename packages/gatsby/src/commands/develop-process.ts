@@ -150,7 +150,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     program,
     parentSpan,
     app,
+    reporter,
     pendingQueryRuns: new Set([`/`]),
+    shouldRunInitialTypegen: true,
   })
 
   const service = interpret(machine)
