@@ -227,6 +227,19 @@ module.exports = async function build(
     externalJobsEnabled &&
     process.send
 
+  if (pageGenerationJobsEnabled && process.send) {
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `PAGE_GENERATION_ENABLED`,
+        timestamp: new Date().toJSON(),
+        payload: {
+          success: true,
+        },
+      },
+    })
+  }
+
   /**
    * Rendering Engine
    */
