@@ -55,7 +55,7 @@ describe(`gatsby-plugin-image`, () => {
 
     // wait for the image to load
     cy.get("[data-main-image]").should("be.visible")
-    cy.wait(100)
+    cy.wait(500)
 
     cy.then(() => {
       cleanup()
@@ -69,7 +69,7 @@ describe(`gatsby-plugin-image`, () => {
     })
   })
 
-  it.only(`rerenders when image src changed`, () => {
+  it(`rerenders when image src changed`, () => {
     const mutationStub = cy.stub()
     let cleanup
 
@@ -111,7 +111,7 @@ describe(`gatsby-plugin-image`, () => {
 
     cy.get("#click").click()
 
-    cy.wait(100)
+    cy.wait(500)
 
     cy.get("[data-main-image]", {
       timeout: 5000,
@@ -165,6 +165,8 @@ describe(`gatsby-plugin-image`, () => {
     )
 
     cy.get("#click").click()
+
+    cy.wait(500)
 
     // wait for the image to load
     cy.get("[data-main-image]").should("be.visible")
