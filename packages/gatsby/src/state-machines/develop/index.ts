@@ -1,4 +1,10 @@
-import { MachineConfig, AnyEventObject, forwardTo, Machine } from "xstate"
+import {
+  MachineConfig,
+  AnyEventObject,
+  forwardTo,
+  createMachine,
+  assign,
+} from "xstate"
 import { IDataLayerContext } from "../data-layer/types"
 import { IQueryRunningContext } from "../query-running/types"
 import { IWaitingContext } from "../waiting/types"
@@ -71,6 +77,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           parentSpan,
           store,
           webhookBody,
+          program,
+          reporter,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -78,6 +86,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             webhookBody,
             shouldRunCreatePagesStatefully: true,
             deferNodeMutation: true,
+            program,
+            reporter,
           }
         },
         onDone: {
@@ -126,6 +136,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           graphqlRunner,
           websocketManager,
           pendingQueryRuns,
+          shouldRunInitialTypegen,
+          reporter,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -135,6 +147,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             graphqlRunner,
             websocketManager,
             pendingQueryRuns,
+            shouldRunInitialTypegen,
+            reporter,
           }
         },
         onDone: [
@@ -185,6 +199,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           target: `waiting`,
         },
       },
+      exit: assign<IBuildContext>({ shouldRunInitialTypegen: false }),
     },
     // Recompile the JS bundle
     recompiling: {
@@ -207,16 +222,33 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     startingDevServers: {
       invoke: {
         src: `startWebpackServer`,
-        onDone: {
-          target: `waiting`,
-          actions: [
-            `assignServers`,
-            `spawnWebpackListener`,
-            `markSourceFilesClean`,
-          ],
-        },
+        onDone: [
+          {
+            target: `graphQLTypegen`,
+            cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
+          },
+          {
+            target: `waiting`,
+          },
+        ],
         onError: {
           actions: `panic`,
+          target: `waiting`,
+        },
+      },
+      exit: [`assignServers`, `spawnWebpackListener`, `markSourceFilesClean`],
+    },
+    graphQLTypegen: {
+      invoke: {
+        src: {
+          type: `graphQLTypegen`,
+          compile: `all`,
+        },
+        onDone: {
+          target: `waiting`,
+        },
+        onError: {
+          actions: `logError`,
           target: `waiting`,
         },
       },
@@ -285,6 +317,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           store,
           webhookBody,
           webhookSourcePluginName,
+          program,
+          reporter,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -294,6 +328,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             refresh: true,
             deferNodeMutation: true,
             shouldRunCreatePagesStatefully: false,
+            program,
+            reporter,
           }
         },
         onDone: {
@@ -321,12 +357,19 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       invoke: {
         id: `recreate-pages`,
         src: `recreatePages`,
-        data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
+        data: ({
+          parentSpan,
+          store,
+          program,
+          reporter,
+        }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
             store,
+            program,
             deferNodeMutation: true,
             shouldRunCreatePagesStatefully: false,
+            reporter,
           }
         },
         onDone: {
@@ -342,7 +385,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
   },
 }
 
-export const developMachine = Machine(developConfig, {
+export const developMachine = createMachine(developConfig, {
   services: developServices,
   actions: buildActions,
 })

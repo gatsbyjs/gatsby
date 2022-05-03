@@ -157,3 +157,13 @@ export const builtInScalarTypeNames = [
   `JSON`,
   `String`,
 ]
+
+export const internalTypeNames = [
+  ...builtInScalarTypeNames,
+  `Buffer`,
+  `Internal`,
+  `InternalInput`,
+  `Node`,
+  `NodeInput`,
+  `Query`,
+]
