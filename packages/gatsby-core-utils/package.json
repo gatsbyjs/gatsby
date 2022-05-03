@@ -47,7 +47,7 @@
     "configstore": "^5.0.1",
     "fastq": "^1.13.0",
     "file-type": "^16.5.3",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "got": "^11.8.3",
     "import-from": "^4.0.0",
     "lmdb": "^2.2.6",
