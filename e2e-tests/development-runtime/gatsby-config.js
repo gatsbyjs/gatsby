@@ -8,6 +8,7 @@ module.exports = {
   },
   flags: {
     DEV_SSR: false,
+    GRAPHQL_TYPEGEN: true,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
