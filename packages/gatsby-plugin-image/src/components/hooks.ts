@@ -45,6 +45,9 @@ export function hasImageLoaded(cacheKey: string): boolean {
 export type IGatsbyImageDataParent<T = never> = T & {
   gatsbyImageData: IGatsbyImageData
 }
+export type IGatsbyImageParent<T = never> = T & {
+  gatsbyImage: IGatsbyImageData
+}
 export type FileNode = Node & {
   childImageSharp?: IGatsbyImageDataParent<Node>
 }
@@ -61,13 +64,28 @@ const isGatsbyImageDataParent = <T>(
   node: IGatsbyImageDataParent<T> | any
 ): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
 
-export type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
+const isGatsbyImageParent = <T>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyImageParent<T> | any
+): node is IGatsbyImageParent<T> => Boolean(node?.gatsbyImage)
+
+export type ImageDataLike =
+  | FileNode
+  | IGatsbyImageDataParent
+  | IGatsbyImageParent
+  | IGatsbyImageData
+
 export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
   if (isGatsbyImageData(node)) {
     return node
   }
+  // gatsbyImageData GraphQL field
   if (isGatsbyImageDataParent(node)) {
     return node.gatsbyImageData
+  }
+  // gatsbyImage GraphQL field for Gatsby's Image CDN service
+  if (isGatsbyImageParent(node)) {
+    return node.gatsbyImage
   }
   return node?.childImageSharp?.gatsbyImageData
 }
