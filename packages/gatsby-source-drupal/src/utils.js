@@ -12,42 +12,23 @@ const { getOptions } = require(`./plugin-options`)
 import { getGatsbyVersion } from "gatsby-core-utils"
 import { lt, prerelease } from "semver"
 
-let backRefsNamesLookup = new Map()
-let referencedNodesLookup = new Map()
-
-const initRefsLookups = async ({ cache }) => {
-  const backRefsNamesLookupStr = await cache.get(`backRefsNamesLookup`)
-  const referencedNodesLookupStr = await cache.get(`referencedNodesLookup`)
-
-  if (backRefsNamesLookupStr) {
-    backRefsNamesLookup = new Map(JSON.parse(backRefsNamesLookupStr))
-  }
-
-  if (referencedNodesLookupStr) {
-    referencedNodesLookup = new Map(JSON.parse(referencedNodesLookupStr))
-  }
+function makeBackRefsKey(id) {
+  return `backrefs-${id}`
 }
 
-exports.initRefsLookups = initRefsLookups
-
-const storeRefsLookups = async ({ cache }) => {
-  await Promise.all([
-    cache.set(
-      `backRefsNamesLookup`,
-      JSON.stringify(Array.from(backRefsNamesLookup.entries()))
-    ),
-    cache.set(
-      `referencedNodesLookup`,
-      JSON.stringify(Array.from(referencedNodesLookup.entries()))
-    ),
-  ])
+function makeRefNodesKey(id) {
+  return `refnodes-${id}`
 }
 
-exports.storeRefsLookups = storeRefsLookups
-
-const handleReferences = (
+const handleReferences = async (
   node,
-  { getNode, mutateNode = false, createNodeId, entityReferenceRevisions = [] }
+  {
+    getNode,
+    mutateNode = false,
+    createNodeId,
+    entityReferenceRevisions = [],
+    cache,
+  }
 ) => {
   const relationships = node.relationships
   const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
@@ -114,35 +95,40 @@ const handleReferences = (
     })
 
     delete node.drupal_relationships
-    referencedNodesLookup.set(node.id, referencedNodes)
+    await cache.set(makeRefNodesKey(node.id), referencedNodes)
     if (referencedNodes.length) {
       const nodeFieldName = `${node.internal.type}___NODE`
-      referencedNodes.forEach(nodeID => {
-        let referencedNode
-        if (mutateNode) {
-          referencedNode = getNode(nodeID)
-        } else {
-          referencedNode = _.cloneDeep(getNode(nodeID))
-        }
-        if (!referencedNode.relationships[nodeFieldName]) {
-          referencedNode.relationships[nodeFieldName] = []
-        }
+      await Promise.all(
+        referencedNodes.map(async nodeID => {
+          let referencedNode
+          if (mutateNode) {
+            referencedNode = getNode(nodeID)
+          } else {
+            referencedNode = _.cloneDeep(getNode(nodeID))
+          }
+          if (!referencedNode.relationships[nodeFieldName]) {
+            referencedNode.relationships[nodeFieldName] = []
+          }
 
-        if (!referencedNode.relationships[nodeFieldName].includes(node.id)) {
-          referencedNode.relationships[nodeFieldName].push(node.id)
-        }
+          if (!referencedNode.relationships[nodeFieldName].includes(node.id)) {
+            referencedNode.relationships[nodeFieldName].push(node.id)
+          }
 
-        let backRefsNames = backRefsNamesLookup.get(referencedNode.id)
-        if (!backRefsNames) {
-          backRefsNames = []
-          backRefsNamesLookup.set(referencedNode.id, backRefsNames)
-        }
+          let backRefsNames = await cache.get(
+            makeBackRefsKey(referencedNode.id)
+          )
+          if (!backRefsNames) {
+            backRefsNames = []
+            await cache.set(makeBackRefsKey(referencedNode.id), backRefsNames)
+          }
 
-        if (!backRefsNames.includes(nodeFieldName)) {
-          backRefsNames.push(nodeFieldName)
-        }
-        backReferencedNodes.push(referencedNode)
-      })
+          if (!backRefsNames.includes(nodeFieldName)) {
+            backRefsNames.push(nodeFieldName)
+            await cache.set(makeBackRefsKey(referencedNode.id), backRefsNames)
+          }
+          backReferencedNodes.push(referencedNode)
+        })
+      )
     }
   }
 
@@ -159,6 +145,7 @@ const handleDeletedNode = async ({
   getNode,
   createNodeId,
   createContentDigest,
+  cache,
   entityReferenceRevisions,
 }) => {
   let deletedNode = getNode(
@@ -182,61 +169,63 @@ const handleDeletedNode = async ({
   // Clone node so we're not mutating the original node.
   deletedNode = _.cloneDeep(deletedNode)
 
-  // Remove the deleted node from backRefsNamesLookup and referencedNodesLookup
-  backRefsNamesLookup.delete(deletedNode.id)
-  referencedNodesLookup.delete(deletedNode.id)
+  cache.del(makeBackRefsKey(deletedNode.id))
+  cache.del(makeRefNodesKey(deletedNode.id))
 
   // Remove relationships from other nodes and re-create them.
-  Object.keys(deletedNode.relationships).forEach(key => {
+  Object.keys(deletedNode.relationships).forEach(async key => {
     let ids = deletedNode.relationships[key]
     ids = [].concat(ids)
-    ids.forEach(id => {
-      let node = getNode(id)
+    await Promise.all(
+      ids.map(async id => {
+        let node = getNode(id)
 
-      // The referenced node might have already been deleted.
-      if (node) {
-        // Clone node so we're not mutating the original node.
-        node = _.cloneDeep(node)
-        let referencedNodes = referencedNodesLookup.get(node.id)
-        if (referencedNodes?.includes(deletedNode.id)) {
-          // Loop over relationships and cleanup references.
-          Object.entries(node.relationships).forEach(([key, value]) => {
-            // If a string ref matches, delete it.
-            if (_.isString(value) && value === deletedNode.id) {
-              delete node.relationships[key]
-            }
+        // The referenced node might have already been deleted.
+        if (node) {
+          // Clone node so we're not mutating the original node.
+          node = _.cloneDeep(node)
+          let referencedNodes = await cache.get(makeRefNodesKey(node.id))
 
-            // If it's an array, filter, then check if the array is empty and then delete
-            // if so
-            if (_.isArray(value)) {
-              value = value.filter(v => v !== deletedNode.id)
-
-              if (value.length === 0) {
+          if (referencedNodes?.includes(deletedNode.id)) {
+            // Loop over relationships and cleanup references.
+            Object.entries(node.relationships).forEach(([key, value]) => {
+              // If a string ref matches, delete it.
+              if (_.isString(value) && value === deletedNode.id) {
                 delete node.relationships[key]
-              } else {
-                node.relationships[key] = value
               }
-            }
-          })
 
-          // Remove deleted node from array of referencedNodes
-          referencedNodes = referencedNodes.filter(
-            nId => nId !== deletedNode.id
-          )
-          referencedNodesLookup.set(node.id, referencedNodes)
-        }
+              // If it's an array, filter, then check if the array is empty and then delete
+              // if so
+              if (_.isArray(value)) {
+                value = value.filter(v => v !== deletedNode.id)
 
-        // Recreate the referenced node with its now cleaned-up relationships.
-        if (node.internal.owner) {
-          delete node.internal.owner
+                if (value.length === 0) {
+                  delete node.relationships[key]
+                } else {
+                  node.relationships[key] = value
+                }
+              }
+            })
+
+            // Remove deleted node from array of referencedNodes
+            referencedNodes = referencedNodes.filter(
+              nId => nId !== deletedNode.id
+            )
+            await cache.set(makeRefNodesKey(node.id), referencedNodes)
+          }
+
+          // Recreate the referenced node with its now cleaned-up relationships.
+          if (node.internal.owner) {
+            delete node.internal.owner
+          }
+          if (node.fields) {
+            delete node.fields
+          }
+          node.internal.contentDigest = createContentDigest(node)
+          actions.createNode(node)
         }
-        if (node.fields) {
-          delete node.fields
-        }
-        node.internal.contentDigest = createContentDigest(node)
-        actions.createNode(node)
-      }
-    })
+      })
+    )
   })
 
   actions.deleteNode(deletedNode)
@@ -343,11 +332,12 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
   const nodesToUpdate = [newNode]
 
-  const oldNodeReferencedNodes = referencedNodesLookup.get(newNode.id)
-  const backReferencedNodes = handleReferences(newNode, {
+  const oldNodeReferencedNodes = await cache.get(makeRefNodesKey(newNode.id))
+  const backReferencedNodes = await handleReferences(newNode, {
     getNode,
     mutateNode: false,
     createNodeId,
+    cache,
     entityReferenceRevisions: pluginOptions.entityReferenceRevisions,
   })
 
@@ -358,17 +348,16 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     // Clone node so we're not mutating the original node.
     oldNode = _.cloneDeep(oldNode)
     // copy over back references from old node
-    const backRefsNames = backRefsNamesLookup.get(oldNode.id)
+    const backRefsNames = await cache.get(makeBackRefsKey(oldNode.id))
     if (backRefsNames) {
-      backRefsNamesLookup.set(newNode.id, backRefsNames)
+      cache.set(makeBackRefsKey(newNode.id), backRefsNames)
       backRefsNames.forEach(backRefFieldName => {
         newNode.relationships[backRefFieldName] =
           oldNode.relationships[backRefFieldName]
       })
     }
 
-    const newNodeReferencedNodes = referencedNodesLookup.get(newNode.id)
-
+    const newNodeReferencedNodes = await cache.get(makeRefNodesKey(newNode.id))
     // see what nodes are no longer referenced and remove backRefs from them
     let removedReferencedNodes = _.difference(
       oldNodeReferencedNodes,
