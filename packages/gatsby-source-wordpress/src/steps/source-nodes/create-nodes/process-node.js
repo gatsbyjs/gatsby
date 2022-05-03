@@ -12,6 +12,7 @@ import fs from "fs-extra"
 import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions"
 import replaceAll from "replaceall"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { urlAddBasicAuth } from "~/utils/url-add-basic-auth"
 import { gatsbyImageResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/gatsby-image-resolver"
 
 import { formatLogMessage } from "~/utils/format-log-message"
@@ -596,7 +597,7 @@ export const replaceNodeHtmlImages = async ({
             pluginOptions
           )
 
-          const imageUrl =
+          let imageUrl =
             imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
 
           const formats = [`auto`]
@@ -608,6 +609,14 @@ export const replaceNodeHtmlImages = async ({
           }
 
           try {
+            const { username, password } = pluginOptions.auth.htaccess
+            if (username && password) {
+              imageUrl = urlAddBasicAuth({
+                url: imageUrl,
+                username,
+                password,
+              })
+            }
             imageResize = await gatsbyImageResolver(
               {
                 url: imageUrl,
