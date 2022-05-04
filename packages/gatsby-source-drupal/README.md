@@ -2,14 +2,14 @@
 
 Source plugin for pulling data (including images) into Gatsby from Drupal sites.
 
-It pulls data from Drupal 8 sites with the
+It pulls data from Drupal 8/9 sites with the
 [Drupal JSONAPI module](https://www.drupal.org/project/jsonapi) installed.
 
 An example site built with the headless Drupal distro
 [ContentaCMS](https://twitter.com/contentacms) is at
 https://using-drupal.gatsbyjs.org/
 
-`apiBase` Option allows changing the API entry point depending on the version of
+The `apiBase` option allows changing the API entry point depending on the version of
 jsonapi used by your Drupal instance. The default value is `jsonapi`, which has
 been used since jsonapi version `8.x-1.0-alpha4`.
 

@@ -26,6 +26,7 @@ import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
+import { writeGraphQLConfig } from "../utils/graphql-typegen/file-writes"
 
 interface IPluginResolution {
   resolve: string
@@ -657,6 +658,11 @@ export async function initialize({
   })
 
   const workerPool = WorkerPool.create()
+
+  // This is only run during `gatsby develop`
+  if (process.env.GATSBY_GRAPHQL_TYPEGEN) {
+    writeGraphQLConfig(program)
+  }
 
   return {
     store,

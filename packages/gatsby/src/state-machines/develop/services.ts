@@ -4,6 +4,7 @@ import {
   initialize,
   recompile,
   postBootstrap,
+  graphQLTypegen,
 } from "../../services"
 import {
   initializeDataMachine,
@@ -24,4 +25,5 @@ export const developServices: Record<string, ServiceConfig<IBuildContext>> = {
   startWebpackServer,
   recompile,
   postBootstrap,
+  graphQLTypegen,
 }
