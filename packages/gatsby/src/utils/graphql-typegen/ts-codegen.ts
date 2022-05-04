@@ -90,12 +90,19 @@ export async function writeTypeScriptTypes(
   let gatsbyNodeDocuments: Array<Types.DocumentFile> = []
   // The loadDocuments + CodeFileLoader looks for graphql(``) functions inside the gatsby-node.ts files
   // And then extracts the queries into documents
-  // The behavior can be modified: https://www.graphql-tools.com/docs/graphql-tag-pluck
+  // TODO: This codepath can be made obsolete if Gatsby itself already places the queries inside gatsby-node into the `definitions`
   try {
     gatsbyNodeDocuments = await loadDocuments(
       [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
       {
-        loaders: [new CodeFileLoader()],
+        loaders: [
+          new CodeFileLoader({
+            // Configures https://www.graphql-tools.com/docs/graphql-tag-pluck to only check graphql function from Gatsby
+            pluckConfig: {
+              modules: [{ name: `gatsby`, identifier: `graphql` }],
+            },
+          }),
+        ],
       }
     )
   } catch (e) {
