@@ -1,8 +1,8 @@
 {
-  "name": "using-graphql-codegen",
+  "name": "using-graphql-typegen",
   "version": "1.0.0",
   "private": true,
-  "description": "Example on how to use GraphQL Codegen in Gatsby",
+  "description": "Example on how to use GraphQL Typegen in Gatsby",
   "author": "LekoArts",
   "scripts": {
     "develop": "gatsby develop",

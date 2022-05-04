@@ -2,9 +2,9 @@ import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `graphql-typegen-testing`,
+    title: `using-graphql-typegen`,
     siteUrl: `https://www.yourdomain.tld`,
-    description: `A testing project for a new upcoming feature.`
+    description: `Example project for GraphQL Typegen in Gatsby.`
   },
   flags: {
     GRAPHQL_TYPEGEN: true,

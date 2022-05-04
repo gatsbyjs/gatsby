@@ -1,8 +1,8 @@
 ---
-title: GraphQL Codegen
+title: GraphQL Typegen
 examples:
-  - label: Using GraphQL Codegen
-    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-graphql-codegen"
+  - label: Using GraphQL Typegen
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-graphql-typegen"
 ---
 
 ## Introduction
