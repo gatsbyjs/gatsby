@@ -22,7 +22,7 @@ describe(`Gatsby image processing`, () => {
               wysiwygEditorField
             }
           }
-          inlineSvgImageInHtmlFieldPage: wpPage(databaseId: { eq: 11834 }) {
+          inlineSvgImageInHtmlFieldPage: wpPage(databaseId: { eq: 11847 }) {
             content
           }
         }

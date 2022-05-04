@@ -1,14 +1,6 @@
 <?php
 // Plugin Name: WPGatsby Test Plugin (for tests only)
 
-function allow_svg_upload($mimes) {
-  $mimes['svg'] = 'image/svg+xml';
-  return $mimes;
-}
-
-add_filter('upload_mimes', 'allow_svg_upload');
-
-
 add_action( 'graphql_register_types', 'add_test_mutations' );
 
 function add_test_mutations() {
