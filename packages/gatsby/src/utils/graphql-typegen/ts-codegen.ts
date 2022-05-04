@@ -21,7 +21,7 @@ const DEFAULT_TYPESCRIPT_CONFIG: Readonly<TypeScriptPluginConfig> = {
   // Types come from the data layer so they can't be modified
   immutableTypes: true,
   // TODO: Better maybeValue
-  maybeValue: `T | undefined`,
+  maybeValue: `T | null`,
   // We'll want to re-export ourselves
   noExport: true,
   // Recommended for .d.ts files

@@ -205,7 +205,7 @@ export const schemaTypegen: ActionFunction<
   const schema = event.payload.payload
   const directory = context.program.directory
 
-  context.reporter.verbose(`Re-Generating schema.graphql`)
+  context.reporter!.verbose(`Re-Generating schema.graphql`)
 
   await writeGraphQLSchema(directory, schema)
 }
@@ -218,7 +218,7 @@ export const definitionsTypegen: ActionFunction<
   const { schema } = context.store!.getState()
   const directory = context.program.directory
 
-  context.reporter.verbose(`Re-Generating fragments.graphql & TS Types`)
+  context.reporter!.verbose(`Re-Generating fragments.graphql & TS Types`)
 
   await writeGraphQLFragments(directory, definitions)
   await writeTypeScriptTypes(directory, schema, definitions)
