@@ -124,14 +124,7 @@ module.exports = {
         schema: {
           requestConcurrency: 7,
         },
-        debug: {
-          graphql: {
-            writeQueriesToDisk: true,
-            onlyReportCriticalErrors: false,
-            showQueryOnError: true,
-            panicOnError: true,
-          },
-        },
+        debug,
         production: {
           hardCacheMediaFiles: true,
         },
