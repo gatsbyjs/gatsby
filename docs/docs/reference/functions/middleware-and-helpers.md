@@ -67,8 +67,12 @@ Each function can export an object named `config`. This object will allow you to
  }
 ```
 
-The properties of bodyParser currently allow for two properties: `limit` and `type`, which are documented by
+The properties of bodyParser currently allow for two configurable options: `limit` and `type`, which are documented by
 [body-parser](https://expressjs.com/en/resources/middleware/body-parser.html)
+
+### Disabling Body Parsing
+
+If you set `bodyParser` to `false`, no middleware will run on the request. This will allow you to have full control of the request.
 
 ### Examples
 
@@ -101,6 +105,14 @@ export const config = {
     json: {
       limit: "10kb",
     },
+  },
+}
+```
+
+```js
+// disable bodyParser
+export const config = {
+  bodyParser: false,
   },
 }
 ```
