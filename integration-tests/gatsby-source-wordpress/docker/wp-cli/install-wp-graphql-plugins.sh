@@ -22,9 +22,6 @@ install-plugin wp-graphql-gutenberg pristas-peter/wp-graphql-gutenberg ${WPGRAPH
 # CPTUI from Github release
 install-plugin custom-post-type-ui WebDevStudios/custom-post-type-ui ${CPT_UI_VERSION} && \
 
-# WP GraphQL CPTUI from GitHub release
-install-plugin wp-graphql-custom-post-type-ui wp-graphql/wp-graphql-custom-post-type-ui ${WPGRAPHQL_CPT_UI_VERSION} && \
-
 # WP GraphQL Yoast from GitHub release
 install-plugin wp-graphql-yoast-seo ashhitch/wp-graphql-yoast-seo ${WPGRAPHQL_YOAST_VERSION} && \
 
