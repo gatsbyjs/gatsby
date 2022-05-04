@@ -1254,6 +1254,7 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
 }
 
 actions.addGatsbyImageSourceUrl = (sourceUrl: string) => dispatch => {
+  console.log(`adding new source url to redux`, sourceUrl)
   dispatch({
     type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
     payload: { sourceUrl },

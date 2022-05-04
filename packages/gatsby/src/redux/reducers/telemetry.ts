@@ -8,8 +8,6 @@ export const telemetryReducer = (
   state: IGatsbyState["telemetry"] = initialState,
   action: ActionsUnion
 ): IGatsbyState["telemetry"] => {
-  // @ts-ignore
-  console.log(`telemetry reducer action`, action, action.payload)
   switch (action.type) {
     case `PROCESS_GATSBY_IMAGE_SOURCE_URL`: {
       const { sourceUrl } = action.payload
