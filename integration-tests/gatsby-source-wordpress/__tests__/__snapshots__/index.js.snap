@@ -905,7 +905,6 @@ Array [
       "schemaMd5",
       "seo",
       "viewer",
-      "wpGatsby",
       "writingSettings",
       "nodeType",
       "id",
@@ -939,15 +938,21 @@ Array [
   },
   Object {
     "fields": Array [
+      "fieldGroupName",
+    ],
+    "name": "WpAcfFieldGroup",
+  },
+  Object {
+    "fields": Array [
       "target",
       "title",
       "url",
     ],
-    "name": "WpACF_Link",
+    "name": "WpAcfLink",
   },
   Object {
     "fields": null,
-    "name": "WpACF_LinkFilterInput",
+    "name": "WpAcfLinkFilterInput",
   },
   Object {
     "fields": Array [
@@ -970,6 +975,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -999,6 +1005,8 @@ Array [
       "databaseId",
       "description",
       "id",
+      "isContentNode",
+      "isTermNode",
       "link",
       "name",
       "wpParent",
@@ -1008,6 +1016,7 @@ Array [
       "seo",
       "slug",
       "taxonomy",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -1158,6 +1167,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "avatar",
       "databaseId",
       "email",
       "id",
@@ -1316,6 +1326,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "avatar",
       "databaseId",
       "id",
       "name",
@@ -1344,12 +1355,15 @@ Array [
   Object {
     "fields": Array [
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
       "desiredSlug",
       "guid",
       "id",
+      "isContentNode",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -1470,8 +1484,10 @@ Array [
       "hasArchive",
       "hierarchical",
       "id",
+      "isContentNode",
       "isFrontPage",
       "isPostsPage",
+      "isTermNode",
       "label",
       "labels",
       "menuIcon",
@@ -1572,6 +1588,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1596,6 +1613,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1643,6 +1661,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1665,6 +1684,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1810,6 +1830,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1833,6 +1854,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1857,6 +1879,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1882,6 +1905,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1905,6 +1929,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -1944,6 +1969,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2011,6 +2037,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2156,6 +2183,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2203,6 +2231,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2233,6 +2262,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2254,6 +2284,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2429,6 +2460,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2500,6 +2532,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2594,6 +2627,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2615,6 +2649,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2718,6 +2753,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2744,6 +2780,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2760,7 +2797,6 @@ Array [
     "fields": Array [
       "addLinkToFeaturedImage",
       "align",
-      "categories",
       "className",
       "columns",
       "displayAuthor",
@@ -2789,7 +2825,6 @@ Array [
     "fields": Array [
       "addLinkToFeaturedImage",
       "align",
-      "categories",
       "className",
       "columns",
       "displayAuthor",
@@ -2813,6 +2848,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2843,6 +2879,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2970,6 +3007,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -2993,6 +3031,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3014,6 +3053,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3029,6 +3069,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3138,6 +3179,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3161,6 +3203,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3250,6 +3293,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3309,6 +3353,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3339,6 +3384,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3369,6 +3415,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3394,6 +3441,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3415,6 +3463,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3439,6 +3488,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3463,6 +3513,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3486,6 +3537,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3509,6 +3561,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3646,6 +3699,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3670,6 +3724,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3700,6 +3755,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3737,6 +3793,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -3764,7 +3821,6 @@ Array [
       "poster",
       "preload",
       "src",
-      "tracks",
     ],
     "name": "WpCoreVideoBlockAttributes",
   },
@@ -3817,7 +3873,6 @@ Array [
     "fields": Array [
       "dateFormat",
       "description",
-      "email",
       "language",
       "startOfWeek",
       "timeFormat",
@@ -3921,6 +3976,7 @@ Array [
       "commentStatus",
       "comments",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -3930,6 +3986,8 @@ Array [
       "fileSize",
       "guid",
       "id",
+      "isContentNode",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "mediaDetails",
@@ -4325,9 +4383,27 @@ Array [
   },
   Object {
     "fields": Array [
+      "contentType",
+      "contentTypeName",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
       "featuredImage",
       "featuredImageDatabaseId",
       "featuredImageId",
+      "guid",
+      "id",
+      "isContentNode",
+      "isTermNode",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "slug",
+      "status",
+      "template",
+      "uri",
     ],
     "name": "WpNodeWithFeaturedImage",
   },
@@ -4394,6 +4470,7 @@ Array [
       "comments",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -4403,10 +4480,12 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
       "isFrontPage",
       "isPostsPage",
       "isPrivacyPage",
       "isRevision",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "menuOrder",
@@ -4614,6 +4693,7 @@ Array [
       "comments",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -4625,8 +4705,10 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
       "isRevision",
       "isSticky",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -4694,12 +4776,15 @@ Array [
       "databaseId",
       "description",
       "id",
+      "isContentNode",
+      "isTermNode",
       "link",
       "name",
       "posts",
       "seo",
       "slug",
       "taxonomy",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -4927,7 +5012,6 @@ Array [
       "schema",
       "title",
       "twitterDescription",
-      "twitterImage",
       "twitterTitle",
     ],
     "name": "WpPostTypeSEO",
@@ -4952,6 +5036,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -4959,6 +5044,9 @@ Array [
       "enclosure",
       "guid",
       "id",
+      "isContentNode",
+      "isRevision",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -5201,6 +5289,7 @@ Array [
       "companyLogo",
       "companyName",
       "companyOrPerson",
+      "homeUrl",
       "inLanguage",
       "logo",
       "personLogo",
@@ -5327,13 +5416,23 @@ Array [
   },
   Object {
     "fields": Array [
+      "breadcrumbTitle",
+      "canonical",
       "fullHead",
+      "language",
       "metaDesc",
       "metaRobotsNofollow",
       "metaRobotsNoindex",
+      "opengraphDescription",
+      "opengraphImage",
+      "opengraphTitle",
+      "region",
       "schema",
       "social",
       "title",
+      "twitterDescription",
+      "twitterImage",
+      "twitterTitle",
     ],
     "name": "WpSEOUser",
   },
@@ -5343,6 +5442,8 @@ Array [
   },
   Object {
     "fields": Array [
+      "articleType",
+      "pageType",
       "raw",
     ],
     "name": "WpSEOUserSchema",
@@ -5388,7 +5489,6 @@ Array [
       "discussionSettingsDefaultPingStatus",
       "generalSettingsDateFormat",
       "generalSettingsDescription",
-      "generalSettingsEmail",
       "generalSettingsLanguage",
       "generalSettingsStartOfWeek",
       "generalSettingsTimeFormat",
@@ -5417,12 +5517,15 @@ Array [
       "databaseId",
       "description",
       "id",
+      "isContentNode",
+      "isTermNode",
       "link",
       "name",
       "posts",
       "seo",
       "slug",
       "taxonomy",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -5649,9 +5752,12 @@ Array [
       "databaseId",
       "description",
       "id",
+      "isContentNode",
+      "isTermNode",
       "link",
       "name",
       "slug",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -5717,10 +5823,6 @@ Array [
     "name": "WpTermNodeSortInput",
   },
   Object {
-    "fields": null,
-    "name": "WpTermObjectUnion",
-  },
-  Object {
     "fields": Array [
       "author",
       "authorDatabaseId",
@@ -5729,6 +5831,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -5739,6 +5842,8 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -5821,6 +5926,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -5831,6 +5937,8 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -5913,6 +6021,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -5923,6 +6032,8 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -5999,6 +6110,8 @@ Array [
   Object {
     "fields": Array [
       "id",
+      "isContentNode",
+      "isTermNode",
       "uri",
     ],
     "name": "WpUniformResourceIdentifiable",
@@ -6012,6 +6125,8 @@ Array [
       "description",
       "firstName",
       "id",
+      "isContentNode",
+      "isTermNode",
       "lastName",
       "locale",
       "name",
@@ -6224,17 +6339,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "arePrettyPermalinksEnabled",
-      "isPreviewFrontendOnline",
-    ],
-    "name": "WpWPGatsby",
-  },
-  Object {
-    "fields": null,
-    "name": "WpWPGatsbyFilterInput",
-  },
-  Object {
-    "fields": Array [
       "defaultCategory",
       "defaultPostFormat",
       "useSmilies",
@@ -6248,6 +6352,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -6264,6 +6369,7 @@ Array [
     "fields": Array [
       "additionalListCssClasses",
       "className",
+      "questions",
     ],
     "name": "WpYoastFaqBlockAttributes",
   },
@@ -6275,12 +6381,14 @@ Array [
     "fields": Array [
       "additionalListCssClasses",
       "className",
+      "questions",
     ],
     "name": "WpYoastFaqBlockDeprecatedV1Attributes",
   },
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -6299,11 +6407,13 @@ Array [
       "className",
       "days",
       "defaultDurationText",
+      "description",
       "durationText",
       "hasDuration",
       "hours",
       "jsonDescription",
       "minutes",
+      "steps",
       "unorderedList",
     ],
     "name": "WpYoastHowToBlockAttributes",
@@ -6318,11 +6428,13 @@ Array [
       "className",
       "days",
       "defaultDurationText",
+      "description",
       "durationText",
       "hasDuration",
       "hours",
       "jsonDescription",
       "minutes",
+      "steps",
       "unorderedList",
     ],
     "name": "WpYoastHowToBlockDeprecatedV1Attributes",
@@ -6333,11 +6445,13 @@ Array [
       "className",
       "days",
       "defaultDurationText",
+      "description",
       "durationText",
       "hasDuration",
       "hours",
       "jsonDescription",
       "minutes",
+      "steps",
       "unorderedList",
     ],
     "name": "WpYoastHowToBlockDeprecatedV2Attributes",
@@ -6345,6 +6459,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -6388,17 +6503,24 @@ Array [
   },
   Object {
     "fields": Array [
+      "fieldGroupName",
+    ],
+    "name": "AcfFieldGroup",
+  },
+  Object {
+    "fields": Array [
       "target",
       "title",
       "url",
     ],
-    "name": "ACF_Link",
+    "name": "AcfLink",
   },
   Object {
     "fields": Array [
       "actionType",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -6409,8 +6531,10 @@ Array [
       "enqueuedStylesheets",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -6496,6 +6620,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -6509,9 +6634,18 @@ Array [
     "name": "Block",
   },
   Object {
+    "fields": null,
+    "name": "BlockAttributesArray",
+  },
+  Object {
+    "fields": null,
+    "name": "BlockAttributesObject",
+  },
+  Object {
     "fields": Array [
       "blocks",
       "blocksJSON",
+      "id",
       "previewBlocks",
       "previewBlocksJSON",
     ],
@@ -6545,6 +6679,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -6555,8 +6690,10 @@ Array [
       "enqueuedStylesheets",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isTermNode",
       "lastEditedBy",
       "lastUpdateTime",
       "link",
@@ -6589,10 +6726,6 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "BlockUnion",
-  },
-  Object {
-    "fields": null,
     "name": "Boolean",
   },
   Object {
@@ -6606,7 +6739,9 @@ Array [
       "enqueuedScripts",
       "enqueuedStylesheets",
       "id",
+      "isContentNode",
       "isRestricted",
+      "isTermNode",
       "link",
       "name",
       "parent",
@@ -6616,6 +6751,7 @@ Array [
       "seo",
       "slug",
       "taxonomy",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -6734,6 +6870,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "avatar",
       "databaseId",
       "email",
       "id",
@@ -6786,6 +6923,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "avatar",
       "databaseId",
       "email",
       "id",
@@ -6802,6 +6940,7 @@ Array [
   Object {
     "fields": Array [
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -6812,8 +6951,10 @@ Array [
       "enqueuedStylesheets",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -6904,9 +7045,11 @@ Array [
       "hasArchive",
       "hierarchical",
       "id",
+      "isContentNode",
       "isFrontPage",
       "isPostsPage",
       "isRestricted",
+      "isTermNode",
       "label",
       "labels",
       "menuIcon",
@@ -6969,8 +7112,21 @@ Array [
     "name": "ContentTypeToTaxonomyConnectionEdge",
   },
   Object {
+    "fields": null,
+    "name": "ContentTypesOfCategoryEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "ContentTypesOfPostFormatEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "ContentTypesOfTagEnum",
+  },
+  Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -6995,6 +7151,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7042,6 +7199,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7064,6 +7222,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7087,6 +7246,7 @@ Array [
       "linkTarget",
       "placeholder",
       "rel",
+      "style",
       "text",
       "textColor",
       "title",
@@ -7109,6 +7269,7 @@ Array [
       "linkTarget",
       "placeholder",
       "rel",
+      "style",
       "text",
       "textColor",
       "title",
@@ -7127,6 +7288,7 @@ Array [
       "linkTarget",
       "placeholder",
       "rel",
+      "style",
       "text",
       "textColor",
       "title",
@@ -7145,6 +7307,7 @@ Array [
       "linkTarget",
       "placeholder",
       "rel",
+      "style",
       "text",
       "textColor",
       "title",
@@ -7163,6 +7326,7 @@ Array [
       "linkTarget",
       "placeholder",
       "rel",
+      "style",
       "text",
       "textColor",
       "title",
@@ -7181,6 +7345,7 @@ Array [
       "linkTarget",
       "placeholder",
       "rel",
+      "style",
       "text",
       "textColor",
       "title",
@@ -7199,6 +7364,7 @@ Array [
       "linkTarget",
       "placeholder",
       "rel",
+      "style",
       "text",
       "textColor",
       "title",
@@ -7209,6 +7375,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7232,6 +7399,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7256,6 +7424,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7281,6 +7450,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7304,6 +7474,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7343,6 +7514,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7362,6 +7534,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -7378,6 +7551,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -7390,6 +7564,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -7402,6 +7577,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -7410,6 +7586,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7432,6 +7609,7 @@ Array [
       "customGradient",
       "customOverlayColor",
       "dimRatio",
+      "focalPoint",
       "gradient",
       "hasParallax",
       "id",
@@ -7439,6 +7617,7 @@ Array [
       "minHeight",
       "minHeightUnit",
       "overlayColor",
+      "style",
       "url",
     ],
     "name": "CoreCoverBlockAttributes",
@@ -7457,6 +7636,7 @@ Array [
       "customGradient",
       "customOverlayColor",
       "dimRatio",
+      "focalPoint",
       "gradient",
       "hasParallax",
       "id",
@@ -7464,6 +7644,7 @@ Array [
       "minHeight",
       "minHeightUnit",
       "overlayColor",
+      "style",
       "url",
     ],
     "name": "CoreCoverBlockDeprecatedV1Attributes",
@@ -7478,6 +7659,7 @@ Array [
       "customGradient",
       "customOverlayColor",
       "dimRatio",
+      "focalPoint",
       "gradient",
       "hasParallax",
       "id",
@@ -7485,6 +7667,7 @@ Array [
       "minHeight",
       "minHeightUnit",
       "overlayColor",
+      "style",
       "url",
     ],
     "name": "CoreCoverBlockDeprecatedV2Attributes",
@@ -7499,6 +7682,7 @@ Array [
       "customGradient",
       "customOverlayColor",
       "dimRatio",
+      "focalPoint",
       "gradient",
       "hasParallax",
       "id",
@@ -7506,6 +7690,7 @@ Array [
       "minHeight",
       "minHeightUnit",
       "overlayColor",
+      "style",
       "url",
     ],
     "name": "CoreCoverBlockDeprecatedV3Attributes",
@@ -7520,6 +7705,7 @@ Array [
       "customGradient",
       "customOverlayColor",
       "dimRatio",
+      "focalPoint",
       "gradient",
       "hasParallax",
       "id",
@@ -7527,6 +7713,7 @@ Array [
       "minHeight",
       "minHeightUnit",
       "overlayColor",
+      "style",
       "url",
     ],
     "name": "CoreCoverBlockDeprecatedV4Attributes",
@@ -7541,6 +7728,7 @@ Array [
       "customGradient",
       "customOverlayColor",
       "dimRatio",
+      "focalPoint",
       "gradient",
       "hasParallax",
       "id",
@@ -7548,6 +7736,7 @@ Array [
       "minHeight",
       "minHeightUnit",
       "overlayColor",
+      "style",
       "url",
     ],
     "name": "CoreCoverBlockDeprecatedV5Attributes",
@@ -7555,6 +7744,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7602,6 +7792,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7632,6 +7823,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7653,6 +7845,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7828,6 +8021,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7847,6 +8041,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "tagName",
       "templateLock",
       "textColor",
@@ -7864,6 +8059,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "tagName",
       "templateLock",
       "textColor",
@@ -7877,6 +8073,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "tagName",
       "templateLock",
       "textColor",
@@ -7890,6 +8087,7 @@ Array [
       "backgroundColor",
       "className",
       "gradient",
+      "style",
       "tagName",
       "templateLock",
       "textColor",
@@ -7899,6 +8097,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -7921,6 +8120,7 @@ Array [
       "fontSize",
       "level",
       "placeholder",
+      "style",
       "textAlign",
       "textColor",
     ],
@@ -7940,6 +8140,7 @@ Array [
       "fontSize",
       "level",
       "placeholder",
+      "style",
       "textAlign",
       "textColor",
     ],
@@ -7955,6 +8156,7 @@ Array [
       "fontSize",
       "level",
       "placeholder",
+      "style",
       "textAlign",
       "textColor",
     ],
@@ -7970,6 +8172,7 @@ Array [
       "fontSize",
       "level",
       "placeholder",
+      "style",
       "textAlign",
       "textColor",
     ],
@@ -7985,6 +8188,7 @@ Array [
       "fontSize",
       "level",
       "placeholder",
+      "style",
       "textAlign",
       "textColor",
     ],
@@ -7993,6 +8197,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8014,6 +8219,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8117,6 +8323,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8143,6 +8350,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8212,6 +8420,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8233,6 +8442,7 @@ Array [
       "ordered",
       "reversed",
       "start",
+      "style",
       "textColor",
       "type",
       "values",
@@ -8242,6 +8452,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8260,6 +8471,7 @@ Array [
       "anchor",
       "backgroundColor",
       "className",
+      "focalPoint",
       "gradient",
       "href",
       "imageFill",
@@ -8276,6 +8488,7 @@ Array [
       "mediaUrl",
       "mediaWidth",
       "rel",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -8291,6 +8504,7 @@ Array [
       "anchor",
       "backgroundColor",
       "className",
+      "focalPoint",
       "gradient",
       "href",
       "imageFill",
@@ -8307,6 +8521,7 @@ Array [
       "mediaUrl",
       "mediaWidth",
       "rel",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -8318,6 +8533,7 @@ Array [
       "anchor",
       "backgroundColor",
       "className",
+      "focalPoint",
       "gradient",
       "href",
       "imageFill",
@@ -8334,6 +8550,7 @@ Array [
       "mediaUrl",
       "mediaWidth",
       "rel",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -8345,6 +8562,7 @@ Array [
       "anchor",
       "backgroundColor",
       "className",
+      "focalPoint",
       "gradient",
       "href",
       "imageFill",
@@ -8361,6 +8579,7 @@ Array [
       "mediaUrl",
       "mediaWidth",
       "rel",
+      "style",
       "textColor",
       "verticalAlignment",
     ],
@@ -8369,6 +8588,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8392,6 +8612,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8413,6 +8634,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8428,6 +8650,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8451,6 +8674,7 @@ Array [
       "dropCap",
       "fontSize",
       "placeholder",
+      "style",
       "textColor",
     ],
     "name": "CoreParagraphBlockAttributes",
@@ -8470,6 +8694,7 @@ Array [
       "dropCap",
       "fontSize",
       "placeholder",
+      "style",
       "textColor",
     ],
     "name": "CoreParagraphBlockDeprecatedV1Attributes",
@@ -8485,6 +8710,7 @@ Array [
       "dropCap",
       "fontSize",
       "placeholder",
+      "style",
       "textColor",
     ],
     "name": "CoreParagraphBlockDeprecatedV2Attributes",
@@ -8500,6 +8726,7 @@ Array [
       "dropCap",
       "fontSize",
       "placeholder",
+      "style",
       "textColor",
     ],
     "name": "CoreParagraphBlockDeprecatedV3Attributes",
@@ -8515,6 +8742,7 @@ Array [
       "dropCap",
       "fontSize",
       "placeholder",
+      "style",
       "textColor",
     ],
     "name": "CoreParagraphBlockDeprecatedV4Attributes",
@@ -8530,6 +8758,7 @@ Array [
       "dropCap",
       "fontSize",
       "placeholder",
+      "style",
       "textColor",
     ],
     "name": "CoreParagraphBlockDeprecatedV5Attributes",
@@ -8537,6 +8766,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8560,6 +8790,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8649,6 +8880,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8708,6 +8940,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8738,6 +8971,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8768,6 +9002,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8793,6 +9028,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8814,6 +9050,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8838,6 +9075,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8862,6 +9100,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8885,6 +9124,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -8908,6 +9148,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -9045,6 +9286,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -9069,6 +9311,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -9099,6 +9342,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -9136,6 +9380,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -9183,17 +9428,6 @@ Array [
       "clientMutationId",
     ],
     "name": "CreateActionMonitorActionPayload",
-  },
-  Object {
-    "fields": null,
-    "name": "CreateBlockEditorPreviewInput",
-  },
-  Object {
-    "fields": Array [
-      "blockEditorPreview",
-      "clientMutationId",
-    ],
-    "name": "CreateBlockEditorPreviewPayload",
   },
   Object {
     "fields": null,
@@ -9359,18 +9593,6 @@ Array [
       "deletedId",
     ],
     "name": "DeleteActionMonitorActionPayload",
-  },
-  Object {
-    "fields": null,
-    "name": "DeleteBlockEditorPreviewInput",
-  },
-  Object {
-    "fields": Array [
-      "blockEditorPreview",
-      "clientMutationId",
-      "deletedId",
-    ],
-    "name": "DeleteBlockEditorPreviewPayload",
   },
   Object {
     "fields": null,
@@ -9573,6 +9795,7 @@ Array [
     "fields": Array [
       "id",
       "isDraft",
+      "manifestIds",
       "modified",
       "parentDatabaseId",
       "previewDatabaseId",
@@ -9688,6 +9911,7 @@ Array [
       "commentStatus",
       "comments",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -9700,8 +9924,10 @@ Array [
       "fileSize",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "mediaDetails",
@@ -9872,10 +10098,6 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "MenuItemsWhereArgs",
-  },
-  Object {
-    "fields": null,
     "name": "MenuLocationEnum",
   },
   Object {
@@ -9946,9 +10168,35 @@ Array [
   },
   Object {
     "fields": Array [
+      "contentType",
+      "contentTypeName",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
       "featuredImage",
       "featuredImageDatabaseId",
       "featuredImageId",
+      "guid",
+      "id",
+      "isContentNode",
+      "isPreview",
+      "isRestricted",
+      "isTermNode",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "slug",
+      "status",
+      "template",
+      "uri",
     ],
     "name": "NodeWithFeaturedImage",
   },
@@ -10016,6 +10264,7 @@ Array [
       "comments",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -10029,12 +10278,14 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
       "isFrontPage",
       "isPostsPage",
       "isPreview",
       "isPrivacyPage",
       "isRestricted",
       "isRevision",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "menuOrder",
@@ -10212,6 +10463,10 @@ Array [
     "name": "Plugin",
   },
   Object {
+    "fields": null,
+    "name": "PluginStatusEnum",
+  },
+  Object {
     "fields": Array [
       "author",
       "authorDatabaseId",
@@ -10224,6 +10479,7 @@ Array [
       "comments",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -10238,10 +10494,12 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
       "isRevision",
       "isSticky",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -10285,13 +10543,16 @@ Array [
       "enqueuedScripts",
       "enqueuedStylesheets",
       "id",
+      "isContentNode",
       "isRestricted",
+      "isTermNode",
       "link",
       "name",
       "posts",
       "seo",
       "slug",
       "taxonomy",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -10634,6 +10895,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -10644,8 +10906,11 @@ Array [
       "enqueuedStylesheets",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isRevision",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -10657,6 +10922,8 @@ Array [
       "previewBlocksJSON",
       "previewRevisionDatabaseId",
       "previewRevisionId",
+      "revisionOf",
+      "revisions",
       "seo",
       "slug",
       "status",
@@ -10675,6 +10942,25 @@ Array [
       "node",
     ],
     "name": "ReusableBlockToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "ReusableBlockToRevisionConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ReusableBlockToRevisionConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "ReusableBlockToRevisionConnectionWhereArgs",
   },
   Object {
     "fields": Array [
@@ -11048,6 +11334,10 @@ Array [
     "name": "RootQueryToPluginConnectionEdge",
   },
   Object {
+    "fields": null,
+    "name": "RootQueryToPluginConnectionWhereArgs",
+  },
+  Object {
     "fields": Array [
       "edges",
       "nodes",
@@ -11386,6 +11676,7 @@ Array [
       "companyLogo",
       "companyName",
       "companyOrPerson",
+      "homeUrl",
       "inLanguage",
       "logo",
       "personLogo",
@@ -11468,18 +11759,30 @@ Array [
   },
   Object {
     "fields": Array [
+      "breadcrumbTitle",
+      "canonical",
       "fullHead",
+      "language",
       "metaDesc",
       "metaRobotsNofollow",
       "metaRobotsNoindex",
+      "opengraphDescription",
+      "opengraphImage",
+      "opengraphTitle",
+      "region",
       "schema",
       "social",
       "title",
+      "twitterDescription",
+      "twitterImage",
+      "twitterTitle",
     ],
     "name": "SEOUser",
   },
   Object {
     "fields": Array [
+      "articleType",
+      "pageType",
       "raw",
     ],
     "name": "SEOUserSchema",
@@ -11551,13 +11854,16 @@ Array [
       "enqueuedScripts",
       "enqueuedStylesheets",
       "id",
+      "isContentNode",
       "isRestricted",
+      "isTermNode",
       "link",
       "name",
       "posts",
       "seo",
       "slug",
       "taxonomy",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -11698,10 +12004,13 @@ Array [
       "enqueuedScripts",
       "enqueuedStylesheets",
       "id",
+      "isContentNode",
       "isRestricted",
+      "isTermNode",
       "link",
       "name",
       "slug",
+      "taxonomyName",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -11744,10 +12053,6 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "TermObjectUnion",
-  },
-  Object {
-    "fields": null,
     "name": "TermObjectsConnectionOrderbyEnum",
   },
   Object {
@@ -11767,10 +12072,6 @@ Array [
     "name": "Theme",
   },
   Object {
-    "fields": null,
-    "name": "TimezoneEnum",
-  },
-  Object {
     "fields": Array [
       "author",
       "authorDatabaseId",
@@ -11779,6 +12080,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -11792,8 +12094,10 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -11831,6 +12135,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -11844,8 +12149,10 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -11883,6 +12190,7 @@ Array [
       "blocksJSON",
       "content",
       "contentType",
+      "contentTypeName",
       "databaseId",
       "date",
       "dateGmt",
@@ -11896,8 +12204,10 @@ Array [
       "featuredImageId",
       "guid",
       "id",
+      "isContentNode",
       "isPreview",
       "isRestricted",
+      "isTermNode",
       "lastEditedBy",
       "link",
       "modified",
@@ -11929,6 +12239,8 @@ Array [
   Object {
     "fields": Array [
       "id",
+      "isContentNode",
+      "isTermNode",
       "uri",
     ],
     "name": "UniformResourceIdentifiable",
@@ -11943,17 +12255,6 @@ Array [
       "clientMutationId",
     ],
     "name": "UpdateActionMonitorActionPayload",
-  },
-  Object {
-    "fields": null,
-    "name": "UpdateBlockEditorPreviewInput",
-  },
-  Object {
-    "fields": Array [
-      "blockEditorPreview",
-      "clientMutationId",
-    ],
-    "name": "UpdateBlockEditorPreviewPayload",
   },
   Object {
     "fields": null,
@@ -12118,7 +12419,9 @@ Array [
       "extraCapabilities",
       "firstName",
       "id",
+      "isContentNode",
       "isRestricted",
+      "isTermNode",
       "lastName",
       "locale",
       "mediaItems",
@@ -12465,6 +12768,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -12481,6 +12785,7 @@ Array [
     "fields": Array [
       "additionalListCssClasses",
       "className",
+      "questions",
     ],
     "name": "YoastFaqBlockAttributes",
   },
@@ -12492,12 +12797,14 @@ Array [
     "fields": Array [
       "additionalListCssClasses",
       "className",
+      "questions",
     ],
     "name": "YoastFaqBlockDeprecatedV1Attributes",
   },
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
@@ -12516,11 +12823,13 @@ Array [
       "className",
       "days",
       "defaultDurationText",
+      "description",
       "durationText",
       "hasDuration",
       "hours",
       "jsonDescription",
       "minutes",
+      "steps",
       "unorderedList",
     ],
     "name": "YoastHowToBlockAttributes",
@@ -12535,11 +12844,13 @@ Array [
       "className",
       "days",
       "defaultDurationText",
+      "description",
       "durationText",
       "hasDuration",
       "hours",
       "jsonDescription",
       "minutes",
+      "steps",
       "unorderedList",
     ],
     "name": "YoastHowToBlockDeprecatedV1Attributes",
@@ -12550,11 +12861,13 @@ Array [
       "className",
       "days",
       "defaultDurationText",
+      "description",
       "durationText",
       "hasDuration",
       "hours",
       "jsonDescription",
       "minutes",
+      "steps",
       "unorderedList",
     ],
     "name": "YoastHowToBlockDeprecatedV2Attributes",
@@ -12562,6 +12875,7 @@ Array [
   Object {
     "fields": Array [
       "attributes",
+      "attributesJSON",
       "dynamicContent",
       "innerBlocks",
       "isDynamic",
