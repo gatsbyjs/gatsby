@@ -127,6 +127,7 @@
     "parcel-resolver-externals": "*",
     "parcel-resolver-require-resolve": "*",
     "parcel-transformer-define": "*",
+    "parcel-transformer-remove-gatsby-internals": "*",
     "parseurl": "^1.3.3",
     "physical-cpu-count": "^2.0.0",
     "platform": "^1.3.6",

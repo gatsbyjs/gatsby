@@ -44,6 +44,7 @@ export function createParcelConfig(name: string, config: any, settings?: any) {
         "@parcel/transformer-js",
         "@parcel/transformer-react-refresh-wrap",
         "parcel-transformer-define",
+        "parcel-transformer-remove-gatsby-internals",
       ],
       "*.{json,json5}": ["@parcel/transformer-json"],
       "*.jsonld": ["@parcel/transformer-jsonld"],

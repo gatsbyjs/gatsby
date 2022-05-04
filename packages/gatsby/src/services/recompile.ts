@@ -4,7 +4,7 @@ import * as fs from "fs-extra"
 import { Stats } from "webpack"
 import reporter from "gatsby-cli/lib/reporter"
 import { emitter } from "../redux"
-import { buildRenderer } from "../commands/build-html"
+import { buildRenderer, IBuildArgs } from "../commands/build-html"
 import { Stage } from "../commands/types"
 import { clearRequireCacheRecursively } from "../utils/clear-require-cache"
 
@@ -45,7 +45,7 @@ async function recompileSSRBundle({
   reporter.verbose(`Recompiling SSR bundle`)
 
   const { close, rendererPath } = await buildRenderer(
-    program,
+    program as IBuildArgs,
     Stage.DevelopHTML
   )
 

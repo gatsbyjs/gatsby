@@ -241,7 +241,7 @@ const buildBundlerRenderer = async (
     targets: {
       root: {
         outputFormat: `commonjs` as OutputFormat,
-        includeNodeModules: true,
+        includeNodeModules: false,
         sourceMap: false,
         engines: {
           node: `>= 14.15.0`,

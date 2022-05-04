@@ -1,0 +1,13 @@
+{
+  "name": "parcel-transformer-remove-gatsby-internals",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-plugin-remove-graphql-queries": "^4.0.0"
+  },
+  "dependencies": {
+    "parcel": "^2.4.1"
+  }
+}
