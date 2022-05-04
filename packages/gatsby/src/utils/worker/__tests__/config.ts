@@ -17,9 +17,9 @@ beforeEach(() => {
   store.dispatch({ type: `DELETE_CACHE` })
 })
 
-afterEach(() => {
+afterEach(async () => {
   if (worker) {
-    worker.end()
+    await Promise.all(worker.end())
     worker = undefined
   }
 })
