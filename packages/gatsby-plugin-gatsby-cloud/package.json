@@ -32,7 +32,6 @@
     "http/2-server-push",
     "gatsby-cloud"
   ],
-  "types": "./index.d.ts",
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
@@ -46,9 +45,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\" && npm run clean && npm run copy-type-declarations",
-    "clean": "del-cli ./components/index.d.ts",
-    "copy-type-declarations": "cpy src/components/index.d.ts components",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
   },
