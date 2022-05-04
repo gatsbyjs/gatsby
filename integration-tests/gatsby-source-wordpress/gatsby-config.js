@@ -31,6 +31,9 @@ const sharedTypeSettings = {
   BlockAttributesObject: {
     exclude: true,
   },
+  BlockEditorPreview: {
+    exclude: true,
+  },
   Post: { excludeFieldNames: [`pinged`] },
 }
 
@@ -38,7 +41,6 @@ const debug = {
   graphql: {
     writeQueriesToDisk: true,
     onlyReportCriticalErrors: false,
-    showQueryOnError: true,
     panicOnError: true,
   },
 }

@@ -266,7 +266,6 @@ exports.queries = {
               ... on WpCoreButtonBlockAttributes {
                 align
                 backgroundColor
-                borderRadius
                 className
                 gradient
                 linkTarget
@@ -277,20 +276,6 @@ exports.queries = {
                 title
                 url
               }
-            }
-          }
-          ... on WpCoreFileBlock {
-            attributes {
-              downloadButtonText
-              fileName
-              id
-              showDownloadButton
-              textLinkTarget
-            }
-          }
-          ... on WpCoreSpacerBlock {
-            attributes {
-              height
             }
           }
           ... on WpCoreSeparatorBlock {
@@ -405,13 +390,6 @@ exports.queries = {
                   url
                 }
               }
-            }
-          }
-
-          ... on WpCoreListBlock {
-            attributes {
-              ordered
-              values
             }
           }
         }
