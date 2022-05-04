@@ -142,7 +142,7 @@ async function bundleSSR({
   }
 
   const bundler = new Parcel(options)
-  const result = await bundler.run()
+  await bundler.run()
   return undefined
 
   // return new Promise(async (resolve, reject) => {

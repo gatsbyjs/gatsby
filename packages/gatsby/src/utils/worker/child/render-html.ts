@@ -158,7 +158,7 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        console.log(`Rendering ${pagePath}`)
+        console.log(`Rendering ${pagePath} with ${htmlComponentRendererPath}`)
         const { html, unsafeBuiltinsUsage } =
           await htmlComponentRenderer.default({
             pagePath,

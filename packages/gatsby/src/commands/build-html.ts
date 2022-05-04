@@ -23,6 +23,7 @@ import { IPageDataWithQueryResult } from "../utils/page-data"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 
 
+import { getPublicPath } from "../utils/get-public-path"
 import { createParcelConfig } from "../utils/parcel"
 import { OutputFormat  } from "@parcel/types"
 import Parcel from "@parcel/core"
@@ -164,7 +165,7 @@ const doBuildRenderer = async (
 
 
 export const buildRenderer = async (
-  program: IProgram,
+  program: IBuildArgs,
   stage: Stage,
   parentSpan?: IActivity
 ): Promise<IBuildRendererResult> => {
@@ -178,14 +179,16 @@ function getPackageRoot(pkg) {
 }
 
 const buildBundlerRenderer = async (
-  program: IProgram,
+  program: IBuildArgs,
   // stage: Stage,
   // parentSpan?: IActivity
 ): Promise<IBuildRendererResult> => {
-  // const config = await webpackConfig(program, program.directory, stage, null, {
-  //   parentSpan,
-  // })
   const directoryPath = withBasePath(program.directory)
+
+  const { assetPrefix, pathPrefix } = store.getState().config
+  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
+
+  // TODO write babel transformer to run js through existing plugins
 
   const config = createParcelConfig(
     'build-html', 
@@ -193,23 +196,20 @@ const buildBundlerRenderer = async (
       resolvers: [`parcel-resolver-aliases`],
     },
     {
+      define: {
+        HAS_REACT_18: "false",
+        __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
+        __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
+        __ASSET_PREFIX__: JSON.stringify(
+          program.prefixPaths ? assetPrefix : ``
+        ),
+      },
       aliases: {
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
-        // "react/jsx-runtime": "react/jsx-runtime.js",
-        // react: path.resolve(process.cwd(), './node_modules/react')
-        // gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
-        // "@babel/runtime": getPackageRoot(`@babel/runtime`),
-        // "@reach/router": getPackageRoot(`@gatsbyjs/reach-router`),
-        // "react-lifecycles-compat": directoryPath(
-        //   `.cache/react-lifecycles-compat.js`
-        // ),
-        // "@pmmmwh/react-refresh-webpack-plugin": getPackageRoot(
-        //   `@pmmmwh/react-refresh-webpack-plugin`
-        // ),
-        // "socket.io-client": getPackageRoot(`socket.io-client`),
-        // "webpack-hot-middleware": getPackageRoot(
-        //   `@gatsbyjs/webpack-hot-middleware`
-        // ),
+        gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        "@babel/runtime": getPackageRoot(`@babel/runtime`),
+        "@reach/router": getPackageRoot(`@gatsbyjs/reach-router`),
+        "socket.io-client": getPackageRoot(`socket.io-client`),
       }
     }
   )
@@ -222,6 +222,7 @@ const buildBundlerRenderer = async (
   const options = {
     config: config.rc,
     cacheDir: config.cache,
+    mode: process.env.NODE_ENV === `development` ? `development` : `production`,
     entries: entry,
     outDir: outDir,
     watch: false,
@@ -234,10 +235,13 @@ const buildBundlerRenderer = async (
     hmrPort: 0,
     sourceMaps: false,
     autoInstall: false,
+    defaultTargetOptions: {
+      shouldOptimize: false,
+    },
     targets: {
       root: {
         outputFormat: `commonjs` as OutputFormat,
-        includeNodeModules: false,
+        includeNodeModules: true,
         sourceMap: false,
         engines: {
           node: `>= 14.15.0`,
@@ -247,30 +251,14 @@ const buildBundlerRenderer = async (
     },
   }
 
-  // const promise = new Promise(async (resolve, reject) => {
-  //   try {
-  //     const bundler = new Parcel(options)
-
-  //     await bundler.watch((error, buildEvent) => {
-  //       if (buildEvent?.type === "buildSuccess") {
-  //         // move from entry file name to our desired file
-  //         fs.moveSync(path.join(outDir, entryFileName), outFile, {overwrite: true})
-  //         return resolve(undefined)
-  //       }
-  //       if (buildEvent?.type === "buildFailure") {
-  //         console.log(buildEvent)
-  //         // TODO format this better, use codeframes
-  //         reject(buildEvent?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || error)
-  //       }
-  //     })
-  //   } catch (e) {
-  //     reject(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
-  //   }
-  // })
-
-  const bundler = new Parcel(options)
-  const result = await bundler.run()
-  fs.moveSync(path.join(outDir, entryFileName), outFile, {overwrite: true})
+  try {
+    const bundler = new Parcel(options)
+    await bundler.run()
+    fs.moveSync(path.join(outDir, entryFileName), outFile, {overwrite: true})
+  } catch (e) {
+    console.log(e?.diagnostics.map(d => `${d.origin}: ${d.message}\n  ${d.hints?.join('\n  ')}\n  ${d.codeFrames && JSON.stringify(d.codeFrames)}`).join('\n') || e)
+    throw e
+  }
 
   return {
     rendererPath: outFile,
@@ -280,7 +268,7 @@ const buildBundlerRenderer = async (
 }
 
 const buildWebpackRenderer = async (
-  program: IProgram,
+  program: IBuildArgs,
   stage: Stage,
   parentSpan?: IActivity
 ): Promise<IBuildRendererResult> => {
@@ -529,7 +517,7 @@ export const buildHTML = async ({
   activity,
   workerPool,
 }: {
-  program: IProgram
+  program: IBuildArgs
   stage: Stage
   pagePaths: Array<string>
   activity: IActivity
