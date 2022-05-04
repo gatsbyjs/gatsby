@@ -536,10 +536,6 @@ exports.queries = {
       opengraphType
       title
       twitterDescription
-      twitterImage {
-        id
-        title
-      }
       twitterTitle
     }
   `,

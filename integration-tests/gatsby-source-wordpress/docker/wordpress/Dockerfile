@@ -1,4 +1,4 @@
-FROM wordpress:5.6
+FROM wordpress:5.9
 
 ARG WP_CONTENT_DIR=/var/www/html/wp-content
 ARG PLUGIN_DIR=${WP_CONTENT_DIR}/plugins
@@ -6,10 +6,12 @@ ARG UPLOADS_DIR=${WP_CONTENT_DIR}/uploads
 
 LABEL maintainer="tyler@gatsbyjs.com"
 
-# Set timezone, install XDebug, PHP Composer, WP-CLI
-RUN echo 'date.timezone = "UTC"' > /usr/local/etc/php/conf.d/timezone.ini \
-  && apt-get update && apt-get install unzip git -y && rm -rf /var/lib/apt/lists/* \
-  && curl -O 'https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar' \
+# Set timezone
+RUN echo 'date.timezone = "UTC"' > /usr/local/etc/php/conf.d/timezone.ini
+# install system deps
+RUN apt-get update && apt-get install unzip git -y && rm -rf /var/lib/apt/lists/*
+# install wp-cli
+RUN curl -O 'https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar' \
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp
 
