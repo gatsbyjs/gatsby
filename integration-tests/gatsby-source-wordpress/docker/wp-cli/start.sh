@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo "define( 'GRAPHQL_DEBUG', true );" >> /var/www/html/wp-config.php
+
 cd /var/www/html && \
 
 wp plugin deactivate --all && \
