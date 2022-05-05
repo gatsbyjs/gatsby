@@ -1,14 +1,13 @@
 import * as fs from "fs-extra"
 import { join } from "path"
 import { codegen } from "@graphql-codegen/core"
-import { Kind } from "graphql"
+import { GraphQLSchema, Kind } from "graphql"
 import type { Types } from "@graphql-codegen/plugin-helpers"
 import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript/config"
 import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations/config"
-import { AnyAction, Store } from "redux"
 import { CodeFileLoader } from "@graphql-tools/code-file-loader"
 import { loadDocuments } from "@graphql-tools/load"
-import { IGatsbyState, IStateProgram } from "../../redux/types"
+import { IDefinitionMeta, IStateProgram } from "../../redux/types"
 import { filterTargetDefinitions, stabilizeSchema } from "./utils"
 
 const OUTPUT_PATH = `src/gatsby-types.d.ts`
@@ -22,7 +21,7 @@ const DEFAULT_TYPESCRIPT_CONFIG: Readonly<TypeScriptPluginConfig> = {
   // Types come from the data layer so they can't be modified
   immutableTypes: true,
   // TODO: Better maybeValue
-  maybeValue: `T | undefined`,
+  maybeValue: `T | null`,
   // We'll want to re-export ourselves
   noExport: true,
   // Recommended for .d.ts files
@@ -43,7 +42,8 @@ const DEFAULT_TYPESCRIPT_OPERATIONS_CONFIG: Readonly<TypeScriptDocumentsPluginCo
 
 export async function writeTypeScriptTypes(
   directory: IStateProgram["directory"],
-  store: Store<IGatsbyState, AnyAction>
+  schema: GraphQLSchema,
+  definitions: Map<string, IDefinitionMeta>
 ): Promise<void> {
   const pluginConfig: Pick<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     pluginMap: {
@@ -85,18 +85,24 @@ export async function writeTypeScriptTypes(
     ],
   }
 
-  const { schema, definitions } = store.getState()
   const filename = join(directory, OUTPUT_PATH)
 
   let gatsbyNodeDocuments: Array<Types.DocumentFile> = []
   // The loadDocuments + CodeFileLoader looks for graphql(``) functions inside the gatsby-node.ts files
   // And then extracts the queries into documents
-  // The behavior can be modified: https://www.graphql-tools.com/docs/graphql-tag-pluck
+  // TODO: This codepath can be made obsolete if Gatsby itself already places the queries inside gatsby-node into the `definitions`
   try {
     gatsbyNodeDocuments = await loadDocuments(
       [`./gatsby-node.ts`, `./plugins/**/gatsby-node.ts`],
       {
-        loaders: [new CodeFileLoader()],
+        loaders: [
+          new CodeFileLoader({
+            // Configures https://www.graphql-tools.com/docs/graphql-tag-pluck to only check graphql function from Gatsby
+            pluckConfig: {
+              modules: [{ name: `gatsby`, identifier: `graphql` }],
+            },
+          }),
+        ],
       }
     )
   } catch (e) {
