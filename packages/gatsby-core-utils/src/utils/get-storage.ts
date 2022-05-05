@@ -59,7 +59,6 @@ export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
       path: fullDbPath,
       compression: true,
       sharedStructuresKey: Symbol.for(`structures`),
-      overlappingSync: false,
     })
 
     databases = {
