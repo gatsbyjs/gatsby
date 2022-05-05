@@ -8,7 +8,7 @@ Welcome to `gatsby@4.14.0` release (May 2022 #1)
 
 Key highlights of this release:
 
-- [GraphQL Typgen](#graphql-typegen)
+- [Experimental: GraphQL Typgen](#experimental-graphql-typegen)
 - [Updated Default Starter](#updated-default-starter)
 - [Gatsby Functions Configuration](#gatsby-functions-configuration)
 - [`gatsby-source-drupal`: Image CDN Support](#gatsby-source-drupal-image-cdn-support)
@@ -23,7 +23,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## GraphQL Typegen
+## Experimental: GraphQL Typegen
 
 TODO
 
