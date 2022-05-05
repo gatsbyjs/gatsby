@@ -76,6 +76,7 @@ function getRootDb(): RootDatabase {
       name: `root`,
       path: fullDbPath,
       compression: true,
+      overlappingSync: false,
     })
 
     globalThis.__GATSBY_OPEN_ROOT_LMDBS.set(fullDbPath, rootDb)
