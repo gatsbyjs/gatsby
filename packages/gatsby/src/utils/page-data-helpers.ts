@@ -20,20 +20,19 @@ export function constructPageDataString(
   }: IPageData,
   result: string | Buffer
 ): string {
-  let body = `{
-    "componentChunkName": "${componentChunkName}",
-    "path": ${JSON.stringify(pagePath)},
-    "result": ${result},
-    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+  let body =
+    `{` +
+    `"componentChunkName":"${componentChunkName}",` +
+    `"path":${JSON.stringify(pagePath)},` +
+    `"result":${result},` +
+    `"staticQueryHashes":${JSON.stringify(staticQueryHashes)}`
 
   if (matchPath) {
-    body += `,
-    "matchPath": "${matchPath}"`
+    body += `,"matchPath":"${matchPath}"`
   }
 
   if (manifestId) {
-    body += `,
-    "manifestId": "${manifestId}"`
+    body += `,"manifestId":"${manifestId}"`
   }
 
   body += `}`

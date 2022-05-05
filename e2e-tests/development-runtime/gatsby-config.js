@@ -30,6 +30,7 @@ module.exports = {
     `gatsby-source-pinc-data`,
     `gatsby-source-query-on-demand-data`,
     `gatsby-browser-tsx`,
+    `gatsby-node-typegen`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {

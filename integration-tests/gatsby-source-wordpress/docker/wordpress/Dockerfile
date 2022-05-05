@@ -1,6 +1,7 @@
 FROM wordpress:5.9
 
-ARG WP_CONTENT_DIR=/var/www/html/wp-content
+ARG ROOT_DIR=/var/www/html
+ARG WP_CONTENT_DIR=${ROOT_DIR}/wp-content
 ARG PLUGIN_DIR=${WP_CONTENT_DIR}/plugins
 ARG UPLOADS_DIR=${WP_CONTENT_DIR}/uploads
 
@@ -26,7 +27,7 @@ RUN cp -R /tmp/wp-content/* ${WP_CONTENT_DIR} && cp -R /tmp/wp-content/* /usr/sr
 
 COPY plugins/* ${PLUGIN_DIR}/
 
-RUN find ${WP_CONTENT_DIR} -type d -exec chmod 755 {} \;
+RUN find ${ROOT_DIR} -type d -exec chmod 777 {} \;
 RUN find ${WP_CONTENT_DIR} -type f -exec chmod 644 {} \;
 
 EXPOSE 8001
