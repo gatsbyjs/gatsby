@@ -29,7 +29,7 @@ TODO
 
 ## Updated Default Starter
 
-TODO
+We updated our [default Starter template `gatsby-starter-default`](https://www.gatsbyjs.com/starters/gatsbyjs/gatsby-starter-default/) to contain references to documentation, tutorial, our monorepo examples folder, and more – and aligned its look-and-feel to that of our `gatsby new`/`npm init gatsby` experience.
 
 ## Gatsby Functions Configuration
 
