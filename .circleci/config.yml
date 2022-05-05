@@ -540,6 +540,7 @@ jobs:
       - run:
           name: Run tests
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: "true"

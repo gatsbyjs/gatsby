@@ -1666,6 +1666,27 @@ export interface GatsbyFunctionRequest<ReqBody = any> extends IncomingMessage {
   cookies: Record<string, string>
 }
 
+export interface GatsbyFunctionBodyParserCommonMiddlewareConfig {
+  type?: string
+  limit?: string | number
+}
+
+export interface GatsbyFunctionBodyParserUrlencodedConfig
+  extends GatsbyFunctionBodyParserCommonMiddlewareConfig {
+  extended: boolean
+}
+
+export interface GatsbyFunctionBodyParserConfig {
+  json?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  text?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig
+}
+
+export interface GatsbyFunctionConfig {
+  bodyParser?: GatsbyFunctionBodyParserConfig
+}
+
 declare module NodeJS {
   interface Global {
     __GATSBY: {

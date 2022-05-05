@@ -58,6 +58,8 @@ When you run `npm run deploy` all contents of the `public` folder will be moved 
 
 **Note**: To select `main` or `gh-pages` as your publishing source, you must have the branch present in your repository. If you don't have a `main` or `gh-pages` branch, you can create them and then return to source settings to change your publishing source.
 
+> ⚠️ As your repository will grow and get more commits, so will your `gh-pages` branch. This might slow down operations like clone and increase disk usage. To address this, use the `-f` option from the `gh-pages` command to avoid keeping an history of the GitHub Pages branch.
+
 ### Deploying to a GitHub Pages subdomain at github.io
 
 For a repository named like `username.github.io`, you don't need to specify `pathPrefix` and your website needs to be pushed to the `main` branch.

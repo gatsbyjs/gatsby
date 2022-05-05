@@ -14,6 +14,7 @@ function testWithGatsbyPluginImage(elem) {
     const cleanHtml = html
       .replace(base64ImageExp, `data:image/redacted;base64,redacted`)
       .replace(styleAttrExp, ``)
+      .replace(/data-gatsby-image-ssr=\"\"/gm, "")
 
     // Create a DOM element with the redacted base64 data
     cy.document().then(document => {

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.13.0/packages/gatsby-plugin-gatsby-cloud) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- don't add `undefined` to preload path if assetPrefix is falsy fix [#35400](https://github.com/gatsbyjs/gatsby/issues/35400) ([68aabc8](https://github.com/gatsbyjs/gatsby/commit/68aabc8f62a83d3109d8a7df6cef8ff6a3eb5802))
+- use assetPrefix in preload headers ([912cd00](https://github.com/gatsbyjs/gatsby/commit/912cd003f90601c120fbaf30bb8057f4fac0fcd3))
+
 ### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.12.1/packages/gatsby-plugin-gatsby-cloud) (2022-04-13)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

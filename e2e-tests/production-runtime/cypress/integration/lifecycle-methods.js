@@ -1,6 +1,4 @@
-// TODO: In https://github.com/gatsbyjs/gatsby/pull/35226 the skip needs to be removed
-
-describe.skip(`Production build tests`, () => {
+describe(`Production build tests`, () => {
   it(`should remount when navigating to different template`, () => {
     cy.visit(`/`).waitForRouteChange()
 
