@@ -23,7 +23,14 @@ require("dotenv").config({
 })
 ```
 
-This loads `process.env.GATSBY_API_URL` and `process.env.API_KEY` for use in `gatsby-*.js` files and functions.
+or the following code snippet to the top of your `gatsby-config.ts` file if you're using Typescript:
+
+```typescript:title=gatsby-config.ts
+import dotenv from "dotenv"
+dotenv.config({path: `.env.${process.env.NODE_ENV}`})
+```
+
+This loads `process.env.GATSBY_API_URL` and `process.env.API_KEY` for use in `gatsby-*.js/.ts` files and functions.
 
 For example, when configuring a plugin in `gatsby-config.js`:
 
@@ -31,6 +38,24 @@ For example, when configuring a plugin in `gatsby-config.js`:
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-custom`,
+      options: {
+        apiKey: process.env.API_KEY,
+      },
+    },
+  ],
+}
+```
+
+And configuring a plugin in `gatsby-config.ts`:
+
+```typescript:title=gatsby-config.ts
+import dotenv from "dotenv"
+dotenv.config({path: `.env.${process.env.NODE_ENV}`})
 
 module.exports = {
   plugins: [
