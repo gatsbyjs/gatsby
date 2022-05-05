@@ -76,4 +76,7 @@ describe(`rich-text`, () => {
     cy.get(`[data-cy-id="english-rich-text-localized"]`).snapshot()
     cy.get(`[data-cy-id="german-rich-text-localized"]`).snapshot()
   })
+  it(`rich-text: Tables`, () => {
+    cy.get(`[data-cy-id="rich-text-tables"]`).snapshot()
+  })
 })
