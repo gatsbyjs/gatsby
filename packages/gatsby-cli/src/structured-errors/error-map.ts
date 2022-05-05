@@ -701,7 +701,7 @@ const errors = {
   },
   "11902": {
     text: (context): string =>
-      `We encountered an error while trying to compile your site's ${context.configName}. Please fix the error and try again.`,
+      `We encountered an error while trying to compile your site's ${context.configName}. Check the current limitations (https://gatsby.dev/ts-limitations), fix the error, and try again.`,
     level: Level.ERROR,
     type: Type.COMPILATION,
     category: ErrorCategory.USER,
