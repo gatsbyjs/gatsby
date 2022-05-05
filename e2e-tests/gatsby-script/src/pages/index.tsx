@@ -5,6 +5,10 @@ import "../styles/global.css"
 const pages = [
   { name: `Scripts with sources`, path: `/scripts-with-sources` },
   { name: `Inline scripts`, path: `/inline-scripts` },
+  {
+    name: `Add scripts via Gatsby browser`,
+    path: `/adds-scripts-via-gatsby-browser`,
+  },
 ]
 
 function IndexPage() {

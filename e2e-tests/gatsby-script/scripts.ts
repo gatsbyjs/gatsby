@@ -6,16 +6,22 @@ import { ScriptStrategy } from "gatsby-script"
 export enum Script {
   three = `three`,
   marked = `marked`,
+  jQuery = `jQuery`,
+  popper = `popper`,
 }
 
 export const scripts: Record<Script, string> = {
   [Script.three]: `https://unpkg.com/three@0.139.1/build/three.js`,
   [Script.marked]: `https://cdn.jsdelivr.net/npm/marked/marked.min.js`,
+  [Script.jQuery]: `https://code.jquery.com/jquery-3.4.1.min.js`,
+  [Script.popper]: `https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js`,
 }
 
 export const scriptStrategyIndex: Record<Script, ScriptStrategy> = {
   [Script.three]: ScriptStrategy.postHydrate,
   [Script.marked]: ScriptStrategy.idle,
+  [Script.jQuery]: ScriptStrategy.postHydrate,
+  [Script.popper]: ScriptStrategy.idle,
 }
 
 export const scriptSuccessIndex: Record<Script, () => boolean> = {
@@ -23,11 +29,18 @@ export const scriptSuccessIndex: Record<Script, () => boolean> = {
   [Script.three]: () => typeof THREE === `object`,
   // @ts-ignore
   [Script.marked]: () => typeof marked === `object`,
+
+  // @ts-ignore
+  [Script.jQuery]: () => typeof jQuery === `function`,
+  // @ts-ignore
+  [Script.popper]: () => typeof Popper === `function`,
 }
 
 export const scriptUrlIndex: Record<string, Script> = {
   [scripts.three]: Script.three,
   [scripts.marked]: Script.marked,
+  [scripts.jQuery]: Script.jQuery,
+  [scripts.popper]: Script.popper,
 }
 
 export const scriptUrls = new Set(Object.values(scripts))
