@@ -1,6 +1,4 @@
 const { Transformer } = require('@parcel/plugin')
-const path = require('path')
-const fs = require('fs')
 const babel = require(`@babel/core`)
 const babelPluginRemoveGraphqlQueries = require('babel-plugin-remove-graphql-queries')
 

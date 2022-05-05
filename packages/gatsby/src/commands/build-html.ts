@@ -206,7 +206,7 @@ const buildBundlerRenderer = async (
       },
       aliases: {
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
-        gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
+        // gatsby$: directoryPath(path.join(`.cache`, `gatsby-browser-entry.js`)),
         "@babel/runtime": getPackageRoot(`@babel/runtime`),
         "@reach/router": getPackageRoot(`@gatsbyjs/reach-router`),
         "socket.io-client": getPackageRoot(`socket.io-client`),
