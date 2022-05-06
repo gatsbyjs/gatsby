@@ -7,9 +7,12 @@ module.exports = new Transformer({
     let code = await asset.getCode()
     
     const { code: transformed } = babel.transform(code, {
-      presets: [`@babel/preset-react`],
+      presets: [
+        `@babel/preset-react`,
+        `@babel/preset-typescript`,
+      ],
       plugins: [babelPluginRemoveGraphqlQueries],
-      // filename,
+      filename: asset.filePath,
     })
 
     asset.setCode(transformed)

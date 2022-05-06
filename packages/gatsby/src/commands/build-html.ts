@@ -226,14 +226,15 @@ const buildBundlerRenderer = async (
     entries: entry,
     outDir: outDir,
     watch: false,
+    shouldContentHash: false,
     contentHash: false,
     global: 'moduleName',
     minify: false,
-    scopeHoist: false,
+    scopeHoist: true,
     target: 'commonjs',
     hmr: false,
     hmrPort: 0,
-    sourceMaps: false,
+    sourceMaps: true,
     autoInstall: false,
     defaultTargetOptions: {
       shouldOptimize: false,
@@ -241,7 +242,7 @@ const buildBundlerRenderer = async (
     targets: {
       root: {
         outputFormat: `commonjs` as OutputFormat,
-        includeNodeModules: false,
+        includeNodeModules: true,
         sourceMap: false,
         engines: {
           node: `>= 14.15.0`,
@@ -473,6 +474,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
+    throw error
     const prettyError = await createErrorFromString(
       error.stack,
       `${rendererPath}.map`
@@ -583,6 +585,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         context.ref = match[1]
       }
 
+      console.log(err)
       buildHTMLActivityProgress.panic({
         id,
         context,

@@ -8,6 +8,7 @@
     "babel-plugin-remove-graphql-queries": "^4.0.0"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.16.7",
     "parcel": "^2.4.1"
   }
 }
