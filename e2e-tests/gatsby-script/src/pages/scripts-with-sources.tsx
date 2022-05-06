@@ -12,12 +12,18 @@ import { Script, ScriptStrategy } from "gatsby-script"
 function ScriptsWithSourcesPage() {
   useOccupyMainThread()
 
+  const [renderScriptComponent, setRenderScriptComponent] =
+    React.useState(false)
+  const toggleRenderScriptComponent = () => 
+    setRenderScriptComponent(!renderScriptComponent)
+  
+
   return (
     <main>
       <h1>Script component e2e test</h1>
 
       <br />
-      <h2>Scripts with sources</h2>
+
       <ScriptResourceRecords
         check={record =>
           scriptUrls.has(record.name) || record.name.includes(`framework`)
@@ -60,6 +66,16 @@ function ScriptsWithSourcesPage() {
         strategy={ScriptStrategy.idle}
         onError={() => onError(ScriptStrategy.idle)}
       />
+
+      <br />
+      <button
+        data-test-id="script-component-toggle"
+        onClick={toggleRenderScriptComponent}
+      >
+        Toggle render script component[
+        {renderScriptComponent ? "unmount" : "mount"}]
+      </button>
+      {renderScriptComponent && <Script src={scripts.jQuery} />}
     </main>
   )
 }

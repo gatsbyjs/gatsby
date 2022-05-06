@@ -191,5 +191,26 @@ describe(`scripts with sources`, () => {
         ScriptStrategy.idle
       )
     })
+
+    describe(`On Toggle`, () => {
+      it.only("Should not refetch scripts", () => {
+        cy.visit(page)
+
+        const resourceLengthStart =
+          performance.getEntriesByType("resource").length
+        // show
+        cy.get('[data-test-id="script-component-toggle"]').click()
+        // hide
+        cy.get('[data-test-id="script-component-toggle"]').click()
+        // show
+        cy.get('[data-test-id="script-component-toggle"]').click()
+
+        const resourceLengthEnd =
+          performance.getEntriesByType("resource").length
+
+        //Expect resource length to increase
+        expect(resourceLengthEnd).to.equal(resourceLengthStart)
+      })
+    })
   })
 })

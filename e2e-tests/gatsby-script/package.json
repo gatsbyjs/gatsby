@@ -6,7 +6,7 @@
   "dependencies": {
     "cypress": "^9.1.1",
     "gatsby": "4.13.0-next.1-dev-1651582877134",
-    "gatsby-script": "^1.0.0-alpha-gatsby-script.20088",
+    "gatsby-script": "1.0.0-alpha-gatsby-script.20100",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
