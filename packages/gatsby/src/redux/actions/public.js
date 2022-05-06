@@ -1253,12 +1253,12 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 
-actions.addGatsbyImageSourceUrl = (sourceUrl: string) => dispatch => {
+actions.addGatsbyImageSourceUrl = (sourceUrl: string) => {
   console.log(`adding new source url to redux`, sourceUrl)
-  dispatch({
+  return {
     type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
     payload: { sourceUrl },
-  })
+  }
 }
 
 actions.clearGatsbyImageSourceUrls = () => dispatch => {
