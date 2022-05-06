@@ -15,6 +15,11 @@ export const telemetryReducer = (
 
       nextState.add(sourceUrl)
 
+      process.stdout.write(
+        `process write telemetry stuff ----------------------------------------`
+      )
+      process.stdout.write(JSON.stringify(Array.from(nextState)))
+
       return {
         ...state,
         gatsbyImageSourceUrls: nextState,
