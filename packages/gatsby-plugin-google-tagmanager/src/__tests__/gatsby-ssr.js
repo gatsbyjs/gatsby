@@ -9,6 +9,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
     }
     const pluginOptions = {
       includeInDevelopment: true,
+      id: `123`,
     }
 
     onRenderBody(mocks, pluginOptions)
@@ -51,6 +52,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         setPreBodyComponents: jest.fn(),
       }
       const pluginOptions = {
+        id: `123`,
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `object`,
@@ -72,6 +74,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         setPreBodyComponents: jest.fn(),
       }
       const pluginOptions = {
+        id: `123`,
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `function`,
@@ -130,6 +133,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         setPreBodyComponents: jest.fn(),
       }
       const pluginOptions = {
+        id: `123`,
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `object`,
@@ -153,6 +157,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         setPreBodyComponents: jest.fn(),
       }
       const pluginOptions = {
+        id: `123`,
         includeInDevelopment: true,
         enableWebVitalsTracking: true,
       }
@@ -170,6 +175,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         setPreBodyComponents: jest.fn(),
       }
       const pluginOptions = {
+        id: `123`,
         includeInDevelopment: true,
         enableWebVitalsTracking: false,
       }
@@ -227,6 +233,54 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).toContain(
         `${selfHostedOrigin}/ns.html`
       )
+    })
+
+    it(`should add several GTM container scripts when ids is provided`, () => {
+      const ids = [`123`, `124`]
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        ids,
+        includeInDevelopment: true,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+      const containers = mocks.setHeadComponents.mock.calls[0][0]
+
+      expect(containers).toHaveLength(ids.length)
+
+      Array.from(containers).forEach((container, index) =>
+        expect(container.props.dangerouslySetInnerHTML.__html).toContain(
+          ids[index]
+        )
+      )
+    })
+
+    it(`should add unique GTM container scripts when ids and id are provided`, () => {
+      const id = `123`
+      const ids = [id, `124`]
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        id,
+        ids,
+        includeInDevelopment: true,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+      const containers = mocks.setHeadComponents.mock.calls[0][0]
+
+      expect(containers.length).toBeLessThan(ids.length + [id].length)
+
+      const containersWithSameId = Array.from(containers).filter(container =>
+        container.props.dangerouslySetInnerHTML.__html.includes(id)
+      )
+
+      expect(containersWithSameId).toHaveLength(1)
     })
   })
 })

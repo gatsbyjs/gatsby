@@ -40,6 +40,7 @@ exports.onRenderBody = (
   { setHeadComponents, setPreBodyComponents, reporter },
   {
     id,
+    ids = [],
     includeInDevelopment = false,
     gtmAuth,
     gtmPreview,
@@ -49,6 +50,8 @@ exports.onRenderBody = (
     selfHostedOrigin = `https://www.googletagmanager.com`,
   }
 ) => {
+  const idList = id ? [id] : []
+  const uniqueIDs = [...new Set([...ids, ...idList])]
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     const environmentParamStr =
       gtmAuth && gtmPreview
@@ -69,6 +72,7 @@ exports.onRenderBody = (
     selfHostedOrigin = selfHostedOrigin.replace(/\/$/, ``)
 
     const inlineScripts = []
+    const preBodyComponents = []
     if (enableWebVitalsTracking) {
       // web-vitals/polyfill (necessary for non chromium browsers)
       // @seehttps://www.npmjs.com/package/web-vitals#how-the-polyfill-works
@@ -85,11 +89,12 @@ exports.onRenderBody = (
       )
     }
 
-    inlineScripts.push(
-      <script
-        key="plugin-google-tagmanager"
-        dangerouslySetInnerHTML={{
-          __html: oneLine`
+    uniqueIDs.forEach(id => {
+      inlineScripts.push(
+        <script
+          key="plugin-google-tagmanager"
+          dangerouslySetInnerHTML={{
+            __html: oneLine`
           ${defaultDataLayerCode}
           ${generateGTM({
             id,
@@ -97,23 +102,24 @@ exports.onRenderBody = (
             dataLayerName,
             selfHostedOrigin,
           })}`,
-        }}
-      />
-    )
+          }}
+        />
+      )
+      preBodyComponents.push(
+        <noscript
+          key="plugin-google-tagmanager"
+          dangerouslySetInnerHTML={{
+            __html: generateGTMIframe({
+              id,
+              environmentParamStr,
+              selfHostedOrigin,
+            }),
+          }}
+        />
+      )
+    })
 
     setHeadComponents(inlineScripts)
-
-    setPreBodyComponents([
-      <noscript
-        key="plugin-google-tagmanager"
-        dangerouslySetInnerHTML={{
-          __html: generateGTMIframe({
-            id,
-            environmentParamStr,
-            selfHostedOrigin,
-          }),
-        }}
-      />,
-    ])
+    setPreBodyComponents(preBodyComponents)
   }
 }
