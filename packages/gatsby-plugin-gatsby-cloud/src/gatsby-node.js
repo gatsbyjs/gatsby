@@ -21,7 +21,7 @@ process.env.GATSBY_PREVIEW_INDICATOR_ENABLED =
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
 exports.onCreateWebpackConfig = ({ actions, stage }) => {
-  if (stage !== BUILD_HTML_STAGE && stage !== BUILD_CSS_STAGE) {
+  if (stage === BUILD_HTML_STAGE) {
     return
   }
 

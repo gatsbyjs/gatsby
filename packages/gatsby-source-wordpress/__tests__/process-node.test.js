@@ -83,14 +83,14 @@ jest.mock(`../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.j
 
 test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, async () => {
   const node = {
-    content: `\n<p>Welcome to WordPress. This is your first post. Edit or deleteit, then start writing!</p>\n\n\n\n<p></p>\n\n\n\n<figureclass="wp-block-image size-large"><img loading="lazy" width="1024" height="768" src="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg" alt=""class="wp-image-115" srcset="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg 1024w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-300x225.jpg 300w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-768x576.jpg 768w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1536x1152.jpg 1536w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-2048x1536.jpg 2048w"sizes="(max-width: 1024px) 100vw, 1024px" /></figure>\n`,
+    content: `\n<p>Welcome to WordPress. This is your first post. Edit or deleteit, then start writing!</p>\n\n\n\n<p></p>\n\n\n\n<figureclass="wp-block-image size-large"><img loading="lazy" width="1024" height="768" src="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg" alt=""class="wp-image-115" srcset="http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1024x768.jpg 1024w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-300x225.jpg 300w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-768x576.jpg 768w,http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-1536x1152.jpg 1536w, http://wpgatsby.local/wp-content/uploads/2022/02/sasha-set-GURzQwO8Li0-unsplash-2048x1536.jpg 2048w"sizes="(max-width: 1024px) 100vw, 1024px" /></figure>\n<figure class="wp-block-image size-large"><img src="http://wpgatsby.local/wp-content/uploads/2022/04/gaussian2.svg" alt="" class="wp-image-11836"/></figure>`,
     id: `cG9zdDox`,
     modifiedGmt: `2022-02-18T23:18:00`,
     __typename: `Post`
   }
 
-  const gatsbyImageUrl = `/_gatsby/image`
-
+  const gatsbyImageUrlPart = `/_gatsby/image`
+  const gatsbyFileUrlPart = `/_gatsby/file`
   const nodeString = JSON.stringify(node)
 
   const updatedNodeString = await replaceNodeHtmlImages({
@@ -102,16 +102,20 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
     wpUrl: `http://wpgatsby.local/`,
     pluginOptions: {
       html: {
-        useGatsbyImage: true
+        useGatsbyImage: true,
       }
     }
   })
 
-  expect(updatedNodeString).toInclude(gatsbyImageUrl)
   expect(updatedNodeString).not.toEqual(nodeString)
+  expect(updatedNodeString).toInclude(gatsbyImageUrlPart)
+  expect(updatedNodeString).toInclude(gatsbyFileUrlPart)
 
   const imageMatches = execall(/\/_gatsby\/image/gm, updatedNodeString)
-  expect(imageMatches.length).toBe(39)
+  expect(imageMatches.length).toBe(15)
+
+  const fileMatches = execall(/\/_gatsby\/file/gm, updatedNodeString)
+  expect(fileMatches.length).toBe(1)
 
 
   const transformedNodeStringNoHtmlImages = await replaceNodeHtmlImages({
@@ -134,5 +138,6 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
 
   expect(noImageMatches.length).toBe(0)
 
-  expect(transformedNodeStringNoHtmlImages).not.toInclude(gatsbyImageUrl)
+  expect(transformedNodeStringNoHtmlImages).not.toInclude(gatsbyImageUrlPart)
+  expect(transformedNodeStringNoHtmlImages).not.toInclude(gatsbyFileUrlPart)
 })

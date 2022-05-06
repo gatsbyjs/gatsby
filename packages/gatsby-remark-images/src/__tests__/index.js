@@ -25,7 +25,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 })
 
 const Remark = require(`remark`)
-const { Potrace } = require(`potrace`)
+const { Potrace } = require(`@gatsbyjs/potrace`)
 const queryString = require(`query-string`)
 const cheerio = require(`cheerio`)
 const toHAST = require(`mdast-util-to-hast`)
@@ -98,6 +98,37 @@ const createPluginOptions = (
     getRemarkFileDependency,
   }
 }
+const createRecursivePluginOptions = (content, imagePaths = `/`) => {
+  const dirName = `not-a-real-dir`
+  return {
+    files: [].concat(imagePaths).map(imagePath => {
+      return {
+        absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
+      }
+    }),
+    markdownNode: createNode(content),
+    markdownAST: remark.parse(content),
+    getNode: id => {
+      if (id === 1234) {
+        return {
+          id: 1234,
+          internal: { type: `JsonRemarkProperty` },
+          parent: 2345,
+        }
+      }
+      return {
+        dir: dirName,
+        internal: {
+          type: `File`,
+        },
+      }
+    },
+    compiler: {
+      parseString: remark.parse.bind(remark),
+      generateHTML: node => hastToHTML(toHAST(node)),
+    },
+  }
+}
 
 test(`it returns empty array when 0 images`, async () => {
   const content = `
@@ -161,6 +192,23 @@ test(`it transforms images in markdown`, async () => {
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms images in markdown in nested markdown node`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createRecursivePluginOptions(content, imagePath))
 
   expect(nodes.length).toBe(1)
 

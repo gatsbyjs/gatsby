@@ -101,6 +101,11 @@ export const fetchAndCreateSingleNode = async ({
     id,
   })
 
+  if (isPreview && `slug` in remoteNode && !remoteNode.slug) {
+    // sometimes preview nodes do not have a slug - but some users will use slugs to build page urls. So we should make sure we have something for the slug.
+    remoteNode.slug = id
+  }
+
   if (isPreview) {
     const existingNode = getNode(id)
 
