@@ -110,8 +110,14 @@ export async function mergeWorkerState(
   activity.start()
 
   for (const { workerId } of pool.getWorkerInfo()) {
-    const state = loadPartialStateFromDisk([`queries`], String(workerId))
+    const state = loadPartialStateFromDisk(
+      [`queries`, `telemetry`],
+      String(workerId)
+    )
+    console.log(`in worker pool handler`, state)
     const queryStateChunk = state.queries as IGatsbyState["queries"]
+    const queryStateTelemetryChunk =
+      state.telemetry as IGatsbyState["telemetry"]
     if (queryStateChunk) {
       // When there are too little queries, some worker can be inactive and its state is empty
       store.dispatch({
@@ -119,6 +125,7 @@ export async function mergeWorkerState(
         payload: {
           workerId,
           queryStateChunk,
+          queryStateTelemetryChunk,
         },
       })
       await new Promise(resolve => process.nextTick(resolve))

@@ -31,6 +31,28 @@ export const telemetryReducer = (
         gatsbyImageSourceUrls: new Set<string>(),
       }
     }
+    case `MERGE_WORKER_QUERY_STATE`: {
+      const { queryStateTelemetryChunk } = action.payload
+      const { gatsbyImageSourceUrls } = state
+
+      process.stdout.write(`merging worker state.........`)
+      process.stdout.write(
+        JSON.stringify(
+          Array.from(queryStateTelemetryChunk.gatsbyImageSourceUrls ?? []),
+          null,
+          2
+        )
+      )
+
+      return {
+        ...state,
+        ...queryStateTelemetryChunk,
+        gatsbyImageSourceUrls: new Set([
+          ...(queryStateTelemetryChunk?.gatsbyImageSourceUrls ?? []),
+          ...gatsbyImageSourceUrls,
+        ]),
+      }
+    }
     default: {
       return state
     }
