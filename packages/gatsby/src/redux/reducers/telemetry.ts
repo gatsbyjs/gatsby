@@ -15,11 +15,6 @@ export const telemetryReducer = (
 
       nextState.add(sourceUrl)
 
-      process.stdout.write(
-        `process write telemetry stuff ----------------------------------------`
-      )
-      process.stdout.write(JSON.stringify(Array.from(nextState)))
-
       return {
         ...state,
         gatsbyImageSourceUrls: nextState,
@@ -34,15 +29,6 @@ export const telemetryReducer = (
     case `MERGE_WORKER_QUERY_STATE`: {
       const { queryStateTelemetryChunk } = action.payload
       const { gatsbyImageSourceUrls } = state
-
-      process.stdout.write(`merging worker state.........`)
-      process.stdout.write(
-        JSON.stringify(
-          Array.from(queryStateTelemetryChunk.gatsbyImageSourceUrls ?? []),
-          null,
-          2
-        )
-      )
 
       return {
         ...state,
