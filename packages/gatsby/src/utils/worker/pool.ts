@@ -114,7 +114,6 @@ export async function mergeWorkerState(
       [`queries`, `telemetry`],
       String(workerId)
     )
-    console.log(`in worker pool handler`, state)
     const queryStateChunk = state.queries as IGatsbyState["queries"]
     const queryStateTelemetryChunk =
       state.telemetry as IGatsbyState["telemetry"]
