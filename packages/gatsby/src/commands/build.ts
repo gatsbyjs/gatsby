@@ -62,6 +62,7 @@ import {
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
+import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -81,7 +82,7 @@ module.exports = async function build(
 
   if (program.profile) {
     report.warn(
-      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
+      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.com/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
 
@@ -286,13 +287,19 @@ module.exports = async function build(
     )
   }
 
+  // Start saving page.mode in the main process (while queries run in workers in parallel)
+  const waitMaterializePageMode = materializePageMode()
+
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
     })
     // Jobs still might be running even though query running finished
-    await waitUntilAllJobsComplete()
+    await Promise.all([
+      waitUntilAllJobsComplete(),
+      waitUntilWorkerJobsAreComplete(),
+    ])
     // Restart worker pool before merging state to lower memory pressure while merging state
     waitForWorkerPoolRestart = workerPool.restart()
     await mergeWorkerState(workerPool, buildSpan)
@@ -322,6 +329,7 @@ module.exports = async function build(
   }
 
   if (process.send && shouldGenerateEngines()) {
+    await waitMaterializePageMode
     process.send({
       type: `LOG_ACTION`,
       action: {
@@ -400,9 +408,6 @@ module.exports = async function build(
   }
 
   await waitForWorkerPoolRestart
-
-  // Start saving page.mode in the main process (while HTML is generated in workers in parallel)
-  const waitMaterializePageMode = materializePageMode()
 
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({

@@ -43,7 +43,7 @@ This usually shows a code example showing how to include this plugin in a site's
 
     code example
 
-//See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples.
+See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples.
 
 This section could also include before-and-after examples of data when the plugin is enabled, if applicable.
 

@@ -75,7 +75,7 @@ If your Prismic documents are being retrieved, then the configuration was succes
 
 Once you have verified on GraphiQL that you can retrieve the data from your previously created Prismic content repository, you can start on fetching and rendering that content.
 
-In GraphiQL experiment with the data and how it's structured. You can use the autocomplete to help you navigate around how Gatsby interprets the Prismic repository. You will need a query that gets the Home information, as well as an array of blog posts sorted in descending order.
+In GraphiQL, experiment with the data and how it's structured. You can use the autocomplete to help you navigate around how Gatsby interprets the Prismic repository. You will need a query that gets the Home information, as well as an array of blog posts sorted in descending order.
 
 ```jsx:title=src/pages/index.js
 import React from "react"

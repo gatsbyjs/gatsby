@@ -13,6 +13,7 @@ import urlUtil from "url"
 import path from "path"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
+import { getPlaceholderUrlFromMediaItemNode } from "../create-nodes/process-node"
 
 const nodeFetchConcurrency = 2
 
@@ -179,16 +180,39 @@ export const createMediaItemNode = async ({
         )
       }
 
+      const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
+        node,
+        pluginOptions
+      )
+
+      const url = node.sourceUrl || node.mediaItemUrl
+
+      const filename =
+        node?.mediaDetails?.file?.split(`/`)?.pop() ||
+        path.basename(urlUtil.parse(url).pathname)
+
       node = {
         ...node,
-        localFile: {
-          id: localFileNode?.id,
-        },
+        url,
+        contentType: node.contentType,
+        mimeType: node.mimeType,
+        filename,
+        filesize: node?.mediaDetails?.fileSize,
+        width: node?.mediaDetails?.width,
+        height: node?.mediaDetails?.height,
+        placeholderUrl:
+          placeholderUrl ?? node?.mediaDetails?.sizes?.[0]?.sourceUrl ?? url,
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
           type: buildTypeName(`MediaItem`),
         },
+      }
+
+      if (localFileNode?.id) {
+        node.localFile = {
+          id: localFileNode?.id,
+        }
       }
 
       const normalizedNode = normalizeNode({ node, nodeTypeName: `MediaItem` })
@@ -394,7 +418,7 @@ export const fetchMediaItemsBySourceUrl = async ({
           )
 
           nodes.forEach((node, index) => {
-            if (!node) {
+            if (!node || !node?.localFile?.id) {
               return
             }
 

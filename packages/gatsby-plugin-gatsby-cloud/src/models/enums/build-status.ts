@@ -3,4 +3,6 @@ export enum BuildStatus {
   UPTODATE = `UPTODATE`,
   ERROR = `ERROR`,
   BUILDING = `BUILDING`,
+  QUEUED = `QUEUED`,
+  UPLOADING = `UPLOADING`,
 }

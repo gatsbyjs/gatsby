@@ -13,10 +13,10 @@ Recipes to automate more things.
 
 We chose [MDX](https://mdxjs.com/) to allow for a literate programming style of writing recipes which
 enables us to port our dozens of recipes from
-https://www.gatsbyjs.org/docs/recipes/ as well as in the future, entire
+https://www.gatsbyjs.com/docs/recipes/ as well as in the future, entire
 tutorials.
 
-[Read more about Recipes on the launch blog post](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/)
+[Read more about Recipes on the launch blog post](https://www.gatsbyjs.com/blog/2020-04-15-announcing-gatsby-recipes/)
 
 There's an umbrella issue for testing / using Recipes during its incubation stage.
 Follow the issue for updates! https://github.com/gatsbyjs/gatsby/issues/22991
@@ -285,5 +285,5 @@ a step
 If you’d like to write a recipe, there are a few great places to get an idea:
 
 - Think of a task that took you more time than other tasks in the last Gatsby site you built. Is there a way to automate any part of that task?
-- Look at this list of recipes in the Gatsby docs. Many of these can be partially or fully automated through creating a recipe `mdx` file. https://www.gatsbyjs.org/docs/recipes/
+- Look at this list of recipes in the Gatsby docs. Many of these can be partially or fully automated through creating a recipe `mdx` file. https://www.gatsbyjs.com/docs/recipes/
 - community members have posted a number of recipes in the [recipes umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991). You can browse their ideas to find inspiration for new recipes to write.

@@ -294,8 +294,8 @@ DiskStore.prototype._getFilePathByKey = function (key): string {
     // create subdirs with the first 3 chars of the hash
     return path.join(
       this.options.path,
-      `diskstore-` + hash.substr(0, 3),
-      hash.substr(3)
+      `diskstore-` + hash.slice(0, 3),
+      hash.slice(3)
     )
   } else {
     return path.join(this.options.path, `diskstore-` + hash)

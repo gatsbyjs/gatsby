@@ -245,6 +245,10 @@ export const usePollForNodeManifest = ({
 
   useEffect(
     function handlePoll() {
+      if (DEBUG_CONTENT_SYNC_MODE) {
+        console.info({ pollingHasStarted, shouldPoll })
+      }
+
       if (!pollingHasStarted || !shouldPoll) {
         return
       }
@@ -268,6 +272,8 @@ export const usePollForNodeManifest = ({
           setRedirectUrl,
           setLoadingDuration,
         })
+      } else if (DEBUG_CONTENT_SYNC_MODE) {
+        console.log({ showError, shouldTimeout })
       }
     },
     // whenever pollCount changes or if we enable shouldPoll we re-run poll()

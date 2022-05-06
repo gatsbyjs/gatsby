@@ -15,6 +15,9 @@ const shouldUpgradeGatsbyVersion =
   lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
 export const getLocalizedField = ({ field, locale, localesFallback }) => {
+  if (!field) {
+    return null
+  }
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -57,13 +60,13 @@ const makeMakeId =
   (spaceId, id, type) =>
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-export const buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
+export const buildEntryList = ({ contentTypeItems, currentSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
   )
-  // Now fill the buckets. Ignore entries for which there exists no bucket. (Not sure if that ever happens)
-  mergedSyncData.entries.map(entry => {
+  // Now fill the buckets. Ignore entries for which there exists no bucket. (This happens when filterContentType is used)
+  currentSyncData.entries.map(entry => {
     const arr = map.get(entry.sys.contentType.sys.id)
     if (arr) {
       arr.push(entry)
@@ -196,7 +199,7 @@ function prepareTextNode(id, node, key, text) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `TextNode`,
     },
   }
 
@@ -220,7 +223,7 @@ function prepareJSONNode(id, node, key, content) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `JsonNode`,
     },
   }
 
@@ -328,6 +331,26 @@ export const createNodesForContentType = ({
   }
 
   const createNodePromises = []
+
+  // Create a node for the content type
+  const contentTypeNode = {
+    id: createNodeId(contentTypeItemId),
+    parent: null,
+    children: [],
+    name: contentTypeItem.name,
+    displayField: contentTypeItem.displayField,
+    description: contentTypeItem.description,
+    internal: {
+      type: `${makeTypeName(`ContentType`)}`,
+      contentDigest: contentTypeItem.sys.updatedAt,
+    },
+    sys: {
+      type: contentTypeItem.sys.type,
+    },
+  }
+
+  createNodePromises.push(createNode(contentTypeNode))
+
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -364,7 +387,7 @@ export const createNodesForContentType = ({
         )
 
         const existingNode = getNode(entryNodeId)
-        if (existingNode?.internal?.contentDigest === entryItem.sys.updatedAt) {
+        if (existingNode?.updatedAt === entryItem.sys.updatedAt) {
           // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
           // of an entry did not change, then we can trust that none of its children were changed either.
           return null
@@ -396,12 +419,7 @@ export const createNodesForContentType = ({
           if (entryItemFields[entryItemFieldKey]) {
             const entryItemFieldValue = entryItemFields[entryItemFieldKey]
             if (Array.isArray(entryItemFieldValue)) {
-              if (
-                entryItemFieldValue[0] &&
-                entryItemFieldValue[0].sys &&
-                entryItemFieldValue[0].sys.type &&
-                entryItemFieldValue[0].sys.id
-              ) {
+              if (entryItemFieldValue[0]?.sys?.type === `Link`) {
                 // Check if there are any values in entryItemFieldValue to prevent
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
@@ -425,12 +443,7 @@ export const createNodesForContentType = ({
 
                 delete entryItemFields[entryItemFieldKey]
               }
-            } else if (
-              entryItemFieldValue &&
-              entryItemFieldValue.sys &&
-              entryItemFieldValue.sys.type &&
-              entryItemFieldValue.sys.id
-            ) {
+            } else if (entryItemFieldValue?.sys?.type === `Link`) {
               if (
                 resolvable.has(
                   `${entryItemFieldValue.sys.id}___${
@@ -542,9 +555,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(textNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const textNode = prepareTextNode(
                 textNodeId,
                 entryNode,
@@ -610,9 +621,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(jsonNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const jsonNode = prepareJSONNode(
                 jsonNodeId,
                 entryNode,
@@ -639,10 +648,7 @@ export const createNodesForContentType = ({
               // of an entry did not change, then we can trust that none of its children were changed either.
               // (That's why child nodes use the updatedAt of the parent node as their digest, too)
               const existingNode = getNode(jsonNodeId)
-              if (
-                existingNode?.internal?.contentDigest !==
-                entryItem.sys.updatedAt
-              ) {
+              if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
                 const jsonNode = prepareJSONNode(
                   jsonNodeId,
                   entryNode,
@@ -681,26 +687,6 @@ export const createNodesForContentType = ({
       })
       .filter(Boolean)
 
-    // Create a node for each content type
-    const contentTypeNode = {
-      id: createNodeId(contentTypeItemId),
-      parent: null,
-      children: [],
-      name: contentTypeItem.name,
-      displayField: contentTypeItem.displayField,
-      description: contentTypeItem.description,
-      internal: {
-        type: `${makeTypeName(`ContentType`)}`,
-      },
-      sys: {
-        type: contentTypeItem.sys.type,
-      },
-    }
-
-    // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-    contentTypeNode.internal.contentDigest = contentTypeItem.sys.updatedAt
-
-    createNodePromises.push(createNode(contentTypeNode))
     entryNodes.forEach(entryNode => {
       createNodePromises.push(createNode(entryNode))
     })
@@ -734,6 +720,13 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
+    const file = getField(assetItem.fields?.file) ?? null
+
+    // Skip empty and unprocessed assets in Preview API
+    if (!file || !file.url || !file.contentType || !file.fileName) {
+      return
+    }
+
     const assetNode = {
       contentful_id: assetItem.sys.id,
       spaceId: space.sys.id,
@@ -742,7 +735,7 @@ export const createAssetNodes = ({
       updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
-      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
+      file,
       title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
@@ -754,6 +747,14 @@ export const createAssetNodes = ({
       sys: {
         type: assetItem.sys.type,
       },
+      url: `https:${file.url}`,
+      placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
+      // These fields are optional for edge cases in the Preview API and Contentfuls asset processing
+      mimeType: file.contentType,
+      filename: file.fileName,
+      width: file.details?.image?.width ?? null,
+      height: file.details?.image?.height ?? null,
+      size: file.details?.size ?? null,
     }
 
     // Link tags

@@ -282,15 +282,10 @@ class LocalNodeModel {
         })
         runQueryActivity.start()
       }
-      let nodeFoundById = getDataStore().getNode(query.filter.id.eq)
-
-      // make sure our node is of compatible type
-      if (
-        nodeFoundById &&
-        !nodeTypeNames.includes(nodeFoundById.internal.type)
-      ) {
-        nodeFoundById = null
-      }
+      const nodeFoundById = this.getNodeById({
+        id: query.filter.id.eq,
+        type: gqlType,
+      })
 
       if (runQueryActivity) {
         runQueryActivity.end()
@@ -483,6 +478,7 @@ class LocalNodeModel {
 
     if (!_.isEmpty(actualFieldsToResolve)) {
       const resolvedNodes = new Map()
+      const previouslyResolvedNodes = getResolvedNodes(typeName)
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         this.trackInlineObjectsInRootNode(node)
         const resolvedFields = await resolveRecursive(
@@ -494,13 +490,21 @@ class LocalNodeModel {
           queryFields,
           actualFieldsToResolve
         )
-        if (!node.__gatsby_resolved) {
-          node.__gatsby_resolved = {}
-        }
-        resolvedNodes.set(
-          node.id,
-          _.merge(node.__gatsby_resolved, resolvedFields)
+        const previouslyResolvedFields =
+          previouslyResolvedNodes?.get(node.id) ?? {}
+
+        const mergedResolvedFields = _.merge(
+          previouslyResolvedFields,
+          resolvedFields
         )
+
+        resolvedNodes.set(node.id, mergedResolvedFields)
+
+        // `resolvedNodesCache` redux state is always source
+        // of truth. `node.__gatsby_resolved` might not persist
+        // (we mutate node loaded from LMDB) and is only optimization
+        // to avoid additional lookups in `resolvedNodesCache` WHEN it exists
+        node.__gatsby_resolved = mergedResolvedFields
       }
       if (resolvedNodes.size) {
         await saveResolvedNodes(typeName, resolvedNodes)
@@ -982,7 +986,7 @@ const addRootNodeToInlineObject = (
   }
 }
 
-const saveResolvedNodes = async (typeName, resolvedNodes) => {
+const saveResolvedNodes = (typeName, resolvedNodes) => {
   store.dispatch({
     type: `SET_RESOLVED_NODES`,
     payload: {
@@ -991,6 +995,9 @@ const saveResolvedNodes = async (typeName, resolvedNodes) => {
     },
   })
 }
+
+const getResolvedNodes = typeName =>
+  store.getState().resolvedNodesCache.get(typeName)
 
 const deepObjectDifference = (from, to) => {
   const result = {}

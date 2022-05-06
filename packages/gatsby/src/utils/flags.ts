@@ -235,6 +235,16 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `GRAPHQL_TYPEGEN`,
+    env: `GATSBY_GRAPHQL_TYPEGEN`,
+    command: `develop`,
+    telemetryId: `GraphQLTypegen`,
+    description: `A built-in way for automatic TypeScript type generation and better GraphQL IntelliSense. See https://github.com/gatsbyjs/gatsby/discussions/35420 for more details.`,
+    experimental: true,
+    noCI: true,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags

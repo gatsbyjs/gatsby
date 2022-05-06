@@ -29,7 +29,8 @@ export enum DbComparator {
   GLOB = `$glob`,
 }
 
-export type FilterValueNullable =  // TODO: merge with DbComparatorValue
+// TODO: merge with DbComparatorValue
+export type FilterValueNullable =
   | string
   | number
   | boolean

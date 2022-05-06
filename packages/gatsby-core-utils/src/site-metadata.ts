@@ -44,7 +44,7 @@ function addField(
   { name, value }: { name: string; value: string }
 ): string {
   const FIND = `  siteMetadata: {\n`
-  const REPLACE = `  siteMetadata: {\n      ${name}: \`${value}\`,\n`
+  const REPLACE = `  siteMetadata: {\n    ${name}: \`${value}\`,\n`
   const modifiedConfig = src.replace(FIND, REPLACE)
   return modifiedConfig
 }

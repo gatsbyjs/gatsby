@@ -8,7 +8,7 @@ import {
   GraphQLNonNull,
   GraphQLInputFieldConfigMap,
 } from "gatsby/graphql"
-import { Potrace } from "potrace"
+import { Potrace } from "@gatsbyjs/potrace"
 import type Sharp from "sharp"
 
 const sharp: typeof Sharp = require(`./safe-sharp`)

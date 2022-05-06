@@ -18,7 +18,7 @@ import {
   IPluginInfoOptions,
   ISiteConfig,
 } from "./types"
-import { resolvePlugin } from "./load"
+import { resolvePlugin } from "./resolve-plugin"
 
 interface IApi {
   version?: string
@@ -180,7 +180,7 @@ export async function handleBadExports({
 
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
-  rootDir: string | null
+  rootDir: string
 ): Promise<{
   errors: number
   plugins: Array<IPluginRefObject>
@@ -384,7 +384,7 @@ async function validatePluginsOptions(
 
 export async function validateConfigPluginsOptions(
   config: ISiteConfig = {},
-  rootDir: string | null
+  rootDir: string
 ): Promise<void> {
   if (!config.plugins) return
 
@@ -426,7 +426,7 @@ export function collatePluginAPIs({
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
     const pluginNodeExports = resolveModuleExports(
-      `${plugin.resolve}/gatsby-node`,
+      plugin.resolvedCompiledGatsbyNode ?? `${plugin.resolve}/gatsby-node`,
       {
         mode: `require`,
       }
@@ -483,7 +483,7 @@ export const handleMultipleReplaceRenderers = ({
       reporter.warn(`replaceRenderer API found in these plugins:`)
       reporter.warn(rendererPlugins.join(`, `))
       reporter.warn(
-        `This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`
+        `This might be an error, see: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/`
       )
     } else {
       console.log(``)
@@ -493,7 +493,7 @@ export const handleMultipleReplaceRenderers = ({
       reporter.error(rendererPlugins.join(`, `))
       reporter.error(`This will break your build`)
       reporter.error(
-        `See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`
+        `See: https://www.gatsbyjs.com/docs/debugging-replace-renderer-api/`
       )
       if (process.env.NODE_ENV === `production`) process.exit(1)
     }

@@ -47,10 +47,10 @@ async function run() {
     // Fetch once to trigger re-compilation.
     await fetch(`${devSiteBasePath}/${path}`)
 
-    // Then wait for a second to ensure it's ready to go.
+    // Then wait for six seconds to ensure it's ready to go.
     // Otherwise, tests are flaky depending on the speed of the testing machine.
     await new Promise(resolve => {
-      setTimeout(() => resolve(), 1000)
+      setTimeout(() => resolve(), 6000)
     })
 
     let devStatus = 200

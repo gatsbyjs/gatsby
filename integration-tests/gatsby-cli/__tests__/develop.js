@@ -10,7 +10,6 @@ jest.setTimeout(MAX_TIMEOUT)
 
 describe(`gatsby develop`, () => {
   const cwd = `gatsby-sites/gatsby-develop`
-
   beforeAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
   afterAll(() => GatsbyCLI.from(cwd).invoke(`clean`))
 
@@ -18,7 +17,7 @@ describe(`gatsby develop`, () => {
     // 1. Start the `gatsby develop` command
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(
       `develop`,
-      log => log.includes(`Building development bundle`)
+      log => log.includes(`You can now view`)
     )
 
     // 2. kill the `gatsby develop` command so we can get logs
@@ -26,9 +25,8 @@ describe(`gatsby develop`, () => {
 
     // 3. Make sure logs for the user contain expected results
     const logs = getLogs()
-    logs.should.contain(
-      `success open and validate gatsby-configs, load plugins`
-    )
+    logs.should.contain(`success load gatsby config`)
+    logs.should.contain(`success load plugins`)
     logs.should.contain(`success onPreInit`)
     logs.should.contain(`success initialize cache`)
     logs.should.contain(`success copy gatsby files`)
