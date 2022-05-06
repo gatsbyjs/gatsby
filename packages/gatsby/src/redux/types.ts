@@ -445,7 +445,6 @@ export type ActionsUnion =
   | ISetDomainRequestHeaders
   | IProcessGatsbyImageSourceUrlAction
   | IClearGatsbyImageSourceUrlAction
-  | IMergeGatsbyImageSourceUrlTelemetryState
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
