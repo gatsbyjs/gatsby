@@ -11,7 +11,6 @@ const {
   GraphQLInt,
   GraphQLBoolean,
 } = require(`gatsby/graphql`)
-const { queueImageResizing } = require(`gatsby-plugin-sharp`)
 const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
 const {
   DuotoneGradientType,
@@ -109,17 +108,11 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
           rotate,
         }
 
-        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const { absolutePath } = getNodeAndSavePathDependency(
+          image.parent,
+          context.path
+        )
         const { contentDigest } = image.internal
-
-        const job = await queueImageResizing({ file, args: sharpArgs })
-
-        if (!(await fs.exists(job.absolutePath))) {
-          debug(`Preparing ${file.name}`)
-          await job.finishedPromise
-        }
-
-        const { absolutePath } = job
 
         return generateSqip({
           cache,
