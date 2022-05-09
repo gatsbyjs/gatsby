@@ -127,9 +127,9 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     // NO WARNING ON SAME SCRIPT ?? @tyhopp
 
     // @ts-ignore - TBD
-    if (scripts[scriptKey]?.strategy === strategy) {
+    if (scripts[scriptKey]?.strategy !== strategy) {
       console.warn(
-        `Script ${scriptKey} is already loaded with the same strategy. Consider removing duplicates`
+        `Script ${scriptKey} is already loaded with a different strategy. Consider removing duplicates`
       )
     }
 
