@@ -131,6 +131,34 @@ module.exports = async function build(
     parentSpan: buildSpan,
   })
 
+  // Page Gen
+  const GATSBY_PARALLEL_PAGE_GENERATION_ENABLED =
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `1` ||
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `true`
+
+  const externalJobsEnabled =
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
+
+  const pageGenerationJobsEnabled =
+    GATSBY_PARALLEL_PAGE_GENERATION_ENABLED &&
+    externalJobsEnabled &&
+    process.send
+
+  if (pageGenerationJobsEnabled && store.getState().program.firstRun) {
+    // @ts-ignore
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `PAGE_GENERATION_ENABLED`,
+        timestamp: new Date().toJSON(),
+        payload: {
+          success: true,
+        },
+      },
+    })
+  }
+
   // writes sync and async require files to disk
   // used inside routing "html" + "javascript"
   await writeOutRequires({
@@ -209,34 +237,6 @@ module.exports = async function build(
     await writeQueryContext({
       staticQueriesByTemplate: state.staticQueriesByTemplate,
       components: state.components,
-    })
-  }
-
-  // Page Gen
-  const GATSBY_PARALLEL_PAGE_GENERATION_ENABLED =
-    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `1` ||
-    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `true`
-
-  const externalJobsEnabled =
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
-
-  const pageGenerationJobsEnabled =
-    GATSBY_PARALLEL_PAGE_GENERATION_ENABLED &&
-    store.getState().program.firstRun && // &&
-    externalJobsEnabled &&
-    process.send
-
-  if (pageGenerationJobsEnabled && process.send) {
-    process.send({
-      type: `LOG_ACTION`,
-      action: {
-        type: `PAGE_GENERATION_ENABLED`,
-        timestamp: new Date().toJSON(),
-        payload: {
-          success: true,
-        },
-      },
     })
   }
 

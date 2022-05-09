@@ -1,5 +1,7 @@
+import path from "path"
 import { reporter } from "../utils/reporter"
 import { initStarter } from "../init-starter"
+import { setSiteMetadata } from "../utils/site-metadata"
 import { trackCli } from "../tracking"
 import { run, DEFAULT_STARTERS } from "../index"
 
@@ -16,7 +18,7 @@ jest.mock(`enquirer`, () => {
       // Mock answers
       this.answers = {
         // First prompt answer
-        name: `hello-world`,
+        name: `my-site`,
 
         // Main question set answers
         project: `hello-world`,
@@ -61,6 +63,7 @@ jest.mock(`../utils/hash`, () => {
     md5: jest.fn(args => args),
   }
 })
+
 jest.mock(`../utils/question-helpers`, () => {
   const originalQuestionHelpers = jest.requireActual(
     `../utils/question-helpers`
@@ -78,12 +81,29 @@ jest.mock(`../components/utils`, () => {
 })
 
 const dirName = `hello-world`
+const siteName = `my-site`
+const fullPath = path.resolve(`hello-world`)
+
 let parseArgsMock
 
 describe(`run`, () => {
   beforeEach(() => {
     jest.clearAllMocks()
     parseArgsMock = require(`../utils/parse-args`).parseArgs
+  })
+
+  describe(`gatsby-config.js `, () => {
+    beforeEach(() => {
+      parseArgsMock.mockReturnValueOnce({
+        flags: { yes: false },
+        siteName,
+      })
+    })
+
+    it(`should use siteName as site title`, async () => {
+      await run()
+      expect(setSiteMetadata).toHaveBeenCalledWith(fullPath, `title`, siteName)
+    })
   })
 
   describe(`no skip flag`, () => {
@@ -188,7 +208,7 @@ describe(`run`, () => {
         DEFAULT_STARTERS.js,
         dirName,
         [],
-        dirName
+        siteName
       )
     })
     it(`should track JS was selected as language`, async () => {
@@ -214,7 +234,7 @@ describe(`run`, () => {
         DEFAULT_STARTERS.ts,
         dirName,
         [],
-        dirName
+        siteName
       )
     })
 

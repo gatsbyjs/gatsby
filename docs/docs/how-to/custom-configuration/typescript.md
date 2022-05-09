@@ -159,7 +159,7 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 
 > Support added in `gatsby@4.9.0`
 
-You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config` file.
+You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config.ts` file.
 
 ```ts:title=gatsby-config.ts
 import type { GatsbyConfig } from "gatsby"
@@ -174,11 +174,13 @@ const config: GatsbyConfig = {
 export default config
 ```
 
+Read the [Gatsby Config API documentation](/docs/reference/config-files/gatsby-config/) to learn more about its different options.
+
 ### `gatsby-node.ts`
 
 > Support added in `gatsby@4.9.0`
 
-You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node` file.
+You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node.ts` file.
 
 ```ts:title=gatsby-node.ts
 import type { GatsbyNode } from "gatsby"
@@ -215,6 +217,8 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
   })
 }
 ```
+
+Read the [Gatsby Node APIs documentation](/docs/reference/config-files/gatsby-node/) to learn more about its different APIs.
 
 ### Local Plugins
 

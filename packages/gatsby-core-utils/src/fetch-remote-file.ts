@@ -158,7 +158,7 @@ async function fetchFile({
   try {
     const digest = createContentDigest(url)
     const finalDirectory = excludeDigest
-      ? fileDirectory
+      ? path.resolve(fileDirectory)
       : path.join(fileDirectory, digest)
 
     if (!name) {

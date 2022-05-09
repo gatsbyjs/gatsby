@@ -27,6 +27,8 @@ const restrictedNodeFields = [
   `parent`,
 ]
 
+const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
+
 /***
  * Localization algorithm
  *
@@ -250,32 +252,8 @@ export async function sourceNodes(
     })
   })
 
-  // Update existing entry nodes that weren't updated but that need reverse links added.
-  existingNodes
-    .filter(n => !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
-    .forEach(n => {
-      if (
-        n.contentful_id &&
-        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
-      ) {
-        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
-          foreignReference => {
-            const { name, id } = foreignReference
-
-            // Create new reference field when none exists
-            if (!n[name]) {
-              n[name] = [id]
-              return
-            }
-
-            // Add non existing references to reference field
-            if (n[name] && !n[name].includes(id)) {
-              n[name].push(id)
-            }
-          }
-        )
-      }
-    })
+  const { deletedEntries, deletedAssets } = currentSyncData
+  const deletedEntryGatsbyReferenceIds = new Set()
 
   function deleteContentfulNode(node) {
     const normalizedType = node.sys.type.startsWith(`Deleted`)
@@ -293,6 +271,8 @@ export async function sourceNodes(
             defaultLocale,
           })
         )
+        // Gather deleted node ids to remove them later on
+        deletedEntryGatsbyReferenceIds.add(nodeId)
         return getNode(nodeId)
       })
       .filter(node => node)
@@ -303,8 +283,6 @@ export async function sourceNodes(
       deleteNode(node)
     })
   }
-
-  const { deletedEntries, deletedAssets } = currentSyncData
 
   if (deletedEntries.length || deletedAssets.length) {
     const deletionActivity = reporter.activityTimer(
@@ -317,6 +295,136 @@ export async function sourceNodes(
     deletedEntries.forEach(deleteContentfulNode)
     deletedAssets.forEach(deleteContentfulNode)
     deletionActivity.end()
+  }
+
+  // Update existing entry nodes that weren't updated but that need reverse links added or removed.
+  const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
+  existingNodes
+    .filter(
+      n =>
+        n.sys.type === `Entry` &&
+        !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`) &&
+        !deletedEntryGatsbyReferenceIds.has(n.id)
+    )
+    .forEach(n => {
+      if (
+        n.contentful_id &&
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
+      ) {
+        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
+          foreignReference => {
+            const { name, id: contentfulId, type, spaceId } = foreignReference
+
+            const nodeId = createNodeId(
+              makeId({
+                spaceId,
+                id: contentfulId,
+                type,
+                currentLocale: n.node_locale,
+                defaultLocale,
+              })
+            )
+
+            // Create new reference field when none exists
+            if (!n[name]) {
+              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
+              n[name] = [nodeId]
+              return
+            }
+
+            // Add non existing references to reference field
+            if (n[name] && !n[name].includes(nodeId)) {
+              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
+              n[name].push(nodeId)
+            }
+          }
+        )
+      }
+
+      // Remove references to deleted nodes
+      if (n.contentful_id && deletedEntryGatsbyReferenceIds.size) {
+        Object.keys(n).forEach(name => {
+          // @todo Detect reference fields based on schema. Should be easier to achieve in the upcoming version.
+          if (!name.endsWith(`___NODE`)) {
+            return
+          }
+          if (Array.isArray(n[name])) {
+            n[name] = n[name].filter(referenceId => {
+              const shouldRemove =
+                deletedEntryGatsbyReferenceIds.has(referenceId)
+              if (shouldRemove) {
+                existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
+              }
+              return !shouldRemove
+            })
+          } else {
+            const referenceId = n[name]
+            if (deletedEntryGatsbyReferenceIds.has(referenceId)) {
+              existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
+              n[name] = null
+            }
+          }
+        })
+      }
+    })
+
+  // We need to call `createNode` on nodes we modified reverse links on,
+  // otherwise changes won't actually persist
+  if (existingNodesThatNeedReverseLinksUpdateInDatastore.size) {
+    for (const node of existingNodesThatNeedReverseLinksUpdateInDatastore) {
+      function addChildrenToList(node, nodeList = [node]) {
+        for (const childNodeId of node?.children ?? []) {
+          const childNode = getNode(childNodeId)
+          if (
+            childNode &&
+            childNode.internal.owner === `gatsby-source-contentful`
+          ) {
+            nodeList.push(childNode)
+            addChildrenToList(childNode)
+          }
+        }
+        return nodeList
+      }
+
+      const nodeAndDescendants = addChildrenToList(node)
+      for (const nodeToUpdateOriginal of nodeAndDescendants) {
+        // We should not mutate original node as Gatsby will still
+        // compare against what's in in-memory weak cache, so we
+        // clone original node to ensure reference identity is not possible
+        const nodeToUpdate = _.cloneDeep(nodeToUpdateOriginal)
+        // We need to remove properties from existing fields
+        // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
+        // Gatsby automatically will set `.owner` it back
+        delete nodeToUpdate.internal.owner
+        // `.fields` need to be created with `createNodeField` action, we can't just re-add them.
+        // Other plugins (or site itself) will have opportunity to re-generate them in `onCreateNode` lifecycle.
+        // Contentful content nodes are not using `createNodeField` so it's safe to delete them.
+        // (Asset nodes DO use `createNodeField` for `localFile` and if we were updating those, then
+        // we would also need to restore that field ourselves after re-creating a node)
+        delete nodeToUpdate.fields // plugin adds node field on asset nodes which don't have reverse links
+
+        // We add or modify counter postfix to contentDigest
+        // to make sure Gatsby treat this as data update
+        let counter
+        const [initialContentDigest, counterStr] =
+          nodeToUpdate.internal.contentDigest.split(
+            CONTENT_DIGEST_COUNTER_SEPARATOR
+          )
+
+        if (counterStr) {
+          counter = parseInt(counterStr, 10)
+        }
+
+        if (!counter || isNaN(counter)) {
+          counter = 1
+        } else {
+          counter++
+        }
+
+        nodeToUpdate.internal.contentDigest = `${initialContentDigest}${CONTENT_DIGEST_COUNTER_SEPARATOR}${counter}`
+        createNode(nodeToUpdate)
+      }
+    }
   }
 
   const creationActivity = reporter.activityTimer(`Contentful: Create nodes`, {

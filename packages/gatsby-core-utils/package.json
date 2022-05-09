@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "3.11.0-next.1",
+  "version": "3.12.0-next.2",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -8,7 +8,8 @@
   ],
   "exports": {
     ".": "./dist/index.js",
-    "./*": "./dist/*.js"
+    "./*": "./dist/*.js",
+    "./dist/*": "./dist/*.js"
   },
   "typesVersions": {
     "*": {
@@ -49,7 +50,7 @@
     "fs-extra": "^10.0.0",
     "got": "^11.8.3",
     "import-from": "^4.0.0",
-    "lmdb": "^2.2.4",
+    "lmdb": "^2.2.6",
     "lock": "^1.1.0",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",
@@ -61,10 +62,10 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@types/ci-info": "2.0.0",
-    "babel-preset-gatsby-package": "^2.11.0-next.0",
+    "babel-preset-gatsby-package": "^2.12.0-next.0",
     "cross-env": "^7.0.3",
     "is-uuid": "^1.0.2",
-    "msw": "^0.36.8",
+    "msw": "^0.38.2",
     "typescript": "^4.5.5"
   },
   "engines": {
