@@ -685,7 +685,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
   ) {
     imageCDNState.hasLoggedNoPlaceholderStyle = true
     reporter.warn(
-      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\n\nhttps://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
+      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\nhttps://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme\n\n`
     )
   }
 
