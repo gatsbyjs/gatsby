@@ -10,6 +10,8 @@ const pageGenChunkSize =
 
 const publishChunkSize = Number(process.env.GATSBY_PAGE_GEN_CHUNK_SIZE) || 10
 
+const publishConcurrency = Number(process.env.GATSBY_PAGE_GEN_CONCURRENCY) || 10
+
 interface IQueryIds {
   pageQueryIds: Array<{ path: string }>
 }
@@ -57,7 +59,7 @@ export function runPageGenerationJobs(queryIds: IQueryIds): Promise<void> {
 
   const publishChunks = chunk(pageChunks, publishChunkSize)
 
-  const queue = fastq(worker, 10)
+  const queue = fastq(worker, publishConcurrency)
 
   for (const publishChunk of publishChunks) {
     publishChunk.forEach(pageChunk => {
