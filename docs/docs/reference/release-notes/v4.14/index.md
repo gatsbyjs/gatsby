@@ -12,6 +12,7 @@ Key highlights of this release:
 - [Updated Default Starter](#updated-default-starter)
 - [Gatsby Functions Configuration](#gatsby-functions-configuration)
 - [`gatsby-source-drupal`: Image CDN Support](#gatsby-source-drupal-image-cdn-support)
+- [50% Improvement in image and font load time](#50-improvement-in-image-and-font-load-time)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -70,6 +71,27 @@ We intend to document as many ways to use a GraphQL language server to benefits 
 We updated our [default Starter template `gatsby-starter-default`](https://www.gatsbyjs.com/starters/gatsbyjs/gatsby-starter-default/) to contain references to documentation, tutorial, our monorepo examples folder, and more – and aligned its look-and-feel to that of our `gatsby new`/`npm init gatsby` experience. It shows you how to use TypeScript, Server Side Rendering, and Deferred Static Generation in your Gatsby application.
 
 ![Preview of the new landing page. At the top it says "Welcome to Gatsby", below that it links to the separate subpages like "TypeScript" or "Server Side Rendering". Then four blocks linking out to sections like the tutorial or examples are shown. The footer contains links to Discord, Documentation, and more.](https://user-images.githubusercontent.com/16143594/167383192-e33e7b23-fa70-4a3f-8238-97f6273cecdc.png)
+
+## 50% Improvement in Image and Font load time
+When users visit a website, they need to see things on the screen before they begin interacting with the webpage. Prioritizing scripts over critical assest doesn't help us achieve this. Generally, we can lazily load other not essential scripts and allow images and font to load early enough.
+
+Before now, gatsby preloads a huge percentage of Js & Json assets which may lead to [Network Congestion](https://en.wikipedia.org/wiki/Network_congestion) especially for large sites that end up with a lot of chunks. This prevents images and fonts from loading early in time. In this release, we stopped preloading Js & Json assests,  giving way to images and fonts to load on time.
+
+The waterfall diagrams below describe what how we fetched assets before now and what it currently loooks like. 
+
+### Before
+![Gatsby asset waterfall before](https://www.webpagetest.org/waterfall.php?test=220508_BiDcFP_3BM&run=4&cached=&step=1)
+
+### After
+![Gatsby asset waterfall after](https://www.webpagetest.org/waterfall.php?test=220509_BiDcPV_A4X&run=2&cached=&step=1)
+
+We ran a test on gatsbyjs.com to see what differnce this change makes. Here's a GiF to show the page loading process. 
+
+
+
+![loaded image earlier](https://www.webpagetest.org/video/video.php?tests=220509_BiDcPV_A4X-l:Now-r:3,220508_BiDcFP_3BM-l:Before-r:4&bg=ffffff&text=222222&end=visual&format=gif)
+
+With the branch new version, we finish loading and rendering the page and rendering at `1.2s` compared `2.2s` on in the previous version. Cummulatively this leads to more than 50% Improvement for users. 
 
 ## Gatsby Functions Configuration
 
