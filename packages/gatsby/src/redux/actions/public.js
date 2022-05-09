@@ -1260,10 +1260,10 @@ actions.addGatsbyImageSourceUrl = (sourceUrl: string) => {
   }
 }
 
-actions.clearGatsbyImageSourceUrls = () => dispatch => {
-  dispatch({
+actions.clearGatsbyImageSourceUrls = () => {
+  return {
     type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
-  })
+  }
 }
 
 /**
