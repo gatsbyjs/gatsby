@@ -1,16 +1,22 @@
-import { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
+import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
+import type { PartytownProps } from "@builder.io/partytown/react"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
   idle = `idle`,
+  offMainThread = `off-main-thread`,
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ScriptProps
-  extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad` | `onError`> {
+  extends Omit<
+    ScriptHTMLAttributes<HTMLScriptElement> & PartytownProps,
+    `onLoad` | `onError`
+  > {
   id?: string
-  strategy?: ScriptStrategy | `post-hydrate` | `idle`
+  strategy?: ScriptStrategy | `post-hydrate` | `idle` | `off-main-thread`
   children?: string
   onLoad?: (event: Event) => void
   onError?: (event: ErrorEvent) => void
@@ -28,7 +34,12 @@ const handledProps = new Set([
 export const scriptCache = new Set()
 
 export function Script(props: ScriptProps): ReactElement | null {
-  const { strategy = ScriptStrategy.postHydrate, onLoad, onError } = props || {}
+  const {
+    src,
+    strategy = ScriptStrategy.postHydrate,
+    onLoad,
+    onError,
+  } = props || {}
 
   useEffect(() => {
     let script: HTMLScriptElement | null
@@ -54,6 +65,38 @@ export function Script(props: ScriptProps): ReactElement | null {
       script?.remove()
     }
   }, [])
+
+  if (strategy === ScriptStrategy.offMainThread) {
+    const inlineScript = resolveInlineScript(props)
+    const attributes = resolveAttributes(props)
+
+    const { collectScript } = useContext(PartytownContext)
+    if (collectScript) {
+      collectScript(attributes)
+    }
+
+    if (inlineScript) {
+      return (
+        <script
+          type="text/partytown"
+          async
+          data-strategy={strategy}
+          {...attributes}
+        >
+          {resolveInlineScript(props)}
+        </script>
+      )
+    }
+    return (
+      <script
+        type="text/partytown"
+        async
+        src={proxyPartytownUrl(src)}
+        data-strategy={strategy}
+        {...attributes}
+      />
+    )
+  }
 
   return null
 }
@@ -126,4 +169,11 @@ function resolveAttributes(props: ScriptProps): Record<string, string> {
   }
 
   return attributes
+}
+
+function proxyPartytownUrl(url: string | undefined): string | undefined {
+  if (!url) {
+    return undefined
+  }
+  return `/__partytown-proxy?url=${encodeURIComponent(url)}`
 }

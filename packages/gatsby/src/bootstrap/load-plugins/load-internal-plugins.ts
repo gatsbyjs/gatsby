@@ -39,6 +39,7 @@ export function loadInternalPlugins(
     `../../internal-plugins/webpack-theme-component-shadowing`,
     `../../internal-plugins/bundle-optimisations`,
     `../../internal-plugins/functions`,
+    `../../internal-plugins/partytown`,
   ].filter(Boolean) as Array<string>
 
   internalPlugins.forEach(relPath => {

@@ -1,13 +1,10 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, Script, ScriptStrategy } from "gatsby"
 import { ScriptResourceRecords } from "../components/script-resource-records"
 import { ScriptMarkRecords } from "../components/script-mark-records"
 import { useOccupyMainThread } from "../hooks/use-occupy-main-thread"
 import { inlineScripts, InlineScript } from "../../scripts"
 import "../styles/global.css"
-
-// TODO - Import from gatsby core after gatsby-script is in general availability
-import { Script, ScriptStrategy } from "gatsby-script"
 
 function InlineScriptsPage() {
   useOccupyMainThread()
