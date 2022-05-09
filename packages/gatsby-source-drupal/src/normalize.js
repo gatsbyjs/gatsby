@@ -100,6 +100,14 @@ const getGatsbyImageCdnFields = async ({
 
     return gatsbyImageCdnFields
   } catch (e) {
+    if (e.message.includes(`unrecognized file format`)) {
+      reporter.error(
+        `Encountered corrupt file while requesting image dimensions for ${url}`
+      )
+
+      return {}
+    }
+
     reporter.error(e)
     reporter.info(
       JSON.stringify(
