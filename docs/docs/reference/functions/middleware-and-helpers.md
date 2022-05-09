@@ -70,10 +70,6 @@ Each function can export an object named `config`. This object will allow you to
 Gatsby currently supports the `limit` and `type` options for the `bodyParser` configuration, which are documented by
 [body-parser](https://expressjs.com/en/resources/middleware/body-parser.html)
 
-### Disabling Body Parsing
-
-If you set `bodyParser` to `false`, no middleware will run on the request. This will allow you to have full control of the request.
-
 ### Examples
 
 ```js
@@ -115,4 +111,15 @@ export const config = {
   bodyParser: false,
   },
 }
+```
+
+```ts
+// TypeScript
+export const config: GatsbyFunctionConfig = { 
+   bodyParser: { 
+     json: { 
+       limit: `100mb`, 
+     }, 
+   }, 
+ } 
 ```
