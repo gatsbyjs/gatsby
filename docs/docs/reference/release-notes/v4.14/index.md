@@ -90,7 +90,7 @@ With Gatsby's new Image CDN feature we added a new GraphQL field `gatsbyImage` i
   - Add `contentTypeFilter` option, via [PR #35204](https://github.com/gatsbyjs/gatsby/pull/35204)
 - `gatsby`: Fixes `UNHANDLED EXCEPTION write EPIPE` on Netlify, via [PR #35513](https://github.com/gatsbyjs/gatsby/pull/35513)
 - `gatsby-plugin-image`: Fix image flicker issues between page navigations and/or state updates, via [PR #35226](https://github.com/gatsbyjs/gatsby/pull/35226)
-- `gatsby-source-wordpress`
+- `gatsby-source-wordpress`:
   - Always include Draft slugs for Gatsby Preview via [PR #35573](https://github.com/gatsbyjs/gatsby/pull/35573).
   - Use Image CDN for non-transformable images in html fields via [PR #35529](https://github.com/gatsbyjs/gatsby/pull/35529)
   - Prevent GraphQL errors when a union list item is `null` via [PR #35533](https://github.com/gatsbyjs/gatsby/pull/35533/files)
