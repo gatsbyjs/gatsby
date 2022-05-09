@@ -30,6 +30,7 @@ const handledProps = new Set([
 ])
 
 export const scriptCache = new Set()
+export const scripts = {}
 
 export function Script(props: ScriptProps): ReactElement | null {
   const {
@@ -120,8 +121,25 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     onError,
   } = props || {}
 
-  if (scriptCache.has(id || src)) {
+  const scriptKey = id || src
+
+  if (scriptCache.has(scriptKey)) {
+    // NO WARNING ON SAME SCRIPT ?? @tyhopp
+
+    // @ts-ignore - TBD
+    if (scripts[scriptKey]?.strategy === strategy) {
+      console.warn(
+        `Script ${scriptKey} is already loaded with the same strategy. Consider removing duplicates`
+      )
+    }
+
     return null
+  }
+
+  // @ts-ignore - TBD
+  scripts[scriptKey] = {
+    src: src,
+    strategy: strategy,
   }
 
   const inlineScript = resolveInlineScript(props)
@@ -157,7 +175,7 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
 
   document.body.appendChild(script)
 
-  scriptCache.add(id || src)
+  scriptCache.add(scriptKey)
 
   return script
 }
