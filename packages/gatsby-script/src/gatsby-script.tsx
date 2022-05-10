@@ -124,7 +124,7 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
   const scriptKey = id || src
 
   if (scriptCache.has(scriptKey)) {
-    // NO WARNING ON SAME SCRIPT ?? @tyhopp
+    if (onLoad) onLoad.call(new Event(`load`))
 
     // @ts-ignore - TBD
     if (scripts[scriptKey]?.strategy !== strategy) {
