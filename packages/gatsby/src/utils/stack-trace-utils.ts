@@ -1,11 +1,11 @@
 import stackTrace, { StackFrame } from "stack-trace"
 import { codeFrameColumns } from "@babel/code-frame"
 import {
-  NullableMappedPosition,
-  SourceMapConsumer,
-  RawSourceMap,
-  RawIndexMap,
-} from "source-map"
+  TraceMap,
+  originalPositionFor,
+  OriginalMapping,
+  SourceMapInput,
+} from "@jridgewell/trace-mapping"
 
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -111,33 +111,36 @@ export const getNonGatsbyCodeFrameFormatted = ({
 }
 
 interface IOriginalSourcePositionAndContent {
-  sourcePosition: NullableMappedPosition | null
+  sourcePosition: OriginalMapping | null
   sourceContent: string | null
 }
 
-export async function findOriginalSourcePositionAndContent(
-  webpackSource: RawSourceMap | RawIndexMap | string,
+export function findOriginalSourcePositionAndContent(
+  webpackSource: SourceMapInput | string,
   position: { line: number; column: number | null }
-): Promise<IOriginalSourcePositionAndContent> {
-  return await SourceMapConsumer.with(webpackSource, null, consumer => {
-    const sourcePosition = consumer.originalPositionFor({
-      line: position.line,
-      column: position.column ?? 0,
-    })
-
-    if (!sourcePosition.source) {
-      return {
-        sourcePosition: null,
-        sourceContent: null,
-      }
-    }
-
-    const sourceContent: string | null =
-      consumer.sourceContentFor(sourcePosition.source, true) ?? null
-
-    return {
-      sourcePosition,
-      sourceContent,
-    }
+): IOriginalSourcePositionAndContent {
+  const tracer = new TraceMap(webpackSource)
+  const { sourcesContent } = tracer
+  const sourcePosition = originalPositionFor(tracer, {
+    line: position.line,
+    column: position.column ?? 0,
   })
+
+  if (!sourcePosition.source) {
+    return {
+      sourcePosition: null,
+      sourceContent: null,
+    }
+  }
+
+  console.log({ sourcesContent })
+
+  // TODO: Re-Add sourceContentFor behavior
+  const sourceContent: string | null = null
+  // consumer.sourceContentFor(sourcePosition.source, true) ?? null
+
+  return {
+    sourcePosition,
+    sourceContent,
+  }
 }

@@ -1,3 +1,4 @@
+// TODO: Do not use source-map-support and migrate to a package that doesn't use source-map under the hood
 require(`source-map-support`).install()
 const sysPath = require(`path`)
 const fs = require(`fs-extra`)

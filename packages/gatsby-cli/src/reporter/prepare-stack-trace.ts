@@ -5,13 +5,15 @@
 import { readFileSync, readdirSync } from "fs"
 import { codeFrameColumns } from "@babel/code-frame"
 import stackTrace from "stack-trace"
-import {
-  SourceMapConsumer,
-  BasicSourceMapConsumer,
-  IndexedSourceMapConsumer,
-  NullableMappedPosition,
-} from "source-map"
+import { TraceMap, originalPositionFor } from "@jridgewell/trace-mapping"
 import * as path from "path"
+
+interface INullableMappedPosition {
+  source: string | null
+  line: number | null
+  column: number | null
+  name: string | null
+}
 
 export class ErrorWithCodeFrame extends Error {
   codeFrame?: string = ``
@@ -27,10 +29,10 @@ export class ErrorWithCodeFrame extends Error {
   }
 }
 
-export async function prepareStackTrace(
+export function prepareStackTrace(
   error: Error,
   sourceOfMainMap: string
-): Promise<ErrorWithCodeFrame> {
+): ErrorWithCodeFrame {
   const newError = new ErrorWithCodeFrame(error)
   // source point to single map, but with code splitting for build-html we need to handle more maps
   // we use fact that all .map files will be in same dir as main one here
@@ -39,10 +41,8 @@ export async function prepareStackTrace(
     .filter(fileName => fileName.endsWith(`.js.map`))
     .map(fileName => path.join(bundleDir, fileName))
 
-  const maps = await Promise.all(
-    bundleDirMapFiles.map(
-      async source => await new SourceMapConsumer(readFileSync(source, `utf8`))
-    )
+  const maps = bundleDirMapFiles.map(
+    source => new TraceMap(readFileSync(source, `utf8`))
   )
 
   const stack = stackTrace
@@ -66,12 +66,13 @@ export async function prepareStackTrace(
 }
 
 function getErrorSource(
-  maps: Array<BasicSourceMapConsumer | IndexedSourceMapConsumer>,
+  maps: Array<TraceMap>,
   topFrame: stackTrace.StackFrame | IWrappedStackFrame
 ): string {
   let source
   for (const map of maps) {
-    source = map.sourceContentFor(topFrame.getFileName(), true)
+    // TODO: Re-Add sourceContentFor behavior
+    source = null // map.sourceContentFor(topFrame.getFileName(), true)
     if (source) {
       break
     }
@@ -103,7 +104,7 @@ interface IWrappedStackFrame {
 }
 
 function wrapCallSite(
-  maps: Array<BasicSourceMapConsumer | IndexedSourceMapConsumer>,
+  maps: Array<TraceMap>,
   frame: stackTrace.StackFrame
 ): IWrappedStackFrame | stackTrace.StackFrame {
   const source = frame.getFileName()
@@ -126,9 +127,9 @@ function getPosition({
   maps,
   frame,
 }: {
-  maps: Array<BasicSourceMapConsumer | IndexedSourceMapConsumer>
+  maps: Array<TraceMap>
   frame: stackTrace.StackFrame
-}): NullableMappedPosition {
+}): INullableMappedPosition {
   if (frame.getFileName().includes(`webpack:`)) {
     // if source-map-register is initiated, stack traces would already be converted
     return {
@@ -145,7 +146,7 @@ function getPosition({
   const line = frame.getLineNumber()
   const column = frame.getColumnNumber()
   for (const map of maps) {
-    const test = map.originalPositionFor({ line, column })
+    const test = originalPositionFor(map, { line, column })
     if (test.source) {
       return test
     }
