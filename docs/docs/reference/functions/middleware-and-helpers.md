@@ -51,6 +51,8 @@ export default async function corsHandler(req, res) {
 
 ## Custom body parsing
 
+> Support for overriding default config added in `gatsby@4.14.0`
+
 By default Gatsby is using following configuration defaults to parse request body and make it available as `req.body` field in appropriate format:
 
 ```js
