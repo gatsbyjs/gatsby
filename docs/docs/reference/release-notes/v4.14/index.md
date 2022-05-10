@@ -10,7 +10,7 @@ Key highlights of this release:
 
 - [Experimental: GraphQL Typgen](#experimental-graphql-typegen)
 - [Updated Default Starter](#updated-default-starter)
-- [Gatsby Functions Configuration](#gatsby-functions-configuration)
+- [Gatsby Functions Body Parsing Configuration](#gatsby-functions-body-parsing-configuration)
 - [`gatsby-source-drupal`: Image CDN Support](#gatsby-source-drupal-image-cdn-support)
 - [50% Improvement in image and font load time](#50-improvement-in-image-and-font-load-time)
 
@@ -94,9 +94,9 @@ We ran a test on gatsbyjs.com to see what differnce this change makes. Here's a 
 
 With the branch new version, we finish loading and rendering the page and rendering at `1.2s` compared `2.2s` on in the previous version. Cummulatively this leads to more than 50% Improvement for users.
 
-## Gatsby Functions Configuration
+## Gatsby Functions Body Parsing Configuration
 
-TODO
+Gatsby now supports adjusting body parsing middleware for API functions. This allows users to increase request body size limit and/or support 3rd party webhook signature verification. For details and examples check [`Custom body parsing` documentation](/docs/reference/functions/middleware-and-helpers/#custom-body-parsing).
 
 ## `gatsby-source-drupal`: Image CDN Support
 
