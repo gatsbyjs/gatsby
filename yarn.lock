@@ -6865,23 +6865,6 @@ babel-preset-fbjs@^3.4.0:
     "@babel/plugin-transform-template-literals" "^7.0.0"
     babel-plugin-syntax-trailing-function-commas "^7.0.0-beta.0"
 
-babel-preset-gatsby-package@^2.13.0-next.0:
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-gatsby-package/-/babel-preset-gatsby-package-2.13.0.tgz#ef9a55637eb9ac6312cfa428fdf5bff411335df0"
-  integrity sha512-FbFPoSJ7km55+YsrzbdFpvnUlrShgsOFHC/nvkMzB8g3JeLM+E0J7l1osDEkbnrCEr98Z0pafS3UEPm3mHtI1Q==
-  dependencies:
-    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.14.5"
-    "@babel/plugin-proposal-optional-chaining" "^7.14.5"
-    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
-    "@babel/plugin-transform-runtime" "^7.15.0"
-    "@babel/plugin-transform-typescript" "^7.15.4"
-    "@babel/preset-env" "^7.15.4"
-    "@babel/preset-flow" "^7.14.0"
-    "@babel/preset-react" "^7.14.0"
-    "@babel/runtime" "^7.15.4"
-    babel-plugin-dynamic-import-node "^2.3.3"
-    core-js "^3.17.2"
-
 babel-preset-jest@^27.4.0:
   version "27.4.0"
   resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-27.4.0.tgz#70d0e676a282ccb200fbabd7f415db5fdf393bca"
@@ -8750,11 +8733,6 @@ core-js@^3.16.0, core-js@^3.22.3:
   version "3.22.3"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.22.3.tgz#498c41d997654cb00e81c7a54b44f0ab21ab01d5"
   integrity sha512-1t+2a/d2lppW1gkLXx3pKPVGbBdxXAkqztvWb1EJ8oF8O2gIGiytzflNiFEehYwVK/t2ryUsGBoOFFvNx95mbg==
-
-core-js@^3.17.2:
-  version "3.22.4"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.22.4.tgz#f4b3f108d45736935aa028444a69397e40d8c531"
-  integrity sha512-1uLykR+iOfYja+6Jn/57743gc9n73EWiOnSJJ4ba3B4fOEYDBv25MagmEZBxTp5cWq4b/KPx/l77zgsp28ju4w==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
