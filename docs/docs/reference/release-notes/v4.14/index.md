@@ -72,14 +72,14 @@ Previously, Gatsby preloaded a large amount of JavaScript and JSON assets which 
 
 With this release we changed Gatsby's behavior and now lazily load non-essential scripts and assets. You can see a before and after of two waterfall diagrams on gatsbyjs.com here:
 
-- [Before Waterfall](https://www.webpagetest.org/waterfall.php?test=220508_BiDcFP_3BM&run=4&cached=&step=1)
-- [After Waterfall](https://www.webpagetest.org/waterfall.php?test=220509_BiDcPV_A4X&run=2&cached=&step=1)
+- [Before Waterfall](https://user-images.githubusercontent.com/16143594/167626715-aa51688a-a38a-4cc2-bd2a-25332dce08af.png)
+- [After Waterfall](https://user-images.githubusercontent.com/16143594/167626724-62635e1b-32c8-4c4b-a3bd-0b4184b05fb7.png)
 
 In total this lead to a **50% improvement** in loading speed for gatsbyjs.com which you can see in this short video:
 
 ![Comparison of before and after this change on gatsbyjs.com. The left side shows "Now", the right one "Before". Both videos show how the hero section of gatsbyjs.com is loaded, below it a number showing the time in seconds is placed.](https://www.webpagetest.org/video/video.php?tests=220509_BiDcPV_A4X-l:Now-r:3,220508_BiDcFP_3BM-l:Before-r:4&bg=ffffff&text=222222&end=visual&format=gif)
 
-The website finished loading after 1.2s compared 2.2s on previous Gatsby versions.
+The website finished loading after 1.2s compared 2.2s on previous Gatsby versions. This is achieved by using the improvements in Gatsby's core, `gatsby-plugin-gatsby-cloud`'s default settings, and [Gatsby Cloud](https://www.gatsbyjs.com/products/cloud/).
 
 ## Gatsby Functions Body Parsing Configuration
 
