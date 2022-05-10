@@ -113,6 +113,17 @@ We updated our [default Starter template `gatsby-starter-default`](https://www.g
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [chrisq21](https://github.com/chrisq21): chore(gatsby): Expose `serverDataStatus` field in SSR type declaration file [PR #35505](https://github.com/gatsbyjs/gatsby/pull/35505)
+- [rodet](https://github.com/rodet): chore(docs): Add note about optimizing GitHub publish [PR #35465](https://github.com/gatsbyjs/gatsby/pull/35465)
+- [renbaoshuo](https://github.com/renbaoshuo): chore(docs): remove git.io urls [PR #35497](https://github.com/gatsbyjs/gatsby/pull/35497)
+- [rburgst](https://github.com/rburgst): fix(gatsby-remark-images): support resolving markdown images from child nodes [PR #28093](https://github.com/gatsbyjs/gatsby/pull/28093)
+- [orinokai](https://github.com/orinokai): fix(gatsby-plugin-preload-fonts): defer checking for write access [PR #35381](https://github.com/gatsbyjs/gatsby/pull/35381)
+- [GaryPWhite](https://github.com/GaryPWhite): chore(gatsby): Bump `react-dev-utils` to v12 [PR #35468](https://github.com/gatsbyjs/gatsby/pull/35468)
+- [axe312ger](https://github.com/axe312ger): feat(contentful): add support for tables in Rich Text [PR #33870](https://github.com/gatsbyjs/gatsby/pull/33870)
+- [ascorbic](https://github.com/ascorbic): fix(gatsby): wait for worker jobs to complete [PR #35513](https://github.com/gatsbyjs/gatsby/pull/35513)
+- [xavivars](https://github.com/xavivars)
+  - fix(gatsby-source-contentful): Prevent null pointer exception [PR #35244](https://github.com/gatsbyjs/gatsby/pull/35244)
+  - feat(gatsby-source-contentful): Add `contentTypeFilter` [PR #35204](https://github.com/gatsbyjs/gatsby/pull/35204)
+- [me4502](https://github.com/me4502): perf(gatsby): Minify page-data [PR #35578](https://github.com/gatsbyjs/gatsby/pull/35578)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.14.0-next.0...gatsby@4.14.0
