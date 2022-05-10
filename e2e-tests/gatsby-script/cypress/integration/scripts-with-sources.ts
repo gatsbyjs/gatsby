@@ -1,4 +1,3 @@
-import { ScriptStrategy } from "gatsby"
 import { Script, scripts } from "../../scripts"
 import { ResourceRecord } from "../../records"
 
@@ -17,7 +16,7 @@ beforeEach(() => {
 })
 
 describe(`scripts with sources`, () => {
-  describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
+  describe(`using the post-hydrate strategy`, () => {
     it(`should load successfully`, () => {
       cy.visit(page)
       cy.getRecord(Script.three, `success`, true).should(`equal`, `true`)
@@ -40,17 +39,17 @@ describe(`scripts with sources`, () => {
     it(`should call an on load callback once the script has loaded`, () => {
       cy.visit(page)
       cy.getRecord(Script.three, ResourceRecord.responseEnd).then(() => {
-        cy.get(`[data-on-load-result=${ScriptStrategy.postHydrate}]`)
+        cy.get(`[data-on-load-result=post-hydrate]`)
       })
     })
 
     it(`should call an on error callback if an error occurred`, () => {
       cy.visit(page)
-      cy.get(`[data-on-error-result=${ScriptStrategy.postHydrate}]`)
+      cy.get(`[data-on-error-result=post-hydrate]`)
     })
   })
 
-  describe(`using the ${ScriptStrategy.idle} strategy`, () => {
+  describe(`using the idle strategy`, () => {
     it(`should load successfully`, () => {
       cy.visit(page)
       cy.getRecord(Script.marked, `success`, true).should(`equal`, `true`)
@@ -72,13 +71,13 @@ describe(`scripts with sources`, () => {
     it(`should call an on load callback once the script has loaded`, () => {
       cy.visit(page)
       cy.getRecord(Script.marked, ResourceRecord.responseEnd).then(() => {
-        cy.get(`[data-on-load-result=${ScriptStrategy.idle}]`)
+        cy.get(`[data-on-load-result=idle]`)
       })
     })
 
     it(`should call an on error callback if an error occurred`, () => {
       cy.visit(page)
-      cy.get(`[data-on-error-result=${ScriptStrategy.idle}]`)
+      cy.get(`[data-on-error-result=idle]`)
     })
   })
 
@@ -91,12 +90,9 @@ describe(`scripts with sources`, () => {
         .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
-        ScriptStrategy.postHydrate
+        `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.idle
-      )
+      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once after the page is refreshed`, () => {
@@ -108,12 +104,9 @@ describe(`scripts with sources`, () => {
         .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
-        ScriptStrategy.postHydrate
+        `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.idle
-      )
+      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once after anchor link navigation`, () => {
@@ -126,12 +119,9 @@ describe(`scripts with sources`, () => {
         .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
-        ScriptStrategy.postHydrate
+        `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.idle
-      )
+      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
@@ -145,12 +135,9 @@ describe(`scripts with sources`, () => {
         .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
-        ScriptStrategy.postHydrate
+        `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.idle
-      )
+      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once after Gatsby link navigation`, () => {
@@ -163,12 +150,9 @@ describe(`scripts with sources`, () => {
         .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
-        ScriptStrategy.postHydrate
+        `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.idle
-      )
+      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
@@ -182,12 +166,9 @@ describe(`scripts with sources`, () => {
         .should(`have.length`, 3)
       cy.getRecord(Script.three, `strategy`, true).should(
         `equal`,
-        ScriptStrategy.postHydrate
+        `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(
-        `equal`,
-        ScriptStrategy.idle
-      )
+      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
     })
   })
 })

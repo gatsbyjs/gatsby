@@ -1,4 +1,3 @@
-import { ScriptStrategy } from "gatsby"
 import { InlineScript } from "../../scripts"
 import { ResourceRecord, MarkRecord } from "../../records"
 
@@ -31,12 +30,12 @@ beforeEach(() => {
 
 for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
   describe(`inline scripts set via ${descriptor}`, () => {
-    describe(`using the ${ScriptStrategy.postHydrate} strategy`, () => {
+    describe(`using the post-hydrate strategy`, () => {
       it(`should execute successfully`, () => {
         cy.visit(page)
 
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           `success`,
           true
         ).should(`equal`, `true`)
@@ -47,7 +46,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
         // Assert framework is loaded before inline script is executed
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           MarkRecord.executeStart
         ).then(dangerouslySetExecuteStart => {
           cy.getRecord(`framework`, ResourceRecord.responseEnd).should(
@@ -58,29 +57,27 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
     })
 
-    describe(`using the ${ScriptStrategy.idle} strategy`, () => {
+    describe(`using the idle strategy`, () => {
       it(`should execute successfully`, () => {
         cy.visit(page)
 
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          `success`,
-          true
-        ).should(`equal`, `true`)
+        cy.getRecord(`idle-${inlineScriptType}`, `success`, true).should(
+          `equal`,
+          `true`
+        )
       })
 
       it(`should load before other strategies`, () => {
         cy.visit(page)
 
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          MarkRecord.executeStart
-        ).then(dangerouslySetExecuteStart => {
-          cy.getRecord(
-            `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
-            MarkRecord.executeStart
-          ).should(`be.lessThan`, dangerouslySetExecuteStart)
-        })
+        cy.getRecord(`idle-${inlineScriptType}`, MarkRecord.executeStart).then(
+          dangerouslySetExecuteStart => {
+            cy.getRecord(
+              `post-hydrate-${inlineScriptType}`,
+              MarkRecord.executeStart
+            ).should(`be.lessThan`, dangerouslySetExecuteStart)
+          }
+        )
       })
     })
 
@@ -92,15 +89,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
           .children()
           .should(`have.length`, 4)
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           `strategy`,
           true
-        ).should(`equal`, ScriptStrategy.postHydrate)
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.idle)
+        ).should(`equal`, `post-hydrate`)
+        cy.getRecord(`idle-${inlineScriptType}`, `strategy`, true).should(
+          `equal`,
+          `idle`
+        )
       })
 
       it(`should load only once after the page is refreshed`, () => {
@@ -111,15 +107,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
           .children()
           .should(`have.length`, 4)
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           `strategy`,
           true
-        ).should(`equal`, ScriptStrategy.postHydrate)
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.idle)
+        ).should(`equal`, `post-hydrate`)
+        cy.getRecord(`idle-${inlineScriptType}`, `strategy`, true).should(
+          `equal`,
+          `idle`
+        )
       })
 
       it(`should load only once after anchor link navigation`, () => {
@@ -131,15 +126,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
           .children()
           .should(`have.length`, 4)
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           `strategy`,
           true
-        ).should(`equal`, ScriptStrategy.postHydrate)
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.idle)
+        ).should(`equal`, `post-hydrate`)
+        cy.getRecord(`idle-${inlineScriptType}`, `strategy`, true).should(
+          `equal`,
+          `idle`
+        )
       })
 
       it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
@@ -152,15 +146,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
           .children()
           .should(`have.length`, 4)
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           `strategy`,
           true
-        ).should(`equal`, ScriptStrategy.postHydrate)
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.idle)
+        ).should(`equal`, `post-hydrate`)
+        cy.getRecord(`idle-${inlineScriptType}`, `strategy`, true).should(
+          `equal`,
+          `idle`
+        )
       })
 
       it(`should load only once after Gatsby link navigation`, () => {
@@ -172,15 +165,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
           .children()
           .should(`have.length`, 4)
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           `strategy`,
           true
-        ).should(`equal`, ScriptStrategy.postHydrate)
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.idle)
+        ).should(`equal`, `post-hydrate`)
+        cy.getRecord(`idle-${inlineScriptType}`, `strategy`, true).should(
+          `equal`,
+          `idle`
+        )
       })
 
       it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
@@ -193,15 +185,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
           .children()
           .should(`have.length`, 4)
         cy.getRecord(
-          `${ScriptStrategy.postHydrate}-${inlineScriptType}`,
+          `post-hydrate-${inlineScriptType}`,
           `strategy`,
           true
-        ).should(`equal`, ScriptStrategy.postHydrate)
-        cy.getRecord(
-          `${ScriptStrategy.idle}-${inlineScriptType}`,
-          `strategy`,
-          true
-        ).should(`equal`, ScriptStrategy.idle)
+        ).should(`equal`, `post-hydrate`)
+        cy.getRecord(`idle-${inlineScriptType}`, `strategy`, true).should(
+          `equal`,
+          `idle`
+        )
       })
     })
   })
