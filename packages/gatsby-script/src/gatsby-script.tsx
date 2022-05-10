@@ -124,10 +124,9 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
   const scriptKey = id || src
 
   if (scriptCache.has(scriptKey)) {
-    if (onLoad) onLoad.call(new Event(`load`))
+    if (onLoad) onLoad(new Event(`load`))
 
-    // @ts-ignore - TBD
-    if (scripts[scriptKey]?.strategy !== strategy) {
+    if (scriptKey && scripts[scriptKey]?.strategy !== strategy) {
       console.warn(
         `Script ${scriptKey} is already loaded with a different strategy. Consider removing duplicates`
       )
@@ -136,10 +135,11 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     return null
   }
 
-  // @ts-ignore - TBD
-  scripts[scriptKey] = {
-    src: src,
-    strategy: strategy,
+  if (scriptKey) {
+    scripts[scriptKey] = {
+      src: src,
+      strategy: strategy,
+    }
   }
 
   const inlineScript = resolveInlineScript(props)
