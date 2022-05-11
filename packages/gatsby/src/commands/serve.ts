@@ -26,6 +26,7 @@ import { configureTrailingSlash } from "../utils/express-middlewares"
 import { getDataStore, detectLmdbStore } from "../datastore"
 import { functionMiddlewares } from "../internal-plugins/functions/middleware"
 import proxy from "express-http-proxy"
+import { partytownDefaultProxiedHosts } from "../internal-plugins/partytown/default-proxied-hosts"
 
 process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
 detectLmdbStore()
@@ -122,9 +123,18 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const app = express()
 
   // Proxy gatsby-script using off-main-thread strategy
+  const { partytownProxiedHosts = [] } = config || {}
+  const hosts = [...partytownDefaultProxiedHosts, ...partytownProxiedHosts]
+
   app.use(
     `/__partytown-proxy`,
     proxy(req => new URL(req.query.url as string).host as string, {
+      filter: req =>
+        hosts.some(host => {
+          // TODO - Probably want to log a warning saying host is unsafe and how to add to config if desired
+          const queryParamHost = new URL(req.query.url as string).host as string
+          return queryParamHost === host
+        }),
       proxyReqPathResolver: req => {
         const { pathname = ``, search = `` } = new URL(req.query.url as string)
         return pathname + search

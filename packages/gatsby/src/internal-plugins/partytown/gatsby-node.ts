@@ -1,21 +1,11 @@
 import path from "path"
 import { copyLibFiles } from "@builder.io/partytown/utils"
+import { partytownDefaultProxiedHosts } from "./default-proxied-hosts"
 
 /**
- * List of trusted hosts proxied by default. Extracted from Partytown integration tests.
- * @see {@link https://github.com/BuilderIO/partytown/tree/main/tests/integrations}
+ * Copy Partytown library files to public.
+ * @see {@link https://partytown.builder.io/copy-library-files}
  */
-const proxyHostDefaultSafelist: Array<string> = [
-  `assets.adobedtm.com`,
-  `connect.facebook.net`,
-  `www.google-analytics.com`,
-  `www.googletagmanager.com`,
-  `forms.hsforms.com`, // HubSpot
-  `widget.intercom.io`,
-  `syndication.twitter.com`,
-  `cdn.syndication.twimg.com`, // Twitter
-]
-
 exports.onPreBootstrap = async ({ store }): Promise<void> => {
   const { program } = store.getState()
   await copyLibFiles(path.join(program.directory, `public`, `~partytown`))
@@ -25,14 +15,18 @@ exports.onPreBootstrap = async ({ store }): Promise<void> => {
  * Implement reverse proxy so scripts can fetch in web workers without CORS errors.
  * @see {@link https://partytown.builder.io/proxying-requests}
  */
-exports.createPages = ({ actions }): void => {
+exports.createPages = ({ actions, store }): void => {
   const { createRedirect } = actions
 
-  for (const host of proxyHostDefaultSafelist) {
+  const { config = {} } = store.getState()
+  const { partytownProxiedHosts = [] } = config
+  const hosts = [...partytownDefaultProxiedHosts, ...partytownProxiedHosts]
+
+  for (const host of hosts) {
     const encodedURL: string = encodeURI(`https://${host}`)
 
     createRedirect({
-      fromPath: `/__partytown-proxy?url=${encodedURL}`,
+      fromPath: `/__partytown-proxy?url=${encodedURL}*`,
       toPath: encodedURL,
       statusCode: 200,
       headers: {
