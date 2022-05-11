@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.14.0/packages/gatsby-plugin-image) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Features
+
+- add check for node.gatsbyImage in the getImage helper [#35507](https://github.com/gatsbyjs/gatsby/issues/35507) ([abc6dca](https://github.com/gatsbyjs/gatsby/commit/abc6dca7a24bd1fcf8946ce23e09d50c914ac589))
+
+#### Bug Fixes
+
+- fix image flickers fix [#35226](https://github.com/gatsbyjs/gatsby/issues/35226) ([9a91295](https://github.com/gatsbyjs/gatsby/commit/9a912956a5ea66be7281f6263928b64f20ff1d53))
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- update dependency semver to ^7.3.7 [#35543](https://github.com/gatsbyjs/gatsby/issues/35543) ([f593e00](https://github.com/gatsbyjs/gatsby/commit/f593e005e4561b423a297e967205d833451a2f55))
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
 ## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.13.0/packages/gatsby-plugin-image) (2022-04-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
