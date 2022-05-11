@@ -165,7 +165,7 @@ export type GetServerDataProps = {
  */
 export type GetServerDataReturn<ServerDataType = Record<string, unknown>> =
   Promise<{
-    headers?: Map<string, unknown>
+    headers?: Record<string, unknown>
     props?: ServerDataType
     status?: number
   }>
