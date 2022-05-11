@@ -123,13 +123,13 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const app = express()
 
   // Proxy gatsby-script using off-main-thread strategy
-  const { partytownProxiedHosts = [] } = config || {}
+  const { partytownProxiedURLs = [] } = config || {}
 
   app.use(
     `/__partytown-proxy`,
     proxy(req => new URL(req.query.url as string).host as string, {
       filter: req =>
-        partytownProxiedHosts.some(host => {
+        partytownProxiedURLs.some(host => {
           // TODO - Probably want to log a warning saying host is unsafe and how to add to config if desired
           const queryParamHost = new URL(req.query.url as string).host as string
           return queryParamHost === host

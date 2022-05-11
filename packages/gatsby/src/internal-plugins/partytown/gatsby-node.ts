@@ -18,9 +18,9 @@ exports.createPages = ({ actions, store }): void => {
   const { createRedirect } = actions
 
   const { config = {} } = store.getState()
-  const { partytownProxiedHosts = [] } = config
+  const { partytownProxiedURLs = [] } = config
 
-  for (const host of partytownProxiedHosts) {
+  for (const host of partytownProxiedURLs) {
     const encodedURL: string = encodeURI(host)
 
     createRedirect({

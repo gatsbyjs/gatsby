@@ -48,7 +48,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         })
       )
       .single(),
-    partytownProxiedHosts: Joi.array().items(Joi.string()),
+    partytownProxiedURLs: Joi.array().items(Joi.string()),
     developMiddleware: Joi.func(),
     jsxRuntime: Joi.string().valid(`automatic`, `classic`).default(`classic`),
     jsxImportSource: Joi.string(),

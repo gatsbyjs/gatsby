@@ -259,10 +259,10 @@ export interface GatsbyConfig {
     url: string
   }
   /**
-   * A list of trusted hosts that will be proxied for use with the gatsby-script off-main-thread strategy.
+   * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
    * @see https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/
    */
-  partytownProxiedHosts?: Array<string>
+  partytownProxiedURLs?: Array<string>
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
   developMiddleware?(app: any): void
 }

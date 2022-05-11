@@ -98,7 +98,7 @@ export interface IGatsbyConfig {
   polyfill?: boolean
   developMiddleware?: any
   proxy?: any
-  partytownProxiedHosts?: Array<string>
+  partytownProxiedURLs?: Array<string>
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
