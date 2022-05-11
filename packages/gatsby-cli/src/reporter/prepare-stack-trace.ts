@@ -5,15 +5,14 @@
 import { readFileSync, readdirSync } from "fs"
 import { codeFrameColumns } from "@babel/code-frame"
 import stackTrace from "stack-trace"
-import { TraceMap, originalPositionFor } from "@jridgewell/trace-mapping"
+import {
+  TraceMap,
+  originalPositionFor,
+  OriginalMapping,
+  InvalidOriginalMapping,
+  sourceContentFor,
+} from "@jridgewell/trace-mapping"
 import * as path from "path"
-
-interface INullableMappedPosition {
-  source: string | null
-  line: number | null
-  column: number | null
-  name: string | null
-}
 
 export class ErrorWithCodeFrame extends Error {
   codeFrame?: string = ``
@@ -71,8 +70,7 @@ function getErrorSource(
 ): string {
   let source
   for (const map of maps) {
-    // TODO: Re-Add sourceContentFor behavior
-    source = null // map.sourceContentFor(topFrame.getFileName(), true)
+    source = sourceContentFor(map, topFrame.getFileName())
     if (source) {
       break
     }
@@ -129,7 +127,7 @@ function getPosition({
 }: {
   maps: Array<TraceMap>
   frame: stackTrace.StackFrame
-}): INullableMappedPosition {
+}): OriginalMapping | InvalidOriginalMapping {
   if (frame.getFileName().includes(`webpack:`)) {
     // if source-map-register is initiated, stack traces would already be converted
     return {

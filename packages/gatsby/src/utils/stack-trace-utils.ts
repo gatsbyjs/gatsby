@@ -5,6 +5,7 @@ import {
   originalPositionFor,
   OriginalMapping,
   SourceMapInput,
+  sourceContentFor,
 } from "@jridgewell/trace-mapping"
 
 const fs = require(`fs-extra`)
@@ -120,7 +121,6 @@ export function findOriginalSourcePositionAndContent(
   position: { line: number; column: number | null }
 ): IOriginalSourcePositionAndContent {
   const tracer = new TraceMap(webpackSource)
-  const { sourcesContent } = tracer
   const sourcePosition = originalPositionFor(tracer, {
     line: position.line,
     column: position.column ?? 0,
@@ -133,11 +133,7 @@ export function findOriginalSourcePositionAndContent(
     }
   }
 
-  console.log({ sourcesContent })
-
-  // TODO: Re-Add sourceContentFor behavior
-  const sourceContent: string | null = null
-  // consumer.sourceContentFor(sourcePosition.source, true) ?? null
+  const sourceContent = sourceContentFor(tracer, sourcePosition.source)
 
   return {
     sourcePosition,
