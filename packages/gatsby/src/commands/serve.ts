@@ -26,7 +26,6 @@ import { configureTrailingSlash } from "../utils/express-middlewares"
 import { getDataStore, detectLmdbStore } from "../datastore"
 import { functionMiddlewares } from "../internal-plugins/functions/middleware"
 import proxy from "express-http-proxy"
-import { partytownDefaultProxiedHosts } from "../internal-plugins/partytown/default-proxied-hosts"
 
 process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
 detectLmdbStore()
