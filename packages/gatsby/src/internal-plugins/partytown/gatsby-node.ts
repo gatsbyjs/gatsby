@@ -1,6 +1,5 @@
 import path from "path"
 import { copyLibFiles } from "@builder.io/partytown/utils"
-import { partytownDefaultProxiedHosts } from "./default-proxied-hosts"
 
 /**
  * Copy Partytown library files to public.
@@ -20,14 +19,13 @@ exports.createPages = ({ actions, store }): void => {
 
   const { config = {} } = store.getState()
   const { partytownProxiedHosts = [] } = config
-  const hosts = [...partytownDefaultProxiedHosts, ...partytownProxiedHosts]
 
-  for (const host of hosts) {
-    const encodedURL: string = encodeURI(`https://${host}`)
+  for (const host of partytownProxiedHosts) {
+    const encodedURL: string = encodeURI(host)
 
     createRedirect({
-      fromPath: `/__partytown-proxy?url=${encodedURL}:rest`,
-      toPath: `${encodedURL}:rest`,
+      fromPath: `/__partytown-proxy?url=${encodedURL}`,
+      toPath: encodedURL,
       statusCode: 200,
       headers: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
