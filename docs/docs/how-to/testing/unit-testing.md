@@ -59,6 +59,8 @@ module.exports = {
 }
 ```
 
+> **Note:** If you're using Jest 28 or above, you can skip adding the `moduleNameMapper` options for `gatsby-page-utils`, `gatsby-core-utils`, and `gatsby-plugin-utils`. The mentioned bug was fixed in Jest 28.
+
 Go over the content of this configuration file:
 
 - The `transform` section tells Jest that all `js` or `jsx` files need to be
