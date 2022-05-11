@@ -96,12 +96,12 @@
   "scripts": {
     "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
     "build:rollup": "rollup -c",
-    "build": "npm-run-all -p build:babel build:rollup",
+    "build": "npm-run-all --npm-path npm -p build:babel build:rollup",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch:babel": "npm run build:babel -- --watch",
     "watch:rollup": "npm run build:rollup -- -w",
-    "watch": "npm-run-all -p watch:babel watch:rollup",
+    "watch": "npm-run-all --npm-path npm -p watch:babel watch:rollup",
     "postinstall": "node scripts/postinstall.js"
   },
   "engines": {
