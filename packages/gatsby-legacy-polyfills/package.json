@@ -31,7 +31,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@jridgewell/trace-mapping": "^0.3.11",
+    "@jridgewell/trace-mapping": "^0.3.13",
     "chokidar-cli": "^3.0.0",
     "codegen.macro": "^4.1.0",
     "core-js": "3.9.0",

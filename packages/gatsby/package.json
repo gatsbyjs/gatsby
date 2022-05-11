@@ -27,7 +27,7 @@
     "@graphql-codegen/typescript-operations": "^2.3.5",
     "@graphql-tools/code-file-loader": "^7.2.14",
     "@graphql-tools/load": "^7.5.10",
-    "@jridgewell/trace-mapping": "^0.3.11",
+    "@jridgewell/trace-mapping": "^0.3.13",
     "@nodelib/fs.walk": "^1.2.8",
     "@parcel/core": "^2.3.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",

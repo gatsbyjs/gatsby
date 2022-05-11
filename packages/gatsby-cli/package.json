@@ -18,7 +18,7 @@
     "@babel/runtime": "^7.15.4",
     "@babel/template": "^7.16.7",
     "@babel/types": "^7.16.8",
-    "@jridgewell/trace-mapping": "^0.3.11",
+    "@jridgewell/trace-mapping": "^0.3.13",
     "@types/common-tags": "^1.8.1",
     "better-opn": "^2.1.1",
     "boxen": "^5.1.2",
