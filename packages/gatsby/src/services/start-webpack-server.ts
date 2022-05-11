@@ -105,7 +105,7 @@ export async function startWebpackServer({
 
         if (webpackActivity) {
           if (stats.hasWarnings()) {
-            const rawMessages = stats.toJson({ moduleTrace: false })
+            const rawMessages = stats.toJson({ all: false, warnings: true })
             reportWebpackWarnings(rawMessages.warnings, report)
           }
 
