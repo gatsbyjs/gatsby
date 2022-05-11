@@ -26,7 +26,7 @@ exports.createPages = ({ actions, store }): void => {
     const encodedURL: string = encodeURI(`https://${host}`)
 
     createRedirect({
-      fromPath: `/__partytown-proxy?url=${encodedURL}*`,
+      fromPath: `/__partytown-proxy?url=${encodedURL}`,
       toPath: encodedURL,
       statusCode: 200,
       headers: {
