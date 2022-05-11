@@ -126,7 +126,9 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
   if (scriptCache.has(scriptKey)) {
     if (onLoad) onLoad(new Event(`load`))
 
-    if (scriptKey && scripts[scriptKey]?.strategy !== strategy) {
+    const isDevelop = process.env.NODE_ENV === `development`
+
+    if (scriptKey && scripts[scriptKey]?.strategy !== strategy && isDevelop) {
       console.warn(
         `Script ${scriptKey} is already loaded with a different strategy. Consider removing duplicates`
       )
