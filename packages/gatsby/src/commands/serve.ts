@@ -129,7 +129,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     proxy(req => new URL(req.query.url as string).host as string, {
       filter: req =>
         partytownProxiedURLs.some(host => {
-          // TODO - Probably want to log a warning saying host is unsafe and how to add to config if desired
           const queryParamHost = new URL(req.query.url as string).host as string
           return queryParamHost === host
         }),
