@@ -62,6 +62,11 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
+        <Link to="/한글-URL" data-testid="dsg-page-with-unicode-path">
+          Go to DSG page with unicode path
+        </Link>
+      </li>
+      <li>
         <Link to="/foo/@something/bar" data-testid="page-with-encodable-path">
           Go to page with unicode path
         </Link>

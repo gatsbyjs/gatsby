@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.14.0/packages/gatsby-page-utils) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.13.0/packages/gatsby-page-utils) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.12.1/packages/gatsby-page-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.12.0/packages/gatsby-page-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency micromatch to ^4.0.5 for gatsby-page-utils [#35285](https://github.com/gatsbyjs/gatsby/issues/35285) ([310bcf3](https://github.com/gatsbyjs/gatsby/commit/310bcf3d551e180c26a26ce52d64f93842ee6391))
+
 ### [2.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.11.1/packages/gatsby-page-utils) (2022-03-31)
 
 **Note:** Version bump only for package gatsby-page-utils

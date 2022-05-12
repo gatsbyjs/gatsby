@@ -131,6 +131,21 @@ describe(`Production build tests`, () => {
   })
 
   describe(`Supports unicode characters in urls`, () => {
+    describe(`DSG pages`, () => {
+      it(`Can navigate directly`, () => {
+        cy.visit(encodeURI(`/한글-URL`)).waitForRouteChange()
+        cy.getTestElement(`dom-marker`).contains("page-2")
+      })
+
+      it(`Can navigate on client`, () => {
+        cy.visit(`/`).waitForRouteChange()
+        cy.getTestElement(`dsg-page-with-unicode-path`)
+          .click()
+          .waitForRouteChange()
+        cy.getTestElement(`dom-marker`).contains("page-2")
+      })
+    })
+
     it(`Can navigate directly`, () => {
       cy.visit(encodeURI(`/안녕/`), {
         // Cypress seems to think it's 404

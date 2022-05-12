@@ -63,6 +63,7 @@ import {
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { runPageGenerationJobs } from "../services/run-page-generation-jobs"
+import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -393,7 +394,10 @@ module.exports = async function build(
       parentSpan: buildSpan,
     })
     // Jobs still might be running even though query running finished
-    await waitUntilAllJobsComplete()
+    await Promise.all([
+      waitUntilAllJobsComplete(),
+      waitUntilWorkerJobsAreComplete(),
+    ])
     // Restart worker pool before merging state to lower memory pressure while merging state
     waitForWorkerPoolRestart = workerPool.restart()
     await mergeWorkerState(workerPool, buildSpan)

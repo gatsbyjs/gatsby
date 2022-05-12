@@ -13,6 +13,7 @@ import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensio
 import replaceAll from "replaceall"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 import { gatsbyImageResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/gatsby-image-resolver"
+import { publicUrlResolver } from "gatsby-plugin-utils/dist/polyfill-remote-file/graphql/public-url-resolver"
 
 import { formatLogMessage } from "~/utils/format-log-message"
 
@@ -159,8 +160,8 @@ const pickNodeBySourceUrlOrCheerioImg = ({
 let displayedFailedToRestoreMessage = false
 
 const fetchNodeHtmlImageMediaItemNodes = async ({
+  // node, // for inspecting nodes while debugging
   cheerioImages,
-  node,
   helpers,
   wpUrl,
 }) => {
@@ -226,7 +227,6 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
     await fetchReferencedMediaItemsAndCreateNodes({
       mediaItemUrls,
     })
-
   // images that have been edited from the media library that were previously
   // uploaded to a post/page will have a different sourceUrl so they can't be fetched by it
   // in many cases we have data-id or data-image-id as attributes on the img
@@ -414,26 +414,6 @@ const copyFileToStaticAndReturnUrlPath = async (fileNode, helpers) => {
   return relativeUrl
 }
 
-const filterMatches =
-  wpUrl =>
-  ({ match }) => {
-    const { hostname: wpHostname } = url.parse(wpUrl)
-
-    // @todo make it a plugin option to fetch non-wp images
-    // here we're filtering out image tags that don't contain our site url
-    const isHostedInWp =
-      // if it has the full WP url
-      match.includes(wpHostname) ||
-      // or it's an absolute path
-      match.includes(`src=\\"/wp-content`)
-
-    // six backslashes means we're looking for three backslashes
-    // since we're looking for JSON encoded strings inside of our JSON encoded string
-    const isInJSON = match.includes(`src=\\\\\\"`)
-
-    return isHostedInWp && !isInJSON
-  }
-
 const cacheCreatedFileNodeBySrc = ({ node, src }) => {
   if (node) {
     // save any fetched media items in our global media item cache
@@ -476,7 +456,10 @@ export const replaceNodeHtmlImages = async ({
   pluginOptions,
 }) => {
   // this prevents fetching inline html images
-  if (!pluginOptions?.html?.useGatsbyImage) {
+  if (
+    !pluginOptions?.html?.useGatsbyImage ||
+    pluginOptions?.type?.MediaItem?.exclude
+  ) {
     return nodeString
   }
 
@@ -573,12 +556,12 @@ export const replaceNodeHtmlImages = async ({
         const configuredMaxWidth = pluginOptions?.html?.imageMaxWidth
 
         // if the configured html.maxWidth property is less than the result, then
-        // override the resultant width
+        // override the resulting width
         if (configuredMaxWidth && configuredMaxWidth < maxWidth) {
           maxWidth = configuredMaxWidth
         }
 
-        const quality = pluginOptions?.html?.imageQuality
+        const quality = pluginOptions?.html?.imageQuality ?? 70
 
         const { reporter } = helpers
 
@@ -586,17 +569,26 @@ export const replaceNodeHtmlImages = async ({
           supportedExtensions[extension] || extension === `gif`
 
         let imageResize = null
+        let publicUrl
 
-        if (gatsbyTransformerSharpSupportsThisFileType) {
-          const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
-            imageNode,
-            pluginOptions
-          )
+        const imageUrl =
+          imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
 
-          const imageUrl =
-            imageNode.mediaItemUrl || imageNode.sourceUrl || imageNode.url
+        try {
+          if (gatsbyTransformerSharpSupportsThisFileType) {
+            const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
+              imageNode,
+              pluginOptions
+            )
 
-          try {
+            const formats = [`auto`]
+            if (pluginOptions.html.generateWebpImages) {
+              formats.push(`webp`)
+            }
+            if (pluginOptions.html.generateAvifImages) {
+              formats.push(`avif`)
+            }
+
             imageResize = await gatsbyImageResolver(
               {
                 url: imageUrl,
@@ -614,20 +606,33 @@ export const replaceNodeHtmlImages = async ({
                 layout: `constrained`,
                 placeholder: !placeholderUrl
                   ? `none`
-                  : pluginOptions?.html?.placeholderType || `blurred`,
+                  : pluginOptions?.html?.placeholderType || `dominantColor`,
                 quality,
+                formats,
               },
               helpers.actions
             )
-          } catch (e) {
-            reporter.error(e)
-            reporter.warn(
-              formatLogMessage(
-                `${node.__typename} ${node.id} couldn't process inline html image ${imageUrl}`
-              )
+          } else {
+            publicUrl = publicUrlResolver(
+              {
+                url: imageUrl,
+                mimeType: imageNode.mimeType,
+                filename: path.basename(imageNode.sourceUrl || imageNode.url),
+                internal: {
+                  contentDigest: imageNode.modifiedGmt,
+                },
+              },
+              helpers.actions
             )
-            return null
           }
+        } catch (e) {
+          reporter.error(e)
+          reporter.warn(
+            formatLogMessage(
+              `${node.__typename} ${node.id} couldn't process inline html image ${imageUrl}`
+            )
+          )
+          return null
         }
 
         return {
@@ -636,6 +641,7 @@ export const replaceNodeHtmlImages = async ({
           fileNode,
           imageResize,
           maxWidth,
+          publicUrl,
         }
       })
     )
@@ -647,12 +653,15 @@ export const replaceNodeHtmlImages = async ({
         continue
       }
 
-      const { match, imageResize, cheerioImg } = matchResize
+      const { match, imageResize, cheerioImg, publicUrl } = matchResize
 
       let ReactGatsbyImage
       // used to create hydration data for images
       let gatsbyImageHydrationData = null
-      if (imageResize && imageResize.images.sources.length > 0) {
+      if (
+        imageResize &&
+        (imageResize.images.sources.length > 0 || imageResize.images.fallback)
+      ) {
         gatsbyImageHydrationData = {
           image: imageResize,
           alt: cheerioImg?.attribs?.alt,
@@ -664,6 +673,18 @@ export const replaceNodeHtmlImages = async ({
         ReactGatsbyImage = React.createElement(
           GatsbyImage,
           gatsbyImageHydrationData,
+          null
+        )
+      } else if (publicUrl) {
+        ReactGatsbyImage = React.createElement(
+          `img`,
+          {
+            src: publicUrl,
+            alt: cheerioImg?.attribs?.alt,
+            className: `${
+              cheerioImg?.attribs?.class || ``
+            } inline-gatsby-image-wrapper`,
+          },
           null
         )
       }
@@ -701,7 +722,10 @@ const replaceFileLinks = async ({
   pluginOptions,
   node,
 }) => {
-  if (!pluginOptions?.html?.createStaticFiles) {
+  if (
+    !pluginOptions?.html?.createStaticFiles ||
+    pluginOptions?.type?.MediaItem?.exclude
+  ) {
     return nodeString
   }
 

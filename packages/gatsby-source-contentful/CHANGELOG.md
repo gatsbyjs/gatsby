@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.12.0/packages/gatsby-source-contentful) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Features
+
+- add support for tables in Rich Text [#33870](https://github.com/gatsbyjs/gatsby/issues/33870) ([55c7183](https://github.com/gatsbyjs/gatsby/commit/55c718315f3e60e0448af8c3ef5c19fa8d9384b5))
+- Add `contentTypeFilter` [#35204](https://github.com/gatsbyjs/gatsby/issues/35204) ([7477b5f](https://github.com/gatsbyjs/gatsby/commit/7477b5f36e841f4b60ef8d21e73a01d5251dbf1d))
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- update dependency semver to ^7.3.7 [#35543](https://github.com/gatsbyjs/gatsby/issues/35543) ([f593e00](https://github.com/gatsbyjs/gatsby/commit/f593e005e4561b423a297e967205d833451a2f55))
+- Prevent null pointer exception [#35244](https://github.com/gatsbyjs/gatsby/issues/35244) ([7bc7cf6](https://github.com/gatsbyjs/gatsby/commit/7bc7cf665f07e722d77628d6eabed9c11840e29a))
+
+## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.11.0/packages/gatsby-source-contentful) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- Prevent null pointer exception [#35244](https://github.com/gatsbyjs/gatsby/issues/35244) [#35492](https://github.com/gatsbyjs/gatsby/issues/35492) ([dc25387](https://github.com/gatsbyjs/gatsby/commit/dc25387f4e23ea13cd48817420c733085848807d))
+
+### [7.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.10.1/packages/gatsby-source-contentful) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.10.0/packages/gatsby-source-contentful) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- handle backreferences on data updates properly [#35214](https://github.com/gatsbyjs/gatsby/issues/35214) ([cf98027](https://github.com/gatsbyjs/gatsby/commit/cf980279eabc6ad5b4a001666b69f7497c21bed1))
+
 ### [7.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.9.1/packages/gatsby-source-contentful) (2022-03-31)
 
 #### Bug Fixes
