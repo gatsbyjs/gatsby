@@ -1478,4 +1478,30 @@ actions.unstable_createNodeManifest = (
   }
 }
 
+/**
+ * Stores request headers for a given domain.
+ *
+ * @param {Object} $0
+ * @param {string} $0.domain The domain to store the headers for.
+ * @param {Object} $0.headers The headers to store.
+ */
+actions.setRequestHeaders = ({ domain, headers }) => {
+  if (!domain) {
+    throw new Error(`The setRequestHeaders action requires a domain.`)
+  }
+  if (!headers) {
+    throw new Error(`The setRequestHeaders action requires headers.`)
+  }
+
+  const baseDomain = url.parse(domain).hostname
+
+  return {
+    type: `SET_REQUEST_HEADERS`,
+    payload: {
+      domain: baseDomain,
+      headers,
+    },
+  }
+}
+
 module.exports = { actions }
