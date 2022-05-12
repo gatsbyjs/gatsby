@@ -82,9 +82,8 @@ export function Script(props: ScriptProps): ReactElement | null {
           async
           data-strategy={strategy}
           {...attributes}
-        >
-          {resolveInlineScript(props)}
-        </script>
+          dangerouslySetInnerHTML={{ __html: resolveInlineScript(props) }}
+        />
       )
     }
     return (
