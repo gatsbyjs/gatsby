@@ -127,13 +127,9 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(
     `/__partytown-proxy`,
     proxy(req => new URL(req.query.url as string).host as string, {
-      filter: req =>
-        partytownProxiedURLs.some(host => {
-          const queryParamHost = new URL(req.query.url as string).host as string
-          return queryParamHost === host
-        }),
+      filter: req => partytownProxiedURLs.some(url => req.query?.url === url),
       proxyReqPathResolver: req => {
-        const { pathname = ``, search = `` } = new URL(req.query.url as string)
+        const { pathname = ``, search = `` } = new URL(req.query?.url as string)
         return pathname + search
       },
     })
