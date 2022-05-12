@@ -102,7 +102,7 @@ const getGatsbyImageCdnFields = async ({
   } catch (e) {
     if (e.message.includes(`unrecognized file format`)) {
       reporter.error(
-        `Encountered corrupt file while requesting image dimensions for ${url}`
+        `[gatsby-source-drupal] Encountered corrupt file while requesting image dimensions for ${url}`
       )
 
       return {}
@@ -121,7 +121,7 @@ const getGatsbyImageCdnFields = async ({
       )
     )
     reporter.panic(
-      `Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
+      `[gatsby-source-drupal] Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
     )
   }
 
