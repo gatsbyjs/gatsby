@@ -2,7 +2,7 @@ import * as React from "react"
 import { graphql } from "gatsby"
 
 
-const Info = ({ buildTime }: { buildTime?: string }) => {
+const Info = ({ buildTime }: { buildTime?: string | null }) => {
   return (
     <p>
       Build time: {buildTime}
