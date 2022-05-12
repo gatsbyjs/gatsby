@@ -4,6 +4,7 @@ import type { Options } from "@mdx-js/loader"
 
 import path from "path"
 import { sentenceCase } from "change-case"
+import fs from "fs-extra"
 import grayMatter from "gray-matter"
 
 import { defaultOptions, IMdxPluginOptions } from "./plugin-options"
@@ -134,17 +135,18 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
 
   const { data: frontmatter } = grayMatter(content)
 
+  // Use slug from frontmatter, otherwise fall back to the file name and path
   const slug =
     frontmatter.slug ||
     [node.relativeDirectory, node.name === `index` ? `` : node.name]
       .filter(Boolean)
       .join(`/`)
+
+  // Use slug from frontmatter, otherwise fall back to the file name
   const title =
     frontmatter.title || node.name === `index`
       ? `Home`
       : sentenceCase(node.name)
-
-  console.log({ frontmatter })
 
   const mdxNode: NodeInput = {
     id: createNodeId(`${node.id} >>> Mdx`),
@@ -163,6 +165,33 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
 
   createNode(mdxNode)
   createParentChildLink({ parent: node, child: mdxNode })
+}
+
+/**
+ * Add frontmatter as page context for MDX pages
+ */
+export const onCreatePage: GatsbyNode["onCreatePage"] = async (
+  { page, actions },
+  pluginOptions
+) => {
+  const { createPage, deletePage } = actions
+  const { extensions } = defaultOptions(pluginOptions as IMdxPluginOptions)
+  const ext = path.extname(page.component)
+
+  // Only apply on pages based on .mdx files and avoid loops
+  if (extensions.includes(ext) && !page.context.frontmatter) {
+    const content = await fs.readFile(page.component, `utf8`)
+    const { data: frontmatter } = grayMatter(content)
+
+    deletePage(page)
+    createPage({
+      ...page,
+      context: {
+        ...page.context,
+        frontmatter,
+      },
+    })
+  }
 }
 
 /**
