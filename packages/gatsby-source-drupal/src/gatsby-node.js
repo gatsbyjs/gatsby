@@ -847,6 +847,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       translatableEntities: Joi.array().items(Joi.string()).required(),
       nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
+    placeholderStyleName: Joi.string().description(
+      `The machine name of the Gatsby Image CDN placeholder style in Drupal. The default is "placeholder".`
+    ),
   })
 
 exports.onCreateDevServer = async ({ app }) => {
