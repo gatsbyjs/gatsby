@@ -4,7 +4,7 @@ import { Partytown } from "@builder.io/partytown/react"
 import { PartytownContext } from "gatsby-script"
 import type { PartytownProps } from "@builder.io/partytown/react"
 
-const collectedScripts: Record<string, Array<PartytownProps>> = {}
+const collectedScripts: Map<string, Array<PartytownProps>> = new Map()
 
 export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({
   element,
@@ -13,10 +13,9 @@ export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({
   <PartytownContext.Provider
     value={{
       collectScript: (newScript: PartytownProps): void => {
-        collectedScripts[pathname] = [
-          ...(collectedScripts?.[pathname] || []),
-          newScript,
-        ]
+        const currentCollectedScripts = collectedScripts.get(pathname) || []
+        currentCollectedScripts.push(newScript)
+        collectedScripts.set(pathname, currentCollectedScripts)
       },
     }}
   >
@@ -28,19 +27,17 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
   pathname,
   setHeadComponents,
 }) => {
-  if (!collectedScripts?.[pathname]?.length) {
+  const collectedScriptsOnPage = collectedScripts.get(pathname)
+
+  if (!collectedScriptsOnPage?.length) {
     return
   }
 
-  const collectedForwards: Array<string> = collectedScripts?.[pathname]?.reduce(
-    (forwards: Array<string>, script: PartytownProps) => {
-      if (script?.forward) {
-        forwards = [...forwards, ...script?.forward]
-      }
-      return forwards
-    },
-    []
+  const collectedForwards: Array<string> = collectedScriptsOnPage?.flatMap(
+    (script: PartytownProps) => script?.forward || []
   )
 
   setHeadComponents([<Partytown key="partytown" forward={collectedForwards} />])
+
+  collectedScripts.delete(pathname)
 }
