@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "4.15.0-next.1",
+  "version": "4.15.0-next.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
@@ -26,7 +26,7 @@
     "common-tags": "^1.8.2",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "create-gatsby": "^2.15.0-next.1",
+    "create-gatsby": "^2.15.0-next.2",
     "envinfo": "^7.8.1",
     "execa": "^5.1.1",
     "fs-exists-cached": "^1.0.0",
@@ -96,12 +96,12 @@
   "scripts": {
     "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
     "build:rollup": "rollup -c",
-    "build": "npm-run-all -p build:babel build:rollup",
+    "build": "npm-run-all --npm-path npm -p build:babel build:rollup",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch:babel": "npm run build:babel -- --watch",
     "watch:rollup": "npm run build:rollup -- -w",
-    "watch": "npm-run-all -p watch:babel watch:rollup",
+    "watch": "npm-run-all --npm-path npm -p watch:babel watch:rollup",
     "postinstall": "node scripts/postinstall.js"
   },
   "engines": {

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.14.0/packages/gatsby-worker) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
 ## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.13.0/packages/gatsby-worker) (2022-04-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
