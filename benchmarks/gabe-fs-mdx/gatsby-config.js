@@ -12,9 +12,6 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-mdx`,
-      options: {
-        lessBabel: true,
-      },
     },
   ],
 }
