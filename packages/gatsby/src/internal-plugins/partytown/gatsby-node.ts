@@ -27,10 +27,6 @@ exports.createPages = ({ actions, store }): void => {
       fromPath: `/__partytown-proxy?url=${encodedURL}`,
       toPath: encodedURL,
       statusCode: 200,
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        "/__partytown-proxy": [`Access-Control-Allow-Origin: *`],
-      },
     })
   }
 }
