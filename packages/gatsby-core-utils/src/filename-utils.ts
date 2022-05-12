@@ -29,7 +29,7 @@ export function getRemoteFileExtension(url: string): string {
  *
  */
 export function getRemoteFileName(url: string): string {
-  return getParsedPath(url).name
+  return decodeURIComponent(getParsedPath(url).name)
 }
 
 export function createFileHash(input: string, length: number = 8): string {

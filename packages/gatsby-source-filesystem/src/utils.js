@@ -38,7 +38,7 @@ export function getRemoteFileExtension(url) {
  * @return {String}          filename
  */
 export function getRemoteFileName(url) {
-  return getParsedPath(url).name
+  return decodeURIComponent(getParsedPath(url).name)
 }
 
 // createFilePath should be imported from `gatsby-core-utils`
