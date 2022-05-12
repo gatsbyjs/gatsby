@@ -67,7 +67,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
         )
       })
 
-      it(`should load before other strategies`, () => {
+      it(`should load after other strategies`, () => {
         cy.visit(page)
 
         cy.getRecord(`idle-${inlineScriptType}`, MarkRecord.executeStart).then(
