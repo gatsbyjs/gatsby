@@ -21,18 +21,26 @@ export async function runStaticQueries({
   }
 
   const state = store.getState()
-  const activity = reporter.createProgress(
-    `run static queries`,
-    staticQueryIds.length,
-    0,
-    {
-      id: `static-query-running`,
-      parentSpan,
-    }
-  )
+  const showActivity =
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `1` ||
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `true` ||
+    !process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
+
+  let activity
+  if (showActivity) {
+    activity = reporter.createProgress(
+      `run static queries`,
+      staticQueryIds.length,
+      0,
+      {
+        id: `static-query-running`,
+        parentSpan,
+      }
+    )
+  }
 
   // TODO: This is hacky, remove with a refactor of PQR itself
-  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+  if (!activity) {
     activity.start()
   }
 
@@ -43,7 +51,7 @@ export async function runStaticQueries({
     graphqlTracing: program?.graphqlTracing,
   })
 
-  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+  if (!activity) {
     activity.done()
   }
 }

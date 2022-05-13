@@ -85,7 +85,7 @@ function createQueue<QueryIDType>({
     queryId: QueryIDType
   ) => IQueryJob | undefined
   state: IGatsbyState
-  activity: IProgressReporter
+  activity?: IProgressReporter
   graphqlRunner: GraphQLRunner
   graphqlTracing: boolean
 }): fastq.queue<QueryIDType, any> {
@@ -102,7 +102,7 @@ function createQueue<QueryIDType>({
     }
     queryRunner(graphqlRunner, job, activity?.span)
       .then(result => {
-        if (activity.tick) {
+        if (activity?.tick) {
           activity.tick()
         }
         // Note: we need setImmediate to ensure garbage collection has a chance
@@ -135,7 +135,7 @@ async function processQueries<QueryIDType>({
     | (({ job, result }: { job: IQueryJob; result: unknown }) => void)
     | undefined
   state: IGatsbyState
-  activity: IProgressReporter
+  activity?: IProgressReporter
   graphqlRunner: GraphQLRunner
   graphqlTracing: boolean
 }): Promise<void> {

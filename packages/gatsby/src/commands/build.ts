@@ -340,10 +340,19 @@ module.exports = async function build(
   let waitForWorkerPoolRestart = Promise.resolve()
   if (pageGenerationJobsEnabled) {
     // TODO RUN OUR JOB FUNCTION
+    const activity = reporter.activityTimer(
+      `Bursting ${queryIds?.pageQueryIds?.length ?? 0} pages`,
+      {
+        id: `page-generation`,
+        parentSpan: buildSpan,
+      }
+    )
+    activity.start()
     await runPageGenerationJobs(queryIds)
 
     // Jobs still might be running even though query running finished
     await waitUntilAllJobsComplete()
+    activity.end()
   } else if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,

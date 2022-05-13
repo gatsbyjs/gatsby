@@ -4,6 +4,7 @@ import "../../utils/engines-fs-provider"
 
 import { ExecutionResult, Source } from "graphql"
 import { uuid } from "gatsby-core-utils"
+import crypto from "crypto"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
@@ -266,7 +267,6 @@ export class GraphQLEngine {
     requestId?: string
   }): void {
     const resultHash = crypto
-      // @ts-ignore - silence
       .createHash(`sha1`)
       .update(JSON.stringify(payload.result))
       .digest(`base64`)
