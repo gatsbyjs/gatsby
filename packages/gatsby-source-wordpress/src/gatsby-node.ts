@@ -7,20 +7,8 @@ module.exports = runApisInSteps({
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.tempPreventMultipleInstances,
+    steps.setRequestHeaders,
   ],
-
-  onPreBoostrap: ({ actions }, { auth, url }) => {
-    const { password, username } = auth?.htaccess || {}
-
-    if (password && username) {
-      actions.setRequestHeaders({
-        domain: url,
-        headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-        },
-      })
-    }
-  },
 
   pluginOptionsSchema: steps.pluginOptionsSchema,
 

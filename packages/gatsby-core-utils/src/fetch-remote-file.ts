@@ -12,8 +12,10 @@ import { slash } from "./path"
 import { requestRemoteNode } from "./remote-file-utils/fetch-file"
 import { getStorage, getDatabaseDir } from "./utils/get-storage"
 import { createMutex } from "./mutex"
+import { getStore } from "./utils/get-store"
 import type { Options } from "got"
 import type { IFetchRemoteFileOptions } from "./remote-file-utils/fetch-file"
+import url from "url"
 
 interface ITask {
   args: IFetchRemoteFileOptions
@@ -26,6 +28,13 @@ const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
 const alreadyCopiedFiles = new Set<string>()
 
 export type { IFetchRemoteFileOptions }
+
+function getRequestHeaders(passedUrl: string): string | undefined {
+  const baseDomain = url.parse(passedUrl).hostname
+  const { requestHeaders } = getStore().getState()
+
+  return requestHeaders.get(baseDomain)
+}
 
 /**
  * Downloads a remote file to disk
@@ -197,9 +206,12 @@ async function fetchFile({
     const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
     let filename = createFilePath(finalDirectory, name, ext)
 
+    const storedRequestHeaders = getRequestHeaders(url) || {}
+
     // See if there's response headers for this url
     // from a previous request.
-    const headers = { ...httpHeaders }
+    const headers = { ...httpHeaders, ...storedRequestHeaders }
+
     if (cachedEntry?.headers?.etag && (await fs.pathExists(filename))) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       headers[`If-None-Match`] = cachedEntry.headers.etag

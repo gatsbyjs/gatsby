@@ -250,6 +250,7 @@ export interface IGatsbyState {
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
+  requestHeaders: Map<string, { [header: string]: string }>
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -954,6 +955,17 @@ export interface INodeManifest {
   pluginName: string
   node: {
     id: string
+  }
+}
+
+export interface ISetDomainRequestHeaders {
+  type: `SET_REQUEST_HEADERS`
+  payload: {
+    pluginName: string
+    domain: string
+    headers: {
+      [header: string]: string
+    }
   }
 }
 

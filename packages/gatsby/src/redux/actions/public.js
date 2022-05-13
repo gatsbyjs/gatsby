@@ -1485,21 +1485,13 @@ actions.unstable_createNodeManifest = (
  * @param {string} $0.domain The domain to store the headers for.
  * @param {Object} $0.headers The headers to store.
  */
-actions.setRequestHeaders = ({ domain, headers }) => {
-  if (!domain) {
-    throw new Error(`The setRequestHeaders action requires a domain.`)
-  }
-  if (!headers) {
-    throw new Error(`The setRequestHeaders action requires headers.`)
-  }
-
-  const baseDomain = url.parse(domain).hostname
-
+actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
   return {
     type: `SET_REQUEST_HEADERS`,
     payload: {
-      domain: baseDomain,
+      domain,
       headers,
+      pluginName: plugin.name,
     },
   }
 }
