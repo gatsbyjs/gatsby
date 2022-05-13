@@ -52,7 +52,10 @@ import {
   createPageSSRBundle,
   writeQueryContext,
 } from "../utils/page-ssr-module/bundle-webpack"
-import { shouldGenerateEngines } from "../utils/engines-helpers"
+import {
+  shouldGenerateEngines,
+  shouldGenerateSSREngine,
+} from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
 import {
@@ -62,6 +65,7 @@ import {
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
+import { runPageGenerationJobs } from "../services/run-page-generation-jobs"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
 
 module.exports = async function build(
@@ -69,9 +73,11 @@ module.exports = async function build(
   // Let external systems running Gatsby to inject attributes
   externalTelemetryAttributes: Record<string, any>
 ): Promise<void> {
+  const buildId = uuid.v4()
+
   // global gatsby object to use without store
   global.__GATSBY = {
-    buildId: uuid.v4(),
+    buildId,
     root: program!.directory,
   }
 
@@ -128,10 +134,33 @@ module.exports = async function build(
     parentSpan: buildSpan,
   })
 
-  await apiRunnerNode(`onPreBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
-  })
+  // Page Gen
+  const GATSBY_PARALLEL_PAGE_GENERATION_ENABLED =
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `1` ||
+    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `true`
+
+  const externalJobsEnabled =
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
+
+  const pageGenerationJobsEnabled =
+    GATSBY_PARALLEL_PAGE_GENERATION_ENABLED &&
+    externalJobsEnabled &&
+    process.send
+
+  if (pageGenerationJobsEnabled && store.getState().program.firstRun) {
+    // @ts-ignore -- silence!
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `PAGE_GENERATION_ENABLED`,
+        timestamp: new Date().toJSON(),
+        payload: {
+          success: true,
+        },
+      },
+    })
+  }
 
   // writes sync and async require files to disk
   // used inside routing "html" + "javascript"
@@ -139,6 +168,20 @@ module.exports = async function build(
     store,
     parentSpan: buildSpan,
   })
+
+  const graphqlRunner = new GraphQLRunner(store, {
+    collectStats: true,
+    graphqlTracing: program.graphqlTracing,
+  })
+
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  // Only run queries with mode SSG
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+      query => getPageMode(query) === `SSG`
+    )
+  }
 
   let closeJavascriptBundleCompilation: (() => Promise<void>) | undefined
   let closeHTMLBundleCompilation: (() => Promise<void>) | undefined
@@ -175,6 +218,24 @@ module.exports = async function build(
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
     buildActivityTimer.end()
+  }
+
+  // Run Static Queries prior to building the Query Engine. Static Query Context
+  // is needed for engine creation
+  await runStaticQueries({
+    queryIds,
+    parentSpan: buildSpan,
+    store,
+    graphqlRunner,
+  })
+
+  // create scope so we don't leak state object
+  {
+    const state = store.getState()
+    await writeQueryContext({
+      staticQueriesByTemplate: state.staticQueriesByTemplate,
+      components: state.components,
+    })
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
@@ -273,25 +334,17 @@ module.exports = async function build(
     cacheActivity.end()
   }
 
-  const graphqlRunner = new GraphQLRunner(store, {
-    collectStats: true,
-    graphqlTracing: program.graphqlTracing,
-  })
-
-  const { queryIds } = await calculateDirtyQueries({ store })
-
-  // Only run queries with mode SSG
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-      query => getPageMode(query) === `SSG`
-    )
-  }
-
   // Start saving page.mode in the main process (while queries run in workers in parallel)
   const waitMaterializePageMode = materializePageMode()
 
   let waitForWorkerPoolRestart = Promise.resolve()
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+  if (pageGenerationJobsEnabled) {
+    // TODO RUN OUR JOB FUNCTION
+    await runPageGenerationJobs(queryIds)
+
+    // Jobs still might be running even though query running finished
+    await waitUntilAllJobsComplete()
+  } else if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
     })
@@ -319,14 +372,10 @@ module.exports = async function build(
     })
   }
 
-  // create scope so we don't leak state object
-  {
-    const state = store.getState()
-    await writeQueryContext({
-      staticQueriesByTemplate: state.staticQueriesByTemplate,
-      components: state.components,
-    })
-  }
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
+    parentSpan: buildSpan,
+  })
 
   if (process.send && shouldGenerateEngines()) {
     await waitMaterializePageMode
@@ -335,6 +384,10 @@ module.exports = async function build(
       action: {
         type: `ENGINES_READY`,
         timestamp: new Date().toJSON(),
+        payload: {
+          createPageGeneratorService: !!pageGenerationJobsEnabled,
+          createSSRService: shouldGenerateSSREngine(),
+        },
       },
     })
   }
@@ -376,8 +429,11 @@ module.exports = async function build(
     }
   }
 
-  await flushPendingPageDataWrites(buildSpan)
-  markWebpackStatusAsDone()
+  if (!pageGenerationJobsEnabled) {
+    await flushPendingPageDataWrites(buildSpan)
+
+    markWebpackStatusAsDone()
+  }
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
@@ -402,144 +458,152 @@ module.exports = async function build(
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
-    program.keepPageRenderer = true
-  }
+  let toRegenerate: Array<string> = []
+  let toDelete: Array<string> = []
+  if (!pageGenerationJobsEnabled) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
+      program.keepPageRenderer = true
+    }
 
-  await waitForWorkerPoolRestart
+    await waitForWorkerPoolRestart
 
-  const { toRegenerate, toDelete } =
-    await buildHTMLPagesAndDeleteStaleArtifacts({
+    const res = await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
       parentSpan: buildSpan,
     })
 
-  await waitMaterializePageMode
-  const waitWorkerPoolEnd = Promise.all(workerPool.end())
+    toRegenerate = res.toRegenerate
+    toDelete = res.toDelete
 
-  {
-    let SSGCount = 0
-    let DSGCount = 0
-    let SSRCount = 0
-    for (const page of store.getState().pages.values()) {
-      if (page.mode === `SSR`) {
-        SSRCount++
-      } else if (page.mode === `DSG`) {
-        DSGCount++
-      } else {
-        SSGCount++
+    await waitMaterializePageMode
+    const waitWorkerPoolEnd = Promise.all(workerPool.end())
+
+    {
+      let SSGCount = 0
+      let DSGCount = 0
+      let SSRCount = 0
+      for (const page of store.getState().pages.values()) {
+        if (page.mode === `SSR`) {
+          SSRCount++
+        } else if (page.mode === `DSG`) {
+          DSGCount++
+        } else {
+          SSGCount++
+        }
+      }
+
+      telemetry.addSiteMeasurement(`BUILD_END`, {
+        pagesCount: toRegenerate.length, // number of html files that will be written
+        totalPagesCount: store.getState().pages.size, // total number of pages
+        SSRCount,
+        DSGCount,
+        SSGCount,
+      })
+    }
+
+    const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
+      parentSpan: buildSpan,
+    })
+    postBuildActivityTimer.start()
+    await apiRunnerNode(`onPostBuild`, {
+      graphql: gatsbyNodeGraphQLFunction,
+      parentSpan: postBuildActivityTimer.span,
+    })
+    postBuildActivityTimer.end()
+
+    // Wait for any jobs that were started in onPostBuild
+    // This could occur due to queries being run which invoke sharp for instance
+    await waitUntilAllJobsComplete()
+
+    if (!pageGenerationJobsEnabled) {
+      try {
+        await waitWorkerPoolEnd
+      } catch (e) {
+        report.warn(`Error when closing WorkerPool: ${e.message}`)
       }
     }
 
-    telemetry.addSiteMeasurement(`BUILD_END`, {
-      pagesCount: toRegenerate.length, // number of html files that will be written
-      totalPagesCount: store.getState().pages.size, // total number of pages
-      SSRCount,
-      DSGCount,
-      SSGCount,
+    // Make sure we saved the latest state so we have all jobs cached
+    await db.saveState()
+
+    const state = store.getState()
+    reporter._renderPageTree({
+      components: state.components,
+      functions: state.functions,
+      pages: state.pages,
+      root: state.program.directory,
     })
-  }
 
-  const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
-    parentSpan: buildSpan,
-  })
-  postBuildActivityTimer.start()
-  await apiRunnerNode(`onPostBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: postBuildActivityTimer.span,
-  })
-  postBuildActivityTimer.end()
+    if (process.send) {
+      const gatsbyCloudConfig = constructConfigObject(state.config)
 
-  // Wait for any jobs that were started in onPostBuild
-  // This could occur due to queries being run which invoke sharp for instance
-  await waitUntilAllJobsComplete()
-
-  try {
-    await waitWorkerPoolEnd
-  } catch (e) {
-    report.warn(`Error when closing WorkerPool: ${e.message}`)
-  }
-
-  // Make sure we saved the latest state so we have all jobs cached
-  await db.saveState()
-
-  const state = store.getState()
-  reporter._renderPageTree({
-    components: state.components,
-    functions: state.functions,
-    pages: state.pages,
-    root: state.program.directory,
-  })
-
-  if (process.send) {
-    const gatsbyCloudConfig = constructConfigObject(state.config)
-
-    process.send({
-      type: `LOG_ACTION`,
-      action: {
-        type: `GATSBY_CONFIG_KEYS`,
-        payload: gatsbyCloudConfig,
-        timestamp: new Date().toJSON(),
-      },
-    })
-  }
-
-  report.info(`Done building in ${process.uptime()} sec`)
-
-  buildActivity.end()
-  if (!externalTelemetryAttributes) {
-    await stopTracer()
-  }
-
-  if (program.logPages) {
-    if (toRegenerate.length) {
-      report.info(
-        `Built pages:\n${toRegenerate
-          .map(path => `Updated page: ${path}`)
-          .join(`\n`)}`
-      )
+      process.send({
+        type: `LOG_ACTION`,
+        action: {
+          type: `GATSBY_CONFIG_KEYS`,
+          payload: gatsbyCloudConfig,
+          timestamp: new Date().toJSON(),
+        },
+      })
     }
 
-    if (toDelete.length) {
-      report.info(
-        `Deleted pages:\n${toDelete
-          .map(path => `Deleted page: ${path}`)
-          .join(`\n`)}`
-      )
+    report.info(`Done building in ${process.uptime()} sec`)
+
+    buildActivity.end()
+    if (!externalTelemetryAttributes) {
+      await stopTracer()
     }
-  }
 
-  if (program.writeToFile) {
-    const createdFilesPath = path.resolve(
-      `${program.directory}/.cache`,
-      `newPages.txt`
-    )
-    const createdFilesContent = toRegenerate.length
-      ? `${toRegenerate.join(`\n`)}\n`
-      : ``
+    if (program.logPages) {
+      if (toRegenerate.length) {
+        report.info(
+          `Built pages:\n${toRegenerate
+            .map(path => `Updated page: ${path}`)
+            .join(`\n`)}`
+        )
+      }
 
-    const deletedFilesPath = path.resolve(
-      `${program.directory}/.cache`,
-      `deletedPages.txt`
-    )
-    const deletedFilesContent = toDelete.length
-      ? `${toDelete.join(`\n`)}\n`
-      : ``
+      if (toDelete.length) {
+        report.info(
+          `Deleted pages:\n${toDelete
+            .map(path => `Deleted page: ${path}`)
+            .join(`\n`)}`
+        )
+      }
+    }
 
-    await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
-    report.info(`.cache/newPages.txt created`)
+    if (program.writeToFile) {
+      const createdFilesPath = path.resolve(
+        `${program.directory}/.cache`,
+        `newPages.txt`
+      )
+      const createdFilesContent = toRegenerate.length
+        ? `${toRegenerate.join(`\n`)}\n`
+        : ``
 
-    await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
-    report.info(`.cache/deletedPages.txt created`)
-  }
+      const deletedFilesPath = path.resolve(
+        `${program.directory}/.cache`,
+        `deletedPages.txt`
+      )
+      const deletedFilesContent = toDelete.length
+        ? `${toDelete.join(`\n`)}\n`
+        : ``
 
-  showExperimentNotices()
+      await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
+      report.info(`.cache/newPages.txt created`)
 
-  if (await userGetsSevenDayFeedback()) {
-    showSevenDayFeedbackRequest()
-  } else if (await userPassesFeedbackRequestHeuristic()) {
-    showFeedbackRequest()
+      await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
+      report.info(`.cache/deletedPages.txt created`)
+    }
+
+    showExperimentNotices()
+
+    if (await userGetsSevenDayFeedback()) {
+      showSevenDayFeedbackRequest()
+    } else if (await userPassesFeedbackRequestHeuristic()) {
+      showFeedbackRequest()
+    }
   }
 }

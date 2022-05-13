@@ -35,6 +35,7 @@ export interface IQueryOptions {
   componentPath?: string | undefined
   forceGraphqlTracing?: boolean
   telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
+  requestId?: string
 }
 
 export interface IGraphQLRunnerOptions {

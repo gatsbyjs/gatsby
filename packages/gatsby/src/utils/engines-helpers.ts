@@ -7,6 +7,15 @@ export function shouldPrintEngineSnapshot(): boolean {
 
 let generate = false
 export function shouldGenerateEngines(): boolean {
+  return (
+    process.env.gatsby_executing_command === `build` &&
+    (generate ||
+      process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `1` ||
+      process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `true`)
+  )
+}
+
+export function shouldGenerateSSREngine(): boolean {
   return process.env.gatsby_executing_command === `build` && generate
 }
 
