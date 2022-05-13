@@ -4,6 +4,7 @@ import { store } from "../redux/index"
 import { createInternalJob } from "../utils/jobs/manager"
 import { createJobV2FromInternalJob } from "../redux/actions/internal"
 import fastq from "fastq"
+import type Reporter from "gatsby-cli/lib/reporter"
 
 const pageGenChunkSize =
   Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
@@ -49,13 +50,21 @@ function worker({ pageChunk, store }, cb): void {
     })
 }
 
-export function runPageGenerationJobs(queryIds: IQueryIds): Promise<void> {
+export function runPageGenerationJobs(
+  queryIds: IQueryIds,
+  reporter: typeof Reporter
+): Promise<void> {
   const pageChunks = chunk(queryIds?.pageQueryIds, pageGenChunkSize)
 
-  console.log(
-    `Total Page Chunks ${pageChunks?.length}`
-    // pageChunks.map(pageChunk => pageChunk.map(page => page.path))
+  const activity = reporter.createProgress(
+    `Running Page Generation (burst mode)`,
+    queryIds?.pageQueryIds.length,
+    0,
+    {
+      id: `page-generation`,
+    }
   )
+  activity.start()
 
   const publishChunks = chunk(pageChunks, publishChunkSize)
 
@@ -64,16 +73,20 @@ export function runPageGenerationJobs(queryIds: IQueryIds): Promise<void> {
   for (const publishChunk of publishChunks) {
     publishChunk.forEach(pageChunk => {
       if (pageChunk) {
-        queue.push({ pageChunk, store })
+        queue.push({ pageChunk, store }, () => {
+          activity.tick(pageChunk.length)
+        })
       }
     })
   }
 
   if (queue.idle()) {
+    activity.end()
     return Promise.resolve()
   } else {
     return new Promise(resolve => {
       queue.drain = (): void => {
+        activity.end()
         resolve()
       }
     })
