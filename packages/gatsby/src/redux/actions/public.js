@@ -1480,7 +1480,7 @@ actions.unstable_createNodeManifest = (
 }
 
 /**
- * Stores request headers for a given domain.
+ * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
  *
  * @param {Object} $0
  * @param {string} $0.domain The domain to store the headers for.
