@@ -4,6 +4,7 @@ import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import getSharpInstance from "gatsby-sharp"
 import { getCache } from "./utils/cache"
+import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
 
 export interface IResizeArgs {
   width: number
@@ -48,10 +49,11 @@ export async function transformImage({
   const basename = path.basename(filename, ext)
   const filePath = await fetchRemoteFile({
     directory: cache.directory,
-    url: url,
+    url,
     name: basename,
     ext,
     cacheKey: contentDigest,
+    httpHeaders: getRequestHeadersForUrl(url),
   })
 
   const outputPath = path.join(outputDir, filename)

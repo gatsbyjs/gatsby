@@ -7,6 +7,7 @@ import getSharpInstance from "gatsby-sharp"
 import { getCache } from "./utils/cache"
 import { getImageFormatFromMimeType } from "./utils/mime-type-helpers"
 import type { IRemoteImageNode } from "./types"
+import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
 
 export enum PlaceholderType {
   BLURRED = `blurred`,
@@ -57,6 +58,7 @@ const queue = Queue<
     url,
     cacheKey: contentDigest,
     directory: tmpDir,
+    httpHeaders: getRequestHeadersForUrl(url),
   })
 
   switch (type) {

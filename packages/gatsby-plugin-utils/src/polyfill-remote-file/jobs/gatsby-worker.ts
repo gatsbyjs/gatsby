@@ -3,6 +3,7 @@ import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { cpuCoreCount } from "gatsby-core-utils/cpu-core-count"
 import Queue from "fastq"
 import { transformImage } from "../transform-images"
+import { getRequestHeadersForUrl } from "../utils/get-request-headers-for-url"
 
 interface IImageServiceProps {
   outputDir: Parameters<typeof transformImage>[0]["outputDir"]
@@ -35,11 +36,12 @@ export async function FILE_CDN({
 
   await fetchRemoteFile({
     directory: outputDir,
-    url: url,
+    url,
     name: path.basename(filename, ext),
     ext,
     cacheKey: contentDigest,
     excludeDigest: true,
+    httpHeaders: getRequestHeadersForUrl(url),
   })
 }
 

@@ -5,6 +5,7 @@ import { hasFeature } from "../has-feature"
 import { ImageCDNUrlKeys } from "./utils/url-generator"
 import { getFileExtensionFromMimeType } from "./utils/mime-type-helpers"
 import { transformImage } from "./transform-images"
+import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
 
 import type { Application } from "express"
 
@@ -25,11 +26,15 @@ export function addImageRoutes(app: Application): Application {
       `file`
     )
 
+    const url = req.query[ImageCDNUrlKeys.URL] as string
+
     const filePath = await fetchRemoteFile({
       directory: outputDir,
-      url: req.query[ImageCDNUrlKeys.URL] as string,
+      url,
       name: req.params.filename,
+      httpHeaders: getRequestHeadersForUrl(url),
     })
+
     fs.createReadStream(filePath).pipe(res)
   })
 
