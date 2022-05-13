@@ -1,11 +1,11 @@
-import { GraphQLFieldResolver } from "gatsby/graphql"
-import {
+import { stripIndent } from "common-tags"
+import type { GraphQLFieldResolver } from "gatsby/graphql"
+import type {
   EnumTypeComposerAsObjectDefinition,
   ObjectTypeComposerFieldConfigAsObjectDefinition,
   ObjectTypeComposerArgumentConfigMapDefinition,
 } from "graphql-compose"
-import { stripIndent } from "common-tags"
-import { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils"
+import type { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils"
 
 export const ImageFormatType: EnumTypeComposerAsObjectDefinition = {
   name: `GatsbyImageFormat`,

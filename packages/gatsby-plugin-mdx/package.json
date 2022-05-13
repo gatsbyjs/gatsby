@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "3.14.0-next.0",
+  "version": "3.15.0-next.2",
   "description": "MDX integration for Gatsby",
   "main": "index.js",
   "license": "MIT",
@@ -31,13 +31,13 @@
     "@babel/types": "^7.15.4",
     "camelcase-css": "^2.0.1",
     "change-case": "^3.1.0",
-    "core-js": "^3.17.2",
+    "core-js": "^3.22.3",
     "dataloader": "^1.4.0",
     "debug": "^4.3.1",
     "escape-string-regexp": "^1.0.5",
     "eval": "^0.1.4",
-    "fs-extra": "^10.0.0",
-    "gatsby-core-utils": "^3.14.0-next.0",
+    "fs-extra": "^10.1.0",
+    "gatsby-core-utils": "^3.15.0-next.1",
     "gray-matter": "^4.0.2",
     "json5": "^2.1.3",
     "loader-utils": "^1.4.0",
@@ -63,7 +63,7 @@
   "devDependencies": {
     "@mdx-js/mdx": "^1.6.16",
     "@mdx-js/react": "^1.6.16",
-    "gatsby-plugin-utils": "^3.8.0-next.0",
+    "gatsby-plugin-utils": "^3.9.0-next.2",
     "js-combinatorics": "^1.4.5",
     "react-test-renderer": "^16.13.1"
   },

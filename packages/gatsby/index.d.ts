@@ -165,7 +165,7 @@ export type GetServerDataProps = {
  */
 export type GetServerDataReturn<ServerDataType = Record<string, unknown>> =
   Promise<{
-    headers?: Map<string, unknown>
+    headers?: Record<string, unknown>
     props?: ServerDataType
     status?: number
   }>
@@ -1664,6 +1664,27 @@ export interface GatsbyFunctionRequest<ReqBody = any> extends IncomingMessage {
    * Object of `cookies` from header
    */
   cookies: Record<string, string>
+}
+
+export interface GatsbyFunctionBodyParserCommonMiddlewareConfig {
+  type?: string
+  limit?: string | number
+}
+
+export interface GatsbyFunctionBodyParserUrlencodedConfig
+  extends GatsbyFunctionBodyParserCommonMiddlewareConfig {
+  extended: boolean
+}
+
+export interface GatsbyFunctionBodyParserConfig {
+  json?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  text?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig
+}
+
+export interface GatsbyFunctionConfig {
+  bodyParser?: GatsbyFunctionBodyParserConfig
 }
 
 declare module NodeJS {

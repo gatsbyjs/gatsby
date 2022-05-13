@@ -15,7 +15,7 @@ export default function FakeDataHogwarts({ data: { fake }, pageContext: { uuid }
 }
 
 export const blogPostQuery = graphql`
-  query($id: String!) {
+  query FakeDataHogwarts($id: String!) {
     fake: fakeData(id: { eq: $id }) {
       fields {
         slug

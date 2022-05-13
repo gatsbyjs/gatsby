@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.0/packages/gatsby-source-wordpress) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Features
+
+- use image cdn for non-resizable images in html (svgs/gifs mainly) [#35529](https://github.com/gatsbyjs/gatsby/issues/35529) ([ebd63b2](https://github.com/gatsbyjs/gatsby/commit/ebd63b25fbe924c071a84e8e61ba065ceeab176f))
+- always include draft slugs [#35573](https://github.com/gatsbyjs/gatsby/issues/35573) ([128c7bb](https://github.com/gatsbyjs/gatsby/commit/128c7bbe3051a5cd37fffe6a6ed6e7a7f8f2906d))
+- allow excluding MediaItem nodes [#35467](https://github.com/gatsbyjs/gatsby/issues/35467) ([1cee33f](https://github.com/gatsbyjs/gatsby/commit/1cee33feb8da9a951df28423bc8845f704d2443b))
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- update dependency cache-manager to ^3.6.1 for gatsby-source-wordpress [#35540](https://github.com/gatsbyjs/gatsby/issues/35540) ([0543a21](https://github.com/gatsbyjs/gatsby/commit/0543a216699f3d2cf8b21fcce12f9638f2d8b114))
+- update dependency semver to ^7.3.7 [#35543](https://github.com/gatsbyjs/gatsby/issues/35543) ([f593e00](https://github.com/gatsbyjs/gatsby/commit/f593e005e4561b423a297e967205d833451a2f55))
+
+#### Other Changes
+
+- Prevent throwing errors when item it undefined [#35533](https://github.com/gatsbyjs/gatsby/issues/35533) ([9f450e1](https://github.com/gatsbyjs/gatsby/commit/9f450e10a3d9f490576b514985b6d2b2c2fbf59f))
+
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.13.0/packages/gatsby-source-wordpress) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- bring back defaults before image_cdn [#35370](https://github.com/gatsbyjs/gatsby/issues/35370) ([027acf8](https://github.com/gatsbyjs/gatsby/commit/027acf8e44ad649c6e4d7a46946d3dfe1baa501a))
+
+#### Bug Fixes
+
+- localFile id [#35423](https://github.com/gatsbyjs/gatsby/issues/35423) ([d50457f](https://github.com/gatsbyjs/gatsby/commit/d50457fa9c529df05c514c807a54a4ca6d89da52))
+- fix integration tests fix [#35399](https://github.com/gatsbyjs/gatsby/issues/35399) ([9b8aadc](https://github.com/gatsbyjs/gatsby/commit/9b8aadcde64c699d6c4c364d3035eb91f87140b3))
+
+#### Chores
+
+- Fix typo in `presets[].options` Fix [#35455](https://github.com/gatsbyjs/gatsby/issues/35455) ([dfa5991](https://github.com/gatsbyjs/gatsby/commit/dfa59916815587ad4a5dd597b0ad586ed77e44fe))
+
 ### [6.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.2/packages/gatsby-source-wordpress) (2022-04-15)
 
 #### Bug Fixes
