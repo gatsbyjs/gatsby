@@ -1,6 +1,3 @@
-import reporter from "gatsby-cli/lib/reporter"
-import url from "url"
-
 import { IGatsbyState, ISetDomainRequestHeaders } from "../types"
 
 export const setRequestHeadersReducer = (
@@ -9,37 +6,9 @@ export const setRequestHeadersReducer = (
 ): IGatsbyState["requestHeaders"] => {
   switch (action.type) {
     case `SET_REQUEST_HEADERS`: {
-      const { headers, domain, pluginName } = action.payload
+      const { headers, domain } = action.payload
 
-      const noHeaders = typeof headers !== `object`
-      const noDomain = typeof domain !== `string`
-
-      if (noHeaders) {
-        reporter.warn(
-          `Plugin ${pluginName} called actions.setRequestHeaders with a headers property that isn't an object.`
-        )
-      }
-
-      if (noDomain) {
-        reporter.warn(
-          `Plugin ${pluginName} called actions.setRequestHeaders with a domain property that isn't a string.`
-        )
-      }
-
-      if (noDomain || noHeaders) {
-        return state
-      }
-
-      const baseDomain = url.parse(domain)?.hostname
-
-      if (baseDomain) {
-        state.set(baseDomain, headers)
-      } else {
-        reporter.warn(
-          `Plugin ${pluginName} called actions.setRequestHeaders with a domain that is not a valid URL. (${domain})`
-        )
-      }
-
+      state.set(domain, headers)
       return state
     }
     default:

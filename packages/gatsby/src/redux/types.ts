@@ -961,7 +961,6 @@ export interface INodeManifest {
 export interface ISetDomainRequestHeaders {
   type: `SET_REQUEST_HEADERS`
   payload: {
-    pluginName: string
     domain: string
     headers: {
       [header: string]: string

@@ -1,4 +1,5 @@
 // @flow
+const reporter = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -1486,13 +1487,41 @@ actions.unstable_createNodeManifest = (
  * @param {Object} $0.headers The headers to store.
  */
 actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
-  return {
-    type: `SET_REQUEST_HEADERS`,
-    payload: {
-      domain,
-      headers,
-      pluginName: plugin.name,
-    },
+  const noHeaders = typeof headers !== `object`
+  const noDomain = typeof domain !== `string`
+
+  if (noHeaders) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`
+    )
+  }
+
+  if (noDomain) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`
+    )
+  }
+
+  if (noDomain || noHeaders) {
+    return null
+  }
+
+  const baseDomain = url.parse(domain)?.hostname
+
+  if (baseDomain) {
+    return {
+      type: `SET_REQUEST_HEADERS`,
+      payload: {
+        domain: baseDomain,
+        headers,
+      },
+    }
+  } else {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain that is not a valid URL. (${domain})`
+    )
+
+    return null
   }
 }
 
