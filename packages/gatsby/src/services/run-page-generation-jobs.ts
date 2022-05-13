@@ -86,8 +86,10 @@ export function runPageGenerationJobs(
   } else {
     return new Promise(resolve => {
       queue.drain = (): void => {
-        activity.end()
-        resolve()
+        setImmediate(() => {
+          activity.end()
+          resolve()
+        })
       }
     })
   }

@@ -337,6 +337,21 @@ module.exports = async function build(
   // Start saving page.mode in the main process (while queries run in workers in parallel)
   const waitMaterializePageMode = materializePageMode()
 
+  if (process.send && shouldGenerateEngines()) {
+    await waitMaterializePageMode
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `ENGINES_READY`,
+        timestamp: new Date().toJSON(),
+        payload: {
+          createPageGeneratorService: !!pageGenerationJobsEnabled,
+          createSSRService: shouldGenerateSSREngine(),
+        },
+      },
+    })
+  }
+
   let waitForWorkerPoolRestart = Promise.resolve()
   if (pageGenerationJobsEnabled) {
     // TODO RUN OUR JOB FUNCTION
@@ -376,21 +391,6 @@ module.exports = async function build(
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
-
-  if (process.send && shouldGenerateEngines()) {
-    await waitMaterializePageMode
-    process.send({
-      type: `LOG_ACTION`,
-      action: {
-        type: `ENGINES_READY`,
-        timestamp: new Date().toJSON(),
-        payload: {
-          createPageGeneratorService: !!pageGenerationJobsEnabled,
-          createSSRService: shouldGenerateSSREngine(),
-        },
-      },
-    })
-  }
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
