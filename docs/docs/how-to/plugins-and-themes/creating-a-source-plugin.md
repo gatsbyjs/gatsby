@@ -1061,6 +1061,27 @@ You might notice that `width`, `height`, `resize`, and `gatsbyImage` can be null
 
 The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
 
+#### Adding Image CDN request headers with the `setRequestHeaders` action
+
+Since Gatsby will be fetching files from your CMS instead of your source plugin fetching those files, you may need to set request headers for Gatsby to use in those requests.
+This is needed if for example your CMS is locked down behind some kind of authentication.
+For each domain Image CDN will make requests to, set the required headers following this example:
+
+```js
+exports.onPluginInit = ({ actions }, pluginOptions) => {
+  if (typeof actions.setRequestHeaders === `function`) {
+    actions.setRequestHeaders({
+      // set the domain the headers should apply to
+      domain: pluginOptions.apiUrl,
+      headers: {
+        // add any needed headers
+        Authorization: pluginOptions.authToken,
+      },
+    })
+  }
+}
+```
+
 #### `sourceNodes` node API additions
 
 When creating nodes, you must add some fields to the node itself to match what the `RemoteFile` interface expects. You will need `url`, `mimeType`, `filename` as mandatory fields. When you have an image type, `width` and `height` are required as well. The optional fields are `placeholderUrl` and `filesize`. `placeholderUrl` will be the url used to generate blurred or dominant color placeholder so it should contain `%width%` and `%height%` url params if possible.
