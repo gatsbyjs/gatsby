@@ -29,17 +29,18 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = (
           use: [
             loaders.js(),
             {
+              loader: `@mdx-js/loader`,
+              options: {
+                useDynamicImport: true,
+                providerImportSource: `@mdx-js/react`,
+              } as Options,
+            },
+            {
               loader: path.join(`gatsby-plugin-mdx`, `dist`, `mdx-loader`),
               options: {
                 fileMap,
                 pluginOptions,
               } as IMdxLoaderOptions,
-            },
-            {
-              loader: `@mdx-js/loader`,
-              options: {
-                useDynamicImport: true,
-              } as Options,
             },
           ],
         },
