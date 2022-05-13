@@ -1,16 +1,21 @@
-import React, { useState } from "react"
+import React, { ReactElement, useState } from "react"
 import type { GatsbySSR } from "gatsby"
 import { Partytown } from "@builder.io/partytown/react"
 import { PartytownContext } from "gatsby-script"
 import type { PartytownProps } from "@builder.io/partytown/react"
 
-// TODO: type return and props
-// eslint-disable-next-line
-function PartytownProvider({ children }) {
-  const [{ collectedForwards, collectedAnyScript }, setState] = useState<{
-    collectedForwards: Set<string>
-    collectedAnyScript: boolean
-  }>({ collectedForwards: new Set(), collectedAnyScript: false })
+interface ICollectedForwardsState {
+  collectedForwards: Set<string>
+  collectedAnyScript: boolean
+}
+
+function PartytownProvider({ children }): ReactElement {
+  const [{ collectedForwards, collectedAnyScript }, setState] =
+    useState<ICollectedForwardsState>({
+      collectedForwards: new Set(),
+      collectedAnyScript: false,
+    })
+
   return (
     <PartytownContext.Provider
       value={{
@@ -26,7 +31,7 @@ function PartytownProvider({ children }) {
             stateShouldChange = true
           }
 
-          if (newScript.forward) {
+          if (newScript?.forward) {
             if (Array.isArray(newScript.forward)) {
               for (const singleForward of newScript.forward) {
                 if (!potentialNewState.collectedForwards.has(singleForward)) {

@@ -1,7 +1,7 @@
 import path from "path"
 import { copyLibFiles } from "@builder.io/partytown/utils"
-import proxy from "express-http-proxy"
 import { CreateDevServerArgs } from "gatsby"
+import { partytownProxyPath, partytownProxy } from "./proxy"
 
 /**
  * Copy Partytown library files to public.
@@ -26,7 +26,7 @@ exports.createPages = ({ actions, store }): void => {
     const encodedURL: string = encodeURI(host)
 
     createRedirect({
-      fromPath: `/__partytown-proxy?url=${encodedURL}`,
+      fromPath: `${partytownProxyPath}?url=${encodedURL}`,
       toPath: encodedURL,
       statusCode: 200,
     })
@@ -40,14 +40,5 @@ export async function onCreateDevServer({
   const { config } = store.getState()
   const { partytownProxiedURLs = [] } = config || {}
 
-  app.use(
-    `/__partytown-proxy`,
-    proxy(req => new URL(req.query.url as string).host as string, {
-      filter: req => partytownProxiedURLs.some(url => req.query?.url === url),
-      proxyReqPathResolver: req => {
-        const { pathname = ``, search = `` } = new URL(req.query?.url as string)
-        return pathname + search
-      },
-    })
-  )
+  app.use(partytownProxyPath, partytownProxy(partytownProxiedURLs))
 }
