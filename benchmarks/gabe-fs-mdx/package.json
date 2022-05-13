@@ -13,6 +13,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "devDependencies": {
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
     "prettier": "2.0.4"
   },
   "repository": {

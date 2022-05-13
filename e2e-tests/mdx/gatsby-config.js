@@ -29,6 +29,7 @@ module.exports = {
         remarkPlugins: [remarkRequireFilePathPlugin],
       },
     },
+    `gatsby-plugin-webpack-bundle-analyser-v2`,
   ],
 }
 

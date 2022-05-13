@@ -1,12 +1,12 @@
 /* eslint-disable @babel/no-invalid-this */
-import type { Node as AcornNode } from "acorn"
 import type { Node } from "gatsby"
 import type { LoaderDefinition } from "webpack"
-import { parse } from "acorn"
-import { generate, Node as AstringNode } from "astring"
+
+import grayMatter from "gray-matter"
 import { getOptions } from "loader-utils"
+import type { Options } from "mdast-util-to-markdown"
+
 import { defaultOptions, IMdxPluginOptions } from "./plugin-options"
-import path from "path"
 
 interface IFileNode extends Node {
   sourceInstanceName: string
@@ -15,10 +15,6 @@ interface IFileNode extends Node {
 export interface IMdxLoaderOptions {
   pluginOptions: IMdxPluginOptions
   fileMap: Map<string, IFileNode>
-}
-
-interface IMdxEstreeNode extends Node {
-  body: [AcornNode]
 }
 
 // Wrap MDX content with Gatsby Layout component and inject components from `@mdx-js/react`
@@ -46,111 +42,45 @@ const gatsbyMdxLoader: LoaderDefinition = async function (source) {
     return source
   }
 
-  // Parse to syntax tree
-  const estree = parse(source, {
-    sourceType: `module`,
-    ecmaVersion: 2020,
-  }) as unknown as IMdxEstreeNode
+  // Remove frontmatter
+  const { content } = grayMatter(source)
 
-  // Import Gatsby layout
-  estree.body.unshift(
-    {
-      type: `ImportDeclaration`,
-      specifiers: [
-        {
-          type: `ImportDefaultSpecifier`,
-          local: { type: `Identifier`, name: `GatsbyMDXWrapper` },
-        },
-      ],
-      source: {
-        type: `Literal`,
-        value: path.join(`gatsby-plugin-mdx`, `dist`, `mdx-wrapper`),
-      },
-    } as unknown as AcornNode,
-    {
-      type: `ImportDeclaration`,
-      specifiers: [
-        {
-          type: `ImportDefaultSpecifier`,
-          local: { type: `Identifier`, name: `GatsbyMDXLayout` },
-        },
-      ],
-      source: { type: `Literal`, value: layoutPath },
-    } as unknown as AcornNode
+  const { fromMarkdown } = await import(`mdast-util-from-markdown`)
+  const { toMarkdown } = await import(`mdast-util-to-markdown`)
+
+  const { mdxjs } = await import(`micromark-extension-mdxjs`)
+  const { mdxFromMarkdown, mdxToMarkdown } = await import(`mdast-util-mdx`)
+
+  // Parse MDX to AST
+  const tree = fromMarkdown(content, {
+    extensions: [mdxjs()],
+    mdastExtensions: [mdxFromMarkdown()],
+  })
+
+  const hasDefaultExport = !!tree.children.find(
+    child =>
+      typeof child.value === `string` &&
+      child.value.indexOf(`export default`) !== -1
   )
 
-  // Replace default MDX export with a wrapper function that
-  // wraps MDX with the Gatsby layout component
-  // Inverted loop to speed it up, should be the last item
-  for (let index = estree.body.length - 1; index >= 0; index--) {
-    const node = estree.body[index]
-
-    if (node.type === `ExportDefaultDeclaration`) {
-      const defaultExportNode = node as any // @todo quick wins have to be done
-
-      defaultExportNode.declaration = {
-        type: `ArrowFunctionExpression`,
-        id: null,
-        expression: true,
-        generator: false,
-        async: false,
-        params: [],
-        body: {
-          type: `CallExpression`,
-          callee: {
-            type: `Identifier`,
-            name: `_jsx`,
-          },
-          arguments: [
-            {
-              type: `Identifier`,
-              name: `GatsbyMDXWrapper`,
-            },
-            {
-              type: `ObjectExpression`,
-              properties: [
-                {
-                  type: `Property`,
-                  method: false,
-                  shorthand: true,
-                  computed: false,
-                  key: {
-                    type: `Identifier`,
-                    name: `MDXContent`,
-                  },
-                  kind: `init`,
-                  value: {
-                    type: `Identifier`,
-                    name: `MDXContent`,
-                  },
-                },
-                {
-                  type: `Property`,
-                  method: false,
-                  shorthand: true,
-                  computed: false,
-                  key: {
-                    type: `Identifier`,
-                    name: `GatsbyMDXLayout`,
-                  },
-                  kind: `init`,
-                  value: {
-                    type: `Identifier`,
-                    name: `GatsbyMDXLayout`,
-                  },
-                },
-              ],
-            },
-          ],
-          optional: false,
-        },
-      }
-
-      break
-    }
+  if (hasDefaultExport) {
+    return content
   }
 
-  return generate(estree as unknown as AstringNode)
+  tree.children.unshift({
+    type: `mdxjsEsm` as `text`,
+    value: `import GatsbyMDXLayout from "${layoutPath}"`,
+  })
+
+  tree.children.push({
+    type: `mdxjsEsm` as `text`,
+    value: `export default GatsbyMDXLayout`,
+  })
+  const out = toMarkdown(tree, {
+    extensions: [mdxToMarkdown() as Options],
+  })
+
+  return out
 }
 
 export default gatsbyMdxLoader
