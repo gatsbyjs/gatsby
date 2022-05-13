@@ -3,13 +3,13 @@
   "description": "Gatsby MDX tester",
   "version": "1.0.0",
   "dependencies": {
-    "@mdx-js/mdx": "^1.6.6",
-    "@mdx-js/react": "^1.6.6",
+    "@mdx-js/react": "^2",
     "cypress": "^7.2.0",
     "fs-extra": "^8.1.0",
-    "gatsby": "^3.0.0",
-    "gatsby-plugin-mdx": "^2.0.0",
-    "gatsby-source-filesystem": "^3.0.0",
+    "gatsby": "^4.0.0",
+    "gatsby-plugin-mdx": "^3.0.0",
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
+    "gatsby-source-filesystem": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "theme-ui": "^0.3.1"
