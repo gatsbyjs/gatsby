@@ -20,6 +20,6 @@ module.exports = {
         },
       },
     },
-    `gatsby-plugin-webpack-bundle-analyser-v2`,
-  ],
+    !process.env.CI && `gatsby-plugin-webpack-bundle-analyser-v2`,
+  ].filter(Boolean),
 }
