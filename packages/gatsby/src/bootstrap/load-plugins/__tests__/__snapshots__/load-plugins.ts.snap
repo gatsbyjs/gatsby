@@ -104,24 +104,6 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "partytown",
-    "nodeAPIs": Array [
-      "onPreBootstrap",
-      "createPages",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [
-      "wrapRootElement",
-      "onRenderBody",
-    ],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
     "module": undefined,
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
@@ -271,27 +253,6 @@ Array [
     "id": "",
     "module": undefined,
     "modulePath": undefined,
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-      "setFieldsOnGraphQLNodeType",
-      "onPluginInit",
-    ],
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/partytown/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "subPluginPaths": undefined,
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
-    "module": undefined,
-    "modulePath": undefined,
     "name": "gatsby-plugin-typescript",
     "nodeAPIs": Array [
       "pluginOptionsSchema",
@@ -342,6 +303,24 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "wrapRootElement",
+      "onRenderBody",
+    ],
     "version": "1.0.0",
   },
 ]
@@ -446,24 +425,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
-    "name": "partytown",
-    "nodeAPIs": Array [
-      "onPreBootstrap",
-      "createPages",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [
-      "wrapRootElement",
-      "onRenderBody",
-    ],
     "version": "1.0.0",
   },
   Object {
@@ -637,27 +598,6 @@ Array [
       "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/partytown/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "subPluginPaths": undefined,
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
-    "module": undefined,
-    "modulePath": undefined,
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-      "setFieldsOnGraphQLNodeType",
-      "onPluginInit",
-    ],
-    "pluginOptions": Object {
       "path": "__TEST__/src/pages",
       "pathCheck": false,
       "plugins": Array [],
@@ -722,6 +662,24 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "wrapRootElement",
+      "onRenderBody",
+    ],
     "version": "1.0.0",
   },
 ]
@@ -826,24 +784,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
-    "name": "partytown",
-    "nodeAPIs": Array [
-      "onPreBootstrap",
-      "createPages",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [
-      "wrapRootElement",
-      "onRenderBody",
-    ],
     "version": "1.0.0",
   },
   Object {
@@ -1028,27 +968,6 @@ Array [
       "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/partytown/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "ssrAPIs": Array [],
-    "subPluginPaths": undefined,
-    "version": "1.0.0",
-  },
-  Object {
-    "browserAPIs": Array [],
-    "id": "",
-    "module": undefined,
-    "modulePath": undefined,
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-      "setFieldsOnGraphQLNodeType",
-      "onPluginInit",
-    ],
-    "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby-plugin-page-creator/src/pages",
       "pathCheck": false,
       "plugins": Array [],
@@ -1113,6 +1032,24 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "wrapRootElement",
+      "onRenderBody",
+    ],
     "version": "1.0.0",
   },
 ]
