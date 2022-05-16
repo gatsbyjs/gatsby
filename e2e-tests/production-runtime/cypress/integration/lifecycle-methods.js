@@ -1,5 +1,13 @@
+import React from "react";
+const skipIfReact18 = (name, test) => {
+  const isReact18 = /^18/.test(React.version)
+  const runner = isReact18 ? it.skip : it
+  const testName = isReact18 ? `skipped due to react 18: ${name}` : name
+  runner(testName, test)
+}
+
 describe(`Production build tests`, () => {
-  it(`should remount when navigating to different template`, () => {
+  skipIfReact18(`should remount when navigating to different template`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`page2`).click().waitForRouteChange()
@@ -9,7 +17,7 @@ describe(`Production build tests`, () => {
     cy.lifecycleCallCount(`render`).should(`equal`, 2)
   })
 
-  it(`should remount when navigating to different page using same template`, () => {
+  skipIfReact18(`should remount when navigating to different page using same template`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`duplicated`).click().waitForRouteChange()
