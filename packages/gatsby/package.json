@@ -98,7 +98,7 @@
     "gatsby-react-router-scroll": "^5.15.0-next.0",
     "gatsby-telemetry": "^3.15.0-next.1",
     "gatsby-worker": "^1.15.0-next.0",
-    "glob": "^7.2.0",
+    "glob": "^7.2.3",
     "globby": "^11.1.0",
     "got": "^11.8.2",
     "graphql": "^15.7.2",
