@@ -11,33 +11,24 @@ export const telemetryReducer = (
   switch (action.type) {
     case `PROCESS_GATSBY_IMAGE_SOURCE_URL`: {
       const { sourceUrl } = action.payload
-      const nextState = new Set(state.gatsbyImageSourceUrls)
-
-      nextState.add(sourceUrl)
-
-      return {
-        ...state,
-        gatsbyImageSourceUrls: nextState,
-      }
+      state.gatsbyImageSourceUrls.add(sourceUrl)
+      return state
     }
     case `CLEAR_GATSBY_IMAGE_SOURCE_URL`: {
-      return {
-        ...state,
-        gatsbyImageSourceUrls: new Set<string>(),
-      }
+      state.gatsbyImageSourceUrls = new Set<string>()
+      return state
     }
     case `MERGE_WORKER_QUERY_STATE`: {
       const { queryStateTelemetryChunk } = action.payload
-      const { gatsbyImageSourceUrls } = state
 
-      return {
-        ...state,
-        ...queryStateTelemetryChunk,
-        gatsbyImageSourceUrls: new Set([
-          ...(queryStateTelemetryChunk?.gatsbyImageSourceUrls ?? []),
-          ...gatsbyImageSourceUrls,
-        ]),
-      }
+      const urlsFromWorker =
+        queryStateTelemetryChunk.gatsbyImageSourceUrls || new Set<string>()
+
+      urlsFromWorker.forEach(url => {
+        state.gatsbyImageSourceUrls.add(url)
+      })
+
+      return state
     }
     default: {
       return state
