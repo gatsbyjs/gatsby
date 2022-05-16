@@ -1,5 +1,5 @@
-import { script } from "../../gatsby-script-scripts"
-import { resourceRecord } from "../../gatsby-script-records"
+import { script } from "../../../gatsby-script-scripts"
+import { resourceRecord } from "../../../gatsby-script-records"
 
 const page = {
   target: `/gatsby-script-scripts-with-sources/`,
