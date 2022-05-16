@@ -32,7 +32,7 @@
     "gatsby-plugin-catch-links": "^4.14.0",
     "gatsby-plugin-utils": "^3.8.0",
     "gatsby-source-filesystem": "^4.14.0",
-    "glob": "^7.2.0",
+    "glob": "^7.2.3",
     "got": "^11.8.3",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
