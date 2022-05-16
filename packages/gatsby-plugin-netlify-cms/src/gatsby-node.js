@@ -173,7 +173,7 @@ exports.onCreateWebpackConfig = (
             messages: [
               `Netlify CMS is running at ${
                 program.https ? `https://` : `http://`
-              }${program.host}:${program.proxyPort}/${publicPathClean}/`,
+              }${program.host}:${program.port}/${publicPathClean}/`,
             ],
           },
         }),

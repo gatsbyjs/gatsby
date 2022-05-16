@@ -9,7 +9,6 @@ const initialState: IStateProgram = {
   open: false,
   openTracingConfigFile: ``,
   port: 80,
-  proxyPort: 80,
   host: `localhost`,
   sitePackageJson: {},
   extensions: [],
