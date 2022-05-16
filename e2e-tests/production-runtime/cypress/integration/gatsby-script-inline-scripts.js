@@ -1,27 +1,21 @@
-import { InlineScript } from "../../scripts"
-import { ResourceRecord, MarkRecord } from "../../records"
+import { inlineScript } from "../../gatsby-script-scripts"
+import { resourceRecord, markRecord } from "../../gatsby-script-records"
 
-// The page that we will assert against
-const page = `/inline-scripts`
+const page = {
+  target: `/gatsby-script-inline-scripts/`,
+  navigation: `/gatsby-script-navigation/`,
+}
 
 const typesOfInlineScripts = [
   {
     descriptor: `dangerouslySetInnerHTML`,
-    inlineScriptType: InlineScript.dangerouslySet,
+    inlineScriptType: inlineScript.dangerouslySet,
   },
   {
     descriptor: `template literals`,
-    inlineScriptType: InlineScript.templateLiteral,
+    inlineScriptType: inlineScript.templateLiteral,
   },
 ]
-
-beforeEach(() => {
-  cy.intercept(new RegExp(`framework`), { middleware: true }, req => {
-    req.on(`before:response`, res => {
-      res.headers[`cache-control`] = `no-store` // Do not cache responses
-    })
-  })
-})
 
 /**
  * Normally we would duplicate the tests so they're flatter and easier to debug,
@@ -32,7 +26,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
   describe(`inline scripts set via ${descriptor}`, () => {
     describe(`using the post-hydrate strategy`, () => {
       it(`should execute successfully`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
 
         cy.getRecord(
           `post-hydrate-${inlineScriptType}`,
@@ -42,14 +36,14 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load after the framework bundle has loaded`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
 
         // Assert framework is loaded before inline script is executed
         cy.getRecord(
           `post-hydrate-${inlineScriptType}`,
-          MarkRecord.executeStart
+          markRecord.executeStart
         ).then(dangerouslySetExecuteStart => {
-          cy.getRecord(`framework`, ResourceRecord.responseEnd).should(
+          cy.getRecord(`framework`, resourceRecord.responseEnd).should(
             `be.lessThan`,
             dangerouslySetExecuteStart
           )
@@ -59,7 +53,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
     describe(`using the idle strategy`, () => {
       it(`should execute successfully`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
 
         cy.getRecord(`idle-${inlineScriptType}`, `success`, true).should(
           `equal`,
@@ -68,13 +62,13 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load after other strategies`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
 
-        cy.getRecord(`idle-${inlineScriptType}`, MarkRecord.executeStart).then(
+        cy.getRecord(`idle-${inlineScriptType}`, markRecord.executeStart).then(
           dangerouslySetExecuteStart => {
             cy.getRecord(
               `post-hydrate-${inlineScriptType}`,
-              MarkRecord.executeStart
+              markRecord.executeStart
             ).should(`be.lessThan`, dangerouslySetExecuteStart)
           }
         )
@@ -83,7 +77,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
     describe(`when navigation occurs`, () => {
       it(`should load only once on initial page load`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
@@ -100,7 +94,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once after the page is refreshed`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
         cy.reload()
 
         cy.get(`table[id=script-mark-records] tbody`)
@@ -118,9 +112,9 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once after anchor link navigation`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
         cy.get(`a[id=anchor-link-back-to-index]`).click()
-        cy.get(`a[href="${page}"][id=anchor-link]`).click()
+        cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
@@ -137,8 +131,8 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
-        cy.visit(`/`)
-        cy.get(`a[href="${page}"][id=anchor-link]`).click()
+        cy.visit(page.navigation)
+        cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
         cy.go(`back`)
         cy.go(`forward`)
 
@@ -157,9 +151,9 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once after Gatsby link navigation`, () => {
-        cy.visit(page)
+        cy.visit(page.target)
         cy.get(`a[id=gatsby-link-back-to-index]`).click()
-        cy.get(`a[href="${page}"][id=gatsby-link]`).click()
+        cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
@@ -176,8 +170,8 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
-        cy.visit(`/`)
-        cy.get(`a[href="${page}"][id=gatsby-link]`).click()
+        cy.visit(page.navigation)
+        cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
         cy.go(`back`)
         cy.go(`forward`)
 

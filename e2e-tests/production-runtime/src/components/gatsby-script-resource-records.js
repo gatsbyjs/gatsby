@@ -3,23 +3,17 @@ import {
   scriptUrlIndex,
   scriptStrategyIndex,
   scriptSuccessIndex,
-  Script,
-} from "../../scripts"
-import { ResourceRecord } from "../../records"
+} from "../../gatsby-script-scripts"
+import { resourceRecord } from "../../gatsby-script-records"
 import { trim } from "../utils/trim"
-
-interface Props {
-  check: (record: PerformanceResourceTiming) => boolean
-  count: number
-}
 
 /**
  * Displays performance resource records of scripts in a table.
  */
-export function ScriptResourceRecords(props: Props): JSX.Element {
+export function ScriptResourceRecords(props) {
   const { check, count } = props
 
-  const [records, setRecords] = useState<Array<PerformanceResourceTiming>>([])
+  const [records, setRecords] = useState([])
 
   /**
    * Poll for the resource records we care about.
@@ -27,9 +21,7 @@ export function ScriptResourceRecords(props: Props): JSX.Element {
    */
   useEffect(() => {
     const interval = setInterval(() => {
-      const resourceRecords = performance.getEntriesByType(
-        `resource`
-      ) as Array<PerformanceResourceTiming>
+      const resourceRecords = performance.getEntriesByType(`resource`)
 
       const scriptRecords = resourceRecords.filter(check)
 
@@ -57,9 +49,9 @@ export function ScriptResourceRecords(props: Props): JSX.Element {
           .map(record => {
             const { name: url, fetchStart, responseEnd } = record || {}
 
-            let name: Script | `framework`
-            let strategy: string
-            let success: string
+            let name
+            let strategy
+            let success
 
             if (record.name.includes(`framework`)) {
               name = `framework`
@@ -76,8 +68,8 @@ export function ScriptResourceRecords(props: Props): JSX.Element {
                 <td id="name">{name}</td>
                 <td id="strategy">{strategy}</td>
                 <td id="success">{success}</td>
-                <td id={ResourceRecord.fetchStart}>{trim(fetchStart)}</td>
-                <td id={ResourceRecord.responseEnd}>{trim(responseEnd)}</td>
+                <td id={resourceRecord.fetchStart}>{trim(fetchStart)}</td>
+                <td id={resourceRecord.responseEnd}>{trim(responseEnd)}</td>
               </tr>
             )
           })}

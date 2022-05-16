@@ -1,15 +1,17 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import "../styles/global.css"
 
 const pages = [
-  { name: `Scripts with sources`, path: `/scripts-with-sources` },
-  { name: `Inline scripts`, path: `/inline-scripts` },
+  {
+    name: `Scripts with sources`,
+    path: `/gatsby-script-scripts-with-sources/`,
+  },
+  { name: `Inline scripts`, path: `/gatsby-script-inline-scripts/` },
 ]
 
 function IndexPage() {
   return (
-    <main>
+    <main style={{ margin: `1em` }}>
       <h1>Script component e2e test</h1>
       <p>Tests are on other pages, links below.</p>
 

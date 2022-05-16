@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react"
-import { PerformanceMarkWithDetails, MarkRecord } from "../../records"
+import { markRecord } from "../../gatsby-script-records"
 import { trim } from "../utils/trim"
-
-interface Props {
-  check: (record: PerformanceMarkWithDetails) => boolean
-  count: number
-}
 
 /**
  * Displays performance mark records of scripts in a table.
  */
-export function ScriptMarkRecords(props: Props): JSX.Element {
+export function ScriptMarkRecords(props) {
   const { check, count } = props
 
-  const [records, setRecords] = useState<Array<PerformanceMarkWithDetails>>([])
+  const [records, setRecords] = useState([])
 
   /**
    * Poll for the mark records we care about.
@@ -21,9 +16,7 @@ export function ScriptMarkRecords(props: Props): JSX.Element {
    */
   useEffect(() => {
     const interval = setInterval(() => {
-      const markRecords = performance.getEntriesByType(
-        `mark`
-      ) as Array<PerformanceMarkWithDetails>
+      const markRecords = performance.getEntriesByType(`mark`)
 
       const scriptRecords = markRecords.filter(check)
 
@@ -57,7 +50,7 @@ export function ScriptMarkRecords(props: Props): JSX.Element {
                 <td id="type">{type}</td>
                 <td id="strategy">{strategy}</td>
                 <td id="success">{success}</td>
-                <td id={MarkRecord.executeStart}>{trim(executeStart)}</td>
+                <td id={markRecord.executeStart}>{trim(executeStart)}</td>
               </tr>
             )
           })}

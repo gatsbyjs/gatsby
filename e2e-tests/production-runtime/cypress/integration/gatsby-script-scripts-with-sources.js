@@ -1,34 +1,25 @@
-import { Script, scripts } from "../../scripts"
-import { ResourceRecord } from "../../records"
+import { script, scripts } from "../../gatsby-script-scripts"
+import { resourceRecord } from "../../gatsby-script-records"
 
-// The page that we will assert against
-const page = `/scripts-with-sources`
-
-beforeEach(() => {
-  // @ts-ignore Object.values does exist, Cypress wants ES5 in tsconfig
-  for (const script of [...Object.values(scripts), new RegExp(`framework`)]) {
-    cy.intercept(script, { middleware: true }, req => {
-      req.on(`before:response`, res => {
-        res.headers[`cache-control`] = `no-store` // Do not cache responses
-      })
-    })
-  }
-})
+const page = {
+  target: `/gatsby-script-scripts-with-sources/`,
+  navigation: `/gatsby-script-navigation/`,
+}
 
 describe(`scripts with sources`, () => {
   describe(`using the post-hydrate strategy`, () => {
     it(`should load successfully`, () => {
-      cy.visit(page)
-      cy.getRecord(Script.three, `success`, true).should(`equal`, `true`)
+      cy.visit(page.target)
+      cy.getRecord(script.three, `success`, true).should(`equal`, `true`)
     })
 
     it(`should load after the framework bundle has loaded`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
 
       // Assert framework is loaded before three starts loading
-      cy.getRecord(Script.three, ResourceRecord.fetchStart).then(
+      cy.getRecord(script.three, resourceRecord.fetchStart).then(
         threeFetchStart => {
-          cy.getRecord(`framework`, ResourceRecord.responseEnd).should(
+          cy.getRecord(`framework`, resourceRecord.responseEnd).should(
             `be.lessThan`,
             threeFetchStart
           )
@@ -37,30 +28,30 @@ describe(`scripts with sources`, () => {
     })
 
     it(`should call an on load callback once the script has loaded`, () => {
-      cy.visit(page)
-      cy.getRecord(Script.three, ResourceRecord.responseEnd).then(() => {
+      cy.visit(page.target)
+      cy.getRecord(script.three, resourceRecord.responseEnd).then(() => {
         cy.get(`[data-on-load-result=post-hydrate]`)
       })
     })
 
     it(`should call an on error callback if an error occurred`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
       cy.get(`[data-on-error-result=post-hydrate]`)
     })
   })
 
   describe(`using the idle strategy`, () => {
     it(`should load successfully`, () => {
-      cy.visit(page)
-      cy.getRecord(Script.marked, `success`, true).should(`equal`, `true`)
+      cy.visit(page.target)
+      cy.getRecord(script.marked, `success`, true).should(`equal`, `true`)
     })
 
     it(`should load after other strategies`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
 
-      cy.getRecord(Script.marked, ResourceRecord.fetchStart).then(
+      cy.getRecord(script.marked, resourceRecord.fetchStart).then(
         markedFetchStart => {
-          cy.getRecord(Script.three, ResourceRecord.fetchStart).should(
+          cy.getRecord(script.three, resourceRecord.fetchStart).should(
             `be.lessThan`,
             markedFetchStart
           )
@@ -69,106 +60,106 @@ describe(`scripts with sources`, () => {
     })
 
     it(`should call an on load callback once the script has loaded`, () => {
-      cy.visit(page)
-      cy.getRecord(Script.marked, ResourceRecord.responseEnd).then(() => {
+      cy.visit(page.target)
+      cy.getRecord(script.marked, resourceRecord.responseEnd).then(() => {
         cy.get(`[data-on-load-result=idle]`)
       })
     })
 
     it(`should call an on error callback if an error occurred`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
       cy.get(`[data-on-error-result=idle]`)
     })
   })
 
   describe(`when navigation occurs`, () => {
     it(`should load only once on initial page load`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
         .should(`have.length`, 3)
-      cy.getRecord(Script.three, `strategy`, true).should(
+      cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
+      cy.getRecord(script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once after the page is refreshed`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
       cy.reload()
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
         .should(`have.length`, 3)
-      cy.getRecord(Script.three, `strategy`, true).should(
+      cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
+      cy.getRecord(script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once after anchor link navigation`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
       cy.get(`a[id=anchor-link-back-to-index]`).click()
-      cy.get(`a[href="${page}"][id=anchor-link]`).click()
+      cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
         .should(`have.length`, 3)
-      cy.getRecord(Script.three, `strategy`, true).should(
+      cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
+      cy.getRecord(script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
-      cy.visit(`/`)
-      cy.get(`a[href="${page}"][id=anchor-link]`).click()
+      cy.visit(page.navigation)
+      cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
       cy.go(`back`)
       cy.go(`forward`)
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
         .should(`have.length`, 3)
-      cy.getRecord(Script.three, `strategy`, true).should(
+      cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
+      cy.getRecord(script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once after Gatsby link navigation`, () => {
-      cy.visit(page)
+      cy.visit(page.target)
       cy.get(`a[id=gatsby-link-back-to-index]`).click()
-      cy.get(`a[href="${page}"][id=gatsby-link]`).click()
+      cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
         .should(`have.length`, 3)
-      cy.getRecord(Script.three, `strategy`, true).should(
+      cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
+      cy.getRecord(script.marked, `strategy`, true).should(`equal`, `idle`)
     })
 
     it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
-      cy.visit(`/`)
-      cy.get(`a[href="${page}"][id=gatsby-link]`).click()
+      cy.visit(page.navigation)
+      cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
       cy.go(`back`)
       cy.go(`forward`)
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
         .should(`have.length`, 3)
-      cy.getRecord(Script.three, `strategy`, true).should(
+      cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
       )
-      cy.getRecord(Script.marked, `strategy`, true).should(`equal`, `idle`)
+      cy.getRecord(script.marked, `strategy`, true).should(`equal`, `idle`)
     })
   })
 })
