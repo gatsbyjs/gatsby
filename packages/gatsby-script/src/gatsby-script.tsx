@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react"
 import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import type { PartytownProps } from "@builder.io/partytown/react"
+import { requestIdleCallback } from "./request-idle-callback-shim"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,

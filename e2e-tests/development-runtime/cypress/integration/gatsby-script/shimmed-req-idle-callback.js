@@ -1,23 +1,12 @@
-import { Script, scripts } from "../../scripts"
+import { Script, scripts } from "../../../gatsby-script-scripts"
 import { ResourceRecord } from "../../records"
 
 // The page that we will assert against
-const page = `/scripts-with-sources`
+const page = `/gatsby-script-scripts-with-sources`
 
 Cypress.on(`window:before:load`, win => {
   cy.spy(win, "requestIdleCallback").as("requestIdleCallback")
   win.requestIdleCallback = undefined
-})
-
-beforeEach(() => {
-  // @ts-ignore Object.values does exist, Cypress wants ES5 in tsconfig
-  for (const script of [...Object.values(scripts), new RegExp(`framework`)]) {
-    cy.intercept(script, { middleware: true }, req => {
-      req.on(`before:response`, res => {
-        res.headers[`cache-control`] = `no-store` // Do not cache responses
-      })
-    })
-  }
 })
 
 /*
