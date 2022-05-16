@@ -1,26 +1,24 @@
-import React from "react";
-const skipIfReact18 = (name, test) => {
-  const isReact18 = /^18/.test(React.version)
-  const runner = isReact18 ? it.skip : it
-  const testName = isReact18 ? `skipped due to react 18: ${name}` : name
-  runner(testName, test)
-}
-
 describe(`Production build tests`, () => {
-  skipIfReact18(`should remount when navigating to different template`, () => {
+  it(`should remount when navigating to different template`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`page2`).click().waitForRouteChange()
+    
+    // add buffer time so that componentDidMount has time to be called after route change
+    cy.wait(1000)
 
     // we expect 2 `componentDidMount` calls - 1 for initial page and 1 for second page
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 2)
     cy.lifecycleCallCount(`render`).should(`equal`, 2)
   })
 
-  skipIfReact18(`should remount when navigating to different page using same template`, () => {
+  it(`should remount when navigating to different page using same template`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`duplicated`).click().waitForRouteChange()
+
+    // add buffer time so that componentDidMount has time to be called after route change
+    cy.wait(1000)
 
     // we expect 2 `componentDidMount` calls - 1 for initial page and 1 for duplicated page
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 2)
