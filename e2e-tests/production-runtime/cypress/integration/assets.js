@@ -2,7 +2,8 @@ describe(`webpack assets`, () => {
   beforeEach(() => {
     cy.intercept("/gatsby-astronaut.png").as("static-folder-image")
     // Should load two files: normal and italic
-    cy.intercept("/static/merriweather-latin-300**.woff2").as("font")
+    cy.intercept("/static/merriweather-latin-300-**.woff2").as("font-regular")
+    cy.intercept("/static/merriweather-latin-300italic-**.woff2").as("font-italic")
     cy.intercept("/static/gatsby-astronaut-**.png").as("img-import")
     cy.visit(`/assets/`).waitForRouteChange()
   })
@@ -10,30 +11,13 @@ describe(`webpack assets`, () => {
   // Service worker is handling requests so this one is cached by previous runs
   if (!Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
     it(`should only create one font file (no duplicates with different hashes)`, () => {
-      // Check that there is no duplicate files (should have italic as second request, not another normal font)
-      let filesNeeded = [
-        new RegExp(`merriweather-latin-300-`, 'i'),
-        new RegExp(`merriweather-latin-300italic-`, 'i'),
-      ]
-
-      let totalFiles = filesNeeded.length
-
-      // cy.wait enough times to catch all files
-      for (let i = 0; i < totalFiles; i++) {
-
-        // match each one in a list since requests are not deterministic
-        cy.wait("@font").should(req => {
-          let matched = false;
-          for (let i = 0; i < filesNeeded.length; i++) {
-            if (filesNeeded[i].test(req.response.url)) {
-              matched = true;
-              filesNeeded.splice(i, 1)
-            }
-          }
-
-          expect(matched).to.be.equal(true)
-        })
-      }
+      cy.wait("@font-regular").should(req => {
+        expect(req.response.url).to.match(/merriweather-latin-300-/i)
+      })
+      
+      cy.wait("@font-italic").should(req => {
+        expect(req.response.url).to.match(/merriweather-latin-300italic-/i)
+      })
     })
 
     it(`should load image import`, () => {
