@@ -16,10 +16,19 @@ const strategies: Array<ScriptStrategy> = [
   ScriptStrategy.idle,
 ]
 
+jest.mock(`../request-idle-callback-shim`, () => {
+  const originalModule = jest.requireActual(`../request-idle-callback-shim`)
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    requestIdleCallback: jest.fn<any, any>(callback => callback()),
+  }
+})
+
 describe(`Script`, () => {
   beforeAll(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    global.requestIdleCallback = jest.fn<any, any>(callback => callback())
     // @ts-ignore Mock it out for now
     performance.getEntriesByName = jest.fn(() => [])
   })
