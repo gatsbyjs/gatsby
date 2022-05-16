@@ -49,14 +49,15 @@
     "update:webhook": "node scripts/webhook.js",
     "update:cms-webhook": "node scripts/cms-webhook.js",
     "update:preview": "curl -X POST -d \"{ \\\"fake-data-update\\\": true }\" -H \"Content-Type: application/json\" http://localhost:8000/__refresh",
-    "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
+    "start-server-and-test": "start-server-and-test develop http://localhost:8000 combined",
     "start-server-and-test:locally": "start-server-and-test develop http://localhost:8000 cy:open",
     "cy:open": "cypress open",
     "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome",
     "playwright": "playwright test --project=chromium",
     "playwright:debug": "playwright test --project=chromium --debug",
     "start-server-and-test:playwright": "start-server-and-test develop http://localhost:8000 playwright",
-    "start-server-and-test:playwright-debug": "start-server-and-test develop http://localhost:8000 playwright:debug"
+    "start-server-and-test:playwright-debug": "start-server-and-test develop http://localhost:8000 playwright:debug",
+    "combined": "npm run playwright && npm run cy:run"
   },
   "devDependencies": {
     "@playwright/test": "^1.22.0",
