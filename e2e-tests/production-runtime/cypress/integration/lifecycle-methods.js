@@ -3,7 +3,7 @@ describe(`Production build tests`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`page2`).click().waitForRouteChange()
-    
+
     // add buffer time so that componentDidMount has time to be called after route change
     cy.wait(1000)
 
@@ -31,6 +31,9 @@ describe(`Production build tests`, () => {
     cy.getTestElement(`/page/profile`).click().waitForRouteChange()
 
     cy.getTestElement(`/nested/foo`).click().waitForRouteChange()
+
+    // add buffer time so that componentDidMount has time to be called after route change
+    cy.wait(1000)
 
     // we expect just 1 `componentDidMount` call, when navigating inside matchPath
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 1)
