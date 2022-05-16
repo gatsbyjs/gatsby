@@ -52,9 +52,14 @@
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "start-server-and-test:locally": "start-server-and-test develop http://localhost:8000 cy:open",
     "cy:open": "cypress open",
-    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome",
+    "playwright": "playwright test --project=chromium",
+    "playwright:debug": "playwright test --project=chromium --debug",
+    "start-server-and-test:playwright": "start-server-and-test develop http://localhost:8000 playwright",
+    "start-server-and-test:playwright-debug": "start-server-and-test develop http://localhost:8000 playwright:debug"
   },
   "devDependencies": {
+    "@playwright/test": "^1.22.0",
     "@testing-library/cypress": "^7.0.0",
     "cross-env": "^5.2.0",
     "cypress": "6.1.0",
