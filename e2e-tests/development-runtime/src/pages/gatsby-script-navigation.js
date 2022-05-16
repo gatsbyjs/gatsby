@@ -7,6 +7,10 @@ const pages = [
     path: `/gatsby-script-scripts-with-sources/`,
   },
   { name: `Inline scripts`, path: `/gatsby-script-inline-scripts/` },
+  {
+    name: `Scripts from SSR and browser apis`,
+    path: `/gatsby-script-ssr-browser-apis/`,
+  },
 ]
 
 function IndexPage() {
