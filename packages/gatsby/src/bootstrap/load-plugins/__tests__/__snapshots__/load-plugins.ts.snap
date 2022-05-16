@@ -311,7 +311,11 @@ Array [
     ],
     "id": "",
     "name": "partytown",
-    "nodeAPIs": Array [],
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -669,7 +673,11 @@ Array [
     ],
     "id": "",
     "name": "partytown",
-    "nodeAPIs": Array [],
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -1038,7 +1046,11 @@ Array [
     ],
     "id": "",
     "name": "partytown",
-    "nodeAPIs": Array [],
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
