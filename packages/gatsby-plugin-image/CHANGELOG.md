@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.14.1/packages/gatsby-plugin-image) (2022-05-12)
+
+#### Bug Fixes
+
+- fix race condition fix [#35635](https://github.com/gatsbyjs/gatsby/issues/35635) fix [#35640](https://github.com/gatsbyjs/gatsby/issues/35640) ([5566d44](https://github.com/gatsbyjs/gatsby/commit/5566d448edd4f82ba13edda0af51e8aa0362e367))
+
 ## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.14.0/packages/gatsby-plugin-image) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
