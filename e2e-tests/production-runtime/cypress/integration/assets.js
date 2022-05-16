@@ -11,12 +11,22 @@ describe(`webpack assets`, () => {
   if (!Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
     it(`should only create one font file (no duplicates with different hashes)`, () => {
       // Check that there is no duplicate files (should have italic as second request, not another normal font)
+      let filesNeeded = [
+        new RegExp(`merriweather-latin-300-`, 'i'),
+        new RegExp(`merriweather-latin-300italic-`, 'i'),
+      ]
+
+      // match each one in a list since requests are not deterministic
       cy.wait("@font").should(req => {
-        expect(req.response.url).to.match(/merriweather-latin-300-/i)
+        for (let i = 0; i < filesNeeded.length; i++) {
+          if (filesNeeded[i].test(req.response.url)) {
+            filesNeeded.splice(i, 1)
+          }
+        }
       })
-      cy.wait("@font").should(req => {
-        expect(req.response.url).to.match(/merriweather-latin-300italic-/i)
-      })
+
+      // we should have matched every item in the list
+      expect(filesNeeded).to.be.equal([])
     })
     it(`should load image import`, () => {
       cy.wait("@img-import").should(req => {
