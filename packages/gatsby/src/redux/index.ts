@@ -37,12 +37,6 @@ export const readState = (): IGatsbyState => {
       })
     }
 
-    if (!state.telemetry) {
-      state.telemetry = {
-        gatsbyImageSourceUrls: new Set<string>(),
-      }
-    }
-
     // jsonDataPaths was removed in the per-page-manifest
     // changes. Explicitly delete it here to cover case where user
     // runs gatsby the first time after upgrading.
