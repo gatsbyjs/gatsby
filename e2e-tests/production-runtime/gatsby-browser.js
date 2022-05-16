@@ -1,4 +1,6 @@
-const Wrapper = require(`./src/wrap-root-element`).default
+const WrapPageElement = require(`./src/wrap-page-element`).default
+const WrapRootElement = require(`./src/wrap-root-element`).default
+
 require(`./src/index.css`)
 require(`typeface-merriweather`)
 
@@ -27,4 +29,5 @@ exports.onPrefetchPathname = ({ pathname }) => {
   addLogEntry(`onPrefetchPathname`, pathname)
 }
 
-exports.wrapRootElement = Wrapper
+exports.wrapPageElement = WrapPageElement
+exports.wrapRootElement = WrapRootElement

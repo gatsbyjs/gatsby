@@ -1,16 +1,22 @@
 export const script = {
   three: `three`,
   marked: `marked`,
+  jQuery: `jQuery`,
+  popper: `popper`,
 }
 
 export const scripts = {
   [script.three]: `https://unpkg.com/three@0.139.1/build/three.js`,
   [script.marked]: `https://cdn.jsdelivr.net/npm/marked/marked.min.js`,
+  [script.jQuery]: `https://code.jquery.com/jquery-3.4.1.min.js`,
+  [script.popper]: `https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js`,
 }
 
 export const scriptStrategyIndex = {
   [script.three]: `post-hydrate`,
   [script.marked]: `idle`,
+  [script.jQuery]: `post-hydrate`,
+  [script.popper]: `idle`,
 }
 
 export const scriptSuccessIndex = {
@@ -18,11 +24,17 @@ export const scriptSuccessIndex = {
   [script.three]: () => typeof THREE === `object`,
   // @ts-ignore
   [script.marked]: () => typeof marked === `object`,
+  // @ts-ignore
+  [script.jQuery]: () => typeof jQuery === `function`,
+  // @ts-ignore
+  [script.popper]: () => typeof Popper === `function`,
 }
 
 export const scriptUrlIndex = {
   [scripts.three]: script.three,
   [scripts.marked]: script.marked,
+  [scripts.jQuery]: script.jQuery,
+  [scripts.popper]: script.popper,
 }
 
 export const scriptUrls = new Set(Object.values(scripts))
