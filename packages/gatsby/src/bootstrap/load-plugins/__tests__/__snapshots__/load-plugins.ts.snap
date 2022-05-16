@@ -306,13 +306,12 @@ Array [
     "version": "1.0.0",
   },
   Object {
-    "browserAPIs": Array [],
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
     "id": "",
     "name": "partytown",
-    "nodeAPIs": Array [
-      "onPreBootstrap",
-      "createPages",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -665,13 +664,12 @@ Array [
     "version": "1.0.0",
   },
   Object {
-    "browserAPIs": Array [],
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
     "id": "",
     "name": "partytown",
-    "nodeAPIs": Array [
-      "onPreBootstrap",
-      "createPages",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -1035,13 +1033,12 @@ Array [
     "version": "1.0.0",
   },
   Object {
-    "browserAPIs": Array [],
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
     "id": "",
     "name": "partytown",
-    "nodeAPIs": Array [
-      "onPreBootstrap",
-      "createPages",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
