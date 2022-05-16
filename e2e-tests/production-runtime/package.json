@@ -54,7 +54,8 @@
     "playwright:debug": "playwright test --project=chromium --debug",
     "start-server-and-test:playwright": "start-server-and-test serve http://localhost:9000 playwright",
     "start-server-and-test:playwright-debug": "start-server-and-test serve http://localhost:9000 playwright:debug",
-    "combined": "npm run playwright && npm run cy:run"
+    "combined": "npm run playwright && npm run cy:run",
+    "postinstall": "playwright install chromium"
   },
   "devDependencies": {
     "@playwright/test": "^1.22.0",
