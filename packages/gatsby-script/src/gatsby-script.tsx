@@ -40,6 +40,7 @@ export function Script(props: ScriptProps): ReactElement | null {
     onLoad,
     onError,
   } = props || {}
+  const { collectScript } = useContext(PartytownContext)
 
   useEffect(() => {
     let script: HTMLScriptElement | null
@@ -52,6 +53,12 @@ export function Script(props: ScriptProps): ReactElement | null {
         requestIdleCallback(() => {
           script = injectScript(props)
         })
+        break
+      case ScriptStrategy.offMainThread:
+        if (typeof window !== `undefined` && collectScript) {
+          const attributes = resolveAttributes(props)
+          collectScript(attributes)
+        }
         break
     }
 
@@ -70,8 +77,7 @@ export function Script(props: ScriptProps): ReactElement | null {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
 
-    const { collectScript } = useContext(PartytownContext)
-    if (collectScript) {
+    if (typeof window === `undefined` && collectScript) {
       collectScript(attributes)
     }
 
