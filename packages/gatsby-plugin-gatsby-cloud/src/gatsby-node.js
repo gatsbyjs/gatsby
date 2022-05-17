@@ -11,7 +11,7 @@ import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
-import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
+import { DEFAULT_OPTIONS, BUILD_HTML_STAGE } from "./constants"
 import { emitRoutes, emitFileNodes } from "./ipc"
 
 const assetsManifest = {}
