@@ -41,9 +41,9 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
   ## Summary
 
   Brief explanation of the feature.
-  
+
   ## Try it out
-  
+
   Section with instructions on how to use the feature, e.g. with a canary.
 
   ## Basic example
