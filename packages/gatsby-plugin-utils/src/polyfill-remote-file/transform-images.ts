@@ -4,7 +4,7 @@ import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import getSharpInstance from "gatsby-sharp"
 import { getCache } from "./utils/cache"
-import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
+import { getRequestHeadersForUrl } from "gatsby/dist/utils/get-request-headers-for-url"
 
 export interface IResizeArgs {
   width: number
