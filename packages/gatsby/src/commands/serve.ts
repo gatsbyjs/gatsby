@@ -125,9 +125,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const app = express()
 
   // Proxy gatsby-script using off-main-thread strategy
-  const { partytownProxiedURLs = [] } = config || {}
-
-  app.use(partytownProxyPath, partytownProxy(partytownProxiedURLs))
+  app.use(
+    partytownProxyPath,
+    partytownProxy(config?.partytown?.proxiedURLs || [])
+  )
 
   // eslint-disable-next-line new-cap
   const router = express.Router()

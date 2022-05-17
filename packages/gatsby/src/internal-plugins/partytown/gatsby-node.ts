@@ -8,8 +8,9 @@ import { partytownProxyPath, partytownProxy } from "./proxy"
  * @see {@link https://partytown.builder.io/copy-library-files}
  */
 exports.onPreBootstrap = async ({ store }): Promise<void> => {
-  const { program } = store.getState()
-  await copyLibFiles(path.join(program.directory, `public`, `~partytown`))
+  const { program, config } = store.getState()
+  const lib = config?.partytown?.lib || `/~partytown/`
+  await copyLibFiles(path.join(program.directory, `public`, lib))
 }
 
 /**
@@ -20,10 +21,9 @@ exports.createPages = ({ actions, store }): void => {
   const { createRedirect } = actions
 
   const { config = {} } = store.getState()
-  const { partytownProxiedURLs = [] } = config
 
-  for (const host of partytownProxiedURLs) {
-    const encodedURL: string = encodeURI(host)
+  for (const proxiedURL of config?.partytown?.proxiedURLs || []) {
+    const encodedURL: string = encodeURI(proxiedURL)
 
     createRedirect({
       fromPath: `${partytownProxyPath}?url=${encodedURL}`,
@@ -37,8 +37,10 @@ export async function onCreateDevServer({
   app,
   store,
 }: CreateDevServerArgs): Promise<void> {
-  const { config } = store.getState()
-  const { partytownProxiedURLs = [] } = config || {}
+  const { config = {} } = store.getState()
 
-  app.use(partytownProxyPath, partytownProxy(partytownProxiedURLs))
+  app.use(
+    partytownProxyPath,
+    partytownProxy(config?.partytown?.proxiedURLs || [])
+  )
 }

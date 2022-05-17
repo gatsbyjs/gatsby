@@ -3,6 +3,7 @@ import type { GatsbySSR } from "gatsby"
 import { Partytown } from "@builder.io/partytown/react"
 import { PartytownContext } from "gatsby-script"
 import type { PartytownProps } from "@builder.io/partytown/react"
+import { store } from "../../redux"
 
 const collectedScripts: Map<string, Array<PartytownProps>> = new Map()
 
@@ -37,7 +38,12 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
     (script: PartytownProps) => script?.forward || []
   )
 
-  setHeadComponents([<Partytown key="partytown" forward={collectedForwards} />])
+  const { config } = store.getState()
+  const lib = config?.partytown?.lib || `/~partytown/`
+
+  setHeadComponents([
+    <Partytown key="partytown" forward={collectedForwards} lib={lib} />,
+  ])
 
   collectedScripts.delete(pathname)
 }

@@ -27,5 +27,7 @@ module.exports = {
     `gatsby-plugin-less`,
     `gatsby-plugin-stylus`,
   ].concat(process.env.TEST_PLUGIN_OFFLINE ? [`gatsby-plugin-offline`] : []),
-  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
+  partytown: {
+    proxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
+  },
 }
