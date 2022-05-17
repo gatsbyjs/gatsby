@@ -637,54 +637,6 @@ describe(`gatsbyImageData`, () => {
     expect(parsedFullWidthSrcSet[1].descriptor).toEqual(`700w`)
   })
 
-  it(`should fetch placeholder file with headers from the setRequestHeaders action`, async () => {
-    fetchRemoteFile.mockImplementationOnce(input => {
-      if (
-        !input.httpHeaders ||
-        input.httpHeaders.Authorization !== `Bearer 123`
-      ) {
-        throw Error(`No headers found for url ${input.url}`)
-      } else {
-        return path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
-      }
-    })
-
-    const { store } = jest.requireActual(`gatsby/dist/redux`)
-    const { actions } = jest.requireActual(`gatsby/dist/redux/actions/public`)
-
-    store.dispatch(
-      actions.setRequestHeaders(
-        {
-          domain: portraitSource.url,
-          headers: {
-            Authorization: `Bearer 123`,
-          },
-        },
-        {
-          name: `gatsby-source-test`,
-        }
-      )
-    )
-
-    const fixedResult = await gatsbyImageResolver(
-      portraitSource,
-      {
-        layout: `fixed`,
-        width: 300,
-        placeholder: PlaceholderType.BLURRED,
-      },
-      actions
-    )
-
-    expect(fetchRemoteFile).toHaveBeenCalledTimes(1)
-    expect(fetchRemoteFile).toHaveBeenCalledWith(
-      expect.objectContaining({
-        url: portraitSource.url,
-      })
-    )
-    expect(fixedResult?.placeholder).toBeTruthy()
-  })
-
   it(`should generate dominant color placeholder by default`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
       path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
@@ -773,5 +725,53 @@ describe(`gatsbyImageData`, () => {
     expect(constrainedResult?.images.fallback.src).toContain(`dog-portrait.jpg`)
 
     expect(constrainedResult?.images.sources.length).toBe(2)
+  })
+
+  it(`should fetch placeholder file with headers from the setRequestHeaders action`, async () => {
+    fetchRemoteFile.mockImplementationOnce(input => {
+      if (
+        !input.httpHeaders ||
+        input.httpHeaders.Authorization !== `Bearer 123`
+      ) {
+        throw Error(`No headers found for url ${input.url}`)
+      } else {
+        return path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+      }
+    })
+
+    const { store } = jest.requireActual(`gatsby/dist/redux`)
+    const { actions } = jest.requireActual(`gatsby/dist/redux/actions/public`)
+
+    store.dispatch(
+      actions.setRequestHeaders(
+        {
+          domain: portraitSource.url,
+          headers: {
+            Authorization: `Bearer 123`,
+          },
+        },
+        {
+          name: `gatsby-source-test`,
+        }
+      )
+    )
+
+    const fixedResult = await gatsbyImageResolver(
+      portraitSource,
+      {
+        layout: `fixed`,
+        width: 300,
+        placeholder: PlaceholderType.BLURRED,
+      },
+      actions
+    )
+
+    expect(fetchRemoteFile).toHaveBeenCalledTimes(1)
+    expect(fetchRemoteFile).toHaveBeenCalledWith(
+      expect.objectContaining({
+        url: portraitSource.url,
+      })
+    )
+    expect(fixedResult?.placeholder).toBeTruthy()
   })
 })
