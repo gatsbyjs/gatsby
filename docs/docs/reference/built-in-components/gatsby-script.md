@@ -2,6 +2,8 @@
 title: Gatsby Script API
 ---
 
+> Support for the Gatsby Script API was added in `gatsby@4.15.0`.
+
 Gatsby includes a built-in `<Script>` component that aids in loading third-party scripts performantly.
 
 It offers a convenient way to declare different loading strategies and a default loading strategy that gives Gatsby users strong performance out of the box.
