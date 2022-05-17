@@ -1,8 +1,7 @@
 import React, { ReactElement, useState } from "react"
 import type { GatsbySSR } from "gatsby"
 import { Partytown } from "@builder.io/partytown/react"
-import { PartytownContext } from "gatsby-script"
-import type { PartytownProps } from "@builder.io/partytown/react"
+import { PartytownContext, ScriptProps } from "gatsby-script"
 
 interface ICollectedForwardsState {
   collectedForwards: Set<string>
@@ -19,7 +18,7 @@ function PartytownProvider({ children }): ReactElement {
   return (
     <PartytownContext.Provider
       value={{
-        collectScript: (newScript: PartytownProps): void => {
+        collectScript: (newScript: ScriptProps): void => {
           let stateShouldChange = false
           const potentialNewState = {
             collectedAnyScript,

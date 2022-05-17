@@ -17,6 +17,7 @@ export interface ScriptProps
   children?: string
   onLoad?: (event: Event) => void
   onError?: (event: ErrorEvent) => void
+  forward?: Array<string>
 }
 
 const handledProps = new Set([
