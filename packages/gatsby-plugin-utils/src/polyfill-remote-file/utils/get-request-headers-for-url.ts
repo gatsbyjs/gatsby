@@ -5,15 +5,14 @@ import resolveFrom from "resolve-from"
 
 import type { Headers } from "got"
 
-export function getStore(): typeof import("gatsby/src/redux")["store"] {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getStore(): any {
   const gatsbyPkgRoot = path.dirname(
     resolveFrom(process.cwd(), `gatsby/package.json`)
   )
 
-  const { store } = importFrom(
-    gatsbyPkgRoot,
-    `gatsby/dist/redux`
-  ) as typeof import("gatsby/src/redux")
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { store } = importFrom(gatsbyPkgRoot, `gatsby/dist/redux`) as any
 
   return store
 }
