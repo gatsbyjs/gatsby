@@ -165,6 +165,23 @@ import { Script, ScriptStrategy } from "gatsby"
 </Script>
 ```
 
+#### Forward collection
+
+Gatsby will collect all `off-main-thread` scripts on a page, and automatically merge any [Partytown forwarded events](https://partytown.builder.io/forwarding-events) defined via the `forward` property into a single configuration for each page:
+
+```jsx
+<Script
+  src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTM}`}
+  strategy={ScriptStrategy.offMainThread}
+  // highlight-next-line
+  forward={[`gtag`]}
+/>
+```
+
+The `forward` property is the only Partytown-specific property that is handled by the `<Script>` component.
+
+#### Proxy configuration
+
 Many scripts [require a proxy to work in Partytown](https://partytown.builder.io/proxying-requests), so Gatsby has built-in proxy functionality to make this easier. To keep the proxy secure, you must define the absolute URLs you want proxied in your Gatsby config.
 
 Here's how you would do that for the Google Analytics example above:
@@ -188,11 +205,28 @@ module.exports = {
 
 This works out of the box when running your site via `gatsby develop`, `gatsby serve` and Gatsby Cloud. Hosting on other providers will require your own implementation to proxy URLs from `/__partytown-proxy?url=${YOUR_URL}` to `YOUR_URL`.
 
-#### Forward collection
+#### Debugging
 
-Gatsby will collect all `off-main-thread` scripts on a page, and automatically merge any [Partytown forwarded events](https://partytown.builder.io/forwarding-events) into a single configuration for each page.
+You can leverage Partytown's [vanilla config](https://partytown.builder.io/configuration#vanilla-config) to enable debug mode for your off-main-thread scripts:
 
-There's nothing you need to do to make this work, but it is useful to be aware of in case you have an advanced use case.
+```jsx:title=gatsby-ssr.js
+import React from "react";
+
+export const onRenderBody = ({ setHeadComponents }) => {
+  setHeadComponents([
+    <script
+      key="test"
+      dangerouslySetInnerHTML={{
+        __html: `partytown = { debug: true };`,
+      }}
+    />,
+  ]);
+};
+```
+
+You may need to adjust your dev tools to the verbose log level in order to see the extra logs in your console.
+
+It is recommended that you only make use of the `debug` property in Partytown's vanilla config to avoid unexpected behavior.
 
 #### Limitations
 
