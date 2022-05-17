@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react"
 import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
-import type { PartytownProps } from "@builder.io/partytown/react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
 
 export enum ScriptStrategy {
@@ -12,10 +11,7 @@ export enum ScriptStrategy {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface ScriptProps
-  extends Omit<
-    ScriptHTMLAttributes<HTMLScriptElement> & PartytownProps,
-    `onLoad` | `onError`
-  > {
+  extends Omit<ScriptHTMLAttributes<HTMLScriptElement>, `onLoad` | `onError`> {
   id?: string
   strategy?: ScriptStrategy | `post-hydrate` | `idle` | `off-main-thread`
   children?: string

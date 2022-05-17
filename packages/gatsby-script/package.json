@@ -30,7 +30,6 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@babel/preset-typescript": "^7.16.7",
-    "@builder.io/partytown": "^0.5.2",
     "@testing-library/react": "^11.2.7",
     "babel-preset-gatsby-package": "^2.15.0-next.0",
     "cross-env": "^7.0.3",

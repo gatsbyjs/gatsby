@@ -1,8 +1,8 @@
 import { createContext } from "react"
-import type { PartytownProps } from "@builder.io/partytown/react"
+import { ScriptProps } from "./gatsby-script"
 
 const PartytownContext: React.Context<{
-  collectScript?: (script: PartytownProps) => void
+  collectScript?: (script: ScriptProps) => void
 }> = createContext({})
 
 export { PartytownContext }
