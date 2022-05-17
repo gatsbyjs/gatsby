@@ -140,15 +140,16 @@ export default async ({
         pluginName: `internal-data-bridge`,
       })
     }
+  } else {
+    await apiRunner(`sourceNodes`, {
+      traceId,
+      waitForCascadingActions: true,
+      deferNodeMutation,
+      parentSpan,
+      webhookBody: webhookBody || {},
+      pluginName,
+    })
   }
-  await apiRunner(`sourceNodes`, {
-    traceId,
-    waitForCascadingActions: true,
-    deferNodeMutation,
-    parentSpan,
-    webhookBody: webhookBody || {},
-    pluginName,
-  })
 
   await getDataStore().ready()
 
