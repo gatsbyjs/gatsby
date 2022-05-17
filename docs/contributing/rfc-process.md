@@ -38,16 +38,20 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
 - Copy the RFC template into your clipboard:
 
   ```md
-  # Summary
+  ## Summary
 
   Brief explanation of the feature.
+  
+  ## Try it out
+  
+  Section with instructions on how to use the feature, e.g. with a canary.
 
-  # Basic example
+  ## Basic example
 
   If the proposal involves a new or changed API, include a basic code example.
   Omit this section if it's not applicable.
 
-  # Motivation
+  ## Motivation
 
   Why are we doing this? What use cases does it support? What is the expected
   outcome?
@@ -57,7 +61,7 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
   enumerate the constraints you are trying to solve without coupling them too
   closely to the solution you have in mind.
 
-  # Detailed design
+  ## Detailed design
 
   This is the bulk of the RFC. Explain the design in enough detail for somebody
   familiar with Gatsby to understand, and for somebody familiar with the
@@ -65,7 +69,7 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
   and include examples of how the feature is used. Any new terminology should be
   defined here.
 
-  # Drawbacks
+  ## Drawbacks
 
   Why should we _not_ do this? Please consider:
 
@@ -77,17 +81,17 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
 
   There are tradeoffs to choosing any path. Attempt to identify them here.
 
-  # Alternatives
+  ## Alternatives
 
   What other designs have been considered? What is the impact of not doing this?
 
-  # Adoption strategy
+  ## Adoption strategy
 
   If we implement this proposal, how will existing Gatsby developers adopt it? Is
   this a breaking change? Can we write a codemod? Should we coordinate with
   other projects or libraries?
 
-  # How we teach this
+  ## How we teach this
 
   What names and terminology work best for these concepts and why? How is this
   idea best presented? As a continuation of existing Gatsby patterns?
@@ -98,7 +102,7 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
 
   How should this feature be taught to existing Gatsby developers?
 
-  # Unresolved questions
+  ## Unresolved questions
 
   Optional, but suggested for first drafts. What parts of the design are still
   TBD?
