@@ -35,7 +35,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async ({ store, getNodesByType }, userPluginOptions) => {
+exports.onPostBuild = async ({ store }, userPluginOptions) => {
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
   const { redirects, pageDataStats, nodes, pages } = store.getState()
