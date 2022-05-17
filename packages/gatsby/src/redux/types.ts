@@ -439,6 +439,7 @@ export type ActionsUnion =
   | IMaterializePageMode
   | ISetJobV2Context
   | IClearJobV2Context
+  | ISetDomainRequestHeaders
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
