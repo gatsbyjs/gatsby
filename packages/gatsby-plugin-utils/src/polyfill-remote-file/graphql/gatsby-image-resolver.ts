@@ -245,7 +245,11 @@ export async function gatsbyImageResolver(
     }
   }
 
-  actions.addGatsbyImageSourceUrl(source.url)
+  if (
+    [`true`, `1`].includes(process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``)
+  ) {
+    actions.addGatsbyImageSourceUrl(source.url)
+  }
 
   return {
     images: result as IGatsbyImageData,
