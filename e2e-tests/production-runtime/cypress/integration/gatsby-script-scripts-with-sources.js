@@ -1,6 +1,8 @@
 import { script } from "../../gatsby-script-scripts"
 import { resourceRecord } from "../../gatsby-script-records"
 
+Cypress.config(`defaultCommandTimeout`, 30000) // Since we're asserting network requests
+
 const page = {
   target: `/gatsby-script-scripts-with-sources/`,
   navigation: `/gatsby-script-navigation/`,
@@ -78,7 +80,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -92,7 +94,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -107,7 +109,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -123,7 +125,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -138,7 +140,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -154,7 +156,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`

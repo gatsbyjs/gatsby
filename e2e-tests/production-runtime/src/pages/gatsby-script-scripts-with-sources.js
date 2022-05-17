@@ -18,7 +18,7 @@ function ScriptsWithSourcesPage() {
         check={record =>
           scriptUrls.has(record.name) || record.name.includes(`framework`)
         }
-        count={3}
+        count={5} // Include scripts from ssr/browser APIs
       />
 
       <br />

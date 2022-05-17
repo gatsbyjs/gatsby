@@ -40,7 +40,7 @@
     "test": "npm run build && npm run start-server-and-test && npm run test-env-vars",
     "test:offline": "npm run build:offline && yarn start-server-and-test:offline && npm run test-env-vars",
     "test-env-vars": " node __tests__/env-vars.js",
-    "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
+    "start-server-and-test": "start-server-and-test serve http://localhost:9000 combined",
     "start-server-and-test:locally": "start-server-and-test serve http://localhost:9000 cy:open",
     "start-server-and-test:offline": "start-server-and-test serve http://localhost:9000 cy:run:offline",
     "cy:open": "cypress open",
@@ -49,9 +49,16 @@
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run:normal": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome",
     "cy:run:slow": "cross-env CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js",
-    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot cypress run --browser chrome --config testFiles=prefetching.js"
+    "cy:run:bot": "cross-env CYPRESS_CONNECTION_TYPE=bot cypress run --browser chrome --config testFiles=prefetching.js",
+    "playwright": "playwright test --project=chromium",
+    "playwright:debug": "playwright test --project=chromium --debug",
+    "start-server-and-test:playwright": "start-server-and-test serve http://localhost:9000 playwright",
+    "start-server-and-test:playwright-debug": "start-server-and-test serve http://localhost:9000 playwright:debug",
+    "combined": "npm run playwright && npm run cy:run",
+    "postinstall": "playwright install chromium"
   },
   "devDependencies": {
+    "@playwright/test": "^1.22.0",
     "cross-env": "^5.2.0",
     "fs-extra": "^7.0.1",
     "gatsby-core-utils": "^3.1.3",

@@ -78,7 +78,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -92,7 +92,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -107,7 +107,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -123,7 +123,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -138,7 +138,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
@@ -154,7 +154,7 @@ describe(`scripts with sources`, () => {
 
       cy.get(`table[id=script-resource-records] tbody`)
         .children()
-        .should(`have.length`, 3)
+        .should(`have.length`, 5)
       cy.getRecord(script.three, `strategy`, true).should(
         `equal`,
         `post-hydrate`
