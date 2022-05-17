@@ -122,8 +122,6 @@ export async function writeTypeScriptTypes(
     }
   })
 
-  const isVerbose = process.env.gatsby_log_level === `verbose`
-
   const codegenOptions: Omit<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     // @ts-ignore - Incorrect types
     schema: undefined,
@@ -140,7 +138,6 @@ export async function writeTypeScriptTypes(
       skipTypename: true,
       flattenGeneratedTypes: true,
     },
-    skipDocumentsValidation: !isVerbose,
   }
 
   const result = await codegen({
