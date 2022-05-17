@@ -27,6 +27,7 @@ export async function sourceNodes({
     deferNodeMutation,
     webhookBody,
     pluginName: webhookSourcePluginName,
+    rootDir: store.getState().program.directory,
   })
 
   reporter.verbose(`Checking for deleted pages`)

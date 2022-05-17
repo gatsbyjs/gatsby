@@ -1,11 +1,13 @@
+import path from "path"
 import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
-import { store } from "../redux"
+import { store, emitter } from "../redux"
 import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
 import { IGatsbyState, IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
+import GatsbyCacheLmdb from "./cache-lmdb"
 
 const { deleteNode } = actions
 
@@ -92,20 +94,53 @@ function deleteStaleNodes(
 
 let isInitialSourcing = true
 let sourcingCount = 0
+let decoupledSourcingCache
 export default async ({
   webhookBody,
   pluginName,
   parentSpan,
   deferNodeMutation = false,
+  rootDir,
 }: {
   webhookBody: unknown
   pluginName?: string
   parentSpan?: Span
   deferNodeMutation?: boolean
+  rootDir: string
 }): Promise<void> => {
   const traceId = isInitialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
+
+  if (
+    process.env.DECOUPLED_SOURCING === `true` ||
+    process.env.DECOUPLED_SOURCING === `1`
+  ) {
+    decoupledSourcingCache =
+      decoupledSourcingCache ||
+      new GatsbyCacheLmdb({
+        name: `ledger-cache`,
+        encoding: `string`,
+      }).init()
+
+    const sourcerer = require(path.join(rootDir, `decoupled-sourcerer`))
+    console.log({ sourcerer })
+    console.time(`sourcing time`)
+    await sourcerer({ cache: decoupledSourcingCache, store, emitter })
+    console.timeEnd(`sourcing time`)
+
+    // TODO figure out if we do need to run this on every sourcing.
+    if (isInitialSourcing) {
+      await apiRunner(`sourceNodes`, {
+        traceId,
+        waitForCascadingActions: true,
+        deferNodeMutation,
+        parentSpan,
+        webhookBody: {},
+        pluginName: `internal-data-bridge`,
+      })
+    }
+  }
   await apiRunner(`sourceNodes`, {
     traceId,
     waitForCascadingActions: true,
