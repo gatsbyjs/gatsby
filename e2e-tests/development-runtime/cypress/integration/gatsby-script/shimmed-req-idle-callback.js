@@ -1,5 +1,5 @@
-import { Script, scripts } from "../../../gatsby-script-scripts"
-import { ResourceRecord } from "../../records"
+import { script } from "../../../gatsby-script-scripts"
+import { resourceRecord } from "../../../gatsby-script-records"
 
 // The page that we will assert against
 const page = `/gatsby-script-scripts-with-sources`
@@ -16,7 +16,7 @@ Cypress.on(`window:before:load`, win => {
 describe(`using the idle strategy with shimmed requestIdleCallback`, () => {
   it(`should load successfully`, () => {
     cy.visit(page).waitForRouteChange()
-    cy.getRecord(Script.marked, `success`, true).should(`equal`, `true`)
+    cy.getRecord(script.marked, `success`, true).should(`equal`, `true`)
 
     cy.get("@requestIdleCallback").should("not.be.called")
   })
@@ -24,9 +24,9 @@ describe(`using the idle strategy with shimmed requestIdleCallback`, () => {
   it(`should load after other strategies`, () => {
     cy.visit(page).waitForRouteChange()
 
-    cy.getRecord(Script.marked, ResourceRecord.fetchStart).then(
+    cy.getRecord(script.marked, resourceRecord.fetchStart).then(
       markedFetchStart => {
-        cy.getRecord(Script.three, ResourceRecord.fetchStart).should(
+        cy.getRecord(script.three, resourceRecord.fetchStart).should(
           `be.lessThan`,
           markedFetchStart
         )
@@ -37,7 +37,7 @@ describe(`using the idle strategy with shimmed requestIdleCallback`, () => {
 
   it(`should call an on load callback once the script has loaded`, () => {
     cy.visit(page).waitForRouteChange()
-    cy.getRecord(Script.marked, ResourceRecord.responseEnd).then(() => {
+    cy.getRecord(script.marked, resourceRecord.responseEnd).then(() => {
       cy.get(`[data-on-load-result=idle]`)
     })
     cy.get("@requestIdleCallback").should("not.be.called")
