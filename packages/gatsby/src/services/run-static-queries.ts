@@ -40,7 +40,7 @@ export async function runStaticQueries({
   }
 
   // TODO: This is hacky, remove with a refactor of PQR itself
-  if (!activity) {
+  if (activity) {
     activity.start()
   }
 
@@ -51,7 +51,7 @@ export async function runStaticQueries({
     graphqlTracing: program?.graphqlTracing,
   })
 
-  if (!activity) {
+  if (activity) {
     activity.done()
   }
 }

@@ -238,6 +238,8 @@ module.exports = async function build(
     })
   }
 
+  await waitUntilAllJobsComplete()
+
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     const state = store.getState()
     const buildActivityTimer = report.activityTimer(

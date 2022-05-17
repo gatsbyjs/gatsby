@@ -62,10 +62,6 @@ exports.GENERATE_PAGE = async ({ args }): Promise<void> => {
         hadError = true
       }
     }
-
-    console.log(
-      `${requestId} with ${graphqlEngine.getTrackedActions(requestId).length}`
-    )
   } catch (e) {
     console.error(e)
     hadError = true
