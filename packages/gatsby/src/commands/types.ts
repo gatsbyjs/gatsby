@@ -19,6 +19,8 @@ export interface IProgram {
   open: boolean
   openTracingConfigFile: string
   port: number
+  // TODO(v5): remove
+  proxyPort: number
   host: string
   report: Reporter
   [`cert-file`]?: string

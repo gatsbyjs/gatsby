@@ -234,6 +234,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     const args = ${JSON.stringify({
       ...program,
       port: developPort,
+      // TODO(v5): remove
+      proxyPort: developPort,
       // Don't pass SSL options down to the develop process, it should always use HTTP
       ssl: null,
       debugInfo,
