@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add request headers allows you to add request headers 1`] = `
+Object {
+  "payload": Object {
+    "domain": "testdomain.com",
+    "headers": Object {
+      "X-Header": "test",
+    },
+  },
+  "type": "SET_REQUEST_HEADERS",
+}
+`;
+
+exports[`Add request headers allows you to add request headers 2`] = `
+Map {
+  "testdomain.com" => Object {
+    "X-Header": "test",
+  },
+}
+`;
