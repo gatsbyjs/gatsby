@@ -96,7 +96,15 @@ describe(
       // and our data files (page-data and app-data) are for newer built.
       // We will mock both app-data (to change the hash) as well as example page-data
       // to simulate changes to static query hashes between builds.
-      it(`should force reload page if on initial load the html is not matching newest app/page-data`, () => {
+      it(
+        `should force reload page if on initial load the html is not matching newest app/page-data`, 
+        {
+          retries: {
+            // give this test a few more chances... this one is rough
+            runMode: 4,
+          },
+        },
+        () => {
         const mockHash = createMockCompilationHash()
 
         // trying to intercept just `/` seems to intercept all routes
