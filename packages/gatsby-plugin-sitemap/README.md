@@ -192,7 +192,7 @@ allPages.filter(
 | Param         | Type                | Description                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------- |
 | page          | <code>object</code> |                                                                                     |
-| excludedRoute | <code>string</code> | Element from `exclude` Array in plugin config.                                      |
+| excludedRoute | <code>string</code> | Element from `excludes` Array in plugin config                                      |
 | tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
 
 <a id="serialize"></a>
