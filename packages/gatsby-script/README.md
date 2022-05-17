@@ -2,7 +2,7 @@
 
 An enhanced script component for Gatsby sites with support for various loading strategies.
 
-See the [documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/) for full details.
+See the [documentation](https://gatsby.dev/gatsby-script) for full details.
 
 ## Usage
 

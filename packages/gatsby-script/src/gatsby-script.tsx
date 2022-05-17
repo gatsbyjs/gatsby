@@ -79,7 +79,7 @@ export function Script(props: ScriptProps): ReactElement | null {
     if (typeof window === `undefined` && collectScript) {
       const identifier = id || src || `no-id-or-src`
       console.warn(
-        `Unable to collect off-main-thread script '${identifier}' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/ for more information.`
+        `Unable to collect off-main-thread script '${identifier}' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
       )
       collectScript(attributes)
     }
