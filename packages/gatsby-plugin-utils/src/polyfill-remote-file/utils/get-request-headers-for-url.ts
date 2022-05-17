@@ -8,5 +8,5 @@ export function getRequestHeadersForUrl(
   const baseDomain = url.parse(passedUrl).hostname
   const { requestHeaders } = store.getState()
 
-  return requestHeaders.get(baseDomain)
+  return requestHeaders?.get(baseDomain)
 }
