@@ -16,7 +16,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -34,7 +34,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -53,7 +53,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -72,7 +72,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -91,7 +91,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -110,7 +110,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -129,7 +129,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -148,7 +148,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -174,7 +174,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -193,7 +193,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.fileName.split(".").pop()})
+                {node.title} ({node.filename.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -231,7 +231,7 @@ export const pageQuery = graphql`
       nodes {
         title
         description
-        fileName
+        filename
         url
         constrained: gatsbyImageData(width: 420)
         fullWidth: gatsbyImageData(width: 200, layout: FIXED)
@@ -266,7 +266,7 @@ export const pageQuery = graphql`
       nodes {
         title
         description
-        fileName
+        filename
         url
         constrained: gatsbyImageData(width: 420)
       }
@@ -280,7 +280,7 @@ export const pageQuery = graphql`
       nodes {
         title
         description
-        fileName
+        filename
         url
         constrained: gatsbyImageData(width: 420)
       }

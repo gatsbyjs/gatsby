@@ -126,7 +126,7 @@ Array [
         "description": Object {
           "type": "String",
         },
-        "fileName": Object {
+        "filename": Object {
           "type": "String!",
         },
         "gatsbyImageData": Object {

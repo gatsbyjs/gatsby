@@ -29,7 +29,7 @@ const getBase64Image = (imageProps, cache) => {
 
   // Keep aspect ratio, image format and other transform options
   const { aspectRatio } = imageProps
-  const originalFormat = imageProps.image.contentType.split(`/`)[1]
+  const originalFormat = imageProps.image.mimeType.split(`/`)[1]
   const toFormat = imageProps.options.toFormat
   const imageOptions = {
     ...imageProps.options,
@@ -53,9 +53,9 @@ const getBase64Image = (imageProps, cache) => {
   }
 
   const loadImage = async () => {
-    const { contentType } = imageProps.image
+    const { mimeType } = imageProps.image
 
-    const extension = mimeTypeExtensions.get(contentType)
+    const extension = mimeTypeExtensions.get(mimeType)
 
     const absolutePath = await fetchRemoteFile({
       url: requestUrl,
@@ -80,15 +80,15 @@ const getBase64Image = (imageProps, cache) => {
 
 const getTracedSVG = async ({ image, options, cache }) => {
   const { traceSVG } = await import(`gatsby-plugin-sharp`)
-  const { url: imgUrl, fileName, contentType } = image
+  const { url: imgUrl, filename, mimeType } = image
 
-  if (contentType.indexOf(`image/`) !== 0) {
+  if (mimeType.indexOf(`image/`) !== 0) {
     return null
   }
 
-  const extension = mimeTypeExtensions.get(contentType)
+  const extension = mimeTypeExtensions.get(mimeType)
   const url = createUrl(imgUrl, options)
-  const name = path.basename(fileName, extension)
+  const name = path.basename(filename, extension)
 
   const absolutePath = await fetchRemoteFile({
     url,
@@ -101,7 +101,7 @@ const getTracedSVG = async ({ image, options, cache }) => {
   return traceSVG({
     file: {
       internal: image.internal,
-      name: fileName,
+      name: filename,
       extension,
       absolutePath,
     },
@@ -124,9 +124,9 @@ const getDominantColor = async ({ image, options, cache }) => {
   }
 
   try {
-    const { contentType, url: imgUrl, fileName } = image
+    const { mimeType, url: imgUrl, filename } = image
 
-    if (contentType.indexOf(`image/`) !== 0) {
+    if (mimeType.indexOf(`image/`) !== 0) {
       return null
     }
 
@@ -135,9 +135,9 @@ const getDominantColor = async ({ image, options, cache }) => {
       options.width = 256
     }
 
-    const extension = mimeTypeExtensions.get(contentType)
+    const extension = mimeTypeExtensions.get(mimeType)
     const url = createUrl(imgUrl, options)
-    const name = path.basename(fileName, extension)
+    const name = path.basename(filename, extension)
 
     const absolutePath = await fetchRemoteFile({
       url,
@@ -174,7 +174,7 @@ function getBasicImageProps(image, args) {
 
   return {
     baseUrl: image.url,
-    contentType: image.contentType,
+    mimeType: image.mimeType,
     aspectRatio: width / height,
     width,
     height,
@@ -277,11 +277,11 @@ export async function resolveGatsbyImageData(
 
   options = doMergeDefaults(options, defaults)
 
-  const { baseUrl, contentType, width, height } = getBasicImageProps(
+  const { baseUrl, mimeType, width, height } = getBasicImageProps(
     image,
     options
   )
-  let [, format] = contentType.split(`/`)
+  let [, format] = mimeType.split(`/`)
   if (format === `jpeg`) {
     format = `jpg`
   }

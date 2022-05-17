@@ -26,7 +26,7 @@ export const pageQuery = graphql`
     ) {
       title
       description
-      fileName
+      filename
       url
       gatsbyImage(width: 420)
     }

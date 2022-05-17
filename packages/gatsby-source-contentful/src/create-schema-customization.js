@@ -376,7 +376,7 @@ export async function createSchemaCustomization(
           description: { type: `String` },
           contentType: { type: `String!` },
           mimeType: { type: `String!` },
-          fileName: { type: `String!` },
+          filename: { type: `String!` },
           url: { type: `String!` },
           size: { type: `Int` },
           width: { type: `Int` },

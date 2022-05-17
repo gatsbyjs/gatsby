@@ -194,9 +194,9 @@ async function sqipContentful({ type, cache, store }) {
           mimeTypeExtensions,
         } = require(`gatsby-source-contentful/image-helpers`)
 
-        const { contentType, url: imgUrl, fileName } = asset
+        const { mimeType, url: imgUrl, filename } = asset
 
-        if (!contentType.includes(`image/`)) {
+        if (!mimeType.includes(`image/`)) {
           return null
         }
 
@@ -224,9 +224,9 @@ async function sqipContentful({ type, cache, store }) {
           background,
         }
 
-        const extension = mimeTypeExtensions.get(contentType)
+        const extension = mimeTypeExtensions.get(mimeType)
         const url = createUrl(imgUrl, options)
-        const name = path.basename(fileName, extension)
+        const name = path.basename(filename, extension)
 
         const absolutePath = await fetchRemoteFile({
           url,

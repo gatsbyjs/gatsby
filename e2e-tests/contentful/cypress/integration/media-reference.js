@@ -7,7 +7,7 @@ describe(`media-reference`, () => {
       cy.get("img")
         .should("have.length", 2)
         .should("have.attr", "src")
-        .should("match", /^\/\/images\.ctfassets\.net/)
+        .should("match", /^https:\/\/images\.ctfassets\.net/)
     })
   })
 
@@ -15,7 +15,7 @@ describe(`media-reference`, () => {
     cy.get('[data-cy-id="media-reference-one"]').within(() => {
       cy.get("img")
         .should("have.attr", "src")
-        .should("match", /^\/\/images\.ctfassets\.net/)
+        .should("match", /^https:\/\/images\.ctfassets\.net/)
     })
   })
 })

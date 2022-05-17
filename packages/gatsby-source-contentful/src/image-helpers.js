@@ -20,7 +20,7 @@ export const mimeTypeExtensions = new Map([
 
 // Check if Contentful asset is actually an image
 export function isImage(image) {
-  return mimeTypeExtensions.has(image?.contentType)
+  return mimeTypeExtensions.has(image?.mimeType)
 }
 
 // Create a Contentful Image API url

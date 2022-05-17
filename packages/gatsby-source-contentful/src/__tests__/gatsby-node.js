@@ -388,8 +388,8 @@ describe(`gatsby-node`, () => {
               true,
               noLocaleFallback
             ) || ``,
-          contentType: file.contentType,
-          fileName: file.fileName,
+          mimeType: file.contentType,
+          filename: file.fileName,
           url: `https:` + file.url,
           size: file.details.size,
           width: file.details?.image?.width || null,
