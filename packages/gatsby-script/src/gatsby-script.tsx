@@ -90,6 +90,7 @@ export function Script(props: ScriptProps): ReactElement | null {
           type="text/partytown"
           async
           data-strategy={strategy}
+          crossOrigin="anonymous"
           {...attributes}
           dangerouslySetInnerHTML={{ __html: resolveInlineScript(props) }}
         />
@@ -101,6 +102,7 @@ export function Script(props: ScriptProps): ReactElement | null {
         async
         src={proxyPartytownUrl(src)}
         data-strategy={strategy}
+        crossOrigin="anonymous"
         {...attributes}
       />
     )
