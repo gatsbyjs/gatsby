@@ -1,11 +1,12 @@
 import { script } from "../../gatsby-script-scripts"
 import { resourceRecord } from "../../gatsby-script-records"
 
-// The page that we will assert against
+Cypress.config(`defaultCommandTimeout`, 30000) // Since we're asserting network requests
+
 const page = `/gatsby-script-scripts-with-sources`
 
 Cypress.on(`window:before:load`, win => {
-  cy.spy(win, "requestIdleCallback").as("requestIdleCallback")
+  cy.spy(win, `requestIdleCallback`).as(`requestIdleCallback`)
   win.requestIdleCallback = undefined
 })
 
@@ -18,7 +19,7 @@ describe(`using the idle strategy with shimmed requestIdleCallback`, () => {
     cy.visit(page).waitForRouteChange()
     cy.getRecord(script.marked, `success`, true).should(`equal`, `true`)
 
-    cy.get("@requestIdleCallback").should("not.be.called")
+    cy.get(`@requestIdleCallback`).should(`not.be.called`)
   })
 
   it(`should load after other strategies`, () => {
@@ -32,7 +33,7 @@ describe(`using the idle strategy with shimmed requestIdleCallback`, () => {
         )
       }
     )
-    cy.get("@requestIdleCallback").should("not.be.called")
+    cy.get(`@requestIdleCallback`).should(`not.be.called`)
   })
 
   it(`should call an on load callback once the script has loaded`, () => {
@@ -40,13 +41,13 @@ describe(`using the idle strategy with shimmed requestIdleCallback`, () => {
     cy.getRecord(script.marked, resourceRecord.responseEnd).then(() => {
       cy.get(`[data-on-load-result=idle]`)
     })
-    cy.get("@requestIdleCallback").should("not.be.called")
+    cy.get(`@requestIdleCallback`).should(`not.be.called`)
   })
 
   it(`should call an on error callback if an error occurred`, () => {
     cy.visit(page).waitForRouteChange()
     cy.get(`[data-on-error-result=idle]`)
 
-    cy.get("@requestIdleCallback").should("not.be.called")
+    cy.get(`@requestIdleCallback`).should(`not.be.called`)
   })
 })
