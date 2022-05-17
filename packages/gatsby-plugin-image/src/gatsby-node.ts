@@ -4,6 +4,7 @@ import {
   ImageFormatType,
   ImageLayoutType,
   ImagePlaceholderType,
+  ImageScalarType,
 } from "./resolver-utils"
 
 export * from "./node-apis/preprocess-source"
@@ -11,6 +12,7 @@ export * from "./node-apis/preprocess-source"
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
   ({ actions, schema }) => {
     actions.createTypes([
+      schema.buildScalarType(ImageScalarType),
       schema.buildEnumType(ImageFormatType),
       schema.buildEnumType(ImageLayoutType),
       schema.buildEnumType(ImagePlaceholderType),
