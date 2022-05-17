@@ -109,11 +109,11 @@ Cypress.Commands.add(`waitForHmr`, (message = `App is up to date`) => {
 })
 
 Cypress.Commands.add(`getFastRefreshOverlay`, () =>
-  cy.get("gatsby-fast-refresh").shadow()
+  cy.get(`gatsby-fast-refresh`).shadow()
 )
 
 Cypress.Commands.add(`assertNoFastRefreshOverlay`, () =>
-  cy.get("gatsby-fast-refresh").should("not.exist")
+  cy.get(`gatsby-fast-refresh`).should(`not.exist`)
 )
 
 addMatchImageSnapshotCommand({

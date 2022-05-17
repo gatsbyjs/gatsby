@@ -2,6 +2,8 @@
 
 An enhanced script component for Gatsby sites with support for various loading strategies.
 
+You do not need to install this package directly, it is available in the main Gatsby package since `gatsby@4.15.0`.
+
 See the [documentation](https://gatsby.dev/gatsby-script) for full details.
 
 ## Usage
@@ -30,7 +32,6 @@ function IndexPage() {
         src={scripts.gtag}
         strategy={ScriptStrategy.offMainThread}
         forward={[`gtag`]}
-        debug={true}
       />
       <Script id="gtag-config" strategy={ScriptStrategy.offMainThread}>
         {`
