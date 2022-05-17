@@ -29,6 +29,7 @@ const DEFAULT_TYPESCRIPT_CONFIG: Readonly<TypeScriptPluginConfig> = {
   scalars: {
     Date: `string`,
     JSON: `Record<string, unknown>`,
+    GatsbyImageData: `gatsby-plugin-image#IGatsbyImageData`,
   },
   // import type {} syntax is nicer
   useTypeImports: true,

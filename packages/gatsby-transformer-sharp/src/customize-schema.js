@@ -7,7 +7,6 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
-  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -407,7 +406,7 @@ const imageNodeType = ({
   cache,
 }) => {
   return {
-    type: new GraphQLNonNull(GraphQLJSON),
+    type: `GatsbyImageData`,
     args: {
       layout: {
         type: ImageLayoutType,
