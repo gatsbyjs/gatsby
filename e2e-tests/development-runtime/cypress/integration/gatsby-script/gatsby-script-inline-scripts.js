@@ -94,8 +94,8 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once after the page is refreshed`, () => {
-        cy.visit(page.target)
-        cy.reload()
+        cy.visit(page.target).waitForRouteChange()
+        cy.reload().url().should(`contain`, page.target)
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
@@ -131,8 +131,9 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once if the page is revisited via browser back/forward buttons after anchor link navigation`, () => {
-        cy.visit(page.navigation)
+        cy.visit(page.navigation).waitForRouteChange()
         cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
+        cy.get(`table[id=script-mark-records] tbody`) // Make sure history has time to change
         cy.go(`back`)
         cy.go(`forward`)
 
