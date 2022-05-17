@@ -1,5 +1,5 @@
-import { script } from "../../../gatsby-script-scripts"
-import { resourceRecord } from "../../../gatsby-script-records"
+import { script } from "../../gatsby-script-scripts"
+import { resourceRecord } from "../../gatsby-script-records"
 
 // The page that we will assert against
 const page = `/gatsby-script-scripts-with-sources`
