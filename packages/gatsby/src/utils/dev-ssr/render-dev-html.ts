@@ -11,6 +11,7 @@ import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
 import { emitter, GatsbyReduxStore } from "../../redux"
 import { IGatsbyPage } from "../../redux/types"
+import { getServerData, IServerData } from "../get-server-data"
 
 interface IErrorRenderMeta {
   codeFrame: string
@@ -22,7 +23,8 @@ interface IErrorRenderMeta {
 }
 
 // TODO: convert `render-dev-html-child.js` to TS and use `typeof import("./render-dev-html-child")`
-// instead of defining interface here
+// instead of defining interface hereimport { IServerData } from '../../../dist/utils/get-server-data.d';
+
 interface IRenderDevHtmlChild {
   renderHTML: (arg: {
     path: string
@@ -32,6 +34,7 @@ interface IRenderDevHtmlChild {
     isClientOnlyPage?: boolean
     error?: IErrorRenderMeta
     directory?: string
+    serverData: any
   }) => Promise<string>
   deleteModuleCache: (htmlComponentRendererPath: string) => void
 }
@@ -72,6 +75,7 @@ export const restartWorker = (htmlComponentRendererPath: string): void => {
     changeCount = 0
   } else {
     worker.all.deleteModuleCache(htmlComponentRendererPath)
+    delete require.cache[require.resolve(htmlComponentRendererPath)]
   }
 }
 
@@ -158,6 +162,7 @@ interface IRenderDevHtmlProps {
   error?: IErrorRenderMeta
   htmlComponentRendererPath: string
   directory: string
+  req?: any
 }
 
 export const renderDevHTML = ({
@@ -168,6 +173,7 @@ export const renderDevHTML = ({
   error = undefined,
   htmlComponentRendererPath,
   directory,
+  req,
 }: IRenderDevHtmlProps): Promise<string> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async (resolve, reject) => {
@@ -252,6 +258,16 @@ export const renderDevHTML = ({
       isClientOnlyPage = true
     }
 
+    const renderer = require(htmlComponentRendererPath)
+
+    const componentInstance = await renderer.getPageChunk(page)
+
+    let serverData: IServerData | undefined = undefined
+
+    if (page.mode === `SSR` && found) {
+      serverData = await getServerData(req, page, req.path, componentInstance)
+    }
+
     const publicDir = nodePath.join(directory, `public`)
 
     try {
@@ -263,6 +279,7 @@ export const renderDevHTML = ({
         publicDir,
         isClientOnlyPage,
         error,
+        serverData,
       })
       return resolve(htmlString)
     } catch (error) {

@@ -612,6 +612,7 @@ export async function startServer(
           store,
           htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,
+          req,
         })
         res.status(200).send(renderResponse)
       } catch (error) {

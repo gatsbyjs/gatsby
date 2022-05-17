@@ -217,16 +217,11 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     // Create file with sync requires of visited page components files.
-    let lazySyncRequires = `
-  // prefer default export if available
-  const preferDefault = m => (m && m.default) || m
-  \n\n`
-    lazySyncRequires += `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
+
+    const lazySyncRequires = `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
       .map(
         (c: IGatsbyPageComponent): string =>
-          `  "${c.componentChunkName}": preferDefault(require("${joinPath(
-            c.component
-          )}"))`
+          `  "${c.componentChunkName}": require("${joinPath(c.component)}")`
       )
       .join(`,\n`)}
   }\n\n`

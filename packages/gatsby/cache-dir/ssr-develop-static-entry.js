@@ -11,6 +11,9 @@ import syncRequires from "$virtual/ssr-sync-requires"
 import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
 
+// prefer default export if available
+const preferDefault = m => (m && m.default) || m
+
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
 // this module so that when this code runs, testRequireError is undefined.
@@ -53,6 +56,7 @@ export default async function staticPage(
   isClientOnlyPage,
   publicDir,
   error,
+  serverData,
   callback
 ) {
   let bodyHtml = ``
@@ -225,6 +229,7 @@ export default async function staticPage(
         const props = {
           ...this.props,
           ...pageData.result,
+          serverData,
           params: {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
@@ -237,7 +242,7 @@ export default async function staticPage(
           !isClientOnlyPage
         ) {
           pageElement = React.createElement(
-            syncRequires.ssrComponents[componentChunkName],
+            preferDefault(syncRequires.ssrComponents[componentChunkName]),
             props
           )
         } else {
@@ -349,4 +354,8 @@ export default async function staticPage(
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
   callback(null, htmlStr)
+}
+
+export function getPageChunk({ componentChunkName }) {
+  return syncRequires.ssrComponents[componentChunkName]
 }

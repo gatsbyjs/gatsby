@@ -87,6 +87,7 @@ exports.renderHTML = ({
   isClientOnlyPage = false,
   error = undefined,
   directory,
+  serverData,
 }) =>
   new Promise((resolve, reject) => {
     try {
@@ -98,6 +99,7 @@ exports.renderHTML = ({
             isClientOnlyPage,
             publicDir,
             error,
+            serverData,
             (_throwAway, htmlString) => {
               resolve(htmlString)
             }
