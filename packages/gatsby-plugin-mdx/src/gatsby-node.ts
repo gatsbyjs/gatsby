@@ -143,7 +143,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
       .filter(Boolean)
       .join(`/`)
 
-  // Use slug from frontmatter, otherwise fall back to the file name
+  // Use title from frontmatter, otherwise fall back to the file name
   const title =
     frontmatter.title || node.name === `index`
       ? `Home`
