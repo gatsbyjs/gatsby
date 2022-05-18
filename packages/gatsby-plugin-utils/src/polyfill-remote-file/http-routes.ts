@@ -5,7 +5,7 @@ import { hasFeature } from "../has-feature"
 import { ImageCDNUrlKeys } from "./utils/url-generator"
 import { getFileExtensionFromMimeType } from "./utils/mime-type-helpers"
 import { transformImage } from "./transform-images"
-import { getRequestHeadersForUrl } from "gatsby/dist/utils/get-request-headers-for-url"
+import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
 
 import type { Application } from "express"
 
