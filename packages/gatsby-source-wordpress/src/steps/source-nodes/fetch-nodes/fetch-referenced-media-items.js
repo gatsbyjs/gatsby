@@ -107,6 +107,33 @@ const pushPromiseOntoRetryQueue = ({
   })
 }
 
+export const addImageCDNFieldsToNode = (node, pluginOptions) => {
+  if (!node?.__typename?.includes(`MediaItem`)) {
+    return node
+  }
+
+  const placeholderUrl = getPlaceholderUrlFromMediaItemNode(node, pluginOptions)
+
+  const url = node.sourceUrl || node.mediaItemUrl
+
+  const filename =
+    node?.mediaDetails?.file?.split(`/`)?.pop() ||
+    path.basename(urlUtil.parse(url).pathname)
+
+  return {
+    ...node,
+    url,
+    contentType: node.contentType,
+    mimeType: node.mimeType,
+    filename,
+    filesize: node?.mediaDetails?.fileSize,
+    width: node?.mediaDetails?.width,
+    height: node?.mediaDetails?.height,
+    placeholderUrl:
+      placeholderUrl ?? node?.mediaDetails?.sizes?.[0]?.sourceUrl ?? url,
+  }
+}
+
 export const createMediaItemNode = async ({
   node,
   helpers,
@@ -180,34 +207,17 @@ export const createMediaItemNode = async ({
         )
       }
 
-      const placeholderUrl = getPlaceholderUrlFromMediaItemNode(
-        node,
+      node = addImageCDNFieldsToNode(
+        {
+          ...node,
+          parent: null,
+          internal: {
+            contentDigest: createContentDigest(node),
+            type: buildTypeName(`MediaItem`),
+          },
+        },
         pluginOptions
       )
-
-      const url = node.sourceUrl || node.mediaItemUrl
-
-      const filename =
-        node?.mediaDetails?.file?.split(`/`)?.pop() ||
-        path.basename(urlUtil.parse(url).pathname)
-
-      node = {
-        ...node,
-        url,
-        contentType: node.contentType,
-        mimeType: node.mimeType,
-        filename,
-        filesize: node?.mediaDetails?.fileSize,
-        width: node?.mediaDetails?.width,
-        height: node?.mediaDetails?.height,
-        placeholderUrl:
-          placeholderUrl ?? node?.mediaDetails?.sizes?.[0]?.sourceUrl ?? url,
-        parent: null,
-        internal: {
-          contentDigest: createContentDigest(node),
-          type: buildTypeName(`MediaItem`),
-        },
-      }
 
       if (localFileNode?.id) {
         node.localFile = {
