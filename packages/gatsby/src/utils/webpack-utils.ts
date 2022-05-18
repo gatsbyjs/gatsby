@@ -512,11 +512,14 @@ export const createWebpackUtils = (
         `warning`,
         `webpack`,
       ]
-      const doNotPolyfillRegex = new RegExp(
-        `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
-          `|`
-        )})[\\\\/]`
-      )
+      // const doNotPolyfillRegex = new RegExp(
+      //   `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
+      //     `|`
+      //   )})[\\\\/]`
+      // )
+
+      // TODO polyfill our build result?
+      const doNotPolyfillRegex = new RegExp(`node_modules`)
 
       return {
         test: /\.(js|mjs)$/,
