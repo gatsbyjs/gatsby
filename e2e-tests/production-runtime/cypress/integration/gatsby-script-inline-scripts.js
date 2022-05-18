@@ -114,6 +114,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       it(`should load only once after anchor link navigation`, () => {
         cy.visit(page.target)
         cy.get(`a[id=anchor-link-back-to-index]`).click()
+        cy.url().should(`contain`, page.navigation)
         cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
 
         cy.get(`table[id=script-mark-records] tbody`)

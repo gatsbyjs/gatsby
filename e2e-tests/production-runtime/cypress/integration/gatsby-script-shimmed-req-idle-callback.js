@@ -5,7 +5,7 @@ Cypress.config(`defaultCommandTimeout`, 30000) // Since we're asserting network 
 
 const page = `/gatsby-script-scripts-with-sources`
 
-Cypress.on(`window:before:load`, win => {
+Cypress.on(`window:load`, win => {
   cy.spy(win, `requestIdleCallback`).as(`requestIdleCallback`)
   win.requestIdleCallback = undefined
 })
