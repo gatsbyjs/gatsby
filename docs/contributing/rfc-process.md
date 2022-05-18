@@ -45,7 +45,7 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
   ## Try it out
 
   Section with instructions on how to use the feature, e.g. with a canary.
-  
+
   <!-- When defining a canary for installation, tell users to use `--save-exact` (npm) or `--exact` (yarn) flag. -->
 
   ## Basic example
