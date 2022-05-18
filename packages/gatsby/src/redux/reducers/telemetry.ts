@@ -21,6 +21,11 @@ export const telemetryReducer = (
     case `MERGE_WORKER_QUERY_STATE`: {
       const { queryStateTelemetryChunk } = action.payload
 
+      // This action may be dispatched in cases where queries might not be included in the merge data
+      if (!queryStateTelemetryChunk) {
+        return state
+      }
+
       const urlsFromWorker =
         queryStateTelemetryChunk.gatsbyImageSourceUrls || new Set<string>()
 
