@@ -2,17 +2,10 @@ import { stripIndent } from "common-tags"
 import type { GraphQLFieldResolver } from "gatsby/graphql"
 import type {
   EnumTypeComposerAsObjectDefinition,
-  ScalarTypeComposerAsObjectDefinition,
   ObjectTypeComposerFieldConfigAsObjectDefinition,
   ObjectTypeComposerArgumentConfigMapDefinition,
 } from "graphql-compose"
 import type { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils"
-
-const SCALAR_NAME = `GatsbyImageData`
-
-export const ImageScalarType: ScalarTypeComposerAsObjectDefinition = {
-  name: SCALAR_NAME,
-}
 
 export const ImageFormatType: EnumTypeComposerAsObjectDefinition = {
   name: `GatsbyImageFormat`,
@@ -81,7 +74,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
   IGatsbyImageResolverArgs & TArgs
 > {
   return {
-    type: `${SCALAR_NAME}!`,
+    type: `GatsbyImageData!`,
     args: {
       layout: {
         type: ImageLayoutType.name,
@@ -173,7 +166,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
   IGatsbyImageFieldArgs & TArgs
 > {
   return {
-    type: `${SCALAR_NAME}!`,
+    type: `GatsbyImageData!`,
     args: {
       layout: {
         type: ImageLayoutType.name,
