@@ -260,12 +260,17 @@ export const renderDevHTML = ({
 
     const renderer = require(htmlComponentRendererPath)
 
-    const componentInstance = await renderer.getPageChunk(page)
+    const componentInstance = await renderer.getPageChunk(pageObj)
 
     let serverData: IServerData | undefined = undefined
 
-    if (page.mode === `SSR` && found) {
-      serverData = await getServerData(req, page, req.path, componentInstance)
+    if (pageObj.mode === `SSR` && found) {
+      serverData = await getServerData(
+        req,
+        pageObj,
+        req.path,
+        componentInstance
+      )
     }
 
     const publicDir = nodePath.join(directory, `public`)
