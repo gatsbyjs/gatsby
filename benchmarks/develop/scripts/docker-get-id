@@ -1,0 +1,8 @@
+DOCKER_ID=$(\
+  docker ps --format '{{.Image}}:{{.ID}}' | \
+  grep "gatsby-develop" | \
+  head -n 1 | \
+  sed 's/gatsby\-develop://'\
+)
+
+echo $DOCKER_ID
