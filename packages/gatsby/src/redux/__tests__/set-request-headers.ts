@@ -28,14 +28,13 @@ describe(`Add request headers`, () => {
     expect(action.payload.headers).toEqual({
       "X-Header": `test`,
     })
-    expect(action).toMatchSnapshot()
 
     const state = reducer(undefined, action)
 
     expect(state.get(`testdomain.com`)).toEqual({
       "X-Header": `test`,
     })
-    expect(state).toMatchSnapshot()
+    expect(state.size).toBe(1)
   })
 
   it(`fails if domain is missing`, () => {
