@@ -37,6 +37,7 @@ async function watch(
     monoRepoPackages,
     localPackages,
     packageNameToPath,
+    noRegistry,
   }
 ) {
   setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
@@ -155,6 +156,7 @@ async function watch(
           localPackages,
           ignorePackageJSONChanges,
           yarnWorkspaceRoot,
+          noRegistry,
         })
       } else {
         // run `yarn`
@@ -339,6 +341,7 @@ async function watch(
             packageNameToPath,
             localPackages,
             ignorePackageJSONChanges,
+            noRegistry,
           })
           packagesToPublish.clear()
           isPublishing = false

@@ -8,6 +8,7 @@ const installPackages = async ({
   packagesToInstall,
   yarnWorkspaceRoot,
   newlyPublishedPackageVersions,
+  noRegistry,
 }) => {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
@@ -118,20 +119,28 @@ const installPackages = async ({
 
     // package.json files are changed - so we just want to install
     // using verdaccio registry
-    installCmd = [`yarn`, [`install`, `--registry=${registryUrl}`]]
+    const yarnCommands = [`install`]
+
+    if (!noRegistry) {
+      yarnCommands.push(`--registry=${registryUrl}`)
+    }
+
+    installCmd = [`yarn`, yarnCommands]
   } else {
-    installCmd = [
-      `yarn`,
-      [
-        `add`,
-        ...packagesToInstall.map(packageName => {
-          const packageVersion = newlyPublishedPackageVersions[packageName]
-          return `${packageName}@${packageVersion}`
-        }),
-        `--registry=${registryUrl}`,
-        `--exact`,
-      ],
+    const yarnCommands = [
+      `add`,
+      ...packagesToInstall.map(packageName => {
+        const packageVersion = newlyPublishedPackageVersions[packageName]
+        return `${packageName}@${packageVersion}`
+      }),
+      `--exact`,
     ]
+
+    if (!noRegistry) {
+      yarnCommands.push(`--registry=${registryUrl}`)
+    }
+
+    installCmd = [`yarn`, yarnCommands]
   }
 
   try {
