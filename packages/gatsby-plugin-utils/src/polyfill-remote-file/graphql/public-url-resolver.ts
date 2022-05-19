@@ -3,12 +3,13 @@ import {
   dispatchLocalFileServiceJob,
   shouldDispatch,
 } from "../jobs/dispatchers"
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
 import type { IRemoteFileNode, IGraphQLFieldConfigDefinition } from "../types"
 
 export function publicUrlResolver(
   source: IRemoteFileNode,
-  actions: Actions
+  actions: Actions,
+  store: Store
 ): string {
   if (shouldDispatch()) {
     dispatchLocalFileServiceJob(
@@ -17,7 +18,8 @@ export function publicUrlResolver(
         filename: source.filename,
         contentDigest: source.internal.contentDigest,
       },
-      actions
+      actions,
+      store
     )
   }
 
@@ -25,12 +27,13 @@ export function publicUrlResolver(
 }
 
 export function generatePublicUrlFieldConfig(
-  actions: Actions
+  actions: Actions,
+  store: Store
 ): IGraphQLFieldConfigDefinition<IRemoteFileNode, string> {
   return {
     type: `String!`,
     resolve(source): string {
-      return publicUrlResolver(source, actions)
+      return publicUrlResolver(source, actions, store)
     },
   }
 }

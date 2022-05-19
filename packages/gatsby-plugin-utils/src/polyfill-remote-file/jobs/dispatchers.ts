@@ -1,7 +1,8 @@
 import path from "path"
 import { getGatsbyVersion } from "../utils/get-gatsby-version"
 import { generateFileUrl, generateImageUrl } from "../utils/url-generator"
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
+import { getRequestHeadersForUrl } from "../utils/get-request-headers-for-url"
 
 export function shouldDispatch(): boolean {
   return (
@@ -18,7 +19,8 @@ export function dispatchLocalFileServiceJob(
     filename,
     contentDigest,
   }: { url: string; filename: string; contentDigest: string },
-  actions: Actions
+  actions: Actions,
+  store: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
   const publicUrl = generateFileUrl({
@@ -29,6 +31,8 @@ export function dispatchLocalFileServiceJob(
   publicUrl.unshift(`public`)
   // get filename and remove querystring
   const outputFilename = publicUrl.pop()?.split(`?`)[0]
+
+  const httpHeaders = getRequestHeadersForUrl(url, store)
 
   actions.createJobV2(
     {
@@ -43,6 +47,7 @@ export function dispatchLocalFileServiceJob(
         url,
         filename: outputFilename,
         contentDigest,
+        httpHeaders,
       },
     },
     {

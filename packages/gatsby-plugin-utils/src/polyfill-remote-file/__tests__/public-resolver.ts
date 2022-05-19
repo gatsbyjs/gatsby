@@ -59,6 +59,9 @@ describe(`publicResolver`, () => {
     const actions = {
       createJobV2: jest.fn(() => jest.fn()),
     }
+    const store = {
+      getState: (): void => {},
+    }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
 
     const source = {
@@ -74,7 +77,7 @@ describe(`publicResolver`, () => {
         contentDigest: `1`,
       },
     }
-    publicUrlResolver(source, actions)
+    publicUrlResolver(source, actions, store)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({
         args: {
@@ -96,6 +99,9 @@ describe(`publicResolver`, () => {
     const actions = {
       createJobV2: jest.fn(() => jest.fn()),
     }
+    const store = {
+      getState: (): void => {},
+    }
     dispatchers.shouldDispatch.mockImplementationOnce(() => true)
 
     const source = {
@@ -113,7 +119,7 @@ describe(`publicResolver`, () => {
         contentDigest: `1`,
       },
     }
-    publicUrlResolver(source, actions)
+    publicUrlResolver(source, actions, store)
     expect(actions.createJobV2).toHaveBeenCalledWith(
       expect.objectContaining({
         args: {

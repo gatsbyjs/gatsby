@@ -27,10 +27,15 @@ const queue = Queue<null, IImageServiceProps, string>(
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export async function FILE_CDN({
   outputDir,
-  args: { url, filename, contentDigest },
+  args: { url, filename, contentDigest, httpHeaders },
 }: {
   outputDir: string
-  args: { url: string; filename: string; contentDigest: string }
+  args: {
+    url: string
+    filename: string
+    contentDigest: string
+    httpHeaders: Record<string, string>
+  }
 }): Promise<void> {
   const ext = path.extname(filename)
 
@@ -41,7 +46,7 @@ export async function FILE_CDN({
     ext,
     cacheKey: contentDigest,
     excludeDigest: true,
-    httpHeaders: getRequestHeadersForUrl(url),
+    httpHeaders,
   })
 }
 
