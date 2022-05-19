@@ -17,6 +17,7 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
       {
         store,
         schema,
+        actions,
       }
     )
   )
