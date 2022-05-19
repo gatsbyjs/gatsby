@@ -1,3 +1,7 @@
+## ⚠️ This package is now deprecated
+
+The `gatsby-plugin-graphql-config` package is now deprecated. Upgrade to Gatsby 4.15.0 to use [GraphQL Typegen](https://gatsbyjs.com/docs/how-to/local-development/graphql-typegen).
+
 # gatsby-plugin-graphql-config
 
 Persists Gatsby GraphQL schema and fragments to the `.cache` directory, as well as a [GraphQL Config](https://graphql-config.com) file to enable full-featured tooling for:
