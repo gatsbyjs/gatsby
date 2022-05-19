@@ -1,6 +1,5 @@
 import _ from "lodash"
 import semver from "semver"
-import reporter from "gatsby-cli/lib/reporter"
 
 import sampleSiteForExperiment from "./sample-site-for-experiment"
 
@@ -244,13 +243,7 @@ const activeFlags: Array<IFlag> = [
     description: `More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. See https://github.com/gatsbyjs/gatsby/discussions/35420 for more details.`,
     experimental: false,
     noCI: true,
-    testFitness: (): fitnessEnum => {
-      reporter.warn(
-        `This feature is available as graphqlTypegen option natively now. This flag no longer has any effect and you can remove them from config. Learn more at: https://gatsby.dev/graphql-typegen`
-      )
-
-      return false
-    },
+    testFitness: (): fitnessEnum => false,
   },
 ]
 
