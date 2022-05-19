@@ -233,7 +233,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         onDone: [
           {
             target: `initialGraphQLTypegen`,
-            cond: (ctx): boolean => ctx.graphqlTypegen,
+            cond: (ctx: IBuildContext): boolean => ctx.graphqlTypegen,
           },
           {
             target: `waiting`,
