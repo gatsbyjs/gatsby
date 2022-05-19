@@ -350,11 +350,11 @@ jobs:
       - run: # Allow localhost registry
           command: echo 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Set project dir
+          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Copy over packages
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once --no-registry
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run:
-          command: yarn install
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn add start-server-and-test@^1.11.0
