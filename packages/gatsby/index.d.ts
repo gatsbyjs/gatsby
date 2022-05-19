@@ -228,7 +228,7 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 /**
  * Gatsby configuration API.
  *
- * @see https://www.gatsbyjs.com/docs/gatsby-config/
+ * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 export interface GatsbyConfig {
   /** When you want to reuse common pieces of data across the site (for example, your site title), you can store that here. */
@@ -243,7 +243,7 @@ export interface GatsbyConfig {
   trailingSlash?: "always" | "never" | "ignore" | "legacy"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
-  /** TODO */
+  /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. */
   graphqlTypegen?: boolean
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
