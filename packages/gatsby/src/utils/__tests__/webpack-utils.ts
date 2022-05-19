@@ -4,12 +4,12 @@ import { Stage, IProgram } from "../../commands/types"
 
 import autoprefixer from "autoprefixer"
 
-let mockHasIESupport = jest.fn()
+const mockHasIESupport = jest.fn()
 
 jest.mock(`../browserslist`, () => {
   return {
     getBrowsersList: (): Array<string> => [],
-    hasIESupport: () => mockHasIESupport(),
+    hasIESupport: (): boolean => mockHasIESupport(),
   }
 })
 
@@ -130,7 +130,7 @@ describe(`webpack utils`, () => {
     })
     describe(`exclude function`, () => {
       let dependencies
-      const setup = () => {
+      const setup = (): void => {
         dependencies = config.rules.dependencies({
           modulesThatUseGatsby: [
             {

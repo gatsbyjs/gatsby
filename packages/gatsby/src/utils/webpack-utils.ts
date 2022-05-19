@@ -514,12 +514,12 @@ export const createWebpackUtils = (
         `webpack`,
       ]
 
-      let doNotPolyfillRegex = hasIESupport(process.cwd())
+      const doNotPolyfillRegex = hasIESupport(process.cwd())
         ? new RegExp(
-          `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
-            `|`
-          )})[\\\\/]`
-        )
+            `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
+              `|`
+            )})[\\\\/]`
+          )
         : new RegExp(`node_modules`)
 
       return {
