@@ -1487,7 +1487,10 @@ actions.unstable_createNodeManifest = (
  * @param {Object} $0.headers The headers to store.
  */
 actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
-  const noHeaders = typeof headers !== `object`
+  const headersIsObject =
+    typeof headers === `object` && headers !== null && !Array.isArray(headers)
+
+  const noHeaders = !headersIsObject
   const noDomain = typeof domain !== `string`
 
   if (noHeaders) {
@@ -1503,6 +1506,10 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
   }
 
   if (noDomain || noHeaders) {
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`
+    )
+
     return null
   }
 
@@ -1517,8 +1524,8 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
       },
     }
   } else {
-    reporter.warn(
-      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain that is not a valid URL. (${domain})`
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
     )
 
     return null

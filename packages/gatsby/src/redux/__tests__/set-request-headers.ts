@@ -6,6 +6,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     __esModule: true,
     warn: jest.fn(),
+    panic: jest.fn(),
   }
 })
 
@@ -50,6 +51,24 @@ describe(`Add request headers`, () => {
     expect(reporter.warn).toHaveBeenCalledWith(
       `Plugin gatsby-source-test called actions.setRequestHeaders with a domain property that isn't a string.`
     )
+    expect(reporter.panic).toHaveBeenCalled()
+  })
+
+  it(`fails if an invalid URL is passed to the domain argument`, () => {
+    const domain = `not a domain`
+    actions.setRequestHeaders(
+      {
+        domain,
+        headers: {
+          "X-Header": `test`,
+        },
+      },
+      testPlugin
+    )
+
+    expect(reporter.panic).toHaveBeenCalledWith(
+      `Plugin ${testPlugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
+    )
   })
 
   it(`fails if headers are missing`, () => {
@@ -63,5 +82,6 @@ describe(`Add request headers`, () => {
     expect(reporter.warn).toHaveBeenCalledWith(
       `Plugin gatsby-source-test called actions.setRequestHeaders with a headers property that isn't an object.`
     )
+    expect(reporter.panic).toHaveBeenCalled()
   })
 })
