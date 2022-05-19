@@ -61,7 +61,7 @@ async function build(dockerExec) {
 
       start = Date.now()
       const { err  } = await dockerExec(
-        `yarn gatsby build`, 
+        `yarn gatsby:build`, 
         {
           BUILD_NUM_NODES: args.numNodes, 
           BUILD_STRING_NODE_SIZE: args.nodeSize, 
@@ -94,11 +94,11 @@ async function develop(dockerExec) {
     console.log(` - clearing cache`)
     await dockerExec(`rm -rf .cache`)
 
-    console.log(` - running build with ${args.numNodes} nodes of size ${args.nodeSize}`)
+    console.log(` - running develop with ${args.numNodes} nodes of size ${args.nodeSize}`)
 
     start = Date.now()
     const process = dockerExec(
-      `yarn gatsby develop --port 9000`, 
+      `yarn gatsby:develop`, 
       {
         BUILD_NUM_NODES: args.numNodes, 
         BUILD_STRING_NODE_SIZE: args.nodeSize, 

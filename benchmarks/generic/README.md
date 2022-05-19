@@ -10,7 +10,7 @@ It has ports 9000 (for hosting gatsby) and 9229 (for debugging) exposed.
 Within the container, two points to your local filesystem are mounted:
 
 - /usr/src/gatsby : Your local gatsby repo
-- /usr/src/site : The benchmark gatsby site
+- /usr/src/app : The benchmark gatsby site
 
 If you'd like to configure `jemalloc` to run within the container, set the `JEMALLOC=1` env var when building the docker container.
 
