@@ -136,7 +136,6 @@ export async function writeTypeScriptTypes(
       },
       addUnderscoreToArgsType: true,
       skipTypename: true,
-      flattenGeneratedTypes: true,
     },
   }
 
