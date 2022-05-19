@@ -1,3 +1,6 @@
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -6,9 +9,9 @@ module.exports = {
       twitter: `kylemathews`,
     },
   },
+  graphqlTypegen: true,
   flags: {
     DEV_SSR: false,
-    GRAPHQL_TYPEGEN: true,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
