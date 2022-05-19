@@ -14,13 +14,8 @@ import { IBuildContext } from "../../services"
 
 const RECOMPILE_PANIC_LIMIT = 6
 
-const getGraphqlTypegenConfig = (ctx: IBuildContext): boolean => {
-  const { store } = ctx
-  const { config } = store!.getState()
-  console.log({ config })
-  const { graphqlTypegen = false } = config
-  return graphqlTypegen
-}
+const getGraphqlTypegenConfig = (ctx: IBuildContext): boolean =>
+  !!ctx.store!.getState().config.graphqlTypegen
 
 /**
  * This is the top-level state machine for the `gatsby develop` command
