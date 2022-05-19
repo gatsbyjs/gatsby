@@ -344,8 +344,14 @@ jobs:
       - run: # Don't allow any fallback to root dependencies
           command: yarn config set pnpFallbackMode none
           working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Forces to use the local packages
-          command: yarn link --all --private ~/project
+      - run: # Set the local registry to gatsby-dev-cli registry
+          command: yarn config set npmRegistryServer http://localhost:4873
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow localhost registry
+          command: echo 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Copy over packages
+          command: gatsby-dev --force-install --scan-once --no-registry
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn install
