@@ -330,6 +330,9 @@ jobs:
           command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnp
           working_directory: ~/project
       - run:
+          name: Install gatsby-dev
+          command: yarn global add gatsby-dev-cli
+      - run:
           command: touch yarn.lock
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
