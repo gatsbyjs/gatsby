@@ -27,6 +27,8 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
+export * from "gatsby-script"
+
 export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>
   onScroll(): void
@@ -256,6 +258,11 @@ export interface GatsbyConfig {
     prefix: string
     url: string
   }
+  /**
+   * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
+   * @see https://gatsby.dev/gatsby-script
+   */
+  partytownProxiedURLs?: Array<string>
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
   developMiddleware?(app: any): void
 }
