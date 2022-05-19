@@ -22,7 +22,6 @@ export function polyfillImageServiceDevRoutes(
 }
 
 export function addImageRoutes(app: Application, store: Store): Application {
-  console.log(`Adding image routes`, store)
   app.get(`/_gatsby/file/:url/:filename`, async (req, res) => {
     const outputDir = path.join(
       global.__GATSBY?.root || process.cwd(),
