@@ -17,7 +17,7 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn"
+export type AvailableFeatures = "image-cdn" | "graphql-typegen"
 
 export {
   default as Link,
@@ -165,7 +165,7 @@ export type GetServerDataProps = {
  */
 export type GetServerDataReturn<ServerDataType = Record<string, unknown>> =
   Promise<{
-    headers?: Map<string, unknown>
+    headers?: Record<string, unknown>
     props?: ServerDataType
     status?: number
   }>
@@ -1186,7 +1186,7 @@ export interface Actions {
     node: NodeInput & TNode,
     plugin?: ActionPlugin,
     options?: ActionOptions
-  ): void
+  ): void | Promise<void>
 
   /** @see https://www.gatsbyjs.com/docs/actions/#touchNode */
   touchNode(node: NodeInput, plugin?: ActionPlugin): void

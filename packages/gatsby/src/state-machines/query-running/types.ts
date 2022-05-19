@@ -12,7 +12,6 @@ type Reporter = typeof reporter
 
 export interface IQueryRunningContext {
   reporter?: Reporter
-  shouldRunInitialTypegen?: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
