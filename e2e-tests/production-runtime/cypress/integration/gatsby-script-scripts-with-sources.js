@@ -104,6 +104,10 @@ describe(`scripts with sources`, () => {
 
     it(`should load only once after anchor link navigation`, () => {
       cy.visit(page.target)
+      cy.get(`table[id=script-resource-records] tbody`)
+        .children()
+        .should(`have.length`, 5)
+
       cy.get(`a[id=anchor-link-back-to-index]`).click()
       cy.url().should(`contain`, page.navigation)
       cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
