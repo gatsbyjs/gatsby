@@ -36,3 +36,8 @@ export const hasES6ModuleSupport = (directory: string): boolean => {
   const browserslist = getBrowsersList(directory)
   return query(browserslist + `, not supports es6-module`).length === 0
 }
+
+export const hasIESupport = (directory: string): boolean => {
+  const browserslist = getBrowsersList(directory)
+  return query(browserslist + ` and ie > 1`).length > 0
+}

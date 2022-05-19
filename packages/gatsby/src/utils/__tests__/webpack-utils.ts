@@ -4,9 +4,12 @@ import { Stage, IProgram } from "../../commands/types"
 
 import autoprefixer from "autoprefixer"
 
+let mockHasIESupport = jest.fn()
+
 jest.mock(`../browserslist`, () => {
   return {
     getBrowsersList: (): Array<string> => [],
+    hasIESupport: () => mockHasIESupport(),
   }
 })
 
@@ -31,6 +34,11 @@ beforeAll(() => {
   config = createWebpackUtils(Stage.Develop, {
     directory: `${os.tmpdir()}/test`,
   } as IProgram)
+})
+
+beforeEach(() => {
+  // reset mocks
+  mockHasIESupport.mockReturnValue(true)
 })
 
 describe(`webpack utils`, () => {
@@ -122,7 +130,7 @@ describe(`webpack utils`, () => {
     })
     describe(`exclude function`, () => {
       let dependencies
-      beforeAll(() => {
+      const setup = () => {
         dependencies = config.rules.dependencies({
           modulesThatUseGatsby: [
             {
@@ -131,7 +139,10 @@ describe(`webpack utils`, () => {
             },
           ],
         })
-      })
+      }
+
+      beforeEach(setup)
+
       it(`excludes source files from user code`, () => {
         expect(
           dependencies.exclude(
@@ -167,12 +178,24 @@ describe(`webpack utils`, () => {
           )
         ).toEqual(true)
       })
-      it(`includes dependencies that don't use gatsby`, () => {
+      it(`includes dependencies that don't use gatsby when IE is supported`, () => {
         expect(
           dependencies.exclude(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/awesome-lib/index.js`
           )
         ).toEqual(false)
+      })
+      it(`excludes dependencies that don't use gatsby when IE is not supported`, () => {
+        mockHasIESupport.mockReturnValue(false)
+
+        // run setup with new mock
+        setup()
+
+        expect(
+          dependencies.exclude(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/awesome-lib/index.js`
+          )
+        ).toEqual(true)
       })
       it(`excludes gatsby-browser.js`, () => {
         expect(

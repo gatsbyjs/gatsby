@@ -6,7 +6,7 @@ jest.mock(`browserslist/node`, () => {
   }
 })
 const path = require(`path`)
-import { getBrowsersList, hasES6ModuleSupport } from "../browserslist"
+import { getBrowsersList, hasES6ModuleSupport, hasIESupport } from "../browserslist"
 const { findConfig: mockedFindConfig } = require(`browserslist/node`)
 
 const BASE = path.resolve(`.`)
@@ -48,5 +48,19 @@ describe(`browserslist`, () => {
     getBrowsersList(BASE)
 
     expect(hasES6ModuleSupport(BASE)).toBe(false)
+  });
+
+  [
+    {defaults: [`last 2 versions, not ie 6-11`], expected: false},
+    {defaults: [`last 2 chrome versions`], expected: false},
+    {defaults: [`last 2 versions`], expected: true},
+  ].forEach(({defaults, expected}) => {
+    it.only(`hasIESupport returns ${expected} when browser list is "${defaults}"`, () => {
+      mockedFindConfig.mockReturnValueOnce({defaults})
+
+      const actual = hasIESupport(BASE)
+
+      expect(actual).toBe(expected)
+    })
   })
 })
