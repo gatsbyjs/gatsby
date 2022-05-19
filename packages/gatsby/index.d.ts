@@ -243,6 +243,8 @@ export interface GatsbyConfig {
   trailingSlash?: "always" | "never" | "ignore" | "legacy"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
+  /** TODO */
+  graphqlTypegen?: boolean
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
