@@ -10,7 +10,7 @@ It has ports 9000 (for hosting gatsby) and 9229 (for debugging) exposed.
 Within the container, two points to your local filesystem are mounted:
 
 - /usr/src/gatsby : Your local gatsby repo
-- /usr/src/site : The memory benchmark gatsby site
+- /usr/src/site : The benchmark gatsby site
 
 If you'd like to configure `jemalloc` to run within the container, set the `JEMALLOC=1` env var when building the docker container.
 
@@ -18,7 +18,7 @@ If you'd like to configure `jemalloc` to run within the container, set the `JEMA
 
 ### Tests
 
-#### yarn test --memory X --num-nodes Y --node-size Z
+#### yarn test --memory X --num-nodes Y --node-size Z --command [build, develop]
 
 Runs a test build within a docker container with the given memory allotment.
 Within our gatsby-node, we'll create X nodes with a string property of size Y.
@@ -26,8 +26,11 @@ Within our gatsby-node, we'll create X nodes with a string property of size Y.
 Example: running a build with 1000 nodes of 1mb each, in a docker container with 8gb of memory.
 
 ```
-$ yarn test --memory 8g --num-nodes 500 --node-size 1m
+$ yarn test --memory 8g --num-nodes 500 --node-size 1m --command build
 ```
+
+You may optionally pass a `--site` flag as well to test a specific site at the given path. This will, however,
+not respond to the `num-nodes` or `node-size` arguments, as those are configured in the benchmark's gatsby-node.
 
 #### yarn test-suite --name some-name --suite [incremental|exhaustive]
 
