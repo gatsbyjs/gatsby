@@ -169,6 +169,8 @@ See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path
 
 ## trailingSlash
 
+> Support added in `gatsby@4.7.0`
+
 Configures the creation of URLs for pages, and whether to remove, append, or ignore trailing slashes.
 
 - `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
@@ -178,6 +180,8 @@ Configures the creation of URLs for pages, and whether to remove, append, or ign
 The default setting for this option is `legacy` in order to preserve existing behavior for current users. In Gatsby v5 the default mode will be `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option. Alternate hosting providers (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
 
 ## graphqlTypegen
+
+> Support added in `gatsby@4.15.0`
 
 You can enable the [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen) feature by setting `graphqlTypegen` to `true`. It'll allow you to more easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
 
