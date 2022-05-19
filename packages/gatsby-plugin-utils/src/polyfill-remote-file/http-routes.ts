@@ -8,16 +8,21 @@ import { transformImage } from "./transform-images"
 import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
 
 import type { Application } from "express"
+import type { Store } from "gatsby"
 
-export function polyfillImageServiceDevRoutes(app: Application): void {
+export function polyfillImageServiceDevRoutes(
+  app: Application,
+  store: Store
+): void {
   if (hasFeature(`image-cdn`)) {
     return
   }
 
-  addImageRoutes(app)
+  addImageRoutes(app, store)
 }
 
-export function addImageRoutes(app: Application): Application {
+export function addImageRoutes(app: Application, store: Store): Application {
+  console.log(`Adding image routes`, store)
   app.get(`/_gatsby/file/:url/:filename`, async (req, res) => {
     const outputDir = path.join(
       global.__GATSBY?.root || process.cwd(),
@@ -32,7 +37,7 @@ export function addImageRoutes(app: Application): Application {
       directory: outputDir,
       url,
       name: req.params.filename,
-      httpHeaders: getRequestHeadersForUrl(url),
+      httpHeaders: getRequestHeadersForUrl(url, store),
     })
 
     fs.createReadStream(filePath).pipe(res)
@@ -96,6 +101,7 @@ export function addImageRoutes(app: Application): Application {
         filename,
         ...resizeParams,
       },
+      store,
     })
 
     res.setHeader(

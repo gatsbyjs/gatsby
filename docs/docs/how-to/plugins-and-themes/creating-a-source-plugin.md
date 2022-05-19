@@ -1108,8 +1108,8 @@ Add the polyfill, `polyfillImageServiceDevRoutes`, to ensure that the developmen
 ```js
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 
-export const onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+export const onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }
 ```
 

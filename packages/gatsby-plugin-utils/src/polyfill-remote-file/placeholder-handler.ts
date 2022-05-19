@@ -6,8 +6,10 @@ import Queue from "fastq"
 import getSharpInstance from "gatsby-sharp"
 import { getCache } from "./utils/cache"
 import { getImageFormatFromMimeType } from "./utils/mime-type-helpers"
-import type { IRemoteImageNode } from "./types"
 import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
+
+import type { IRemoteImageNode } from "./types"
+import type { Store } from "gatsby"
 
 export enum PlaceholderType {
   BLURRED = `blurred`,
@@ -40,11 +42,12 @@ const queue = Queue<
     width: number
     height: number
     type: PlaceholderType
+    store: Store
   },
   string
   // eslint-disable-next-line consistent-return
 >(async function (
-  { url, contentDigest, width, height, type },
+  { url, contentDigest, width, height, type, store },
   cb
 ): Promise<void> {
   const sharp = await getSharpInstance()
@@ -58,7 +61,7 @@ const queue = Queue<
     url,
     cacheKey: contentDigest,
     directory: tmpDir,
-    httpHeaders: getRequestHeadersForUrl(url),
+    httpHeaders: getRequestHeadersForUrl(url, store),
   })
 
   switch (type) {
@@ -171,7 +174,8 @@ QUEUE_CONCURRENCY)
 // eslint-disable-next-line consistent-return
 export async function generatePlaceholder(
   source: IRemoteImageNode,
-  placeholderType: PlaceholderType
+  placeholderType: PlaceholderType,
+  store: Store
 ): Promise<{ fallback?: string; backgroundColor?: string }> {
   switch (placeholderType) {
     case PlaceholderType.BLURRED: {
@@ -189,6 +193,7 @@ export async function generatePlaceholder(
             width: PLACEHOLDER_BASE64_WIDTH,
             quality: PLACEHOLDER_QUALITY,
           },
+          store,
         }),
       }
     }
@@ -207,6 +212,7 @@ export async function generatePlaceholder(
             width: PLACEHOLDER_DOMINANT_WIDTH,
             quality: PLACEHOLDER_QUALITY,
           },
+          store,
         }),
       }
     }
@@ -225,6 +231,7 @@ export async function generatePlaceholder(
             width: PLACEHOLDER_TRACED_WIDTH,
             quality: PLACEHOLDER_QUALITY,
           },
+          store,
         }),
       }
     }
@@ -240,9 +247,11 @@ async function runPlaceholder({
   contentDigest,
   type,
   placeholderOptions,
+  store,
 }: IPlaceholderGenerationArgs & {
   type: PlaceholderType
   placeholderOptions: { width: number; quality: number }
+  store: Store
 }): Promise<string> {
   const cache = getCache()
   const cacheKey = `image-cdn:${id}-${contentDigest}:${type}`
@@ -281,6 +290,7 @@ async function runPlaceholder({
           width,
           height,
           type,
+          store,
         },
         (err, result) => {
           if (err) {

@@ -114,7 +114,7 @@ exports.createSchemaCustomization ({ actions, schema }) => {
 }
 
 /** @type {import('gatsby').onCreateDevServer} */
-exports.onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+exports.onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }
 ```

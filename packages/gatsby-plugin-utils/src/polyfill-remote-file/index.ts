@@ -16,7 +16,7 @@ import {
   gatsbyImageResolver,
 } from "./graphql/gatsby-image-resolver"
 
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
 import type { InterfaceTypeComposerAsObjectDefinition } from "graphql-compose"
 import type { SchemaBuilder, IRemoteFileNode } from "./types"
 
@@ -24,7 +24,8 @@ let enums: ReturnType<typeof getRemoteFileEnums> | undefined
 
 export function getRemoteFileFields(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  actions: Actions
+  actions: Actions,
+  store: Store
 ): Record<string, unknown> {
   return {
     id: `ID!`,
@@ -35,7 +36,7 @@ export function getRemoteFileFields(
     height: `Int`,
     publicUrl: generatePublicUrlFieldConfig(actions),
     resize: generateResizeFieldConfig(enums, actions),
-    gatsbyImage: generateGatsbyImageFieldConfig(enums, actions),
+    gatsbyImage: generateGatsbyImageFieldConfig(enums, actions, store),
   }
 }
 

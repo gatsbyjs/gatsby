@@ -23,6 +23,8 @@ import fetchReferencedMediaItemsAndCreateNodes, {
 import btoa from "btoa"
 import store from "~/store"
 
+import { store as gatsbyStore } from "gatsby/dist/redux"
+
 /**
  * Takes in a MediaItem node from WPGraphQL as well as Gatsby plugin options and returns the correct placeholder URL for GatsbyImage
  *
@@ -610,7 +612,8 @@ export const replaceNodeHtmlImages = async ({
                 quality,
                 formats,
               },
-              helpers.actions
+              helpers.actions,
+              gatsbyStore
             )
           } else {
             publicUrl = publicUrlResolver(

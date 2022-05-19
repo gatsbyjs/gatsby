@@ -6,6 +6,8 @@ import getSharpInstance from "gatsby-sharp"
 import { getCache } from "./utils/cache"
 import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
 
+import type { Store } from "gatsby"
+
 export interface IResizeArgs {
   width: number
   height: number
@@ -28,6 +30,7 @@ const queue = new Map<
 export async function transformImage({
   outputDir,
   args: { url, filename, contentDigest, ...args },
+  store,
 }: {
   outputDir: string
   args: IResizeArgs & {
@@ -35,6 +38,7 @@ export async function transformImage({
     filename: string
     contentDigest?: string
   }
+  store: Store
 }): Promise<string> {
   const cache = getCache()
 
@@ -53,7 +57,7 @@ export async function transformImage({
     name: basename,
     ext,
     cacheKey: contentDigest,
-    httpHeaders: getRequestHeadersForUrl(url),
+    httpHeaders: getRequestHeadersForUrl(url, store),
   })
 
   const outputPath = path.join(outputDir, filename)
