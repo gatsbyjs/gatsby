@@ -187,7 +187,8 @@ export async function gatsbyImageResolver(
             cropFocus: args.cropFocus,
             quality: args.quality as number,
           },
-          actions
+          actions,
+          store
         )
       }
 

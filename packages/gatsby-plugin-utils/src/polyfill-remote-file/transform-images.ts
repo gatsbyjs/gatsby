@@ -4,9 +4,6 @@ import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import getSharpInstance from "gatsby-sharp"
 import { getCache } from "./utils/cache"
-import { getRequestHeadersForUrl } from "./utils/get-request-headers-for-url"
-
-import type { Store } from "gatsby"
 
 export interface IResizeArgs {
   width: number
@@ -29,16 +26,15 @@ const queue = new Map<
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export async function transformImage({
   outputDir,
-  args: { url, filename, contentDigest, ...args },
-  store,
+  args: { url, filename, contentDigest, httpHeaders, ...args },
 }: {
   outputDir: string
   args: IResizeArgs & {
     url: string
     filename: string
     contentDigest?: string
+    httpHeaders: Record<string, string> | undefined
   }
-  store: Store
 }): Promise<string> {
   const cache = getCache()
 
@@ -57,7 +53,7 @@ export async function transformImage({
     name: basename,
     ext,
     cacheKey: contentDigest,
-    httpHeaders: getRequestHeadersForUrl(url, store),
+    httpHeaders,
   })
 
   const outputPath = path.join(outputDir, filename)

@@ -72,7 +72,8 @@ export function dispatchLocalImageServiceJob(
     contentDigest: string
   },
   imageArgs: Parameters<typeof generateImageUrl>[1],
-  actions: Actions
+  actions: Actions,
+  store: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
   const publicUrl = generateImageUrl(
@@ -82,6 +83,10 @@ export function dispatchLocalImageServiceJob(
   publicUrl.unshift(`public`)
   // get filename and remove querystring
   const outputFilename = publicUrl.pop()?.split(`?`)[0]
+
+  const httpHeaders = getRequestHeadersForUrl(url, store) as
+    | Record<string, string>
+    | undefined
 
   actions.createJobV2(
     {
@@ -95,6 +100,7 @@ export function dispatchLocalImageServiceJob(
         url,
         filename: outputFilename,
         contentDigest,
+        httpHeaders,
         ...imageArgs,
       },
     },
