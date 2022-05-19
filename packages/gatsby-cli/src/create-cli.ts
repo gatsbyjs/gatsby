@@ -311,7 +311,13 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
 
-    handler: getCommandHandler(`serve`),
+    handler: getCommandHandler(
+      `serve`,
+      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) => {
+        process.env.NODE_ENV = process.env.NODE_ENV || `production`
+        return cmd(args)
+      }
+    ),
   })
 
   cli.command({
