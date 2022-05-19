@@ -161,5 +161,15 @@ export function loadInternalPlugins(
 
   plugins.push(processedPageCreatorPlugin)
 
+  // Partytown plugin collects usage of <Script strategy={"off-main-thread"} />
+  // in `wrapRootElement`, so we have to make sure it's the last one running to be able to
+  // collect scripts that users might inject in their `wrapRootElement`
+  plugins.push(
+    processPlugin(
+      path.join(__dirname, `../../internal-plugins/partytown`),
+      rootDir
+    )
+  )
+
   return plugins
 }

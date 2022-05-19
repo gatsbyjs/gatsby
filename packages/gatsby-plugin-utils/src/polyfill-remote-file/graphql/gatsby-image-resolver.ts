@@ -1,3 +1,4 @@
+import { hasFeature } from "../../has-feature"
 import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
@@ -263,7 +264,7 @@ export function generateGatsbyImageFieldConfig(
   IGatsbyImageDataArgs
 > {
   return {
-    type: `JSON`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON`,
     description: `Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.`,
     args: {
       layout: {
