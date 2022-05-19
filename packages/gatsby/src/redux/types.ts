@@ -104,6 +104,7 @@ export interface IGatsbyConfig {
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
+  graphqlTypegen?: boolean
 }
 
 export interface IGatsbyNode {

@@ -54,6 +54,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
     trailingSlash: Joi.string()
       .valid(`always`, `never`, `ignore`, `legacy`) // TODO(v5): Remove legacy
       .default(`legacy`),
+    graphqlTypegen: Joi.boolean().default(false),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(

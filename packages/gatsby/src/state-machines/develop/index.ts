@@ -43,12 +43,12 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     SET_SCHEMA: {
       actions: `schemaTypegen`,
       cond: (ctx: IBuildContext): boolean =>
-        !!process.env.GATSBY_GRAPHQL_TYPEGEN && !ctx.shouldRunInitialTypegen,
+        ctx.graphqlTypegen && !ctx.shouldRunInitialTypegen,
     },
     SET_GRAPHQL_DEFINITIONS: {
       actions: `definitionsTypegen`,
       cond: (ctx: IBuildContext): boolean =>
-        !!process.env.GATSBY_GRAPHQL_TYPEGEN && !ctx.shouldRunInitialTypegen,
+        ctx.graphqlTypegen && !ctx.shouldRunInitialTypegen,
     },
   },
   states: {
@@ -233,7 +233,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         onDone: [
           {
             target: `initialGraphQLTypegen`,
-            cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
+            cond: (ctx): boolean => ctx.graphqlTypegen,
           },
           {
             target: `waiting`,

@@ -145,6 +145,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const app = express()
   const parentSpan = tracer.startSpan(`bootstrap`)
+  const graphqlTypegen = store.getState().config.graphqlTypegen as boolean
 
   const machine = developMachine.withContext({
     program,
@@ -153,6 +154,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     reporter,
     pendingQueryRuns: new Set([`/`]),
     shouldRunInitialTypegen: true,
+    graphqlTypegen,
   })
 
   const service = interpret(machine)
