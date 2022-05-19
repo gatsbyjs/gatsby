@@ -8,7 +8,7 @@ export function getRequestHeadersForUrl(
   store: Store
 ): Headers | undefined {
   if (!store || !(`getState` in store)) {
-    throw new Error(
+    console.warn(
       `getRequestHeadersForUrl: argument 2 "store" is not a redux store. Please pass Gatsby's redux store. (for url ${passedUrl})`
     )
   }
