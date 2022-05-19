@@ -42,9 +42,12 @@ describe(`SSR`, () => {
 
     const pageUrl = `http://localhost:8000/bad-page/`
     // Poll until the new page is bundled (so starts returning a non-404 status).
-    const rawDevHtml = await fetchUntil(pageUrl, res => {
-      return res
+    await fetchUntil(pageUrl, res => {
+      return res.status !== 404
     }).then(res => res.text())
+
+    // Simulates a refresh for DEV SSR to kick in
+    const rawDevHtml = await fetchUntil(pageUrl, res => res).then(res => res.text())
 
     expect(rawDevHtml).toMatch("<h1>Failed to Server Render (SSR)</h1>")
     expect(rawDevHtml).toMatch("<h2>Error message:</h2>")
