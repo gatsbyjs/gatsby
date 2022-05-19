@@ -3,7 +3,6 @@ import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
 import { cpuCoreCount } from "gatsby-core-utils/cpu-core-count"
 import Queue from "fastq"
 import { transformImage } from "../transform-images"
-import { getRequestHeadersForUrl } from "../utils/get-request-headers-for-url"
 
 interface IImageServiceProps {
   outputDir: Parameters<typeof transformImage>[0]["outputDir"]
