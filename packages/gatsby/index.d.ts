@@ -17,7 +17,7 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn"
+export type AvailableFeatures = "image-cdn" | "graphql-typegen"
 
 export {
   default as Link,
@@ -26,6 +26,8 @@ export {
   withPrefix,
   withAssetPrefix,
 } from "gatsby-link"
+
+export * from "gatsby-script"
 
 export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>
@@ -228,7 +230,7 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 /**
  * Gatsby configuration API.
  *
- * @see https://www.gatsbyjs.com/docs/gatsby-config/
+ * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 export interface GatsbyConfig {
   /** When you want to reuse common pieces of data across the site (for example, your site title), you can store that here. */
@@ -243,6 +245,8 @@ export interface GatsbyConfig {
   trailingSlash?: "always" | "never" | "ignore" | "legacy"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
+  /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. */
+  graphqlTypegen?: boolean
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
@@ -256,6 +260,11 @@ export interface GatsbyConfig {
     prefix: string
     url: string
   }
+  /**
+   * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
+   * @see https://gatsby.dev/gatsby-script
+   */
+  partytownProxiedURLs?: Array<string>
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
   developMiddleware?(app: any): void
 }

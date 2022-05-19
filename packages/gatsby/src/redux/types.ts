@@ -98,12 +98,14 @@ export interface IGatsbyConfig {
   polyfill?: boolean
   developMiddleware?: any
   proxy?: any
+  partytownProxiedURLs?: Array<string>
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
+  graphqlTypegen?: boolean
 }
 
 export interface IGatsbyNode {
