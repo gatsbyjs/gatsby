@@ -21,6 +21,6 @@ DOCKER_ID=$(\
 )
 
 sleep 1
-docker exec $DOCKER_ID bash -c "/usr/src/app/scripts/docker-write-memory &"
+docker exec $DOCKER_ID bash -c "/usr/src/gatsby/benchmarks/generic/scripts/docker-write-memory &"
 
 echo "\nStarted container id ${DOCKER_ID} with ${MEMORY_LIMIT} of memory! Run \`yarn docker:connect\` to connect to the container.\n"
