@@ -240,10 +240,12 @@ const activeFlags: Array<IFlag> = [
     env: `GATSBY_GRAPHQL_TYPEGEN`,
     command: `develop`,
     telemetryId: `GraphQLTypegen`,
-    description: `More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. See https://github.com/gatsbyjs/gatsby/discussions/35420 for more details.`,
+    description: `More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/35420`,
     experimental: false,
     noCI: true,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => false,
+    requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
   },
 ]
 
