@@ -351,7 +351,7 @@ jobs:
           command: echo 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Copy over packages
-          command: node ../../../packages/gatsby-dev-cli/index.js --force-install --scan-once --no-registry
+          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once --no-registry
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn install
