@@ -51,14 +51,14 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default async function staticPage(
+export default async function staticPage({
   pagePath,
   isClientOnlyPage,
   publicDir,
   error,
   serverData,
-  callback
-) {
+  callback,
+}) {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
