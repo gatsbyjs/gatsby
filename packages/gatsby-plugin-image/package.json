@@ -83,6 +83,7 @@
     "common-tags": "^1.8.2",
     "fs-extra": "^10.1.0",
     "gatsby-core-utils": "^3.15.0-next.1",
+    "gatsby-plugin-utils": "^3.9.0-next.2",
     "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.8.1"
   },

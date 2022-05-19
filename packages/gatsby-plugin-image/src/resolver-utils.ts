@@ -5,6 +5,7 @@ import type {
   ObjectTypeComposerFieldConfigAsObjectDefinition,
   ObjectTypeComposerArgumentConfigMapDefinition,
 } from "graphql-compose"
+import { hasFeature } from "gatsby-plugin-utils"
 import type { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils"
 
 export const ImageFormatType: EnumTypeComposerAsObjectDefinition = {
@@ -74,7 +75,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
   IGatsbyImageResolverArgs & TArgs
 > {
   return {
-    type: `GatsbyImageData!`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
     args: {
       layout: {
         type: ImageLayoutType.name,
@@ -166,7 +167,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
   IGatsbyImageFieldArgs & TArgs
 > {
   return {
-    type: `GatsbyImageData!`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
     args: {
       layout: {
         type: ImageLayoutType.name,

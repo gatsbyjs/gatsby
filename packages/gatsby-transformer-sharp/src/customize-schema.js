@@ -7,6 +7,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -16,6 +17,7 @@ const {
   traceSVG,
   generateImageData,
 } = require(`gatsby-plugin-sharp`)
+const { hasFeature } = require(`gatsby-plugin-utils`)
 
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
@@ -406,7 +408,9 @@ const imageNodeType = ({
   cache,
 }) => {
   return {
-    type: `GatsbyImageData!`,
+    type: hasFeature(`graphql-typegen`)
+      ? `GatsbyImageData!`
+      : new GraphQLNonNull(GraphQLJSON),
     args: {
       layout: {
         type: ImageLayoutType,

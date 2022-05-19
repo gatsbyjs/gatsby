@@ -32,6 +32,7 @@ it("generates the expected api output", done => {
         },
         "features": Array [
           "image-cdn",
+          "graphql-typegen",
         ],
         "node": Object {
           "createPages": Object {},
