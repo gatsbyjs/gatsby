@@ -30,9 +30,18 @@ export async function graphQLTypegen({
 
   const { schema, definitions } = store.getState()
 
-  await writeGraphQLSchema(directory, schema)
-  await writeGraphQLFragments(directory, definitions)
-  await writeTypeScriptTypes(directory, schema, definitions)
+  try {
+    await writeGraphQLSchema(directory, schema)
+    await writeGraphQLFragments(directory, definitions)
+    await writeTypeScriptTypes(directory, schema, definitions)
+  } catch (err) {
+    activity.panicOnBuild({
+      id: `12100`,
+      context: {
+        sourceMessage: err,
+      },
+    })
+  }
 
   activity.end()
 }
