@@ -29,8 +29,9 @@ const handledProps = new Set([
   `onError`,
 ])
 
-export const scriptCache = new Set()
-export const scripts = {}
+export const injectedScriptCache: Set<string> = new Set()
+export const injectedScriptLoadEventCache: Map<string, Event> = new Map()
+export const injectedScriptErrorEventCache: Map<string, ErrorEvent> = new Map()
 
 export function Script(props: ScriptProps): ReactElement | null {
   const {
@@ -69,7 +70,6 @@ export function Script(props: ScriptProps): ReactElement | null {
       if (onError) {
         script?.removeEventListener(`error`, onError)
       }
-      script?.remove()
     }
   }, [])
 
@@ -121,31 +121,31 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     onError,
   } = props || {}
 
-  const scriptKey = id || src
+  const scriptKey = id || src || (injectedScriptCache.size + 1).toString()
 
-  if (scriptCache.has(scriptKey)) {
-    if (onLoad) onLoad(new Event(`load`))
+  // If a script is already loaded or is a duplicate, we still want to replay load/error callbacks
+  const onLoadEvent = injectedScriptLoadEventCache.get(scriptKey)
+  const onErrorEvent = injectedScriptErrorEventCache.get(scriptKey)
 
-    const isDevelop = process.env.NODE_ENV === `development`
+  console.log(
+    `getting onLoad`,
+    scriptKey,
+    onLoadEvent,
+    injectedScriptLoadEventCache
+  )
 
-    if (scriptKey && scripts[scriptKey]?.strategy !== strategy && isDevelop) {
-      console.warn(
-        `Script ${scriptKey} is already loaded with a different strategy. Consider removing duplicates`
-      )
-    }
+  if (onLoadEvent && onLoad) {
+    onLoad(onLoadEvent)
+  }
 
+  if (onErrorEvent && onError) {
+    onError(onErrorEvent)
+  }
+
+  // Avoid injecting duplicate scripts into the DOM
+  if (injectedScriptCache.has(scriptKey)) {
     return null
   }
-
-  if (scriptKey) {
-    scripts[scriptKey] = {
-      src: src,
-      strategy: strategy,
-    }
-  }
-
-  const inlineScript = resolveInlineScript(props)
-  const attributes = resolveAttributes(props)
 
   const script = document.createElement(`script`)
 
@@ -155,9 +155,13 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
 
   script.dataset.strategy = strategy
 
+  const attributes = resolveAttributes(props)
+
   for (const [key, value] of Object.entries(attributes)) {
     script.setAttribute(key, value)
   }
+
+  const inlineScript = resolveInlineScript(props)
 
   if (inlineScript) {
     script.textContent = inlineScript
@@ -168,16 +172,28 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
   }
 
   if (onLoad) {
-    script.addEventListener(`load`, onLoad)
+    script.addEventListener(`load`, onLoadEvent => {
+      console.log(
+        `setting onLoad`,
+        scriptKey,
+        onLoadEvent,
+        injectedScriptLoadEventCache
+      )
+      injectedScriptLoadEventCache.set(scriptKey, onLoadEvent)
+      onLoad(onLoadEvent)
+    })
   }
 
   if (onError) {
-    script.addEventListener(`error`, onError)
+    script.addEventListener(`error`, onErrorEvent => {
+      injectedScriptErrorEventCache.set(scriptKey, onErrorEvent)
+      onError(onErrorEvent)
+    })
   }
 
-  document.body.appendChild(script)
+  injectedScriptCache.add(scriptKey)
 
-  scriptCache.add(scriptKey)
+  document.body.appendChild(script)
 
   return script
 }

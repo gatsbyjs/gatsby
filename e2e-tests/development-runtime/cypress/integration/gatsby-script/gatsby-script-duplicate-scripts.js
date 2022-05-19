@@ -1,4 +1,4 @@
-import { scripts } from "../../scripts"
+import { scripts } from "../../../gatsby-script-scripts"
 
 describe(`Duplicate Scripts`, () => {
   beforeEach(() => {
