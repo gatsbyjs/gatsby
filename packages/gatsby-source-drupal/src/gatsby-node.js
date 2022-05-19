@@ -861,7 +861,7 @@ exports.onCreateDevServer = async ({ app, store }) => {
 }
 
 exports.createSchemaCustomization = (
-  { actions, schema, reporter },
+  { actions, schema, store, reporter },
   pluginOptions
 ) => {
   if (pluginOptions.skipFileDownloads) {
@@ -877,6 +877,7 @@ exports.createSchemaCustomization = (
         {
           schema,
           actions,
+          store,
         }
       ),
     ])

@@ -47,9 +47,11 @@ function addRemoteFilePolyfillInterface<
   {
     schema,
     actions,
+    store,
   }: {
     schema: SchemaBuilder
     actions: Actions
+    store: Store
   }
 ): T {
   // When the image-cdn is part of Gatsby we will only add the RemoteFile interface if necessary
@@ -99,7 +101,8 @@ function addRemoteFilePolyfillInterface<
         name: `RemoteFile`,
         fields: getRemoteFileFields(
           enums,
-          actions
+          actions,
+          store
         ) as InterfaceTypeComposerAsObjectDefinition<
           IRemoteFileNode,
           unknown
@@ -126,7 +129,7 @@ function addRemoteFilePolyfillInterface<
   type.config.fields = {
     // @ts-ignore - wrong typing by typecomposer
     ...type.config.fields,
-    ...getRemoteFileFields(enums, actions),
+    ...getRemoteFileFields(enums, actions, store),
   }
 
   return type
