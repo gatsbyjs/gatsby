@@ -54,7 +54,7 @@ export function Script(props: ScriptProps): ReactElement | null {
         })
         break
       case ScriptStrategy.offMainThread:
-        if (typeof window !== `undefined` && collectScript) {
+        if (collectScript) {
           const attributes = resolveAttributes(props)
           collectScript(attributes)
         }
@@ -88,7 +88,6 @@ export function Script(props: ScriptProps): ReactElement | null {
       return (
         <script
           type="text/partytown"
-          async
           data-strategy={strategy}
           crossOrigin="anonymous"
           {...attributes}
@@ -99,7 +98,6 @@ export function Script(props: ScriptProps): ReactElement | null {
     return (
       <script
         type="text/partytown"
-        async
         src={proxyPartytownUrl(src)}
         data-strategy={strategy}
         crossOrigin="anonymous"
@@ -185,5 +183,5 @@ function proxyPartytownUrl(url: string | undefined): string | undefined {
   if (!url) {
     return undefined
   }
-  return `/__partytown-proxy?url=${encodeURIComponent(url)}`
+  return `/__third-party-proxy?url=${encodeURIComponent(url)}`
 }
