@@ -29,9 +29,20 @@ const handledProps = new Set([
   `onError`,
 ])
 
-export const injectedScriptCache: Set<string> = new Set()
-export const injectedScriptLoadEventCache: Map<string, Event> = new Map()
-export const injectedScriptErrorEventCache: Map<string, ErrorEvent> = new Map()
+export const scriptCache: Set<string> = new Set()
+export const scriptCallbackCache: Map<
+  string,
+  {
+    load?: {
+      callbacks?: Array<(event: Event) => void>
+      event?: Event | undefined
+    }
+    error?: {
+      callbacks?: Array<(event: ErrorEvent) => void>
+      event?: ErrorEvent | undefined
+    }
+  }
+> = new Map()
 
 export function Script(props: ScriptProps): ReactElement | null {
   const {
@@ -121,29 +132,40 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     onError,
   } = props || {}
 
-  const scriptKey = id || src || (injectedScriptCache.size + 1).toString()
+  const scriptKey = id || src || (scriptCache.size + 1).toString()
 
-  // If a script is already loaded or is a duplicate, we still want to replay load/error callbacks
-  const onLoadEvent = injectedScriptLoadEventCache.get(scriptKey)
-  const onErrorEvent = injectedScriptErrorEventCache.get(scriptKey)
+  /**
+   * If a duplicate script is already loaded/errored, we replay load/error callbacks with the original event.
+   * If it's not yet loaded/errored, keep track of callbacks so we can call load/error callbacks for each when the event occurs.
+   */
+  const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
 
-  console.log(
-    `getting onLoad`,
-    scriptKey,
-    onLoadEvent,
-    injectedScriptLoadEventCache
-  )
+  const callbackNames = [`load`, `error`]
 
-  if (onLoadEvent && onLoad) {
-    onLoad(onLoadEvent)
+  const currentCallbacks = {
+    load: onLoad,
+    error: onError,
   }
 
-  if (onErrorEvent && onError) {
-    onError(onErrorEvent)
+  for (const name of callbackNames) {
+    if (currentCallbacks?.[name]) {
+      const { callbacks = [] } = cachedCallbacks?.[name] || {}
+      callbacks.push(currentCallbacks?.[name])
+
+      if (cachedCallbacks?.[name]?.event) {
+        currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event)
+      } else {
+        scriptCallbackCache.set(scriptKey, {
+          [name]: {
+            callbacks,
+          },
+        })
+      }
+    }
   }
 
   // Avoid injecting duplicate scripts into the DOM
-  if (injectedScriptCache.has(scriptKey)) {
+  if (scriptCache.has(scriptKey)) {
     return null
   }
 
@@ -171,27 +193,21 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     script.src = src
   }
 
-  if (onLoad) {
-    script.addEventListener(`load`, onLoadEvent => {
-      console.log(
-        `setting onLoad`,
-        scriptKey,
-        onLoadEvent,
-        injectedScriptLoadEventCache
-      )
-      injectedScriptLoadEventCache.set(scriptKey, onLoadEvent)
-      onLoad(onLoadEvent)
-    })
+  for (const name of callbackNames) {
+    if (currentCallbacks?.[name]) {
+      script.addEventListener(name, event => {
+        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+
+        for (const callback of cachedCallbacks?.[name]?.callbacks || []) {
+          callback(event)
+        }
+
+        scriptCallbackCache.set(scriptKey, { [name]: { event } })
+      })
+    }
   }
 
-  if (onError) {
-    script.addEventListener(`error`, onErrorEvent => {
-      injectedScriptErrorEventCache.set(scriptKey, onErrorEvent)
-      onError(onErrorEvent)
-    })
-  }
-
-  injectedScriptCache.add(scriptKey)
+  scriptCache.add(scriptKey)
 
   document.body.appendChild(script)
 
