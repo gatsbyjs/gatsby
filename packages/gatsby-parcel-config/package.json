@@ -14,7 +14,7 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "^1.0.0-next.0",
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.0.0-next.0",
     "@parcel/bundler-default": "2.5.0",
     "@parcel/compressor-raw": "2.5.0",
     "@parcel/namer-default": "2.5.0",
@@ -33,7 +33,7 @@
     "@parcel/transformer-react-refresh-wrap": "2.5.0"
   },
   "parcelDependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "^1.0.0-next.0",
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.0.0-next.0",
     "@parcel/optimizer-data-url": "2.5.0",
     "@parcel/packager-raw-url": "2.5.0",
     "@parcel/packager-ts": "2.5.0",
