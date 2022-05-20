@@ -1,7 +1,7 @@
 import proxy from "express-http-proxy"
 import type { RequestHandler } from "express"
 
-export const partytownProxyPath = `/__partytown-proxy`
+export const thirdPartyProxyPath = `/__third-party-proxy`
 
 export function partytownProxy(
   partytownProxiedURLs: Array<string>

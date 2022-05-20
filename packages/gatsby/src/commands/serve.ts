@@ -26,7 +26,7 @@ import { configureTrailingSlash } from "../utils/express-middlewares"
 import { getDataStore, detectLmdbStore } from "../datastore"
 import { functionMiddlewares } from "../internal-plugins/functions/middleware"
 import {
-  partytownProxyPath,
+  thirdPartyProxyPath,
   partytownProxy,
 } from "../internal-plugins/partytown/proxy"
 
@@ -127,7 +127,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   // Proxy gatsby-script using off-main-thread strategy
   const { partytownProxiedURLs = [] } = config || {}
 
-  app.use(partytownProxyPath, partytownProxy(partytownProxiedURLs))
+  app.use(thirdPartyProxyPath, partytownProxy(partytownProxiedURLs))
 
   // eslint-disable-next-line new-cap
   const router = express.Router()

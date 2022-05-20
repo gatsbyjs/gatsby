@@ -39,7 +39,9 @@ function PartytownProvider({ children }): ReactElement {
                 }
               }
             } else {
-              console.log(`unexpected shape of forward`, newScript)
+              if (process.env.NODE_ENV === `development`) {
+                console.log(`unexpected shape of forward`, newScript)
+              }
             }
           }
 
