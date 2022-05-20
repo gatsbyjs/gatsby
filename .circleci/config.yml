@@ -344,6 +344,9 @@ jobs:
       - run: # Don't allow any fallback to root dependencies
           command: yarn config set pnpFallbackMode none
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Install before custom registry server is set
+          command: yarn add start-server-and-test@^1.11.0
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set the local registry to gatsby-dev-cli registry
           command: yarn config set npmRegistryServer http://localhost:4873
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -356,9 +359,6 @@ jobs:
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Copy over packages
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once --external-registry
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run:
-          command: yarn add start-server-and-test@^1.11.0
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn build
