@@ -1616,6 +1616,8 @@ export interface IPluginRefObject {
   resolve: string
   options?: IPluginRefOptions
   parentDir?: string
+  /** @private Internal key used by create-gatsby during plugin installation. Not necessary to define and can be removed. */
+  __key?: string
 }
 
 export type PluginRef = string | IPluginRefObject
