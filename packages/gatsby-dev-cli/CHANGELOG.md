@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.14.0/packages/gatsby-dev-cli) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.13.0/packages/gatsby-dev-cli) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- use package name not directory name [#35447](https://github.com/gatsbyjs/gatsby/issues/35447) ([028f348](https://github.com/gatsbyjs/gatsby/commit/028f3484c8ce70086ce8e3d121b5e183cc45f912))
+
 ### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.12.1/packages/gatsby-dev-cli) (2022-04-13)
 
 **Note:** Version bump only for package gatsby-dev-cli

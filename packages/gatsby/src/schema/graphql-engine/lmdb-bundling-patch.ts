@@ -31,7 +31,19 @@ export default function (this: any, source: string): string {
       path.dirname(this.resourcePath).replace(`/dist`, ``)
 
     const lmdbRequire = createRequire(this.resourcePath)
-    const nodeGypBuild = lmdbRequire(`node-gyp-build`)
+    let nodeGypBuild
+    try {
+      nodeGypBuild = lmdbRequire(`node-gyp-build-optional-packages`)
+    } catch (e) {
+      // lmdb@2.3.8 way of loading binaries failed, we will try to fallback to
+      // old way before failing completely
+    }
+
+    if (!nodeGypBuild) {
+      // if lmdb@2.3.8 didn't import expected node-gyp-build fork (node-gyp-build-optional-packages)
+      // let's try falling back to upstream package - if that doesn't work, we will fail compilation
+      nodeGypBuild = lmdbRequire(`node-gyp-build`)
+    }
 
     lmdbBinaryLocation = slash(
       path.relative(
@@ -43,6 +55,10 @@ export default function (this: any, source: string): string {
     return source
   }
   return source
+    .replace(
+      `require$1('node-gyp-build-optional-packages')(dirName)`,
+      `require(${JSON.stringify(lmdbBinaryLocation)})`
+    )
     .replace(
       `require$1('node-gyp-build')(dirName)`,
       `require(${JSON.stringify(lmdbBinaryLocation)})`

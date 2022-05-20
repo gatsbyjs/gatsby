@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.3.1/packages/gatsby-source-shopify) (2022-05-12)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.3.0/packages/gatsby-source-shopify) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.2.0/packages/gatsby-source-shopify) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ### [7.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.1.1/packages/gatsby-source-shopify) (2022-04-13)
 
 **Note:** Version bump only for package gatsby-source-shopify

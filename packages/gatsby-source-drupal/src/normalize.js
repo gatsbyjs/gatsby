@@ -45,8 +45,9 @@ const getGatsbyImageCdnFields = async ({
   }
 
   const mimeType = node.attributes.filemime
+  const { filename } = node.attributes
 
-  if (!mimeType) {
+  if (!mimeType || !filename) {
     return {}
   }
 
@@ -59,11 +60,12 @@ const getGatsbyImageCdnFields = async ({
   if (!mimeType.includes(`image/`)) {
     return {
       mimeType,
+      filename,
       url,
     }
   }
 
-  const extraNodeData = fileNodesExtendedData?.get(node.id) || null
+  const extraNodeData = fileNodesExtendedData?.get?.(node.id) || null
 
   try {
     const { placeholderStyleName } = getOptions()
@@ -78,6 +80,7 @@ const getGatsbyImageCdnFields = async ({
 
     const hasRequiredData = input => input && input.width && input.height
 
+    // extraNodeData comes from the fileNodesExtendedData Map which is built up in sourceNodes in gatsby-node. The data in this Map is found by looking at connections to file nodes from other node types. This is needed because Drupal's JSON API doesn't provide image widths/heights and placeholder urls for file nodes when querying directly for file nodes. This data can only be found on other nodes with relationships to file nodes. In the case that we don't have this data, we use probe-image-size to find the width/height of the image so that image CDN still works even if we don't have the data.
     const imageSize = hasRequiredData(extraNodeData)
       ? extraNodeData
       : await probeImageSize(url)
@@ -87,7 +90,7 @@ const getGatsbyImageCdnFields = async ({
     }
 
     const gatsbyImageCdnFields = {
-      filename: node.attributes?.filename,
+      filename,
       url,
       placeholderUrl,
       width: imageSize.width,
@@ -97,6 +100,14 @@ const getGatsbyImageCdnFields = async ({
 
     return gatsbyImageCdnFields
   } catch (e) {
+    if (e.message.includes(`unrecognized file format`)) {
+      reporter.error(
+        `[gatsby-source-drupal] Encountered corrupt file while requesting image dimensions for ${url}`
+      )
+
+      return {}
+    }
+
     reporter.error(e)
     reporter.info(
       JSON.stringify(
@@ -110,7 +121,7 @@ const getGatsbyImageCdnFields = async ({
       )
     )
     reporter.panic(
-      `Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
+      `[gatsby-source-drupal] Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
     )
   }
 

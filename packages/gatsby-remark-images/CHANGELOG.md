@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.14.0/packages/gatsby-remark-images) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- support resolving markdown images from child nodes [#28093](https://github.com/gatsbyjs/gatsby/issues/28093) ([496cb5d](https://github.com/gatsbyjs/gatsby/commit/496cb5d3c5046a00c39dbc0f1d11b0f10c76b081))
+
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.13.0/packages/gatsby-remark-images) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- enable tracedsvg [#35328](https://github.com/gatsbyjs/gatsby/issues/35328) ([a246011](https://github.com/gatsbyjs/gatsby/commit/a246011dafdba0230847b02c2812b6bda298f8e1))
+
 ### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.12.1/packages/gatsby-remark-images) (2022-04-13)
 
 **Note:** Version bump only for package gatsby-remark-images

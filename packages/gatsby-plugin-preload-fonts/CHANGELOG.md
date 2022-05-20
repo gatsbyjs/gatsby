@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.14.0/packages/gatsby-plugin-preload-fonts) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- defer checking for write access [#35381](https://github.com/gatsbyjs/gatsby/issues/35381) ([fb89536](https://github.com/gatsbyjs/gatsby/commit/fb89536f69e1c172e2c91ebf18868a6eff2a22a7))
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.13.0/packages/gatsby-plugin-preload-fonts) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
 ### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.12.1/packages/gatsby-plugin-preload-fonts) (2022-04-13)
 
 **Note:** Version bump only for package gatsby-plugin-preload-fonts

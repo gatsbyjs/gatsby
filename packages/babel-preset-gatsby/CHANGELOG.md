@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.14.0/packages/babel-preset-gatsby) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency babel-plugin-macros to v3 for babel-preset-gatsby [#33508](https://github.com/gatsbyjs/gatsby/issues/33508) ([7445aa3](https://github.com/gatsbyjs/gatsby/commit/7445aa34e0138e676fb506b48bd120b245daee35))
+
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.13.0/packages/babel-preset-gatsby) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 ### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby@2.12.1/packages/babel-preset-gatsby) (2022-04-13)
 
 **Note:** Version bump only for package babel-preset-gatsby
