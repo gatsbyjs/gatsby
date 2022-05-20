@@ -1,4 +1,6 @@
-import { scripts } from "../../../gatsby-script-scripts"
+import { scripts } from "../../gatsby-script-scripts"
+
+Cypress.config(`defaultCommandTimeout`, 30000) // Since we're asserting network requests
 
 describe(`duplicate scripts`, () => {
   beforeEach(() => {
