@@ -29,7 +29,20 @@ const handledProps = new Set([
   `onError`,
 ])
 
-export const scriptCache = new Set()
+export const scriptCache: Set<string> = new Set()
+export const scriptCallbackCache: Map<
+  string,
+  {
+    load?: {
+      callbacks?: Array<(event: Event) => void>
+      event?: Event | undefined
+    }
+    error?: {
+      callbacks?: Array<(event: ErrorEvent) => void>
+      event?: ErrorEvent | undefined
+    }
+  }
+> = new Map()
 
 export function Script(props: ScriptProps): ReactElement | null {
   const {
@@ -120,7 +133,40 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     onError,
   } = props || {}
 
-  if (scriptCache.has(id || src)) {
+  const scriptKey = id || src || (scriptCache.size + 1).toString()
+
+  /**
+   * If a duplicate script is already loaded/errored, we replay load/error callbacks with the original event.
+   * If it's not yet loaded/errored, keep track of callbacks so we can call load/error callbacks for each when the event occurs.
+   */
+  const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+
+  const callbackNames = [`load`, `error`]
+
+  const currentCallbacks = {
+    load: onLoad,
+    error: onError,
+  }
+
+  for (const name of callbackNames) {
+    if (currentCallbacks?.[name]) {
+      const { callbacks = [] } = cachedCallbacks?.[name] || {}
+      callbacks.push(currentCallbacks?.[name])
+
+      if (cachedCallbacks?.[name]?.event) {
+        currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event)
+      } else {
+        scriptCallbackCache.set(scriptKey, {
+          [name]: {
+            callbacks,
+          },
+        })
+      }
+    }
+  }
+
+  // Avoid injecting duplicate scripts into the DOM
+  if (scriptCache.has(scriptKey)) {
     return null
   }
 
@@ -147,17 +193,25 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     script.src = src
   }
 
-  if (onLoad) {
-    script.addEventListener(`load`, onLoad)
+  for (const name of callbackNames) {
+    if (currentCallbacks?.[name]) {
+      script.addEventListener(name, event => {
+        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+
+        for (const callback of cachedCallbacks?.[name]?.callbacks || []) {
+          callback(event)
+        }
+
+        scriptCallbackCache.set(scriptKey, { [name]: { event } })
+      })
+    }
   }
 
-  if (onError) {
-    script.addEventListener(`error`, onError)
-  }
+  scriptCache.add(scriptKey)
 
   document.body.appendChild(script)
 
-  scriptCache.add(id || src)
+  scriptCache.add(scriptKey)
 
   return script
 }
