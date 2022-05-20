@@ -348,7 +348,8 @@ jobs:
           command: yarn config set npmRegistryServer http://localhost:4873
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Allow localhost registry
-          command: echo 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
+          command: |
+            echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Set project dir
           command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project

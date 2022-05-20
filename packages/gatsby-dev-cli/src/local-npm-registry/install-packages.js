@@ -8,7 +8,7 @@ const installPackages = async ({
   packagesToInstall,
   yarnWorkspaceRoot,
   newlyPublishedPackageVersions,
-  noRegistry,
+  externalRegistry,
 }) => {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
@@ -121,7 +121,7 @@ const installPackages = async ({
     // using verdaccio registry
     const yarnCommands = [`install`]
 
-    if (!noRegistry) {
+    if (!externalRegistry) {
       yarnCommands.push(`--registry=${registryUrl}`)
     }
 
@@ -136,7 +136,7 @@ const installPackages = async ({
       `--exact`,
     ]
 
-    if (!noRegistry) {
+    if (!externalRegistry) {
       yarnCommands.push(`--registry=${registryUrl}`)
     }
 

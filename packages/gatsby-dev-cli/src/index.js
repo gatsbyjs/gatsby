@@ -27,9 +27,9 @@ You typically only need to configure this once.`
     `force-install`,
     `Disables copying files into node_modules and forces usage of local npm repository.`
   )
-  .nargs(`no-registry`, 0)
+  .nargs(`external-registry`, 0)
   .describe(
-    `no-registry`,
+    `external-registry`,
     `Run 'yarn add' commands without the --registry flag.`
   )
   .alias(`C`, `copy-all`)
@@ -153,5 +153,5 @@ watch(gatsbyLocation, argv.packages, {
   forceInstall: argv.forceInstall,
   monoRepoPackages,
   packageNameToPath,
-  noRegistry: argv.noRegistry,
+  externalRegistry: argv.externalRegistry,
 })
