@@ -145,3 +145,10 @@ To break down the important bits here for deploying the Gatsby website from Trav
 2. `deploy` will only fire when the build runs on the `main` branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
 
 Committing and pushing both the `.travis.yml` and `package.json` files to your base branch will be the final step in the process.
+
+## Other recourses
+
+- [Deploying to Vercel](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-vercel/)
+- [Deploying to Netlify](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-netlify/)
+- [Deploying to AWS Amplify](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-aws-amplify/)
+- [Deploying to Gatsby Cloud](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/)
