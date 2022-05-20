@@ -61,7 +61,7 @@ async function build(dockerExec) {
 
       start = Date.now()
       const { err  } = await dockerExec(
-        `yarn gatsby:build`, 
+        `yarn gatsby build`, 
         {
           BUILD_NUM_NODES: args.numNodes, 
           BUILD_STRING_NODE_SIZE: args.nodeSize, 
@@ -98,7 +98,7 @@ async function develop(dockerExec) {
 
     start = Date.now()
     const process = dockerExec(
-      `yarn gatsby:develop`, 
+      `yarn gatsby develop -H 0.0.0.0 -p 9000`, 
       {
         BUILD_NUM_NODES: args.numNodes, 
         BUILD_STRING_NODE_SIZE: args.nodeSize, 
@@ -175,8 +175,8 @@ async function runTest() {
     console.log(`\nSuccess!\n`)
   }
 
-  console.log(`Stopping container ${dockerId}`)
-  await hostExec(`./scripts/docker-stop`)
+  // console.log(`Stopping container ${dockerId}`)
+  // await hostExec(`./scripts/docker-stop`)
 
   exit(code)
 }

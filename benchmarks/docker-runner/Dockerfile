@@ -1,6 +1,5 @@
 FROM node:14-buster
 ARG jemalloc
-ENV NODE_ENV=production
 ENV CI=1
 ENV GATSBY_CPU_COUNT=4
 RUN apt-get update -y && apt-get upgrade -y && apt-get install git curl npm -y
