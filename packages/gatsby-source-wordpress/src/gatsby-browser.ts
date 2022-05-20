@@ -85,9 +85,7 @@ function hydrateImages(): void {
           } else {
             const element = React.createElement(mod.GatsbyImage, imageProps)
 
-            if (parent) {
-              ReactDOM.hydrate(element, image.parentNode)
-            }
+            ReactDOM.hydrate(element, image.parentNode)
           }
         }
       }
