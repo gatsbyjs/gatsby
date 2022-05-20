@@ -93,7 +93,7 @@ export function addImageRoutes(app: Application, store?: Store): Application {
       params
     )
 
-    const httpHeaders = getRequestHeadersForUrl(url, store) as
+    const httpHeaders = getRequestHeadersForUrl(remoteUrl, store) as
       | Record<string, string>
       | undefined
 
