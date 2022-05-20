@@ -1,3 +1,4 @@
+/* global HAS_REACT_18 */
 import type { GatsbyImageProps } from "gatsby-plugin-image"
 import React from "react"
 
@@ -33,20 +34,14 @@ export function onRouteUpdate(): void {
   }
 }
 
+declare const HAS_REACT_18: boolean
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let ReactDOM: any
-let hasWarnedReact17 = false
 
-try {
+if (HAS_REACT_18) {
   ReactDOM = require(`react-dom/client`)
-} catch (e) {
-  if (process.env.NODE_ENV === `development` && !hasWarnedReact17) {
-    hasWarnedReact17 = true
-    console.warn(
-      `Upgrade to React 18+ to fix the "Module not found: Can't resolve 'react-dom/client'" warning.`
-    )
-  }
-
+} else {
   ReactDOM = require(`react-dom`)
 }
 
@@ -78,9 +73,10 @@ function hydrateImages(): void {
             const root = ReactDOM.createRoot(image.parentNode)
             root.render(React.createElement(mod.GatsbyImage, imageProps))
           } else {
-            const element = React.createElement(mod.GatsbyImage, imageProps)
-
-            ReactDOM.hydrate(element, image.parentNode)
+            ReactDOM.hydrate(
+              React.createElement(mod.GatsbyImage, imageProps),
+              image.parentNode
+            )
           }
         }
       }
