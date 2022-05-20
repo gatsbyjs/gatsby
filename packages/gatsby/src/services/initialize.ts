@@ -27,6 +27,7 @@ import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
 import { writeGraphQLConfig } from "../utils/graphql-typegen/file-writes"
+import { isBurstModeEnabled } from "../constants"
 
 interface IPluginResolution {
   resolve: string
@@ -339,7 +340,7 @@ export async function initialize({
     `${program.directory}/gatsby-node.ts`,
   ] as Array<string>
 
-  const state = store.getState()
+  let state = store.getState()
 
   const hashes = await Promise.all(
     // Ignore optional files with .catch() as these are not required
@@ -463,6 +464,7 @@ export async function initialize({
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
+    console.log(`DELETING CACHE mtf`)
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
     store.dispatch({
@@ -657,7 +659,32 @@ export async function initialize({
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const workerPool = WorkerPool.create()
+  let workerPool: WorkerPool.GatsbyWorkerPool
+  state = store.getState()
+  if (isBurstModeEnabled(state.program)) {
+    // @ts-ignore Emulate the `workerPool` object
+    workerPool = {
+      all: new Proxy(
+        {},
+        {
+          get() {
+            return (): Array<Promise<void>> => []
+          },
+        }
+      ) as WorkerPool.GatsbyWorkerPool["all"],
+      single: new Proxy(
+        {},
+        {
+          get() {
+            return (): Promise<void> => Promise.resolve()
+          },
+        }
+      ) as WorkerPool.GatsbyWorkerPool["single"],
+      end: (): Array<Promise<number | null>> => [],
+    }
+  } else {
+    workerPool = WorkerPool.create()
+  }
 
   // This is only run during `gatsby develop`
   if (state.config.graphqlTypegen) {

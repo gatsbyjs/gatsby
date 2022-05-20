@@ -67,6 +67,7 @@ import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { runPageGenerationJobs } from "../services/run-page-generation-jobs"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
+import { isBurstModeEnabled } from "../constants"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -134,21 +135,9 @@ module.exports = async function build(
     parentSpan: buildSpan,
   })
 
-  // Page Gen
-  const GATSBY_PARALLEL_PAGE_GENERATION_ENABLED =
-    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `1` ||
-    process.env.GATSBY_PARALLEL_PAGE_GENERATION_ENABLED === `true`
+  const pageGenerationJobsEnabled = isBurstModeEnabled(store.getState().program)
 
-  const externalJobsEnabled =
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
-
-  const pageGenerationJobsEnabled =
-    GATSBY_PARALLEL_PAGE_GENERATION_ENABLED &&
-    externalJobsEnabled &&
-    process.send
-
-  if (pageGenerationJobsEnabled && store.getState().program.firstRun) {
+  if (pageGenerationJobsEnabled) {
     // @ts-ignore -- silence!
     process.send({
       type: `LOG_ACTION`,
@@ -462,7 +451,9 @@ module.exports = async function build(
 
   let toRegenerate: Array<string> = []
   let toDelete: Array<string> = []
-  if (!pageGenerationJobsEnabled) {
+  if (pageGenerationJobsEnabled) {
+    toRegenerate = queryIds.pageQueryIds.map(queryId => queryId.path)
+  } else {
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
       // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
       program.keepPageRenderer = true
@@ -478,134 +469,134 @@ module.exports = async function build(
 
     toRegenerate = res.toRegenerate
     toDelete = res.toDelete
+  }
 
-    await waitMaterializePageMode
-    const waitWorkerPoolEnd = Promise.all(workerPool.end())
+  await waitMaterializePageMode
+  const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
-    {
-      let SSGCount = 0
-      let DSGCount = 0
-      let SSRCount = 0
-      for (const page of store.getState().pages.values()) {
-        if (page.mode === `SSR`) {
-          SSRCount++
-        } else if (page.mode === `DSG`) {
-          DSGCount++
-        } else {
-          SSGCount++
-        }
+  {
+    let SSGCount = 0
+    let DSGCount = 0
+    let SSRCount = 0
+    for (const page of store.getState().pages.values()) {
+      if (page.mode === `SSR`) {
+        SSRCount++
+      } else if (page.mode === `DSG`) {
+        DSGCount++
+      } else {
+        SSGCount++
       }
-
-      telemetry.addSiteMeasurement(`BUILD_END`, {
-        pagesCount: toRegenerate.length, // number of html files that will be written
-        totalPagesCount: store.getState().pages.size, // total number of pages
-        SSRCount,
-        DSGCount,
-        SSGCount,
-      })
     }
 
-    const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
-      parentSpan: buildSpan,
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      pagesCount: toRegenerate.length, // number of html files that will be written
+      totalPagesCount: store.getState().pages.size, // total number of pages
+      SSRCount,
+      DSGCount,
+      SSGCount,
     })
-    postBuildActivityTimer.start()
-    await apiRunnerNode(`onPostBuild`, {
-      graphql: gatsbyNodeGraphQLFunction,
-      parentSpan: postBuildActivityTimer.span,
+  }
+
+  const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
+    parentSpan: buildSpan,
+  })
+  postBuildActivityTimer.start()
+  await apiRunnerNode(`onPostBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
+    parentSpan: postBuildActivityTimer.span,
+  })
+  postBuildActivityTimer.end()
+
+  // Wait for any jobs that were started in onPostBuild
+  // This could occur due to queries being run which invoke sharp for instance
+  await waitUntilAllJobsComplete()
+
+  if (!pageGenerationJobsEnabled) {
+    try {
+      await waitWorkerPoolEnd
+    } catch (e) {
+      report.warn(`Error when closing WorkerPool: ${e.message}`)
+    }
+  }
+
+  // Make sure we saved the latest state so we have all jobs cached
+  await db.saveState()
+
+  const state = store.getState()
+  reporter._renderPageTree({
+    components: state.components,
+    functions: state.functions,
+    pages: state.pages,
+    root: state.program.directory,
+  })
+
+  if (process.send) {
+    const gatsbyCloudConfig = constructConfigObject(state.config)
+
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `GATSBY_CONFIG_KEYS`,
+        payload: gatsbyCloudConfig,
+        timestamp: new Date().toJSON(),
+      },
     })
-    postBuildActivityTimer.end()
+  }
 
-    // Wait for any jobs that were started in onPostBuild
-    // This could occur due to queries being run which invoke sharp for instance
-    await waitUntilAllJobsComplete()
+  report.info(`Done building in ${process.uptime()} sec`)
 
-    if (!pageGenerationJobsEnabled) {
-      try {
-        await waitWorkerPoolEnd
-      } catch (e) {
-        report.warn(`Error when closing WorkerPool: ${e.message}`)
-      }
-    }
+  buildActivity.end()
+  if (!externalTelemetryAttributes) {
+    await stopTracer()
+  }
 
-    // Make sure we saved the latest state so we have all jobs cached
-    await db.saveState()
-
-    const state = store.getState()
-    reporter._renderPageTree({
-      components: state.components,
-      functions: state.functions,
-      pages: state.pages,
-      root: state.program.directory,
-    })
-
-    if (process.send) {
-      const gatsbyCloudConfig = constructConfigObject(state.config)
-
-      process.send({
-        type: `LOG_ACTION`,
-        action: {
-          type: `GATSBY_CONFIG_KEYS`,
-          payload: gatsbyCloudConfig,
-          timestamp: new Date().toJSON(),
-        },
-      })
-    }
-
-    report.info(`Done building in ${process.uptime()} sec`)
-
-    buildActivity.end()
-    if (!externalTelemetryAttributes) {
-      await stopTracer()
-    }
-
-    if (program.logPages) {
-      if (toRegenerate.length) {
-        report.info(
-          `Built pages:\n${toRegenerate
-            .map(path => `Updated page: ${path}`)
-            .join(`\n`)}`
-        )
-      }
-
-      if (toDelete.length) {
-        report.info(
-          `Deleted pages:\n${toDelete
-            .map(path => `Deleted page: ${path}`)
-            .join(`\n`)}`
-        )
-      }
-    }
-
-    if (program.writeToFile) {
-      const createdFilesPath = path.resolve(
-        `${program.directory}/.cache`,
-        `newPages.txt`
+  if (program.logPages) {
+    if (toRegenerate.length) {
+      report.info(
+        `Built pages:\n${toRegenerate
+          .map(path => `Updated page: ${path}`)
+          .join(`\n`)}`
       )
-      const createdFilesContent = toRegenerate.length
-        ? `${toRegenerate.join(`\n`)}\n`
-        : ``
+    }
 
-      const deletedFilesPath = path.resolve(
-        `${program.directory}/.cache`,
-        `deletedPages.txt`
+    if (toDelete.length) {
+      report.info(
+        `Deleted pages:\n${toDelete
+          .map(path => `Deleted page: ${path}`)
+          .join(`\n`)}`
       )
-      const deletedFilesContent = toDelete.length
-        ? `${toDelete.join(`\n`)}\n`
-        : ``
-
-      await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
-      report.info(`.cache/newPages.txt created`)
-
-      await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
-      report.info(`.cache/deletedPages.txt created`)
     }
+  }
 
-    showExperimentNotices()
+  if (program.writeToFile) {
+    const createdFilesPath = path.resolve(
+      `${program.directory}/.cache`,
+      `newPages.txt`
+    )
+    const createdFilesContent = toRegenerate.length
+      ? `${toRegenerate.join(`\n`)}\n`
+      : ``
 
-    if (await userGetsSevenDayFeedback()) {
-      showSevenDayFeedbackRequest()
-    } else if (await userPassesFeedbackRequestHeuristic()) {
-      showFeedbackRequest()
-    }
+    const deletedFilesPath = path.resolve(
+      `${program.directory}/.cache`,
+      `deletedPages.txt`
+    )
+    const deletedFilesContent = toDelete.length
+      ? `${toDelete.join(`\n`)}\n`
+      : ``
+
+    await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
+    report.info(`.cache/newPages.txt created`)
+
+    await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
+    report.info(`.cache/deletedPages.txt created`)
+  }
+
+  showExperimentNotices()
+
+  if (await userGetsSevenDayFeedback()) {
+    showSevenDayFeedbackRequest()
+  } else if (await userPassesFeedbackRequestHeuristic()) {
+    showFeedbackRequest()
   }
 }

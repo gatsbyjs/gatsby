@@ -15,6 +15,7 @@ const initialState: IStateProgram = {
   extensions: [],
   browserslist: [],
   report: reporter,
+  firstRun: false,
 }
 
 export const programReducer = (
@@ -31,7 +32,7 @@ export const programReducer = (
 
     case `SET_PROGRAM`:
       return {
-        firstRun: false,
+        firstRun: state.firstRun,
         ...action.payload,
       }
 
