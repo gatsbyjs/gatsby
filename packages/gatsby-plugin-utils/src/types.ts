@@ -3,7 +3,7 @@
  * These types are duplicated from packages/gatsby/src/bootstrap/load-plugins/types.ts
  * If you edit this file, make sure to edit that file too!!!
  * They are duplicate to avoid a circular dependency between gatsby-plugin-utils <=> gatsby <=> gatsby-plugin-utils
- * See gatsbyjs/gatsby#27578 and ping @laurieontech or @mxstbr if you have any questions
+ * See gatsbyjs/gatsby#27578
  */
 
 export interface IRawSiteConfig {

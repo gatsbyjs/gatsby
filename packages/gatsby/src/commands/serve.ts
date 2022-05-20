@@ -25,6 +25,10 @@ import { initTracer } from "../utils/tracer"
 import { configureTrailingSlash } from "../utils/express-middlewares"
 import { getDataStore, detectLmdbStore } from "../datastore"
 import { functionMiddlewares } from "../internal-plugins/functions/middleware"
+import {
+  partytownProxyPath,
+  partytownProxy,
+} from "../internal-plugins/partytown/proxy"
 
 process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
 detectLmdbStore()
@@ -119,6 +123,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const root = path.join(program.directory, `public`)
 
   const app = express()
+
+  // Proxy gatsby-script using off-main-thread strategy
+  const { partytownProxiedURLs = [] } = config || {}
+
+  app.use(partytownProxyPath, partytownProxy(partytownProxiedURLs))
+
   // eslint-disable-next-line new-cap
   const router = express.Router()
 

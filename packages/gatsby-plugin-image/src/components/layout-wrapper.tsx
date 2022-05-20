@@ -34,6 +34,9 @@ if (hasNativeLazyLoadSupport) {
 
     if (mainImage.complete) {
       mainImage.style.opacity = 1;
+
+      // also hide the placeholder
+      mainImage.parentNode.parentNode.querySelector('[data-placeholder-image]').style.opacity = 0;
     }
   }
 }

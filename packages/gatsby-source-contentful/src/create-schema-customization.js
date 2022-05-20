@@ -161,7 +161,7 @@ export async function createSchemaCustomization(
               }
             : {}),
         },
-        interfaces: [`ContentfulReference`, `Node`],
+        interfaces: [`ContentfulReference`, `Node`, `RemoteFile`],
       }),
       {
         schema,

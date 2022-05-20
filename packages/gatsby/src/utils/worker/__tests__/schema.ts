@@ -75,9 +75,9 @@ describeWhenLMDB(`worker (schema)`, () => {
     stateFromWorker = await worker.single.getState()
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
     for (const watcher of mockWatchersToClose) {
