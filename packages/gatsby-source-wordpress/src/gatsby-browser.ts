@@ -1,6 +1,5 @@
 import type { GatsbyImageProps } from "gatsby-plugin-image"
 import React from "react"
-import ReactDOM from "react-dom"
 
 let hydrateRef
 let isFirstHydration = true
@@ -34,7 +33,25 @@ export function onRouteUpdate(): void {
   }
 }
 
+let hasWarnedReact17 = false
+
 function hydrateImages(): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let ReactDOM: any
+
+  try {
+    ReactDOM = require(`react-dom/client`)
+  } catch (e) {
+    if (process.env.NODE_ENV === `development` && !hasWarnedReact17) {
+      hasWarnedReact17 = true
+      console.warn(
+        `Upgrade to React 18+ to fix the "Module not found: Can't resolve 'react-dom/client'" warning.`
+      )
+    }
+
+    ReactDOM = require(`react-dom`)
+  }
+
   const doc = document
   const inlineWPimages: Array<HTMLElement> = Array.from(
     doc.querySelectorAll(`[data-wp-inline-image]`)
@@ -62,20 +79,15 @@ function hydrateImages(): void {
             hydrationData.innerHTML
           )
 
-          // @ts-ignore - createRoot is on ReactDOM
           if (ReactDOM.createRoot) {
-            // @ts-ignore - createRoot is on ReactDOM
-            const root = ReactDOM.createRoot(image.parentNode.parentNode)
-            // @ts-ignore - not same as below, not sure why it's complaining
-            root.render(React.createElement(mod.default, imageProps), {
-              hydrate: true,
-            })
+            const root = ReactDOM.createRoot(image.parentNode)
+            root.render(React.createElement(mod.GatsbyImage, imageProps))
           } else {
-            ReactDOM.hydrate(
-              // @ts-ignore - no idea why it complains
-              React.createElement(mod.GatsbyImage, imageProps),
-              image.parentNode.parentNode
-            )
+            const element = React.createElement(mod.GatsbyImage, imageProps)
+
+            if (parent) {
+              ReactDOM.hydrate(element, image.parentNode)
+            }
           }
         }
       }
