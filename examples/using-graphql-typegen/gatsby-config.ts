@@ -6,9 +6,7 @@ const config: GatsbyConfig = {
     siteUrl: `https://www.yourdomain.tld`,
     description: `Example project for GraphQL Typegen in Gatsby.`
   },
-  flags: {
-    GRAPHQL_TYPEGEN: true,
-  },
+  graphqlTypegen: true,
   plugins: [
     `gatsby-transformer-remark`, 
     {
