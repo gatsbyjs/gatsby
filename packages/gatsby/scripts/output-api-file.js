@@ -41,7 +41,7 @@ async function outputFile() {
   }, {})
 
   /** @type {Array<import("../index").AvailableFeatures>} */
-  output.features = ["image-cdn"];
+  output.features = ["image-cdn", "graphql-typegen"];
 
   return fs.writeFile(
     path.resolve(OUTPUT_FILE_NAME),

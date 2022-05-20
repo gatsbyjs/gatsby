@@ -30,6 +30,8 @@ const {
   getExtendedFileNodeData,
 } = require(`./utils`)
 
+const imageCdnDocs = `https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
+
 const agent = {
   http: new HttpAgent(),
   https: new HttpsAgent(),
@@ -680,12 +682,13 @@ ${JSON.stringify(webhookBody, null, 4)}`
   }
 
   if (
+    skipFileDownloads &&
     !imageCDNState.foundPlaceholderStyle &&
     !imageCDNState.hasLoggedNoPlaceholderStyle
   ) {
     imageCDNState.hasLoggedNoPlaceholderStyle = true
     reporter.warn(
-      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\n\nhttps://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
+      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\n${imageCdnDocs}\n`
     )
   }
 
@@ -847,6 +850,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       translatableEntities: Joi.array().items(Joi.string()).required(),
       nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
+    placeholderStyleName: Joi.string().description(
+      `The machine name of the Gatsby Image CDN placeholder style in Drupal. The default is "placeholder".`
+    ),
   })
 
 exports.onCreateDevServer = async ({ app }) => {
@@ -854,20 +860,29 @@ exports.onCreateDevServer = async ({ app }) => {
   polyfillImageServiceDevRoutes(app)
 }
 
-exports.createSchemaCustomization = ({ actions, schema }) => {
-  actions.createTypes([
-    // polyfill so image CDN works on older versions of Gatsby
-    addRemoteFilePolyfillInterface(
-      // this type is merged in with the inferred file__file type, adding Image CDN support via the gatsbyImage GraphQL field. The `RemoteFile` interface as well as the polyfill above are what add the gatsbyImage field.
-      schema.buildObjectType({
-        name: `file__file`,
-        fields: {},
-        interfaces: [`Node`, `RemoteFile`],
-      }),
-      {
-        schema,
-        actions,
-      }
-    ),
-  ])
+exports.createSchemaCustomization = (
+  { actions, schema, reporter },
+  pluginOptions
+) => {
+  if (pluginOptions.skipFileDownloads) {
+    actions.createTypes([
+      // polyfill so image CDN works on older versions of Gatsby
+      addRemoteFilePolyfillInterface(
+        // this type is merged in with the inferred file__file type, adding Image CDN support via the gatsbyImage GraphQL field. The `RemoteFile` interface as well as the polyfill above are what add the gatsbyImage field.
+        schema.buildObjectType({
+          name: `file__file`,
+          fields: {},
+          interfaces: [`Node`, `RemoteFile`],
+        }),
+        {
+          schema,
+          actions,
+        }
+      ),
+    ])
+  } else {
+    reporter.info(
+      `[gatsby-source-drupal] Enable the skipFileDownloads option to use Gatsby's Image CDN. See the docs for more info:\n${imageCdnDocs}\n`
+    )
+  }
 }

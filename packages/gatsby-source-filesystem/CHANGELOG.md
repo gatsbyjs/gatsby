@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.14.0/packages/gatsby-source-filesystem) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
 ## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.13.0/packages/gatsby-source-filesystem) (2022-04-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
