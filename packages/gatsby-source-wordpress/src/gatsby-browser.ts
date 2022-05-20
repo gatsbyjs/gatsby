@@ -65,11 +65,7 @@ function hydrateImages(): void {
     /* webpackChunkName: "gatsby-plugin-image" */ `gatsby-plugin-image`
   ).then(mod => {
     inlineWPimages.forEach(image => {
-      if (
-        image.dataset &&
-        image.dataset.wpInlineImage &&
-        image.parentNode.parentNode
-      ) {
+      if (image.dataset && image.dataset.wpInlineImage && image.parentNode) {
         const hydrationData = doc.querySelector(
           `script[data-wp-inline-image-hydration="${image.dataset.wpInlineImage}"]`
         )
