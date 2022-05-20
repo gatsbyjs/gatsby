@@ -33,25 +33,24 @@ export function onRouteUpdate(): void {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let ReactDOM: any
 let hasWarnedReact17 = false
 
-function hydrateImages(): void {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let ReactDOM: any
-
-  try {
-    ReactDOM = require(`react-dom/client`)
-  } catch (e) {
-    if (process.env.NODE_ENV === `development` && !hasWarnedReact17) {
-      hasWarnedReact17 = true
-      console.warn(
-        `Upgrade to React 18+ to fix the "Module not found: Can't resolve 'react-dom/client'" warning.`
-      )
-    }
-
-    ReactDOM = require(`react-dom`)
+try {
+  ReactDOM = require(`react-dom/client`)
+} catch (e) {
+  if (process.env.NODE_ENV === `development` && !hasWarnedReact17) {
+    hasWarnedReact17 = true
+    console.warn(
+      `Upgrade to React 18+ to fix the "Module not found: Can't resolve 'react-dom/client'" warning.`
+    )
   }
 
+  ReactDOM = require(`react-dom`)
+}
+
+function hydrateImages(): void {
   const doc = document
   const inlineWPimages: Array<HTMLElement> = Array.from(
     doc.querySelectorAll(`[data-wp-inline-image]`)
