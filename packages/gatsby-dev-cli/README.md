@@ -79,3 +79,7 @@ Copy all modules/files in the gatsby source repo in packages/
 #### `--force-install`
 
 Disable copying files into node_modules and force usage of local npm repository.
+
+#### `--external-registry`
+
+Run `yarn add` commands without the `--registry` flag. This is helpful when using yarn 2/3 and you need to use `yarn config set npmRegistryServer http://localhost:4873` for `gatsby-dev-cli` to work.
