@@ -82,4 +82,4 @@ Disable copying files into node_modules and force usage of local npm repository.
 
 #### `--external-registry`
 
-Run `yarn add` commands without the `--registry` flag. This is helpful when using yarn 2/3 and you need to use `yarn config set npmRegistryServer http://localhost:4873` for `gatsby-dev-cli` to work.
+Run `yarn add` commands without the `--registry` flag. This is helpful when using yarn 2/3 and you need to use `yarn config set npmRegistryServer http://localhost:4873` and `echo -e 'unsafeHttpWhitelist:\n - "localhost"' >> .yarnrc.yml` before running `gatsby-dev-cli`.
