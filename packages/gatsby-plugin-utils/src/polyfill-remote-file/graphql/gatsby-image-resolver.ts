@@ -76,7 +76,7 @@ export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
   actions: Actions,
-  store: Store
+  store?: Store
 ): Promise<{
   images: IGatsbyImageData
   layout: string
@@ -258,7 +258,7 @@ export async function gatsbyImageResolver(
 export function generateGatsbyImageFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
   actions: Actions,
-  store: Store
+  store?: Store
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode | IRemoteImageNode,
   ReturnType<typeof gatsbyImageResolver>,

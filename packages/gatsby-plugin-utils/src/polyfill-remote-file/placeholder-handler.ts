@@ -42,7 +42,7 @@ const queue = Queue<
     width: number
     height: number
     type: PlaceholderType
-    store: Store
+    store?: Store
   },
   string
   // eslint-disable-next-line consistent-return
@@ -175,7 +175,7 @@ QUEUE_CONCURRENCY)
 export async function generatePlaceholder(
   source: IRemoteImageNode,
   placeholderType: PlaceholderType,
-  store: Store
+  store?: Store
 ): Promise<{ fallback?: string; backgroundColor?: string }> {
   switch (placeholderType) {
     case PlaceholderType.BLURRED: {
@@ -251,7 +251,7 @@ async function runPlaceholder({
 }: IPlaceholderGenerationArgs & {
   type: PlaceholderType
   placeholderOptions: { width: number; quality: number }
-  store: Store
+  store?: Store
 }): Promise<string> {
   const cache = getCache()
   const cacheKey = `image-cdn:${id}-${contentDigest}:${type}`

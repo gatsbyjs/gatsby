@@ -25,7 +25,7 @@ let enums: ReturnType<typeof getRemoteFileEnums> | undefined
 export function getRemoteFileFields(
   enums: ReturnType<typeof getRemoteFileEnums>,
   actions: Actions,
-  store: Store
+  store?: Store
 ): Record<string, unknown> {
   return {
     id: `ID!`,

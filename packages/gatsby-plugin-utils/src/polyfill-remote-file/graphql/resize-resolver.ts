@@ -41,7 +41,7 @@ export async function resizeResolver(
   source: IRemoteFileNode,
   args: Partial<IResizeArgs> & WidthOrHeight,
   actions: Actions,
-  store: Store
+  store?: Store
 ): Promise<{
   width: number
   height: number
@@ -115,7 +115,7 @@ export async function resizeResolver(
 export function generateResizeFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
   actions: Actions,
-  store: Store
+  store?: Store
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode,
   ReturnType<typeof resizeResolver>,

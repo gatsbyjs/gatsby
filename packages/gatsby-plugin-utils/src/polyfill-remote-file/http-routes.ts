@@ -12,7 +12,7 @@ import type { Store } from "gatsby"
 
 export function polyfillImageServiceDevRoutes(
   app: Application,
-  store: Store
+  store?: Store
 ): void {
   if (hasFeature(`image-cdn`)) {
     return
@@ -21,7 +21,7 @@ export function polyfillImageServiceDevRoutes(
   addImageRoutes(app, store)
 }
 
-export function addImageRoutes(app: Application, store: Store): Application {
+export function addImageRoutes(app: Application, store?: Store): Application {
   app.get(`/_gatsby/file/:url/:filename`, async (req, res) => {
     const outputDir = path.join(
       global.__GATSBY?.root || process.cwd(),

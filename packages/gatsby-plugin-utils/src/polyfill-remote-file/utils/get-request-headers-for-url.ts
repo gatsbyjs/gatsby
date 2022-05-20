@@ -7,7 +7,7 @@ let loggedWarning = false
 
 export function getRequestHeadersForUrl(
   passedUrl: string,
-  store: Store
+  store?: Store
 ): Headers | undefined {
   const storeIsMissing = !store || !(`getState` in store)
 

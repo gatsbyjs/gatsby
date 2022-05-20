@@ -9,7 +9,7 @@ import type { IRemoteFileNode, IGraphQLFieldConfigDefinition } from "../types"
 export function publicUrlResolver(
   source: IRemoteFileNode,
   actions: Actions,
-  store: Store
+  store?: Store
 ): string {
   if (shouldDispatch()) {
     dispatchLocalFileServiceJob(
@@ -28,7 +28,7 @@ export function publicUrlResolver(
 
 export function generatePublicUrlFieldConfig(
   actions: Actions,
-  store: Store
+  store?: Store
 ): IGraphQLFieldConfigDefinition<IRemoteFileNode, string> {
   return {
     type: `String!`,

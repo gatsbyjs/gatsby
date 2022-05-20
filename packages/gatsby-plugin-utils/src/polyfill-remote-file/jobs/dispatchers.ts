@@ -20,7 +20,7 @@ export function dispatchLocalFileServiceJob(
     contentDigest,
   }: { url: string; filename: string; contentDigest: string },
   actions: Actions,
-  store: Store
+  store?: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
   const publicUrl = generateFileUrl({
@@ -73,7 +73,7 @@ export function dispatchLocalImageServiceJob(
   },
   imageArgs: Parameters<typeof generateImageUrl>[1],
   actions: Actions,
-  store: Store
+  store?: Store
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
   const publicUrl = generateImageUrl(
