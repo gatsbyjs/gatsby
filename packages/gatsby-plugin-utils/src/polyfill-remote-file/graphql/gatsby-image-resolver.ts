@@ -72,6 +72,10 @@ const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 const DEFAULT_QUALITY = 75
 
+const GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = [`true`, `1`].includes(
+  process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``
+)
+
 export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
@@ -245,9 +249,8 @@ export async function gatsbyImageResolver(
     }
   }
 
-  if (
-    [`true`, `1`].includes(process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``)
-  ) {
+  // Check if addGatsbyImageSourceUrl for backwards compatibility with older Gatsby versions
+  if (GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS && actions.addGatsbyImageSourceUrl) {
     actions.addGatsbyImageSourceUrl(source.url)
   }
 
