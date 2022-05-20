@@ -71,11 +71,17 @@ onExit(() => {
   })
 })
 
-process.on(`message`, msg => {
-  if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
-    process.exit(msg.action.payload)
+process.on(
+  `message`,
+  (msg: {
+    type: string
+    action: { type: string; payload: number | undefined }
+  }) => {
+    if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
+      process.exit(msg.action.payload)
+    }
   }
-})
+)
 
 interface IDevelopArgs extends IProgram {
   debugInfo: IDebugInfo | null
