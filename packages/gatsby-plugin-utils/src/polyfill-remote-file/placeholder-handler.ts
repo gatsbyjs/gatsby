@@ -57,11 +57,13 @@ const queue = Queue<
     tmpDir = await mkdtemp(path.join(cache.directory, `placeholder-`))
   }
 
+  const httpHeaders = getRequestHeadersForUrl(url, store)
+
   const filePath = await fetchRemoteFile({
     url,
     cacheKey: contentDigest,
     directory: tmpDir,
-    httpHeaders: getRequestHeadersForUrl(url, store),
+    httpHeaders,
   })
 
   switch (type) {
