@@ -27,7 +27,7 @@ const adjustPackageJson = ({
   versionPostFix,
   packagesToPublish,
   ignorePackageJSONChanges,
-  root,
+  packageNameToPath,
 }) => {
   // we need to check if package depend on any other package to will be published and
   // adjust version selector to point to dev version of package so local registry is used
@@ -49,7 +49,7 @@ const adjustPackageJson = ({
         fs.readFileSync(
           getMonorepoPackageJsonPath({
             packageName: packageThatWillBePublished,
-            root,
+            packageNameToPath,
           }),
           `utf-8`
         )
@@ -99,19 +99,19 @@ const createTemporaryNPMRC = ({ pathToPackage }) => {
 const publishPackage = async ({
   packageName,
   packagesToPublish,
-  root,
   versionPostFix,
   ignorePackageJSONChanges,
+  packageNameToPath,
 }) => {
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
-    root,
+    packageNameToPath,
   })
 
   const { unadjustPackageJson, newPackageVersion } = adjustPackageJson({
     monoRepoPackageJsonPath,
     packageName,
-    root,
+    packageNameToPath,
     versionPostFix,
     packagesToPublish,
     ignorePackageJSONChanges,

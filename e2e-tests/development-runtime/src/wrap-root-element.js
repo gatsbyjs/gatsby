@@ -1,5 +1,6 @@
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql, Script } from "gatsby"
+import { scripts } from "../gatsby-script-scripts"
 
 const WrapRootElement = ({ element }) => (
   <StaticQuery
@@ -19,6 +20,8 @@ const WrapRootElement = ({ element }) => (
     }) => (
       <>
         {element}
+        <Script src={scripts.jQuery} strategy="post-hydrate" />
+        <Script src={scripts.popper} strategy="idle" />
         <div>
           StaticQuery in wrapRootElement test (should show site title):
           <span data-testid="wrap-root-element-result">{title}</span>

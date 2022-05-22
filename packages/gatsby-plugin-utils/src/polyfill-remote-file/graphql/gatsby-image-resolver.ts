@@ -1,3 +1,4 @@
+import { hasFeature } from "../../has-feature"
 import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
@@ -157,10 +158,16 @@ export async function gatsbyImageResolver(
 
     return 1
   }
+
   const sortedFormats = Array.from(formats).sort(
     (a, b) => getFormatValue(b) - getFormatValue(a)
   )
 
+  // Result will be used like this
+  // <picture>
+  // for each result.sources we create a <source srcset="..." /> tag
+  // <img src="fallbacksrc" srcset="fallbacksrcset" />
+  // </picture>
   for (const format of sortedFormats) {
     let fallbackSrc: string | undefined = undefined
     const images = imageSizes.sizes.map(width => {
@@ -204,7 +211,8 @@ export async function gatsbyImageResolver(
       }
     })
 
-    if (format === sourceMetadata.format && fallbackSrc) {
+    // The latest format (by default will be jpg/png) is the fallback and doesn't need sources
+    if (format === sortedFormats[sortedFormats.length - 1] && fallbackSrc) {
       result.fallback = {
         src: fallbackSrc,
         srcSet: createSrcSetFromImages(images),
@@ -253,7 +261,7 @@ export function generateGatsbyImageFieldConfig(
   IGatsbyImageDataArgs
 > {
   return {
-    type: `JSON`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON`,
     description: `Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.`,
     args: {
       layout: {

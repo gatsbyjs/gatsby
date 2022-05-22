@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.14.0/packages/gatsby-source-filesystem) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.13.0/packages/gatsby-source-filesystem) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.12.1/packages/gatsby-source-filesystem) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.12.0/packages/gatsby-source-filesystem) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+- use correct hash when using createFileNodeFromBuffer [#35243](https://github.com/gatsbyjs/gatsby/issues/35243) ([54f643b](https://github.com/gatsbyjs/gatsby/commit/54f643b04c296af22df1176397389dd110380791))
+
 ### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.11.1/packages/gatsby-source-filesystem) (2022-03-31)
 
 **Note:** Version bump only for package gatsby-source-filesystem

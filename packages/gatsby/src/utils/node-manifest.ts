@@ -32,6 +32,20 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
+function getNodeManifestFileLimit(): number {
+  const defaultLimit = 10000
+
+  const overrideLimit =
+    process.env.NODE_MANIFEST_FILE_LIMIT &&
+    Number(process.env.NODE_MANIFEST_FILE_LIMIT)
+
+  return overrideLimit || defaultLimit
+}
+/**
+ * This defines a limit to the number number of node manifest files that will be written to disk
+ */
+const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit()
+
 /**
  * Finds a final built page by nodeId or by node.slug as a fallback.
  *
@@ -311,6 +325,27 @@ export async function processNodeManifest(
   return finalManifest
 }
 
+function nodeManifestSortComparerAscendingUpdatedAt(a, b): number {
+  /**
+   * Prioritize node manifests that have an updatedAtUTC so that manifests known to be
+   * newest are written to disk first. If neither have an updatedAtUTC, there isn't
+   * anything to sort
+   */
+  if (!a.updatedAtUTC && !b.updatedAtUTC) {
+    return 0
+  }
+
+  if (!a.updatedAtUTC) {
+    return 1
+  }
+
+  if (!b.updatedAtUTC) {
+    return -1
+  }
+
+  return Date.parse(a.updatedAtUTC) - Date.parse(b.updatedAtUTC)
+}
+
 /**
  * Grabs all pending node manifests, processes them, writes them to disk,
  * and then removes them from the store.
@@ -325,7 +360,7 @@ export async function processNodeManifests(): Promise<Map<
     process.env.VERBOSE_NODE_MANIFEST === `true`
 
   const startTime = Date.now()
-  const { nodeManifests } = store.getState()
+  let { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
 
@@ -362,6 +397,12 @@ export async function processNodeManifests(): Promise<Map<
   }
 
   const processNodeManifestQueue = fastq(processNodeManifestTask, 25)
+
+  if (totalManifests > NODE_MANIFEST_FILE_LIMIT) {
+    nodeManifests = [...nodeManifests]
+    nodeManifests.sort(nodeManifestSortComparerAscendingUpdatedAt)
+    nodeManifests = nodeManifests.slice(0, NODE_MANIFEST_FILE_LIMIT)
+  }
 
   for (const manifest of nodeManifests) {
     processNodeManifestQueue.push(manifest, () => {})

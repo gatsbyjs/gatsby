@@ -180,6 +180,12 @@ Enable the new [tags feature](https://www.contentful.com/blog/2021/04/08/governa
 
 Learn how to use them at the [Contentful Tags](#contentful-tags) section.
 
+**`contentTypeFilter`** [function][optional] [default: () => true]
+
+Possibility to limit how many contentType/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in Contentful and only want to get the data from certain content types.
+
+For example, to exclude content types starting with "page" `contentTypeFilter: contentType => !contentType.sys.id.startsWith('page')`
+
 ## How to query for nodes
 
 Two standard node types are available from Contentful: `Asset` and `ContentType`.

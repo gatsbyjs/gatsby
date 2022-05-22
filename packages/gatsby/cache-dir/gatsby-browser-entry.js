@@ -112,3 +112,5 @@ export {
   useStaticQuery,
   prefetchPathname,
 }
+
+export * from "gatsby-script"

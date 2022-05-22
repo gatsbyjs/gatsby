@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.14.1/packages/gatsby-transformer-sqip) (2022-05-12)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.14.0/packages/gatsby-transformer-sqip) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.13.0/packages/gatsby-transformer-sqip) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.12.1/packages/gatsby-transformer-sqip) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.12.0/packages/gatsby-transformer-sqip) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency mini-svg-data-uri to ^1.4.4 for gatsby-transformer-sqip [#35286](https://github.com/gatsbyjs/gatsby/issues/35286) ([e4ef32a](https://github.com/gatsbyjs/gatsby/commit/e4ef32a41021bb6cabb9dd195cf3c6fe5a52175c))
+
+#### Chores
+
+- update dependency debug to ^4.3.4 for gatsby-transformer-sqip [#35278](https://github.com/gatsbyjs/gatsby/issues/35278) ([8b0e81b](https://github.com/gatsbyjs/gatsby/commit/8b0e81bf6d45acf87bb003595ec3a40ab54445f8))
+
 ### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.11.1/packages/gatsby-transformer-sqip) (2022-03-31)
 
 **Note:** Version bump only for package gatsby-transformer-sqip

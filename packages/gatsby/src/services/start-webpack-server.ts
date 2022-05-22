@@ -9,7 +9,6 @@ import {
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
 
-import { printDeprecationWarnings } from "../utils/print-deprecation-warnings"
 import { showExperimentNotices } from "../utils/show-experiment-notice"
 import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
@@ -87,7 +86,7 @@ export async function startWebpackServer({
             program.sitePackageJson.name || `(Unnamed package)`,
             urls
           )
-          printDeprecationWarnings()
+
           if (program.open) {
             try {
               await openurl(urls.localUrlForBrowser)
@@ -105,7 +104,7 @@ export async function startWebpackServer({
 
         if (webpackActivity) {
           if (stats.hasWarnings()) {
-            const rawMessages = stats.toJson({ moduleTrace: false })
+            const rawMessages = stats.toJson({ all: false, warnings: true })
             reportWebpackWarnings(rawMessages.warnings, report)
           }
 

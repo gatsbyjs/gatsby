@@ -43,7 +43,7 @@ function warnForPluginsWithoutNodes(
 
   pluginsWithNoNodes.map(name =>
     report.warn(
-      `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
+      `The ${name} plugin has generated no Gatsby nodes. Do you need it? This could also suggest the plugin is misconfigured.`
     )
   )
 }

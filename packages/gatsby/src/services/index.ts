@@ -15,5 +15,6 @@ export { runPageQueries } from "./run-page-queries"
 export { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 export { runMutationBatch } from "./run-mutation-batch"
 export { recompile } from "./recompile"
+export { graphQLTypegen } from "./graphql-typegen"
 
 export * from "./types"
