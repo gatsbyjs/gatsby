@@ -5,7 +5,7 @@ import {
   InterfaceTypeComposer,
   ObjectTypeComposerFieldConfigMapDefinition,
 } from "graphql-compose"
-import { getFieldsEnum } from "./sort"
+// import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
 import {
   createDistinctResolver,
@@ -89,62 +89,62 @@ function createPagination<TSource = any, TContext = any>({
 }): ObjectTypeComposer {
   const inputTypeComposer: InputTypeComposer =
     typeComposer.getInputTypeComposer()
-  const fieldsEnumTC = getFieldsEnum({
-    schemaComposer,
-    typeComposer,
-    inputTypeComposer,
-  })
+  // const fieldsEnumTC = getFieldsEnum({
+  //   schemaComposer,
+  //   typeComposer,
+  //   inputTypeComposer,
+  // })
   const paginationTypeComposer: ObjectTypeComposer =
     schemaComposer.getOrCreateOTC(typeName, tc => {
       // getGroup() will create a recursive call to pagination,
       // so only add it and other aggregate functions on onCreate.
       // Cast into their own category to avoid Typescript conflicts.
-      const aggregationFields: { [key: string]: any } = {
-        distinct: {
-          type: [`String!`],
-          args: {
-            field: fieldsEnumTC.getTypeNonNull(),
-          },
-          resolve: createDistinctResolver(typeComposer.getTypeName()),
-        },
-        max: {
-          type: `Float`,
-          args: {
-            field: fieldsEnumTC.getTypeNonNull(),
-          },
-          resolve: createMaxResolver(typeComposer.getTypeName()),
-        },
-        min: {
-          type: `Float`,
-          args: {
-            field: fieldsEnumTC.getTypeNonNull(),
-          },
-          resolve: createMinResolver(typeComposer.getTypeName()),
-        },
-        sum: {
-          type: `Float`,
-          args: {
-            field: fieldsEnumTC.getTypeNonNull(),
-          },
-          resolve: createSumResolver(typeComposer.getTypeName()),
-        },
-        group: {
-          type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],
-          args: {
-            skip: `Int`,
-            limit: `Int`,
-            field: fieldsEnumTC.getTypeNonNull(),
-          },
-          resolve: createGroupResolver(typeComposer.getTypeName()),
-        },
-      }
+      // const aggregationFields: { [key: string]: any } = {
+      //   distinct: {
+      //     type: [`String!`],
+      //     args: {
+      //       field: fieldsEnumTC.getTypeNonNull(),
+      //     },
+      //     resolve: createDistinctResolver(typeComposer.getTypeName()),
+      //   },
+      //   max: {
+      //     type: `Float`,
+      //     args: {
+      //       field: fieldsEnumTC.getTypeNonNull(),
+      //     },
+      //     resolve: createMaxResolver(typeComposer.getTypeName()),
+      //   },
+      //   min: {
+      //     type: `Float`,
+      //     args: {
+      //       field: fieldsEnumTC.getTypeNonNull(),
+      //     },
+      //     resolve: createMinResolver(typeComposer.getTypeName()),
+      //   },
+      //   sum: {
+      //     type: `Float`,
+      //     args: {
+      //       field: fieldsEnumTC.getTypeNonNull(),
+      //     },
+      //     resolve: createSumResolver(typeComposer.getTypeName()),
+      //   },
+      //   group: {
+      //     type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],
+      //     args: {
+      //       skip: `Int`,
+      //       limit: `Int`,
+      //       field: fieldsEnumTC.getTypeNonNull(),
+      //     },
+      //     resolve: createGroupResolver(typeComposer.getTypeName()),
+      //   },
+      // }
 
       tc.addFields({
         totalCount: `Int!`,
         edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
         nodes: [typeComposer.getTypeNonNull()],
         pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
-        ...aggregationFields,
+        // ...aggregationFields,
         ...fields,
       })
     })

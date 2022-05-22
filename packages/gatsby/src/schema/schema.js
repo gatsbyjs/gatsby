@@ -43,7 +43,12 @@ const {
   internalExtensionNames,
 } = require(`./extensions`)
 import { getPagination } from "./types/pagination"
-import { getSortInput, SORTABLE_ENUM } from "./types/sort"
+import {
+  getSortInput,
+  SORTABLE_ENUM,
+  getSortInputProposal2,
+  getSortInputProposal3,
+} from "./types/sort"
 import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
 import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
 
@@ -1266,6 +1271,9 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       args: {
         filter: filterInputTC,
         sort: sortInputTC,
+        sortProposal1: `String`,
+        sortProposal2: getSortInputProposal2({ schemaComposer, typeComposer }),
+        sortProposal3: getSortInputProposal3({ schemaComposer, typeComposer }),
         skip: `Int`,
         limit: `Int`,
       },
