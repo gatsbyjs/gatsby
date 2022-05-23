@@ -87,12 +87,16 @@ export function Script(props: ScriptProps): ReactElement | null {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
 
-    if (typeof window === `undefined` && collectScript) {
-      const identifier = id || src || `no-id-or-src`
-      console.warn(
-        `Unable to collect off-main-thread script '${identifier}' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
-      )
-      collectScript(attributes)
+    if (typeof window === `undefined`) {
+      if (collectScript) {
+        collectScript(attributes)
+      } else {
+        console.warn(
+          `Unable to collect off-main-thread script '${
+            id || src || `no-id-or-src`
+          }' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
+        )
+      }
     }
 
     if (inlineScript) {
