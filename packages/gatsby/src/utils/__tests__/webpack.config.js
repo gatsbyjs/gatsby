@@ -1,4 +1,3 @@
-
 const mockHasES6ModuleSupport = jest.fn()
 jest.mock(`../browserslist`, () => {
   return {
@@ -56,7 +55,7 @@ beforeEach(() => {
   })
 })
 
-const getConfig = (stage, args = {}) =>
+const getConfig = stage =>
   webpackConfig(
     {
       directory: process.cwd(),
@@ -68,30 +67,44 @@ const getConfig = (stage, args = {}) =>
 
 describe(`build-javascript`, () => {
   const stage = `build-javascript`
-  
+
   it(`polyfills dependencies when ES6 module support is false`, async () => {
-    const { module: {rules}} = await getConfig(stage)
+    const {
+      module: { rules },
+    } = await getConfig(stage)
 
     const polyfillRule = rules.find(rule => {
       if (Array.isArray(rule.use)) {
-        return rule.use[0]?.loader && (rule.use[0].loader.indexOf("/babel-loader/") >= 0)
+        return (
+          rule.use[0]?.loader &&
+          rule.use[0].loader.indexOf(`/babel-loader/`) >= 0
+        )
       }
+
+      return undefined
     })
-    
+
     expect(polyfillRule).toBeTruthy()
   })
-  
+
   it(`doesn't polyfill dependencies when ES6 module support is true`, async () => {
     mockHasES6ModuleSupport.mockReturnValue(true)
 
-    const { module: {rules}} = await getConfig(stage)
+    const {
+      module: { rules },
+    } = await getConfig(stage)
 
     const polyfillRule = rules.find(rule => {
       if (Array.isArray(rule.use)) {
-        return rule.use[0]?.loader && (rule.use[0].loader.indexOf("/babel-loader/") >= 0)
+        return (
+          rule.use[0]?.loader &&
+          rule.use[0].loader.indexOf(`/babel-loader/`) >= 0
+        )
       }
+
+      return undefined
     })
-    
+
     expect(polyfillRule).toBeFalsy()
   })
 })
@@ -102,7 +115,7 @@ describe(`build-html`, () => {
   describe(`basic functionality`, () => {
     it(`returns webpack config with expected shape`, async () => {
       const config = await getConfig(stage)
-  
+
       expect(config).toEqual(
         expect.objectContaining(
           [`context`, `entry`, `output`, `module`, `plugins`, `resolve`].reduce(
@@ -116,25 +129,25 @@ describe(`build-html`, () => {
       )
     }, 30000)
   })
-  
+
   describe(`environment variables`, () => {
     afterEach(() => {
       delete process.env.GATSBY_ACTIVE_ENV
     })
-  
+
     it(`sanitizes process.env variables`, async () => {
       await getConfig(stage)
-  
+
       expect(DefinePlugin).toHaveBeenCalledWith(
         expect.objectContaining({
           "process.env": `({})`,
         })
       )
     })
-  
+
     it(`provides expected variables`, async () => {
       await getConfig(stage)
-  
+
       expect(DefinePlugin).toHaveBeenCalledWith(
         expect.objectContaining(
           [
@@ -149,12 +162,12 @@ describe(`build-html`, () => {
         )
       )
     })
-  
+
     describe(`env var overriding`, () => {
       it(`allows for GATSBY_ACTIVE_ENV override`, async () => {
         process.env.GATSBY_ACTIVE_ENV = `staging`
         await getConfig(stage)
-  
+
         expect(readFileSync).toHaveBeenCalledWith(
           expect.stringContaining(`.env.staging`),
           expect.anything()
@@ -164,10 +177,10 @@ describe(`build-html`, () => {
           [`process.env.NODE_ENV`]: JSON.stringify(process.env.NODE_ENV),
         })
       })
-  
+
       it(`falls back to NODE_ENV`, async () => {
         await getConfig(stage)
-  
+
         expect(readFileSync).toHaveBeenCalledWith(
           expect.stringContaining(`.env.${process.env.NODE_ENV}`),
           expect.anything()
@@ -176,4 +189,3 @@ describe(`build-html`, () => {
     })
   })
 })
-
