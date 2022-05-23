@@ -18,7 +18,6 @@ module.exports = {
       parser: '@graphql-eslint/eslint-plugin',
       plugins: ['@graphql-eslint'],
       rules: {
-        '@graphql-eslint/require-id-when-available': 'error',
         '@graphql-eslint/no-anonymous-operations': 'error',
         '@graphql-eslint/naming-convention': [
           'error',
