@@ -6,6 +6,12 @@ import { onLoad, onError } from "../utils/gatsby-script-callbacks"
 const DuplicateScripts = () => {
   const [onLoadScriptLoaded, setOnLoadScriptLoaded] = useState(false)
   const [onErrorScriptLoaded, setOnErrorScriptLoaded] = useState(false)
+  const [secondOnLoadScriptLoaded, setSecondOnLoadScriptLoaded] = useState(
+    false
+  )
+  const [secondOnErrorScriptLoaded, setSecondOnErrorScriptLoaded] = useState(
+    false
+  )
 
   return (
     <main>
@@ -51,6 +57,40 @@ const DuplicateScripts = () => {
           src="/non-existent-script.js"
           onError={() => {
             onError(`duplicate-3`)
+          }}
+        />
+      )}
+
+      <Script src={scripts.three} />
+      <Script
+        src={scripts.three}
+        onLoad={() => {
+          onLoad(`duplicate-first-script-no-callback`)
+          setSecondOnLoadScriptLoaded(true)
+        }}
+      />
+      {secondOnLoadScriptLoaded && (
+        <Script
+          src={scripts.three}
+          onLoad={() => {
+            onLoad(`duplicate-first-script-no-callback-2`)
+          }}
+        />
+      )}
+
+      <Script src="/other-non-existent-script.js" />
+      <Script
+        src="/other-non-existent-script.js"
+        onError={() => {
+          onError(`duplicate-first-script-no-callback`)
+          setSecondOnErrorScriptLoaded(true)
+        }}
+      />
+      {secondOnErrorScriptLoaded && (
+        <Script
+          src="/other-non-existent-script.js"
+          onError={() => {
+            onError(`duplicate-first-script-no-callback-2`)
           }}
         />
       )}
