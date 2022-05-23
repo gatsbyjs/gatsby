@@ -81,7 +81,7 @@ Each strategy comes with its own set of considerations, but they are all more pe
 
 The Gatsby `<Script>` component also supports inline scripts, so for your smaller scripts you can save the cost of a network request _and_ determine when the inline script is loaded.
 
-For more information, see the [Gatsby Script reference documentation](/docs/built-in-components/gatsby-script/).
+For more information, see the [Gatsby Script reference documentation](/docs/reference/built-in-components/gatsby-script/).
 
 ### Reduce your JavaScript bundle cost
 
