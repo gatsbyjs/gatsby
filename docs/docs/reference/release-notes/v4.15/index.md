@@ -64,7 +64,14 @@ Read the [GraphQL Typegen guide](/docs/how-to/local-development/graphql-typegen)
 
 ## Notable bugfixes & improvements
 
-TODO
+- `gatsby`:
+  - Improved performance of "Building development bundle", via [PR #35641](https://github.com/gatsbyjs/gatsby/pull/35641)
+  - Don't apply trailing slashes to ".pdf" or ".xml" links, via [PR #35681](https://github.com/gatsbyjs/gatsby/pull/35681)
+- `gatsby-cli`: Default to `production` NODE_ENV for `gatsby serve` to be consistent with `gatsby build`, via [PR #35693](https://github.com/gatsbyjs/gatsby/pull/35693)
+- `gatsby-source-wordpress`: handle media edit (for example rotation or rename) properly for IMAGE_CDN, via [PR #35687](https://github.com/gatsbyjs/gatsby/pull/35687)
+- `gatsby-source-drupal`:
+  - Warn about corrupt files and don't create enable IMAGE_CDN if `skipFileDownloads` is not enabled, via [PR #35619](https://github.com/gatsbyjs/gatsby/pull/35619)
+  - Add missing `placeholderStyleName` plugin config option, via [PR #35644](https://github.com/gatsbyjs/gatsby/pull/35644)
 
 ## Contributors
 
