@@ -722,6 +722,7 @@ const errors = {
     level: Level.ERROR,
     type: Type.GRAPHQL,
     category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/graphql-typegen`,
   },
 }
 
