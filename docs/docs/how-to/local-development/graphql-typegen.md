@@ -61,7 +61,7 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
    `
    ```
 
-   It is important that your query has a name (here: `query TypegenPage {}`) as otherwise the automatic type generation doesn't work. We recommend naming the query the same as your React component and using [PascalCase](https://en.wiktionary.org/wiki/Pascal_case).
+   It is important that your query has a name (here: `query TypegenPage {}`) as otherwise the automatic type generation doesn't work. We recommend naming the query the same as your React component and using [PascalCase](https://en.wiktionary.org/wiki/Pascal_case). You can enforce this requirement by using [`graphql-eslint`](#graphql-eslint).
 
 1. Access the `Queries` namespace and use the `TypegenPage` type in your React component like so:
 
@@ -146,7 +146,76 @@ module.exports = require("./site/.cache/typegen/graphql.config.json")
 
 ## `graphql-eslint`
 
-TODO
+You can optionally use [`graphql-eslint`](https://github.com/B2o5T/graphql-eslint) to lint your GraphQL queries. It seamlessly integrates with the `graphql.config.js` file you created in the other step.
+
+This guide assumes that you don't have any existing ESLint configuration yet. You'll need to adapt your configuration if you're already using ESLint and refer to [`graphql-eslint`'s documentation](https://github.com/B2o5T/graphql-eslint/tree/master/docs).
+
+1. Install dependencies
+
+   ```shell
+   npm install --save-dev eslint @graphql-eslint/eslint-plugin @typescript-eslint/eslint-plugin @typescript-eslint/parser
+   ```
+
+1. Edit your `package.json` to add two scripts:
+
+   ```json:title=package.json
+   {
+     "scripts": {
+       "lint": "eslint --ignore-path .gitignore .",
+       "lint:fix": "npm run lint -- --fix"
+     },
+   }
+   ```
+
+1. Create a `.eslintrc.js` file to configure ESLint:
+
+   ```js:title=.eslintrc.js
+   module.exports = {
+     root: true,
+     overrides: [
+       {
+         files: ['*.ts', '*.tsx'],
+         processor: '@graphql-eslint/graphql',
+         parser: "@typescript-eslint/parser",
+         extends: [
+           "eslint:recommended",
+           "plugin:@typescript-eslint/recommended"
+         ],
+         env: {
+           es6: true,
+         },
+       },
+       {
+         files: ['*.graphql'],
+         parser: '@graphql-eslint/eslint-plugin',
+         plugins: ['@graphql-eslint'],
+         rules: {
+           '@graphql-eslint/no-anonymous-operations': 'error',
+           '@graphql-eslint/naming-convention': [
+             'error',
+             {
+               OperationDefinition: {
+                 style: 'PascalCase',
+                 forbiddenPrefixes: ['Query', 'Mutation', 'Subscription', 'Get'],
+                 forbiddenSuffixes: ['Query', 'Mutation', 'Subscription'],
+               },
+             },
+           ],
+         },
+       },
+     ],
+   }
+   ```
+
+1. Create a `graphql.config.js` at the root of your project with the following contents:
+
+   ```js:title=graphql.config.js
+   module.exports = require("./.cache/typegen/graphql.config.json")
+   ```
+
+1. Start the Gatsby development server with `gatsby develop` and check that `.cache/typegen/graphql.config.json` was created.
+
+You can now use `npm run lint` and `npm run lint:fix` to check your GraphQL queries, e.g. if they are named.
 
 ## Additional Resources
 
