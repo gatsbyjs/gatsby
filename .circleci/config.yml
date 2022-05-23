@@ -237,7 +237,7 @@ jobs:
   unit_tests_node18:
     executor:
       name: node
-      image: "18.0.0"
+      image: "18.2.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
