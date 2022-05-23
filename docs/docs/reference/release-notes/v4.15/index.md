@@ -8,7 +8,8 @@ Welcome to `gatsby@4.14.0` release (May 2022 #1)
 
 Key highlights of this release:
 
-- [TODO](#TODO)
+- [Script Component](#script-component)
+- [GraphQL Typegen](#graphql-typegen)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -20,9 +21,15 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## TODO
+## Script Component
 
 TODO
+
+## GraphQL Typegen
+
+TODO
+
+##
 
 ## Notable bugfixes & improvements
 
