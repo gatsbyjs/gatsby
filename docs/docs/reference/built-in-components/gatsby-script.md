@@ -253,8 +253,8 @@ Here is an example using the callbacks:
 ```tsx
 <Script
   src="https://my-example-script"
-  onLoad={() => onLoad(`console.log('Hello world!')`)}
-  onError={() => onError(`console.log('Sadness')`)}
+  onLoad={() => console.log('Success') )}
+  onError={() => console.log('Sadness') )}
 />
 ```
 
