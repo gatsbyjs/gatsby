@@ -258,7 +258,9 @@ Here is an example using the callbacks:
 />
 ```
 
-This enables the ability to load scripts dependently. Here's an example showing how to load the second script after the first:
+Duplicate scripts (scripts with the same `id` or `src` attributes) will execute `onLoad` and `onError` callbacks despite not being injected into the DOM.
+
+Access to the `onLoad` and `onError` callbacks also enables the ability to load scripts dependently. Here's an example showing how to load the second script after the first:
 
 ```tsx
 import React, { useState } from "react"
