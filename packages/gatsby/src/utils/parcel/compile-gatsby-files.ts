@@ -72,6 +72,7 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
         error,
         context: {
           siteRoot,
+          sourceMessage: error.message,
         },
       })
     }
