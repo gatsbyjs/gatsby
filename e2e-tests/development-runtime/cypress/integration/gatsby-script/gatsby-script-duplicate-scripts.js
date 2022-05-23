@@ -1,6 +1,6 @@
 describe(`duplicate scripts`, () => {
   beforeEach(() => {
-    cy.visit(`/gatsby-script-duplicate-scripts/`)
+    cy.visit(`/gatsby-script-duplicate-scripts/`).waitForRouteChange()
   })
 
   it(`should execute load callbacks of duplicate scripts`, () => {
