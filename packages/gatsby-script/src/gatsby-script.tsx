@@ -195,6 +195,7 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
 
   if (scriptKey) {
     for (const name of callbackNames) {
+      // Add listeners on injected scripts so events are cached for use in de-duplicated script callbacks
       script.addEventListener(name, event => {
         const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
 
