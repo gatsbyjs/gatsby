@@ -51,5 +51,8 @@
   },
   "peerDependencies": {
     "@parcel/core": "2.5.0"
+  },
+  "scripts": {
+    "version": "node ../../scripts/pin-version.js"
   }
 }

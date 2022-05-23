@@ -270,6 +270,7 @@
     "postinstall": "node scripts/postinstall.js",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch",
+    "version": "node ../../scripts/pin-version.js",
     "typecheck": "tsc --noEmit"
   },
   "types": "index.d.ts",
