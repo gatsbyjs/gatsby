@@ -52,9 +52,15 @@ For full details, see the [Gatsby Script reference documentation](/docs/referenc
 
 ## GraphQL Typegen
 
-TODO
+In the last [v4.14 release](/docs/reference/release-notes/v4.14/#experimental-graphql-typegen) we've added GraphQL Typegen as an experimental feature. After some bugfixing and improving its documentation the feature is now generally available behind a `gatsby-config` option.
 
-##
+```js:title=gatsby-config.js
+module.exports = {
+  graphqlTypegen: true,
+}
+```
+
+Read the [GraphQL Typegen guide](/docs/how-to/local-development/graphql-typegen) to learn how you can use it today and continue to give us your feedback in the [RFC discussion](https://github.com/gatsbyjs/gatsby/discussions/35420).
 
 ## Notable bugfixes & improvements
 
