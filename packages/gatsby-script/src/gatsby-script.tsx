@@ -45,25 +45,19 @@ export const scriptCallbackCache: Map<
 > = new Map()
 
 export function Script(props: ScriptProps): ReactElement | null {
-  const {
-    id,
-    src,
-    strategy = ScriptStrategy.postHydrate,
-    onLoad,
-    onError,
-  } = props || {}
+  const { id, src, strategy = ScriptStrategy.postHydrate } = props || {}
   const { collectScript } = useContext(PartytownContext)
 
   useEffect(() => {
-    let script: HTMLScriptElement | null
+    let details: IInjectedScriptDetails | null
 
     switch (strategy) {
       case ScriptStrategy.postHydrate:
-        script = injectScript(props)
+        details = injectScript(props)
         break
       case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          script = injectScript(props)
+          details = injectScript(props)
         })
         break
       case ScriptStrategy.offMainThread:
@@ -75,12 +69,16 @@ export function Script(props: ScriptProps): ReactElement | null {
     }
 
     return (): void => {
-      if (onLoad) {
-        script?.removeEventListener(`load`, onLoad)
+      const { script, loadCallback, errorCallback } = details || {}
+
+      if (loadCallback) {
+        script?.removeEventListener(`load`, loadCallback)
       }
-      if (onError) {
-        script?.removeEventListener(`error`, onError)
+
+      if (errorCallback) {
+        script?.removeEventListener(`error`, errorCallback)
       }
+
       script?.remove()
     }
   }, [])
@@ -122,7 +120,13 @@ export function Script(props: ScriptProps): ReactElement | null {
   return null
 }
 
-function injectScript(props: ScriptProps): HTMLScriptElement | null {
+interface IInjectedScriptDetails {
+  script: HTMLScriptElement | null
+  loadCallback: (event: Event) => void
+  errorCallback: (event: ErrorEvent) => void
+}
+
+function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
   const {
     id,
     src,
@@ -193,18 +197,16 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     script.src = src
   }
 
+  const wrappedCallbacks: Record<string, (event: Event | ErrorEvent) => void> =
+    {}
+
   if (scriptKey) {
+    // Add listeners on injected scripts so events are cached for use in de-duplicated script callbacks
     for (const name of callbackNames) {
-      // Add listeners on injected scripts so events are cached for use in de-duplicated script callbacks
-      script.addEventListener(name, event => {
-        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
-
-        for (const callback of cachedCallbacks?.[name]?.callbacks || []) {
-          callback(event)
-        }
-
-        scriptCallbackCache.set(scriptKey, { [name]: { event } })
-      })
+      const wrappedEventCallback = (event: Event | ErrorEvent): void =>
+        onEventCallback(event, scriptKey, name)
+      script.addEventListener(name, wrappedEventCallback)
+      wrappedCallbacks[`${name}Callback`] = wrappedEventCallback
     }
 
     scriptCache.add(scriptKey)
@@ -212,7 +214,11 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
 
   document.body.appendChild(script)
 
-  return script
+  return {
+    script,
+    loadCallback: wrappedCallbacks.loadCallback,
+    errorCallback: wrappedCallbacks.errorCallback,
+  }
 }
 
 function resolveInlineScript(props: ScriptProps): string {
@@ -239,4 +245,18 @@ function proxyPartytownUrl(url: string | undefined): string | undefined {
     return undefined
   }
   return `/__third-party-proxy?url=${encodeURIComponent(url)}`
+}
+
+function onEventCallback(
+  event: Event | ErrorEvent,
+  scriptKey: string,
+  eventName: string
+): void {
+  const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+
+  for (const callback of cachedCallbacks?.[eventName]?.callbacks || []) {
+    callback(event)
+  }
+
+  scriptCallbackCache.set(scriptKey, { [eventName]: { event } })
 }
