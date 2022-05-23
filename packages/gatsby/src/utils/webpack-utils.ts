@@ -9,7 +9,7 @@ import type { MinifyOptions as TerserOptions } from "terser"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
-import { getBrowsersList, hasIESupport } from "./browserslist"
+import { getBrowsersList } from "./browserslist"
 import ESLintPlugin from "eslint-webpack-plugin"
 import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
@@ -513,14 +513,11 @@ export const createWebpackUtils = (
         `warning`,
         `webpack`,
       ]
-
-      const doNotPolyfillRegex = hasIESupport(process.cwd())
-        ? new RegExp(
-            `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
-              `|`
-            )})[\\\\/]`
-          )
-        : new RegExp(`node_modules`)
+      const doNotPolyfillRegex = new RegExp(
+        `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
+          `|`
+        )})[\\\\/]`
+      )
 
       return {
         test: /\.(js|mjs)$/,
