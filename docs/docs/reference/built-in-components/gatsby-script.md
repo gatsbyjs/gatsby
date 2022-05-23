@@ -199,13 +199,14 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
   },
+  // highlight-next-line
   partytownProxiedURLs: [
     `https://www.googletagmanager.com/gtag/js?id=${process.env.GTM}`
   ],
 }
 ```
 
-This works out of the box when running your site via `gatsby develop`, `gatsby serve` and Gatsby Cloud. Hosting on other providers will require your own implementation to proxy URLs from `/__partytown-proxy?url=${YOUR_URL}` to `YOUR_URL`.
+This works out of the box when running your site via `gatsby develop`, `gatsby serve` and Gatsby Cloud. Hosting on other providers will require your own implementation to proxy URLs from `/__third-party-proxy?url=${YOUR_URL}` to `YOUR_URL`.
 
 #### Debugging
 
@@ -253,8 +254,8 @@ Here is an example using the callbacks:
 ```tsx
 <Script
   src="https://my-example-script"
-  onLoad={() => console.log('Success') )}
-  onError={() => console.log('Sadness') )}
+  onLoad={() => console.log('success') )}
+  onError={() => console.log('sadness') )}
 />
 ```
 
