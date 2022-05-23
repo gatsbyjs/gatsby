@@ -464,7 +464,7 @@ export async function initialize({
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
-    console.log(`DELETING CACHE mtf`)
+
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
     store.dispatch({
