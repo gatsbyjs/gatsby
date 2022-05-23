@@ -549,7 +549,9 @@ ${JSON.stringify(webhookBody, null, 4)}`
               throw error
             }
           }
-          dataArray.push(...d.body.data)
+          if (d.body.data) {
+            dataArray.push(...d.body.data)
+          }
           // Add support for includes. Includes allow entity data to be expanded
           // based on relationships. The expanded data is exposed as `included`
           // in the JSON API response.
