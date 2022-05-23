@@ -26,7 +26,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
   describe(`inline scripts set via ${descriptor}`, () => {
     describe(`using the post-hydrate strategy`, () => {
       it(`should execute successfully`, () => {
-        cy.visit(page.target)
+        cy.visit(page.target).waitForRouteChange()
 
         cy.getRecord(
           `post-hydrate-${inlineScriptType}`,
@@ -36,7 +36,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load after the framework bundle has loaded`, () => {
-        cy.visit(page.target)
+        cy.visit(page.target).waitForRouteChange()
 
         // Assert framework is loaded before inline script is executed
         cy.getRecord(
@@ -53,7 +53,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
     describe(`using the idle strategy`, () => {
       it(`should execute successfully`, () => {
-        cy.visit(page.target)
+        cy.visit(page.target).waitForRouteChange()
 
         cy.getRecord(`idle-${inlineScriptType}`, `success`, true).should(
           `equal`,
@@ -62,7 +62,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load after other strategies`, () => {
-        cy.visit(page.target)
+        cy.visit(page.target).waitForRouteChange()
 
         cy.getRecord(`idle-${inlineScriptType}`, markRecord.executeStart).then(
           dangerouslySetExecuteStart => {
@@ -77,7 +77,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
 
     describe(`when navigation occurs`, () => {
       it(`should load only once on initial page load`, () => {
-        cy.visit(page.target)
+        cy.visit(page.target).waitForRouteChange()
 
         cy.get(`table[id=script-mark-records] tbody`)
           .children()
@@ -112,7 +112,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once after anchor link navigation`, () => {
-        cy.visit(page.target)
+        cy.visit(page.target).waitForRouteChange()
         cy.get(`a[id=anchor-link-back-to-index]`).click()
         cy.url().should(`contain`, page.navigation)
         cy.get(`a[href="${page.target}"][id=anchor-link]`).click()
@@ -153,7 +153,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once after Gatsby link navigation`, () => {
-        cy.visit(page.target)
+        cy.visit(page.target).waitForRouteChange()
         cy.get(`a[id=gatsby-link-back-to-index]`).click()
         cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
 
@@ -172,7 +172,7 @@ for (const { descriptor, inlineScriptType } of typesOfInlineScripts) {
       })
 
       it(`should load only once if the page is revisited via browser back/forward buttons after Gatsby link navigation`, () => {
-        cy.visit(page.navigation)
+        cy.visit(page.navigation).waitForRouteChange()
         cy.get(`a[href="${page.target}"][id=gatsby-link]`).click()
         cy.go(`back`)
         cy.go(`forward`)
