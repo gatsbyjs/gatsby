@@ -195,17 +195,15 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
 
   if (scriptKey) {
     for (const name of callbackNames) {
-      if (currentCallbacks?.[name]) {
-        script.addEventListener(name, event => {
-          const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+      script.addEventListener(name, event => {
+        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
 
-          for (const callback of cachedCallbacks?.[name]?.callbacks || []) {
-            callback(event)
-          }
+        for (const callback of cachedCallbacks?.[name]?.callbacks || []) {
+          callback(event)
+        }
 
-          scriptCallbackCache.set(scriptKey, { [name]: { event } })
-        })
-      }
+        scriptCallbackCache.set(scriptKey, { [name]: { event } })
+      })
     }
 
     scriptCache.add(scriptKey)
