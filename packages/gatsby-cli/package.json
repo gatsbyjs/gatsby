@@ -95,7 +95,7 @@
   "scripts": {
     "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
     "build:rollup": "rollup -c",
-    "build": "npm-run-all --npm-path npm -p build:babel build:rollup",
+    "build": "npm run build:babel && npm run build:rollup",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch:babel": "npm run build:babel -- --watch",
