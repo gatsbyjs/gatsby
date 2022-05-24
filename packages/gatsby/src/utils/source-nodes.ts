@@ -11,18 +11,16 @@ import GatsbyCacheLmdb from "./cache-lmdb"
 
 const { deleteNode } = actions
 
+const nodeOwnerSet = new Set([`default-site-plugin`])
+function sampleNodePluginOwners(action): null {
+  nodeOwnerSet.add(action.payload.internal.owner)
+}
+
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
  * may create nodes, but which have not actually created any nodes.
  */
-function discoverPluginsWithoutNodes(
-  storeState: IGatsbyState,
-  nodes: GatsbyIterable<IGatsbyNode>
-): Array<string> {
-  // Find out which plugins own already created nodes
-  const nodeOwnerSet = new Set([`default-site-plugin`])
-  nodes.forEach(node => nodeOwnerSet.add(node.internal.owner))
-
+function discoverPluginsWithoutNodes(storeState: IGatsbyState): Array<string> {
   return storeState.flattenedPlugins
     .filter(
       plugin =>
@@ -37,11 +35,8 @@ function discoverPluginsWithoutNodes(
 /**
  * Warn about plugins that should have created nodes but didn't.
  */
-function warnForPluginsWithoutNodes(
-  state: IGatsbyState,
-  nodes: GatsbyIterable<IGatsbyNode>
-): void {
-  const pluginsWithNoNodes = discoverPluginsWithoutNodes(state, nodes)
+function warnForPluginsWithoutNodes(state: IGatsbyState): void {
+  const pluginsWithNoNodes = discoverPluginsWithoutNodes(state)
 
   pluginsWithNoNodes.map(name =>
     report.warn(
@@ -112,10 +107,18 @@ export default async ({
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
 
-  if (
+  const DECOUPLED_SOURCING =
     process.env.DECOUPLED_SOURCING === `true` ||
     process.env.DECOUPLED_SOURCING === `1`
-  ) {
+  console.log(`sourcing`)
+
+  // Listen to node creation to record which plugins create nodes.
+  if (isInitialSourcing) {
+    emitter.on(`CREATE_NODE`, sampleNodePluginOwners)
+  }
+
+  if (DECOUPLED_SOURCING) {
+    console.log(`decoupled sourcing`)
     decoupledSourcingCache =
       decoupledSourcingCache ||
       new GatsbyCacheLmdb({
@@ -129,18 +132,16 @@ export default async ({
     await sourcerer({ cache: decoupledSourcingCache, store, emitter })
     console.timeEnd(`sourcing time`)
 
-    // TODO figure out if we do need to run this on every sourcing.
-    if (isInitialSourcing) {
-      await apiRunner(`sourceNodes`, {
-        traceId,
-        waitForCascadingActions: true,
-        deferNodeMutation,
-        parentSpan,
-        webhookBody: {},
-        pluginName: `internal-data-bridge`,
-      })
-    }
+    await apiRunner(`sourceNodes`, {
+      traceId,
+      waitForCascadingActions: true,
+      deferNodeMutation,
+      parentSpan,
+      webhookBody: {},
+      pluginName: `internal-data-bridge`,
+    })
   } else {
+    console.log(`regular sourcing`)
     await apiRunner(`sourceNodes`, {
       traceId,
       waitForCascadingActions: true,
@@ -151,18 +152,26 @@ export default async ({
     })
   }
 
+  console.time(`getDataStore.ready()`)
   await getDataStore().ready()
+  console.timeEnd(`getDataStore.ready()`)
 
   // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
+  console.time(`other sourcing work`)
   if (isInitialSourcing) {
     const state = store.getState()
-    const nodes = getDataStore().iterateNodes()
+    warnForPluginsWithoutNodes(state)
 
-    warnForPluginsWithoutNodes(state, nodes)
+    if (!DECOUPLED_SOURCING) {
+      const nodes = getDataStore().iterateNodes()
+      deleteStaleNodes(state, nodes)
+    }
 
-    deleteStaleNodes(state, nodes)
     isInitialSourcing = false
+
+    emitter.off(`CREATE_NODE`, sampleNodePluginOwners)
   }
+  console.timeEnd(`other sourcing work`)
 
   store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
 
