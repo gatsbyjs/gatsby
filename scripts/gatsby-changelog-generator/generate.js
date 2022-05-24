@@ -232,17 +232,29 @@ async function regenerateChangelog(packageName) {
 }
 
 function addChangelogEntries(packageName, entries, contents) {
-  contents = contents || String(fs.readFileSync(changelogPath(packageName)))
-  const header = renderHeader(packageName)
-  const updatedChangelogParts = [
-    header,
-    entries.trimRight(),
-    contents.slice(header.length).trimStart(),
-  ]
-  fs.writeFileSync(
-    changelogPath(packageName),
-    updatedChangelogParts.join(`\n\n`)
-  )
+  try {
+    contents = contents || String(fs.readFileSync(changelogPath(packageName)))
+    const header = renderHeader(packageName)
+    const updatedChangelogParts = [
+      header,
+      entries.trimRight(),
+      contents.slice(header.length).trimStart(),
+    ]
+    fs.writeFileSync(
+      changelogPath(packageName),
+      updatedChangelogParts.join(`\n\n`)
+    )
+  } catch (e) {
+    /*
+    We don't have changelog file, so we skip it
+    package "gatsby-parcel-config": Error: ENOENT: no such file or directory, open '/Users/misiek/dev/pgs-gatsby/packages/gatsby-parcel-config/CHANGELOG.md'
+      at Object.openSync (fs.js:498:3)
+      at Object.readFileSync (fs.js:394:35)
+      at addChangelogEntries (/Users/misiek/dev/pgs-gatsby/scripts/gatsby-changelog-generator/generate.js:235:36)
+      at onNewVersion (/Users/misiek/dev/pgs-gatsby/scripts/gatsby-changelog-generator/generate.js:314:9)
+    */
+    console.error(e)
+  }
 }
 
 /**
