@@ -36,6 +36,8 @@ import { Script } from "gatsby";
 
 This will load your script after your page has hydrated by default, offering performance benefits over the native `<script>` tag (even with `async` or `defer` applied).
 
+In our testing so far, we've noted a **20% reduction in Total Blocking Time** for Gatsbyjs.com by moving 3 third party scripts to use the `off-main-thread` strategy via the new component. With the benefit of gradually migrating scripts to the new component, we'll be able to continue to fine tune scripts to the appropriate strategies, and provide the very best frontend speed to visitors of Gatsbyjs.com.
+
 The Gatsby `<Script>` component includes three loading strategies that you can define, allowing a great deal of flexibility via a single `strategy` attribute:
 
 - `post-hydrate` - Loads after the page has hydrated
