@@ -4,13 +4,11 @@ on:
     - cron: "0 */12 * * *"
 permissions:
   contents: read
-
 jobs:
   stale:
     permissions:
-      contents: read  # for actions/checkout to fetch code
-      issues: write  # for actions/stale to close stale issues
-
+      contents: read
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
