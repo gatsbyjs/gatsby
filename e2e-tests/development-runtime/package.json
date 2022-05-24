@@ -64,7 +64,7 @@
     "@playwright/test": "^1.22.0",
     "@testing-library/cypress": "^7.0.0",
     "cross-env": "^5.2.0",
-    "cypress": "6.1.0",
+    "cypress": "^9.7.0",
     "cypress-image-snapshot": "^4.0.1",
     "fs-extra": "^7.0.1",
     "gatsby-core-utils": "next",
@@ -78,9 +78,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby"
-  },
-  "resolutions": {
-    "cypress": "6.1.0",
-    "graphql-config": "3.3.0"
   }
 }
