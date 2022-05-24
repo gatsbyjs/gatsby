@@ -46,7 +46,6 @@ In addition, these features are supported out of the box:
 
 - Inline scripts via template literals and the `dangerouslySetInnerHTML` property
 - `onLoad` and `onError` callbacks for `post-hydrate` and `idle` scripts with sources
-- Partytown proxy and forwards collection
 
 For full details, see the [Gatsby Script reference documentation](/docs/reference/built-in-components/gatsby-script/).
 
