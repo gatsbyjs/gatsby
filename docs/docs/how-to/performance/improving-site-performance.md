@@ -75,7 +75,7 @@ Gatsby includes a built-in `<Script>` component that unlocks the ability to load
 
 - After your page hydrates (`post-hydrate` strategy)
 - After the browser's main thread becomes idle (`idle` strategy)
-- In a web worker, avoiding doing any work on the main thread at all (`off-main-thread` strategy)
+- In a web worker, avoiding doing any work on the main thread at all (`off-main-thread` strategy, experimental)
 
 Each strategy comes with its own set of considerations, but they are all more performant than the regular blocking `<script>`, `<script async>`, and `<script defer>`.
 

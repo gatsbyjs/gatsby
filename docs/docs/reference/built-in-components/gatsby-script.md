@@ -117,7 +117,7 @@ You can declare a loading strategy by passing a `strategy` property. These are t
 
 - `post-hydrate` - Loads after the page has hydrated
 - `idle` - Loads after the page has become idle
-- `off-main-thread` - Loads off the main thread in a web worker via [Partytown](https://partytown.builder.io)
+- `off-main-thread` (experimental) - Loads off the main thread in a web worker via [Partytown](https://partytown.builder.io)
 
 The best strategy to use depends on the functionality of the script you would like to include.
 
@@ -141,7 +141,7 @@ import { Script, ScriptStrategy } from "gatsby"
 <Script src="https://my-example-script" strategy={ScriptStrategy.offMainThread} />
 ```
 
-### Off main thread strategy
+### Off main thread strategy (experimental)
 
 The `off-main-thread` strategy leverages [Partytown](https://partytown.builder.io) under the hood, so it requires further configuration. See the [Partytown configuration](https://partytown.builder.io/configuration) documentation for complete details.
 
@@ -206,7 +206,9 @@ module.exports = {
 }
 ```
 
-This works out of the box when running your site via `gatsby develop`, `gatsby serve` and Gatsby Cloud. Hosting on other providers will require your own implementation to proxy URLs from `/__third-party-proxy?url=${YOUR_URL}` to `YOUR_URL`.
+This works out of the box when running your site via `gatsby develop`, `gatsby serve` and Gatsby Cloud.
+
+Hosting on other providers requires support for Gatsby's [`createRedirect`](/docs/reference/config-files/actions/) action to rewrite requests from `/__third-party-proxy?url=${YOUR_URL}` to `YOUR_URL` with a 200 status code. You may need to check with your hosting provider to see if this is supported.
 
 #### Debugging
 
