@@ -78,6 +78,9 @@ Read the [GraphQL Typegen guide](/docs/how-to/local-development/graphql-typegen)
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [chuckreynolds](https://github.com/chuckreynolds): sitemap plugin readme has incorrect array name reference [PR #35659](https://github.com/gatsbyjs/gatsby/pull/35659)
+- [admir4l](https://github.com/admir4l): chore(gatsby, gatsby-cli, gatsby-plugin-sharp): remove old unused UUID dependency [PR #35657](https://github.com/gatsbyjs/gatsby/pull/35657)
+- [feedm3](https://github.com/feedm3): fix(gatsby): use correct types for the response headers [PR #35633](https://github.com/gatsbyjs/gatsby/pull/35633)
+- [alvis](https://github.com/alvis): fix(gatsby): correct the types of `createNode` action return [PR #32522](https://github.com/gatsbyjs/gatsby/pull/32522)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.15.0-next.0...gatsby@4.15.0
