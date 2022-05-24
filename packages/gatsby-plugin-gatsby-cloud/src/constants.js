@@ -36,17 +36,3 @@ export const CACHING_HEADERS = {
   "/static/*": [IMMUTABLE_CACHING_HEADER],
   "/sw.js": [NEVER_CACHE_HEADER],
 }
-
-export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/
-
-export const COMMON_BUNDLES = [`commons`, `app`]
-
-export const PAGE_DATA_DIR = `page-data/`
-
-export const POLLING_INTERVAL = 5000
-
-export const FEEDBACK_COOKIE_NAME = `last_feedback`
-export const DAYS_BEFORE_FEEDBACK = 30
-export const INTERACTION_COOKIE_NAME = `interaction_count`
-export const INTERACTIONS_BEFORE_FEEDBACK = 3
-export const FEEDBACK_URL = `https://gatsby.dev/zrx`

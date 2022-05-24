@@ -1,7 +1,7 @@
 # gatsby-plugin-gatsby-cloud
 
 Automatically generates a `_headers.json` file and a `_redirects.json` file at the root of the public folder to configure
-Headers and Redirects on Gatsby Cloud
+Headers and Redirects on Gatsby Cloud.
 
 By default, the plugin will add some basic security headers. You can easily add or replace headers through the plugin config.
 

@@ -498,6 +498,7 @@ export const createWebpackUtils = (
         `dom-helpers`,
         `gatsby-legacy-polyfills`,
         `gatsby-link`,
+        `gatsby-script`,
         `gatsby-react-router-scroll`,
         `invariant`,
         `lodash`,

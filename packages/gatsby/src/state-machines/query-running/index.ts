@@ -1,4 +1,4 @@
-import { MachineConfig, Machine, assign } from "xstate"
+import { MachineConfig, createMachine, assign } from "xstate"
 import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
@@ -20,7 +20,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       actions: `trackRequestedQueryRun`,
     },
   },
-  context: {},
   states: {
     extractingQueries: {
       id: `extracting-queries`,
@@ -126,7 +125,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     },
   },
 }
-export const queryRunningMachine = Machine(queryStates, {
+export const queryRunningMachine = createMachine(queryStates, {
   actions: queryActions,
   services: queryRunningServices,
 })

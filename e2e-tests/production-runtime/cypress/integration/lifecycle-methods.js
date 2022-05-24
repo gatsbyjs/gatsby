@@ -1,10 +1,11 @@
-// TODO: In https://github.com/gatsbyjs/gatsby/pull/35226 the skip needs to be removed
-
-describe.skip(`Production build tests`, () => {
+describe(`Production build tests`, () => {
   it(`should remount when navigating to different template`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`page2`).click().waitForRouteChange()
+
+    // add buffer time so that componentDidMount has time to be called after route change
+    cy.wait(1000)
 
     // we expect 2 `componentDidMount` calls - 1 for initial page and 1 for second page
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 2)
@@ -15,6 +16,9 @@ describe.skip(`Production build tests`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.getTestElement(`duplicated`).click().waitForRouteChange()
+
+    // add buffer time so that componentDidMount has time to be called after route change
+    cy.wait(1000)
 
     // we expect 2 `componentDidMount` calls - 1 for initial page and 1 for duplicated page
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 2)
@@ -27,6 +31,9 @@ describe.skip(`Production build tests`, () => {
     cy.getTestElement(`/page/profile`).click().waitForRouteChange()
 
     cy.getTestElement(`/nested/foo`).click().waitForRouteChange()
+
+    // add buffer time so that componentDidMount has time to be called after route change
+    cy.wait(1000)
 
     // we expect just 1 `componentDidMount` call, when navigating inside matchPath
     cy.lifecycleCallCount(`componentDidMount`).should(`equal`, 1)

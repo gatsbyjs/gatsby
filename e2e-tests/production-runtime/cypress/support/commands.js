@@ -70,3 +70,15 @@ Cypress.Commands.add(
       .then(() => subject)
   }
 )
+
+/**
+ * Get a record from a table cell in one of the test components.
+ * @example cy.getRecord(Script.dayjs, ResourceRecord.fetchStart)
+ * @example cy.getRecord(`${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`, MarkRecord.executeStart)
+ */
+Cypress.Commands.add(`getRecord`, (key, metric, raw = false) => {
+  return cy
+    .get(`[id=${key}] [id=${metric}]`)
+    .invoke(`text`)
+    .then(value => (raw ? value : Number(value)))
+})
