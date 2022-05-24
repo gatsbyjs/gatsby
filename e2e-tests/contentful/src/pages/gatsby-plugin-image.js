@@ -10,8 +10,7 @@ import SvgImage from "../components/svg-image"
 const GatsbyPluginImagePage = ({ data }) => {
   const dynamicImage = useContentfulImage({
     image: {
-      url:
-        "//images.ctfassets.net/k8iqpp6u0ior/3BSI9CgDdAn1JchXmY5IJi/f97a2185b3395591b98008647ad6fd3c/camylla-battani-AoqgGAqrLpU-unsplash.jpg",
+      url: "//images.ctfassets.net/k8iqpp6u0ior/3BSI9CgDdAn1JchXmY5IJi/f97a2185b3395591b98008647ad6fd3c/camylla-battani-AoqgGAqrLpU-unsplash.jpg",
       width: 2000,
       height: 1000,
     },
@@ -23,7 +22,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: constrained</h2>
       <Grid data-cy="constrained">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -31,9 +30,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
-              <GatsbyImage image={node.constrained} />
+              <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -41,7 +40,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: full width</h2>
       <Grid data-cy="full-width">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -49,9 +48,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fullWidth ? (
-              <GatsbyImage image={node.fullWidth} />
+              <GatsbyImage image={node.fullWidth} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -60,7 +59,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: fixed</h2>
       <Grid data-cy="fixed">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -68,9 +67,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fixed ? (
-              <GatsbyImage image={node.fixed} />
+              <GatsbyImage image={node.fixed} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -79,7 +78,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: Dominant Color Placeholder</h2>
       <Grid data-cy="dominant-color">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -87,9 +86,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.dominantColor ? (
-              <GatsbyImage image={node.dominantColor} />
+              <GatsbyImage image={node.dominantColor} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -98,7 +97,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: Traced SVG Placeholder</h2>
       <Grid data-cy="traced">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -106,9 +105,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.traced ? (
-              <GatsbyImage image={node.traced} />
+              <GatsbyImage image={node.traced} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -117,7 +116,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: Blurred Placeholder</h2>
       <Grid data-cy="blurred">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -125,9 +124,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.blurred ? (
-              <GatsbyImage image={node.blurred} />
+              <GatsbyImage image={node.blurred} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -136,7 +135,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: Custom Image Formats (WebP & AVIF)</h2>
       <Grid data-cy="customImageFormats">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -144,9 +143,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.customImageFormats ? (
-              <GatsbyImage image={node.customImageFormats} />
+              <GatsbyImage image={node.customImageFormats} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -155,7 +154,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: SQIP Placeholder</h2>
       <Grid data-cy="sqip">
         {data.default.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -170,9 +169,10 @@ const GatsbyPluginImagePage = ({ data }) => {
                     ? { fallback: node.sqip.dataURI }
                     : null,
                 }}
+                alt={node.title}
               />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -181,7 +181,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: English</h2>
       <Grid data-cy="english">
         {data.english.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -189,9 +189,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
-              <GatsbyImage image={node.constrained} />
+              <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -200,7 +200,7 @@ const GatsbyPluginImagePage = ({ data }) => {
       <h2>gatsby-plugin-image: German</h2>
       <Grid data-cy="german">
         {data.german.nodes.map(node => (
-          <div>
+          <div key={node.title}>
             <p>
               <strong>
                 {node.title} ({node.file.fileName.split(".").pop()})
@@ -208,9 +208,9 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
-              <GatsbyImage image={node.constrained} />
+              <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.file.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -221,7 +221,7 @@ const GatsbyPluginImagePage = ({ data }) => {
         <code>useContentfulImage</code>
       </h2>
       <Grid data-cy="hook">
-        <GatsbyImage image={dynamicImage} />
+        <GatsbyImage image={dynamicImage} alt="Image on the fly" />
       </Grid>
     </Layout>
   )
