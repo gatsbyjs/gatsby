@@ -1,7 +1,7 @@
 {
   "name": "gatsby-script",
   "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
-  "version": "1.0.0-next.3",
+  "version": "1.0.0",
   "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -25,13 +25,12 @@
     "watch": "babel -w src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@babel/preset-typescript": "^7.16.7",
     "@testing-library/react": "^11.2.7",
-    "babel-preset-gatsby-package": "^2.15.0-next.0",
+    "babel-preset-gatsby-package": "^2.15.0",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
     "typescript": "^4.6.3"
