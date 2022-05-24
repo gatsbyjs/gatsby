@@ -40,7 +40,7 @@ The Gatsby `<Script>` component includes three loading strategies that you can d
 
 - `post-hydrate` - Loads after the page has hydrated
 - `idle` - Loads after the page has become idle
-- `off-main-thread` - Loads off the main thread in a web worker via [Partytown](https://partytown.builder.io)
+- `off-main-thread` (experimental) - Loads off the main thread in a web worker via [Partytown](https://partytown.builder.io)
 
 In addition, these features are supported out of the box:
 
