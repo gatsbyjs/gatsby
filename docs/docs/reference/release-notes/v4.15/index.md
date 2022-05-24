@@ -4,7 +4,7 @@ version: "4.15.0"
 title: "v4.15 Release Notes"
 ---
 
-Welcome to `gatsby@4.14.0` release (May 2022 #1)
+Welcome to `gatsby@4.15.0` release (May 2022 #2)
 
 Key highlights of this release:
 
