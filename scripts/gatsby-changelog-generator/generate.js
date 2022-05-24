@@ -310,21 +310,23 @@ async function onNewVersion() {
         .filter(v => isStableVersion(v) || isBranchCutPreminorVersion(v))
         .slice(-1)
 
-      const entry = await buildChangelogEntry({
-        pkg: packageName,
-        version,
-        fromTag: lastVersion ? `${packageName}@${lastVersion}` : ``,
-        toTag: `HEAD`,
-        date: dateFormat(new Date(), `yyyy-mm-dd`),
-        gatsbyRelease:
-          gatsbyVersion && gatsbyVersion.patch === 0
-            ? `${gatsbyVersion.major}.${gatsbyVersion.minor}`
-            : ``,
-      })
+      if (lastVersion) {
+        const entry = await buildChangelogEntry({
+          pkg: packageName,
+          version,
+          fromTag: lastVersion ? `${packageName}@${lastVersion}` : ``,
+          toTag: `HEAD`,
+          date: dateFormat(new Date(), `yyyy-mm-dd`),
+          gatsbyRelease:
+            gatsbyVersion && gatsbyVersion.patch === 0
+              ? `${gatsbyVersion.major}.${gatsbyVersion.minor}`
+              : ``,
+        })
 
-      if (entry) {
-        addChangelogEntries(packageName, entry)
-        updatedChangelogs.push(changelogRelativePath(packageName))
+        if (entry) {
+          addChangelogEntries(packageName, entry)
+          updatedChangelogs.push(changelogRelativePath(packageName))
+        }
       }
     } catch (error) {
       console.error(`package "${packageName}": ${error.stack}`)
