@@ -25,6 +25,8 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 We're releasing a built-in `<Script>` component that aids in loading third-party scripts performantly.
 
+> Note - If you are using Jest, you will need to include `gatsby-script` in your `transformIgnorePatterns` key in your Jest config since `gatsby-script` is an ES module. See [the unit testing documentation on Jest configuration](/docs/how-to/testing/unit-testing/#2-creating-a-configuration-file-for-jest) for more details.
+
 As a familiar React component, migration to the `<Script>` component is as simple as importing and capitalizing your existing script tags in most cases:
 
 ```diff
