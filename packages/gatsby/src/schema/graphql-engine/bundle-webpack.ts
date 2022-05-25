@@ -31,6 +31,13 @@ export async function createGraphqlEngineBundle(
   )
   await printQueryEnginePlugins()
 
+  const assetRelocatorUseEntry = {
+    loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
+    options: {
+      outputAssetBase: `assets`,
+    },
+  }
+
   const compiler = webpack({
     name: `Query Engine`,
     // mode: `production`,
@@ -71,17 +78,35 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
-          test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,
-          parser: { amd: false },
-          use: [
+          oneOf: [
             {
-              loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
-              options: {
-                outputAssetBase: `assets`,
-              },
+              test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,
+              parser: { amd: false },
+              use: [
+                assetRelocatorUseEntry,
+                {
+                  loader: require.resolve(`./lmdb-bundling-patch`),
+                },
+              ],
             },
             {
-              loader: require.resolve(`./lmdb-bundling-patch`),
+              // For node binary relocations, include ".node" files as well here
+              test: /gatsby-node\.([cm]?js)$/,
+              // it is recommended for Node builds to turn off AMD support
+              parser: { amd: false },
+              use: [
+                assetRelocatorUseEntry,
+                {
+                  loader: require.resolve(`./webpack-remove-apis-loader`),
+                },
+              ],
+            },
+            {
+              // For node binary relocations, include ".node" files as well here
+              test: /\.([cm]?js|node)$/,
+              // it is recommended for Node builds to turn off AMD support
+              parser: { amd: false },
+              use: assetRelocatorUseEntry,
             },
           ],
         },
@@ -103,18 +128,6 @@ export async function createGraphqlEngineBundle(
             loader: `babel-loader`,
             options: {
               presets: [`@babel/preset-typescript`],
-            },
-          },
-        },
-        {
-          // For node binary relocations, include ".node" files as well here
-          test: /\.([cm]?js|node)$/,
-          // it is recommended for Node builds to turn off AMD support
-          parser: { amd: false },
-          use: {
-            loader: require.resolve(`@vercel/webpack-asset-relocator-loader`),
-            options: {
-              outputAssetBase: `assets`,
             },
           },
         },
