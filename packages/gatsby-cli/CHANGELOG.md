@@ -17,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Chores
 
-- don't use npm-run-all to build packages  ([fb4de37](https://github.com/gatsbyjs/gatsby/commit/fb4de379e914892c8ce437d4613b60499cfeb897))
+- don't use npm-run-all to build packages ([fb4de37](https://github.com/gatsbyjs/gatsby/commit/fb4de379e914892c8ce437d4613b60499cfeb897))
 - remove old unused UUID dependency [#35657](https://github.com/gatsbyjs/gatsby/issues/35657) ([d4aaa2a](https://github.com/gatsbyjs/gatsby/commit/d4aaa2a3c01541effd50db3cf57d1445776ce487))
 - workaround lerna + npm-run-all weirdness [#35595](https://github.com/gatsbyjs/gatsby/issues/35595) ([8cc0970](https://github.com/gatsbyjs/gatsby/commit/8cc09702f9a2767c51cf5267233108c07e4ac073))
 

@@ -9,7 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Chores
 
-- Update README  ([2289a2c](https://github.com/gatsbyjs/gatsby/commit/2289a2c48328754da409803c79f056f1edbb4b53))
+- Update README ([2289a2c](https://github.com/gatsbyjs/gatsby/commit/2289a2c48328754da409803c79f056f1edbb4b53))
 - `yarn_pnp` tests uses `gatsby-dev-cli` instead of portals [#35699](https://github.com/gatsbyjs/gatsby/issues/35699) ([972e6e1](https://github.com/gatsbyjs/gatsby/commit/972e6e137150451d972c51259bf3ef29771a7d99))
 
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.14.0/packages/gatsby-dev-cli) (2022-05-10)
