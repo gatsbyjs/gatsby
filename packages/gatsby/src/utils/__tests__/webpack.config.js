@@ -69,6 +69,8 @@ describe(`build-javascript`, () => {
   const stage = `build-javascript`
 
   it(`polyfills dependencies when ES6 module support is false`, async () => {
+    mockHasES6ModuleSupport.mockReturnValue(false)
+
     const {
       module: { rules },
     } = await getConfig(stage)
