@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.15.0/packages/gatsby-plugin-image) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Throw Typegen errors & add `IGatsbyImageData` to output [#35683](https://github.com/gatsbyjs/gatsby/issues/35683) ([e7fc88b](https://github.com/gatsbyjs/gatsby/commit/e7fc88b024c84a3e9f732deec7441621024e1f95))
+- fix race condition fix [#35635](https://github.com/gatsbyjs/gatsby/issues/35635) ([12cb033](https://github.com/gatsbyjs/gatsby/commit/12cb033f7998427cfbabe8d833a7c2bd516f3b1f))
+
+#### Chores
+
+- don't use npm-run-all to build packages  ([fb4de37](https://github.com/gatsbyjs/gatsby/commit/fb4de379e914892c8ce437d4613b60499cfeb897))
+- workaround lerna + npm-run-all weirdness [#35595](https://github.com/gatsbyjs/gatsby/issues/35595) ([8cc0970](https://github.com/gatsbyjs/gatsby/commit/8cc09702f9a2767c51cf5267233108c07e4ac073))
+
 ### [2.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.14.1/packages/gatsby-plugin-image) (2022-05-12)
 
 #### Bug Fixes
