@@ -1,57 +1,94 @@
 import type { GatsbyNode, NodeInput } from "gatsby"
 import type { FileSystemNode } from "gatsby-source-filesystem"
-import type { Options } from "@mdx-js/loader"
+import type { IFileNode, NodeMap } from "./types"
 
 import path from "path"
 import { sentenceCase } from "change-case"
 import fs from "fs-extra"
 import grayMatter from "gray-matter"
 
-import { defaultOptions, IMdxPluginOptions } from "./plugin-options"
-import { IMdxLoaderOptions } from "./mdx-loader"
+import {
+  defaultOptions,
+  enhanceMdxOptions,
+  IMdxPluginOptions,
+} from "./plugin-options"
+import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
+import compileMDX from "./compile-mdx"
+import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 
 /**
  * Add support for MDX files including using Gatsby layout components
  */
-export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = (
-  { actions, loaders, getNodesByType },
-  pluginOptions
-) => {
-  const fileNodes = getNodesByType(`File`)
-  const fileMap = new Map()
-  fileNodes.forEach(fileNode => fileMap.set(fileNode.absolutePath, fileNode))
+export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
+  async (
+    { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
+    pluginOptions
+  ) => {
+    const mdxNodes = getNodesByType(`Mdx`)
+    const nodeMap: NodeMap = new Map()
+    mdxNodes.forEach(mdxNode => {
+      if (!mdxNode.parent) {
+        return
+      }
+      const fileNode = getNode(mdxNode.parent) as IFileNode
+      if (!fileNode) {
+        return
+      }
+      nodeMap.set(fileNode.absolutePath, { fileNode, mdxNode })
+    })
 
-  const loaderOptions: Options = {
-    useDynamicImport: true,
-    providerImportSource: `@mdx-js/react`,
+    const options = defaultOptions(pluginOptions as IMdxPluginOptions)
+
+    const mdxOptions = await enhanceMdxOptions(
+      pluginOptions as IMdxPluginOptions,
+      {
+        getNode,
+        getNodesByType,
+        pathPrefix,
+        reporter,
+        cache,
+      }
+    )
+
+    const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
+      options: mdxOptions,
+      nodeMap,
+    }
+
+    const layoutLoaderOptions: IGatsbyLayoutLoaderOptions = {
+      options,
+      nodeMap,
+    }
+
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /\.mdx?$/,
+            use: [
+              loaders.js(),
+              {
+                loader: path.join(
+                  `gatsby-plugin-mdx`,
+                  `dist`,
+                  `gatsby-mdx-loader`
+                ),
+                options: mdxLoaderOptions,
+              },
+              {
+                loader: path.join(
+                  `gatsby-plugin-mdx`,
+                  `dist`,
+                  `gatsby-layout-loader`
+                ),
+                options: layoutLoaderOptions,
+              },
+            ],
+          },
+        ],
+      },
+    })
   }
-
-  const gatsbyLoaderOptions: IMdxLoaderOptions = {
-    fileMap,
-    pluginOptions: pluginOptions as IMdxPluginOptions,
-  }
-
-  actions.setWebpackConfig({
-    module: {
-      rules: [
-        {
-          test: /\.mdx?$/,
-          use: [
-            loaders.js(),
-            {
-              loader: `@mdx-js/loader`,
-              options: loaderOptions,
-            },
-            {
-              loader: path.join(`gatsby-plugin-mdx`, `dist`, `mdx-loader`),
-              options: gatsbyLoaderOptions,
-            },
-          ],
-        },
-      ],
-    },
-  })
-}
 
 /**
  * Add the MDX extensions as resolvable. This is how the page creator
@@ -66,12 +103,20 @@ export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries and render the pages.
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
-  { filename, contents },
+  { filename, contents, getNode, getNodesByType, pathPrefix, reporter, cache },
   pluginOptions
 ) => {
-  const { compile } = await import(`@mdx-js/mdx`)
-  const { extensions, mdxOptions } = defaultOptions(
-    pluginOptions as IMdxPluginOptions
+  const { extensions } = defaultOptions(pluginOptions as IMdxPluginOptions)
+
+  const mdxOptions = await enhanceMdxOptions(
+    pluginOptions as IMdxPluginOptions,
+    {
+      getNode,
+      getNodesByType,
+      pathPrefix,
+      reporter,
+      cache,
+    }
   )
 
   const ext = path.extname(filename)
@@ -80,7 +125,16 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     return undefined
   }
 
-  const code = await compile(contents, mdxOptions)
+  const code = await compileMDX(
+    contents,
+    {
+      id: ``,
+      children: [],
+      parent: ``,
+      internal: { contentDigest: ``, owner: ``, type: `` },
+    },
+    mdxOptions
+  )
 
   return code.toString()
 }
@@ -200,5 +254,18 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .default([`.mdx`])
       .description(
         `Configure the file extensions that gatsby-plugin-mdx will process`
+      ),
+    defaultLayouts: Joi.object({})
+      .unknown(true)
+      .default({})
+      .description(`Set the layout components for MDX source types`),
+    gatsbyRemarkPlugins: Joi.subPlugins().description(
+      `Use Gatsby-specific remark plugins`
+    ),
+    mdxOptions: Joi.object({})
+      .unknown(true)
+      .default({})
+      .description(
+        `Pass any options to MDX. See: https://mdxjs.com/packages/mdx/#compilefile-options`
       ),
   })
