@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.14.0/packages/gatsby-core-utils) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- fix Source and destination must not be the same fix [#35503](https://github.com/gatsbyjs/gatsby/issues/35503) ([f968c84](https://github.com/gatsbyjs/gatsby/commit/f968c84b3c27cd45bc5b2fea93c3b46390efe54d))
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.13.0/packages/gatsby-core-utils) (2022-04-26)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)

@@ -156,6 +156,7 @@ export const builtInScalarTypeNames = [
   `Int`,
   `JSON`,
   `String`,
+  `GatsbyImageData`,
 ]
 
 export const internalTypeNames = [

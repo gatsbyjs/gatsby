@@ -14,6 +14,9 @@ import { IBuildContext } from "../../services"
 
 const RECOMPILE_PANIC_LIMIT = 6
 
+const getGraphqlTypegenConfig = (ctx: IBuildContext): boolean =>
+  !!ctx.store!.getState().config.graphqlTypegen
+
 /**
  * This is the top-level state machine for the `gatsby develop` command
  */
@@ -43,12 +46,12 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     SET_SCHEMA: {
       actions: `schemaTypegen`,
       cond: (ctx: IBuildContext): boolean =>
-        !!process.env.GATSBY_GRAPHQL_TYPEGEN && !ctx.shouldRunInitialTypegen,
+        getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
     },
     SET_GRAPHQL_DEFINITIONS: {
       actions: `definitionsTypegen`,
       cond: (ctx: IBuildContext): boolean =>
-        !!process.env.GATSBY_GRAPHQL_TYPEGEN && !ctx.shouldRunInitialTypegen,
+        getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
     },
   },
   states: {
@@ -233,7 +236,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         onDone: [
           {
             target: `initialGraphQLTypegen`,
-            cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
+            cond: (ctx: IBuildContext): boolean => getGraphqlTypegenConfig(ctx),
           },
           {
             target: `waiting`,

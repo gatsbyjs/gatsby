@@ -1,6 +1,6 @@
+/* global HAS_REACT_18 */
 import type { GatsbyImageProps } from "gatsby-plugin-image"
 import React from "react"
-import ReactDOM from "react-dom"
 
 let hydrateRef
 let isFirstHydration = true
@@ -34,6 +34,17 @@ export function onRouteUpdate(): void {
   }
 }
 
+declare const HAS_REACT_18: boolean
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let ReactDOM: any
+
+if (HAS_REACT_18) {
+  ReactDOM = require(`react-dom/client`)
+} else {
+  ReactDOM = require(`react-dom`)
+}
+
 function hydrateImages(): void {
   const doc = document
   const inlineWPimages: Array<HTMLElement> = Array.from(
@@ -48,11 +59,7 @@ function hydrateImages(): void {
     /* webpackChunkName: "gatsby-plugin-image" */ `gatsby-plugin-image`
   ).then(mod => {
     inlineWPimages.forEach(image => {
-      if (
-        image.dataset &&
-        image.dataset.wpInlineImage &&
-        image.parentNode.parentNode
-      ) {
+      if (image.dataset && image.dataset.wpInlineImage && image.parentNode) {
         const hydrationData = doc.querySelector(
           `script[data-wp-inline-image-hydration="${image.dataset.wpInlineImage}"]`
         )
@@ -62,19 +69,13 @@ function hydrateImages(): void {
             hydrationData.innerHTML
           )
 
-          // @ts-ignore - createRoot is on ReactDOM
           if (ReactDOM.createRoot) {
-            // @ts-ignore - createRoot is on ReactDOM
-            const root = ReactDOM.createRoot(image.parentNode.parentNode)
-            // @ts-ignore - not same as below, not sure why it's complaining
-            root.render(React.createElement(mod.default, imageProps), {
-              hydrate: true,
-            })
+            const root = ReactDOM.createRoot(image.parentNode)
+            root.render(React.createElement(mod.GatsbyImage, imageProps))
           } else {
             ReactDOM.hydrate(
-              // @ts-ignore - no idea why it complains
               React.createElement(mod.GatsbyImage, imageProps),
-              image.parentNode.parentNode
+              image.parentNode
             )
           }
         }
