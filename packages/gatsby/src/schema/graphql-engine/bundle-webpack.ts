@@ -80,7 +80,9 @@ export async function createGraphqlEngineBundle(
         {
           oneOf: [
             {
+              // specific set of loaders for LMBD - our custom patch to massage lmdb to work with relocator -> relocator
               test: /node_modules[/\\]lmdb[/\\].*\.[cm]?js/,
+              // it is recommended for Node builds to turn off AMD support
               parser: { amd: false },
               use: [
                 assetRelocatorUseEntry,
@@ -90,7 +92,7 @@ export async function createGraphqlEngineBundle(
               ],
             },
             {
-              // For node binary relocations, include ".node" files as well here
+              // specific set of loaders for gatsby-node files - our babel transform that removes lifecycles not needed for engine -> relocator
               test: /gatsby-node\.([cm]?js)$/,
               // it is recommended for Node builds to turn off AMD support
               parser: { amd: false },
@@ -102,6 +104,7 @@ export async function createGraphqlEngineBundle(
               ],
             },
             {
+              // generic loader for all other cases than lmdb or gatsby-node - we don't do anything special other than using relocator on it
               // For node binary relocations, include ".node" files as well here
               test: /\.([cm]?js|node)$/,
               // it is recommended for Node builds to turn off AMD support
