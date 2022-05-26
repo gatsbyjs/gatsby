@@ -150,6 +150,7 @@ export async function createGraphqlEngineBundle(
         inquirer: false,
         // only load one version of lmdb
         lmdb: require.resolve(`lmdb`),
+        "ts-node": require.resolve(`./shims/ts-node`),
       },
     },
     plugins: [
