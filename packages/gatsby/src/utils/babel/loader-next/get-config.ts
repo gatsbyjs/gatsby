@@ -226,7 +226,6 @@ function getFreshConfig(
   const loadedOptions = loadOptions(options)
   const config = consumeIterator(loadConfig(loadedOptions))
 
-  console.log(config)
   return config
 }
 
