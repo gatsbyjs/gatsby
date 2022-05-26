@@ -11,6 +11,7 @@
     "@wordpress/block-library": "^2.29.3",
     "gatsby": "^4.0.0",
     "gatsby-image": "^3.11.0",
+    "gatsby-plugin-image": "^2.15.0",
     "gatsby-plugin-manifest": "^4.12.1",
     "gatsby-plugin-offline": "^5.10.2",
     "gatsby-plugin-react-helmet": "^5.10.0",
