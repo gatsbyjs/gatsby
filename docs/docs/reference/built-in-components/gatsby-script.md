@@ -131,13 +131,11 @@ The `idle` strategy is ideal for cases where you want to ensure a script loads i
 
 ### Off main thread strategy (experimental)
 
-The `off-main-thread` strategy, unlike `post-hydrate` and `idle`, loads your script in a [web worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) off the main thread.
+The `off-main-thread` strategy, unlike `post-hydrate` and `idle`, loads your script in a [web worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) via [Partytown](https://partytown.builder.io).
 
 This means that the burden of evaluation of your script is no longer the conern of the main thread, freeing it up to take care of other crucial tasks.
 
-The `off-main-thread` strategy leverages [Partytown](https://partytown.builder.io) under the hood to achieve this. Due to this dependency, this strategy may require extra configuration. See the [Partytown configuration](https://partytown.builder.io/configuration) documentation for complete details.
-
-Here is an example configuring the `<Script>` component with [Google Analytics](https://analytics.google.com/analytics/web/):
+Here is an example configuring the `<Script>` component with the `off-main-thread` strategy to load [Google Analytics](https://analytics.google.com/analytics/web/):
 
 ```jsx
 import { Script } from "gatsby"
