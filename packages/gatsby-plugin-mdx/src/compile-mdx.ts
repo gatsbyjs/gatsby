@@ -1,13 +1,13 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
-
-import { Node } from "gatsby"
+import type { IFileNode, IMdxNode } from "./types"
 
 // Compiles MDX into JS
 // This could be replaced by @mdx-js/mdx if MDX compile would
 // accept custom data passed to the unified pipeline via processor.data()
 export default async function compileMDX(
   source: string,
-  mdxNode: Node,
+  mdxNode: IMdxNode,
+  fileNode: IFileNode,
   options: ProcessorOptions
 ): Promise<string> {
   const { createProcessor } = await import(`@mdx-js/mdx`)
@@ -18,11 +18,9 @@ export default async function compileMDX(
   // If we could pass this via MDX loader config, this whole custom loader might be obsolete.
   processor.data(`mdxNode`, mdxNode)
 
-  console.dir(`@todo add path`, { mdxNode })
-
   const result = await processor.process(
     // Inject path to original file for remark plugins. See: https://github.com/gatsbyjs/gatsby/issues/26914
-    new VFile({ value: source, path: `/at/todo/foo.mdx` })
+    new VFile({ value: source, path: fileNode.absolutePath })
   )
 
   return result.toString()

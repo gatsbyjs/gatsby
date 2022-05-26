@@ -23,18 +23,9 @@ const gatsbyMDXLoader: LoaderDefinition = async function (source) {
     return source
   }
 
-  const { mdxNode } = res
+  const { mdxNode, fileNode } = res
 
-  return compileMDX(
-    source,
-    mdxNode || {
-      id: ``,
-      children: [],
-      parent: ``,
-      internal: { contentDigest: ``, owner: ``, type: `` },
-    },
-    options
-  )
+  return compileMDX(source, mdxNode, fileNode, options)
 }
 
 export default gatsbyMDXLoader

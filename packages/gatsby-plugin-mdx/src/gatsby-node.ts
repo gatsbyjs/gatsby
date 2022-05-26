@@ -133,6 +133,14 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
       parent: ``,
       internal: { contentDigest: ``, owner: ``, type: `` },
     },
+    {
+      id: ``,
+      children: [],
+      parent: ``,
+      internal: { contentDigest: ``, owner: ``, type: `` },
+      absolutePath: filename,
+      sourceInstanceName: `mocked`,
+    },
     mdxOptions
   )
 
