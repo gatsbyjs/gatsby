@@ -26,6 +26,7 @@ import {
   ICreateJobV2FromInternalAction,
   ICreatePageDependencyActionPayloadType,
   IDeleteNodeManifests,
+  IClearGatsbyImageSourceUrlAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -436,4 +437,11 @@ export const createJobV2FromInternalJob =
 
       return result
     })
+  }
+
+export const clearGatsbyImageSourceUrls =
+  (): IClearGatsbyImageSourceUrlAction => {
+    return {
+      type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
+    }
   }
