@@ -26,7 +26,8 @@
     "node-fetch": "^2.6.7",
     "p-queue": "^6.6.2",
     "retry-axios": "^2.6.0",
-    "semver": "^7.3.7"
+    "semver": "^7.3.7",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
