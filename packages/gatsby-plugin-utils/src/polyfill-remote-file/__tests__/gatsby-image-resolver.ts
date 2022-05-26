@@ -803,9 +803,7 @@ describe(`gatsbyImageData`, () => {
     )
     const actions = {
       addGatsbyImageSourceUrl: jest.fn(),
-    } as Actions
-
-    process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = `1`
+    } as unknown as Actions
 
     await gatsbyImageResolver(
       portraitSource,
@@ -816,9 +814,7 @@ describe(`gatsbyImageData`, () => {
       actions
     )
 
-    process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = null
-
-    expect(actions.addGatsbyImageSourceUrl.mock.calls[0][0]).toEqual(
+    expect(actions.addGatsbyImageSourceUrl).toHaveBeenCalledWith(
       portraitSource.url
     )
   })
