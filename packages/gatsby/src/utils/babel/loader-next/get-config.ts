@@ -288,11 +288,13 @@ export default function getConfig(
       ...cachedConfig,
       options: {
         ...cachedConfig.options,
-        cwd: loaderOptions.cwd,
+        cwd: loaderOptions.cwd || process.cwd(),
         root: loaderOptions.cwd,
         filename,
         sourceFileName: filename,
       },
+      cwd: loaderOptions.cwd || process.cwd(),
+      filename,
     }
   }
 

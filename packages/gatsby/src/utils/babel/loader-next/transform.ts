@@ -84,7 +84,6 @@ export default function transform(
     filename,
   })
 
-  console.log(babelConfig.passes, normalizeOpts(babelConfig), source)
   const file = consumeIterator(
     normalizeFile(babelConfig.passes, normalizeOpts(babelConfig), source)
   )
