@@ -1,4 +1,4 @@
-const babelLoader = require(`babel-loader`)
+const babelLoader = require("./babel/loader-next")
 
 const {
   prepareOptions,

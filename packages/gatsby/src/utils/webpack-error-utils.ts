@@ -52,6 +52,7 @@ const transformWebpackError = (
   stage: StageEnum,
   webpackError: WebpackError
 ): ITransformedWebpackError => {
+  console.log(webpackError.stack || webpackError)
   const castedWebpackError = webpackError as unknown as IWebpackError
 
   let location
