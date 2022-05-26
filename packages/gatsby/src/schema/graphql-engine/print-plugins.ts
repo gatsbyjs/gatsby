@@ -50,6 +50,18 @@ function relativePluginPath(resolve: string): string {
   )
 }
 
+function traverse(obj, path = ``): void {
+  if (_.isPlainObject(obj) || _.isArray(obj)) {
+    _.each(obj, (value, key) => {
+      traverse(value, `${path}.${key}`)
+    })
+  }
+
+  if (_.isFunction(obj)) {
+    console.warn(`There is a function in ${path} - burst builds *might* fail`)
+  }
+}
+
 function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
   usedSubPlugins: IGatsbyState["flattenedPlugins"]
@@ -59,6 +71,27 @@ function render(
 
   const sanitizedUsedPlugins = usedPlugins.map(plugin => {
     // TODO: We don't support functions in pluginOptions here
+    // subPluginPath might be something like `foo.bar`,
+    // but for now let's just handle flat fields
+    // that are used by remark or mdx (`plugins`, `gatsbyRemarkPlugins`)
+    // @ts-ignore
+    traverse(_.omit(plugin.pluginOptions, plugin.subPluginPaths), plugin.name)
+
+    if (plugin.subPluginPaths && Array.isArray(plugin.subPluginPaths)) {
+      for (const subPluginPath of plugin.subPluginPaths) {
+        const subPlugins = plugin.pluginOptions[subPluginPath]
+        if (Array.isArray(subPlugins)) {
+          for (const subPlugin of subPlugins) {
+            // @ts-ignore pluginOptions is actually a thing
+            traverse(
+              _.omit(subPlugin.pluginOptions, subPlugin.subPluginPaths),
+              subPlugin.name
+            )
+          }
+        }
+      }
+    }
+
     return {
       ...plugin,
       resolve: ``,
