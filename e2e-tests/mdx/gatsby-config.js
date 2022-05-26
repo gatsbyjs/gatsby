@@ -26,11 +26,7 @@ module.exports = {
         defaultLayouts: {
           default: require.resolve("./src/components/layout.js"),
         },
-        gatsbyRemarkPlugins: [
-          `gatsby-remark-images`,
-          // @todo also support plugins that generate `raw` nodes
-          // { resolve: `gatsby-remark-autolink-headers` },
-        ],
+        gatsbyRemarkPlugins: [`gatsby-remark-images`],
         mdxOptions: {
           remarkPlugins: [remarkRequireFilePathPlugin],
         },

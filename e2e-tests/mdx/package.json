@@ -10,6 +10,7 @@
     "gatsby-plugin-mdx": "^3.0.0",
     "gatsby-plugin-sharp": "^4.0.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
+    "gatsby-remark-images": "^6.15.0",
     "gatsby-source-filesystem": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

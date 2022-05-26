@@ -64,7 +64,7 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
 
       if (typeof requiredPlugin.setParserPlugins === `function`) {
         for (const parserPlugin of requiredPlugin.setParserPlugins(
-          plugin.pluginOptions || {}
+          plugin.options || {}
         )) {
           if (Array.isArray(parserPlugin)) {
             const [parser, parserPluginOptions] = parserPlugin

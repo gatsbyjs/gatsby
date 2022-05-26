@@ -4,10 +4,6 @@ import type { Pluggable } from "unified"
 
 import { IMdxPluginOptions } from "./plugin-options"
 
-// ensure only one `/` in new url
-const withPathPrefix = (url: string, pathPrefix: string): string =>
-  (pathPrefix + url).replace(/\/\//, `/`)
-
 interface IGetSourcePluginsAsRemarkPlugins {
   gatsbyRemarkPlugins: IMdxPluginOptions["gatsbyRemarkPlugins"]
   getNode: NodePluginArgs["getNode"]
@@ -16,6 +12,10 @@ interface IGetSourcePluginsAsRemarkPlugins {
   reporter: Reporter
   cache: GatsbyCache
 }
+
+// ensure only one `/` in new url
+const withPathPrefix = (url: string, pathPrefix: string): string =>
+  (pathPrefix + url).replace(/\/\//, `/`)
 
 export async function getSourcePluginsAsRemarkPlugins({
   gatsbyRemarkPlugins,
