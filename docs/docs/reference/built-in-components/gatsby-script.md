@@ -234,10 +234,7 @@ It is recommended that you only make use of the `debug` property in Partytown's 
 
 By leveraging [Partytown](https://partytown.builder.io), scripts that use the `off-main-thread` strategy must also be aware of the [limitations mentioned in the Partytown documentation](https://partytown.builder.io/trade-offs). While the strategy can be powerful, it may not be the best solution for all scenarios.
 
-In addition:
-
-- `off-main-thread` scripts load only on server-side render (e.g. initial page render, page reload, etc.) and not on client-side render (e.g. navigation via Gatsby Link)
-- `off-main-thread` scripts cannot use the `onLoad` and `onError` callbacks
+In addition, the `off-main-thread` strategy does not support the `onLoad` and `onError` callbacks.
 
 ## Usage in Gatsby SSR and Browser APIs
 
