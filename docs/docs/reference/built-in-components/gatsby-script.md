@@ -27,7 +27,7 @@ function MyPage() {
 export default MyPage
 ```
 
-If you have existing scripts, using the Gatsby `<Script>` component is as simple as changing lowercase `script` tag names to capitalized `Script` tag names in most cases:
+If you have existing scripts, using the Gatsby `<Script>` component is as simple as importing `Script` and changing lowercase `script` tag names to capitalized `Script` tag names in most cases:
 
 ```diff
 import React from "react"
@@ -89,9 +89,9 @@ Functionally, both of these ways of defining inline scripts are equivalent.
 
 You can declare a loading strategy by passing a `strategy` property. These are the available loading strategies:
 
-- `post-hydrate` (default) - Loads after the page has hydrated
-- `idle` - Loads after the page has become idle
-- `off-main-thread` (experimental) - Loads off the main thread in a web worker via [Partytown](https://partytown.builder.io)
+- [`post-hydrate`](#post-hydrate-strategy-default) (default) - Loads after the page has hydrated
+- [`idle`](#idle-strategy) - Loads after the page has become idle
+- [`off-main-thread`](#off-main-thread-strategy-experimental) (experimental) - Loads off the main thread in a web worker via [Partytown](https://partytown.builder.io)
 
 Here's how you can define these strategies in the `<Script>` component:
 
@@ -115,7 +115,7 @@ import { Script, ScriptStrategy } from "gatsby"
 
 The `post-hydrate` strategy is the **default** loading strategy and will be used if you do not specificy a `strategy` attribute.
 
-The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](https://www.gatsbyjs.com/docs/glossary/hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
+The advantage of this strategy is that you have the ability to declare that your script should start loading _after_ [hydration](/docs/glossary/hydration/). This is impactful because hydration is what makes your page interactive, and by using regular `<script>` tags (even with `async` or `defer` applied), you run the risk of your script being loaded in parallel with the framework JavaScript that hydrates your page.
 
 This can have negative implications for key web vital metrics like [Total Blocking Time](https://web.dev/tbt/). By leveraging the `<Script>` component with the `post-hydrate` strategy, you ensure that your script avoids interfering with your page reaching an interactive state, resulting in a better experience for your users.
 
@@ -241,7 +241,7 @@ In addition:
 
 ## Usage in Gatsby SSR and Browser APIs
 
-It can also be used in the following [Gatsby SSR](/docs/reference/config-files/gatsby-ssr/) and [Gatsby Browser](/docs/reference/config-files/gatsby-browser/) APIs:
+The Gatsby `<Script>` component can also be used in the following [Gatsby SSR](/docs/reference/config-files/gatsby-ssr/) and [Gatsby Browser](/docs/reference/config-files/gatsby-browser/) APIs:
 
 - `wrapPageElement`
 - `wrapRootElement`
@@ -292,6 +292,8 @@ Here is an example using the callbacks:
 ```
 
 Duplicate scripts (scripts with the same `id` or `src` attributes) will execute `onLoad` and `onError` callbacks despite not being injected into the DOM.
+
+## Loading scripts dependently
 
 Access to the `onLoad` and `onError` callbacks also enables the ability to load scripts dependently. Here's an example showing how to load the second script after the first:
 
