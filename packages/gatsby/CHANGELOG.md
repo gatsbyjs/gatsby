@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.15.0/packages/gatsby) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Features
+
+- Add `gatsby-parcel-namer-relative-to-cwd` to monorepo & update Parcel to 2.5.0 [#35446](https://github.com/gatsbyjs/gatsby/issues/35446) ([459fab4](https://github.com/gatsbyjs/gatsby/commit/459fab40f318e09e112eef2e8673e869dc28e1d5))
+- Add `graphqlTypegen` config option [#35697](https://github.com/gatsbyjs/gatsby/issues/35697) ([97433ec](https://github.com/gatsbyjs/gatsby/commit/97433ec6d3022dc80c272687e51cdbe0de501224))
+- Script component [#35403](https://github.com/gatsbyjs/gatsby/issues/35403) ([a88703f](https://github.com/gatsbyjs/gatsby/commit/a88703f4de47c0ba9db48914bc2e0df73440dc92))
+- Auto-Install Preview UI [#35587](https://github.com/gatsbyjs/gatsby/issues/35587) ([3beb047](https://github.com/gatsbyjs/gatsby/commit/3beb047b05218eeef133f8a87e4019399fded34a))
+
+#### Bug Fixes
+
+- Throw Typegen errors & add `IGatsbyImageData` to output [#35683](https://github.com/gatsbyjs/gatsby/issues/35683) ([e7fc88b](https://github.com/gatsbyjs/gatsby/commit/e7fc88b024c84a3e9f732deec7441621024e1f95))
+- correct the types of `createNode` action return [#32522](https://github.com/gatsbyjs/gatsby/issues/32522) ([a5a2162](https://github.com/gatsbyjs/gatsby/commit/a5a2162a4f57b584790e8b1ed42687e3870f1934))
+- use correct types for the response headers [#35633](https://github.com/gatsbyjs/gatsby/issues/35633) ([35d4a92](https://github.com/gatsbyjs/gatsby/commit/35d4a92dd290c0271588478b0eadec1024310301))
+
+#### Performance Improvements
+
+- speedups for webpack compilation (develop) [#35641](https://github.com/gatsbyjs/gatsby/issues/35641) ([09a6dd9](https://github.com/gatsbyjs/gatsby/commit/09a6dd9e3c8ebbf9ce5ab40f70c18a1e8562424c))
+
+#### Refactoring
+
+- Misc review comments [#35710](https://github.com/gatsbyjs/gatsby/issues/35710) [#35403](https://github.com/gatsbyjs/gatsby/issues/35403) ([f7f8ffe](https://github.com/gatsbyjs/gatsby/commit/f7f8ffe689a6a475931355ae21897b8b48ca6ef3))
+
+#### Chores
+
+- re-pin select packages after 'lerna version' [#35725](https://github.com/gatsbyjs/gatsby/issues/35725) [#35726](https://github.com/gatsbyjs/gatsby/issues/35726) ([04f9509](https://github.com/gatsbyjs/gatsby/commit/04f9509ce6295215b87b377855460873e0b5afeb))
+- Update `IPluginRefObject` type [#35711](https://github.com/gatsbyjs/gatsby/issues/35711) ([eb59c93](https://github.com/gatsbyjs/gatsby/commit/eb59c93d0a3893e73b1c227518b493dbd71783ec))
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) ([3909fa4](https://github.com/gatsbyjs/gatsby/commit/3909fa4265d907df62c6f79129f90f96ae09acd4))
+- bump lmdb to 2.3.10 [#35585](https://github.com/gatsbyjs/gatsby/issues/35585) ([c410214](https://github.com/gatsbyjs/gatsby/commit/c4102149ba61498bcc0e0594b3d78014e39cc3da))
+
 ### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.14.1/packages/gatsby) (2022-05-16)
 
 #### Chores

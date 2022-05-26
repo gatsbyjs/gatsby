@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.15.0/packages/gatsby-source-wordpress) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Add image cdn fields on updates [#35687](https://github.com/gatsbyjs/gatsby/issues/35687) ([54832b4](https://github.com/gatsbyjs/gatsby/commit/54832b4fb4a61614b8a96487b1bf894799c52bcf))
+
+#### Chores
+
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) ([3909fa4](https://github.com/gatsbyjs/gatsby/commit/3909fa4265d907df62c6f79129f90f96ae09acd4))
+
+### [6.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.3/packages/gatsby-source-wordpress) (2022-05-19)
+
+#### Bug Fixes
+
+- Add image cdn fields on updates [#35687](https://github.com/gatsbyjs/gatsby/issues/35687) [#35694](https://github.com/gatsbyjs/gatsby/issues/35694) ([4dd512d](https://github.com/gatsbyjs/gatsby/commit/4dd512da2bbec66b499d1196b813aa945b0de8f0))
+
 ### [6.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.2/packages/gatsby-source-wordpress) (2022-05-16)
 
 #### Chores

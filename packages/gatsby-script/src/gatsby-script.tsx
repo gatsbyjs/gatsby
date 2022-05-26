@@ -45,25 +45,19 @@ export const scriptCallbackCache: Map<
 > = new Map()
 
 export function Script(props: ScriptProps): ReactElement | null {
-  const {
-    id,
-    src,
-    strategy = ScriptStrategy.postHydrate,
-    onLoad,
-    onError,
-  } = props || {}
+  const { id, src, strategy = ScriptStrategy.postHydrate } = props || {}
   const { collectScript } = useContext(PartytownContext)
 
   useEffect(() => {
-    let script: HTMLScriptElement | null
+    let details: IInjectedScriptDetails | null
 
     switch (strategy) {
       case ScriptStrategy.postHydrate:
-        script = injectScript(props)
+        details = injectScript(props)
         break
       case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          script = injectScript(props)
+          details = injectScript(props)
         })
         break
       case ScriptStrategy.offMainThread:
@@ -75,12 +69,16 @@ export function Script(props: ScriptProps): ReactElement | null {
     }
 
     return (): void => {
-      if (onLoad) {
-        script?.removeEventListener(`load`, onLoad)
+      const { script, loadCallback, errorCallback } = details || {}
+
+      if (loadCallback) {
+        script?.removeEventListener(`load`, loadCallback)
       }
-      if (onError) {
-        script?.removeEventListener(`error`, onError)
+
+      if (errorCallback) {
+        script?.removeEventListener(`error`, errorCallback)
       }
+
       script?.remove()
     }
   }, [])
@@ -89,12 +87,16 @@ export function Script(props: ScriptProps): ReactElement | null {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
 
-    if (typeof window === `undefined` && collectScript) {
-      const identifier = id || src || `no-id-or-src`
-      console.warn(
-        `Unable to collect off-main-thread script '${identifier}' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
-      )
-      collectScript(attributes)
+    if (typeof window === `undefined`) {
+      if (collectScript) {
+        collectScript(attributes)
+      } else {
+        console.warn(
+          `Unable to collect off-main-thread script '${
+            id || src || `no-id-or-src`
+          }' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
+        )
+      }
     }
 
     if (inlineScript) {
@@ -122,7 +124,13 @@ export function Script(props: ScriptProps): ReactElement | null {
   return null
 }
 
-function injectScript(props: ScriptProps): HTMLScriptElement | null {
+interface IInjectedScriptDetails {
+  script: HTMLScriptElement | null
+  loadCallback: (event: Event) => void
+  errorCallback: (event: ErrorEvent) => void
+}
+
+function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
   const {
     id,
     src,
@@ -131,13 +139,7 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     onError,
   } = props || {}
 
-  const scriptKey = id || src || (scriptCache.size + 1).toString()
-
-  /**
-   * If a duplicate script is already loaded/errored, we replay load/error callbacks with the original event.
-   * If it's not yet loaded/errored, keep track of callbacks so we can call load/error callbacks for each when the event occurs.
-   */
-  const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+  const scriptKey = id || src
 
   const callbackNames = [`load`, `error`]
 
@@ -146,26 +148,34 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     error: onError,
   }
 
-  for (const name of callbackNames) {
-    if (currentCallbacks?.[name]) {
-      const { callbacks = [] } = cachedCallbacks?.[name] || {}
-      callbacks.push(currentCallbacks?.[name])
+  if (scriptKey) {
+    /**
+     * If a duplicate script is already loaded/errored, we replay load/error callbacks with the original event.
+     * If it's not yet loaded/errored, keep track of callbacks so we can call load/error callbacks for each when the event occurs.
+     */
+    const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
 
-      if (cachedCallbacks?.[name]?.event) {
-        currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event)
-      } else {
-        scriptCallbackCache.set(scriptKey, {
-          [name]: {
-            callbacks,
-          },
-        })
+    for (const name of callbackNames) {
+      if (currentCallbacks?.[name]) {
+        const { callbacks = [] } = cachedCallbacks?.[name] || {}
+        callbacks.push(currentCallbacks?.[name])
+
+        if (cachedCallbacks?.[name]?.event) {
+          currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event)
+        } else {
+          scriptCallbackCache.set(scriptKey, {
+            [name]: {
+              callbacks,
+            },
+          })
+        }
       }
     }
-  }
 
-  // Avoid injecting duplicate scripts into the DOM
-  if (scriptCache.has(scriptKey)) {
-    return null
+    // Avoid injecting duplicate scripts into the DOM
+    if (scriptCache.has(scriptKey)) {
+      return null
+    }
   }
 
   const inlineScript = resolveInlineScript(props)
@@ -191,27 +201,28 @@ function injectScript(props: ScriptProps): HTMLScriptElement | null {
     script.src = src
   }
 
-  for (const name of callbackNames) {
-    if (currentCallbacks?.[name]) {
-      script.addEventListener(name, event => {
-        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+  const wrappedCallbacks: Record<string, (event: Event | ErrorEvent) => void> =
+    {}
 
-        for (const callback of cachedCallbacks?.[name]?.callbacks || []) {
-          callback(event)
-        }
-
-        scriptCallbackCache.set(scriptKey, { [name]: { event } })
-      })
+  if (scriptKey) {
+    // Add listeners on injected scripts so events are cached for use in de-duplicated script callbacks
+    for (const name of callbackNames) {
+      const wrappedEventCallback = (event: Event | ErrorEvent): void =>
+        onEventCallback(event, scriptKey, name)
+      script.addEventListener(name, wrappedEventCallback)
+      wrappedCallbacks[`${name}Callback`] = wrappedEventCallback
     }
-  }
 
-  scriptCache.add(scriptKey)
+    scriptCache.add(scriptKey)
+  }
 
   document.body.appendChild(script)
 
-  scriptCache.add(scriptKey)
-
-  return script
+  return {
+    script,
+    loadCallback: wrappedCallbacks.loadCallback,
+    errorCallback: wrappedCallbacks.errorCallback,
+  }
 }
 
 function resolveInlineScript(props: ScriptProps): string {
@@ -238,4 +249,18 @@ function proxyPartytownUrl(url: string | undefined): string | undefined {
     return undefined
   }
   return `/__third-party-proxy?url=${encodeURIComponent(url)}`
+}
+
+function onEventCallback(
+  event: Event | ErrorEvent,
+  scriptKey: string,
+  eventName: string
+): void {
+  const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
+
+  for (const callback of cachedCallbacks?.[eventName]?.callbacks || []) {
+    callback(event)
+  }
+
+  scriptCallbackCache.set(scriptKey, { [eventName]: { event } })
 }

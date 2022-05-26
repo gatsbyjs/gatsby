@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.16.0/packages/gatsby-source-drupal) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Image cdn fixes fixes [#35619](https://github.com/gatsbyjs/gatsby/issues/35619) ([15a3fbf](https://github.com/gatsbyjs/gatsby/commit/15a3fbf720b4e38eca390830538bdb50042ba392))
+- add placeholder style name plugin option to the options schema [#35644](https://github.com/gatsbyjs/gatsby/issues/35644) ([6fd8bf7](https://github.com/gatsbyjs/gatsby/commit/6fd8bf7abba95ae4d7d6bfdadd93e45f2cd67e49))
+
 ## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.15.0/packages/gatsby-source-drupal) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

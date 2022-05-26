@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.13.0/packages/gatsby-source-contentful) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Other Changes
+
+- Add RemoteFile interface [#35617](https://github.com/gatsbyjs/gatsby/issues/35617) ([55a4550](https://github.com/gatsbyjs/gatsby/commit/55a4550d7ba70a5b549a58484496113f27a8315a))
+
 ## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.12.0/packages/gatsby-source-contentful) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
