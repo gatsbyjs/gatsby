@@ -1,13 +1,21 @@
 import { Minimatch } from "minimatch"
+import type { IFlattenedGoogleGtagPluginOptions } from "./get-flattened-plugin-options"
 
-export function createSnippet(relevantPluginOptions) {
-  const { gtagConfig, exclude, respectDNT, trackingIds } = relevantPluginOptions
+export function createSnippet(
+  flattenedPluginOptions: IFlattenedGoogleGtagPluginOptions
+): string {
+  const {
+    gtagConfig = {},
+    exclude,
+    respectDNT,
+    trackingIds,
+  } = flattenedPluginOptions
 
   // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
   // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
   gtagConfig.send_page_view = false
 
-  const excludeGtagPaths = []
+  const excludeGtagPaths: Array<RegExp> = []
 
   exclude.map(exclude => {
     const mm = new Minimatch(exclude)

@@ -6,16 +6,41 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "build": "babel src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
+    "watch": "babel -w src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
+  },
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
     "gatsby-plugin-utils": "^3.9.0",
     "minimatch": "^3.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
+    "@babel/preset-typescript": "^7.16.7",
     "babel-preset-gatsby-package": "^2.16.0-next.0",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.3"
+  },
+  "peerDependencies": {
+    "gatsby": "^4.0.0-next",
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag#readme",
   "keywords": [
@@ -25,21 +50,10 @@
     "google global site tag"
   ],
   "license": "MIT",
-  "main": "index.js",
-  "peerDependencies": {
-    "gatsby": "^4.0.0-next",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-plugin-google-gtag"
-  },
-  "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
     "node": ">=14.15.0"
