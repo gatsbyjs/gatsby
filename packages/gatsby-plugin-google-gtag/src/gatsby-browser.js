@@ -1,3 +1,10 @@
+import { wrapPageElement } from "./gatsby-shared"
+import { hasFeature } from "gatsby-plugin-utils"
+
+if (hasFeature(`gatsby-script`)) {
+  exports.wrapPageElement = wrapPageElement
+}
+
 exports.onRouteUpdate = ({ location }) => {
   if (process.env.NODE_ENV !== `production` || typeof gtag !== `function`) {
     return null
@@ -8,7 +15,9 @@ exports.onRouteUpdate = ({ location }) => {
     typeof window.excludeGtagPaths !== `undefined` &&
     window.excludeGtagPaths.some(rx => rx.test(location.pathname))
 
-  if (pathIsExcluded) return null
+  if (pathIsExcluded) {
+    return null
+  }
 
   // wrap inside a timeout to make sure react-helmet is done with its changes (https://github.com/gatsbyjs/gatsby/issues/11592)
   const sendPageView = () => {

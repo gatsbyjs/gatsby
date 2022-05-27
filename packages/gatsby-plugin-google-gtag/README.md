@@ -18,9 +18,19 @@ NOTE: This plugin only works in production mode! To test your Global Site Tag is
 
 ## How to use
 
+If you use `gatsby@4.15.x` or later, this plugin will use the [Gatsby Script API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/) to load scripts using the [`off-main-thread`](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/#off-main-thread-strategy-experimental) strategy for better performance.
+
+This means that you must include your absolute gtag URL in the `partytownProxiedURLs` key in your Gatsby config (see below). If you use `gatsby@4.15.0` or earlier, this is not required.
+
 ```js
 // In your gatsby-config.js
 module.exports = {
+  /**
+   * If using `gatsby@4.15.0` or later, include `partytownProxiedURLs`.
+   *  - `origin` is either your self hosted origin (if defined in plugin options) or https://www.googletagmanager.com (default).
+   *  - `firstTrackingId` is the first string in your provided `trackingIds` array in the plugin options.
+   */
+  partytownProxiedURLs: [`${origin}/gtag/js?id=${firstTrackingId}`],
   plugins: [
     {
       resolve: `gatsby-plugin-google-gtag`,

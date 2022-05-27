@@ -114,7 +114,7 @@ describe(`selfHostedOrigin`, () => {
     const pluginOptions = {
       trackingIds: [`GA_TRACKING_ID`],
       pluginConfig: {
-        origin: origin,
+        origin,
       },
     }
 

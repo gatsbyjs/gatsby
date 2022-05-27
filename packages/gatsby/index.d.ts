@@ -17,7 +17,10 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen"
+export type AvailableFeatures =
+  | "image-cdn"
+  | "graphql-typegen"
+  | "gatsby-script"
 
 export {
   default as Link,
