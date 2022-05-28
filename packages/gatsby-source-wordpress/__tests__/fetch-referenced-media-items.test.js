@@ -6,8 +6,10 @@ jest.mock(`../dist/utils/fetch-graphql`, () => jest.fn())
 
 import fetchGraphql from "../dist/utils/fetch-graphql"
 import { fetchMediaItemsBySourceUrl, fetchMediaItemsById } from "../dist/steps/source-nodes/fetch-nodes/fetch-referenced-media-items"
-import { createContentDigest } from "gatsby-core-utils"
+// import { createContentDigest } from "gatsby-core-utils"
 import store from "../dist/store"
+
+const createContentDigest = (input) => JSON.stringify(input)
 
 const fakeReporter = {
   panic: msg => {
@@ -19,7 +21,6 @@ const fakeReporter = {
 }
 
 const getNodeMock = jest.fn()
-
 
 describe(`fetch-referenced-media-items`, () => {
   beforeAll(() => {
