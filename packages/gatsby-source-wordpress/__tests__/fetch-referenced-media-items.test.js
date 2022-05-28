@@ -16,6 +16,8 @@ const fakeReporter = {
 
 const getNodeMock = jest.fn()
 
+const btoa = (input) => Buffer.from(input).toString(`base64`)
+
 describe(`fetch-referenced-media-items`, () => {
   beforeAll(() => {
     store.dispatch.gatsbyApi.setState({
