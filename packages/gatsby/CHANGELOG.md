@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.15.1/packages/gatsby) (2022-05-25)
+
+#### Bug Fixes
+
+- correctly auto-load preview plugin [#35745](https://github.com/gatsbyjs/gatsby/issues/35745) [#35746](https://github.com/gatsbyjs/gatsby/issues/35746) ([884c554](https://github.com/gatsbyjs/gatsby/commit/884c5545b5030846d9b8fb414b2e20bab2ceb437))
+
 ## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.15.0/packages/gatsby) (2022-05-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
