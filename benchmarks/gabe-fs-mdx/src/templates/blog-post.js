@@ -18,7 +18,6 @@ export const pageQuery = graphql`
   query MdxQuery($id: String!) {
     mdx(id: { eq: $id }) {
       id
-      body
       frontmatter {
         title
       }
