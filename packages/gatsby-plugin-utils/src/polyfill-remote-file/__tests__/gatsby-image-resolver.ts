@@ -1,4 +1,5 @@
 import path from "path"
+import url from "url"
 import { ensureDir, remove } from "fs-extra"
 import importFrom from "import-from"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
@@ -753,33 +754,25 @@ describe(`gatsbyImageData`, () => {
   })
 
   it(`should fetch placeholder file with headers from the setRequestHeaders action`, async () => {
+    const authToken = `Bearer 12345`
+
     fetchRemoteFile.mockImplementationOnce(input => {
-      if (
-        !input.httpHeaders ||
-        input.httpHeaders.Authorization !== `Bearer 123`
-      ) {
+      if (!input.httpHeaders || input.httpHeaders.Authorization !== authToken) {
         throw Error(`No headers found for url ${input.url}`)
       } else {
         return path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
       }
     })
 
-    const { store } = jest.requireActual(`gatsby/dist/redux`)
-    const { actions } = jest.requireActual(`gatsby/dist/redux/actions/public`)
+    const baseDomain = url.parse(portraitSource.url)?.hostname
 
-    store.dispatch(
-      actions.setRequestHeaders(
-        {
-          domain: portraitSource.url,
-          headers: {
-            Authorization: `Bearer 123`,
-          },
-        },
-        {
-          name: `gatsby-source-test`,
+    const store = {
+      getState: (): { requestHeaders: Map<string, Record<string, string>> } => {
+        return {
+          requestHeaders: new Map([[baseDomain, { Authorization: authToken }]]),
         }
-      )
-    )
+      },
+    } as unknown as Store
 
     const fixedResult = await gatsbyImageResolver(
       portraitSource,
