@@ -31,7 +31,7 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
 1. Gatsby created a type generation file which you should see at `src/gatsby-types.d.ts`. It contains the TypeScript types for your queries. Your `tsconfig.json` should include this file so that you can access the `namespace Queries` everywhere in your project.
 1. Create a new page at `src/pages/typegen.tsx` with the following contents:
 
-   ```tsx
+   ```tsx:title=src/pages/typegen.tsx
    import * as React from "react"
    import { graphql, PageProps } from "gatsby"
 
@@ -65,13 +65,13 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
 
 1. Access the `Queries` namespace and use the `TypegenPage` type in your React component like so:
 
-   ```ts
+   ```tsx
    ({ data }: PageProps<Queries.TypegenPage>)
    ```
 
    When you type out the site title like this you should get TypeScript IntelliSense:
 
-   ```jsx
+   ```tsx
    <p>Site title: {data.site?.siteMetadata?.title}</p>
    ```
 
@@ -81,7 +81,7 @@ As Gatsby [infers all fields](/docs/glossary#inference) — unless an explicit s
 
 If you're sure that `siteMetadata.title` is always available you can use Gatsby's schema customization API to explicitly type your fields:
 
-```js:title=gatsby-node.ts
+```ts:title=gatsby-node.ts
 import { GatsbyNode } from "gatsby"
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }) => {

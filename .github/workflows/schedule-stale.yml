@@ -2,8 +2,13 @@ name: Stale Bot
 on:
   schedule:
     - cron: "0 */12 * * *"
+permissions:
+  contents: read
 jobs:
   stale:
+    permissions:
+      contents: read
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
