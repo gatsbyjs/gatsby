@@ -20,7 +20,7 @@ aliases:
 
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node14.15.0-chrome86-ff82
+      - image: cypress/browsers:node14.15.0-chrome96-ff94
     environment:
       <<: *e2e-executor-env
 
