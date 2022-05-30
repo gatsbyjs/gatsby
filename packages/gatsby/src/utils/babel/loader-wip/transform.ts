@@ -74,6 +74,7 @@ export default function transform(
   loaderOptions: any,
   filename: string,
   target: string,
+  overrides: object,
 ) {
   // @ts-ignore
   const babelConfig = getConfig.call(this, {
@@ -82,6 +83,7 @@ export default function transform(
     inputSourceMap,
     target,
     filename,
+    overrides,
   })
 
   const file = consumeIterator(

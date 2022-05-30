@@ -25,7 +25,8 @@ if (/^6\./.test(babel.version)) {
 async function gatsbyBabelLoader(
   this: any,
   inputSource: string,
-  inputSourceMap: object | null | undefined
+  inputSourceMap: object | null | undefined,
+  overrides, // TODO use these!
 ) {
   const filename = this.resourcePath
   const target = this.target
@@ -37,7 +38,8 @@ async function gatsbyBabelLoader(
     inputSourceMap,
     loaderOptions,
     filename,
-    target
+    target,
+    overrides,
   )
 
   return [transformedSource, outputSourceMap]
@@ -45,6 +47,7 @@ async function gatsbyBabelLoader(
 
 function makeLoader(callback?) {
   const overrides = callback ? callback(babel) : undefined;
+  console.log({overrides})
 
   return function (source, inputSourceMap) {
     // Make the loader async

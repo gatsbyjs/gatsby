@@ -11,7 +11,7 @@ import { consumeIterator } from './util'
  * is germane.
  *
  * However, these characteristics need not protect against circumstances that
- * will not be encountered in Next.js.  For example, a source file may be
+ * will not be encountered.  For example, a source file may be
  * transformed differently depending on whether we're doing a production compile
  * or for HMR in dev mode.  However, those two circumstances will never be
  * encountered within the context of a single V8 context (and, thus, shared
@@ -25,7 +25,6 @@ import { consumeIterator } from './util'
 interface CharacteristicsGermaneToCaching {
   isServer: boolean
   isPageFile: boolean
-  isNextDist: boolean
   hasModuleExports: boolean
   fileExt: string
 }
@@ -38,15 +37,12 @@ function getCacheCharacteristics(
 ): CharacteristicsGermaneToCaching {
   const { isServer, pagesDir } = loaderOptions
   const isPageFile = filename.startsWith(pagesDir)
-  // const isNextDist = nextDistPath.test(filename)
-  const isNextDist = false
   const hasModuleExports = source.indexOf('module.exports') !== -1
   const fileExt = fileExtensionRegex.exec(filename)?.[1] || 'unknown'
 
   return {
     isServer,
     isPageFile,
-    isNextDist,
     hasModuleExports,
     fileExt,
   }
@@ -61,7 +57,7 @@ function getPlugins(
   cacheCharacteristics: CharacteristicsGermaneToCaching
 ) {
   // @ts-ignore
-  const { isServer, isPageFile, isNextDist, hasModuleExports } =
+  const { isServer, isPageFile, hasModuleExports } =
     cacheCharacteristics
 
   const { hasReactRefresh, development } = loaderOptions
@@ -83,21 +79,14 @@ function getPlugins(
         'typeof window': isServer ? 'undefined' : 'object',
         'process.browser': isServer ? false : true,
       },
-      'next-js-transform-define-instance',
+      'transform-define-instance',
     ],
     { type: 'plugin' }
   )
-  const commonJsItem = isNextDist
-    ? createConfigItem(
-        require('@babel/plugin-transform-modules-commonjs'),
-        { type: 'plugin' }
-      )
-    : null
 
   return [
     reactRefreshItem,
     transformDefineItem,
-    commonJsItem,
   ].filter(Boolean)
 }
 
@@ -118,7 +107,7 @@ function getCustomBabelConfig(configFilePath: string) {
     return require(configFilePath)
   }
   throw new Error(
-    'The Next.js Babel loader does not support .mjs or .cjs config files.'
+    'The Babel loader does not support .mjs or .cjs config files.'
   )
 }
 
@@ -132,7 +121,8 @@ function getFreshConfig(
   loaderOptions: any,
   target: string,
   filename: string,
-  inputSourceMap?: object | null
+  overrides: object,
+  inputSourceMap?: object | null,
 ) {
   let { isServer, pagesDir, development, hasJsxRuntime, configFile } =
     loaderOptions
@@ -185,7 +175,7 @@ function getFreshConfig(
     overrides: loaderOptions.overrides,
 
     caller: {
-      name: 'next-babel-turbo-loader',
+      name: 'gatsby-babel-loader',
       supportsStaticESM: true,
       supportsDynamicImport: true,
 
@@ -206,6 +196,24 @@ function getFreshConfig(
       // ...loaderOptions.caller,
     },
   } as any
+
+  // @ts-ignore
+  if (overrides && overrides.config) {
+
+
+
+  
+    // TODO override with our options
+
+
+
+
+    // options = overrides.config.call(this, config, {
+    //   source,
+    //   map: inputSourceMap,
+    //   customOptions,
+    // });
+  }
 
   // Babel does strict checks on the config so undefined is not allowed
   if (typeof options.target === 'undefined') {
@@ -235,14 +243,13 @@ function getFreshConfig(
  * file attributes and Next.js compiler states: `CharacteristicsGermaneToCaching`.
  */
 function getCacheKey(cacheCharacteristics: CharacteristicsGermaneToCaching) {
-  const { isServer, isPageFile, isNextDist, hasModuleExports, fileExt } =
+  const { isServer, isPageFile, hasModuleExports, fileExt } =
     cacheCharacteristics
 
   const flags =
     0 |
     (isServer ? 0b0001 : 0) |
     (isPageFile ? 0b0010 : 0) |
-    (isNextDist ? 0b0100 : 0) |
     (hasModuleExports ? 0b1000 : 0)
 
   return fileExt + flags
@@ -260,12 +267,14 @@ export default function getConfig(
     loaderOptions,
     filename,
     inputSourceMap,
+    overrides,
   }: {
     source: string
     loaderOptions: any
     target: string
     filename: string
-    inputSourceMap?: object | null
+    inputSourceMap?: object | null,
+    overrides: object,
   }
 ): BabelConfig {
   const cacheCharacteristics = getCacheCharacteristics(
@@ -307,7 +316,8 @@ export default function getConfig(
     loaderOptions,
     target,
     filename,
-    inputSourceMap
+    overrides,
+    inputSourceMap,
   )
 
   configCache.set(cacheKey, freshConfig)

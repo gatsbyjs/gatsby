@@ -1,4 +1,5 @@
-const babelLoader = require("./babel/loader-next")
+const babelLoader = require("./babel/loader-wip")
+// const babelLoader = require("babel-loader")
 
 const {
   prepareOptions,
@@ -42,6 +43,7 @@ module.exports = babelLoader.custom(babel => {
       const customOptionsCacheKey = `${stage}-${isPageTemplate}`
 
       if (customOptionsCache.has(customOptionsCacheKey)) {
+        console.log({toReturn: customOptionsCache.get(customOptionsCacheKey)})
         return customOptionsCache.get(customOptionsCacheKey)
       }
 
@@ -95,6 +97,7 @@ module.exports = babelLoader.custom(babel => {
       }
 
       let { options } = partialConfig
+      console.log(options)
       if (configCache.has(configCacheKey)) {
         return { ...options, ...configCache.get(configCacheKey) }
       }
