@@ -1,8 +1,7 @@
-import btoa from "btoa"
-
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 
 import type { Step } from "~/utils/run-steps"
+import { b64e } from "~/utils/string-encoding"
 
 export const setRequestHeaders: Step = ({ actions }): void => {
   if (typeof actions?.setRequestHeaders !== `function`) {
@@ -18,7 +17,7 @@ export const setRequestHeaders: Step = ({ actions }): void => {
     actions.setRequestHeaders({
       domain: url,
       headers: {
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+        Authorization: `Basic ${b64e(`${username}:${password}`)}`,
       },
     })
   }

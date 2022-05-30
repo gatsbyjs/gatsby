@@ -20,7 +20,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import fetchReferencedMediaItemsAndCreateNodes, {
   stripImageSizesFromUrl,
 } from "../fetch-nodes/fetch-referenced-media-items"
-import btoa from "btoa"
+import { b64e } from "~/utils/string-encoding"
 import store from "~/store"
 
 import { store as gatsbyStore } from "gatsby/dist/redux"
@@ -106,7 +106,7 @@ const getCheerioImgDbId = cheerioImg => {
 }
 
 // media items are of the "post" type
-const dbIdToMediaItemRelayId = dbId => (dbId ? btoa(`post:${dbId}`) : null)
+const dbIdToMediaItemRelayId = dbId => (dbId ? b64e(`post:${dbId}`) : null)
 
 const getCheerioImgRelayId = cheerioImg =>
   dbIdToMediaItemRelayId(getCheerioImgDbId(cheerioImg))
