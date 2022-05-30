@@ -51,6 +51,8 @@ In addition, these features are supported out of the box:
 
 For full details, see the [Gatsby Script reference documentation](/docs/reference/built-in-components/gatsby-script/).
 
+> Note - If you are using Jest, you will need to include `gatsby-script` in your `transformIgnorePatterns` key in your Jest config since `gatsby-script` is an ES module. See [the unit testing documentation on Jest configuration](/docs/how-to/testing/unit-testing/#2-creating-a-configuration-file-for-jest) for more details.
+
 ## GraphQL Typegen
 
 In the last [v4.14 release](/docs/reference/release-notes/v4.14/#experimental-graphql-typegen) we've added GraphQL Typegen as an experimental feature. After some bugfixing and improving its documentation the feature is now generally available behind a `gatsby-config` option.
