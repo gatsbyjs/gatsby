@@ -98,14 +98,6 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         name: `Mdx`,
         fields: {
           rawBody: `String!`,
-          body: {
-            type: `String!`,
-            async resolve(mdxNode) {
-              const code = await compile(mdxNode.rawBody, mdxOptions)
-
-              return code.toString()
-            },
-          },
           frontmatter: `MdxFrontmatter!`,
           slug: `String`,
           title: `String`,
