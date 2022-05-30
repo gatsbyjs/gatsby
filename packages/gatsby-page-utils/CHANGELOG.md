@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.15.0/packages/gatsby-page-utils) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Apply `never` trailing slash to xml & pdf [#35681](https://github.com/gatsbyjs/gatsby/issues/35681) ([d383eab](https://github.com/gatsbyjs/gatsby/commit/d383eab271e6c4595fa01f43e34250fa39334987))
+
+#### Chores
+
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) ([3909fa4](https://github.com/gatsbyjs/gatsby/commit/3909fa4265d907df62c6f79129f90f96ae09acd4))
+
 ### [2.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.14.1/packages/gatsby-page-utils) (2022-05-16)
 
 #### Chores
