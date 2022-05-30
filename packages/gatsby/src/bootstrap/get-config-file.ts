@@ -6,12 +6,14 @@ import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 
-function isNearMatch(
+export function isNearMatch(
   fileName: string | undefined,
   configName: string,
   distance: number
 ): boolean {
-  if (!fileName) return false
+  if (!fileName || !configName) {
+    return false
+  }
   return levenshtein(fileName, configName) <= distance
 }
 
