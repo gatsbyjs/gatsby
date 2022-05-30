@@ -133,3 +133,34 @@ export const config: GatsbyFunctionConfig = {
   },
 }
 ```
+
+### How function config is applied
+
+When working with `config` and adjusting `type` of one of body parser middlewares, it's important to realize that all body parser middlewares are still being applied with concrete order:
+
+1. `raw`
+2. `text`
+3. `urlencoded`
+4. `json`
+
+This means that if you want `json` to be used for all possible requests for given function, it won't be enough to just set `*/*` for `json` middleware, we also need to change config for middlewares that are higher in priority, so they don't accidentally match and handle request before `json` middleware can process it:
+
+```js
+export const config = {
+  bodyParser: {
+    raw: {
+      type: `-`,
+    },
+    json: {
+      type: `-`,
+    },
+    urlencoded: {
+      type: `-`,
+      extended: true,
+    },
+    json: {
+      type: `*/*`,
+    },
+  },
+}
+```
