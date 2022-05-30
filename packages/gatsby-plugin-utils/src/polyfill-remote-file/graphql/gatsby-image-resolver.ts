@@ -265,7 +265,7 @@ export function generateGatsbyImageFieldConfig(
   IGatsbyImageDataArgs
 > {
   return {
-    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData` : `JSON`,
     description: `Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.`,
     args: {
       layout: {
