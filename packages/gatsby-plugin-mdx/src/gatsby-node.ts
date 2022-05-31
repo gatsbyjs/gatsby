@@ -257,14 +257,43 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .description(
         `Configure the file extensions that gatsby-plugin-mdx will process`
       ),
-    defaultLayouts: Joi.object({})
+    defaultLayouts: Joi.object()
       .unknown(true)
       .default({})
       .description(`Set the layout components for MDX source types`),
     gatsbyRemarkPlugins: Joi.subPlugins().description(
       `Use Gatsby-specific remark plugins`
     ),
-    mdxOptions: Joi.object({})
+    mdxOptions: Joi.object()
+      .keys({
+        jsx: Joi.boolean().description(`Whether to keep JSX.`),
+        format: Joi.string()
+          .valid(`mdx`, `md`)
+          .description(`Format of the files to be processed`),
+        outputFormat: Joi.string()
+          .valid(`program`, `function-body`)
+          .description(
+            `Whether to compile to a whole program or a function body..`
+          ),
+        mdExtensions: Joi.array()
+          .items(Joi.string().regex(/^\./))
+          .description(`Extensions (with \`.\`) for markdown.`),
+        mdxExtensions: Joi.array()
+          .items(Joi.string().regex(/^\./))
+          .description(`Extensions (with \`.\`) for MDX.`),
+        recmaPlugins: Joi.array().description(
+          `List of recma (esast, JavaScript) plugins.`
+        ),
+        remarkPlugins: Joi.array().description(
+          `List of remark (mdast, markdown) plugins.`
+        ),
+        rehypePlugins: Joi.array().description(
+          `List of rehype (hast, HTML) plugins.`
+        ),
+        remarkRehypeOptions: Joi.object()
+          .unknown()
+          .description(`Options to pass through to \`remark-rehype\`.`),
+      })
       .unknown(true)
       .default({})
       .description(
