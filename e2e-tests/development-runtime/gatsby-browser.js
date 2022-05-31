@@ -1,3 +1,4 @@
+import WrapPageElement from "./src/wrap-page-element"
 import WrapRootElement from "./src/wrap-root-element"
 import * as React from "react"
 
@@ -22,6 +23,10 @@ export const onRouteUpdate = ({ location }) => {
 export const onPrefetchPathname = ({ pathname }) => {
   addLogEntry(`onPrefetchPathname`, pathname)
 }
+
+export const wrapPageElement = ({ element, props }) => (
+  <WrapPageElement element={element} props={props} />
+)
 
 export const wrapRootElement = ({ element }) => (
   <WrapRootElement element={element} />
