@@ -29,7 +29,7 @@
     "@graphql-tools/code-file-loader": "^7.2.14",
     "@graphql-tools/load": "^7.5.10",
     "@nodelib/fs.walk": "^1.2.8",
-    "@parcel/core": "2.5.0",
+    "@parcel/core": "2.6.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/http-proxy": "^1.17.7",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
@@ -270,6 +270,7 @@
     "postinstall": "node scripts/postinstall.js",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch",
+    "version": "node ../../scripts/pin-version.js",
     "typecheck": "tsc --noEmit"
   },
   "types": "index.d.ts",

@@ -637,7 +637,7 @@ export function runTests(env, host) {
           })
         })
 
-        describe(`custom type`, () => {
+        describe(`custom type (using 'custom/type' payload)`, () => {
           const body = JSON.stringify({
             content: `test-string`,
           })
@@ -675,6 +675,55 @@ export function runTests(env, host) {
             expect(result.status).toBe(200)
             const responseBody = await result.json()
 
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "<Buffer 7b 22 63 6f 6e 74 65 6e 74 22 3a 22 74 65 73 74 2d 73 74 72 69 6e 67 22 7d>",
+              }
+            `)
+          })
+        })
+
+        describe(`'application/json' payload`, () => {
+          const body = JSON.stringify({
+            content: `test-string`,
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/json",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            // default config will use default config for "application/json" type
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{ content: 'test-string' }",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { raw: { type: "*/*" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-raw-type`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/json",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            // despite application/json payload, we get
+            // expected Buffer
             expect(responseBody).toMatchInlineSnapshot(`
               Object {
                 "body": "<Buffer 7b 22 63 6f 6e 74 65 6e 74 22 3a 22 74 65 73 74 2d 73 74 72 69 6e 67 22 7d>",

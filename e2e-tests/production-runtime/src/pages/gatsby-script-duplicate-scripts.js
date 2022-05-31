@@ -3,7 +3,7 @@ import { Script } from "gatsby"
 import { scripts } from "../../gatsby-script-scripts"
 import { onLoad, onError } from "../utils/gatsby-script-callbacks"
 
-const DuplicateScripts = () => {
+const DuplicateScriptsPage = () => {
   const [onLoadScriptLoaded, setOnLoadScriptLoaded] = useState(false)
   const [onErrorScriptLoaded, setOnErrorScriptLoaded] = useState(false)
 
@@ -58,4 +58,4 @@ const DuplicateScripts = () => {
   )
 }
 
-export default DuplicateScripts
+export default DuplicateScriptsPage
