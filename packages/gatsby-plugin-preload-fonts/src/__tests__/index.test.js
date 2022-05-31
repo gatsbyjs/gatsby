@@ -49,6 +49,7 @@ const mockPageRequests = requests => {
         }
       },
       url: () => currentPath,
+      setCacheEnabled: () => {},
     }
 
     return { close: jest.fn(), newPage: () => Promise.resolve(page) }
