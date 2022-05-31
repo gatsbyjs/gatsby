@@ -31,6 +31,7 @@ const {
 } = require(`./utils`)
 
 const imageCdnDocs = `https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
+let GATSBY_SOURCE_DRUPAL_REQUEST_TIMEOUT = 30000
 
 const agent = {
   http: new HttpAgent(),
@@ -94,7 +95,7 @@ async function worker([url, options]) {
     cache: false,
     timeout: {
       // Occasionally requests to Drupal stall. Set a 30s timeout to retry in this case.
-      request: 30000,
+      request: GATSBY_SOURCE_DRUPAL_REQUEST_TIMEOUT,
     },
     // request: http2wrapper.auto,
     // http2: true,
@@ -166,6 +167,7 @@ exports.sourceNodes = async (
     params = {},
     concurrentFileRequests = 20,
     concurrentAPIRequests = 20,
+    requestTimeoutMS = 30000,
     disallowedLinkTypes = [
       `self`,
       `describedby`,
@@ -188,6 +190,9 @@ exports.sourceNodes = async (
     touchNode,
     unstable_createNodeManifest,
   } = actions
+
+  // Set request timeout value from the plugin options.
+  GATSBY_SOURCE_DRUPAL_REQUEST_TIMEOUT = requestTimeoutMS
 
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
@@ -839,6 +844,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     params: Joi.object().description(`Append optional GET params to requests`),
     concurrentFileRequests: Joi.number().integer().default(20).min(1),
     concurrentAPIRequests: Joi.number().integer().default(20).min(1),
+    requestTimeoutMS: Joi.number().integer().default(30000).min(1),
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
     fastBuilds: Joi.boolean(),
