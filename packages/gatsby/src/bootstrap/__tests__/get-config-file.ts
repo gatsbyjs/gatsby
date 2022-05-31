@@ -42,7 +42,7 @@ const reporterPanicMock = reporter.panic as jest.MockedFunction<
 >
 
 describe(`isNearMatch`, () => {
-  it(`should NOT find a near match if file name is undefined or null`, () => {
+  it(`should NOT find a near match if file name is undefined`, () => {
     const nearMatchA = isNearMatch(undefined, `gatsby-config`, 1)
     expect(nearMatchA).toBeFalse()
   })
@@ -99,6 +99,21 @@ describe(`getConfigFile`, () => {
     })
   })
 
+  it(`should handle non-require errors`, async () => {
+    testRequireErrorMock.mockImplementationOnce(() => false)
+
+    await getConfigFile(nearMatchDir, `gatsby-config`)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10123`,
+      error: expect.toBeObject(),
+      context: {
+        configName: `gatsby-config`,
+        message: expect.toBeString(),
+      },
+    })
+  })
+
   it(`should handle case where gatsby-config.ts exists but no compiled gatsby-config.js exists`, async () => {
     // Force outer and inner errors so we can hit the code path that checks if gatsby-config.ts exists
     pathJoinMock
@@ -113,21 +128,6 @@ describe(`getConfigFile`, () => {
       error: expect.toBeObject(),
       context: {
         configName: `gatsby-config`,
-      },
-    })
-  })
-
-  it(`should handle non-require errors`, async () => {
-    testRequireErrorMock.mockImplementationOnce(() => false)
-
-    await getConfigFile(nearMatchDir, `gatsby-config`)
-
-    expect(reporterPanicMock).toBeCalledWith({
-      id: `10123`,
-      error: expect.toBeObject(),
-      context: {
-        configName: `gatsby-config`,
-        message: expect.toBeString(),
       },
     })
   })
@@ -147,7 +147,7 @@ describe(`getConfigFile`, () => {
     })
   })
 
-  it(`should handle gatsby config in src dir`, async () => {
+  it(`should handle gatsby config incorrectly located in src dir`, async () => {
     testRequireErrorMock.mockImplementationOnce(() => true)
 
     await getConfigFile(srcDir, `gatsby-config`)
