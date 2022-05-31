@@ -21,6 +21,16 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = (
   const fileMap = new Map()
   fileNodes.forEach(fileNode => fileMap.set(fileNode.absolutePath, fileNode))
 
+  const loaderOptions: Options = {
+    useDynamicImport: true,
+    providerImportSource: `@mdx-js/react`,
+  }
+
+  const gatsbyLoaderOptions: IMdxLoaderOptions = {
+    fileMap,
+    pluginOptions: pluginOptions as IMdxPluginOptions,
+  }
+
   actions.setWebpackConfig({
     module: {
       rules: [
@@ -30,17 +40,11 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = (
             loaders.js(),
             {
               loader: `@mdx-js/loader`,
-              options: {
-                useDynamicImport: true,
-                providerImportSource: `@mdx-js/react`,
-              } as Options,
+              options: loaderOptions,
             },
             {
               loader: path.join(`gatsby-plugin-mdx`, `dist`, `mdx-loader`),
-              options: {
-                fileMap,
-                pluginOptions,
-              } as IMdxLoaderOptions,
+              options: gatsbyLoaderOptions,
             },
           ],
         },
