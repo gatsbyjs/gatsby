@@ -68,14 +68,8 @@ const getConfig = stage =>
 describe(`build-javascript`, () => {
   const stage = `build-javascript`
 
-  it(`polyfills dependencies when ES6 module support is false`, async () => {
-    mockHasES6ModuleSupport.mockReturnValue(false)
-
-    const {
-      module: { rules },
-    } = await getConfig(stage)
-
-    const polyfillRule = rules.find(rule => {
+  const getPolyfillRule = config =>
+    config.module.rules.find(rule => {
       if (Array.isArray(rule.use)) {
         return (
           rule.use[0]?.loader &&
@@ -85,6 +79,12 @@ describe(`build-javascript`, () => {
 
       return undefined
     })
+
+  it(`polyfills dependencies when ES6 module support is false`, async () => {
+    mockHasES6ModuleSupport.mockReturnValue(false)
+
+    const config = await getConfig(stage)
+    const polyfillRule = getPolyfillRule(config)
 
     expect(polyfillRule).toBeTruthy()
   })
@@ -92,20 +92,8 @@ describe(`build-javascript`, () => {
   it(`doesn't polyfill dependencies when ES6 module support is true`, async () => {
     mockHasES6ModuleSupport.mockReturnValue(true)
 
-    const {
-      module: { rules },
-    } = await getConfig(stage)
-
-    const polyfillRule = rules.find(rule => {
-      if (Array.isArray(rule.use)) {
-        return (
-          rule.use[0]?.loader &&
-          rule.use[0].loader.indexOf(`/babel-loader/`) >= 0
-        )
-      }
-
-      return undefined
-    })
+    const config = await getConfig(stage)
+    const polyfillRule = getPolyfillRule(config)
 
     expect(polyfillRule).toBeFalsy()
   })
