@@ -113,7 +113,13 @@ export default async ({
   console.log(`sourcing`)
 
   // Listen to node creation to record which plugins create nodes.
-  if (isInitialSourcing) {
+  // TODO — do we need to handle TOUCH_NODE as well? Or is
+  // this warning truely only intersting on an empty cache?
+  // Right now it's warning if the cache is warm which isn't what
+  // we want.
+  //
+  // Probably we could store this info in a reducer.
+  if (isInitialSourcing) 
     emitter.on(`CREATE_NODE`, sampleNodePluginOwners)
   }
 
