@@ -708,7 +708,7 @@ const errors = {
   },
   "11903": {
     text: (context): string =>
-      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.`,
+      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.\n${context.sourceMessage}`,
     level: Level.ERROR,
     type: Type.COMPILATION,
     category: ErrorCategory.USER,
