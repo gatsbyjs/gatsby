@@ -118,7 +118,7 @@ export async function getConfigFile(
         })
       }
 
-      // gatsby-config.js is incorrectly in src/gatsby-config.js
+      // gatsby-config.js is incorrectly located in src/gatsby-config.js
       if (existsSync(path.join(siteDirectory, `src`, configName + `.js`))) {
         report.panic({
           id: `10125`,
