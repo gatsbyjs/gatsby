@@ -81,12 +81,12 @@ async function onCreateNode(
     throw new Error(`Unable to parse JSON: ${hint}`)
   }
 
-  async function transformArrayChunk(chunk) {
+  async function transformArrayChunk({ chunk, startCount }) {
     for (let i = 0, l = chunk.length; i < l; i++) {
       const obj = chunk[i]
       transformObject(
         obj,
-        createNodeId(`${node.id} [${i}] >>> JSON`),
+        createNodeId(`${node.id} [${i + startCount}] >>> JSON`),
         getType({
           node,
           object: obj,
@@ -102,8 +102,11 @@ async function onCreateNode(
   }
 
   if (_.isArray(parsedContent)) {
-    for (const chunk of _.chunk(parsedContent, 100)) {
-      await transformArrayChunk(chunk)
+    const chunks = _.chunk(parsedContent, 100)
+    let count = 0
+    for await (const chunk of chunks) {
+      await transformArrayChunk({ chunk, startCount: count })
+      count += chunk.length
     }
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
