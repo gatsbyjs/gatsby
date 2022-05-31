@@ -5,6 +5,8 @@ Headers and Redirects on Gatsby Cloud.
 
 By default, the plugin will add some basic security headers. You can easily add or replace headers through the plugin config.
 
+NOTE: This plugin is autoinstalled on Gatsby Cloud to ensure the latest compatible version, there is no need to install it locally unless you wish to add plugin config.
+
 ## Install
 
 `npm install --save gatsby-plugin-gatsby-cloud`

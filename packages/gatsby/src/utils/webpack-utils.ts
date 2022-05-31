@@ -723,7 +723,6 @@ export const createWebpackUtils = (
                 `removeHiddenElems`,
                 `removeMetadata`,
                 `removeNonInheritableGroupAttrs`,
-                `removeOffCanvasPaths`, // Default: disabled
                 `removeRasterImages`, // Default: disabled
                 `removeScriptElement`, // Default: disabled
                 `removeStyleElement`, // Default: disabled

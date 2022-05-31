@@ -83,6 +83,8 @@ export const query = graphql`
 `
 ```
 
+If you don't want to manually type out `DataProps` you can use Gatsby's [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen) feature.
+
 ### `gatsby-browser.tsx` / `gatsby-ssr.tsx`
 
 > Support added in `gatsby@4.8.0`
@@ -336,6 +338,8 @@ Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/
 ## Other Resources
 
 TypeScript integration for pages is supported through automatically including [`gatsby-plugin-typescript`](/plugins/gatsby-plugin-typescript/). Visit that link to see configuration options and limitations of this setup.
+
+You can also use Gatsby's [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen) feature to have type-safety for your GraphQL results and autocompletion in your favorite IDE.
 
 If you are new to TypeScript, check out these other resources to learn more:
 

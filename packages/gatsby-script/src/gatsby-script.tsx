@@ -153,10 +153,9 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
      * If a duplicate script is already loaded/errored, we replay load/error callbacks with the original event.
      * If it's not yet loaded/errored, keep track of callbacks so we can call load/error callbacks for each when the event occurs.
      */
-    const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
-
     for (const name of callbackNames) {
       if (currentCallbacks?.[name]) {
+        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
         const { callbacks = [] } = cachedCallbacks?.[name] || {}
         callbacks.push(currentCallbacks?.[name])
 
@@ -164,6 +163,7 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
           currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event)
         } else {
           scriptCallbackCache.set(scriptKey, {
+            ...cachedCallbacks,
             [name]: {
               callbacks,
             },
