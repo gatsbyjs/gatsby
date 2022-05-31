@@ -245,9 +245,12 @@ describe(`Load plugins`, () => {
     })
 
     it(`loads gatsby-plugin-gatsby-cloud if not provided and installed on gatsby-cloud`, async () => {
-      resolveFrom.mockImplementation(
-        (rootDir, pkg) => rootDir + `/node_modules/` + pkg
-      )
+      resolveFrom.mockImplementation((rootDir, pkg) => {
+        if (pkg !== `gatsby-plugin-gatsby-cloud`) {
+          return undefined
+        }
+        return rootDir + `/node_modules/` + pkg
+      })
       const config = {
         plugins: [],
       }
@@ -268,9 +271,12 @@ describe(`Load plugins`, () => {
     })
 
     it(`uses the user provided plugin-gatsby-cloud if provided`, async () => {
-      resolveFrom.mockImplementation(
-        (rootDir, pkg) => rootDir + `/node_modules/` + pkg
-      )
+      resolveFrom.mockImplementation((rootDir, pkg) => {
+        if (pkg !== `gatsby-plugin-gatsby-cloud`) {
+          return undefined
+        }
+        return rootDir + `/node_modules/` + pkg
+      })
       const config = {
         plugins: [
           {
@@ -302,9 +308,12 @@ describe(`Load plugins`, () => {
     })
 
     it(`does not add gatsby-plugin-gatsby-cloud if it exists in config.plugins`, async () => {
-      resolveFrom.mockImplementation(
-        (rootDir, pkg) => rootDir + `/node_modules/` + pkg
-      )
+      resolveFrom.mockImplementation((rootDir, pkg) => {
+        if (pkg !== `gatsby-plugin-gatsby-cloud`) {
+          return undefined
+        }
+        return rootDir + `/node_modules/` + pkg
+      })
       const config = {
         plugins: [
           `gatsby-plugin-gatsby-cloud`,

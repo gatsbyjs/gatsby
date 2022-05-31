@@ -11,12 +11,12 @@ const spies: Record<keyof typeof ActionCreators, jest.SpyInstance> = (
   return acc
 }, {} as any)
 
-afterEach(() => {
+afterEach(async () => {
   for (const spy of Object.values(spies)) {
     spy.mockClear()
   }
   if (worker) {
-    worker.end()
+    await Promise.all(worker.end())
     worker = undefined
   }
 })

@@ -110,6 +110,8 @@ aliases:
       - lint
       - typecheck
       - unit_tests_node14
+      - unit_tests_node16
+      - unit_tests_node18
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -166,8 +168,8 @@ commands:
                 name: Upgrade React to << parameters.react_version >>
                 command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
       - run:
-          name: Install gatsby-dev
-          command: yarn global add gatsby-dev-cli
+          name: Install gatsby-dev@next
+          command: yarn global add gatsby-dev-cli@next
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
@@ -221,10 +223,21 @@ jobs:
       - run: yarn check-repo-fields
 
   unit_tests_node14:
-    # GATSBY_EXPERIMENTAL_LMDB_INDEXES is not activated yet
     executor:
       name: node
       image: "14.15.0"
+    <<: *test_template
+
+  unit_tests_node16:
+    executor:
+      name: node
+      image: "16.15.0"
+    <<: *test_template
+
+  unit_tests_node18:
+    executor:
+      name: node
+      image: "18.2.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -344,14 +357,21 @@ jobs:
       - run: # Don't allow any fallback to root dependencies
           command: yarn config set pnpFallbackMode none
           working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run: # Forces to use the local packages
-          command: yarn link --all --private ~/project
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run:
-          command: yarn install
-          working_directory: /tmp/e2e-tests/gatsby-pnp
-      - run:
+      - run: # Install before custom registry server is set
           command: yarn add start-server-and-test@^1.11.0
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Set the local registry to gatsby-dev-cli registry
+          command: yarn config set npmRegistryServer http://localhost:4873
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow localhost registry
+          command: |
+            echo -e 'unsafeHttpWhitelist:\n  - "localhost"' >> .yarnrc.yml
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Set project dir
+          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --set-path-to-repo ~/project
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Copy over packages
+          command: node ~/project/packages/gatsby-dev-cli/dist/index.js --force-install --scan-once --external-registry
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn build
@@ -540,6 +560,7 @@ jobs:
       - run:
           name: Run tests
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: "true"
@@ -580,6 +601,18 @@ workflows:
             - lint
             - bootstrap
       - unit_tests_node14:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node16:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node18:
           <<: *ignore_docs
           requires:
             - lint
