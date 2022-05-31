@@ -3,6 +3,14 @@ import { isNearMatch, getConfigFile } from "../get-config-file"
 import { testRequireError } from "../../utils/test-require-error"
 import reporter from "gatsby-cli/lib/reporter"
 
+jest.mock(`path`, () => {
+  const actual = jest.requireActual(`path`)
+  return {
+    ...actual,
+    join: jest.fn((...arg) => actual.join(...arg)),
+  }
+})
+
 jest.mock(`../../utils/test-require-error`, () => {
   return {
     testRequireError: jest.fn(),
@@ -23,6 +31,8 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
+const pathJoinMock = path.join as jest.MockedFunction<typeof path.join>
+
 const testRequireErrorMock = testRequireError as jest.MockedFunction<
   typeof testRequireError
 >
@@ -34,16 +44,7 @@ const reporterPanicMock = reporter.panic as jest.MockedFunction<
 describe(`isNearMatch`, () => {
   it(`should NOT find a near match if file name is undefined or null`, () => {
     const nearMatchA = isNearMatch(undefined, `gatsby-config`, 1)
-    const nearMatchB = isNearMatch(null, `gatsby-config`, 1)
     expect(nearMatchA).toBeFalse()
-    expect(nearMatchB).toBeFalse()
-  })
-
-  it(`should NOT find a near match if config name is undefined or null`, () => {
-    const nearMatchA = isNearMatch(`gatsby-config`, undefined, 1)
-    const nearMatchB = isNearMatch(`gatsby-config`, null, 1)
-    expect(nearMatchA).toBeFalse()
-    expect(nearMatchB).toBeFalse()
   })
 
   it(`should calculate near matches based on distance`, () => {
@@ -58,6 +59,7 @@ describe(`isNearMatch`, () => {
 const dir = path.resolve(__dirname, `../__mocks__/get-config`)
 const compiledDir = `${dir}/compiled-dir`
 const userRequireDir = `${dir}/user-require-dir`
+const tsDir = `${dir}/ts-dir`
 const nearMatchDir = `${dir}/near-match-dir`
 const srcDir = `${dir}/src-dir`
 
@@ -93,6 +95,24 @@ describe(`getConfigFile`, () => {
       context: {
         configName: `gatsby-config`,
         message: expect.toBeString(),
+      },
+    })
+  })
+
+  it(`should handle case where gatsby-config.ts exists but no compiled gatsby-config.js exists`, async () => {
+    // Force outer and inner errors so we can hit the code path that checks if gatsby-config.ts exists
+    pathJoinMock
+      .mockImplementationOnce(() => `force-outer-error`)
+      .mockImplementationOnce(() => `force-inner-error`)
+    testRequireErrorMock.mockImplementationOnce(() => true)
+
+    await getConfigFile(tsDir, `gatsby-config`)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10127`,
+      error: expect.toBeObject(),
+      context: {
+        configName: `gatsby-config`,
       },
     })
   })

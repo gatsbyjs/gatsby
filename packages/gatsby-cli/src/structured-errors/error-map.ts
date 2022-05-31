@@ -370,6 +370,13 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "10127": {
+    text: (context): string =>
+      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js. Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "10226": {
     text: (context): string =>
       [

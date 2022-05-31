@@ -2,7 +2,7 @@ import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `get-config-file-test`,
+    title: `ts`,
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [],
