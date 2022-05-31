@@ -24,11 +24,11 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
     )
   }
 
-  // get the default layout for the file source group, or if it doesn't
-  // exist, the overall default layout
-  const layoutPath =
-    options.defaultLayouts[res.fileNode.sourceInstanceName] ||
-    options.defaultLayouts[`default`]
+  // Get the default layout for the file source instance group name,
+  // or fall back to the default
+  const layoutPath = res.fileNode.sourceInstanceName
+    ? options.defaultLayouts[res.fileNode.sourceInstanceName]
+    : options.defaultLayouts[`default`]
 
   // No default layout set? Nothing to do here!
   if (!layoutPath) {

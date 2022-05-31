@@ -25,15 +25,16 @@ interface IHelpers {
 type MdxDefaultOptions = (pluginOptions: IMdxPluginOptions) => IMdxPluginOptions
 
 export const defaultOptions: MdxDefaultOptions = pluginOptions => {
+  const mdxOptions: ProcessorOptions = {
+    format: `mdx`,
+    useDynamicImport: true,
+    providerImportSource: `@mdx-js/react`,
+  }
   const options: IMdxPluginOptions = deepmerge(
     {
       extensions: [`.mdx`],
       defaultLayouts: {},
-      mdxOptions: {
-        format: `mdx`,
-        useDynamicImport: true,
-        providerImportSource: `@mdx-js/react`,
-      } as ProcessorOptions,
+      mdxOptions,
     },
     pluginOptions
   )

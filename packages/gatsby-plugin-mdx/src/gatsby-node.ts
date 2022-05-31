@@ -22,7 +22,7 @@ import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
   async (
     { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
-    pluginOptions
+    pluginOptions: IMdxPluginOptions
   ) => {
     const mdxNodes = getNodesByType(`Mdx`)
     const nodeMap: NodeMap = new Map()
@@ -30,25 +30,22 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
       if (!mdxNode.parent) {
         return
       }
-      const fileNode = getNode(mdxNode.parent) as IFileNode
-      if (!fileNode) {
+      const fileNode: IFileNode | undefined = getNode(mdxNode.parent)
+      if (!fileNode || !fileNode.absolutePath) {
         return
       }
       nodeMap.set(fileNode.absolutePath, { fileNode, mdxNode })
     })
 
-    const options = defaultOptions(pluginOptions as IMdxPluginOptions)
+    const options = defaultOptions(pluginOptions)
 
-    const mdxOptions = await enhanceMdxOptions(
-      pluginOptions as IMdxPluginOptions,
-      {
-        getNode,
-        getNodesByType,
-        pathPrefix,
-        reporter,
-        cache,
-      }
-    )
+    const mdxOptions = await enhanceMdxOptions(pluginOptions, {
+      getNode,
+      getNodesByType,
+      pathPrefix,
+      reporter,
+      cache,
+    })
 
     const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
       options: mdxOptions,
@@ -96,28 +93,25 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
  */
 export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
   _data,
-  pluginOptions
-) => defaultOptions(pluginOptions as IMdxPluginOptions).extensions
+  pluginOptions: IMdxPluginOptions
+) => defaultOptions(pluginOptions).extensions
 
 /**
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries and render the pages.
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
   { filename, contents, getNode, getNodesByType, pathPrefix, reporter, cache },
-  pluginOptions
+  pluginOptions: IMdxPluginOptions
 ) => {
-  const { extensions } = defaultOptions(pluginOptions as IMdxPluginOptions)
+  const { extensions } = defaultOptions(pluginOptions)
 
-  const mdxOptions = await enhanceMdxOptions(
-    pluginOptions as IMdxPluginOptions,
-    {
-      getNode,
-      getNodesByType,
-      pathPrefix,
-      reporter,
-      cache,
-    }
-  )
+  const mdxOptions = await enhanceMdxOptions(pluginOptions, {
+    getNode,
+    getNodesByType,
+    pathPrefix,
+    reporter,
+    cache,
+  })
 
   const ext = path.extname(filename)
 
@@ -173,8 +167,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_shouldOnCreateNode: GatsbyNode["unstable_shouldOnCreateNode"] =
-  ({ node }: { node: FileSystemNode }, pluginOptions) => {
-    const { extensions } = defaultOptions(pluginOptions as IMdxPluginOptions)
+  ({ node }: { node: FileSystemNode }, pluginOptions: IMdxPluginOptions) => {
+    const { extensions } = defaultOptions(pluginOptions)
     return node.internal.type === `File` && extensions.includes(node.ext)
   }
 
@@ -228,10 +222,10 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
  */
 export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   { page, actions },
-  pluginOptions
+  pluginOptions: IMdxPluginOptions
 ) => {
   const { createPage, deletePage } = actions
-  const { extensions } = defaultOptions(pluginOptions as IMdxPluginOptions)
+  const { extensions } = defaultOptions(pluginOptions)
   const ext = path.extname(page.component)
 
   // Only apply on pages based on .mdx files and avoid loops
