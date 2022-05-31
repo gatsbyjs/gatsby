@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.16.0/packages/gatsby-source-drupal) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Image cdn fixes fixes [#35619](https://github.com/gatsbyjs/gatsby/issues/35619) ([15a3fbf](https://github.com/gatsbyjs/gatsby/commit/15a3fbf720b4e38eca390830538bdb50042ba392))
+- add placeholder style name plugin option to the options schema [#35644](https://github.com/gatsbyjs/gatsby/issues/35644) ([6fd8bf7](https://github.com/gatsbyjs/gatsby/commit/6fd8bf7abba95ae4d7d6bfdadd93e45f2cd67e49))
+
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.15.0/packages/gatsby-source-drupal) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Features
+
+- Persist backreference data individually in cache so cheaper to get/set [#35323](https://github.com/gatsbyjs/gatsby/issues/35323) ([1257a8d](https://github.com/gatsbyjs/gatsby/commit/1257a8d75882c9700d76a2d1498eeaba9255f52d))
+- Image CDN support [#35265](https://github.com/gatsbyjs/gatsby/issues/35265) ([82a532a](https://github.com/gatsbyjs/gatsby/commit/82a532ae4f93090f0b0912dc39fac2823845306d))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-drupal [#35554](https://github.com/gatsbyjs/gatsby/issues/35554) ([fb98116](https://github.com/gatsbyjs/gatsby/commit/fb98116eed3ff6888ed255a94350f123990d9a4f))
+- fix Image CDN optional chaining call fix [#35498](https://github.com/gatsbyjs/gatsby/issues/35498) ([53de2d0](https://github.com/gatsbyjs/gatsby/commit/53de2d00129ad830f3a6e803a5c30e7e57d4b8b1))
+
+#### Other Changes
+
+- Changes from Wards review at https://github.com/gatsbyjs/gatsby/pull/35265#pullrequestreview-949950960 [#pullrequestreview-949950960](https://github.com/gatsbyjs/gatsby/issues/pullrequestreview-949950960) [#35475](https://github.com/gatsbyjs/gatsby/issues/35475) ([3036ba0](https://github.com/gatsbyjs/gatsby/commit/3036ba00ba6fdc2b690dd440c9f12781dc967de3))
+- test image cdn node data [#35470](https://github.com/gatsbyjs/gatsby/issues/35470) ([238faef](https://github.com/gatsbyjs/gatsby/commit/238faef918d9dc649304b9ab169c7808586ab5fa))
+
 ## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.14.0/packages/gatsby-source-drupal) (2022-04-28)
 
 #### Features

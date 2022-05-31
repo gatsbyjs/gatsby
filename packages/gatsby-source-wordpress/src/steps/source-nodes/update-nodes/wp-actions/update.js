@@ -5,7 +5,9 @@ import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
-import fetchReferencedMediaItemsAndCreateNodes from "../../fetch-nodes/fetch-referenced-media-items"
+import fetchReferencedMediaItemsAndCreateNodes, {
+  addImageCDNFieldsToNode,
+} from "../../fetch-nodes/fetch-referenced-media-items"
 
 import { dump } from "dumper.js"
 import { atob } from "atob"
@@ -194,16 +196,19 @@ export const createSingleNode = async ({
 
   const builtTypename = buildTypeName(typeInfo.nodesTypeName)
 
-  let remoteNode = {
-    ...processedNode,
-    __typename: builtTypename,
-    id: id,
-    parent: null,
-    internal: {
-      contentDigest: createContentDigest(updatedNodeContent),
-      type: builtTypename,
+  let remoteNode = addImageCDNFieldsToNode(
+    {
+      ...processedNode,
+      __typename: builtTypename,
+      id: id,
+      parent: null,
+      internal: {
+        contentDigest: createContentDigest(updatedNodeContent),
+        type: builtTypename,
+      },
     },
-  }
+    pluginOptions
+  )
 
   const typeSettings = getTypeSettingsByType({
     name: typeInfo.nodesTypeName,

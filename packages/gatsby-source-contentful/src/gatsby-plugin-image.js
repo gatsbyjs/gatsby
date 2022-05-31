@@ -17,7 +17,7 @@ const inFlightBase64Cache = new Map()
 const resolvedBase64Cache = new Map()
 
 // Note: this may return a Promise<body>, body (sync), or null
-export const getBase64Image = (imageProps, cache) => {
+const getBase64Image = (imageProps, cache) => {
   if (!imageProps) {
     return null
   }
@@ -110,7 +110,7 @@ const getTracedSVG = async ({ image, options, cache }) => {
       extension,
       absolutePath,
     },
-    args: { toFormat: `` },
+    args: { toFormat: ``, ...options.tracedSVGOptions },
     fileArgs: options,
   })
 }
@@ -199,6 +199,19 @@ export function generateImageSource(
   _fit, // We use resizingBehavior instead
   imageTransformOptions
 ) {
+  const imageFormatDefaults = imageTransformOptions[`${toFormat}Options`]
+
+  if (
+    imageFormatDefaults &&
+    Object.keys(imageFormatDefaults).length !== 0 &&
+    imageFormatDefaults.constructor === Object
+  ) {
+    imageTransformOptions = {
+      ...imageTransformOptions,
+      ...imageFormatDefaults,
+    }
+  }
+
   const {
     jpegProgressive,
     quality,
@@ -249,6 +262,29 @@ export async function resolveGatsbyImageData(
   if (!isImage(image)) return null
 
   const { generateImageData } = await import(`gatsby-plugin-image`)
+
+  const { getPluginOptions, doMergeDefaults } = await import(
+    `gatsby-plugin-sharp/plugin-options`
+  )
+
+  const sharpOptions = getPluginOptions()
+
+  const userDefaults = sharpOptions.defaults
+
+  const defaults = {
+    tracedSVGOptions: {},
+    blurredOptions: {},
+    jpgOptions: {},
+    pngOptions: {},
+    webpOptions: {},
+    gifOptions: {},
+    avifOptions: {},
+    quality: 50,
+    placeholder: `dominantColor`,
+    ...userDefaults,
+  }
+
+  options = doMergeDefaults(options, defaults)
 
   const { baseUrl, contentType, width, height } = getBasicImageProps(
     image,

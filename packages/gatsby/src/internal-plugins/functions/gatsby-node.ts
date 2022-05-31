@@ -365,22 +365,28 @@ export async function onPreBootstrap({
         reporter,
       })
 
-      function callback(err, stats): any {
-        const rawMessages = stats.toJson({ moduleTrace: false })
-        if (rawMessages.warnings.length > 0) {
+      function callback(err, stats?: webpack.Stats): void {
+        const rawMessages = stats?.toJson({
+          all: false,
+          warnings: true,
+          errors: true,
+        })
+        if (rawMessages?.warnings && rawMessages.warnings.length > 0) {
           reportWebpackWarnings(rawMessages.warnings, reporter)
         }
 
         if (err) return reject(err)
-        const errors = stats.compilation.errors || []
+        const errors = stats?.compilation.errors || []
 
         // If there's errors, reject in production and print to the console
         // in development.
         if (isProductionEnv) {
-          if (errors.length > 0) return reject(stats.compilation.errors)
+          if (errors.length > 0) return reject(errors)
         } else {
           const formatted = formatWebpackMessages({
-            errors: rawMessages.errors.map(e => e.message),
+            errors: rawMessages?.errors
+              ? rawMessages.errors.map(e => e.message)
+              : [],
             warnings: [],
           })
           reporter.error(formatted.errors)
