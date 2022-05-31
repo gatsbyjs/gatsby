@@ -244,10 +244,14 @@ function updateDataStore(action: ActionsUnion): void {
       let fn
       const dbs = getDatabases()
       if (!debounceFunctionsPerNode.has(action.payload.id)) {
-        fn = _.debounce(_action => {
-          updateNodes(dbs.nodes, _action)
-          updateNodesByType(dbs.nodesByType, _action)
-        }, 1000)
+        fn = _.debounce(
+          _action => {
+            updateNodes(dbs.nodes, _action)
+            updateNodesByType(dbs.nodesByType, _action)
+          },
+          1000,
+          { leading: true, trailing: true }
+        )
         debounceFunctionsPerNode.set(action.payload.id, fn)
       } else {
         fn = debounceFunctionsPerNode.get(action.payload.id)
