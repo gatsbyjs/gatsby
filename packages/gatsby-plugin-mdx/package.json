@@ -60,7 +60,7 @@
     "micromark-extension-mdxjs": "^1.0.0"
   },
   "devDependencies": {
-    "babel-preset-gatsby-package": "2.15.0-next.0",
+    "babel-preset-gatsby-package": "2.16.0-next.0",
     "typescript": "^4.6.4"
   },
   "peerDependencies": {
