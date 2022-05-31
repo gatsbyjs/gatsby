@@ -339,7 +339,7 @@ module.exports = async (
 
   function getModule() {
     let swcLoader = []
-    if (process.env.GATSBY_EXPERIMENTAL_SWC_ENV) {
+    if (process.env.GATSBY_EXPERIMENTAL_SWC) {
       swcLoader = [
         {
           test: /\.m?js$/,

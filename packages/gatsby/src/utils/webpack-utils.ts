@@ -384,17 +384,21 @@ export const createWebpackUtils = (
     },
 
     dependencies: options => {
+      const loaderOptions = process.env.GATSBY_EXPERIMENTAL_SWC ? [] : options
+
       return {
         options: {
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
             `webpack`,
-            `babel`
+            process.env.GATSBY_EXPERIMENTAL_SWC ? `swc` : `babel`
           ),
-          ...options,
+          ...loaderOptions,
         },
-        loader: require.resolve(`babel-loader`),
+        loader: require.resolve(
+          process.env.GATSBY_EXPERIMENTAL_SWC ? `swc-loader` : `babel-loader`
+        ),
       }
     },
   }

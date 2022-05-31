@@ -76,7 +76,7 @@ export default function preset(_, options = {}) {
     ],
   ]
 
-  if (!process.env.GATSBY_EXPERIMENTAL_SWC_ENV) {
+  if (!process.env.GATSBY_EXPERIMENTAL_SWC) {
     presets.unshift([
       resolve(`@babel/preset-env`),
       {
