@@ -73,7 +73,7 @@ describe(`getConfigFile`, () => {
       dir,
       `gatsby-config`
     )
-    expect(configFilePath).toBe(`${dir}/gatsby-config.js`)
+    expect(configFilePath).toBe(path.join(dir, `gatsby-config.js`))
     expect(configModule.siteMetadata.title).toBe(`uncompiled`)
   })
 
@@ -82,7 +82,9 @@ describe(`getConfigFile`, () => {
       compiledDir,
       `gatsby-config`
     )
-    expect(configFilePath).toBe(`${compiledDir}/compiled/gatsby-config.js`)
+    expect(configFilePath).toBe(
+      path.join(compiledDir, `compiled`, `gatsby-config.js`)
+    )
     expect(configModule.siteMetadata.title).toBe(`compiled`)
   })
 
