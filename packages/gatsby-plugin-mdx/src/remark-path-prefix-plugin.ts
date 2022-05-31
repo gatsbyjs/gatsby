@@ -19,7 +19,6 @@ export const pathPlugin = ({ pathPrefix }: { pathPrefix: string }) =>
         node.url.startsWith(`/`) &&
         !node.url.startsWith(`//`)
       ) {
-        // TODO: where does withPathPrefix
         node.url = withPathPrefix(node.url, pathPrefix)
       }
     })
