@@ -82,10 +82,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 }
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
-  async ({ actions, schema }, pluginOptions) => {
-    const { compile } = await import(`@mdx-js/mdx`)
-    const { mdxOptions } = defaultOptions(pluginOptions as IMdxPluginOptions)
-
+  async ({ actions, schema }) => {
     const { createTypes } = actions
     const typeDefs = [
       schema.buildObjectType({
