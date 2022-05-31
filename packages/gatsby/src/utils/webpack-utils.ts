@@ -498,6 +498,7 @@ export const createWebpackUtils = (
         `dom-helpers`,
         `gatsby-legacy-polyfills`,
         `gatsby-link`,
+        `gatsby-script`,
         `gatsby-react-router-scroll`,
         `invariant`,
         `lodash`,
@@ -722,7 +723,6 @@ export const createWebpackUtils = (
                 `removeHiddenElems`,
                 `removeMetadata`,
                 `removeNonInheritableGroupAttrs`,
-                `removeOffCanvasPaths`, // Default: disabled
                 `removeRasterImages`, // Default: disabled
                 `removeScriptElement`, // Default: disabled
                 `removeStyleElement`, // Default: disabled

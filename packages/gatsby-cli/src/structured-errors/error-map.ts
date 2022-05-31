@@ -262,21 +262,21 @@ const errors = {
       ${context.sourceMessage}
 
       This can happen if you e.g. accidentally added { } to the field "${context.fieldName}". If you didn't expect "${context.fieldName}" to be of type "${context.fieldType}" make sure that your input source and/or plugin is correct.
-      However, if you expect "value" to exist, the field might be accessible in another subfield. Please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have.
+      However, if you expect "value" to exist, the field might be accessible in another subfield. Please try your query in GraphiQL.
 
-      It is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned
-      "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":
-      https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization#creating-type-definitions`,
+      It is recommended to explicitly type your GraphQL schema if you want to use optional fields.`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/creating-type-definitions`,
   },
   "85923": {
     text: (context): string =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo.\nHowever, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node.js/gatsby-config.js, please try a restart of your development server\n- The field might be accessible in another subfield, please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere. Therefore Gatsby can't infer the type and add it to the GraphQL schema. A quick fix is to add at least one entry with that field ("dummy content")\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":\nhttps://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization#creating-type-definitions`,
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo. However, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node/gatsby-config, please try a restart of your development server.\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere.\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields.`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/creating-type-definitions`,
   },
   "85924": {
     text: (context): string =>
@@ -366,6 +366,13 @@ const errors = {
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
       `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
       `\nare not supported in the root gatsby-config.`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "10127": {
+    text: (context): string =>
+      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js. Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -701,17 +708,28 @@ const errors = {
   },
   "11902": {
     text: (context): string =>
-      `We encountered an error while trying to compile your site's ${context.configName}. Please fix the error and try again.`,
+      `We encountered an error while trying to compile your site's ${context.configName}. Check the current limitations (https://gatsby.dev/ts-limitations), fix the error, and try again.`,
     level: Level.ERROR,
     type: Type.COMPILATION,
     category: ErrorCategory.USER,
   },
   "11903": {
     text: (context): string =>
-      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.`,
+      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.\n${context.sourceMessage}`,
     level: Level.ERROR,
     type: Type.COMPILATION,
     category: ErrorCategory.USER,
+  },
+  "12100": {
+    text: (
+      context
+    ): string => `There was an error while trying to generate TS types from your GraphQL queries:
+    
+    ${context.sourceMessage}`,
+    level: Level.ERROR,
+    type: Type.GRAPHQL,
+    category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/graphql-typegen`,
   },
 }
 

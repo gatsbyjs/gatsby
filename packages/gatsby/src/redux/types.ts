@@ -1,7 +1,12 @@
 import type { TrailingSlash } from "gatsby-page-utils"
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
-import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
+import {
+  DocumentNode,
+  GraphQLSchema,
+  DefinitionNode,
+  SourceLocation,
+} from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { ThunkAction } from "redux-thunk"
@@ -93,12 +98,14 @@ export interface IGatsbyConfig {
   polyfill?: boolean
   developMiddleware?: any
   proxy?: any
+  partytownProxiedURLs?: Array<string>
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
+  graphqlTypegen?: boolean
 }
 
 export interface IGatsbyNode {
@@ -153,12 +160,13 @@ export interface IDefinitionMeta {
   def: DefinitionNode
   filePath: string
   text: string
-  templateLoc: any
-  printedAst: string
+  templateLoc: SourceLocation
+  printedAst: string | null
   isHook: boolean
   isStaticQuery: boolean
   isFragment: boolean
-  hash: string
+  isConfigQuery: boolean
+  hash: number
 }
 
 type GatsbyNodes = Map<string, IGatsbyNode>

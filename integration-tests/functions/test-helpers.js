@@ -5,6 +5,8 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const FormData = require("form-data")
 
+jest.setTimeout(15000)
+
 export function runTests(env, host) {
   describe(env, () => {
     test(`top-level API`, async () => {
@@ -109,6 +111,35 @@ export function runTests(env, host) {
 
         expect(result.status).toEqual(200)
       })
+
+      test(`no handler function export`, async () => {
+        const result = await fetch(`${host}/api/no-function-export`)
+
+        expect(result.status).toEqual(500)
+        const body = await result.text()
+
+        if (env === `develop`) {
+          expect(body).toMatch(/Error when executing function/)
+          expect(body).toMatch(/does not export a function/)
+        } else {
+          // details are not exposed in `gatsby serve`
+          expect(body).toEqual(`Internal Server Error`)
+        }
+      })
+
+      test(`function throws`, async () => {
+        const result = await fetch(`${host}/api/function-throw`)
+
+        expect(result.status).toEqual(500)
+        const body = await result.text()
+        if (env === `develop`) {
+          expect(body).toMatch(/Error when executing function/)
+          expect(body).toMatch(/some error/)
+        } else {
+          // details are not exposed in `gatsby serve`
+          expect(body).toEqual(`Internal Server Error`)
+        }
+      })
     })
 
     describe(`response formats`, () => {
@@ -152,9 +183,9 @@ export function runTests(env, host) {
 
     describe(`functions can parse different ways of sending data`, () => {
       test(`query string`, async () => {
-        const result = await fetch(
-          `${host}/api/parser?amIReal=true`
-        ).then(res => res.json())
+        const result = await fetch(`${host}/api/parser?amIReal=true`).then(
+          res => res.json()
+        )
 
         expect(result).toMatchSnapshot()
       })
@@ -253,6 +284,605 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`functions can configure body parsing middleware`, () => {
+      describe(`text`, () => {
+        describe(`50kb string`, () => {
+          const body = `x`.repeat(50 * 1024)
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "text/plain",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 51100 more characters",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { text: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-text-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "text/plain",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 51100 more characters",
+              }
+            `)
+          })
+        })
+
+        describe(`50mb string`, () => {
+          const body = `x`.repeat(50 * 1024 * 1024)
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "text/plain",
+              },
+            })
+
+            expect(result.status).toBe(413)
+          })
+
+          it(`on { bodyParser: { text: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-text-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "text/plain",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 52428700 more characters",
+              }
+            `)
+          })
+        })
+
+        describe(`custom type`, () => {
+          const body = `test-string`
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "custom/type",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{}",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { text: { type: "*/*" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-text-type`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "custom/type",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "'test-string'",
+              }
+            `)
+          })
+        })
+      })
+
+      describe(`json`, () => {
+        describe(`50kb json`, () => {
+          const body = JSON.stringify({
+            content: `x`.repeat(50 * 1024),
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/json",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{
+                content: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 51100 more characters
+              }",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { json: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-json-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/json",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{
+                content: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 51100 more characters
+              }",
+              }
+            `)
+          })
+        })
+
+        describe(`50mb json`, () => {
+          const body = JSON.stringify({
+            content: `x`.repeat(50 * 1024 * 1024),
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/json",
+              },
+            })
+
+            expect(result.status).toBe(413)
+          })
+
+          it(`on { bodyParser: { json: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-json-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/json",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{
+                content: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 52428700 more characters
+              }",
+              }
+            `)
+          })
+        })
+
+        describe(`custom type`, () => {
+          const body = JSON.stringify({
+            content: `test-string`,
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "custom/type",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{}",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { json: { type: "*/*" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-json-type`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "custom/type",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{ content: 'test-string' }",
+              }
+            `)
+          })
+        })
+      })
+
+      describe(`raw`, () => {
+        describe(`50kb raw`, () => {
+          const body = JSON.stringify({
+            content: `x`.repeat(50 * 1024),
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/octet-stream",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "<Buffer 7b 22 63 6f 6e 74 65 6e 74 22 3a 22 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 ... 51164 more bytes>",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { raw: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-raw-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/octet-stream",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "<Buffer 7b 22 63 6f 6e 74 65 6e 74 22 3a 22 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 ... 51164 more bytes>",
+              }
+            `)
+          })
+        })
+
+        describe(`50mb raw`, () => {
+          const body = JSON.stringify({
+            content: `x`.repeat(50 * 1024 * 1024),
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/octet-stream",
+              },
+            })
+
+            expect(result.status).toBe(413)
+          })
+
+          it(`on { bodyParser: { raw: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-raw-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/octet-stream",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "<Buffer 7b 22 63 6f 6e 74 65 6e 74 22 3a 22 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 78 ... 52428764 more bytes>",
+              }
+            `)
+          })
+        })
+
+        describe(`custom type (using 'custom/type' payload)`, () => {
+          const body = JSON.stringify({
+            content: `test-string`,
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "custom/type",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{}",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { raw: { type: "*/*" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-raw-type`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "custom/type",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "<Buffer 7b 22 63 6f 6e 74 65 6e 74 22 3a 22 74 65 73 74 2d 73 74 72 69 6e 67 22 7d>",
+              }
+            `)
+          })
+        })
+
+        describe(`'application/json' payload`, () => {
+          const body = JSON.stringify({
+            content: `test-string`,
+          })
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/json",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            // default config will use default config for "application/json" type
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{ content: 'test-string' }",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { raw: { type: "*/*" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-raw-type`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/json",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            // despite application/json payload, we get
+            // expected Buffer
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "<Buffer 7b 22 63 6f 6e 74 65 6e 74 22 3a 22 74 65 73 74 2d 73 74 72 69 6e 67 22 7d>",
+              }
+            `)
+          })
+        })
+      })
+
+      describe(`urlencoded`, () => {
+        describe(`50kb urlencoded`, () => {
+          // for urlencoded using "URLSearchParams"
+          // FormData creates multipart request which
+          // is not what this middleware handles
+
+          const body = new URLSearchParams()
+          body.append(`content`, `x`.repeat(50 * 1024))
+
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/x-www-form-urlencoded",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{
+                content: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 51100 more characters
+              }",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { urlencoded: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-urlencoded-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/x-www-form-urlencoded",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{
+                content: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 51100 more characters
+              }",
+              }
+            `)
+          })
+        })
+
+        describe(`50mb urlencoded`, () => {
+          // for urlencoded using "URLSearchParams"
+          // FormData creates multipart request which
+          // is not what this middleware handles
+          const body = new URLSearchParams()
+          body.append(`content`, `x`.repeat(50 * 1024 * 1024))
+
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "application/x-www-form-urlencoded",
+              },
+            })
+
+            expect(result.status).toBe(413)
+          })
+
+          it(`on { bodyParser: { urlencoded: { limit: "100mb" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-urlencoded-limit`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "application/x-www-form-urlencoded",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{
+                content: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'... 52428700 more characters
+              }",
+              }
+            `)
+          })
+        })
+
+        describe(`custom type`, () => {
+          // for urlencoded using "URLSearchParams"
+          // FormData creates multipart request which
+          // is not what this middleware handles
+          const body = new URLSearchParams()
+          body.append(`content`, `test-string`)
+
+          it(`on default config`, async () => {
+            const result = await fetch(`${host}/api/config/defaults`, {
+              method: `POST`,
+              body,
+              headers: {
+                "content-type": "custom/type",
+              },
+            })
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{}",
+              }
+            `)
+          })
+
+          it(`on { bodyParser: { urlencoded: { type: "*/*" }}}`, async () => {
+            const result = await fetch(
+              `${host}/api/config/body-parser-urlencoded-type`,
+              {
+                method: `POST`,
+                body,
+                headers: {
+                  "content-type": "custom/type",
+                },
+              }
+            )
+
+            expect(result.status).toBe(200)
+            const responseBody = await result.json()
+
+            expect(responseBody).toMatchInlineSnapshot(`
+              Object {
+                "body": "{ content: 'test-string' }",
+              }
+            `)
+          })
+        })
+      })
+    })
+
     describe(`plugins can declare functions and they can be shadowed`, () => {
       test(`shadowing`, async () => {
         const result = await fetch(
@@ -284,27 +914,19 @@ export function runTests(env, host) {
 
     describe(`ignores files that match the pattern`, () => {
       test(`dotfile`, async () => {
-        const result = await fetch(
-          `${host}/api/ignore/.config`
-        )
+        const result = await fetch(`${host}/api/ignore/.config`)
         expect(result.status).toEqual(404)
       })
       test(`.d.ts file`, async () => {
-        const result = await fetch(
-          `${host}/api/ignore/foo.d`
-        )
+        const result = await fetch(`${host}/api/ignore/foo.d`)
         expect(result.status).toEqual(404)
       })
       test(`test file`, async () => {
-        const result = await fetch(
-          `${host}/api/ignore/hello.test`
-        )
+        const result = await fetch(`${host}/api/ignore/hello.test`)
         expect(result.status).toEqual(404)
       })
       test(`test directory`, async () => {
-        const result = await fetch(
-          `${host}/api/ignore/__tests__/hello`
-        )
+        const result = await fetch(`${host}/api/ignore/__tests__/hello`)
         expect(result.status).toEqual(404)
       })
       test(`test file in plugin`, async () => {
