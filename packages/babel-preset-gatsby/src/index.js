@@ -60,43 +60,48 @@ export default function preset(_, options = {}) {
     )
   }
 
-  return {
-    presets: [
-      [
-        resolve(`@babel/preset-env`),
-        {
-          corejs: 3,
-          loose: true,
-          modules: stage === `test` ? `commonjs` : false,
-          useBuiltIns: `usage`,
-          targets,
-          // debug: true,
-          exclude: [
-            // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
-            `transform-typeof-symbol`,
-            // we already have transforms for these
-            `transform-spread`,
-            `proposal-nullish-coalescing-operator`,
-            `proposal-optional-chaining`,
-
-            ...polyfillsToExclude,
-          ],
-        },
-      ],
-      [
-        resolve(`@babel/preset-react`),
-        {
-          useBuiltIns: true,
-          pragma:
-            options.reactRuntime === `automatic`
-              ? undefined
-              : `React.createElement`,
-          development: stage === `develop`,
-          runtime: options.reactRuntime || `classic`,
-          ...(reactImportSource && { importSource: reactImportSource }),
-        },
-      ],
+  const presets = [
+    [
+      resolve(`@babel/preset-react`),
+      {
+        useBuiltIns: true,
+        pragma:
+          options.reactRuntime === `automatic`
+            ? undefined
+            : `React.createElement`,
+        development: stage === `develop`,
+        runtime: options.reactRuntime || `classic`,
+        ...(reactImportSource && { importSource: reactImportSource }),
+      },
     ],
+  ]
+
+  if (!process.env.GATSBY_EXPERIMENTAL_SWC_ENV) {
+    presets.unshift([
+      resolve(`@babel/preset-env`),
+      {
+        corejs: 3,
+        loose: true,
+        modules: stage === `test` ? `commonjs` : false,
+        useBuiltIns: `usage`,
+        targets,
+        // debug: true,
+        exclude: [
+          // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
+          `transform-typeof-symbol`,
+          // we already have transforms for these
+          `transform-spread`,
+          `proposal-nullish-coalescing-operator`,
+          `proposal-optional-chaining`,
+
+          ...polyfillsToExclude,
+        ],
+      },
+    ])
+  }
+
+  return {
+    presets,
     plugins: [
       [
         resolve(`./optimize-hook-destructuring`),

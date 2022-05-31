@@ -338,6 +338,24 @@ module.exports = async (
   }
 
   function getModule() {
+    let swcLoader = []
+    if (process.env.GATSBY_EXPERIMENTAL_SWC_ENV) {
+      swcLoader = [
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: `swc-loader`,
+            options: {
+              parseMap: true,
+              cacheDirectory: path.join(process.cwd(), `./.cache/swc`),
+              cacheIdentifier: `TODO`,
+            },
+          },
+        },
+      ]
+    }
+
     // Common config for every env.
     // prettier-ignore
     let configRules = [
@@ -367,6 +385,7 @@ module.exports = async (
           }
         }
       },
+      ...swcLoader,
       rules.js({
         modulesThatUseGatsby,
       }),
