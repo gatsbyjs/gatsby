@@ -1,41 +1,34 @@
 /* eslint-disable @babel/no-invalid-this */
-import type { Node } from "gatsby"
 import type { LoaderDefinition } from "webpack"
+import type { Options } from "mdast-util-to-markdown"
+import type { NodeMap } from "./types"
+import type { IMdxPluginOptions } from "./plugin-options"
 
 import grayMatter from "gray-matter"
 import { getOptions } from "loader-utils"
-import type { Options } from "mdast-util-to-markdown"
 
-import { defaultOptions, IMdxPluginOptions } from "./plugin-options"
-
-interface IFileNode extends Node {
-  sourceInstanceName: string
+export interface IGatsbyLayoutLoaderOptions {
+  options: IMdxPluginOptions
+  nodeMap: NodeMap
 }
 
-export interface IMdxLoaderOptions {
-  pluginOptions: IMdxPluginOptions
-  fileMap: Map<string, IFileNode>
-}
+// Wrap MDX content with Gatsby Layout component
+const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
+  const { options, nodeMap }: IGatsbyLayoutLoaderOptions = getOptions(this)
 
-// Wrap MDX content with Gatsby Layout component and inject components from `@mdx-js/react`
-const gatsbyMdxLoader: LoaderDefinition = async function (source) {
-  const { pluginOptions, fileMap }: IMdxLoaderOptions = getOptions(this)
+  const res = nodeMap.get(this.resourcePath)
 
-  const options = defaultOptions(pluginOptions)
-
-  const fileNode = fileMap.get(this.resourcePath)
-
-  if (!fileNode) {
+  if (!res) {
     throw new Error(
       `Unable to locate GraphQL File node for ${this.resourcePath}`
     )
   }
 
-  // get the default layout for the file source group, or if it doesn't
-  // exist, the overall default layout
-  const layoutPath =
-    options.defaultLayouts[fileNode.sourceInstanceName] ||
-    options.defaultLayouts[`default`]
+  // Get the default layout for the file source instance group name,
+  // or fall back to the default
+  const layoutPath = res.fileNode.sourceInstanceName
+    ? options.defaultLayouts[res.fileNode.sourceInstanceName]
+    : options.defaultLayouts[`default`]
 
   // No default layout set? Nothing to do here!
   if (!layoutPath) {
@@ -83,4 +76,4 @@ const gatsbyMdxLoader: LoaderDefinition = async function (source) {
   return out
 }
 
-export default gatsbyMdxLoader
+export default gatsbyLayoutLoader

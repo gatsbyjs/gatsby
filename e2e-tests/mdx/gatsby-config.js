@@ -18,15 +18,18 @@ module.exports = {
       },
     },
     `gatsby-plugin-test-regression1`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        lessBabel: false,
         extensions: [`.mdx`, `.md`],
         defaultLayouts: {
           default: require.resolve("./src/components/layout.js"),
         },
-        remarkPlugins: [remarkRequireFilePathPlugin],
+        gatsbyRemarkPlugins: [`gatsby-remark-images`],
+        mdxOptions: {
+          remarkPlugins: [remarkRequireFilePathPlugin],
+        },
       },
     },
     !process.env.CI && `gatsby-plugin-webpack-bundle-analyser-v2`,
