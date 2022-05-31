@@ -55,10 +55,11 @@ describe(`isNearMatch`, () => {
 })
 
 // Separate config directories so cases can be tested separately
-const mockDir = path.resolve(__dirname, `../__mocks__/get-config-file`)
-const compiledMockDir = `${mockDir}/compiled-dir`
-const nearMatchDir = `${mockDir}/near-match-dir`
-const srcDir = `${mockDir}/src-dir`
+const dir = path.resolve(__dirname, `../__mocks__/get-config`)
+const compiledDir = `${dir}/compiled-dir`
+const userRequireDir = `${dir}/user-require-dir`
+const nearMatchDir = `${dir}/near-match-dir`
+const srcDir = `${dir}/src-dir`
 
 describe(`getConfigFile`, () => {
   beforeEach(() => {
@@ -67,27 +68,34 @@ describe(`getConfigFile`, () => {
 
   it(`should get an uncompiled gatsby-config.js`, async () => {
     const { configModule, configFilePath } = await getConfigFile(
-      mockDir,
+      dir,
       `gatsby-config`
     )
-    expect(configFilePath).toBe(`${mockDir}/gatsby-config.js`)
+    expect(configFilePath).toBe(`${dir}/gatsby-config.js`)
     expect(configModule.siteMetadata.title).toBe(`uncompiled`)
   })
 
   it(`should get a compiled gatsby-config.js`, async () => {
     const { configModule, configFilePath } = await getConfigFile(
-      compiledMockDir,
+      compiledDir,
       `gatsby-config`
     )
-    expect(configFilePath).toBe(`${compiledMockDir}/compiled/gatsby-config.js`)
+    expect(configFilePath).toBe(`${compiledDir}/compiled/gatsby-config.js`)
     expect(configModule.siteMetadata.title).toBe(`compiled`)
   })
 
-  /**
-   * TODO - Ask Lennart about this since the case is handled in a recent PR
-   * @see @link {https://github.com/gatsbyjs/gatsby/pull/35038}
-   */
-  it.skip(`should handle compiled file errors`, async () => {})
+  it(`should handle user require errors found in compiled gatsby-config.js`, async () => {
+    await getConfigFile(userRequireDir, `gatsby-config`)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `11902`,
+      error: expect.toBeObject(),
+      context: {
+        configName: `gatsby-config`,
+        message: expect.toBeString(),
+      },
+    })
+  })
 
   it(`should handle non-require errors`, async () => {
     testRequireErrorMock.mockImplementationOnce(() => false)
