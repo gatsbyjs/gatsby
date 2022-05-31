@@ -6,7 +6,7 @@ describe(`client-side navigation to the new page`, () => {
   })
 
   it(`can navigate to newly created page using link`, () => {
-    cy.findByTestId(`hot-reloading-new-file`).click().waitForRouteChange()
+    cy.findByTestId(`hot-reloading-new-file`).click({ force: true }).waitForRouteChange()
     cy.getTestElement(`message`).invoke(`text`).should(`contain`, `Hello`)
   })
 })
