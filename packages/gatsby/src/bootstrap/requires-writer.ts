@@ -332,7 +332,7 @@ export const startListener = (): void => {
      * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
      * files as required
      */
-    emitter.on(`CREATE_SERVER_VISITED_PAGE`, async (): void => {
+    emitter.on(`CREATE_SERVER_VISITED_PAGE`, async (): Promise<void> => {
       await writeAll(store.getState())
     })
   }
