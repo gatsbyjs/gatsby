@@ -3,6 +3,7 @@ import fs from "fs-extra"
 import nodePath from "path"
 import report from "gatsby-cli/lib/reporter"
 import { isCI } from "gatsby-core-utils"
+import type { Request } from "express"
 import { ROUTES_DIRECTORY } from "../../constants"
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
@@ -11,7 +12,8 @@ import { getDevSSRWebpack } from "../../commands/build-html"
 import { GatsbyReduxStore } from "../../redux"
 import { IGatsbyPage } from "../../redux/types"
 import { getServerData, IServerData } from "../get-server-data"
-
+import { getPageMode } from "../page-mode"
+import { parseError } from "./render-dev-html-child"
 interface IErrorRenderMeta {
   codeFrame: string
   source: string
@@ -162,7 +164,7 @@ interface IRenderDevHtmlProps {
   error?: IErrorRenderMeta
   htmlComponentRendererPath: string
   directory: string
-  req?: any
+  req: Request
   allowTimedFallback: boolean
 }
 
@@ -255,19 +257,24 @@ export const renderDevHTML = ({
       isClientOnlyPage = true
     }
 
-    const renderer = require(htmlComponentRendererPath)
-
-    const componentInstance = await renderer.getPageChunk(pageObj)
-
     let serverData: IServerData | undefined = undefined
+    const pageMode = getPageMode(pageObj)
+    if (pageMode === `SSR` && found && !isClientOnlyPage) {
+      const renderer = require(htmlComponentRendererPath)
+      const componentInstance = await renderer.getPageChunk(pageObj)
 
-    if (pageObj.mode === `SSR` && found) {
-      serverData = await getServerData(
-        req,
-        pageObj,
-        req.path,
-        componentInstance
-      )
+      try {
+        serverData = await getServerData(
+          req,
+          pageObj,
+          req.path,
+          componentInstance
+        )
+      } catch (err) {
+        return reject(
+          parseError({ err, directory, componentPath: pageObj.component })
+        )
+      }
     }
 
     const publicDir = nodePath.join(directory, `public`)
