@@ -94,26 +94,30 @@ exports.renderHTML = ({
       const htmlComponentRenderer = require(htmlComponentRendererPath)
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         htmlComponentRenderer
-          .default(
-            path,
+          .default({
+            pagePath: path,
             isClientOnlyPage,
             publicDir,
             error,
             serverData,
-            (_throwAway, htmlString) => {
+            callback: (_throwAway, htmlString) => {
+              console.trace(`succesful SSR for`, path)
               resolve(htmlString)
-            }
-          )
+            },
+          })
           .catch(err => {
+            console.log(`failed SSR for 1`, path, err)
             const error = parseError({ err, directory, componentPath })
             reject(error)
           })
       } else {
         htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
+          console.log(`how did we get here?`, path)
           resolve(htmlString)
         })
       }
     } catch (err) {
+      console.log(`failed SSR for 2`, path, err)
       const error = parseError({ err, directory, componentPath })
       reject(error)
     }

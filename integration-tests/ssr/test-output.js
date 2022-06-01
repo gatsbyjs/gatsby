@@ -45,7 +45,11 @@ async function run() {
     )
 
     // Fetch once to trigger re-compilation.
-    await fetch(`${devSiteBasePath}/${path}`)
+    await fetch(`${devSiteBasePath}/${path}`, {
+      headers: {
+        "x-gatsby-wait-for-dev-ssr": `1`,
+      },
+    })
 
     // Then wait for six seconds to ensure it's ready to go.
     // Otherwise, tests are flaky depending on the speed of the testing machine.
@@ -54,7 +58,11 @@ async function run() {
     })
 
     let devStatus = 200
-    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res => {
+    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`, {
+      headers: {
+        "x-gatsby-wait-for-dev-ssr": `1`,
+      },
+    }).then(res => {
       devStatus = res.status
       return res.text()
     })

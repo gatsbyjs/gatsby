@@ -13,6 +13,7 @@ import {
   getAbsolutePathForVirtualModule,
 } from "../utils/gatsby-webpack-virtual-modules"
 import { getPageMode } from "../utils/page-mode"
+import { devSSRWillInvalidate } from "../commands/build-html"
 
 interface IGatsbyPageComponent {
   component: string
@@ -227,6 +228,9 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   }\n\n`
 
     writeModule(`$virtual/ssr-sync-requires`, lazySyncRequires)
+    // if this is executed, webpack should mark it as invalid, but sometimes there is some timing race
+    // so we also explicitly set flag here as well
+    devSSRWillInvalidate()
   }
 
   // Create file with sync requires of components/json files.
@@ -328,9 +332,8 @@ export const startListener = (): void => {
      * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
      * files as required
      */
-    emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
-      reporter.pendingActivity({ id: `requires-writer` })
-      debouncedWriteAll()
+    emitter.on(`CREATE_SERVER_VISITED_PAGE`, async (): void => {
+      await writeAll(store.getState())
     })
   }
 

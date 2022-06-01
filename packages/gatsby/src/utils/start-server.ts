@@ -599,6 +599,8 @@ export async function startServer(
         return next()
       }
 
+      const allowTimedFallback = !req.headers[`x-gatsby-wait-for-dev-ssr`]
+
       await appendPreloadHeaders(pathObj.path, res)
 
       const htmlActivity = report.phantomActivity(`building HTML for path`, {})
@@ -610,6 +612,7 @@ export async function startServer(
           page: pathObj,
           skipSsr: Object.prototype.hasOwnProperty.call(req.query, `skip-ssr`),
           store,
+          allowTimedFallback,
           htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,
           req,
@@ -682,6 +685,7 @@ export async function startServer(
             error: message,
             htmlComponentRendererPath: PAGE_RENDERER_PATH,
             directory: program.directory,
+            allowTimedFallback,
           })
 
           res.send(clientOnlyShell)
@@ -738,7 +742,7 @@ export async function startServer(
 
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         try {
-          const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)
+          const allowTimedFallback = !req.headers[`x-gatsby-wait-for-dev-ssr`]
           const renderResponse = await renderDevHTML({
             path: `/dev-404-page/`,
             // Let renderDevHTML figure it out.
@@ -746,6 +750,7 @@ export async function startServer(
             store,
             htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
+            allowTimedFallback,
           })
           res.status(404).send(renderResponse)
         } catch (e) {
