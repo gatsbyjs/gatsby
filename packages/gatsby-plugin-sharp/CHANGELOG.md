@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.15.0/packages/gatsby-plugin-sharp) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Chores
+
+- remove old unused UUID dependency [#35657](https://github.com/gatsbyjs/gatsby/issues/35657) ([d4aaa2a](https://github.com/gatsbyjs/gatsby/commit/d4aaa2a3c01541effd50db3cf57d1445776ce487))
+
+### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.14.1/packages/gatsby-plugin-sharp) (2022-05-12)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.14.0/packages/gatsby-plugin-sharp) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
