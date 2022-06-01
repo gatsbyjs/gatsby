@@ -186,7 +186,7 @@ export const createSingleNode = async ({
     helpers,
   })
 
-  if (!pluginOptions.type.MediaItem.exclude) {
+  if (!pluginOptions.type?.MediaItem?.exclude) {
     await fetchReferencedMediaItemsAndCreateNodes({
       referencedMediaItemNodeIds: nodeMediaItemIdReferences,
     })
