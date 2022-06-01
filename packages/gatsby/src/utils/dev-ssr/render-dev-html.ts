@@ -35,7 +35,7 @@ interface IRenderDevHtmlChild {
     isClientOnlyPage?: boolean
     error?: IErrorRenderMeta
     directory?: string
-    serverData: any
+    serverData?: IServerData["props"]
   }) => Promise<string>
   deleteModuleCache: (htmlComponentRendererPath: string) => void
 }
@@ -178,7 +178,7 @@ export const renderDevHTML = ({
   allowTimedFallback,
   directory,
   req,
-}: IRenderDevHtmlProps): Promise<string> =>
+}: IRenderDevHtmlProps): Promise<{ html: string; serverData?: IServerData }> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async (resolve, reject) => {
     startListener()
@@ -288,9 +288,9 @@ export const renderDevHTML = ({
         publicDir,
         isClientOnlyPage,
         error,
-        serverData,
+        serverData: serverData?.props,
       })
-      return resolve(htmlString)
+      return resolve({ html: htmlString, serverData })
     } catch (error) {
       return reject(error)
     }

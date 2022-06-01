@@ -607,7 +607,7 @@ export async function startServer(
       htmlActivity.start()
 
       try {
-        const renderResponse = await renderDevHTML({
+        const { html: renderResponse, serverData } = await renderDevHTML({
           path: pathObj.path,
           page: pathObj,
           skipSsr: Object.prototype.hasOwnProperty.call(req.query, `skip-ssr`),
@@ -617,7 +617,17 @@ export async function startServer(
           directory: program.directory,
           req,
         })
-        res.status(200).send(renderResponse)
+
+        if (serverData?.headers) {
+          for (const [name, value] of Object.entries(serverData.headers)) {
+            res.setHeader(name, value)
+          }
+        }
+        let statusCode = 200
+        if (serverData?.status) {
+          statusCode = serverData.status
+        }
+        res.status(statusCode).send(renderResponse)
       } catch (error) {
         // The page errored but couldn't read the page component.
         // This is a race condition when a page is deleted but its requested
@@ -677,7 +687,7 @@ export async function startServer(
 
         try {
           // Generate a shell for client-only content -- for the error overlay
-          const clientOnlyShell = await renderDevHTML({
+          const { html: clientOnlyShell } = await renderDevHTML({
             path: pathObj.path,
             page: pathObj,
             skipSsr: true,
@@ -744,7 +754,7 @@ export async function startServer(
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         try {
           const allowTimedFallback = !req.headers[`x-gatsby-wait-for-dev-ssr`]
-          const renderResponse = await renderDevHTML({
+          const { html: renderResponse } = await renderDevHTML({
             path: `/dev-404-page/`,
             // Let renderDevHTML figure it out.
             page: undefined,

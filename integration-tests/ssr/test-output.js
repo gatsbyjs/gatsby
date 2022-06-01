@@ -11,6 +11,7 @@ async function run() {
   const prettier = require(`prettier`)
   const cheerio = require(`cheerio`)
   const stripAnsi = require(`strip-ansi`)
+  const pagesUsingEngines = require(`./pages-using-engines`)
 
   const devSiteBasePath = `http://localhost:8000`
 
@@ -35,13 +36,16 @@ async function run() {
       return $.html()
     }
 
+    const getProdHtmlPath = path => {
+      let maybeUsingEngine = pagesUsingEngines[path]
+      if (maybeUsingEngine) {
+        return maybeUsingEngine
+      }
+      return generateHtmlPath(join(process.cwd(), `public`), path)
+    }
+
     const builtHtml = format(
-      filterHtml(
-        fs.readFileSync(
-          generateHtmlPath(join(process.cwd(), `public`), path),
-          `utf-8`
-        )
-      )
+      filterHtml(fs.readFileSync(getProdHtmlPath(path), `utf-8`))
     )
 
     // Fetch once to trigger re-compilation.
