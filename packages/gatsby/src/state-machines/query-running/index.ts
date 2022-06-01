@@ -26,25 +26,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       invoke: {
         id: `extracting-queries`,
         src: `extractQueries`,
-        onDone: [
-          {
-            target: `graphQLTypegen`,
-            cond: (ctx): boolean =>
-              !!process.env.GATSBY_GRAPHQL_TYPEGEN &&
-              !ctx.shouldRunInitialTypegen,
-          },
-          {
-            target: `waitingPendingQueries`,
-          },
-        ],
-      },
-    },
-    graphQLTypegen: {
-      invoke: {
-        src: {
-          type: `graphQLTypegen`,
-          compile: `definitions`,
-        },
         onDone: {
           target: `waitingPendingQueries`,
         },

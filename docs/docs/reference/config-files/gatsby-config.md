@@ -48,6 +48,7 @@ Options available to set within `gatsby-config.js` include:
 1. [flags](#flags) (object)
 1. [pathPrefix](#pathprefix) (string)
 1. [trailingSlash](#trailingslash) (string)
+1. [graphqlTypegen](#graphqltypegen) (boolean)
 1. [polyfill](#polyfill) (boolean)
 1. [mapping](#mapping-node-types) (object)
 1. [proxy](#proxy) (object)
@@ -168,6 +169,8 @@ See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path
 
 ## trailingSlash
 
+> Support added in `gatsby@4.7.0`
+
 Configures the creation of URLs for pages, and whether to remove, append, or ignore trailing slashes.
 
 - `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
@@ -176,11 +179,23 @@ Configures the creation of URLs for pages, and whether to remove, append, or ign
 
 The default setting for this option is `legacy` in order to preserve existing behavior for current users. In Gatsby v5 the default mode will be `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option. Alternate hosting providers (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
 
+## graphqlTypegen
+
+> Support added in `gatsby@4.15.0`
+
+You can enable the [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen) feature by setting `graphqlTypegen` to `true`. It'll allow you to more easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  graphqlTypegen: true,
+}
+```
+
 ## polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
 
-If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.
+If you'd like to provide your own Promise polyfill, you can set `polyfill` to `false`.
 
 ```javascript:title=gatsby-config.js
 module.exports = {

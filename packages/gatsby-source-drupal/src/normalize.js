@@ -100,6 +100,14 @@ const getGatsbyImageCdnFields = async ({
 
     return gatsbyImageCdnFields
   } catch (e) {
+    if (e.message.includes(`unrecognized file format`)) {
+      reporter.error(
+        `[gatsby-source-drupal] Encountered corrupt file while requesting image dimensions for ${url}`
+      )
+
+      return {}
+    }
+
     reporter.error(e)
     reporter.info(
       JSON.stringify(
@@ -113,7 +121,7 @@ const getGatsbyImageCdnFields = async ({
       )
     )
     reporter.panic(
-      `Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
+      `[gatsby-source-drupal] Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
     )
   }
 
@@ -255,14 +263,12 @@ exports.downloadFile = async (
     const fileNode = await createRemoteFileNode({
       url: url.href,
       name: path.parse(decodeURIComponent(url.pathname)).name,
-      store,
       cache,
       createNode,
       createNodeId,
       getCache,
       parentNodeId: node.id,
       auth,
-      reporter,
     })
     if (fileNode) {
       node.localFile___NODE = fileNode.id

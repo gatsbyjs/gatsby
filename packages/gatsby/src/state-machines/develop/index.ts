@@ -14,6 +14,9 @@ import { IBuildContext } from "../../services"
 
 const RECOMPILE_PANIC_LIMIT = 6
 
+const getGraphqlTypegenConfig = (ctx: IBuildContext): boolean =>
+  !!ctx.store!.getState().config.graphqlTypegen
+
 /**
  * This is the top-level state machine for the `gatsby develop` command
  */
@@ -39,6 +42,16 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     QUERY_RUN_REQUESTED: {
       actions: `trackRequestedQueryRun`,
+    },
+    SET_SCHEMA: {
+      actions: `schemaTypegen`,
+      cond: (ctx: IBuildContext): boolean =>
+        getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
+    },
+    SET_GRAPHQL_DEFINITIONS: {
+      actions: `definitionsTypegen`,
+      cond: (ctx: IBuildContext): boolean =>
+        getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
     },
   },
   states: {
@@ -136,7 +149,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           graphqlRunner,
           websocketManager,
           pendingQueryRuns,
-          shouldRunInitialTypegen,
           reporter,
         }: IBuildContext): IQueryRunningContext => {
           return {
@@ -147,7 +159,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             graphqlRunner,
             websocketManager,
             pendingQueryRuns,
-            shouldRunInitialTypegen,
             reporter,
           }
         },
@@ -224,8 +235,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         src: `startWebpackServer`,
         onDone: [
           {
-            target: `graphQLTypegen`,
-            cond: (): boolean => !!process.env.GATSBY_GRAPHQL_TYPEGEN,
+            target: `initialGraphQLTypegen`,
+            cond: (ctx: IBuildContext): boolean => getGraphqlTypegenConfig(ctx),
           },
           {
             target: `waiting`,
@@ -238,12 +249,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       },
       exit: [`assignServers`, `spawnWebpackListener`, `markSourceFilesClean`],
     },
-    graphQLTypegen: {
+    initialGraphQLTypegen: {
       invoke: {
-        src: {
-          type: `graphQLTypegen`,
-          compile: `all`,
-        },
+        src: `graphQLTypegen`,
         onDone: {
           target: `waiting`,
         },
