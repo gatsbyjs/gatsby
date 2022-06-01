@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.15.1](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-source-wordpress) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ### [6.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.2/packages/gatsby-source-wordpress) (2022-05-16)
 
 #### Chores

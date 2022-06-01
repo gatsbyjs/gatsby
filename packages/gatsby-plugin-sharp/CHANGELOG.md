@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-plugin-sharp) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.14.1/packages/gatsby-plugin-sharp) (2022-05-12)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

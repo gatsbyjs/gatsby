@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-plugin-utils) (2022-06-01)
+
+#### Bug Fixes
+
+- Make `GatsbyImageData` nullable [#35777](https://github.com/gatsbyjs/gatsby/issues/35777) [#35785](https://github.com/gatsbyjs/gatsby/issues/35785) ([e7a3e6e](https://github.com/gatsbyjs/gatsby/commit/e7a3e6ebca645bd15f668aa3c2e763d93d648ea0))
+
 ## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.8.0/packages/gatsby-plugin-utils) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
