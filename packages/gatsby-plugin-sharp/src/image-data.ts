@@ -66,7 +66,16 @@ export async function getImageMetadata(
 
     const { width, height, density, format } = await pipeline.metadata()
 
-    const { dominant } = await pipeline.stats()
+    // Downsize the image before calculating the dominant color
+    const buffer = await pipeline
+      .resize(DEFAULT_BLURRED_IMAGE_WIDTH, DEFAULT_BLURRED_IMAGE_WIDTH, {
+        fit: `inside`,
+        withoutEnlargement: true,
+      })
+      .toBuffer()
+
+    const { dominant } = await sharp(buffer).stats()
+
     // Fallback in case sharp doesn't support dominant
     const dominantColor = dominant
       ? rgbToHex(dominant.r, dominant.g, dominant.b)
