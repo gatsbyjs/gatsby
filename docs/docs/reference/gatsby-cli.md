@@ -273,10 +273,9 @@ gatsby options set [<key> <value>]
 ```
 
 | Argument | Description                                                                     |
-|----------|---------------------------------------------------------------------------------|
+| -------- | ------------------------------------------------------------------------------- |
 | key      | Set the package manager `gatsby new` is using. choices: `pm`, `package-manager` |
 | value    | Set the package manager as `npm` or `yarn`.                                     |
-
 
 To set the default package manager as `yarn` you'd run:
 
