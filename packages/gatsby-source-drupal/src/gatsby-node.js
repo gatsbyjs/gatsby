@@ -92,10 +92,6 @@ async function worker([url, options]) {
   const response = await got(url, {
     agent,
     cache: false,
-    timeout: {
-      // Occasionally requests to Drupal stall. Set a 30s timeout to retry in this case.
-      request: 30000,
-    },
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
@@ -166,6 +162,7 @@ exports.sourceNodes = async (
     params = {},
     concurrentFileRequests = 20,
     concurrentAPIRequests = 20,
+    requestTimeoutMS,
     disallowedLinkTypes = [
       `self`,
       `describedby`,
@@ -188,7 +185,6 @@ exports.sourceNodes = async (
     touchNode,
     unstable_createNodeManifest,
   } = actions
-
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -329,6 +325,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
             searchParams: params,
             responseType: `json`,
             parentSpan: fastBuildsSpan,
+            timeout: {
+              // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+              request: requestTimeoutMS,
+            },
           },
         ])
 
@@ -487,6 +487,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
         searchParams: params,
         responseType: `json`,
         parentSpan: fullFetchSpan,
+        timeout: {
+          // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+          request: requestTimeoutMS,
+        },
       },
     ])
     allData = await Promise.all(
@@ -537,6 +541,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 searchParams: params,
                 responseType: `json`,
                 parentSpan: fullFetchSpan,
+                timeout: {
+                  // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+                  request: requestTimeoutMS,
+                },
               },
             ])
           } catch (error) {
@@ -837,6 +845,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     params: Joi.object().description(`Append optional GET params to requests`),
     concurrentFileRequests: Joi.number().integer().default(20).min(1),
     concurrentAPIRequests: Joi.number().integer().default(20).min(1),
+    requestTimeoutMS: Joi.number().integer().default(30000).min(1),
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
     fastBuilds: Joi.boolean(),
