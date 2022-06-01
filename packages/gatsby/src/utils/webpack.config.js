@@ -20,12 +20,15 @@ import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-module
 import { StaticQueryMapper } from "./webpack/plugins/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/plugins/force-css-hmr-for-edge-cases"
 import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
-import { hasES6ModuleSupport } from "./browserslist"
+import { getBrowsersList, hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
 import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
+const {
+  CORE_JS_POLYFILL_EXCLUDE_LIST: polyfillsToExclude,
+} = require(`gatsby-legacy-polyfills/dist/exclude`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -340,6 +343,20 @@ module.exports = async (
   function getModule() {
     let swcLoader = []
     if (process.env.GATSBY_EXPERIMENTAL_SWC) {
+      let targets
+      if (
+        stage === `build-html` ||
+        stage === `develop-html` ||
+        stage === `test`
+      ) {
+        targets = {
+          node: `current`,
+        }
+      } else {
+        // TODO better way to get directory here?
+        targets = getBrowsersList(process.cwd())
+      }
+
       swcLoader = [
         {
           test: /\.m?js$/,
@@ -350,6 +367,24 @@ module.exports = async (
               parseMap: true,
               cacheDirectory: path.join(process.cwd(), `./.cache/swc`),
               cacheIdentifier: `TODO`,
+              env: {
+                corejs: 3,
+                loose: true,
+                modules: stage === `test` ? `commonjs` : false,
+                useBuiltIns: `usage`,
+                targets,
+                // debug: true,
+                exclude: [
+                  // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
+                  `transform-typeof-symbol`,
+                  // we already have transforms for these
+                  `transform-spread`,
+                  `proposal-nullish-coalescing-operator`,
+                  `proposal-optional-chaining`,
+
+                  ...polyfillsToExclude,
+                ],
+              },
             },
           },
         },
