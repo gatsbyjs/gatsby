@@ -261,6 +261,7 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .unknown(true)
       .default({})
       .description(`Set the layout components for MDX source types`),
+    // @ts-ignore - subPlugins() exists in bootstrap/load-plugins
     gatsbyRemarkPlugins: Joi.subPlugins().description(
       `Use Gatsby-specific remark plugins`
     ),
