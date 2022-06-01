@@ -144,7 +144,7 @@ const runWebpack = (
 
       // because of this line we can't use our watch helper
       // These things should use emitter
-      compiler.hooks.invalid.tap(`ssr file invalidation`, file => {
+      compiler.hooks.invalid.tap(`ssr file invalidation`, () => {
         SSRBundleReceivedInvalidEvent = true
         SSRBundleWillInvalidate = false // we were waiting for this event, we are no longer waiting for it
       })
