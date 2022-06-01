@@ -15,6 +15,8 @@ import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
+const DOMINANT_COLOR_IMAGE_SIZE = 200
+
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
@@ -68,7 +70,7 @@ export async function getImageMetadata(
 
     // Downsize the image before calculating the dominant color
     const buffer = await pipeline
-      .resize(DEFAULT_BLURRED_IMAGE_WIDTH, DEFAULT_BLURRED_IMAGE_WIDTH, {
+      .resize(DOMINANT_COLOR_IMAGE_SIZE, DOMINANT_COLOR_IMAGE_SIZE, {
         fit: `inside`,
         withoutEnlargement: true,
       })
