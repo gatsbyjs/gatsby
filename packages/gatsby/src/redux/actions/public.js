@@ -1011,21 +1011,10 @@ actions.createNodeField = (
  * @example
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
-actions.createParentChildLink = ({ parent, child }, plugin) => {
-  if (isNotTestEnv) {
-    createParentChildLinkBatcher.add({ parent: parent.id, child })
-    return []
-  } else {
-    if (!parent.children.includes(child.id)) {
-      parent.children.push(child.id)
-    }
+actions.createParentChildLink = ({ parent, child }) => {
+  createParentChildLinkBatcher.add({ parent: parent.id, child })
 
-    return {
-      type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
-      plugin,
-      payload: parent,
-    }
-  }
+  return []
 }
 
 /**

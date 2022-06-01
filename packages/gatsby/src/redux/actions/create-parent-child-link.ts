@@ -2,7 +2,9 @@ import Batcher from "../../utils/batcher"
 import { store } from "../"
 const { getNode } = require(`../../datastore`)
 
-export const createParentChildLinkBatcher = new Batcher(1000)
+const isTestEnv = process.env.NODE_ENV === `test`
+const batchCount = isTestEnv ? 1 : 1000
+export const createParentChildLinkBatcher = new Batcher(batchCount)
 
 createParentChildLinkBatcher.bulkCall(createCalls => {
   const nodesMap = new Map()
