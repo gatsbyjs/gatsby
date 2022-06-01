@@ -685,6 +685,7 @@ export async function startServer(
             error: message,
             htmlComponentRendererPath: PAGE_RENDERER_PATH,
             directory: program.directory,
+            req,
             allowTimedFallback,
           })
 
@@ -750,6 +751,7 @@ export async function startServer(
             store,
             htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
+            req,
             allowTimedFallback,
           })
           res.status(404).send(renderResponse)
