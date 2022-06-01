@@ -30,6 +30,7 @@ import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
 import { wrapNode } from "../../utils/detect-node-mutations"
+import { createParentChildLinkBatcher } from "./create-parent-child-link"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -1010,19 +1011,10 @@ actions.createNodeField = (
  * @example
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
-actions.createParentChildLink = (
-  { parent, child }: { parent: any, child: any },
-  plugin?: Plugin
-) => {
-  if (!parent.children.includes(child.id)) {
-    parent.children.push(child.id)
-  }
+actions.createParentChildLink = ({ parent, child }) => {
+  createParentChildLinkBatcher.add({ parent: parent.id, child })
 
-  return {
-    type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
-    plugin,
-    payload: parent,
-  }
+  return []
 }
 
 /**

@@ -7,7 +7,6 @@ import { IDataStore, ILmdbDatabases, IQueryResult } from "../types"
 import { emitter, replaceReducer } from "../../redux"
 import { GatsbyIterable } from "../common/iterable"
 import { doRunQuery } from "./query/run-query"
-import _ from "lodash"
 import {
   IRunFilterArg,
   runFastFiltersAndSort,
@@ -220,8 +219,6 @@ async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
 
 let lastOperationPromise: Promise<any> = Promise.resolve()
 
-const debounceFunctionsPerNodeType = new Map()
-
 function updateDataStore(action: ActionsUnion): void {
   switch (action.type) {
     case `DELETE_CACHE`: {
@@ -240,31 +237,10 @@ function updateDataStore(action: ActionsUnion): void {
       clearIndexes()
       break
     }
-    case `ADD_CHILD_NODE_TO_PARENT_NODE`: {
-      let fn
-      const dbs = getDatabases()
-      const key = action.payload.id + action.payload.internal.type
-      if (!debounceFunctionsPerNodeType.has(key)) {
-        fn = _.debounce(
-          _action => {
-            updateNodes(dbs.nodes, _action)
-            updateNodesByType(dbs.nodesByType, _action)
-          },
-          100,
-          { leading: true, trailing: true }
-        )
-        debounceFunctionsPerNodeType.set(key, fn)
-      } else {
-        fn = debounceFunctionsPerNodeType.get(key)
-      }
-
-      // Call the debounce function.
-      fn(action)
-      break
-    }
     case `CREATE_NODE`:
     case `DELETE_NODE`:
     case `ADD_FIELD_TO_NODE`:
+    case `ADD_CHILD_NODE_TO_PARENT_NODE`:
     case `MATERIALIZE_PAGE_MODE`: {
       const dbs = getDatabases()
       const operationPromise = Promise.all([
