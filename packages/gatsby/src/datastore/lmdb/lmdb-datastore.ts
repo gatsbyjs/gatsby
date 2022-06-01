@@ -220,7 +220,7 @@ async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
 
 let lastOperationPromise: Promise<any> = Promise.resolve()
 
-const debounceFunctionsPerNode = new Map()
+const debounceFunctionsPerNodeType = new Map()
 
 function updateDataStore(action: ActionsUnion): void {
   switch (action.type) {
@@ -243,18 +243,19 @@ function updateDataStore(action: ActionsUnion): void {
     case `ADD_CHILD_NODE_TO_PARENT_NODE`: {
       let fn
       const dbs = getDatabases()
-      if (!debounceFunctionsPerNode.has(action.payload.id)) {
+      const key = action.payload.id + action.payload.internal.type
+      if (!debounceFunctionsPerNodeType.has(key)) {
         fn = _.debounce(
           _action => {
             updateNodes(dbs.nodes, _action)
             updateNodesByType(dbs.nodesByType, _action)
           },
-          1000,
+          100,
           { leading: true, trailing: true }
         )
-        debounceFunctionsPerNode.set(action.payload.id, fn)
+        debounceFunctionsPerNodeType.set(key, fn)
       } else {
-        fn = debounceFunctionsPerNode.get(action.payload.id)
+        fn = debounceFunctionsPerNodeType.get(key)
       }
 
       // Call the debounce function.
