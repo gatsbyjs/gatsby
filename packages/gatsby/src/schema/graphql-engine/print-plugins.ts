@@ -73,7 +73,7 @@ function render(
   const imports: Array<string> = [
     ...uniqGatsbyNode.map(
       (plugin, i) =>
-        `import * as pluginGatsbyNode${i} from "gatsby/dist/schema/graphql-engine/webpack-remove-apis-loader!${relativePluginPath(
+        `import * as pluginGatsbyNode${i} from "${relativePluginPath(
           plugin.resolve
         )}/gatsby-node"`
     ),

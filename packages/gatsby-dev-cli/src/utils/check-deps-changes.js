@@ -31,9 +31,9 @@ exports.checkDepsChanges = async ({
   newPath,
   packageName,
   monoRepoPackages,
-  root,
   isInitialScan,
   ignoredPackageJSON,
+  packageNameToPath,
 }) => {
   let localPKGjson
   let packageNotInstalled = false
@@ -80,7 +80,7 @@ exports.checkDepsChanges = async ({
 
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
-    root,
+    packageNameToPath,
   })
   const monorepoPKGjsonString = fs.readFileSync(
     monoRepoPackageJsonPath,

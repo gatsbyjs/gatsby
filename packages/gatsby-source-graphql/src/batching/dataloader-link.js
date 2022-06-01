@@ -1,5 +1,5 @@
 const DataLoader = require(`dataloader`)
-const { ApolloLink, Observable } = require(`apollo-link`)
+const { ApolloLink, Observable } = require(`@apollo/client`)
 const { print } = require(`gatsby/graphql`)
 const { merge, resolveResult } = require(`./merge-queries`)
 

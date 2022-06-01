@@ -11,6 +11,8 @@ jest.mock(`gatsby-telemetry`, () => {
   return {
     decorateEvent: jest.fn(),
     trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
+    trackError: jest.fn(),
   }
 })
 
@@ -70,9 +72,9 @@ describe(`worker (jobs)`, () => {
     workerStateAfter = await Promise.all(worker.all.getReduxJobs())
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
   })

@@ -36,14 +36,25 @@ const metadataCache = new Map<string, IImageMetadata>()
 
 export async function getImageMetadata(
   file: FileNode,
-  getDominantColor?: boolean
+  getDominantColor?: boolean,
+  cache?: GatsbyCache
 ): Promise<IImageMetadata> {
   if (!getDominantColor) {
     // If we don't need the dominant color we can use the cheaper size function
     const { width, height, type } = await getImageSizeAsync(file)
     return { width, height, format: type }
   }
-  let metadata = metadataCache.get(file.internal.contentDigest)
+
+  let metadata: IImageMetadata | undefined
+  const METADATA_KEY = `metadata-${file.internal.contentDigest}`
+
+  if (cache) {
+    // Use plugin cache
+    metadata = await cache.get(METADATA_KEY)
+  } else {
+    // Use in-memory cache instead
+    metadata = metadataCache.get(METADATA_KEY)
+  }
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
   }
@@ -62,7 +73,11 @@ export async function getImageMetadata(
       : `#000000`
 
     metadata = { width, height, density, format, dominantColor }
-    metadataCache.set(file.internal.contentDigest, metadata)
+    if (cache) {
+      await cache.set(METADATA_KEY, metadata)
+    } else {
+      metadataCache.set(METADATA_KEY, metadata)
+    }
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err)
     return {}
@@ -131,7 +146,11 @@ export async function generateImageData({
     )
   }
 
-  const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
+  const metadata = await getImageMetadata(
+    file,
+    placeholder === `dominantColor`,
+    cache
+  )
 
   if ((args.width || args.height) && layout === `fullWidth`) {
     reporter.warn(
@@ -259,7 +278,11 @@ export async function generateImageData({
   if (!images?.length) {
     return undefined
   }
-  const imageProps: IGatsbyImageData = {
+  const imageProps: Pick<
+    IGatsbyImageData,
+    "backgroundColor" | "layout" | "placeholder" | "images"
+  > &
+    Partial<Pick<IGatsbyImageData, "width" | "height">> = {
     layout,
     placeholder: undefined,
     backgroundColor,
@@ -380,5 +403,5 @@ export async function generateImageData({
       imageProps.width = args.width || primaryImage.width || 1
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio
   }
-  return imageProps
+  return imageProps as IGatsbyImageData
 }

@@ -14,11 +14,9 @@ exports.onCreateNode = async (
   if (filter(node)) {
     const fileNode = await createRemoteFileNode({
       url: node.url,
-      store,
       cache,
       createNode,
       createNodeId: createContentDigest,
-      reporter,
     })
 
     if (fileNode) {

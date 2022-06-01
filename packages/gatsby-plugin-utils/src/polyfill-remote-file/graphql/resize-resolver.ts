@@ -1,5 +1,4 @@
-import path from "path"
-import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
+import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
 import {
@@ -25,6 +24,7 @@ interface IResizeArgs {
   format: ImageFormat
   cropFocus: Array<ImageCropFocus>
   quality: number
+  aspectRatio: number
 }
 
 const DEFAULT_QUALITY = 75
@@ -82,27 +82,26 @@ export async function resizeResolver(
     dispatchLocalImageServiceJob(
       {
         url: source.url,
-        extension: format,
-        basename: path.basename(source.filename, path.extname(source.filename)),
+        mimeType: source.mimeType,
+        filename: source.filename,
+        contentDigest: source.internal.contentDigest,
+      },
+      {
         ...(args as IResizeArgs),
         width,
         height,
         format,
-        contentDigest: source.internal.contentDigest,
       },
       actions
     )
   }
 
-  const src = `${generatePublicUrl(source)}/${generateImageArgs({
+  const src = generateImageUrl(source, {
     ...(args as IResizeArgs),
     width,
     height,
     format,
-  })}/${path.basename(
-    source.filename,
-    path.extname(source.filename)
-  )}.${format}`
+  })
 
   return {
     src,
@@ -124,6 +123,7 @@ export function generateResizeFieldConfig(
     args: {
       width: `Int`,
       height: `Int`,
+      aspectRatio: `Float`,
       fit: {
         type: enums.fit.getTypeName(),
         defaultValue: enums.fit.getField(`COVER`).value,

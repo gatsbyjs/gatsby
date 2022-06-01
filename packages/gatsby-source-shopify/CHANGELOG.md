@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.4.0/packages/gatsby-source-shopify) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [7.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.3.1/packages/gatsby-source-shopify) (2022-05-12)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.3.0/packages/gatsby-source-shopify) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.2.0/packages/gatsby-source-shopify) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [7.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.1.1/packages/gatsby-source-shopify) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.1.0/packages/gatsby-source-shopify) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+
+#### Chores
+
+- update formatting & linting [#35302](https://github.com/gatsbyjs/gatsby/issues/35302) ([ac4fddb](https://github.com/gatsbyjs/gatsby/commit/ac4fddbd6e0368e19ed7ccfff0df8cce4e22f57e))
+- update sharp [#35303](https://github.com/gatsbyjs/gatsby/issues/35303) ([d267bb3](https://github.com/gatsbyjs/gatsby/commit/d267bb3d7547d08cfaabfbfc93199c785c50aec3))
+
+### [7.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.0.1/packages/gatsby-source-shopify) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@7.0.0/packages/gatsby-source-shopify) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-source-shopify): Rewrite for media, presentment, schema, etc. [#34049](https://github.com/gatsbyjs/gatsby/issues/34049) ([17b4f55](https://github.com/gatsbyjs/gatsby/commit/17b4f5569cb596c8699813223b9deb5a7c585ee1))
+
+### [6.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.10.2/packages/gatsby-source-shopify) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [6.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.10.1/packages/gatsby-source-shopify) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.10.0/packages/gatsby-source-shopify) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+### [6.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.9.1/packages/gatsby-source-shopify) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.9.0/packages/gatsby-source-shopify) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

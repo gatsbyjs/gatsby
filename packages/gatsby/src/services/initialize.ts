@@ -4,9 +4,9 @@ import * as fs from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import md5File from "md5-file"
 import crypto from "crypto"
-import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
+import glob from "globby"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
@@ -26,6 +26,7 @@ import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 import { compileGatsbyFiles } from "../utils/parcel/compile-gatsby-files"
 import { resolveModule } from "../utils/module-resolver"
+import { writeGraphQLConfig } from "../utils/graphql-typegen/file-writes"
 
 interface IPluginResolution {
   resolve: string
@@ -284,12 +285,18 @@ export async function initialize({
       }
     )
     activity.start()
-    await del([
-      `public/**/*.{html,css}`,
-      `!public/page-data/**/*`,
-      `!public/static`,
-      `!public/static/**/*.{html,css}`,
-    ])
+    const files = await glob(
+      [
+        `public/**/*.{html,css}`,
+        `!public/page-data/**/*`,
+        `!public/static`,
+        `!public/static/**/*.{html,css}`,
+      ],
+      {
+        cwd: program.directory,
+      }
+    )
+    await Promise.all(files.map(file => fs.remove(file)))
     activity.end()
   }
 
@@ -429,28 +436,30 @@ export async function initialize({
 
       const deleteGlobs = [
         // By default delete all files & subdirectories
-        `${cacheDirectory}/**`,
-        `!${cacheDirectory}/data`,
-        `${cacheDirectory}/data/**`,
-        `!${cacheDirectory}/data/gatsby-core-utils/`,
-        `!${cacheDirectory}/data/gatsby-core-utils/**`,
-        `!${cacheDirectory}/compiled`,
+        `.cache/**`,
+        `.cache/data/**`,
+        `!.cache/data/gatsby-core-utils/**`,
+        `!.cache/compiled`,
       ]
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
         // Stop the caches directory from being deleted, add all sub directories,
         // but remove gatsby-source-filesystem
-        deleteGlobs.push(`!${cacheDirectory}/caches`)
-        deleteGlobs.push(`${cacheDirectory}/caches/*`)
-        deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
+        deleteGlobs.push(`!.cache/caches`)
+        deleteGlobs.push(`.cache/caches/*`)
+        deleteGlobs.push(`!.cache/caches/gatsby-source-filesystem`)
       }
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
         // Add webpack
-        deleteGlobs.push(`!${cacheDirectory}/webpack`)
+        deleteGlobs.push(`!.cache/webpack`)
       }
 
-      await del(deleteGlobs)
+      const files = await glob(deleteGlobs, {
+        cwd: program.directory,
+      })
+
+      await Promise.all(files.map(file => fs.remove(file)))
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
@@ -508,7 +517,9 @@ export async function initialize({
   const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
-    await fs.copy(srcDir, siteDir)
+    await fs.copy(srcDir, siteDir, {
+      overwrite: true,
+    })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
     if (lmdbStoreIsUsed) {
       await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
@@ -647,6 +658,12 @@ export async function initialize({
   })
 
   const workerPool = WorkerPool.create()
+
+  // This is only run during `gatsby develop`
+  if (state.config.graphqlTypegen) {
+    telemetry.trackFeatureIsUsed(`GraphQLTypegen`)
+    writeGraphQLConfig(program)
+  }
 
   return {
     store,

@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.15.0/packages/gatsby-remark-copy-linked-files) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.14.0/packages/gatsby-remark-copy-linked-files) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.13.0/packages/gatsby-remark-copy-linked-files) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.12.1/packages/gatsby-remark-copy-linked-files) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.12.0/packages/gatsby-remark-copy-linked-files) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency probe-image-size to ^7.2.3 for gatsby-remark-copy-linked-files [#35289](https://github.com/gatsbyjs/gatsby/issues/35289) ([5039ca0](https://github.com/gatsbyjs/gatsby/commit/5039ca048b6505fe75d273c0c97cabb6a40d9352))
+
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.11.0/packages/gatsby-remark-copy-linked-files) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.10.0/packages/gatsby-remark-copy-linked-files) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Bug Fixes
+
+- Upgrade `probe-image-size` to fix memory leak warning fix [#35009](https://github.com/gatsbyjs/gatsby/issues/35009) ([f98c9ba](https://github.com/gatsbyjs/gatsby/commit/f98c9ba4a74cf4ba751daace911c90108f9b0343))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.9.0/packages/gatsby-remark-copy-linked-files) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

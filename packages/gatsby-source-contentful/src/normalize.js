@@ -15,6 +15,9 @@ const shouldUpgradeGatsbyVersion =
   lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
 export const getLocalizedField = ({ field, locale, localesFallback }) => {
+  if (!field) {
+    return null
+  }
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -62,7 +65,7 @@ export const buildEntryList = ({ contentTypeItems, currentSyncData }) => {
   const map = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
   )
-  // Now fill the buckets. Ignore entries for which there exists no bucket. (Not sure if that ever happens)
+  // Now fill the buckets. Ignore entries for which there exists no bucket. (This happens when filterContentType is used)
   currentSyncData.entries.map(entry => {
     const arr = map.get(entry.sys.contentType.sys.id)
     if (arr) {
@@ -196,7 +199,7 @@ function prepareTextNode(id, node, key, text) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `TextNode`,
     },
   }
 
@@ -220,7 +223,7 @@ function prepareJSONNode(id, node, key, content) {
       contentDigest: node.updatedAt,
     },
     sys: {
-      type: node.sys.type,
+      type: `JsonNode`,
     },
   }
 
@@ -384,7 +387,7 @@ export const createNodesForContentType = ({
         )
 
         const existingNode = getNode(entryNodeId)
-        if (existingNode?.internal?.contentDigest === entryItem.sys.updatedAt) {
+        if (existingNode?.updatedAt === entryItem.sys.updatedAt) {
           // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
           // of an entry did not change, then we can trust that none of its children were changed either.
           return null
@@ -552,9 +555,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(textNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const textNode = prepareTextNode(
                 textNodeId,
                 entryNode,
@@ -620,9 +621,7 @@ export const createNodesForContentType = ({
             // of an entry did not change, then we can trust that none of its children were changed either.
             // (That's why child nodes use the updatedAt of the parent node as their digest, too)
             const existingNode = getNode(jsonNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
+            if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
               const jsonNode = prepareJSONNode(
                 jsonNodeId,
                 entryNode,
@@ -649,10 +648,7 @@ export const createNodesForContentType = ({
               // of an entry did not change, then we can trust that none of its children were changed either.
               // (That's why child nodes use the updatedAt of the parent node as their digest, too)
               const existingNode = getNode(jsonNodeId)
-              if (
-                existingNode?.internal?.contentDigest !==
-                entryItem.sys.updatedAt
-              ) {
+              if (existingNode?.updatedAt !== entryItem.sys.updatedAt) {
                 const jsonNode = prepareJSONNode(
                   jsonNodeId,
                   entryNode,
@@ -724,7 +720,13 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
-    const file = assetItem.fields.file ? getField(assetItem.fields.file) : {}
+    const file = getField(assetItem.fields?.file) ?? null
+
+    // Skip empty and unprocessed assets in Preview API
+    if (!file || !file.url || !file.contentType || !file.fileName) {
+      return
+    }
+
     const assetNode = {
       contentful_id: assetItem.sys.id,
       spaceId: space.sys.id,
@@ -747,10 +749,12 @@ export const createAssetNodes = ({
       },
       url: `https:${file.url}`,
       placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
+      // These fields are optional for edge cases in the Preview API and Contentfuls asset processing
       mimeType: file.contentType,
       filename: file.fileName,
-      width: file.details?.image?.width,
-      height: file.details?.image?.height,
+      width: file.details?.image?.width ?? null,
+      height: file.details?.image?.height ?? null,
+      size: file.details?.size ?? null,
     }
 
     // Link tags

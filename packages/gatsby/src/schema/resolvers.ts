@@ -676,7 +676,7 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
-    if (context.telemetryResolverTimings) {
+    if (context?.telemetryResolverTimings) {
       time = process.hrtime.bigint()
     }
 
@@ -687,7 +687,7 @@ export function wrappingResolver<TSource, TArgs>(
     }
 
     const endActivity = (): void => {
-      if (context.telemetryResolverTimings) {
+      if (context?.telemetryResolverTimings) {
         context.telemetryResolverTimings.push({
           name: `${info.parentType}.${info.fieldName}`,
           duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,

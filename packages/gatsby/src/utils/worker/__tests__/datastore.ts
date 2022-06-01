@@ -7,11 +7,14 @@ import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { getDataStore } from "../../../datastore"
 
+jest.setTimeout(15000)
+
 jest.mock(`gatsby-telemetry`, () => {
   return {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
   }
 })
 
@@ -25,9 +28,9 @@ beforeEach(() => {
   store.dispatch({ type: `DELETE_CACHE` })
 })
 
-afterEach(() => {
+afterEach(async () => {
   if (worker) {
-    worker.end()
+    await Promise.all(worker.end())
     worker = undefined
   }
 })

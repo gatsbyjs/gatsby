@@ -1,5 +1,5 @@
-import path from "path"
-import { generatePublicUrl, generateImageArgs } from "../utils/url-generator"
+import { hasFeature } from "../../has-feature"
+import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
 import {
@@ -7,7 +7,7 @@ import {
   shouldDispatch,
 } from "../jobs/dispatchers"
 import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
-import { ImageCropFocus, ImageFit, isImage } from "../types"
+import { ImageCropFocus, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
 import type { Actions } from "gatsby"
@@ -158,10 +158,16 @@ export async function gatsbyImageResolver(
 
     return 1
   }
+
   const sortedFormats = Array.from(formats).sort(
     (a, b) => getFormatValue(b) - getFormatValue(a)
   )
 
+  // Result will be used like this
+  // <picture>
+  // for each result.sources we create a <source srcset="..." /> tag
+  // <img src="fallbacksrc" srcset="fallbacksrcset" />
+  // </picture>
   for (const format of sortedFormats) {
     let fallbackSrc: string | undefined = undefined
     const images = imageSizes.sizes.map(width => {
@@ -169,31 +175,28 @@ export async function gatsbyImageResolver(
         dispatchLocalImageServiceJob(
           {
             url: source.url,
-            extension: format,
-            basename: path.basename(
-              source.filename,
-              path.extname(source.filename)
-            ),
+            mimeType: source.mimeType,
+            filename: source.filename,
+            contentDigest: source.internal.contentDigest,
+          },
+          {
             width,
             height: Math.round(width / imageSizes.aspectRatio),
             format,
-            fit: args.fit as ImageFit,
-            contentDigest: source.internal.contentDigest,
+            cropFocus: args.cropFocus,
             quality: args.quality as number,
           },
           actions
         )
       }
 
-      const src = `${generatePublicUrl(source)}/${generateImageArgs({
+      const src = generateImageUrl(source, {
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         format,
         cropFocus: args.cropFocus,
         quality: args.quality as number,
-      })}/${encodeURIComponent(
-        path.basename(source.filename, path.extname(source.filename))
-      )}.${format}`
+      })
 
       if (!fallbackSrc) {
         fallbackSrc = src
@@ -208,7 +211,8 @@ export async function gatsbyImageResolver(
       }
     })
 
-    if (format === sourceMetadata.format && fallbackSrc) {
+    // The latest format (by default will be jpg/png) is the fallback and doesn't need sources
+    if (format === sortedFormats[sortedFormats.length - 1] && fallbackSrc) {
       result.fallback = {
         src: fallbackSrc,
         srcSet: createSrcSetFromImages(images),
@@ -257,7 +261,7 @@ export function generateGatsbyImageFieldConfig(
   IGatsbyImageDataArgs
 > {
   return {
-    type: `JSON`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData` : `JSON`,
     description: `Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.`,
     args: {
       layout: {
@@ -381,6 +385,7 @@ function calculateImageSizes(
     fit,
     outputPixelDensities,
     breakpoints,
+    aspectRatio,
   }: CalculateImageSizesArgs
 ): IImageSizes {
   if (width && Number(width) <= 0) {
@@ -403,6 +408,7 @@ function calculateImageSizes(
         fit,
         sourceMetadata,
         outputPixelDensities,
+        aspectRatio,
       })
     }
     case `constrained`: {
@@ -414,6 +420,7 @@ function calculateImageSizes(
         fit,
         outputPixelDensities,
         layout,
+        aspectRatio,
       })
     }
     case `fullWidth`: {
@@ -426,6 +433,7 @@ function calculateImageSizes(
         outputPixelDensities,
         layout,
         breakpoints,
+        aspectRatio,
       })
     }
   }
@@ -437,8 +445,14 @@ function calculateFixedImageSizes({
   height,
   fit = `cover`,
   outputPixelDensities,
+  aspectRatio: requestedAspectRatio,
 }: Omit<ImageSizeArgs, "layout" | "breakpoints">): IImageSizes {
-  let aspectRatio = sourceMetadata.width / sourceMetadata.height
+  let aspectRatio
+  if (requestedAspectRatio) {
+    aspectRatio = requestedAspectRatio
+  } else {
+    aspectRatio = sourceMetadata.width / sourceMetadata.height
+  }
 
   // make sure output outputPixelDensities has a value of 1
   outputPixelDensities.push(1)
@@ -452,6 +466,7 @@ function calculateFixedImageSizes({
       width,
       height,
       fit,
+      aspectRatio,
     })
     width = calculated.width
     height = calculated.height
@@ -517,9 +532,15 @@ function calculateResponsiveImageSizes({
   outputPixelDensities,
   breakpoints,
   layout,
+  aspectRatio: requestedAspectRatio,
 }: ImageSizeArgs): IImageSizes {
   let sizes: Array<number> = []
-  let aspectRatio = sourceMetadata.width / sourceMetadata.height
+  let aspectRatio
+  if (requestedAspectRatio) {
+    aspectRatio = requestedAspectRatio
+  } else {
+    aspectRatio = sourceMetadata.width / sourceMetadata.height
+  }
   // Sort, dedupe and ensure there's a 1
   const densities = new Set<number>(
     outputPixelDensities.sort(sortNumeric).filter(Boolean)
@@ -531,6 +552,7 @@ function calculateResponsiveImageSizes({
       width,
       height,
       fit,
+      aspectRatio,
     })
     width = calculated.width
     height = calculated.height

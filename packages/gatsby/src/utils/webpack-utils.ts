@@ -416,7 +416,7 @@ export const createWebpackUtils = (
       modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
     } = {}): RuleSetRule => {
       return {
-        test: /\.(js|mjs|jsx)$/,
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
         include: (modulePath: string): boolean => {
           // when it's not coming from node_modules we treat it as a source file.
           if (!vendorRegex.test(modulePath)) {
@@ -482,7 +482,7 @@ export const createWebpackUtils = (
         sourceMaps: false,
 
         cacheIdentifier: JSON.stringify({
-          browerslist: supportedBrowsers,
+          browsersList: supportedBrowsers,
           gatsbyPreset: require(`babel-preset-gatsby/package.json`).version,
         }),
       }
@@ -498,6 +498,7 @@ export const createWebpackUtils = (
         `dom-helpers`,
         `gatsby-legacy-polyfills`,
         `gatsby-link`,
+        `gatsby-script`,
         `gatsby-react-router-scroll`,
         `invariant`,
         `lodash`,
@@ -722,7 +723,6 @@ export const createWebpackUtils = (
                 `removeHiddenElems`,
                 `removeMetadata`,
                 `removeNonInheritableGroupAttrs`,
-                `removeOffCanvasPaths`, // Default: disabled
                 `removeRasterImages`, // Default: disabled
                 `removeScriptElement`, // Default: disabled
                 `removeStyleElement`, // Default: disabled

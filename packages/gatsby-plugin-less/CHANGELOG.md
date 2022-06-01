@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.15.0/packages/gatsby-plugin-less) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.14.0/packages/gatsby-plugin-less) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.13.0/packages/gatsby-plugin-less) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.12.1/packages/gatsby-plugin-less) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.12.0/packages/gatsby-plugin-less) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.11.0/packages/gatsby-plugin-less) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.10.0/packages/gatsby-plugin-less) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
 ## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.9.0/packages/gatsby-plugin-less) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

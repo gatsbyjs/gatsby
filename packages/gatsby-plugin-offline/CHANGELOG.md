@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.15.0/packages/gatsby-plugin-offline) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Chores
+
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) ([3909fa4](https://github.com/gatsbyjs/gatsby/commit/3909fa4265d907df62c6f79129f90f96ae09acd4))
+
+### [5.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.14.1/packages/gatsby-plugin-offline) (2022-05-16)
+
+#### Chores
+
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) [#35671](https://github.com/gatsbyjs/gatsby/issues/35671) ([59165a7](https://github.com/gatsbyjs/gatsby/commit/59165a7d2421ec79525393f1e5361d204806b1ef))
+
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.14.0/packages/gatsby-plugin-offline) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.13.0/packages/gatsby-plugin-offline) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.12.1/packages/gatsby-plugin-offline) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.12.0/packages/gatsby-plugin-offline) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+### [5.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.11.1/packages/gatsby-plugin-offline) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.11.0/packages/gatsby-plugin-offline) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- compatibility with react rc 2 [#35108](https://github.com/gatsbyjs/gatsby/issues/35108) ([0c61265](https://github.com/gatsbyjs/gatsby/commit/0c6126574d203c0e6fef173b76859cdcab2f13aa))
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+### [5.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.10.2/packages/gatsby-plugin-offline) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+### [5.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.10.1/packages/gatsby-plugin-offline) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.10.0/packages/gatsby-plugin-offline) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+### [5.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.9.1/packages/gatsby-plugin-offline) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.9.0/packages/gatsby-plugin-offline) (2022-03-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)

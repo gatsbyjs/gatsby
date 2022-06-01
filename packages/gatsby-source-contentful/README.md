@@ -11,6 +11,7 @@
 
 - [gatsby-source-contentful](#gatsby-source-contentful)
   - [Install](#install)
+  - [Setup Instructions](#setup-instructions)
   - [How to use](#how-to-use)
   - [Restrictions and limitations](#restrictions-and-limitations)
     - [Using Delivery API](#using-delivery-api)
@@ -25,6 +26,8 @@
     - [Query for Assets in ContentType nodes](#query-for-assets-in-contenttype-nodes)
     - [More on Queries with Contentful and Gatsby](#more-on-queries-with-contentful-and-gatsby)
   - [Displaying responsive image with gatsby-plugin-image](#displaying-responsive-image-with-gatsby-plugin-image)
+    - [Building images on the fly via `useContentfulImage`](#building-images-on-the-fly-via-usecontentfulimage)
+      - [On-the-fly image options:](#on-the-fly-image-options)
   - [Contentful Tags](#contentful-tags)
     - [List available tags](#list-available-tags)
     - [Filter content by tags](#filter-content-by-tags)
@@ -180,6 +183,12 @@ Enable the new [tags feature](https://www.contentful.com/blog/2021/04/08/governa
 
 Learn how to use them at the [Contentful Tags](#contentful-tags) section.
 
+**`contentTypeFilter`** [function][optional] [default: () => true]
+
+Possibility to limit how many contentType/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in Contentful and only want to get the data from certain content types.
+
+For example, to exclude content types starting with "page" `contentTypeFilter: contentType => !contentType.sys.id.startsWith('page')`
+
 ## How to query for nodes
 
 Two standard node types are available from Contentful: `Asset` and `ContentType`.
@@ -206,7 +215,7 @@ You might query for **all** of a type of node:
 }
 ```
 
-You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https://next.gatsbyjs.org/docs/node-apis/#createPages) Node API.
+You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https://gatsbyjs.com/docs/node-apis/#createPages) Node API.
 
 ### Query for a single node
 
@@ -247,7 +256,7 @@ To query for a single `CaseStudy` node with the short text properties `title` an
   }
 ```
 
-You might query for a **single** node inside a component in your `src/components` folder, using [Gatsby's `StaticQuery` component](https://www.gatsbyjs.org/docs/static-query/).
+You might query for a **single** node inside a component in your `src/components` folder, using [Gatsby's `StaticQuery` component](https://www.gatsbyjs.com/docs/static-query/).
 
 #### A note about LongText fields
 
@@ -263,7 +272,7 @@ On Contentful, a "Long text" field uses Markdown by default. The field is expose
 }
 ```
 
-Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [`gatsby-transformer-remark`](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a `childMarkdownRemark` on the "Long text" field and expose the generated html as a child node:
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/). The transformer will create a `childMarkdownRemark` on the "Long text" field and expose the generated html as a child node:
 
 ```graphql
 {
@@ -384,6 +393,44 @@ module.exports = {
 4. Your query will return a dynamic image. Check the [documentation of gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/#dynamic-images) to learn how to render it on your website.
 
 Check the [Reference Guide of gatsby-plugin-image](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/) to get a deeper insight on how this works.
+
+### Building images on the fly via `useContentfulImage`
+
+With `useContentfulImage` and the URL to the image on the Contentful Image API you can create dynamic images on the fly:
+
+```js
+import { GatsbyImage } from "gatsby-plugin-image"
+import * as React from "react"
+import { useContentfulImage } from "gatsby-source-contentful/hooks"
+
+const MyComponent = () => {
+  const dynamicImage = useContentfulImage({
+    image: {
+      url: "//images.ctfassets.net/k8iqpp6u0ior/3BSI9CgDdAn1JchXmY5IJi/f97a2185b3395591b98008647ad6fd3c/camylla-battani-AoqgGAqrLpU-unsplash.jpg",
+      width: 2000,
+      height: 1000,
+    },
+  })
+
+  return <GatsbyImage image={dynamicImage} />
+}
+```
+
+#### On-the-fly image options:
+
+This hook accepts the same parameters as the `gatsbyImageData` field in your GraphQL queries. They are automatically translated to the proper Contentful Image API parameters.
+
+Here are the most relevant ones:
+
+- width: maximum 4000
+- height: maximum 4000
+- toFormat: defaults to the actual image format
+- jpegProgressive: set to `progressive` to enable
+- quality: between 1 and 100
+- resizingBehavior: https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/change-the-resizing-behavior
+- cropFocus: https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-focus-area
+- background: background color in format `rgb:9090ff`
+- cornerRadius: https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/crop-rounded-corners-&-circle-elipsis
 
 ## [Contentful Tags](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags)
 

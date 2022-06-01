@@ -14,6 +14,15 @@ jest.mock(`got`, () =>
   })
 )
 
+jest.mock(`probe-image-size`, () =>
+  jest.fn(() => {
+    return {
+      width: 100,
+      height: 100,
+    }
+  })
+)
+
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
     createRemoteFileNode: jest.fn(),
@@ -25,6 +34,7 @@ function makeCache() {
   return {
     get: async id => store.get(id),
     set: async (key, value) => store.set(key, value),
+    del: async key => store.delete(key),
     store,
   }
 }
@@ -65,6 +75,10 @@ describe(`gatsby-source-drupal`, () => {
     verbose: jest.fn(),
     activityTimer: jest.fn(() => activity),
     log: jest.fn(),
+    error: console.error,
+    panic: input => {
+      throw new Error(input)
+    },
   }
   const store = {
     getState: jest.fn(() => {
@@ -500,6 +514,31 @@ describe(`gatsby-source-drupal`, () => {
     })
   })
 
+  describe(`Image CDN`, () => {
+    it(`should generate required Image CDN node data`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+
+      const options = {
+        baseUrl,
+        skipFileDownloads: true,
+      }
+
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+
+      const fileNode = nodes[createNodeId(`und.file-1`)]
+      expect(fileNode).toBeDefined()
+      expect(fileNode.url).toEqual(
+        `http://fixture/sites/default/files/main-image.png`
+      )
+      expect(fileNode.mimeType).toEqual(`image/png`)
+      expect(fileNode.width).toEqual(100)
+      expect(fileNode.height).toEqual(100)
+    })
+  })
+
   describe(`Fastbuilds sync`, () => {
     describe(`Before sync with expired timestamp`, () => {
       beforeAll(async () => {
@@ -693,7 +732,7 @@ describe(`gatsby-source-drupal`, () => {
           { baseUrl }
         )
 
-        expect(reporter.warn).toHaveBeenCalledTimes(1)
+        expect(reporter.warn).toHaveBeenCalledTimes(2)
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,

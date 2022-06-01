@@ -18,7 +18,7 @@ import "graphiql-code-exporter/CodeExporter.css"
 
 const parameters = {}
 window.location.search
-  .substr(1)
+  .slice(1)
   .split(`&`)
   .forEach(function (entry) {
     const eq = entry.indexOf(`=`)

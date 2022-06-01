@@ -70,7 +70,7 @@ describe("a new PR", () => {
         description: lorem ipsum
         location: moon
         github: https://github.com/gatsbyjs
-        website: https://www.gatsbyjs.org/
+        website: https://www.gatsbyjs.com/
         for_hire: false
         portfolio: true
         hiring: false

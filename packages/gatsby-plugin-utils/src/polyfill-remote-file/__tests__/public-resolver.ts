@@ -1,6 +1,7 @@
 import path from "path"
 import type { Actions } from "gatsby"
 import { publicUrlResolver } from "../index"
+import { generateFileUrl } from "../utils/url-generator"
 import * as dispatchers from "../jobs/dispatchers"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
@@ -24,7 +25,10 @@ describe(`publicResolver`, () => {
     }
 
     expect(publicUrlResolver(source, actions)).toEqual(
-      `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}/file.pdf`
+      generateFileUrl({
+        filename: source.filename,
+        url: source.url,
+      })
     )
   })
 
@@ -44,7 +48,10 @@ describe(`publicResolver`, () => {
     }
 
     expect(publicUrlResolver(source, actions)).toEqual(
-      `/_gatsby/file/${Buffer.from(source.url).toString(`base64`)}/image.jpg`
+      generateFileUrl({
+        filename: source.filename,
+        url: source.url,
+      })
     )
   })
 

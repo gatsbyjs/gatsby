@@ -51,6 +51,7 @@ jest.mock(`gatsby-telemetry`, () => {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
   }
 })
 
@@ -185,9 +186,9 @@ describeWhenLMDB(`worker (queries)`, () => {
     await Promise.all(worker.all.buildSchema())
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
     for (const watcher of mockWatchersToClose) {
