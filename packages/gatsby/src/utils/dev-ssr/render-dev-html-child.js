@@ -79,7 +79,7 @@ const parseError = function ({ err, directory, componentPath }) {
 
 exports.parseError = parseError
 
-exports.renderHTML = ({
+exports.renderHTML = async ({
   path,
   componentPath,
   htmlComponentRendererPath,
@@ -88,37 +88,29 @@ exports.renderHTML = ({
   error = undefined,
   directory,
   serverData,
-}) =>
-  new Promise((resolve, reject) => {
-    try {
-      const htmlComponentRenderer = require(htmlComponentRendererPath)
-      if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-        htmlComponentRenderer
-          .default({
-            pagePath: path,
-            isClientOnlyPage,
-            publicDir,
-            error,
-            serverData,
-            callback: (_throwAway, htmlString) => {
-              resolve(htmlString)
-            },
-          })
-          .catch(err => {
-            const error = parseError({ err, directory, componentPath })
-            reject(error)
-          })
-      } else {
-        htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
-          resolve(htmlString)
-        })
-      }
-    } catch (err) {
-      const error = parseError({ err, directory, componentPath })
-      reject(error)
+}) => {
+  try {
+    const htmlComponentRenderer = require(htmlComponentRendererPath)
+    if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+      return await htmlComponentRenderer.default({
+        pagePath: path,
+        isClientOnlyPage,
+        publicDir,
+        error,
+        serverData,
+      })
+    } else {
+      return await htmlComponentRenderer.default({
+        pagePath: path,
+        publicDir,
+        isClientOnlyPage: true,
+      })
     }
-  })
-
+  } catch (err) {
+    const error = parseError({ err, directory, componentPath })
+    throw error
+  }
+}
 exports.deleteModuleCache = htmlComponentRendererPath => {
   delete require.cache[require.resolve(htmlComponentRendererPath)]
 }

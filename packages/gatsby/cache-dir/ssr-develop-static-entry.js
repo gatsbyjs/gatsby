@@ -57,7 +57,6 @@ export default async function staticPage({
   publicDir,
   error,
   serverData,
-  callback,
 }) {
   let bodyHtml = ``
   let headComponents = [
@@ -353,7 +352,7 @@ export default async function staticPage({
   let htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
-  callback(null, htmlStr)
+  return htmlStr
 }
 
 export function getPageChunk({ componentChunkName }) {
