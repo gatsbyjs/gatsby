@@ -19,7 +19,7 @@
     "@babel/preset-react": "^7.14.0",
     "@babel/runtime": "^7.15.4",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "core-js": "^3.22.3"
+    "core-js": "^3.22.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
