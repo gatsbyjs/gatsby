@@ -42,8 +42,7 @@
     }
   },
   "files": [
-    "dist/*",
-    "gatsby-node.js"
+    "dist/*"
   ],
   "jest": {
     "testEnvironment": "node"
