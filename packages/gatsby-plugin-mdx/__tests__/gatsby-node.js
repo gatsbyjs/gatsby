@@ -17,6 +17,7 @@ describe(`pluginOptionsSchema`, () => {
       `"mediaTypes[1]" must be a string`,
       `"shouldBlockNodeFromTransformation" must have an arity lesser or equal to 1`,
       `"root" must be a string`,
+      `"JSFrontmatterEngine" must be a boolean`,
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
@@ -29,6 +30,7 @@ describe(`pluginOptionsSchema`, () => {
       mediaTypes: [1, 2],
       shouldBlockNodeFromTransformation: (wrong, number) => null,
       root: 1,
+      JSFrontmatterEngine: `this should be a boolean`,
     })
 
     expect(errors).toEqual(expectedErrors)
@@ -63,6 +65,7 @@ describe(`pluginOptionsSchema`, () => {
       mediaTypes: [`text/markdown`, `text/x-markdown`, `custom-media/type`],
       shouldBlockNodeFromTransformation: node => Boolean(node),
       root: `james-holden`,
+      JSFrontmatterEngine: true,
     })
 
     expect(isValid).toBe(true)
