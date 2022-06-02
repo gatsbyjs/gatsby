@@ -281,8 +281,8 @@ Here is an example using the callbacks:
 ```jsx
 <Script
   src="https://my-example-script"
-  onLoad={() => console.log('success')}
-  onError={() => console.log('sadness')}
+  onLoad={() => console.log("success")}
+  onError={() => console.log("sadness")}
 />
 ```
 
