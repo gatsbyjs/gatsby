@@ -110,6 +110,8 @@ aliases:
       - lint
       - typecheck
       - unit_tests_node14
+      - unit_tests_node16
+      - unit_tests_node18
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -221,10 +223,21 @@ jobs:
       - run: yarn check-repo-fields
 
   unit_tests_node14:
-    # GATSBY_EXPERIMENTAL_LMDB_INDEXES is not activated yet
     executor:
       name: node
       image: "14.15.0"
+    <<: *test_template
+
+  unit_tests_node16:
+    executor:
+      name: node
+      image: "16.15.0"
+    <<: *test_template
+
+  unit_tests_node18:
+    executor:
+      name: node
+      image: "18.2.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -587,6 +600,18 @@ workflows:
             - lint
             - bootstrap
       - unit_tests_node14:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node16:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node18:
           <<: *ignore_docs
           requires:
             - lint
