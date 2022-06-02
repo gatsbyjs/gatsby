@@ -17,7 +17,7 @@
     "gatsby-core-utils": "^3.16.0-next.0",
     "gatsby-plugin-utils": "^3.10.0-next.1",
     "gatsby-telemetry": "^3.16.0-next.0",
-    "got": "^11.8.3",
+    "got": "^11.8.5",
     "lodash": "^4.17.21",
     "mini-svg-data-uri": "^1.4.4",
     "probe-image-size": "^7.2.3",
