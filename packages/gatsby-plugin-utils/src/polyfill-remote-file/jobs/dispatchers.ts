@@ -71,7 +71,12 @@ export function dispatchLocalImageServiceJob(
 ): void {
   const GATSBY_VERSION = getGatsbyVersion()
   const publicUrl = generateImageUrl(
-    { url, mimeType, filename },
+    {
+      url,
+      mimeType,
+      filename,
+      internal: { contentDigest },
+    },
     imageArgs
   ).split(`/`)
   publicUrl.unshift(`public`)
