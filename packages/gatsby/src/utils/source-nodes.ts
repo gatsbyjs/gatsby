@@ -57,6 +57,9 @@ function getStaleNodes(
 ): GatsbyIterable<IGatsbyNode> {
   return nodes.filter(node => {
     let rootNode = node
+    if (rootNode.internal.type === `SitePage`) {
+      return false
+    }
     let next: IGatsbyNode | undefined = undefined
 
     let whileCount = 0
@@ -86,6 +89,14 @@ function deleteStaleNodes(
   nodes: GatsbyIterable<IGatsbyNode>
 ): void {
   const staleNodes = getStaleNodes(state, nodes)
+  let count = 0
+  staleNodes.forEach(staleNode => {
+    count += 1
+    if (count < 10) {
+      console.log(`staleNode`, staleNode)
+    }
+  })
+  console.log(`total stale nodes`, count)
 
   staleNodes.forEach(node => store.dispatch(deleteNode(node)))
 }

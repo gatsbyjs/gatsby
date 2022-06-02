@@ -10,11 +10,12 @@ const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
-const { getNode, getDataStore } = require(`../../datastore`)
+const { getNode, getNodesByType, getDataStore } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
 const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
+import { deepEqual } from "fast-equals"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
   getCommonDir,
@@ -429,9 +430,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   const oldPage: Page = store.getState().pages.get(internalPage.path)
   const contextModified =
-    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+    !!oldPage && !deepEqual(oldPage.context, internalPage.context)
   const componentModified =
-    !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
+    !!oldPage && !deepEqual(oldPage.component, internalPage.component)
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -452,23 +453,23 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   node.children = []
   node.internal = {
     type: `SitePage`,
-    contentDigest: createContentDigest(node),
   }
   node.id = `SitePage ${internalPage.path}`
   const oldNode = getNode(node.id)
 
   let deleteActions
   let updateNodeAction
-  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
-    updateNodeAction = {
-      ...actionOptions,
-      plugin,
-      type: `TOUCH_NODE`,
-      payload: node.id,
-    }
+  if (oldNode && !contextModified && !componentModified) {
+    // updateNodeAction = {
+    // ...actionOptions,
+    // plugin,
+    // type: `TOUCH_NODE`,
+    // payload: node.id,
+    // }
   } else {
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
+    let newDigestId = 0
     if (oldNode) {
       const createDeleteAction = node => {
         return {
@@ -481,6 +482,39 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       deleteActions = findChildren(oldNode.children)
         .map(getNode)
         .map(createDeleteAction)
+
+      // Increment the node's contentDigest if it's set.
+      const oldNodeDigestId = parseInt(
+        oldNode.internal.contentDigest.split(`///`)[1]
+      )
+      if (Math.random() > 0.995) {
+        console.log({ oldNodeDigestId })
+      }
+      if (_.isNumber(oldNodeDigestId)) {
+        newDigestId = oldNodeDigestId + 1
+      }
+    }
+
+    node.internal.contentDigest = `${internalPage.path}-${internalPage.mode}-${internalPage.matchPath}-${internalPage.componentChunkName}///${newDigestId}`
+    if (Math.random() > 0.999) {
+      const dataStore = getDataStore()
+      const types = dataStore.getTypes()
+      console.log(
+        `Number of node types: ${types.length}. Nodes per type: ${types
+          .map(type => type + `: ` + dataStore.countNodes(type))
+          .join(`, `)}`
+      )
+      console.log({
+        id: node.id,
+        // getNode,
+        // sitePageCount: getNodesByType(`SitePage`).length,
+        // benchmarkCOunt: getNodesByType(`Benchmark`).length,
+        oldNode: oldNode ? true : false,
+        contentDigest: node.internal.contentDigest,
+        contextModified,
+        componentModified,
+        // node,
+      })
     }
 
     node.internal.counter = getNextNodeCounter()

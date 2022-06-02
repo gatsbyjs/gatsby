@@ -20,6 +20,7 @@ export function deleteUntouchedPages(
       page.updatedAt < timeBeforeApisRan
     ) {
       store.dispatch(deletePage(page))
+      // TODO also delete the SitePage node here.
       deletedPages.push(page.path, `/page-data${page.path}`)
     }
   })
