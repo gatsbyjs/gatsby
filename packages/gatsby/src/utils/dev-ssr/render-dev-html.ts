@@ -13,7 +13,7 @@ import { GatsbyReduxStore } from "../../redux"
 import { IGatsbyPage } from "../../redux/types"
 import { getServerData, IServerData } from "../get-server-data"
 import { getPageMode } from "../page-mode"
-import { parseError } from "./render-dev-html-child"
+import { parseError } from "./parse-error"
 interface IErrorRenderMeta {
   codeFrame: string
   source: string
