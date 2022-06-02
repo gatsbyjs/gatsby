@@ -35,7 +35,12 @@ export function generateFileUrl({
 }
 
 export function generateImageUrl(
-  source: IRemoteFileNode,
+  source: {
+    url: string
+    mimeType: string
+    filename: string
+    internal: { contentDigest: string }
+  },
   imageArgs: Parameters<typeof generateImageArgs>[0]
 ): string {
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
