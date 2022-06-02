@@ -252,6 +252,7 @@ export interface IGatsbyState {
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
+  requestHeaders: Map<string, { [header: string]: string }>
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -440,6 +441,7 @@ export type ActionsUnion =
   | IMaterializePageMode
   | ISetJobV2Context
   | IClearJobV2Context
+  | ISetDomainRequestHeaders
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -956,6 +958,16 @@ export interface INodeManifest {
   pluginName: string
   node: {
     id: string
+  }
+}
+
+export interface ISetDomainRequestHeaders {
+  type: `SET_REQUEST_HEADERS`
+  payload: {
+    domain: string
+    headers: {
+      [header: string]: string
+    }
   }
 }
 

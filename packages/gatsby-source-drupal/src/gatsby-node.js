@@ -866,13 +866,13 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
   })
 
-exports.onCreateDevServer = async ({ app }) => {
+exports.onCreateDevServer = async ({ app, store }) => {
   // this makes the gatsby develop image CDN emulator work on earlier versions of Gatsby.
-  polyfillImageServiceDevRoutes(app)
+  polyfillImageServiceDevRoutes(app, store)
 }
 
 exports.createSchemaCustomization = (
-  { actions, schema, reporter },
+  { actions, schema, store, reporter },
   pluginOptions
 ) => {
   if (pluginOptions.skipFileDownloads) {
@@ -888,6 +888,7 @@ exports.createSchemaCustomization = (
         {
           schema,
           actions,
+          store,
         }
       ),
     ])
