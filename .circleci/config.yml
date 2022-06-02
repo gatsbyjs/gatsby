@@ -110,8 +110,6 @@ aliases:
       - lint
       - typecheck
       - unit_tests_node14
-      - unit_tests_node16
-      - unit_tests_node18
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -223,21 +221,10 @@ jobs:
       - run: yarn check-repo-fields
 
   unit_tests_node14:
+    # GATSBY_EXPERIMENTAL_LMDB_INDEXES is not activated yet
     executor:
       name: node
       image: "14.15.0"
-    <<: *test_template
-
-  unit_tests_node16:
-    executor:
-      name: node
-      image: "16.15.0"
-    <<: *test_template
-
-  unit_tests_node18:
-    executor:
-      name: node
-      image: "18.2.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -429,14 +416,13 @@ jobs:
 
   mdx_e2e_tests:
     <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: spbj28
-      CYPRESS_RECORD_KEY: af30ea46-121f-4fb7-97dd-f17ec224402e
     steps:
       - e2e-test:
           test_path: e2e-tests/mdx
-          test_command: yarn test
+          test_command: CYPRESS_PROJECT_ID=spbj28 CYPRESS_RECORD_KEY=af30ea46-121f-4fb7-97dd-f17ec224402e yarn test
+      - e2e-test:
+          test_path: e2e-tests/mdx-less-babel
+          test_command: CYPRESS_PROJECT_ID=xo139a CYPRESS_RECORD_KEY=74d485b5-3ba6-40e1-a7d4-e63c0a8d2a4d yarn test
 
   e2e_tests_gatsby-static-image:
     <<: *e2e-executor
@@ -601,18 +587,6 @@ workflows:
             - lint
             - bootstrap
       - unit_tests_node14:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - unit_tests_node16:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - unit_tests_node18:
           <<: *ignore_docs
           requires:
             - lint
