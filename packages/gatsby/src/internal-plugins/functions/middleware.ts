@@ -223,10 +223,10 @@ export function functionMiddlewares(
     setCookies,
     setContext,
     multer().any(),
+    bodyParserMiddlewareWithConfig(`raw`),
     bodyParserMiddlewareWithConfig(`text`),
     bodyParserMiddlewareWithConfig(`urlencoded`),
     bodyParserMiddlewareWithConfig(`json`),
-    bodyParserMiddlewareWithConfig(`raw`),
     executeFunction,
   ]
 }

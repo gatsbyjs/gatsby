@@ -307,6 +307,12 @@ module.exports = {
 
 You can use the `concurrentAPIRequests` option to change how many simultaneous API requests are made to the server/service. 20 is the default and seems to be the fastest for most sites.
 
+## API Request Timeout
+
+You can use the `requestTimeoutMS` option to set the request timeout for API requests. API requests sometimes stall and we want to retry these instead of endlessly waiting.
+
+The default is 30000ms. Very large sites might need to increase this.
+
 ## Disallowed Link Types
 
 You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self`, `describedby`, `contact_message--feedback`, and `contact_message--pesonal` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
