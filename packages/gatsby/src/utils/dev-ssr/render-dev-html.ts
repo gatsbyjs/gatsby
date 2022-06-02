@@ -24,8 +24,7 @@ interface IErrorRenderMeta {
 }
 
 // TODO: convert `render-dev-html-child.js` to TS and use `typeof import("./render-dev-html-child")`
-// instead of defining interface hereimport { IServerData } from '../../../dist/utils/get-server-data.d';
-
+// instead of defining interface here
 interface IRenderDevHtmlChild {
   renderHTML: (arg: {
     path: string
