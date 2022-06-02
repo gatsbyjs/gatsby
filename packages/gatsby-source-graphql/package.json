@@ -9,10 +9,10 @@
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@babel/runtime": "^7.15.4",
-    "@graphql-tools/links": "^8.2.14",
-    "@graphql-tools/utils": "^8.6.9",
+    "@graphql-tools/links": "^8.2.17",
+    "@graphql-tools/utils": "^8.6.12",
     "@graphql-tools/wrap": "^8.3.3",
-    "dataloader": "^2.0.0",
+    "dataloader": "^2.1.0",
     "gatsby-core-utils": "^3.16.0-next.0",
     "invariant": "^2.2.4",
     "node-fetch": "^2.6.7"
