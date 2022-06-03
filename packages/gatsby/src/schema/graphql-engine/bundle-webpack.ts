@@ -172,14 +172,18 @@ export async function createGraphqlEngineBundle(
       function getResourcePath(
         webpackModule?: Module | NormalModule | ConcatenatedModule | null
       ): string | undefined {
-        if (!(webpackModule instanceof ConcatenatedModule)) {
+        if (webpackModule && !(webpackModule instanceof ConcatenatedModule)) {
           return (webpackModule as NormalModule).resource
         }
 
-        // ConcatenatedModule is a collection of modules so we have to go deeper to actually get a path,
-        // at this point we won't know which one so we just grab first module here
-        const [firstSubModule] = webpackModule.modules
-        return getResourcePath(firstSubModule)
+        if (webpackModule?.modules) {
+          // ConcatenatedModule is a collection of modules so we have to go deeper to actually get a path,
+          // at this point we won't know which one so we just grab first module here
+          const [firstSubModule] = webpackModule.modules
+          return getResourcePath(firstSubModule)
+        }
+
+        return undefined
       }
 
       let tsNodeUsed = false
