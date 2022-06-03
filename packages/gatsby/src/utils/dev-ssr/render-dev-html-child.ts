@@ -1,6 +1,8 @@
-import { parseError } from "./parse-error"
+import { parseError, IErrorRenderMeta } from "./parse-error"
 
-exports.renderHTML = async ({
+import type { IServerData } from "../get-server-data"
+
+export async function renderHTML({
   path,
   componentPath,
   htmlComponentRendererPath,
@@ -9,7 +11,16 @@ exports.renderHTML = async ({
   error = undefined,
   directory,
   serverData,
-}) => {
+}: {
+  path: string
+  componentPath: string
+  htmlComponentRendererPath: string
+  publicDir: string
+  isClientOnlyPage?: boolean
+  error?: IErrorRenderMeta
+  directory: string
+  serverData?: IServerData["props"]
+}): Promise<string> {
   try {
     const htmlComponentRenderer = require(htmlComponentRendererPath)
     if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
@@ -32,6 +43,6 @@ exports.renderHTML = async ({
     throw error
   }
 }
-exports.deleteModuleCache = htmlComponentRendererPath => {
+export function deleteModuleCache(htmlComponentRendererPath: string): void {
   delete require.cache[require.resolve(htmlComponentRendererPath)]
 }

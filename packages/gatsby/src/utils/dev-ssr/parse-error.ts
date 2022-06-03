@@ -51,6 +51,15 @@ export interface IParsedError {
   column: number
 }
 
+export interface IErrorRenderMeta {
+  codeFrame: string
+  source: string
+  line: number
+  column: number
+  sourceMessage?: string
+  stack?: string
+}
+
 // Code borrowed and modified from https://github.com/watilde/parse-error
 export const parseError = function ({
   err,

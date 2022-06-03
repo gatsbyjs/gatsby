@@ -13,34 +13,14 @@ import { GatsbyReduxStore } from "../../redux"
 import { IGatsbyPage } from "../../redux/types"
 import { getServerData, IServerData } from "../get-server-data"
 import { getPageMode } from "../page-mode"
-import { parseError } from "./parse-error"
-interface IErrorRenderMeta {
-  codeFrame: string
-  source: string
-  line: number
-  column: number
-  sourceMessage?: string
-  stack?: string
-}
+import { parseError, IErrorRenderMeta } from "./parse-error"
 
-// TODO: convert `render-dev-html-child.js` to TS and use `typeof import("./render-dev-html-child")`
-// instead of defining interface here
-interface IRenderDevHtmlChild {
-  renderHTML: (arg: {
-    path: string
-    componentPath: string
-    htmlComponentRendererPath: string
-    publicDir: string
-    isClientOnlyPage?: boolean
-    error?: IErrorRenderMeta
-    directory?: string
-    serverData?: IServerData["props"]
-  }) => Promise<string>
-  deleteModuleCache: (htmlComponentRendererPath: string) => void
-}
+type GatsbyDevSSRWorkerPool = WorkerPool<
+  typeof import("./render-dev-html-child")
+>
 
-const startWorker = (): WorkerPool<IRenderDevHtmlChild> => {
-  const newWorker = new WorkerPool<IRenderDevHtmlChild>(
+const startWorker = (): GatsbyDevSSRWorkerPool => {
+  const newWorker = new WorkerPool<typeof import("./render-dev-html-child")>(
     require.resolve(`./render-dev-html-child`),
     {
       numWorkers: 1,
@@ -55,7 +35,7 @@ const startWorker = (): WorkerPool<IRenderDevHtmlChild> => {
   return newWorker
 }
 
-let worker: WorkerPool<IRenderDevHtmlChild>
+let worker: GatsbyDevSSRWorkerPool
 export const initDevWorkerPool = (): void => {
   worker = startWorker()
 }
