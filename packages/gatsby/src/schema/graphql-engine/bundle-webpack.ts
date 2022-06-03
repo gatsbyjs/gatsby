@@ -79,6 +79,16 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: `babel-loader`,
+            options: {
+              presets: [`@babel/preset-typescript`],
+            },
+          },
+        },
+        {
           oneOf: [
             {
               // specific set of loaders for LMBD - our custom patch to massage lmdb to work with relocator -> relocator
@@ -94,7 +104,7 @@ export async function createGraphqlEngineBundle(
             },
             {
               // specific set of loaders for gatsby-node files - our babel transform that removes lifecycles not needed for engine -> relocator
-              test: /gatsby-node\.([cm]?js)$/,
+              test: /gatsby-node\.(cjs|mjs|js|ts)$/,
               // it is recommended for Node builds to turn off AMD support
               parser: { amd: false },
               use: [
@@ -107,7 +117,7 @@ export async function createGraphqlEngineBundle(
             {
               // generic loader for all other cases than lmdb or gatsby-node - we don't do anything special other than using relocator on it
               // For node binary relocations, include ".node" files as well here
-              test: /\.([cm]?js|node)$/,
+              test: /\.(cjs|mjs|js|ts|node)$/,
               // it is recommended for Node builds to turn off AMD support
               parser: { amd: false },
               use: assetRelocatorUseEntry,
@@ -122,16 +132,6 @@ export async function createGraphqlEngineBundle(
               esm: {
                 fullySpecified: false,
               },
-            },
-          },
-        },
-        {
-          test: /\.ts$/,
-          exclude: /node_modules/,
-          use: {
-            loader: `babel-loader`,
-            options: {
-              presets: [`@babel/preset-typescript`],
             },
           },
         },
