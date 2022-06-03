@@ -89,7 +89,10 @@ async function genMDX(
 
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
-  const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
+  const { data, content: frontMatterCodeResult } = grayMatter(
+    node.rawBody,
+    options
+  )
 
   const content = isolateMDXComponent
     ? frontMatterCodeResult
@@ -210,7 +213,7 @@ async function findImports({
   pathPrefix,
   ...helpers
 }) {
-  const { content } = grayMatter(node.rawBody)
+  const { content } = grayMatter(node.rawBody, options)
 
   const gatsbyRemarkPluginsAsremarkPlugins =
     await getSourcePluginsAsRemarkPlugins({
@@ -289,7 +292,7 @@ async function findImportsExports({
   pathPrefix,
   ...helpers
 }) {
-  const { data: frontmatter, content } = grayMatter(rawInput)
+  const { data: frontmatter, content } = grayMatter(rawInput, options)
 
   const gatsbyRemarkPluginsAsRemarkPlugins =
     await getSourcePluginsAsRemarkPlugins({
