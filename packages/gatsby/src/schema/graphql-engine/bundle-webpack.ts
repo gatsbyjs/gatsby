@@ -168,7 +168,7 @@ export async function createGraphqlEngineBundle(
   })
 
   return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
+    compiler.run((err, stats): void => {
       function getResourcePath(
         webpackModule?: Module | NormalModule | ConcatenatedModule | null
       ): string | undefined {
@@ -186,17 +186,11 @@ export async function createGraphqlEngineBundle(
         return undefined
       }
 
-      let tsNodeUsed = false
       function iterateModules(
         webpackModules: Set<Module>,
         compilation: Compilation
       ): void {
         for (const webpackModule of webpackModules) {
-          if (tsNodeUsed) {
-            // once we find ts-node module anywhere we can stop iterating
-            break
-          }
-
           if (webpackModule instanceof ConcatenatedModule) {
             iterateModules(
               (webpackModule as ConcatenatedModule).modules,
@@ -208,30 +202,37 @@ export async function createGraphqlEngineBundle(
               const importedBy = getResourcePath(
                 compilation.moduleGraph.getIssuer(webpackModule)
               )
-              console.warn(
-                `"ts-node" usage detected${
-                  importedBy ? ` (imported by ${importedBy})` : ``
-                }`
-              )
-              tsNodeUsed = true
+              const structuredError = {
+                id: `98011`,
+                context: {
+                  package: `ts-node`,
+                  importedBy,
+                  advisory: `Gatsby is supporting TypeScript natively (see https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/). "ts-node" might not be needed anymore at all, consider removing it.`,
+                },
+              }
+              throw structuredError
             }
           }
         }
       }
 
-      if (stats?.compilation.modules) {
-        iterateModules(stats.compilation.modules, stats.compilation)
-      }
+      try {
+        if (stats?.compilation.modules) {
+          iterateModules(stats.compilation.modules, stats.compilation)
+        }
 
-      compiler.close(closeErr => {
-        if (err) {
-          return reject(err)
-        }
-        if (closeErr) {
-          return reject(closeErr)
-        }
-        return resolve(stats?.compilation)
-      })
+        compiler.close(closeErr => {
+          if (err) {
+            return reject(err)
+          }
+          if (closeErr) {
+            return reject(closeErr)
+          }
+          return resolve(stats?.compilation)
+        })
+      } catch (e) {
+        reject(e)
+      }
     })
   })
 }
