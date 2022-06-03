@@ -140,6 +140,75 @@ describe(`gatsby config`, () => {
       `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
     )
   })
+
+  it(`return false for graphqlTypegen when not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: false,
+      })
+    )
+  })
+
+  it(`throws when graphqlTypegen is not valid option`, () => {
+    const config = {
+      graphqlTypegen: `foo-bar`,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "graphqlTypegen" must be one of [boolean, object]]`
+    )
+  })
+
+  it(`return defaults for graphqlTypegen when empty object is set`, () => {
+    const config = {
+      graphqlTypegen: {},
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+        },
+      })
+    )
+  })
+
+  // Re-Add when more options are added
+  it.skip(`return partial defaults for graphqlTypegen when partial options object is set`, () => {
+    const config = {
+      graphqlTypegen: {
+        debug: true,
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+          debug: true,
+        },
+      })
+    )
+  })
+
+  it(`throws when graphqlTypegen has invalid key`, () => {
+    const config = {
+      graphqlTypegen: {
+        invalid: true,
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "graphqlTypegen.invalid" is not allowed]`
+    )
+  })
 })
 
 describe(`node schema`, () => {

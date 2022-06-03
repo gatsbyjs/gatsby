@@ -224,14 +224,20 @@ export const definitionsTypegen: ActionFunction<
   AnyEventObject
 > = async (context, event) => {
   const definitions = event.payload.payload
-  const { schema } = context.store!.getState()
+  const { schema, config } = context.store!.getState()
   const directory = context.program.directory
+  const graphqlTypegenOptions = config.graphqlTypegen ?? false
 
   context.reporter!.verbose(`Re-Generating fragments.graphql & TS Types`)
 
   try {
     await writeGraphQLFragments(directory, definitions)
-    await writeTypeScriptTypes(directory, schema, definitions)
+    await writeTypeScriptTypes(
+      directory,
+      schema,
+      definitions,
+      graphqlTypegenOptions
+    )
   } catch (err) {
     context.reporter!.panicOnBuild({
       id: `12100`,

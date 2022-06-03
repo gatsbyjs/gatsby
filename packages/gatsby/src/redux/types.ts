@@ -78,6 +78,10 @@ export interface IGatsbyFunction {
   pluginName: string
 }
 
+export interface IGraphQLTypegenOptions {
+  typesOutputPath: string
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
     // This is the name of the plugin like `gatsby-plugin-manifest
@@ -105,7 +109,7 @@ export interface IGatsbyConfig {
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
-  graphqlTypegen?: boolean
+  graphqlTypegen?: boolean | IGraphQLTypegenOptions
 }
 
 export interface IGatsbyNode {
