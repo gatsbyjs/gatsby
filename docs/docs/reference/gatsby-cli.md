@@ -260,15 +260,14 @@ Which package manager would you like to use ? › - Use arrow-keys. Return to su
 
 Once you’ve made your choice, the CLI won’t ask for your preference again for any subsequent project. If you want to change the preference, there are two ways to change the default package manager for your next project:
 
-1.) [Using options command from CLI](#using-options-command-from-cli)
-
-2.) [Editing the config file](#editing-the-config-file)
+1. [Using options command from CLI](#using-options-command-from-cli)
+1. [Editing the config file](#editing-the-config-file)
 
 ### Using options command from CLI
 
 You can use the `gatsby options` command to change the default package manager.
 
-```
+```shell
 gatsby options set [<key> <value>]
 ```
 
@@ -279,7 +278,7 @@ gatsby options set [<key> <value>]
 
 To set the default package manager as `yarn` you'd run:
 
-```
+```shell
 gatsby options set package-manager yarn
 ```
 
