@@ -1,16 +1,26 @@
 #!/usr/bin/env node
 
-// this is used for development purposes only
-// to be able to run `gatsby build` once to source data
-// and print schema and then just rebundle graphql-engine
-// with source file changes and compare memory usage when
-// running queries
+/*
+this is used for development purposes only
+to be able to run `gatsby build` once to source data
+and print schema and then just rebundle graphql-engine
+with source file changes and test re-built engine quickly
+
+Usage:
+There need to be at least one successful `gatsby build`
+before starting to use this script (warm up datastore,
+generate "page-ssr" bundle). Once that's done you can
+run following command in test site directory:
+
+```shell
+node node_modules/gatsby/dist/schema/graphql-engine/standalone-regenerate.js
+```
+*/
 
 import { createGraphqlEngineBundle } from "./bundle-webpack"
 import reporter from "gatsby-cli/lib/reporter"
 import { loadConfigAndPlugins } from "../../utils/worker/child/load-config-and-plugins"
 import * as fs from "fs-extra"
-// import { getKeysForModule } from "../../utils/require-gatsby-plugin"
 import { validateEngines } from "../../utils/validate-engines"
 
 async function run(): Promise<void> {
