@@ -333,7 +333,10 @@ export const startListener = (): void => {
      * files as required
      */
     emitter.on(`CREATE_SERVER_VISITED_PAGE`, async (): Promise<void> => {
-      await writeAll(store.getState())
+      // this event only happen on new additions
+      devSSRWillInvalidate()
+      reporter.pendingActivity({ id: `requires-writer` })
+      debouncedWriteAll()
     })
   }
 
