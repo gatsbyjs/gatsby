@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.15.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.15.2/packages/gatsby-plugin-mdx) (2022-06-02)
+
+#### Bug Fixes
+
+- don't allow JS frontmatter by default [#35830](https://github.com/gatsbyjs/gatsby/issues/35830) [#35832](https://github.com/gatsbyjs/gatsby/issues/35832) ([e916cf8](https://github.com/gatsbyjs/gatsby/commit/e916cf8a0e24b9c870edd3d089611e2adb899d4e))
+
 ### [3.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.15.1/packages/gatsby-plugin-mdx) (2022-06-01)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
