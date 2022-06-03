@@ -73,11 +73,9 @@ describe(`build-javascript`, () => {
       if (Array.isArray(rule.use)) {
         return (
           rule.use[0]?.loader &&
-          rule.use[0].loader.indexOf(`/babel-loader/`) >= 0
+          rule.use[0].loader.indexOf(`babel-loader`) >= 0
         )
       }
-
-      return undefined
     })
 
   it(`polyfills dependencies when ES6 module support is false`, async () => {
