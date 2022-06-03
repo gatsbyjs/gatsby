@@ -1,9 +1,12 @@
 export function register() {
   // no-op
-  // we will transpile typescript files when bundling for engines
-  // so we don't need any runtime handler for it anymore
-  // TO-DO: currently we don't really set any options on TS transpilation
-  // users might provide arguments to ts-node that would behave differently
-  // than our defaults - can we support that somehow to ensure same
-  // TS setting are used when bundling as in regular runtime?
+  //
+  // We are actually failing the build when `ts-node` exists in webpack's dependency graph
+  // because it's known to not work and cause failures.
+  //
+  // This shim for `ts-node` just skips trying to bundle the actual `ts-node`
+  // so webpack has less work to do during bundling.
+  //
+  // Using or not this shim, functionally doesn't make a difference - we will still
+  // fail the build with same actionable error anyway.
 }
