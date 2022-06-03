@@ -170,36 +170,54 @@ export async function createGraphqlEngineBundle(
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       function getResourcePath(
-        webpackModule: Module | NormalModule | ConcatenatedModule
+        webpackModule?: Module | NormalModule | ConcatenatedModule | null
       ): string | undefined {
         if (!(webpackModule instanceof ConcatenatedModule)) {
           return (webpackModule as NormalModule).resource
         }
 
-        // ConcatenatedModule is a collection of modules so we have to go deeper to actually get it
-        return webpackModule.modules.some(
-          innerModule => (innerModule as NormalModule).resource
-        )
+        // ConcatenatedModule is a collection of modules so we have to go deeper to actually get a path,
+        // at this point we won't know which one so we just grab first module here
+        const [firstSubModule] = webpackModule.modules
+        return getResourcePath(firstSubModule)
       }
 
       let tsNodeUsed = false
-      stats?.compilation.modules.forEach(webpackModule => {
-        if (
-          !tsNodeUsed &&
-          getResourcePath(webpackModule)?.includes(`ts-node`)
-        ) {
-          // console.log(webpackModule)
-          const importedBy = getResourcePath(
-            stats.compilation.moduleGraph.getIssuer(webpackModule)
-          )
-          console.warn(
-            `"ts-node" usage detected${
-              importedBy ? ` (imported by ${importedBy})` : ``
-            }`
-          )
-          tsNodeUsed = true
+      function iterateModules(
+        webpackModules: Set<Module>,
+        compilation: Compilation
+      ): void {
+        for (const webpackModule of webpackModules) {
+          if (tsNodeUsed) {
+            // once we find ts-node module anywhere we can stop iterating
+            break
+          }
+
+          if (webpackModule instanceof ConcatenatedModule) {
+            iterateModules(
+              (webpackModule as ConcatenatedModule).modules,
+              compilation
+            )
+          } else {
+            const resourcePath = getResourcePath(webpackModule)
+            if (resourcePath?.includes(`ts-node`)) {
+              const importedBy = getResourcePath(
+                compilation.moduleGraph.getIssuer(webpackModule)
+              )
+              console.warn(
+                `"ts-node" usage detected${
+                  importedBy ? ` (imported by ${importedBy})` : ``
+                }`
+              )
+              tsNodeUsed = true
+            }
+          }
         }
-      })
+      }
+
+      if (stats?.compilation.modules) {
+        iterateModules(stats.compilation.modules, stats.compilation)
+      }
 
       compiler.close(closeErr => {
         if (err) {
