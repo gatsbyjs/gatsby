@@ -2,7 +2,7 @@
 
 import * as path from "path"
 import * as fs from "fs-extra"
-import webpack, { Module, NormalModule } from "webpack"
+import webpack, { Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
