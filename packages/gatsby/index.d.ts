@@ -1230,6 +1230,13 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/actions/#setRequestHeaders */
+  setRequestHeaders(
+    this: void,
+    args: { domain: string; headers: Record<string, string> },
+    plugin?: ActionPlugin
+  ): void
+
   /** @see https://www.gatsbyjs.com/docs/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 

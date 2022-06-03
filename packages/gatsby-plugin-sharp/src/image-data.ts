@@ -15,6 +15,8 @@ import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
+const DOMINANT_COLOR_IMAGE_SIZE = 200
+
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
@@ -66,7 +68,16 @@ export async function getImageMetadata(
 
     const { width, height, density, format } = await pipeline.metadata()
 
-    const { dominant } = await pipeline.stats()
+    // Downsize the image before calculating the dominant color
+    const buffer = await pipeline
+      .resize(DOMINANT_COLOR_IMAGE_SIZE, DOMINANT_COLOR_IMAGE_SIZE, {
+        fit: `inside`,
+        withoutEnlargement: true,
+      })
+      .toBuffer()
+
+    const { dominant } = await sharp(buffer).stats()
+
     // Fallback in case sharp doesn't support dominant
     const dominantColor = dominant
       ? rgbToHex(dominant.r, dominant.g, dominant.b)

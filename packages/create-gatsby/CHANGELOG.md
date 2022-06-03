@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.15.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.15.1/packages/create-gatsby) (2022-06-01)
+
+**Note:** Version bump only for package create-gatsby
+
 ## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.15.0/packages/create-gatsby) (2022-05-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
