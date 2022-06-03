@@ -2,7 +2,8 @@
 
 import * as path from "path"
 import * as fs from "fs-extra"
-import webpack from "webpack"
+import webpack, { Module, NormalModule } from "webpack"
+import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
@@ -168,6 +169,38 @@ export async function createGraphqlEngineBundle(
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
+      function getResourcePath(
+        webpackModule: Module | NormalModule | ConcatenatedModule
+      ): string | undefined {
+        if (!(webpackModule instanceof ConcatenatedModule)) {
+          return (webpackModule as NormalModule).resource
+        }
+
+        // ConcatenatedModule is a collection of modules so we have to go deeper to actually get it
+        return webpackModule.modules.some(
+          innerModule => (innerModule as NormalModule).resource
+        )
+      }
+
+      let tsNodeUsed = false
+      stats?.compilation.modules.forEach(webpackModule => {
+        if (
+          !tsNodeUsed &&
+          getResourcePath(webpackModule)?.includes(`ts-node`)
+        ) {
+          // console.log(webpackModule)
+          const importedBy = getResourcePath(
+            stats.compilation.moduleGraph.getIssuer(webpackModule)
+          )
+          console.warn(
+            `"ts-node" usage detected${
+              importedBy ? ` (imported by ${importedBy})` : ``
+            }`
+          )
+          tsNodeUsed = true
+        }
+      })
+
       compiler.close(closeErr => {
         if (err) {
           return reject(err)
