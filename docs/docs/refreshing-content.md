@@ -11,3 +11,8 @@ You can trigger this endpoint locally, for example, on Unix-based operating syst
 Additionally, the sourced content can also be refreshed with the "Refresh Data" button in the [GraphiQL explorer](/docs/how-to/querying-data/running-queries-with-graphiql). This button is only visible if `ENABLE_GATSBY_REFRESH_ENDPOINT` is set to `true`.
 
 Securing the refresh endpoint is possible by supplying a value for the environmental variable `GATSBY_REFRESH_TOKEN`, which will cause Gatsby to only accept requests with a matching authorization header. For example `GATSBY_REFRESH_TOKEN=12345` would require a request with header: `authorization: 12345`.
+
+Make sure you add this code to your gatsby-config.js file so that Gatsby can read the env var:
+`require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});`
