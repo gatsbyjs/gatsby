@@ -131,7 +131,7 @@ const getGatsbyImageCdnFields = async ({
       )
     )
     reporter.panic(
-      `[gatsby-source-drupal] Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
+      `[gatsby-source-drupal] Encountered an unrecoverable error while generating Gatsby Image CDN fields for url ${url}. See above for additional information.`
     )
   }
 
