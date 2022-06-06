@@ -112,6 +112,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -143,6 +144,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -200,6 +202,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -216,6 +219,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -275,6 +279,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 75,
@@ -291,6 +296,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 150,
@@ -307,6 +313,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -323,6 +330,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -386,6 +394,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 750,
@@ -402,6 +411,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1080,
@@ -418,6 +428,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1366,
@@ -434,6 +445,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1920,
@@ -520,6 +532,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -535,6 +548,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -555,6 +569,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -570,6 +585,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
