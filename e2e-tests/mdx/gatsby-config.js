@@ -37,7 +37,7 @@ module.exports = {
  * See #26914 for more info.
  */
 function remarkRequireFilePathPlugin() {
-  return function transformer(tree, file) {
+  return function transformer(_, file) {
     if (!file.dirname) {
       throw new Error("No directory name for this markdown file!")
     }
