@@ -68,6 +68,7 @@ In a series of PRs we've ensured that Gatsby and its dependencies are compatible
 - `gatsby-source-drupal`: Allow sites to configure the request timeout, via [PR #35794](https://github.com/gatsbyjs/gatsby/pull/35794)
 - `gatsby-plugin-utils`: Add new `setRequestHeaders` API, via [PR #35655](https://github.com/gatsbyjs/gatsby/pull/35655)
 - `gatsby-plugin-utils`: Add `contentDigest` to image cdn args, via [PR #35816](https://github.com/gatsbyjs/gatsby/pull/35816)
+- `gatsby-plugin-mdx`: Don't allow JS frontmatter by default, via [PR #35830](https://github.com/gatsbyjs/gatsby/pull/35830)
 
 ## Contributors
 
