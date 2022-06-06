@@ -20,6 +20,7 @@ const imageCDNState = {
 
 exports.imageCDNState = imageCDNState
 
+let four04WarningCount = 0
 /**
  * This FN takes in node data and returns Gatsby Image CDN fields that should be added to that node. If the input node isn't an image an empty object is returned.
  */
@@ -100,6 +101,15 @@ const getGatsbyImageCdnFields = async ({
 
     return gatsbyImageCdnFields
   } catch (e) {
+    if (e.message.includes(`404`)) {
+      if (four04WarningCount < 10) {
+        four04WarningCount++
+        reporter.warn(`Drupal file missing for url ${url}`)
+      }
+
+      return {}
+    }
+
     if (e.message.includes(`unrecognized file format`)) {
       reporter.error(
         `[gatsby-source-drupal] Encountered corrupt file while requesting image dimensions for ${url}`
