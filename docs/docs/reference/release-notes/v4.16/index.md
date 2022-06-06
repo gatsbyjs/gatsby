@@ -53,7 +53,7 @@ Learn more in the [`useContentfulImage` documentation](https://github.com/gatsby
 
 ## Node 18 Compability
 
-In a series of PRs we've ensured that Gatsby and its dependencies are compatible with Node 18: 
+In a series of PRs we've ensured that Gatsby and its dependencies are compatible with Node 18:
 
 - In [PR #35585](https://github.com/gatsbyjs/gatsby/pull/35585) `lmdb` was updated as in never versions it ships with prebuilt binaries for Node 18.
 - In [PR #35621](https://github.com/gatsbyjs/gatsby/pull/35621) we migrated from `source-map` to `@jridgewell/trace-mapping` as `source-map` in incompatible with Node 18.
