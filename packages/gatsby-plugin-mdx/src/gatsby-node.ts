@@ -193,9 +193,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
       .join(`/`)
 
   // Use title from frontmatter, otherwise fall back to the file name
-  const title =
-    frontmatter.title ||
-    (node.name === `index` ? `Home` : sentenceCase(node.name))
+  const title = frontmatter.title || sentenceCase(node.name)
 
   const mdxNode: NodeInput = {
     id: createNodeId(`${node.id} >>> Mdx`),
