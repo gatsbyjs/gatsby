@@ -10,6 +10,7 @@ const ORIGIN = `https://gatsbyjs.com`
 export enum ImageCDNUrlKeys {
   URL = `u`,
   ARGS = `a`,
+  CONTENT_DIGEST = `cd`,
 }
 
 export function generateFileUrl({
@@ -34,21 +35,28 @@ export function generateFileUrl({
 }
 
 export function generateImageUrl(
-  source: { url: string; mimeType: string; filename: string },
+  source: {
+    url: string
+    mimeType: string
+    filename: string
+    internal: { contentDigest: string }
+  },
   imageArgs: Parameters<typeof generateImageArgs>[0]
 ): string {
   const filenameWithoutExt = basename(source.filename, extname(source.filename))
+  const queryStr = generateImageArgs(imageArgs)
 
   const parsedURL = new URL(
     `${ORIGIN}${generatePublicUrl(source)}/${createContentDigest(
-      generateImageArgs(imageArgs)
+      queryStr
     )}/${filenameWithoutExt}.${imageArgs.format}`
   )
 
   parsedURL.searchParams.append(ImageCDNUrlKeys.URL, source.url)
+  parsedURL.searchParams.append(ImageCDNUrlKeys.ARGS, queryStr)
   parsedURL.searchParams.append(
-    ImageCDNUrlKeys.ARGS,
-    generateImageArgs(imageArgs)
+    ImageCDNUrlKeys.CONTENT_DIGEST,
+    source.internal.contentDigest
   )
 
   return `${parsedURL.pathname}${parsedURL.search}`
