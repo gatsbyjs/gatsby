@@ -11,7 +11,7 @@ const scripts = {
   myLocalScript2: `/my-local-script-2.js`,
 }
 
-const IndexPage = () => {
+const IndexPage = (): JSX.Element => {
   const [loaded, setLoaded] = useState<boolean>(false)
 
   return (
@@ -39,14 +39,14 @@ const IndexPage = () => {
       <Script
         strategy="post-hydrate" // Can also use the `ScriptStrategy` enum to declare strategies
         src={scripts.three}
-        onLoad={() => console.log(`success loading ${scripts.three}`)}
-        onError={() => console.log(`failure loading ${scripts.three}`)}
+        onLoad={(): void => console.log(`success loading ${scripts.three}`)}
+        onError={(): void => console.log(`failure loading ${scripts.three}`)}
       />
       <Script
         strategy="idle"
         src={scripts.jQuery}
-        onLoad={() => console.log(`success loading ${scripts.jQuery}`)}
-        onError={() => console.log(`failure loading ${scripts.jQuery}`)}
+        onLoad={(): void => console.log(`success loading ${scripts.jQuery}`)}
+        onError={(): void => console.log(`failure loading ${scripts.jQuery}`)}
       />
       <Script
         strategy="off-main-thread"
@@ -57,19 +57,21 @@ const IndexPage = () => {
       {/* Dependent script loading, here my-local-script-2 loads after my-local-script loads */}
       <Script
         src={scripts.myLocalScript}
-        onLoad={() => {
+        onLoad={(): void => {
           console.log(`success loading ${scripts.myLocalScript}`)
           setLoaded(true)
         }}
-        onError={() => console.log(`failure loading ${scripts.myLocalScript}`)}
+        onError={(): void =>
+          console.log(`failure loading ${scripts.myLocalScript}`)
+        }
       />
       {loaded && (
         <Script
           src={scripts.myLocalScript2}
-          onLoad={() =>
+          onLoad={(): void =>
             console.log(`success loading ${scripts.myLocalScript2}`)
           }
-          onError={() =>
+          onError={(): void =>
             console.log(`failure loading ${scripts.myLocalScript2}`)
           }
         />

@@ -1,8 +1,11 @@
 import React from "react"
+import type { GatsbySSR } from "gatsby"
 
 export { wrapPageElement, wrapRootElement } from "./gatsby-shared"
 
-export const onRenderBody = ({ setHeadComponents }) => {
+export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
+  setHeadComponents,
+}): void => {
   /**
    * Enable debug mode via Partytown's vanilla config.
    * @see {@link https://partytown.builder.io/configuration#vanilla-config}
@@ -11,7 +14,9 @@ export const onRenderBody = ({ setHeadComponents }) => {
     <script
       key="debug"
       dangerouslySetInnerHTML={{
-        __html: `partytown = { debug: true };`,
+        __html: `partytown = {
+          debug: true
+        }`,
       }}
     />,
   ])
