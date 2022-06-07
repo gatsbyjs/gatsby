@@ -77,6 +77,7 @@ Note that this option will cause this plugin to fetch extra image metadata for I
     resolve: `gatsby-source-drupal`,
     options: {
       imageCDN: false,
+      // other plugin options go here
     },
   },
 ```
