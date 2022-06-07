@@ -97,7 +97,11 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
     nodeString,
     node,
     helpers: {
-      reporter: console
+      reporter: console,
+      actions: {
+        addGatsbyImageSourceUrl: jest.fn(),
+        createJobV2: jest.fn(),
+      },
     },
     wpUrl: `http://wpgatsby.local/`,
     pluginOptions: {
@@ -122,7 +126,11 @@ test(`Gatsby Image service works in html fields via replaceNodeHtmlImages`, asyn
     nodeString,
     node,
     helpers: {
-      reporter: console
+      reporter: console,
+      actions: {
+        addGatsbyImageSourceUrl: jest.fn(),
+        createJobV2: jest.fn(),
+      },
     },
     wpUrl: `http://wpgatsby.local/`,
     pluginOptions: {

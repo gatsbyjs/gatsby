@@ -203,7 +203,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueriesDependencies())
     // Pass "1" as workerId as the test only have one worker
-    const result = loadPartialStateFromDisk([`queries`], `1`)
+    const result = loadPartialStateFromDisk([`queries`, `telemetry`], `1`)
 
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -234,6 +234,9 @@ describeWhenLMDB(`worker (queries)`, () => {
               "running": 0,
             },
           },
+        },
+        "telemetry": Object {
+          "gatsbyImageSourceUrls": Set {},
         },
       }
     `)
