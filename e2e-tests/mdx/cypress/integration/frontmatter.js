@@ -1,6 +1,6 @@
 const page = {
   js: `/frontmatter-js`,
-  javscript: `/frontmatter-javascript`,
+  javascript: `/frontmatter-javascript`,
   yaml: `/frontmatter-yaml`,
   json: `/frontmatter-json`,
   graphqlQuery: `/frontmatter-graphql-query`,
