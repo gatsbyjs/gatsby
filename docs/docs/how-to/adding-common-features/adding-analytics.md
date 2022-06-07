@@ -14,7 +14,7 @@ Gatsby offers a plugin for most common services, making first-class integration 
 
 When utilizing marketing analytics tools, one key tradeoff is that marketing analytics tools are often the culprit for poor website performance. As a result, tools that make it easier for marketers to add and remove analytics (via Google Tag Manager), can also make it easier for them to harm site performance without noticing.
 
-**Adding scripts performantly**
+## Adding scripts performantly**
 
 Gatsby has a built-in [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) that helps in loading scripts with a very high perfomrance. It's flexible and easy to use in declaring different loading strategies. 
 
