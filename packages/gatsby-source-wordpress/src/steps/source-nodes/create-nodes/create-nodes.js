@@ -159,9 +159,10 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
   const referencedMediaItemNodeIdsArray = [...referencedMediaItemNodeIds]
 
   /**
-   * if we're lazy fetching media items (before Gatsby v4), we need to fetch media item nodes upfront here
+   * if we're not excluding media items or we're lazy fetching media items (before Gatsby v4), we need to fetch media item nodes upfront here
    */
   if (
+    !pluginOptions.type.MediaItem.exclude &&
     (!pluginOptions.type.MediaItem.lazyNodes || usingGatsbyV4OrGreater) &&
     referencedMediaItemNodeIdsArray.length
   ) {
