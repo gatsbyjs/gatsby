@@ -70,14 +70,13 @@ When you're using Gatsby Image CDN you no longer need Gatsby to fetch all of the
   },
 ```
 
-Note that this option will cause this plugin to fetch extra image metadata for Image CDN. If you're not using Image CDN and still want to use this option and don't want that extra metadata, you can disable that by explicitly turning Image CDN off with the following option:
+Note that this option will cause this plugin to fetch extra image metadata for Image CDN. If you need to use the `skipFileDownloads` option but don't want to use Image CDN and fetch extra metadata, you can disable it by explicitly turning Image CDN off:
 
 ```js
   {
     resolve: `gatsby-source-drupal`,
     options: {
       imageCDN: false,
-      // other plugin options go here
     },
   },
 ```
