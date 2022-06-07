@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Script } from "gatsby"
+import { Script, ScriptStrategy } from "gatsby"
 import "../styles/common.css"
 
 const scripts = {
@@ -37,7 +37,7 @@ const IndexPage = (): JSX.Element => {
 
       {/* Scripts with sources */}
       <Script
-        strategy="post-hydrate" // Can also use the `ScriptStrategy` enum to declare strategies
+        strategy={ScriptStrategy.postHydrate} // In addition to string literals, we can also use the `ScriptStrategy` enum to declare strategies
         src={scripts.three}
         onLoad={(): void => console.log(`success loading ${scripts.three}`)}
         onError={(): void => console.log(`failure loading ${scripts.three}`)}

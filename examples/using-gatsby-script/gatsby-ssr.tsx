@@ -7,7 +7,7 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
   setHeadComponents,
 }): void => {
   /**
-   * Enable debug mode via Partytown's vanilla config.
+   * Enable debug mode via Partytown's vanilla config. Change to `debug: true` to enable.
    * @see {@link https://partytown.builder.io/configuration#vanilla-config}
    */
   setHeadComponents([

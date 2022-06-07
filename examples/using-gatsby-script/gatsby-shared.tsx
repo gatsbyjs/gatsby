@@ -2,6 +2,11 @@ import React from "react"
 import { Script } from "gatsby"
 import type { GatsbyBrowser, GatsbySSR } from "gatsby"
 
+/**
+ * Shared `wrapPageElement` and `wrapRootElement` functions to be
+ * re-exported in gatsby-browser and gatsby-ssr.
+ */
+
 export const wrapPageElement:
   | GatsbyBrowser[`wrapPageElement`]
   | GatsbySSR[`wrapPageElement`] = ({ element }): JSX.Element => (
