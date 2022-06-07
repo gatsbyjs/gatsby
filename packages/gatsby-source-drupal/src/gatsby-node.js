@@ -516,7 +516,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                   url.searchParams.append(key, value)
                 }
                 url = url.toString()
-                reporter.verbose(`applying filter to ${type} - ${url}`)
+                reporter.verbose(`applying filter to ${type} - ${decodeURI(url)}`)
               }
             }
           }
