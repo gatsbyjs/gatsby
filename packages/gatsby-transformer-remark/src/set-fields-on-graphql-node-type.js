@@ -16,12 +16,13 @@ const remark2retext = require(`remark-retext`)
 const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 const prune = require(`underscore.string/prune`)
+
 const {
   getConcatenatedValue,
   cloneTreeUntil,
   findLastTextNode,
-} = require(`./hast-processing`)
-const codeHandler = require(`./code-handler`)
+} = require(`./utils/hast-processing`)
+const codeHandler = require(`./utils/code-handler`)
 const { getHeadingID } = require(`./utils/get-heading-id`)
 const { timeToRead } = require(`./utils/time-to-read`)
 
@@ -98,13 +99,13 @@ module.exports = function remarkExtendNodeType(
   },
   pluginOptions
 ) {
-  if (type.name !== `MarkdownRemark`) {
+  if (!type.name.startsWith(`MarkdownRemark`)) {
     return {}
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     // Setup Remark.
     const {
       blocks,
@@ -149,6 +150,11 @@ module.exports = function remarkExtendNodeType(
           }
         }
       }
+    }
+
+    async function getSlug(markdownNode) {
+      const splitPath = markdownNode?.fileAbsolutePath?.split(`/`)
+      return splitPath?.[splitPath?.length - 1]?.slice(0, -3)
     }
 
     async function getFileWithNodeDependencyTracking(
@@ -625,7 +631,7 @@ module.exports = function remarkExtendNodeType(
       let isBeforeSeparator = true
       visit(
         ast,
-        node => isBeforeSeparator,
+        () => isBeforeSeparator,
         node => {
           if (excerptSeparator && node.value === excerptSeparator) {
             isBeforeSeparator = false
@@ -705,6 +711,12 @@ module.exports = function remarkExtendNodeType(
           return hastReparseRaw(strippedAst)
         },
       },
+      slug: {
+        type: `String`,
+        async resolve(markdownNode, opt, context) {
+          return getSlug(markdownNode, context)
+        },
+      },
       excerpt: {
         type: `String`,
         args: {
@@ -717,7 +729,7 @@ module.exports = function remarkExtendNodeType(
             defaultValue: false,
           },
           format: {
-            type: `MarkdownExcerptFormats`,
+            type: `MarkdownRemarkExcerptFormats`,
             defaultValue: `PLAIN`,
           },
         },
@@ -758,9 +770,9 @@ module.exports = function remarkExtendNodeType(
         },
       },
       headings: {
-        type: [`MarkdownHeading`],
+        type: [`MarkdownRemarkHeading`],
         args: {
-          depth: `MarkdownHeadingLevels`,
+          depth: `MarkdownRemarkHeadingLevels`,
         },
         async resolve(markdownNode, { depth }, context) {
           let headings = await getHeadings(markdownNode, context)
@@ -798,7 +810,7 @@ module.exports = function remarkExtendNodeType(
       },
       // TODO add support for non-latin languages https://github.com/wooorm/remark/issues/251#issuecomment-296731071
       wordCount: {
-        type: `MarkdownWordCount`,
+        type: `MarkdownRemarkWordCount`,
         resolve(markdownNode) {
           const counts = {}
 
