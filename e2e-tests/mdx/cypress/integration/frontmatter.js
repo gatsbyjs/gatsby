@@ -15,25 +15,64 @@ const titles = {
   parsed: `I am parsed`,
 }
 
+// Frontmatter that should not be rendered
+const otherKey = `Some other key`
+
 describe(`webpack loader`, () => {
-  it(`---yaml frontmatter should parse`, () => {
-    cy.visit(page.yaml).waitForRouteChange()
-    cy.get(selector).invoke(`text`).should(`eq`, titles.parsed)
+  describe(`---yaml frontmatter`, () => {
+    beforeEach(() => {
+      cy.visit(page.yaml).waitForRouteChange()
+    })
+
+    it(`should parse`, () => {
+      cy.get(selector).invoke(`text`).should(`eq`, titles.parsed)
+    })
+
+    it(`should not leak into the page`, () => {
+      cy.contains(otherKey).should(`not.exist`)
+    })
   })
 
-  it(`---json frontmatter should parse`, () => {
-    cy.visit(page.json).waitForRouteChange()
-    cy.get(selector).invoke(`text`).should(`eq`, titles.parsed)
+  describe(`---json frontmatter`, () => {
+    beforeEach(() => {
+      cy.visit(page.json).waitForRouteChange()
+    })
+
+    it(`should parse`, () => {
+      cy.get(selector).invoke(`text`).should(`eq`, titles.parsed)
+    })
+
+    it(`should not leak into the page`, () => {
+      cy.contains(otherKey).should(`not.exist`)
+    })
   })
 
-  it(`---js frontmatter should not parse by default`, () => {
-    cy.visit(page.js).waitForRouteChange()
-    cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
+  describe(`---js frontmatter`, () => {
+    beforeEach(() => {
+      cy.visit(page.js).waitForRouteChange()
+    })
+
+    it(`should parse`, () => {
+      cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
+    })
+
+    it(`should not leak into the page`, () => {
+      cy.contains(otherKey).should(`not.exist`)
+    })
   })
 
-  it(`---javascript frontmatter should not parse by default`, () => {
-    cy.visit(page.javscript).waitForRouteChange()
-    cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
+  describe(`---javascript frontmatter`, () => {
+    beforeEach(() => {
+      cy.visit(page.javascript).waitForRouteChange()
+    })
+
+    it(`should parse`, () => {
+      cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
+    })
+
+    it(`should not leak into the page`, () => {
+      cy.contains(otherKey).should(`not.exist`)
+    })
   })
 })
 
