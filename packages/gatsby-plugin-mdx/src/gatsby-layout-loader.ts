@@ -4,7 +4,6 @@ import type { Options } from "mdast-util-to-markdown"
 import type { NodeMap } from "./types"
 import type { IMdxPluginOptions } from "./plugin-options"
 
-import grayMatter from "gray-matter"
 import { getOptions } from "loader-utils"
 
 export interface IGatsbyLayoutLoaderOptions {
@@ -13,7 +12,7 @@ export interface IGatsbyLayoutLoaderOptions {
 }
 
 // Wrap MDX content with Gatsby Layout component
-const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
+const gatsbyLayoutLoader: LoaderDefinition = async function () {
   const { options, nodeMap }: IGatsbyLayoutLoaderOptions = getOptions(this)
 
   const res = nodeMap.get(this.resourcePath)
@@ -21,6 +20,12 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
   if (!res) {
     throw new Error(
       `Unable to locate GraphQL File node for ${this.resourcePath}`
+    )
+  }
+
+  if (!res.mdxNode.body) {
+    throw new Error(
+      `MDX node is empty: ${JSON.stringify(res.mdxNode, null, 2)}`
     )
   }
 
@@ -34,11 +39,8 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
 
   // No default layout set? Nothing to do here!
   if (!layoutPath) {
-    return source
+    return res.mdxNode.body
   }
-
-  // Remove frontmatter
-  const { content } = grayMatter(source)
 
   const { fromMarkdown } = await import(`mdast-util-from-markdown`)
   const { toMarkdown } = await import(`mdast-util-to-markdown`)
@@ -47,7 +49,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
   const { mdxFromMarkdown, mdxToMarkdown } = await import(`mdast-util-mdx`)
 
   // Parse MDX to AST
-  const tree = fromMarkdown(content, {
+  const tree = fromMarkdown(res.mdxNode.body, {
     extensions: [mdxjs()],
     mdastExtensions: [mdxFromMarkdown()],
   })
@@ -59,12 +61,16 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
   )
 
   if (hasDefaultExport) {
-    return content
+    return res.mdxNode.body
   }
 
   tree.children.unshift({
     type: `mdxjsEsm` as `text`,
     value: `import GatsbyMDXLayout from "${layoutPath}"`,
+  })
+  tree.children.push({
+    type: `mdxjsEsm` as `text`,
+    value: `export * from "${layoutPath}"`,
   })
 
   tree.children.push({

@@ -8,6 +8,8 @@ import type {
 import deepmerge from "deepmerge"
 import { IPluginRefObject } from "gatsby-plugin-utils/types"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
+import rehypeMdxMetadataExtractor from "./rehype-metadata-extractor"
+import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
 
 export interface IMdxPluginOptions extends PluginOptions {
   extensions: [string]
@@ -29,6 +31,7 @@ export const defaultOptions: MdxDefaultOptions = pluginOptions => {
     format: `mdx`,
     useDynamicImport: true,
     providerImportSource: `@mdx-js/react`,
+    jsxRuntime: `classic`,
   }
   const options: IMdxPluginOptions = deepmerge(
     {
@@ -53,12 +56,12 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
 ) => {
   const options = defaultOptions(pluginOptions)
 
+  if (!options.mdxOptions.remarkPlugins) {
+    options.mdxOptions.remarkPlugins = []
+  }
+
   // Support gatsby-remark-* plugins
   if (Object.keys(options.gatsbyRemarkPlugins).length) {
-    if (!options.mdxOptions.remarkPlugins) {
-      options.mdxOptions.remarkPlugins = []
-    }
-
     // Parser plugins
     for (const plugin of options.gatsbyRemarkPlugins) {
       const requiredPlugin = plugin.module
@@ -86,6 +89,19 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
       options.mdxOptions.remarkPlugins.push(...gatsbyRemarkPlugins)
     }
   }
+
+  options.mdxOptions.remarkPlugins.push(remarkMdxHtmlPlugin)
+
+  if (!options.mdxOptions.rehypePlugins) {
+    options.mdxOptions.rehypePlugins = []
+  }
+
+  options.mdxOptions.rehypePlugins.push(
+    // Extract metadata generated from by rehype-infer-* plugins
+    // And use these to get the excerpt and time to read
+    // @todo add options: https://github.com/rehypejs/rehype-infer-description-meta#options
+    rehypeMdxMetadataExtractor
+  )
 
   return options.mdxOptions
 }

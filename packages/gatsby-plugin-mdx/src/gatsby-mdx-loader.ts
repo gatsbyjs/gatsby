@@ -25,7 +25,14 @@ const gatsbyMDXLoader: LoaderDefinition = async function (source) {
 
   const { mdxNode, fileNode } = res
 
-  return compileMDX(source, mdxNode, fileNode, options)
+  const { processedMDX } = await compileMDX(
+    // We want to work with the transformed source from our layout plugin
+    { ...mdxNode, body: source },
+    fileNode,
+    options
+  )
+
+  return processedMDX
 }
 
 export default gatsbyMDXLoader

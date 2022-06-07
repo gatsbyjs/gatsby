@@ -3,7 +3,6 @@ import type { GatsbyCache, Reporter, NodePluginArgs } from "gatsby"
 import type { Pluggable } from "unified"
 
 import { IMdxPluginOptions } from "./plugin-options"
-import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
 import { pathPlugin } from "./remark-path-prefix-plugin"
 
 interface IGetSourcePluginsAsRemarkPlugins {
@@ -63,8 +62,8 @@ export async function getSourcePluginsAsRemarkPlugins({
   })
 
   if (pathPrefix) {
-    return [[pathPlugin, { pathPrefix }], ...userPlugins, remarkMdxHtmlPlugin]
+    return [[pathPlugin, { pathPrefix }], ...userPlugins]
   } else {
-    return [...userPlugins, remarkMdxHtmlPlugin]
+    return userPlugins
   }
 }

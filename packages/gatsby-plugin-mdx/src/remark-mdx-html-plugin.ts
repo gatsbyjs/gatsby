@@ -8,7 +8,7 @@ export const remarkMdxHtmlPlugin = () =>
     const { visit } = await import(`unist-util-visit`)
 
     visit(markdownAST, node => {
-      if (node.type !== `html`) {
+      if (![`html`, `raw`].includes(node.type)) {
         return
       }
       node.type = `mdxJsxFlowElement`
