@@ -77,7 +77,7 @@ async function worker([url, options]) {
   if (typeof options.searchParams === `object`) {
     url = new URL(url)
     const searchParams = new URLSearchParams(options.searchParams)
-    for (let [key, value] of searchParams.entries()) {
+    for (const [key, value] of searchParams.entries()) {
       url.searchParams.append(key, value)
     }
     url = url.toString()
@@ -512,11 +512,13 @@ ${JSON.stringify(webhookBody, null, 4)}`
               if (filters.hasOwnProperty(type)) {
                 url = new URL(url)
                 const filterParams = new URLSearchParams(filters[type])
-                for (let [key, value] of filterParams.entries()) {
+                for (const [key, value] of filterParams.entries()) {
                   url.searchParams.append(key, value)
                 }
                 url = url.toString()
-                reporter.verbose(`applying filter to ${type} - ${decodeURI(url)}`)
+                reporter.verbose(
+                  `applying filter to ${type} - ${decodeURI(url)}`
+                )
               }
             }
           }
