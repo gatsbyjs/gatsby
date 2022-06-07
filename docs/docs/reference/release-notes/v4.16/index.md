@@ -10,7 +10,7 @@ Key highlights of this release:
 
 - [Speed Improvements for Image Processing](#speed-improvements-for-image-processing)
 - [`useContentfulImage` hook](#usecontentfulimage-hook)
-- [Node 18 Compability](#node-18-compability)
+- [Node 18 Compatibility](#node-18-compatibility)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -51,7 +51,7 @@ export default MyComponent
 
 Learn more in the [`useContentfulImage` documentation](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/README.md#building-images-on-the-fly-via-usecontentfulimage).
 
-## Node 18 Compability
+## Node 18 Compatibility
 
 In a series of PRs we've ensured that Gatsby and its dependencies are compatible with Node 18:
 
