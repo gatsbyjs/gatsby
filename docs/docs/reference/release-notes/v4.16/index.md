@@ -93,3 +93,5 @@ A big **Thank You** to [our community who contributed][full-changelog] to this r
 - [varunsh-coder](https://github.com/varunsh-coder): chore(stale-action): Add GitHub token permissions [PR #35713](https://github.com/gatsbyjs/gatsby/pull/35713)
 - [Foo-x](https://github.com/Foo-x): fix(gatsby-plugin-preload-fonts): disable cache [PR #34633](https://github.com/gatsbyjs/gatsby/pull/34633)
 - [joshuacox](https://github.com/joshuacox): chore(docs): Update outdated building a theme tutorial snippets [PR #35792](https://github.com/gatsbyjs/gatsby/pull/35792)
+
+[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.16.0-next.0...gatsby@4.16.0
