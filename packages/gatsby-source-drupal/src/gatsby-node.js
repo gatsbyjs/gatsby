@@ -179,6 +179,12 @@ exports.sourceNodes = async (
       nonTranslatableEntities: [],
     },
   } = pluginOptions
+
+  // older versions of Gatsby didn't use Joi's default value for plugin options
+  if (!(`imageCDN` in pluginOptions)) {
+    pluginOptions.imageCDN = true
+  }
+
   const {
     createNode,
     setPluginStatus,
