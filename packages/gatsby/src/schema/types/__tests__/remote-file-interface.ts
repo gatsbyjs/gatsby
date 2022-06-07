@@ -114,7 +114,7 @@ describe(`remote-file`, () => {
       expect(data).toMatchInlineSnapshot(`
         Object {
           "height": 100,
-          "src": "/_gatsby/image/089c5250227072e75a690e7c21838ed7/1a3d5207b5ced4f39bbd3bbd1c1fa633/pauline-loroy-U3aF7hgUSrk-unsplash.jpg?u=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1587300003388-59208cc962cb%3Fixlib%3Drb-1.2.1%26q%3D80%26fm%3Djpg%26crop%3Dentropy%26cs%3Dtinysrgb%26w%3D640&a=w%3D100%26h%3D100%26fm%3Djpg%26q%3D75",
+          "src": "/_gatsby/image/089c5250227072e75a690e7c21838ed7/1a3d5207b5ced4f39bbd3bbd1c1fa633/pauline-loroy-U3aF7hgUSrk-unsplash.jpg?u=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1587300003388-59208cc962cb%3Fixlib%3Drb-1.2.1%26q%3D80%26fm%3Djpg%26crop%3Dentropy%26cs%3Dtinysrgb%26w%3D640&a=w%3D100%26h%3D100%26fm%3Djpg%26q%3D75&cd=1",
           "width": 100,
         }
       `)
