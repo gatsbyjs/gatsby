@@ -558,7 +558,9 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   const { helpers, pluginOptions } = state.gatsbyApi
 
   // don't fetch media items if they are excluded via pluginOptions
-  if (pluginOptions.type?.MediaItem?.exclude) return []
+  if (pluginOptions.type?.MediaItem?.exclude) {
+    return []
+  }
 
   const { createContentDigest, actions } = helpers
   const { url } = pluginOptions
