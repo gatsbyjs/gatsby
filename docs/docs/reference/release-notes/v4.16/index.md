@@ -73,3 +73,23 @@ In a series of PRs we've ensured that Gatsby and its dependencies are compatible
 ## Contributors
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
+
+- [trevorblades](https://github.com/trevorblades): fix(docs): Lowercase typename [PR #35821](https://github.com/gatsbyjs/gatsby/pull/35821)
+- [Danishkhurshid](https://github.com/Danishkhurshid): fix(gatsby-source-drupal): Add a check for data prop [PR #35719](https://github.com/gatsbyjs/gatsby/pull/35719)
+- [rutterjt](https://github.com/rutterjt): chore(docs): Fix `videoSourceURL` markdown key mismatch [PR #35755](https://github.com/gatsbyjs/gatsby/pull/35755)
+- [benogle](https://github.com/benogle): chore(docs): Add articles to awesome gatsby resources [PR #35738](https://github.com/gatsbyjs/gatsby/pull/35738)
+- [Apprentice76](https://github.com/Apprentice76): fix(gatsby-source-filesystem): Update `createRemoteFileNode` args [PR #35422](https://github.com/gatsbyjs/gatsby/pull/35422)
+- [tsdexter](https://github.com/tsdexter): fix(gatsby-source-wordpress): bug patch for issue 35460 [PR #35817](https://github.com/gatsbyjs/gatsby/pull/35817)
+- [AbdallahAbis](https://github.com/AbdallahAbis): chore(docs): Remove typo in Script guide [PR #35826](https://github.com/gatsbyjs/gatsby/pull/35826)
+- [axe312ger](https://github.com/axe312ger)
+  - Contentful: respect gatsby-plugin-image defaults and extend tests [PR #33536](https://github.com/gatsbyjs/gatsby/pull/33536)
+  - chore: clean up yarn.lock [PR #35502](https://github.com/gatsbyjs/gatsby/pull/35502)
+  - feat(contentful): new useContentfulHook to create images on client side [PR #29263](https://github.com/gatsbyjs/gatsby/pull/29263)
+- [tordans](https://github.com/tordans): chore(docs): Update using-web-fonts for fontsource [PR #35579](https://github.com/gatsbyjs/gatsby/pull/35579)
+- [ascorbic](https://github.com/ascorbic)
+  - feat(gatsby-plugin-sharp): cache image metadata [PR #35791](https://github.com/gatsbyjs/gatsby/pull/35791)
+  - perf(gatsby-plugin-image): downsize image before extracting dominant color [PR #35814](https://github.com/gatsbyjs/gatsby/pull/35814)
+- [just-boris](https://github.com/just-boris): fix(gatsby): Remove `removeOffCanvasPaths` svgo option [PR #35788](https://github.com/gatsbyjs/gatsby/pull/35788)
+- [varunsh-coder](https://github.com/varunsh-coder): chore(stale-action): Add GitHub token permissions [PR #35713](https://github.com/gatsbyjs/gatsby/pull/35713)
+- [Foo-x](https://github.com/Foo-x): fix(gatsby-plugin-preload-fonts): disable cache [PR #34633](https://github.com/gatsbyjs/gatsby/pull/34633)
+- [joshuacox](https://github.com/joshuacox): chore(docs): Update outdated building a theme tutorial snippets [PR #35792](https://github.com/gatsbyjs/gatsby/pull/35792)
