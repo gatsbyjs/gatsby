@@ -1,5 +1,8 @@
 ---
 title: Gatsby Script API
+examples:
+  - label: Using Gatsby Script
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-script"
 ---
 
 > Support for the Gatsby Script API was added in `gatsby@4.15.0`.
