@@ -850,6 +850,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     requestTimeoutMS: Joi.number().integer().default(30000).min(1),
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
+    imageCDN: Joi.boolean().default(true),
     fastBuilds: Joi.boolean(),
     entityReferenceRevisions: Joi.array().items(Joi.string()),
     secret: Joi.string().description(
@@ -875,7 +876,7 @@ exports.createSchemaCustomization = (
   { actions, schema, store, reporter },
   pluginOptions
 ) => {
-  if (pluginOptions.skipFileDownloads) {
+  if (pluginOptions.skipFileDownloads && pluginOptions.imageCDN) {
     actions.createTypes([
       // polyfill so image CDN works on older versions of Gatsby
       addRemoteFilePolyfillInterface(

@@ -32,7 +32,7 @@ const getGatsbyImageCdnFields = async ({
   fileNodesExtendedData,
   reporter,
 }) => {
-  if (!pluginOptions?.skipFileDownloads) {
+  if (!pluginOptions?.skipFileDownloads || pluginOptions.imageCDN === false) {
     return {}
   }
 
