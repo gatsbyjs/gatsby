@@ -5,7 +5,7 @@ const withPathPrefix = (url: string, pathPrefix: string): string =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
 // Ensure relative links include `pathPrefix`
-export const pathPlugin = ({ pathPrefix }: { pathPrefix: string }) =>
+export const remarkPathPlugin = ({ pathPrefix }: { pathPrefix: string }) =>
   async function transformer(markdownAST: Node): Promise<Node> {
     if (!pathPrefix) {
       return markdownAST

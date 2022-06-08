@@ -10,6 +10,7 @@ import { IPluginRefObject } from "gatsby-plugin-utils/types"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
 import rehypeMdxMetadataExtractor from "./rehype-metadata-extractor"
 import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
+import { remarkPathPlugin } from "./remark-path-prefix-plugin"
 
 export interface IMdxPluginOptions extends PluginOptions {
   extensions: [string]
@@ -60,6 +61,14 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
     options.mdxOptions.remarkPlugins = []
   }
 
+  // Inject Gatsby path prefix if needed
+  if (helpers.pathPrefix) {
+    options.mdxOptions.remarkPlugins.push([
+      remarkPathPlugin,
+      { pathPrefix: helpers.pathPrefix },
+    ])
+  }
+
   // Support gatsby-remark-* plugins
   if (Object.keys(options.gatsbyRemarkPlugins).length) {
     // Parser plugins
@@ -96,12 +105,8 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
     options.mdxOptions.rehypePlugins = []
   }
 
-  options.mdxOptions.rehypePlugins.push(
-    // Extract metadata generated from by rehype-infer-* plugins
-    // And use these to get the excerpt and time to read
-    // @todo add options: https://github.com/rehypejs/rehype-infer-description-meta#options
-    rehypeMdxMetadataExtractor
-  )
+  // Extract metadata generated from by rehype-infer-* and similar plugins
+  options.mdxOptions.rehypePlugins.push(rehypeMdxMetadataExtractor)
 
   return options.mdxOptions
 }

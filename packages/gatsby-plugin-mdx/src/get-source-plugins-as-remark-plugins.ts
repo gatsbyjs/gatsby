@@ -3,7 +3,6 @@ import type { GatsbyCache, Reporter, NodePluginArgs } from "gatsby"
 import type { Pluggable } from "unified"
 
 import { IMdxPluginOptions } from "./plugin-options"
-import { pathPlugin } from "./remark-path-prefix-plugin"
 
 interface IGetSourcePluginsAsRemarkPlugins {
   gatsbyRemarkPlugins: IMdxPluginOptions["gatsbyRemarkPlugins"]
@@ -29,7 +28,7 @@ export async function getSourcePluginsAsRemarkPlugins({
   )
 
   if (!userPluginsFiltered.length) {
-    return pathPrefix ? [[pathPlugin, { pathPrefix }]] : []
+    return []
   }
 
   const userPlugins = userPluginsFiltered.map(plugin => {
@@ -61,9 +60,5 @@ export async function getSourcePluginsAsRemarkPlugins({
     return wrappedGatsbyPlugin
   })
 
-  if (pathPrefix) {
-    return [[pathPlugin, { pathPrefix }], ...userPlugins]
-  } else {
-    return userPlugins
-  }
+  return userPlugins
 }
