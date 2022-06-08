@@ -49,10 +49,10 @@ const typeDefs = [
 
 module.exports = (helpers, pluginOptions) => {
   const { actions } = helpers
-  const { plugins, subtypes } = pluginOptions
+  const { plugins, contentTypes } = pluginOptions
 
-  if (subtypes) {
-    for (const type of subtypes.types) {
+  if (contentTypes) {
+    for (const type of contentTypes.types) {
       const graphQLType = `MarkdownRemark${type}`
 
       typeDefs.push(`

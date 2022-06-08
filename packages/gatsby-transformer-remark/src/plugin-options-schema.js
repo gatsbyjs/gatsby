@@ -9,7 +9,7 @@ module.exports = function pluginOptionsSchema({ Joi }) {
     excerpt_separator: Joi.string().description(
       `If your Markdown file contains HTML, excerpt will not return a value. In that case, you can set an excerpt_separator to an HTML tag. Edit your Markdown files to include that HTML tag after the text you’d like to appear in the excerpt.`
     ),
-    subtypes: Joi.object({
+    contentTypes: Joi.object({
       resolveType: Joi.alternatives(Joi.string(), Joi.function()).required(),
       types: Joi.array().items(Joi.string()).unique().required(),
     }),

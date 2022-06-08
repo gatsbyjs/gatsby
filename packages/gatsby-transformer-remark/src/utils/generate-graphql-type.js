@@ -6,17 +6,17 @@ module.exports = async function generateGraphQLType(
   frontmatter
 ) {
   const { reporter } = helpers
-  const { subtypes } = pluginOptions
+  const { contentTypes } = pluginOptions
 
-  if (subtypes) {
+  if (contentTypes) {
     const type =
-      typeof subtypes.resolveType === `string`
-        ? get(frontmatter, subtypes.resolveType)
-        : await subtypes.resolveType(frontmatter)
+      typeof contentTypes.resolveType === `string`
+        ? get(frontmatter, contentTypes.resolveType)
+        : await contentTypes.resolveType(frontmatter)
 
-    if (!subtypes.types.includes(type)) {
+    if (!contentTypes.types.includes(type)) {
       reporter.error(
-        `Type '${type}' does not match any of the provided subtypes.`
+        `Type '${type}' does not match any of the provided contentTypes.`
       )
     }
 
