@@ -104,7 +104,7 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
 
     // The plugin image component is a bit special where if it's server-side rendered, we add extra script tags to support lazy-loading without
     // In this case we stop hydration but fire the correct events.
-    const ssrImage = root.current?.querySelector(
+    const ssrImage = root.current.querySelector(
       `[data-gatsby-image-ssr]`
     ) as HTMLImageElement
     if (ssrImage && hasNativeLazyLoadSupport()) {
@@ -194,10 +194,6 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
   // useLayoutEffect is ran before React commits to the DOM. This allows us to make sure our HTML is using our cached image version
   useLayoutEffect(() => {
     if (imageCache.has(cacheKey) && renderImage) {
-      if (!root.current) {
-        return
-      }
-
       root.current.innerHTML = renderImage({
         isLoading: imageCache.has(cacheKey),
         isLoaded: imageCache.has(cacheKey),
