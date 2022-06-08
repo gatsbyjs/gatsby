@@ -22,7 +22,7 @@ const FluidPage = () => (
     </div>
     <div data-testid="image-fixed-relative">
       <StaticImage
-        src="../../content/relative.jpg"
+        src="../../../citrus-fruits-outside-src.jpg"
         height={500}
         layout="fixed"
         alt="Citrus fruits"

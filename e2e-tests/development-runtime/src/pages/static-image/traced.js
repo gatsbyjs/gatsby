@@ -20,7 +20,7 @@ const FluidPage = () => (
     </div>
     <div data-testid="image-traced-relative">
       <StaticImage
-        src="../../content/relative.jpg"
+        src="../../../citrus-fruits-outside-src.jpg"
         placeholder="tracedSVG"
         alt="Citrus fruits"
       />

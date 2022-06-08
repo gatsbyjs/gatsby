@@ -21,7 +21,7 @@ const FluidPage = () => (
     </div>
     <div data-testid="image-fluid-relative">
       <StaticImage
-        src="../../content/relative.jpg"
+        src="../../../citrus-fruits-outside-src.jpg"
         layout="fullWidth"
         alt="Citrus fruits"
       />
