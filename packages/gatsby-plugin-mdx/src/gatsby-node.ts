@@ -1,6 +1,7 @@
-import type { GatsbyNode, NodeInput } from "gatsby"
+import type { GatsbyNode, NodeInput, NodePluginArgs } from "gatsby"
 import type { FileSystemNode } from "gatsby-source-filesystem"
-import type { IFileNode, IMdxMetadata, NodeMap } from "./types"
+import type { Options } from "rehype-infer-description-meta"
+import type { IFileNode, IMdxMetadata, IMdxNode, NodeMap } from "./types"
 
 import path from "path"
 import { sentenceCase } from "change-case"
@@ -144,7 +145,12 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
   return processedMDX.toString()
 }
 
-const compileMDXWithCustomConfig = async ({
+/**
+ * This helper function allows you to inject additional plugins and configuration into the MDX
+ * compilation pipeline. Very useful to create your own resolvers that return custom metadata.
+ * Internally used to generate the tables of contents and the excerpts.
+ */
+export const compileMDXWithCustomOptions = async ({
   pluginOptions,
   customOptions,
   getNode,
@@ -153,6 +159,15 @@ const compileMDXWithCustomConfig = async ({
   reporter,
   cache,
   mdxNode,
+}: {
+  pluginOptions: IMdxPluginOptions
+  customOptions: Partial<IMdxPluginOptions>
+  getNode: NodePluginArgs["getNode"]
+  getNodesByType: NodePluginArgs["getNodesByType"]
+  pathPrefix: string
+  reporter: NodePluginArgs["reporter"]
+  cache: NodePluginArgs["cache"]
+  mdxNode: IMdxNode
 }): Promise<{
   processedMDX: string
   metadata: IMdxMetadata
@@ -167,6 +182,9 @@ const compileMDXWithCustomConfig = async ({
     reporter,
     cache,
   })
+  if (!mdxNode.parent) {
+    return null
+  }
   const fileNode = getNode(mdxNode.parent)
   if (!fileNode) {
     return null
@@ -205,19 +223,20 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                 defaultValue: 140,
               },
             },
-            async resolve(mdxNode, { pruneLength }) {
+            async resolve(mdxNode, { pruneLength }: { pruneLength: number }) {
               const rehypeInferDescriptionMeta = (
                 await import(`rehype-infer-description-meta`)
               ).default
 
-              const result = await compileMDXWithCustomConfig({
+              const descriptionOptions: Options = { truncateSize: pruneLength }
+
+              const result = await compileMDXWithCustomOptions({
                 mdxNode,
                 pluginOptions,
                 customOptions: {
                   mdxOptions: {
                     rehypePlugins: [
-                      rehypeInferDescriptionMeta,
-                      { truncateSize: pruneLength },
+                      [rehypeInferDescriptionMeta, descriptionOptions],
                     ],
                   },
                 },
@@ -247,7 +266,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
               const { visit } = await import(`unist-util-visit`)
               const { toc } = await import(`mdast-util-toc`)
 
-              const result = await compileMDXWithCustomConfig({
+              const result = await compileMDXWithCustomOptions({
                 mdxNode,
                 pluginOptions,
                 customOptions: {
