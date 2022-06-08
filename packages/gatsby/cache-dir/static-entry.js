@@ -125,6 +125,11 @@ export default async function staticPage({
         content={`Gatsby ${gatsbyVersion}`}
         key={`generator-${gatsbyVersion}`}
       />,
+      <meta
+        name="generator"
+        content={`Gatsby ${gatsbyVersion}`}
+        key={`---generator-${gatsbyVersion}`}
+      />,
     ]
     let htmlAttributes = {}
     let bodyAttributes = {}
@@ -211,19 +216,13 @@ export default async function staticPage({
     const { componentChunkName } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
-    // Utils
-    const WrapHandler = ({ children }) => (
-      <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-        <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
-          {children}
-        </Router>
-      </ServerLocation>
-    )
-
-    class Handler extends React.Component {
+    /** *****************************Some utils(will definitelty change after POC)***************************/
+    class SomeWrappper extends React.Component {
       render() {
+        // Exclude "api" from the props
+        const { api, ...otherProps } = this.props
         const props = {
-          ...this.props,
+          ...otherProps,
           ...pageData.result,
           params: {
             ...grabMatchParams(this.props.location.pathname),
@@ -231,13 +230,17 @@ export default async function staticPage({
           },
         }
 
-        const pageElement = createElement(pageComponent[this.props.API], props)
+        const pageElement = createElement(pageComponent[api], props)
 
         return pageElement
       }
     }
 
-    //
+    function RouterComponent({ children }) {
+      return <React.Fragment>{children}</React.Fragment>
+    }
+
+    /** *****************************Some utils***************************/
 
     if (pageComponent.links) {
       if (typeof pageComponent.links !== `function`)
@@ -245,12 +248,18 @@ export default async function staticPage({
           `Expected "links" export to be a function got "${typeof pageComponent.meta}".`
         )
 
-      const linkElem = (
-        <WrapHandler>
-          <Handler path="/*" API="links" />
-        </WrapHandler>
+      // Todo: DRY
+      setHeadComponents(
+        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+          <Router
+            primary={false}
+            component={RouterComponent}
+            baseuri={__BASE_PATH__}
+          >
+            <SomeWrappper path="/*" api="links" />
+          </Router>
+        </ServerLocation>
       )
-      setHeadComponents(linkElem)
     }
 
     if (pageComponent.meta) {
@@ -259,13 +268,18 @@ export default async function staticPage({
           `Expected "meta" export to be a function got "${typeof pageComponent.meta}".`
         )
 
-      const metaElem = (
-        <WrapHandler>
-          <Handler path="/*" API="meta" />
-        </WrapHandler>
+      // Todo: DRY`
+      setHeadComponents(
+        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+          <Router
+            primary={false}
+            component={RouterComponent}
+            baseuri={__BASE_PATH__}
+          >
+            <SomeWrappper path="/*" api="meta" />
+          </Router>
+        </ServerLocation>
       )
-
-      setHeadComponents(metaElem)
     }
 
     class RouteHandler extends React.Component {

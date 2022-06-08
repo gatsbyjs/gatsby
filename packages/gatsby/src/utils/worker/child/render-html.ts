@@ -247,11 +247,11 @@ export const renderHTMLDev = async ({
     paths,
     async pagePath => {
       try {
-        const pageData = await readPageData(publicDir, pagePath)
+        // const pageData = await readPageData(publicDir, pagePath)
 
         const htmlString = await htmlComponentRenderer.default({
           pagePath,
-          pageData,
+          // pageData,
         })
         return fs.outputFile(generateHtmlPath(outputDir, pagePath), htmlString)
       } catch (e) {
