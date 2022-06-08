@@ -5,7 +5,7 @@ import type { NodeMap } from "./types"
 
 import { getOptions } from "loader-utils"
 
-import compileMDX from "./compile-mdx"
+import { compileMDX } from "./compile-mdx"
 
 export interface IGatsbyMDXLoaderOptions {
   options: ProcessorOptions

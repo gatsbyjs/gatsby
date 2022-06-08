@@ -1,10 +1,15 @@
+import type { NodePluginArgs } from "gatsby"
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
+
+import deepmerge from "deepmerge"
+
+import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 
 // Compiles MDX into JS
 // This could be replaced by @mdx-js/mdx if MDX compile would
 // accept custom data passed to the unified pipeline via processor.data()
-export default async function compileMDX(
+export async function compileMDX(
   mdxNode: IMdxNode,
   fileNode: IFileNode,
   options: ProcessorOptions
@@ -48,4 +53,56 @@ export default async function compileMDX(
     err.message = `Unable to compile MDX:\n${errorMeta}\n\n---\nOriginal error:\n\n${err.message}`
     throw err
   }
+}
+
+/**
+ * This helper function allows you to inject additional plugins and configuration into the MDX
+ * compilation pipeline. Very useful to create your own resolvers that return custom metadata.
+ * Internally used to generate the tables of contents and the excerpts.
+ */
+export const compileMDXWithCustomOptions = async ({
+  pluginOptions,
+  customOptions,
+  getNode,
+  getNodesByType,
+  pathPrefix,
+  reporter,
+  cache,
+  mdxNode,
+}: {
+  pluginOptions: IMdxPluginOptions
+  customOptions: Partial<IMdxPluginOptions>
+  getNode: NodePluginArgs["getNode"]
+  getNodesByType: NodePluginArgs["getNodesByType"]
+  pathPrefix: string
+  reporter: NodePluginArgs["reporter"]
+  cache: NodePluginArgs["cache"]
+  mdxNode: IMdxNode
+}): Promise<{
+  processedMDX: string
+  metadata: IMdxMetadata
+} | null> => {
+  const customPluginOptions = deepmerge(
+    Object.assign({}, pluginOptions),
+    customOptions
+  )
+
+  // Prepare MDX compile
+  const mdxOptions = await enhanceMdxOptions(customPluginOptions, {
+    getNode,
+    getNodesByType,
+    pathPrefix,
+    reporter,
+    cache,
+  })
+  if (!mdxNode.parent) {
+    return null
+  }
+  const fileNode = getNode(mdxNode.parent)
+  if (!fileNode) {
+    return null
+  }
+
+  // Compile MDX and extract metadata
+  return compileMDX(mdxNode, fileNode, mdxOptions)
 }

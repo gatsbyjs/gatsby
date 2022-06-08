@@ -1,1 +1,1 @@
-// noop
+export * from "./compile-mdx"
