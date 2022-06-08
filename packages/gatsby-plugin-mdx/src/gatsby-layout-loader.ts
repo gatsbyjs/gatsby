@@ -70,11 +70,6 @@ const gatsbyLayoutLoader: LoaderDefinition = async function () {
   })
   tree.children.push({
     type: `mdxjsEsm` as `text`,
-    value: `export * from "${layoutPath}"`,
-  })
-
-  tree.children.push({
-    type: `mdxjsEsm` as `text`,
     value: `export default GatsbyMDXLayout`,
   })
   const out = toMarkdown(tree, {
