@@ -1,5 +1,4 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
-import { cloneDeep } from "lodash"
 import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
 
 // Compiles MDX into JS
@@ -14,7 +13,7 @@ export default async function compileMDX(
     const { createProcessor } = await import(`@mdx-js/mdx`)
     const { VFile } = await import(`vfile`)
 
-    const processor = createProcessor(cloneDeep(options))
+    const processor = createProcessor(options)
 
     // If we could pass this via MDX loader config, this whole custom loader might be obsolete.
     const metadata: IMdxMetadata = {}
