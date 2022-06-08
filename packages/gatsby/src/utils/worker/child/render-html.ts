@@ -227,6 +227,7 @@ export const renderHTMLDev = async ({
   sessionId: number
 }): Promise<Array<unknown>> => {
   const outputDir = join(process.cwd(), `.cache`, `develop-html`)
+  const publicDir = join(process.cwd(), `public`)
 
   // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
   // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
@@ -246,8 +247,11 @@ export const renderHTMLDev = async ({
     paths,
     async pagePath => {
       try {
+        const pageData = await readPageData(publicDir, pagePath)
+
         const htmlString = await htmlComponentRenderer.default({
           pagePath,
+          pageData,
         })
         return fs.outputFile(generateHtmlPath(outputDir, pagePath), htmlString)
       } catch (e) {

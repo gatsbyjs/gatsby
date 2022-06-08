@@ -5,7 +5,9 @@
       {
         "apis": [
           "getServerData",
-          "config"
+          "config",
+          "meta",
+          "links"
         ]
       }
     ]

@@ -208,12 +208,65 @@ export default async function staticPage({
       postBodyComponents = sanitizeComponents(components)
     }
 
-    const pageDataUrl = getPageDataUrl(pagePath)
-
-    const { componentChunkName, staticQueryHashes = [] } = pageData
+    const { componentChunkName } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
-    const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
+    // Utils
+    const WrapHandler = ({ children }) => (
+      <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+        <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
+          {children}
+        </Router>
+      </ServerLocation>
+    )
+
+    class Handler extends React.Component {
+      render() {
+        const props = {
+          ...this.props,
+          ...pageData.result,
+          params: {
+            ...grabMatchParams(this.props.location.pathname),
+            ...(pageData.result?.pageContext?.__params || {}),
+          },
+        }
+
+        const pageElement = createElement(pageComponent[this.props.API], props)
+
+        return pageElement
+      }
+    }
+
+    //
+
+    if (pageComponent.links) {
+      if (typeof pageComponent.links !== `function`)
+        throw new Error(
+          `Expected "links" export to be a function got "${typeof pageComponent.meta}".`
+        )
+
+      const linkElem = (
+        <WrapHandler>
+          <Handler path="/*" API="links" />
+        </WrapHandler>
+      )
+      setHeadComponents(linkElem)
+    }
+
+    if (pageComponent.meta) {
+      if (typeof pageComponent.meta !== `function`)
+        throw new Error(
+          `Expected "meta" export to be a function got "${typeof pageComponent.meta}".`
+        )
+
+      const metaElem = (
+        <WrapHandler>
+          <Handler path="/*" API="meta" />
+        </WrapHandler>
+      )
+
+      setHeadComponents(metaElem)
+    }
 
     class RouteHandler extends React.Component {
       render() {
