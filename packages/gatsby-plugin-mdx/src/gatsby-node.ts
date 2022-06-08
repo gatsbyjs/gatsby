@@ -7,7 +7,7 @@ import path from "path"
 import { sentenceCase } from "change-case"
 import fs from "fs-extra"
 import grayMatter from "gray-matter"
-import { merge } from "lodash"
+import deepmerge from "deepmerge"
 
 import {
   defaultOptions,
@@ -172,7 +172,10 @@ export const compileMDXWithCustomOptions = async ({
   processedMDX: string
   metadata: IMdxMetadata
 } | null> => {
-  const customPluginOptions = merge({}, pluginOptions, customOptions)
+  const customPluginOptions = deepmerge(
+    Object.assign({}, pluginOptions),
+    customOptions
+  )
 
   // Prepare MDX compile
   const mdxOptions = await enhanceMdxOptions(customPluginOptions, {
