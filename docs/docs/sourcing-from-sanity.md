@@ -76,7 +76,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImageData} />
+    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImage} />
   </article>
 )
 
@@ -88,7 +88,7 @@ export const query = graphql`
       name
       profileImage {
         asset {
-          gatsbyImageData(placeholder: BLURRED)
+          gatsbyImage(placeholder: BLURRED)
         }
       }
     }
@@ -105,7 +105,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImageData} />
+    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImage} />
   </article>
 )
 
@@ -117,7 +117,7 @@ export const query = graphql`
       name
       profileImage {
         asset {
-          gatsbyImageData(layout: FIXED, placeholder: BLURRED, width: 400)
+          gatsbyImage(layout: FIXED, placeholder: BLURRED, width: 400)
         }
       }
     }

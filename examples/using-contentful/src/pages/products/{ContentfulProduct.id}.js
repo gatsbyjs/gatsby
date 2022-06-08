@@ -22,7 +22,7 @@ class ProductTemplate extends React.Component {
       brand,
       categories,
     } = product
-    const productImg = image[0]?.gatsbyImageData
+    const productImg = image[0]?.gatsbyImage
     return (
       <Layout>
         <div
@@ -82,7 +82,7 @@ export const pageQuery = graphql`
       }
       price
       image {
-        gatsbyImageData(width: 200)
+        gatsbyImage(width: 200)
       }
       brand {
         companyName {

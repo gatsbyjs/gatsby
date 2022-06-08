@@ -19,7 +19,7 @@ class CategoryTemplate extends React.Component {
       product,
       icon,
     } = category
-    const iconImg = icon.gatsbyImageData
+    const iconImg = icon.gatsbyImage
     return (
       <Layout>
         <div
@@ -66,7 +66,7 @@ export const pageQuery = graphql`
         title
       }
       icon {
-        gatsbyImageData(layout: FIXED, width: 75)
+        gatsbyImage(layout: FIXED, width: 75)
       }
       product {
         gatsbyPath(filePath: "/products/{ContentfulProduct.id}")

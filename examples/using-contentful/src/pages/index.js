@@ -27,10 +27,10 @@ const Product = ({ node }) => (
         }}
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
-          {node.image[0].gatsbyImageData && (
+          {node.image[0].gatsbyImage && (
             <GatsbyImage
               style={{ margin: 0 }}
-              image={node.image[0].gatsbyImageData}
+              image={node.image[0].gatsbyImage}
             />
           )}
         </div>
@@ -95,7 +95,7 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            gatsbyImageData(layout: FIXED, width: 75)
+            gatsbyImage(layout: FIXED, width: 75)
           }
         }
       }
@@ -109,7 +109,7 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            gatsbyImageData(layout: FIXED, width: 75)
+            gatsbyImage(layout: FIXED, width: 75)
           }
         }
       }

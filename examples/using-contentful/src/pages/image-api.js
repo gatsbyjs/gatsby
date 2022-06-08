@@ -95,7 +95,7 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        gatsbyImageData(layout: CONSTRAINED, width: 186)
+        gatsbyImage(layout: CONSTRAINED, width: 186)
       }
     }
   }
@@ -134,7 +134,7 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        gatsbyImageData(layout: FIXED, width: 100, height: 100)
+        gatsbyImage(layout: FIXED, width: 100, height: 100)
       }
     }
   }
@@ -171,7 +171,7 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        gatsbyImageData(layout: FULL_WIDTH)
+        gatsbyImage(layout: FULL_WIDTH)
       }
     }
   }
@@ -210,7 +210,7 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        gatsbyImageData(
+        gatsbyImage(
           layout: CONSTRAINED
           placeholder: DOMINANT_COLOR
           width: 186
@@ -253,7 +253,7 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        gatsbyImageData(
+        gatsbyImage(
           layout: CONSTRAINED
           placeholder: BLURRED
           width: 186
@@ -297,7 +297,7 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        gatsbyImageData(
+        gatsbyImage(
           layout: CONSTRAINED
           placeholder: TRACED_SVG
           width: 186
@@ -322,20 +322,20 @@ export const pageQuery = graphql`
         node {
           title
           id
-          constrained: gatsbyImageData(layout: CONSTRAINED, width: 186)
-          fixed: gatsbyImageData(layout: FIXED, width: 100, height: 100)
-          fullWidth: gatsbyImageData(layout: FULL_WIDTH)
-          dominant: gatsbyImageData(
+          constrained: gatsbyImage(layout: CONSTRAINED, width: 186)
+          fixed: gatsbyImage(layout: FIXED, width: 100, height: 100)
+          fullWidth: gatsbyImage(layout: FULL_WIDTH)
+          dominant: gatsbyImage(
             layout: CONSTRAINED
             placeholder: DOMINANT_COLOR
             width: 186
           )
-          blurred: gatsbyImageData(
+          blurred: gatsbyImage(
             layout: CONSTRAINED
             placeholder: BLURRED
             width: 186
           )
-          traced: gatsbyImageData(
+          traced: gatsbyImage(
             layout: CONSTRAINED
             placeholder: TRACED_SVG
             width: 186
