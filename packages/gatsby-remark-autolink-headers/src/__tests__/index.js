@@ -249,7 +249,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
     visit(transformed, `heading`, node => {
       expect(node.data.hProperties.style).toContain(`position:relative`)
       expect(node.children).toHaveLength(2)
-      expect(node.children[1].data.hProperties.class).toContain(`after`)
+      expect(node.children[1].data.properties.class).toContain(`after`)
 
       expect(node).toMatchSnapshot()
     })
