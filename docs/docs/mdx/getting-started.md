@@ -2,11 +2,6 @@
 title: Getting Started with MDX
 ---
 
-The fastest way to get started with Gatsby + MDX is to use the [MDX
-starter](https://github.com/gatsbyjs/gatsby-starter-mdx-basic). This
-allows you to write `.mdx` files in `src/pages` in order to create new pages on
-your site.
-
 ## 🚀 Quick start
 
 Use `npm init gatsby` to create a new site. At the question "Would you like to install additional features with other plugins?" choose the option "Add Markdown and MDX support".
@@ -21,7 +16,7 @@ Alternatively, you may be looking to configure an existing blog site to use MDX.
 1. **Add `gatsby-plugin-mdx`** and MDX as dependencies
 
    ```shell
-   npm install gatsby-plugin-mdx @mdx-js/mdx@v1 @mdx-js/react@v1
+   npm install gatsby-plugin-mdx @mdx-js/react
    ```
 
 2. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
