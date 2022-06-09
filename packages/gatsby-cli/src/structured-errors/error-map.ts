@@ -543,6 +543,23 @@ const errors = {
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
   },
+  "11333": {
+    text: (context): string =>
+      [
+        `${context.pluginName} attempted to create a page after the createPages API has finished.`,
+        `Please check that the createPages implementation in gatsby-node is awaited properly.`,
+        ``,
+        `The page object passed to createPage:\n${JSON.stringify(
+          context.pageObject,
+          null,
+          4
+        )}`,
+        ``,
+        `See the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      ].join(`\n`),
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>

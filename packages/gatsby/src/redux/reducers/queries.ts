@@ -103,6 +103,7 @@ export function queriesReducer(
         state.trackedQueries.delete(queryId)
       }
       state.deletedQueries.clear()
+      state.createPagesFinished = true
       return state
     }
     case `QUERY_EXTRACTED`: {

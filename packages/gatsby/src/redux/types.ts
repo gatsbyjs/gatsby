@@ -294,6 +294,7 @@ export interface IGatsbyState {
     trackedComponents: Map<string, IComponentState>
     deletedQueries: Set<Identifier>
     dirtyQueriesListToEmitViaWebsocket: Array<string>
+    createPagesFinished: boolean
   }
   components: Map<IGatsbyPageComponent["componentPath"], IGatsbyPageComponent>
   staticQueryComponents: Map<

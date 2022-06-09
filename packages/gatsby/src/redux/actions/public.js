@@ -427,7 +427,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalPage.path = `/${internalPage.path}`
   }
 
-  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const state = store.getState()
+  const oldPage: Page = state.pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
   const componentModified =
@@ -437,7 +438,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     ? page.path.slice(0, -1)
     : page.path + `/`
 
-  if (store.getState().pages.has(alternateSlashPath)) {
+  if (state.pages.has(alternateSlashPath)) {
     report.warn(
       chalk.bold.yellow(`Non-deterministic routing danger: `) +
         `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
@@ -445,6 +446,16 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           `This could lead to non-deterministic routing behavior`
         )
     )
+  }
+
+  if (state.queries.createPagesFinished) {
+    reporter.panic({
+      id: `11333`,
+      context: {
+        pluginName: name,
+        pageObject: page,
+      },
+    })
   }
 
   // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
