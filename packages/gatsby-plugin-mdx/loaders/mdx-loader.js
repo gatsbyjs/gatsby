@@ -183,12 +183,9 @@ export const _frontmatter = ${JSON.stringify(data)};`
   // check needs to happen first.
   if (!hasDefaultExport(content, options) && !!defaultLayout) {
     debug(`inserting default layout`, defaultLayout)
-    const { content: contentWithoutFrontmatter, matter } = grayMatter(
-      content,
-      options
-    )
+    const { content: contentWithoutFrontmatter } = grayMatter(content, options)
 
-    code = `${matter ? matter : ``}
+    code = `
 
 import DefaultLayout from "${slash(defaultLayout)}"
 
