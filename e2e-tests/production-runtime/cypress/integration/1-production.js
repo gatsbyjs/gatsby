@@ -248,7 +248,14 @@ describe(`Production build tests`, () => {
       })
     })
 
-    describe(`With trailing slash canonical path (/slashes/with-trailing/)`, () => {
+    describe.only(`With trailing slash canonical path (/slashes/with-trailing/)`, () => {
+      /*
+      Cypress.on('uncaught:exception', (err, runnable) => {
+        if (err.message.includes('Minified React error')) {
+          return false
+        }
+      })
+      */
       it(`/slashes/with-trailing?param=value`, () => {
         cy.visit(`/slashes/with-trailing?param=value`).waitForRouteChange()
 
