@@ -392,7 +392,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
-          react_version: "^18.0.0"
+          react_version: "^18.1.0"
 
   e2e_tests_production_runtime:
     <<: *e2e_tests_production_runtime_alias
