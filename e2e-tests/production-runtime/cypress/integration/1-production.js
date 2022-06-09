@@ -248,7 +248,7 @@ describe(`Production build tests`, () => {
       })
     })
 
-    describe.only(`With trailing slash canonical path (/slashes/with-trailing/)`, () => {
+    describe(`With trailing slash canonical path (/slashes/with-trailing/)`, () => {
       it(`/slashes/with-trailing?param=value`, () => {
         cy.visit(`/slashes/with-trailing?param=value`).waitForRouteChange()
 
