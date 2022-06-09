@@ -427,7 +427,7 @@ jobs:
           test_path: e2e-tests/themes
           test_command: cd production-runtime; yarn test
 
-  mdx_e2e_tests:
+  e2e_tests_mdx:
     <<: *e2e-executor
     steps:
       - e2e-test:
@@ -636,6 +636,8 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_contentful:
           <<: *e2e-test-workflow
+      - e2e_tests_mdx:
+          <<: *e2e-test-workflow
       - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
@@ -649,8 +651,6 @@ workflows:
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - themes_e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
-      - mdx_e2e_tests:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
