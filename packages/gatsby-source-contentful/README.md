@@ -74,7 +74,7 @@ This plugin has several limitations, please be aware of these:
 
 6. The following field names are restricted and will be prefixed: `children`, `contentful_id`, `fields`, `id`, `internal`, `parent`,
 
-7. The Plugin has a dependency on `gatsby-plugin-image` which itself has dependencies. Check [Displaying responsive image with gatsby-plugin-image](#displaying-responsive-image-with-gatsby-plugin-image) to determine which additional plugins you'll need to install.  
+7. The Plugin has a dependency on `gatsby-plugin-image` which itself has dependencies. Check [Displaying responsive image with gatsby-plugin-image](#displaying-responsive-image-with-gatsby-plugin-image) to determine which additional plugins you'll need to install.
 
 ### Using Delivery API
 
@@ -90,7 +90,7 @@ module.exports = {
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
-    `gatsby-plugin-image`
+    `gatsby-plugin-image`,
   ],
 }
 ```
@@ -110,7 +110,7 @@ module.exports = {
         host: `preview.contentful.com`,
       },
     },
-    `gatsby-plugin-image`
+    `gatsby-plugin-image`,
   ],
 }
 ```
