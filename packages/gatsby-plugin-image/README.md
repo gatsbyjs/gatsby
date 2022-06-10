@@ -110,87 +110,110 @@ There are a few technical restrictions to the way you can pass props into `Stati
 
 If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component.
 
+TODO: link to gatsbyImage docs and the _benefits_
+
+> 💡 The `gatsbyImage` field has been added as the next generation of `gatsbyImageData`. Support for it has currently been brought to [the source plugins listed in the enablement doc](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171-How-to-Enable-Image-CDN). It is recommended to use this field over `gatsbyImageData` as it has [several benefits](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-). Support for `gatsbyImageData` has _not_ been removed.
+
 1. **Add the image to your page query.**
 
    Any GraphQL File object that includes an image will have a `childImageSharp` field that you can use to query the image data. The exact data structure will vary according to your data source, but the syntax is like this:
 
-   ```graphql
-   query {
-     blogPost(id: { eq: $Id }) {
-       title
-       body
-       avatar {
-         childImageSharp {
-           gatsbyImageData(width: 200)
-         }
-       }
-     }
-   }
-   ```
+```graphql
+query {
+  blogPost(id: { eq: $Id }) {
+    title
+    body
+    avatar {
+      # using the old gatsbyImageData field
+      childImageSharp {
+        gatsbyImageData(width: 200)
+      }
+
+      # using the new gatsbyImage field
+      gatsbyImage(width: 200)
+    }
+  }
+}
+```
 
 2. **Configure your image.**
 
    For all the configuration options, see the [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/).
 
-   You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
+   You configure the image by passing arguments to the `gatsbyImageData` or `gatsbyImage` resolvers. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 
-   ```graphql
-   query {
-     blogPost(id: { eq: $Id }) {
-       title
-       body
-       author
-       avatar {
-         childImageSharp {
-           gatsbyImageData(
-             width: 200
-             placeholder: BLURRED
-             formats: [AUTO, WEBP, AVIF]
-           )
-         }
-       }
-     }
-   }
-   ```
+```graphql
+query {
+  blogPost(id: { eq: $Id }) {
+    title
+    body
+    author
+    avatar {
+      # using the old gatsbyImageData field
+      childImageSharp {
+        gatsbyImageData(
+          width: 200
+          placeholder: BLURRED
+          formats: [AUTO, WEBP, AVIF]
+        )
+      }
+
+      # using the new gatsbyImage field
+      gatsbyImage(width: 200, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
+    }
+  }
+}
+```
 
 3. **Display the image.**
 
-   You can then use the `GatsbyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
+   You can then use the `GatsbyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData` or `file.gatsbyImage`, which can be passed to the `GatsbyImage` component.
 
-   ```jsx
-   import { graphql } from "gatsby"
-   import { GatsbyImage, getImage } from "gatsby-plugin-image"
+```jsx
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-   function BlogPost({ data }) {
-     const image = getImage(data.blogPost.avatar)
-     return (
-       <section>
-         <h2>{data.blogPost.title}</h2>
-         <GatsbyImage image={image} alt={data.blogPost.author} />
-         <p>{data.blogPost.body}</p>
-       </section>
-     )
-   }
+function BlogPost({ data }) {
+  const imageOne = getImage(data.blogPost.oldGatsbyImageApi)
+  const imageTwo = getImage(data.blogPost.newGatsbyImageApi)
+  return (
+    <section>
+      <h2>{data.blogPost.title}</h2>
+      <GatsbyImage image={imageOne} alt={data.blogPost.author} />
+      <GatsbyImage image={imageTwo} alt={data.blogPost.author} />
+      <p>{data.blogPost.body}</p>
+    </section>
+  )
+}
 
-   export const pageQuery = graphql`
-     query {
-       blogPost(id: { eq: $Id }) {
-         title
-         body
-         author
-         avatar {
-           childImageSharp {
-             gatsbyImageData(
-               width: 200
-               placeholder: BLURRED
-               formats: [AUTO, WEBP, AVIF]
-             )
-           }
-         }
-       }
-     }
-   `
-   ```
+export const pageQuery = graphql`
+  query {
+    blogPost(id: { eq: $Id }) {
+      title
+      body
+      author
+      oldGatsbyImageApi: avatar {
+        # using the old gatsbyImageData field
+        childImageSharp {
+          gatsbyImageData(
+            width: 200
+            placeholder: BLURRED
+            formats: [AUTO, WEBP, AVIF]
+          )
+        }
+      }
+      newGatsbyImageApi: avatar {
+        # using the new gatsbyImage field
+        gatsbyImage(
+          width: 200
+          placeholder: BLURRED
+          formats: [AUTO, WEBP, AVIF]
+        )
+      }
+    }
+  }
+`
+```
 
 For full APIs, see [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
 
