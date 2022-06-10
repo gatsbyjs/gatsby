@@ -15,7 +15,7 @@ For full documentation on all configuration options, see [the Gatsby Image Plugi
       - [Restrictions on using `StaticImage`](#restrictions-on-using-staticimage)
     - [Dynamic images](#dynamic-images)
   - [Customizing the default options](#customizing-the-default-options)
-  - [Migrating](#migrating)
+  - [Migrating to gatsby-plugin-image](#migrating-to-gatsby-plugin-image)
 
 ## Installation
 
@@ -251,7 +251,7 @@ module.exports = {
 }
 ```
 
-## Migrating
+## Migrating to gatsby-plugin-image
 
 _Main article: **[Migrating from gatsby-image to gatsby-plugin-image](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide)**_
 
