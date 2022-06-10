@@ -25,6 +25,9 @@
     "watch": "babel -w src --extensions \".js,.jsx,.ts,.tsx\" --out-dir dist --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
   },
+  "dependencies": {
+    "gatsby-telemetry": "^3.17.0-next.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
