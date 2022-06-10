@@ -20,6 +20,9 @@ const { grabMatchParams } = require(`./find-path`)
 
 const chunkMapping = require(`../public/chunk-map.json`)
 
+const { GatsbyScriptContext } = require(`gatsby-script`)
+const { Partytown } = require(`@builder.io/partytown/react`)
+
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
@@ -116,6 +119,7 @@ export default async function staticPage({
 }) {
   // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
   global.unsafeBuiltinUsage = []
+  global.gatsbyScripts = []
 
   try {
     let bodyHtml = ``
@@ -252,14 +256,22 @@ export default async function staticPage({
 
     const bodyComponent = (
       <StaticQueryContext.Provider value={staticQueryContext}>
-        {apiRunner(
-          `wrapRootElement`,
-          { element: routerElement, pathname: pagePath },
-          routerElement,
-          ({ result }) => {
-            return { element: result, pathname: pagePath }
-          }
-        ).pop()}
+        <GatsbyScriptContext.Provider
+          value={{
+            collectScript: script => {
+              global.gatsbyScripts.push(script)
+            },
+          }}
+        >
+          {apiRunner(
+            `wrapRootElement`,
+            { element: routerElement, pathname: pagePath },
+            routerElement,
+            ({ result }) => {
+              return { element: result, pathname: pagePath }
+            }
+          ).pop()}
+        </GatsbyScriptContext.Provider>
       </StaticQueryContext.Provider>
     )
 
@@ -314,6 +326,23 @@ export default async function staticPage({
       styles,
       pathPrefix: __PATH_PREFIX__,
     })
+
+    let needsPartytown = false
+    const forwards = []
+
+    for (const script of global.gatsbyScripts) {
+      if (script?.strategy === `off-main-thread`) {
+        needsPartytown = true
+      }
+
+      if (Array.isArray(script?.forward)) {
+        forwards.push(...script?.forward)
+      }
+    }
+
+    if (needsPartytown) {
+      setHeadComponents([<Partytown key="partytown" forward={forwards} />])
+    }
 
     reversedScripts.forEach(script => {
       // Add preload/prefetch <link>s magic comments
@@ -445,7 +474,11 @@ export default async function staticPage({
       />
     )}`
 
-    return { html, unsafeBuiltinsUsage: global.unsafeBuiltinUsage }
+    return {
+      html,
+      unsafeBuiltinsUsage: global.unsafeBuiltinUsage,
+      gatsbyScriptsInPage: global.gatsbyScripts,
+    }
   } catch (e) {
     e.unsafeBuiltinsUsage = global.unsafeBuiltinUsage
     throw e

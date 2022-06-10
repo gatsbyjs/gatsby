@@ -166,7 +166,7 @@ export function loadInternalPlugins(
   // collect scripts that users might inject in their `wrapRootElement`
   plugins.push(
     processPlugin(
-      path.join(__dirname, `../../internal-plugins/partytown`),
+      path.join(__dirname, `../../internal-plugins/gatsby-script-collection`),
       rootDir
     )
   )

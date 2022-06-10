@@ -1,14 +1,14 @@
 import React, { ReactElement, useState } from "react"
 import type { GatsbySSR } from "gatsby"
 import { Partytown } from "@builder.io/partytown/react"
-import { PartytownContext, ScriptProps } from "gatsby-script"
+import { GatsbyScriptContext, ScriptProps } from "gatsby-script"
 
 interface ICollectedForwardsState {
   collectedForwards: Set<string>
   collectedAnyScript: boolean
 }
 
-function PartytownProvider({ children }): ReactElement {
+function GatsbyScriptProvider({ children }): ReactElement {
   const [{ collectedForwards, collectedAnyScript }, setState] =
     useState<ICollectedForwardsState>({
       collectedForwards: new Set(),
@@ -16,7 +16,7 @@ function PartytownProvider({ children }): ReactElement {
     })
 
   return (
-    <PartytownContext.Provider
+    <GatsbyScriptContext.Provider
       value={{
         collectScript: (newScript: ScriptProps): void => {
           let stateShouldChange = false
@@ -55,10 +55,10 @@ function PartytownProvider({ children }): ReactElement {
       {collectedAnyScript && (
         <Partytown key="partytown" forward={Array.from(collectedForwards)} />
       )}
-    </PartytownContext.Provider>
+    </GatsbyScriptContext.Provider>
   )
 }
 
 export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({ element }) => (
-  <PartytownProvider>{element}</PartytownProvider>
+  <GatsbyScriptProvider>{element}</GatsbyScriptProvider>
 )

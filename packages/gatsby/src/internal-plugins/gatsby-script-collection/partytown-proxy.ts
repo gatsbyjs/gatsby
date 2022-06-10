@@ -3,6 +3,9 @@ import type { RequestHandler } from "express"
 
 export const thirdPartyProxyPath = `/__third-party-proxy`
 
+/**
+ * Used in gatsby develop and gatsby serve. Production uses real createRedirect.
+ */
 export function partytownProxy(
   partytownProxiedURLs: Array<string>
 ): RequestHandler {

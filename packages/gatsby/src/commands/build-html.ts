@@ -21,6 +21,10 @@ import { PackageJson } from "../.."
 import { IPageDataWithQueryResult } from "../utils/page-data"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+
+import type { CollectedScriptProps } from "gatsby-script"
+import { collectGatsbyScriptTelemetry } from "../internal-plugins/gatsby-script-collection/collect-telemetry"
+
 type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -176,6 +180,7 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 }
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+  gatsbyScriptsInSite: Array<CollectedScriptProps>
   previewErrors: Record<string, any>
 }
 
@@ -267,6 +272,8 @@ const renderHTMLQueue = async (
           type: `HTML_GENERATED`,
           payload: pageSegment,
         })
+
+        collectGatsbyScriptTelemetry(htmlRenderMeta.gatsbyScriptsInSite)
 
         for (const [_pagePath, arrayOfUsages] of Object.entries(
           htmlRenderMeta.unsafeBuiltinsUsageByPagePath

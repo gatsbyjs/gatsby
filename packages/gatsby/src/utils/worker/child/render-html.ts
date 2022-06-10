@@ -18,6 +18,7 @@ import {
   IResourcesForTemplate,
   getStaticQueryContext,
 } from "../../static-query-utils"
+import type { CollectedScriptProps } from "gatsby-script"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
@@ -128,6 +129,7 @@ export const renderHTMLProd = async ({
   const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
   const unsafeBuiltinsUsageByPagePath = {}
+  const gatsbyScriptsInSite: Array<CollectedScriptProps> = []
   const previewErrors = {}
 
   // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
@@ -158,13 +160,15 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const { html, unsafeBuiltinsUsage } =
+        const { html, unsafeBuiltinsUsage, gatsbyScriptsInPage } =
           await htmlComponentRenderer.default({
             pagePath,
             pageData,
             webpackCompilationHash,
             ...resourcesForTemplate,
           })
+
+        gatsbyScriptsInSite.push(...gatsbyScriptsInPage)
 
         if (unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
@@ -211,7 +215,11 @@ export const renderHTMLProd = async ({
     { concurrency: 2 }
   )
 
-  return { unsafeBuiltinsUsageByPagePath, previewErrors }
+  return {
+    unsafeBuiltinsUsageByPagePath,
+    gatsbyScriptsInSite,
+    previewErrors,
+  }
 }
 
 // TODO: remove when DEV_SSR is done
