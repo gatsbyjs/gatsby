@@ -6,12 +6,16 @@ For full documentation on all configuration options, see [the Gatsby Image Plugi
 
 ## Contents
 
-- [Installation](#installation)
-- [Using the Gatsby Image components](#using-the-gatsby-image-components)
-  - [Static images](#static-images)
-  - [Dynamic images](#dynamic-images)
-- [Customizing the default options](#customizing-the-default-options)
-- [Migrating to gatsby-plugin-image](#migrating)
+- [gatsby-plugin-image](#gatsby-plugin-image)
+  - [Contents](#contents)
+  - [Installation](#installation)
+  - [Using the Gatsby Image components](#using-the-gatsby-image-components)
+    - [Deciding which component to use](#deciding-which-component-to-use)
+    - [Static images](#static-images)
+      - [Restrictions on using `StaticImage`](#restrictions-on-using-staticimage)
+    - [Dynamic images](#dynamic-images)
+  - [Customizing the default options](#customizing-the-default-options)
+  - [Migrating](#migrating)
 
 ## Installation
 
@@ -117,7 +121,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
        body
        avatar {
          childImageSharp {
-           gatsbyImage(width: 200)
+           gatsbyImageData(width: 200)
          }
        }
      }
@@ -128,7 +132,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
    For all the configuration options, see the [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/).
 
-   You configure the image by passing arguments to the `gatsbyImage` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
+   You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 
    ```graphql
    query {
@@ -138,7 +142,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
        author
        avatar {
          childImageSharp {
-           gatsbyImage(
+           gatsbyImageData(
              width: 200
              placeholder: BLURRED
              formats: [AUTO, WEBP, AVIF]
@@ -151,7 +155,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
 3. **Display the image.**
 
-   You can then use the `GatsbyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImage`, which can be passed to the `GatsbyImage` component.
+   You can then use the `GatsbyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
 
    ```jsx
    import { graphql } from "gatsby"
@@ -176,7 +180,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
          author
          avatar {
            childImageSharp {
-             gatsbyImage(
+             gatsbyImageData(
                width: 200
                placeholder: BLURRED
                formats: [AUTO, WEBP, AVIF]
