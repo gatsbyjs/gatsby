@@ -110,9 +110,7 @@ There are a few technical restrictions to the way you can pass props into `Stati
 
 If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component.
 
-TODO: link to gatsbyImage docs and the _benefits_
-
-> 💡 The `gatsbyImage` field has been added as the next generation of `gatsbyImageData`. Support for it has currently been brought to [the source plugins listed in the enablement doc](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171-How-to-Enable-Image-CDN). It is recommended to use this field over `gatsbyImageData` as it has [several benefits](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-). Support for `gatsbyImageData` has _not_ been removed.
+> 💡 The `gatsbyImage` field has been added as the next generation of `gatsbyImageData`. It is recommended to use `gatsbyImage` when available instead of `gatsbyImageData` as it has [several benefits](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-). An up to date list of source plugins that currently offer `gatsbyImage` support can be found in [the Image CDN enablement doc](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171-How-to-Enable-Image-CDN). Please note that support for `gatsbyImageData` has _not_ been removed.
 
 1. **Add the image to your page query.**
 
