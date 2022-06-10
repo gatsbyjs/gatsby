@@ -3,7 +3,6 @@ import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
 import { collectTelemetry } from "./collect-telemetry"
-import { isTrackingEnabled } from "gatsby-telemetry"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -85,7 +84,7 @@ export function Script(props: ScriptProps): ReactElement | null {
     }
   }, [])
 
-  if (typeof window === `undefined` && isTrackingEnabled()) {
+  if (typeof window === `undefined`) {
     collectTelemetry(props)
   }
 
