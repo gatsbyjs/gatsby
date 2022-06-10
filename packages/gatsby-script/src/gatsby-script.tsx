@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react"
 import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
+import { collectTelemetry } from "./collect-telemetry"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -97,6 +98,8 @@ export function Script(props: ScriptProps): ReactElement | null {
           }' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
         )
       }
+
+      collectTelemetry(props, inlineScript)
     }
 
     if (inlineScript) {
@@ -110,6 +113,7 @@ export function Script(props: ScriptProps): ReactElement | null {
         />
       )
     }
+
     return (
       <script
         type="text/partytown"

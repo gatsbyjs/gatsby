@@ -42,8 +42,8 @@ describe(`Script`, () => {
 
   it(`should default to a post-hydrate strategy`, async () => {
     const { container } = render(<Script src={scripts.react} />)
-    const script = container.parentElement.querySelector(`script`)
-    expect(script.getAttribute(`data-strategy`)).toEqual(
+    const script = container?.parentElement?.querySelector(`script`)
+    expect(script?.getAttribute(`data-strategy`)).toEqual(
       ScriptStrategy.postHydrate
     )
   })
@@ -52,8 +52,8 @@ describe(`Script`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.postHydrate} />
     )
-    const script = container.parentElement.querySelector(`script`)
-    expect(script.getAttribute(`data-strategy`)).toEqual(
+    const script = container?.parentElement?.querySelector(`script`)
+    expect(script?.getAttribute(`data-strategy`)).toEqual(
       ScriptStrategy.postHydrate
     )
   })
@@ -62,19 +62,19 @@ describe(`Script`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.idle} />
     )
-    const script = container.parentElement.querySelector(`script`)
-    expect(script.getAttribute(`data-strategy`)).toEqual(ScriptStrategy.idle)
+    const script = container?.parentElement?.querySelector(`script`)
+    expect(script?.getAttribute(`data-strategy`)).toEqual(ScriptStrategy.idle)
   })
 
   it(`should be possible to declare an off-main-thread strategy`, () => {
     const { container } = render(
       <Script src={scripts.react} strategy={ScriptStrategy.offMainThread} />
     )
-    const script = container.parentElement.querySelector(`script`)
-    expect(script.getAttribute(`data-strategy`)).toEqual(
+    const script = container?.parentElement?.querySelector(`script`)
+    expect(script?.getAttribute(`data-strategy`)).toEqual(
       ScriptStrategy.offMainThread
     )
-    expect(script.getAttribute(`type`)).toEqual(`text/partytown`)
+    expect(script?.getAttribute(`type`)).toEqual(`text/partytown`)
   })
 
   it(`should include inline scripts passed via the dangerouslySetInnerHTML prop in the DOM`, () => {
@@ -86,8 +86,8 @@ describe(`Script`, () => {
           dangerouslySetInnerHTML={{ __html: scripts.inline }}
         />
       )
-      const script = container.parentElement.querySelector(`script`)
-      expect(script.textContent).toBe(scripts.inline)
+      const script = container?.parentElement?.querySelector(`script`)
+      expect(script?.textContent).toBe(scripts.inline)
     }
   })
 
@@ -98,8 +98,8 @@ describe(`Script`, () => {
           {scripts.inline}
         </Script>
       )
-      const script = container.parentElement.querySelector(`script`)
-      expect(script.textContent).toBe(scripts.inline)
+      const script = container?.parentElement?.querySelector(`script`)
+      expect(script?.textContent).toBe(scripts.inline)
     }
   })
 
@@ -121,11 +121,11 @@ describe(`Script`, () => {
         ></Script>
       )
 
-      const script = container.parentElement.querySelector(`script`)
+      const script = container?.parentElement?.querySelector(`script`)
 
-      expect(script.dataset.first).toBe(lines.first)
-      expect(script.dataset.second).toBe(lines.second)
-      expect(script.dataset.third).toBe(lines.third)
+      expect(script?.dataset.first).toBe(lines.first)
+      expect(script?.dataset.second).toBe(lines.second)
+      expect(script?.dataset.third).toBe(lines.third)
     }
   })
 })
