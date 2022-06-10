@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.14.2](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-plugin-mdx) (2022-06-10)
+
+#### Bug Fixes
+
+- Do not leak frontmatter into page [#35859](https://github.com/gatsbyjs/gatsby/issues/35859) [#35913](https://github.com/gatsbyjs/gatsby/issues/35913) ([2d00ea0](https://github.com/gatsbyjs/gatsby/commit/2d00ea092d50a0ff57b0cb4ca9569d484764b084))
+- don't allow JS frontmatter by default [#35830](https://github.com/gatsbyjs/gatsby/issues/35830) [#35834](https://github.com/gatsbyjs/gatsby/issues/35834) ([ff94ed5](https://github.com/gatsbyjs/gatsby/commit/ff94ed511a82ec537c0e7e94d9d811cd9e8d7fc7))
+
 ### [2.14.1](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-plugin-mdx) (2022-06-02)
 
 #### Bug Fixes
