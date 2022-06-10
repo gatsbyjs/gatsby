@@ -3,6 +3,7 @@ import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
 import { collectTelemetry } from "./collect-telemetry"
+import { isTrackingEnabled } from "gatsby-telemetry"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -84,6 +85,10 @@ export function Script(props: ScriptProps): ReactElement | null {
     }
   }, [])
 
+  if (typeof window === `undefined` && isTrackingEnabled()) {
+    collectTelemetry(props)
+  }
+
   if (strategy === ScriptStrategy.offMainThread) {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
@@ -98,8 +103,6 @@ export function Script(props: ScriptProps): ReactElement | null {
           }' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
         )
       }
-
-      collectTelemetry(props, inlineScript)
     }
 
     if (inlineScript) {
@@ -229,7 +232,7 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
   }
 }
 
-function resolveInlineScript(props: ScriptProps): string {
+export function resolveInlineScript(props: ScriptProps): string {
   const { dangerouslySetInnerHTML, children = `` } = props || {}
   const { __html: dangerousHTML = `` } = dangerouslySetInnerHTML || {}
   return dangerousHTML || children

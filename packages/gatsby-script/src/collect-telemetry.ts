@@ -1,5 +1,9 @@
-import { isTrackingEnabled, trackCli } from "gatsby-telemetry"
-import { ScriptStrategy, ScriptProps } from "./gatsby-script"
+import { trackCli } from "gatsby-telemetry"
+import {
+  ScriptStrategy,
+  ScriptProps,
+  resolveInlineScript,
+} from "./gatsby-script"
 
 export enum ScriptTelemetryLabel {
   strategy = `GATSBY_SCRIPT_STRATEGY`,
@@ -12,15 +16,9 @@ export enum ScriptTelemetryType {
   inline = `INLINE_SCRIPT`,
 }
 
-export function collectTelemetry(
-  props: ScriptProps = {},
-  inlineScript: string
-): void {
-  if (!isTrackingEnabled()) {
-    return
-  }
-
+export function collectTelemetry(props: ScriptProps = {}): void {
   const { src, strategy = ScriptStrategy.postHydrate, onLoad, onError } = props
+  const inlineScript = resolveInlineScript(props)
 
   trackCli(ScriptTelemetryLabel.strategy, {
     valueString: strategy,
