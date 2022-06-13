@@ -1,4 +1,11 @@
-describe(`remote-file`, () => {
+describe(
+  `remote-file`, 
+  {
+    retries: {
+      runMode: 4,
+    },
+  },
+  () => {
   beforeEach(() => {
     cy.visit(`/remote-file/`).waitForRouteChange()
 
