@@ -1,0 +1,9 @@
+.index-main {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin: 0.5em auto;
+  max-width: 600px;
+}
+
+.index-main > p {
+  line-height: 1.5em;
+}

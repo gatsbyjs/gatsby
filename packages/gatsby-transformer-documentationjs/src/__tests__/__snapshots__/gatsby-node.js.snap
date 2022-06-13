@@ -52,12 +52,12 @@ Object {
 }
 `;
 
-exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a captions from examples: description content 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.js) should extract out a captions from examples: description content 1`] = `
 "A js doc with multiple examples, some of them with caption
 "
 `;
 
-exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a captions from examples: examplesWithCaptions 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.js) should extract out a captions from examples: examplesWithCaptions 1`] = `
 Array [
   Object {
     "caption": null,
@@ -80,12 +80,12 @@ await pear()",
 ]
 `;
 
-exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: description content 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.js) should extract out a description, params, and examples: description content 1`] = `
 "A pretty cool jsdoc example
 "
 `;
 
-exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: example 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.js) should extract out a description, params, and examples: example 1`] = `
 Object {
   "caption": null,
   "description": "const apple = require('apple')
@@ -97,9 +97,61 @@ apple()",
 }
 `;
 
-exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: param description 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.js) should extract out a description, params, and examples: param description 1`] = `
 "A nice crispy apple
 "
 `;
 
-exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: param name 1`] = `"paramName"`;
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.js) should extract out a description, params, and examples: param name 1`] = `"paramName"`;
+
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.jsx) should extract out a captions from examples: description content 1`] = `
+"A js doc with multiple examples, some of them with caption
+"
+`;
+
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.jsx) should extract out a captions from examples: examplesWithCaptions 1`] = `
+Array [
+  Object {
+    "caption": null,
+    "description": "const pear = require('pear')
+pear()",
+    "highlighted": "<span class=\\"token keyword\\">const</span> pear <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'pear'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"token function\\">pear</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>",
+    "raw": "const pear = require('pear')
+pear()",
+  },
+  Object {
+    "caption": "How to async pear",
+    "description": "const pear = require('pear')
+await pear()",
+    "highlighted": "<span class=\\"token keyword\\">const</span> pear <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'pear'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"token keyword\\">await</span> <span class=\\"token function\\">pear</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>",
+    "raw": "const pear = require('pear')
+await pear()",
+  },
+]
+`;
+
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.jsx) should extract out a description, params, and examples: description content 1`] = `
+"A pretty cool jsdoc example
+"
+`;
+
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.jsx) should extract out a description, params, and examples: example 1`] = `
+Object {
+  "caption": null,
+  "description": "const apple = require('apple')
+apple()",
+  "highlighted": "<span class=\\"token keyword\\">const</span> apple <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'apple'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"token function\\">apple</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>",
+  "raw": "const apple = require('apple')
+apple()",
+}
+`;
+
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.jsx) should extract out a description, params, and examples: param description 1`] = `
+"A nice crispy apple
+"
+`;
+
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example (.jsx) should extract out a description, params, and examples: param name 1`] = `"paramName"`;

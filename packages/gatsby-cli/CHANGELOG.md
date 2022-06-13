@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.16.0/packages/gatsby-cli) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Bug Fixes
+
+- Improve get-config-file error handling [#35776](https://github.com/gatsbyjs/gatsby/issues/35776) ([160bbf0](https://github.com/gatsbyjs/gatsby/commit/160bbf0423df87296f75cf717ebecbd8e4337245))
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+- Migrate from `source-map` to `@jridgewell/trace-mapping` [#35621](https://github.com/gatsbyjs/gatsby/issues/35621) ([fc5df03](https://github.com/gatsbyjs/gatsby/commit/fc5df037f69bd69b236d6c91916f0552eb830fd8))
+- Run Unit Tests on Node 16 and 18 [#35622](https://github.com/gatsbyjs/gatsby/issues/35622) ([d22a86e](https://github.com/gatsbyjs/gatsby/commit/d22a86ef82e918c4df03046891a9fefb12bd9bd1))
+- Update snapshots for plugin add handler ([9eab90f](https://github.com/gatsbyjs/gatsby/commit/9eab90fe5329271d6389f4dea2e96b178c4f8a19))
+- Add GraphQL Typegen [#35584](https://github.com/gatsbyjs/gatsby/issues/35584) ([1c392e6](https://github.com/gatsbyjs/gatsby/commit/1c392e630b49df5acaccd5221526b171ac53bbfc))
+
 ### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.15.1/packages/gatsby-cli) (2022-06-01)
 
 **Note:** Version bump only for package gatsby-cli
