@@ -207,7 +207,16 @@ export const schemaTypegen: ActionFunction<
 
   context.reporter!.verbose(`Re-Generating schema.graphql`)
 
-  await writeGraphQLSchema(directory, schema)
+  try {
+    await writeGraphQLSchema(directory, schema)
+  } catch (err) {
+    context.reporter!.panicOnBuild({
+      id: `12100`,
+      context: {
+        sourceMessage: err,
+      },
+    })
+  }
 }
 
 export const definitionsTypegen: ActionFunction<
@@ -220,8 +229,17 @@ export const definitionsTypegen: ActionFunction<
 
   context.reporter!.verbose(`Re-Generating fragments.graphql & TS Types`)
 
-  await writeGraphQLFragments(directory, definitions)
-  await writeTypeScriptTypes(directory, schema, definitions)
+  try {
+    await writeGraphQLFragments(directory, definitions)
+    await writeTypeScriptTypes(directory, schema, definitions)
+  } catch (err) {
+    context.reporter!.panicOnBuild({
+      id: `12100`,
+      context: {
+        sourceMessage: err,
+      },
+    })
+  }
 }
 
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {

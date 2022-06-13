@@ -16,7 +16,7 @@ import {
   gatsbyImageResolver,
 } from "./graphql/gatsby-image-resolver"
 
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
 import type { InterfaceTypeComposerAsObjectDefinition } from "graphql-compose"
 import type { SchemaBuilder, IRemoteFileNode } from "./types"
 
@@ -24,7 +24,8 @@ let enums: ReturnType<typeof getRemoteFileEnums> | undefined
 
 export function getRemoteFileFields(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  actions: Actions
+  actions: Actions,
+  store?: Store
 ): Record<string, unknown> {
   return {
     id: `ID!`,
@@ -33,9 +34,9 @@ export function getRemoteFileFields(
     filesize: `Int`,
     width: `Int`,
     height: `Int`,
-    publicUrl: generatePublicUrlFieldConfig(actions),
-    resize: generateResizeFieldConfig(enums, actions),
-    gatsbyImage: generateGatsbyImageFieldConfig(enums, actions),
+    publicUrl: generatePublicUrlFieldConfig(actions, store),
+    resize: generateResizeFieldConfig(enums, actions, store),
+    gatsbyImage: generateGatsbyImageFieldConfig(enums, actions, store),
   }
 }
 
@@ -46,9 +47,11 @@ function addRemoteFilePolyfillInterface<
   {
     schema,
     actions,
+    store,
   }: {
     schema: SchemaBuilder
     actions: Actions
+    store: Store
   }
 ): T {
   // When the image-cdn is part of Gatsby we will only add the RemoteFile interface if necessary
@@ -98,7 +101,8 @@ function addRemoteFilePolyfillInterface<
         name: `RemoteFile`,
         fields: getRemoteFileFields(
           enums,
-          actions
+          actions,
+          store
         ) as InterfaceTypeComposerAsObjectDefinition<
           IRemoteFileNode,
           unknown
@@ -125,7 +129,7 @@ function addRemoteFilePolyfillInterface<
   type.config.fields = {
     // @ts-ignore - wrong typing by typecomposer
     ...type.config.fields,
-    ...getRemoteFileFields(enums, actions),
+    ...getRemoteFileFields(enums, actions, store),
   }
 
   return type

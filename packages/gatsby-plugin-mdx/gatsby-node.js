@@ -68,6 +68,9 @@ exports.onPostBootstrap = ({ cache }, pluginOptions) => {
   }
 }
 
+// Dedupe warning
+let warnedAboutJSFrontmatterEngine = false
+
 exports.pluginOptionsSchema = function ({ Joi }) {
   return Joi.object({
     extensions: Joi.array()
@@ -123,5 +126,40 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     commonmark: Joi.boolean()
       .default(false)
       .description("MDX will be parsed using CommonMark."),
+    JSFrontmatterEngine: Joi.boolean()
+      .default(false)
+      .description(`Enable JavaScript frontmatter parsing`),
+  }).custom(value => {
+    const { JSFrontmatterEngine, engines = {} } = value || {}
+
+    if (JSFrontmatterEngine) {
+      // show this warning only once in main process
+      if (!process.env.GATSBY_WORKER_ID) {
+        console.warn(
+          `JS frontmatter engine is enabled in gatsby-plugin-mdx (via JSFrontmatterEngine: true in plugin options). This can cause a security risk, see https://github.com/gatsbyjs/gatsby/security/advisories/GHSA-mj46-r4gr-5x83. If you are not relying on this feature we strongly suggest disabling it via the "JSFrontmatterEngine: false" plugin option. If you rely on this feature make sure to properly secure or sanitize your content source.`
+        )
+      }
+      return value
+    }
+
+    const js = () => {
+      if (!warnedAboutJSFrontmatterEngine) {
+        console.warn(
+          `You have frontmatter declared with "---js" or "---javascript" that is not parsed by default to mitigate a security risk (see https://github.com/gatsbyjs/gatsby/security/advisories/GHSA-mj46-r4gr-5x83). If you require this feature it can be enabled by setting "JSFrontmatterEngine: true" in the plugin options of gatsby-plugin-mdx.`
+        )
+        warnedAboutJSFrontmatterEngine = true
+      }
+      // we still have to return a frontmatter, se we just stub it with empty object
+      return {}
+    }
+
+    return {
+      ...value,
+      engines: {
+        ...engines,
+        js,
+        javascript: js,
+      },
+    }
   })
 }

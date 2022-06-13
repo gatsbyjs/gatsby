@@ -17,6 +17,7 @@ const {
   traceSVG,
   generateImageData,
 } = require(`gatsby-plugin-sharp`)
+const { hasFeature } = require(`gatsby-plugin-utils`)
 
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
@@ -407,7 +408,9 @@ const imageNodeType = ({
   cache,
 }) => {
   return {
-    type: new GraphQLNonNull(GraphQLJSON),
+    type: hasFeature(`graphql-typegen`)
+      ? `GatsbyImageData!`
+      : new GraphQLNonNull(GraphQLJSON),
     args: {
       layout: {
         type: ImageLayoutType,

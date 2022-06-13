@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.17.0/packages/gatsby-source-drupal) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+- Allow sites to configure the request timeout [#35794](https://github.com/gatsbyjs/gatsby/issues/35794) ([8166d4a](https://github.com/gatsbyjs/gatsby/commit/8166d4a74b768bf4247db413d1a544f1e923716e))
+
+#### Bug Fixes
+
+- Update `createRemoteFileNode` args [#35422](https://github.com/gatsbyjs/gatsby/issues/35422) fixes [#35363](https://github.com/gatsbyjs/gatsby/issues/35363) ([caaf7a5](https://github.com/gatsbyjs/gatsby/commit/caaf7a555bb42043044f05743eec0ac1ad372cc4))
+- Add a check for data prop [#35719](https://github.com/gatsbyjs/gatsby/issues/35719) ([0d1f44e](https://github.com/gatsbyjs/gatsby/commit/0d1f44ebcdfca0f9a2f405b94dc11ffc9129a793))
+
+### [5.16.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.16.2/packages/gatsby-source-drupal) (2022-06-01)
+
+#### Features
+
+- Allow sites to configure the request timeout [#35794](https://github.com/gatsbyjs/gatsby/issues/35794) [#35820](https://github.com/gatsbyjs/gatsby/issues/35820) ([4f4d2d7](https://github.com/gatsbyjs/gatsby/commit/4f4d2d7c7d805e9a7d2a1c2f8156aa50ec1e87f6))
+
+### [5.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.16.1/packages/gatsby-source-drupal) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.16.0/packages/gatsby-source-drupal) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Image cdn fixes fixes [#35619](https://github.com/gatsbyjs/gatsby/issues/35619) ([15a3fbf](https://github.com/gatsbyjs/gatsby/commit/15a3fbf720b4e38eca390830538bdb50042ba392))
+- add placeholder style name plugin option to the options schema [#35644](https://github.com/gatsbyjs/gatsby/issues/35644) ([6fd8bf7](https://github.com/gatsbyjs/gatsby/commit/6fd8bf7abba95ae4d7d6bfdadd93e45f2cd67e49))
+
 ## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.15.0/packages/gatsby-source-drupal) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

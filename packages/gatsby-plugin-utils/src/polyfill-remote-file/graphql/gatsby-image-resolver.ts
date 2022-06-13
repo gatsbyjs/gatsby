@@ -1,3 +1,4 @@
+import { hasFeature } from "../../has-feature"
 import { generateImageUrl } from "../utils/url-generator"
 import { getImageFormatFromMimeType } from "../utils/mime-type-helpers"
 import { stripIndent } from "../utils/strip-indent"
@@ -9,7 +10,7 @@ import { generatePlaceholder, PlaceholderType } from "../placeholder-handler"
 import { ImageCropFocus, isImage } from "../types"
 import { validateAndNormalizeFormats, calculateImageDimensions } from "./utils"
 
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
 import type {
   IRemoteFileNode,
   IRemoteImageNode,
@@ -71,10 +72,15 @@ const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 const DEFAULT_QUALITY = 75
 
+const GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS = [`true`, `1`].includes(
+  process.env.GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS || ``
+)
+
 export async function gatsbyImageResolver(
   source: IRemoteFileNode,
   args: IGatsbyImageDataArgs,
-  actions: Actions
+  actions: Actions,
+  store?: Store
 ): Promise<{
   images: IGatsbyImageData
   layout: string
@@ -185,7 +191,8 @@ export async function gatsbyImageResolver(
             cropFocus: args.cropFocus,
             quality: args.quality as number,
           },
-          actions
+          actions,
+          store
         )
       }
 
@@ -230,7 +237,8 @@ export async function gatsbyImageResolver(
   if (args.placeholder !== `none`) {
     const { fallback, backgroundColor: bgColor } = await generatePlaceholder(
       source,
-      args.placeholder as PlaceholderType
+      args.placeholder as PlaceholderType,
+      store
     )
 
     if (fallback) {
@@ -239,6 +247,11 @@ export async function gatsbyImageResolver(
     if (bgColor) {
       backgroundColor = bgColor
     }
+  }
+
+  // Check if addGatsbyImageSourceUrl for backwards compatibility with older Gatsby versions
+  if (GATSBY_SHOULD_TRACK_IMAGE_CDN_URLS && actions.addGatsbyImageSourceUrl) {
+    actions.addGatsbyImageSourceUrl(source.url)
   }
 
   return {
@@ -253,14 +266,15 @@ export async function gatsbyImageResolver(
 
 export function generateGatsbyImageFieldConfig(
   enums: ReturnType<typeof getRemoteFileEnums>,
-  actions: Actions
+  actions: Actions,
+  store?: Store
 ): IGraphQLFieldConfigDefinition<
   IRemoteFileNode | IRemoteImageNode,
   ReturnType<typeof gatsbyImageResolver>,
   IGatsbyImageDataArgs
 > {
   return {
-    type: `JSON`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData` : `JSON`,
     description: `Data used in the <GatsbyImage /> component. See https://gatsby.dev/img for more info.`,
     args: {
       layout: {
@@ -359,7 +373,7 @@ export function generateGatsbyImageFieldConfig(
       },
     },
     resolve(source, args): ReturnType<typeof gatsbyImageResolver> {
-      return gatsbyImageResolver(source, args, actions)
+      return gatsbyImageResolver(source, args, actions, store)
     },
   }
 }
