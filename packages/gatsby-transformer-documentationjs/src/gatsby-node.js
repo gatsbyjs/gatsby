@@ -189,6 +189,7 @@ function unstable_shouldOnCreateNode({ node }) {
   return (
     node.internal.type === `File` &&
     (node.internal.mediaType === `application/javascript` ||
+      node.extension === `jsx` ||
       node.extension === `tsx` ||
       node.extension === `ts`)
   )
