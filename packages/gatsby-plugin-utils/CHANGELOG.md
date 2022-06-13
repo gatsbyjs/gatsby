@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.10.0/packages/gatsby-plugin-utils) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) [#35863](https://github.com/gatsbyjs/gatsby/issues/35863) ([aacb781](https://github.com/gatsbyjs/gatsby/commit/aacb781438760e2c3f8bfa64132a0a87fa2d55ff))
+- add `contentDigest` to image cdn args [#35816](https://github.com/gatsbyjs/gatsby/issues/35816) [#35860](https://github.com/gatsbyjs/gatsby/issues/35860) ([cedbdb8](https://github.com/gatsbyjs/gatsby/commit/cedbdb89153a21bd4e22e612f677bf291aadceee))
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+
+#### Bug Fixes
+
+- Make `GatsbyImageData` nullable [#35777](https://github.com/gatsbyjs/gatsby/issues/35777) ([ca09aa7](https://github.com/gatsbyjs/gatsby/commit/ca09aa7a7b1fbb719ef3cd0c64bbe663d30d73c2))
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+
 ### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.9.1/packages/gatsby-plugin-utils) (2022-06-01)
 
 #### Bug Fixes

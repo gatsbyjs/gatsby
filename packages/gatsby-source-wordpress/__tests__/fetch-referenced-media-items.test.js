@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 jest.mock(`../dist/utils/fetch-graphql`, () => jest.fn())
 
 import fetchGraphql from "../dist/utils/fetch-graphql"
@@ -20,6 +16,7 @@ const fakeReporter = {
 
 const getNodeMock = jest.fn()
 
+const btoa = (input) => Buffer.from(input).toString(`base64`)
 
 describe(`fetch-referenced-media-items`, () => {
   beforeAll(() => {

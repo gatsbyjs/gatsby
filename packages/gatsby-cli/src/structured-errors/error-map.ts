@@ -64,6 +64,17 @@ const errors = {
     type: Type.WEBPACK,
     level: Level.ERROR,
   },
+  "98011": {
+    text: (context): string =>
+      `Rendering Engines attempted to use unsupported "${
+        context.package
+      }" package${
+        context.importedBy ? ` (imported by "${context.importedBy}")` : ``
+      }${context.advisory ? `\n\n${context.advisory}` : ``}`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "98123": {
     text: (context): string =>
       `${context.stageLabel} failed\n\n${
