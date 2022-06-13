@@ -9,6 +9,7 @@ exports.onRenderBody = (
     return null
 
   const gtagConfig = pluginOptions.gtagConfig || {}
+  const gtagConsent = pluginOptions.gtagConsent || {}
   const pluginConfig = pluginOptions.pluginConfig || {}
 
   const origin = pluginConfig.origin || `https://www.googletagmanager.com`
@@ -60,6 +61,11 @@ exports.onRenderBody = (
       }) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){window.dataLayer && window.dataLayer.push(arguments);}
+        ${
+          if (gtagConsent && gtagConsent.length) {
+            `gtag('consent', 'default', ${JSON.stringify(gtagConsent)});`
+          }
+        }
         gtag('js', new Date());
 
         ${pluginOptions.trackingIds
