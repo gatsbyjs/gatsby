@@ -31,6 +31,12 @@ module.exports = {
           "AW-CONVERSION_ID", // Google Ads / Adwords / AW
           "DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
         ],
+        // Optional - if you want to set default consent settings
+        // this example disables ad and analytics cookies
+        gtagConsent: {
+          ad_storage': 'denied',
+          analytics_storage': 'denied'
+        },
         // This object gets passed directly to the gtag config command
         // This config will be shared across all trackingIds
         gtagConfig: {
@@ -95,6 +101,12 @@ export default () => (
   </div>
 )
 ```
+
+## The optional "gtagConsent" options
+
+If you want to set the default Consent options, e.g. disable ad or analytics
+cookies, this is where you can put them. All these options are passed directly
+to the gtag consent command.
 
 ## The "gtagConfig.anonymize_ip" option
 
