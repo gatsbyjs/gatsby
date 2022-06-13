@@ -46,6 +46,8 @@ export async function createPages({
     return returnValue
   }
 
+  store.dispatch(actions.apiStarted({ apiName: `createPages` }))
+
   createPagesCount += 1
   const traceId = isInitialCreatePages
     ? `initial-createPages`

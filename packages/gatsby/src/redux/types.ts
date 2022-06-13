@@ -378,6 +378,7 @@ export type ActionsUnion =
   | IAddFieldToNodeAction
   | IAddThirdPartySchema
   | IApiFinishedAction
+  | IApiStartedAction
   | ICreateFieldExtension
   | ICreateNodeAction
   | ICreatePageAction
@@ -453,6 +454,13 @@ export interface ISetComponentFeatures {
     componentPath: string
     serverData: boolean
     config: boolean
+  }
+}
+
+export interface IApiStartedAction {
+  type: `API_STARTED`
+  payload: {
+    apiName: GatsbyNodeAPI
   }
 }
 

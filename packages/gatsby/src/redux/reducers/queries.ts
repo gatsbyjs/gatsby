@@ -65,7 +65,6 @@ export function queriesReducer(
   switch (action.type) {
     case `DELETE_CACHE`:
       return initialState()
-
     case `CREATE_PAGE`: {
       const { path, componentPath } = action.payload
       let query = state.trackedQueries.get(path)
@@ -89,6 +88,13 @@ export function queriesReducer(
       //   This is OK for cold cache but with warm cache we will re-run all of those queries (unnecessarily).
       //   We will reconcile the state after createPages API call and actually delete those queries.
       state.deletedQueries.add(action.payload.path)
+      return state
+    }
+    case `API_STARTED`: {
+      if (action.payload.apiName !== `createPages`) {
+        return state
+      }
+      state.createPagesFinished = false
       return state
     }
     case `API_FINISHED`: {

@@ -27,6 +27,7 @@ import {
   ICreatePageDependencyActionPayloadType,
   IDeleteNodeManifests,
   IClearGatsbyImageSourceUrlAction,
+  IApiStartedAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -107,6 +108,15 @@ export const replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+export const apiStarted = (
+  payload: IApiStartedAction["payload"]
+): IApiStartedAction => {
+  return {
+    type: `API_STARTED`,
+    payload,
   }
 }
 
