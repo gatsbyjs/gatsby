@@ -28,6 +28,7 @@ const initialState = (): IGatsbyState["queries"] => {
     trackedComponents: new Map<ComponentPath, IComponentState>(),
     deletedQueries: new Set<QueryId>(),
     dirtyQueriesListToEmitViaWebsocket: [],
+    createPagesFinished: false,
   }
 }
 

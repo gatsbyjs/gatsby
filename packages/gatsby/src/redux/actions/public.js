@@ -449,13 +449,16 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (state.queries.createPagesFinished) {
-    reporter.panic({
-      id: `11333`,
-      context: {
-        pluginName: name,
-        pageObject: page,
-      },
-    })
+    reporter.warn(
+      chalk.bold.yellow(
+        `${name} attempted to create a page after the createPages API has finished.`
+      ) +
+        `Please check that the createPages implementation in gatsby-node is awaited properly.\n\nThe page object passed to createPage:\n${JSON.stringify(
+          page,
+          null,
+          2
+        )}`
+    )
   }
 
   // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
