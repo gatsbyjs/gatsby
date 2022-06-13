@@ -18,15 +18,7 @@ export function sortDefinitions(
   a: IDefinitionMeta,
   b: IDefinitionMeta
 ): number {
-  const aKey = a.name
-  const bKey = b.name
-  if (aKey < bKey) {
-    return -1
-  }
-  if (aKey > bKey) {
-    return 1
-  }
-  return 0
+  return a.name.localeCompare(b.name)
 }
 
 /**
