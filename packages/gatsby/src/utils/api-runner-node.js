@@ -353,52 +353,6 @@ const runAPI = async (plugin, api, args, activity) => {
         ? getUninitializedCache(plugin.name)
         : getCache(plugin.name)
 
-    // Ideally this would be more abstracted and applied to more situations, but right now
-    // this can be potentially breaking so targeting `createPages` API and `createPage` action
-    let actions = doubleBoundActionCreators
-    let apiFinished = false
-    if (api === `createPages`) {
-      let alreadyDisplayed = false
-      const createPageAction = actions.createPage
-      // create new actions object with wrapped createPage action
-      // doubleBoundActionCreators is memoized, so we can't just
-      // reassign createPage field as this would cause this extra logic
-      // to be used in subsequent APIs and we only want to target this `createPages` call.
-      actions = {
-        ...actions,
-        createPage: (...args) => {
-          createPageAction(...args)
-          if (apiFinished && !alreadyDisplayed) {
-            const warning = [
-              reporter.stripIndent(`
-              Action ${chalk.bold(
-                `createPage`
-              )} was called outside of its expected asynchronous lifecycle ${chalk.bold(
-                `createPages`
-              )} in ${chalk.bold(plugin.name)}.
-              Ensure that you return a Promise from ${chalk.bold(
-                `createPages`
-              )} and are awaiting any asynchronous method invocations (like ${chalk.bold(
-                `graphql`
-              )} or http requests).
-              For more info and debugging tips: see ${chalk.bold(
-                `https://gatsby.dev/sync-actions`
-              )}
-            `),
-            ]
-
-            const possiblyCodeFrame = getNonGatsbyCodeFrameFormatted()
-            if (possiblyCodeFrame) {
-              warning.push(possiblyCodeFrame)
-            }
-
-            reporter.warn(warning.join(`\n\n`))
-            alreadyDisplayed = true
-          }
-        },
-      }
-    }
-
     const localReporter = getLocalReporter({ activity, reporter })
 
     const runningActivities = new Set()
@@ -427,7 +381,7 @@ const runAPI = async (plugin, api, args, activity) => {
         parentSpan: pluginSpan,
         basePath: pathPrefix,
         pathPrefix: publicPath,
-        actions,
+        actions: doubleBoundActionCreators,
         loadNodeContent,
         store,
         emitter,
@@ -467,7 +421,6 @@ const runAPI = async (plugin, api, args, activity) => {
       return Promise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
-          apiFinished = true
           endInProgressActivitiesCreatedByThisRun()
           callback(err, val)
         }
@@ -487,7 +440,6 @@ const runAPI = async (plugin, api, args, activity) => {
         return await gatsbyNode[api](...apiCallArgs)
       } finally {
         pluginSpan.finish()
-        apiFinished = true
         endInProgressActivitiesCreatedByThisRun()
       }
     }
