@@ -216,6 +216,7 @@ describeWhenLMDB(`worker (queries)`, () => {
               "/bar",
             },
           },
+          "createPagesFinished": false,
           "deletedQueries": Set {},
           "dirtyQueriesListToEmitViaWebsocket": Array [],
           "queryNodes": Map {},
