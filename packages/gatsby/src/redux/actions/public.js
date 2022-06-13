@@ -1,4 +1,5 @@
 // @flow
+const reporter = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -1244,6 +1245,13 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 
+actions.addGatsbyImageSourceUrl = (sourceUrl: string) => {
+  return {
+    type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
+    payload: { sourceUrl },
+  }
+}
+
 /**
  * DEPRECATED. Use createJobV2 instead.
  *
@@ -1467,6 +1475,59 @@ actions.unstable_createNodeManifest = (
       pluginName: plugin.name,
       updatedAtUTC,
     },
+  }
+}
+
+/**
+ * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
+ *
+ * @param {Object} $0
+ * @param {string} $0.domain The domain to store the headers for.
+ * @param {Object} $0.headers The headers to store.
+ */
+actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
+  const headersIsObject =
+    typeof headers === `object` && headers !== null && !Array.isArray(headers)
+
+  const noHeaders = !headersIsObject
+  const noDomain = typeof domain !== `string`
+
+  if (noHeaders) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`
+    )
+  }
+
+  if (noDomain) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`
+    )
+  }
+
+  if (noDomain || noHeaders) {
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`
+    )
+
+    return null
+  }
+
+  const baseDomain = url.parse(domain)?.hostname
+
+  if (baseDomain) {
+    return {
+      type: `SET_REQUEST_HEADERS`,
+      payload: {
+        domain: baseDomain,
+        headers,
+      },
+    }
+  } else {
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
+    )
+
+    return null
   }
 }
 

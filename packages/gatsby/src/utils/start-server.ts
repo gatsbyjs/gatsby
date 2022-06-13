@@ -289,7 +289,7 @@ export async function startServer(
     res.end()
   })
 
-  addImageRoutes(app)
+  addImageRoutes(app, store)
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -406,7 +406,7 @@ export async function startServer(
     }
   )
 
-  app.get(`/__original-stack-frame`, async (req, res) => {
+  app.get(`/__original-stack-frame`, (req, res) => {
     const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
@@ -454,10 +454,7 @@ export async function startServer(
       line: lineNumber,
       column: columnNumber,
     }
-    const result = await findOriginalSourcePositionAndContent(
-      sourceMap,
-      position
-    )
+    const result = findOriginalSourcePositionAndContent(sourceMap, position)
 
     const sourcePosition = result?.sourcePosition
     const sourceLine = sourcePosition?.line

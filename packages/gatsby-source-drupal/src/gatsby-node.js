@@ -92,10 +92,6 @@ async function worker([url, options]) {
   const response = await got(url, {
     agent,
     cache: false,
-    timeout: {
-      // Occasionally requests to Drupal stall. Set a 30s timeout to retry in this case.
-      request: 30000,
-    },
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
@@ -166,6 +162,7 @@ exports.sourceNodes = async (
     params = {},
     concurrentFileRequests = 20,
     concurrentAPIRequests = 20,
+    requestTimeoutMS,
     disallowedLinkTypes = [
       `self`,
       `describedby`,
@@ -182,13 +179,18 @@ exports.sourceNodes = async (
       nonTranslatableEntities: [],
     },
   } = pluginOptions
+
+  // older versions of Gatsby didn't use Joi's default value for plugin options
+  if (!(`imageCDN` in pluginOptions)) {
+    pluginOptions.imageCDN = true
+  }
+
   const {
     createNode,
     setPluginStatus,
     touchNode,
     unstable_createNodeManifest,
   } = actions
-
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -329,6 +331,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
             searchParams: params,
             responseType: `json`,
             parentSpan: fastBuildsSpan,
+            timeout: {
+              // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+              request: requestTimeoutMS,
+            },
           },
         ])
 
@@ -487,6 +493,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
         searchParams: params,
         responseType: `json`,
         parentSpan: fullFetchSpan,
+        timeout: {
+          // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+          request: requestTimeoutMS,
+        },
       },
     ])
     allData = await Promise.all(
@@ -537,6 +547,10 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 searchParams: params,
                 responseType: `json`,
                 parentSpan: fullFetchSpan,
+                timeout: {
+                  // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+                  request: requestTimeoutMS,
+                },
               },
             ])
           } catch (error) {
@@ -839,8 +853,10 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     params: Joi.object().description(`Append optional GET params to requests`),
     concurrentFileRequests: Joi.number().integer().default(20).min(1),
     concurrentAPIRequests: Joi.number().integer().default(20).min(1),
+    requestTimeoutMS: Joi.number().integer().default(30000).min(1),
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
+    imageCDN: Joi.boolean().default(true),
     fastBuilds: Joi.boolean(),
     entityReferenceRevisions: Joi.array().items(Joi.string()),
     secret: Joi.string().description(
@@ -857,16 +873,16 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
   })
 
-exports.onCreateDevServer = async ({ app }) => {
+exports.onCreateDevServer = async ({ app, store }) => {
   // this makes the gatsby develop image CDN emulator work on earlier versions of Gatsby.
-  polyfillImageServiceDevRoutes(app)
+  polyfillImageServiceDevRoutes(app, store)
 }
 
 exports.createSchemaCustomization = (
-  { actions, schema, reporter },
+  { actions, schema, store, reporter },
   pluginOptions
 ) => {
-  if (pluginOptions.skipFileDownloads) {
+  if (pluginOptions.skipFileDownloads && pluginOptions.imageCDN) {
     actions.createTypes([
       // polyfill so image CDN works on older versions of Gatsby
       addRemoteFilePolyfillInterface(
@@ -879,6 +895,7 @@ exports.createSchemaCustomization = (
         {
           schema,
           actions,
+          store,
         }
       ),
     ])
