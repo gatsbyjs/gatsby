@@ -215,9 +215,9 @@ One example of a use case for `resolveUrl` is when using tag manager scripts suc
 
 Here's an example using [Google Tag Manager](https://tagmanager.google.com) to load [Google Analytics](http://analytics.google.com) (Universal Analytics in this case):
 
-Note - This assumes we have [set up Google Tag Manager to use Universal Analytics](https://support.google.com/tagmanager/answer/6107124?hl=en) in the Google Tag Manager web application.
+Note - This assumes you have [set up Google Tag Manager to use Universal Analytics](https://support.google.com/tagmanager/answer/6107124?hl=en) in the Google Tag Manager web application.
 
-First we load our Google Tag Manager (GTM) script and send an initialization event:
+First you load our Google Tag Manager (GTM) script and send an initialization event:
 
 ```jsx
 import { Script } from "gatsby"
@@ -239,7 +239,7 @@ import { Script } from "gatsby"
 </Script>
 ```
 
-Then we define `resolveUrl` in Partytown's vanilla config to handle the Google Analytics script loaded by Google Tag Manager:
+Then you define `resolveUrl` in Partytown's vanilla config to handle the Google Analytics script loaded by Google Tag Manager:
 
 ```jsx:title=gatsby-ssr.js
 import React from "react"
@@ -273,7 +273,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
 }
 ```
 
-Lastly, we need to add the Google Analytics URL to `partytownProxiedURLs` so that Gatsby knows the URL is safe to proxy:
+Lastly, you need to add the Google Analytics URL to `partytownProxiedURLs` so that Gatsby knows the URL is safe to proxy:
 
 ```js:title=gatsby-config.js
 import dotenv from "dotenv"
