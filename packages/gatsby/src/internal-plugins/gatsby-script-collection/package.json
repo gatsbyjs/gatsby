@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "partytown",
+  "name": "gatsby-script-collection",
   "version": "1.0.0",
-  "description": "Internal plugin that handles Partytown setup",
+  "description": "Internal plugin that handles Gatsby script collection",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

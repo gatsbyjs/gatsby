@@ -1,8 +1,10 @@
 import React, { useEffect, useContext } from "react"
-import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
+import {
+  GatsbyScriptContext,
+  filterCollectedScriptProps,
+} from "./gatsby-script-context"
 import { requestIdleCallback } from "./request-idle-callback-shim"
-import { collectTelemetry } from "./collect-telemetry"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -47,7 +49,7 @@ export const scriptCallbackCache: Map<
 
 export function Script(props: ScriptProps): ReactElement | null {
   const { id, src, strategy = ScriptStrategy.postHydrate } = props || {}
-  const { collectScript } = useContext(PartytownContext)
+  const { collectScript } = useContext(GatsbyScriptContext)
 
   useEffect(() => {
     let details: IInjectedScriptDetails | null
@@ -63,8 +65,8 @@ export function Script(props: ScriptProps): ReactElement | null {
         break
       case ScriptStrategy.offMainThread:
         if (collectScript) {
-          const attributes = resolveAttributes(props)
-          collectScript(attributes)
+          const collectedScriptProps = filterCollectedScriptProps(props)
+          collectScript(collectedScriptProps)
         }
         break
     }
@@ -84,17 +86,14 @@ export function Script(props: ScriptProps): ReactElement | null {
     }
   }, [])
 
-  if (typeof window === `undefined`) {
-    collectTelemetry(props)
-  }
-
   if (strategy === ScriptStrategy.offMainThread) {
     const inlineScript = resolveInlineScript(props)
     const attributes = resolveAttributes(props)
 
     if (typeof window === `undefined`) {
       if (collectScript) {
-        collectScript(attributes)
+        const collectedScriptProps = filterCollectedScriptProps(props)
+        collectScript(collectedScriptProps)
       } else {
         console.warn(
           `Unable to collect off-main-thread script '${

@@ -1,9 +1,5 @@
-import { trackCli } from "gatsby-telemetry"
-import {
-  ScriptStrategy,
-  ScriptProps,
-  resolveInlineScript,
-} from "./gatsby-script"
+import telemetry from "gatsby-telemetry"
+import { ScriptStrategy, ScriptProps, resolveInlineScript } from "gatsby-script"
 
 export enum ScriptTelemetryLabel {
   strategy = `GATSBY_SCRIPT_STRATEGY`,
@@ -20,7 +16,8 @@ export function collectTelemetry(props: ScriptProps = {}): void {
   const { src, strategy = ScriptStrategy.postHydrate, onLoad, onError } = props
   const inlineScript = resolveInlineScript(props)
 
-  trackCli(ScriptTelemetryLabel.strategy, {
+  telemetry.trackCli(ScriptTelemetryLabel.strategy, {
+    name: `gatsby-script strategy`,
     valueString: strategy,
   })
 
@@ -33,7 +30,8 @@ export function collectTelemetry(props: ScriptProps = {}): void {
   }
 
   if (type !== `UNKNOWN`) {
-    trackCli(ScriptTelemetryLabel.type, {
+    telemetry.trackCli(ScriptTelemetryLabel.type, {
+      name: `gatsby-script type`,
       valueString: type,
     })
   }
@@ -48,7 +46,8 @@ export function collectTelemetry(props: ScriptProps = {}): void {
   }
 
   if (callbacks.length) {
-    trackCli(ScriptTelemetryLabel.callbacks, {
+    telemetry.trackCli(ScriptTelemetryLabel.callbacks, {
+      name: `gatsby-script callbacks`,
       valueStringArray: callbacks,
     })
   }

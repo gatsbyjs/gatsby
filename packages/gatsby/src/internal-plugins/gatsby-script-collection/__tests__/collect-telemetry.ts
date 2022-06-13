@@ -3,7 +3,7 @@ import {
   ScriptTelemetryLabel,
   ScriptTelemetryType,
 } from "../collect-telemetry"
-import { ScriptStrategy } from "../gatsby-script"
+import { ScriptStrategy } from "gatsby-script"
 import { trackCli, isTrackingEnabled } from "gatsby-telemetry"
 
 jest.mock(`gatsby-telemetry`, () => {

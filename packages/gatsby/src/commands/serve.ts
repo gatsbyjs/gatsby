@@ -28,7 +28,7 @@ import { functionMiddlewares } from "../internal-plugins/functions/middleware"
 import {
   thirdPartyProxyPath,
   partytownProxy,
-} from "../internal-plugins/partytown/proxy"
+} from "../internal-plugins/gatsby-script-collection/partytown-proxy"
 
 process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
 detectLmdbStore()

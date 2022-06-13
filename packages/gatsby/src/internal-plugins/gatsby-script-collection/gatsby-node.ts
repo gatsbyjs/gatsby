@@ -1,7 +1,7 @@
 import path from "path"
 import { copyLibFiles } from "@builder.io/partytown/utils"
 import { CreateDevServerArgs } from "gatsby"
-import { thirdPartyProxyPath, partytownProxy } from "./proxy"
+import { thirdPartyProxyPath, partytownProxy } from "./partytown-proxy"
 
 /**
  * Copy Partytown library files to public.
