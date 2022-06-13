@@ -14,6 +14,21 @@ export function stabilizeSchema(schema: GraphQLSchema): GraphQLSchema {
   return lexicographicSortSchema(schema)
 }
 
+export function sortDefinitions(
+  a: IDefinitionMeta,
+  b: IDefinitionMeta
+): number {
+  const aKey = a.name
+  const bKey = b.name
+  if (aKey < bKey) {
+    return -1
+  }
+  if (aKey > bKey) {
+    return 1
+  }
+  return 0
+}
+
 /**
  * Internally in Gatsby we use the function generateQueryName:
  * packages/gatsby/src/query/file-parser.js
