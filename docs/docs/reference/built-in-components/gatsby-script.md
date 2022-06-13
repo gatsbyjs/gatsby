@@ -217,7 +217,7 @@ Here's an example using [Google Tag Manager](https://tagmanager.google.com) to l
 
 Note - This assumes you have [set up Google Tag Manager to use Universal Analytics](https://support.google.com/tagmanager/answer/6107124?hl=en) in the Google Tag Manager web application.
 
-First you load our Google Tag Manager (GTM) script and send an initialization event:
+First you load your Google Tag Manager (GTM) script and send an initialization event:
 
 ```jsx
 import { Script } from "gatsby"
