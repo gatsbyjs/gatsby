@@ -1,6 +1,5 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
-const chalk = require(`chalk`)
 const { bindActionCreators: origBindActionCreators } = require(`redux`)
 const memoize = require(`memoizee`)
 
@@ -29,7 +28,6 @@ const { getNodes, getNode, getNodesByType } = require(`../datastore`)
 const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { requireGatsbyPlugin } = require(`./require-gatsby-plugin`)
-const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
 import { wrapNode, wrapNodes } from "./detect-node-mutations"
