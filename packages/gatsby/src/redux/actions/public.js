@@ -391,6 +391,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   page.path = applyTrailingSlashOption(page.path, trailingSlash)
 
+  const isCreatedByStatefulCreatePages =
+    actionOptions?.traceId === `initial-createPagesStatefully`
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
@@ -398,8 +401,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     component: normalizePath(page.component),
     componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
-    isCreatedByStatefulCreatePages:
-      actionOptions?.traceId === `initial-createPagesStatefully`,
+    isCreatedByStatefulCreatePages,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
@@ -448,7 +450,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
   }
 
-  if (state.queries.createPagesFinished) {
+  if (state.queries.createPagesFinished && !isCreatedByStatefulCreatePages) {
     const warning = [
       reporter.stripIndent(`
         Action ${chalk.bold(
