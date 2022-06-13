@@ -20,6 +20,8 @@ const imageCDNState = {
 
 exports.imageCDNState = imageCDNState
 
+let four04WarningCount = 0
+let corruptFileWarningCount = 0
 /**
  * This FN takes in node data and returns Gatsby Image CDN fields that should be added to that node. If the input node isn't an image an empty object is returned.
  */
@@ -30,7 +32,7 @@ const getGatsbyImageCdnFields = async ({
   fileNodesExtendedData,
   reporter,
 }) => {
-  if (!pluginOptions?.skipFileDownloads) {
+  if (!pluginOptions?.skipFileDownloads || pluginOptions.imageCDN === false) {
     return {}
   }
 
@@ -100,10 +102,22 @@ const getGatsbyImageCdnFields = async ({
 
     return gatsbyImageCdnFields
   } catch (e) {
+    if (e.message.includes(`404`)) {
+      if (four04WarningCount < 10) {
+        four04WarningCount++
+        reporter.warn(`[gatsby-source-drupal] file returns 404: ${url}`)
+      }
+
+      return {}
+    }
+
     if (e.message.includes(`unrecognized file format`)) {
-      reporter.error(
-        `[gatsby-source-drupal] Encountered corrupt file while requesting image dimensions for ${url}`
-      )
+      if (corruptFileWarningCount < 10) {
+        corruptFileWarningCount++
+        reporter.warn(
+          `[gatsby-source-drupal] Encountered corrupt file while requesting image dimensions for ${url}`
+        )
+      }
 
       return {}
     }
@@ -121,7 +135,7 @@ const getGatsbyImageCdnFields = async ({
       )
     )
     reporter.panic(
-      `[gatsby-source-drupal] Encountered an unrecoverable error while generating Gatsby Image CDN fields. See above for additional information.`
+      `[gatsby-source-drupal] Encountered an unrecoverable error while generating Gatsby Image CDN fields for url ${url}. See above for additional information.`
     )
   }
 

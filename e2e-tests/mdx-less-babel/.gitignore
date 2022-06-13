@@ -9,3 +9,4 @@ yarn-error.log
 
 # Cypress output
 cypress/videos/
+cypress/screenshots/

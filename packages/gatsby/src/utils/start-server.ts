@@ -289,7 +289,7 @@ export async function startServer(
     res.end()
   })
 
-  addImageRoutes(app)
+  addImageRoutes(app, store)
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,

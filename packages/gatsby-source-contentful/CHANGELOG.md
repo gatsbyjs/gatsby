@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.14.0/packages/gatsby-source-contentful) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+- new useContentfulHook to create images on client side [#29263](https://github.com/gatsbyjs/gatsby/issues/29263) ([8d8a800](https://github.com/gatsbyjs/gatsby/commit/8d8a800a40da84c839b1ad73a25648abbc736250))
+
+#### Bug Fixes
+
+- Update `createRemoteFileNode` args [#35422](https://github.com/gatsbyjs/gatsby/issues/35422) fixes [#35363](https://github.com/gatsbyjs/gatsby/issues/35363) ([caaf7a5](https://github.com/gatsbyjs/gatsby/commit/caaf7a555bb42043044f05743eec0ac1ad372cc4))
+
+#### Other Changes
+
+- respect gatsby-plugin-image defaults and extend tests [#33536](https://github.com/gatsbyjs/gatsby/issues/33536) ([2fc7732](https://github.com/gatsbyjs/gatsby/commit/2fc773223bcc5154332b8c0d28f728654998d57d))
+
 ### [7.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.13.1/packages/gatsby-source-contentful) (2022-06-01)
 
 **Note:** Version bump only for package gatsby-source-contentful
