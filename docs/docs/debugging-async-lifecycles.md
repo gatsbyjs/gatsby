@@ -8,7 +8,6 @@ In the context of Gatsby, this means that if you are invoking asynchronous funct
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {
-  // highlight-start
   graphql(`
     {
       allMarkdownRemark {
@@ -31,13 +30,12 @@ exports.createPages = async function ({ actions, graphql }) {
       })
     })
   })
-  // highlight-end
 }
 ```
 
-Can you spot the error? In this case, an asynchronous action (`graphql`) was invoked but this asynchronous action was neither `return`ed nor `await`ed from `createPages`. This means that the lifecycle method will be marked as complete before it's actually completed--which leads to missing data errors and other hard-to-debug errors.
+In this case, an asynchronous action (`graphql()`) was invoked but this asynchronous action was neither `return`ed nor `await`ed from `createPages`. This means that the lifecycle method will be marked as complete before it's actually completed. Which leads to missing data errors and other hard-to-debug errors.
 
-The fix is surprisingly simple--just one line to change!
+The fix is to await the asynchronous function:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {
