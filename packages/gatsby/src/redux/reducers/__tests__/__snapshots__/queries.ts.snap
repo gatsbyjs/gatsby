@@ -12,6 +12,7 @@ Object {
       "/hi/",
     },
   },
+  "createPagesFinished": false,
   "deletedQueries": Set {},
   "dirtyQueriesListToEmitViaWebsocket": Array [],
   "queryNodes": Map {
