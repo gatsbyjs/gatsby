@@ -449,16 +449,30 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (state.queries.createPagesFinished) {
-    reporter.warn(
-      chalk.bold.yellow(
-        `${name} attempted to create a page after the createPages API has finished.`
-      ) +
-        `Please check that the createPages implementation in gatsby-node is awaited properly.\n\nThe page object passed to createPage:\n${JSON.stringify(
-          page,
-          null,
-          2
-        )}`
-    )
+    const warning = [
+      reporter.stripIndent(`
+        Action ${chalk.bold(
+          `createPage`
+        )} was called outside of its expected asynchronous lifecycle ${chalk.bold(
+        `createPages`
+      )} in ${chalk.bold(plugin.name)}.
+        Ensure that you return a Promise from ${chalk.bold(
+          `createPages`
+        )} and are awaiting any asynchronous method invocations (like ${chalk.bold(
+        `graphql`
+      )} or http requests).
+        For more info and debugging tips: see ${chalk.bold(
+          `https://gatsby.dev/sync-actions`
+        )}
+      `),
+    ]
+
+    const possiblyCodeFrame = getNonGatsbyCodeFrame()
+    if (possiblyCodeFrame) {
+      warning.push(possiblyCodeFrame)
+    }
+
+    reportOnce(warning.join(`\n\n`), `warn`)
   }
 
   // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
