@@ -207,7 +207,7 @@ export async function createGraphqlEngineBundle(
                 context: {
                   package: `ts-node`,
                   importedBy,
-                  advisory: `Gatsby is supporting TypeScript natively (see https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/). "ts-node" might not be needed anymore at all, consider removing it.`,
+                  advisory: `Gatsby is supporting TypeScript natively (see https://gatsby.dev/typescript). "ts-node" might not be needed anymore at all, consider removing it.`,
                 },
               }
               throw structuredError
