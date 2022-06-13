@@ -1,5 +1,8 @@
 ---
 title: Gatsby Script API
+examples:
+  - label: Using Gatsby Script
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-script"
 ---
 
 > Support for the Gatsby Script API was added in `gatsby@4.15.0`.
@@ -133,7 +136,7 @@ The `idle` strategy is ideal for cases where you want to ensure a script loads i
 
 The `off-main-thread` strategy, unlike `post-hydrate` and `idle`, loads your script in a [web worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) via [Partytown](https://partytown.builder.io).
 
-This means that the burden of evaluation of your script is no longer the conern of the main thread, freeing it up to take care of other crucial tasks.
+This means that the burden of evaluation of your script is no longer the concern of the main thread, freeing it up to take care of other crucial tasks.
 
 Here is an example configuring the `<Script>` component with the `off-main-thread` strategy to load [Google Analytics](https://analytics.google.com/analytics/web/):
 
@@ -281,8 +284,8 @@ Here is an example using the callbacks:
 ```jsx
 <Script
   src="https://my-example-script"
-  onLoad={() => console.log('success') )}
-  onError={() => console.log('sadness') )}
+  onLoad={() => console.log("success")}
+  onError={() => console.log("sadness")}
 />
 ```
 
