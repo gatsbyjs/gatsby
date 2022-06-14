@@ -343,8 +343,7 @@ module.exports = {
 
 ### Imports
 
-When importing a react component into your MDX, you can import it using the `import`
-statement as in JavaScript.
+When importing a React component into your MDX, you can import it using the `import` statement like in JavaScript.
 
 ```mdx
 import { SketchPicker } from "react-color"
