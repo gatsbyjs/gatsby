@@ -324,7 +324,9 @@ export async function processNodeManifest(
     !previouslySeenNodeManifest ||
     // or we have seen it but it didn't have a page associated with it.
     (previouslySeenNodeManifest &&
-      previouslySeenNodeManifest.foundPageBy === `none`)
+      previouslySeenNodeManifest.foundPageBy === `none` &&
+      // and this manifest does have a page
+      finalManifest.foundPageBy !== `none`)
 
   if (shouldWriteManifest) {
     previouslySeenNodeManifests.set(inputManifest.manifestId, finalManifest)
