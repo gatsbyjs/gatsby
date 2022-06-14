@@ -1,4 +1,3 @@
-import { store } from "../../redux"
 import { IGatsbyNode } from "../../redux/types"
 import {
   IDbQueryElemMatch,
@@ -289,9 +288,6 @@ export const ensureIndexByQuery = (
   indexFields: Array<string>,
   resolvedFields: Record<string, any>
 ): void => {
-  const state = store.getState()
-  const resolvedNodesCache = state.resolvedNodesCache
-
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
@@ -311,7 +307,6 @@ export const ensureIndexByQuery = (
           node,
           chain: filterPath,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -330,7 +325,6 @@ export const ensureIndexByQuery = (
           node,
           chain: filterPath,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -351,8 +345,6 @@ export function ensureEmptyFilterCache(
   // We want to cache the result since it's basically a list of nodes by type(s)
   // There are sites that have multiple queries which are empty
 
-  const state = store.getState()
-  const resolvedNodesCache = state.resolvedNodesCache
   const orderedByCounter: Array<IGatsbyNodePartial> = []
 
   filtersCache.set(filterCacheKey, {
@@ -396,7 +388,6 @@ function addNodeToFilterCache({
   node,
   chain,
   filterCache,
-  resolvedNodesCache,
   indexFields,
   resolvedFields,
   valueOffset = node,
@@ -404,7 +395,6 @@ function addNodeToFilterCache({
   node: IGatsbyNode
   chain: Array<string>
   filterCache: IFilterCache
-  resolvedNodesCache: Map<string, any>
   indexFields: Array<string>
   resolvedFields: Record<string, any>
   valueOffset?: any
@@ -481,9 +471,6 @@ export const ensureIndexByElemMatch = (
   // Given an elemMatch filter, generate the cache that contains all nodes that
   // matches a given value for that sub-query
 
-  const state = store.getState()
-  const { resolvedNodesCache } = state
-
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Array<IGatsbyNodePartial>>(),
@@ -500,7 +487,6 @@ export const ensureIndexByElemMatch = (
           valueAtCurrentStep: node,
           filter,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -519,7 +505,6 @@ export const ensureIndexByElemMatch = (
           valueAtCurrentStep: node,
           filter,
           filterCache,
-          resolvedNodesCache,
           indexFields,
           resolvedFields,
         })
@@ -534,7 +519,6 @@ function addNodeToBucketWithElemMatch({
   valueAtCurrentStep, // Arbitrary step on the path inside the node
   filter,
   filterCache,
-  resolvedNodesCache,
   indexFields,
   resolvedFields,
 }: {
@@ -542,7 +526,6 @@ function addNodeToBucketWithElemMatch({
   valueAtCurrentStep: any // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch
   filterCache: IFilterCache
-  resolvedNodesCache
   indexFields: Array<string>
   resolvedFields: Record<string, any>
 }): void {
@@ -580,7 +563,6 @@ function addNodeToBucketWithElemMatch({
         valueAtCurrentStep: elem,
         filter: nestedQuery,
         filterCache,
-        resolvedNodesCache,
         indexFields,
         resolvedFields,
       })
@@ -590,7 +572,6 @@ function addNodeToBucketWithElemMatch({
         node,
         chain: nestedQuery.path,
         filterCache,
-        resolvedNodesCache,
         indexFields,
         resolvedFields,
         valueOffset: elem,
