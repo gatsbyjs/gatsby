@@ -310,7 +310,7 @@ Array [
       "wrapRootElement",
     ],
     "id": "",
-    "name": "partytown",
+    "name": "gatsby-script-collection",
     "nodeAPIs": Array [
       "onCreateDevServer",
       "onPreBootstrap",
@@ -320,10 +320,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
-    "ssrAPIs": Array [
-      "wrapRootElement",
-      "onRenderBody",
-    ],
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
 ]
@@ -672,7 +669,7 @@ Array [
       "wrapRootElement",
     ],
     "id": "",
-    "name": "partytown",
+    "name": "gatsby-script-collection",
     "nodeAPIs": Array [
       "onCreateDevServer",
       "onPreBootstrap",
@@ -682,10 +679,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
-    "ssrAPIs": Array [
-      "wrapRootElement",
-      "onRenderBody",
-    ],
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
 ]
@@ -1045,7 +1039,7 @@ Array [
       "wrapRootElement",
     ],
     "id": "",
-    "name": "partytown",
+    "name": "gatsby-script-collection",
     "nodeAPIs": Array [
       "onCreateDevServer",
       "onPreBootstrap",
@@ -1055,10 +1049,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
-    "ssrAPIs": Array [
-      "wrapRootElement",
-      "onRenderBody",
-    ],
+    "ssrAPIs": Array [],
     "version": "1.0.0",
   },
 ]
