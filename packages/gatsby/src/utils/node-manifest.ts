@@ -225,7 +225,7 @@ export async function processNodeManifest(
   listOfUniqueErrorIds: Set<string>,
   nodeManifestPagePathMap: Map<string, string>,
   verboseLogs: boolean,
-  previouslySeenNodeManifests: PreviouslySeenNodeManifests
+  previouslyWrittenNodeManifests: PreviouslySeenNodeManifests
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -314,22 +314,22 @@ export async function processNodeManifest(
 
   await fs.ensureDir(manifestFileDir)
 
-  const previouslySeenNodeManifest = previouslySeenNodeManifests.get(
+  const previouslyWrittenNodeManifest = previouslyWrittenNodeManifests.get(
     inputManifest.manifestId
   )
 
   // prefer writing over manifests that have no found page if two manifests have the same manifest ID
   const shouldWriteManifest =
     // if we've never seen a manifest with this ID
-    !previouslySeenNodeManifest ||
+    !previouslyWrittenNodeManifest ||
     // or we have seen it but it didn't have a page associated with it.
-    (previouslySeenNodeManifest &&
-      previouslySeenNodeManifest.foundPageBy === `none` &&
+    (previouslyWrittenNodeManifest &&
+      previouslyWrittenNodeManifest.foundPageBy === `none` &&
       // and this manifest does have a page
       finalManifest.foundPageBy !== `none`)
 
   if (shouldWriteManifest) {
-    previouslySeenNodeManifests.set(inputManifest.manifestId, finalManifest)
+    previouslyWrittenNodeManifests.set(inputManifest.manifestId, finalManifest)
     await fs.writeJSON(manifestFilePath, finalManifest)
   }
 
@@ -397,7 +397,7 @@ export async function processNodeManifests(): Promise<Map<
   let totalFailedManifests = 0
   const nodeManifestPagePathMap: Map<string, string> = new Map()
   const listOfUniqueErrorIds: Set<string> = new Set()
-  const previouslySeenNodeManifests: PreviouslySeenNodeManifests = new Map()
+  const previouslyWrittenNodeManifests: PreviouslySeenNodeManifests = new Map()
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
@@ -408,7 +408,7 @@ export async function processNodeManifests(): Promise<Map<
       listOfUniqueErrorIds,
       nodeManifestPagePathMap,
       verboseLogs,
-      previouslySeenNodeManifests
+      previouslyWrittenNodeManifests
     )
 
     if (processedManifest) {
