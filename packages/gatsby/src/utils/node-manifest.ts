@@ -32,7 +32,7 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
-type PreviouslySeenNodeManifests = Map<string, INodeManifestOut>
+type PreviouslyWrittenNodeManifests = Map<string, INodeManifestOut>
 
 function getNodeManifestFileLimit(): number {
   const defaultLimit = 10000
@@ -225,7 +225,7 @@ export async function processNodeManifest(
   listOfUniqueErrorIds: Set<string>,
   nodeManifestPagePathMap: Map<string, string>,
   verboseLogs: boolean,
-  previouslyWrittenNodeManifests: PreviouslySeenNodeManifests
+  previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -397,7 +397,8 @@ export async function processNodeManifests(): Promise<Map<
   let totalFailedManifests = 0
   const nodeManifestPagePathMap: Map<string, string> = new Map()
   const listOfUniqueErrorIds: Set<string> = new Set()
-  const previouslyWrittenNodeManifests: PreviouslySeenNodeManifests = new Map()
+  const previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests =
+    new Map()
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
