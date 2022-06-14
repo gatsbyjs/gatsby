@@ -9,6 +9,7 @@ import {
 import { getDataStore, getNode } from "../"
 import _ from "lodash"
 import { getValueAt } from "../../utils/get-value-at"
+import { attachResolvedFields } from "../../schema/attach-resolved-fields"
 
 // Only list supported ops here. "CacheableFilterOp"
 // TODO: merge with DbComparator ?
@@ -102,12 +103,7 @@ export const getGatsbyNodePartial = (
         dottedField.startsWith(`__gatsby_resolved.`) &&
         !fullNodeObject.__gatsby_resolved
       ) {
-        const typeName = fullNodeObject.internal.type
-        const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
-        const resolved = resolvedNodes?.get(fullNodeObject.id)
-        if (resolved !== undefined) {
-          fullNodeObject.__gatsby_resolved = resolved
-        }
+        fullNodeObject = attachResolvedFields(fullNodeObject)
       }
 
       // use the full node object to fetch the value
@@ -371,14 +367,7 @@ export function ensureEmptyFilterCache(
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
       .forEach(node => {
-        if (!node.__gatsby_resolved) {
-          const typeName = node.internal.type
-          const resolvedNodes = resolvedNodesCache.get(typeName)
-          const resolved = resolvedNodes?.get(node.id)
-          if (resolved !== undefined) {
-            node.__gatsby_resolved = resolved
-          }
-        }
+        node = attachResolvedFields(node)
         orderedByCounter.push(
           getGatsbyNodePartial(node, indexFields, resolvedFields)
         )
@@ -390,14 +379,7 @@ export function ensureEmptyFilterCache(
       .iterateNodes()
       .forEach(node => {
         if (nodeTypeNames.includes(node.internal.type)) {
-          if (!node.__gatsby_resolved) {
-            const typeName = node.internal.type
-            const resolvedNodes = resolvedNodesCache.get(typeName)
-            const resolved = resolvedNodes?.get(node.id)
-            if (resolved !== undefined) {
-              node.__gatsby_resolved = resolved
-            }
-          }
+          node = attachResolvedFields(node)
           orderedByCounter.push(
             getGatsbyNodePartial(node, indexFields, resolvedFields)
           )
@@ -428,11 +410,7 @@ function addNodeToFilterCache({
   valueOffset?: any
 }): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
-  if (!node.__gatsby_resolved) {
-    const typeName = node.internal.type
-    const resolvedNodes = resolvedNodesCache.get(typeName)
-    node.__gatsby_resolved = resolvedNodes?.get(node.id)
-  }
+  node = attachResolvedFields(node)
 
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
@@ -569,11 +547,7 @@ function addNodeToBucketWithElemMatch({
   resolvedFields: Record<string, any>
 }): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
-  if (!node.__gatsby_resolved) {
-    const typeName = node.internal.type
-    const resolvedNodes = resolvedNodesCache.get(typeName)
-    node.__gatsby_resolved = resolvedNodes?.get(node.id)
-  }
+  node = attachResolvedFields(node)
 
   const { path, nestedQuery } = filter
 

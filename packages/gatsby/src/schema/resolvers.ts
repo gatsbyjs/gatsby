@@ -27,6 +27,7 @@ import {
 import { IGatsbyNode } from "../redux/types"
 import { IQueryResult } from "../datastore/types"
 import { GatsbyIterable } from "../datastore/common/iterable"
+import { attachResolvedFields } from "./attach-resolved-fields"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
@@ -121,6 +122,8 @@ export const distinct: GatsbyResolver<
 
   const values = new Set<string>()
   edges.forEach(({ node }) => {
+    node = attachResolvedFields(node)
+
     const value =
       getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
     if (value === null || value === undefined) {
