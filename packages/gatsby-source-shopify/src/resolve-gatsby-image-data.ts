@@ -10,6 +10,7 @@ import {
   IImage,
   ImageFormat,
 } from "gatsby-plugin-image"
+import { createContentDigest } from "gatsby-core-utils"
 
 import { urlBuilder } from "./get-shopify-image"
 import { parseImageExtension } from "./helpers"
@@ -103,7 +104,7 @@ export function makeResolveGatsbyImageData(cache: GatsbyCache) {
       const imageBase64 = await getImageBase64({
         imageAddress: lowResImageURL,
         directory: cache.directory as string,
-        contentDigest: image.internal.contentDigest,
+        contentDigest: createContentDigest(image),
       })
 
       placeholderURL = getBase64DataURI({ imageBase64 })
