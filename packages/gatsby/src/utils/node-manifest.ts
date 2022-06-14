@@ -320,12 +320,12 @@ export async function processNodeManifest(
 
   // prefer writing over manifests that have no found page if two manifests have the same manifest ID
   const shouldWriteManifest =
-    // if we've never seen a manifest with this ID
+    // if we've never written a manifest with this ID to disk
     !previouslyWrittenNodeManifest ||
-    // or we have seen it but it didn't have a page associated with it.
+    // or we have but it didn't have a page associated with it.
     (previouslyWrittenNodeManifest &&
       previouslyWrittenNodeManifest.foundPageBy === `none` &&
-      // and this manifest does have a page
+      // and the current manifest does have a page
       finalManifest.foundPageBy !== `none`)
 
   if (shouldWriteManifest) {
