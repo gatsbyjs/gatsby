@@ -1343,12 +1343,12 @@ describe(`Query schema`, () => {
       describe(`max`, () => {
         it(`calculates max value of numeric field`, async () => {
           const query = `
-          {
-            allMarkdown {
-              max(field: frontmatter___views)
+            {
+              allMarkdown {
+                max(field: frontmatter___views)
+              }
             }
-          }
-        `
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.max).toEqual(200)
@@ -1356,12 +1356,12 @@ describe(`Query schema`, () => {
 
         it(`calculates max value of numeric string field`, async () => {
           const query = `
-          {
-            allMarkdown {
-              max(field: frontmatter___price)
+            {
+              allMarkdown {
+                max(field: frontmatter___price)
+              }
             }
-          }
-        `
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.max).toEqual(3.99)
@@ -1369,12 +1369,12 @@ describe(`Query schema`, () => {
 
         it(`returns null for max of non-numeric fields`, async () => {
           const query = `
-        {
-          allMarkdown {
-            max(field: frontmatter___title)
-          }
-        }
-      `
+            {
+              allMarkdown {
+                max(field: frontmatter___title)
+              }
+            }
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.max).toBeNull()
@@ -1384,12 +1384,12 @@ describe(`Query schema`, () => {
       describe(`min`, () => {
         it(`calculates min value of numeric field`, async () => {
           const query = `
-          {
-            allMarkdown {
-              min(field: frontmatter___views)
+            {
+              allMarkdown {
+                min(field: frontmatter___views)
+              }
             }
-          }
-        `
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.min).toEqual(100)
@@ -1397,12 +1397,12 @@ describe(`Query schema`, () => {
 
         it(`calculates min value of numeric string field`, async () => {
           const query = `
-          {
-            allMarkdown {
-              min(field: frontmatter___price)
+            {
+              allMarkdown {
+                min(field: frontmatter___price)
+              }
             }
-          }
-        `
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.min).toEqual(1.99)
@@ -1410,12 +1410,12 @@ describe(`Query schema`, () => {
 
         it(`returns null for min of non-numeric fields`, async () => {
           const query = `
-        {
-          allMarkdown {
-            min(field: frontmatter___title)
-          }
-        }
-      `
+            {
+              allMarkdown {
+                min(field: frontmatter___title)
+              }
+            }
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.min).toBeNull()
@@ -1425,12 +1425,12 @@ describe(`Query schema`, () => {
       describe(`sum`, () => {
         it(`calculates sum of numeric field`, async () => {
           const query = `
-        {
-          allMarkdown {
-            sum(field: frontmatter___views)
-          }
-        }
-      `
+            {
+              allMarkdown {
+                sum(field: frontmatter___views)
+              }
+            }
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.sum).toEqual(300)
@@ -1438,24 +1438,24 @@ describe(`Query schema`, () => {
 
         it(`calculates sum of numeric string field`, async () => {
           const query = `
-        {
-          allMarkdown {
-            sum(field: frontmatter___price)
-          }
-        }
-      `
+            {
+              allMarkdown {
+                sum(field: frontmatter___price)
+              }
+            }
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.sum).toEqual(5.98)
         })
         it(`returns null for sum of non-numeric fields`, async () => {
           const query = `
-        {
-          allMarkdown {
-            sum(field: frontmatter___title)
-          }
-        }
-      `
+            {
+              allMarkdown {
+                sum(field: frontmatter___title)
+              }
+            }
+          `
           const results = await runQuery(query)
           expect(results.errors).toBeUndefined()
           expect(results.data.allMarkdown.sum).toBeNull()
