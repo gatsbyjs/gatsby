@@ -152,6 +152,8 @@ export const min: GatsbyResolver<
   let min = Number.MAX_SAFE_INTEGER
 
   edges.forEach(({ node }) => {
+    node = attachResolvedFields(node)
+
     let value =
       getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
 
@@ -178,6 +180,8 @@ export const max: GatsbyResolver<
   let max = Number.MIN_SAFE_INTEGER
 
   edges.forEach(({ node }) => {
+    node = attachResolvedFields(node)
+
     let value =
       getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
     if (typeof value !== `number`) {
@@ -201,6 +205,8 @@ export const sum: GatsbyResolver<
   const { edges } = source
 
   return edges.reduce<number | null>((prev, { node }) => {
+    node = attachResolvedFields(node)
+
     let value =
       getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
 
@@ -229,6 +235,8 @@ export const group: GatsbyResolver<
   const { edges } = source
   const groupedResults: Record<string, Array<IGatsbyNode>> = edges.reduce(
     (acc, { node }) => {
+      node = attachResolvedFields(node)
+
       const value =
         getValueAt(node, `__gatsby_resolved.${field}`) ||
         getValueAt(node, field)
