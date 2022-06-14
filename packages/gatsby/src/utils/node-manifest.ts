@@ -32,6 +32,8 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
+type PreviouslySeenNodeManifests = Map<string, INodeManifestOut>
+
 function getNodeManifestFileLimit(): number {
   const defaultLimit = 10000
 
@@ -222,7 +224,8 @@ export async function processNodeManifest(
   inputManifest: INodeManifest,
   listOfUniqueErrorIds: Set<string>,
   nodeManifestPagePathMap: Map<string, string>,
-  verboseLogs: boolean
+  verboseLogs: boolean,
+  previouslySeenNodeManifests: PreviouslySeenNodeManifests
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -310,11 +313,31 @@ export async function processNodeManifest(
   const manifestFileDir = path.dirname(manifestFilePath)
 
   await fs.ensureDir(manifestFileDir)
-  await fs.writeJSON(manifestFilePath, finalManifest)
 
-  if (verboseLogs) {
+  const previouslySeenNodeManifest = previouslySeenNodeManifests.get(
+    inputManifest.manifestId
+  )
+
+  // prefer writing over manifests that have no found page if two manifests have the same manifest ID
+  const shouldWriteManifest =
+    // if we've never seen a manifest with this ID
+    !previouslySeenNodeManifest ||
+    // or we have seen it but it didn't have a page associated with it.
+    (previouslySeenNodeManifest &&
+      previouslySeenNodeManifest.foundPageBy === `none`)
+
+  if (shouldWriteManifest) {
+    previouslySeenNodeManifests.set(inputManifest.manifestId, finalManifest)
+    await fs.writeJSON(manifestFilePath, finalManifest)
+  }
+
+  if (shouldWriteManifest && verboseLogs) {
     reporter.info(
       `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`
+    )
+  } else if (verboseLogs) {
+    reporter.info(
+      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase} but it was not written to disk because it was already written to disk previously.`
     )
   }
 
@@ -372,6 +395,7 @@ export async function processNodeManifests(): Promise<Map<
   let totalFailedManifests = 0
   const nodeManifestPagePathMap: Map<string, string> = new Map()
   const listOfUniqueErrorIds: Set<string> = new Set()
+  const previouslySeenNodeManifests: PreviouslySeenNodeManifests = new Map()
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
@@ -381,7 +405,8 @@ export async function processNodeManifests(): Promise<Map<
       manifest,
       listOfUniqueErrorIds,
       nodeManifestPagePathMap,
-      verboseLogs
+      verboseLogs,
+      previouslySeenNodeManifests
     )
 
     if (processedManifest) {
