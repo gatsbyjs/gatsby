@@ -1,6 +1,5 @@
 describe(`Prefetching`, () => {
-  if (Cypress.env(`CONNECTION_TYPE`) === `slow`) {
-    if (Cypress.env(`CONNECTION_TYPE`) === `bot`) {
+  if (Cypress.env(`CONNECTION_TYPE`) === `bot`) {
     it(`should not prefetch if Googlebot`, () => {
       cy.visit(`/`).waitForRouteChange()
 
