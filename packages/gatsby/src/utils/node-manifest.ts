@@ -318,29 +318,29 @@ export async function processNodeManifest(
     inputManifest.manifestId
   )
 
-  // prefer writing over manifests that have no found page if two manifests have the same manifest ID
+  // prevent manifests from writing over top one another if they have the same manifest ID
   const shouldWriteManifest =
-    // if we've never written a manifest with this ID to disk
-    !previouslyWrittenNodeManifest ||
-    // or we have but it didn't have a page associated with it.
-    (previouslyWrittenNodeManifest &&
-      previouslyWrittenNodeManifest.foundPageBy === `none` &&
-      // and the current manifest does have a page
-      finalManifest.foundPageBy !== `none`)
+    // if we've never written a manifest with this ID to disk and we found a page path
+    !previouslyWrittenNodeManifest && finalManifest.page.path !== null
 
   if (shouldWriteManifest) {
     previouslyWrittenNodeManifests.set(inputManifest.manifestId, finalManifest)
     await fs.writeJSON(manifestFilePath, finalManifest)
   }
 
-  if (shouldWriteManifest && verboseLogs) {
-    reporter.info(
-      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`
-    )
-  } else if (verboseLogs) {
-    reporter.info(
-      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase} but it was not written to disk because it was already written to disk previously.`
-    )
+  if (verboseLogs) {
+    const baseLogMessage = `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`
+    if (shouldWriteManifest) {
+      reporter.info(baseLogMessage)
+    } else if (finalManifest.page.path === null) {
+      reporter.info(
+        `${baseLogMessage} but it was not written to disk because no associated page path was found`
+      )
+    } else {
+      reporter.info(
+        `${baseLogMessage} but it was not written to disk because it was already written to disk previously`
+      )
+    }
   }
 
   if (nodeManifestPage.path) {
