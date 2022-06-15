@@ -35,6 +35,7 @@ async function run() {
   const updatedChangelogs = updatedPackages.map(
     pkg => `packages/${pkg}/CHANGELOG.md`
   )
+  await execa(`yarn prettier --write "packages/**/CHANGELOG.md"`)
   await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
   try {

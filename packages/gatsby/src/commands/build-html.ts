@@ -295,7 +295,7 @@ const renderHTMLQueue = async (
                   pagePaths: [pagePath],
                 })
                 seenErrors.add(error.stack)
-                const prettyError = await createErrorFromString(
+                const prettyError = createErrorFromString(
                   error.stack,
                   `${htmlComponentRendererPath}.map`
                 )
@@ -370,7 +370,7 @@ const renderHTMLQueue = async (
     }
 
     for (const unsafeBuiltinUsedStack of uniqueUnsafeBuiltinUsedStacks) {
-      const prettyError = await createErrorFromString(
+      const prettyError = createErrorFromString(
         unsafeBuiltinUsedStack,
         `${htmlComponentRendererPath}.map`
       )
@@ -425,7 +425,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const prettyError = await createErrorFromString(
+    const prettyError = createErrorFromString(
       error.stack,
       `${rendererPath}.map`
     )

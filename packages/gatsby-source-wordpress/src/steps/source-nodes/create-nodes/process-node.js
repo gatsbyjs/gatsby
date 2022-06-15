@@ -20,8 +20,10 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import fetchReferencedMediaItemsAndCreateNodes, {
   stripImageSizesFromUrl,
 } from "../fetch-nodes/fetch-referenced-media-items"
-import btoa from "btoa"
+import { b64e } from "~/utils/string-encoding"
 import store from "~/store"
+
+import { store as gatsbyStore } from "gatsby/dist/redux"
 
 /**
  * Takes in a MediaItem node from WPGraphQL as well as Gatsby plugin options and returns the correct placeholder URL for GatsbyImage
@@ -104,7 +106,7 @@ const getCheerioImgDbId = cheerioImg => {
 }
 
 // media items are of the "post" type
-const dbIdToMediaItemRelayId = dbId => (dbId ? btoa(`post:${dbId}`) : null)
+const dbIdToMediaItemRelayId = dbId => (dbId ? b64e(`post:${dbId}`) : null)
 
 const getCheerioImgRelayId = cheerioImg =>
   dbIdToMediaItemRelayId(getCheerioImgDbId(cheerioImg))
@@ -610,7 +612,8 @@ export const replaceNodeHtmlImages = async ({
                 quality,
                 formats,
               },
-              helpers.actions
+              helpers.actions,
+              gatsbyStore
             )
           } else {
             publicUrl = publicUrlResolver(

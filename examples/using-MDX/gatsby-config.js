@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Using MDX example`,
     description: `Kick off your next, great Gatsby project with MDX.`,
-    author: `@obinnaspeaks`,
+    author: `@pragmaticpat`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -35,6 +35,8 @@ module.exports = {
         },
       },
     },
+    `gatsby-plugin-image`,
+
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

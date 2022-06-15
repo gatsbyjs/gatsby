@@ -8,7 +8,11 @@ import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescrip
 import { CodeFileLoader } from "@graphql-tools/code-file-loader"
 import { loadDocuments } from "@graphql-tools/load"
 import { IDefinitionMeta, IStateProgram } from "../../redux/types"
-import { filterTargetDefinitions, stabilizeSchema } from "./utils"
+import {
+  filterTargetDefinitions,
+  sortDefinitions,
+  stabilizeSchema,
+} from "./utils"
 
 const OUTPUT_PATH = `src/gatsby-types.d.ts`
 const NAMESPACE = `Queries`
@@ -104,6 +108,7 @@ export async function writeTypeScriptTypes(
             },
           }),
         ],
+        sort: true,
       }
     )
   } catch (e) {
@@ -112,15 +117,17 @@ export async function writeTypeScriptTypes(
 
   const documents: Array<Types.DocumentFile> = [
     ...filterTargetDefinitions(definitions).values(),
-  ].map(definitionMeta => {
-    return {
-      document: {
-        kind: Kind.DOCUMENT,
-        definitions: [definitionMeta.def],
-      },
-      hash: definitionMeta.hash.toString(),
-    }
-  })
+  ]
+    .sort(sortDefinitions)
+    .map(definitionMeta => {
+      return {
+        document: {
+          kind: Kind.DOCUMENT,
+          definitions: [definitionMeta.def],
+        },
+        hash: definitionMeta.hash.toString(),
+      }
+    })
 
   const codegenOptions: Omit<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     // @ts-ignore - Incorrect types

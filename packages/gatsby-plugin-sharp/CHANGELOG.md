@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.16.0/packages/gatsby-plugin-sharp) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- cache image metadata [#35791](https://github.com/gatsbyjs/gatsby/issues/35791) ([7d93d2e](https://github.com/gatsbyjs/gatsby/commit/7d93d2e31ad4a862e1536e274552763372be7bc5))
+
+#### Performance Improvements
+
+- downsize image before extracting dominant color [#35814](https://github.com/gatsbyjs/gatsby/issues/35814) ([5e6c808](https://github.com/gatsbyjs/gatsby/commit/5e6c80827076ad74e104413a7dba94fe77bb4406))
+
+### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.15.1/packages/gatsby-plugin-sharp) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.15.0/packages/gatsby-plugin-sharp) (2022-05-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
