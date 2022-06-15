@@ -4,6 +4,7 @@ import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
+import { createMutex } from "gatsby-core-utils/mutex"
 import path from "path"
 import fs from "fs-extra"
 import fastq from "fastq"
@@ -329,8 +330,15 @@ export async function processNodeManifest(
       finalManifest.foundPageBy !== `none`)
 
   if (shouldWriteManifest) {
+    const mutex = createMutex(
+      `gatsby:node-manifest:${inputManifest.manifestId}`
+    )
+    await mutex.acquire()
+
     previouslyWrittenNodeManifests.set(inputManifest.manifestId, finalManifest)
     await fs.writeJSON(manifestFilePath, finalManifest)
+
+    await mutex.release()
   }
 
   if (shouldWriteManifest && verboseLogs) {
