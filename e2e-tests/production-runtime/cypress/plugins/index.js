@@ -1,6 +1,6 @@
 const blockResources = require(`./block-resources`)
 
-module.exports = (on, config) => {
+module.exports = (on, _config) => {
   on(`before:browser:launch`, (browser = {}, launchOptions) => {
     if (
       browser.name === `chrome` &&
