@@ -32,8 +32,6 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
-type PreviouslyWrittenNodeManifests = Map<string, INodeManifestOut>
-
 function getNodeManifestFileLimit(): number {
   const defaultLimit = 10000
 
@@ -225,7 +223,7 @@ export async function processNodeManifest(
   listOfUniqueErrorIds: Set<string>,
   nodeManifestPagePathMap: Map<string, string>,
   verboseLogs: boolean,
-  previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests
+  previouslyWrittenNodeManifests: Set<string>
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -314,17 +312,17 @@ export async function processNodeManifest(
 
   await fs.ensureDir(manifestFileDir)
 
-  const previouslyWrittenNodeManifest = previouslyWrittenNodeManifests.get(
+  const hasPreviouslyWrittenNodeManifest = previouslyWrittenNodeManifests.has(
     inputManifest.manifestId
   )
 
   // prevent manifests from writing over top one another if they have the same manifest ID
   const shouldWriteManifest =
     // if we've never written a manifest with this ID to disk and we found a page path
-    !previouslyWrittenNodeManifest && finalManifest.page.path !== null
+    !hasPreviouslyWrittenNodeManifest && finalManifest.page.path !== null
 
   if (shouldWriteManifest) {
-    previouslyWrittenNodeManifests.set(inputManifest.manifestId, finalManifest)
+    previouslyWrittenNodeManifests.add(inputManifest.manifestId)
     await fs.writeJSON(manifestFilePath, finalManifest)
   }
 
@@ -397,8 +395,7 @@ export async function processNodeManifests(): Promise<Map<
   let totalFailedManifests = 0
   const nodeManifestPagePathMap: Map<string, string> = new Map()
   const listOfUniqueErrorIds: Set<string> = new Set()
-  const previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests =
-    new Map()
+  const previouslyWrittenNodeManifests: Set<string> = new Set()
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
