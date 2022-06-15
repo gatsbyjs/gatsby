@@ -4,11 +4,6 @@ module.exports = (on, config) => {
   on(`before:browser:launch`, (browser = {}, launchOptions) => {
     if (
       browser.name === `chrome` &&
-      process.env.CYPRESS_CONNECTION_TYPE === `slow`
-    ) {
-      launchOptions.args.push(`--force-effective-connection-type=2g`)
-    } else if (
-      browser.name === `chrome` &&
       process.env.CYPRESS_CONNECTION_TYPE === `bot`
     ) {
       launchOptions.args.push(
