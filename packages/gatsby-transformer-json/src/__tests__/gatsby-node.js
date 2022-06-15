@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const os = require(`os`)
 
 const { onCreateNode } = require(`../gatsby-node`)

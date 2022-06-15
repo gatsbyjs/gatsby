@@ -1,4 +1,3 @@
-const { promisify } = require(`bluebird`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
@@ -11,6 +10,7 @@ const { reportError } = require(`./report-error`)
 const {
   createContentDigest,
 } = require(`gatsby-core-utils/create-content-digest`)
+const { promisify } = require(`util`)
 
 exports.notMemoizedPrepareTraceSVGInputFile = async ({
   file,

@@ -1,4 +1,3 @@
-import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
@@ -208,79 +207,83 @@ const renderHTMLQueue = async (
   const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
 
   try {
-    await Bluebird.map(segments, async pageSegment => {
-      const renderHTMLResult = await renderHTML({
-        envVars,
-        htmlComponentRendererPath,
-        paths: pageSegment,
-        sessionId,
-        webpackCompilationHash,
-      })
-
-      if (isPreview) {
-        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
-        const seenErrors = new Set()
-        const errorMessages = new Map()
-        await Promise.all(
-          Object.entries(htmlRenderMeta.previewErrors).map(
-            async ([pagePath, error]) => {
-              if (!seenErrors.has(error.stack)) {
-                errorMessages.set(error.stack, {
-                  pagePaths: [pagePath],
-                })
-                seenErrors.add(error.stack)
-                const prettyError = createErrorFromString(
-                  error.stack,
-                  `${htmlComponentRendererPath}.map`
-                )
-
-                const errorMessageStr = `${prettyError.stack}${
-                  prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
-                }`
-
-                const errorMessage = errorMessages.get(error.stack)
-                errorMessage.errorMessage = errorMessageStr
-                errorMessages.set(error.stack, errorMessage)
-              } else {
-                const errorMessage = errorMessages.get(error.stack)
-                errorMessage.pagePaths.push(pagePath)
-                errorMessages.set(error.stack, errorMessage)
-              }
-            }
-          )
-        )
-
-        for (const value of errorMessages.values()) {
-          const errorMessage = `The following page(s) saw this error when building their HTML:\n\n${value.pagePaths
-            .map(p => `- ${p}`)
-            .join(`\n`)}\n\n${value.errorMessage}`
-          reporter.error({
-            id: `95314`,
-            context: { errorMessage },
-          })
-        }
-      }
-
-      if (stage === `build-html`) {
-        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
-        store.dispatch({
-          type: `HTML_GENERATED`,
-          payload: pageSegment,
+    await Promise.all(
+      segments.map(async pageSegment => {
+        const renderHTMLResult = await renderHTML({
+          envVars,
+          htmlComponentRendererPath,
+          paths: pageSegment,
+          sessionId,
+          webpackCompilationHash,
         })
 
-        for (const [_pagePath, arrayOfUsages] of Object.entries(
-          htmlRenderMeta.unsafeBuiltinsUsageByPagePath
-        )) {
-          for (const unsafeUsageStack of arrayOfUsages) {
-            uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+        if (isPreview) {
+          const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
+          const seenErrors = new Set()
+          const errorMessages = new Map()
+          await Promise.all(
+            Object.entries(htmlRenderMeta.previewErrors).map(
+              async ([pagePath, error]) => {
+                if (!seenErrors.has(error.stack)) {
+                  errorMessages.set(error.stack, {
+                    pagePaths: [pagePath],
+                  })
+                  seenErrors.add(error.stack)
+                  const prettyError = createErrorFromString(
+                    error.stack,
+                    `${htmlComponentRendererPath}.map`
+                  )
+
+                  const errorMessageStr = `${prettyError.stack}${
+                    prettyError.codeFrame
+                      ? `\n\n${prettyError.codeFrame}\n`
+                      : ``
+                  }`
+
+                  const errorMessage = errorMessages.get(error.stack)
+                  errorMessage.errorMessage = errorMessageStr
+                  errorMessages.set(error.stack, errorMessage)
+                } else {
+                  const errorMessage = errorMessages.get(error.stack)
+                  errorMessage.pagePaths.push(pagePath)
+                  errorMessages.set(error.stack, errorMessage)
+                }
+              }
+            )
+          )
+
+          for (const value of errorMessages.values()) {
+            const errorMessage = `The following page(s) saw this error when building their HTML:\n\n${value.pagePaths
+              .map(p => `- ${p}`)
+              .join(`\n`)}\n\n${value.errorMessage}`
+            reporter.error({
+              id: `95314`,
+              context: { errorMessage },
+            })
           }
         }
-      }
 
-      if (activity && activity.tick) {
-        activity.tick(pageSegment.length)
-      }
-    })
+        if (stage === `build-html`) {
+          const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
+          store.dispatch({
+            type: `HTML_GENERATED`,
+            payload: pageSegment,
+          })
+
+          for (const [_pagePath, arrayOfUsages] of Object.entries(
+            htmlRenderMeta.unsafeBuiltinsUsageByPagePath
+          )) {
+            for (const unsafeUsageStack of arrayOfUsages) {
+              uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+            }
+          }
+        }
+
+        if (activity && activity.tick) {
+          activity.tick(pageSegment.length)
+        }
+      })
+    )
   } catch (e) {
     if (e?.context?.unsafeBuiltinsUsageByPagePath) {
       for (const [_pagePath, arrayOfUsages] of Object.entries(

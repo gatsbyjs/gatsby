@@ -4,7 +4,7 @@ import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
 import { isNodeInternalModulePath } from "gatsby-core-utils"
 import { IStructuredStackFrame } from "../structured-errors/types"
 
-const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
+const packagesToSkip = [`core-js`, `regenerator-runtime`, `graphql`]
 
 const packagesToSkipTest = new RegExp(
   `node_modules[\\/](${packagesToSkip.join(`|`)})`
