@@ -451,7 +451,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   await mediaFileFetchQueue.onIdle()
 
   const allResults = await Promise.all(allPromises)
-  return allResults.flat()
+  return allResults.concat(previouslyCachedMediaItemNodes).flat()
 }
 
 export const fetchMediaItemsById = async ({
