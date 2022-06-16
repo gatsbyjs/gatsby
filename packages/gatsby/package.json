@@ -128,6 +128,7 @@
     "moment": "^2.29.1",
     "multer": "^1.4.3",
     "node-fetch": "^2.6.6",
+    "node-html-parser": "^5.3.3",
     "normalize-path": "^3.0.0",
     "null-loader": "^4.0.1",
     "opentracing": "^0.14.5",

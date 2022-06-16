@@ -6,8 +6,7 @@
         "apis": [
           "getServerData",
           "config",
-          "meta",
-          "links"
+          "head"
         ]
       }
     ]

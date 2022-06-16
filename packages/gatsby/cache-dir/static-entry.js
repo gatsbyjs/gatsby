@@ -17,6 +17,7 @@ const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
 const asyncRequires = require(`$virtual/async-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
+const { parse } = require(`node-html-parser`)
 
 const chunkMapping = require(`../public/chunk-map.json`)
 
@@ -155,6 +156,17 @@ export default async function staticPage({
       }
     }
 
+    function nodeToReactElement(node) {
+      const { tagName, attributes } = node
+
+      const element = createElement(
+        tagName?.toLowerCase(),
+        attributes,
+        node.childNodes[0]?.textContent
+      )
+      return element
+    }
+
     const replaceBodyHTMLString = body => {
       bodyHtml = body
     }
@@ -211,70 +223,30 @@ export default async function staticPage({
     const { componentChunkName } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
-    /** *****************************Some utils(will definitelty change after POC)***************************/
-    class PropsPasser extends React.Component {
-      render() {
-        // Exclude "api" from the props
-        const { api, ...otherProps } = this.props
-        const props = {
-          ...otherProps,
-          ...pageData.result,
-          params: {
-            ...grabMatchParams(this.props.location.pathname),
-            ...(pageData.result?.pageContext?.__params || {}),
-          },
-        }
+    if (pageComponent.head) {
+      if (typeof pageComponent.head !== `function`)
+        throw new Error(
+          `Expected "head" export to be a function got "${typeof pageComponent.head}".`
+        )
 
-        const pageElement = createElement(pageComponent[api], props)
-
-        return pageElement
+      const props = {
+        ...pageData.result,
+        params: {
+          ...grabMatchParams(pagePath),
+          ...(pageData.result?.pageContext?.__params || {}),
+        },
       }
-    }
 
-    /** *****************************Some utils***************************/
+      const headElem = pageComponent.head(props)
+      const rawString = renderToString(headElem)
+      const nodes = [...parse(rawString).childNodes]
 
-    if (pageComponent.links) {
-      if (typeof pageComponent.links !== `function`)
-        throw new Error(
-          `Expected "links" export to be a function got "${typeof pageComponent.meta}".`
-        )
+      const elementsForNodes = nodes.map(node => {
+        node.setAttribute(`data-gatsby-head`, true)
+        return nodeToReactElement(node)
+      })
 
-      // Todo: DRY
-      setHeadComponents(
-        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-          <Router
-            primary={false}
-            component={({ children }) => (
-              <React.Fragment>{children}</React.Fragment>
-            )}
-            baseuri={__BASE_PATH__}
-          >
-            <PropsPasser path="/*" api="links" />
-          </Router>
-        </ServerLocation>
-      )
-    }
-
-    if (pageComponent.meta) {
-      if (typeof pageComponent.meta !== `function`)
-        throw new Error(
-          `Expected "meta" export to be a function got "${typeof pageComponent.meta}".`
-        )
-
-      // Todo: DRY`
-      setHeadComponents(
-        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-          <Router
-            primary={false}
-            component={({ children }) => (
-              <React.Fragment>{children}</React.Fragment>
-            )}
-            baseuri={__BASE_PATH__}
-          >
-            <PropsPasser path="/*" api="meta" />
-          </Router>
-        </ServerLocation>
-      )
+      setHeadComponents(elementsForNodes)
     }
 
     class RouteHandler extends React.Component {
