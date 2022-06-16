@@ -7,6 +7,17 @@ const fs = require(`fs-extra`)
 
 jest.setTimeout(100000)
 
+jest.mock(`gatsby-core-utils/mutex`, () => {
+  return {
+    createMutex: jest.fn(() => {
+      return {
+        acquire: jest.fn(() => Promise.resolve()),
+        release: jest.fn(() => Promise.resolve()),
+      }
+    }),
+  }
+})
+
 const publicDir = path.join(process.cwd(), `public`)
 
 const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
