@@ -619,7 +619,9 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
           return cb(null, null)
         }
 
-        return runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity)
+        return Promise.resolve(
+          runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity)
+        )
           .then(result => {
             cb(null, result)
           })
