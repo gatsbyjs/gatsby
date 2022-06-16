@@ -200,7 +200,7 @@ objects.
 
 ### Configuring trailing slash behavior
 
-As of gatsby@4.7.0, you have the optin of removing, appending, or ignoring [trailing slashes.](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#trailingslash)
+As of `gatsby@4.7.0`, you now have the option of [removing, appending, or ignoring trailing slashes](/docs/reference/config-files/gatsby-config/#trailingslash).
 
 ### Pass context to pages
 
