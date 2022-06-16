@@ -4,7 +4,6 @@ import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
-import { createMutex } from "gatsby-core-utils/mutex"
 import path from "path"
 import fs from "fs-extra"
 import fastq from "fastq"
@@ -33,7 +32,7 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
-type PreviouslyWrittenNodeManifests = Map<string, INodeManifestOut>
+type PreviouslyWrittenNodeManifests = Map<string, Promise<INodeManifestOut>>
 
 function getNodeManifestFileLimit(): number {
   const defaultLimit = 10000
@@ -315,9 +314,8 @@ export async function processNodeManifest(
 
   await fs.ensureDir(manifestFileDir)
 
-  const previouslyWrittenNodeManifest = previouslyWrittenNodeManifests.get(
-    inputManifest.manifestId
-  )
+  const previouslyWrittenNodeManifest =
+    await previouslyWrittenNodeManifests.get(inputManifest.manifestId)
 
   // prefer writing over manifests that have no found page if two manifests have the same manifest ID
   const shouldWriteManifest =
@@ -330,15 +328,19 @@ export async function processNodeManifest(
       finalManifest.foundPageBy !== `none`)
 
   if (shouldWriteManifest) {
-    const mutex = createMutex(
-      `gatsby:node-manifest:${inputManifest.manifestId}`
+    const writePromise = fs.writeJSON(manifestFilePath, finalManifest)
+
+    // This prevents two manifests from writing to the same file at the same time
+    previouslyWrittenNodeManifests.set(
+      inputManifest.manifestId,
+      new Promise(resolve => {
+        writePromise.then(() => {
+          resolve(finalManifest)
+        })
+      })
     )
-    await mutex.acquire()
 
-    previouslyWrittenNodeManifests.set(inputManifest.manifestId, finalManifest)
-    await fs.writeJSON(manifestFilePath, finalManifest)
-
-    await mutex.release()
+    await writePromise
   }
 
   if (shouldWriteManifest && verboseLogs) {
