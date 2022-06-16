@@ -577,7 +577,7 @@ export class ProdLoader extends BaseLoader {
 
       return (
         asyncRequires.components[chunkName]()
-          .then(preferDefault)
+          .then(component => component)
           // loader will handle the case when component is error
           .catch(err => err)
       )

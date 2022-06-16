@@ -126,11 +126,6 @@ export async function preparePageTemplateConfigs(
 
   await Promise.all(
     Array.from(store.getState().components.values()).map(async component => {
-      const componentInstance = await pageRenderer.getPageChunk({
-        componentChunkName: component.componentChunkName,
-      })
-      console.log({ componentInstance })
-
       if (component.config) {
         const componentInstance = await pageRenderer.getPageChunk({
           componentChunkName: component.componentChunkName,

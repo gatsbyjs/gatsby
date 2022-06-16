@@ -125,11 +125,6 @@ export default async function staticPage({
         content={`Gatsby ${gatsbyVersion}`}
         key={`generator-${gatsbyVersion}`}
       />,
-      <meta
-        name="generator"
-        content={`Gatsby ${gatsbyVersion}`}
-        key={`---generator-${gatsbyVersion}`}
-      />,
     ]
     let htmlAttributes = {}
     let bodyAttributes = {}
@@ -217,7 +212,7 @@ export default async function staticPage({
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
     /** *****************************Some utils(will definitelty change after POC)***************************/
-    class SomeWrappper extends React.Component {
+    class PropsPasser extends React.Component {
       render() {
         // Exclude "api" from the props
         const { api, ...otherProps } = this.props
@@ -236,10 +231,6 @@ export default async function staticPage({
       }
     }
 
-    function RouterComponent({ children }) {
-      return <React.Fragment>{children}</React.Fragment>
-    }
-
     /** *****************************Some utils***************************/
 
     if (pageComponent.links) {
@@ -253,10 +244,12 @@ export default async function staticPage({
         <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
           <Router
             primary={false}
-            component={RouterComponent}
+            component={({ children }) => (
+              <React.Fragment>{children}</React.Fragment>
+            )}
             baseuri={__BASE_PATH__}
           >
-            <SomeWrappper path="/*" api="links" />
+            <PropsPasser path="/*" api="links" />
           </Router>
         </ServerLocation>
       )
@@ -273,10 +266,12 @@ export default async function staticPage({
         <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
           <Router
             primary={false}
-            component={RouterComponent}
+            component={({ children }) => (
+              <React.Fragment>{children}</React.Fragment>
+            )}
             baseuri={__BASE_PATH__}
           >
-            <SomeWrappper path="/*" api="meta" />
+            <PropsPasser path="/*" api="meta" />
           </Router>
         </ServerLocation>
       )

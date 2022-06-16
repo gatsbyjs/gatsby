@@ -14,10 +14,39 @@ class PageRenderer extends React.Component {
       },
     }
 
-    const pageElement = createElement(this.props.pageResources.component, {
-      ...props,
-      key: this.props.path || this.props.pageResources.page.path,
-    })
+    let linkElem
+    let metaElem
+
+    const pageComponent = this.props.pageResources.component
+
+    if (pageComponent.links) {
+      if (typeof pageComponent.links !== `function`)
+        throw new Error(
+          `Expected "links" export to be a function got "${typeof pageComponent.links}".`
+        )
+
+      linkElem = React.createElement(pageComponent.links, props, null)
+      console.log(`linkElem`, linkElem)
+    }
+
+    if (pageComponent.meta) {
+      if (typeof pageComponent.meta !== `function`)
+        throw new Error(
+          `Expected "meta" export to be a function got "${typeof pageComponent.meta}".`
+        )
+
+      metaElem = React.createElement(pageComponent.meta, props, null)
+    }
+
+    const preferDefault = m => (m && m.default) || m
+
+    const pageElement = createElement(
+      preferDefault(this.props.pageResources.component),
+      {
+        ...props,
+        key: this.props.path || this.props.pageResources.page.path,
+      }
+    )
 
     const wrappedPage = apiRunner(
       `wrapPageElement`,
@@ -28,7 +57,13 @@ class PageRenderer extends React.Component {
       }
     ).pop()
 
-    return wrappedPage
+    return (
+      <>
+        {linkElem}
+        {metaElem}
+        {wrappedPage}
+      </>
+    )
   }
 }
 
