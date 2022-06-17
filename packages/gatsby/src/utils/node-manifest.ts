@@ -319,6 +319,8 @@ export async function processNodeManifest(
 
   // write a manifest if we don't currently have one written for this ID
   // or if we can replace the written one with a manifest that has found a page
+  // NOTE: We still want to write out a manifest if foundPageBy is "none", this helps with error messaging
+  //       But we prefer to write a manifest that has a foundPageBy that is NOT "none"
   const shouldWriteManifest =
     !previouslyWrittenNodeManifest ||
     (previouslyWrittenNodeManifest?.foundPageBy === `none` &&
