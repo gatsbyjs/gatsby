@@ -9,8 +9,7 @@
   "dependencies": {
     "@babel/parser": "^7.15.5",
     "@babel/runtime": "^7.15.4",
-    "@babel/traverse": "^7.15.4",
-    "bluebird": "^3.7.2"
+    "@babel/traverse": "^7.15.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
