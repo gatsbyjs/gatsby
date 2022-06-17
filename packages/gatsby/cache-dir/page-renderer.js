@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { apiRunner } from "./api-runner-browser"
 import { grabMatchParams } from "./find-path"
 import { renderToString } from "react-dom/server"
+import { StaticQueryContext } from "gatsby"
 
 // Renders page
 class PageRenderer extends React.Component {
@@ -15,7 +16,6 @@ class PageRenderer extends React.Component {
       },
     }
 
-    let headElem
     const pageComponent = this.props.pageResources.component
 
     if (pageComponent.head) {
@@ -24,11 +24,16 @@ class PageRenderer extends React.Component {
           `Expected "head" export to be a function got "${typeof pageComponent.head}".`
         )
 
-      headElem = pageComponent.head(props)
-      const rawString = renderToString(headElem)
+      const headElement = createElement(
+        StaticQueryContext.Provider,
+        { value: this.props.pageResources.staticQueryResults },
+        createElement(pageComponent.head, props, null)
+      )
 
-      const elem = new DOMParser().parseFromString(rawString, `text/html`)
-      const nodes = [...elem.head.childNodes]
+      const rawString = renderToString(headElement)
+
+      const parsed = new DOMParser().parseFromString(rawString, `text/html`)
+      const nodes = [...parsed.head.childNodes]
 
       const allElem = [...document.querySelectorAll(`[data-gatsby-head]`)]
       allElem.forEach(e => e.remove())

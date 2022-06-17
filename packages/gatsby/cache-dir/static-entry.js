@@ -237,8 +237,13 @@ export default async function staticPage({
         },
       }
 
-      const headElem = pageComponent.head(props)
-      const rawString = renderToString(headElem)
+      const headElement = createElement(
+        StaticQueryContext.Provider,
+        { value: staticQueryContext },
+        createElement(pageComponent.head, props, null)
+      )
+
+      const rawString = renderToString(headElement)
       const nodes = [...parse(rawString).childNodes]
 
       const elementsForNodes = nodes.map(node => {
