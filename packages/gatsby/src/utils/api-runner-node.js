@@ -522,6 +522,7 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
     return null
   }
 
+  console.log(api, implementingPlugins)
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async resolve => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
@@ -689,7 +690,7 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
     )
 
     const results = []
-    for (const plugin of plugins) {
+    for (const plugin of implementingPlugins) {
       runApiQueue.push(plugin, function (err, result) {
         results.push(result)
       })
@@ -719,7 +720,6 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
     // Filter empty results
     apiRunInstance.results = results.filter(result => !_.isEmpty(result))
 
-    console.log({ api, waitForCascadingActions })
     // Filter out empty responses and return if the
     // api caller isn't waiting for cascading actions to finish.
     if (!waitForCascadingActions) {
