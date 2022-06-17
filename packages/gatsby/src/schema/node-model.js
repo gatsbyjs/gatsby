@@ -23,6 +23,7 @@ import {
 import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
 import { reportOnce } from "../utils/report-once"
 import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
+import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -319,8 +320,7 @@ class LocalNodeModel {
       this.schemaComposer,
       this.schema,
       gqlType,
-      fields,
-      nodeTypeNames
+      fields
     )
 
     for (const nodeTypeName of nodeTypeNames) {
@@ -686,21 +686,6 @@ class ContextualNodeModel {
 
 const getNodeById = id => (id != null ? getNode(id) : null)
 
-const toNodeTypeNames = (schema, gqlTypeName) => {
-  const gqlType =
-    typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
-
-  if (!gqlType) return []
-
-  const possibleTypes = isAbstractType(gqlType)
-    ? schema.getPossibleTypes(gqlType)
-    : [gqlType]
-
-  return possibleTypes
-    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
-    .map(type => type.name)
-}
-
 const getQueryFields = ({ filter, sort, group, distinct, max, min, sum }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
   const sortFields = (sort && sort.fields) || []
@@ -898,7 +883,6 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames,
   isNestedAndParentNeedsResolve = false
 ) => {
   const fieldsToResolve = {}
@@ -908,17 +892,14 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    const possibleTCs = [
+
+    const needsResolve = fieldNeedToResolve({
+      schema,
+      gqlType: type,
       typeComposer,
-      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
-    ]
-    let needsResolve = false
-    for (const tc of possibleTCs) {
-      needsResolve = tc.getFieldExtension(fieldName, `needsResolve`) || false
-      if (needsResolve) {
-        break
-      }
-    }
+      schemaComposer,
+      fieldName,
+    })
 
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
@@ -926,7 +907,6 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType),
         isNestedAndParentNeedsResolve || needsResolve
       )
       if (!_.isEmpty(innerResolved)) {

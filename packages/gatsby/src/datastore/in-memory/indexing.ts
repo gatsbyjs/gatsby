@@ -8,7 +8,7 @@ import {
 import { getDataStore, getNode } from "../"
 import _ from "lodash"
 import { getValueAt } from "../../utils/get-value-at"
-import { attachResolvedFields } from "../../schema/attach-resolved-fields"
+import { getResolvedFields } from "../../schema/utils"
 
 // Only list supported ops here. "CacheableFilterOp"
 // TODO: merge with DbComparator ?
@@ -29,6 +29,7 @@ type GatsbyNodeID = string
 export interface IGatsbyNodePartial {
   id: GatsbyNodeID
   internal: {
+    type: string
     counter: number
   }
   gatsbyNodePartialInternalData: {
@@ -88,25 +89,29 @@ export const getGatsbyNodePartial = (
   )
   let fullNodeObject: IGatsbyNode | undefined =
     node.gatsbyNodePartialInternalData ? undefined : (node as IGatsbyNode)
+  let resolvedNodeFields
 
   for (const dottedField of sortFieldIds) {
     if (dottedField in node) {
       dottedFields[dottedField] = node[dottedField]
     } else {
-      // if we haven't gotten the full node object, fetch it once
-      if (!fullNodeObject) {
-        fullNodeObject = getNode(node.id)!
-      }
+      if (dottedField.startsWith(`__gatsby_resolved.`)) {
+        if (!resolvedNodeFields) {
+          resolvedNodeFields = getResolvedFields(node)
+        }
 
-      if (
-        dottedField.startsWith(`__gatsby_resolved.`) &&
-        !fullNodeObject.__gatsby_resolved
-      ) {
-        fullNodeObject = attachResolvedFields(fullNodeObject)
+        dottedFields[dottedField] = getValueAt(
+          resolvedNodeFields,
+          dottedField.slice(`__gatsby_resolved.`.length)
+        )
+      } else {
+        // if we haven't gotten the full node object, fetch it once
+        // use the full node object to fetch the value
+        if (!fullNodeObject) {
+          fullNodeObject = getNode(node.id)!
+        }
+        dottedFields[dottedField] = getValueAt(fullNodeObject, dottedField)
       }
-
-      // use the full node object to fetch the value
-      dottedFields[dottedField] = getValueAt(fullNodeObject, dottedField)
     }
   }
 
@@ -115,6 +120,7 @@ export const getGatsbyNodePartial = (
     id: node.id,
     internal: {
       counter: node.internal.counter,
+      type: node.internal.type,
     },
     gatsbyNodePartialInternalData: {
       indexFields: fieldsToStore,
@@ -359,7 +365,6 @@ export function ensureEmptyFilterCache(
     getDataStore()
       .iterateNodesByType(nodeTypeNames[0])
       .forEach(node => {
-        node = attachResolvedFields(node)
         orderedByCounter.push(
           getGatsbyNodePartial(node, indexFields, resolvedFields)
         )
@@ -371,7 +376,6 @@ export function ensureEmptyFilterCache(
       .iterateNodes()
       .forEach(node => {
         if (nodeTypeNames.includes(node.internal.type)) {
-          node = attachResolvedFields(node)
           orderedByCounter.push(
             getGatsbyNodePartial(node, indexFields, resolvedFields)
           )
@@ -399,16 +403,17 @@ function addNodeToFilterCache({
   resolvedFields: Record<string, any>
   valueOffset?: any
 }): void {
-  // There can be a filter that targets `__gatsby_resolved` so fix that first
-  node = attachResolvedFields(node)
-
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
   let v = valueOffset as any
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
-    v = v[nextProp]
+    if (i === 1 && nextProp === `__gatsby_resolved`) {
+      v = getResolvedFields(v)
+    } else {
+      v = v[nextProp]
+    }
   }
 
   if (
@@ -529,16 +534,17 @@ function addNodeToBucketWithElemMatch({
   indexFields: Array<string>
   resolvedFields: Record<string, any>
 }): void {
-  // There can be a filter that targets `__gatsby_resolved` so fix that first
-  node = attachResolvedFields(node)
-
   const { path, nestedQuery } = filter
 
   // Find the value to apply elemMatch to
   let i = 0
   while (i < path.length && valueAtCurrentStep) {
     const nextProp = path[i++]
-    valueAtCurrentStep = valueAtCurrentStep[nextProp]
+    if (i === 1 && nextProp === `__gatsby_resolved`) {
+      valueAtCurrentStep = getResolvedFields(valueAtCurrentStep)
+    } else {
+      valueAtCurrentStep = valueAtCurrentStep[nextProp]
+    }
   }
 
   if (path.length !== i) {
