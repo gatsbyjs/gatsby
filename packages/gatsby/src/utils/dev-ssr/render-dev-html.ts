@@ -251,7 +251,12 @@ export const renderDevHTML = ({
         )
       } catch (err) {
         return reject(
-          parseError({ err, directory, componentPath: pageObj.component })
+          parseError({
+            err,
+            directory,
+            componentPath: pageObj.component,
+            htmlComponentRendererPath,
+          })
         )
       }
     }

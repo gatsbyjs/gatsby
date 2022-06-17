@@ -50,9 +50,9 @@ describe(`SSR`, () => {
         pagePath: `/bad-page/`,
         title: `browser API used in page template render method`,
         assert: rawDevHtml => {
-          expect(rawDevHtml).toMatch("<p>window is not defined</p>")
+          expect(rawDevHtml).toMatch(/<p>.*window is not defined<\/p>/)
           // html should contain stacktrace to bad-page
-          expect(rawDevHtml).toMatch(/at Component \(.+?(?=bad-page.js)[^)]+\)/)
+          expect(rawDevHtml).toMatch(/at.*bad-page.js/)
         },
       },
       {
@@ -60,11 +60,9 @@ describe(`SSR`, () => {
         pagePath: `/bad-ssr/`,
         title: `handling failing getServerData`,
         assert: rawDevHtml => {
-          expect(rawDevHtml).toMatch("<p>network error, I swear</p>")
+          expect(rawDevHtml).toMatch(/<p>.*network error, I swear<\/p>/)
           // html should contain stacktrace to bad-ssr
-          expect(rawDevHtml).toMatch(
-            /at Module.getServerData \(.+?(?=bad-ssr.js)[^)]+\)/
-          )
+          expect(rawDevHtml).toMatch(/at.*bad-ssr.js/)
         },
       },
     ]

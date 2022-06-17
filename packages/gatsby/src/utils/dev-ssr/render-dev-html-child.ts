@@ -39,7 +39,12 @@ export async function renderHTML({
       })
     }
   } catch (err) {
-    const error = parseError({ err, directory, componentPath })
+    const error = parseError({
+      err,
+      directory,
+      componentPath,
+      htmlComponentRendererPath,
+    })
     throw error
   }
 }

@@ -1,36 +1,58 @@
-// TODO: Do not use source-map-support and migrate to a package that doesn't use source-map under the hood
-require(`source-map-support`).install()
+import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
+
 const sysPath = require(`path`)
 const fs = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
 
-const getPosition = function (stackObject): {
+const getPosition = function (stackObject: Array<string>): {
   filename: string
   line: number
   column: number
 } {
-  let filename
-  let line
-  let column
+  let filename = ``
+  let line = 0
+  let column = 0
   // Because the JavaScript error stack has not yet been standardized,
   // wrap the stack parsing in a try/catch for a soft fail if an
   // unexpected stack is encountered.
   try {
-    const filteredStack = stackObject.filter(function (s) {
-      return /\(.+?\)$/.test(s)
-    })
-    let splitLine
-    // For current Node & Chromium Error stacks
-    if (filteredStack.length > 0) {
-      splitLine = filteredStack[0].match(/(?:\()(.+?)(?:\))$/)[1].split(`:`)
-      // For older, future, or otherwise unexpected stacks
-    } else {
-      splitLine = stackObject[0].split(`:`)
+    for (const stackLine of stackObject) {
+      {
+        // testing for following format:
+        // "    at Component (/Users/misiek/dev/gatsby/integration-tests/ssr/.cache/page-ssr/routes/render-page.js:4088:13)"
+        const splitLine = stackLine.match(/(?:\()(.+):([0-9]+):([0-9]+)(?:\))$/)
+        if (splitLine) {
+          filename = splitLine[1]
+          line = Number(splitLine[2])
+          column = Number(splitLine[3])
+          break
+        }
+      }
+
+      {
+        // testing for following format:
+        // "    at ssr/src/pages/bad-page.js:4:13"
+        const splitLine = stackLine.match(/at (.+):([0-9]+):([0-9]+)$/)
+        if (splitLine) {
+          filename = splitLine[1]
+          line = Number(splitLine[2])
+          column = Number(splitLine[3])
+          break
+        }
+      }
+
+      {
+        // trying to extract generic:
+        // "<filepath>:<line>:<column>"
+        const splitLine = stackLine.match(/(.+):([0-9]+):([0-9]+)/)
+        if (splitLine) {
+          filename = splitLine[1]
+          line = Number(splitLine[2])
+          column = Number(splitLine[3])
+          break
+        }
+      }
     }
-    const splitLength = splitLine.length
-    filename = splitLine[splitLength - 3]
-    line = Number(splitLine[splitLength - 2])
-    column = Number(splitLine[splitLength - 1])
   } catch (err) {
     filename = ``
     line = 0
@@ -66,11 +88,16 @@ export const parseError = function ({
   err,
   directory,
   componentPath,
+  htmlComponentRendererPath,
 }: {
   err: Error
   directory: string
   componentPath: string
+  htmlComponentRendererPath: string
 }): IParsedError {
+  // convert stack trace to use source file locations and not compiled ones
+  err = createErrorFromString(err.stack, `${htmlComponentRendererPath}.map`)
+
   const stack = err.stack ? err.stack : ``
   const stackObject = stack.split(`\n`)
   const position = getPosition(stackObject)
@@ -80,7 +107,9 @@ export const parseError = function ({
     directory,
     // Don't need to use path.sep as webpack always uses a single forward slash
     // as a path separator.
-    ...position.filename.split(sysPath.sep).slice(2)
+    ...position.filename
+      .split(sysPath.sep)
+      .slice(position.filename.startsWith(`/`) ? 2 : 1)
   )
 
   let sourceContent
