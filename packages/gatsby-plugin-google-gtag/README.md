@@ -34,8 +34,8 @@ module.exports = {
         // Optional - if you want to set default consent settings
         // this example disables ad and analytics cookies
         gtagConsent: {
-          ad_storage': 'denied',
-          analytics_storage': 'denied'
+          ad_storage: "denied",
+          analytics_storage: "denied",
         },
         // This object gets passed directly to the gtag config command
         // This config will be shared across all trackingIds
