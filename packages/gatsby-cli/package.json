@@ -65,6 +65,7 @@
     "@types/hosted-git-info": "^3.0.2",
     "@types/yargs": "^15.0.14",
     "babel-preset-gatsby-package": "^2.18.0-next.0",
+    "babel-plugin-lodash": "^3.3.4",
     "cross-env": "^7.0.3",
     "ink": "^3.2.0",
     "ink-spinner": "^4.0.3",
