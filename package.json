@@ -152,5 +152,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "resolutions": {
+    "cssnano": "^5.1.12"
+  }
 }

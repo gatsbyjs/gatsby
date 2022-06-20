@@ -1,7 +1,7 @@
 import * as React from "react"
 import { oneLine } from "common-tags"
-import cssNanoMacro from "../macros/cssnano.macro"
-import terserMacro from "../macros/terser.macro"
+import cssNanoMacro from "preval-minify-css.macro"
+import terserMacro from "preval-minify-js.macro"
 import { RenderBodyArgs } from "gatsby"
 
 const generateHtml = (

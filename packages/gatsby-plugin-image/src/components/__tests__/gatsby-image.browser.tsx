@@ -8,7 +8,7 @@ import type { IGatsbyImageData } from "../gatsby-image.browser"
 
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(
-  `../../../macros/terser.macro`,
+  `preval-minify-js.macro`,
   () =>
     (strs): string =>
       strs.join(``)

@@ -1,5 +1,5 @@
 import React, { Fragment, FunctionComponent } from "react"
-import terserMacro from "../../macros/terser.macro"
+import terserMacro from "preval-minify-js.macro"
 import { Layout } from "../image-utils"
 
 export interface ILayoutWrapperProps {
