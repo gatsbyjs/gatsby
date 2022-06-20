@@ -288,6 +288,11 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   )
 
+  // route ipc messaging to the original develop process
+  process.on(`message`, msg => {
+    developProcess.send(msg)
+  })
+
   process.on(`SIGINT`, async () => {
     await shutdownServices(
       {
