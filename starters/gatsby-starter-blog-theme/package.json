@@ -17,6 +17,6 @@
     "gatsby-theme-blog": "^4.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "theme-ui": "0.14.5"
+    "theme-ui": "0.14.6"
   }
 }
