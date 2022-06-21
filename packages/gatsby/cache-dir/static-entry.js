@@ -243,15 +243,18 @@ export default async function staticPage({
         createElement(pageComponent.head, props, null)
       )
 
+      // extract head nodes from string
       const rawString = renderToString(headElement)
-      const nodes = [...parse(rawString).childNodes]
+      const headNodes = [...parse(rawString).childNodes]
 
-      const elementsForNodes = nodes.map(node => {
+      // add attribute to new head nodes
+      const newHeadNodes = headNodes.map(node => {
         node.setAttribute(`data-gatsby-head`, true)
         return nodeToReactElement(node)
       })
 
-      setHeadComponents(elementsForNodes)
+      // Append new head nodes
+      setHeadComponents(newHeadNodes)
     }
 
     class RouteHandler extends React.Component {

@@ -16,6 +16,16 @@ class PageRenderer extends React.Component {
       },
     }
 
+    const preferDefault = m => (m && m.default) || m
+
+    const pageElement = createElement(
+      preferDefault(this.props.pageResources.component),
+      {
+        ...props,
+        key: this.props.path || this.props.pageResources.page.path,
+      }
+    )
+
     const pageComponent = this.props.pageResources.component
 
     if (pageComponent.head) {
@@ -30,29 +40,24 @@ class PageRenderer extends React.Component {
         createElement(pageComponent.head, props, null)
       )
 
+      // extract head nodes from string
       const rawString = renderToString(headElement)
-
       const parsed = new DOMParser().parseFromString(rawString, `text/html`)
-      const nodes = [...parsed.head.childNodes]
+      const headNodes = [...parsed.head.childNodes]
 
-      const allElem = [...document.querySelectorAll(`[data-gatsby-head]`)]
-      allElem.forEach(e => e.remove())
+      // Remove previous head nodes
+      const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
+      prevHeadNodes.forEach(e => e.remove())
 
-      nodes.forEach(node => {
+      // add attribute to new head nodes
+      const newHeadNodes = headNodes.map(node => {
         node.setAttribute(`data-gatsby-head`, true)
-        document.head.appendChild(node)
+        return node
       })
+
+      // Append new head nodes
+      document.head.append(...newHeadNodes)
     }
-
-    const preferDefault = m => (m && m.default) || m
-
-    const pageElement = createElement(
-      preferDefault(this.props.pageResources.component),
-      {
-        ...props,
-        key: this.props.path || this.props.pageResources.page.path,
-      }
-    )
 
     const wrappedPage = apiRunner(
       `wrapPageElement`,
