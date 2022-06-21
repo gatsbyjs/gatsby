@@ -191,6 +191,21 @@ module.exports = {
 }
 ```
 
+Optionally, you can configure its behavior by passing an object to `graphqlTypegen`, see the options below.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  graphqlTypegen: {
+    typesOutputPath: `gatsby-types.d.ts`,
+    // Other options...
+  },
+}
+```
+
+### typesOutputPath
+
+You can specifiy the path of the generated TypeScript types file relative to the site root. Default: `src/gatsby-types.d.ts`.
+
 ## polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
