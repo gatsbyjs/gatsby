@@ -206,11 +206,11 @@ describe(`gatsby config`, () => {
     )
   })
 
-  // Re-Add when more options are added
-  it.skip(`return partial defaults for graphqlTypegen when partial options object is set`, () => {
+  // TODO: Write "return partial defaults for graphqlTypegen when partial options object is set" test with more graphqlTypegen options
+  it(`graphqlTypegen config object can be overwritten`, () => {
     const config = {
       graphqlTypegen: {
-        debug: true,
+        typesOutputPath: `gatsby-types.d.ts`,
       },
     }
 
@@ -218,8 +218,7 @@ describe(`gatsby config`, () => {
     expect(result.value).toEqual(
       expect.objectContaining({
         graphqlTypegen: {
-          typesOutputPath: `src/gatsby-types.d.ts`,
-          debug: true,
+          typesOutputPath: `gatsby-types.d.ts`,
         },
       })
     )

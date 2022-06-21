@@ -1,4 +1,4 @@
-import { IBuildContext, IGraphQLTypegenOptions } from "../internal"
+import { IBuildContext } from "../internal"
 import {
   writeGraphQLFragments,
   writeGraphQLSchema,
@@ -29,7 +29,11 @@ export async function graphQLTypegen({
   activity.start()
 
   const { schema, definitions, config } = store.getState()
-  const graphqlTypegenOptions = config.graphqlTypegen as IGraphQLTypegenOptions
+  const graphqlTypegenOptions = config.graphqlTypegen
+
+  if (!graphqlTypegenOptions) {
+    throw new Error(`graphqlTypegen option is falsy. This should never happen.`)
+  }
 
   try {
     await writeGraphQLSchema(directory, schema)
