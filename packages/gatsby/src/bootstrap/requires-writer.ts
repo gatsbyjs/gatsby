@@ -67,11 +67,10 @@ const pickComponentFields = (page: IGatsbyPage): IGatsbyPageComponent =>
 export const getComponents = (
   pages: Array<IGatsbyPage>
 ): Array<IGatsbyPageComponent> =>
-  _(pages)
-    .map(pickComponentFields)
-    .uniqBy(c => c.componentChunkName)
-    .orderBy(c => c.componentChunkName)
-    .value()
+  _.orderBy(
+    _.uniqBy(_.map(pages, pickComponentFields), c => c.componentChunkName),
+    c => c.componentChunkName
+  )
 
 /**
  * Get all dynamic routes and sort them by most specific at the top

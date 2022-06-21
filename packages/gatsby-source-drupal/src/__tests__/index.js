@@ -14,6 +14,8 @@ jest.mock(`got`, () =>
   })
 )
 
+const probeImageSize = require(`probe-image-size`)
+
 jest.mock(`probe-image-size`, () =>
   jest.fn(() => {
     return {
@@ -515,6 +517,10 @@ describe(`gatsby-source-drupal`, () => {
   })
 
   describe(`Image CDN`, () => {
+    afterEach(() => {
+      probeImageSize.mockClear()
+    })
+
     it(`should generate required Image CDN node data`, async () => {
       // Reset nodes and test includes relationships.
       Object.keys(nodes).forEach(key => delete nodes[key])
@@ -536,6 +542,29 @@ describe(`gatsby-source-drupal`, () => {
       expect(fileNode.mimeType).toEqual(`image/png`)
       expect(fileNode.width).toEqual(100)
       expect(fileNode.height).toEqual(100)
+      expect(probeImageSize).toHaveBeenCalled()
+    })
+
+    it(`should not generate required Image CDN node data when imageCDN option is set to false`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+
+      const options = {
+        baseUrl,
+        skipFileDownloads: true,
+        imageCDN: false,
+      }
+
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+
+      const fileNode = nodes[createNodeId(`und.file-1`)]
+
+      // imageCDN: true fetches the width/height
+      expect(fileNode.width).not.toBeDefined()
+      expect(fileNode.height).not.toBeDefined()
+      expect(probeImageSize).not.toHaveBeenCalled()
     })
   })
 

@@ -68,7 +68,10 @@ describe(`gatsbyImageData`, () => {
     fetchRemoteFile.mockClear()
   })
 
-  const actions = {} as Actions
+  const actions = {
+    addGatsbyImageSourceUrl: jest.fn(),
+  } as Actions
+
   const portraitSource = {
     id: `1`,
     url: `https://images.unsplash.com/photo-1588795945-b9c8d9f9b9c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80`,
@@ -109,6 +112,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -140,6 +144,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -197,6 +202,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -213,6 +219,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -272,6 +279,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 75,
@@ -288,6 +296,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 150,
@@ -304,6 +313,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -320,6 +330,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -383,6 +394,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 750,
@@ -399,6 +411,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1080,
@@ -415,6 +428,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1366,
@@ -431,6 +445,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1920,
@@ -517,6 +532,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -532,6 +548,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -552,6 +569,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -567,6 +585,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -792,5 +811,27 @@ describe(`gatsbyImageData`, () => {
       })
     )
     expect(fixedResult?.placeholder).toBeTruthy()
+  })
+
+  it(`should call add image source urls to the redux store`, async () => {
+    fetchRemoteFile.mockResolvedValueOnce(
+      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+    )
+    const actions = {
+      addGatsbyImageSourceUrl: jest.fn(),
+    } as unknown as Actions
+
+    await gatsbyImageResolver(
+      portraitSource,
+      {
+        layout: `fixed`,
+        width: 300,
+      },
+      actions
+    )
+
+    expect(actions.addGatsbyImageSourceUrl).toHaveBeenCalledWith(
+      portraitSource.url
+    )
   })
 })

@@ -1,7 +1,7 @@
 import React from "react"
 import url from "url"
 
-exports.onRenderBody = (
+export const onRenderBody = (
   { setHeadComponents, pathname = `/` },
   pluginOptions
 ) => {

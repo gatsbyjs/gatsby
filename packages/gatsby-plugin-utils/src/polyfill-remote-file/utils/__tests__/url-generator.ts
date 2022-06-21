@@ -58,6 +58,9 @@ describe(`url-generator`, () => {
       url: `https://example.com/image.jpg`,
       filename: `image.jpg`,
       mimeType: `image/jpeg`,
+      internal: {
+        contentDigest: `1234`,
+      },
     }
 
     it(`should return an image based url`, () => {
@@ -70,7 +73,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/18867d45576d8283d6fabb82406789c8/a5d4237c29c15bd781f3586364b7e168/image.webp?u=https%3A%2F%2Fexample.com%2Fimage.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/18867d45576d8283d6fabb82406789c8/a5d4237c29c15bd781f3586364b7e168/image.webp?u=https%3A%2F%2Fexample.com%2Fimage.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 
@@ -79,6 +82,9 @@ describe(`url-generator`, () => {
         url: `https://example.com/image-éà.jpg`,
         filename: `image-éà.jpg`,
         mimeType: `image/jpeg`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(
@@ -90,7 +96,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/efe0766d673b5a1cb5070c77e019c3de/a5d4237c29c15bd781f3586364b7e168/image-%C3%A9%C3%A0.webp?u=https%3A%2F%2Fexample.com%2Fimage-%C3%A9%C3%A0.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/efe0766d673b5a1cb5070c77e019c3de/a5d4237c29c15bd781f3586364b7e168/image-%C3%A9%C3%A0.webp?u=https%3A%2F%2Fexample.com%2Fimage-%C3%A9%C3%A0.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 
@@ -99,6 +105,9 @@ describe(`url-generator`, () => {
         url: `https://example.com/image test.jpg`,
         filename: `image test.jpg`,
         mimeType: `image/jpeg`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(
@@ -110,7 +119,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/4b2d785bb2f2b7d04e00cb15daeb1687/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage+test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/4b2d785bb2f2b7d04e00cb15daeb1687/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage+test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 
@@ -119,6 +128,9 @@ describe(`url-generator`, () => {
         url: `https://example.com/image%20test.jpg`,
         filename: `image test.jpg`,
         mimeType: `image/jpeg`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(
@@ -130,7 +142,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/e204b74f97d4407c992c4c3a7c5c66c4/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage%2520test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/e204b74f97d4407c992c4c3a7c5c66c4/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage%2520test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 

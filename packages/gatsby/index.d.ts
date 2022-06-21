@@ -1283,6 +1283,12 @@ export interface Actions {
     plugin?: ActionPlugin
   ): Promise<unknown>
 
+  /** @see https://www.gatsbyjs.com/docs/actions/#addGatsbyImageSourceUrl */
+  addGatsbyImageSourceUrl(
+    this: void,
+    sourceUrl: string,
+  ): void
+
   /** @see https://www.gatsbyjs.com/docs/actions/#setJob */
   setJob(
     this: void,
