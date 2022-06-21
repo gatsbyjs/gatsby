@@ -15,6 +15,7 @@ describe(
     cy.scrollTo("bottom", {
       duration: 500,
     })
+    cy.wait(500)
   })
 
   async function testImages(images, expectations) {

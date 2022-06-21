@@ -392,7 +392,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
-          react_version: "^18.1.0"
+          react_version: "^18.2.0"
 
   e2e_tests_production_runtime:
     <<: *e2e_tests_production_runtime_alias
@@ -403,7 +403,7 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=ec36ff6b-3db9-48a9-8f7b-2faf301ab800 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=2a4f4f31-0dfb-4a56-80e0-9ed42a1131a4 yarn test:offline
-          react_version: "^18.0.0"
+          react_version: "^18.2.0"
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
