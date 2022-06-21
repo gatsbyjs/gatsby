@@ -22,7 +22,14 @@ describe(`Redirects`, () => {
     cy.get(`h1`).invoke(`text`).should(`contain`, `NOT FOUND`)
   })
 
-  it(`use redirects when preloading page-data`, () => {
+  it(
+    `use redirects when preloading page-data`,
+    {
+      retries: {
+        runMode: 3,
+      },
+    },
+    () => {
     const expectedLinks = [`/Longue-PAGE`, `/pagina-larga`]
 
     // we should not hit those routes
