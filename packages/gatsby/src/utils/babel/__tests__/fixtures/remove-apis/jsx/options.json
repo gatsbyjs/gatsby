@@ -8,8 +8,7 @@
       {
         "apis": [
           "getServerData",
-          "config",
-          "head"
+          "config"
         ]
       }
     ]
