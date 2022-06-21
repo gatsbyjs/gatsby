@@ -13,7 +13,7 @@ import { typesWithoutInference } from "../../schema/types/type-defs"
 
 import { IGatsbyState, ActionsUnion } from "../types"
 
-const ignoredFields: Set<string> = new Set([...NodeInterfaceFields])
+const ignoredFields: Set<string> = new Set(NodeInterfaceFields)
 
 const initialTypeMetadata = (): { ignoredFields: Set<string> } => {
   return { ignoredFields }
