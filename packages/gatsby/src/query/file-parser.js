@@ -528,11 +528,10 @@ export default class FileParser {
           }),
           serverData: findApiExport(ast, `getServerData`),
           config: findApiExport(ast, `config`),
-          meta: findApiExport(ast, `meta`),
-          links: findApiExport(ast, `links`),
+          head: findApiExport(ast, `head`),
         }
       }
-      const { astDefinitions, serverData, config, meta, links } = cache[hash]
+      const { astDefinitions, serverData, config, head } = cache[hash]
 
       // Note: we should dispatch this action even when getServerData is not found
       // (maybe it was set before, so now we need to reset renderMode from SSR to the default one)
@@ -542,8 +541,7 @@ export default class FileParser {
           componentPath: file,
           serverData,
           config,
-          meta,
-          links,
+          head,
         },
       })
 
