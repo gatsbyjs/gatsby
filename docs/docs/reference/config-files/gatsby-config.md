@@ -191,7 +191,7 @@ module.exports = {
 }
 ```
 
-Optionally, you can configure its behavior by passing an object to `graphqlTypegen`, see the options below.
+Optionally, you can configure its behavior by passing an object to `graphqlTypegen`, see the options below. If you don't pass an object (but `graphqlTypegen: true`), the default value for each option will be used.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
