@@ -39,6 +39,10 @@ export async function createGraphqlEngineBundle(
     },
   }
 
+  const gatsbyPluginTSRequire = mod.createRequire(
+    require.resolve(`gatsby-plugin-typescript`)
+  )
+
   const compiler = webpack({
     name: `Query Engine`,
     // mode: `production`,
@@ -82,9 +86,11 @@ export async function createGraphqlEngineBundle(
           test: /\.ts$/,
           exclude: /node_modules/,
           use: {
-            loader: `babel-loader`,
+            loader: require.resolve(`babel-loader`),
             options: {
-              presets: [`@babel/preset-typescript`],
+              presets: [
+                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
+              ],
             },
           },
         },
