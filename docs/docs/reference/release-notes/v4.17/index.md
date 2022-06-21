@@ -39,7 +39,7 @@ In our test case we found invalidated queries were reduced from **40k to 6k**, d
 We continue to have ongoing RFCs that we’d like your input on. Please give it a read, if applicable a try, and leave feedback!
 
 - [Support for MDX v2](https://github.com/gatsbyjs/gatsby/discussions/25068): We are updating `gatsby-plugin-mdx` to be compatible with MDX v2. Keep a look out in the discussion for a canary to try!
-- [Metadata Management API](https://github.com/gatsbyjs/gatsby/discussions/35841): We will be adding a built-in metadata management solution to Gatsby. Work is in progress and a canary forthcoming!
+- [Metadata Management API](https://github.com/gatsbyjs/gatsby/discussions/35841): We will be adding a built-in metadata management solution to Gatsby. Work is in progress and you can try out the canary now!
 
 ## Notable bugfixes & improvements
 
@@ -54,6 +54,12 @@ We continue to have ongoing RFCs that we’d like your input on. Please give it 
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-// TODO
+- [chrispecoraro](https://github.com/chrispecoraro): Update gatsby-script.md [PR #35903](https://github.com/gatsbyjs/gatsby/pull/35903)
+- [rutterjt](https://github.com/rutterjt): chore(docs): Add Jest 28 `jest-environment-jsdom` information [PR #35904](https://github.com/gatsbyjs/gatsby/pull/35904)
+- [rudevdr](https://github.com/rudevdr): chore(docs): fix export.createPages to exports.CreatePages in documentation [PR #35874](https://github.com/gatsbyjs/gatsby/pull/35874)
+- [febeling](https://github.com/febeling): chore(gatsby-source-drupal): Document fix for 406 [PR #35927](https://github.com/gatsbyjs/gatsby/pull/35927)
+- [labifrancis](https://github.com/labifrancis): chore(docs): Add Gatsby Script component to "Adding Analytics" [PR #35839](https://github.com/gatsbyjs/gatsby/pull/35839)
+- [tsdexter](https://github.com/tsdexter): refactor(gatsby-source-wordpress): move option check within relevant function to ensure enforcement [PR #35827](https://github.com/gatsbyjs/gatsby/pull/35827)
+- [ElegantStack](https://github.com/ElegantStack): chore(docs): add options command to cli reference [PR #35815](https://github.com/gatsbyjs/gatsby/pull/35815)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.17.0-next.0...gatsby@4.17.0
