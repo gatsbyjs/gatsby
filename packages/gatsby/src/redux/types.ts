@@ -84,7 +84,7 @@ export interface IGraphQLTypegenOptions {
 
 export interface IGatsbyConfig {
   plugins?: Array<{
-    // This is the name of the plugin like `gatsby-plugin-manifest
+    // This is the name of the plugin like `gatsby-plugin-manifest`
     resolve: string
     options: {
       [key: string]: unknown

@@ -13,7 +13,7 @@ import { DataLayerResult } from "../data-layer"
 import { saveState } from "../../redux/save-state"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
-import { ProgramStatus } from "../../redux/types"
+import { IGraphQLTypegenOptions, ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
 import { callRealApi } from "../../utils/call-deferred-api"
 import {
@@ -226,7 +226,7 @@ export const definitionsTypegen: ActionFunction<
   const definitions = event.payload.payload
   const { schema, config } = context.store!.getState()
   const directory = context.program.directory
-  const graphqlTypegenOptions = config.graphqlTypegen ?? false
+  const graphqlTypegenOptions = config.graphqlTypegen as IGraphQLTypegenOptions
 
   context.reporter!.verbose(`Re-Generating fragments.graphql & TS Types`)
 

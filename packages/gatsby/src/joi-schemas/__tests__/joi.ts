@@ -163,9 +163,37 @@ describe(`gatsby config`, () => {
     )
   })
 
+  it(`throws when graphqlTypegen has invalid keys`, () => {
+    const config = {
+      graphqlTypegen: {
+        invalid: true,
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "graphqlTypegen.invalid" is not allowed]`
+    )
+  })
+
   it(`return defaults for graphqlTypegen when empty object is set`, () => {
     const config = {
       graphqlTypegen: {},
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+        },
+      })
+    )
+  })
+
+  it(`return defaults for graphqlTypegen when true is set`, () => {
+    const config = {
+      graphqlTypegen: true,
     }
 
     const result = gatsbyConfigSchema.validate(config)
@@ -194,19 +222,6 @@ describe(`gatsby config`, () => {
           debug: true,
         },
       })
-    )
-  })
-
-  it(`throws when graphqlTypegen has invalid key`, () => {
-    const config = {
-      graphqlTypegen: {
-        invalid: true,
-      },
-    }
-
-    const result = gatsbyConfigSchema.validate(config)
-    expect(result.error).toMatchInlineSnapshot(
-      `[ValidationError: "graphqlTypegen.invalid" is not allowed]`
     )
   })
 })

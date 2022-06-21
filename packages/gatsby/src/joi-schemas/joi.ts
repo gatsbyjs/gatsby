@@ -1,6 +1,6 @@
 import Joi from "joi"
 import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
-import { TYPES_OUTPUT_PATH } from "../utils/graphql-typegen/ts-codegen"
+import { DEFAULT_TYPES_OUTPUT_PATH } from "../utils/graphql-typegen/ts-codegen"
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.replace(/(\w)\/+$/, `$1`)
@@ -60,10 +60,20 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       Joi.boolean(),
       Joi.object()
         .keys({
-          typesOutputPath: Joi.string().default(TYPES_OUTPUT_PATH),
+          typesOutputPath: Joi.string().default(DEFAULT_TYPES_OUTPUT_PATH),
         })
         .unknown(false)
-    ).default(false),
+    )
+      .default(false)
+      .custom(value => {
+        if (value === true) {
+          return {
+            typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
+          }
+        }
+
+        return value
+      }),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(

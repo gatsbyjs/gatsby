@@ -18,7 +18,7 @@ import {
   stabilizeSchema,
 } from "./utils"
 
-export const TYPES_OUTPUT_PATH = `src/gatsby-types.d.ts`
+export const DEFAULT_TYPES_OUTPUT_PATH = `src/gatsby-types.d.ts`
 const NAMESPACE = `Queries`
 
 // These override the defaults from
@@ -53,7 +53,7 @@ export async function writeTypeScriptTypes(
   directory: IStateProgram["directory"],
   schema: GraphQLSchema,
   definitions: Map<string, IDefinitionMeta>,
-  graphqlTypegenOptions: boolean | IGraphQLTypegenOptions
+  graphqlTypegenOptions: IGraphQLTypegenOptions
 ): Promise<void> {
   const pluginConfig: Pick<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     pluginMap: {
@@ -95,15 +95,7 @@ export async function writeTypeScriptTypes(
     ],
   }
 
-  let options: IGraphQLTypegenOptions = {
-    typesOutputPath: TYPES_OUTPUT_PATH,
-  }
-
-  if (typeof graphqlTypegenOptions !== `boolean`) {
-    options = graphqlTypegenOptions
-  }
-
-  const filename = join(directory, options.typesOutputPath)
+  const filename = join(directory, graphqlTypegenOptions.typesOutputPath)
 
   let gatsbyNodeDocuments: Array<Types.DocumentFile> = []
   // The loadDocuments + CodeFileLoader looks for graphql(``) functions inside the gatsby-node.ts files
