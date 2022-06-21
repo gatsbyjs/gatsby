@@ -63,10 +63,10 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
 
    It is important that your query has a name (here: `query TypegenPage {}`) as otherwise the automatic type generation doesn't work. We recommend naming the query the same as your React component and using [PascalCase](https://en.wiktionary.org/wiki/Pascal_case). You can enforce this requirement by using [`graphql-eslint`](#graphql-eslint).
 
-1. Access the `Queries` namespace and use the `TypegenPage` type in your React component like so:
+1. Access the `Queries` namespace and use the `TypegenPageQuery` type in your React component like so:
 
    ```tsx
-   ({ data }: PageProps<Queries.TypegenPage>)
+   ({ data }: PageProps<Queries.TypegenPageQuery>)
    ```
 
    When you type out the site title like this you should get TypeScript IntelliSense:
