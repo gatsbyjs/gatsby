@@ -1,18 +1,20 @@
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const { createContentDigest } = require(`gatsby-core-utils`)
-const {
-  addRemoteFilePolyfillInterface,
-} = require("gatsby-plugin-utils/polyfill-remote-file")
+import * as path from "path"
+import * as fs from "fs-extra"
+import { createContentDigest } from "gatsby-core-utils"
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
+import type { GatsbyNode } from "gatsby"
 
-exports.onPreBootstrap = () => {
+export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = () => {
   fs.copyFileSync(
     `./src/templates/static-page-from-cache.js`,
     `./.cache/static-page-from-cache.js`
   )
 }
 
-exports.createSchemaCustomization = ({ actions, schema, store }) => {
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({
+  actions,
+  schema,
+}) => {
   const { createTypes } = actions
   const typeDefs = `
       type Product implements Node {
@@ -29,7 +31,6 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
         interfaces: ["Node", "RemoteFile"],
       }),
       {
-        store,
         schema,
         actions,
       }
@@ -39,10 +40,13 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
 
 const products = ["Burger", "Chicken"]
 
-exports.sourceNodes = ({ actions, createNodeId }) => {
+export const sourceNodes: GatsbyNode["sourceNodes"] = ({
+  actions,
+  createNodeId,
+}) => {
   products.forEach((product, i) => {
     actions.createNode({
-      id: createNodeId(i),
+      id: createNodeId(i.toString()),
       children: [],
       parent: null,
       internal: {
@@ -99,7 +103,9 @@ exports.sourceNodes = ({ actions, createNodeId }) => {
   })
 }
 
-exports.createPages = ({ actions: { createPage, createRedirect } }) => {
+export const createPages: GatsbyNode["createPages"] = ({
+  actions: { createPage, createRedirect },
+}) => {
   createPage({
     path: `/안녕`,
     component: path.resolve(`src/pages/page-2.js`),
@@ -239,7 +245,7 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
   })
 }
 
-exports.onCreatePage = ({ page, actions }) => {
+export const onCreatePage: GatsbyNode["onCreatePage"] = ({ page, actions }) => {
   switch (page.path) {
     case `/client-only-paths/`:
       // create client-only-paths
