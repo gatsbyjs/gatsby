@@ -24,7 +24,3 @@ Then you can run it by:
 cd gatsby-example-site
 gatsby develop
 ```
-
-## Deploy
-
-[![Deploy to Gatsby](https://www.gatsbyjs.com/deploynow.png "Deploy to Gatsby")](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-default)
