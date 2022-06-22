@@ -12,15 +12,13 @@ Please follow the [official "Install Tailwind CSS with Gatsby" guide](https://ta
 - If you use [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen/) a file at `src/gatsby-types.d.ts` will be generated and with the default configuration for `content` in `tailwind.config.js` this will trigger an infinite loop. You have two options to fix this:
   1. Configure GraphQL Typegen's [`typesOutputPath` option](/docs/reference/config-files/gatsby-config/#graphqltypegen) to generate the file in another place
   2. Adapt the `content` array to not include the `src/gatsby-types.d.ts` file, for example:
-     ```js:title=tailwind.config.js
+     ```diff:title=tailwind.config.js
      module.exports = {
        content: [
-         './src/pages/*.{js,jsx,ts,tsx}',
-         './src/components/**/*.{js,jsx,ts,tsx}'
+     -   "./src/**/*.{js,jsx,ts,tsx}",
+     +   "./src/pages/*.{js,jsx,ts,tsx}",
+     +   "./src/components/**/*.{js,jsx,ts,tsx}"
        ],
-       theme: {},
-       variants: {},
-       plugins: []
      }
      ```
 
