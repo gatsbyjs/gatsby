@@ -10,7 +10,7 @@ Please follow the [official "Install Tailwind CSS with Gatsby" guide](https://ta
 
 - It is **not recommended** that you include Gatsby's output directories (`public` and `.cache`) in your `content` array in your `tailwind.config.js`. You should only include your source files to have Tailwind working as expected.
 - If you use [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen/) a file at `src/gatsby-types.d.ts` will be generated and with the default configuration for `content` in `tailwind.config.js` this will trigger an infinite loop. You have two options to fix this:
-  1. Configure GraphQL Typegen's `typesOutputPath` option to generate the file in another place
+  1. Configure GraphQL Typegen's [`typesOutputPath` option](/docs/reference/config-files/gatsby-config/#graphqltypegen) to generate the file in another place
   2. Adapt the `content` array to not include the `src/gatsby-types.d.ts` file, for example:
      ```js:title=tailwind.config.js
      module.exports = {
