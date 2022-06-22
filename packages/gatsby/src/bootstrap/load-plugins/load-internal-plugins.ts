@@ -43,15 +43,20 @@ export function loadInternalPlugins(
 
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
-    plugins.push(processPlugin(absPath, rootDir))
+    const processedPlugin = processPlugin(absPath, rootDir)
+    if (processedPlugin) {
+      plugins.push(processedPlugin)
+    }
   })
 
   // Add plugins from the site config.
   if (config.plugins) {
     config.plugins.forEach(plugin => {
       const processedPlugin = processPlugin(plugin, rootDir)
-      plugins.push(processedPlugin)
-      configuredPluginNames.add(processedPlugin.name)
+      if (processedPlugin) {
+        plugins.push(processedPlugin)
+        configuredPluginNames.add(processedPlugin.name)
+      }
     })
   }
 
@@ -61,18 +66,19 @@ export function loadInternalPlugins(
   // because themes have already been added in the proper order to the plugins
   // array
   plugins.forEach(plugin => {
-    plugins.push(
-      processPlugin(
-        {
-          resolve: require.resolve(`gatsby-plugin-page-creator`),
-          options: {
-            path: slash(path.join(plugin.resolve, `src/pages`)),
-            pathCheck: false,
-          },
+    const processedPlugin = processPlugin(
+      {
+        resolve: require.resolve(`gatsby-plugin-page-creator`),
+        options: {
+          path: slash(path.join(plugin.resolve, `src/pages`)),
+          pathCheck: false,
         },
-        rootDir
-      )
+      },
+      rootDir
     )
+    if (processedPlugin) {
+      plugins.push(processedPlugin)
+    }
   })
 
   if (
@@ -114,7 +120,9 @@ export function loadInternalPlugins(
       },
       rootDir
     )
-    plugins.push(processedTypeScriptPlugin)
+    if (processedTypeScriptPlugin) {
+      plugins.push(processedTypeScriptPlugin)
+    }
   }
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
@@ -159,17 +167,20 @@ export function loadInternalPlugins(
     rootDir
   )
 
-  plugins.push(processedPageCreatorPlugin)
+  if (processedPageCreatorPlugin) {
+    plugins.push(processedPageCreatorPlugin)
+  }
 
   // Partytown plugin collects usage of <Script strategy={"off-main-thread"} />
   // in `wrapRootElement`, so we have to make sure it's the last one running to be able to
   // collect scripts that users might inject in their `wrapRootElement`
-  plugins.push(
-    processPlugin(
-      path.join(__dirname, `../../internal-plugins/partytown`),
-      rootDir
-    )
+  const processedPartytownPlugin = processPlugin(
+    path.join(__dirname, `../../internal-plugins/partytown`),
+    rootDir
   )
+  if (processedPartytownPlugin) {
+    plugins.push(processedPartytownPlugin)
+  }
 
   return plugins
 }

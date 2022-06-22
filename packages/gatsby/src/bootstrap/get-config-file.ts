@@ -5,6 +5,10 @@ import report from "gatsby-cli/lib/reporter"
 import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
+import {
+  setGatsbyConfigCache,
+  requireGatsbyConfig,
+} from "../utils/require-gatsby-config"
 
 export function isNearMatch(
   fileName: string | undefined,
@@ -26,12 +30,22 @@ export async function getConfigFile(
   let configPath = ``
   let configFilePath = ``
   let configModule: any
+  const absoluteConfigPath = path.join(siteDirectory, configName)
 
   // Attempt to find compiled gatsby-config.js in .cache/compiled/gatsby-config.js
   try {
-    configPath = path.join(`${siteDirectory}/${COMPILED_CACHE_DIR}`, configName)
-    configFilePath = require.resolve(configPath)
-    configModule = require(configFilePath)
+    const configModuleFromCache = requireGatsbyConfig(absoluteConfigPath)
+    if (configModuleFromCache) {
+      configModule = configModuleFromCache
+    } else {
+      configPath = path.join(
+        `${siteDirectory}/${COMPILED_CACHE_DIR}`,
+        configName
+      )
+      configFilePath = require.resolve(configPath)
+      configModule = require(configFilePath)
+      setGatsbyConfigCache(absoluteConfigPath, configModule)
+    }
   } catch (outerError) {
     // Not all plugins will have a compiled file, so the err.message can look like this:
     // "Cannot find module '<root>/node_modules/gatsby-source-filesystem/.cache/compiled/gatsby-config'"
@@ -40,7 +54,9 @@ export async function getConfigFile(
     // So this is trying to differentiate between an error we're fine ignoring and an error that we should throw
     const isModuleNotFoundError = outerError.code === `MODULE_NOT_FOUND`
     const isThisFileRequireError =
-      outerError?.requireStack?.[0]?.includes(`get-config-file`) ?? true
+      (outerError?.requireStack?.[0]?.includes(`get-config-file`) ||
+        outerError?.requireStack?.[0]?.includes(`query-engine`)) ??
+      true
 
     // User's module require error inside gatsby-config.js
     if (!(isModuleNotFoundError && isThisFileRequireError)) {
@@ -58,8 +74,14 @@ export async function getConfigFile(
     configPath = path.join(siteDirectory, configName)
 
     try {
-      configFilePath = require.resolve(configPath)
-      configModule = require(configFilePath)
+      const configModuleFromCache = requireGatsbyConfig(absoluteConfigPath)
+      if (configModuleFromCache) {
+        configModule = configModuleFromCache
+      } else {
+        configFilePath = require.resolve(configPath)
+        configModule = require(configFilePath)
+        setGatsbyConfigCache(absoluteConfigPath, configModule)
+      }
     } catch (innerError) {
       // Some other error that is not a require error
       if (!testRequireError(configPath, innerError)) {

@@ -22,7 +22,10 @@ import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-fi
  * @param rootDir
  * This is the project location, from which are found the plugins
  */
-export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
+export function resolvePlugin(
+  plugin: PluginRef,
+  rootDir: string
+): IPluginInfo | null {
   const pluginName = isString(plugin) ? plugin : plugin.resolve
 
   // Handle local plugins
@@ -82,6 +85,10 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
       version: packageJSON.version,
     }
   } catch (err) {
+    if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+      return null
+    }
+
     if (process.env.gatsby_log_level === `verbose`) {
       reporter.panicOnBuild(
         `plugin "${pluginName} threw the following error:\n`,

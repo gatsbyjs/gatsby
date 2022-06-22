@@ -167,6 +167,7 @@ export async function createGraphqlEngineBundle(
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        SITE_DIRECTORY: JSON.stringify(rootDir),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),

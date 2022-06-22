@@ -21,7 +21,9 @@ function addCloudPluginWhenInstalled(
       },
       rootDir
     )
-    plugins.push(processedGatsbyCloudPlugin)
+    if (processedGatsbyCloudPlugin) {
+      plugins.push(processedGatsbyCloudPlugin)
+    }
   }
 }
 

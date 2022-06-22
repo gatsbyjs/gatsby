@@ -191,7 +191,11 @@ async function validatePluginsOptions(
       let gatsbyNode
       try {
         const resolvedPlugin = resolvePlugin(plugin, rootDir)
-        gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
+        if (resolvedPlugin) {
+          gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
+        } else {
+          gatsbyNode = {}
+        }
       } catch (err) {
         gatsbyNode = {}
       }
@@ -229,6 +233,9 @@ async function validatePluginsOptions(
 
                   try {
                     const resolvedPlugin = resolvePlugin(value, rootDir)
+                    if (!resolvedPlugin) {
+                      return null
+                    }
                     const modulePath = require.resolve(
                       `${resolvedPlugin.resolve}${entry ? `/${entry}` : ``}`
                     )

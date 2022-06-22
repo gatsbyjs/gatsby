@@ -19,11 +19,16 @@ import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
 import {
   gatsbyNodes,
+  gatsbyConfigs,
   gatsbyWorkers,
+  // @ts-ignore
   flattenedPlugins,
   // @ts-ignore
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
+import { setGatsbyConfigCache } from "../../utils/require-gatsby-config"
+import { loadConfig } from "../../bootstrap/load-config"
+import { loadPlugins } from "../../bootstrap/load-plugins"
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -32,6 +37,8 @@ type MaybePhantomActivity =
 const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
 )
+
+process.env.GATSBY_IS_GRAPHQL_ENGINE = `true`
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
@@ -52,11 +59,19 @@ export class GraphQLEngine {
       // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
       store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
-      // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
-      //  (as there might be non-serializable options, i.e. functions)
+      /*
       store.dispatch({
         type: `SET_SITE_FLATTENED_PLUGINS`,
         payload: flattenedPlugins,
+      })
+      */
+
+      store.dispatch({
+        type: `SET_PROGRAM`,
+        payload: {
+          // @ts-ignore SITE_DIRECTORY is being "inlined" by bundler
+          directory: SITE_DIRECTORY,
+        },
       })
 
       for (const pluginName of Object.keys(gatsbyNodes)) {
@@ -73,6 +88,14 @@ export class GraphQLEngine {
           gatsbyWorkers[pluginName]
         )
       }
+
+      for (const gatsbyConfig of Object.keys(gatsbyConfigs)) {
+        setGatsbyConfigCache(gatsbyConfig, gatsbyConfigs[gatsbyConfig])
+      }
+
+      const siteDirectory = store.getState().program.directory
+      const config = await loadConfig({ siteDirectory })
+      await loadPlugins(config, siteDirectory)
 
       if (_CFLAGS_.GATSBY_MAJOR === `4`) {
         await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })

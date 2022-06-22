@@ -3,12 +3,19 @@ import { createPluginId } from "./utils/create-id"
 import { resolvePlugin } from "./resolve-plugin"
 import { isString, isEmpty, set, merge } from "lodash"
 
-export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
+export function processPlugin(
+  plugin: PluginRef,
+  rootDir: string
+): IPluginInfo | null {
   // Respect the directory that the plugin was sourced from initially
   rootDir = (!isString(plugin) && plugin.parentDir) || rootDir
 
   if (isString(plugin)) {
     const info = resolvePlugin(plugin, rootDir)
+
+    if (!info) {
+      return null
+    }
 
     return {
       ...info,
@@ -52,7 +59,9 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
 
       for (const root of roots) {
         const result = processPlugin(root, rootDir)
-        processed.push(result)
+        if (result) {
+          processed.push(result)
+        }
       }
 
       set(plugin.options, pathToSwap, processed)
@@ -76,6 +85,10 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   }
 
   const info = resolvePlugin(plugin, rootDir)
+
+  if (!info) {
+    return null
+  }
 
   return {
     ...info,

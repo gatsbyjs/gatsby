@@ -6,6 +6,7 @@ import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
+import { getAllGatsbyConfig } from "../../utils/require-gatsby-config"
 
 export const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
@@ -34,6 +35,8 @@ export async function printQueryEnginePlugins(): Promise<void> {
 
 function renderQueryEnginePlugins(): string {
   const { flattenedPlugins } = store.getState()
+  const gatsbyConfigs = getAllGatsbyConfig()
+
   const usedPlugins = flattenedPlugins.filter(
     p =>
       includePlugins.has(p.name) ||
@@ -41,7 +44,7 @@ function renderQueryEnginePlugins(): string {
         p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api)))
   )
   const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
-  return render(usedPlugins, usedSubPlugins)
+  return render(usedPlugins, usedSubPlugins, gatsbyConfigs)
 }
 
 function relativePluginPath(resolve: string): string {
@@ -52,10 +55,12 @@ function relativePluginPath(resolve: string): string {
 
 function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
-  usedSubPlugins: IGatsbyState["flattenedPlugins"]
+  usedSubPlugins: IGatsbyState["flattenedPlugins"],
+  gatsbyConfigs: Map<string, unknown>
 ): string {
   const uniqGatsbyNode = uniq(usedPlugins)
   const uniqSubPlugins = uniq(usedSubPlugins)
+  const gatsbyConfigsArray = Array.from(gatsbyConfigs.keys())
 
   const sanitizedUsedPlugins = usedPlugins.map(plugin => {
     // TODO: We don't support functions in pluginOptions here
@@ -77,6 +82,10 @@ function render(
           plugin.resolve
         )}/gatsby-node"`
     ),
+    ...gatsbyConfigsArray.map(
+      (path, i) =>
+        `import * as GatsbyConfig${i} from "${relativePluginPath(path)}"`
+    ),
     ...pluginsWithWorkers.map(
       (plugin, i) =>
         `import * as pluginGatsbyWorker${i} from "${relativePluginPath(
@@ -94,6 +103,9 @@ function render(
   const gatsbyNodeExports = uniqGatsbyNode.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
   )
+  const gatsbyConfigExports = gatsbyConfigsArray.map(
+    (path, i) => `"${path}": GatsbyConfig${i},`
+  )
   const gatsbyWorkerExports = pluginsWithWorkers.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyWorker${i},`
   )
@@ -102,6 +114,10 @@ ${imports.join(`\n`)}
 
 export const gatsbyNodes = {
 ${gatsbyNodeExports.join(`\n`)}
+}
+
+export const gatsbyConfigs = {
+${gatsbyConfigExports.join(`\n`)}
 }
 
 export const gatsbyWorkers = {
