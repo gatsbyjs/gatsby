@@ -306,9 +306,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
+      const splitPath = page.component.split(`?`)
 
       // normalize component path
-      page.component = slash(page.component)
+      page.component = slash(splitPath[0])
       // check if path uses correct casing - incorrect casing will
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
@@ -401,7 +402,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
-    component: normalizePath(page.component.split(`?`)[0]),
+    component: normalizePath(page.component),
     componentPath: normalizePath(page.component.split(`?`)[0]),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
