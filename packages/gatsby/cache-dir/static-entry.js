@@ -156,17 +156,6 @@ export default async function staticPage({
       }
     }
 
-    function nodeToReactElement(node) {
-      const { tagName, attributes } = node
-
-      const element = createElement(
-        tagName?.toLowerCase(),
-        attributes,
-        node.childNodes[0]?.textContent
-      )
-      return element
-    }
-
     const replaceBodyHTMLString = body => {
       bodyHtml = body
     }
@@ -250,10 +239,17 @@ export default async function staticPage({
       // add attribute to new head nodes
       const newHeadNodes = headNodes.map(node => {
         node.setAttribute(`data-gatsby-head`, true)
-        return nodeToReactElement(node)
+        const { tagName, attributes } = node
+
+        const element = createElement(
+          tagName?.toLowerCase(),
+          attributes,
+          node.childNodes[0]?.textContent
+        )
+
+        return element
       })
 
-      // Append new head nodes
       setHeadComponents(newHeadNodes)
     }
 
