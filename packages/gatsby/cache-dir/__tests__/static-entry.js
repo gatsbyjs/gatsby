@@ -197,60 +197,81 @@ describe(`develop-static-entry`, () => {
     global.HAS_REACT_18 = false
   })
 
-  test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
+  test(`SSR: onPreRenderHTML can be used to replace headComponents`, async () => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toMatchSnapshot()
   })
 
-  test(`SSR: onPreRenderHTML can be used to replace postBodyComponents`, done => {
+  test(`SSR: onPreRenderHTML can be used to replace postBodyComponents`, async () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Post`),
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toMatchSnapshot()
   })
 
-  test(`SSR: onPreRenderHTML can be used to replace preBodyComponents`, done => {
+  test(`SSR: onPreRenderHTML can be used to replace preBodyComponents`, async () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Pre`),
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toMatchSnapshot()
   })
 
-  test(`SSR: onPreRenderHTML adds metatag note for development environment`, done => {
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(
-        `<meta name="note" content="environment=development"/>`
-      )
-      done()
+  test(`SSR: onPreRenderHTML adds metatag note for development environment`, async () => {
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toContain(
+      `<meta name="note" content="environment=development"/>`
+    )
   })
 
-  test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
+  test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, async () => {
     global.plugins = [reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(
-        `<meta name="note" content="environment=development"/>`
-      )
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+
+    expect(html).toContain(
+      `<meta name="note" content="environment=development"/>`
+    )
   })
 
-  test(`SSR: replaceRenderer can be sync`, done => {
+  test(`SSR: replaceRenderer can be sync`, async () => {
     global.plugins = [
       {
         plugin: {
@@ -260,14 +281,17 @@ describe(`develop-static-entry`, () => {
       },
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(`i'm sync`)
-
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toContain(`i'm sync`)
   })
 
-  test(`SSR: replaceRenderer can be async`, done => {
+  test(`SSR: replaceRenderer can be async`, async () => {
     jest.useFakeTimers()
     global.plugins = [
       {
@@ -283,13 +307,16 @@ describe(`develop-static-entry`, () => {
       },
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(`i'm async`)
-
-      done()
+    const htmlPromise = ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
     jest.runAllTimers()
     jest.useRealTimers()
+    expect(await htmlPromise).toContain(`i'm async`)
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, () => {
