@@ -56,13 +56,6 @@ export async function compileGatsbyFiles(
   siteRoot: string,
   retry: number = 0
 ): Promise<void> {
-  if (retry > RETRY_COUNT) {
-    // TO-DO: structured log
-    reporter.panic(`too many retries`)
-  }
-
-  console.log(`compiling`, retry)
-
   try {
     const parcel = constructParcel(siteRoot)
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
@@ -86,6 +79,18 @@ export async function compileGatsbyFiles(
         delete require.cache[bundle.filePath]
         require(bundle.filePath)
       } catch (e) {
+        if (retry >= RETRY_COUNT) {
+          reporter.panic({
+            id: `11904`,
+            context: {
+              siteRoot,
+              retries: RETRY_COUNT,
+              compiledFileLocation: bundle.filePath,
+              sourceFileLocation: bundle.getMainEntry()?.filePath,
+            },
+          })
+        }
+
         reporter.verbose(
           `Failed to import compiled file "${bundle.filePath}", retrying (#${
             retry + 1
