@@ -68,7 +68,7 @@ class PageRenderer extends React.Component {
           }
           if (node.rawTagName === `script`)
             console.warn(
-              `It's not a good practice to add scripts here. Please use the <Script> component in your page template instead. see https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
+              `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
             )
         }
 
