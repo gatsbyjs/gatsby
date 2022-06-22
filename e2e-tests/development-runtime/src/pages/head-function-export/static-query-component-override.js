@@ -5,8 +5,8 @@ export default function HeadFunctionExportStaticQueryComponentOverride() {
   return (
     <>
       <h1>
-        I test basic usage for the head function export via a common component
-        with overrides
+        I test usage for the head function export via a common component with
+        overrides
       </h1>
       <p>Some other words</p>
     </>
