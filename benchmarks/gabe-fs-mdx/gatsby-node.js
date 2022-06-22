@@ -1,3 +1,5 @@
+const path = require("path")
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -34,7 +36,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: slug,
-      component: parent.absolutePath,
+      component: `${path.resolve(`./src/templates/blog-post.js`)}?__mdxPath=${
+        parent.absolutePath
+      }`,
       context: {
         id,
         slug,

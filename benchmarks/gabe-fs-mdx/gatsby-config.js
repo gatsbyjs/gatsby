@@ -14,11 +14,6 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-mdx`,
-      options: {
-        defaultLayouts: {
-          articles: path.resolve(`./src/templates/blog-post.js`),
-        },
-      },
     },
     !process.env.CI && `gatsby-plugin-webpack-bundle-analyser-v2`,
   ].filter(Boolean),

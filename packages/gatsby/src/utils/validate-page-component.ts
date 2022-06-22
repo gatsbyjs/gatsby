@@ -39,14 +39,15 @@ export function validatePageComponent(
   }
 
   if (isNotTestEnv) {
-    if (!fs.existsSync(component)) {
+    const cleanComponentPath = component.split(`?`)[0]
+    if (!fs.existsSync(cleanComponentPath)) {
       return {
         error: {
           id: `11325`,
           context: {
             pluginName,
             pageObject: page,
-            component: component,
+            component: cleanComponentPath,
           },
         },
       }
