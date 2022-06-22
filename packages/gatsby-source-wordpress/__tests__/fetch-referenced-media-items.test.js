@@ -132,7 +132,7 @@ const createApi = () => {
         createContentDigest,
         helpers: createApi(),
       })
-      expect(result).toHaveLength(2)
+      expect(result).toHaveLength(4)
     })
   })
 
