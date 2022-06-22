@@ -57,13 +57,13 @@ export async function compileGatsbyFiles(
   retry: number = 0
 ): Promise<void> {
   try {
-    const parcel = constructParcel(siteRoot)
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
     await ensureDir(distDir)
     await emptyDir(distDir)
 
     await exponentialBackoff(retry)
 
+    const parcel = constructParcel(siteRoot)
     const { bundleGraph } = await parcel.run()
 
     await exponentialBackoff(retry)
