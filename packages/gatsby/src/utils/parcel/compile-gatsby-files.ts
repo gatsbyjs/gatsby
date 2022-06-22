@@ -89,13 +89,17 @@ export async function compileGatsbyFiles(
               sourceFileLocation: bundle.getMainEntry()?.filePath,
             },
           })
+        } else if (retry > 0) {
+          // first retry is most flaky and it seems it always get in good state
+          // after that - most likely cache clearing is the trick that fixes the problem
+          reporter.verbose(
+            `Failed to import compiled file "${
+              bundle.filePath
+            }" after retry, attempting another retry (#${
+              retry + 1
+            } of ${RETRY_COUNT}) - "${e.message}"`
+          )
         }
-
-        reporter.verbose(
-          `Failed to import compiled file "${bundle.filePath}", retrying (#${
-            retry + 1
-          } of ${RETRY_COUNT}) - "${e.message}"`
-        )
 
         // sometimes parcel cache gets in weird state
         await remove(getCacheDir(siteRoot))
