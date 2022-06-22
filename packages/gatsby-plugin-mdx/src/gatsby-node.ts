@@ -76,6 +76,35 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
                 ),
                 options: mdxLoaderOptions,
               },
+              // {
+              //   loader: path.join(
+              //     `gatsby-plugin-mdx`,
+              //     `dist`,
+              //     `gatsby-layout-loader`
+              //   ),
+              //   options: layoutLoaderOptions,
+              // },
+            ],
+          },
+          {
+            test: /\.[tj]sx?\?__mdxPath=.+\.mdx?$/,
+            // test: /\.js?$/,
+            // test: [/\.mdx?$/, ],
+            // test: (t: string): unknown =>
+            //   console.log({
+            //     t,
+            //     match: t.match(/\.[tj]sx?\?__mdxPath=.+\.mdx?$/),
+            //   }),
+            use: [
+              loaders.js(),
+              // {
+              //   loader: path.join(
+              //     `gatsby-plugin-mdx`,
+              //     `dist`,
+              //     `gatsby-mdx-loader`
+              //   ),
+              //   options: mdxLoaderOptions,
+              // },
               {
                 loader: path.join(
                   `gatsby-plugin-mdx`,

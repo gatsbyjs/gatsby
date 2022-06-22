@@ -479,7 +479,9 @@ export default class FileParser {
   ): Promise<?Array<GraphQLDocumentInFile>> {
     let text
     try {
-      text = await fs.readFile(file, `utf8`)
+      const cleanFilePath = file.split(`?`)[0]
+      text = await fs.readFile(cleanFilePath, `utf8`)
+      // console.log({ cleanFilePath, text })
     } catch (err) {
       addError({
         id: `85913`,
