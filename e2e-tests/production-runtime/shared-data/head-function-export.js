@@ -12,7 +12,7 @@ const page = {
 
 const data = {
   static: {
-    base: `http://localhost:8000`,
+    base: `http://localhost:9000`,
     title: `Ella Fitzgerald's Page`,
     meta: `Ella Fitzgerald`,
     noscript: `You take romance - I will take Jell-O!`,
@@ -20,7 +20,7 @@ const data = {
     link: `/used-by-head-function-export-basic.css`,
   },
   queried: {
-    base: `http://localhost:8000`,
+    base: `http://localhost:9000`,
     title: `Nat King Cole's Page`,
     meta: `Nat King Cole`,
     noscript: `There is just one thing I cannot figure out. My income tax!`,
