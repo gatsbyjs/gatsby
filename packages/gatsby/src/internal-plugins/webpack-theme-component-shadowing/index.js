@@ -195,7 +195,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     )
 
     for (const theme of themesArray) {
-      const possibleComponentPath = path.join(theme, component)
+      const possibleComponentPath = path.join(theme, component.split(`?`)[0])
       debug(`possibleComponentPath`, possibleComponentPath)
 
       let dir
