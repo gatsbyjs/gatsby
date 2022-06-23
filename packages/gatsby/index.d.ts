@@ -151,6 +151,11 @@ export type PageProps<
 }
 
 /**
+ * Props object passed into the [head](https://www.gatsbyjs.com/docs/reference/seo/head/) function.
+ */
+export type HeadProps = Omit<PageProps, "navigate">
+
+/**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
 export type GetServerDataProps = {
