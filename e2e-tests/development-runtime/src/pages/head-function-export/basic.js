@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import { data } from "../../../shared-data/head-function-export"
 
 export default function HeadFunctionExportBasic() {
   return (
@@ -14,26 +15,22 @@ export default function HeadFunctionExportBasic() {
 }
 
 export function head() {
+  const { base, title, meta, noscript, style, link } = data.static
+
   return (
     <>
-      <base data-testid="base" href="http://localhost:8000" />
-      <title data-testid="title">Ella Fitzgerald's Page</title>
-      <meta data-testid="meta" name="author" content="Ella Fitzgerald" />
-      <noscript data-testid="noscript">
-        You take romance - I'll take Jell-O!
-      </noscript>
+      <base data-testid="base" href={base} />
+      <title data-testid="title">{title}</title>
+      <meta data-testid="meta" name="author" content={meta} />
+      <noscript data-testid="noscript">{noscript}</noscript>
       <style data-testid="style">
         {`
           h1 {
-            color: rebeccapurple;
+            color: ${style};
           }
         `}
       </style>
-      <link
-        data-testid="link"
-        href="/used-by-head-function-export-basic.css"
-        rel="stylesheet"
-      />
+      <link data-testid="link" href={link} rel="stylesheet" />
     </>
   )
 }

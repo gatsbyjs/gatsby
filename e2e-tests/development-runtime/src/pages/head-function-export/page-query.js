@@ -15,23 +15,23 @@ export default function HeadFunctionExportPageQuery() {
 }
 
 export function head({ data }) {
-  const { base, title, author, noscript, color, css } =
+  const { base, title, meta, noscript, style, link } =
     data?.site?.siteMetadata?.headFunctionExport || {}
 
   return (
     <>
       <base data-testid="base" href={base} />
       <title data-testid="title">{title}</title>
-      <meta data-testid="meta" name="author" content={author} />
+      <meta data-testid="meta" name="author" content={meta} />
       <noscript data-testid="noscript">{noscript}</noscript>
       <style data-testid="style">
         {`
           h1 {
-            color: ${color};
+            color: ${style};
           }
         `}
       </style>
-      <link data-testid="link" href={css} rel="stylesheet" />
+      <link data-testid="link" href={link} rel="stylesheet" />
     </>
   )
 }
@@ -43,10 +43,10 @@ export const pageQuery = graphql`
         headFunctionExport {
           base
           title
-          author
+          meta
           noscript
-          color
-          css
+          style
+          link
         }
       }
     }
