@@ -520,12 +520,12 @@ export default class FileParser {
 
     try {
       if (!cache[hash]) {
-        const ast = await parseToAst(cleanFilepath, text, {
+        const ast = await parseToAst(file, text, {
           parentSpan: this.parentSpan,
           addError,
         })
         cache[hash] = {
-          astDefinitions: await findGraphQLTags(cleanFilepath, ast, {
+          astDefinitions: await findGraphQLTags(file, ast, {
             parentSpan: this.parentSpan,
             addError,
           }),
