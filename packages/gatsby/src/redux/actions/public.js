@@ -365,8 +365,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = `${page.component}?${splitPath[1]}`
       }
 
-      console.log({ comp: page.component, splitPath })
-
       pageComponentCache.set(originalPageComponent, page.component)
     }
   }
@@ -403,7 +401,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     path: page.path,
     matchPath: page.matchPath,
     component: normalizePath(page.component),
-    componentPath: normalizePath(page.component.split(`?`)[0]),
+    componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
