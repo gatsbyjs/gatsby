@@ -34,14 +34,17 @@ const resolveTheme = async (
       pathToLocalTheme = path.join(rootDir, `plugins`, themeName)
       // is a local plugin OR it doesn't exist
       try {
-        const { resolve } = resolvePlugin(themeName, rootDir)
-        themeDir = resolve
+        const maybeResolved = resolvePlugin(themeName, rootDir)
+        if (!maybeResolved && process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+          return null
+        }
+        themeDir = maybeResolved.resolve
       } catch (localErr) {
         reporter.panic(`Failed to resolve ${themeName}`, localErr)
       }
     }
 
-    if (!themeDir) {
+    if (!themeDir && !process.env.GATSBY_IS_GRAPHQL_ENGINE) {
       const nodeResolutionPaths = module.paths.map(p => path.join(p, themeName))
       reporter.panic({
         id: `10226`,
@@ -53,6 +56,10 @@ const resolveTheme = async (
         },
       })
     }
+  }
+
+  if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+    return null
   }
 
   const { configModule, configFilePath } = await getConfigFile(
@@ -96,6 +103,11 @@ const processTheme = (
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
       const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
+
+      if (!themeObj) {
+        return []
+      }
+
       return processTheme(themeObj, { rootDir: themeDir })
     }).then(arr =>
       arr.concat([
@@ -118,6 +130,11 @@ module.exports = async (config, { configFilePath, rootDir }) => {
         true,
         rootDir
       )
+
+      if (!themeObj) {
+        return []
+      }
+
       return processTheme(themeObj, { rootDir })
     }
   ).then(arr => _.flattenDeep(arr))

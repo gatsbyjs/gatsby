@@ -53,6 +53,7 @@ export function loadInternalPlugins(
   if (config.plugins) {
     config.plugins.forEach(plugin => {
       const processedPlugin = processPlugin(plugin, rootDir)
+      console.log({ plugin, processedPlugin, rootDir })
       if (processedPlugin) {
         plugins.push(processedPlugin)
         configuredPluginNames.add(processedPlugin.name)
@@ -182,6 +183,8 @@ export function loadInternalPlugins(
   if (processedPartytownPlugin) {
     plugins.push(processedPartytownPlugin)
   }
+
+  console.log({ plugins })
 
   return plugins
 }

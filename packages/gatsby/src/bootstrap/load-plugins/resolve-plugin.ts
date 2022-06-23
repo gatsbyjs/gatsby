@@ -73,6 +73,8 @@ export function resolvePlugin(
       )
     )
 
+    console.log({ resolvedPath })
+
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
     )
@@ -86,6 +88,7 @@ export function resolvePlugin(
     }
   } catch (err) {
     if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+      console.log(`getting called with`, plugin)
       return null
     }
 
