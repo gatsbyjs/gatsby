@@ -1,3 +1,7 @@
+const {
+  data: headFunctionExportData,
+} = require(`./shared-data/head-function-export.js`)
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
@@ -8,6 +12,8 @@ module.exports = {
     social: {
       twitter: `kylemathews`,
     },
+    // Separate to avoid needing to change other tests that rely on site metadata
+    headFunctionExport: headFunctionExportData.queried,
   },
   graphqlTypegen: true,
   flags: {
