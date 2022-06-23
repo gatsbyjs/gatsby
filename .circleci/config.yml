@@ -20,7 +20,7 @@ aliases:
 
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node14.15.0-chrome86-ff82
+      - image: cypress/browsers:node14.15.0-chrome96-ff94
     environment:
       <<: *e2e-executor-env
 
@@ -392,7 +392,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
-          react_version: "^18.0.0"
+          react_version: "^18.2.0"
 
   e2e_tests_production_runtime:
     <<: *e2e_tests_production_runtime_alias
@@ -403,7 +403,7 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=ec36ff6b-3db9-48a9-8f7b-2faf301ab800 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=2a4f4f31-0dfb-4a56-80e0-9ed42a1131a4 yarn test:offline
-          react_version: "^18.0.0"
+          react_version: "^18.2.0"
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -436,17 +436,6 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/mdx-less-babel
           test_command: CYPRESS_PROJECT_ID=xo139a CYPRESS_RECORD_KEY=74d485b5-3ba6-40e1-a7d4-e63c0a8d2a4d yarn test
-
-  e2e_tests_gatsby-static-image:
-    <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: zstawi
-      CYPRESS_RECORD_KEY: 389326a6-c0d2-4215-bc5e-3be29483ed13
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-static-image
-          test_command: yarn test
 
   e2e_tests_visual-regression:
     <<: *e2e-executor
@@ -525,7 +514,6 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
-      - run: yarn format:other
 
   windows_unit_tests:
     parallelism: 4
@@ -643,8 +631,6 @@ workflows:
       - e2e_tests_pnp:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
-          <<: *e2e-test-workflow
-      - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
       - e2e_tests_visual-regression:
           <<: *e2e-test-workflow
