@@ -1,11 +1,13 @@
 import * as fs from "fs-extra"
 import * as t from "@babel/types"
+import * as path from "path"
 import traverse from "@babel/traverse"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
 import report from "gatsby-cli/lib/reporter"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testRequireError } from "../utils/test-require-error"
 import { resolveModule } from "../utils/module-resolver"
+import { requireGatsbyPlugin } from "../utils/require-gatsby-plugin"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -194,7 +196,29 @@ export const resolveModuleExports = (
     let absPath: string | undefined
     try {
       absPath = require.resolve(modulePath)
-      return Object.keys(require(modulePath)).filter(
+      const moduleName = path.parse(modulePath).name
+      const pluginResolve = path.dirname(modulePath)
+      const pluginName = path.basename(pluginResolve)
+
+      const cachedPlugin = requireGatsbyPlugin(
+        {
+          name: pluginName,
+          resolve: pluginResolve,
+        },
+        moduleName
+      )
+
+      let module
+
+      if (cachedPlugin) {
+        module = cachedPlugin
+      } else if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+        return []
+      } else {
+        module = require(modulePath)
+      }
+
+      return Object.keys(module).filter(
         exportName => exportName !== `__esModule`
       )
     } catch (e) {
