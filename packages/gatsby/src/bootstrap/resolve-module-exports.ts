@@ -195,7 +195,6 @@ export const resolveModuleExports = (
   if (mode === `require`) {
     let absPath: string | undefined
     try {
-      absPath = require.resolve(modulePath)
       const moduleName = path.parse(modulePath).name
       const pluginResolve = path.dirname(modulePath)
       const pluginName = path.basename(pluginResolve)
@@ -215,6 +214,7 @@ export const resolveModuleExports = (
       } else if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
         return []
       } else {
+        absPath = require.resolve(modulePath)
         module = require(modulePath)
       }
 

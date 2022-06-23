@@ -76,6 +76,7 @@ export function loadInternalPlugins(
       },
       rootDir
     )
+    // TODO(v5): Only do this for plugins that have a gatsby-config (themes)
     if (processedPlugin) {
       plugins.push(processedPlugin)
     }

@@ -20,6 +20,11 @@ export function requireGatsbyPlugin(
   const key = `${plugin.name}/${module}`
 
   let pluginModule = pluginModuleCache.get(key)
+
+  if (!pluginModule && process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+    return null
+  }
+
   if (!pluginModule) {
     pluginModule = require(module === `gatsby-node` &&
       plugin.resolvedCompiledGatsbyNode

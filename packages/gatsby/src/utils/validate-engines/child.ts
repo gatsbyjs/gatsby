@@ -19,7 +19,7 @@ class EngineValidationError extends Error {
     parent: mod
   }) {
     super(
-      `Generated engines use disallowed import "${request}". Only allowed imports are to Node.js builtin modules or engines internals.`
+      `Generated engines use disallowed import "${request}". Only allowed imports are Node.js built-in modules or engines internals.`
     )
     this.request = request
     this.relativeToRoot = relativeToRoot
