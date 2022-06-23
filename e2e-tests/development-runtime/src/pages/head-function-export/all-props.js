@@ -1,37 +1,41 @@
 import * as React from "react"
 
-export default function HeadFunctionExportAllProps() {
+export default function HeadFunctionExportAllProps(props) {
   return (
     <>
       <h1>
         I test usage for the head function export to make sure all props are
         received
       </h1>
+      <pre>{JSON.stringify(props, null, 2)}</pre>
     </>
   )
 }
 
-export function getServerData() {
-  return {
-    hello: `world`,
-  }
-}
-
 export function head(props) {
-  const { location, pageResources, params, path, uri } = props || {}
+  const { location, pageContext, pageResources, params, path, uri } =
+    props || {}
 
   return (
     <>
-      <meta name="location.origin" content={location.origin} />
-      <meta name="pageContext" content="TODO" />
       <meta
+        data-testid="location.origin"
+        name="location.origin"
+        content={location.origin}
+      />
+      <meta
+        data-testid="pageContext"
+        name="pageContext"
+        content={pageContext}
+      />
+      <meta
+        data-testid="pageResources.page.componentChunkName"
         name="pageResources.page.componentChunkName"
         content={pageResources.page.componentChunkName}
       />
-      <meta name="params" content={params?.hello} />
-      <meta name="path" content={path} />
-      <meta name="getServerData" content={getServerData?.hello} />
-      <meta name="uri" content={uri} />
+      <meta data-testid="params" name="params" content={params} />
+      <meta data-testid="path" name="path" content={path} />
+      <meta data-testid="uri" name="uri" content={uri} />
     </>
   )
 }

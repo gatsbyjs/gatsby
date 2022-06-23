@@ -13,8 +13,8 @@ export default function HeadFunctionExportWarnings() {
 export function head() {
   return (
     <>
-      <h1>hello</h1>
-      <script>{`console.log('hello')`}</script>
+      <h1 data-testid="h1">hello</h1>
+      <script data-testid="script">{`console.log('hello')`}</script>
     </>
   )
 }

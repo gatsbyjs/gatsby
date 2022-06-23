@@ -1,11 +1,15 @@
 import * as React from "react"
 import { graphql } from "gatsby"
+import { Link } from "gatsby"
 
 export default function HeadFunctionExportPageQuery() {
   return (
     <>
       <h1>I test usage for the head function export with a page query</h1>
       <p>Some other words</p>
+      <Link data-testid="gatsby-link" to="/head-function-export/basic">
+        Navigate to basic via Gatsby Link
+      </Link>
     </>
   )
 }
@@ -16,18 +20,18 @@ export function head({ data }) {
 
   return (
     <>
-      <base href={base} />
-      <title>{title}</title>
-      <meta name="author" content={author} />
-      <noscript>{noscript}</noscript>
-      <style>
+      <base data-testid="base" href={base} />
+      <title data-testid="title">{title}</title>
+      <meta data-testid="meta" name="author" content={author} />
+      <noscript data-testid="noscript">{noscript}</noscript>
+      <style data-testid="style">
         {`
           h1 {
             color: ${color};
           }
         `}
       </style>
-      <link href={css} rel="stylesheet" />
+      <link data-testid="link" href={css} rel="stylesheet" />
     </>
   )
 }

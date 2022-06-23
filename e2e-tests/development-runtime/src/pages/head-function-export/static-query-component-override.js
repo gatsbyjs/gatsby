@@ -16,7 +16,11 @@ export default function HeadFunctionExportStaticQueryComponentOverride() {
 export function head() {
   return (
     <HeadComponent title="Override title">
-      <meta name="description" content="An extra description" />
+      <meta
+        data-testid="description"
+        name="description"
+        content="An extra description"
+      />
     </HeadComponent>
   )
 }

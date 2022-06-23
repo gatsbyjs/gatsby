@@ -15,7 +15,7 @@ module.exports = {
       author: `Nat King Cole`,
       noscript: `There's just one thing I can't figure out. My income tax!`,
       color: `blue`,
-      css: `/used-by-head-function-export-with-query.css`,
+      css: `/used-by-head-function-export-query.css`,
     },
   },
   graphqlTypegen: true,
