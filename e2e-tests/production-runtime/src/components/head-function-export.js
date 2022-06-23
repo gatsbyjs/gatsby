@@ -2,7 +2,7 @@ import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { data } from "../../shared-data/head-function-export.js"
 
-function HeadComponent({ title: titleOverride, children }) {
+function HeadComponent({ children }) {
   const data = useStaticQuery(graphql`
     query SiteMetaDataStaticQuery {
       site {
@@ -26,7 +26,7 @@ function HeadComponent({ title: titleOverride, children }) {
   return (
     <>
       <base data-testid="base" href={base} />
-      <title data-testid="title">{titleOverride || title}</title>
+      <title data-testid="title">{title}</title>
       <meta data-testid="meta" name="author" content={meta} />
       <noscript data-testid="noscript">{noscript}</noscript>
       <style data-testid="style">

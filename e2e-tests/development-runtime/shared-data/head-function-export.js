@@ -5,7 +5,6 @@ const page = {
   pageQuery: `${path}/page-query/`,
   reExport: `${path}/re-exported-function/`,
   staticQuery: `${path}/static-query-component/`,
-  staticQueryOverride: `${path}/static-query-component-override/`,
   warnings: `${path}/warnings/`,
   allProps: `${path}/all-props/`,
 }
