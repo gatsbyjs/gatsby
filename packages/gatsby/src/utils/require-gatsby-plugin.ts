@@ -1,9 +1,9 @@
-const pluginModuleCache = new Map<string, any>()
+const pluginModuleCache = new Map<string, unknown>()
 
 export function setGatsbyPluginCache(
   plugin: { name: string; resolve: string },
   module: string,
-  moduleObject: any
+  moduleObject: unknown
 ): void {
   const key = `${plugin.name}/${module}`
   pluginModuleCache.set(key, moduleObject)
@@ -16,7 +16,7 @@ export function requireGatsbyPlugin(
     resolvedCompiledGatsbyNode?: string
   },
   module: string
-): any {
+): unknown {
   const key = `${plugin.name}/${module}`
 
   let pluginModule = pluginModuleCache.get(key)
