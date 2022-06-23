@@ -10,6 +10,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { isString } from "lodash"
 import { checkLocalPlugin } from "./utils/check-local-plugin"
 import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files"
+import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
 
 /**
  * @param plugin
@@ -56,6 +57,24 @@ export function resolvePlugin(
    * which should be located in node_modules.
    */
   try {
+    if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+      const gatsbyNodeModule = requireGatsbyPlugin(
+        { name: pluginName, resolve: `` },
+        `gatsby-node`
+      )
+
+      if (gatsbyNodeModule) {
+        return {
+          resolve: pluginName,
+          name: pluginName,
+          id: createPluginId(pluginName),
+          version: ``,
+        }
+      }
+
+      return null
+    }
+
     const requireSource =
       rootDir !== null
         ? createRequireFromPath(`${rootDir}/:internal:`)
@@ -73,8 +92,6 @@ export function resolvePlugin(
       )
     )
 
-    console.log({ resolvedPath })
-
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
     )
@@ -88,7 +105,6 @@ export function resolvePlugin(
     }
   } catch (err) {
     if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
-      console.log(`getting called with`, plugin)
       return null
     }
 

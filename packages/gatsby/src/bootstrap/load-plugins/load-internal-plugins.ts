@@ -53,7 +53,6 @@ export function loadInternalPlugins(
   if (config.plugins) {
     config.plugins.forEach(plugin => {
       const processedPlugin = processPlugin(plugin, rootDir)
-      console.log({ plugin, processedPlugin, rootDir })
       if (processedPlugin) {
         plugins.push(processedPlugin)
         configuredPluginNames.add(processedPlugin.name)
@@ -69,6 +68,7 @@ export function loadInternalPlugins(
   plugins.forEach(plugin => {
     const processedPlugin = processPlugin(
       {
+        // TODO: require.resolve won't work
         resolve: require.resolve(`gatsby-plugin-page-creator`),
         options: {
           path: slash(path.join(plugin.resolve, `src/pages`)),
@@ -163,6 +163,7 @@ export function loadInternalPlugins(
 
   const processedPageCreatorPlugin = processPlugin(
     {
+      // TODO: require.resolve won't work
       resolve: require.resolve(`gatsby-plugin-page-creator`),
       options: pageCreatorOptions,
     },
@@ -183,8 +184,6 @@ export function loadInternalPlugins(
   if (processedPartytownPlugin) {
     plugins.push(processedPartytownPlugin)
   }
-
-  console.log({ plugins })
 
   return plugins
 }

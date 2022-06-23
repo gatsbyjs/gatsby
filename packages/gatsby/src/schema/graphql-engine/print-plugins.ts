@@ -63,7 +63,6 @@ function render(
   const gatsbyConfigsArray = Array.from(gatsbyConfigs.keys())
 
   const sanitizedUsedPlugins = usedPlugins.map(plugin => {
-    // TODO: We don't support functions in pluginOptions here
     return {
       ...plugin,
       resolve: ``,
