@@ -4,7 +4,6 @@ import { apiRunner } from "./api-runner-browser"
 import { grabMatchParams } from "./find-path"
 import { renderToString } from "react-dom/server"
 import { StaticQueryContext } from "gatsby"
-import { parse } from "node-html-parser"
 
 import { VALID_NODE_NAMES } from "./head/constants"
 
@@ -45,49 +44,44 @@ class PageRenderer extends React.Component {
 
       // extract head nodes from string
       const rawString = renderToString(headElement)
-      const headNodes = parse(rawString).childNodes
+      const parser = new DOMParser()
+      const parsed = parser.parseFromString(rawString, `text/html`)
+
+      // If DOMParser encounters invalid head elements, it put all the elements in the body
+      const headNodes = [...parsed.head.childNodes, ...parsed.body.childNodes]
 
       // Remove previous head nodes
       const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
       prevHeadNodes.forEach(e => e.remove())
 
       // add attribute to new head nodes while showing warning if it's not a valid node
-      const newHeadNodes = headNodes.map(node => {
-        if (process.env.NODE_ENV !== `production`) {
-          if (
-            !VALID_NODE_NAMES.includes(node.rawTagName) &&
-            node.rawTagName !== `script` // exempt scripts from this check since we have special warnings for them
-          ) {
-            console.warn(
-              `<${
-                node.rawTagName
-              }> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
-                `, `
-              )}`
-            )
+      let validHeadNodes = []
+
+      for (const node of headNodes) {
+        const nodeName = node.nodeName.toLowerCase()
+
+        if (!VALID_NODE_NAMES.includes(nodeName)) {
+          if (process.env.NODE_ENV !== `production`) {
+            if (nodeName !== `script`) {
+              console.warn(
+                `<${nodeName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
+                  `, `
+                )}`
+              )
+            } else {
+              console.warn(
+                `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
+              )
+            }
           }
-          if (node.rawTagName === `script`)
-            console.warn(
-              `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
-            )
+        } else {
+          node.setAttribute(`data-gatsby-head`, true)
+          validHeadNodes = [...validHeadNodes, node]
         }
+      }
 
-        // create element since node isn't a real element
-        const element = document.createElement(node.rawTagName)
-
-        element.textContent = node.textContent
-        element.setAttribute(`data-gatsby-head`, true)
-
-        Object.entries(node.attributes).forEach(([key, value]) => {
-          element.setAttribute(key, value)
-        })
-
-        return element
-      })
-
-      document.head.append(...newHeadNodes)
+      document.head.append(...validHeadNodes)
     }
-
     const wrappedPage = apiRunner(
       `wrapPageElement`,
       { element: pageElement, props },
