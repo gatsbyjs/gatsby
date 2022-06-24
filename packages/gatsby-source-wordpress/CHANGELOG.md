@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.17.0/packages/gatsby-source-wordpress) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) ([7a5b5c1](https://github.com/gatsbyjs/gatsby/commit/7a5b5c124cea2c448f110c487e81194344dedb7d))
+
+#### Refactoring
+
+- move option check within relevant function to ensure enforcement [#35827](https://github.com/gatsbyjs/gatsby/issues/35827) ([b653c7b](https://github.com/gatsbyjs/gatsby/commit/b653c7b32e8b0e82f581f1a4586a819999117734))
+
+### [6.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.16.1/packages/gatsby-source-wordpress) (2022-06-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.16.0/packages/gatsby-source-wordpress) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

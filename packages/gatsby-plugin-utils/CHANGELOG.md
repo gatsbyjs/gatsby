@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.11.0/packages/gatsby-plugin-utils) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) ([7a5b5c1](https://github.com/gatsbyjs/gatsby/commit/7a5b5c124cea2c448f110c487e81194344dedb7d))
+- add `contentDigest` to image cdn args [#35816](https://github.com/gatsbyjs/gatsby/issues/35816) ([8257bca](https://github.com/gatsbyjs/gatsby/commit/8257bca2a1d352fef7d4a261926e7d455154bf2e))
+
 ## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.10.0/packages/gatsby-plugin-utils) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

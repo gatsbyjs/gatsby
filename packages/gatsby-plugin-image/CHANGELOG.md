@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.17.0/packages/gatsby-plugin-image) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Bug Fixes
+
+- Handle immediate unmount [#35878](https://github.com/gatsbyjs/gatsby/issues/35878) ([fbdec7e](https://github.com/gatsbyjs/gatsby/commit/fbdec7e29b14528972bb6882c4f012aac3953b76))
+
+### [2.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.16.1/packages/gatsby-plugin-image) (2022-06-08)
+
+#### Bug Fixes
+
+- Handle immediate unmount [#35878](https://github.com/gatsbyjs/gatsby/issues/35878) [#35883](https://github.com/gatsbyjs/gatsby/issues/35883) ([e2cf510](https://github.com/gatsbyjs/gatsby/commit/e2cf51067122885126cabcc55816e1bcb6111df5))
+
 ## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.16.0/packages/gatsby-plugin-image) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

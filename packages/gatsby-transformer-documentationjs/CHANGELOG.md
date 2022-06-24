@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.17.0/packages/gatsby-transformer-documentationjs) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Bug Fixes
+
+- Support jsx [#35899](https://github.com/gatsbyjs/gatsby/issues/35899) ([a53dfec](https://github.com/gatsbyjs/gatsby/commit/a53dfec2422aa73ea8815b3fe2ccd6208c316293))
+
 ## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-documentationjs@6.16.0/packages/gatsby-transformer-documentationjs) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.18.0/packages/gatsby-source-drupal) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Bug Fixes
+
+- drupal image cdn probe 404 + imageCDN option [#35855](https://github.com/gatsbyjs/gatsby/issues/35855) ([7511ee7](https://github.com/gatsbyjs/gatsby/commit/7511ee7407e127a135375434062b52427440ac65))
+
+#### Chores
+
+- Document fix for 406 fix [#35927](https://github.com/gatsbyjs/gatsby/issues/35927) ([76ed6a8](https://github.com/gatsbyjs/gatsby/commit/76ed6a8e208114c6c453b9dcca5eb60979275a02))
+
+### [5.17.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.17.1/packages/gatsby-source-drupal) (2022-06-08)
+
+#### Bug Fixes
+
+- drupal image cdn probe 404 + imageCDN option [#35855](https://github.com/gatsbyjs/gatsby/issues/35855) [#35882](https://github.com/gatsbyjs/gatsby/issues/35882) ([7ceb16d](https://github.com/gatsbyjs/gatsby/commit/7ceb16dcf42e62906f68ae6e9d02f2fd60ddb9dc))
+
 ## [5.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.17.0/packages/gatsby-source-drupal) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

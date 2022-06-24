@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.15.0/packages/gatsby-source-contentful) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Chores
+
+- add peer deps to gatsby-source-contentful docs [#35854](https://github.com/gatsbyjs/gatsby/issues/35854) ([a8405cb](https://github.com/gatsbyjs/gatsby/commit/a8405cb279f3dc07029df6d89ae50db3ccbfc388))
+
 ## [7.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.14.0/packages/gatsby-source-contentful) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
