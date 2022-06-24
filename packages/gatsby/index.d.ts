@@ -795,7 +795,7 @@ export interface GatsbySSR<
 }
 
 export interface PluginOptions {
-  plugins: unknown[]
+  // plugins: unknown[]
   [key: string]: unknown
 }
 
