@@ -54,16 +54,25 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
       return urling(`http://localhost:${port}`)
     } else if (gatsbyCommandName === `build`) {
       // for gatsby build wait for the process to exit
-      return new Promise(resolve =>
-        gatsbyProcess.on(`exit`, () => {
-          gatsbyProcess.kill()
-          resolve()
-        })
-      )
+      return gatsbyProcess
     }
   })
 
-  afterAll(() => gatsbyProcess.kill())
+  afterAll(() => {
+    return new Promise(resolve => {
+      if (!gatsbyProcess || gatsbyProcess.killed) {
+        return resolve()
+      }
+
+      gatsbyProcess.on(`exit`, () => {
+        setImmediate(() => {
+          resolve()
+        })
+      })
+
+      gatsbyProcess.kill()
+    })
+  })
 
   it(`Creates an accurate node manifest when using the ownerNodeId argument in createPage`, async () => {
     const manifestFileContents = await getManifestContents(1)
@@ -166,16 +175,25 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
       await urling(`http://localhost:${port}`)
     } else if (gatsbyCommandName === `build`) {
       // for gatsby build wait for the process to exit
-      return new Promise(resolve => {
-        gatsbyProcess.on(`exit`, () => {
-          gatsbyProcess.kill()
-          resolve()
-        })
-      })
+      return gatsbyProcess
     }
   })
 
-  afterAll(() => gatsbyProcess.kill())
+  afterAll(() => {
+    return new Promise(resolve => {
+      if (!gatsbyProcess || gatsbyProcess.killed) {
+        return resolve()
+      }
+
+      gatsbyProcess.on(`exit`, () => {
+        setImmediate(() => {
+          resolve()
+        })
+      })
+
+      gatsbyProcess.kill()
+    })
+  })
 
   it(`Limits the number of node manifest files written to disk to 500`, async () => {
     const nodeManifestFiles = fs.readdirSync(manifestDir)
