@@ -46,9 +46,21 @@ export function generateComponentChunkName(componentPath: string): string {
   } else {
     const { program } = store.getState()
     const directory = program?.directory || `/`
-    const name = pathRelative(directory, componentPath)
+    let name = pathRelative(directory, componentPath)
 
-    const chunkName = `component---${replaceUnifiedRoutesKeys(
+    const prefix = `component---`
+    const maxLength = 255 - directory.length - prefix.length
+
+    // Shorten path name to not exceed max length of 255 characters
+    if (name.length > maxLength) {
+      const hash = require(`crypto`)
+        .createHash(`sha1`)
+        .update(name)
+        .digest(`base64`)
+      name = `${name.substring(0, maxLength - 41)}-${hash}`
+    }
+
+    const chunkName = `${prefix}${replaceUnifiedRoutesKeys(
       kebabCase(name),
       name
     )}`
