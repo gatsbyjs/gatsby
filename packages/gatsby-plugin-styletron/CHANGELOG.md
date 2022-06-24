@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.17.0/packages/gatsby-plugin-styletron) (2022-06-21)
-
-[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
 ## [7.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.16.0/packages/gatsby-plugin-styletron) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

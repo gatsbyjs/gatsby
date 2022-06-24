@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@4.17.0/packages/gatsby-source-npm-package-search) (2022-06-21)
-
-[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
-
-#### Bug Fixes
-
-- update dependency got to ^11.8.5 for gatsby-source-npm-package-search [#35802](https://github.com/gatsbyjs/gatsby/issues/35802) ([be21c15](https://github.com/gatsbyjs/gatsby/commit/be21c1580a133f71ea80df6821142df282679c1e))
-
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@4.16.0/packages/gatsby-source-npm-package-search) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
