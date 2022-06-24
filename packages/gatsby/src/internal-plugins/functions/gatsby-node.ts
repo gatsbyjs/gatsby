@@ -331,7 +331,7 @@ const createWebpackConfig = async ({
         checkResource(resource): boolean {
           if (resource === `lmdb`) {
             reporter.warn(
-              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.`
+              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.\nIf you are importing utils from \`gatsby-core-utils\`, make sure to import from a specific module (for example \`gatsby-core-utils/create-content-digest\`).`
             )
             return true
           }
