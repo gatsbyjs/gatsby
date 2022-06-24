@@ -61,7 +61,11 @@
     "rehype-infer-description-meta": "^1.0.1",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.0",
-    "vfile": "^5.3.2"
+    "vfile": "^5.3.2",
+    "acorn": "^8.7.1",
+    "acorn-jsx": "^5.3.2",
+    "astring": "^1.8.3",
+    "estree-util-build-jsx": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
@@ -73,6 +77,7 @@
   },
   "peerDependencies": {
     "@mdx-js/react": "^2.0.0",
+    "@types/estree": "^0.0.50",
     "gatsby": "^4.0.0-next",
     "gatsby-source-filesystem": "^4.0.0-next",
     "loader-utils": "^3.2.0",

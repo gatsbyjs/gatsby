@@ -4,6 +4,7 @@ import type { NodePluginArgs } from "gatsby"
 import type { LoaderDefinition } from "webpack"
 import type { NodeMap } from "./types"
 
+import grayMatter from "gray-matter"
 import { getOptions } from "loader-utils"
 
 import { compileMDX } from "./compile-mdx"
@@ -28,9 +29,12 @@ const gatsbyMDXLoader: LoaderDefinition = async function (source) {
 
   const { mdxNode, fileNode } = res
 
+  // Remove frontmatter
+  const { content } = grayMatter(source)
+
   const compileRes = await compileMDX(
     // We want to work with the transformed source from our layout plugin
-    { ...mdxNode, body: source },
+    { ...mdxNode, body: content },
     fileNode,
     options,
     reporter
