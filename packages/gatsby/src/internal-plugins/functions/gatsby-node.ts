@@ -325,7 +325,20 @@ const createWebpackConfig = async ({
         },
       ],
     },
-    plugins: [new webpack.DefinePlugin(processEnvVars)],
+    plugins: [
+      new webpack.DefinePlugin(processEnvVars),
+      new webpack.IgnorePlugin({
+        checkResource(resource): boolean {
+          if (resource === `lmdb`) {
+            reporter.warn(
+              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.`
+            )
+            return true
+          }
+          return false
+        },
+      }),
+    ],
   }
 }
 
