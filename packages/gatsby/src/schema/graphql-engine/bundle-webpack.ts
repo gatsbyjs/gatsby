@@ -43,6 +43,13 @@ export async function createGraphqlEngineBundle(
     require.resolve(`gatsby-plugin-typescript`)
   )
 
+  // load env vars into DefinePlugin for engines
+  const varsFromProcessEnv = Object.keys(process.env).reduce((acc, key) => {
+    // shouldn't ever hit the undefined case, but satisfy typescript
+    acc[key] = process.env[key]?.toString() || `undefined`
+    return acc
+  }, {} as Record<string, string>)
+
   const compiler = webpack({
     name: `Query Engine`,
     // mode: `production`,
@@ -162,6 +169,7 @@ export async function createGraphqlEngineBundle(
     },
     plugins: [
       new webpack.DefinePlugin({
+        GATSBY_ENGINE_ENV_VARS: JSON.stringify(varsFromProcessEnv),
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,

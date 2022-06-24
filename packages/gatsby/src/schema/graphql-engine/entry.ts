@@ -89,6 +89,12 @@ export class GraphQLEngine {
         )
       }
 
+      // @ts-ignore GATSBY_ENGINE_ENV_VARS is being "inlined" by bundler
+      for (const [key, value] of Object.entries(GATSBY_ENGINE_ENV_VARS)) {
+        // @ts-ignore
+        process.env[key] = value
+      }
+
       for (const gatsbyConfig of Object.keys(gatsbyConfigs)) {
         setGatsbyConfigCache(gatsbyConfig, gatsbyConfigs[gatsbyConfig])
       }
