@@ -20,6 +20,7 @@ const { grabMatchParams } = require(`./find-path`)
 const { parse } = require(`node-html-parser`)
 
 const chunkMapping = require(`../public/chunk-map.json`)
+const { VALID_NODE_NAMES } = require(`./head/constants`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
@@ -236,21 +237,36 @@ export default async function staticPage({
       const rawString = renderToString(headElement)
       const headNodes = [...parse(rawString).childNodes]
 
-      // add attribute to new head nodes
-      const newHeadNodes = headNodes.map(node => {
-        node.setAttribute(`data-gatsby-head`, true)
-        const { tagName, attributes } = node
+      let validHeadNodes = []
 
-        const element = createElement(
-          tagName?.toLowerCase(),
-          attributes,
-          node.childNodes[0]?.textContent
-        )
+      for (const node of headNodes) {
+        const { rawTagName, attributes } = node
 
-        return element
-      })
+        if (!VALID_NODE_NAMES.includes(rawTagName)) {
+          if (process.env.NODE_ENV === `production`) {
+            const warning =
+              rawTagName !== `script`
+                ? `<${rawTagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
+                    `, `
+                  )}`
+                : `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
 
-      setHeadComponents(newHeadNodes)
+            console.warn(warning)
+          }
+        } else {
+          node.setAttribute(`data-gatsby-head`, true)
+
+          const element = createElement(
+            rawTagName,
+            attributes,
+            node.childNodes[0]?.textContent
+          )
+
+          validHeadNodes = [...validHeadNodes, element]
+        }
+      }
+
+      setHeadComponents(validHeadNodes)
     }
 
     class RouteHandler extends React.Component {
