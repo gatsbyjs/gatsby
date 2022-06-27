@@ -28,14 +28,6 @@ interface IResolveThemeResult {
   configFilePath: string
 }
 
-interface IProcessThemeResult {
-  themeName: string
-  themeConfig: IGatsbyConfig
-  themeSpec: IThemeSpec
-  themeDir: string
-  parentDir: string
-}
-
 // get the gatsby-config file for a theme
 const resolveTheme = async (
   themeSpec: IThemeSpec,

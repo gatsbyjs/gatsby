@@ -250,6 +250,28 @@ export type GatsbyNodeAPI =
   | "createPages"
   | "onPostBuild"
 
+export interface IFlattenedPlugin {
+  resolve: SystemPath
+  id: Identifier
+  name: string
+  version: string
+  pluginOptions: {
+    plugins: []
+    [key: string]: unknown
+  }
+  nodeAPIs: Array<GatsbyNodeAPI>
+  browserAPIs: Array<
+    | "onRouteUpdate"
+    | "registerServiceWorker"
+    | "onServiceWorkerActive"
+    | "onPostPrefetchPathname"
+  >
+  ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
+  pluginFilepath: SystemPath
+  subPluginPaths?: Array<string>
+  modulePath?: string
+}
+
 export interface IGatsbyState {
   program: IStateProgram
   nodes: GatsbyNodes
@@ -260,27 +282,7 @@ export interface IGatsbyState {
   requestHeaders: Map<string, { [header: string]: string }>
   telemetry: ITelemetry
   lastAction: ActionsUnion
-  flattenedPlugins: Array<{
-    resolve: SystemPath
-    id: Identifier
-    name: string
-    version: string
-    pluginOptions: {
-      plugins: []
-      [key: string]: unknown
-    }
-    nodeAPIs: Array<GatsbyNodeAPI>
-    browserAPIs: Array<
-      | "onRouteUpdate"
-      | "registerServiceWorker"
-      | "onServiceWorkerActive"
-      | "onPostPrefetchPathname"
-    >
-    ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
-    pluginFilepath: SystemPath
-    subPluginPaths?: Array<string>
-    modulePath?: string
-  }>
+  flattenedPlugins: Array<IFlattenedPlugin>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>
   pages: Map<string, IGatsbyPage>
