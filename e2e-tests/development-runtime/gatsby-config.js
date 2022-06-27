@@ -1,3 +1,6 @@
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -6,6 +9,7 @@ module.exports = {
       twitter: `kylemathews`,
     },
   },
+  graphqlTypegen: true,
   flags: {
     DEV_SSR: false,
   },
@@ -28,12 +32,14 @@ module.exports = {
     `gatsby-source-fake-data`,
     `gatsby-source-pinc-data`,
     `gatsby-source-query-on-demand-data`,
+    `gatsby-browser-tsx`,
+    `gatsby-node-typegen`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-subcache`],
+        plugins: [`gatsby-remark-subcache`, `gatsby-remark-images`],
       },
     },
     `gatsby-plugin-sharp`,
@@ -57,4 +63,5 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
   ],
+  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
 }

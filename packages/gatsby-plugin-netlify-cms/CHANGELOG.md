@@ -3,6 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.16.0/packages/gatsby-plugin-netlify-cms) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.15.0/packages/gatsby-plugin-netlify-cms) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.14.0/packages/gatsby-plugin-netlify-cms) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.13.0/packages/gatsby-plugin-netlify-cms) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- react18-compatible require resolve resolve [#35365](https://github.com/gatsbyjs/gatsby/issues/35365) ([5698ada](https://github.com/gatsbyjs/gatsby/commit/5698adab820e001845bd56270183afa168e80114))
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.12.1/packages/gatsby-plugin-netlify-cms) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.12.0/packages/gatsby-plugin-netlify-cms) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.11.0/packages/gatsby-plugin-netlify-cms) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- compatibility with react rc 2 [#35108](https://github.com/gatsbyjs/gatsby/issues/35108) ([0c61265](https://github.com/gatsbyjs/gatsby/commit/0c6126574d203c0e6fef173b76859cdcab2f13aa))
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.10.0/packages/gatsby-plugin-netlify-cms) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.9.0/packages/gatsby-plugin-netlify-cms) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [6.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.8.0/packages/gatsby-plugin-netlify-cms) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.7.0/packages/gatsby-plugin-netlify-cms) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.6.0/packages/gatsby-plugin-netlify-cms) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.5.0/packages/gatsby-plugin-netlify-cms) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Bug Fixes
+
+- Update mini-css-extract-plugin to fix inc builds issue fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) [#33982](https://github.com/gatsbyjs/gatsby/issues/33982) ([725dc36](https://github.com/gatsbyjs/gatsby/commit/725dc3609a85728e3dbcbd77e740b5fed488c515))
+
+#### Other Changes
+
+- Revert "fix(gatsby): Update mini-css-extract-plugin to fix inc builds issue (#33979)" fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) fix [#34413](https://github.com/gatsbyjs/gatsby/issues/34413) ([26a94f2](https://github.com/gatsbyjs/gatsby/commit/26a94f218f3a8dbd2581ddb2cf4a6788fc48eaf1))
+
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.4.0/packages/gatsby-plugin-netlify-cms) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

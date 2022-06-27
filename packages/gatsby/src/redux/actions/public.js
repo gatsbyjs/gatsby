@@ -1,4 +1,5 @@
 // @flow
+const reporter = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -20,6 +21,7 @@ const {
   truncatePath,
   tooLongSegmentsInPath,
 } = require(`../../utils/path`)
+const { applyTrailingSlashOption } = require(`gatsby-page-utils`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
@@ -275,6 +277,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
+  const { trailingSlash } = store.getState().config
   const rootPath = store.getState().program.directory
   const { error, message, panicOnBuild } = validatePageComponent(
     page,
@@ -386,6 +389,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.path = truncatedPath
   }
 
+  page.path = applyTrailingSlashOption(page.path, trailingSlash)
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
@@ -425,6 +430,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const oldPage: Page = store.getState().pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+  const componentModified =
+    !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -492,6 +499,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       ...actionOptions,
       type: `CREATE_PAGE`,
       contextModified,
+      componentModified,
       plugin,
       payload: internalPage,
     },
@@ -864,7 +872,7 @@ actions.createNode =
     ).find(action => action.type === `CREATE_NODE`)
 
     if (!createNodeAction) {
-      return undefined
+      return Promise.resolve(undefined)
     }
 
     const { payload: node, traceId, parentSpan } = createNodeAction
@@ -1245,6 +1253,13 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 
+actions.addGatsbyImageSourceUrl = (sourceUrl: string) => {
+  return {
+    type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`,
+    payload: { sourceUrl },
+  }
+}
+
 /**
  * DEPRECATED. Use createJobV2 instead.
  *
@@ -1345,12 +1360,18 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects
+ * @param {Object} redirect.conditions Specify a country or language based redirect
+ * @param {(string|string[])} redirect.conditions.country A two-letter country code based on the regional indicator symbol
+ * @param {(string|string[])} redirect.conditions.language A two-letter identifier defined by ISO 639-1
  * @example
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
  *   const { createRedirect } = actions
  *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+ *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', conditions: { language: 'zn' }})
+ *   createRedirect({ fromPath: '/url', toPath: '/en/url', conditions: { language: ['ca', 'us'] }})
+ *   createRedirect({ fromPath: '/url', toPath: '/ca/url', conditions: { country: 'ca' }})
+ *   createRedirect({ fromPath: '/url', toPath: '/en/url', conditions: { country: ['ca', 'us'] }})
  *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
  *   // Create pages here
  * }
@@ -1404,11 +1425,13 @@ actions.createPageDependency = (
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: [
+      {
+        path,
+        nodeId,
+        connection,
+      },
+    ],
   }
 }
 
@@ -1460,6 +1483,59 @@ actions.unstable_createNodeManifest = (
       pluginName: plugin.name,
       updatedAtUTC,
     },
+  }
+}
+
+/**
+ * Stores request headers for a given domain to be later used when making requests for Image CDN (and potentially other features).
+ *
+ * @param {Object} $0
+ * @param {string} $0.domain The domain to store the headers for.
+ * @param {Object} $0.headers The headers to store.
+ */
+actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
+  const headersIsObject =
+    typeof headers === `object` && headers !== null && !Array.isArray(headers)
+
+  const noHeaders = !headersIsObject
+  const noDomain = typeof domain !== `string`
+
+  if (noHeaders) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`
+    )
+  }
+
+  if (noDomain) {
+    reporter.warn(
+      `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`
+    )
+  }
+
+  if (noDomain || noHeaders) {
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`
+    )
+
+    return null
+  }
+
+  const baseDomain = url.parse(domain)?.hostname
+
+  if (baseDomain) {
+    return {
+      type: `SET_REQUEST_HEADERS`,
+      payload: {
+        domain: baseDomain,
+        headers,
+      },
+    }
+  } else {
+    reporter.panic(
+      `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
+    )
+
+    return null
   }
 }
 

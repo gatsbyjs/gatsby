@@ -258,9 +258,33 @@ Which package manager would you like to use ? › - Use arrow-keys. Return to su
    npm
 ```
 
-Once you’ve made your choice, the CLI won’t ask for your preference again for any subsequent project.
+Once you’ve made your choice, the CLI won’t ask for your preference again for any subsequent project. If you want to change the preference, there are two ways to change the default package manager for your next project:
 
-If you want to change this for your next project you have to edit the config file created automatically by the CLI.
+1. [Using options command from CLI](#using-options-command-from-cli)
+1. [Editing the config file](#editing-the-config-file)
+
+### Using options command from CLI
+
+You can use the `gatsby options` command to change the default package manager.
+
+```shell
+gatsby options set [<key> <value>]
+```
+
+| Argument | Description                                                                     |
+| -------- | ------------------------------------------------------------------------------- |
+| key      | Set the package manager `gatsby new` is using. choices: `pm`, `package-manager` |
+| value    | Set the package manager as `npm` or `yarn`.                                     |
+
+To set the default package manager as `yarn` you'd run:
+
+```shell
+gatsby options set package-manager yarn
+```
+
+### Editing the config file
+
+You can also manually change the default package manager by editing the config file created automatically by the CLI.
 This file is available on your system at: `~/.config/gatsby/config.json`
 
 In it you’re going to see something like this.

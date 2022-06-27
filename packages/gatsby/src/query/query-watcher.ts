@@ -137,7 +137,7 @@ const watch = async (rootDir: string): Promise<void> => {
   watcher = chokidar
     .watch(
       [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
-      { ignoreInitial: true }
+      { ignoreInitial: true, ignored: [`**/*.d.ts`] }
     )
     .on(`change`, path => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
@@ -269,7 +269,7 @@ export const updateStateAndRunQueries = async (
         reason.
 
         If the failing component(s) is a regular component and not intended to be a page
-        component, you generally want to use a <StaticQuery> (https://gatsbyjs.org/docs/static-query)
+        component, you generally want to use a <StaticQuery> (https://gatsbyjs.com/docs/static-query)
         instead of exporting a page query.
 
         If you're more experienced with GraphQL, you can also export GraphQL

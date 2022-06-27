@@ -16,6 +16,10 @@ const wrapOptions = innerOptions =>
     .replace(`const something = `, ``)
     .replace(`;`, ``)
 
+const hasImageCDN =
+  process.env.GATSBY_CLOUD_IMAGE_CDN === `1` ||
+  process.env.GATSBY_CLOUD_IMAGE_CDN === `true`
+
 const pluginOptionsSchema = ({ Joi }) => {
   const getTypeOptions = () =>
     Joi.object({
@@ -631,7 +635,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
       fallbackImageMaxWidth: Joi.number()
         .integer()
         .allow(null)
-        .default(100)
+        .default(1024)
         .description(
           `If a max width can't be inferred from html this value will be passed to Sharp. If the image is smaller than this, the image file's width will be used instead.`
         )
@@ -644,7 +648,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         }),
       imageQuality: Joi.number()
         .integer()
-        .default(90)
+        .default(70)
         .allow(null)
         .description(
           `Determines the image quality that Sharp will use when generating inline html image thumbnails.`
@@ -670,7 +674,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       generateWebpImages: Joi.boolean()
-        .default(false)
+        .default(true)
         .allow(null)
         .description(
           `When this is true, .webp images will be generated for images in html fields in addition to the images gatsby-image normally generates.`
@@ -682,6 +686,31 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
               },
             `),
         }),
+      generateAvifImages: Joi.boolean()
+        .default(hasImageCDN)
+        .allow(null)
+        .description(
+          `When this is true, .avif images will be generated for images in html fields in addition to the images gatsby-image normally generates.`
+        )
+        .meta({
+          example: wrapOptions(`
+                html: {
+                  generateAvifImages: false,
+                },
+              `),
+        }),
+      placeholderType: Joi.string()
+        .default(`dominantColor`)
+        .description(
+          `This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.`
+        )
+        .example(
+          wrapOptions(`
+          html: {
+            placeholderType: \`dominantColor\`
+          }
+        `)
+        ),
     })
       .description(`Options related to html field processing.`)
       .meta({
@@ -725,6 +754,11 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       MediaItem: Joi.object({
+        placeholderSizeName: Joi.string()
+          .default(`gatsby-image-placeholder`)
+          .description(
+            `This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. To use, create a new image size in WP and name it "gatsby-image-placeholder" (or the name that you pass to this option) and that new size will be used automatically for placeholder images in the Gatsby build.`
+          ),
         createFileNodes: Joi.boolean()
           .default(true)
           .description(
@@ -810,6 +844,20 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             }
           }`),
           }),
+        exclude: Joi.boolean()
+          .allow(null)
+          .description(
+            `Completely excludes MediaItem nodes from node sourcing and from the ingested schema. Setting this to true also disables the html.createStaticFiles, html.useGatsbyImage, and type.MediaItem.createFileNodes options.`
+          )
+          .meta({
+            example: wrapOptions(`
+              type: {
+                MediaItem: {
+                  exclude: true,
+                },
+              },
+            `),
+          }),
       }),
     })
       .pattern(Joi.string(), getTypeOptions())
@@ -881,7 +929,7 @@ This should be the full url of your GraphQL endpoint.`
                 example: wrapOptions(`
                     presets: [
                       {
-                        name: \`DEVELOP\`,
+                        presetName: \`DEVELOP\`,
                         useIf: () => process.env.NODE_ENV === \`development\`,
                         options: {
                           type: {

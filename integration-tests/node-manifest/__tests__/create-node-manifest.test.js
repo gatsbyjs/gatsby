@@ -2,7 +2,10 @@
 jest.setTimeout(100000)
 const DEFAULT_MAX_DAYS_OLD = 30
 
-const { spawnGatsbyProcess } = require(`../utils/get-gatsby-process`)
+const {
+  spawnGatsbyProcess,
+  runGatsbyClean,
+} = require(`../utils/get-gatsby-process`)
 const urling = require(`urling`)
 const rimraf = require(`rimraf`)
 const path = require(`path`)
@@ -32,28 +35,36 @@ const getManifestContents = async nodeId =>
 const pageDataContents = async pagePath =>
   await fs.readJSON(path.join(pageDataDir, pagePath, `page-data.json`))
 
-let gatsbyProcess
-
-beforeAll(async () => {
-  await cleanNodeManifests()
-
-  gatsbyProcess = spawnGatsbyProcess(gatsbyCommandName)
-
-  if (gatsbyCommandName === `develop`) {
-    // wait for localhost
-    await urling(`http://localhost:8000`)
-  } else if (gatsbyCommandName === `build`) {
-    // for gatsby build wait for the process to exit
-    await new Promise(resolve => gatsbyProcess.on(`exit`, resolve))
-    gatsbyProcess.kill()
-  }
-})
-
-afterAll(() => gatsbyProcess.kill())
+const port = 8010
 
 // see gatsby-node.js for where createNodeManifest was called
 // and for the corresponding pages that were created with createPage
 describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
+  let gatsbyProcess
+
+  beforeAll(async () => {
+    await cleanNodeManifests()
+
+    gatsbyProcess = spawnGatsbyProcess(gatsbyCommandName, {
+      PORT: port,
+    })
+
+    if (gatsbyCommandName === `develop`) {
+      // wait for localhost
+      return urling(`http://localhost:${port}`)
+    } else if (gatsbyCommandName === `build`) {
+      // for gatsby build wait for the process to exit
+      return new Promise(resolve =>
+        gatsbyProcess.on(`exit`, () => {
+          gatsbyProcess.kill()
+          resolve()
+        })
+      )
+    }
+  })
+
+  afterAll(() => gatsbyProcess.kill())
+
   it(`Creates an accurate node manifest when using the ownerNodeId argument in createPage`, async () => {
     const manifestFileContents = await getManifestContents(1)
 
@@ -68,6 +79,14 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     expect(manifestFileContents.node.id).toBe(`2`)
     expect(manifestFileContents.page.path).toBe(`/two`)
     expect(manifestFileContents.foundPageBy).toBe(`context.id`)
+  })
+
+  it(`Creates an accurate node manifest when ownerNodeId isn't present but there's a matching "slug" in pageContext`, async () => {
+    const manifestFileContents = await getManifestContents(5)
+
+    expect(manifestFileContents.node.id).toBe(`5`)
+    expect(manifestFileContents.page.path).toBe(`/slug-test-path`)
+    expect(manifestFileContents.foundPageBy).toBe(`context.slug`)
   })
 
   if (gatsbyCommandName === `build`) {
@@ -127,5 +146,39 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     }
 
     expect(recentlyUpdatedNodeManifest.node.id).toBe(recentlyUpdatedNodeId)
+  })
+})
+
+describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
+  let gatsbyProcess
+
+  beforeEach(async () => {
+    await runGatsbyClean()
+
+    gatsbyProcess = spawnGatsbyProcess(gatsbyCommandName, {
+      DUMMY_NODE_MANIFEST_COUNT: 700,
+      NODE_MANIFEST_FILE_LIMIT: 500,
+      PORT: port,
+    })
+
+    if (gatsbyCommandName === `develop`) {
+      // wait for localhost
+      await urling(`http://localhost:${port}`)
+    } else if (gatsbyCommandName === `build`) {
+      // for gatsby build wait for the process to exit
+      return new Promise(resolve => {
+        gatsbyProcess.on(`exit`, () => {
+          gatsbyProcess.kill()
+          resolve()
+        })
+      })
+    }
+  })
+
+  afterAll(() => gatsbyProcess.kill())
+
+  it(`Limits the number of node manifest files written to disk to 500`, async () => {
+    const nodeManifestFiles = fs.readdirSync(manifestDir)
+    expect(nodeManifestFiles).toHaveLength(500)
   })
 })

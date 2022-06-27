@@ -298,7 +298,7 @@ describe(`api-runner-node`, () => {
               1337: {
                 text: context => `Error text is ${context.someProp}`,
                 level: `ERROR`,
-                docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+                docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
               },
             })
 
@@ -341,7 +341,7 @@ describe(`api-runner-node`, () => {
       "test-plugin-plugin-prefixes_1337": {
         text: {},
         level: `ERROR`,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     })
   })

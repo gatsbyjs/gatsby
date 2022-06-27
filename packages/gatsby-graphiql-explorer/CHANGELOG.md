@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.16.0/packages/gatsby-graphiql-explorer) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.15.0/packages/gatsby-graphiql-explorer) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Chores
+
+- don't use npm-run-all to build packages ([fb4de37](https://github.com/gatsbyjs/gatsby/commit/fb4de379e914892c8ce437d4613b60499cfeb897))
+- workaround lerna + npm-run-all weirdness [#35595](https://github.com/gatsbyjs/gatsby/issues/35595) ([8cc0970](https://github.com/gatsbyjs/gatsby/commit/8cc09702f9a2767c51cf5267233108c07e4ac073))
+
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.14.0/packages/gatsby-graphiql-explorer) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency core-js to ^3.22.3 [#35541](https://github.com/gatsbyjs/gatsby/issues/35541) ([1a4d0ea](https://github.com/gatsbyjs/gatsby/commit/1a4d0eaaa9a0c8e322db8eb7509d0d62e3e432c5))
+- update dependency core-js to ^3.22.2 [#33381](https://github.com/gatsbyjs/gatsby/issues/33381) ([f4a7ca5](https://github.com/gatsbyjs/gatsby/commit/f4a7ca57b3b5e0a45bb883d13065e7df3ec8a324))
+
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.13.0/packages/gatsby-graphiql-explorer) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.12.1/packages/gatsby-graphiql-explorer) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.12.0/packages/gatsby-graphiql-explorer) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.11.0/packages/gatsby-graphiql-explorer) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Refactoring
+
+- replace deprecated String.prototype.substr() [#35205](https://github.com/gatsbyjs/gatsby/issues/35205) ([21f7c65](https://github.com/gatsbyjs/gatsby/commit/21f7c654da647a949c83efb2e17b473eab4db3ed))
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.10.0/packages/gatsby-graphiql-explorer) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.9.0/packages/gatsby-graphiql-explorer) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.8.0/packages/gatsby-graphiql-explorer) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.7.0/packages/gatsby-graphiql-explorer) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.6.0/packages/gatsby-graphiql-explorer) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
+## [2.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.5.0/packages/gatsby-graphiql-explorer) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-graphiql-explorer
+
 ## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.4.0/packages/gatsby-graphiql-explorer) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

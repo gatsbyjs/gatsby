@@ -20,10 +20,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-local-worker`,
+    `gatsby-ssr-tsx`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sass`,
     `gatsby-plugin-less`,
     `gatsby-plugin-stylus`,
   ].concat(process.env.TEST_PLUGIN_OFFLINE ? [`gatsby-plugin-offline`] : []),
+  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
 }

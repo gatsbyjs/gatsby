@@ -14,6 +14,7 @@ function testWithGatsbyPluginImage(elem) {
     const cleanHtml = html
       .replace(base64ImageExp, `data:image/redacted;base64,redacted`)
       .replace(styleAttrExp, ``)
+      .replace(/data-gatsby-image-ssr=\"\"/gm, "")
 
     // Create a DOM element with the redacted base64 data
     cy.document().then(document => {
@@ -74,5 +75,8 @@ describe(`rich-text`, () => {
   it(`rich-text: Localized`, () => {
     cy.get(`[data-cy-id="english-rich-text-localized"]`).snapshot()
     cy.get(`[data-cy-id="german-rich-text-localized"]`).snapshot()
+  })
+  it(`rich-text: Tables`, () => {
+    cy.get(`[data-cy-id="rich-text-tables"]`).snapshot()
   })
 })

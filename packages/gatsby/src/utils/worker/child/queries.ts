@@ -32,7 +32,7 @@ export async function saveQueriesDependencies(): Promise<void> {
     return { ...state, queries: { ...state.queries, queryNodes: new Map() } }
   }
   savePartialStateToDisk(
-    [`queries`],
+    [`queries`, `telemetry`],
     process.env.GATSBY_WORKER_ID,
     pickNecessaryQueryState
   )

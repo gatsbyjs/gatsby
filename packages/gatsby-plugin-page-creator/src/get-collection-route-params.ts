@@ -25,7 +25,7 @@ export function getCollectionRouteParams(
       return
     }
     // Use the previously created regex to match prefix-123 to prefix-(.+)
-    const match = urlParts[i].match(templateRegex[i])
+    const match = urlParts[i]?.match(templateRegex[i])
 
     if (!match) {
       return

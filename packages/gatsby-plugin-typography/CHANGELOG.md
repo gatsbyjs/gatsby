@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.16.0/packages/gatsby-plugin-typography) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.15.0/packages/gatsby-plugin-typography) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.14.0/packages/gatsby-plugin-typography) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.13.0/packages/gatsby-plugin-typography) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.12.1/packages/gatsby-plugin-typography) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.12.0/packages/gatsby-plugin-typography) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.11.0/packages/gatsby-plugin-typography) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- compatibility with react rc 2 [#35108](https://github.com/gatsbyjs/gatsby/issues/35108) ([0c61265](https://github.com/gatsbyjs/gatsby/commit/0c6126574d203c0e6fef173b76859cdcab2f13aa))
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.10.0/packages/gatsby-plugin-typography) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.9.0/packages/gatsby-plugin-typography) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.8.0/packages/gatsby-plugin-typography) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.7.0/packages/gatsby-plugin-typography) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.6.0/packages/gatsby-plugin-typography) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.5.0/packages/gatsby-plugin-typography) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.4.0/packages/gatsby-plugin-typography) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

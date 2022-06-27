@@ -5,12 +5,12 @@ jest.mock(`@graphql-tools/wrap`, () => {
     RenameTypes: jest.fn(),
   }
 })
-jest.mock(`apollo-link-http`, () => {
+jest.mock(`@apollo/client`, () => {
   return {
     createHttpLink: jest.fn(),
   }
 })
-const { createHttpLink } = require(`apollo-link-http`)
+const { createHttpLink } = require(`@apollo/client`)
 const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
 jest.mock(`gatsby/graphql`, () => {
   const graphql = jest.requireActual(`gatsby/graphql`)

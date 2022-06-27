@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.16.0/packages/gatsby-transformer-asciidoc) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.15.0/packages/gatsby-transformer-asciidoc) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.14.0/packages/gatsby-transformer-asciidoc) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.13.0/packages/gatsby-transformer-asciidoc) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.12.1/packages/gatsby-transformer-asciidoc) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.12.0/packages/gatsby-transformer-asciidoc) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.11.0/packages/gatsby-transformer-asciidoc) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.10.0/packages/gatsby-transformer-asciidoc) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.9.0/packages/gatsby-transformer-asciidoc) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.8.0/packages/gatsby-transformer-asciidoc) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.7.0/packages/gatsby-transformer-asciidoc) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update dependency asciidoctor to ^2.2.6 for gatsby-transformer-asciidoc [#34642](https://github.com/gatsbyjs/gatsby/issues/34642) ([7302083](https://github.com/gatsbyjs/gatsby/commit/730208335e3ee78e27727dc6ad22cf7a0a6900d3))
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.6.0/packages/gatsby-transformer-asciidoc) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.5.0/packages/gatsby-transformer-asciidoc) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
 ## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-asciidoc@3.4.0/packages/gatsby-transformer-asciidoc) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

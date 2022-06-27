@@ -4,20 +4,19 @@ describe(`collection-routing`, () => {
   })
 
   it(`can create simplest collection route that also has a number as an identifier`, () => {
-    cy.visit(`/collection-routing/1/`)
-      .waitForRouteChange()
-    cy.findByTestId(`slug`)
-      .should(`have.text`, `/preview/1`)
-    cy.findByTestId(`pagecontext`)
-      .should(`have.text`, `1`)
+    cy.visit(`/collection-routing/1/`).waitForRouteChange()
+    cy.findByTestId(`slug`).should(`have.text`, `/preview/1`)
+    cy.findByTestId(`pagecontext`).should(`have.text`, `1`)
   })
 
   it(`can navigate to a collection route and see its content rendered`, () => {
+    // this test depends on the alphabetical sorting of markdown files
     cy.findByTestId(`collection-routing-blog-0`)
-    cy.should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)
+      .should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)
       .click()
-    cy.waitForRouteChange()
-      .assertRoute(`/collection-routing/2018-12-14-hello-world/`)
+    cy.waitForRouteChange().assertRoute(
+      `/collection-routing/2018-12-14-hello-world/`
+    )
     cy.findByTestId(`slug`)
     cy.should(`have.text`, `/2018-12-14-hello-world/`)
     cy.findByTestId(`pagecontext`)
@@ -25,42 +24,33 @@ describe(`collection-routing`, () => {
   })
 
   it(`can navigate to a collection route that uses unions and see its content rendered`, () => {
+    // this test depends on the alphabetical sorting of image files
     cy.findByTestId(`collection-routing-image-0`)
-    cy.should(`have.attr`, `data-testimagename`, `gatsby-astronaut`)
+      .should(`have.attr`, `data-testimagename`, `citrus-fruits`)
       .click()
-    cy.waitForRouteChange()
-      .assertRoute(`/collection-routing/gatsby-astronaut/`)
+    cy.waitForRouteChange().assertRoute(`/collection-routing/citrus-fruits/`)
     cy.findByTestId(`name`)
-    cy.should(`have.text`, `gatsby-astronaut`)
+    cy.should(`have.text`, `citrus-fruits`)
     cy.findByTestId(`pagecontext`)
-    cy.should(`have.text`, `gatsby-astronaut`)
+    cy.should(`have.text`, `citrus-fruits`)
   })
 
   it(`should allow normal folder`, () => {
-    cy.visit(`/collection-routing/hogwarts/1/`)
-      .waitForRouteChange()
-    cy.findByTestId(`custom-text`)
-      .should(`have.text`, `static-folder`)
-    cy.findByTestId(`pagecontext`)
-      .should(`have.text`, `1`)
+    cy.visit(`/collection-routing/hogwarts/1/`).waitForRouteChange()
+    cy.findByTestId(`custom-text`).should(`have.text`, `static-folder`)
+    cy.findByTestId(`pagecontext`).should(`have.text`, `1`)
   })
 
   it(`should allow static template`, () => {
-    cy.visit(`/collection-routing/westworld/1/template`)
-      .waitForRouteChange()
-    cy.findByTestId(`custom-text`)
-      .should(`have.text`, `Static Template`)
-    cy.findByTestId(`pagecontext`)
-      .should(`have.text`, `1`)
+    cy.visit(`/collection-routing/westworld/1/template`).waitForRouteChange()
+    cy.findByTestId(`custom-text`).should(`have.text`, `Static Template`)
+    cy.findByTestId(`pagecontext`).should(`have.text`, `1`)
   })
 
   it(`should allow nested collections`, () => {
-    cy.visit(`/collection-routing/hello-world-1/1`)
-      .waitForRouteChange()
-    cy.findByTestId(`slug`)
-      .should(`have.text`, `/preview/1 + test`)
-    cy.findByTestId(`pagecontext`)
-      .should(`have.text`, `1`)
+    cy.visit(`/collection-routing/hello-world-1/1`).waitForRouteChange()
+    cy.findByTestId(`slug`).should(`have.text`, `/preview/1 + test`)
+    cy.findByTestId(`pagecontext`).should(`have.text`, `1`)
   })
 
   it(`supports nested collection + client-only route`, () => {

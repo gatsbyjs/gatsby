@@ -57,7 +57,7 @@
     "resolve-from": "^5.0.0",
     "semver": "^7.3.5",
     "single-trailing-newline": "^1.0.0",
-    "strip-ansi": "^6.0.0",
+    "strip-ansi": "^6.0.1",
     "style-to-object": "^0.3.0",
     "unified": "^8.4.2",
     "unist-util-remove": "^2.0.0",

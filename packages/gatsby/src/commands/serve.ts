@@ -7,8 +7,6 @@ import chalk from "chalk"
 import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
-import multer from "multer"
-import cookie from "cookie"
 import telemetry from "gatsby-telemetry"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
@@ -16,9 +14,24 @@ import { getConfigFile } from "../bootstrap/get-config-file"
 import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
-import { IGatsbyFunction } from "../redux/types"
+import {
+  IGatsbyConfig,
+  IGatsbyFunction,
+  IGatsbyPage,
+  IGatsbyState,
+} from "../redux/types"
 import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
+import { configureTrailingSlash } from "../utils/express-middlewares"
+import { getDataStore, detectLmdbStore } from "../datastore"
+import { functionMiddlewares } from "../internal-plugins/functions/middleware"
+import {
+  thirdPartyProxyPath,
+  partytownProxy,
+} from "../internal-plugins/partytown/proxy"
+
+process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
+detectLmdbStore()
 
 interface IMatchPath {
   path: string
@@ -101,21 +114,49 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     program.directory,
     `gatsby-config`
   )
-  const config = preferDefault(configModule)
+  const config: IGatsbyConfig = preferDefault(configModule)
 
-  const { pathPrefix: configPathPrefix } = config || {}
+  const { pathPrefix: configPathPrefix, trailingSlash } = config || {}
 
   const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
   const root = path.join(program.directory, `public`)
 
   const app = express()
+
+  // Proxy gatsby-script using off-main-thread strategy
+  const { partytownProxiedURLs = [] } = config || {}
+
+  app.use(thirdPartyProxyPath, partytownProxy(partytownProxiedURLs))
+
   // eslint-disable-next-line new-cap
   const router = express.Router()
 
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
+
+  router.use(
+    configureTrailingSlash(
+      () =>
+        ({
+          pages: {
+            get(pathName: string): IGatsbyPage | undefined {
+              return getDataStore().getNode(`SitePage ${pathName}`) as
+                | IGatsbyPage
+                | undefined
+            },
+            values(): Iterable<IGatsbyPage> {
+              return getDataStore().iterateNodesByType(
+                `SitePage`
+              ) as Iterable<IGatsbyPage>
+            },
+          },
+        } as unknown as IGatsbyState),
+      trailingSlash
+    )
+  )
+
   router.use(express.static(`public`, { dotfiles: `allow` }))
 
   const compiledFunctionsDir = path.join(
@@ -136,84 +177,11 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   if (functions) {
     app.use(
       `/api/*`,
-      multer().any(),
-      express.urlencoded({ extended: true }),
-      (req, _, next) => {
-        const cookies = req.headers.cookie
-
-        if (!cookies) {
-          return next()
-        }
-
-        req.cookies = cookie.parse(cookies)
-
-        return next()
-      },
-      express.text(),
-      express.json(),
-      express.raw(),
-      async (req, res, next) => {
-        const { "0": pathFragment } = req.params
-
-        // Check first for exact matches.
-        let functionObj = functions.find(
-          ({ functionRoute }) => functionRoute === pathFragment
-        )
-
-        if (!functionObj) {
-          // Check if there's any matchPaths that match.
-          // We loop until we find the first match.
-          functions.some(f => {
-            if (f.matchPath) {
-              const matchResult = reachMatch(f.matchPath, pathFragment)
-              if (matchResult) {
-                req.params = matchResult.params
-                if (req.params[`*`]) {
-                  // Backwards compatability for v3
-                  // TODO remove in v5
-                  req.params[`0`] = req.params[`*`]
-                }
-                functionObj = f
-
-                return true
-              }
-            }
-
-            return false
-          })
-        }
-
-        if (functionObj) {
-          const pathToFunction = functionObj.absoluteCompiledFilePath
-          const start = Date.now()
-
-          try {
-            delete require.cache[require.resolve(pathToFunction)]
-            const fn = require(pathToFunction)
-
-            const fnToExecute = (fn && fn.default) || fn
-
-            await Promise.resolve(fnToExecute(req, res))
-          } catch (e) {
-            console.error(e)
-            // Don't send the error if that would cause another error.
-            if (!res.headersSent) {
-              res.sendStatus(500)
-            }
-          }
-
-          const end = Date.now()
-          console.log(
-            `Executed function "/api/${functionObj.functionRoute}" in ${
-              end - start
-            }ms`
-          )
-
-          return
-        } else {
-          next()
-        }
-      }
+      ...functionMiddlewares({
+        getFunctions(): Array<IGatsbyFunction> {
+          return functions
+        },
+      })
     )
   }
 

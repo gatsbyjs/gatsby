@@ -19,17 +19,18 @@ describe(`onCreateBabelConfig`, () => {
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
-    const expectedErrors = [`"optionA" is not allowed`]
+    const expectedWarnings = [`"optionA" is not allowed`]
 
-    const { isValid, errors } = await testPluginOptionsSchema(
+    const { isValid, warnings, hasWarnings } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       {
         optionA: `This option shouldn't exist`,
       }
     )
 
-    expect(isValid).toBe(false)
-    expect(errors).toEqual(expectedErrors)
+    expect(isValid).toBe(true)
+    expect(hasWarnings).toBe(true)
+    expect(warnings).toEqual(expectedWarnings)
   })
 
   it.each`

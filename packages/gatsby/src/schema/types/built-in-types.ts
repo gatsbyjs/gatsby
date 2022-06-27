@@ -147,3 +147,24 @@ export const overridableBuiltInTypeNames = new Set([`SiteSiteMetadata`])
 
 export const builtInTypeDefinitions = (): Array<DocumentNode> =>
   allSdlTypes.map(type => parse(type))
+
+export const builtInScalarTypeNames = [
+  `Boolean`,
+  `Date`,
+  `Float`,
+  `ID`,
+  `Int`,
+  `JSON`,
+  `String`,
+  `GatsbyImageData`,
+]
+
+export const internalTypeNames = [
+  ...builtInScalarTypeNames,
+  `Buffer`,
+  `Internal`,
+  `InternalInput`,
+  `Node`,
+  `NodeInput`,
+  `Query`,
+]

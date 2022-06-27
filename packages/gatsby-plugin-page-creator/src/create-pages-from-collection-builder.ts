@@ -3,6 +3,7 @@ import { Actions, CreatePagesArgs } from "gatsby"
 import { createPath } from "gatsby-page-utils"
 import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
+import { TrailingSlash, applyTrailingSlashOption } from "gatsby-page-utils"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "gatsby-core-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
@@ -18,6 +19,7 @@ export async function createPagesFromCollectionBuilder(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter,
+  trailingSlash: TrailingSlash,
   slugifyOptions?: ISlugifyOptions
 ): Promise<void> {
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
@@ -28,6 +30,7 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
+        trailingSlash,
         slugifyOptions
       )
     )
@@ -46,6 +49,7 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
+        trailingSlash,
         slugifyOptions
       )
     )
@@ -82,6 +86,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
           actions,
           graphql,
           reporter,
+          trailingSlash,
           slugifyOptions
         )
     )
@@ -118,7 +123,10 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       reporter,
       slugifyOptions
     )
-    const path = createPath(derivedPath)
+    // TODO(v5): Remove legacy handling
+    const isLegacy = trailingSlash === `legacy`
+    const hasTrailingSlash = derivedPath.endsWith(`/`)
+    const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
     // We've already created a page with this path
     if (knownPagePaths.has(path)) {
       return
@@ -131,8 +139,10 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
     const matchPath = getMatchPath(path)
 
+    const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+
     actions.createPage({
-      path: path,
+      path: modifiedPath,
       matchPath,
       component: absolutePath,
       context: {
@@ -168,6 +178,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
         actions,
         graphql,
         reporter,
+        trailingSlash,
         slugifyOptions
       )
   )

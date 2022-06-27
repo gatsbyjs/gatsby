@@ -12,6 +12,8 @@ export const KNOWN_CONFIG_KEYS = [
   `developMiddleware`,
   `jsxRuntime`,
   `jsxImportSource`,
+  `trailingSlash`,
+  `graphqlTypegen`,
 ]
 
 export function didYouMean(

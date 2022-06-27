@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useContentfulImage constrained: width and aspectRatio 1`] = `
+Object {
+  "backgroundColor": null,
+  "height": 337,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 600px) 600px, 100vw",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=337",
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=150&h=84 150w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=300&h=169 300w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=337 600w",
+    },
+    "sources": Array [],
+  },
+  "layout": "constrained",
+  "width": 600,
+}
+`;
+
+exports[`useContentfulImage constrained: width and height 1`] = `
+Object {
+  "backgroundColor": null,
+  "height": 480,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 600px) 600px, 100vw",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480",
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=150&h=120 150w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=300&h=240 300w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480 600w",
+    },
+    "sources": Array [],
+  },
+  "layout": "constrained",
+  "width": 600,
+}
+`;
+
+exports[`useContentfulImage fixed: width and height 1`] = `
+Object {
+  "backgroundColor": null,
+  "height": 480,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "600px",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480",
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480 600w",
+    },
+    "sources": Array [],
+  },
+  "layout": "fixed",
+  "width": 600,
+}
+`;
+
+exports[`useContentfulImage fullWidth: aspect ratio 1`] = `
+Object {
+  "backgroundColor": null,
+  "height": 0.5625,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "100vw",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304",
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=180 320w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=654&h=368 654w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=768&h=432 768w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1024&h=576 1024w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1366&h=768 1366w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1600&h=900 1600w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1920&h=1080 1920w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=2048&h=1152 2048w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=2560&h=1440 2560w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=3440&h=1935 3440w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=3840&h=2160 3840w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304 4096w",
+    },
+    "sources": Array [],
+  },
+  "layout": "fullWidth",
+  "width": 1,
+}
+`;
+
+exports[`useContentfulImage fullWidth: aspectRatio, maxWidth 1`] = `
+Object {
+  "backgroundColor": null,
+  "height": 0.5625,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "100vw",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304",
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=180 320w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=654&h=368 654w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=768&h=432 768w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1024&h=576 1024w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1366&h=768 1366w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1600&h=900 1600w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1920&h=1080 1920w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=2048&h=1152 2048w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=2560&h=1440 2560w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=3440&h=1935 3440w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=3840&h=2160 3840w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304 4096w",
+    },
+    "sources": Array [],
+  },
+  "layout": "fullWidth",
+  "width": 1,
+}
+`;
+
+exports[`useContentfulImage fullWidth: width, height & maxWidth 1`] = `
+Object {
+  "backgroundColor": null,
+  "height": 0.75,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "100vw",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=800&h=600",
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=240 320w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=654&h=491 654w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=768&h=576 768w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=800&h=600 800w",
+    },
+    "sources": Array [],
+  },
+  "layout": "fullWidth",
+  "width": 1,
+}
+`;

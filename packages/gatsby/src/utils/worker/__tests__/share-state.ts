@@ -12,6 +12,7 @@ jest.mock(`gatsby-telemetry`, () => {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
   }
 })
 
@@ -28,9 +29,9 @@ describe(`worker (share-state)`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
   })

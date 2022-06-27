@@ -4,7 +4,7 @@ import { createUrl } from "../image-helpers"
 jest.mock(`gatsby-core-utils`)
 jest.mock(`fs-extra`)
 
-describe(`contentful extend node type`, () => {
+describe(`Contentful Image API helpers`, () => {
   describe(`createUrl`, () => {
     it(`allows you to create URls`, () => {
       expect(

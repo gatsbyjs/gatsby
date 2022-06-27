@@ -6,7 +6,7 @@ require(`dotenv`).config({
   path: `.env.test`,
 })
 
-const urling = require(`urling`)
+const urling = require(`../test-fns/test-utils/urling`)
 
 const {
   spawnGatsbyProcess,
@@ -31,7 +31,9 @@ const testOnColdCacheOnly = isWarmCache ? test.skip : test
 describe(`[gatsby-source-wordpress] Build default options`, () => {
   beforeAll(done => {
     ;(async () => {
+      console.log(`Waiting for WPGraphQL to be ready...`)
       await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
+      console.log(`WPGraphQL is ready`)
 
       if (isWarmCache) {
         done()
@@ -60,6 +62,10 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
   let gatsbyDevelopProcess
 
   beforeAll(async () => {
+    if (process.env.SKIP_BEFORE_ALL) {
+      return
+    }
+
     if (!isWarmCache) {
       await gatsbyCleanBeforeAll()
     }
@@ -93,19 +99,17 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
 
     return new Promise(resolve => {
       gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
-      gatsbyDevelopProcess.stdout.on("data", data => {
-        process.stdout.write(data)
-        if (data.toString().includes("http://localhost:8000")) {
-          resolve()
-        }
-      })
+      urling({ url: `http://localhost:8000/`, retry: 100 }).then(resolve)
     })
   })
 
   require(`../test-fns/index`)
 
   afterAll(done => {
-    gatsbyDevelopProcess.kill()
+    if (gatsbyDevelopProcess) {
+      gatsbyDevelopProcess.kill()
+    }
+
     done()
   })
 })

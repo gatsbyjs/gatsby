@@ -95,6 +95,7 @@ Array [
       },
     },
   ],
+  "babel-plugin-lodash",
 ]
 `;
 
@@ -116,6 +117,7 @@ Array [
       },
     },
   ],
+  "babel-plugin-lodash",
 ]
 `;
 
@@ -185,5 +187,6 @@ Array [
       },
     },
   ],
+  "babel-plugin-lodash",
 ]
 `;

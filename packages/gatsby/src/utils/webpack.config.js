@@ -1,5 +1,3 @@
-require(`v8-compile-cache`)
-
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -25,6 +23,7 @@ import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
+import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
@@ -52,7 +51,7 @@ module.exports = async (
   const stage = suppliedStage
   const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
-  const { assetPrefix, pathPrefix } = store.getState().config
+  const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 
   const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
@@ -77,13 +76,16 @@ module.exports = async (
       }
     }
 
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+
     const envObject = Object.keys(parsed).reduce((acc, key) => {
       acc[key] = JSON.stringify(parsed[key])
       return acc
     }, {})
 
     const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-      if (key.match(/^GATSBY_/)) {
+      if (target === `node` || key.match(/^GATSBY_/)) {
         acc[key] = JSON.stringify(process.env[key])
       }
       return acc
@@ -124,7 +126,7 @@ module.exports = async (
 
     if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
       const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.substr(-1) === `/`) {
+      if (pubPath.slice(-1) === `/`) {
         hmrBasePath = pubPath
       } else {
         hmrBasePath = withTrailingSlash(pubPath)
@@ -225,8 +227,12 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
+        HAS_REACT_18: JSON.stringify(
+          major(require(`react-dom/package.json`).version) >= 18
+        ),
       }),
 
       plugins.virtualModules(),
@@ -385,7 +391,7 @@ module.exports = async (
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
-    if (stage === `build-javascript`) {
+    if (stage === `build-javascript` && !hasES6ModuleSupport(directory)) {
       configRules.push(
         rules.dependencies({
           modulesThatUseGatsby,
@@ -856,7 +862,11 @@ module.exports = async (
             .flattenedPlugins.filter(plugin =>
               plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
             )
-            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+            .map(
+              plugin =>
+                plugin.resolvedCompiledGatsbyNode ??
+                path.join(plugin.resolve, `gatsby-node.js`)
+            ),
         ],
       },
     }
@@ -889,11 +899,17 @@ module.exports = async (
         continue
       }
 
-      const ruleLoaders = Array.isArray(rule.use)
-        ? rule.use.map(useEntry =>
+      let use = rule.use
+
+      if (typeof use === `function`) {
+        use = rule.use({})
+      }
+
+      const ruleLoaders = Array.isArray(use)
+        ? use.map(useEntry =>
             typeof useEntry === `string` ? useEntry : useEntry.loader
           )
-        : [rule.use?.loader ?? rule.loader]
+        : [use?.loader ?? rule.loader]
 
       const hasBabelLoader = ruleLoaders.some(
         loader => loader === babelLoaderLoc
@@ -911,7 +927,7 @@ module.exports = async (
       // so loader rule test work well
       const queryParamStartIndex = modulePath.indexOf(`?`)
       if (queryParamStartIndex !== -1) {
-        modulePath = modulePath.substr(0, queryParamStartIndex)
+        modulePath = modulePath.slice(0, queryParamStartIndex)
       }
 
       return fastRefreshIncludes.some(re => re.test(modulePath))

@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.16.0/packages/gatsby-plugin-schema-snapshot) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.15.0/packages/gatsby-plugin-schema-snapshot) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.14.0/packages/gatsby-plugin-schema-snapshot) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.13.0/packages/gatsby-plugin-schema-snapshot) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.12.1/packages/gatsby-plugin-schema-snapshot) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.12.0/packages/gatsby-plugin-schema-snapshot) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.11.0/packages/gatsby-plugin-schema-snapshot) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.10.0/packages/gatsby-plugin-schema-snapshot) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.9.0/packages/gatsby-plugin-schema-snapshot) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.8.0/packages/gatsby-plugin-schema-snapshot) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.7.0/packages/gatsby-plugin-schema-snapshot) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.6.0/packages/gatsby-plugin-schema-snapshot) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- unlink file on init [#34527](https://github.com/gatsbyjs/gatsby/issues/34527) ([42ed5ef](https://github.com/gatsbyjs/gatsby/commit/42ed5efbd382ed99c314c0f5e4ea0ff90a98dd86))
+
+### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.5.1/packages/gatsby-plugin-schema-snapshot) (2022-01-24)
+
+#### Bug Fixes
+
+- unlink file on init [#34527](https://github.com/gatsbyjs/gatsby/issues/34527) [#34572](https://github.com/gatsbyjs/gatsby/issues/34572) ([fe61ad8](https://github.com/gatsbyjs/gatsby/commit/fe61ad8526a5aec392472a398d7edad4bda92f28))
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.5.0/packages/gatsby-plugin-schema-snapshot) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
 ## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-schema-snapshot@3.4.0/packages/gatsby-plugin-schema-snapshot) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

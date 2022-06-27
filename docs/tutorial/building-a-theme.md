@@ -2,7 +2,7 @@
 title: Building a Theme
 ---
 
-In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring).
+In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring). **Note:** The video instructions are slightly outdated at times, thus the written instructions here are the source of truth.
 
 ## Set up yarn workspaces
 
@@ -47,12 +47,7 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
   "name": "gatsby-theme-events",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "clean": "gatsby clean"
-  }
+  "license": "MIT"
 }
 ```
 
@@ -105,10 +100,10 @@ You should now see the following dependencies in your `site/package.json`:
 ```json:title=site/package.json
 {
   "dependencies": {
-    "gatsby": "^3.0.0",
+    "gatsby": "^4.15.1",
     "gatsby-theme-events": "*",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }
 ```
@@ -134,7 +129,7 @@ If you run `yarn workspaces info`, you'll be able to verify that the site is usi
 
 ### Add peer dependencies to `gatsby-theme-events`
 
-Targeting the `gatsby-theme-events` workspace, install `gatsby`, `react`, and `react-dom` as peer and development dependencies:
+Targeting the `gatsby-theme-events` workspace, install `gatsby`, `react`, and `react-dom` as peer dependencies:
 
 ```shell
 yarn workspace gatsby-theme-events add -P gatsby react react-dom
@@ -142,27 +137,30 @@ yarn workspace gatsby-theme-events add -P gatsby react react-dom
 
 > 💡 The `-P` flag is shorthand for installing peer dependencies.
 
-```shell
-yarn workspace gatsby-theme-events add -D gatsby react react-dom
-```
-
-> 💡 The `-D` flag is shorthand for installing development dependencies.
-
 The `gatsby-theme-events/package.json` file should now include the following:
 
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
-    "gatsby": "^3.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
-  },
-  {
-  "devDependencies": {
-    "gatsby": "^3.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "gatsby": "^4.15.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
+}
+```
+
+### Set up `site/gatsby-config.js`
+
+Create a `gatsby-config.js` file inside `site`:
+
+```javascript:title=site/gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-theme-events",
+      options: {},
+    },
+  ],
 }
 ```
 
@@ -226,7 +224,7 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: "data",
+        path: `${__dirname}/data/`,
       },
     },
     {
@@ -242,7 +240,7 @@ module.exports = {
 With this saved, restart the development server:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 Open up the GraphiQL explorer for the site, and make a test query on `allEvent`:
@@ -274,7 +272,7 @@ const fs = require("fs")
 
 // Make sure the data directory exists
 exports.onPreBootstrap = ({ reporter }) => {
-  const contentPath = "data"
+  const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -298,7 +296,7 @@ const fs = require("fs")
 
 // Make sure the data directory exists
 exports.onPreBootstrap = ({ reporter }) => {
-  const contentPath = "data"
+  const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -339,7 +337,7 @@ const fs = require("fs")
 
 // Make sure the data directory exists
 exports.onPreBootstrap = ({ reporter }) => {
-  const contentPath = "data"
+  const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -475,10 +473,10 @@ exports.createResolvers = ({ createResolvers }) => {
 
 > 💡 The resolver function receives the `source`, which in this case is the `Event` node.
 
-Test that this is working by running `gatsby-theme-events` again:
+Test that this is working by running `site` again:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 If you query this time for `allEvent`, you'll see the `Event` data, including the new slugs:
@@ -621,10 +619,10 @@ export default EventTemplate
 
 ### Test that pages are building
 
-To test that the root path (`"/"`) and individual event pages are building successfully, run `gatsby-theme-events` in develop mode again:
+To test that the root path (`"/"`) and individual event pages are building successfully, run `site` in develop mode again:
 
 ```shell
-yarn workspace gatsby-theme-events develop
+yarn workspace site develop
 ```
 
 You should see the placeholder `events.js` component at `http://localhost:8000/`.
@@ -987,7 +985,7 @@ Update the `gatsby-theme-events/gatsby-config.js` to accept options:
 
 ```javascript:title=gatsby-theme-events/gatsby-config.js
 // highlight-next-line
-module.exports = ({ contentPath = "data", basePath = "/" }) => ({
+module.exports = ({ contentPath = `${__dirname}/data/`, basePath = "/" }) => ({
   plugins: [
     {
       resolve: "gatsby-source-filesystem",
@@ -1006,7 +1004,7 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => ({
 })
 ```
 
-The `contentPath` will default to "data", and the `basePath` will default to the root, "/".
+The `contentPath` will default to `${__dirname}/data/`, and the `basePath` will default to the root, "/".
 
 In `gatsby-node.js`, the options that were added to the `gatsby-config.js` function are provided as a second argument to Gatsby's API hooks.
 
@@ -1015,7 +1013,7 @@ Update the `contentPath` to use the option set in `gatsby-config.js`:
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 // highlight-start
 exports.onPreBootstrap = ({ reporter }, options) => {
-  const contentPath = options.contentPath || "data"
+  const contentPath = options.contentPath || `${__dirname}/data/`
   // highlight-end
 
   // {...}
@@ -1044,13 +1042,13 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 
 Note that the example above sets default values for `options`. This behavior was also included in the prior `gatsby-config.js` example. You only need to set default values once, but both mechanisms for doing so are valid.
 
-> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because you've converted the theme to use a function export, you can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
+> 💡 The function export in `gatsby-config.js` is only supported for themes. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
 
-### Set up `site/gatsby-config.js`
+### Update `site/gatsby-config.js`
 
-Create a `gatsby-config.js` file inside `site`:
+Update the `gatsby-config.js` file inside `site`:
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
@@ -1099,7 +1097,7 @@ yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
 
 ```javascript:title=gatsby-theme-events/gatsby-config.js
-module.exports = ({ contentPath = "data", basePath = "/" }) => ({
+module.exports = ({ contentPath = `${__dirname}/data/`, basePath = "/" }) => ({
   plugins: [
     // highlight-next-line
     "gatsby-plugin-theme-ui",

@@ -17,6 +17,8 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
+export type AvailableFeatures = "image-cdn" | "graphql-typegen"
+
 export {
   default as Link,
   GatsbyLinkProps,
@@ -24,6 +26,8 @@ export {
   withPrefix,
   withAssetPrefix,
 } from "gatsby-link"
+
+export * from "gatsby-script"
 
 export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>
@@ -146,17 +150,49 @@ export type PageProps<
   serverData: ServerDataType
 }
 
+/**
+ * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerDataProps = {
+  headers: Map<string, unknown>
+  method: string
+  url: string
+  query?: Record<string, unknown>
+  params?: Record<string, unknown>
+  pageContext: Record<string, unknown>
+}
+
+/**
+ * The return type (promise payload) from the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerDataReturn<ServerDataType = Record<string, unknown>> =
+  Promise<{
+    headers?: Record<string, unknown>
+    props?: ServerDataType
+    status?: number
+  }>
+
+/**
+ * A shorthand type for combining the props and return type for the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
+ */
+export type GetServerData<ServerDataType> = (
+  props: GetServerDataProps
+) => GetServerDataReturn<ServerDataType>
+
+/**
+ * Constructor arguments for the PageRenderer.
+ */
 export interface PageRendererProps {
   location: WindowLocation
 }
 
 /**
- * PageRenderer's constructor [loads the page resources](https://www.gatsbyjs.org/docs/production-app/#load-page-resources) for the path.
+ * PageRenderer's constructor [loads the page resources](https://www.gatsbyjs.com/docs/production-app/#load-page-resources) for the path.
  *
- * On first load though, these will have already been requested from the server by `<link rel="preload" ... />` in the page's original HTML (see [Link Preloads](https://www.gatsbyjs.org/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) in HTML Generation Docs).
+ * On first load though, these will have already been requested from the server by `<link rel="preload" ... />` in the page's original HTML (see [Link Preloads](https://www.gatsbyjs.com/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) in HTML Generation Docs).
  * The loaded page resources includes the imported component, with which we create the actual page component using [React.createElement()](https://reactjs.org/docs/react-api.html). This element is returned to our RouteHandler which hands it off to Reach Router for rendering.
  *
- * @see https://www.gatsbyjs.org/docs/production-app/#page-rendering
+ * @see https://www.gatsbyjs.com/docs/production-app/#page-rendering
  */
 export class PageRenderer extends React.Component<PageRendererProps> {}
 
@@ -175,7 +211,7 @@ export interface StaticQueryProps<T = any> {
  * - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
  * - StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
  *
- * @see https://www.gatsbyjs.org/docs/static-query/
+ * @see https://www.gatsbyjs.com/docs/static-query/
  */
 
 export class StaticQuery<T = any> extends React.Component<
@@ -187,14 +223,18 @@ export class StaticQuery<T = any> extends React.Component<
  *
  * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
  *
- * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
+ * @see https://www.gatsbyjs.com/docs/page-query#how-does-the-graphql-tag-work
  */
 export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
+
+export interface GraphQLTypegenOptions {
+  typesOutputPath?: string
+}
 
 /**
  * Gatsby configuration API.
  *
- * @see https://www.gatsbyjs.org/docs/gatsby-config/
+ * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 export interface GatsbyConfig {
   /** When you want to reuse common pieces of data across the site (for example, your site title), you can store that here. */
@@ -205,8 +245,12 @@ export interface GatsbyConfig {
   flags?: Record<string, boolean>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
+  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `legacy` is used which is the behavior until v5. With Gatsby v5 "always" will be the default. */
+  trailingSlash?: "always" | "never" | "ignore" | "legacy"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
+  /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. If set to true, the default GraphQLTypegenOptions are used. See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/ for all options. */
+  graphqlTypegen?: boolean | GraphQLTypegenOptions
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
@@ -214,12 +258,17 @@ export interface GatsbyConfig {
   jsxImportSource?: string
   /**
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
-   * @see https://www.gatsbyjs.org/docs/api-proxy/
+   * @see https://www.gatsbyjs.com/docs/api-proxy/
    * */
   proxy?: {
     prefix: string
     url: string
   }
+  /**
+   * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
+   * @see https://gatsby.dev/gatsby-script
+   */
+  partytownProxiedURLs?: Array<string>
   /** Sometimes you need more granular/flexible access to the development server. Gatsby exposes the Express.js development server to your site’s gatsby-config.js where you can add Express middleware as needed. */
   developMiddleware?(app: any): void
 }
@@ -227,7 +276,7 @@ export interface GatsbyConfig {
 /**
  * Gatsby API for Node.js.
  *
- * @see https://www.gatsbyjs.org/docs/node-apis/
+ * @see https://www.gatsbyjs.com/docs/node-apis/
  */
 export interface GatsbyNode<
   TNode extends Record<string, unknown> = Record<string, unknown>,
@@ -238,7 +287,7 @@ export interface GatsbyNode<
    * sourcing and transformation of nodes plus creation of the GraphQL schema are
    * complete so you can query your data in order to create pages.
    *
-   * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
+   * @see https://www.gatsbyjs.com/docs/node-apis/#createPages
    */
   createPages?(
     args: CreatePagesArgs & {
@@ -306,7 +355,7 @@ export interface GatsbyNode<
    * transform nodes created by other plugins should implement this API.
    *
    * See also the documentation for `createNode`
-   * and [`createNodeField`](https://www.gatsbyjs.org/docs/actions/#createNodeField)
+   * and [`createNodeField`](https://www.gatsbyjs.com/docs/actions/#createNodeField)
    * @example
    * exports.onCreateNode = ({ node, actions }) => {
    *   const { createNode, createNodeField } = actions
@@ -339,7 +388,7 @@ export interface GatsbyNode<
    * for programmatically manipulating pages created by other plugins e.g.
    * if you want paths without trailing slashes.
    *
-   * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
+   * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.com/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
   onCreatePage?(
@@ -350,7 +399,7 @@ export interface GatsbyNode<
 
   /**
    * Let plugins extend/mutate the site's webpack configuration.
-   * @see https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
+   * @see https://www.gatsbyjs.com/docs/node-apis/#onCreateWebpackConfig
    */
   onCreateWebpackConfig?(
     args: CreateWebpackConfigArgs,
@@ -411,7 +460,7 @@ export interface GatsbyNode<
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreInit?(
-    args: ParentSpanPluginArgs,
+    args: PreInitArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
@@ -452,7 +501,7 @@ export interface GatsbyNode<
    *
    * Many transformer plugins use this to add fields that take arguments.
    *
-   * @see https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType
+   * @see https://www.gatsbyjs.com/docs/node-apis/#setFieldsOnGraphQLNodeType
    */
   setFieldsOnGraphQLNodeType?(
     args: SetFieldsOnGraphQLNodeTypeArgs,
@@ -468,7 +517,7 @@ export interface GatsbyNode<
    * will be called exactly once after all of your source plugins have finished
    * creating nodes.
    *
-   * @see https://www.gatsbyjs.org/docs/node-apis/#sourceNodes
+   * @see https://www.gatsbyjs.com/docs/node-apis/#sourceNodes
    */
   sourceNodes?(
     args: SourceNodesArgs,
@@ -524,7 +573,7 @@ export interface GatsbyNode<
    *
    * This API runs immediately before schema generation. For modifications of the generated schema, e.g.
    * to customize added third-party types, use the createResolvers API.
-   * @see https://www.gatsbyjs.org/docs/node-apis/#createSchemaCustomization
+   * @see https://www.gatsbyjs.com/docs/node-apis/#createSchemaCustomization
    */
   createSchemaCustomization?(
     args: CreateSchemaCustomizationArgs,
@@ -542,7 +591,7 @@ export interface GatsbyNode<
 /**
  * Gatsby browser API.
  *
- * @see https://www.gatsbyjs.org/docs/browser-apis/
+ * @see https://www.gatsbyjs.com/docs/browser-apis/
  */
 export interface GatsbyBrowser<
   DataType = Record<string, unknown>,
@@ -608,7 +657,7 @@ export interface GatsbyBrowser<
 /**
  * Gatsby server-side rendering API.
  *
- * @see https://www.gatsbyjs.org/docs/ssr-apis/
+ * @see https://www.gatsbyjs.com/docs/ssr-apis/
  */
 export interface GatsbySSR<
   DataSet = Record<string, unknown>,
@@ -701,7 +750,7 @@ export interface GatsbySSR<
    * This is useful for setting wrapper component around pages that won't get
    * unmounted on page change. For setting Provider components use `wrapRootElement`.
    *
-   * _Note:_ [There is equivalent hook in Browser API](https://www.gatsbyjs.org/docs/browser-apis/#wrapPageElement)
+   * _Note:_ [There is equivalent hook in Browser API](https://www.gatsbyjs.com/docs/browser-apis/#wrapPageElement)
    * @example
    * const React = require("react")
    * const Layout = require("./src/components/layout")
@@ -723,7 +772,7 @@ export interface GatsbySSR<
    * This is useful to setup any Providers component that will wrap your application.
    * For setting persistent UI elements around pages use `wrapPageElement`.
    *
-   * _Note:_ [There is equivalent hook in Browser API](https://www.gatsbyjs.org/docs/browser-apis/#wrapRootElement)
+   * _Note:_ [There is equivalent hook in Browser API](https://www.gatsbyjs.com/docs/browser-apis/#wrapRootElement)
    * @example
    * const React = require("react")
    * const { Provider } = require("react-redux")
@@ -873,6 +922,9 @@ export interface NodePluginSchema {
   ): GatsbyGraphQLInputObjectType
   buildEnumType(config: ComposeEnumTypeConfig): GatsbyGraphQLEnumType
   buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
+}
+export interface PreInitArgs extends ParentSpanPluginArgs {
+  actions: Actions
 }
 
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
@@ -1094,7 +1146,7 @@ export interface NodePluginArgs {
   /**
    * Set of utilities that allow adding more detailed tracing for plugins.
    * Check
-   * [Performance tracing](https://www.gatsbyjs.org/docs/performance-tracing)
+   * [Performance tracing](https://www.gatsbyjs.com/docs/performance-tracing)
    * page for more details.
    */
   tracing: Tracing
@@ -1127,10 +1179,10 @@ export interface BuildArgs extends ParentSpanPluginArgs {
 }
 
 export interface Actions {
-  /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
+  /** @see https://www.gatsbyjs.com/docs/actions/#deletePage */
   deletePage(this: void, args: { path: string; component: string }): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createPage */
   createPage<TContext = Record<string, unknown>>(
     this: void,
     args: Page<TContext>,
@@ -1138,21 +1190,21 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
+  /** @see https://www.gatsbyjs.com/docs/actions/#deletePage */
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createNode */
   createNode<TNode = Record<string, unknown>>(
     this: void,
     node: NodeInput & TNode,
     plugin?: ActionPlugin,
     options?: ActionOptions
-  ): void
+  ): void | Promise<void>
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
+  /** @see https://www.gatsbyjs.com/docs/actions/#touchNode */
   touchNode(node: NodeInput, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createNodeField */
   createNodeField(
     this: void,
     args: {
@@ -1164,7 +1216,7 @@ export interface Actions {
     options?: ActionOptions
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createParentChildLink */
   createParentChildLink(
     this: void,
     args: { parent: Node; child: NodeInput },
@@ -1182,37 +1234,44 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#setWebpackConfig */
+  /** @see https://www.gatsbyjs.com/docs/actions/#setRequestHeaders */
+  setRequestHeaders(
+    this: void,
+    args: { domain: string; headers: Record<string, string> },
+    plugin?: ActionPlugin
+  ): void
+
+  /** @see https://www.gatsbyjs.com/docs/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#replaceWebpackConfig */
+  /** @see https://www.gatsbyjs.com/docs/actions/#replaceWebpackConfig */
   replaceWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#setBabelOptions */
+  /** @see https://www.gatsbyjs.com/docs/actions/#setBabelOptions */
   setBabelOptions(this: void, options: object, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#setBabelPlugin */
+  /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPlugin */
   setBabelPlugin(
     this: void,
     config: { name: string; options: object },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#setBabelPreset */
+  /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPreset */
   setBabelPreset(
     this: void,
     config: { name: string; options: object },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createJob */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createJob */
   createJob(
     this: void,
     job: Record<string, unknown> & { id: string },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createJobV2 */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createJobV2 */
   createJobV2(
     this: void,
     job: {
@@ -1224,24 +1283,27 @@ export interface Actions {
     plugin?: ActionPlugin
   ): Promise<unknown>
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#setJob */
+  /** @see https://www.gatsbyjs.com/docs/actions/#addGatsbyImageSourceUrl */
+  addGatsbyImageSourceUrl(this: void, sourceUrl: string): void
+
+  /** @see https://www.gatsbyjs.com/docs/actions/#setJob */
   setJob(
     this: void,
     job: Record<string, unknown> & { id: string },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#endJob */
+  /** @see https://www.gatsbyjs.com/docs/actions/#endJob */
   endJob(this: void, job: { id: string }, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#setPluginStatus */
+  /** @see https://www.gatsbyjs.com/docs/actions/#setPluginStatus */
   setPluginStatus(
     this: void,
     status: Record<string, unknown>,
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createRedirect */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createRedirect */
   createRedirect(
     this: void,
     redirect: {
@@ -1257,7 +1319,7 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#addThirdPartySchema */
+  /** @see https://www.gatsbyjs.com/docs/actions/#addThirdPartySchema */
   addThirdPartySchema(
     this: void,
     args: { schema: object },
@@ -1265,7 +1327,7 @@ export interface Actions {
     traceId?: string
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createTypes */
   createTypes(
     this: void,
     types:
@@ -1277,7 +1339,7 @@ export interface Actions {
     traceId?: string
   ): void
 
-  /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
+  /** @see https://www.gatsbyjs.com/docs/actions/#createFieldExtension */
   createFieldExtension(
     this: void,
     extension: object,
@@ -1559,13 +1621,17 @@ export interface Page<TContext = Record<string, unknown>> {
   path: string
   matchPath?: string
   component: string
-  context: TContext
+  context?: TContext
+  ownerNodeId?: string
+  defer?: boolean
 }
 
 export interface IPluginRefObject {
   resolve: string
   options?: IPluginRefOptions
   parentDir?: string
+  /** @private Internal key used by create-gatsby during plugin installation. Not necessary to define and can be removed. */
+  __key?: string
 }
 
 export type PluginRef = string | IPluginRefObject
@@ -1608,7 +1674,7 @@ export interface GatsbyFunctionResponse<T = any> extends ServerResponse {
 /**
  * Gatsby function route request
  */
-export interface GatsbyFunctionRequest extends IncomingMessage {
+export interface GatsbyFunctionRequest<ReqBody = any> extends IncomingMessage {
   /**
    * Object of values from URL query parameters (after the ? in the URL)
    */
@@ -1618,11 +1684,32 @@ export interface GatsbyFunctionRequest extends IncomingMessage {
    * Object of values from route parameters
    */
   params: Record<string, string>
-  body: any
+  body: ReqBody
   /**
    * Object of `cookies` from header
    */
   cookies: Record<string, string>
+}
+
+export interface GatsbyFunctionBodyParserCommonMiddlewareConfig {
+  type?: string
+  limit?: string | number
+}
+
+export interface GatsbyFunctionBodyParserUrlencodedConfig
+  extends GatsbyFunctionBodyParserCommonMiddlewareConfig {
+  extended: boolean
+}
+
+export interface GatsbyFunctionBodyParserConfig {
+  json?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  raw?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  text?: GatsbyFunctionBodyParserCommonMiddlewareConfig
+  urlencoded?: GatsbyFunctionBodyParserUrlencodedConfig
+}
+
+export interface GatsbyFunctionConfig {
+  bodyParser?: GatsbyFunctionBodyParserConfig
 }
 
 declare module NodeJS {
