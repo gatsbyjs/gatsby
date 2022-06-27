@@ -43,6 +43,24 @@ Each method detailed below will start with the following contact form:
 
 ## Form submission options in Gatsby
 
+### fabform.io
+
+Fabform.io is an intelligent forms backend with features like: Universal inbox to collect all form submissions, Captcha to stop form spam in its tracks, Automatic email reply to form sumbitters, send form data to email, save form submissions to Google Sheets, Airtable , Form redirect on successful submissions and ooodles more features. Fabform.io has a generous free plan to get you started.
+
+Just a few lines of HTML code and your running.
+
+```
+
+<form action="https://fabform.io/f/{form-id}" method="post">
+ <label for="email">Your Email</label>
+ <input name="email" type="email">
+ <button type="submit">Submit</button> 
+</form>
+
+```
+
+
+
 ### Getform
 
 Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. Begin by creating a form on your Gatsby site that you can receive submissions from. When creating the form, direct the HTTP POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
