@@ -50,7 +50,7 @@ module.exports = {
     ], // Workaround for https://github.com/facebook/jest/issues/9771
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script)/)`],
   globals: {
     __PATH_PREFIX__: ``,
   },
@@ -58,6 +58,8 @@ module.exports = {
   setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
+
+> **Note:** If you're using Jest 28 or above, you can skip adding the `moduleNameMapper` options for `gatsby-page-utils`, `gatsby-core-utils`, and `gatsby-plugin-utils`. The mentioned bug was fixed in Jest 28.
 
 Go over the content of this configuration file:
 

@@ -100,10 +100,10 @@ You should now see the following dependencies in your `site/package.json`:
 ```json:title=site/package.json
 {
   "dependencies": {
-    "gatsby": "^3.0.0",
+    "gatsby": "^4.15.1",
     "gatsby-theme-events": "*",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }
 ```
@@ -142,9 +142,9 @@ The `gatsby-theme-events/package.json` file should now include the following:
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
-    "gatsby": "^3.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "gatsby": "^4.15.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }
 ```
@@ -224,7 +224,7 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: "data",
+        path: `${__dirname}/data/`,
       },
     },
     {
@@ -272,7 +272,7 @@ const fs = require("fs")
 
 // Make sure the data directory exists
 exports.onPreBootstrap = ({ reporter }) => {
-  const contentPath = "data"
+  const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -296,7 +296,7 @@ const fs = require("fs")
 
 // Make sure the data directory exists
 exports.onPreBootstrap = ({ reporter }) => {
-  const contentPath = "data"
+  const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -337,7 +337,7 @@ const fs = require("fs")
 
 // Make sure the data directory exists
 exports.onPreBootstrap = ({ reporter }) => {
-  const contentPath = "data"
+  const contentPath = `${__dirname}/data/`
 
   if (!fs.existsSync(contentPath)) {
     reporter.info(`creating the ${contentPath} directory`)
@@ -985,7 +985,7 @@ Update the `gatsby-theme-events/gatsby-config.js` to accept options:
 
 ```javascript:title=gatsby-theme-events/gatsby-config.js
 // highlight-next-line
-module.exports = ({ contentPath = "data", basePath = "/" }) => ({
+module.exports = ({ contentPath = `${__dirname}/data/`, basePath = "/" }) => ({
   plugins: [
     {
       resolve: "gatsby-source-filesystem",
@@ -1004,7 +1004,7 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => ({
 })
 ```
 
-The `contentPath` will default to "data", and the `basePath` will default to the root, "/".
+The `contentPath` will default to `${__dirname}/data/`, and the `basePath` will default to the root, "/".
 
 In `gatsby-node.js`, the options that were added to the `gatsby-config.js` function are provided as a second argument to Gatsby's API hooks.
 
@@ -1013,7 +1013,7 @@ Update the `contentPath` to use the option set in `gatsby-config.js`:
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 // highlight-start
 exports.onPreBootstrap = ({ reporter }, options) => {
-  const contentPath = options.contentPath || "data"
+  const contentPath = options.contentPath || `${__dirname}/data/`
   // highlight-end
 
   // {...}
@@ -1097,7 +1097,7 @@ yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
 
 ```javascript:title=gatsby-theme-events/gatsby-config.js
-module.exports = ({ contentPath = "data", basePath = "/" }) => ({
+module.exports = ({ contentPath = `${__dirname}/data/`, basePath = "/" }) => ({
   plugins: [
     // highlight-next-line
     "gatsby-plugin-theme-ui",

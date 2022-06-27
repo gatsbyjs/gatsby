@@ -45,9 +45,10 @@ exports.startVerdaccio = startServer
 exports.publishPackagesLocallyAndInstall = async ({
   packagesToPublish,
   localPackages,
-  root,
+  packageNameToPath,
   ignorePackageJSONChanges,
   yarnWorkspaceRoot,
+  externalRegistry,
 }) => {
   await startServer()
 
@@ -59,7 +60,7 @@ exports.publishPackagesLocallyAndInstall = async ({
     newlyPublishedPackageVersions[packageName] = await publishPackage({
       packageName,
       packagesToPublish,
-      root,
+      packageNameToPath,
       versionPostFix,
       ignorePackageJSONChanges,
     })
@@ -71,5 +72,6 @@ exports.publishPackagesLocallyAndInstall = async ({
     packagesToInstall,
     yarnWorkspaceRoot,
     newlyPublishedPackageVersions,
+    externalRegistry,
   })
 }

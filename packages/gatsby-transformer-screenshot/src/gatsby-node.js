@@ -1,5 +1,5 @@
 const axios = require(`axios`)
-const Queue = require(`better-queue`)
+const Queue = require(`fastq`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
@@ -104,27 +104,16 @@ exports.onCreateNode = async (
   const { createNode, createParentChildLink } = actions
 
   try {
-    const screenshotNode = await new Promise((resolve, reject) => {
-      screenshotQueue.push(
-        {
-          url: node.url,
-          parent: node.id,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          getCache,
-          createContentDigest,
-          parentNodeId: node.id,
-        },
-        (err, result) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(result)
-          }
-        }
-      )
+    const screenshotNode = await screenshotQueue.push({
+      url: node.url,
+      parent: node.id,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      getCache,
+      createContentDigest,
+      parentNodeId: node.id,
     })
 
     createParentChildLink({
@@ -163,13 +152,11 @@ const createScreenshotNode = async ({
 
       fileNode = await createRemoteFileNode({
         url: screenshotResponse.data.url,
-        store,
         cache,
         createNode,
         createNodeId,
         getCache,
         parentNodeId,
-        reporter,
       })
       expires = screenshotResponse.data.expires
 

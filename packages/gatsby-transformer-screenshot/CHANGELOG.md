@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.16.0/packages/gatsby-transformer-screenshot) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Bug Fixes
+
+- Update `createRemoteFileNode` args [#35422](https://github.com/gatsbyjs/gatsby/issues/35422) fixes [#35363](https://github.com/gatsbyjs/gatsby/issues/35363) ([caaf7a5](https://github.com/gatsbyjs/gatsby/commit/caaf7a555bb42043044f05743eec0ac1ad372cc4))
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.15.0/packages/gatsby-transformer-screenshot) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.14.0/packages/gatsby-transformer-screenshot) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.13.0/packages/gatsby-transformer-screenshot) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- finished migration from better-queue to fastq [#35425](https://github.com/gatsbyjs/gatsby/issues/35425) ([3fb8642](https://github.com/gatsbyjs/gatsby/commit/3fb86420bd256d87cede884f2f7cb83304d01b50))
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.12.1/packages/gatsby-transformer-screenshot) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.12.0/packages/gatsby-transformer-screenshot) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.11.0/packages/gatsby-transformer-screenshot) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
