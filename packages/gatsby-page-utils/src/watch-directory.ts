@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 import * as chokidar from "chokidar"
 const { slash } = require(`gatsby-core-utils`)
 

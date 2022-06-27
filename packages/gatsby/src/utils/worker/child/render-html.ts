@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 import fs from "fs-extra"
-import Bluebird from "bluebird"
 import * as path from "path"
 import { generateHtmlPath } from "gatsby-core-utils"
 import { truncate } from "lodash"
+import fastq from "fastq"
 
 import {
   readWebpackStats,
@@ -151,65 +151,73 @@ export const renderHTMLProd = async ({
     }
   }
 
-  await Bluebird.map(
-    paths,
-    async pagePath => {
-      try {
-        const pageData = await readPageData(publicDir, pagePath)
-        const resourcesForTemplate = await getResourcesForTemplate(pageData)
+  const queue = fastq<unknown, string, boolean>(async (pagePath, cb) => {
+    try {
+      const pageData = await readPageData(publicDir, pagePath)
+      const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const { html, unsafeBuiltinsUsage } =
-          await htmlComponentRenderer.default({
-            pagePath,
-            pageData,
-            webpackCompilationHash,
-            ...resourcesForTemplate,
-          })
-
-        if (unsafeBuiltinsUsage.length > 0) {
-          unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
+      const { html, unsafeBuiltinsUsage } = await htmlComponentRenderer.default(
+        {
+          pagePath,
+          pageData,
+          webpackCompilationHash,
+          ...resourcesForTemplate,
         }
+      )
+
+      if (unsafeBuiltinsUsage.length > 0) {
+        unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
+      }
+
+      await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+      cb(null, true)
+    } catch (e) {
+      if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
+        unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
+      }
+      // add some context to error so we can display more helpful message
+      e.context = {
+        path: pagePath,
+        unsafeBuiltinsUsageByPagePath,
+      }
+
+      // If we're in Preview-mode, write out a simple error html file.
+      if (isPreview) {
+        const pageData = await readPageData(publicDir, pagePath)
+        const truncatedPageData = truncateObjStrings(pageData)
+
+        const html = `<h1>Preview build error</h1>
+      <p>There was an error when building the preview page for this page ("${pagePath}").</p>
+      <h3>Error</h3>
+      <pre><code>${e.stack}</code></pre>
+      <h3>Page component id</h3>
+      <p><code>${pageData.componentChunkName}</code></p>
+      <h3>Page data</h3>
+      <pre><code>${JSON.stringify(truncatedPageData, null, 4)}</code></pre>`
 
         await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
-      } catch (e) {
-        if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
-          unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
-        }
-        // add some context to error so we can display more helpful message
-        e.context = {
-          path: pagePath,
-          unsafeBuiltinsUsageByPagePath,
+        previewErrors[pagePath] = {
+          e,
+          message: e.message,
+          code: e.code,
+          stack: e.stack,
+          name: e.name,
         }
 
-        // If we're in Preview-mode, write out a simple error html file.
-        if (isPreview) {
-          const pageData = await readPageData(publicDir, pagePath)
-          const truncatedPageData = truncateObjStrings(pageData)
-
-          const html = `<h1>Preview build error</h1>
-        <p>There was an error when building the preview page for this page ("${pagePath}").</p>
-        <h3>Error</h3>
-        <pre><code>${e.stack}</code></pre>
-        <h3>Page component id</h3>
-        <p><code>${pageData.componentChunkName}</code></p>
-        <h3>Page data</h3>
-        <pre><code>${JSON.stringify(truncatedPageData, null, 4)}</code></pre>`
-
-          await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
-          previewErrors[pagePath] = {
-            e,
-            message: e.message,
-            code: e.code,
-            stack: e.stack,
-            name: e.name,
-          }
-        } else {
-          throw e
-        }
+        cb(null, true)
+      } else {
+        cb(e)
       }
-    },
-    { concurrency: 2 }
-  )
+    }
+  }, 2)
+
+  paths.forEach(pagePath => queue.push(pagePath))
+
+  if (!queue.idle()) {
+    await new Promise(resolve => {
+      queue.drain = resolve as () => unknown
+    })
+  }
 
   return { unsafeBuiltinsUsageByPagePath, previewErrors }
 }
@@ -242,22 +250,37 @@ export const renderHTMLDev = async ({
     lastSessionId = sessionId
   }
 
-  return Bluebird.map(
-    paths,
-    async pagePath => {
-      try {
-        const htmlString = await htmlComponentRenderer.default({
-          pagePath,
-        })
-        return fs.outputFile(generateHtmlPath(outputDir, pagePath), htmlString)
-      } catch (e) {
-        // add some context to error so we can display more helpful message
-        e.context = {
-          path: pagePath,
-        }
-        throw e
+  const queue = fastq<unknown, string, boolean>(async (pagePath, cb) => {
+    try {
+      const htmlString = await htmlComponentRenderer.default({
+        pagePath,
+      })
+
+      await fs.outputFile(generateHtmlPath(outputDir, pagePath), htmlString)
+      cb(null, true)
+    } catch (e) {
+      // add some context to error so we can display more helpful message
+      e.context = {
+        path: pagePath,
       }
-    },
-    { concurrency: 2 }
+
+      cb(e)
+    }
+  }, 2)
+
+  paths.forEach(pagePath =>
+    queue.push(pagePath, err => {
+      if (err) {
+        throw err
+      }
+    })
   )
+
+  if (!queue.idle()) {
+    await new Promise(resolve => {
+      queue.drain = resolve as () => unknown
+    })
+  }
+
+  return []
 }

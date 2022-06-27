@@ -1,5 +1,4 @@
 /* eslint-disable @babel/no-invalid-this */
-const Promise = require(`bluebird`)
 const PDFParser = require(`pdf2json`)
 
 function unstable_shouldOnCreateNode({ node }) {
@@ -12,10 +11,10 @@ const convertToJson = path =>
     const pdfParser = new PDFParser(this, 1)
     pdfParser.loadPDF(path)
     pdfParser
-      .on(`pdfParser_dataReady`, pdfData => {
+      .on(`pdfParser_dataReady`, () => {
         res(pdfParser.getRawTextContent())
       })
-      .on(`pdfParser_dataError`, errData => {
+      .on(`pdfParser_dataError`, () => {
         rej(`PDF to JSON conversion failed!`)
       })
   })
@@ -23,7 +22,6 @@ const convertToJson = path =>
 async function onCreateNode({
   node,
   actions,
-  loadNodeContent,
   createNodeId,
   createContentDigest,
 }) {

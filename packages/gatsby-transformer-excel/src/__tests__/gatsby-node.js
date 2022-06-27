@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const XLSX = require(`xlsx`)
 
 const { onCreateNode } = require(`../gatsby-node`)

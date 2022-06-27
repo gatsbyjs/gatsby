@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
   GraphQLList,
