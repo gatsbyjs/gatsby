@@ -8,6 +8,7 @@ import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
+import { RUNNING_IN_GRAPHQL_ENGINE_VAR_NAME } from "../../constants"
 
 type Reporter = typeof reporter
 
@@ -169,6 +170,7 @@ export async function createGraphqlEngineBundle(
     },
     plugins: [
       new webpack.DefinePlugin({
+        [RUNNING_IN_GRAPHQL_ENGINE_VAR_NAME]: `"true"`,
         GATSBY_ENGINE_ENV_VARS: JSON.stringify(varsFromProcessEnv),
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,

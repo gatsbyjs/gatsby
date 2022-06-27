@@ -9,6 +9,7 @@ import { testRequireError } from "../utils/test-require-error"
 import { resolveModule } from "../utils/module-resolver"
 import { requireGatsbyPlugin } from "../utils/require-gatsby-plugin"
 import { preferDefault } from "./prefer-default"
+import { RUNNING_IN_GRAPHQL_ENGINE } from "../constants"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -212,7 +213,7 @@ export const resolveModuleExports = (
 
       if (cachedPlugin) {
         module = cachedPlugin
-      } else if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+      } else if (RUNNING_IN_GRAPHQL_ENGINE) {
         return []
       } else {
         absPath = require.resolve(modulePath)

@@ -11,6 +11,7 @@ import { isString } from "lodash"
 import { checkLocalPlugin } from "./utils/check-local-plugin"
 import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files"
 import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
+import { RUNNING_IN_GRAPHQL_ENGINE } from "../../constants"
 
 /**
  * @param plugin
@@ -57,7 +58,7 @@ export function resolvePlugin(
    * which should be located in node_modules.
    */
   try {
-    if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+    if (RUNNING_IN_GRAPHQL_ENGINE) {
       const gatsbyNodeModule = requireGatsbyPlugin(
         { name: pluginName, resolve: `` },
         `gatsby-node`
@@ -104,7 +105,7 @@ export function resolvePlugin(
       version: packageJSON.version,
     }
   } catch (err) {
-    if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+    if (RUNNING_IN_GRAPHQL_ENGINE) {
       return null
     }
 

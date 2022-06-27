@@ -7,6 +7,7 @@ const debug = require(`debug`)(`gatsby:load-themes`)
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
 import { resolvePlugin } from "../load-plugins/resolve-plugin"
+import { RUNNING_IN_GRAPHQL_ENGINE } from "../../constants"
 const reporter = require(`gatsby-cli/lib/reporter`)
 
 // get the gatsby-config file for a theme
@@ -35,7 +36,7 @@ const resolveTheme = async (
       // is a local plugin OR it doesn't exist
       try {
         const maybeResolved = resolvePlugin(themeName, rootDir)
-        if (!maybeResolved && process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+        if (!maybeResolved && RUNNING_IN_GRAPHQL_ENGINE) {
           return null
         }
         themeDir = maybeResolved.resolve
@@ -44,7 +45,7 @@ const resolveTheme = async (
       }
     }
 
-    if (!themeDir && !process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+    if (!themeDir && !RUNNING_IN_GRAPHQL_ENGINE) {
       const nodeResolutionPaths = module.paths.map(p => path.join(p, themeName))
       reporter.panic({
         id: `10226`,
@@ -58,7 +59,7 @@ const resolveTheme = async (
     }
   }
 
-  if (process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+  if (RUNNING_IN_GRAPHQL_ENGINE) {
     return null
   }
 

@@ -1,3 +1,5 @@
+import { RUNNING_IN_GRAPHQL_ENGINE } from "../constants"
+
 const pluginModuleCache = new Map<string, unknown>()
 
 export function setGatsbyPluginCache(
@@ -21,7 +23,7 @@ export function requireGatsbyPlugin(
 
   let pluginModule = pluginModuleCache.get(key)
 
-  if (!pluginModule && process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+  if (!pluginModule && RUNNING_IN_GRAPHQL_ENGINE) {
     return null
   }
 

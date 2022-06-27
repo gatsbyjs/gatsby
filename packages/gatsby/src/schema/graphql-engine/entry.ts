@@ -36,8 +36,6 @@ const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
 )
 
-process.env.GATSBY_IS_GRAPHQL_ENGINE = `true`
-
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runnerPromise?: Promise<GraphQLRunner>

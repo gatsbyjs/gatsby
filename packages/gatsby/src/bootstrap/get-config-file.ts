@@ -9,6 +9,7 @@ import {
   setGatsbyConfigCache,
   requireGatsbyConfig,
 } from "../utils/require-gatsby-config"
+import { RUNNING_IN_GRAPHQL_ENGINE } from "../constants"
 
 export function isNearMatch(
   fileName: string | undefined,
@@ -37,7 +38,7 @@ export async function getConfigFile(
     const configModuleFromCache = requireGatsbyConfig(absoluteConfigPath)
     if (configModuleFromCache) {
       configModule = configModuleFromCache
-    } else if (!process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+    } else if (!RUNNING_IN_GRAPHQL_ENGINE) {
       configPath = path.join(
         `${siteDirectory}/${COMPILED_CACHE_DIR}`,
         configName
@@ -77,7 +78,7 @@ export async function getConfigFile(
       const configModuleFromCache = requireGatsbyConfig(absoluteConfigPath)
       if (configModuleFromCache) {
         configModule = configModuleFromCache
-      } else if (!process.env.GATSBY_IS_GRAPHQL_ENGINE) {
+      } else if (!RUNNING_IN_GRAPHQL_ENGINE) {
         configFilePath = require.resolve(configPath)
         configModule = require(configFilePath)
         setGatsbyConfigCache(absoluteConfigPath, configModule)
