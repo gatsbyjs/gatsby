@@ -391,7 +391,7 @@ module.exports = async (
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
-    if (stage === `build-javascript`) {
+    if (stage === `build-javascript` && !hasES6ModuleSupport(directory)) {
       configRules.push(
         rules.dependencies({
           modulesThatUseGatsby,
