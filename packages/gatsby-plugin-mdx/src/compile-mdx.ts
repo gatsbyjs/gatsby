@@ -1,8 +1,7 @@
+import deepmerge from "deepmerge"
 import type { NodePluginArgs } from "gatsby"
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
-
-import deepmerge from "deepmerge"
 
 import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 
@@ -44,7 +43,7 @@ export async function compileMDX(
       mdxNode.slug && `Slug: ${mdxNode.slug}`,
       mdxNode.frontmatter &&
         `Frontmatter:\n${JSON.stringify(mdxNode.frontmatter, null, 2)}`,
-      fileNode.absolutePath && `Path: ${fileNode.absolutePath}`,
+      fileNode.relativePath && `Path: ${fileNode.relativePath}`,
       mdxNode.body && `Content:\n ${mdxNode.body}`,
     ]
       .filter(Boolean)

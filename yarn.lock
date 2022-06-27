@@ -6890,23 +6890,6 @@ babel-preset-fbjs@^3.4.0:
     "@babel/plugin-transform-template-literals" "^7.0.0"
     babel-plugin-syntax-trailing-function-commas "^7.0.0-beta.0"
 
-babel-preset-gatsby-package@^2.16.0-next.0:
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-gatsby-package/-/babel-preset-gatsby-package-2.17.0.tgz#332ed5b14ab2083c5412e40d762b3364a655c47a"
-  integrity sha512-t7BtwAFz3kUujHsPZ6DAvVvZEfljbTgGzihKGnV8GWsIeD7MRIBfaJK8j00s2dm+t4OtmH5HNrwGNjORL8ibZw==
-  dependencies:
-    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.14.5"
-    "@babel/plugin-proposal-optional-chaining" "^7.14.5"
-    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
-    "@babel/plugin-transform-runtime" "^7.15.0"
-    "@babel/plugin-transform-typescript" "^7.15.4"
-    "@babel/preset-env" "^7.15.4"
-    "@babel/preset-flow" "^7.14.0"
-    "@babel/preset-react" "^7.14.0"
-    "@babel/runtime" "^7.15.4"
-    babel-plugin-dynamic-import-node "^2.3.3"
-    core-js "^3.22.3"
-
 babel-preset-jest@^27.4.0:
   version "27.4.0"
   resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-27.4.0.tgz#70d0e676a282ccb200fbabd7f415db5fdf393bca"
@@ -12075,52 +12058,6 @@ functions-have-names@^1.2.2:
 gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
-
-gatsby-core-utils@^3.17.0:
-  version "3.17.0"
-  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-3.17.0.tgz#5fe33c4267a3d0a7439b8065ee9c16f5cc2aead1"
-  integrity sha512-1e0YaqTAEpSSBkpWkY703lu+Bl76ASXUvUcpnNO3CavCYZsRQxAXtMXIKIEvhm1z6zWJmY9HILo6/DjP+PHeyw==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    ci-info "2.0.0"
-    configstore "^5.0.1"
-    fastq "^1.13.0"
-    file-type "^16.5.3"
-    fs-extra "^10.1.0"
-    got "^11.8.3"
-    import-from "^4.0.0"
-    lmdb "2.5.2"
-    lock "^1.1.0"
-    node-object-hash "^2.3.10"
-    proper-lockfile "^4.1.2"
-    resolve-from "^5.0.0"
-    tmp "^0.2.1"
-    xdg-basedir "^4.0.0"
-
-gatsby-plugin-utils@^3.10.0-next.1:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-utils/-/gatsby-plugin-utils-3.11.0.tgz#cffbd98ab0cafe2ff9b8eb513c980024605dcadf"
-  integrity sha512-v2D6O2aME9p7tqlGykq5mgtj7Jqp/CWatgo0zJ7bFWSYPPUpQ7jRVAph1PIgFTAV/CaUrrvt9sxdRaZrglJyug==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    "@gatsbyjs/potrace" "^2.2.0"
-    fs-extra "^10.1.0"
-    gatsby-core-utils "^3.17.0"
-    gatsby-sharp "^0.11.0"
-    graphql-compose "^9.0.7"
-    import-from "^4.0.0"
-    joi "^17.4.2"
-    mime "^3.0.0"
-    mini-svg-data-uri "^1.4.4"
-    svgo "^2.8.0"
-
-gatsby-sharp@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/gatsby-sharp/-/gatsby-sharp-0.11.0.tgz#f672e26a4134e2ff264a335ab6efd35782de8052"
-  integrity sha512-RIbU8qi/Qs7G/KJiY0zyGS9Yic5n4RpDUf/1W3gvRl78Uo3LSuIeGEpaai6mYEnreuGb5fQIcqdkYs/UV3e8WA==
-  dependencies:
-    "@types/sharp" "^0.30.0"
-    sharp "^0.30.3"
 
 gauge@~2.7.3:
   version "2.7.4"

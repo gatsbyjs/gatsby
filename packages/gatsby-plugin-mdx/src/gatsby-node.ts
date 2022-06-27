@@ -309,7 +309,7 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   const ext = path.extname(page.component)
 
   // Only apply on pages based on .mdx files and avoid loops
-  if (extensions.includes(ext) && !page.context.frontmatter) {
+  if (extensions.includes(ext) && !page.context?.frontmatter) {
     const content = await fs.readFile(page.component, `utf8`)
     const { data: frontmatter } = grayMatter(content)
 
