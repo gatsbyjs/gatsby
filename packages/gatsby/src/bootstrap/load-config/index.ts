@@ -3,7 +3,7 @@ import telemetry from "gatsby-telemetry"
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
 import { internalActions } from "../../redux/actions"
-import loadThemes from "../load-themes"
+import { loadThemes } from "../load-themes"
 import { store } from "../../redux"
 import handleFlags from "../../utils/handle-flags"
 import availableFlags from "../../utils/flags"
@@ -23,7 +23,7 @@ export async function loadConfig({
     siteDirectory,
     `gatsby-config`
   )
-  let config = preferDefault(configModule)
+  let config: IGatsbyConfig = preferDefault(configModule)
 
   // The root config cannot be exported as a function, only theme configs
   if (typeof config === `function`) {

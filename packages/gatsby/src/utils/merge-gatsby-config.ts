@@ -1,6 +1,6 @@
 import _ from "lodash"
-import { Express } from "express"
-import type { TrailingSlash } from "gatsby-page-utils"
+import { IGatsbyConfig } from "../internal"
+
 // TODO export it in index.d.ts
 type PluginEntry =
   | string
@@ -14,26 +14,9 @@ interface INormalizedPluginEntry {
   options: Record<string, unknown>
 }
 
-interface IGatsbyConfigInput {
-  siteMetadata?: Record<string, unknown>
-  plugins?: Array<PluginEntry>
-  pathPrefix?: string
-  assetPrefix?: string
-  polyfill?: boolean
-  mapping?: Record<string, string>
-  proxy?: {
-    prefix: string
-    url: string
-  }
-  developMiddleware?(app: Express): void
-  jsxRuntime?: "classic" | "automatic"
-  jsxImportSource?: string
-  trailingSlash?: TrailingSlash
-}
-
-type ConfigKey = keyof IGatsbyConfigInput
-type Metadata = IGatsbyConfigInput["siteMetadata"]
-type Mapping = IGatsbyConfigInput["mapping"]
+type ConfigKey = keyof IGatsbyConfig
+type Metadata = IGatsbyConfig["siteMetadata"]
+type Mapping = IGatsbyConfig["mapping"]
 
 /**
  * Normalize plugin spec before comparing so
@@ -79,9 +62,9 @@ const howToMerge = {
  * Defines how a theme object is merged with the user's config
  */
 export const mergeGatsbyConfig = (
-  a: IGatsbyConfigInput,
-  b: IGatsbyConfigInput
-): IGatsbyConfigInput => {
+  a: IGatsbyConfig,
+  b: IGatsbyConfig
+): IGatsbyConfig => {
   // a and b are gatsby configs, If they have keys, that means there are values to merge
   const allGatsbyConfigKeysWithAValue = _.uniq(
     Object.keys(a).concat(Object.keys(b))
@@ -98,7 +81,7 @@ export const mergeGatsbyConfig = (
         [gatsbyConfigKey]: mergeFn(a[gatsbyConfigKey], b[gatsbyConfigKey]),
       }
     },
-    {} as IGatsbyConfigInput
+    {} as IGatsbyConfig
   )
 
   // return the fully merged config

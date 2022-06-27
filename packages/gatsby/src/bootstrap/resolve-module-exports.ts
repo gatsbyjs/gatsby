@@ -199,11 +199,12 @@ export const resolveModuleExports = (
     try {
       const moduleName = path.parse(modulePath).name
       const pluginResolve = path.dirname(modulePath)
-      const pluginName = path.basename(pluginResolve)
+      // const pluginName = path.basename(pluginResolve)
 
       const cachedPlugin = requireGatsbyPlugin(
         {
-          name: pluginName,
+          // using pluginResolve in name is hacky, e.g. if user uses require.resolve it might break
+          name: pluginResolve,
           resolve: pluginResolve,
         },
         moduleName

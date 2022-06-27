@@ -92,6 +92,9 @@ function render(
   const gatsbyNodeExports = uniqGatsbyNode.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
   )
+  const subPluginsExports = uniqSubPlugins.map(
+    (plugin, i) => `"${plugin.name}": subPlugin${i},`
+  )
   const gatsbyConfigExports = gatsbyConfigsArray.map(
     (path, i) => `"${path}": GatsbyConfig${i},`
   )
@@ -103,6 +106,10 @@ ${imports.join(`\n`)}
 
 export const gatsbyNodes = {
 ${gatsbyNodeExports.join(`\n`)}
+}
+
+export const subPlugins = {
+${subPluginsExports.join(`\n`)}
 }
 
 export const gatsbyConfigs = {
