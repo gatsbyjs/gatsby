@@ -219,22 +219,31 @@ export default async function staticPage({
           `Expected "head" export to be a function got "${typeof pageComponent.head}".`
         )
 
-      const props = {
-        ...pageData.result,
-        params: {
-          ...grabMatchParams(pagePath),
-          ...(pageData.result?.pageContext?.__params || {}),
-        },
+      function HeadRouteHandler(props) {
+        const _props = {
+          ...props,
+          ...pageData.result,
+          params: {
+            ...grabMatchParams(props.location.pathname),
+            ...(pageData.result?.pageContext?.__params || {}),
+          },
+        }
+
+        return createElement(pageComponent.head, _props)
       }
 
-      const headElement = createElement(
-        StaticQueryContext.Provider,
-        { value: staticQueryContext },
-        createElement(pageComponent.head, props, null)
+      const routerElement = (
+        <StaticQueryContext.Provider value={staticQueryContext}>
+          <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+            <Router baseuri={__BASE_PATH__} component={React.Fragment}>
+              <HeadRouteHandler path="/*" />
+            </Router>
+          </ServerLocation>
+        </StaticQueryContext.Provider>
       )
 
       // extract head nodes from string
-      const rawString = renderToString(headElement)
+      const rawString = renderToString(routerElement)
       const headNodes = [...parse(rawString).childNodes]
 
       let validHeadNodes = []
@@ -258,7 +267,10 @@ export default async function staticPage({
 
           const element = createElement(
             rawTagName,
-            attributes,
+            {
+              ...attributes,
+              "data-gatsby-head": true,
+            },
             node.childNodes[0]?.textContent
           )
 
