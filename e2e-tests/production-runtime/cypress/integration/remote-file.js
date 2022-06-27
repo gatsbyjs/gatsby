@@ -1,4 +1,11 @@
-describe(`remote-file`, () => {
+describe(
+  `remote-file`, 
+  {
+    retries: {
+      runMode: 4,
+    },
+  },
+  () => {
   beforeEach(() => {
     cy.visit(`/remote-file/`).waitForRouteChange()
 
@@ -8,6 +15,7 @@ describe(`remote-file`, () => {
     cy.scrollTo("bottom", {
       duration: 500,
     })
+    cy.wait(500)
   })
 
   async function testImages(images, expectations) {

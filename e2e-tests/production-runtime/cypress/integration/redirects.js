@@ -3,6 +3,12 @@ Cypress.on(`window:before:load`, win => {
   spy = cy.spy(win.console, `error`).as(`spyWinConsoleError`)
 })
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if (err.message.includes('Minified React error')) {
+    return false
+  }
+})
+
 describe(`Redirects`, () => {
   it(`are case insensitive when ignoreCase is set to true`, () => {
     cy.visit(`/Longue-PAGE`, { failOnStatusCode: false }).waitForRouteChange()
@@ -16,7 +22,14 @@ describe(`Redirects`, () => {
     cy.get(`h1`).invoke(`text`).should(`contain`, `NOT FOUND`)
   })
 
-  it(`use redirects when preloading page-data`, () => {
+  it(
+    `use redirects when preloading page-data`,
+    {
+      retries: {
+        runMode: 3,
+      },
+    },
+    () => {
     const expectedLinks = [`/Longue-PAGE`, `/pagina-larga`]
 
     // we should not hit those routes
