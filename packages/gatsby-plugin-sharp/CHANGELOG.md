@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.16.0/packages/gatsby-plugin-sharp) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- cache image metadata [#35791](https://github.com/gatsbyjs/gatsby/issues/35791) ([7d93d2e](https://github.com/gatsbyjs/gatsby/commit/7d93d2e31ad4a862e1536e274552763372be7bc5))
+
+#### Performance Improvements
+
+- downsize image before extracting dominant color [#35814](https://github.com/gatsbyjs/gatsby/issues/35814) ([5e6c808](https://github.com/gatsbyjs/gatsby/commit/5e6c80827076ad74e104413a7dba94fe77bb4406))
+
+### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.15.1/packages/gatsby-plugin-sharp) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.15.0/packages/gatsby-plugin-sharp) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Chores
+
+- remove old unused UUID dependency [#35657](https://github.com/gatsbyjs/gatsby/issues/35657) ([d4aaa2a](https://github.com/gatsbyjs/gatsby/commit/d4aaa2a3c01541effd50db3cf57d1445776ce487))
+
+### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.14.1/packages/gatsby-plugin-sharp) (2022-05-12)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.14.0/packages/gatsby-plugin-sharp) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- update dependency semver to ^7.3.7 [#35543](https://github.com/gatsbyjs/gatsby/issues/35543) ([f593e00](https://github.com/gatsbyjs/gatsby/commit/f593e005e4561b423a297e967205d833451a2f55))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.13.0/packages/gatsby-plugin-sharp) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- enable tracedsvg [#35328](https://github.com/gatsbyjs/gatsby/issues/35328) ([a246011](https://github.com/gatsbyjs/gatsby/commit/a246011dafdba0230847b02c2812b6bda298f8e1))
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.12.1/packages/gatsby-plugin-sharp) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.12.0/packages/gatsby-plugin-sharp) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-sharp [#35296](https://github.com/gatsbyjs/gatsby/issues/35296) ([6f088aa](https://github.com/gatsbyjs/gatsby/commit/6f088aa809549890ad1126df00fe40ab74870711))
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) ([392d6bc](https://github.com/gatsbyjs/gatsby/commit/392d6bc4300b9856e37a33291789e4dce5ac22d2))
+
+#### Chores
+
+- update sharp [#35303](https://github.com/gatsbyjs/gatsby/issues/35303) ([d267bb3](https://github.com/gatsbyjs/gatsby/commit/d267bb3d7547d08cfaabfbfc93199c785c50aec3))
+
+### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.11.1/packages/gatsby-plugin-sharp) (2022-03-31)
+
+#### Bug Fixes
+
+- windows quirks [#35246](https://github.com/gatsbyjs/gatsby/issues/35246) [#35268](https://github.com/gatsbyjs/gatsby/issues/35268) ([a527891](https://github.com/gatsbyjs/gatsby/commit/a5278911d9c69a2b6478d97776d506722a0ad3a6))
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.11.0/packages/gatsby-plugin-sharp) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

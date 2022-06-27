@@ -636,6 +636,69 @@ Fetch details:
       expect(fs.copy).toBeCalledTimes(1)
       global.__GATSBY = currentGlobal
     })
+
+    it(`should not re-download and not copy when the dist folder is the same`, async () => {
+      const currentGlobal = global.__GATSBY
+      global.__GATSBY = {
+        root: cache.directory,
+      }
+      await fs.ensureDir(path.join(cache.directory, `public`))
+      const filePathPromise = await fetchRemoteFile({
+        url: getExternalUrl(++cacheVersion),
+        directory: path.join(cache.directory, `public`),
+        cacheKey: `${cacheVersion}`,
+        excludeDigest,
+      })
+      const cachedFilePathPromise = await fetchRemoteFile({
+        url: getExternalUrl(cacheVersion),
+        directory: path.join(cache.directory, `public`),
+        cacheKey: `${cacheVersion}`,
+        excludeDigest,
+      })
+
+      const [, cachedFilePath] = await Promise.all([
+        filePathPromise,
+        cachedFilePathPromise,
+      ])
+
+      expect(cachedFilePath).toStartWith(path.join(cache.directory, `public`))
+      expect(gotStream).toBeCalledTimes(1)
+      expect(fs.pathExists).toBeCalledTimes(1)
+      expect(fs.copy).toBeCalledTimes(excludeDigest ? 0 : 1)
+      global.__GATSBY = currentGlobal
+    })
+
+    it(`should re-download and not copy when the dist folder is the same`, async () => {
+      const currentGlobal = global.__GATSBY
+      global.__GATSBY = {
+        root: cache.directory,
+      }
+      await fs.ensureDir(path.join(cache.directory, `public`))
+      const filePathPromise = fetchRemoteFile({
+        url: getExternalUrl(++cacheVersion),
+        directory: path.join(cache.directory, `public`),
+        cacheKey: `${cacheVersion}`,
+        excludeDigest,
+      })
+      const cachedFilePathPromise = fetchRemoteFile({
+        url: getExternalUrl(cacheVersion),
+        directory: path.join(cache.directory, `public`),
+        cacheKey: `${cacheVersion}`,
+        excludeDigest,
+      })
+
+      const [filePath, cachedFilePath] = await Promise.all([
+        filePathPromise,
+        cachedFilePathPromise,
+      ])
+
+      expect(filePath).toBe(cachedFilePath)
+      expect(cachedFilePath).toStartWith(path.join(cache.directory, `public`))
+      expect(gotStream).toBeCalledTimes(1)
+      expect(fs.pathExists).toBeCalledTimes(0)
+      expect(fs.copy).toBeCalledTimes(0)
+      global.__GATSBY = currentGlobal
+    })
   })
 
   describe(`retries the download`, () => {

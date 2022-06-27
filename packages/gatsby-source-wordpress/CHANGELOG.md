@@ -3,6 +3,122 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.16.0/packages/gatsby-source-wordpress) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) [#35863](https://github.com/gatsbyjs/gatsby/issues/35863) ([aacb781](https://github.com/gatsbyjs/gatsby/commit/aacb781438760e2c3f8bfa64132a0a87fa2d55ff))
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+
+#### Bug Fixes
+
+- bug patch for issue 35460 [#35817](https://github.com/gatsbyjs/gatsby/issues/35817) ([299ad95](https://github.com/gatsbyjs/gatsby/commit/299ad959af0daaa42211a85eae1fc061a47281f6))
+- Update `createRemoteFileNode` args [#35422](https://github.com/gatsbyjs/gatsby/issues/35422) fixes [#35363](https://github.com/gatsbyjs/gatsby/issues/35363) ([caaf7a5](https://github.com/gatsbyjs/gatsby/commit/caaf7a555bb42043044f05743eec0ac1ad372cc4))
+- html image hydration for React 17 & 18 [#35707](https://github.com/gatsbyjs/gatsby/issues/35707) ([09caff8](https://github.com/gatsbyjs/gatsby/commit/09caff88a1da69e773c183e3211bb509de50cc64))
+
+### [6.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.15.1/packages/gatsby-source-wordpress) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.15.0/packages/gatsby-source-wordpress) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Add image cdn fields on updates [#35687](https://github.com/gatsbyjs/gatsby/issues/35687) ([54832b4](https://github.com/gatsbyjs/gatsby/commit/54832b4fb4a61614b8a96487b1bf894799c52bcf))
+
+#### Chores
+
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) ([3909fa4](https://github.com/gatsbyjs/gatsby/commit/3909fa4265d907df62c6f79129f90f96ae09acd4))
+
+### [6.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.3/packages/gatsby-source-wordpress) (2022-05-19)
+
+#### Bug Fixes
+
+- Add image cdn fields on updates [#35687](https://github.com/gatsbyjs/gatsby/issues/35687) [#35694](https://github.com/gatsbyjs/gatsby/issues/35694) ([4dd512d](https://github.com/gatsbyjs/gatsby/commit/4dd512da2bbec66b499d1196b813aa945b0de8f0))
+
+### [6.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.2/packages/gatsby-source-wordpress) (2022-05-16)
+
+#### Chores
+
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) [#35671](https://github.com/gatsbyjs/gatsby/issues/35671) ([59165a7](https://github.com/gatsbyjs/gatsby/commit/59165a7d2421ec79525393f1e5361d204806b1ef))
+
+### [6.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.1/packages/gatsby-source-wordpress) (2022-05-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.14.0/packages/gatsby-source-wordpress) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Features
+
+- use image cdn for non-resizable images in html (svgs/gifs mainly) [#35529](https://github.com/gatsbyjs/gatsby/issues/35529) ([ebd63b2](https://github.com/gatsbyjs/gatsby/commit/ebd63b25fbe924c071a84e8e61ba065ceeab176f))
+- always include draft slugs [#35573](https://github.com/gatsbyjs/gatsby/issues/35573) ([128c7bb](https://github.com/gatsbyjs/gatsby/commit/128c7bbe3051a5cd37fffe6a6ed6e7a7f8f2906d))
+- allow excluding MediaItem nodes [#35467](https://github.com/gatsbyjs/gatsby/issues/35467) ([1cee33f](https://github.com/gatsbyjs/gatsby/commit/1cee33feb8da9a951df28423bc8845f704d2443b))
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- update dependency cache-manager to ^3.6.1 for gatsby-source-wordpress [#35540](https://github.com/gatsbyjs/gatsby/issues/35540) ([0543a21](https://github.com/gatsbyjs/gatsby/commit/0543a216699f3d2cf8b21fcce12f9638f2d8b114))
+- update dependency semver to ^7.3.7 [#35543](https://github.com/gatsbyjs/gatsby/issues/35543) ([f593e00](https://github.com/gatsbyjs/gatsby/commit/f593e005e4561b423a297e967205d833451a2f55))
+
+#### Other Changes
+
+- Prevent throwing errors when item it undefined [#35533](https://github.com/gatsbyjs/gatsby/issues/35533) ([9f450e1](https://github.com/gatsbyjs/gatsby/commit/9f450e10a3d9f490576b514985b6d2b2c2fbf59f))
+
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.13.0/packages/gatsby-source-wordpress) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- bring back defaults before image_cdn [#35370](https://github.com/gatsbyjs/gatsby/issues/35370) ([027acf8](https://github.com/gatsbyjs/gatsby/commit/027acf8e44ad649c6e4d7a46946d3dfe1baa501a))
+
+#### Bug Fixes
+
+- localFile id [#35423](https://github.com/gatsbyjs/gatsby/issues/35423) ([d50457f](https://github.com/gatsbyjs/gatsby/commit/d50457fa9c529df05c514c807a54a4ca6d89da52))
+- fix integration tests fix [#35399](https://github.com/gatsbyjs/gatsby/issues/35399) ([9b8aadc](https://github.com/gatsbyjs/gatsby/commit/9b8aadcde64c699d6c4c364d3035eb91f87140b3))
+
+#### Chores
+
+- Fix typo in `presets[].options` Fix [#35455](https://github.com/gatsbyjs/gatsby/issues/35455) ([dfa5991](https://github.com/gatsbyjs/gatsby/commit/dfa59916815587ad4a5dd597b0ad586ed77e44fe))
+
+### [6.12.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.2/packages/gatsby-source-wordpress) (2022-04-15)
+
+#### Bug Fixes
+
+- localFile id [#35423](https://github.com/gatsbyjs/gatsby/issues/35423) [#35429](https://github.com/gatsbyjs/gatsby/issues/35429) ([0e96737](https://github.com/gatsbyjs/gatsby/commit/0e96737bcdcdb45ccd5fa9236be1a69331ff907f))
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.1/packages/gatsby-source-wordpress) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.12.0/packages/gatsby-source-wordpress) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- logic for matching image nodes [#35324](https://github.com/gatsbyjs/gatsby/issues/35324) ([7824e60](https://github.com/gatsbyjs/gatsby/commit/7824e60fc1bedecee59b4fd6923ea98173abd747))
+
+#### Chores
+
+- update sharp [#35303](https://github.com/gatsbyjs/gatsby/issues/35303) ([d267bb3](https://github.com/gatsbyjs/gatsby/commit/d267bb3d7547d08cfaabfbfc93199c785c50aec3))
+
+### [6.11.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.2/packages/gatsby-source-wordpress) (2022-04-05)
+
+#### Bug Fixes
+
+- logic for matching image nodes [#35324](https://github.com/gatsbyjs/gatsby/issues/35324) [#35342](https://github.com/gatsbyjs/gatsby/issues/35342) ([35908f2](https://github.com/gatsbyjs/gatsby/commit/35908f2f96ff5eef85ca5a8c4f9f1391a5c26ed7))
+
+### [6.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.1/packages/gatsby-source-wordpress) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.11.0/packages/gatsby-source-wordpress) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

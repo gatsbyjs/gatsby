@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.10.0/packages/gatsby-plugin-utils) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) [#35863](https://github.com/gatsbyjs/gatsby/issues/35863) ([aacb781](https://github.com/gatsbyjs/gatsby/commit/aacb781438760e2c3f8bfa64132a0a87fa2d55ff))
+- add `contentDigest` to image cdn args [#35816](https://github.com/gatsbyjs/gatsby/issues/35816) [#35860](https://github.com/gatsbyjs/gatsby/issues/35860) ([cedbdb8](https://github.com/gatsbyjs/gatsby/commit/cedbdb89153a21bd4e22e612f677bf291aadceee))
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+
+#### Bug Fixes
+
+- Make `GatsbyImageData` nullable [#35777](https://github.com/gatsbyjs/gatsby/issues/35777) ([ca09aa7](https://github.com/gatsbyjs/gatsby/commit/ca09aa7a7b1fbb719ef3cd0c64bbe663d30d73c2))
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+
+### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.9.1/packages/gatsby-plugin-utils) (2022-06-01)
+
+#### Bug Fixes
+
+- Make `GatsbyImageData` nullable [#35777](https://github.com/gatsbyjs/gatsby/issues/35777) [#35785](https://github.com/gatsbyjs/gatsby/issues/35785) ([e7a3e6e](https://github.com/gatsbyjs/gatsby/commit/e7a3e6ebca645bd15f668aa3c2e763d93d648ea0))
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.9.0/packages/gatsby-plugin-utils) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Throw Typegen errors & add `IGatsbyImageData` to output [#35683](https://github.com/gatsbyjs/gatsby/issues/35683) ([e7fc88b](https://github.com/gatsbyjs/gatsby/commit/e7fc88b024c84a3e9f732deec7441621024e1f95))
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.8.0/packages/gatsby-plugin-utils) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.7.0/packages/gatsby-plugin-utils) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- bring back defaults before image_cdn [#35370](https://github.com/gatsbyjs/gatsby/issues/35370) ([027acf8](https://github.com/gatsbyjs/gatsby/commit/027acf8e44ad649c6e4d7a46946d3dfe1baa501a))
+- enable tracedsvg [#35328](https://github.com/gatsbyjs/gatsby/issues/35328) ([a246011](https://github.com/gatsbyjs/gatsby/commit/a246011dafdba0230847b02c2812b6bda298f8e1))
+
+### [3.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.1/packages/gatsby-plugin-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.0/packages/gatsby-plugin-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+
+#### Chores
+
+- update dependency msw to ^0.39.2 for gatsby-plugin-utils [#35300](https://github.com/gatsbyjs/gatsby/issues/35300) ([aa0f61a](https://github.com/gatsbyjs/gatsby/commit/aa0f61ab40560183745e96bcef834577bc4be156))
+
+### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.1/packages/gatsby-plugin-utils) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
 ## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.0/packages/gatsby-plugin-utils) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

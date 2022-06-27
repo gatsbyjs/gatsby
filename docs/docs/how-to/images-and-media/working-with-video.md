@@ -73,7 +73,7 @@ If a Markdown page or post has a featured video, you might want to include a vid
 path: "/blog/my-first-post"
 date: "2019-03-27"
 title: "My first blog post"
-videoSourceURL: https://www.youtube.com/embed/dQw4w9WgXcQ
+videoSrcURL: https://www.youtube.com/embed/dQw4w9WgXcQ
 videoTitle: "Gatsby is Never Gonna Give You Up"
 ---
 ```

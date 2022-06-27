@@ -212,11 +212,23 @@ exports.onCreateWebpackConfig = (
           ({ name, assetName, sourceMap, assetDir }) =>
             [
               {
-                from: require.resolve(path.join(name, assetDir, assetName)),
+                from: path.join(
+                  path.dirname(
+                    require.resolve(path.join(name, `package.json`))
+                  ),
+                  assetDir,
+                  assetName
+                ),
                 to: assetName,
               },
               sourceMap && {
-                from: require.resolve(path.join(name, assetDir, sourceMap)),
+                from: path.join(
+                  path.dirname(
+                    require.resolve(path.join(name, `package.json`))
+                  ),
+                  assetDir,
+                  sourceMap
+                ),
                 to: sourceMap,
               },
             ].filter(Boolean)

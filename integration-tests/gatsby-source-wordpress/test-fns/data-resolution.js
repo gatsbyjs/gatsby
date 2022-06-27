@@ -5,6 +5,7 @@
 const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
+const { URL } = require("url")
 
 const gatsbyConfig = require("../gatsby-config")
 
@@ -31,11 +32,11 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpMediaItem`].nodes).toBeTruthy()
     expect(data[`allWpMediaItem`].nodes).toMatchSnapshot()
-    expect(data[`allWpMediaItem`].totalCount).toBe(17)
+    expect(data[`allWpMediaItem`].totalCount).toBe(18)
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(5)
+    expect(data[`allWpPage`].totalCount).toBe(6)
     expect(data[`allWpPost`].totalCount).toBe(5)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
@@ -87,8 +88,8 @@ describe(`data resolution`, () => {
 
     expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(
       // we add a media item node before running our warm cache build.
-      // so 30 before 31 after
-      isWarmCache ? 31 : 30
+      // so 32 before 33 after
+      isWarmCache ? 33 : 32
     )
   })
 
@@ -541,6 +542,7 @@ describe(`data resolution`, () => {
             nodes {
               featuredImage {
                 node {
+                  filename
                   mediaItemUrl
                   resize(width: 100, height: 100, quality: 100) {
                     width
@@ -560,13 +562,15 @@ describe(`data resolution`, () => {
         return
       }
 
-      const { resize } = node.featuredImage.node
-      const [, , , sourceUrl64, _args64, filename] = resize.src.split(`/`)
+      const { resize, mediaItemUrl } = node.featuredImage.node
+      const parsedUrl = new URL(resize.src, "https://www.gatsbyjs.com")
 
-      const sourceUrl = Buffer.from(sourceUrl64, `base64`).toString(`ascii`)
+      const sourceUrl = parsedUrl.searchParams.get("u")
 
-      expect(node.featuredImage.node.mediaItemUrl).toEqual(sourceUrl)
-      expect(node.featuredImage.node.mediaItemUrl).toContain(filename)
+      expect(mediaItemUrl).toEqual(sourceUrl)
+      expect(
+        parsedUrl.pathname.endsWith(node.featuredImage.node.filename)
+      ).toBe(true)
     })
   })
 })

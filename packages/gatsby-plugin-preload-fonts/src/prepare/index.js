@@ -60,6 +60,7 @@ export async function main() {
 
   const browser = await puppeteer.launch({ args: process.argv.slice(2) })
   const page = await browser.newPage()
+  page.setCacheEnabled(false)
   page.on(`requestfinished`, req => {
     if (req.url().match(/(socket\.io|commons\.js)/)) return
 

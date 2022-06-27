@@ -1027,20 +1027,24 @@ It is also recommended that you add a polyfill to provide support back through G
 ```js
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
-addRemoteFilePolyfillInterface(
-  schema.buildObjectType({
-    name: `YourImageAssetNodeType`,
-    fields: {
-      // your fields
-    },
-    interfaces: [`Node`, `RemoteFile`],
-  }),
-  {
-    schema,
-    actions,
-    // schema and actions are arguments on the `createSchemaCustomization` API
-  }
-)
+exports.createSchemaCustomization = ({ actions, schema, store }) => {
+  const imageAssetType = addRemoteFilePolyfillInterface(
+    schema.buildObjectType({
+      name: `YourImageAssetNodeType`,
+      fields: {
+        // your fields - see createSchemaCustomization docs - if you're using schema inference you can also leave this object empty
+      },
+      interfaces: [`Node`, `RemoteFile`],
+    }),
+    {
+      schema,
+      actions,
+      store,
+    }
+  )
+
+  actions.createTypes([imageAssetType])
+}
 ```
 
 Implementing the `RemoteFile` interface adds the correct fields to your new GraphQL type and adds the necessary resolvers to handle the type. `RemoteFile` holds the following properties:
@@ -1057,6 +1061,27 @@ Implementing the `RemoteFile` interface adds the correct fields to your new Grap
 You might notice that `width`, `height`, `resize`, and `gatsbyImage` can be null. This is because the `RemoteFile` interface can also handle assets other than images, like PDF’s.
 
 The string returned from `gatsbyImage` is intended to work seamlessly with [Gatsby Image Component](/docs/reference/built-in-components/gatsby-plugin-image/#gatsbyimage) just like `gatsbyImageData` does.
+
+#### Adding Image CDN request headers with the `setRequestHeaders` action
+
+Since Gatsby will be fetching files from your CMS instead of your source plugin fetching those files, you may need to set request headers for Gatsby to use in those requests.
+This is needed if for example your CMS is locked down behind some kind of authentication.
+For each domain Image CDN will make requests to, set the required headers following this example:
+
+```js
+exports.onPluginInit = ({ actions }, pluginOptions) => {
+  if (typeof actions.setRequestHeaders === `function`) {
+    actions.setRequestHeaders({
+      // set the domain the headers should apply to
+      domain: pluginOptions.apiUrl,
+      headers: {
+        // add any needed headers
+        Authorization: pluginOptions.authToken,
+      },
+    })
+  }
+}
+```
 
 #### `sourceNodes` node API additions
 
@@ -1084,8 +1109,8 @@ Add the polyfill, `polyfillImageServiceDevRoutes`, to ensure that the developmen
 ```js
 import { polyfillImageServiceDevRoutes } from "gatsby-plugin-utils/polyfill-remote-file"
 
-export const onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+export const onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }
 ```
 

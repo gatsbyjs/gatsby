@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../global.d.ts" />
-
 import React, { Fragment, FunctionComponent } from "react"
 import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
@@ -37,6 +34,9 @@ if (hasNativeLazyLoadSupport) {
 
     if (mainImage.complete) {
       mainImage.style.opacity = 1;
+
+      // also hide the placeholder
+      mainImage.parentNode.parentNode.querySelector('[data-placeholder-image]').style.opacity = 0;
     }
   }
 }
@@ -50,15 +50,17 @@ export function getSizer(
   width: number,
   height: number
 ): string {
-  let sizer: string | null = null
+  let sizer = ``
   if (layout === `fullWidth`) {
     sizer = `<div aria-hidden="true" style="padding-top: ${
       (height / width) * 100
     }%;"></div>`
   }
+
   if (layout === `constrained`) {
     sizer = `<div style="max-width: ${width}px; display: block;"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E" style="max-width: 100%; display: block; position: static;"></div>`
   }
+
   return sizer
 }
 
@@ -72,6 +74,7 @@ const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
   }
+
   if (layout === `constrained`) {
     return (
       <div style={{ maxWidth: width, display: `block` }}>
@@ -100,10 +103,7 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> =
         <Sizer {...props} />
         {children}
 
-        {
-          // eslint-disable-next-line no-undef
-          SERVER && <NativeScriptLoading />
-        }
+        {SERVER ? <NativeScriptLoading /> : null}
       </Fragment>
     )
   }

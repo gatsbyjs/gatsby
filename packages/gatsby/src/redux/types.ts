@@ -1,7 +1,12 @@
 import type { TrailingSlash } from "gatsby-page-utils"
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
-import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
+import {
+  DocumentNode,
+  GraphQLSchema,
+  DefinitionNode,
+  SourceLocation,
+} from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { ThunkAction } from "redux-thunk"
@@ -73,9 +78,13 @@ export interface IGatsbyFunction {
   pluginName: string
 }
 
+export interface IGraphQLTypegenOptions {
+  typesOutputPath: string
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
-    // This is the name of the plugin like `gatsby-plugin-manifest
+    // This is the name of the plugin like `gatsby-plugin-manifest`
     resolve: string
     options: {
       [key: string]: unknown
@@ -93,12 +102,14 @@ export interface IGatsbyConfig {
   polyfill?: boolean
   developMiddleware?: any
   proxy?: any
+  partytownProxiedURLs?: Array<string>
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
+  graphqlTypegen?: IGraphQLTypegenOptions
 }
 
 export interface IGatsbyNode {
@@ -153,12 +164,13 @@ export interface IDefinitionMeta {
   def: DefinitionNode
   filePath: string
   text: string
-  templateLoc: any
-  printedAst: string
+  templateLoc: SourceLocation
+  printedAst: string | null
   isHook: boolean
   isStaticQuery: boolean
   isFragment: boolean
-  hash: string
+  isConfigQuery: boolean
+  hash: number
 }
 
 type GatsbyNodes = Map<string, IGatsbyNode>
@@ -244,6 +256,8 @@ export interface IGatsbyState {
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
+  requestHeaders: Map<string, { [header: string]: string }>
+  telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -432,6 +446,9 @@ export type ActionsUnion =
   | IMaterializePageMode
   | ISetJobV2Context
   | IClearJobV2Context
+  | ISetDomainRequestHeaders
+  | IProcessGatsbyImageSourceUrlAction
+  | IClearGatsbyImageSourceUrlAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -951,11 +968,37 @@ export interface INodeManifest {
   }
 }
 
+export interface ISetDomainRequestHeaders {
+  type: `SET_REQUEST_HEADERS`
+  payload: {
+    domain: string
+    headers: {
+      [header: string]: string
+    }
+  }
+}
+
+export interface IProcessGatsbyImageSourceUrlAction {
+  type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`
+  payload: {
+    sourceUrl: string
+  }
+}
+
+export interface IClearGatsbyImageSourceUrlAction {
+  type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`
+}
+
+export interface ITelemetry {
+  gatsbyImageSourceUrls: Set<string>
+}
+
 export interface IMergeWorkerQueryState {
   type: `MERGE_WORKER_QUERY_STATE`
   payload: {
     workerId: number
     queryStateChunk: IGatsbyState["queries"]
+    queryStateTelemetryChunk: IGatsbyState["telemetry"]
   }
 }
 

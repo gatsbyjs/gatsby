@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.16.0/packages/gatsby-remark-code-repls) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.15.0/packages/gatsby-remark-code-repls) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.14.0/packages/gatsby-remark-code-repls) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency urijs to ^1.19.11 for gatsby-remark-code-repls [#35544](https://github.com/gatsbyjs/gatsby/issues/35544) ([130d222](https://github.com/gatsbyjs/gatsby/commit/130d2221e50547ec22beeb5c63e05032c4a92c66))
+
+## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.13.0/packages/gatsby-remark-code-repls) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+### [6.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.12.1/packages/gatsby-remark-code-repls) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [6.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.12.0/packages/gatsby-remark-code-repls) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency urijs to ^1.19.10 for gatsby-remark-code-repls [#35294](https://github.com/gatsbyjs/gatsby/issues/35294) ([d426849](https://github.com/gatsbyjs/gatsby/commit/d42684912691617d71ea82d8b91d9f53a06280bc))
+
 ## [6.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-code-repls@6.11.0/packages/gatsby-remark-code-repls) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
