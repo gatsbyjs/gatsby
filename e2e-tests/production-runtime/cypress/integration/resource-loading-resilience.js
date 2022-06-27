@@ -2,6 +2,12 @@ const waitForAPIOptions = {
   timeout: 5000,
 }
 
+Cypress.on('uncaught:exception', () => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})
+
 function runTests(testNameSuffix) {
   it(`Loads index - ${testNameSuffix}`, () => {
     cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)

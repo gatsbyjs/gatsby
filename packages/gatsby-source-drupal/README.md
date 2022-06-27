@@ -230,6 +230,26 @@ module.exports = {
 }
 ```
 
+One case where custom headers can be useful is if your webserver returns a `406 Not Acceptable` response.
+This happens when it requires narrow conformance with the JSON:API MIME type (e.g. Apache2 with security
+module enabled).
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        // ...
+        headers: {
+          accept: "application/vnd.api+json",
+        },
+      },
+    },
+  ],
+}
+```
+
 ## GET Search Params
 
 You can append optional GET request params to the request url using `params` option.

@@ -11,6 +11,7 @@ async function run() {
   const prettier = require(`prettier`)
   const cheerio = require(`cheerio`)
   const stripAnsi = require(`strip-ansi`)
+  const pagesUsingEngines = require(`./pages-using-engines`)
 
   const devSiteBasePath = `http://localhost:8000`
 
@@ -35,17 +36,24 @@ async function run() {
       return $.html()
     }
 
+    const getProdHtmlPath = path => {
+      let maybeUsingEngine = pagesUsingEngines[path]
+      if (maybeUsingEngine) {
+        return maybeUsingEngine
+      }
+      return generateHtmlPath(join(process.cwd(), `public`), path)
+    }
+
     const builtHtml = format(
-      filterHtml(
-        fs.readFileSync(
-          generateHtmlPath(join(process.cwd(), `public`), path),
-          `utf-8`
-        )
-      )
+      filterHtml(fs.readFileSync(getProdHtmlPath(path), `utf-8`))
     )
 
     // Fetch once to trigger re-compilation.
-    await fetch(`${devSiteBasePath}/${path}`)
+    await fetch(`${devSiteBasePath}/${path}`, {
+      headers: {
+        "x-gatsby-wait-for-dev-ssr": `1`,
+      },
+    })
 
     // Then wait for six seconds to ensure it's ready to go.
     // Otherwise, tests are flaky depending on the speed of the testing machine.
@@ -54,7 +62,11 @@ async function run() {
     })
 
     let devStatus = 200
-    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res => {
+    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`, {
+      headers: {
+        "x-gatsby-wait-for-dev-ssr": `1`,
+      },
+    }).then(res => {
       devStatus = res.status
       return res.text()
     })
