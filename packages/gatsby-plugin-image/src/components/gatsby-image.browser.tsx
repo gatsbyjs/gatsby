@@ -151,6 +151,10 @@ const GatsbyImageHydrator: FC<GatsbyImageProps> = function GatsbyImageHydrator({
     let cleanupCallback
     renderImageToStringPromise.then(
       ({ renderImageToString, swapPlaceholderImage }) => {
+        if (!root.current) {
+          return
+        }
+
         root.current.innerHTML = renderImageToString({
           isLoading: true,
           isLoaded: imageCache.has(cacheKey),

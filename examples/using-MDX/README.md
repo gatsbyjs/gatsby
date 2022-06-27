@@ -9,42 +9,7 @@
 
 This repository demonstrates how to add MDX pages to a new Gatsby site.
 
----
-
-In this section you will see two examples of using MDX, one of which is from a 3rd party react library and another that shows how to use existing components with MDX.
-
-## 📊 React Charts
-
-In the pages directory of this example you will find the `chart-info.mdx` file which uses some components to display this array of information in multiple graphs.
-
-```javascript
-export const data = [
-  {
-    label: "In App Purchase Income",
-    datums: [
-      { x: "2020", y: 9 },
-      { x: "2019", y: 32 },
-      { x: "2018", y: 35 },
-      { x: "2017", y: 36 },
-      { x: "2016", y: 38 },
-      { x: "2015", y: 30 },
-      { x: "2014", y: 29 },
-    ],
-  },
-  {
-    label: "Advertising Income",
-    datums: [
-      { x: "2020", y: 4 },
-      { x: "2019", y: 3 },
-      { x: "2018", y: 12 },
-      { x: "2017", y: 14 },
-      { x: "2016", y: 10 },
-      { x: "2015", y: 9 },
-      { x: "2014", y: 17 },
-    ],
-  },
-]
-```
+In the pages directory of this example you will find the `chart-info.mdx` file which uses a variety of components to display interactive charts.
 
 ## 🔧 Running locally
 
@@ -82,7 +47,9 @@ The site is now running at `http://localhost:8000`, you can see the MDX example 
 
 - [Gatsby default starter repo](https://github.com/gatsbyjs/gatsby-starter-default)
 - [Gatsby plugin MDX](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx/)
-- [Bar chart from react-charts](https://react-charts.js.org/examples/bar)
+- [Bar chart from Nivo Charts](https://nivo.rocks/bar/)
+- [Line chart from Nivo Charts](https://nivo.rocks/line/)
+- [Area Bump chart from Nivo Charts](https://nivo.rocks/area-bump/)
 
 ## 🎓 More Guides for Learning Gatsby and MDX
 
