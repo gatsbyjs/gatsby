@@ -1,5 +1,5 @@
+/* global HAS_REACT_18 */
 import React, { createElement, useEffect } from "react"
-import { createRoot } from "react-dom/client"
 import PropTypes from "prop-types"
 import { apiRunner } from "./api-runner-browser"
 import { grabMatchParams } from "./find-path"
@@ -13,6 +13,17 @@ function Caller({ children, callback }) {
   }, [callback])
 
   return children
+}
+
+// TODO: We do something similar in production-app, we  should use a take this function, put it in some utils file and share
+function render(el, Component) {
+  if (HAS_REACT_18) {
+    const reactDomClient = require(`react-dom/client`)
+    reactDomClient.createRoot(el).render(Component)
+  } else {
+    const reactDomClient = require(`react-dom`)
+    reactDomClient.render(Component, el)
+  }
 }
 
 // Renders page
@@ -51,7 +62,6 @@ function PageRenderer(props) {
 
     useEffect(() => {
       const hiddenRoot = document.createElement(`div`)
-      const root = createRoot(hiddenRoot)
 
       const callback = () => {
         // Remove previous head nodes
@@ -84,8 +94,10 @@ function PageRenderer(props) {
 
         document.head.append(...validHeadNodes)
       }
+
+      // Use react18's .createRoot.render or fallback to .render
       // just a hack to call the callback after react has done first render
-      root.render(<Caller callback={callback}>{headElement}</Caller>)
+      render(hiddenRoot, <Caller callback={callback}>{headElement}</Caller>)
     }, [headElement])
   }
   const wrappedPage = apiRunner(
