@@ -404,18 +404,22 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     )
   }
 
+  const nodesUpdated = []
   for (const node of nodesToUpdate) {
-    if (node.internal.owner) {
-      delete node.internal.owner
+    if (!nodesUpdated.includes(node.id)) {
+      if (node.internal.owner) {
+        delete node.internal.owner
+      }
+      if (node.fields) {
+        delete node.fields
+      }
+      node.internal.contentDigest = createContentDigest(node)
+      createNode(node)
+      reporter.log(
+        `Updated Gatsby node — id: ${node.id} type: ${node.internal.type}`
+      )
+      nodesUpdated.push(node.id)
     }
-    if (node.fields) {
-      delete node.fields
-    }
-    node.internal.contentDigest = createContentDigest(node)
-    createNode(node)
-    reporter.log(
-      `Updated Gatsby node — id: ${node.id} type: ${node.internal.type}`
-    )
   }
 }
 
