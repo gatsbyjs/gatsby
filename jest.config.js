@@ -56,7 +56,7 @@ module.exports = {
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
   reporters: process.env.CI
-    ? [[`jest-silent-reporter`, { useDots: true }]].concat(
+    ? [[`jest-silent-reporter`, { useDots: true, showPaths: true }]].concat(
         useCoverage ? `jest-junit` : []
       )
     : [`default`].concat(useCoverage ? `jest-junit` : []),

@@ -26,13 +26,14 @@ const queue = new Map<
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export async function transformImage({
   outputDir,
-  args: { url, filename, contentDigest, ...args },
+  args: { url, filename, contentDigest, httpHeaders, ...args },
 }: {
   outputDir: string
   args: IResizeArgs & {
     url: string
     filename: string
     contentDigest?: string
+    httpHeaders: Record<string, string> | undefined
   }
 }): Promise<string> {
   const cache = getCache()
@@ -48,10 +49,11 @@ export async function transformImage({
   const basename = path.basename(filename, ext)
   const filePath = await fetchRemoteFile({
     directory: cache.directory,
-    url: url,
+    url,
     name: basename,
     ext,
     cacheKey: contentDigest,
+    httpHeaders,
   })
 
   const outputPath = path.join(outputDir, filename)

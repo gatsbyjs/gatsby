@@ -163,6 +163,6 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     .external(validateContentfulAccess)
 
 /** @type {import('gatsby').GatsbyNode["onCreateDevServer"]} */
-export const onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+export const onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }
