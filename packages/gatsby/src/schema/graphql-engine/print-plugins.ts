@@ -1,7 +1,6 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
 import * as fs from "fs-extra"
 import * as path from "path"
-import * as _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
@@ -62,15 +61,6 @@ function render(
   const uniqSubPlugins = uniq(usedSubPlugins)
   const gatsbyConfigsArray = Array.from(gatsbyConfigs.keys())
 
-  const sanitizedUsedPlugins = usedPlugins.map(plugin => {
-    return {
-      ...plugin,
-      resolve: ``,
-      pluginFilepath: ``,
-      subPluginPaths: undefined,
-    }
-  })
-
   const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
 
   const subPluginModuleToImportNameMapping = new Map<string, string>()
@@ -122,39 +112,6 @@ ${gatsbyConfigExports.join(`\n`)}
 export const gatsbyWorkers = {
 ${gatsbyWorkerExports.join(`\n`)}
 }
-
-export const flattenedPlugins =
-  ${JSON.stringify(
-    sanitizedUsedPlugins.map(plugin => {
-      return {
-        ...plugin,
-        pluginOptions: _.cloneDeepWith(
-          plugin.pluginOptions,
-          (value: any): any => {
-            if (
-              typeof value === `object` &&
-              value !== null &&
-              value.module &&
-              value.modulePath
-            ) {
-              const { module, modulePath, ...subPlugin } = value
-              return {
-                ...subPlugin,
-                module: `_SKIP_START_${subPluginModuleToImportNameMapping.get(
-                  modulePath
-                )}_SKIP_END_`,
-                resolve: ``,
-                pluginFilepath: ``,
-              }
-            }
-            return undefined
-          }
-        ),
-      }
-    }),
-    null,
-    2
-  ).replace(/"_SKIP_START_|_SKIP_END_"/g, ``)}
 `
   return output
 }

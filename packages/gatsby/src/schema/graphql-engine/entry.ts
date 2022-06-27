@@ -22,8 +22,6 @@ import {
   gatsbyConfigs,
   gatsbyWorkers,
   // @ts-ignore
-  flattenedPlugins,
-  // @ts-ignore
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
 import { setGatsbyConfigCache } from "../../utils/require-gatsby-config"
@@ -58,13 +56,6 @@ export class GraphQLEngine {
     try {
       // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
       store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
-
-      /*
-      store.dispatch({
-        type: `SET_SITE_FLATTENED_PLUGINS`,
-        payload: flattenedPlugins,
-      })
-      */
 
       store.dispatch({
         type: `SET_PROGRAM`,
