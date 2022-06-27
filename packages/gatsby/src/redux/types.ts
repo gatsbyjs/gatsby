@@ -110,6 +110,7 @@ export interface IGatsbyConfig {
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
   graphqlTypegen?: IGraphQLTypegenOptions
+  flags?: Record<string, boolean>
 }
 
 export interface IGatsbyNode {
