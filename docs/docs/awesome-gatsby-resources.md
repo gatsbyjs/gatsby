@@ -96,6 +96,8 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 - [Headless WordPress: Why Gatsby Should Be Next on Your List of Things to Learn](https://deliciousbrains.com/gatsby-headless-wordpress/)
 - [Gatsby Tutorials \[video series\] — Michael Uloth](https://www.youtube.com/watch?v=jAa1wh5ATm0&list=PLHBEcHVSROXQQhXpNhmiVKKcw72Cc0V-U)
 - [Guiding Digital's "Gatsby" Playlist](https://www.youtube.com/playlist?list=PLlKF6nzQe39fzz4MHc19l8-PtSqyseqok)
+- [Image Processing in Gatsby](https://www.useanvil.com/blog/engineering/gatsby-image-processing/)
+- [Improving build times in Gatsby](https://www.useanvil.com/blog/engineering/build-times-in-a-static-site-generated-website/)
 
 ### German
 

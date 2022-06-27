@@ -27,6 +27,11 @@ You typically only need to configure this once.`
     `force-install`,
     `Disables copying files into node_modules and forces usage of local npm repository.`
   )
+  .nargs(`external-registry`, 0)
+  .describe(
+    `external-registry`,
+    `Run 'yarn add' commands without the --registry flag.`
+  )
   .alias(`C`, `copy-all`)
   .nargs(`C`, 0)
   .describe(
@@ -82,7 +87,34 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 }
 
 // get list of packages from monorepo
-const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
+const packageNameToPath = new Map()
+const monoRepoPackages = fs
+  .readdirSync(path.join(gatsbyLocation, `packages`))
+  .map(dirName => {
+    try {
+      const localPkg = JSON.parse(
+        fs.readFileSync(
+          path.join(gatsbyLocation, `packages`, dirName, `package.json`)
+        )
+      )
+
+      if (localPkg?.name) {
+        packageNameToPath.set(
+          localPkg.name,
+          path.join(gatsbyLocation, `packages`, dirName)
+        )
+        return localPkg.name
+      }
+    } catch (error) {
+      // fallback to generic one
+    }
+
+    packageNameToPath.set(
+      dirName,
+      path.join(gatsbyLocation, `packages`, dirName)
+    )
+    return dirName
+  })
 
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
 // intersect dependencies with monoRepoPackages to get list of packages that are used
@@ -120,4 +152,6 @@ watch(gatsbyLocation, argv.packages, {
   scanOnce: argv.scanOnce,
   forceInstall: argv.forceInstall,
   monoRepoPackages,
+  packageNameToPath,
+  externalRegistry: argv.externalRegistry,
 })

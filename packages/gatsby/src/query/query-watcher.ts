@@ -137,7 +137,7 @@ const watch = async (rootDir: string): Promise<void> => {
   watcher = chokidar
     .watch(
       [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
-      { ignoreInitial: true }
+      { ignoreInitial: true, ignored: [`**/*.d.ts`] }
     )
     .on(`change`, path => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)

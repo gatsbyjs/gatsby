@@ -7,7 +7,6 @@ import { build, watch } from "../utils/webpack/bundle"
 import * as path from "path"
 
 import { emitter, store } from "../redux"
-import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
@@ -46,20 +45,83 @@ interface IBuildRendererResult {
 }
 
 let devssrWebpackCompiler: webpack.Watching | undefined
-let needToRecompileSSRBundle = true
+let SSRBundleReceivedInvalidEvent = true
+let SSRBundleWillInvalidate = false
+
+export function devSSRWillInvalidate(): void {
+  // we only get one `invalid` callback, so if we already
+  // set this to true, we can't really await next `invalid` event
+  if (!SSRBundleReceivedInvalidEvent) {
+    SSRBundleWillInvalidate = true
+  }
+}
+
+let activeRecompilations = 0
+
 export const getDevSSRWebpack = (): {
-  devssrWebpackWatcher: IWebpackWatchingPauseResume
-  devssrWebpackCompiler: webpack.Compiler
+  recompileAndResumeWatching: (
+    allowTimedFallback: boolean
+  ) => Promise<() => void>
   needToRecompileSSRBundle: boolean
 } => {
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
 
-  return {
-    devssrWebpackWatcher: devssrWebpackCompiler as webpack.Watching,
-    devssrWebpackCompiler: (devssrWebpackCompiler as webpack.Watching).compiler,
-    needToRecompileSSRBundle,
+  const watcher = devssrWebpackCompiler as webpack.Watching
+  const compiler = (devssrWebpackCompiler as webpack.Watching).compiler
+  if (watcher && compiler) {
+    return {
+      recompileAndResumeWatching: async function recompileAndResumeWatching(
+        allowTimedFallback: boolean
+      ): Promise<() => void> {
+        let isResolved = false
+        return await new Promise<() => void>(resolve => {
+          function stopWatching(): void {
+            activeRecompilations--
+            if (activeRecompilations === 0) {
+              watcher.suspend()
+            }
+          }
+          let timeout
+          function finish(): void {
+            emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
+            if (!isResolved) {
+              isResolved = true
+              resolve(stopWatching)
+            }
+            if (timeout) {
+              clearTimeout(timeout)
+            }
+          }
+          emitter.on(`DEV_SSR_COMPILATION_DONE`, finish)
+          // we reset it before we start compilation to be able to catch any invalid events
+          SSRBundleReceivedInvalidEvent = false
+          if (activeRecompilations === 0) {
+            watcher.resume()
+          }
+          activeRecompilations++
+
+          if (allowTimedFallback) {
+            // Timeout after 1.5s.
+            timeout = setTimeout(() => {
+              if (!isResolved) {
+                isResolved = true
+                resolve(stopWatching)
+              }
+            }, 1500)
+          }
+        })
+      },
+      needToRecompileSSRBundle:
+        SSRBundleReceivedInvalidEvent || SSRBundleWillInvalidate,
+    }
+  } else {
+    return {
+      needToRecompileSSRBundle: false,
+      recompileAndResumeWatching: (): Promise<() => void> =>
+        Promise.resolve((): void => {}),
+    }
   }
 }
 
@@ -83,18 +145,22 @@ const runWebpack = (
       // because of this line we can't use our watch helper
       // These things should use emitter
       compiler.hooks.invalid.tap(`ssr file invalidation`, () => {
-        needToRecompileSSRBundle = true
+        SSRBundleReceivedInvalidEvent = true
+        SSRBundleWillInvalidate = false // we were waiting for this event, we are no longer waiting for it
       })
 
+      let isFirstCompile = true
       const watcher = compiler.watch(
         {
           ignored: /node_modules/,
         },
         (err, stats) => {
           // this runs multiple times
-          needToRecompileSSRBundle = false
           emitter.emit(`DEV_SSR_COMPILATION_DONE`)
-          watcher.suspend()
+          if (isFirstCompile) {
+            watcher.suspend()
+            isFirstCompile = false
+          }
 
           if (err) {
             return reject(err)
@@ -229,7 +295,7 @@ const renderHTMLQueue = async (
                   pagePaths: [pagePath],
                 })
                 seenErrors.add(error.stack)
-                const prettyError = await createErrorFromString(
+                const prettyError = createErrorFromString(
                   error.stack,
                   `${htmlComponentRendererPath}.map`
                 )
@@ -304,7 +370,7 @@ const renderHTMLQueue = async (
     }
 
     for (const unsafeBuiltinUsedStack of uniqueUnsafeBuiltinUsedStacks) {
-      const prettyError = await createErrorFromString(
+      const prettyError = createErrorFromString(
         unsafeBuiltinUsedStack,
         `${htmlComponentRendererPath}.map`
       )
@@ -359,7 +425,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const prettyError = await createErrorFromString(
+    const prettyError = createErrorFromString(
       error.stack,
       `${rendererPath}.map`
     )

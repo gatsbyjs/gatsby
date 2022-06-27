@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-expressions */
-import { stripIndent } from "common-tags"
 import camelCase from "camelcase"
-import { IGatsbyImageData } from "."
+import type { IGatsbyImageData } from "./index"
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 export const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
@@ -451,8 +449,8 @@ export function fixedImageSizes({
   // print out this message with the necessary information before we overwrite it for sizing
   if (isTopSizeOverriden) {
     const fixedDimension = imgDimensions.width < width ? `width` : `height`
-    reporter.warn(stripIndent`
-    The requested ${fixedDimension} "${
+    reporter.warn(`
+The requested ${fixedDimension} "${
       fixedDimension === `width` ? width : height
     }px" for the image ${filename} was larger than the actual image ${fixedDimension} of ${
       imgDimensions[fixedDimension]
