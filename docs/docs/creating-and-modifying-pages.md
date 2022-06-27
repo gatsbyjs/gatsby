@@ -198,36 +198,9 @@ Gatsby core and plugins can automatically create pages for you. Sometimes the
 default isn't quite what you want and you need to modify the created page
 objects.
 
-### Removing trailing slashes
+### Configuring trailing slash behavior
 
-A common reason for needing to modify automatically created pages is to remove
-trailing slashes.
-
-To do this, in your site's `gatsby-node.js` add code similar to the following:
-
-_Note: There's also a plugin that will remove all trailing slashes from pages automatically:
-[gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/)_.
-
-_Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
-
-```javascript:title=gatsby-node.js
-// Replacing '/' would result in empty string which is invalid
-const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
-// Implement the Gatsby API “onCreatePage”. This is
-// called after every page is created.
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions
-
-  const oldPage = Object.assign({}, page)
-  // Remove trailing slash unless page is /
-  page.path = replacePath(page.path)
-  if (page.path !== oldPage.path) {
-    // Replace old page with new page
-    deletePage(oldPage)
-    createPage(page)
-  }
-}
-```
+As of `gatsby@4.7.0`, you now have the option of [removing, appending, or ignoring trailing slashes](/docs/reference/config-files/gatsby-config/#trailingslash).
 
 ### Pass context to pages
 
