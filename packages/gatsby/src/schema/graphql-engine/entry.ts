@@ -8,12 +8,17 @@ import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
 import { actions } from "../../redux/actions"
+import _ from "lodash"
 import reporter from "gatsby-cli/lib/reporter"
 import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
-import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
+import type {
+  IFlattenedPlugin,
+  IGatsbyPage,
+  IGatsbyState,
+} from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
 import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
@@ -21,6 +26,7 @@ import {
   gatsbyNodes,
   gatsbyConfigs,
   gatsbyWorkers,
+  subPlugins,
   // @ts-ignore
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
@@ -72,6 +78,13 @@ export class GraphQLEngine {
           gatsbyNodes[pluginName]
         )
       }
+      for (const pluginName of Object.keys(subPlugins)) {
+        setGatsbyPluginCache(
+          { name: pluginName, resolve: `` },
+          `gatsby-node`,
+          subPlugins[pluginName]
+        )
+      }
       for (const pluginName of Object.keys(gatsbyWorkers)) {
         setGatsbyPluginCache(
           { name: pluginName, resolve: `` },
@@ -93,6 +106,37 @@ export class GraphQLEngine {
       const siteDirectory = store.getState().program.directory
       const config = await loadConfig({ siteDirectory })
       await loadPlugins(config, siteDirectory)
+
+      const flattenedPlugins = store.getState().flattenedPlugins
+      const flattenedPLuginsWithSubPlugins = flattenedPlugins.map(plugin => {
+        return {
+          ...plugin,
+          pluginOptions: _.cloneDeepWith(
+            plugin.pluginOptions,
+            (value: IFlattenedPlugin) => {
+              if (
+                typeof value === `object` &&
+                value !== null &&
+                value.resolve
+              ) {
+                const { ...subPlugin } = value
+                return {
+                  ...subPlugin,
+                  module: subPlugins[subPlugin.resolve],
+                  resolve: ``,
+                  pluginFilepath: ``,
+                }
+              }
+              return undefined
+            }
+          ),
+        }
+      })
+
+      store.dispatch({
+        type: `SET_SITE_FLATTENED_PLUGINS`,
+        payload: flattenedPLuginsWithSubPlugins,
+      })
 
       if (_CFLAGS_.GATSBY_MAJOR === `4`) {
         await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
