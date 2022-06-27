@@ -8,6 +8,7 @@ import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testRequireError } from "../utils/test-require-error"
 import { resolveModule } from "../utils/module-resolver"
 import { requireGatsbyPlugin } from "../utils/require-gatsby-plugin"
+import { preferDefault } from "./prefer-default"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -218,7 +219,7 @@ export const resolveModuleExports = (
         module = require(modulePath)
       }
 
-      return Object.keys(module).filter(
+      return Object.keys(preferDefault(module)).filter(
         exportName => exportName !== `__esModule`
       )
     } catch (e) {
