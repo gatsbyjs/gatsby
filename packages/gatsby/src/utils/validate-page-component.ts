@@ -21,17 +21,20 @@ export function validatePageComponent(
   if (!component) {
     throw new Error(`11322`)
   }
-  if (validationCache.has(component)) {
+
+  const cleanComponentPath = component.split(`?`)[0]
+
+  if (validationCache.has(cleanComponentPath)) {
     return {}
   }
-  if (!path.isAbsolute(component)) {
+  if (!path.isAbsolute(cleanComponentPath)) {
     return {
       error: {
         id: `11326`,
         context: {
           pluginName,
           pageObject: page,
-          component: component,
+          component: cleanComponentPath,
         },
       },
       message: `${pluginName} must set the absolute path to the page component when create creating a page`,
@@ -39,7 +42,6 @@ export function validatePageComponent(
   }
 
   if (isNotTestEnv) {
-    const cleanComponentPath = component.split(`?`)[0]
     if (!fs.existsSync(cleanComponentPath)) {
       return {
         error: {
@@ -58,11 +60,11 @@ export function validatePageComponent(
   // (hopefully a component).
   //
 
-  if (!component.includes(`/.cache/`) && isProductionEnv) {
+  if (!cleanComponentPath.includes(`/.cache/`) && isProductionEnv) {
     const fileContent = fs.readFileSync(component, `utf-8`)
 
     if (fileContent === ``) {
-      const relativePath = path.relative(directory, component)
+      const relativePath = path.relative(directory, cleanComponentPath)
 
       return {
         error: {
@@ -76,7 +78,9 @@ export function validatePageComponent(
     }
 
     // this check only applies to js and ts, not mdx
-    if ([`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(component))) {
+    if (
+      [`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(cleanComponentPath))
+    ) {
       const includesDefaultExport =
         fileContent.includes(`export default`) ||
         fileContent.includes(`module.exports`) ||
@@ -90,7 +94,7 @@ export function validatePageComponent(
           error: {
             id: `11328`,
             context: {
-              fileName: component,
+              fileName: cleanComponentPath,
             },
           },
           panicOnBuild: true,
@@ -99,7 +103,7 @@ export function validatePageComponent(
     }
   }
 
-  validationCache.add(component)
+  validationCache.add(cleanComponentPath)
   return {}
 }
 
