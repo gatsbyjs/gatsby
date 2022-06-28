@@ -436,6 +436,7 @@ export function collatePluginAPIs({
       plugin.resolvedCompiledGatsbyNode ?? `${plugin.resolve}/gatsby-node`,
       {
         mode: `require`,
+        name: plugin.name,
       }
     )
     const pluginBrowserExports = resolveModuleExports(

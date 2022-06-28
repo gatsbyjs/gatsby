@@ -185,26 +185,20 @@ https://gatsby.dev/no-mixed-modules
  * return an array listing the names of the module's exports.
  *
  * Returns [] for invalid paths and modules without exports.
- *
- * @param modulePath
- * @param mode
- * @param resolver
  */
 export const resolveModuleExports = (
   modulePath: string,
-  { mode = `analysis`, resolver = resolveModule } = {}
+  { mode = `analysis`, resolver = resolveModule, name = `` } = {}
 ): Array<string> => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {
       const moduleName = path.parse(modulePath).name
       const pluginResolve = path.dirname(modulePath)
-      // const pluginName = path.basename(pluginResolve)
 
       const cachedPlugin = requireGatsbyPlugin(
         {
-          // using pluginResolve in name is hacky, e.g. if user uses require.resolve it might break
-          name: pluginResolve,
+          name: name,
           resolve: pluginResolve,
         },
         moduleName
