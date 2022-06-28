@@ -39,6 +39,10 @@ export async function createGraphqlEngineBundle(
     },
   }
 
+  const gatsbyPluginTSRequire = mod.createRequire(
+    require.resolve(`gatsby-plugin-typescript`)
+  )
+
   const compiler = webpack({
     name: `Query Engine`,
     // mode: `production`,
@@ -79,16 +83,6 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
-          test: /\.ts$/,
-          exclude: /node_modules/,
-          use: {
-            loader: `babel-loader`,
-            options: {
-              presets: [`@babel/preset-typescript`],
-            },
-          },
-        },
-        {
           oneOf: [
             {
               // specific set of loaders for LMBD - our custom patch to massage lmdb to work with relocator -> relocator
@@ -123,6 +117,18 @@ export async function createGraphqlEngineBundle(
               use: assetRelocatorUseEntry,
             },
           ],
+        },
+        {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: require.resolve(`babel-loader`),
+            options: {
+              presets: [
+                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
+              ],
+            },
+          },
         },
         {
           test: /\.m?js$/,

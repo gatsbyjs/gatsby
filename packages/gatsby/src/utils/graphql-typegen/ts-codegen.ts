@@ -7,14 +7,18 @@ import type { TypeScriptPluginConfig } from "@graphql-codegen/typescript/config"
 import type { TypeScriptDocumentsPluginConfig } from "@graphql-codegen/typescript-operations/config"
 import { CodeFileLoader } from "@graphql-tools/code-file-loader"
 import { loadDocuments } from "@graphql-tools/load"
-import { IDefinitionMeta, IStateProgram } from "../../redux/types"
+import {
+  IDefinitionMeta,
+  IStateProgram,
+  IGraphQLTypegenOptions,
+} from "../../redux/types"
 import {
   filterTargetDefinitions,
   sortDefinitions,
   stabilizeSchema,
 } from "./utils"
 
-const OUTPUT_PATH = `src/gatsby-types.d.ts`
+export const DEFAULT_TYPES_OUTPUT_PATH = `src/gatsby-types.d.ts`
 const NAMESPACE = `Queries`
 
 // These override the defaults from
@@ -48,7 +52,8 @@ const DEFAULT_TYPESCRIPT_OPERATIONS_CONFIG: Readonly<TypeScriptDocumentsPluginCo
 export async function writeTypeScriptTypes(
   directory: IStateProgram["directory"],
   schema: GraphQLSchema,
-  definitions: Map<string, IDefinitionMeta>
+  definitions: Map<string, IDefinitionMeta>,
+  graphqlTypegenOptions: IGraphQLTypegenOptions
 ): Promise<void> {
   const pluginConfig: Pick<Types.GenerateOptions, "plugins" | "pluginMap"> = {
     pluginMap: {
@@ -90,7 +95,7 @@ export async function writeTypeScriptTypes(
     ],
   }
 
-  const filename = join(directory, OUTPUT_PATH)
+  const filename = join(directory, graphqlTypegenOptions.typesOutputPath)
 
   let gatsbyNodeDocuments: Array<Types.DocumentFile> = []
   // The loadDocuments + CodeFileLoader looks for graphql(``) functions inside the gatsby-node.ts files
