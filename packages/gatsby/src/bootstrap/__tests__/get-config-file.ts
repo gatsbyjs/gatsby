@@ -119,8 +119,8 @@ describe(`getConfigFile`, () => {
   it(`should handle case where gatsby-config.ts exists but no compiled gatsby-config.js exists`, async () => {
     // Force outer and inner errors so we can hit the code path that checks if gatsby-config.ts exists
     pathJoinMock
-      .mockImplementationOnce(() => `force-outer-error`)
       .mockImplementationOnce(() => `force-inner-error`)
+      .mockImplementationOnce(() => `force-outer-error`)
     testRequireErrorMock.mockImplementationOnce(() => true)
 
     await getConfigFile(tsDir, `gatsby-config`)

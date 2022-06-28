@@ -1,8 +1,8 @@
-const loadThemes = require(`..`)
-const path = require(`path`)
+import path from "path"
+import { loadThemes } from ".."
 
 describe(`loadThemes`, () => {
-  test(`resolves themes and plugins from location of gatsby-config`, async () => {
+  it(`resolves themes and plugins from location of gatsby-config`, async () => {
     /*
       Fixture used in this test is structured like this:
 
@@ -33,14 +33,13 @@ describe(`loadThemes`, () => {
       config: { plugins },
       themes,
     } = await loadThemes(config, {
-      useLegacyThemes: false,
       configFilePath,
       rootDir: path.dirname(configFilePath),
     })
 
     // implicit assertion - above doesn't throw `Couldn't find the "x" plugin`
 
-    expect(plugins.length).toEqual(3)
+    expect(plugins!.length).toEqual(3)
 
     // all nested plugins / themes are found
     expect(plugins).toEqual(

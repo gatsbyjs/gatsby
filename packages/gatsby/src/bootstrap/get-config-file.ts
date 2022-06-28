@@ -72,7 +72,7 @@ export async function getConfigFile(
     }
 
     // Attempt to find uncompiled gatsby-config.js in root dir
-    configPath = path.join(siteDirectory, configName)
+    configPath = absoluteConfigPath
 
     try {
       const configModuleFromCache = requireGatsbyConfig(absoluteConfigPath)
