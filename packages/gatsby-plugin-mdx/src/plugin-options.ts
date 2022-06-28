@@ -1,13 +1,11 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
-import type {
-  PluginOptions,
-  GatsbyCache,
-  Reporter,
-  NodePluginArgs,
-} from "gatsby"
+import type { PluginOptions, GatsbyCache, NodePluginArgs } from "gatsby"
 import deepmerge from "deepmerge"
 import { IPluginRefObject } from "gatsby-plugin-utils/types"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
+import rehypeMdxMetadataExtractor from "./rehype-metadata-extractor"
+import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
+import { remarkPathPlugin } from "./remark-path-prefix-plugin"
 
 export interface IMdxPluginOptions extends PluginOptions {
   extensions: [string]
@@ -19,7 +17,7 @@ interface IHelpers {
   getNode: NodePluginArgs["getNode"]
   getNodesByType: NodePluginArgs["getNodesByType"]
   pathPrefix: NodePluginArgs["pathPrefix"]
-  reporter: Reporter
+  reporter: NodePluginArgs["reporter"]
   cache: GatsbyCache
 }
 type MdxDefaultOptions = (pluginOptions: IMdxPluginOptions) => IMdxPluginOptions
@@ -29,6 +27,7 @@ export const defaultOptions: MdxDefaultOptions = pluginOptions => {
     format: `mdx`,
     useDynamicImport: true,
     providerImportSource: `@mdx-js/react`,
+    jsxRuntime: `classic`,
   }
   const options: IMdxPluginOptions = deepmerge(
     {
@@ -53,12 +52,20 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
 ) => {
   const options = defaultOptions(pluginOptions)
 
+  if (!options.mdxOptions.remarkPlugins) {
+    options.mdxOptions.remarkPlugins = []
+  }
+
+  // Inject Gatsby path prefix if needed
+  if (helpers.pathPrefix) {
+    options.mdxOptions.remarkPlugins.push([
+      remarkPathPlugin,
+      { pathPrefix: helpers.pathPrefix },
+    ])
+  }
+
   // Support gatsby-remark-* plugins
   if (Object.keys(options.gatsbyRemarkPlugins).length) {
-    if (!options.mdxOptions.remarkPlugins) {
-      options.mdxOptions.remarkPlugins = []
-    }
-
     // Parser plugins
     for (const plugin of options.gatsbyRemarkPlugins) {
       const requiredPlugin = plugin.module
@@ -86,6 +93,15 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
       options.mdxOptions.remarkPlugins.push(...gatsbyRemarkPlugins)
     }
   }
+
+  options.mdxOptions.remarkPlugins.push(remarkMdxHtmlPlugin)
+
+  if (!options.mdxOptions.rehypePlugins) {
+    options.mdxOptions.rehypePlugins = []
+  }
+
+  // Extract metadata generated from by rehype-infer-* and similar plugins
+  options.mdxOptions.rehypePlugins.push(rehypeMdxMetadataExtractor)
 
   return options.mdxOptions
 }

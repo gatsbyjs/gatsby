@@ -1,5 +1,6 @@
 import type { GatsbyNode, NodeInput } from "gatsby"
 import type { FileSystemNode } from "gatsby-source-filesystem"
+import type { Options } from "rehype-infer-description-meta"
 import type { IFileNode, NodeMap } from "./types"
 
 import path from "path"
@@ -13,8 +14,10 @@ import {
   IMdxPluginOptions,
 } from "./plugin-options"
 import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
-import compileMDX from "./compile-mdx"
+import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
+import remarkInferTocMeta from "./remark-infer-toc-meta"
+import { ERROR_MAP } from "./error-utils"
 
 /**
  * Add support for MDX files including using Gatsby layout components
@@ -50,6 +53,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
     const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
       options: mdxOptions,
       nodeMap,
+      reporter,
     }
 
     const layoutLoaderOptions: IGatsbyLayoutLoaderOptions = {
@@ -119,13 +123,14 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     return undefined
   }
 
-  const code = await compileMDX(
-    contents,
+  const compileRes = await compileMDX(
     {
       id: ``,
       children: [],
       parent: ``,
       internal: { contentDigest: ``, owner: ``, type: `` },
+      body: contents,
+      rawBody: ``,
     },
     {
       id: ``,
@@ -135,14 +140,21 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
       absolutePath: filename,
       sourceInstanceName: `mocked`,
     },
-    mdxOptions
+    mdxOptions,
+    reporter
   )
 
-  return code.toString()
+  if (!compileRes?.processedMDX) {
+    return undefined
+  }
+  return compileRes.processedMDX.toString()
 }
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
-  async ({ actions, schema }) => {
+  async (
+    { getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema },
+    pluginOptions: IMdxPluginOptions
+  ) => {
     const { createTypes } = actions
     const typeDefs = [
       schema.buildObjectType({
@@ -155,9 +167,85 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
         name: `Mdx`,
         fields: {
           rawBody: `String!`,
+          body: `String!`,
           frontmatter: `MdxFrontmatter!`,
           slug: `String`,
           title: `String`,
+          excerpt: {
+            type: `String`,
+            args: {
+              pruneLength: {
+                type: `Int`,
+                defaultValue: 140,
+              },
+            },
+            async resolve(mdxNode, { pruneLength }: { pruneLength: number }) {
+              const rehypeInferDescriptionMeta = (
+                await import(`rehype-infer-description-meta`)
+              ).default
+
+              const descriptionOptions: Options = { truncateSize: pruneLength }
+
+              const result = await compileMDXWithCustomOptions({
+                mdxNode,
+                pluginOptions,
+                customOptions: {
+                  mdxOptions: {
+                    rehypePlugins: [
+                      [rehypeInferDescriptionMeta, descriptionOptions],
+                    ],
+                  },
+                },
+                getNode,
+                getNodesByType,
+                pathPrefix,
+                reporter,
+                cache,
+              })
+
+              if (!result) {
+                return null
+              }
+
+              return result.metadata.description
+            },
+          },
+          tableOfContents: {
+            type: `JSON`,
+            args: {
+              maxDepth: {
+                type: `Int`,
+                default: 6,
+              },
+            },
+            async resolve(mdxNode, { maxDepth }) {
+              const { visit } = await import(`unist-util-visit`)
+              const { toc } = await import(`mdast-util-toc`)
+
+              const result = await compileMDXWithCustomOptions({
+                mdxNode,
+                pluginOptions,
+                customOptions: {
+                  mdxOptions: {
+                    remarkPlugins: [
+                      [remarkInferTocMeta, { visit, toc, maxDepth }],
+                    ],
+                  },
+                },
+                getNode,
+                getNodesByType,
+                pathPrefix,
+                reporter,
+                cache,
+              })
+
+              if (!result) {
+                return null
+              }
+
+              return result.metadata.toc
+            },
+          },
         },
         interfaces: [`Node`],
       }),
@@ -181,9 +269,9 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
   actions: { createNode, createParentChildLink },
   createNodeId,
 }) => {
-  const content = await loadNodeContent(node)
+  const rawBody = await loadNodeContent(node)
 
-  const { data: frontmatter } = grayMatter(content)
+  const { data: frontmatter, content: body } = grayMatter(rawBody)
 
   // Use slug from frontmatter, otherwise fall back to the file name and path
   const slug =
@@ -200,11 +288,12 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
     children: [],
     parent: node.id,
     internal: {
-      content: content,
+      content: rawBody,
       type: `Mdx`,
       contentDigest: node.internal.contentDigest,
     },
-    rawBody: content,
+    rawBody,
+    body,
     slug,
     title,
     frontmatter,
@@ -226,7 +315,7 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   const ext = path.extname(page.component)
 
   // Only apply on pages based on .mdx files and avoid loops
-  if (extensions.includes(ext) && !page.context.frontmatter) {
+  if (extensions.includes(ext) && !page.context?.frontmatter) {
     const content = await fs.readFile(page.component, `utf8`)
     const { data: frontmatter } = grayMatter(content)
 
@@ -239,6 +328,11 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
       },
     })
   }
+}
+
+export const onPluginInit: GatsbyNode["onPluginInit"] = ({ reporter }) => {
+  // @ts-ignore - We only expose this type from gatsby-cli and we don't want to import from there
+  reporter.setErrorMap(ERROR_MAP)
 }
 
 /**

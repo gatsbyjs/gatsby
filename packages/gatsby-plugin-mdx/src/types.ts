@@ -1,6 +1,10 @@
+import type { VFile, VFileData } from "vfile"
 import type { Node } from "gatsby"
 
-export type IMdxNode = Node
+export interface IMdxNode extends Node {
+  rawBody?: string
+  body?: string
+}
 
 export interface IFileNode extends Node {
   sourceInstanceName?: string
@@ -8,3 +12,19 @@ export interface IFileNode extends Node {
 }
 
 export type NodeMap = Map<string, { fileNode: IFileNode; mdxNode: IMdxNode }>
+
+interface IMdxVFileDataMeta {
+  [key: string]: unknown
+}
+
+interface IMdxVFileData extends VFileData {
+  meta?: IMdxVFileDataMeta
+}
+
+export interface IMdxVFile extends VFile {
+  data: IMdxVFileData
+}
+
+export interface IMdxMetadata {
+  [key: string]: unknown
+}

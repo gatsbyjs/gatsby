@@ -71,11 +71,11 @@ module.exports = (
         title: null,
         children: [],
         data: {
-          hProperties: {
+          properties: {
             "aria-label": `${label} permalink`,
             class: `${className} ${isIconAfterHeader ? `after` : `before`}`,
           },
-          hChildren: [
+          children: [
             {
               type: `raw`,
               // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
