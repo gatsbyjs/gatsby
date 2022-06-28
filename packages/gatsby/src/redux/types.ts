@@ -121,7 +121,6 @@ export interface IGatsbyNode {
     content?: string
     description?: string
   }
-  __gatsby_resolved: any // TODO
   [key: string]: unknown
   fields: Array<string>
 }
