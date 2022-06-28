@@ -3,21 +3,8 @@ import type { GatsbyImageProps } from "gatsby-plugin-image"
 import React from "react"
 
 let hydrateRef
-let isFirstHydration = true
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 
 export function onRouteUpdate(): void {
-  if (
-    process.env.NODE_ENV === `production` &&
-    isFirstHydration &&
-    // Safari has a bug that causes images to stay blank when directly loading a page (images load when client-side navigating)
-    // running this code on first hydration makes images load.
-    !isSafari
-  ) {
-    isFirstHydration = false
-    return
-  }
-
   if (`requestIdleCallback` in window) {
     if (hydrateRef) {
       // @ts-ignore cancelIdleCallback is on window object
