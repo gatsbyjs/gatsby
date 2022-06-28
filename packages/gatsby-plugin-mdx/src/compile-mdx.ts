@@ -6,8 +6,9 @@ import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
 import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 
 // Compiles MDX into JS
-// This could be replaced by @mdx-js/mdx if MDX compile would
-// accept custom data passed to the unified pipeline via processor.data()
+// Differences to original @mdx-js/loader:
+// * We pass the MDX node and a metadata object to the processor
+// * We inject the path to the original mdx file into the VFile which is used by the processor
 export async function compileMDX(
   mdxNode: IMdxNode,
   fileNode: IFileNode,
@@ -19,7 +20,7 @@ export async function compileMDX(
 
     const processor = createProcessor(options)
 
-    // If we could pass this via MDX loader config, this whole custom loader might be obsolete.
+    // Pass required custom data into the processor
     const metadata: IMdxMetadata = {}
     processor.data(`mdxNode`, mdxNode)
     processor.data(`mdxMetadata`, metadata)
