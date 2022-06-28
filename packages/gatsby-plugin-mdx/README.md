@@ -31,14 +31,19 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
   - [Installation](#installation)
   - [Usage](#usage)
     - [Configuration](#configuration)
-      - [Default layouts](#default-layouts)
-      - [Shortcodes](#shortcodes)
+      - [Extensions](#extensions)
       - [Gatsby remark plugins](#gatsby-remark-plugins)
       - [mdxOptions](#mdxoptions)
     - [Imports](#imports)
+    - [Layouts](#layouts)
+    - [Programmatically create MDX pages](#programmatically-create-mdx-pages)
+    - [GraphQL MDX Node structure](#graphql-mdx-node-structure)
+    - [Extending the GraphQL Mdx nodes](#extending-the-graphql-mdx-nodes)
     - [Components](#components)
       - [MDXProvider](#mdxprovider)
-        - [Related](#related)
+      - [Shortcodes](#shortcodes)
+  - [Migration from v1](#migration-from-v1)
+  - [Related](#related)
   - [License](#license)
 
 ## Installation
@@ -107,161 +112,32 @@ module.exports = {
 any other Gatsby plugin. You can define MDX extensions, layouts, global
 scope, and more.
 
-| Key                                             | Default | Description                                             |
-| ----------------------------------------------- | ------- | ------------------------------------------------------- |
-| [`defaultLayouts`](#default-layouts)            | `{}`    | Set the layout components for MDX source types          |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`    | Use Gatsby-specific remark plugins                      |
-| [`mdxOptions`](#mdxOptions)                     | `[]`    | Options directly passed to `compile()` of `@mdx-js/mdx` |
+| Key                                             | Default    | Description                                                       |
+| ----------------------------------------------- | ---------- | ----------------------------------------------------------------- |
+| [`extensions`](#extensions)                     | `[".mdx"]` | Configure the file extensions that gatsby-plugin-mdx will process |
+| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`       | Use Gatsby-specific remark plugins                                |
+| [`mdxOptions`](#mdxOptions)                     | `[]`       | Options directly passed to `compile()` of `@mdx-js/mdx`           |
 
-#### Default layouts
+#### Extensions
 
-`defaultLayouts` takes an object where the `key` is the `name` key of
-the `gatsby-source-filesystem` configuration you want to
-target. `default` applies to any MDX file that doesn't already have a
-layout defined, even if it's imported manually using `import MDX from './thing.mdx`.
+By default, only files with the `.mdx` file extension are treated as MDX when
+using `gatsby-source-filesystem`. To use `.md` or other file extensions, you can
+define an array of file extensions in the `gatsby-plugin-mdx` section of your
+`gatsby-config.js`.
 
 ```js
 // gatsby-config.js
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `posts`,
-        path: `${__dirname}/src/posts/`,
-      },
-    },
-    {
-      resolve: "gatsby-plugin-page-creator",
-      options: {
-        path: `${__dirname}/src/posts`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        defaultLayouts: {
-          posts: require.resolve("./src/components/posts-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js"),
-        },
+        extensions: [`.mdx`, `.md`],
       },
     },
   ],
 }
 ```
-
-MDX has a layout concept that is different from Gatsby's. MDX layouts
-are written using the default export JavaScript syntax in a single MDX
-file. An MDX layout will wrap the MDX content in an additional
-component, so this can be a good place for a page layout depending on
-how you are using MDX.
-
-```javascript
-export default ({ children }) => (
-  <div>
-    <h1>My Layout</h1>
-    <div>{children}</div>
-  </div>
-)
-
-# My MDX
-
-some content
-```
-
-or as an import:
-
-```javascript
-import PageLayout from './src/components/page-layout';
-
-export default PageLayout
-
-# My MDX
-
-some content
-```
-
-Sometimes you don't want to include the layout in every file, so `gatsby-plugin-mdx`
-offers the option to set default layouts in the `gatsby-config.js` plugin
-config. Set the key to the `name` set in the `gatsby-source-filesystem` config.
-If no matching default layout is found, the default layout named `default` is used.
-
-You can also set `options.defaultLayouts.default` if you only want to
-use one layout for all MDX pages that don't already have a layout defined.
-
-```js
-module.exports = {
-  siteMetadata: {
-    title: `Gatsby MDX Kitchen Sink`,
-  },
-  plugins: [
-    {
-      resolve: `gatsby-plugin-mdx`,
-      options: {
-        defaultLayouts: {
-          posts: require.resolve("./src/components/posts-layout.js"),
-          default: require.resolve("./src/components/default-page-layout.js"),
-        },
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `posts`,
-        path: `${__dirname}/src/posts/`,
-      },
-    },
-    {
-      resolve: "gatsby-plugin-page-creator",
-      options: {
-        path: `${__dirname}/src/posts`,
-      },
-    },
-  ],
-}
-```
-
-#### Shortcodes
-
-If you want to allow usage of a component from anywhere (often referred to as a
-shortcode), you can pass it to the
-[MDXProvider](https://www.gatsbyjs.com/docs/mdx/customizing-components/).
-
-```js
-// src/components/layout.js
-import React from "react"
-import { MDXProvider } from "@mdx-js/react"
-import { Link } from "gatsby"
-import { YouTube, Twitter, TomatoBox } from "./ui"
-
-const shortcodes = { Link, YouTube, Twitter, TomatoBox }
-
-export default ({ children }) => (
-  <MDXProvider components={shortcodes}>{children}</MDXProvider>
-)
-```
-
-Then, in any MDX file, you can navigate using `Link` and render `YouTube`, `Twitter`, and `TomatoBox` components without
-an import.
-
-```mdx
-# Hello, world!
-
-Here's a YouTube embed
-
-<TomatoBox>
-  <YouTube id="123abc" />
-</TomatoBox>
-```
-
-[Read more about MDX shortcodes](https://mdxjs.com/blog/shortcodes)
 
 #### Gatsby remark plugins
 
@@ -357,6 +233,121 @@ Here's a color picker!
 
 _**Note:** You should rerun your Gatsby development environment to update imports in MDX files. Otherwise, you'll get a `ReferenceError` for new imports. You can use the shortcodes approach if that is an issue for you._
 
+### Layouts
+
+You can use regular [Layout Components](https://www.gatsbyjs.com/docs/how-to/routing/layout-components/) to apply layout to your sub pages.
+
+To inject them, you have several options:
+
+1. use the [`wrapPageElement' API](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/#wrapPageElement) including its [SSR counterpart](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-ssr/#wrapPageElement).
+2. Add an `export default` statement to your MDX file: https://mdxjs.com/docs/using-mdx/#layout
+3. When using the [`createPage` action](https://www.gatsbyjs.com/docs/recipes/pages-layouts/#creating-pages-programmatically-with-createpage) to programatically create pages, you should use the following URI pattern for your page component: `your-layout-component.js?__mdxPath=absolute-path-to-your-mdx-file.mdx`
+
+### Programmatically create MDX pages
+
+If you want to use the `createPage` action to create your pages, you can do it the following way:
+
+```jsx
+// query for post mdx files and create pages for them
+exports.createPages = async ({ actions, graphql, reporter }) => {
+  const result = await graphql(`
+    query {
+      allMdx(
+        # Using this filter you can select a subset of files
+        # based on the gatsby-source-filesystem options.name property
+        filter: { fields: { collection: { eq: "posts" } } }
+        # You can access frontmatter data to sort
+        sort: { fields: [frontmatter___date], order: DESC }
+      ) {
+        edges {
+          node {
+            slug
+            frontmatter {
+              title
+            }
+            # This is the relevant part, we need the absolute path
+            # to the MDX file for webpack
+            parent {
+              ... on File {
+                absolutePath
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+  if (result.errors) {
+    reporter.panic("error loading posts", result.errors)
+    return
+  }
+  const posts = result.data.allMdx.nodes
+  posts.forEach(post => {
+    const slug = post.slug
+    actions.createPage({
+      path: slug,
+      component: require.resolve("./src/templates/post.js"),
+      context: {
+        frontmatter: post.frontmatter,
+      },
+    })
+  })
+}
+```
+
+(Based on: https://www.gatsbyjs.com/tutorial/building-a-theme/#create-a-page-for-each-event)
+
+The actual Layout Component could look like this:
+
+```jsx
+import React from "react"
+import { graphql } from "gatsby"
+
+export const pageQuery = graphql`
+  query ($slug: String!) {
+    site {
+      siteMetadata {
+        title
+        author
+      }
+    }
+    mdx(fields: { slug: { eq: $slug } }) {
+      title
+      excerpt
+    }
+  }
+`
+function PostTemplate({ data: { mdx: post }, children }) {
+  return (
+    <>
+      <SEO title={post.title} description={post.excerpt} />
+      /* Note that the components children will contain your transformed MDX */
+      <main>{children}</main>
+    </>
+  )
+}
+
+export default PostTemplate
+```
+
+### GraphQL MDX Node structure
+
+In your GraphQL schema, you will discover several additional data related to your MDX content. While your local [GraphiQL](http://localhost:8000/___graphql) will give you the most recent data, here are the most relevant properties of the `Mdx` entities:
+
+| Property        | Description                                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| body            | Your MDX file content without Frontmatter                                                                                                  |
+| rawBody         | Your untouched MDX file content                                                                                                            |
+| title           | Either your title from Frontmatter or the file name in sentence case                                                                       |
+| slug            | Either your slug from Frontmatter or the relative file path + file name. (While `index` in the file name will be replaced with ``)         |
+| frontmatter     | Sub-entity with all Frontmatter data. Regular Gatsby transformations apply, like you can format dates directly within the query.           |
+| excerpt         | A pruned variant of your content. By default trimmed to 140 characters. Based on https://github.com/rehypejs/rehype-infer-description-meta |
+| tableOfContents | Generates a recursive object structure to reflect a table of contents. Based on https://github.com/syntax-tree/mdast-util-toc              |
+
+### Extending the GraphQL Mdx nodes
+
+@todo Explain how to reimplement the timeToRead from v1 of the plugin
+
 ### Components
 
 MDX and `gatsby-plugin-mdx` use components for different things like rendering
@@ -427,12 +418,50 @@ so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
 
-You can also expose any custom component to every mdx file using
-`MDXProvider`. See [Shortcodes](#shortcodes)
+#### Shortcodes
 
-##### Related
+If you want to allow usage of a component from anywhere (often referred to as a
+shortcode), you can pass it to the
+[MDXProvider](https://www.gatsbyjs.com/docs/mdx/customizing-components/).
 
-- [React context for MDX](https://mdxjs.com/packages/react/#use)
+```js
+// src/components/layout.js
+import React from "react"
+import { MDXProvider } from "@mdx-js/react"
+import { Link } from "gatsby"
+import { YouTube, Twitter, TomatoBox } from "./ui"
+
+const shortcodes = { Link, YouTube, Twitter, TomatoBox }
+
+export default ({ children }) => (
+  <MDXProvider components={shortcodes}>{children}</MDXProvider>
+)
+```
+
+Then, in any MDX file, you can navigate using `Link` and render `YouTube`, `Twitter`, and `TomatoBox` components without
+an import.
+
+```mdx
+# Hello, world!
+
+Here's a YouTube embed
+
+<TomatoBox>
+  <YouTube id="123abc" />
+</TomatoBox>
+```
+
+Read more about injecting your own components: https://mdxjs.com/docs/using-mdx/#mdx-provider
+
+## Migration from v1
+
+@todo
+
+## Related
+
+- [What is MDX](https://mdxjs.com/docs/what-is-mdx/)
+- [Using MDX](https://mdxjs.com/docs/using-mdx/)
+- [Troubleshooting MDX](https://mdxjs.com/docs/troubleshooting-mdx/)
 
 ## License
 
