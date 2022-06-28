@@ -383,7 +383,7 @@ const errors = {
   },
   "10127": {
     text: (context): string =>
-      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js. Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
+      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js". Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -730,6 +730,21 @@ const errors = {
     level: Level.ERROR,
     type: Type.COMPILATION,
     category: ErrorCategory.USER,
+  },
+  "11904": {
+    text: (context): string =>
+      `Expected compiled files not found after compilation for ${
+        context.siteRoot
+      } after ${context.retries} retries.\nFile expected to be valid: ${
+        context.compiledFileLocation
+      }${
+        context.sourceFileLocation
+          ? `\nCompiled from: ${context.sourceFileLocation}`
+          : ``
+      }\n\nPlease run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.SYSTEM,
   },
   "12100": {
     text: (

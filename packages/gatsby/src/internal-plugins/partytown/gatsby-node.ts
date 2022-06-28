@@ -23,11 +23,11 @@ exports.createPages = ({ actions, store }): void => {
   const { partytownProxiedURLs = [] } = config
 
   for (const host of partytownProxiedURLs) {
-    const encodedURL: string = encodeURI(host)
+    const encodedURL: string = encodeURIComponent(host)
 
     createRedirect({
       fromPath: `${thirdPartyProxyPath}?url=${encodedURL}`,
-      toPath: encodedURL,
+      toPath: host,
       statusCode: 200,
     })
   }
