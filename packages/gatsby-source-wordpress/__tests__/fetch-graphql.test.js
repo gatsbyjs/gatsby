@@ -2,6 +2,19 @@ import chalk from "chalk"
 import fetchGraphQL, { moduleHelpers } from "../dist/utils/fetch-graphql"
 import store from "../dist/store"
 
+jest.mock(`async-retry`, () => {
+  return {
+    __esModule: true,
+    default: jest.fn((tryFunction) => {
+      const bail = (e) => {
+        throw new Error(e)
+      }
+
+      return tryFunction(bail)
+    })
+  }
+})
+
 describe(`fetchGraphQL helper`, () => {
   let mock
   const panicMessages = []
@@ -17,12 +30,12 @@ describe(`fetchGraphQL helper`, () => {
             }
 
             if (query === `wpgraphql-deactivated`) {
-              return {
+              return Promise.resolve({
                 request: {},
                 headers: {
                   [`content-type`]: `text/html`,
                 },
-              }
+              })
             }
 
             return null
