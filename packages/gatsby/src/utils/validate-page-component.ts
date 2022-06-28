@@ -61,7 +61,7 @@ export function validatePageComponent(
   //
 
   if (!cleanComponentPath.includes(`/.cache/`) && isProductionEnv) {
-    const fileContent = fs.readFileSync(component, `utf-8`)
+    const fileContent = fs.readFileSync(cleanComponentPath, `utf-8`)
 
     if (fileContent === ``) {
       const relativePath = path.relative(directory, cleanComponentPath)
