@@ -27,7 +27,7 @@
     "@babel/runtime": "^7.15.4",
     "@babel/traverse": "^7.15.4",
     "@sindresorhus/slugify": "^1.1.2",
-    "chokidar": "^3.5.2",
+    "chokidar": "^3.5.3",
     "fs-exists-cached": "^1.0.0",
     "gatsby-core-utils": "^3.18.0-next.1",
     "gatsby-page-utils": "^2.18.0-next.1",
