@@ -1,9 +1,9 @@
-/* global HAS_REACT_18 */
 import React, { createElement, useEffect } from "react"
 import PropTypes from "prop-types"
 import { apiRunner } from "./api-runner-browser"
 import { grabMatchParams } from "./find-path"
 import { StaticQueryContext } from "gatsby"
+import { reactDOMUtils } from "./react-dom-utils"
 import { VALID_NODE_NAMES } from "./head/constants"
 
 // Calls callback in an effect and renders children
@@ -13,17 +13,6 @@ function Caller({ children, callback }) {
   }, [callback])
 
   return children
-}
-
-// TODO: We do something similar in production-app, we  should use a take this function, put it in some utils file and share
-function render(el, Component) {
-  if (HAS_REACT_18) {
-    const reactDomClient = require(`react-dom/client`)
-    reactDomClient.createRoot(el).render(Component)
-  } else {
-    const reactDomClient = require(`react-dom`)
-    reactDomClient.render(Component, el)
-  }
 }
 
 // Renders page
@@ -60,6 +49,8 @@ function PageRenderer(props) {
       createElement(pageComponent.head, _props, null)
     )
 
+    const { render } = reactDOMUtils()
+
     useEffect(() => {
       const hiddenRoot = document.createElement(`div`)
 
@@ -71,7 +62,7 @@ function PageRenderer(props) {
         prevHeadNodes.forEach(e => e.remove())
 
         // add attribute to new head nodes while showing warning if it's not a valid node
-        let validHeadNodes = []
+        const validHeadNodes = []
 
         for (const node of hiddenRoot.childNodes) {
           const nodeName = node.nodeName.toLowerCase()
@@ -97,7 +88,7 @@ function PageRenderer(props) {
 
       // Use react18's .createRoot.render or fallback to .render
       // just a hack to call the callback after react has done first render
-      render(hiddenRoot, <Caller callback={callback}>{headElement}</Caller>)
+      render(<Caller callback={callback}>{headElement}</Caller>, hiddenRoot)
     }, [headElement])
   }
   const wrappedPage = apiRunner(
