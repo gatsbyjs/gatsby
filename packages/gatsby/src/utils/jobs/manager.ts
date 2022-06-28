@@ -157,7 +157,7 @@ function runJob(
 ): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
-    const worker = requireGatsbyPlugin(plugin, `gatsby-worker`)
+    const worker = requireGatsbyPlugin(plugin, `gatsby-worker`) as any
     if (!worker[job.name]) {
       throw new Error(`No worker function found for ${job.name}`)
     }
