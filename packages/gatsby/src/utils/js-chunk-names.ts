@@ -48,8 +48,12 @@ export function generateComponentChunkName(componentPath: string): string {
     const directory = program?.directory || `/`
     let name = pathRelative(directory, componentPath)
 
-    const prefix = `component---`
-    const maxLength = 255 - directory.length - prefix.length
+    /**
+     * File names should not exceed 255 characters
+     * * minus 12 for `component---`
+     * * minus 7 for `.js.map`
+     */
+    const maxLength = 236
 
     // Shorten path name to not exceed max length of 255 characters
     if (name.length > maxLength) {
@@ -57,10 +61,12 @@ export function generateComponentChunkName(componentPath: string): string {
         .createHash(`sha1`)
         .update(name)
         .digest(`base64`)
+
+      // Shorten the name, ensure that adding the hash does not exceed 255 chars
       name = `${name.substring(0, maxLength - 41)}-${hash}`
     }
 
-    const chunkName = `${prefix}${replaceUnifiedRoutesKeys(
+    const chunkName = `component---${replaceUnifiedRoutesKeys(
       kebabCase(name),
       name
     )}`
