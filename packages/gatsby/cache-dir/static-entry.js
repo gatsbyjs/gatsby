@@ -274,7 +274,7 @@ export default async function staticPage({
             node.childNodes[0]?.textContent
           )
 
-          validHeadNodes = [...validHeadNodes, element]
+          validHeadNodes.push(element)
         }
       }
 
