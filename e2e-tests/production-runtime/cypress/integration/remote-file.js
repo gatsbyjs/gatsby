@@ -40,17 +40,6 @@ describe(
   }
 
   it(`should render correct dimensions`, () => {
-    cy.get('[data-testid="public"]').then(async $urls => {
-      const urls = Array.from($urls.map((_, $url) => $url.getAttribute("href")))
-
-      for (const url of urls) {
-        const res = await fetch(url, {
-          method: "HEAD",
-        })
-        expect(res.ok).to.be.true
-      }
-    })
-
     cy.get(".resize").then(async $imgs => {
       await testImages(Array.from($imgs), [
         {
