@@ -88,7 +88,7 @@ function PageRenderer(props) {
             }
           } else {
             node.setAttribute(`data-gatsby-head`, true)
-            validHeadNodes = [...validHeadNodes, node]
+            validHeadNodes.push(node)
           }
         }
 
