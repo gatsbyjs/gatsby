@@ -2,7 +2,9 @@
 
 exports[`Dev loader loadPage should be successful when component can be loaded 1`] = `
 Object {
-  "component": [Function],
+  "component": Object {
+    "default": [Function],
+  },
   "json": Object {
     "pageContext": "something something",
   },
