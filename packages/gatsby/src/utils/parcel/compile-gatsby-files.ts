@@ -33,6 +33,7 @@ export function constructParcel(siteRoot: string): Parcel {
     ],
     defaultConfig: require.resolve(`gatsby-parcel-config`),
     mode: `production`,
+    shouldDisableCache: process.env.PARCEL_DISABLE_CACHE || false,
     targets: {
       root: {
         outputFormat: `commonjs`,
