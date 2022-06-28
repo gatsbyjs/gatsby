@@ -8,7 +8,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "gatsby": "^4.17.0",
+    "gatsby": "^4.17.1",
     "gatsby-plugin-feed": "^4.17.0",
     "gatsby-plugin-gatsby-cloud": "^4.17.0",
     "gatsby-plugin-google-analytics": "^4.17.0",
@@ -33,7 +33,7 @@
     "typeface-montserrat": "0.0.75"
   },
   "devDependencies": {
-    "prettier": "^2.6.2"
+    "prettier": "^2.7.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [

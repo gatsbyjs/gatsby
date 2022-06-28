@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@wordpress/block-library": "^2.29.3",
-    "gatsby": "^4.17.0",
+    "gatsby": "^4.17.1",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-image": "^2.17.0",
     "gatsby-plugin-manifest": "^4.17.0",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "dumper.js": "^1.3.1",
-    "prettier": "2.6.2"
+    "prettier": "2.7.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [
