@@ -1,5 +1,5 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
-import type { GatsbyCache, Reporter, NodePluginArgs } from "gatsby"
+import type { GatsbyCache, NodePluginArgs } from "gatsby"
 import type { Pluggable } from "unified"
 
 import { IMdxPluginOptions } from "./plugin-options"
@@ -9,7 +9,7 @@ interface IGetSourcePluginsAsRemarkPlugins {
   getNode: NodePluginArgs["getNode"]
   getNodesByType: NodePluginArgs["getNodesByType"]
   pathPrefix: NodePluginArgs["pathPrefix"]
-  reporter: Reporter
+  reporter: NodePluginArgs["reporter"]
   cache: GatsbyCache
 }
 

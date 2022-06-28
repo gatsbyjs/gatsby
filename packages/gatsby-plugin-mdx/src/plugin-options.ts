@@ -1,10 +1,5 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
-import type {
-  PluginOptions,
-  GatsbyCache,
-  Reporter,
-  NodePluginArgs,
-} from "gatsby"
+import type { PluginOptions, GatsbyCache, NodePluginArgs } from "gatsby"
 import deepmerge from "deepmerge"
 import { IPluginRefObject } from "gatsby-plugin-utils/types"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
@@ -22,7 +17,7 @@ interface IHelpers {
   getNode: NodePluginArgs["getNode"]
   getNodesByType: NodePluginArgs["getNodesByType"]
   pathPrefix: NodePluginArgs["pathPrefix"]
-  reporter: Reporter
+  reporter: NodePluginArgs["reporter"]
   cache: GatsbyCache
 }
 type MdxDefaultOptions = (pluginOptions: IMdxPluginOptions) => IMdxPluginOptions

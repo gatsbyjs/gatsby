@@ -52,6 +52,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
     const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
       options: mdxOptions,
       nodeMap,
+      reporter,
     }
 
     const layoutLoaderOptions: IGatsbyLayoutLoaderOptions = {
@@ -121,7 +122,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     return undefined
   }
 
-  const { processedMDX } = await compileMDX(
+  const compileRes = await compileMDX(
     {
       id: ``,
       children: [],
@@ -138,10 +139,14 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
       absolutePath: filename,
       sourceInstanceName: `mocked`,
     },
-    mdxOptions
+    mdxOptions,
+    reporter
   )
 
-  return processedMDX.toString()
+  if (!compileRes?.processedMDX) {
+    return undefined
+  }
+  return compileRes.processedMDX.toString()
 }
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =

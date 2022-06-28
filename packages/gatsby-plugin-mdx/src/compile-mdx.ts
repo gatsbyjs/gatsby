@@ -12,8 +12,9 @@ import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 export async function compileMDX(
   mdxNode: IMdxNode,
   fileNode: IFileNode,
-  options: ProcessorOptions
-): Promise<{ processedMDX: string; metadata: IMdxMetadata }> {
+  options: ProcessorOptions,
+  reporter: NodePluginArgs["reporter"]
+): Promise<{ processedMDX: string; metadata: IMdxMetadata } | null> {
   try {
     const { createProcessor } = await import(`@mdx-js/mdx`)
     const { VFile } = await import(`vfile`)
@@ -50,8 +51,13 @@ export async function compileMDX(
       .filter(Boolean)
       .join(`\n`)
 
-    err.message = `Unable to compile MDX:\n${errorMeta}\n\n---\nOriginal error:\n\n${err.message}`
-    throw err
+    reporter.panicOnBuild({
+      id: `12200`,
+      context: {
+        sourceMessage: `Unable to compile MDX:\n${errorMeta}\n\n---\nOriginal error:\n\n${err.message}`,
+      },
+    })
+    return null
   }
 }
 
@@ -104,5 +110,5 @@ export const compileMDXWithCustomOptions = async ({
   }
 
   // Compile MDX and extract metadata
-  return compileMDX(mdxNode, fileNode, mdxOptions)
+  return compileMDX(mdxNode, fileNode, mdxOptions, reporter)
 }
