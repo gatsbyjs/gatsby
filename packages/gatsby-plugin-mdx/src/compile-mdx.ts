@@ -4,6 +4,7 @@ import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
 
 import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
+import { ERROR_CODES } from "./error-utils"
 
 // Compiles MDX into JS
 // Differences to original @mdx-js/loader:
@@ -43,20 +44,20 @@ export async function compileMDX(
     const errorMeta = [
       mdxNode.title && `Title: ${mdxNode.title}`,
       mdxNode.slug && `Slug: ${mdxNode.slug}`,
-      mdxNode.frontmatter &&
-        `Frontmatter:\n${JSON.stringify(mdxNode.frontmatter, null, 2)}`,
       fileNode.relativePath && `Path: ${fileNode.relativePath}`,
-      mdxNode.body && `Content:\n ${mdxNode.body}`,
     ]
       .filter(Boolean)
       .join(`\n`)
 
-    reporter.panicOnBuild({
-      id: `12200`,
-      context: {
-        sourceMessage: `Unable to compile MDX:\n${errorMeta}\n\n---\nOriginal error:\n\n${err.message}`,
+    reporter.panicOnBuild(
+      {
+        id: ERROR_CODES.MdxCompilation,
+        context: {
+          errorMeta,
+        },
       },
-    })
+      err
+    )
     return null
   }
 }

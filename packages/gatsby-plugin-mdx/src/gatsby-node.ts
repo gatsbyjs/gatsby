@@ -17,6 +17,7 @@ import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
 import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
+import { ERROR_MAP } from "./error-utils"
 
 /**
  * Add support for MDX files including using Gatsby layout components
@@ -327,6 +328,11 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
       },
     })
   }
+}
+
+export const onPluginInit: GatsbyNode["onPluginInit"] = ({ reporter }) => {
+  // @ts-ignore - We only expose this type from gatsby-cli and we don't want to import from there
+  reporter.setErrorMap(ERROR_MAP)
 }
 
 /**
