@@ -68,7 +68,6 @@ export function loadInternalPlugins(
   plugins.forEach(plugin => {
     const processedPlugin = processPlugin(
       {
-        // TODO: require.resolve won't work
         resolve: require.resolve(`gatsby-plugin-page-creator`),
         options: {
           path: slash(path.join(plugin.resolve, `src/pages`)),
@@ -113,7 +112,7 @@ export function loadInternalPlugins(
       {
         resolve: require.resolve(TYPESCRIPT_PLUGIN_NAME),
         options: {
-          // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
+          // TODO: Do not hard-code these defaults but infer them from the
           // pluginOptionsSchema of gatsby-plugin-typescript
           allExtensions: false,
           isTSX: false,
@@ -163,7 +162,6 @@ export function loadInternalPlugins(
 
   const processedPageCreatorPlugin = processPlugin(
     {
-      // TODO: require.resolve won't work
       resolve: require.resolve(`gatsby-plugin-page-creator`),
       options: pageCreatorOptions,
     },
