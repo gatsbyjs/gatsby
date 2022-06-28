@@ -40,7 +40,6 @@ class DevLoader extends BaseLoader {
 
       return (
         this.asyncRequires.components[chunkName]()
-          .then(component => component)
           // loader will handle the case when component is error
           .catch(err => err)
       )
