@@ -15,7 +15,7 @@ export interface IGatsbyLayoutLoaderOptions {
 const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
   const { nodeMap }: IGatsbyLayoutLoaderOptions = getOptions(this)
 
-  const mdxPath = this.resourceQuery.split(`__mdxPath=`)[1]
+  const mdxPath = this.resourceQuery.split(`__contentFilePath=`)[1]
 
   const res = nodeMap.get(mdxPath)
 

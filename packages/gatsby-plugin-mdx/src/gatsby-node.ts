@@ -76,7 +76,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
           },
           {
             test: /\.[tj]sx?$/,
-            resourceQuery: /__mdxPath=.+\.mdx?$/,
+            resourceQuery: /__contentFilePath=.+\.mdx?$/,
             // resourceQuery: rq => console.log({ rq }),
             use: [
               loaders.js(),
@@ -113,7 +113,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 ) => {
   const options = defaultOptions(pluginOptions)
   const { extensions } = options
-  const splitPath = filename.split(`__mdxPath=`)
+  const splitPath = filename.split(`__contentFilePath=`)
   const mdxPath = splitPath.length === 2 ? splitPath[1] : splitPath[0]
 
   if (!mdxPath) {
@@ -326,7 +326,7 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   const { createPage, deletePage } = actions
   const { extensions } = defaultOptions(pluginOptions)
 
-  const splitPath = page.component.split(`__mdxPath=`)
+  const splitPath = page.component.split(`__contentFilePath=`)
   const mdxPath = splitPath.length === 2 ? splitPath[1] : splitPath[0]
   const ext = path.extname(mdxPath)
 
