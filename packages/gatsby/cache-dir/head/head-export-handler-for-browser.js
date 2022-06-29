@@ -33,12 +33,15 @@ export function headHandlerForBrowser({
     useEffect(() => {
       const hiddenRoot = document.createElement(`div`)
 
+      console.log({ hiddenRoot })
+      document.body.append(hiddenRoot)
+
       const callback = () => {
         // Remove previous head nodes
         const prevHeadNodes = [
           ...document.querySelectorAll(`[data-gatsby-head]`),
         ]
-        prevHeadNodes.forEach(e => e.remove())
+        // prevHeadNodes.forEach(e => e.remove())
 
         // add attribute to new head nodes while showing warning if it's not a valid node
         const validHeadNodes = []
@@ -50,7 +53,7 @@ export function headHandlerForBrowser({
             warnForInvalidTags(nodeName)
           } else {
             node.setAttribute(`data-gatsby-head`, true)
-            validHeadNodes.push(node)
+            validHeadNodes.push(node.cloneNode(true))
           }
         }
 

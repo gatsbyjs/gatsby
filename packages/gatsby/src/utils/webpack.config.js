@@ -313,7 +313,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `eval-cheap-module-source-map`
+        return `cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -386,7 +386,13 @@ module.exports = async (
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
         }],
-      }
+      },
+      {
+        resourceQuery: /export/,
+        use: {
+          loader: require.resolve(`./webpack-remove-apis-loader-new`),
+        },
+      },
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds

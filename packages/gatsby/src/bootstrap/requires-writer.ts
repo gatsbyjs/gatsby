@@ -258,7 +258,22 @@ const preferDefault = m => (m && m.default) || m
 
       return `  "${c.componentChunkName}": () => import("${slash(
         `./${relativeComponentPath}`
-      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+      )}?export=default" /* webpackChunkName: "${c.componentChunkName}" */)`
+    })
+    .join(`,\n`)}
+}\n\n
+
+exports.head = {\n${components
+    .map((c: IGatsbyPageComponent): string => {
+      // we need a relative import path to keep contenthash the same if directory changes
+      const relativeComponentPath = path.relative(
+        getAbsolutePathForVirtualModule(`$virtual`),
+        c.component
+      )
+
+      return `  "${c.componentChunkName}": () => import("${slash(
+        `./${relativeComponentPath}`
+      )}?export=head" /* webpackChunkName: "${c.componentChunkName}head" */)`
     })
     .join(`,\n`)}
 }\n\n`

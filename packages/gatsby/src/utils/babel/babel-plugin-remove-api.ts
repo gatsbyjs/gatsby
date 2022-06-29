@@ -99,6 +99,13 @@ export default declare(function removeApiCalls(
       },
 
       // Remove export statements
+
+      ExportDefaultDeclaration(path, state): void {
+        if (apisToRemove.includes(`default`)) {
+          state.apiRemoved = true
+          path.remove()
+        }
+      },
       ExportNamedDeclaration(path, state): void {
         const declaration = path.node.declaration
 

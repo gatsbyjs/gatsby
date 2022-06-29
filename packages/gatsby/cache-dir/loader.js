@@ -61,7 +61,7 @@ const doesConnectionSupportPrefetch = () => {
 // Regex that matches common search crawlers
 const BOT_REGEX = /bot|crawler|spider|crawling/i
 
-const toPageResources = (pageData, component = null) => {
+const toPageResources = (pageData, component = null, head) => {
   const page = {
     componentChunkName: pageData.componentChunkName,
     path: pageData.path,
@@ -73,6 +73,7 @@ const toPageResources = (pageData, component = null) => {
 
   return {
     component,
+    head,
     json: pageData.result,
     page,
   }
@@ -259,29 +260,30 @@ export class BaseLoader {
 
       const finalResult = {}
 
-      const componentChunkPromise = this.loadComponent(componentChunkName).then(
-        component => {
-          finalResult.createdAt = new Date()
-          let pageResources
-          if (!component || component instanceof Error) {
-            finalResult.status = PageResourceStatus.Error
-            finalResult.error = component
-          } else {
-            finalResult.status = PageResourceStatus.Success
-            if (result.notFound === true) {
-              finalResult.notFound = true
-            }
-            pageData = Object.assign(pageData, {
-              webpackCompilationHash: allData[0]
-                ? allData[0].webpackCompilationHash
-                : ``,
-            })
-            pageResources = toPageResources(pageData, component)
+      const componentChunkPromise = Promise.all([
+        this.loadComponent(componentChunkName),
+        this.loadComponent(componentChunkName, `head`),
+      ]).then(([component, head]) => {
+        finalResult.createdAt = new Date()
+        let pageResources
+        if (!component || component instanceof Error) {
+          finalResult.status = PageResourceStatus.Error
+          finalResult.error = component
+        } else {
+          finalResult.status = PageResourceStatus.Success
+          if (result.notFound === true) {
+            finalResult.notFound = true
           }
-          // undefined if final result is an error
-          return pageResources
+          pageData = Object.assign(pageData, {
+            webpackCompilationHash: allData[0]
+              ? allData[0].webpackCompilationHash
+              : ``,
+          })
+          pageResources = toPageResources(pageData, component, head)
         }
-      )
+        // undefined if final result is an error
+        return pageResources
+      })
 
       const staticQueryBatchPromise = Promise.all(
         staticQueryHashes.map(staticQueryHash => {
