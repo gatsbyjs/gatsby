@@ -231,7 +231,7 @@ export default async function staticPage({
 
       // extract head nodes from string
       const rawString = renderToString(routerElement)
-      const headNodes = [...parse(rawString).childNodes]
+      const headNodes = parse(rawString).childNodes
 
       const validHeadNodes = []
 
