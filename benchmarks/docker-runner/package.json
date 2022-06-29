@@ -1,5 +1,5 @@
 {
-  "name": "memory-usage-benchmark",
+  "name": "gatsby-generic-benchmark",
   "private": true,
   "version": "1.0.0",
   "description": "Test site stress testing memory usage",
@@ -10,8 +10,8 @@
     "gatsby:develop": "NODE_ENV=development yarn gatsby develop -H 0.0.0.0 -p 9000",
     "gatsby:build:debug": "node --nolazy --inspect-brk=0.0.0.0:9229 node_modules/.bin/gatsby build",
     "gatsby:develop:debug": "NODE_ENV=development node --nolazy --inspect-brk=0.0.0.0:9229 node_modules/.bin/gatsby develop -H 0.0.0.0 -p 9000",
-    "docker:build": "docker build -t gatsby-memory . --build-arg jemalloc=$JEMALLOC",
-    "docker:remove": "docker image rm -f gatsby-memory",
+    "docker:build": "docker build -t gatsby-generic-benchmark . --build-arg jemalloc=$JEMALLOC",
+    "docker:remove": "docker image rm -f gatsby-generic-benchmark",
     "docker:rebuild": "yarn docker:stop; yarn docker:remove && yarn docker:build",
     "docker:start": "./scripts/docker-start",
     "docker:connect": "./scripts/docker-connect",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/memory"
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/generic"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
