@@ -46,7 +46,13 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
       )
     }
 
-    // Inject import to actual MDX file at the top of the file
+    /**
+     * Inject import to actual MDX file at the top of the file
+     * Input:
+     * [none]
+     * Output:
+     * import GATSBY_COMPILED_MDX from "/absolute/path/to/content.mdx"
+     */
     AST.body.unshift({
       type: `ImportDeclaration`,
       specifiers: [
@@ -64,7 +70,13 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
       },
     })
 
-    // Replace default export with wrapper function that injects compiled MDX as children
+    /**
+     * Replace default export with wrapper function that injects compiled MDX as children
+     * Input:
+     * export default PageTemplate
+     * Output:
+     * export default (props) => <PageTemplate {...props}>{GATSBY_COMPILED_MDX}</PageTemplate>
+     **/
     AST.body = AST.body.map(child => {
       if (child.type !== `ExportDefaultDeclaration`) {
         return child
