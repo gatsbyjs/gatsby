@@ -246,7 +246,7 @@ export default async function staticPage({
       const rawString = renderToString(routerElement)
       const headNodes = [...parse(rawString).childNodes]
 
-      let validHeadNodes = []
+      const validHeadNodes = []
 
       for (const node of headNodes) {
         const { rawTagName, attributes } = node
