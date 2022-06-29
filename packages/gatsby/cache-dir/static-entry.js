@@ -1,3 +1,5 @@
+import { filterHeadProps } from "./head/utils"
+
 /* global HAS_REACT_18 */
 const React = require(`react`)
 const path = require(`path`)
@@ -216,7 +218,7 @@ export default async function staticPage({
           },
         }
 
-        return createElement(pageComponent.head, _props)
+        return createElement(pageComponent.head, filterHeadProps(_props))
       }
 
       const routerElement = (
