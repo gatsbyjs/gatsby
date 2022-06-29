@@ -48,22 +48,10 @@ export function generateComponentChunkName(componentPath: string): string {
     let name = pathRelative(directory, componentPath)
 
     /**
-     * File names should not exceed 255 characters
-     * * minus 12 for `component---`
-     * * minus 7 for `.js.map`
+     * To prevent long file name errors, we truncate the name to a maximum of 60 characters.
      */
-    const maxLength = 236
-
-    // Shorten path name to not exceed max length of 255 characters
-    if (name.length > maxLength) {
-      const hash = require(`crypto`)
-        .createHash(`sha1`)
-        .update(name)
-        .digest(`base64`)
-
-      // Shorten the name, ensure that adding the hash does not exceed 255 chars
-      name = `${name.substring(0, maxLength - 41)}-${hash}`
-    }
+    const hash = require(`crypto`).createHash(`md5`).update(name).digest(`hex`)
+    name = `${hash.substr(20)}-${name.substring(name.length - 60)}`
 
     const chunkName = `component---${replaceUnifiedRoutesKeys(
       kebabCase(name),
