@@ -62,11 +62,15 @@ function hydrateImages(): void {
         return
       }
 
-      const parent = grandParentIsGatsbyImage
+      const gatsbyImageHydrationElement = grandParentIsGatsbyImage
         ? image.parentNode.parentNode
         : image.parentNode
 
-      if (image.dataset && image.dataset.wpInlineImage && parent) {
+      if (
+        image.dataset &&
+        image.dataset.wpInlineImage &&
+        gatsbyImageHydrationElement
+      ) {
         const hydrationData = doc.querySelector(
           `script[data-wp-inline-image-hydration="${image.dataset.wpInlineImage}"]`
         )
@@ -77,12 +81,12 @@ function hydrateImages(): void {
           )
 
           if (ReactDOM.createRoot) {
-            const root = ReactDOM.createRoot(parent)
+            const root = ReactDOM.createRoot(gatsbyImageHydrationElement)
             root.render(React.createElement(mod.GatsbyImage, imageProps))
           } else {
             ReactDOM.hydrate(
               React.createElement(mod.GatsbyImage, imageProps),
-              parent
+              gatsbyImageHydrationElement
             )
           }
         }
