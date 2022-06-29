@@ -632,6 +632,8 @@ workflows:
           <<: *e2e-test-workflow
       - integration_tests_functions:
           <<: *e2e-test-workflow
+      - integration_tests_head_function_export:
+          <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:
             - bootstrap
