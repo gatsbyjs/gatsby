@@ -28,12 +28,14 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-mdx`,
+      resolve: `gatsby-source-filesystem`,
       options: {
-        defaultLayouts: {
-          default: require.resolve(`./src/components/layout.js`),
-        },
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
       },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
     },
     `gatsby-plugin-image`,
 
