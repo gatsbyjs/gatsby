@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "babel-jest": "^27.2.1",
     "chalk": "^4.1.2",
-    "chokidar": "^3.5.2",
+    "chokidar": "^3.5.3",
     "cross-env": "^7.0.3",
     "danger": "^10.6.4",
     "date-fns": "^1.30.1",
