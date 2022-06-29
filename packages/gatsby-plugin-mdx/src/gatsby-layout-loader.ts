@@ -147,7 +147,6 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
       } as unknown as ExportDefaultDeclaration
     })
 
-    // @todo what do we do with runtime, pragma and pragmaFrag options? We should still be able to support preact.
     buildJsx(AST)
 
     const transformedSource = generate(AST)
