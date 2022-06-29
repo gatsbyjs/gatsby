@@ -16,8 +16,6 @@ export const PageResourceStatus = {
   Success: `success`,
 }
 
-const preferDefault = m => (m && m.default) || m
-
 const stripSurroundingSlashes = s => {
   s = s[0] === `/` ? s.slice(1) : s
   s = s.endsWith(`/`) ? s.slice(0, -1) : s

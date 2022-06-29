@@ -7,8 +7,6 @@ import normalizePagePath from "./normalize-page-path"
 // TODO move away from lodash
 import isEqual from "lodash/isEqual"
 
-const preferDefault = m => (m && m.default) || m
-
 function mergePageEntry(cachedPage, newPageData) {
   return {
     ...cachedPage,
