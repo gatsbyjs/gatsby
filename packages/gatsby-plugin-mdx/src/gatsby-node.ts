@@ -116,9 +116,10 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
   pluginOptions: IMdxPluginOptions
 ) => {
   const { extensions } = defaultOptions(pluginOptions)
-  const mdxFilePath = filename.split(`__mdxPath=`)[1]
+  const splitPath = filename.split(`__mdxPath=`)
+  const mdxPath = splitPath.length === 2 ? splitPath[1] : splitPath[0]
 
-  if (!mdxFilePath) {
+  if (!mdxPath) {
     return undefined
   }
 
@@ -130,13 +131,13 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     cache,
   })
 
-  const ext = path.extname(mdxFilePath)
+  const ext = path.extname(mdxPath)
 
   if (!extensions.includes(ext)) {
     return undefined
   }
 
-  const contents = await fs.readFile(mdxFilePath)
+  const contents = await fs.readFile(mdxPath)
 
   const compileRes = await compileMDX(
     {
@@ -327,14 +328,14 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
 ) => {
   const { createPage, deletePage } = actions
   const { extensions } = defaultOptions(pluginOptions)
-  const ext = path.extname(page.component)
+
+  const splitPath = page.component.split(`__mdxPath=`)
+  const mdxPath = splitPath.length === 2 ? splitPath[1] : splitPath[0]
+  const ext = path.extname(mdxPath)
 
   // Only apply on pages based on .mdx files and avoid loops
   if (extensions.includes(ext) && !page.context?.frontmatter) {
-    const content = await fs.readFile(
-      page.component.split(`__mdxPath=`)[1],
-      `utf8`
-    )
+    const content = await fs.readFile(mdxPath, `utf8`)
     const { data: frontmatter } = grayMatter(content)
 
     deletePage(page)
