@@ -8,11 +8,7 @@ import { sentenceCase } from "change-case"
 import fs from "fs-extra"
 import grayMatter from "gray-matter"
 
-import {
-  defaultOptions,
-  enhanceMdxOptions,
-  IMdxPluginOptions,
-} from "./plugin-options"
+import { defaultOptions, enhanceMdxOptions } from "./plugin-options"
 import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
 import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
@@ -25,7 +21,7 @@ import { ERROR_MAP } from "./error-utils"
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
   async (
     { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
-    pluginOptions: IMdxPluginOptions
+    pluginOptions
   ) => {
     const mdxNodes = getNodesByType(`Mdx`)
     const nodeMap: NodeMap = new Map()
@@ -105,7 +101,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
  */
 export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
   _data,
-  pluginOptions: IMdxPluginOptions
+  pluginOptions
 ) => defaultOptions(pluginOptions).extensions
 
 /**
@@ -113,9 +109,10 @@ export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
   { filename, getNode, getNodesByType, pathPrefix, reporter, cache },
-  pluginOptions: IMdxPluginOptions
+  pluginOptions
 ) => {
-  const { extensions } = defaultOptions(pluginOptions)
+  const options = defaultOptions(pluginOptions)
+  const { extensions } = options
   const splitPath = filename.split(`__mdxPath=`)
   const mdxPath = splitPath.length === 2 ? splitPath[1] : splitPath[0]
 
@@ -169,7 +166,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
   async (
     { getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema },
-    pluginOptions: IMdxPluginOptions
+    pluginOptions
   ) => {
     const { createTypes } = actions
     const typeDefs = [
@@ -271,7 +268,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_shouldOnCreateNode: GatsbyNode["unstable_shouldOnCreateNode"] =
-  ({ node }: { node: FileSystemNode }, pluginOptions: IMdxPluginOptions) => {
+  ({ node }: { node: FileSystemNode }, pluginOptions) => {
     const { extensions } = defaultOptions(pluginOptions)
     return node.internal.type === `File` && extensions.includes(node.ext)
   }
@@ -324,7 +321,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
  */
 export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   { page, actions },
-  pluginOptions: IMdxPluginOptions
+  pluginOptions
 ) => {
   const { createPage, deletePage } = actions
   const { extensions } = defaultOptions(pluginOptions)
