@@ -30,7 +30,7 @@ function PageRenderer(props) {
   const pageElement = createElement(
     preferDefault(props.pageResources.component),
     {
-      ...props,
+      ..._props,
       key: props.path || props.pageResources.page.path,
     }
   )
@@ -93,10 +93,10 @@ function PageRenderer(props) {
   }
   const wrappedPage = apiRunner(
     `wrapPageElement`,
-    { element: pageElement, props },
+    { element: pageElement, props: _props },
     pageElement,
     ({ result }) => {
-      return { element: result, props }
+      return { element: result, props: _props }
     }
   ).pop()
 
