@@ -2,6 +2,7 @@ import memoize from "memoizee"
 import { kebabCase as _kebabCase } from "lodash"
 import path from "path"
 import { store } from "../redux"
+import { getPathToContentComponent } from "gatsby-core-utils/dist/parse-component-path"
 
 const kebabCase = memoize(_kebabCase)
 const pathRelative = memoize(path.relative)
@@ -38,9 +39,7 @@ function replaceUnifiedRoutesKeys(
 
 const chunkNameCache = new Map()
 export function generateComponentChunkName(componentPath: string): string {
-  if (componentPath.indexOf(`?__contentFilePath=`) !== -1) {
-    componentPath = componentPath.split(`?__contentFilePath=`)[1]
-  }
+  componentPath = getPathToContentComponent(componentPath)
   if (chunkNameCache.has(componentPath)) {
     return chunkNameCache.get(componentPath)
   } else {

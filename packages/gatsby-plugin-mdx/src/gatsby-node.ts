@@ -6,6 +6,7 @@ import type { IFileNode, NodeMap } from "./types"
 import path from "path"
 import { sentenceCase } from "change-case"
 import fs from "fs-extra"
+import { getPathToContentComponent } from "gatsby-core-utils"
 import grayMatter from "gray-matter"
 
 import { defaultOptions, enhanceMdxOptions } from "./plugin-options"
@@ -113,8 +114,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 ) => {
   const options = defaultOptions(pluginOptions)
   const { extensions } = options
-  const splitPath = filename.split(`__contentFilePath=`)
-  const mdxPath = splitPath.length === 2 ? splitPath[1] : splitPath[0]
+  const mdxPath = getPathToContentComponent(filename)
 
   if (!mdxPath) {
     return undefined
@@ -326,8 +326,7 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   const { createPage, deletePage } = actions
   const { extensions } = defaultOptions(pluginOptions)
 
-  const splitPath = page.component.split(`__contentFilePath=`)
-  const mdxPath = splitPath.length === 2 ? splitPath[1] : splitPath[0]
+  const mdxPath = getPathToContentComponent(page.component)
   const ext = path.extname(mdxPath)
 
   // Only apply on pages based on .mdx files and avoid loops
