@@ -250,8 +250,6 @@ export default async function staticPage({
             console.warn(warning)
           }
         } else {
-          node.setAttribute(`data-gatsby-head`, true)
-
           const element = createElement(
             rawTagName,
             {
