@@ -3,9 +3,17 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
-const { isLmdbStore } = require(`../../datastore`)
+const { isLmdbStore, getNode } = require(`../../datastore`)
 
 const nodes = require(`./fixtures/node-model`)
+
+const mockActualOrderBy = jest.requireActual(`lodash`).orderBy
+jest.mock(`lodash/orderBy`, () => jest.fn(mockActualOrderBy))
+const orderBySpy = require(`lodash/orderBy`)
+
+beforeEach(() => {
+  orderBySpy.mockClear()
+})
 
 describe(`NodeModel`, () => {
   let nodeModel
@@ -1166,17 +1174,29 @@ describe(`NodeModel`, () => {
 
       const { clearKeptObjects } = require(`lmdb`)
 
-      const actualOrderBy = jest.requireActual(`lodash`).orderBy
-      const spy = jest.spyOn(require(`lodash`), `orderBy`)
-      spy.mockImplementationOnce((...args) => {
+      orderBySpy.mockImplementationOnce((...args) => {
+        // eslint thinks that WeakRef is not defined for some reason :shrug:
+        // eslint-disable-next-line no-undef
+        const weakNode = new WeakRef(getNode(`id8`))
+
         // very implementation specific case:
         // We don't hold full nodes strongly in gatsby anymore so they can be potentially
         // GCed mid execution of query. For this test we force all weakly held nodes to be
         // dropped
         clearKeptObjects()
         gc()
-        return actualOrderBy(...args)
+
+        // now we shouldn't have that node in memory
+        if (weakNode.deref()) {
+          throw new Error(
+            `Test setup is broken, something is keeping a node in memory`
+          )
+        }
+
+        return mockActualOrderBy(...args)
       })
+
+      expect(orderBySpy).not.toBeCalled()
 
       // query will use same filters cache as previous query (important)
       // but will use sorting that requires Materialization (sort_order has custom resolver)
@@ -1192,6 +1212,7 @@ describe(`NodeModel`, () => {
         },
         { path: `/` }
       )
+      expect(orderBySpy).toBeCalled()
       const result = Array.from(entries)
       expect(result.length).toEqual(2)
       expect(result[0].id).toEqual(`id9`)
