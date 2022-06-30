@@ -17,7 +17,7 @@
   "scripts": {
     "build": "microbundle -f cjs,modern --jsx React.createElement --generateTypes false",
     "watch": "npm run build watch --no-compress",
-    "prepare": "npm run clean && npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.7",
+    "cross-env": "^7.0.3",
     "del-cli": "^3.0.1",
     "microbundle": "^0.15.0"
   },
