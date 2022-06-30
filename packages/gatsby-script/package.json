@@ -10,12 +10,12 @@
   "exports": {
     ".": {
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.modern.js",
       "types": "./dist/index.d.ts" 
     }
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.modern.js",
   "types": "dist/index.d.ts",
   "typesVersions": {
     "*": {
@@ -29,8 +29,8 @@
     "dist/*"
   ],
   "scripts": {
-    "build": "microbundle -f cjs,es --jsx React.createElement",
-    "watch": "microbundle watch -f cjs,es --jsx React.createElement",
+    "build": "microbundle -f cjs,modern --jsx React.createElement",
+    "watch": "microbundle watch -f cjs,modern --jsx React.createElement --no-compress",
     "prepare": "npm run clean && npm run build",
     "clean": "del-cli dist/*"
   },
