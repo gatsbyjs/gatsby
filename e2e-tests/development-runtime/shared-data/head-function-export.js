@@ -20,6 +20,7 @@ const data = {
     noscript: `You take romance - I will take Jell-O!`,
     style: `rebeccapurple`,
     link: `/used-by-head-function-export-basic.css`,
+    extraMeta: `Extra meta tag that should be removed during navigation`,
   },
   queried: {
     base: `http://localhost:8000`,
@@ -28,6 +29,7 @@ const data = {
     noscript: `There is just one thing I cannot figure out. My income tax!`,
     style: `blue`,
     link: `/used-by-head-function-export-query.css`,
+    extraMeta2: `Extra meta tag that should be added during navigation`,
   },
   dsg: {
     base: `http://localhost:8000`,

@@ -15,7 +15,7 @@ export default function HeadFunctionExportBasic() {
 }
 
 export function head() {
-  const { base, title, meta, noscript, style, link } = data.static
+  const { base, title, meta, noscript, style, link, extraMeta } = data.static
 
   return (
     <>
@@ -31,6 +31,8 @@ export function head() {
         `}
       </style>
       <link data-testid="link" href={link} rel="stylesheet" />
+
+      <meta data-testid="extra-meta" name="extra-meta" content={extraMeta} />
     </>
   )
 }
