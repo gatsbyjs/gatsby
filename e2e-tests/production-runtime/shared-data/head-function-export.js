@@ -7,6 +7,8 @@ const page = {
   staticQuery: `${path}/static-query-component/`,
   warnings: `${path}/warnings/`,
   allProps: `${path}/all-props/`,
+  dsg: `${path}/dsg`,
+  ssr: `${path}/ssr`,
 }
 
 const data = {
@@ -25,6 +27,22 @@ const data = {
     noscript: `There is just one thing I cannot figure out. My income tax!`,
     style: `blue`,
     link: `/used-by-head-function-export-query.css`,
+  },
+  dsg: {
+    base: `http://localhost:8000`,
+    title: `Louis Armstrong's Page`,
+    meta: `Louis Armstrong`,
+    noscript: `What we play is life`,
+    style: `orange`,
+    link: `/used-by-head-function-export-dsg.css`,
+  },
+  ssr: {
+    base: `http://localhost:8000`,
+    title: `Frank Sinatra's Page`,
+    meta: `Frank Sinatra`,
+    noscript: `You may be a puzzle, but I like the way the parts fit`,
+    style: `green`,
+    link: `/used-by-head-function-export-ssr.css`,
   },
 }
 
