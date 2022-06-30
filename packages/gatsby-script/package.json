@@ -13,6 +13,7 @@
   "files": [
     "dist/*"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "microbundle -f cjs,modern --jsx React.createElement",
     "watch": "microbundle watch -f cjs,modern --jsx React.createElement --no-compress",
