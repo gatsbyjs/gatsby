@@ -8,23 +8,16 @@ export default function PageRunningGraphqlResolversOnJSFrontmatterTestInputs({
 }
 
 export const query = graphql`
-  {
-    allMdx(filter: { slug: { glob: "frontmatter-engine/*" } }) {
-      nodes {
-        frontmatter {
-          title
-        }
-        body
-        excerpt
-        tableOfContents
-        timeToRead
-        wordCount {
-          paragraphs
-          sentences
-          words
-        }
-        mdxAST
-      }
-    }
-  }
-`
+         {
+           allMdx(filter: { slug: { glob: "frontmatter-engine/*" } }) {
+             nodes {
+               frontmatter {
+                 title
+               }
+               body
+               excerpt
+               tableOfContents
+             }
+           }
+         }
+       `

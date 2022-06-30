@@ -271,7 +271,18 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
 }) => {
   const rawBody = await loadNodeContent(node)
 
-  const { data: frontmatter, content: body } = grayMatter(rawBody)
+  const { data: frontmatter, content: body } = grayMatter(rawBody, {
+    // Disable JSON frontmatter parsing.
+    // See: https://github.com/gatsbyjs/gatsby/pull/35830
+    engines: {
+      js: () => {
+        return {}
+      },
+      javascript: () => {
+        return {}
+      },
+    },
+  })
 
   // Use slug from frontmatter, otherwise fall back to the file name and path
   const slug =
@@ -317,7 +328,18 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   // Only apply on pages based on .mdx files and avoid loops
   if (extensions.includes(ext) && !page.context?.frontmatter) {
     const content = await fs.readFile(page.component, `utf8`)
-    const { data: frontmatter } = grayMatter(content)
+    const { data: frontmatter } = grayMatter(content, {
+      // Disable JSON frontmatter parsing.
+      // See: https://github.com/gatsbyjs/gatsby/pull/35830
+      engines: {
+        js: () => {
+          return {}
+        },
+        javascript: () => {
+          return {}
+        },
+      },
+    })
 
     deletePage(page)
     createPage({
