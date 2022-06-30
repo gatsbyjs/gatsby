@@ -9,6 +9,7 @@ const page = {
   allProps: `${path}/all-props/`,
   dsg: `${path}/dsg`,
   ssr: `${path}/ssr`,
+  invalidElements: `${path}/invalid-elements`,
 }
 
 const data = {
