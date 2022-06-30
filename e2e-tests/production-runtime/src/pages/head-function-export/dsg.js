@@ -1,21 +1,20 @@
 import * as React from "react"
-import { Link } from "gatsby"
 import { data } from "../../../shared-data/head-function-export"
 
-export default function HeadFunctionExportBasic() {
-  return (
-    <>
-      <h1>I test basic usage for the head function export</h1>
-      <p>Some other words</p>
-      <Link data-testid="gatsby-link" to="/head-function-export/page-query">
-        Navigate to page-query via Gatsby Link
-      </Link>
-    </>
-  )
+export default function HeadFunctionExportDSG() {
+  return <h1>I test the head function export in a DSG page</h1>
+}
+
+export async function config() {
+  return () => {
+    return {
+      defer: true,
+    }
+  }
 }
 
 export function head() {
-  const { base, title, meta, noscript, style, link, extraMeta } = data.static
+  const { base, title, meta, noscript, style, link } = data.dsg
 
   return (
     <>
@@ -31,8 +30,6 @@ export function head() {
         `}
       </style>
       <link data-testid="link" href={link} rel="stylesheet" />
-
-      <meta data-testid="extra-meta" name="extra-meta" content={extraMeta} />
     </>
   )
 }
