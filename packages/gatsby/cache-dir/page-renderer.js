@@ -5,6 +5,7 @@ import { grabMatchParams } from "./find-path"
 import { StaticQueryContext } from "gatsby"
 import { reactDOMUtils } from "./react-dom-utils"
 import { VALID_NODE_NAMES } from "./head/constants"
+import { filterHeadProps } from "./head/utils"
 
 // Calls callback in an effect and renders children
 function Caller({ children, callback }) {
@@ -46,7 +47,7 @@ function PageRenderer(props) {
     const headElement = createElement(
       StaticQueryContext.Provider,
       { value: props.pageResources.staticQueryResults },
-      createElement(pageComponent.head, _props, null)
+      createElement(pageComponent.head, filterHeadProps(_props), null)
     )
 
     const { render } = reactDOMUtils()

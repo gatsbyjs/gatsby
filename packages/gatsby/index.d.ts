@@ -151,9 +151,26 @@ export type PageProps<
 }
 
 /**
- * Props object passed into the [head](https://www.gatsbyjs.com/docs/reference/seo/head/) function.
+ * A props object passed into the head function for [metadata management](https://gatsby.dev/metadata-management).
  */
-export type HeadProps = Omit<PageProps, "navigate">
+export type HeadProps<DataType = object, PageContextType = object> = {
+  location: {
+    /**
+     * Returns the Location object's URL's path.
+     */
+    pathname: string;
+  }
+  /** The URL parameters when the page has a `matchPath` */
+  params: Record<string, string>
+  /**
+   * Data passed into the page via an exported GraphQL query.
+   */
+  data: DataType
+  /**
+   * A context object which is passed in during the creation of the page.
+   */
+  pageContext: PageContextType
+}
 
 /**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
