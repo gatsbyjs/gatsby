@@ -6,10 +6,23 @@
     "gatsby",
     "gatsby-core-utils"
   ],
+  "source": "src/*.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/*.js",
-    "./dist/*": "./dist/*.js"
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./*": {
+      "require": "./dist/*.js",
+      "import": "./dist/*.mjs"
+    },
+    "./dist/*": {
+      "require": "./dist/*.js",
+      "import": "./dist/*.mjs"
+    }
   },
   "typesVersions": {
     "*": {
@@ -19,21 +32,20 @@
       ]
     }
   },
+  "sideEffects": false,
   "author": "Ward Peeters <ward@coding-tech.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-core-utils"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
-    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
-    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\""
+    "build": "microbundle -f cjs,es --target node --no-sourcemap",
+    "watch": "npm run build watch",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "clean": "del-cli dist/*"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -60,7 +72,9 @@
   "devDependencies": {
     "@types/ci-info": "2.0.0",
     "cross-env": "^7.0.3",
+    "del-cli": "^3.0.1",
     "is-uuid": "^1.0.2",
+    "microbundle": "^0.15.0",
     "msw": "^0.38.2",
     "typescript": "^4.7.2"
   },
