@@ -1,4 +1,5 @@
 import * as React from "react"
+import { data } from "../../../shared-data/head-function-export"
 
 export default function HeadFunctionExportInvalidElements() {
   return (
@@ -15,9 +16,7 @@ export function head() {
       <div>A div-ersion</div>
       <audio>Feast for your ears</audio>
       <video>Feast for your eyes and ears</video>
-      <title data-testid="title">
-        I should actually be inserted, unlike the others
-      </title>
+      <title data-testid="title">{data.invalidElements.title}</title>
     </>
   )
 }

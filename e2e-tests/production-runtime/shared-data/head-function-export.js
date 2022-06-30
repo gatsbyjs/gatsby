@@ -48,6 +48,9 @@ const data = {
     style: `green`,
     link: `/used-by-head-function-export-ssr.css`,
   },
+  invalidElements: {
+    title: `I should actually be inserted, unlike the others`,
+  },
   fsRouteApi: {
     slug: `/fs-route-api`,
   },
