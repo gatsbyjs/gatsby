@@ -20,7 +20,7 @@ function makeRefNodesKey(id) {
   return `refnodes-${id}`
 }
 
-const handleReferences = async (
+async function handleReferences(
   node,
   {
     getNode,
@@ -29,7 +29,7 @@ const handleReferences = async (
     entityReferenceRevisions = [],
     cache,
   }
-) => {
+) {
   const relationships = node.relationships
   const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
 
@@ -165,8 +165,8 @@ const handleDeletedNode = async ({
   // Clone node so we're not mutating the original node.
   deletedNode = _.cloneDeep(deletedNode)
 
-  cache.del(makeBackRefsKey(deletedNode.id))
-  cache.del(makeRefNodesKey(deletedNode.id))
+  await cache.del(makeBackRefsKey(deletedNode.id))
+  await cache.del(makeRefNodesKey(deletedNode.id))
 
   // Remove relationships from other nodes and re-create them.
   Object.keys(deletedNode.relationships).forEach(async key => {
@@ -344,7 +344,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     // copy over back references from old node
     const backRefsNames = await cache.get(makeBackRefsKey(oldNode.id))
     if (backRefsNames) {
-      cache.set(makeBackRefsKey(newNode.id), backRefsNames)
+      await cache.set(makeBackRefsKey(newNode.id), backRefsNames)
       backRefsNames.forEach(backRefFieldName => {
         newNode.relationships[backRefFieldName] =
           oldNode.relationships[backRefFieldName]
