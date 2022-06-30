@@ -2,12 +2,11 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { NodePluginArgs } from "gatsby"
 import type { LoaderDefinition } from "webpack"
-import type { NodeMap } from "./types"
-
-import grayMatter from "gray-matter"
 import { getOptions } from "loader-utils"
 
 import { compileMDX } from "./compile-mdx"
+import { parseFrontmatter } from "./frontmatter"
+import type { NodeMap } from "./types"
 
 export interface IGatsbyMDXLoaderOptions {
   options: ProcessorOptions
@@ -30,11 +29,11 @@ const gatsbyMDXLoader: LoaderDefinition = async function (source) {
   const { mdxNode, fileNode } = res
 
   // Remove frontmatter
-  const { content } = grayMatter(source)
+  const { body } = parseFrontmatter(fileNode.internal.contentDigest, source)
 
   const compileRes = await compileMDX(
     // We want to work with the transformed source from our layout plugin
-    { ...mdxNode, body: content },
+    { ...mdxNode, body },
     fileNode,
     options,
     reporter

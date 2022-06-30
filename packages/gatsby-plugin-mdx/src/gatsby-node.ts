@@ -7,10 +7,10 @@ import path from "path"
 import { sentenceCase } from "change-case"
 import fs from "fs-extra"
 import { getPathToContentComponent } from "gatsby-core-utils"
-import grayMatter from "gray-matter"
 
 import { defaultOptions, enhanceMdxOptions } from "./plugin-options"
 import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
+import { parseFrontmatter } from "./frontmatter"
 import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
@@ -284,7 +284,10 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
 }) => {
   const rawBody = await loadNodeContent(node)
 
-  const { data: frontmatter, content: body } = grayMatter(rawBody)
+  const { frontmatter, body } = parseFrontmatter(
+    node.internal.contentDigest,
+    rawBody
+  )
 
   // Use slug from frontmatter, otherwise fall back to the file name and path
   const slug =
@@ -320,7 +323,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
  * Add frontmatter as page context for MDX pages
  */
 export const onCreatePage: GatsbyNode["onCreatePage"] = async (
-  { page, actions },
+  { page, actions, getNodesByType },
   pluginOptions
 ) => {
   const { createPage, deletePage } = actions
@@ -329,10 +332,25 @@ export const onCreatePage: GatsbyNode["onCreatePage"] = async (
   const mdxPath = getPathToContentComponent(page.component)
   const ext = path.extname(mdxPath)
 
-  // Only apply on pages based on .mdx files and avoid loops
-  if (extensions.includes(ext) && !page.context?.frontmatter) {
+  // Only apply on pages based on .mdx files
+  if (!extensions.includes(ext)) {
+    return
+  }
+
+  const fileNode = getNodesByType(`File`).find(
+    node => node.absolutePath === mdxPath
+  )
+  if (!fileNode) {
+    throw new Error(`Could not locate File node for ${mdxPath}`)
+  }
+
+  // Avoid loops
+  if (!page.context?.frontmatter) {
     const content = await fs.readFile(mdxPath, `utf8`)
-    const { data: frontmatter } = grayMatter(content)
+    const { frontmatter } = parseFrontmatter(
+      fileNode.internal.contentDigest,
+      content
+    )
 
     deletePage(page)
     createPage({
