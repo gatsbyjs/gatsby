@@ -516,6 +516,45 @@ describe(`gatsby-source-drupal`, () => {
     })
   })
 
+  describe(`Paragraph fields`, () => {
+    it(`creates the initial paragraph entity correctly`, async () => {
+      // Reset nodes.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const nodesToUpdate = require(`./fixtures/paragraph-v1.json`)
+      for (const nodeToUpdate of nodesToUpdate) {
+        await handleWebhookUpdate(
+          {
+            nodeToUpdate: nodeToUpdate.data,
+            ...args,
+          },
+          { baseUrl: `https://example.com` }
+        )
+      }
+      expect(
+        nodes[`generated-id-und.e7861064-0009-4458-bf6e-0284d34bb00d`]
+          .field_image.alt
+      ).toEqual(`alt text`)
+    })
+    it(`updates the referenced entities correctly`, async () => {
+      // Reset nodes.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const nodesToUpdate = require(`./fixtures/paragraph-v2.json`)
+      for (const nodeToUpdate of nodesToUpdate) {
+        await handleWebhookUpdate(
+          {
+            nodeToUpdate: nodeToUpdate.data,
+            ...args,
+          },
+          { baseUrl: `https://example.com` }
+        )
+      }
+      expect(
+        nodes[`generated-id-und.e7861064-0009-4458-bf6e-0284d34bb00d`]
+          .field_image.alt
+      ).toEqual(`alt text v2`)
+    })
+  })
+
   describe(`Image CDN`, () => {
     afterEach(() => {
       probeImageSize.mockClear()

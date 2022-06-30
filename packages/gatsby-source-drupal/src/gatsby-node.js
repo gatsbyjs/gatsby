@@ -421,25 +421,23 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 nodesToUpdate = [nodeSyncData.data]
               }
 
-              await Promise.all(
-                nodesToUpdate.map(nodeToUpdate =>
-                  handleWebhookUpdate(
-                    {
-                      nodeToUpdate,
-                      actions,
-                      cache,
-                      createNodeId,
-                      createContentDigest,
-                      getCache,
-                      getNode,
-                      reporter,
-                      store,
-                      languageConfig,
-                    },
-                    pluginOptions
-                  )
+              for (const nodeToUpdate of nodesToUpdate) {
+                await handleWebhookUpdate(
+                  {
+                    nodeToUpdate,
+                    actions,
+                    cache,
+                    createNodeId,
+                    createContentDigest,
+                    getCache,
+                    getNode,
+                    reporter,
+                    store,
+                    languageConfig,
+                  },
+                  pluginOptions
                 )
-              )
+              }
             }
           }
 
@@ -711,17 +709,15 @@ ${JSON.stringify(webhookBody, null, 4)}`
   createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
-  await Promise.all(
-    Array.from(nodes.values()).map(node =>
-      handleReferences(node, {
-        getNode: nodes.get.bind(nodes),
-        mutateNode: true,
-        createNodeId,
-        cache,
-        entityReferenceRevisions,
-      })
-    )
-  )
+  for (const node of Array.from(nodes.values())) {
+    handleReferences(node, {
+      getNode: nodes.get.bind(nodes),
+      mutateNode: true,
+      createNodeId,
+      cache,
+      entityReferenceRevisions,
+    })
+  }
 
   if (skipFileDownloads) {
     reporter.info(`Skipping remote file download from Drupal`)
