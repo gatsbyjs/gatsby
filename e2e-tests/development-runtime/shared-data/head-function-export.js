@@ -7,9 +7,10 @@ const page = {
   staticQuery: `${path}/static-query-component/`,
   warnings: `${path}/warnings/`,
   allProps: `${path}/all-props/`,
-  dsg: `${path}/dsg`,
-  ssr: `${path}/ssr`,
-  invalidElements: `${path}/invalid-elements`,
+  dsg: `${path}/dsg/`,
+  ssr: `${path}/ssr/`,
+  invalidElements: `${path}/invalid-elements/`,
+  fsRouteApi: `${path}/fs-route-api/`,
 }
 
 const data = {
@@ -46,6 +47,9 @@ const data = {
     noscript: `You may be a puzzle, but I like the way the parts fit`,
     style: `green`,
     link: `/used-by-head-function-export-ssr.css`,
+  },
+  fsRouteApi: {
+    slug: `/fs-route-api`,
   },
 }
 
