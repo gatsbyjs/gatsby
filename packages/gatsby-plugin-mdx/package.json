@@ -62,7 +62,7 @@
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.0",
     "vfile": "^5.3.2",
-    "acorn": "^8.7.1",
+    "acorn": "^7.4.1",
     "acorn-jsx": "^5.3.2",
     "astring": "^1.8.3",
     "estree-util-build-jsx": "^2.1.0"
