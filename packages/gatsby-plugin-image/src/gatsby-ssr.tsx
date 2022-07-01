@@ -1,5 +1,4 @@
 import * as React from "react"
-import { oneLine } from "common-tags"
 import cssNanoMacro from "preval-minify-css.macro"
 import terserMacro from "preval-minify-js.macro"
 import { RenderBodyArgs } from "gatsby"
@@ -8,7 +7,7 @@ const generateHtml = (
   str: string
 ): React.DOMAttributes<Element>["dangerouslySetInnerHTML"] => {
   return {
-    __html: oneLine(str),
+    __html: str,
   }
 }
 
@@ -67,8 +66,9 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     <script
       key="gatsby-image-style-script"
       type="module"
-      dangerouslySetInnerHTML={generateHtml(terserMacro`
-  const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
+      dangerouslySetInnerHTML={generateHtml(
+        terserMacro`
+  const hasNativeLazyLoadSupport= typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
   if (hasNativeLazyLoadSupport) {
     document.body.addEventListener('load', function gatsbyImageNativeLoader(e) {
       const target = e.target;
@@ -109,7 +109,8 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
         })
     }, true)
   }
-    `)}
+  `
+      )}
     />,
   ])
 }

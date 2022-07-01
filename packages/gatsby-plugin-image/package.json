@@ -57,7 +57,7 @@
     "microbundle": "^0.15.0",
     "npm-run-all": "^4.1.5",
     "preval-minify-css.macro": "^0.3.0",
-    "preval-minify-js.macro": "^0.3.0",
+    "preval-minify-js.macro": "^0.3.1",
     "semver": "^7.3.7"
   },
   "peerDependencies": {

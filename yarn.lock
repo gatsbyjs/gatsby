@@ -19038,12 +19038,11 @@ preval-minify-css.macro@^0.3.0:
     do-sync "^3.1.1"
     postcss "^8.4.14"
 
-preval-minify-js.macro@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/preval-minify-js.macro/-/preval-minify-js.macro-0.3.0.tgz#74c6ab51d44b42bbd4714338d40eaf9c1b9789e3"
-  integrity sha512-6HrOjsXLQqekh5j3Dgug2LpJdWen7UwG0NJO+xSCpyj7zyfCEQix/guuF8q9vagN3+tftBCuM0phqsiCXyAkjg==
+preval-minify-js.macro@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/preval-minify-js.macro/-/preval-minify-js.macro-0.3.1.tgz#7c367c328c3189436ddc4aba34f263d04f98cc50"
+  integrity sha512-lM1IhH/T0rqLp47rXzGBj/3/5AoTwmgmWyvBsQN0Zy94HVbUgiw7BN+jdmfl3/Y5AcdBbc+8+i/pliAd01+/pg==
   dependencies:
-    "@babel/template" "^7.16.7"
     babel-plugin-macros "^3.1.0"
     deepmerge "^4.2.2"
     do-sync "^3.1.1"
