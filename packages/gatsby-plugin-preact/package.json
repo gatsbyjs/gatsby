@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.15.4",
     "@gatsbyjs/webpack-hot-middleware": "^2.25.3",
     "@prefresh/babel-plugin": "^0.4.3",
-    "@prefresh/webpack": "^3.3.3"
+    "@prefresh/webpack": "^3.3.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
