@@ -10,7 +10,19 @@ export function parseFrontmatter(
     return cacheMap.get(cacheKey)
   }
 
-  const { content, data } = grayMatter(source)
+  const { content, data } = grayMatter(source, {
+    language: `yaml`,
+    // Disable JS(ON) frontmatter parsing.
+    // See: https://github.com/gatsbyjs/gatsby/pull/35830
+    engines: {
+      js: () => {
+        return {}
+      },
+      javascript: () => {
+        return {}
+      },
+    },
+  })
   cacheMap.set(cacheKey, { content, data })
 
   return { body: content, frontmatter: data }
