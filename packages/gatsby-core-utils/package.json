@@ -13,12 +13,12 @@
       "require": "./dist/index.js"
     },
     "./*": {
-      "types": "./dist/*.ts",
+      "types": "./dist/*.d.ts",
       "import": "./dist/*.mjs",
       "require": "./dist/*.js"
     },
     "./dist/*": {
-      "types": "./dist/*.ts",
+      "types": "./dist/*.d.ts",
       "import": "./dist/*.mjs",
       "require": "./dist/*.js"
     }
