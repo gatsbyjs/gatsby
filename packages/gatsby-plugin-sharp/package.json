@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@gatsbyjs/potrace": "^2.2.0",
-    "async": "^3.2.3",
+    "async": "^3.2.4",
     "bluebird": "^3.7.2",
     "debug": "^4.3.4",
     "filenamify": "^4.3.0",
