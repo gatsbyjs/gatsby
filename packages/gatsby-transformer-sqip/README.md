@@ -22,8 +22,6 @@
 
 This project can create beautiful results, but this comes with the cost of processing power. It may take several seconds on your machine to generate the preview. **Make sure to invest some time and to cache your `public` folder to avoid regeneration of the previews on every build.**
 
-Netlify users might use [gatsby-plugin-netlify-cache](https://github.com/axe312ger/gatsby-plugin-netlify-cache).
-
 <details>
 <summary><strong>Table of contents:</strong></summary>
 

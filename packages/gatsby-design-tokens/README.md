@@ -1,7 +1,3 @@
-<img src="https://user-images.githubusercontent.com/21834/74070062-35b91980-4a00-11ea-93a8-b77bde7b4c37.png" width="48" height="48" alt="rebeccapurple dot" />
-<br>
-<br>
-
 # gatsby-design-tokens
 
 <a href="https://www.npmjs.org/package/gatsby-design-tokens">
