@@ -4,6 +4,8 @@ title: Importing and Using Components in MDX
 
 You can import your components from other third party libraries, like [`theme-ui`](https://theme-ui.com/components). Use cases for external libraries could be charting libraries for adding rich data visualizations, form components for adding email signups, styled portions of content like pullquotes, or call to action buttons throughout your pages. You can also import and reuse _your own_ React components and MDX documents.
 
+Gatsby will try to bundle these imported components as efficient as possible. If you import a component within a single page, only this page will contain and load the component.
+
 ## Import components for use from another library
 
 Components imported from other libraries can be rendered inline with your markdown content, allowing you to include rich media like charts, interactive buttons, or styled messages. Components are imported at the top of your MDX documents—in the same syntax they are imported in JavaScript files—and then added using opening and closing brackets like normal JSX elements.
@@ -77,9 +79,9 @@ Because the `<Message />` and `<Chart />` components were passed into the provid
 
 ## Lazy-loading components
 
-When you use components in your `.mdx` files, Gatsby will bundle them into the main application bundle. This can cause performance problems.
+When you use MDXProvider to provide components for your `.mdx` files, Gatsby will bundle them all with your MDXProvider instance. This can cause performance problems when you provide many or bundle-size intense components.
 
-In the future, [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx) will address this. In the meantime, it can be prudent to lazy-load very large dependencies. The following snippet provides an example for lazy-loading an imaginary `Thing` component:
+The following snippet provides an example for lazy-loading an imaginary `Thing` component:
 
 ```jsx:title=src/components/LazyThing.js
 import React from "react"
@@ -103,18 +105,20 @@ const LazyThing = props => {
 export default LazyThing
 ```
 
-Inside your MDX, swap out any references to `Thing` with `LazyThing`:
+In your list of shortcodes for MDX Provider, swap out any references to `Thing` with `LazyThing`:
 
 ```diff
 -import Thing from "../components/Thing/Thing.js"
 +import LazyThing from "../components/Thing/LazyThing.js"
 
-## Introducing Things
+-const shortcodes = { Chart, Pullquote, Message, Thing }
++const shortcodes = { Chart, Pullquote, Message, Thing: LazyThing }
 
-Here is a demo:
-
--<Thing hi={5} />
-+<LazyThing hi={5} />
+export default function Layout({ children }) {
+  return (
+    <MDXProvider components={shortcodes}>{children}</MDXProvider>
+  )
+}
 ```
 
 ### Additional resources

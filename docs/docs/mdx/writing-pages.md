@@ -10,7 +10,7 @@ path inside `src/pages`. An MDX file at `src/pages/awesome.mdx` will
 result in a page being rendered at `mysite.com/awesome`.
 
 > `gatsby-plugin-mdx` looks for MDX files and automatically
-> transpiles them so that Gatsby internals can render them.
+> transpiles them so that Gatsby internals can render them. Ensure to parse these MDX files with `gatsby-source-filesystem`, otherwise they can't be located.
 
 ## Using frontmatter in MDX
 
@@ -45,10 +45,6 @@ query {
   }
 }
 ```
-
-> **Note:** To query `MDX` content, it must be included in the node system using a
-> source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
-> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/plugins/gatsby-source-filesystem/).
 
 Frontmatter is also available in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:
@@ -186,9 +182,7 @@ query MdxExports {
 
 ### Defining a layout
 
-If you have [provided a default layout](/plugins/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
-through the `gatsby-plugin-mdx` plugin options, the exported component you define
-from this file will replace the default.
+With MDX, you define your layout by importing it into your MDX file and exporting it as your default export:
 
 <!-- prettier-ignore -->
 ```mdx:title=src/pages/layout-example.mdx
@@ -212,16 +206,29 @@ const PurpleBorder = ({ children }) => (
 export default PurpleBorder
 ```
 
+You can always apply a global layout via [wrapPageElement](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/#wrapPageElement).
+
+If you have multiple folders of MDX files, and want a different layout for each folder, you can do so [programmatically](/docs/mdx/writing-pages/).
+
 ## GraphQL queries
 
-You can fetch data to use in your MDX file by exporting a `pageQuery`
-in the same way you would for a `.js` page. The queried data is passed
-as a prop, and can be accessed inside any JSX block when writing in
-MDX:
+You can fetch data to use in your MDX file by using `StaticQuery`:
 
 <!-- prettier-ignore -->
 ```mdx
 import { graphql } from "gatsby"
+
+<StaticQuery
+  query={graphql`
+    query HeadingQuery {
+      site {
+        siteMetadata {
+          description
+        }
+      }
+    }
+  `}
+  render={data => (
 
 # My Awesome Page
 
@@ -229,16 +236,8 @@ Here's a paragraph, followed by a paragraph with data!
 
 <p>{props.data.site.siteMetadata.description}</p>
 
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        description
-        title
-      }
-    }
-  }
-`
+  )}
+/>
 ```
 
 > Note: For now, this only works [if the `.mdx` file exporting the query is placed in
