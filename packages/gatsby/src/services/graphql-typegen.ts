@@ -28,12 +28,22 @@ export async function graphQLTypegen({
   )
   activity.start()
 
-  const { schema, definitions } = store.getState()
+  const { schema, definitions, config } = store.getState()
+  const graphqlTypegenOptions = config.graphqlTypegen
+
+  if (!graphqlTypegenOptions) {
+    throw new Error(`graphqlTypegen option is falsy. This should never happen.`)
+  }
 
   try {
     await writeGraphQLSchema(directory, schema)
     await writeGraphQLFragments(directory, definitions)
-    await writeTypeScriptTypes(directory, schema, definitions)
+    await writeTypeScriptTypes(
+      directory,
+      schema,
+      definitions,
+      graphqlTypegenOptions
+    )
   } catch (err) {
     activity.panicOnBuild({
       id: `12100`,

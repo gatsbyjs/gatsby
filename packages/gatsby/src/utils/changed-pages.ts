@@ -1,9 +1,9 @@
 import { actions } from "../redux/actions"
 import { store } from "../redux"
 const { deletePage } = actions
-
-import { isEqualWith, IsEqualCustomizer } from "lodash"
+import { isEqualWith } from "lodash"
 import { IGatsbyPage } from "../redux/types"
+import type { IsEqualCustomizer } from "lodash"
 
 export function deleteUntouchedPages(
   currentPages: Map<string, IGatsbyPage>,

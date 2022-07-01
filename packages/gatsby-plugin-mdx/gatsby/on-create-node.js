@@ -74,6 +74,7 @@ async function onCreateNodeExtraBabel(
     id: createNodeId(`${node.id} >>> Mdx`),
     node,
     content,
+    options,
   })
 
   createNode(mdxNode)

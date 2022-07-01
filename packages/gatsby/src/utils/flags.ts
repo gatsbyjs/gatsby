@@ -1,8 +1,6 @@
 import _ from "lodash"
 import semver from "semver"
 
-import sampleSiteForExperiment from "./sample-site-for-experiment"
-
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
@@ -87,7 +85,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      // `DEV_SSR`, - not working with serverdata atm
+      `DEV_SSR`,
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `DEV_WEBPACK_CACHE`,
     ],
@@ -101,18 +99,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (): fitnessEnum => {
-      // TODO Re-enable after gatsybcamp
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return false
-      }
-
-      if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `QUERY_ON_DEMAND`,

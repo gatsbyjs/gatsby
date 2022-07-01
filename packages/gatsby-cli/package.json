@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "4.16.0-next.1",
+  "version": "4.19.0-next.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
@@ -18,6 +18,7 @@
     "@babel/runtime": "^7.15.4",
     "@babel/template": "^7.16.7",
     "@babel/types": "^7.16.8",
+    "@jridgewell/trace-mapping": "^0.3.13",
     "@types/common-tags": "^1.8.1",
     "better-opn": "^2.1.1",
     "boxen": "^5.1.2",
@@ -26,13 +27,13 @@
     "common-tags": "^1.8.2",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "create-gatsby": "^2.16.0-next.1",
+    "create-gatsby": "^2.19.0-next.1",
     "envinfo": "^7.8.1",
     "execa": "^5.1.1",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.16.0-next.0",
-    "gatsby-telemetry": "^3.16.0-next.0",
+    "gatsby-core-utils": "^3.19.0-next.0",
+    "gatsby-telemetry": "^3.19.0-next.1",
     "hosted-git-info": "^3.0.8",
     "is-valid-path": "^0.1.1",
     "joi": "^17.4.2",
@@ -47,7 +48,6 @@
     "resolve-cwd": "^3.0.0",
     "semver": "^7.3.7",
     "signal-exit": "^3.0.6",
-    "source-map": "0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^6.0.1",
     "update-notifier": "^5.1.0",
@@ -64,7 +64,8 @@
     "@rollup/plugin-replace": "^2.4.2",
     "@types/hosted-git-info": "^3.0.2",
     "@types/yargs": "^15.0.14",
-    "babel-preset-gatsby-package": "^2.16.0-next.0",
+    "babel-plugin-lodash": "^3.3.4",
+    "babel-preset-gatsby-package": "^2.19.0-next.0",
     "cross-env": "^7.0.3",
     "ink": "^3.2.0",
     "ink-spinner": "^4.0.3",
@@ -74,7 +75,7 @@
     "rollup": "^2.66.1",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-internal": "^1.0.4",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.2"
   },
   "files": [
     "lib/",
