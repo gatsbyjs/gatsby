@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.16.0/packages/gatsby-core-utils) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+
 ## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.15.0/packages/gatsby-core-utils) (2022-05-24)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)

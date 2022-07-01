@@ -78,9 +78,13 @@ export interface IGatsbyFunction {
   pluginName: string
 }
 
+export interface IGraphQLTypegenOptions {
+  typesOutputPath: string
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
-    // This is the name of the plugin like `gatsby-plugin-manifest
+    // This is the name of the plugin like `gatsby-plugin-manifest`
     resolve: string
     options: {
       [key: string]: unknown
@@ -105,7 +109,7 @@ export interface IGatsbyConfig {
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
-  graphqlTypegen?: boolean
+  graphqlTypegen?: IGraphQLTypegenOptions
 }
 
 export interface IGatsbyNode {
@@ -121,7 +125,6 @@ export interface IGatsbyNode {
     content?: string
     description?: string
   }
-  __gatsby_resolved: any // TODO
   [key: string]: unknown
   fields: Array<string>
 }
@@ -253,6 +256,7 @@ export interface IGatsbyState {
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
   requestHeaders: Map<string, { [header: string]: string }>
+  telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -442,6 +446,8 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
+  | IProcessGatsbyImageSourceUrlAction
+  | IClearGatsbyImageSourceUrlAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -971,11 +977,27 @@ export interface ISetDomainRequestHeaders {
   }
 }
 
+export interface IProcessGatsbyImageSourceUrlAction {
+  type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`
+  payload: {
+    sourceUrl: string
+  }
+}
+
+export interface IClearGatsbyImageSourceUrlAction {
+  type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`
+}
+
+export interface ITelemetry {
+  gatsbyImageSourceUrls: Set<string>
+}
+
 export interface IMergeWorkerQueryState {
   type: `MERGE_WORKER_QUERY_STATE`
   payload: {
     workerId: number
     queryStateChunk: IGatsbyState["queries"]
+    queryStateTelemetryChunk: IGatsbyState["telemetry"]
   }
 }
 

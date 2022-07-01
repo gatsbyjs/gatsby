@@ -23,6 +23,7 @@ import {
 import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
 import { reportOnce } from "../utils/report-once"
 import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
+import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -319,8 +320,7 @@ class LocalNodeModel {
       this.schemaComposer,
       this.schema,
       gqlType,
-      fields,
-      nodeTypeNames
+      fields
     )
 
     for (const nodeTypeName of nodeTypeNames) {
@@ -478,7 +478,6 @@ class LocalNodeModel {
 
     if (!_.isEmpty(actualFieldsToResolve)) {
       const resolvedNodes = new Map()
-      const previouslyResolvedNodes = getResolvedNodes(typeName)
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         this.trackInlineObjectsInRootNode(node)
         const resolvedFields = await resolveRecursive(
@@ -490,21 +489,8 @@ class LocalNodeModel {
           queryFields,
           actualFieldsToResolve
         )
-        const previouslyResolvedFields =
-          previouslyResolvedNodes?.get(node.id) ?? {}
 
-        const mergedResolvedFields = _.merge(
-          previouslyResolvedFields,
-          resolvedFields
-        )
-
-        resolvedNodes.set(node.id, mergedResolvedFields)
-
-        // `resolvedNodesCache` redux state is always source
-        // of truth. `node.__gatsby_resolved` might not persist
-        // (we mutate node loaded from LMDB) and is only optimization
-        // to avoid additional lookups in `resolvedNodesCache` WHEN it exists
-        node.__gatsby_resolved = mergedResolvedFields
+        resolvedNodes.set(node.id, resolvedFields)
       }
       if (resolvedNodes.size) {
         await saveResolvedNodes(typeName, resolvedNodes)
@@ -699,21 +685,6 @@ class ContextualNodeModel {
 }
 
 const getNodeById = id => (id != null ? getNode(id) : null)
-
-const toNodeTypeNames = (schema, gqlTypeName) => {
-  const gqlType =
-    typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
-
-  if (!gqlType) return []
-
-  const possibleTypes = isAbstractType(gqlType)
-    ? schema.getPossibleTypes(gqlType)
-    : [gqlType]
-
-  return possibleTypes
-    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
-    .map(type => type.name)
-}
 
 const getQueryFields = ({ filter, sort, group, distinct, max, min, sum }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
@@ -912,8 +883,7 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames,
-  isNestedType = false
+  isNestedAndParentNeedsResolve = false
 ) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
@@ -922,17 +892,14 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    const possibleTCs = [
+
+    const needsResolve = fieldNeedToResolve({
+      schema,
+      gqlType: type,
       typeComposer,
-      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
-    ]
-    let needsResolve = false
-    for (const tc of possibleTCs) {
-      needsResolve = tc.getFieldExtension(fieldName, `needsResolve`) || false
-      if (needsResolve) {
-        break
-      }
-    }
+      schemaComposer,
+      fieldName,
+    })
 
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
@@ -940,8 +907,7 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType),
-        true
+        isNestedAndParentNeedsResolve || needsResolve
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
@@ -951,7 +917,7 @@ const determineResolvableFields = (
     if (!fieldsToResolve[fieldName] && needsResolve) {
       fieldsToResolve[fieldName] = true
     }
-    if (!fieldsToResolve[fieldName] && isNestedType) {
+    if (!fieldsToResolve[fieldName] && isNestedAndParentNeedsResolve) {
       // If parent field needs to be resolved - all nested fields should be added as well
       // See https://github.com/gatsbyjs/gatsby/issues/26056
       fieldsToResolve[fieldName] = true
@@ -995,9 +961,6 @@ const saveResolvedNodes = (typeName, resolvedNodes) => {
     },
   })
 }
-
-const getResolvedNodes = typeName =>
-  store.getState().resolvedNodesCache.get(typeName)
 
 const deepObjectDifference = (from, to) => {
   const result = {}
