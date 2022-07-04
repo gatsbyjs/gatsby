@@ -1,3 +1,5 @@
+import { VALID_NODE_NAMES } from "./constants"
+
 /**
  * Filter the props coming from a page down to just the ones that are relevant for head.
  * This e.g. filters out properties that are undefined during SSR.
@@ -28,7 +30,7 @@ export function headExportValidator(head) {
  * @param {string} tagName
  */
 export function warnForInvalidTags(tagName) {
-  if (process.env.NODE_ENV === `production`) {
+  if (process.env.NODE_ENV !== `production`) {
     const warning =
       tagName !== `script`
         ? `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
