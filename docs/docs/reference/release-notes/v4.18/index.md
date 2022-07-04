@@ -40,7 +40,7 @@ The path is relative to the site root, in the example above the file would be ge
 
 ## Server Side Rendering (SSR) in development
 
-TODO
+Shortly before v4 release, we disabled [DEV_SSR flag](https://github.com/gatsbyjs/gatsby/discussions/28138) because`getServerData` was not properly handled. In this release, we handled `getServerData` properly and restored the flag. Now you can add the `DEV_SSR` flag to your `gatsby-config` file so you can spot and fix SSR errors (like trying to access the window object) during development.
 
 ## Open RFCs
 
