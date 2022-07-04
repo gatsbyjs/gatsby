@@ -42,14 +42,4 @@ describe(`js-chunk-names`, () => {
       `component---2271333819-ortis-eros-a-lacinia-leo-pellentesque-convallis-volutpat-mdx`
     )
   })
-
-  it(`it ensures chunk names can not exceed 255 characters`, () => {
-    const shortenedChunkName = generateComponentChunkName(
-      `/src/content/lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-sed-non-ex-libero-praesent-ac-neque-id-ex-vehicula-imperdiet-eget-et-dolor-fusce-cursus-neque-in-ipsum-varius-dictum-sed-ac-lectus-faucibus-lobortis-eros-a-lacinia-leo-pellentesque-convallis-volutpat.mdx`
-    )
-    expect(`${shortenedChunkName}.js.map`.length).toBe(255)
-    expect(shortenedChunkName).toEqual(
-      `component---src-content-lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-sed-non-ex-libero-praesent-ac-neque-id-ex-vehicula-imperdiet-eget-et-dolor-fusce-cursus-neque-in-ipsum-varius-dictum-sed-ac-lect-k-uksd-fy-2-l-ktc-obj-ckz-cn-1-n-dgn-4-o`
-    )
-  })
 })
