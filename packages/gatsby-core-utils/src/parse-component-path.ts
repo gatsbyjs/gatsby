@@ -1,4 +1,4 @@
-// Since v2 of gatsby-source-mdx, we are using the resourceQuery feature
+// Since gatsby-plugin-mdx v4, we are using the resourceQuery feature
 // of webpack's loaders to inject a content file into a page component.
 // These helper functions are used to simplify working with these new
 // page component path URI's.

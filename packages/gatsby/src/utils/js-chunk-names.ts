@@ -2,7 +2,7 @@ import memoize from "memoizee"
 import { kebabCase as _kebabCase } from "lodash"
 import path from "path"
 import { store } from "../redux"
-import { getPathToContentComponent } from "gatsby-core-utils/dist/parse-component-path"
+import { getPathToContentComponent } from "gatsby-core-utils"
 
 const kebabCase = memoize(_kebabCase)
 const pathRelative = memoize(path.relative)
