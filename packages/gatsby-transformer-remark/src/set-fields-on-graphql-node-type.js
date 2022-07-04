@@ -152,9 +152,9 @@ module.exports = function remarkExtendNodeType(
       }
     }
 
-    async function getSlug(markdownNode) {
-      const splitPath = markdownNode?.fileAbsolutePath?.split(`/`)
-      return splitPath?.[splitPath?.length - 1]?.slice(0, -3)
+    function getSlug(node) {
+      const filename = node?.fileAbsolutePath?.split(`/`)?.pop()
+      return filename?.substring(0, filename?.lastIndexOf(`.`))
     }
 
     async function getFileWithNodeDependencyTracking(
