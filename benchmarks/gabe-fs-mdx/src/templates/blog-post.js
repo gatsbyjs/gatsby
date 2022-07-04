@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout_1"
 
-const Article = ({ children, pageContext, data }) => {
+const Article = ({ children, pageContext }) => {
   return (
     <Layout>
       <Link to="/">Go back to index page</Link>
