@@ -16,7 +16,7 @@ module.exports = async function generateGraphQLType(
 
     if (!contentTypes.types.includes(type)) {
       reporter.error(
-        `Type '${type}' does not match any of the provided contentTypes.`
+        `Type '${type}' does not match any of the provided contentTypes. If this type should be allowed, please add it to the content-types in the Gatsby config file.`
       )
     }
 
