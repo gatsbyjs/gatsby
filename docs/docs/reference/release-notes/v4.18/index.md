@@ -8,8 +8,9 @@ Welcome to `gatsby@4.18.0` release (July 2022 #1)
 
 Key highlights of this release:
 
-- TODO
-- [Open RFCs](#open-rfcs)
+- [`typesOutputPath` option for GraphQL Typegen](#typesoutputpath-option-for-graphql-typegen) - Configure the location of the generated TypeScript types
+- [Server Side Rendering (SSR) in development](#server-side-rendering-ssr-in-development) - Find bugs & hydration errors more easily during `gatsby develop`
+- [Open RFCs](#open-rfcs) - MDX v2 & Metadata management
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -21,7 +22,23 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## Key highlight
+## `typesOutputPath` option for GraphQL Typegen
+
+We saw great adoption of the GraphQL Typegen feature we've added in the [4.15 Release](/docs/reference/release-notes/v4.15/#graphql-typegen). We've heard that the location of the automatically generated TypeScript definitions file should be configurable. By default, it's generated in the `src/gatsby-types.d.ts` location.
+
+You're now able to specify the location of the generated types using the `typesOutputPath` option. The `graphqlTypegen` option accepts both a boolean and an object now. If you don't pass an object (but `graphqlTypegen: true`), the default value for each option will be used.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  graphqlTypegen: {
+    typesOutputPath: `gatsby-types.d.ts`,
+  },
+}
+```
+
+The path is relative to the site root, in the example above the file would be generated at `<root>/gatsby-types.d.ts`. For more details and any future options, see the [Gatsby Config API](/docs/reference/config-files/gatsby-config/#graphqltypegen).
+
+## Server Side Rendering (SSR) in development
 
 TODO
 
@@ -34,7 +51,13 @@ We continue to have ongoing RFCs that we’d like your input on. Please give it 
 
 ## Notable bugfixes & improvements
 
-- TODO
+- Properly compile all packages for Node and browser environment, via [PR #35948](https://github.com/gatsbyjs/gatsby/pull/35948)
+- Use `babel-plugin-lodash` to reduce `lodash` size published packages, via [PR #35947](https://github.com/gatsbyjs/gatsby/pull/35947)
+- `gatsby-cli`: Set `NODE_ENV` earlier to fix Jest failing with `Couldn't find temp query result` error, via [PR #35968](https://github.com/gatsbyjs/gatsby/pull/35968)
+- `gatsby`
+  - Add retry mechanism for `gatsby-node/config.ts` compilation to fix intermittent bug during `gatsby build`, via [PR #35974](https://github.com/gatsbyjs/gatsby/pull/35974)
+  - Fix potentially wrong query results when querying fields with custom resolvers, via [PR #35369](https://github.com/gatsbyjs/gatsby/pull/35369)
+- `gatsby-source-wordpress`: Always hydrate images and use the right parent element, via [PR #36002](https://github.com/gatsbyjs/gatsby/pull/36002)
 
 ## Contributors
 
