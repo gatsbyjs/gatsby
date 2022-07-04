@@ -1,11 +1,4 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com">
-    <img alt="Gatsby logomark" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Using MDX Example
-</h1>
+# using-mdx
 
 This repository demonstrates how to add MDX pages to a new Gatsby site.
 
@@ -24,7 +17,7 @@ git clone git@github.com:gatsbyjs/gatsby.git
 2.  Navigate to the example
 
 ```shell
-cd gatsby/examples/using-MDX
+cd gatsby/examples/using-mdx
 ```
 
 3.  Install the dependencies for the application by running
@@ -45,8 +38,7 @@ The site is now running at `http://localhost:8000`, you can see the MDX example 
 
 ## 🧰 Resources used to create this project
 
-- [Gatsby default starter repo](https://github.com/gatsbyjs/gatsby-starter-default)
-- [Gatsby plugin MDX](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx/)
+- [gatsby-plugin-mdx](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx/)
 - [Bar chart from Nivo Charts](https://nivo.rocks/bar/)
 - [Line chart from Nivo Charts](https://nivo.rocks/line/)
 - [Area Bump chart from Nivo Charts](https://nivo.rocks/area-bump/)

@@ -119,4 +119,4 @@ Here is a demo:
 
 ### Additional resources
 
-- Follow this detailed [example on using MDX](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-MDX) to import and render components.
+- Follow this detailed [example on using MDX](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-mdx) to import and render components.
