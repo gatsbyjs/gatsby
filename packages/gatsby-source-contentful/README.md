@@ -1,11 +1,5 @@
 # gatsby-source-contentful
 
-> Source plugin for pulling content types, entries, and assets into Gatsby from
-> Contentful spaces. It creates links between entry types and asset so they can be
-> queried in Gatsby using GraphQL.
->
-> An example site for using this plugin is at https://using-contentful.gatsbyjs.org/
-
 <details>
 <summary><strong>Table of contents</strong></summary>
 
