@@ -1,5 +1,5 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
-import type { PluginOptions, GatsbyCache, NodePluginArgs } from "gatsby"
+import type { GatsbyCache, NodePluginArgs, PluginOptions } from "gatsby"
 import deepmerge from "deepmerge"
 import { IPluginRefObject } from "gatsby-plugin-utils/types"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
@@ -7,11 +7,10 @@ import rehypeMdxMetadataExtractor from "./rehype-metadata-extractor"
 import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
 import { remarkPathPlugin } from "./remark-path-prefix-plugin"
 
-export interface IMdxPluginOptions extends PluginOptions {
+export interface IMdxPluginOptions {
   extensions: [string]
-  defaultLayouts: { [key: string]: string }
   mdxOptions: ProcessorOptions
-  gatsbyRemarkPlugins: [IPluginRefObject]
+  gatsbyRemarkPlugins?: [IPluginRefObject]
 }
 interface IHelpers {
   getNode: NodePluginArgs["getNode"]
@@ -20,7 +19,7 @@ interface IHelpers {
   reporter: NodePluginArgs["reporter"]
   cache: GatsbyCache
 }
-type MdxDefaultOptions = (pluginOptions: IMdxPluginOptions) => IMdxPluginOptions
+type MdxDefaultOptions = (pluginOptions: PluginOptions) => IMdxPluginOptions
 
 export const defaultOptions: MdxDefaultOptions = pluginOptions => {
   const mdxOptions: ProcessorOptions = {
@@ -29,20 +28,20 @@ export const defaultOptions: MdxDefaultOptions = pluginOptions => {
     providerImportSource: `@mdx-js/react`,
     jsxRuntime: `classic`,
   }
-  const options: IMdxPluginOptions = deepmerge(
-    {
-      extensions: [`.mdx`],
-      defaultLayouts: {},
-      mdxOptions,
-    },
+  const defaults = {
+    extensions: [`.mdx`],
+    mdxOptions,
+  }
+  const options = deepmerge(
+    defaults,
     pluginOptions
-  )
+  ) as unknown as IMdxPluginOptions
 
   return options
 }
 
 type EnhanceMdxOptions = (
-  pluginOptions: IMdxPluginOptions,
+  pluginOptions: PluginOptions,
   helpers: IHelpers
 ) => Promise<ProcessorOptions>
 
@@ -65,7 +64,14 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
   }
 
   // Support gatsby-remark-* plugins
-  if (Object.keys(options.gatsbyRemarkPlugins).length) {
+  if (
+    options.gatsbyRemarkPlugins &&
+    Object.keys(options.gatsbyRemarkPlugins).length
+  ) {
+    if (!options.mdxOptions.remarkPlugins) {
+      options.mdxOptions.remarkPlugins = []
+    }
+
     // Parser plugins
     for (const plugin of options.gatsbyRemarkPlugins) {
       const requiredPlugin = plugin.module

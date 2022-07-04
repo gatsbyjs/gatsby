@@ -23,9 +23,9 @@ export async function getSourcePluginsAsRemarkPlugins({
 }: IGetSourcePluginsAsRemarkPlugins): Promise<
   ProcessorOptions["remarkPlugins"]
 > {
-  const userPluginsFiltered = gatsbyRemarkPlugins.filter(
-    plugin => typeof plugin.module === `function`
-  )
+  const userPluginsFiltered = gatsbyRemarkPlugins
+    ? gatsbyRemarkPlugins.filter(plugin => typeof plugin.module === `function`)
+    : []
 
   if (!userPluginsFiltered.length) {
     return []

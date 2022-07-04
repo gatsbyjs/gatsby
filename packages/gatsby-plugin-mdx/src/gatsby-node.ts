@@ -6,14 +6,11 @@ import type { IFileNode, NodeMap } from "./types"
 import path from "path"
 import { sentenceCase } from "change-case"
 import fs from "fs-extra"
-import grayMatter from "gray-matter"
+import { getPathToContentComponent } from "gatsby-core-utils"
 
-import {
-  defaultOptions,
-  enhanceMdxOptions,
-  IMdxPluginOptions,
-} from "./plugin-options"
+import { defaultOptions, enhanceMdxOptions } from "./plugin-options"
 import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
+import { parseFrontmatter } from "./frontmatter"
 import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
@@ -25,7 +22,7 @@ import { ERROR_MAP } from "./error-utils"
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
   async (
     { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
-    pluginOptions: IMdxPluginOptions
+    pluginOptions
   ) => {
     const mdxNodes = getNodesByType(`Mdx`)
     const nodeMap: NodeMap = new Map()
@@ -76,6 +73,13 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
                 ),
                 options: mdxLoaderOptions,
               },
+            ],
+          },
+          {
+            test: /\.[tj]sx?$/,
+            resourceQuery: /__contentFilePath=.+\.mdx?$/,
+            use: [
+              loaders.js(),
               {
                 loader: path.join(
                   `gatsby-plugin-mdx`,
@@ -97,17 +101,23 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
  */
 export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
   _data,
-  pluginOptions: IMdxPluginOptions
+  pluginOptions
 ) => defaultOptions(pluginOptions).extensions
 
 /**
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries and render the pages.
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
-  { filename, contents, getNode, getNodesByType, pathPrefix, reporter, cache },
-  pluginOptions: IMdxPluginOptions
+  { filename, getNode, getNodesByType, pathPrefix, reporter, cache },
+  pluginOptions
 ) => {
-  const { extensions } = defaultOptions(pluginOptions)
+  const options = defaultOptions(pluginOptions)
+  const { extensions } = options
+  const mdxPath = getPathToContentComponent(filename)
+
+  if (!mdxPath) {
+    return undefined
+  }
 
   const mdxOptions = await enhanceMdxOptions(pluginOptions, {
     getNode,
@@ -117,11 +127,13 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     cache,
   })
 
-  const ext = path.extname(filename)
+  const ext = path.extname(mdxPath)
 
   if (!extensions.includes(ext)) {
     return undefined
   }
+
+  const contents = await fs.readFile(mdxPath)
 
   const compileRes = await compileMDX(
     {
@@ -129,7 +141,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
       children: [],
       parent: ``,
       internal: { contentDigest: ``, owner: ``, type: `` },
-      body: contents,
+      body: contents.toString(),
       rawBody: ``,
     },
     {
@@ -153,7 +165,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
   async (
     { getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema },
-    pluginOptions: IMdxPluginOptions
+    pluginOptions
   ) => {
     const { createTypes } = actions
     const typeDefs = [
@@ -255,7 +267,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_shouldOnCreateNode: GatsbyNode["unstable_shouldOnCreateNode"] =
-  ({ node }: { node: FileSystemNode }, pluginOptions: IMdxPluginOptions) => {
+  ({ node }: { node: FileSystemNode }, pluginOptions) => {
     const { extensions } = defaultOptions(pluginOptions)
     return node.internal.type === `File` && extensions.includes(node.ext)
   }
@@ -271,7 +283,10 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
 }) => {
   const rawBody = await loadNodeContent(node)
 
-  const { data: frontmatter, content: body } = grayMatter(rawBody)
+  const { frontmatter, body } = parseFrontmatter(
+    node.internal.contentDigest,
+    rawBody
+  )
 
   // Use slug from frontmatter, otherwise fall back to the file name and path
   const slug =
@@ -307,17 +322,34 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
  * Add frontmatter as page context for MDX pages
  */
 export const onCreatePage: GatsbyNode["onCreatePage"] = async (
-  { page, actions },
-  pluginOptions: IMdxPluginOptions
+  { page, actions, getNodesByType },
+  pluginOptions
 ) => {
   const { createPage, deletePage } = actions
   const { extensions } = defaultOptions(pluginOptions)
-  const ext = path.extname(page.component)
 
-  // Only apply on pages based on .mdx files and avoid loops
-  if (extensions.includes(ext) && !page.context?.frontmatter) {
-    const content = await fs.readFile(page.component, `utf8`)
-    const { data: frontmatter } = grayMatter(content)
+  const mdxPath = getPathToContentComponent(page.component)
+  const ext = path.extname(mdxPath)
+
+  // Only apply on pages based on .mdx files
+  if (!extensions.includes(ext)) {
+    return
+  }
+
+  const fileNode = getNodesByType(`File`).find(
+    node => node.absolutePath === mdxPath
+  )
+  if (!fileNode) {
+    throw new Error(`Could not locate File node for ${mdxPath}`)
+  }
+
+  // Avoid loops
+  if (!page.context?.frontmatter) {
+    const content = await fs.readFile(mdxPath, `utf8`)
+    const { frontmatter } = parseFrontmatter(
+      fileNode.internal.contentDigest,
+      content
+    )
 
     deletePage(page)
     createPage({
