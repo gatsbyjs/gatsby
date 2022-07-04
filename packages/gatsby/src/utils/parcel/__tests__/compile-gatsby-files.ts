@@ -16,6 +16,8 @@ const dir = {
   tsOnlyInLocal: `${__dirname}/fixtures/ts-only-in-local-plugin`,
 }
 
+jest.setTimeout(15000)
+
 jest.mock(`@parcel/core`, () => {
   const parcelCore = jest.requireActual(`@parcel/core`)
 

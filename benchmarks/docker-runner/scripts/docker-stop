@@ -1,7 +1,7 @@
 DOCKER_ID=$(./scripts/docker-get-id)
 
 if [ -z "$DOCKER_ID" ]; then
-  echo "\nNo gatsby-memory is running.\n"
+  echo "\nNo gatsby-generic-benchmark is running.\n"
   return 1
 fi
 

@@ -22,6 +22,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 import type { DocumentNode } from "graphql"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { codeFrameColumns } from "@babel/code-frame"
+import { getPathToLayoutComponent } from "gatsby-core-utils"
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { actions } = require(`../redux/actions`)
@@ -111,7 +112,8 @@ Also note that we are currently unable to use queries defined in files other tha
 async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   let ast
 
-  const cleanFilePath = filePath.split(`?`)[0]
+  // Since gatsby-plugin-mdx v4, we are using the resourceQuery feature of webpack's loaders to inject a content file into a page component.
+  const cleanFilePath = getPathToLayoutComponent(filePath)
 
   // Preprocess and attempt to parse source; return an AST if we can, log an
   // error if we can't.
@@ -480,7 +482,7 @@ export default class FileParser {
     addError
   ): Promise<?Array<GraphQLDocumentInFile>> {
     let text
-    const cleanFilepath = file.split(`?`)[0]
+    const cleanFilepath = getPathToLayoutComponent(file)
     try {
       text = await fs.readFile(cleanFilepath, `utf8`)
     } catch (err) {

@@ -15,14 +15,14 @@ const Article = ({ children, pageContext, data }) => {
 }
 
 export const pageQuery = graphql`
-         query($id: String!) {
-           mdx(id: { eq: $id }) {
-             id
-             frontmatter {
-               title
-             }
-           }
-         }
-       `
+  query($id: String!) {
+    mdx(id: { eq: $id }) {
+      id
+      frontmatter {
+        title
+      }
+    }
+  }
+`
 
 export default Article

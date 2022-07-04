@@ -1,5 +1,5 @@
 import deepmerge from "deepmerge"
-import type { NodePluginArgs } from "gatsby"
+import type { NodePluginArgs, PluginOptions } from "gatsby"
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
 
@@ -77,7 +77,7 @@ export const compileMDXWithCustomOptions = async ({
   cache,
   mdxNode,
 }: {
-  pluginOptions: IMdxPluginOptions
+  pluginOptions: PluginOptions
   customOptions: Partial<IMdxPluginOptions>
   getNode: NodePluginArgs["getNode"]
   getNodesByType: NodePluginArgs["getNodesByType"]

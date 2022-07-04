@@ -36,9 +36,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: slug,
-      component: `${path.resolve(`./src/templates/blog-post.js`)}?__mdxPath=${
-        parent.absolutePath
-      }`,
+      component: `${path.resolve(
+        `./src/templates/blog-post.js`
+      )}?__contentFilePath=${parent.absolutePath}`,
       context: {
         id,
         slug,
