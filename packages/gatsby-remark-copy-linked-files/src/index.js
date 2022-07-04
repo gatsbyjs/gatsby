@@ -29,6 +29,13 @@ const validateDestinationDir = dir => {
   }
 }
 
+// Regex matches only:
+// ../path/item.ext
+// ./path/item.ext
+// item.ext
+const getPathsFromComponent = stringifiedComponent =>
+  stringifiedComponent.match(/(?!\/)(\.{1,2}\/)?[A-z0-9\-_/]+\.[A-z]+/g) || []
+
 const defaultDestination = linkNode =>
   `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`
 
@@ -78,6 +85,7 @@ module.exports = (
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+    copyFromJSX: false,
   }
   const { destinationDir } = pluginOptions
   if (!validateDestinationDir(destinationDir))
@@ -213,6 +221,7 @@ module.exports = (
 
   // For each HTML Node
   visit(markdownAST, [`html`, `jsx`], node => {
+    const isComponent = node.type === `jsx` && /^<[A-Z]/.test(node.value)
     const $ = cheerio.load(node.value)
 
     function processUrl({ url, isRequired }) {
@@ -250,7 +259,19 @@ module.exports = (
       )
     }
 
-    // Handle Images
+    // Handle JSX components.
+    if (options.copyFromJSX && isComponent) {
+      const componentLinks = getPathsFromComponent(node.value)
+
+      componentLinks.forEach(url => {
+        const link = { url }
+
+        visitor(link)
+        node.value = node.value.replace(new RegExp(url, `g`), link.url)
+      })
+    }
+
+    // Handle images.
     extractUrlAttributeAndElement($(`img[src]`), `src`).forEach(
       ({ url, element }) => {
         try {

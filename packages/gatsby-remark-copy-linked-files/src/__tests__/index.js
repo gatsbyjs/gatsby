@@ -6,16 +6,19 @@ jest.mock(`fs-extra`, () => {
   }
 })
 const Remark = require(`remark`)
+const remarkMdx = require(`remark-mdx`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
 
 const plugin = require(`../`)
 
-const remark = new Remark().data(`settings`, {
+const remarkWithSettings = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
   pedantic: true,
 })
+
+const remarkWithMdx = new Remark().use(remarkMdx)
 
 const imageURL = markdownAST => markdownAST.children[0].children[0].url
 
@@ -54,7 +57,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     ;[`svg`, `gif`].forEach(extension => {
       it(`can copy .${extension}`, async () => {
         const path = `images/sample-image.${extension}`
-        const markdownAST = remark.parse(`![some image](${path})`)
+        const markdownAST = remarkWithSettings.parse(`![some image](${path})`)
 
         await plugin({
           files: getFiles(path),
@@ -72,7 +75,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     ;[`png`, `jpg`, `jpeg`].forEach(extension => {
       it(`ignores images with .${extension}`, async () => {
         const path = `images/sample-image.${extension}`
-        const markdownAST = remark.parse(`![some image](${path})`)
+        const markdownAST = remarkWithSettings.parse(`![some image](${path})`)
 
         await plugin({
           files: getFiles(path),
@@ -89,7 +92,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`can copy reference-style images`, async () => {
     const path = `images/sample-image.gif`
 
-    const markdownAST = remark.parse(`![sample][1]\n\n[1]: ${path}`)
+    const markdownAST = remarkWithSettings.parse(`![sample][1]\n\n[1]: ${path}`)
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
@@ -99,7 +102,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`can copy file links`, async () => {
     const path = `files/sample-file.txt`
 
-    const markdownAST = remark.parse(`[path to file](${path})`)
+    const markdownAST = remarkWithSettings.parse(`[path to file](${path})`)
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
@@ -109,7 +112,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`can copy HTML file links`, async () => {
     const path = `files/sample-file.txt`
 
-    const markdownAST = remark.parse(`<a href="${path}">link to file</a>`)
+    const markdownAST = remarkWithSettings.parse(
+      `<a href="${path}">link to file</a>`
+    )
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
@@ -119,7 +124,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`can copy HTML images`, async () => {
     const path = `images/sample-image.gif`
 
-    const markdownAST = remark.parse(`<img src="${path}">`)
+    const markdownAST = remarkWithSettings.parse(`<img src="${path}">`)
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
@@ -127,10 +132,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   })
 
   it(`can copy JSX images`, async () => {
-    const mdx = require(`remark-mdx`)
     const path = `images/sample-image.gif`
 
-    const markdownAST = remark().use(mdx).parse(`<img src="${path}" />`)
+    const markdownAST = remarkWithMdx.parse(`<img src="${path}" />`)
 
     await plugin({
       files: getFiles(path),
@@ -142,11 +146,26 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`doesn't copy JSX files by default`, async () => {
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remarkWithMdx.parse(`<Component anyProp="${path}" />`)
+
+    await plugin({
+      files: getFiles(path),
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).not.toHaveBeenCalled()
+  })
+
   it(`can copy HTML multiple images`, async () => {
     const path1 = `images/sample-image.gif`
     const path2 = `images/another-sample-image.gif`
 
-    const markdownAST = remark.parse(
+    const markdownAST = remarkWithSettings.parse(
       `<div><img src="${path1}"><img src="${path2}"></div>`
     )
 
@@ -164,7 +183,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const path1 = `images/sample-image.jpg`
     const path2 = `images/another-sample-image.gif`
 
-    const markdownAST = remark.parse(
+    const markdownAST = remarkWithSettings.parse(
       `<div><img src="${path1}"><img src="${path2}"></div>`
     )
 
@@ -181,7 +200,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`can copy HTML videos`, async () => {
     const path = `videos/sample-video.mp4`
 
-    const markdownAST = remark.parse(
+    const markdownAST = remarkWithSettings.parse(
       `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
     )
 
@@ -193,7 +212,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`can copy HTML videos from video elements with the src attribute`, async () => {
     const path = `videos/sample-video.mp4`
 
-    const markdownAST = remark.parse(
+    const markdownAST = remarkWithSettings.parse(
       `<video controls="controls" autoplay="true" src="${path}">\n<p>Your browser does not support the video element.</p>\n</video>`
     )
 
@@ -206,7 +225,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const videoPath = `videos/sample-video.mp4`
     const posterPath = `images/sample-image.jpg`
 
-    const markdownAST = remark.parse(
+    const markdownAST = remarkWithSettings.parse(
       `<video controls="controls" autoplay="true" src="${videoPath}" poster="${posterPath}">\n<p>Your browser does not support the video element.</p>\n</video>`
     )
 
@@ -223,7 +242,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`can copy flash from object elements with the value attribute`, async () => {
     const path = `myMovie.swf`
 
-    const markdownAST = remark.parse(
+    const markdownAST = remarkWithSettings.parse(
       `<object type="application/x-shockwave-flash">\n<param name="movie" value="${path}" />\n</object>`
     )
 
@@ -236,7 +255,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const path = `videos/sample-video.mp4`
     const path1 = `images/sample-image.jpg`
 
-    const markdownAST = remark.parse(
+    const markdownAST = remarkWithSettings.parse(
       `<div><img src="${path1}"><video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video></div>`
     )
 
@@ -248,7 +267,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`leaves HTML nodes alone`, async () => {
     const openingTag = `<a href="http://example.com/">`
 
-    const markdownAST = remark.parse(`${openingTag}Link to example.com</a>`)
+    const markdownAST = remarkWithSettings.parse(
+      `${openingTag}Link to example.com</a>`
+    )
 
     await plugin({
       markdownAST,
@@ -265,7 +286,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   it(`leaves absolute file paths alone`, async () => {
     const path = `https://google.com/images/sample-image.gif`
 
-    const markdownAST = remark.parse(`![some absolute image](${path})`)
+    const markdownAST = remarkWithSettings.parse(
+      `![some absolute image](${path})`
+    )
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
@@ -282,7 +305,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     }
     const path = `images/sample-image.gif`
 
-    const markdownAST = remark.parse(`![sample][1]\n\n[1]: ${path}`)
+    const markdownAST = remarkWithSettings.parse(`![sample][1]\n\n[1]: ${path}`)
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
@@ -297,7 +320,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     // pathPrefix passed to plugins already combine pathPrefix and assetPrefix
     it(`relative pathPrefix (no assetPrefix)`, async () => {
       const pathPrefix = `/path-prefix`
-      const markdownAST = remark.parse(`![some image](${imageRelativePath})`)
+      const markdownAST = remarkWithSettings.parse(
+        `![some image](${imageRelativePath})`
+      )
 
       const expectedNewPath = path.posix.join(
         process.cwd(),
@@ -323,7 +348,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     it(`absolute pathPrefix (with assetPrefix, empty base path prefix)`, async () => {
       const pathPrefix = `https://cdn.mysiteassets.com`
-      const markdownAST = remark.parse(`![some image](${imageRelativePath})`)
+      const markdownAST = remarkWithSettings.parse(
+        `![some image](${imageRelativePath})`
+      )
 
       const expectedNewPath = path.posix.join(
         process.cwd(),
@@ -349,7 +376,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     it(`absolute pathPrefix (with assetPrefix, and non-empty base path prefix)`, async () => {
       const pathPrefix = `https://cdn.mysiteassets.com/path-prefix`
-      const markdownAST = remark.parse(`![some image](${imageRelativePath})`)
+      const markdownAST = remarkWithSettings.parse(
+        `![some image](${imageRelativePath})`
+      )
 
       const expectedNewPath = path.posix.join(
         process.cwd(),
@@ -380,7 +409,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const imagePath = parentDir + imageRelativePath
 
     it(`throws an error if the destination supplied by destinationDir points outside of the root dir`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![some absolute image](${imageRelativePath})`
       )
       const invalidDestinationDir = `../destination`
@@ -397,7 +426,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`throws an error if the destination supplied by the destinationDir function points outside of the root dir`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![some absolute image](${imageRelativePath})`
       )
       const invalidDestinationDir = `../destination`
@@ -416,7 +445,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by destinationDir`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![some absolute image](${imageRelativePath})`
       )
       const validDestinationDir = `path/to/dir`
@@ -443,7 +472,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by the destinationDir function`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![some absolute image](${imageRelativePath})`
       )
       const customDestinationDir = f => `foo/${f.hash}--bar`
@@ -463,7 +492,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by destinationDir (with pathPrefix)`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![some absolute image](${imageRelativePath})`
       )
       const pathPrefix = `/blog`
@@ -498,7 +527,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by the destinationDir function (with pathPrefix)`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![some absolute image](${imageRelativePath})`
       )
       const pathPrefix = `/blog`
@@ -527,7 +556,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the root dir when destinationDir is not supplied`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![some absolute image](${imageRelativePath})`
       )
       const expectedNewPath = path.posix.join(
@@ -557,7 +586,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const tiffImagePath = `images/sample-image.tiff`
 
     it(`optionally copies PNG, JPG/JPEG, BPM and TIFF files`, async () => {
-      const markdownAST = remark.parse(
+      const markdownAST = remarkWithSettings.parse(
         `![PNG](${pngImagePath}) ![JPG](${jpgImagePath}) ![JPEG](${jpegImagePath}) ![BPM](${bmpImagePath}) ![TIFF](${tiffImagePath})`
       )
       await plugin(
@@ -579,6 +608,68 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       )
 
       expect(fsExtra.copy).toHaveBeenCalledTimes(5)
+    })
+  })
+
+  describe(`options.copyFromJSX`, () => {
+    it(`can copy JSX files when enabled`, async () => {
+      const path = `images/sample-image.gif`
+
+      const markdownAST = remarkWithMdx.parse(`<Component anyProp="${path}" />`)
+
+      await plugin(
+        {
+          files: getFiles(path),
+          markdownAST,
+          markdownNode,
+          getNode,
+        },
+        { copyFromJSX: true }
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalled()
+    })
+
+    it(`can copy JSX nested prop file`, async () => {
+      const path1 = `images/sample-image.gif`
+      const path2 = `images/sample-image-2.gif`
+
+      const markdownAST = remarkWithMdx.parse(
+        `<Component firstSourceProp="${path1}" secondProp={{nestedSourceProp: "${path2}"}} />`
+      )
+
+      await plugin(
+        {
+          files: [...getFiles(path1), ...getFiles(path2)],
+          markdownAST,
+          markdownNode,
+          getNode,
+        },
+        { copyFromJSX: true }
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalled()
+    })
+
+    it(`can copy JSX multiple files when enabled`, async () => {
+      const path1 = `images/sample-image.gif`
+      const path2 = `images/another-sample-image.gif`
+
+      const markdownAST = remarkWithMdx.parse(
+        `<Component firstProp="${path1}" secondProp="${path2}" />`
+      )
+
+      await plugin(
+        {
+          files: [...getFiles(path1), ...getFiles(path2)],
+          markdownAST,
+          markdownNode,
+          getNode,
+        },
+        { copyFromJSX: true }
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalledTimes(2)
     })
   })
 })

@@ -62,6 +62,7 @@ plugins: [
           options: {
             destinationDir: `path/to/dir`,
             ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+            copyFromJSX: false,
           },
         },
       ],
@@ -208,6 +209,20 @@ plugins: [
 ```
 
 > So now, `[Download it now](image.png)` will be copied to the root dir (i.e. `public` folder)
+
+---
+
+### Enable to copy files from JSX Components `copyFromJSX`
+
+By default, the plugin only copies files that are written in HTML or Markdown.
+It's more tricky to copy linked files that are referenced in an React component.
+This option is searching for a file using an regex and it doesn't respect the `ignoreFileExtensions` option.
+
+This works only if the item is referenced directly in the component as a string.
+This option will ignore files that are assigned to a variable.
+
+> So now, `<ExampleComponent props="image.png" />` will be copied to the root dir (i.e. `public` folder)
+> This plugin can also handle paths nested in a props object like: `<ExampleComponent props={{ nestedPath: "image.png" }} />`.
 
 ---
 
