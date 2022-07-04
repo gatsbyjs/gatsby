@@ -7,7 +7,7 @@ const mediaTypes = [`text/markdown`, `text/x-markdown`]
 
 module.exports = async function onCreateNode(helpers, pluginOptions) {
   const {
-    node,
+    node: fileNode,
     actions,
     reporter,
     createNodeId,
@@ -15,15 +15,15 @@ module.exports = async function onCreateNode(helpers, pluginOptions) {
     createContentDigest,
   } = helpers
 
-  if (mediaTypes.includes(node.internal.mediaType)) {
-    const nodeContent = await loadNodeContent(node)
+  if (mediaTypes.includes(fileNode.internal.mediaType)) {
+    const fileNodeContent = await loadNodeContent(fileNode)
 
     try {
       let {
         content,
         excerpt,
         data: frontmatter,
-      } = grayMatter(nodeContent, pluginOptions)
+      } = grayMatter(fileNodeContent, pluginOptions)
 
       if (frontmatter) {
         frontmatter = mapValues(frontmatter, value => {
@@ -42,34 +42,36 @@ module.exports = async function onCreateNode(helpers, pluginOptions) {
         frontmatter
       )
 
-      const id = createNodeId(`${node.id} >>> ${type}`)
-
-      const markdownNode = {
-        id,
+      const node = {
         excerpt,
         frontmatter,
         rawMarkdownBody: content,
-        children: [],
-        parent: node.id,
-        internal: {
-          type,
-          content,
-        },
       }
 
       // Add path to the markdown file path
-      if (node.internal.type === `File`) {
-        markdownNode.fileAbsolutePath = node.absolutePath
+      if (fileNode.internal.type === `File`) {
+        node.fileAbsolutePath = fileNode.absolutePath
       }
 
-      markdownNode.internal.contentDigest = createContentDigest(markdownNode)
+      actions.createNode({
+        ...node,
+        id: createNodeId(`${fileNode.id} >>> ${type}`),
+        children: [],
+        parent: fileNode.id,
+        internal: {
+          type,
+          content,
+          contentDigest: createContentDigest(node),
+        },
+      })
 
-      actions.createNode(markdownNode)
-      actions.createParentChildLink({ parent: node, child: markdownNode })
+      actions.createParentChildLink({ parent: fileNode, child: node })
     } catch (err) {
       reporter.panicOnBuild(
         `Error processing Markdown ${
-          node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
+          fileNode.absolutePath
+            ? `file ${fileNode.absolutePath}`
+            : `in node ${fileNode.id}`
         }:\n
       ${err.message}`
       )
