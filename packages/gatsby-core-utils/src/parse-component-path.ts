@@ -3,19 +3,21 @@
 // These helper functions are used to simplify working with these new
 // page component path URI's.
 
+const CONTENT_FILE_PATH_QUERY = `?__contentFilePath=`
+
 // Split the path component URI without using the expensive URI.parse()
 export const splitComponentPath = (componentPath: string): Array<string> => {
-  // If the path does not include a question mark, we can assume its a regular path
-  if (!componentPath.includes(`?`)) {
+  // If the path does not include the contentFilePath query, we can assume its a regular path
+  if (!componentPath.includes(CONTENT_FILE_PATH_QUERY)) {
     return [componentPath]
   }
 
-  const splitPath = componentPath.split(`?__contentFilePath=`)
+  const splitPath = componentPath.split(CONTENT_FILE_PATH_QUERY)
 
   // We only support URI paths with the `?__contentFilePath=` parameter
   if (splitPath.length !== 2) {
     throw new Error(
-      `The following page component must contain '?__contentFilePath=':\n${componentPath}`
+      `The following page component must contain '${CONTENT_FILE_PATH_QUERY}':\n${componentPath}`
     )
   }
 
