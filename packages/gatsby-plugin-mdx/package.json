@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "3.16.0-next.1",
+  "version": "3.19.0-next.0",
   "description": "MDX integration for Gatsby",
   "license": "MIT",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#readme",
@@ -45,15 +45,22 @@
     "dist/*",
     "gatsby-node.js"
   ],
-  "jest": {
-    "testEnvironment": "node"
+  "peerDependencies": {
+    "@mdx-js/react": "^2.0.0",
+    "@types/estree": "^0.0.50",
+    "gatsby": "^4.0.0-next",
+    "gatsby-source-filesystem": "^4.0.0-next",
+    "loader-utils": "^3.2.0",
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
+    "webpack": "^5.72.1"
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.1.1",
     "change-case": "^4.1.2",
     "deepmerge": "^4.2.2",
     "fs-extra": "^10.1.0",
-    "gatsby-plugin-utils": "^3.12.0-next.1",
+    "gatsby-plugin-utils": "^3.13.0-next.0",
     "gray-matter": "^4.0.3",
     "mdast-util-mdx": "^2.0.0",
     "mdast-util-toc": "^6.1.0",
@@ -61,23 +68,21 @@
     "rehype-infer-description-meta": "^1.0.1",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.0",
-    "vfile": "^5.3.2"
+    "vfile": "^5.3.2",
+    "acorn": "^7.4.1",
+    "acorn-jsx": "^5.3.2",
+    "astring": "^1.8.3",
+    "estree-util-build-jsx": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.18.2",
     "@types/mdast": "^3.0.10",
-    "babel-preset-gatsby-package": "^2.18.0-next.0",
+    "babel-preset-gatsby-package": "^2.19.0-next.0",
     "cross-env": "^7.0.3",
     "typescript": "^4.7.2"
   },
-  "peerDependencies": {
-    "@mdx-js/react": "^2.0.0",
-    "gatsby": "^4.0.0-next",
-    "gatsby-source-filesystem": "^4.0.0-next",
-    "loader-utils": "^3.2.0",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "webpack": "^5.72.1"
+  "jest": {
+    "testEnvironment": "node"
   }
 }

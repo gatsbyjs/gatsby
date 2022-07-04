@@ -15,7 +15,7 @@ const Article = ({ children, data: { mdx } }) => {
 }
 
 export const pageQuery = graphql`
-  query MdxQuery($id: String!) {
+  query($id: String!) {
     mdx(id: { eq: $id }) {
       id
       frontmatter {

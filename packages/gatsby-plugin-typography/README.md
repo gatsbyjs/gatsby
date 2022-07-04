@@ -4,7 +4,9 @@ A Gatsby plugin for utilizing the [Typography](https://kyleamathews.github.io/ty
 
 ## Install
 
-`npm install gatsby-plugin-typography react-typography typography`
+```shell
+npm install gatsby-plugin-typography react-typography typography
+```
 
 ## Why to use
 

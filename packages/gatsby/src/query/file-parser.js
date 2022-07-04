@@ -22,6 +22,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 import type { DocumentNode } from "graphql"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { codeFrameColumns } from "@babel/code-frame"
+import { getPathToLayoutComponent } from "gatsby-core-utils"
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { actions } = require(`../redux/actions`)
@@ -111,10 +112,13 @@ Also note that we are currently unable to use queries defined in files other tha
 async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   let ast
 
+  // Since gatsby-plugin-mdx v4, we are using the resourceQuery feature of webpack's loaders to inject a content file into a page component.
+  const cleanFilePath = getPathToLayoutComponent(filePath)
+
   // Preprocess and attempt to parse source; return an AST if we can, log an
   // error if we can't.
   const transpiled = await apiRunnerNode(`preprocessSource`, {
-    filename: filePath,
+    filename: cleanFilePath,
     contents: fileStr,
     parentSpan,
   })
@@ -122,7 +126,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = babelParseToAst(item, filePath)
+        const tmp = babelParseToAst(item, cleanFilePath)
         ast = tmp
         break
       } catch (error) {
@@ -132,14 +136,14 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
     if (ast === undefined) {
       addError({
         id: `85912`,
-        filePath,
+        filePath: cleanFilePath,
         context: {
           filePath,
         },
       })
       store.dispatch(
         actions.queryExtractionGraphQLError({
-          componentPath: filePath,
+          componentPath: cleanFilePath,
         })
       )
 
@@ -147,20 +151,20 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
     }
   } else {
     try {
-      ast = babelParseToAst(fileStr, filePath)
+      ast = babelParseToAst(fileStr, cleanFilePath)
     } catch (error) {
       store.dispatch(
         actions.queryExtractionBabelError({
-          componentPath: filePath,
+          componentPath: cleanFilePath,
           error,
         })
       )
 
       addError({
         id: `85911`,
-        filePath,
+        filePath: cleanFilePath,
         context: {
-          filePath,
+          cleanFilePath,
         },
       })
 
@@ -478,8 +482,9 @@ export default class FileParser {
     addError
   ): Promise<?Array<GraphQLDocumentInFile>> {
     let text
+    const cleanFilepath = getPathToLayoutComponent(file)
     try {
-      text = await fs.readFile(file, `utf8`)
+      text = await fs.readFile(cleanFilepath, `utf8`)
     } catch (err) {
       addError({
         id: `85913`,
