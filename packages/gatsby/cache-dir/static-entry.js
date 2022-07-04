@@ -1,5 +1,3 @@
-import { filterHeadProps } from "./head/utils"
-
 /* global HAS_REACT_18 */
 const React = require(`react`)
 const path = require(`path`)
@@ -19,10 +17,8 @@ const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
 const asyncRequires = require(`$virtual/async-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
-const { parse } = require(`node-html-parser`)
-
 const chunkMapping = require(`../public/chunk-map.json`)
-const { VALID_NODE_NAMES } = require(`./head/constants`)
+const { headHandlerForSSR } = require(`./head/head-export-handler-for-ssr`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
@@ -202,71 +198,13 @@ export default async function staticPage({
     const { componentChunkName } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
-    if (pageComponent.head) {
-      if (typeof pageComponent.head !== `function`)
-        throw new Error(
-          `Expected "head" export to be a function got "${typeof pageComponent.head}".`
-        )
-
-      function HeadRouteHandler(props) {
-        const _props = {
-          ...props,
-          ...pageData.result,
-          params: {
-            ...grabMatchParams(props.location.pathname),
-            ...(pageData.result?.pageContext?.__params || {}),
-          },
-        }
-
-        return createElement(pageComponent.head, filterHeadProps(_props))
-      }
-
-      const routerElement = (
-        <StaticQueryContext.Provider value={staticQueryContext}>
-          <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-            <Router baseuri={__BASE_PATH__} component={React.Fragment}>
-              <HeadRouteHandler path="/*" />
-            </Router>
-          </ServerLocation>
-        </StaticQueryContext.Provider>
-      )
-
-      // extract head nodes from string
-      const rawString = renderToString(routerElement)
-      const headNodes = parse(rawString).childNodes
-
-      const validHeadNodes = []
-
-      for (const node of headNodes) {
-        const { rawTagName, attributes } = node
-
-        if (!VALID_NODE_NAMES.includes(rawTagName)) {
-          if (process.env.NODE_ENV === `production`) {
-            const warning =
-              rawTagName !== `script`
-                ? `<${rawTagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
-                    `, `
-                  )}`
-                : `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
-
-            console.warn(warning)
-          }
-        } else {
-          const element = createElement(
-            rawTagName,
-            {
-              ...attributes,
-              "data-gatsby-head": true,
-            },
-            node.childNodes[0]?.textContent
-          )
-
-          validHeadNodes.push(element)
-        }
-      }
-
-      setHeadComponents(validHeadNodes)
-    }
+    headHandlerForSSR({
+      pageComponent,
+      setHeadComponents,
+      staticQueryContext,
+      pageData,
+      pagePath,
+    })
 
     class RouteHandler extends React.Component {
       render() {
