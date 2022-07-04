@@ -1,5 +1,6 @@
 import path from "path"
 import fs from "fs-extra"
+import { getPathToLayoutComponent } from "gatsby-core-utils"
 import { IGatsbyPage } from "../redux/types"
 
 const validationCache = new Set<string>()
@@ -22,7 +23,7 @@ export function validatePageComponent(
     throw new Error(`11322`)
   }
 
-  const cleanComponentPath = component.split(`?`)[0]
+  const cleanComponentPath = getPathToLayoutComponent(component)
 
   if (validationCache.has(cleanComponentPath)) {
     return {}
