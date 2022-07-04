@@ -125,7 +125,7 @@ At this point, you’ve got a fully functional Gatsby website. For additional in
 
 ## 🎓 Learning Gatsby
 
-Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
+Full documentation for Gatsby can be found [on the website](https://www.gatsbyjs.com/).
 
 - **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
@@ -150,7 +150,7 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 
 ## ❗ Code of Conduct
 
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://www.gatsbyjs.com/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
+Gatsby is dedicated to building a welcoming, diverse, and safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://www.gatsbyjs.com/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
 ## 🤝 How to Contribute
 
@@ -168,7 +168,7 @@ We are only accepting critical security patches for Gatsby v3.
 
 ## 📝 License
 
-Licensed under the [MIT License](./LICENSE).
+Gatsby is licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
