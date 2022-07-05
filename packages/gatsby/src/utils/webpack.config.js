@@ -349,23 +349,23 @@ module.exports = async (
         resolve: {
           byDependency: {
             esm: {
-              fullySpecified: false
-            }
-          }
-        }
+              fullySpecified: false,
+            },
+          },
+        },
       },
       {
         test: /\.js$/i,
         descriptionData: {
-          type: `module`
+          type: `module`,
         },
         resolve: {
           byDependency: {
             esm: {
-              fullySpecified: false
-            }
-          }
-        }
+              fullySpecified: false,
+            },
+          },
+        },
       },
       rules.js({
         modulesThatUseGatsby,
@@ -383,14 +383,36 @@ module.exports = async (
       {
         test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
-        use: [{
-          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
-        }],
+        use: [
+          {
+            loader: require.resolve(
+              `./reach-router-add-basecontext-export-loader`
+            ),
+          },
+        ],
       },
       {
-        resourceQuery: /export/,
+        resourceQuery: /export=default/,
         use: {
-          loader: require.resolve(`./webpack-remove-apis-loader-new`),
+          loader: require.resolve(
+            `./webpack/loaders/webpack-remove-exports-loader`
+          ),
+          options: {
+            remove: [`Head`],
+            jsx: true,
+          },
+        },
+      },
+      {
+        resourceQuery: /export=Head/,
+        use: {
+          loader: require.resolve(
+            `./webpack/loaders/webpack-remove-exports-loader`
+          ),
+          options: {
+            remove: [`default`],
+            jsx: true,
+          },
         },
       },
     ]
