@@ -260,6 +260,11 @@ export class BaseLoader {
 
       const finalResult = {}
 
+      // In develop we have separate chunks for template and Head components
+      // to enable HMR (fast refresh requires single exports).
+      // In production we have shared chunk with both exports. Double loadComponent here
+      // will be deduped by webpack runtime resulting in single request and single module
+      // being loaded for both `component` and `head`.
       const componentChunkPromise = Promise.all([
         this.loadComponent(componentChunkName),
         this.loadComponent(componentChunkName, `head`),

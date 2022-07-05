@@ -34,13 +34,17 @@ const onHeadRendered = () => {
   document.head.append(...validHeadNodes)
 }
 
-const observer = new MutationObserver(onHeadRendered)
-observer.observe(hiddenRoot, {
-  attributes: true,
-  childList: true,
-  characterData: true,
-  subtree: true,
-})
+if (process.env.BUILD_STAGE === `develop`) {
+  // We set up observer to be able to regenerate <head> after react-refresh
+  // updates our hidden element.
+  const observer = new MutationObserver(onHeadRendered)
+  observer.observe(hiddenRoot, {
+    attributes: true,
+    childList: true,
+    characterData: true,
+    subtree: true,
+  })
+}
 
 export function headHandlerForBrowser({
   pageComponent,
