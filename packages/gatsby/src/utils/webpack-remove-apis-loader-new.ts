@@ -18,7 +18,7 @@ module.exports = function loader(source: string): string | null | undefined {
       [
         require.resolve(`./babel/babel-plugin-remove-api`),
         {
-          apis: [this.resourceQuery === `?export=default` ? `head` : `default`],
+          apis: [this.resourceQuery === `?export=default` ? `Head` : `default`],
         },
       ],
     ],
