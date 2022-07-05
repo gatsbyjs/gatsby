@@ -63,6 +63,10 @@ We continue to have ongoing RFCs that we’d like your input on. Please give it 
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [glitton](https://github.com/glitton): chore(docs): Remove trailing slashes section in creating-and-modifying-pages [PR #35843](https://github.com/gatsbyjs/gatsby/pull/35843)
+- [rutterjt](https://github.com/rutterjt): chore(docs): fix query type name in Typegen guide [PR #35961](https://github.com/gatsbyjs/gatsby/pull/35961)
+- [slaleye](https://github.com/slaleye): chore(docs): Update copy in tutorial part 1 [PR #35992](https://github.com/gatsbyjs/gatsby/pull/35992)
+- [cameronbraid](https://github.com/cameronbraid): fix(gatsby): Partytown URI encoding of redirect parameters [PR #35990](https://github.com/gatsbyjs/gatsby/pull/35990)
+- [axe312ger](https://github.com/axe312ger): chore(gatsby): Remove MDX `resolutions` [PR #36010](https://github.com/gatsbyjs/gatsby/pull/36010)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.18.0-next.0...gatsby@4.18.0
