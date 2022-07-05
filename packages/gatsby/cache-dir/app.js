@@ -216,7 +216,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         )
         document.body.append(indicatorMountElement)
 
-        // renderer(<LoadingIndicatorEventHandler />, indicatorMountElement)
+        renderer(<LoadingIndicatorEventHandler />, indicatorMountElement)
       }
     }
 
