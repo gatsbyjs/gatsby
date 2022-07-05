@@ -13,7 +13,12 @@ const IS_CI = !!(
 const shouldRecord =
   !!process.env.CYPRESS_PROJECT_ID && !!process.env.CYPRESS_RECORD_KEY && IS_CI
 
-const cypressBin = path.join(process.cwd(), `node_modules/.bin/cypress`)
+let cypressBin
+if (process.platform === `win32`) {
+  cypressBin = path.join(process.cwd(), `node_modules/.bin/cypress.cmd`)
+} else {
+  cypressBin = path.join(process.cwd(), `node_modules/.bin/cypress`)
+}
 
 // first arg is node binary itself
 // second arg is .js file entry point (as in - path to this file)
