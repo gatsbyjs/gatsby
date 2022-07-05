@@ -15,14 +15,14 @@ export function headHandlerForBrowser({
   staticQueryResults,
   pageComponentProps,
 }) {
-  if (pageComponent.head) {
-    headExportValidator(pageComponent.head)
+  if (pageComponent.Head) {
+    headExportValidator(pageComponent.Head)
 
     const headElement = createElement(
       StaticQueryContext.Provider,
       { value: staticQueryResults },
       createElement(
-        pageComponent.head,
+        pageComponent.Head,
         filterHeadProps(pageComponentProps),
         null
       )
