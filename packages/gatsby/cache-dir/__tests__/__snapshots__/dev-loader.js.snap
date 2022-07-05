@@ -5,6 +5,9 @@ Object {
   "component": Object {
     "default": [Function],
   },
+  "head": Object {
+    "default": [Function],
+  },
   "json": Object {
     "pageContext": "something something",
   },
