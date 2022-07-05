@@ -233,7 +233,7 @@ const limitedExports: Rule.RuleModule = {
           return undefined
         }
 
-        if (isApiExport(node, `head`)) {
+        if (isApiExport(node, `Head`)) {
           return undefined
         }
 
