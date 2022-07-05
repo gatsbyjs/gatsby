@@ -6,7 +6,7 @@ export default function HeadFunctionExportBasic() {
   return (
     <>
       <h1>I test basic usage for the head function export</h1>
-      <p>Some other words</p>
+      <p data-testid="page-component-with-head-export">Some other words on your %GATSBY_SITE%</p>
       <Link data-testid="gatsby-link" to="/head-function-export/page-query">
         Navigate to page-query via Gatsby Link
       </Link>
