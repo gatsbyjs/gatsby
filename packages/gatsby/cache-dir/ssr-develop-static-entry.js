@@ -12,7 +12,6 @@ import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
 import { headHandlerForSSR } from "./head/head-export-handler-for-ssr"
 import { getStaticQueryResults } from "./loader"
-import path from "path"
 
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
@@ -25,18 +24,6 @@ const testRequireError = (moduleName, err) => {
   const regex = new RegExp(`Error: Cannot find module\\s.${moduleName}`)
   const firstLine = err.toString().split(`\n`)[0]
   return regex.test(firstLine)
-}
-
-const readStaticQueryContext = async templatePath => {
-  const filePath = path.join(
-    __dirname,
-    `sq-context`,
-    templatePath,
-    `sq-context.json`
-  )
-  const rawSQContext = await fs.readFile(filePath, `utf-8`)
-
-  return JSON.parse(rawSQContext)
 }
 
 let cachedStats
