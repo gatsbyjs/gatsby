@@ -56,7 +56,7 @@ export function dispatchLocalFileServiceJob(
       version: GATSBY_VERSION,
       resolve: path.dirname(
         require.resolve(
-          `gatsby-plugin-utils/polyfill-remote-file/jobs/gatsby-worker.js`
+          `gatsby-plugin-utils/polyfill-remote-file/jobs/gatsby-worker`
         )
       ),
     }
@@ -119,7 +119,7 @@ export function dispatchLocalImageServiceJob(
       version: GATSBY_VERSION,
       resolve: path.dirname(
         require.resolve(
-          `gatsby-plugin-utils/polyfill-remote-file/jobs/gatsby-worker.js`
+          `gatsby-plugin-utils/polyfill-remote-file/jobs/gatsby-worker`
         )
       ),
     }
