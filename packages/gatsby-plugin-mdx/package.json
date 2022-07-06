@@ -1,23 +1,11 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "3.19.0-next.0",
+  "version": "3.19.0-next.1",
   "description": "MDX integration for Gatsby",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-plugin-mdx"
-  },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-transformer-plugin",
-    "mdx",
-    "markdown",
-    "remark",
-    "rehype"
-  ],
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts\"",
     "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
@@ -25,43 +13,26 @@
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.tsx\"",
     "test": "jest"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": "./dist/index.js",
-    "./package.json": "./package.json",
-    "./*.js": "./dist/*.js",
-    "./dist/*": "./dist/*"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-mdx"
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/*.d.ts",
-        "dist/index.d.ts"
-      ]
-    }
-  },
-  "files": [
-    "dist/*",
-    "gatsby-node.js"
-  ],
   "peerDependencies": {
     "@mdx-js/react": "^2.0.0",
-    "@types/estree": "^0.0.50",
     "gatsby": "^4.0.0-next",
     "gatsby-source-filesystem": "^4.0.0-next",
-    "loader-utils": "^3.2.0",
     "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "webpack": "^5.72.1"
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.1.1",
     "change-case": "^4.1.2",
     "deepmerge": "^4.2.2",
     "fs-extra": "^10.1.0",
-    "gatsby-plugin-utils": "^3.13.0-next.0",
+    "gatsby-plugin-utils": "^3.13.0-next.1",
     "gray-matter": "^4.0.3",
+    "loader-utils": "^3.2.0",
     "mdast-util-mdx": "^2.0.0",
     "mdast-util-toc": "^6.1.0",
     "mdast-util-to-markdown": "^1.3.0",
@@ -77,12 +48,26 @@
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.18.2",
+    "@types/estree": "^0.0.50",
     "@types/mdast": "^3.0.10",
-    "babel-preset-gatsby-package": "^2.19.0-next.0",
+    "babel-preset-gatsby-package": "^2.19.0-next.1",
     "cross-env": "^7.0.3",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.2",
+    "webpack": "^5.72.1"
   },
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "mdx",
+    "markdown",
+    "remark",
+    "rehype"
+  ],
+  "files": [
+    "dist/*",
+    "gatsby-node.js"
+  ]
 }

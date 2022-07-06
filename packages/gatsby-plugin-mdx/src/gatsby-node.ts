@@ -1,18 +1,16 @@
 import type { GatsbyNode, NodeInput } from "gatsby"
 import type { FileSystemNode } from "gatsby-source-filesystem"
 import type { Options } from "rehype-infer-description-meta"
-import type { IFileNode, NodeMap } from "./types"
-
 import path from "path"
 import { sentenceCase } from "change-case"
 import fs from "fs-extra"
-import { getPathToContentComponent } from "gatsby-core-utils"
-
+import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
+import type { IFileNode, NodeMap } from "./types"
 import { defaultOptions, enhanceMdxOptions } from "./plugin-options"
-import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
+import type { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
 import { parseFrontmatter } from "./frontmatter"
 import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
-import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
+import type { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
 import { ERROR_MAP } from "./error-utils"
 

@@ -13,7 +13,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mdx-js/react": "^1.6.22",
-    "gatsby": "^4.17.2",
+    "gatsby": "^4.18.0",
     "gatsby-theme-blog": "^4.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

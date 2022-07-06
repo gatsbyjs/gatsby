@@ -2,7 +2,6 @@ import deepmerge from "deepmerge"
 import type { NodePluginArgs, PluginOptions } from "gatsby"
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
-
 import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 import { ERROR_CODES } from "./error-utils"
 

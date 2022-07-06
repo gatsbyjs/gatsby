@@ -1,8 +1,7 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { GatsbyCache, NodePluginArgs } from "gatsby"
 import type { Pluggable } from "unified"
-
-import { IMdxPluginOptions } from "./plugin-options"
+import type { IMdxPluginOptions } from "./plugin-options"
 
 interface IGetSourcePluginsAsRemarkPlugins {
   gatsbyRemarkPlugins: IMdxPluginOptions["gatsbyRemarkPlugins"]

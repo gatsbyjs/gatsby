@@ -1,7 +1,7 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { GatsbyCache, NodePluginArgs, PluginOptions } from "gatsby"
 import deepmerge from "deepmerge"
-import { IPluginRefObject } from "gatsby-plugin-utils/types"
+import type { IPluginRefObject } from "gatsby-plugin-utils/types"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
 import rehypeMdxMetadataExtractor from "./rehype-metadata-extractor"
 import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"

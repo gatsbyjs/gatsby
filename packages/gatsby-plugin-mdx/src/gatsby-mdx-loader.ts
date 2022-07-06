@@ -3,7 +3,6 @@ import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { NodePluginArgs } from "gatsby"
 import type { LoaderDefinition } from "webpack"
 import { getOptions } from "loader-utils"
-
 import { compileMDX } from "./compile-mdx"
 import { parseFrontmatter } from "./frontmatter"
 import type { NodeMap } from "./types"
