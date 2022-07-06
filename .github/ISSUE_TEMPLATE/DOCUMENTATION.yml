@@ -7,7 +7,7 @@ body:
       value: |
         # Welcome 👋
 
-        Thanks for taking the time to fill out this issue.
+        Thanks for taking the time to fill out this issue template.
         Please fill out each section below. This info allows Gatsby maintainers to triage and fix your issue as quickly as possible.
 
         Useful links:
@@ -17,7 +17,7 @@ body:
   - type: checkboxes
     attributes:
       label: Preliminary Checks
-      description: Please make sure that you verify each checkbox and follow the instructions for them.
+      description: Please make sure that you check each checkbox and that you agree to the statement for each checkbox.
       options:
         - label: "This issue is not a duplicate. Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues"
           required: true
@@ -29,7 +29,7 @@ body:
     attributes:
       label: Summary
       description: |
-        What problem(s) did you run into that caused you to request a fix to the documentation or additional documentation? What questions do you think we should answer?
+        What problem(s) did you run into that have caused you to request a fix to the documentation or additional documentation? What questions do you think we should answer?
   - type: textarea
     validations:
       required: true
