@@ -21,7 +21,7 @@ function getNodes(dom) {
   return { base, title, meta, noscript, style, link }
 }
 
-describe(`head function export SSR'ed HTML output`, () => {
+describe(`Head function export SSR'ed HTML output`, () => {
   it(`should work with static data`, () => {
     const html = readFileSync(`${publicDir}${page.basic}/index.html`)
     const dom = parse(html)
@@ -48,7 +48,7 @@ describe(`head function export SSR'ed HTML output`, () => {
     expect(link.attributes.href).toEqual(data.queried.link)
   })
 
-  it(`should work when a head function with static data is re-exported from the page`, () => {
+  it(`should work when a Head function with static data is re-exported from the page`, () => {
     const html = readFileSync(`${publicDir}${page.reExport}/index.html`)
     const dom = parse(html)
     const { base, title, meta, noscript, style, link } = getNodes(dom)
@@ -61,7 +61,7 @@ describe(`head function export SSR'ed HTML output`, () => {
     expect(link.attributes.href).toEqual(data.static.link)
   })
 
-  it(`should work when an imported head component with queried data is used`, () => {
+  it(`should work when an imported Head component with queried data is used`, () => {
     const html = readFileSync(`${publicDir}${page.staticQuery}/index.html`)
     const dom = parse(html)
     const { base, title, meta, noscript, style, link } = getNodes(dom)

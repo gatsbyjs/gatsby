@@ -42,7 +42,7 @@ function HeadComponent({ children }) {
   )
 }
 
-function head() {
+function Head() {
   const { base, title, meta, noscript, style, link } = data.static
 
   return (
@@ -63,5 +63,5 @@ function head() {
   )
 }
 
-export { head }
+export { Head }
 export default HeadComponent

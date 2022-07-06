@@ -16,12 +16,12 @@ export function filterHeadProps(input) {
 }
 
 /**
- * Throw error if head export is not a valid
+ * Throw error if Head export is not a valid
  */
 export function headExportValidator(head) {
   if (typeof head !== `function`)
     throw new Error(
-      `Expected "head" export to be a function got "${typeof head}".`
+      `Expected "Head" export to be a function got "${typeof head}".`
     )
 }
 

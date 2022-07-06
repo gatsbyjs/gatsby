@@ -1,6 +1,6 @@
 import { page } from "../../../shared-data/head-function-export.js"
 
-it.only(`head function export should get all page properties`, () => {
+it.only(`Head function export should get all page properties`, () => {
   cy.visit(page.allProps)
   cy.getTestElement(`location.origin`)
     .invoke(`attr`, `content`)

@@ -4,7 +4,7 @@ import { data } from "../../../shared-data/head-function-export"
 export default function HeadFunctionExportSSR() {
   return (
     <h1>
-      I test the head function export in an SSR page (using getServerData)
+      I test the Head function export in an SSR page (using getServerData)
     </h1>
   )
 }
@@ -15,7 +15,7 @@ export async function getServerData() {
   }
 }
 
-export function head() {
+export function Head() {
   const { base, title, meta, noscript, style, link } = data.ssr
 
   return (

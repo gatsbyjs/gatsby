@@ -4,7 +4,7 @@ export default function HeadFunctionExportAllProps(props) {
   return (
     <>
       <h1>
-        I test usage for the head function export to make sure all props are
+        I test usage for the Head function export to make sure all props are
         received
       </h1>
       <pre>{JSON.stringify(props, null, 2)}</pre>
@@ -12,7 +12,7 @@ export default function HeadFunctionExportAllProps(props) {
   )
 }
 
-export function head(props) {
+export function Head(props) {
   const { location, pageContext, pageResources, params, path, uri } =
     props || {}
 

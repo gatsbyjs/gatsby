@@ -4,12 +4,12 @@ import { data } from "../../../shared-data/head-function-export"
 export default function HeadFunctionExportInvalidElements() {
   return (
     <>
-      <h1>I test usage for the head function export with invalid elements</h1>
+      <h1>I test usage for the Head function export with invalid elements</h1>
     </>
   )
 }
 
-export function head() {
+export function Head() {
   return (
     <>
       <h1>Big, big energy</h1>

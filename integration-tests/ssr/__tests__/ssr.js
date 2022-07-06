@@ -44,7 +44,7 @@ describe(`SSR`, () => {
     )
   }, 180000)
 
-  test(`dev & build outputs have matching head elements from head function export`, async () => {
+  test(`dev & build outputs have matching head elements from Head function export`, async () => {
     const devSsrHtml = await fetch(
       `http://localhost:8000/head-function-export`,
       {

@@ -1,6 +1,6 @@
 import { page, data } from "../../../shared-data/head-function-export.js"
 
-it(`head function export should not include invalid elements`, () => {
+it(`Head function export should not include invalid elements`, () => {
   cy.visit(page.invalidElements)
 
   cy.get(`head > h1`).should(`not.exist`)

@@ -2,7 +2,7 @@ const { data } = require("../../../shared-data/head-function-export")
 
 const TEST_ID = "extra-meta-for-hot-reloading"
 
-describe(`hot reloading head export`, () => {
+describe(`hot reloading Head export`, () => {
   beforeEach(() => {
     cy.visit(`/head-function-export/basic`).waitForRouteChange()
   })

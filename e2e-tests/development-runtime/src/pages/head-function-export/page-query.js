@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 export default function HeadFunctionExportPageQuery() {
   return (
     <>
-      <h1>I test usage for the head function export with a page query</h1>
+      <h1>I test usage for the Head function export with a page query</h1>
       <p>Some other words</p>
       <Link data-testid="gatsby-link" to="/head-function-export/basic">
         Navigate to basic via Gatsby Link
@@ -14,7 +14,7 @@ export default function HeadFunctionExportPageQuery() {
   )
 }
 
-export function head({ data }) {
+export function Head({ data }) {
   const { base, title, meta, noscript, style, link, extraMeta2 } =
     data?.site?.siteMetadata?.headFunctionExport || {}
 

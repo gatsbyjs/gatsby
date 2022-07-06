@@ -2,7 +2,7 @@ import { page, data } from "../../../shared-data/head-function-export.js"
 
 // No need to test SSR navigation (anchor tags) because it's effectively covered in the html insertion tests
 
-describe(`head function export behavior during CSR navigation (Gatsby Link)`, () => {
+describe(`Head function export behavior during CSR navigation (Gatsby Link)`, () => {
   it(`should remove tags not on next page`, () => {
     cy.visit(page.basic)
 
