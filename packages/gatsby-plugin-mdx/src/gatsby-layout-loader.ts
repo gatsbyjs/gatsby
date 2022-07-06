@@ -1,13 +1,10 @@
 /* eslint-disable @babel/no-invalid-this */
 import type { LoaderDefinition } from "webpack"
+import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
+import { getOptions } from "loader-utils"
 import type { Program, Identifier, ExportDefaultDeclaration } from "estree"
 import type { NodeMap } from "./types"
 import type { IMdxPluginOptions } from "./plugin-options"
-
-import { getPathToContentComponent } from "gatsby-core-utils"
-
-import { getOptions } from "loader-utils"
-
 export interface IGatsbyLayoutLoaderOptions {
   options: IMdxPluginOptions
   nodeMap: NodeMap

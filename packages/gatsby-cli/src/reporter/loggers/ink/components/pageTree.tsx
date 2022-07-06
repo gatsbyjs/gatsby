@@ -2,7 +2,7 @@
 import React, { ReactElement, useContext } from "react"
 import { Box, Text, BoxProps, Spacer } from "ink"
 import path from "path"
-import { getPathToLayoutComponent } from "gatsby-core-utils"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 import StoreStateContext from "../context"
 import {
   generatePageTree,

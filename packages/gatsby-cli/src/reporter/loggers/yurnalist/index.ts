@@ -17,7 +17,7 @@ import {
   IComponentWithPageModes,
 } from "../../../util/generate-page-tree"
 import { IRenderPageArgs } from "../../types"
-import { getPathToLayoutComponent } from "gatsby-core-utils"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 
 interface IYurnalistActivities {
   [activityId: string]: {
