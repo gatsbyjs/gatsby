@@ -38,7 +38,7 @@ If you already have a Gatsby site that you'd like to add MDX to, you can follow 
           resolve: `gatsby-source-filesystem`,
           options: {
             name: `pages`,
-            path: `${__dirname}/src/pages/`,
+            path: `${__dirname}/src/pages`,
           },
         },
      ],
@@ -190,13 +190,13 @@ You'll need to use `gatsby-source-filesystem` and tell it to source "posts" from
 ```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
-    "gatsby-plugin-mdx",
+    `gatsby-plugin-mdx`,
     // Add a collection called "posts" that looks
     // for files in content/posts
     {
-      resolve: "gatsby-source-filesystem",
+      resolve: `gatsby-source-filesystem`,
       options: {
-        name: "posts",
+        name: `posts`,
         path: `${__dirname}/content/posts`,
       },
     },
