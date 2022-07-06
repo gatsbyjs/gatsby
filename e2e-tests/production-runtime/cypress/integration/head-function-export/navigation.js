@@ -4,7 +4,7 @@ import { page, data } from "../../../shared-data/head-function-export.js"
 
 describe(`head function export behavior during CSR navigation (Gatsby Link)`, () => {
   it(`should remove tags not on next page`, () => {
-    cy.visit(page.basic)
+    cy.visit(page.basic).waitForRouteChange()
 
     cy.getTestElement(`extra-meta`)
       .invoke(`attr`, `content`)
@@ -16,7 +16,7 @@ describe(`head function export behavior during CSR navigation (Gatsby Link)`, ()
   })
 
   it(`should add tags not on next page`, () => {
-    cy.visit(page.basic)
+    cy.visit(page.basic).waitForRouteChange()
 
     cy.get(`[data-testid="extra-meta-2"]`).should(`not.exist`)
 
@@ -33,7 +33,7 @@ describe(`head function export behavior during CSR navigation (Gatsby Link)`, ()
    */
   it(`should change meta tag values`, () => {
     // Initial load
-    cy.visit(page.basic)
+    cy.visit(page.basic).waitForRouteChange()
 
     // Validate data from initial load
     cy.getTestElement(`base`)
