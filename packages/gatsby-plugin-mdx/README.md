@@ -291,12 +291,9 @@ functions in these examples.
 
 #### Shortcodes
 
-If you want to allow usage of a component from anywhere (often referred to as a
-shortcode), you can pass it to the
-[MDXProvider](https://www.gatsbyjs.com/docs/mdx/customizing-components/).
+If you want to allow usage of a component from anywhere (often referred to as a shortcode), you can pass it to the [MDXProvider](https://www.gatsbyjs.com/docs/how-to/routing/mdx#make-components-available-globally-as-shortcodes).
 
-```js
-// src/components/layout.js
+```js:title=src/components/layout.js
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
 import { Link } from "gatsby"
