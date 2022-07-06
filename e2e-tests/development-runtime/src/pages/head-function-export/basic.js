@@ -31,8 +31,8 @@ export function head() {
         `}
       </style>
       <link data-testid="link" href={link} rel="stylesheet" />
-
       <meta data-testid="extra-meta" name="extra-meta" content={extraMeta} />
+      <meta data-testid="extra-meta-for-hot-reloading" name="extra-meta-for-hot-reloading" content={extraMeta} />
     </>
   )
 }
