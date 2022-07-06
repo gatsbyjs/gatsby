@@ -60,7 +60,11 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
   afterAll(() => {
     return new Promise(resolve => {
-      if (!gatsbyProcess || gatsbyProcess.killed) {
+      if (
+        !gatsbyProcess ||
+        gatsbyProcess.killed ||
+        gatsbyProcess.exitCode !== null
+      ) {
         return resolve()
       }
 
@@ -181,7 +185,11 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
   afterAll(() => {
     return new Promise(resolve => {
-      if (!gatsbyProcess || gatsbyProcess.killed) {
+      if (
+        !gatsbyProcess ||
+        gatsbyProcess.killed ||
+        gatsbyProcess.exitCode !== null
+      ) {
         return resolve()
       }
 
