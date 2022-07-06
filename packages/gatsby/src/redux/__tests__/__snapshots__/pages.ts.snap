@@ -49,7 +49,7 @@ exports[`Add pages allows you to add multiple pages 1`] = `
 Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
@@ -63,7 +63,7 @@ Map {
   },
   "/hi/pizza/" => Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/pizza/",
@@ -84,7 +84,7 @@ Object {
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
@@ -108,7 +108,7 @@ exports[`Add pages allows you to add pages 2`] = `
 Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
@@ -129,7 +129,7 @@ Object {
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
@@ -155,7 +155,7 @@ exports[`Add pages allows you to add pages with context 2`] = `
 Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
@@ -178,7 +178,7 @@ Object {
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
@@ -202,7 +202,7 @@ exports[`Add pages allows you to add pages with matchPath 2`] = `
 Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
-    "componentChunkName": "component---750909527-whatever-index-js",
+    "componentChunkName": "component---1234567890-whatever-index-js",
     "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
@@ -223,7 +223,7 @@ exports[`Add pages allows you to update existing pages (based on path) 1`] = `
 Map {
   "/hi/" => Object {
     "component": "/whatever2/index.js",
-    "componentChunkName": "component---980860156-whatever-2-index-js",
+    "componentChunkName": "component---1234567890-whatever-2-index-js",
     "componentPath": "/whatever2/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
