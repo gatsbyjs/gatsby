@@ -116,14 +116,18 @@ export default declare(function removeApiCalls(
             | t.ExportSpecifier
           > = []
 
-          // Remove `export { foo }` shaped exports
+          // Remove `export { foo } = [...]` and `export { foo } from "X"` shaped exports
           path.node.specifiers.forEach(specifier => {
             if (
               t.isExportSpecifier(specifier) &&
               t.isIdentifier(specifier.exported) &&
               apisToRemove.includes(specifier.exported.name)
             ) {
-              path.scope.bindings[specifier.local.name].path.remove()
+              const binding = path.scope.bindings[specifier.local.name]
+              // binding will not exist for `export { foo } from "X"` cases
+              if (binding) {
+                binding.path.remove()
+              }
             } else {
               specifiersToKeep.push(specifier)
             }
@@ -160,6 +164,12 @@ export default declare(function removeApiCalls(
               ) as NodePath<t.ObjectPattern>
               removeExportProperties(path, objectPath, apisToRemove)
             }
+          }
+        }
+        // Remove `export const { foo } from "X"` shaped exports
+        else if (path.node?.source) {
+          if (path.node.specifiers.length === 0) {
+            path.remove()
           }
         }
       },

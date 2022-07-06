@@ -43,6 +43,28 @@ function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
     }
   }
 
+  if (name === `Head`) {
+    // Head can be re-exported, Head can be class components - so the checks above are not sufficient,
+    // we need to be more permisive here
+
+    // class component
+    if (
+      node.declaration?.type === `ClassDeclaration` &&
+      node.declaration?.id?.type === `Identifier` &&
+      node.declaration?.id?.name === name
+    ) {
+      return true
+    }
+
+    // re-exports
+    if (
+      node.source &&
+      node.specifiers.some(specifier => specifier.exported.name === name)
+    ) {
+      return true
+    }
+  }
+
   return false
 }
 
@@ -218,25 +240,31 @@ const limitedExports: Rule.RuleModule = {
       },
       ExportNamedDeclaration: (node): void => {
         if (hasOneValidNamedDeclaration(node, queryVariableName)) {
+          console.log(`one valid decl`)
           return undefined
         }
 
         if (isTemplateQuery(node, graphqlTagName, namespaceSpecifierName)) {
+          console.log(`temp query`)
           return undefined
         }
 
         if (isApiExport(node, `getServerData`)) {
+          console.log(`getServerData`)
           return undefined
         }
 
         if (isApiExport(node, `config`)) {
+          console.log(`isConfig`)
           return undefined
         }
 
         if (isApiExport(node, `Head`)) {
+          console.log(`is head`)
           return undefined
         }
 
+        console.log(`error`)
         context.report({
           node,
           messageId: `limitedExportsPageTemplates`,
