@@ -208,10 +208,6 @@ In your GraphQL schema, you will discover several additional data related to you
 
 | Property        | Description                                                                                                                                                                 |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| body            | Your MDX file content without frontmatter                                                                                                                                   |
-| rawBody         | Your untouched MDX file content                                                                                                                                             |
-| title           | Either your title from frontmatter or the file name in sentence case                                                                                                        |
-| slug            | Either your slug from frontmatter or the relative file path + file name. (While `index` in the file name will be replaced with ``)                                          |
 | frontmatter     | Sub-entity with all frontmatter data. Regular Gatsby transformations apply, like you can format dates directly within the query.                                            |
 | excerpt         | A pruned variant of your content. By default trimmed to 140 characters. Based on [rehype-infer-description-meta](https://github.com/rehypejs/rehype-infer-description-meta) |
 | tableOfContents | Generates a recursive object structure to reflect a table of contents. Based on [mdast-util-toc](https://github.com/syntax-tree/mdast-util-toc)                             |
