@@ -9444,10 +9444,10 @@ dnserrors@2.1.2:
     lodash.defaults "^4.2.0"
     lodash.omit "^4.5.0"
 
-do-sync@^3.0.11:
-  version "3.0.11"
-  resolved "https://registry.yarnpkg.com/do-sync/-/do-sync-3.0.11.tgz#2500fa69a71fba466556fe4ce564569ffa5ab5b1"
-  integrity sha512-LxkTVZflWg0frWsgg3dEiJb0FViDUydK/lNXdqgHdz5Oz1vi77Uw7GRdEPp7CL2kjl96ijCMJWHJv35wQ9FglA==
+do-sync@^3.0.18:
+  version "3.0.19"
+  resolved "https://registry.yarnpkg.com/do-sync/-/do-sync-3.0.19.tgz#17acc210db9c4f346e63ea7a823a167c638e9963"
+  integrity sha512-qyrGtw7NY05HAqVIkaZwkEp9vachHrZd7TPeEjwGiABfu4RT/voNrS8fMqYuXCnIN45szOFj8guvKsw9N0S26g==
   dependencies:
     cross-spawn "^7.0.2"
 
