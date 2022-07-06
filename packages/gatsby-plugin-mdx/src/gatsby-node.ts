@@ -167,16 +167,8 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     const { createTypes } = actions
     const typeDefs = [
       schema.buildObjectType({
-        name: `MdxFrontmatter`,
-        fields: {},
-        extensions: {
-          infer: true,
-        },
-      }),
-      schema.buildObjectType({
         name: `Mdx`,
         fields: {
-          frontmatter: `MdxFrontmatter!`,
           excerpt: {
             type: `String`,
             args: {
@@ -254,7 +246,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
           },
         },
         extensions: {
-          infer: false,
+          infer: true,
         },
         interfaces: [`Node`],
       }),
