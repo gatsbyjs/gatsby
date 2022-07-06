@@ -2,7 +2,6 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { NodePluginArgs } from "gatsby"
 import type { LoaderDefinition } from "webpack"
-import { getOptions } from "loader-utils"
 import { compileMDX } from "./compile-mdx"
 import { parseFrontmatter } from "./frontmatter"
 import type { NodeMap } from "./types"
@@ -17,8 +16,8 @@ export interface IGatsbyMDXLoaderOptions {
 // This whole loaded could be replaced by @mdx-js/loader if MDX would
 // accept custom data passed to the unified pipeline via processor.data()
 const gatsbyMDXLoader: LoaderDefinition = async function (source) {
-  const { options, nodeMap, reporter }: IGatsbyMDXLoaderOptions =
-    getOptions(this)
+  const { options, nodeMap, reporter } =
+    this.getOptions() as IGatsbyMDXLoaderOptions
   const res = nodeMap.get(this.resourcePath)
 
   if (!res) {

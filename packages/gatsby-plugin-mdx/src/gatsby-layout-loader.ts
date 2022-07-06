@@ -1,7 +1,6 @@
 /* eslint-disable @babel/no-invalid-this */
 import type { LoaderDefinition } from "webpack"
 import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
-import { getOptions } from "loader-utils"
 import type { Program, Identifier, ExportDefaultDeclaration } from "estree"
 import type { NodeMap } from "./types"
 import type { IMdxPluginOptions } from "./plugin-options"
@@ -12,7 +11,7 @@ export interface IGatsbyLayoutLoaderOptions {
 
 // Wrap MDX content with Gatsby Layout component
 const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
-  const { nodeMap }: IGatsbyLayoutLoaderOptions = getOptions(this)
+  const { nodeMap } = this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
   // resource query param or if the MDX file is directly loaded as path.
   const mdxPath = getPathToContentComponent(
