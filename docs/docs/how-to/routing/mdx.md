@@ -364,7 +364,7 @@ Change your `gatsby-node.js` as following:
 createPage({
   path: node.frontmatter.slug,
 -  component: node.parent.absolutePath,
-+  component:  `${path.resolve(`./src/components/posts-page-layout.js`)}?__contentFilePath=${node.parent.absolutePath}`,
++  component: `${path.resolve(`./src/components/posts-page-layout.js`)}?__contentFilePath=${node.parent.absolutePath}`,
   context: { id: node.id },
 })
 ```
