@@ -2,7 +2,6 @@ import type { GatsbyNode, NodeInput } from "gatsby"
 import type { FileSystemNode } from "gatsby-source-filesystem"
 import type { Options } from "rehype-infer-description-meta"
 import path from "path"
-import { sentenceCase } from "change-case"
 import fs from "fs-extra"
 import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
 import type { IFileNode, NodeMap } from "./types"
@@ -169,18 +168,15 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
     const typeDefs = [
       schema.buildObjectType({
         name: `MdxFrontmatter`,
-        fields: {
-          title: `String`,
+        fields: {},
+        extensions: {
+          infer: true,
         },
       }),
       schema.buildObjectType({
         name: `Mdx`,
         fields: {
-          rawBody: `String!`,
-          body: `String!`,
           frontmatter: `MdxFrontmatter!`,
-          slug: `String`,
-          title: `String`,
           excerpt: {
             type: `String`,
             args: {
@@ -257,6 +253,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             },
           },
         },
+        extensions: {
+          infer: false,
+        },
         interfaces: [`Node`],
       }),
     ]
@@ -281,34 +280,15 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
 }) => {
   const rawBody = await loadNodeContent(node)
 
-  const { frontmatter, body } = parseFrontmatter(
-    node.internal.contentDigest,
-    rawBody
-  )
-
-  // Use slug from frontmatter, otherwise fall back to the file name and path
-  const slug =
-    frontmatter.slug ||
-    [node.relativeDirectory, node.name === `index` ? `` : node.name]
-      .filter(Boolean)
-      .join(`/`)
-
-  // Use title from frontmatter, otherwise fall back to the file name
-  const title = frontmatter.title || sentenceCase(node.name)
-
+  const { frontmatter } = parseFrontmatter(node.internal.contentDigest, rawBody)
   const mdxNode: NodeInput = {
     id: createNodeId(`${node.id} >>> Mdx`),
     children: [],
     parent: node.id,
     internal: {
-      content: rawBody,
       type: `Mdx`,
       contentDigest: node.internal.contentDigest,
     },
-    rawBody,
-    body,
-    slug,
-    title,
     frontmatter,
   }
 
