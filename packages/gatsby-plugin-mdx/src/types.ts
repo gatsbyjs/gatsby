@@ -11,8 +11,6 @@ export interface IFileNode extends Node {
   absolutePath?: string
 }
 
-export type NodeMap = Map<string, { fileNode: IFileNode; mdxNode: IMdxNode }>
-
 interface IMdxVFileDataMeta {
   [key: string]: unknown
 }

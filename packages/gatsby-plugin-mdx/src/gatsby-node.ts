@@ -12,6 +12,7 @@ import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import type { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
 import { ERROR_MAP } from "./error-utils"
+import { createFileToMdxCacheKey } from "./cache-helpers"
 
 /**
  * Add support for MDX files including using Gatsby layout components
@@ -21,19 +22,6 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
     { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
     pluginOptions
   ) => {
-    const mdxNodes = getNodesByType(`Mdx`)
-    const nodeMap: NodeMap = new Map()
-    mdxNodes.forEach(mdxNode => {
-      if (!mdxNode.parent) {
-        return
-      }
-      const fileNode: IFileNode | undefined = getNode(mdxNode.parent)
-      if (!fileNode || !fileNode.absolutePath) {
-        return
-      }
-      nodeMap.set(fileNode.absolutePath, { fileNode, mdxNode })
-    })
-
     const options = defaultOptions(pluginOptions)
 
     const mdxOptions = await enhanceMdxOptions(pluginOptions, {
@@ -46,13 +34,18 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
 
     const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
       options: mdxOptions,
-      nodeMap,
       reporter,
+      cache,
+      getNode,
     }
 
     const layoutLoaderOptions: IGatsbyLayoutLoaderOptions = {
       options,
-      nodeMap,
+      nodeExists: async function nodeExists(absolutePath): Promise<boolean> {
+        const entry = await cache.get(createFileToMdxCacheKey(absolutePath))
+
+        return !!entry
+      },
     }
 
     actions.setWebpackConfig({
@@ -63,11 +56,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
             use: [
               loaders.js(),
               {
-                loader: path.join(
-                  `gatsby-plugin-mdx`,
-                  `dist`,
-                  `gatsby-mdx-loader`
-                ),
+                loader: path.join(__dirname, `gatsby-mdx-loader`),
                 options: mdxLoaderOptions,
               },
             ],
@@ -78,11 +67,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
             use: [
               loaders.js(),
               {
-                loader: path.join(
-                  `gatsby-plugin-mdx`,
-                  `dist`,
-                  `gatsby-layout-loader`
-                ),
+                loader: path.join(__dirname, `gatsby-layout-loader`),
                 options: layoutLoaderOptions,
               },
             ],
@@ -134,22 +119,11 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 
   const compileRes = await compileMDX(
     {
-      id: ``,
-      children: [],
-      parent: ``,
-      internal: { contentDigest: ``, owner: ``, type: `` },
-      body: contents.toString(),
-      rawBody: ``,
-    },
-    {
-      id: ``,
-      children: [],
-      parent: ``,
-      internal: { contentDigest: ``, owner: ``, type: `` },
+      source: contents,
       absolutePath: filename,
-      sourceInstanceName: `mocked`,
     },
     mdxOptions,
+    cache,
     reporter
   )
 
@@ -177,29 +151,38 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                 defaultValue: 140,
               },
             },
-            async resolve(mdxNode, { pruneLength }: { pruneLength: number }) {
+            async resolve(
+              mdxNode,
+              { pruneLength }: { pruneLength: number },
+              context
+            ) {
               const rehypeInferDescriptionMeta = (
                 await import(`rehype-infer-description-meta`)
               ).default
 
               const descriptionOptions: Options = { truncateSize: pruneLength }
 
-              const result = await compileMDXWithCustomOptions({
-                mdxNode,
-                pluginOptions,
-                customOptions: {
-                  mdxOptions: {
-                    rehypePlugins: [
-                      [rehypeInferDescriptionMeta, descriptionOptions],
-                    ],
-                  },
+              const result = await compileMDXWithCustomOptions(
+                {
+                  source: mdxNode.body,
+                  absolutePath: context.getNode(mdxNode.parent).absolutePath,
                 },
-                getNode,
-                getNodesByType,
-                pathPrefix,
-                reporter,
-                cache,
-              })
+                {
+                  pluginOptions,
+                  customOptions: {
+                    mdxOptions: {
+                      rehypePlugins: [
+                        [rehypeInferDescriptionMeta, descriptionOptions],
+                      ],
+                    },
+                  },
+                  getNode,
+                  getNodesByType,
+                  pathPrefix,
+                  reporter,
+                  cache,
+                }
+              )
 
               if (!result) {
                 return null
@@ -216,26 +199,33 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                 default: 6,
               },
             },
-            async resolve(mdxNode, { maxDepth }) {
-              const { visit } = await import(`unist-util-visit`)
-              const { toc } = await import(`mdast-util-toc`)
+            async resolve(mdxNode, { maxDepth }, context) {
+              const [{ visit }, { toc }] = await Promise.all([
+                import(`unist-util-visit`),
+                import(`mdast-util-toc`),
+              ])
 
-              const result = await compileMDXWithCustomOptions({
-                mdxNode,
-                pluginOptions,
-                customOptions: {
-                  mdxOptions: {
-                    remarkPlugins: [
-                      [remarkInferTocMeta, { visit, toc, maxDepth }],
-                    ],
-                  },
+              const result = await compileMDXWithCustomOptions(
+                {
+                  source: mdxNode.body,
+                  absolutePath: context.getNode(mdxNode.parent).absolutePath,
                 },
-                getNode,
-                getNodesByType,
-                pathPrefix,
-                reporter,
-                cache,
-              })
+                {
+                  pluginOptions,
+                  customOptions: {
+                    mdxOptions: {
+                      remarkPlugins: [
+                        [remarkInferTocMeta, { visit, toc, maxDepth }],
+                      ],
+                    },
+                  },
+                  getNode,
+                  getNodesByType,
+                  pathPrefix,
+                  reporter,
+                  cache,
+                }
+              )
 
               if (!result) {
                 return null
@@ -269,10 +259,14 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
   loadNodeContent,
   actions: { createNode, createParentChildLink },
   createNodeId,
+  cache,
 }) => {
   const rawBody = await loadNodeContent(node)
 
-  const { frontmatter } = parseFrontmatter(node.internal.contentDigest, rawBody)
+  const { frontmatter, body } = parseFrontmatter(
+    node.internal.contentDigest,
+    rawBody
+  )
   const mdxNode: NodeInput = {
     id: createNodeId(`${node.id} >>> Mdx`),
     children: [],
@@ -281,11 +275,13 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
       type: `Mdx`,
       contentDigest: node.internal.contentDigest,
     },
+    body,
     frontmatter,
   }
 
   createNode(mdxNode)
   createParentChildLink({ parent: node, child: mdxNode })
+  await cache.set(createFileToMdxCacheKey(node.absolutePath), mdxNode.id)
 }
 
 /**

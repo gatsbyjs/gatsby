@@ -35,7 +35,8 @@ export async function getSourcePluginsAsRemarkPlugins({
     const wrappedGatsbyPlugin: Pluggable<Array<any>> =
       function wrappedGatsbyPlugin() {
         // eslint-disable-next-line @babel/no-invalid-this
-        const mdxNode = this.data(`mdxNode`)
+        const mdxNode = getNode(this.data(`mdxNodeId`) as string)
+
         return async function transformer(markdownAST): Promise<any> {
           // Execute gatsby-remark-* plugin
           await requiredPlugin(

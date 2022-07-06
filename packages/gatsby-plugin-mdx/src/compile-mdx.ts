@@ -1,18 +1,19 @@
 import deepmerge from "deepmerge"
 import type { NodePluginArgs, PluginOptions } from "gatsby"
 import type { ProcessorOptions } from "@mdx-js/mdx"
-import type { IFileNode, IMdxMetadata, IMdxNode } from "./types"
+import type { IMdxMetadata, IMdxNode } from "./types"
 import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 import { ERROR_CODES } from "./error-utils"
+import { createFileToMdxCacheKey } from "./cache-helpers"
 
 // Compiles MDX into JS
 // Differences to original @mdx-js/loader:
 // * We pass the MDX node and a metadata object to the processor
 // * We inject the path to the original mdx file into the VFile which is used by the processor
 export async function compileMDX(
-  mdxNode: IMdxNode,
-  fileNode: IFileNode,
+  { absolutePath, source }: { absolutePath: string; source: string | Buffer },
   options: ProcessorOptions,
+  cache: NodePluginArgs["cache"],
   reporter: NodePluginArgs["reporter"]
 ): Promise<{ processedMDX: string; metadata: IMdxMetadata } | null> {
   try {
@@ -23,12 +24,15 @@ export async function compileMDX(
 
     // Pass required custom data into the processor
     const metadata: IMdxMetadata = {}
-    processor.data(`mdxNode`, mdxNode)
+    processor.data(
+      `mdxNodeId`,
+      await cache.get(createFileToMdxCacheKey(absolutePath))
+    )
     processor.data(`mdxMetadata`, metadata)
 
     const result = await processor.process(
       // Inject path to original file for remark plugins. See: https://github.com/gatsbyjs/gatsby/issues/26914
-      new VFile({ value: mdxNode.body, path: fileNode.absolutePath })
+      new VFile({ value: source, path: absolutePath })
     )
 
     // Clone metadata so ensure it won't be overridden by later processings
@@ -40,19 +44,11 @@ export async function compileMDX(
 
     return { processedMDX, metadata: clonedMetadata }
   } catch (err) {
-    const errorMeta = [
-      mdxNode.title && `Title: ${mdxNode.title}`,
-      mdxNode.slug && `Slug: ${mdxNode.slug}`,
-      fileNode.relativePath && `Path: ${fileNode.relativePath}`,
-    ]
-      .filter(Boolean)
-      .join(`\n`)
-
     reporter.panicOnBuild(
       {
         id: ERROR_CODES.MdxCompilation,
         context: {
-          errorMeta,
+          errorMeta: `Path: ${absolutePath}`,
         },
       },
       err
@@ -66,25 +62,26 @@ export async function compileMDX(
  * compilation pipeline. Very useful to create your own resolvers that return custom metadata.
  * Internally used to generate the tables of contents and the excerpts.
  */
-export const compileMDXWithCustomOptions = async ({
-  pluginOptions,
-  customOptions,
-  getNode,
-  getNodesByType,
-  pathPrefix,
-  reporter,
-  cache,
-  mdxNode,
-}: {
-  pluginOptions: PluginOptions
-  customOptions: Partial<IMdxPluginOptions>
-  getNode: NodePluginArgs["getNode"]
-  getNodesByType: NodePluginArgs["getNodesByType"]
-  pathPrefix: string
-  reporter: NodePluginArgs["reporter"]
-  cache: NodePluginArgs["cache"]
-  mdxNode: IMdxNode
-}): Promise<{
+export const compileMDXWithCustomOptions = async (
+  { absolutePath, source }: { absolutePath: string; source: string | Buffer },
+  {
+    pluginOptions,
+    customOptions,
+    getNode,
+    getNodesByType,
+    pathPrefix,
+    reporter,
+    cache,
+  }: {
+    pluginOptions: PluginOptions
+    customOptions: Partial<IMdxPluginOptions>
+    getNode: NodePluginArgs["getNode"]
+    getNodesByType: NodePluginArgs["getNodesByType"]
+    pathPrefix: string
+    reporter: NodePluginArgs["reporter"]
+    cache: NodePluginArgs["cache"]
+  }
+): Promise<{
   processedMDX: string
   metadata: IMdxMetadata
 } | null> => {
@@ -101,14 +98,15 @@ export const compileMDXWithCustomOptions = async ({
     reporter,
     cache,
   })
-  if (!mdxNode.parent) {
-    return null
-  }
-  const fileNode = getNode(mdxNode.parent)
-  if (!fileNode) {
-    return null
-  }
 
   // Compile MDX and extract metadata
-  return compileMDX(mdxNode, fileNode, mdxOptions, reporter)
+  return compileMDX(
+    {
+      source: source,
+      absolutePath: absolutePath,
+    },
+    mdxOptions,
+    cache,
+    reporter
+  )
 }

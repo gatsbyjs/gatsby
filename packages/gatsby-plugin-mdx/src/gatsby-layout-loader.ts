@@ -1,30 +1,34 @@
 /* eslint-disable @babel/no-invalid-this */
-import type { LoaderDefinition } from "webpack"
+import path from "path"
+import { slash } from "gatsby-core-utils/path"
 import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
 import type { Program, Identifier, ExportDefaultDeclaration } from "estree"
-import type { NodeMap } from "./types"
+import type { LoaderDefinition } from "webpack"
 import type { IMdxPluginOptions } from "./plugin-options"
+
 export interface IGatsbyLayoutLoaderOptions {
   options: IMdxPluginOptions
-  nodeMap: NodeMap
+  nodeExists: (path: string) => Promise<boolean>
 }
 
 // Wrap MDX content with Gatsby Layout component
 const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
-  const { nodeMap } = this.getOptions() as IGatsbyLayoutLoaderOptions
+  const callback = this.async()
+  const { nodeExists } = this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
   // resource query param or if the MDX file is directly loaded as path.
   const mdxPath = getPathToContentComponent(
     `${this.resourcePath}${this.resourceQuery}`
   )
 
-  const res = nodeMap.get(mdxPath)
-
-  if (!res) {
-    throw new Error(
-      `Unable to locate GraphQL File node for ${this.resourcePath}`
+  if (!(await nodeExists(mdxPath))) {
+    return callback(
+      new Error(`Unable to locate GraphQL File node for ${this.resourcePath}`)
     )
   }
+
+  // add mdx dependency to webpack
+  this.addDependency(path.resolve(mdxPath))
 
   const acorn = await import(`acorn`)
   const { default: jsx } = await import(`acorn-jsx`)
@@ -67,7 +71,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
       ],
       source: {
         type: `Literal`,
-        value: mdxPath,
+        value: slash(mdxPath),
       },
     })
 
@@ -152,7 +156,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
 
     const transformedSource = generate(AST)
 
-    return transformedSource
+    return callback(null, transformedSource, null, AST)
   } catch (e) {
     throw new Error(
       `Unable to inject MDX into JS template:\n${this.resourcePath}\n${e}`
