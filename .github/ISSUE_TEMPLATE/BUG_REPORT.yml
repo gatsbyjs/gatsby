@@ -1,5 +1,5 @@
 name: Bug Report
-description: Something isn't working as expected? Report your bugs here.
+description: Something not working as expected? Use this template to report a bug.
 labels: ["type: bug"]
 body:
   - type: markdown
@@ -28,7 +28,7 @@ body:
   - type: textarea
     attributes:
       label: Description
-      description: Describe the issue that you're seeing.
+      description: Describe the issue that you're facing.
       placeholder: Be as precise as you can. Feel free to share screenshots, videos, or data from the devtools of your browser.
     validations:
       required: true
@@ -43,7 +43,7 @@ body:
   - type: textarea
     attributes:
       label: Steps to Reproduce
-      description: Clear steps describing how to reproduce the issue.
+      description: Please provide clear steps describing how to reproduce the issue.
       value: |
         1.
         2.
