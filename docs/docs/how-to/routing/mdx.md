@@ -177,7 +177,7 @@ To inject them, you have several options:
 
 ## Programmatically Creating Pages
 
-Sometimes you want to be able to programmatically create pages using MDX content that lives at arbitrary locations outside of `src/pages` or in remote CMS.
+Sometimes you want to be able to programmatically create pages using MDX content that lives at arbitrary locations outside of `src/pages` or in a remote CMS.
 
 For instance, let's say you have a Gatsby website, and you want to add support for MDX so you can start your blog. The posts will live in `content/posts`. You can do this with the help of `gatsby-source-filesystem` and [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) in `gatsby-node.js`.
 
