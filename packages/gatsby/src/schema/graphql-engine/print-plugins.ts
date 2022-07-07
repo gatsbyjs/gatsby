@@ -79,21 +79,21 @@ function render(
    * Not all the properties on this pushed object are needed, but they're required by the TS types.
    */
   pluginsWithWorkers.push({
-    name: `gatsby-plugin-utils/dist/polyfill-remote-file/jobs`,
-    id: `gatsby-plugin-utils/dist/polyfill-remote-file/jobs`,
+    name: `gatsby-plugin-utils/polyfill-remote-file/jobs`,
+    id: `gatsby-plugin-utils/polyfill-remote-file/jobs`,
     browserAPIs: [],
     nodeAPIs: [],
     ssrAPIs: [],
     resolve: path.dirname(
       require.resolve(
-        `gatsby-plugin-utils/dist/polyfill-remote-file/jobs/gatsby-worker`
+        `gatsby-plugin-utils/polyfill-remote-file/jobs/gatsby-worker`
       )
     ),
     version: `0.0.0`,
     pluginOptions: {
       plugins: [],
     },
-    pluginFilepath: `gatsby-plugin-utils/dist/polyfill-remote-file/jobs`,
+    pluginFilepath: `gatsby-plugin-utils/polyfill-remote-file/jobs`,
   })
 
   const subPluginModuleToImportNameMapping = new Map<string, string>()

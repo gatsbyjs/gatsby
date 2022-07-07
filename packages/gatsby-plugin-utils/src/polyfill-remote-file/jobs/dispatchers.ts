@@ -54,7 +54,11 @@ export function dispatchLocalFileServiceJob(
       name: `gatsby`,
       // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
-      resolve: `gatsby-plugin-utils/dist/polyfill-remote-file/jobs/`,
+      resolve: path.dirname(
+        require.resolve(
+          `gatsby-plugin-utils/polyfill-remote-file/jobs/gatsby-worker`
+        )
+      ),
     }
   )
 }
@@ -113,7 +117,11 @@ export function dispatchLocalImageServiceJob(
       name: `gatsby`,
       // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
-      resolve: `gatsby-plugin-utils/dist/polyfill-remote-file/jobs/`,
+      resolve: path.dirname(
+        require.resolve(
+          `gatsby-plugin-utils/polyfill-remote-file/jobs/gatsby-worker`
+        )
+      ),
     }
   )
 }

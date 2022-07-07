@@ -113,7 +113,7 @@ function addRemoteFilePolyfillInterface<
       name: `gatsby`,
       // @ts-ignore - version is allowed
       version: getGatsbyVersion(),
-      resolve: `gatsby-plugin-utils`,
+      resolve: path.dirname(require.resolve(`gatsby-plugin-utils/index.js`)),
     })
   }
 
