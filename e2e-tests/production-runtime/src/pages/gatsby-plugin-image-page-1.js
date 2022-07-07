@@ -43,3 +43,11 @@ export const pageQuery = graphql`
 `
 
 export default PluginImage
+
+export const getServerData = () => {
+  return {
+    props: {
+      ssr: true,
+    },
+  }
+}
