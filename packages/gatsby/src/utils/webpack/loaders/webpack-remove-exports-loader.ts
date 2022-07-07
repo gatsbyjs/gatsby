@@ -18,7 +18,7 @@ module.exports = function loader(
     presets: options?.jsx
       ? [
           [
-            `@babel/preset-react`,
+            require.resolve(`babel-preset-gatsby/babel-preset-react`),
             {
               useBuiltIns: true,
               pragma: `React.createElement`,
