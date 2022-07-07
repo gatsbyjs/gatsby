@@ -319,6 +319,8 @@ Read more about injecting your own components: https://mdxjs.com/docs/using-mdx/
 
 ## Migrating from v3 to v4
 
+`gatsby-plugin-mdx@v4` is a complete rewrite of the original plugin with the goal of making the plugin faster, compatible with MDX v2, leaner, and more maintainable. While doing this rewrite we took the opportunity to fix long-standing issues and remove some functionalities that we now think should be handled by the user, not the plugin. In doing so there will be of course breaking changes you'll have to handle – but with the help of this migration guide and the codemods you'll be on the new version in no time!
+
 TODO
 
 ## Why MDX?
