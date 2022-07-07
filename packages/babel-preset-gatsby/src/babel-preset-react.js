@@ -1,1 +1,3 @@
-export { default as babelPresetReact } from "@babel/preset-react"
+import babelPresetReact from "@babel/preset-react"
+
+export default babelPresetReact
