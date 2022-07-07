@@ -116,6 +116,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 
   const contents = await fs.readFile(mdxPath)
 
+  console.log(`precompile`)
   const compileRes = await compileMDX(
     {
       source: contents,

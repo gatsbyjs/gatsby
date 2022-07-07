@@ -8,11 +8,11 @@ const { platform } = require(`os`)
 const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
+const { slash } = require(`gatsby-core-utils/path`)
 const {
-  slash,
   createContentDigest,
-  splitComponentPath,
-} = require(`gatsby-core-utils`)
+} = require(`gatsby-core-utils/create-content-digest`)
+const { splitComponentPath } = require(`gatsby-core-utils/parse-component-path`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode, getDataStore } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
