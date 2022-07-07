@@ -34,7 +34,7 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 ## Installation
 
 ```shell
-npm install gatsby-plugin-mdx gatsby-source-filesystem
+npm install gatsby-plugin-mdx @mdx-js/react gatsby-source-filesystem
 ```
 
 ## Usage
@@ -334,7 +334,7 @@ _Important:_ Loading MDX from other sources as the file system is not yet suppor
 
 ```sh
 npm remove @mdx-js/react @mdx-js/mdx
-npm install gatsby-plugin-mdx@latest
+npm install gatsby-plugin-mdx@latest @mdx-js/react@latest
 ```
 
 ### Changes in `gatsy-config.js`
