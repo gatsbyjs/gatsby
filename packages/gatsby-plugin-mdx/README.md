@@ -6,23 +6,30 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Configuration](#configuration)
-    - [Extensions](#extensions)
-    - [Gatsby remark plugins](#gatsby-remark--plugins)
-    - [mdxOptions](#mdxoptions)
-  - [Imports](#imports)
-  - [Layouts](#layouts)
-  - [Programmatically create MDX pages](#programmatically-create-mdx-pages)
-  - [GraphQL MDX Node structure](#graphql-mdx-node-structure)
-  - [Extending the GraphQL Mdx nodes](#extending-the-graphql-mdx-nodes)
-  - [Components](#components)
-    - [MDXProvider](#mdxprovider)
-    - [Shortcodes](#shortcodes)
-- [Migrating from v3 to v4](#migrating-from-v3-to-v4)
-- [Why MDX?](#why-mdx)
-- [Related](#related)
+- [gatsby-plugin-mdx](#gatsby-plugin-mdx)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Configuration](#configuration)
+      - [Extensions](#extensions)
+      - [`gatsby-remark-*` plugins](#gatsby-remark--plugins)
+      - [mdxOptions](#mdxoptions)
+    - [Imports](#imports)
+    - [Layouts](#layouts)
+    - [Programmatically create MDX pages](#programmatically-create-mdx-pages)
+    - [GraphQL MDX Node structure](#graphql-mdx-node-structure)
+    - [Extending the GraphQL Mdx nodes](#extending-the-graphql-mdx-nodes)
+    - [Components](#components)
+      - [MDXProvider](#mdxprovider)
+      - [Shortcodes](#shortcodes)
+  - [Migrating from v3 to v4](#migrating-from-v3-to-v4)
+    - [Update dependencies](#update-dependencies)
+    - [Changes in `gatsy-config.js`](#changes-in-gatsy-configjs)
+    - [Changes in `gatsby-node.js`](#changes-in-gatsby-nodejs)
+    - [Update your page templates](#update-your-page-templates)
+    - [Update your MDX content](#update-your-mdx-content)
+  - [Why MDX?](#why-mdx)
+  - [Related](#related)
 
 ## Installation
 
@@ -83,11 +90,11 @@ Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to
 
 `gatsby-plugin-mdx` exposes a configuration API that can be used similarly to any other Gatsby plugin. You can define MDX extensions, layouts, global scope, and more.
 
-| Key                                             | Default    | Description                                                         |
-| ----------------------------------------------- | ---------- | ------------------------------------------------------------------- |
-| [`extensions`](#extensions)                     | `[".mdx"]` | Configure the file extensions that `gatsby-plugin-mdx` will process |
+| Key                                              | Default    | Description                                                         |
+| ------------------------------------------------ | ---------- | ------------------------------------------------------------------- |
+| [`extensions`](#extensions)                      | `[".mdx"]` | Configure the file extensions that `gatsby-plugin-mdx` will process |
 | [`gatsbyRemarkPlugins`](#gatsby-remark--plugins) | `[]`       | Use Gatsby-specific remark plugins                                  |
-| [`mdxOptions`](#mdxOptions)                     | `[]`       | Options directly passed to `compile()` of `@mdx-js/mdx`             |
+| [`mdxOptions`](#mdxOptions)                      | `[]`       | Options directly passed to `compile()` of `@mdx-js/mdx`             |
 
 #### Extensions
 
@@ -321,7 +328,136 @@ Read more about injecting your own components: https://mdxjs.com/docs/using-mdx/
 
 `gatsby-plugin-mdx@v4` is a complete rewrite of the original plugin with the goal of making the plugin faster, compatible with MDX v2, leaner, and more maintainable. While doing this rewrite we took the opportunity to fix long-standing issues and remove some functionalities that we now think should be handled by the user, not the plugin. In doing so there will be of course breaking changes you'll have to handle – but with the help of this migration guide and the codemods you'll be on the new version in no time!
 
-TODO
+_Important:_ Loading MDX from other sources as the file system is not yet supported.
+
+### Update dependencies
+
+```sh
+npm remove @mdx-js/react
+npm install gatsby-plugin-mdx@latest @mdx-js/mdx@latest @mdx-js/react@latest
+```
+
+### Changes in `gatsy-config.js`
+
+The plugin options drastically changed. Most features are removed for simplicity, performance and maintainence reasons.
+
+- You have to move your `remarkPlugins` and `rehypePlugins` into the new `mdxOptions` config option.
+- Everything in `mdxOptions` will be directly passed to MDX: https://mdxjs.com/packages/mdx/#compilefile-options
+- `gatsbyRemarkPlugins` and `extensions` still exist.
+- Every other config option got removed, even `defaultLayouts`. See below how to implement your layouts with the new version
+- If you added `gatsby-transformer-remark` to fix issues with your `gatsby-remark-*` plugins. You can remove this now. Make sure all your remark plugins listed in your `gatsby-plugin-mdx` configuration.
+
+### Changes in `gatsby-node.js`
+
+If you use the `createPage` action to create pages, you have to do some alignments.
+
+1. You need to query the absolut path to the MDX file
+2. Instead of passing your pages layout component only, you have to attach a query parameter to tell webpack that we want this MDX file to be loaded:
+
+```diff
+actions.createPage({
+- component: `/path/to/template.js`,
++ component: `/path/to/template.js?__contentFilePath=/path/to/content.mdx`,
+})
+```
+
+A full example would look like this:
+
+```js
+const { data } = await graphql(
+  `
+    {
+      allMdx(
+        filter: { fields: { collection: { eq: "post" } } }
+        sort: { fields: [frontmatter___date], order: DESC }
+      ) {
+        edges {
+          node {
+            body
+            fields {
+              slug
+            }
+            frontmatter {
+              title
+            }
+// highlight-start
+            parent {
+              ... on File {
+                absolutePath
+              }
+            }
+// highlight-end
+          }
+        }
+      }
+    }
+  `
+)
+
+const posts = data.allMdx.edges
+
+posts.forEach((post, i) => {
+  actions.createPage({
+    path: post.node.fields.slug,
+    component: `/path/to/your/template.js?__contentFilePath=${post.node.parent.absolutePath}`, // highlight-line
+    context: {
+      frontmatter: post.frontmatter, // highlight-line
+    },
+  })
+})
+```
+
+### Update your page templates
+
+1. You can not query the transformed MDX in GraphQL anymore, but your template components get the tranformed MDX as children
+2. You no more need `<MDXRenderer/>` to render your MDX
+3. We no more support the `scope` feature.
+
+```diff
+import React from 'react';
+import { graphql } from "gatsby"
+- import { MDXRenderer } from "gatsby-plugin-mdx"
+
+export const pageQuery = graphql`
+  query($slug: String!) {
+    mdx(fields: { slug: { eq: $slug } }) {
+      frontmatter {
+        title
+        slug
+        date(formatString: "MMMM DD, YYYY")
+      }
+      tableOfContents
+    }
+  }
+`;
+- function PostTemplate({ data: { mdx: post }, scope }) {
++ function PostTemplate({ data: { mdx: post }, children }) {
+
+  return (
+    <>
+-       <MDXRenderer>
+-         {children}
+-       </MDXProvider>
++       {children}
+    </>
+  );
+}
+
+export default PostTemplate;
+```
+
+### Update your MDX content
+
+There have been plenty of changes how MDX works in the background. Your existing MDX might now be invalid.
+
+In our internal test, most of the time, the issue was curly brackets that needed to be escaped with backticks:
+
+```diff
+- You can upload this to Git{Hub,Lab}
++ You can upload this to `Git{Hub,Lab}`
+```
+
+See here for a list of changes that happended to MDX content: https://mdxjs.com/migrating/v2/#update-mdx-content
 
 ## Why MDX?
 
