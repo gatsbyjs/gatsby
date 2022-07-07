@@ -2,7 +2,14 @@
 import path from "path"
 import { slash } from "gatsby-core-utils/path"
 import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
-import type { Program, Identifier, ExportDefaultDeclaration } from "estree"
+import type {
+  Program,
+  Declaration,
+  Expression,
+  ExportDefaultDeclaration,
+  Identifier,
+  FunctionDeclaration,
+} from "estree"
 import type { LoaderDefinition } from "webpack"
 import type { IMdxPluginOptions } from "./plugin-options"
 
@@ -11,11 +18,10 @@ export interface IGatsbyLayoutLoaderOptions {
   nodeExists: (path: string) => Promise<boolean>
 }
 
-// @ts-ignore - Correct return type
 // Wrap MDX content with Gatsby Layout component
 const gatsbyLayoutLoader: LoaderDefinition = async function (
   source
-): Promise<string | Buffer | void> {
+): Promise<string | Buffer> {
   const { nodeExists } = this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
   // resource query param or if the MDX file is directly loaded as path.
@@ -91,8 +97,11 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         return
       }
 
-      const declaration = child.declaration as unknown as Identifier
-      const pageComponentName = declaration.id?.name || declaration.name || null
+      const declaration = child.declaration as Declaration | Expression
+      const pageComponentName =
+        (declaration as FunctionDeclaration).id?.name ||
+        (declaration as Identifier).name ||
+        null
 
       if (!pageComponentName) {
         throw new Error(`Unable to determine default export name`)
