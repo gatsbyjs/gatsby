@@ -10,7 +10,7 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 - [Usage](#usage)
   - [Configuration](#configuration)
     - [Extensions](#extensions)
-    - [Gatsby remark plugins](#gatsby-remark-plugins)
+    - [Gatsby remark plugins](#gatsby-remark--plugins)
     - [mdxOptions](#mdxoptions)
   - [Imports](#imports)
   - [Layouts](#layouts)
@@ -86,7 +86,7 @@ Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to
 | Key                                             | Default    | Description                                                         |
 | ----------------------------------------------- | ---------- | ------------------------------------------------------------------- |
 | [`extensions`](#extensions)                     | `[".mdx"]` | Configure the file extensions that `gatsby-plugin-mdx` will process |
-| [`gatsbyRemarkPlugins`](#gatsby-remark-plugins) | `[]`       | Use Gatsby-specific remark plugins                                  |
+| [`gatsbyRemarkPlugins`](#gatsby-remark--plugins) | `[]`       | Use Gatsby-specific remark plugins                                  |
 | [`mdxOptions`](#mdxOptions)                     | `[]`       | Options directly passed to `compile()` of `@mdx-js/mdx`             |
 
 #### Extensions
@@ -111,7 +111,7 @@ module.exports = {
 
 #### `gatsby-remark-*` plugins
 
-This config option is used for compatibility with a set of plugins many people [use with remark](https://www.gatsbyjs.com/plugins/?=gatsby-remark-) that require the gatsby environment to function properly. In some cases, like [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/), it makes more sense to use a library like [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer) to render codeblocks using a [React component](/api-reference/mdx-provider). In other cases, like [gatsby-remark-images](https://www.gatsbyjs.com/plugins/gatsby-remark-images/), the interaction with the Gatsby APIs is well deserved because the images can be optimized by Gatsby and you should continue using it.
+This config option is used for compatibility with a set of plugins many people [use with remark](https://www.gatsbyjs.com/plugins/?=gatsby-remark-) that require the Gatsby environment to function properly. In some cases, like [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/), it makes more sense to use a library like [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer) to render codeblocks using a [React component](/api-reference/mdx-provider). In other cases, like [gatsby-remark-images](https://www.gatsbyjs.com/plugins/gatsby-remark-images/), the interaction with the Gatsby APIs is well deserved because the images can be optimized by Gatsby and you should continue using it.
 
 ```js:title=gatsby-config.js
 module.exports = {
