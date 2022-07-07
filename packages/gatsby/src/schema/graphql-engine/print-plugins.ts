@@ -69,6 +69,15 @@ function render(
 
   const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
 
+  /**
+   * This fake plugin is needed because Image CDN workers need to be bundled
+   * to work in DSG - but unlike plugin workers, Image CDN is not a Gatsby plugin
+   * and is setup via gatsby-plugin-utils.
+   * Adding this fake plugin causes the Image CDN workers to be bundled.
+   * This is a hacky way to do this, but it works.
+   *
+   * Not all the properties on this pushed object are needed, but they're required by the TS types.
+   */
   pluginsWithWorkers.push({
     name: `gatsby-plugin-utils/dist/polyfill-remote-file/jobs`,
     id: `gatsby-plugin-utils/dist/polyfill-remote-file/jobs`,
