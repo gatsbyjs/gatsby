@@ -7,6 +7,8 @@ const {
   createNodeIdWithVersion,
 } = require(`./normalize`)
 
+const nodesUpdated = []
+
 const { getOptions } = require(`./plugin-options`)
 
 import { getGatsbyVersion } from "gatsby-core-utils"
@@ -404,7 +406,6 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     )
   }
 
-  const nodesUpdated = []
   for (const node of nodesToUpdate) {
     if (!nodesUpdated.includes(node.id)) {
       if (node.internal.owner) {
