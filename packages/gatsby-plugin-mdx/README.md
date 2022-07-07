@@ -54,7 +54,7 @@ By default, this configuration will allow you to automatically create pages with
 
 Note that `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present and configured to process local markdown files in order to generate the resulting Gatsby nodes.
 
-To automatically create pages with `.mdx` from other sources, you also need to configure `gatsby-plugin-page-creator`.
+To automatically create pages from MDX files outside of `src/pages` you'll need to configure `gatsby-plugin-page-creator` and `gatsby-source-filesystem` to point to this folder of files.
 
 ```js:title=gatsby-config.js
 module.exports = {
