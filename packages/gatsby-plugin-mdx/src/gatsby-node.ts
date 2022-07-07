@@ -150,21 +150,22 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                 defaultValue: 140,
               },
             },
-            async resolve(
-              mdxNode,
-              { pruneLength }: { pruneLength: number },
-              context
-            ) {
+            async resolve(mdxNode, { pruneLength }: { pruneLength: number }) {
               const rehypeInferDescriptionMeta = (
                 await import(`rehype-infer-description-meta`)
               ).default
 
               const descriptionOptions: Options = { truncateSize: pruneLength }
+              const fileNode = getNode(mdxNode.parent) as FileSystemNode
+
+              if (!fileNode) {
+                return null
+              }
 
               const result = await compileMDXWithCustomOptions(
                 {
                   source: mdxNode.body,
-                  absolutePath: context.getNode(mdxNode.parent).absolutePath,
+                  absolutePath: fileNode.absolutePath,
                 },
                 {
                   pluginOptions,
@@ -198,16 +199,22 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                 default: 6,
               },
             },
-            async resolve(mdxNode, { maxDepth }, context) {
+            async resolve(mdxNode, { maxDepth }) {
               const [{ visit }, { toc }] = await Promise.all([
                 import(`unist-util-visit`),
                 import(`mdast-util-toc`),
               ])
 
+              const fileNode = getNode(mdxNode.parent) as FileSystemNode
+
+              if (!fileNode) {
+                return null
+              }
+
               const result = await compileMDXWithCustomOptions(
                 {
                   source: mdxNode.body,
-                  absolutePath: context.getNode(mdxNode.parent).absolutePath,
+                  absolutePath: fileNode.absolutePath,
                 },
                 {
                   pluginOptions,
@@ -345,43 +352,39 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .description(
         `Configure the file extensions that gatsby-plugin-mdx will process`
       ),
-    defaultLayouts: Joi.object()
-      .unknown(true)
-      .default({})
-      .description(`Set the layout components for MDX source types`),
     // @ts-ignore - subPlugins() exists in bootstrap/load-plugins
     gatsbyRemarkPlugins: Joi.subPlugins().description(
       `Use Gatsby-specific remark plugins`
     ),
     mdxOptions: Joi.object()
       .keys({
-        jsx: Joi.boolean().description(`Whether to keep JSX.`),
+        jsx: Joi.boolean().description(`Whether to keep JSX`),
         format: Joi.string()
           .valid(`mdx`, `md`)
           .description(`Format of the files to be processed`),
         outputFormat: Joi.string()
           .valid(`program`, `function-body`)
           .description(
-            `Whether to compile to a whole program or a function body..`
+            `Whether to compile to a whole program or a function body`
           ),
         mdExtensions: Joi.array()
           .items(Joi.string().regex(/^\./))
-          .description(`Extensions (with \`.\`) for markdown.`),
+          .description(`Extensions (with \`.\`) for markdown`),
         mdxExtensions: Joi.array()
           .items(Joi.string().regex(/^\./))
-          .description(`Extensions (with \`.\`) for MDX.`),
+          .description(`Extensions (with \`.\`) for MDX`),
         recmaPlugins: Joi.array().description(
-          `List of recma (esast, JavaScript) plugins.`
+          `List of recma (esast, JavaScript) plugins`
         ),
         remarkPlugins: Joi.array().description(
-          `List of remark (mdast, markdown) plugins.`
+          `List of remark (mdast, markdown) plugins`
         ),
         rehypePlugins: Joi.array().description(
-          `List of rehype (hast, HTML) plugins.`
+          `List of rehype (hast, HTML) plugins`
         ),
         remarkRehypeOptions: Joi.object()
           .unknown()
-          .description(`Options to pass through to \`remark-rehype\`.`),
+          .description(`Options to pass through to \`remark-rehype\``),
       })
       .unknown(true)
       .default({})
