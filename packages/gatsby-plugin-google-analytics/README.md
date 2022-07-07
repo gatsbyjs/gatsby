@@ -2,13 +2,15 @@
 
 Easily add Google Analytics to your Gatsby site.
 
-## Upgrade note
+## Deprecation Notice
 
 This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js` and we recommend it.
 
 ## Install
 
-`npm install gatsby-plugin-google-analytics`
+```shell
+npm install gatsby-plugin-google-analytics
+```
 
 ## How to use
 
