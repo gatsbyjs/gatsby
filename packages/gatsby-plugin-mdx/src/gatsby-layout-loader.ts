@@ -16,7 +16,6 @@ export interface IGatsbyLayoutLoaderOptions {
 const gatsbyLayoutLoader: LoaderDefinition = async function (
   source
 ): Promise<string | Buffer | void> {
-  const callback = this.async()
   const { nodeExists } = this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
   // resource query param or if the MDX file is directly loaded as path.
@@ -25,8 +24,8 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
   )
 
   if (!(await nodeExists(mdxPath))) {
-    return callback(
-      new Error(`Unable to locate GraphQL File node for ${this.resourcePath}`)
+    throw new Error(
+      `Unable to locate GraphQL File node for ${this.resourcePath}`
     )
   }
 
@@ -85,18 +84,23 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
      * Output:
      * export default (props) => <PageTemplate {...props}>{GATSBY_COMPILED_MDX}</PageTemplate>
      **/
-    AST.body = AST.body.map(child => {
+    const newBody: Array<any> = []
+    AST.body.forEach(child => {
       if (child.type !== `ExportDefaultDeclaration`) {
-        return child
+        newBody.push(child)
+        return
       }
+
       const declaration = child.declaration as unknown as Identifier
-      if (!declaration.name) {
+      const pageComponentName = declaration.id?.name || declaration.name || null
+
+      if (!pageComponentName) {
         throw new Error(`Unable to determine default export name`)
       }
 
-      const pageComponentName = declaration.name
+      newBody.push(declaration)
 
-      return {
+      newBody.push({
         type: `ExportDefaultDeclaration`,
         declaration: {
           type: `FunctionDeclaration`,
@@ -172,15 +176,15 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
             ],
           },
         },
-      } as unknown as ExportDefaultDeclaration
+      } as unknown as ExportDefaultDeclaration)
     })
+    AST.body = newBody
 
     buildJsx(AST)
 
     const transformedSource = generate(AST)
 
-    // @ts-ignore - webpack typing is weird
-    return callback(null, transformedSource, undefined, AST)
+    return transformedSource
   } catch (e) {
     throw new Error(
       `Unable to inject MDX into JS template:\n${this.resourcePath}\n${e}`
