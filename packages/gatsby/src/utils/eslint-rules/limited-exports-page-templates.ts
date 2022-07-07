@@ -240,31 +240,25 @@ const limitedExports: Rule.RuleModule = {
       },
       ExportNamedDeclaration: (node): void => {
         if (hasOneValidNamedDeclaration(node, queryVariableName)) {
-          console.log(`one valid decl`)
           return undefined
         }
 
         if (isTemplateQuery(node, graphqlTagName, namespaceSpecifierName)) {
-          console.log(`temp query`)
           return undefined
         }
 
         if (isApiExport(node, `getServerData`)) {
-          console.log(`getServerData`)
           return undefined
         }
 
         if (isApiExport(node, `config`)) {
-          console.log(`isConfig`)
           return undefined
         }
 
         if (isApiExport(node, `Head`)) {
-          console.log(`is head`)
           return undefined
         }
 
-        console.log(`error`)
         context.report({
           node,
           messageId: `limitedExportsPageTemplates`,
