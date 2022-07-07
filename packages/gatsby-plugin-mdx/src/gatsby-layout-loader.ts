@@ -11,8 +11,11 @@ export interface IGatsbyLayoutLoaderOptions {
   nodeExists: (path: string) => Promise<boolean>
 }
 
+// @ts-ignore - Correct return type
 // Wrap MDX content with Gatsby Layout component
-const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
+const gatsbyLayoutLoader: LoaderDefinition = async function (
+  source
+): Promise<string | Buffer | void> {
   const callback = this.async()
   const { nodeExists } = this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
@@ -156,7 +159,8 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
 
     const transformedSource = generate(AST)
 
-    return callback(null, transformedSource, null, AST)
+    // @ts-ignore - webpack typing is weird
+    return callback(null, transformedSource, undefined, AST)
   } catch (e) {
     throw new Error(
       `Unable to inject MDX into JS template:\n${this.resourcePath}\n${e}`

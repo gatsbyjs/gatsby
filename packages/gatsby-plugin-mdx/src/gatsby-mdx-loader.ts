@@ -43,7 +43,6 @@ const gatsbyMDXLoader: LoaderDefinition = async function (source) {
   )
 
   if (compileRes?.processedMDX) {
-    console.log(compileRes.processedMDX)
     return compileRes.processedMDX
   }
 
