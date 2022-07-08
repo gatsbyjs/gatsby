@@ -54,6 +54,8 @@ export function dispatchLocalFileServiceJob(
       name: `gatsby`,
       // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
+      // path.dirname + require.resolve is needed so module resolution works for pnp.
+      // without pnp we could just use the module path directly as a string
       resolve: path.dirname(
         require.resolve(
           `gatsby-plugin-utils/dist/polyfill-remote-file/jobs/gatsby-worker`
@@ -117,6 +119,8 @@ export function dispatchLocalImageServiceJob(
       name: `gatsby`,
       // @ts-ignore - version is allowed
       version: GATSBY_VERSION,
+      // path.dirname + require.resolve is needed so module resolution works for pnp.
+      // without pnp we could just use the module path directly as a string.
       resolve: path.dirname(
         require.resolve(
           `gatsby-plugin-utils/dist/polyfill-remote-file/jobs/gatsby-worker`
