@@ -287,7 +287,13 @@ export default async function staticPage({
             onAllReady() {
               pipe(writableStream)
             },
-            onError() {},
+            onError(error) {
+              console.error(
+                `The page "${pagePath}" threw an error while rendering:\n`,
+                error
+              )
+              process.exit()
+            },
           })
 
           bodyHtml = await writableStream
