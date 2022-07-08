@@ -40,23 +40,36 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
-let reactRender
-let reactHydrate
+let reactFirstRenderOrHydrate
 if (HAS_REACT_18) {
   const reactDomClient = require(`react-dom/client`)
-  reactRender = (Component, el) => {
-    const root = reactDomClient.createRoot(el)
-    root.render(Component)
-    return () => root.unmount()
+  reactFirstRenderOrHydrate = (Component, el) => {
+    const useHydrate = el && el.children.length
+
+    if (useHydrate) {
+      // element exists and have content - we use hydrate
+      const root = reactDomClient.hydrateRoot(el, Component)
+      return () => root.unmount()
+    } else {
+      // element doesn't have content - we use render
+      const root = reactDomClient.createRoot(el)
+      root.render(Component)
+      return () => root.unmount()
+    }
   }
-  reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
 } else {
   const reactDomClient = require(`react-dom`)
-  reactRender = (Component, el) => {
-    reactDomClient.render(Component, el)
-    return () => ReactDOM.unmountComponentAtNode(el)
+  reactFirstRenderOrHydrate = (Component, el) => {
+    if (el && el.children.length) {
+      // element exists and have content - we use hydrate
+      reactDomClient.hydrate(Component, el)
+      return () => ReactDOM.unmountComponentAtNode(el)
+    } else {
+      // element doesn't have content - we use render
+      reactDomClient.render(Component, el)
+      return () => ReactDOM.unmountComponentAtNode(el)
+    }
   }
-  reactHydrate = reactDomClient.hydrate
 }
 
 // Do dummy dynamic import so the jsonp __webpack_require__.e is added to the commons.js
@@ -147,20 +160,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const rootElement = document.getElementById(`___gatsby`)
-
-  const focusEl = document.getElementById(`gatsby-focus-wrapper`)
-
-  // Client only pages have any empty body so we just do a normal
-  // render to avoid React complaining about hydration mis-matches.
-  let defaultRenderer = reactRender
-  if (focusEl && focusEl.children.length) {
-    defaultRenderer = reactHydrate
-  }
-
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    defaultRenderer
+    reactFirstRenderOrHydrate
   )[0]
 
   let dismissLoadingIndicator
@@ -184,7 +187,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (indicatorMountElement) {
         // If user defined replaceHydrateFunction themselves the cleanupFn return might not be there
         // So fallback to unmountComponentAtNode for now
-        if (cleanupFn) {
+        if (cleanupFn && typeof cleanupFn === `function`) {
           cleanupFn()
         } else {
           ReactDOM.unmountComponentAtNode(indicatorMountElement)
