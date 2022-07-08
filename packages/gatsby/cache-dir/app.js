@@ -44,14 +44,13 @@ let reactFirstRenderOrHydrate
 if (HAS_REACT_18) {
   const reactDomClient = require(`react-dom/client`)
   reactFirstRenderOrHydrate = (Component, el) => {
+    // we will use hydrate if mount element has any content inside
     const useHydrate = el && el.children.length
 
     if (useHydrate) {
-      // element exists and have content - we use hydrate
       const root = reactDomClient.hydrateRoot(el, Component)
       return () => root.unmount()
     } else {
-      // element doesn't have content - we use render
       const root = reactDomClient.createRoot(el)
       root.render(Component)
       return () => root.unmount()
@@ -60,12 +59,13 @@ if (HAS_REACT_18) {
 } else {
   const reactDomClient = require(`react-dom`)
   reactFirstRenderOrHydrate = (Component, el) => {
-    if (el && el.children.length) {
-      // element exists and have content - we use hydrate
+    // we will use hydrate if mount element has any content inside
+    const useHydrate = el && el.children.length
+
+    if (useHydrate) {
       reactDomClient.hydrate(Component, el)
       return () => ReactDOM.unmountComponentAtNode(el)
     } else {
-      // element doesn't have content - we use render
       reactDomClient.render(Component, el)
       return () => ReactDOM.unmountComponentAtNode(el)
     }
