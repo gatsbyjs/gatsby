@@ -437,7 +437,7 @@ export const pageQuery = graphql`
     <>
 -       <MDXRenderer>
 -         {children}
--       </MDXProvider>
+-       </MDXRenderer>
 +       {children}
     </>
   );
