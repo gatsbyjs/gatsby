@@ -27,7 +27,7 @@ Node.js version 12 _End-of-life_ date is April 30, 2022. Many of Gatsby's depend
 
 Generally, it's recommended to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 16 currently in summer 2022).
 
-> What about Node.js 15 and other odd versioned releases? Stable versions of Node.js are evenly numbered releases - Node.js 14, Node.js 16, Node.js 18 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
+> What about Node.js 15 and other odd release versions? Stable versions of Node.js are evenly numbered releases - Node.js 14, Node.js 16, Node.js 18 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
 
 There are multiple ways to update your version of Node.js depending on how you originally installed it. Read on to find the best approach for you.
 
