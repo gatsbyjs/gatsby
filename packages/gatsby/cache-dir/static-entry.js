@@ -288,11 +288,7 @@ export default async function staticPage({
               pipe(writableStream)
             },
             onError(error) {
-              console.error(
-                `The page "${pagePath}" threw an error while rendering:\n`,
-                error
-              )
-              process.exit()
+              throw error
             },
           })
 
