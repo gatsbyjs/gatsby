@@ -546,7 +546,7 @@ function BlogPostTemplate({ data }) {
 }
 ```
 
-**Note:** The `contentful_id` field must be queried on rich-text references in order for the `renderNode` to receive the correct data.
+**Note:** The `contentful_id` and `__typename` fields must be queried on rich-text references in order for the `renderNode` to receive the correct data.
 
 ### Embedding an image in a Rich Text field
 
