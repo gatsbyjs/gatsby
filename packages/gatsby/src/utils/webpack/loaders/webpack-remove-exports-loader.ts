@@ -20,7 +20,7 @@ const webpackRemoveExportsLoader: LoaderDefinitionFunction<IOptions> =
         configFile: false,
         // @ts-ignore inputSourceMap expect object or falsy, but webpack types suggest sourceMap can be a string,
         // which is not compatibile with babel's transform options
-        inputSourceMap: sourceMap,
+        inputSourceMap: this.sourceMap ? sourceMap || undefined : undefined,
         sourceFileName: this.resourcePath,
         sourceMaps: this.sourceMap,
         filename: this.resourcePath,
