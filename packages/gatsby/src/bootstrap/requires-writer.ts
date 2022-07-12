@@ -248,19 +248,53 @@ const preferDefault = m => (m && m.default) || m
 }\n\n`
 
   // Create file with async requires of components/json files.
-  const asyncRequires = `exports.components = {\n${components
-    .map((c: IGatsbyPageComponent): string => {
-      // we need a relative import path to keep contenthash the same if directory changes
-      const relativeComponentPath = path.relative(
-        getAbsolutePathForVirtualModule(`$virtual`),
-        c.component
-      )
+  const asyncRequires =
+    process.env.gatsby_executing_command === `develop`
+      ? `exports.components = {\n${components
+          .map((c: IGatsbyPageComponent): string => {
+            // we need a relative import path to keep contenthash the same if directory changes
+            const relativeComponentPath = path.relative(
+              getAbsolutePathForVirtualModule(`$virtual`),
+              c.component
+            )
 
-      return `  "${c.componentChunkName}": () => import("${slash(
-        `./${relativeComponentPath}`
-      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
-    })
-    .join(`,\n`)}
+            return `  "${c.componentChunkName}": () => import("${slash(
+              `./${relativeComponentPath}`
+            )}?export=default" /* webpackChunkName: "${
+              c.componentChunkName
+            }" */)`
+          })
+          .join(`,\n`)}
+}\n\n
+
+exports.head = {\n${components
+          .map((c: IGatsbyPageComponent): string => {
+            // we need a relative import path to keep contenthash the same if directory changes
+            const relativeComponentPath = path.relative(
+              getAbsolutePathForVirtualModule(`$virtual`),
+              c.component
+            )
+
+            return `  "${c.componentChunkName}": () => import("${slash(
+              `./${relativeComponentPath}`
+            )}?export=head" /* webpackChunkName: "${
+              c.componentChunkName
+            }head" */)`
+          })
+          .join(`,\n`)}
+}\n\n`
+      : `exports.components = {\n${components
+          .map((c: IGatsbyPageComponent): string => {
+            // we need a relative import path to keep contenthash the same if directory changes
+            const relativeComponentPath = path.relative(
+              getAbsolutePathForVirtualModule(`$virtual`),
+              c.component
+            )
+            return `  "${c.componentChunkName}": () => import("${slash(
+              `./${relativeComponentPath}`
+            )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+          })
+          .join(`,\n`)}
 }\n\n`
 
   const writeAndMove = (

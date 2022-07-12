@@ -43,6 +43,28 @@ function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
     }
   }
 
+  if (name === `Head`) {
+    // Head can be re-exported, Head can be class components - so the checks above are not sufficient,
+    // we need to be more permisive here
+
+    // class component
+    if (
+      node.declaration?.type === `ClassDeclaration` &&
+      node.declaration?.id?.type === `Identifier` &&
+      node.declaration?.id?.name === name
+    ) {
+      return true
+    }
+
+    // re-exports
+    if (
+      node.source &&
+      node.specifiers.some(specifier => specifier.exported.name === name)
+    ) {
+      return true
+    }
+  }
+
   return false
 }
 
@@ -113,7 +135,7 @@ const limitedExports: Rule.RuleModule = {
   meta: {
     type: `problem`,
     messages: {
-      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named exports of a page query, getServerData, head or config are allowed.
+      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named exports of a page query, getServerData, Head or config are allowed.
         All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
 
         Please move your other named exports to another file. Also make sure that you only export page queries that use the "graphql" tag from "gatsby".
@@ -233,7 +255,7 @@ const limitedExports: Rule.RuleModule = {
           return undefined
         }
 
-        if (isApiExport(node, `head`)) {
+        if (isApiExport(node, `Head`)) {
           return undefined
         }
 

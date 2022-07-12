@@ -24,7 +24,7 @@ function PageRenderer(props) {
     }
   )
 
-  const pageComponent = props.pageResources.component
+  const pageComponent = props.pageResources.head
 
   headHandlerForBrowser({
     pageComponent,

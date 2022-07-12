@@ -6,7 +6,7 @@ import { useEffect } from "react"
 export function FireCallbackInEffect({ children, callback }) {
   useEffect(() => {
     callback()
-  }, [callback])
+  })
 
   return children
 }

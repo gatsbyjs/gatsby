@@ -5,8 +5,10 @@ import { data } from "../../../shared-data/head-function-export"
 export default function HeadFunctionExportBasic() {
   return (
     <>
-      <h1>I test basic usage for the head function export</h1>
-      <p>Some other words</p>
+      <h1>I test basic usage for the Head function export</h1>
+      <p data-testid="page-component-with-head-export">
+        Some other words on your %GATSBY_SITE%
+      </p>
       <Link data-testid="gatsby-link" to="/head-function-export/page-query">
         Navigate to page-query via Gatsby Link
       </Link>
@@ -14,8 +16,16 @@ export default function HeadFunctionExportBasic() {
   )
 }
 
-export function head() {
-  const { base, title, meta, noscript, style, link, extraMeta } = data.static
+export function Head() {
+  const {
+    base,
+    title,
+    meta,
+    noscript,
+    style,
+    link,
+    extraMeta,
+  } = data.static
 
   return (
     <>
@@ -31,8 +41,12 @@ export function head() {
         `}
       </style>
       <link data-testid="link" href={link} rel="stylesheet" />
-
       <meta data-testid="extra-meta" name="extra-meta" content={extraMeta} />
+      <meta
+        data-testid="extra-meta-for-hot-reloading"
+        name="extra-meta-for-hot-reloading"
+        content="%SOME_EXTRA_META%"
+      />
     </>
   )
 }

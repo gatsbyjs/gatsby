@@ -1,7 +1,7 @@
 import { VALID_NODE_NAMES } from "gatsby/cache-dir/head/constants"
 import { page } from "../../../shared-data/head-function-export.js"
 
-describe(`head function export should warn`, () => {
+describe(`Head function export should warn`, () => {
   beforeEach(() => {
     cy.visit(page.warnings, {
       onBeforeLoad(win) {

@@ -19,8 +19,8 @@ function headHandlerForSSR({
   pageData,
   pagePath,
 }) {
-  if (pageComponent.head) {
-    headExportValidator(pageComponent.head)
+  if (pageComponent.Head) {
+    headExportValidator(pageComponent.Head)
 
     function HeadRouteHandler(props) {
       const _props = {
@@ -32,7 +32,7 @@ function headHandlerForSSR({
         },
       }
 
-      return createElement(pageComponent.head, filterHeadProps(_props))
+      return createElement(pageComponent.Head, filterHeadProps(_props))
     }
 
     const routerElement = (

@@ -14,7 +14,7 @@ export default function HeadFunctionExportBasic() {
   )
 }
 
-export function head() {
+export function Head() {
   const { base, title, meta, noscript, style, link } = data.static
 
   return (

@@ -1,6 +1,6 @@
 import { page, data } from "../../../shared-data/head-function-export.js"
 
-describe(`head function export html insertion`, () => {
+describe(`Head function export html insertion`, () => {
   it(`should work with static data`, () => {
     cy.visit(page.basic)
     cy.getTestElement(`base`)
@@ -49,7 +49,7 @@ describe(`head function export html insertion`, () => {
       .should(`equal`, data.static.link)
   })
 
-  it(`should work when an imported head component with queried data is used`, () => {
+  it(`should work when an imported Head component with queried data is used`, () => {
     cy.visit(page.staticQuery)
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)

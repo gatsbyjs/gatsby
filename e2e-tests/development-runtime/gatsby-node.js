@@ -1,5 +1,6 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const headFunctionExportSharedData = require("./shared-data/head-function-export")
 const {
   addRemoteFilePolyfillInterface,
   polyfillImageServiceDevRoutes,
@@ -187,6 +188,14 @@ exports.createPages = async function createPages({
   createPage({
     path: `/client-only-paths/static`,
     component: path.resolve(`src/templates/static-page.js`),
+  })
+
+  createPage({
+    path: `/head-function-export/correct-props`,
+    component: path.resolve(
+      `src/templates/head-function-export/correct-props.js`
+    ),
+    context: headFunctionExportSharedData.data.context,
   })
 
   createRedirect({

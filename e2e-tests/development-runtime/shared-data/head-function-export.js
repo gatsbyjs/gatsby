@@ -6,7 +6,7 @@ const page = {
   reExport: `${path}/re-exported-function/`,
   staticQuery: `${path}/static-query-component/`,
   warnings: `${path}/warnings/`,
-  allProps: `${path}/all-props/`,
+  correctProps: `${path}/correct-props/`,
   dsg: `${path}/dsg/`,
   ssr: `${path}/ssr/`,
   invalidElements: `${path}/invalid-elements/`,
@@ -53,6 +53,10 @@ const data = {
   },
   fsRouteApi: {
     slug: `/fs-route-api`,
+  },
+  context: {
+    key: "value",
+    someKey: "someValue",
   },
 }
 

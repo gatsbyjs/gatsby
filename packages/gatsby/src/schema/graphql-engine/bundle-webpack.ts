@@ -8,6 +8,9 @@ import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
+import { schemaCustomizationAPIs } from "./print-plugins"
+import type { GatsbyNodeAPI } from "../../redux/types"
+import * as nodeApis from "../../utils/api-node-docs"
 
 type Reporter = typeof reporter
 
@@ -20,6 +23,16 @@ const cacheLocation = path.join(
   `webpack`,
   `query-engine`
 )
+
+function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
+  const apisToKeep = new Set(schemaCustomizationAPIs)
+  apisToKeep.add(`onPluginInit`)
+
+  const apisToRemove = (Object.keys(nodeApis) as Array<GatsbyNodeAPI>).filter(
+    api => !apisToKeep.has(api)
+  )
+  return apisToRemove
+}
 
 export async function createGraphqlEngineBundle(
   rootDir: string,
@@ -104,7 +117,13 @@ export async function createGraphqlEngineBundle(
               use: [
                 assetRelocatorUseEntry,
                 {
-                  loader: require.resolve(`./webpack-remove-apis-loader`),
+                  loader: require.resolve(
+                    `../../utils/webpack/loaders/webpack-remove-exports-loader`
+                  ),
+                  options: {
+                    remove: getApisToRemoveForQueryEngine(),
+                    jsx: false,
+                  },
                 },
               ],
             },

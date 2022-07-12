@@ -2,7 +2,7 @@ import * as React from "react"
 import { data } from "../../../shared-data/head-function-export"
 
 export default function HeadFunctionExportDSG() {
-  return <h1>I test the head function export in a DSG page</h1>
+  return <h1>I test the Head function export in a DSG page</h1>
 }
 
 export async function config() {
@@ -13,7 +13,7 @@ export async function config() {
   }
 }
 
-export function head() {
+export function Head() {
   const { base, title, meta, noscript, style, link } = data.dsg
 
   return (

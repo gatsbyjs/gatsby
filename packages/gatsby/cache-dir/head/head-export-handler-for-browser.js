@@ -10,19 +10,55 @@ import {
   warnForInvalidTags,
 } from "./utils"
 
+const hiddenRoot = document.createElement(`div`)
+const onHeadRendered = () => {
+  // Remove previous head nodes
+  const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
+  prevHeadNodes.forEach(e => e.remove())
+
+  // add attribute to new head nodes while showing warning if it's not a valid node
+  const validHeadNodes = []
+
+  for (const node of hiddenRoot.childNodes) {
+    const nodeName = node.nodeName.toLowerCase()
+
+    if (!VALID_NODE_NAMES.includes(nodeName)) {
+      warnForInvalidTags(nodeName)
+    } else {
+      const clonedNode = node.cloneNode(true)
+      clonedNode.setAttribute(`data-gatsby-head`, true)
+      validHeadNodes.push(clonedNode)
+    }
+  }
+
+  document.head.append(...validHeadNodes)
+}
+
+if (process.env.BUILD_STAGE === `develop`) {
+  // We set up observer to be able to regenerate <head> after react-refresh
+  // updates our hidden element.
+  const observer = new MutationObserver(onHeadRendered)
+  observer.observe(hiddenRoot, {
+    attributes: true,
+    childList: true,
+    characterData: true,
+    subtree: true,
+  })
+}
+
 export function headHandlerForBrowser({
   pageComponent,
   staticQueryResults,
   pageComponentProps,
 }) {
-  if (pageComponent.head) {
-    headExportValidator(pageComponent.head)
+  if (pageComponent.Head) {
+    headExportValidator(pageComponent.Head)
 
     const headElement = createElement(
       StaticQueryContext.Provider,
       { value: staticQueryResults },
       createElement(
-        pageComponent.head,
+        pageComponent.Head,
         filterHeadProps(pageComponentProps),
         null
       )
@@ -31,36 +67,10 @@ export function headHandlerForBrowser({
     const { render } = reactDOMUtils()
 
     useEffect(() => {
-      const hiddenRoot = document.createElement(`div`)
-
-      const callback = () => {
-        // Remove previous head nodes
-        const prevHeadNodes = [
-          ...document.querySelectorAll(`[data-gatsby-head]`),
-        ]
-        prevHeadNodes.forEach(e => e.remove())
-
-        // add attribute to new head nodes while showing warning if it's not a valid node
-        const validHeadNodes = []
-
-        for (const node of hiddenRoot.childNodes) {
-          const nodeName = node.nodeName.toLowerCase()
-
-          if (!VALID_NODE_NAMES.includes(nodeName)) {
-            warnForInvalidTags(nodeName)
-          } else {
-            node.setAttribute(`data-gatsby-head`, true)
-            validHeadNodes.push(node)
-          }
-        }
-
-        document.head.append(...validHeadNodes)
-      }
-
       // Use react18's .createRoot.render or fallback to .render
       // just a hack to call the callback after react has done first render
       render(
-        <FireCallbackInEffect callback={callback}>
+        <FireCallbackInEffect callback={onHeadRendered}>
           {headElement}
         </FireCallbackInEffect>,
         hiddenRoot

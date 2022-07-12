@@ -35,10 +35,15 @@ const prepareOptions = (
   customOptions = {},
   resolve = require.resolve
 ) => {
-  const { stage, reactRuntime, reactImportSource, isPageTemplate } =
-    customOptions
+  const {
+    stage,
+    reactRuntime,
+    reactImportSource,
+    isPageTemplate,
+    resourceQuery,
+  } = customOptions
 
-  const configItemsMemoCacheKey = `${stage}-${isPageTemplate}`
+  const configItemsMemoCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
 
   if (configItemsMemoCache.has(configItemsMemoCacheKey)) {
     return configItemsMemoCache.get(configItemsMemoCacheKey)
@@ -64,12 +69,22 @@ const prepareOptions = (
     (stage === `develop` || stage === `build-javascript`) &&
     isPageTemplate
   ) {
+    const apis = [`getServerData`, `config`]
+
+    if (resourceQuery === `?export=default`) {
+      apis.push(`Head`)
+    }
+
+    if (resourceQuery === `?export=head`) {
+      apis.push(`default`)
+    }
+
     requiredPlugins.push(
       babel.createConfigItem(
         [
           resolve(`./babel/babel-plugin-remove-api`),
           {
-            apis: [`getServerData`, `config`],
+            apis,
           },
         ],
         {
