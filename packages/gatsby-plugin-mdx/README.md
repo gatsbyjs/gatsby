@@ -216,19 +216,84 @@ In your GraphQL schema, you will discover several additional data related to you
 
 #### timeToRead
 
-TODO
+1. Install `reading-time` into your project:
+   ```shell
+   npm install reading-time
+   ```
+1. In your `gatsby-node` add a new field:
 
-#### slug
+   ```js:title=gatsby-node.js
+   const readingTime = require("reading-time")
 
-TODO
+   exports.onCreateNode = ({ node, actions }) => {
+     const { createNodeField } = actions
+     if (node.internal.type === "Mdx") {
+       createNodeField({
+         node,
+         name: "timeToRead",
+         value: readingTime(node.body)
+       })
+     }
+   }
+   ```
 
-#### headings
-
-TODO
+1. You're now able to query the information on the MDX node:
+   ```graphql
+   query {
+     mdx {
+       fields {
+         timeToRead {
+           minutes
+           text
+           time
+           words
+         }
+       }
+     }
+   }
+   ```
 
 #### wordCount
 
-TODO
+See [timeToRead](#timeToRead). It returns `timeToRead.words`.
+
+#### slug
+
+This largely comes down to your own preference and how you want to wire things up. This here is one of many possible solutions to this:
+
+1. Install `@sindresorhus/slugify` into your project (v1 as v2 is ESM-only):
+   ```shell
+   npm install @sindresorhus/slugify@^1.0.0
+   ```
+1. In your `gatsby-node` add a new field:
+
+   ```js:title=gatsby-node.js
+   const slugify = require("@sindresorhus/slugify")
+
+   exports.onCreateNode = ({ node, actions }) => {
+     const { createNodeField } = actions
+     if (node.internal.type === "Mdx") {
+       createNodeField({
+         node,
+         name: "slug",
+         value: `/${slugify(node.frontmatter.title)}`
+       })
+     }
+   }
+   ```
+
+1. You're now able to query the information on the MDX node:
+   ```graphql
+   query {
+     mdx {
+       fields {
+         slug
+       }
+     }
+   }
+   ```
+
+If you don't want to use the `frontmatter.title`, adjust what you input to `slugify()`. For example, if you want information from the `File` node, you could use `getNode(node.parent)`.
 
 ### Components
 
