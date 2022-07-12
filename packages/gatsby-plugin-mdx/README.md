@@ -6,35 +6,28 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 
 ## Table of contents
 
-- [gatsby-plugin-mdx](#gatsby-plugin-mdx)
-  - [Table of contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Configuration](#configuration)
-      - [Extensions](#extensions)
-      - [`gatsby-remark-*` plugins](#gatsby-remark--plugins)
-      - [mdxOptions](#mdxoptions)
-    - [Imports](#imports)
-    - [Layouts](#layouts)
-    - [Programmatically create MDX pages](#programmatically-create-mdx-pages)
-    - [GraphQL MDX Node structure](#graphql-mdx-node-structure)
-    - [Extending the GraphQL Mdx nodes](#extending-the-graphql-mdx-nodes)
-    - [Components](#components)
-      - [MDXProvider](#mdxprovider)
-      - [Shortcodes](#shortcodes)
-  - [Migrating from v3 to v4](#migrating-from-v3-to-v4)
-    - [Update dependencies](#update-dependencies)
-    - [Changes in `gatsy-config.js`](#changes-in-gatsy-configjs)
-    - [Changes in `gatsby-node.js`](#changes-in-gatsby-nodejs)
-    - [Update your page templates](#update-your-page-templates)
-    - [Update your MDX content](#update-your-mdx-content)
-  - [Why MDX?](#why-mdx)
-  - [Related](#related)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Configuration](#configuration)
+    - [Extensions](#extensions)
+    - [`gatsby-remark-*` plugins](#gatsby-remark--plugins)
+    - [mdxOptions](#mdxoptions)
+  - [Imports](#imports)
+  - [Layouts](#layouts)
+  - [Programmatically create MDX pages](#programmatically-create-mdx-pages)
+  - [GraphQL MDX Node structure](#graphql-mdx-node-structure)
+  - [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes)
+  - [Components](#components)
+    - [MDXProvider](#mdxprovider)
+    - [Shortcodes](#shortcodes)
+- [Migrating from v3 to v4](#migrating-from-v3-to-v4)
+- [Why MDX?](#why-mdx)
+- [Related](#related)
 
 ## Installation
 
 ```shell
-npm install gatsby-plugin-mdx @mdx-js/react gatsby-source-filesystem
+npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
 ```
 
 ## Usage
@@ -94,7 +87,7 @@ Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to
 | ------------------------------------------------ | ---------- | ------------------------------------------------------------------- |
 | [`extensions`](#extensions)                      | `[".mdx"]` | Configure the file extensions that `gatsby-plugin-mdx` will process |
 | [`gatsbyRemarkPlugins`](#gatsby-remark--plugins) | `[]`       | Use Gatsby-specific remark plugins                                  |
-| [`mdxOptions`](#mdxOptions)                      | `[]`       | Options directly passed to `compile()` of `@mdx-js/mdx`             |
+| [`mdxOptions`](#mdxOptions)                      | `{}`       | Options directly passed to `compile()` of `@mdx-js/mdx`             |
 
 #### Extensions
 
@@ -219,9 +212,23 @@ In your GraphQL schema, you will discover several additional data related to you
 | excerpt         | A pruned variant of your content. By default trimmed to 140 characters. Based on [rehype-infer-description-meta](https://github.com/rehypejs/rehype-infer-description-meta) |
 | tableOfContents | Generates a recursive object structure to reflect a table of contents. Based on [mdast-util-toc](https://github.com/syntax-tree/mdast-util-toc)                             |
 
-### Extending the GraphQL Mdx nodes
+### Extending the GraphQL MDX nodes
 
-TODO: Explain how to reimplement the timeToRead from v3 of the plugin.
+#### timeToRead
+
+TODO
+
+#### slug
+
+TODO
+
+#### headings
+
+TODO
+
+#### wordCount
+
+TODO
 
 ### Components
 
@@ -232,10 +239,7 @@ MDX and `gatsby-plugin-mdx` use components for different things like rendering a
 `MDXProvider` is a React component that allows you to replace the
 rendering of tags in MDX content. It does this by providing a list of
 components via context to the internal `MDXTag` component that handles
-rendering of base tags like `p` and `h1`. There are two special tags
-that can be replaced too: `inlineCode` and `wrapper`. `inlineCode` is
-for inline `<code>` and `wrapper` is the special element that wraps
-all of the MDX content.
+rendering of base tags like `p` and `h1`.
 
 ```jsx
 import { MDXProvider } from "@mdx-js/react"
@@ -250,8 +254,8 @@ const components = {
   p: MyParagraph,
 }
 
-export const wrapRootElement = ({ element }) => (
-  <MDXProvider components={components}>{element}</MDXProvider>
+export const ComponentsWrapper = ({ children }) => (
+  <MDXProvider components={components}>{children}</MDXProvider>
 )
 ```
 
@@ -281,7 +285,6 @@ The following components can be customized with the `MDXProvider`:
 | `em`            | [Emphasis](https://github.com/syntax-tree/mdast#emphasis)            | `_emphasis_`                                        |
 | `strong`        | [Strong](https://github.com/syntax-tree/mdast#strong)                | `**strong**`                                        |
 | `delete`        | [Delete](https://github.com/syntax-tree/mdast#delete)                | `~~strikethrough~~`                                 |
-| `inlineCode`    | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
@@ -296,7 +299,7 @@ functions in these examples.
 
 If you want to allow usage of a component from anywhere (often referred to as a shortcode), you can pass it to the [MDXProvider](https://www.gatsbyjs.com/docs/how-to/routing/mdx#make-components-available-globally-as-shortcodes).
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.jsx
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
 import { Link } from "gatsby"
@@ -304,7 +307,7 @@ import { YouTube, Twitter, TomatoBox } from "./ui"
 
 const shortcodes = { Link, YouTube, Twitter, TomatoBox }
 
-export default ({ children }) => (
+export const Layout = ({ children }) => (
   <MDXProvider components={shortcodes}>{children}</MDXProvider>
 )
 ```
@@ -322,142 +325,179 @@ Here's a YouTube embed
 </TomatoBox>
 ```
 
-Read more about injecting your own components: https://mdxjs.com/docs/using-mdx/#mdx-provider
+Read more about injecting your own components in the [official MDX provider guide](https://mdxjs.com/docs/using-mdx/#mdx-provider).
 
 ## Migrating from v3 to v4
 
-`gatsby-plugin-mdx@v4` is a complete rewrite of the original plugin with the goal of making the plugin faster, compatible with MDX v2, leaner, and more maintainable. While doing this rewrite we took the opportunity to fix long-standing issues and remove some functionalities that we now think should be handled by the user, not the plugin. In doing so there will be of course breaking changes you'll have to handle – but with the help of this migration guide and the codemods you'll be on the new version in no time!
+`gatsby-plugin-mdx@^4.0.0` is a complete rewrite of the original plugin with the goal of making the plugin faster, compatible with [MDX v2](https://mdxjs.com/blog/v2/), leaner, and more maintainable. While doing this rewrite we took the opportunity to fix long-standing issues and remove some functionalities that we now think should be handled by the user, not the plugin. In doing so there will be of course breaking changes you'll have to handle – but with the help of this migration guide and the codemods you'll be on the new version in no time!
 
-_Important:_ Loading MDX from other sources as the file system is not yet supported.
+**Please Note:** Loading MDX from other sources as the file system is not yet supported in `gatsby-plugin-mdx@^4.0.0`.
 
 ### Update dependencies
 
-```sh
-npm remove @mdx-js/react @mdx-js/mdx
-npm install gatsby-plugin-mdx@latest @mdx-js/react@latest
+During the Release Candidate phase, use these install instructions:
+
+```shell
+npm remove @mdx-js/mdx
+npm install --save-exact gatsby@mdxv4-rc gatsby-plugin-mdx@mdxv4-rc @mdx-js/react@latest
 ```
 
-### Changes in `gatsy-config.js`
+If you used any related plugins like `gatsby-remark-images`, also update them to their `@mdxv4-rc` version (if available).
 
-The plugin options drastically changed. Most features are removed for simplicity, performance and maintainence reasons.
+<!--
 
-- You have to move your `remarkPlugins` and `rehypePlugins` into the new `mdxOptions` config option.
-- Everything in `mdxOptions` will be directly passed to MDX: https://mdxjs.com/packages/mdx/#compilefile-options
-- `gatsbyRemarkPlugins` and `extensions` still exist.
-- Every other config option got removed, even `defaultLayouts`. See below how to implement your layouts with the new version
-- If you added `gatsby-transformer-remark` to fix issues with your `gatsby-remark-*` plugins. You can remove this now. Make sure all your remark plugins listed in your `gatsby-plugin-mdx` configuration.
+```shell
+npm remove @mdx-js/mdx
+npm install gatsby@latest gatsby-plugin-mdx@latest @mdx-js/react@latest
+```
 
-### Changes in `gatsby-node.js`
+If you used any related plugins like `gatsby-remark-images`, also update them to their `@latest` version.
 
-If you use the `createPage` action to create pages, you have to do some alignments.
+-->
 
-1. You need to query the absolut path to the MDX file
-2. Instead of passing your pages layout component only, you have to attach a query parameter to tell webpack that we want this MDX file to be loaded:
+### New options in `gatsby-config`
+
+- Move your `remarkPlugins` and `rehypePlugins` keys into the new `mdxOptions` config option:
+  ```diff
+  module.exports = {
+    plugins: [
+      {
+        resolve: `gatsby-plugin-mdx`,
+        options: {
+  -       remarkPlugins: [],
+  -       rehypePlugins: [],
+  +       mdxOptions: {
+  +         remarkPlugins: [],
+  +         rehypePlugins: [],
+  +       },
+        },
+      },
+    ],
+  }
+  ```
+- There's a new option called `mdxOptions` which is passed directly to the MDX compiler. See all available options in [the official documentation of `@mdx-js/mdx`](https://mdxjs.com/packages/mdx/#compilefile-options).
+- Only `extensions`, `gatsbyRemarkPlugins`, and `mdxOptions` exist as options now. Every other option got removed, including `defaultLayouts`. See the [layouts guide](#layouts) to learn how to use layouts with `gatsby-plugin-mdx@^4.0.0`.
+- Make sure that any `gatsby-remark-*` plugins are only listed inside the `gatsbyRemarkPlugins` array of `gatsby-plugin-mdx`, not inside the `plugins` array of `gatsby-config` or in any other place.
+
+### Updating `createPage` action in `gatsby-node`
+
+In most cases the changes necessary here are related to the removal of `defaultLayouts` option and the new way how layouts are done. See the [layouts guide](#layouts) to learn how to use layouts with `gatsby-plugin-mdx@^4.0.0`.
+
+You'll need to do two things to continue using your old layout file:
+
+1. You need to query the absolute path to the MDX file
+1. You have to attach this MDX file via the `__contentFilePath` query param to your layout file
 
 ```diff
 actions.createPage({
-- component: `/path/to/template.js`,
-+ component: `/path/to/template.js?__contentFilePath=/path/to/content.mdx`,
+-  component: `/path/to/template.js`,
++  component: `/path/to/template.js?__contentFilePath=/path/to/content.mdx`,
 })
 ```
 
-A full example would look like this:
+Or a more complete example:
 
 ```js
-const { data } = await graphql(
-  `
-    {
-      allMdx(
-        filter: { fields: { collection: { eq: "post" } } }
-        sort: { fields: [frontmatter___date], order: DESC }
-      ) {
-        edges {
-          node {
-            body
-            fields {
-              slug
-            }
-            frontmatter {
-              title
-            }
+const { data } = await graphql(`
+  {
+    allMdx {
+      nodes {
+        id
+        frontmatter {
+          slug
+        }
 // highlight-start
-            parent {
-              ... on File {
-                absolutePath
-              }
-            }
-// highlight-end
+        parent {
+          ... on File {
+            absolutePath
           }
         }
+// highlight-end
       }
     }
-  `
-)
+  }
+`)
 
-const posts = data.allMdx.edges
-
-posts.forEach((post, i) => {
+data.allMdx.nodes.forEach(node => {
   actions.createPage({
-    path: post.node.fields.slug,
-    component: `/path/to/your/template.js?__contentFilePath=${post.node.parent.absolutePath}`, // highlight-line
+    path: node.frontmatter.slug,
+    component: `/path/to/your/template.js?__contentFilePath=${node.parent.absolutePath}`, // highlight-line
     context: {
-      frontmatter: post.frontmatter, // highlight-line
+      id: node.id,
     },
   })
 })
 ```
 
-### Update your page templates
+You'll also need to update your template file itself, see the next section [Updating page templates](#updating-page-templates).
 
-1. You can not query the transformed MDX in GraphQL anymore, but your template components get the tranformed MDX as children
-2. You no more need `<MDXRenderer/>` to render your MDX
-3. We no more support the `scope` feature.
+Note: You could also directly pass the MDX file to the `component` like this:
+
+```js
+actions.createPage({
+  component: `/path/to/content.mdx`,
+})
+```
+
+However, we'd recommend placing such files into the `src/pages` directory and `gatsby-plugin-mdx` will handle the page creation itself.
+
+### Updating page templates
+
+1. Instead of querying for the `body` on the MDX node, the page template now receives the transformed MDX as `children` property.
+1. You no longer need to use `<MDXRenderer>` as you can use `{children}` directly.
+1. If you have given your query a name (e.g. `query PostTemplate`) you have to remove the name. Gatsby automatically creates a name internally, but if a name is provided you'll see a "Duplicate query" warning.
 
 ```diff
-import React from 'react';
+import React from "react"
 import { graphql } from "gatsby"
 - import { MDXRenderer } from "gatsby-plugin-mdx"
 
-export const pageQuery = graphql`
-  query($slug: String!) {
-    mdx(fields: { slug: { eq: $slug } }) {
-      frontmatter {
-        title
-        slug
-        date(formatString: "MMMM DD, YYYY")
-      }
-      tableOfContents
-    }
-  }
-`;
-- function PostTemplate({ data: { mdx: post }, scope }) {
-+ function PostTemplate({ data: { mdx: post }, children }) {
+- function PostTemplate({ data: { mdx } }) {
++ function PostTemplate({ data: { mdx }, children }) {
 
   return (
-    <>
--       <MDXRenderer>
--         {children}
--       </MDXRenderer>
-+       {children}
-    </>
-  );
+    <main>
+      <h1>{mdx.frontmatter.title}</h1>
+-     <MDXRenderer>
+-       {mdx.body}
+-     </MDXRenderer>
++     {children}
+    </main>
+  )
 }
 
-export default PostTemplate;
+export const pageQuery = graphql`
+-  query PostTemplate($id: String!) {
++  query ($id: String!) {
+    mdx(id: { eq: $id }) {
+      frontmatter {
+        title
+      }
+-     body
+    }
+  }
+`
+
+export default PostTemplate
 ```
 
 ### Update your MDX content
 
-There have been plenty of changes how MDX works in the background. Your existing MDX might now be invalid.
+As MDX v2 changed the way it handles content you might need to update your MDX files to be valid MDX now. See their [Update MDX content guide](https://mdxjs.com/migrating/v2/#update-mdx-content) for all details.
 
-In our internal test, most of the time, the issue was curly brackets that needed to be escaped with backticks:
+In our testing, most of the time the issue were curly brackets that needed to be escaped with backticks:
 
 ```diff
 - You can upload this to Git{Hub,Lab}
 + You can upload this to `Git{Hub,Lab}`
 ```
 
-See here for a list of changes that happended to MDX content: https://mdxjs.com/migrating/v2/#update-mdx-content
+### v3 to v4: Breaking Changes
+
+- Removed plugin options: `defaultLayouts`, `mediaTypes`, `lessBabel`, `shouldBlockNodeFromTransformation`, `commonmark`
+- Moved plugin options `remarkPlugins` and `rehypePlugins` into `mdxOptions`
+- Removed `timeToRead`, `rawBody`, `slug`, `headings`, `html`, `mdxAST`, `wordCount`, `fileAbsolutePath` from the query result. You can check [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) to learn how to re-implement some of them on your own.
+- `gatsby-plugin-mdx` only applies to local files (that are sourced with `gatsby-source-filesystem`)
 
 ## Why MDX?
 
