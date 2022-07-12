@@ -367,30 +367,6 @@ module.exports = async (
           },
         },
       },
-      {
-        resourceQuery: /export=default/,
-        use: {
-          loader: require.resolve(
-            `./webpack/loaders/webpack-remove-exports-loader`
-          ),
-          options: {
-            remove: [`Head`],
-            jsx: true,
-          },
-        },
-      },
-      {
-        resourceQuery: /export=Head/,
-        use: {
-          loader: require.resolve(
-            `./webpack/loaders/webpack-remove-exports-loader`
-          ),
-          options: {
-            remove: [`default`],
-            jsx: true,
-          },
-        },
-      },
       rules.js({
         modulesThatUseGatsby,
       }),
