@@ -1,5 +1,6 @@
 /* eslint-disable @babel/no-invalid-this */
 import path from "path"
+import type { NodePluginArgs } from "gatsby"
 import { slash } from "gatsby-core-utils/path"
 import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
 import type {
@@ -12,17 +13,20 @@ import type {
 } from "estree"
 import type { LoaderDefinition } from "webpack"
 import type { IMdxPluginOptions } from "./plugin-options"
+import { ERROR_CODES } from "./error-utils"
 
 export interface IGatsbyLayoutLoaderOptions {
   options: IMdxPluginOptions
   nodeExists: (path: string) => Promise<boolean>
+  reporter: NodePluginArgs["reporter"]
 }
 
 // Wrap MDX content with Gatsby Layout component
 const gatsbyLayoutLoader: LoaderDefinition = async function (
   source
 ): Promise<string | Buffer> {
-  const { nodeExists } = this.getOptions() as IGatsbyLayoutLoaderOptions
+  const { nodeExists, reporter } =
+    this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
   // resource query param or if the MDX file is directly loaded as path.
   const mdxPath = getPathToContentComponent(
@@ -30,9 +34,12 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
   )
 
   if (!(await nodeExists(mdxPath))) {
-    throw new Error(
-      `Unable to locate GraphQL File node for ${this.resourcePath}`
-    )
+    reporter.panicOnBuild({
+      id: ERROR_CODES.NonExistentFileNode,
+      context: {
+        resourcePath: this.resourcePath,
+      },
+    })
   }
 
   // add mdx dependency to webpack
@@ -54,9 +61,12 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
 
     // Throw when tree is not a Program
     if (!AST.body && !AST.sourceType) {
-      throw new Error(
-        `Invalid AST. Parsed source code did not return a Program`
-      )
+      reporter.panicOnBuild({
+        id: ERROR_CODES.InvalidAcornAST,
+        context: {
+          source: source,
+        },
+      })
     }
 
     /**
@@ -104,7 +114,10 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         null
 
       if (!pageComponentName) {
-        throw new Error(`Unable to determine default export name`)
+        reporter.panicOnBuild({
+          id: ERROR_CODES.NonDeterminableExportName,
+          context: {},
+        })
       }
 
       newBody.push(declaration)
@@ -194,10 +207,17 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
     const transformedSource = generate(AST)
 
     return transformedSource
-  } catch (e) {
-    throw new Error(
-      `Unable to inject MDX into JS template:\n${this.resourcePath}\n${e}`
+  } catch (err) {
+    reporter.panicOnBuild(
+      {
+        id: ERROR_CODES.InvalidAcornAST,
+        context: {
+          resourcePath: this.resourcePath,
+        },
+      },
+      err
     )
+    return ``
   }
 }
 

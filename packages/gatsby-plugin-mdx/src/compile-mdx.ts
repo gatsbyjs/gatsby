@@ -48,7 +48,7 @@ export async function compileMDX(
       {
         id: ERROR_CODES.MdxCompilation,
         context: {
-          errorMeta: `Path: ${absolutePath}`,
+          absolutePath,
         },
       },
       err

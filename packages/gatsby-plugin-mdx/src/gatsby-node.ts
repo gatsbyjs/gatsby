@@ -45,6 +45,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
 
         return !!entry
       },
+      reporter,
     }
 
     actions.setWebpackConfig({
