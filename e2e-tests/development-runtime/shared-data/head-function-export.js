@@ -22,7 +22,6 @@ const data = {
     style: `rebeccapurple`,
     link: `/used-by-head-function-export-basic.css`,
     extraMeta: `Extra meta tag that should be removed during navigation`,
-    extraMetaForHotReloading: `%SOME_EXTRA_META%`,
   },
   queried: {
     base: `http://localhost:8000`,

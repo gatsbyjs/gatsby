@@ -25,7 +25,6 @@ export function Head() {
     style,
     link,
     extraMeta,
-    extraMetaForHotReloading,
   } = data.static
 
   return (
@@ -46,7 +45,7 @@ export function Head() {
       <meta
         data-testid="extra-meta-for-hot-reloading"
         name="extra-meta-for-hot-reloading"
-        content={extraMetaForHotReloading}
+        content="%SOME_EXTRA_META%"
       />
     </>
   )

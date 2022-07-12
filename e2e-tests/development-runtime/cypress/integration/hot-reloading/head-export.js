@@ -10,13 +10,13 @@ describe(`hot reloading Head export`, () => {
   it(`displays placeholder content on launch`, () => {
     cy.getTestElement(TEST_ID)
       .invoke(`attr`, `content`)
-      .should(`contain.equal`, data.static.extraMetaForHotReloading)
+      .should(`contain.equal`, "%SOME_EXTRA_META%")
   })
 
   it(`hot reloads with new content`, () => {
     const text = `New Title by HMR`
     cy.exec(
-      `npm run update -- --file src/pages/head-function-export/basic.js --replacements "SOME_EXTRA_META:${text}" --exact`
+      `npm run update -- --file src/pages/head-function-export/basic.js --replacements "SOME_EXTRA_META:${text}"`
     )
 
     cy.waitForHmr()
