@@ -2,7 +2,7 @@
 
 DOCKER_ID=$(./scripts/docker-get-id)
 if [ -z "$DOCKER_ID" ]; then
-  echo -e "\nNo gatsby-memory container was found. Run \`yarn docker:start\` to start one.\n"
+  echo -e "\nNo gatsby-generic-benchmark container was found. Run \`yarn docker:start\` to start one.\n"
   exit 1
 fi
 

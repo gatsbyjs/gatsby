@@ -278,7 +278,9 @@ export default async function staticPage({
             onAllReady() {
               pipe(writableStream)
             },
-            onError() {},
+            onError(error) {
+              throw error
+            },
           })
 
           bodyHtml = await writableStream
