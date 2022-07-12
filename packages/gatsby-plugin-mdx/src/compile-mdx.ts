@@ -43,16 +43,14 @@ export async function compileMDX(
     const processedMDX = result.toString()
 
     return { processedMDX, metadata: clonedMetadata }
-  } catch (err) {
-    reporter.panicOnBuild(
-      {
-        id: ERROR_CODES.MdxCompilation,
-        context: {
-          absolutePath,
-        },
+  } catch (error) {
+    reporter.panicOnBuild({
+      id: ERROR_CODES.MdxCompilation,
+      context: {
+        absolutePath,
+        errorMeta: error,
       },
-      err
-    )
+    })
     return null
   }
 }

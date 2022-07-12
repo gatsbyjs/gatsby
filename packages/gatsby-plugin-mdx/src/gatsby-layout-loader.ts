@@ -64,7 +64,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
       reporter.panicOnBuild({
         id: ERROR_CODES.InvalidAcornAST,
         context: {
-          source: source,
+          resourcePath: this.resourcePath,
         },
       })
     }
@@ -116,7 +116,9 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
       if (!pageComponentName) {
         reporter.panicOnBuild({
           id: ERROR_CODES.NonDeterminableExportName,
-          context: {},
+          context: {
+            resourcePath: this.resourcePath,
+          },
         })
       }
 
@@ -207,16 +209,14 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
     const transformedSource = generate(AST)
 
     return transformedSource
-  } catch (err) {
-    reporter.panicOnBuild(
-      {
-        id: ERROR_CODES.InvalidAcornAST,
-        context: {
-          resourcePath: this.resourcePath,
-        },
+  } catch (error) {
+    reporter.panicOnBuild({
+      id: ERROR_CODES.InvalidAcornAST,
+      context: {
+        resourcePath: this.resourcePath,
       },
-      err
-    )
+      error,
+    })
     return ``
   }
 }

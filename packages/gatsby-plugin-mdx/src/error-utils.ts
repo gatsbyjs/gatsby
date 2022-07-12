@@ -8,8 +8,8 @@ export const ERROR_CODES = {
 
 export const ERROR_MAP = {
   [ERROR_CODES.MdxCompilation]: {
-    text: (context: { absolutePath: string }): string =>
-      `Failed to compile MDX. Information about the file:\nPath: ${context.absolutePath}`,
+    text: (context: { absolutePath: string; errorMeta: any }): string =>
+      `Failed to compile the file "${context.absolutePath}". Original error message: \n\n${context.errorMeta.message}`,
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
@@ -21,14 +21,15 @@ export const ERROR_MAP = {
     type: `PLUGIN`,
   },
   [ERROR_CODES.InvalidAcornAST]: {
-    text: (context: { source: string }): string =>
-      `Invalid AST. Parsed source code did not return valid output. Input source:\n${context.source}`,
+    text: (context: { resourcePath: string }): string =>
+      `Invalid AST. Parsed source code did not return valid output. File:\n${context.resourcePath}`,
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
   },
   [ERROR_CODES.NonDeterminableExportName]: {
-    text: (): string => `Unable to determine default export name`,
+    text: (context: { resourcePath: string }): string =>
+      `Unable to determine default export name for file:\n${context.resourcePath}`,
     level: `ERROR`,
     type: `PLUGIN`,
   },
