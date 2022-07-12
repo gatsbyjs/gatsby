@@ -1,10 +1,10 @@
 const getQuery = (arg, spaceCount) => {
   const { operationDataList } = arg
-  const { query } = operationDataList[0]
-  const anonymousQuery = query.replace(/query\s.+{/gim, `{`)
+  const { query, name } = operationDataList[0]
+  const newQuery = name ? query : query.replace(/query\s.+{/gim, `{`)
   return (
     ` `.repeat(spaceCount) +
-    anonymousQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
+    newQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
   )
 }
 
@@ -16,13 +16,13 @@ const pageQuery = {
   generate: arg => `import React from "react"
 import { graphql } from "gatsby"
 
-const ComponentName = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
+const Page = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
 
 export const query = graphql\`
 ${getQuery(arg, 2)}
 \`
 
-export default ComponentName
+export default Page
 
 `,
 }
