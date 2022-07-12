@@ -36,10 +36,11 @@ module.exports = babelLoader.custom(babel => {
       reactRuntime = `classic`,
       reactImportSource,
       isPageTemplate,
+      resourceQuery,
       rootDir = process.cwd(),
       ...options
     }) {
-      const customOptionsCacheKey = `${stage}-${isPageTemplate}`
+      const customOptionsCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
 
       if (customOptionsCache.has(customOptionsCacheKey)) {
         return customOptionsCache.get(customOptionsCacheKey)
@@ -51,6 +52,7 @@ module.exports = babelLoader.custom(babel => {
           reactRuntime,
           reactImportSource,
           isPageTemplate,
+          resourceQuery,
         },
         loader: {
           cacheIdentifier: JSON.stringify({
@@ -72,8 +74,8 @@ module.exports = babelLoader.custom(babel => {
 
     // Passed Babel's 'PartialConfig' object.
     config(partialConfig, { customOptions }) {
-      const { stage, isPageTemplate } = customOptions
-      let configCacheKey = `${stage}-${isPageTemplate}`
+      const { stage, isPageTemplate, resourceQuery } = customOptions
+      let configCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
 
       if (partialConfig.hasFilesystemConfig()) {
         // partialConfig.files is a Set that accumulates used config files (absolute paths)
