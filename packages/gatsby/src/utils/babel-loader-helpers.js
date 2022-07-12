@@ -71,16 +71,11 @@ const prepareOptions = (
   ) {
     const apis = [`getServerData`, `config`]
 
-    if (
-      resourceQuery === `export=default` ||
-      resourceQuery === `?export=default`
-    ) {
-      console.log(resourceQuery)
+    if (resourceQuery === `?export=default`) {
       apis.push(`Head`)
     }
 
-    if (resourceQuery === `export=head` || resourceQuery === `?export=head`) {
-      console.log(resourceQuery)
+    if (resourceQuery === `?export=head`) {
       apis.push(`default`)
     }
 
