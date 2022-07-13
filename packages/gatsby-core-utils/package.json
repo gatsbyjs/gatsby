@@ -69,7 +69,7 @@
     "fs-extra": "^10.1.0",
     "got": "^11.8.5",
     "import-from": "^4.0.0",
-    "lmdb": "2.5.2",
+    "lmdb": "2.5.3",
     "lock": "^1.1.0",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",
