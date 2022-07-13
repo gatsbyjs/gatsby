@@ -7,7 +7,7 @@ describe(`Head function export should warn`, () => {
       onBeforeLoad(win) {
         cy.stub(win.console, `warn`).as(`consoleWarn`)
       },
-    })
+    }).waitForRouteChange()
   })
 
   it(`for elements that belong in the body`, () => {

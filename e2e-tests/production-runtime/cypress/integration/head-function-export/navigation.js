@@ -10,7 +10,7 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .invoke(`attr`, `content`)
       .should(`equal`, data.static.extraMeta)
 
-    cy.getTestElement(`gatsby-link`).click()
+    cy.getTestElement(`gatsby-link`).click().waitForRouteChange()
 
     cy.get(`[data-testid="extra-meta"]`).should(`not.exist`)
   })
@@ -50,7 +50,7 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .should(`equal`, data.static.link)
 
     // Navigate to a different page via Gatsby Link
-    cy.getTestElement(`gatsby-link`).click()
+    cy.getTestElement(`gatsby-link`).click().waitForRouteChange()
 
     // Validate data on navigated-to page
     cy.getTestElement(`base`)
@@ -67,7 +67,7 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .should(`equal`, data.queried.link)
 
     // Navigate back to original page via Gatsby Link
-    cy.getTestElement(`gatsby-link`).click()
+    cy.getTestElement(`gatsby-link`).click().waitForRouteChange()
 
     // Validate data is same as initial load
     cy.getTestElement(`base`)

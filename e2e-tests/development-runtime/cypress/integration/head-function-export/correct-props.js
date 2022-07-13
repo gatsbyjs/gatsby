@@ -1,7 +1,7 @@
 import headFunctionExportSharedData from "../../../shared-data/head-function-export.js"
 
 it(`Head function export receive correct props`, () => {
-  cy.visit(headFunctionExportSharedData.page.correctProps)
+  cy.visit(headFunctionExportSharedData.page.correctProps).waitForRouteChange()
 
   const data = {
     site: {

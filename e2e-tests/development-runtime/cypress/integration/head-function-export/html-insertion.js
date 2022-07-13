@@ -2,7 +2,7 @@ import { page, data } from "../../../shared-data/head-function-export.js"
 
 describe(`Head function export html insertion`, () => {
   it(`should work with static data`, () => {
-    cy.visit(page.basic)
+    cy.visit(page.basic).waitForRouteChange()
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.base)
@@ -18,7 +18,7 @@ describe(`Head function export html insertion`, () => {
   })
 
   it(`should work with data from a page query`, () => {
-    cy.visit(page.pageQuery)
+    cy.visit(page.pageQuery).waitForRouteChange()
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.queried.base)
@@ -34,7 +34,7 @@ describe(`Head function export html insertion`, () => {
   })
 
   it(`should work when a head function with static data is re-exported from the page`, () => {
-    cy.visit(page.reExport)
+    cy.visit(page.reExport).waitForRouteChange()
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.base)
@@ -50,7 +50,7 @@ describe(`Head function export html insertion`, () => {
   })
 
   it(`should work when an imported Head component with queried data is used`, () => {
-    cy.visit(page.staticQuery)
+    cy.visit(page.staticQuery).waitForRouteChange()
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.queried.base)
@@ -66,7 +66,7 @@ describe(`Head function export html insertion`, () => {
   })
 
   it(`should work in a DSG page (exporting function named config)`, () => {
-    cy.visit(page.dsg)
+    cy.visit(page.dsg).waitForRouteChange()
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.dsg.base)
@@ -82,7 +82,7 @@ describe(`Head function export html insertion`, () => {
   })
 
   it(`should work in an SSR page (exporting function named getServerData)`, () => {
-    cy.visit(page.ssr)
+    cy.visit(page.ssr).waitForRouteChange()
     cy.getTestElement(`base`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.ssr.base)

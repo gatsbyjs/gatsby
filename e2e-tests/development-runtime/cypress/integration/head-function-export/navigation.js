@@ -4,23 +4,23 @@ import { page, data } from "../../../shared-data/head-function-export.js"
 
 describe(`Head function export behavior during CSR navigation (Gatsby Link)`, () => {
   it(`should remove tags not on next page`, () => {
-    cy.visit(page.basic)
+    cy.visit(page.basic).waitForRouteChange()
 
     cy.getTestElement(`extra-meta`)
       .invoke(`attr`, `content`)
       .should(`equal`, data.static.extraMeta)
 
-    cy.getTestElement(`gatsby-link`).click()
+    cy.getTestElement(`gatsby-link`).click().waitForRouteChange()
 
     cy.get(`[data-testid="extra-meta"]`).should(`not.exist`)
   })
 
   it(`should add tags not on next page`, () => {
-    cy.visit(page.basic)
+    cy.visit(page.basic).waitForRouteChange()
 
     cy.get(`[data-testid="extra-meta-2"]`).should(`not.exist`)
 
-    cy.getTestElement(`gatsby-link`).click()
+    cy.getTestElement(`gatsby-link`).click().waitForRouteChange()
 
     cy.getTestElement(`extra-meta-2`)
       .invoke(`attr`, `content`)
@@ -33,7 +33,7 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
    */
   it(`should change meta tag values`, () => {
     // Initial load
-    cy.visit(page.basic)
+    cy.visit(page.basic).waitForRouteChange()
 
     // Validate data from initial load
     cy.getTestElement(`base`)
@@ -67,7 +67,7 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .should(`equal`, data.queried.link)
 
     // Navigate back to original page via Gatsby Link
-    cy.getTestElement(`gatsby-link`).click()
+    cy.getTestElement(`gatsby-link`).click().waitForRouteChange()
 
     // Validate data is same as initial load
     cy.getTestElement(`base`)
