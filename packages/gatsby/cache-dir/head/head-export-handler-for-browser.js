@@ -12,10 +12,6 @@ import {
 
 const hiddenRoot = document.createElement(`div`)
 const onHeadRendered = () => {
-  // Remove previous head nodes
-  const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
-  prevHeadNodes.forEach(e => e.remove())
-
   // add attribute to new head nodes while showing warning if it's not a valid node
   const validHeadNodes = []
 
@@ -51,22 +47,22 @@ export function headHandlerForBrowser({
   staticQueryResults,
   pageComponentProps,
 }) {
-  if (pageComponent.Head) {
-    headExportValidator(pageComponent.Head)
+  useEffect(() => {
+    if (pageComponent.Head) {
+      headExportValidator(pageComponent.Head)
 
-    const headElement = createElement(
-      StaticQueryContext.Provider,
-      { value: staticQueryResults },
-      createElement(
-        pageComponent.Head,
-        filterHeadProps(pageComponentProps),
-        null
+      const headElement = createElement(
+        StaticQueryContext.Provider,
+        { value: staticQueryResults },
+        createElement(
+          pageComponent.Head,
+          filterHeadProps(pageComponentProps),
+          null
+        )
       )
-    )
 
-    const { render } = reactDOMUtils()
+      const { render } = reactDOMUtils()
 
-    useEffect(() => {
       // Use react18's .createRoot.render or fallback to .render
       // just a hack to call the callback after react has done first render
       render(
@@ -75,6 +71,12 @@ export function headHandlerForBrowser({
         </FireCallbackInEffect>,
         hiddenRoot
       )
-    }, [headElement])
-  }
+    }
+
+    return () => {
+      // Remove previous head nodes
+      const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
+      prevHeadNodes.forEach(e => e.remove())
+    }
+  })
 }
