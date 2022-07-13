@@ -17,8 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.18.0",
-    "@parcel/plugin": "2.6.2",
-    "gatsby-core-utils": "^3.19.0-next.1",
+    "@parcel/plugin": "2.6.0",
+    "gatsby-core-utils": "^3.18.1",
     "@parcel/namer-default": "2.6.2"
   },
   "devDependencies": {
