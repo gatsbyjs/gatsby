@@ -31,7 +31,7 @@ export async function writeGraphQLConfig(
           endpoints: {
             default: {
               url: `${program.https ? `https://` : `http://`}${program.host}:${
-                program.proxyPort
+                program.port
               }/___graphql`,
             },
           },
