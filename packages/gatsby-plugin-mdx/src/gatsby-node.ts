@@ -281,6 +281,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
     internal: {
       type: `Mdx`,
       contentDigest: node.internal.contentDigest,
+      contentFilePath: node.absolutePath,
     },
     body,
     frontmatter,
