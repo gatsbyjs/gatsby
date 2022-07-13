@@ -1,5 +1,5 @@
 import React from "react"
-import { createElement, useEffect } from "react"
+import { useEffect } from "react"
 import { StaticQueryContext } from "gatsby"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
@@ -11,9 +11,16 @@ import {
 } from "./utils"
 
 const hiddenRoot = document.createElement(`div`)
+
+const removePrevHeadElements = () => {
+  const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
+  prevHeadNodes.forEach(e => e.remove())
+}
+
 const onHeadRendered = () => {
-  // add attribute to new head nodes while showing warning if it's not a valid node
   const validHeadNodes = []
+
+  removePrevHeadElements()
 
   for (const node of hiddenRoot.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
@@ -49,34 +56,27 @@ export function headHandlerForBrowser({
 }) {
   useEffect(() => {
     if (pageComponent?.Head) {
-      headExportValidator(pageComponent?.Head)
-
-      const headElement = createElement(
-        StaticQueryContext.Provider,
-        { value: staticQueryResults },
-        createElement(
-          pageComponent.Head,
-          filterHeadProps(pageComponentProps),
-          null
-        )
-      )
+      headExportValidator(pageComponent.Head)
 
       const { render } = reactDOMUtils()
 
-      // Use react18's .createRoot.render or fallback to .render
-      // just a hack to call the callback after react has done first render
+      const Head = pageComponent.Head
+
       render(
+        // just a hack to call the callback after react has done first render
+        // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
+        // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
-          {headElement}
+          <StaticQueryContext.Provider value={staticQueryResults}>
+            <Head {...filterHeadProps(pageComponentProps)} />
+          </StaticQueryContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot
       )
     }
 
     return () => {
-      // Remove previous head nodes
-      const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
-      prevHeadNodes.forEach(e => e.remove())
+      removePrevHeadElements()
     }
   })
 }
