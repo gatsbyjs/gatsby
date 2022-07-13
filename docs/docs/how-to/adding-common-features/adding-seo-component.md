@@ -1,5 +1,63 @@
 ---
-title: "Adding an SEO Component"
+title: Adding an SEO Component
+---
+
+## Introduction
+
+Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your content, and decide when to surface it in search results. This information also gets displayed when someone shares your website, e.g. on Twitter. Using the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/) you can change the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
+
+Gatsby automatically provides drop-in support for server rendering of metadata and it'll be added to the static HTML pages that Gatsby produces. This helps your site rank and perform better in search engines.
+
+By the end of this guide you'll have a reusable `<SEO />` component that you can use in your pages.
+
+## Prerequisites
+
+- A Gatsby project set up with `gatsby@4.19.0` or later. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
+
+## Directions
+
+### Adding `siteMetadata`
+
+TODO
+
+## Additional Information
+
+If you want to add `<script />` tags to your pages, use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/).
+
+### Rich Snippets
+
+Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
+
+For example, here is a structured data snippet in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data), that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
+
+```jsx
+<script type="application/ld+json">
+  {`
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://www.spookytech.com",
+      "name": "Spooky technologies",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+5-601-785-8543",
+        "contactType": "Customer Support"
+      }
+    }
+  `}
+</script>
+```
+
+You can use the [Rich Results Test](https://search.google.com/test/rich-results) from Google during local development if you pass valid information.
+
+After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
+
+## Additional Resources
+
+- [Blog posts about SEO in Gatsby](/blog/tags/seo/)
+- [Audit with Lighthouse](/docs/how-to/performance/audit-with-lighthouse/)
+- [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
+
 ---
 
 Every site on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone shares your website, e.g. on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and have rich previews for other clients, smartphone users, and search engines.
