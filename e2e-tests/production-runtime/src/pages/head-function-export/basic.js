@@ -10,6 +10,9 @@ export default function HeadFunctionExportBasic() {
       <Link data-testid="gatsby-link" to="/head-function-export/page-query">
         Navigate to page-query via Gatsby Link
       </Link>
+      <Link data-testid="navigate-to-page-without-head-export" to="/without-head">
+        Navigate to without head export
+      </Link>
     </>
   )
 }

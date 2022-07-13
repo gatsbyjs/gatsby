@@ -27,6 +27,34 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
       .should(`equal`, data.queried.extraMeta2)
   })
 
+  it(`should not contain tags from old tags when we navigate to page without Head export`, () => {
+    cy.visit(page.basic).waitForRouteChange()
+
+    cy.getTestElement(`base`)
+      .invoke(`attr`, `href`)
+      .should(`equal`, data.static.base)
+    cy.getTestElement(`title`).should(`have.text`, data.static.title)
+    cy.getTestElement(`meta`)
+      .invoke(`attr`, `content`)
+      .should(`equal`, data.static.meta)
+    cy.getTestElement(`noscript`).should(`have.text`, data.static.noscript)
+    cy.getTestElement(`style`).should(`contain`, data.static.style)
+    cy.getTestElement(`link`)
+      .invoke(`attr`, `href`)
+      .should(`equal`, data.static.link)
+
+    cy.getTestElement(`navigate-to-page-without-head-export`)
+      .click()
+      .waitForRouteChange()
+
+    cy.getTestElement(`base`).should(`not.exist`)
+    cy.getTestElement(`title`).should(`not.exist`)
+    cy.getTestElement(`meta`).should(`not.exist`)
+    cy.getTestElement(`noscript`).should(`not.exist`)
+    cy.getTestElement(`style`).should(`not.exist`)
+    cy.getTestElement(`link`).should(`not.exist`)
+  })
+
   /**
    * Technically nodes are always removed from the DOM and new ones added (in other words nodes are not reused with different data),
    * but since this is an implementation detail we'll still test the behavior we expect as if we didn't know that.
