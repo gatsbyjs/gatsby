@@ -1,6 +1,6 @@
 import headFunctionExportSharedData from "../../../shared-data/head-function-export.js"
 
-it.only(`Head function export receive correct props`, () => {
+it(`Head function export receive correct props`, () => {
   cy.visit(headFunctionExportSharedData.page.correctProps)
 
   const data = {
