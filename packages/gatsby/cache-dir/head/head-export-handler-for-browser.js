@@ -48,8 +48,8 @@ export function headHandlerForBrowser({
   pageComponentProps,
 }) {
   useEffect(() => {
-    if (pageComponent.Head) {
-      headExportValidator(pageComponent.Head)
+    if (pageComponent?.Head) {
+      headExportValidator(pageComponent?.Head)
 
       const headElement = createElement(
         StaticQueryContext.Provider,

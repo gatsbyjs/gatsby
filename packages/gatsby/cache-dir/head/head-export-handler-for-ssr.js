@@ -12,14 +12,14 @@ const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
 const { VALID_NODE_NAMES } = require(`./constants`)
 
-function headHandlerForSSR({
+export function headHandlerForSSR({
   pageComponent,
   setHeadComponents,
   staticQueryContext,
   pageData,
   pagePath,
 }) {
-  if (pageComponent.Head) {
+  if (pageComponent?.Head) {
     headExportValidator(pageComponent.Head)
 
     function HeadRouteHandler(props) {
@@ -38,7 +38,10 @@ function headHandlerForSSR({
     const routerElement = (
       <StaticQueryContext.Provider value={staticQueryContext}>
         <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-          <Router baseuri={__BASE_PATH__} component={React.Fragment}>
+          <Router
+            baseuri={__BASE_PATH__}
+            component={({ children }) => <>{children}</>}
+          >
             <HeadRouteHandler path="/*" />
           </Router>
         </ServerLocation>
@@ -72,8 +75,4 @@ function headHandlerForSSR({
 
     setHeadComponents(validHeadNodes)
   }
-}
-
-module.exports = {
-  headHandlerForSSR,
 }
