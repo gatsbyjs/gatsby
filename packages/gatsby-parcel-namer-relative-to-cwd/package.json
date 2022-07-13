@@ -18,16 +18,14 @@
   "dependencies": {
     "@babel/runtime": "^7.18.0",
     "@parcel/plugin": "2.6.2",
-    "gatsby-core-utils": "^3.19.0-next.1"
+    "gatsby-core-utils": "^3.19.0-next.1",
+    "@parcel/namer-default": "2.6.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.18.0",
     "babel-preset-gatsby-package": "^2.19.0-next.1",
     "cross-env": "^7.0.3"
-  },
-  "peerDependencies": {
-    "@parcel/namer-default": "2.5.0"
   },
   "scripts": {
     "build": "babel src --out-dir lib/ --ignore \"**/__tests__\" --extensions \".ts\"",
