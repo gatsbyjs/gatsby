@@ -82,6 +82,9 @@ describe(`no-anonymous-exports-page-templates`, () => {
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport class Head extends React.Component { render() { return null } }`,
       }),
       test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport const Head = () => { return null }`,
+      }),
+      test({
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport { Head } from "./somewhere"`,
       }),
     ],
