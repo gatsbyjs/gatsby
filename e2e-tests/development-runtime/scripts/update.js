@@ -29,9 +29,9 @@ const args = yargs
     default: JSON.stringify(
       `
     import * as React from 'react';
-    
+
     import Layout from '../components/layout';
-    
+
     export default function SomeComponent() {
       return (
         <Layout>
@@ -89,7 +89,7 @@ async function update() {
     if (exists) {
       await fs.remove(filePath)
     }
-  } else if (args.copy) {
+  } else if(args.copy) {
     const copyFileContent = await fs.readFile(args.copy)
     await fs.writeFile(filePath, copyFileContent)
   } else {
