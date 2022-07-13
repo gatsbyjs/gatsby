@@ -14,14 +14,8 @@ import type {
 type ChunkGroup = Compilation["chunkGroups"][0]
 type EntryPoint = Compilation["asyncEntrypoints"][0]
 
-const removeExportQueryParam = (
-  path: string | undefined
-): string | undefined => {
-  if (path?.endsWith(`?export=head`) || path?.endsWith(`?export=default`)) {
-    return path?.split(`?`)[0]
-  }
-  return path
-}
+const removeExportQueryParam = (path: string | undefined): string | undefined =>
+  path?.split(`?`)[0]
 
 /**
  * Checks if a module matches a resourcePath
