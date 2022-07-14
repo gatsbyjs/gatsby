@@ -26,6 +26,22 @@ export function headExportValidator(head) {
 }
 
 /**
+ * Warn once for same messsage
+ */
+let warnOnce = _ => {}
+if (process.env.NODE_ENV !== `production`) {
+  const warnings = new Set()
+  warnOnce = msg => {
+    if (!warnings.has(msg)) {
+      console.warn(msg)
+    }
+    warnings.add(msg)
+  }
+}
+
+export { warnOnce }
+
+/**
  * Warn for invalid tags in head.
  * @param {string} tagName
  */
@@ -38,6 +54,6 @@ export function warnForInvalidTags(tagName) {
           )}`
         : `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
 
-    console.warn(warning)
+    warnOnce(warning)
   }
 }
