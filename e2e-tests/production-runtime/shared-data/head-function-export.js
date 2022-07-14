@@ -33,7 +33,7 @@ const data = {
     extraMeta2: `Extra meta tag that should be added during navigation`,
   },
   dsg: {
-    base: `http://localhost:8000`,
+    base: `http://localhost:9000`,
     title: `Louis Armstrong's Page`,
     meta: `Louis Armstrong`,
     noscript: `What we play is life`,
@@ -41,7 +41,7 @@ const data = {
     link: `/used-by-head-function-export-dsg.css`,
   },
   ssr: {
-    base: `http://localhost:8000`,
+    base: `http://localhost:9000`,
     title: `Frank Sinatra's Page`,
     meta: `Frank Sinatra`,
     noscript: `You may be a puzzle, but I like the way the parts fit`,
