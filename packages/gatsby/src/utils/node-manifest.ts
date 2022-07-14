@@ -1,13 +1,12 @@
 import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
 import { getNode } from "./../datastore"
-import { IGatsbyPage, INodeManifest } from "./../redux/types"
+import { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
 import fastq from "fastq"
-import { IGatsbyNodePartial } from "../datastore/in-memory/indexing"
 
 interface INodeManifestPage {
   path?: string
@@ -65,7 +64,7 @@ async function findPageOwnedByNode({
   slug,
 }: {
   nodeId: string
-  fullNode: IGatsbyNodePartial
+  fullNode: IGatsbyNode
   slug?: string
 }): Promise<{
   page: INodeManifestPage
@@ -88,7 +87,7 @@ async function findPageOwnedByNode({
     byConnection.get(nodeType)?.values()?.next()?.value
 
   // for static queries, we can only find the first page using that static query
-  if (pagePath.startsWith(`sq--`)) {
+  if (pagePath?.startsWith(`sq--`)) {
     const staticQueryComponentPath =
       staticQueryComponents.get(pagePath)?.componentPath
 
