@@ -151,7 +151,7 @@ export type PageProps<
 }
 
 /**
- * A props object passed into the head function for [metadata management](https://gatsby.dev/metadata-management).
+ * A props object passed into the Head function for [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
 export type HeadProps<DataType = object, PageContextType = object> = {
   location: {
@@ -171,6 +171,13 @@ export type HeadProps<DataType = object, PageContextType = object> = {
    */
   pageContext: PageContextType
 }
+
+/**
+ * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
+ */
+ export type Head<DataType = object, PageContextType = object> = (
+  props: HeadProps<DataType, PageContextType>
+) => JSX.Element
 
 /**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
