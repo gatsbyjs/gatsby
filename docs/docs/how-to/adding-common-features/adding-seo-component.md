@@ -5,13 +5,11 @@ examples:
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-head"
 ---
 
-## Introduction
-
 Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your content, and decide when to surface it in search results. This information also gets displayed when someone shares your website, e.g. on Twitter. Using the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/) you can change the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
 
-Gatsby automatically provides drop-in support for server rendering of metadata and it'll be added to the static HTML pages that Gatsby produces. This helps your site rank and perform better in search engines. Gatsby does so in a performant and easy to use way.
+Gatsby automatically provides drop-in support for server rendering of metadata and it'll be added to the static HTML pages that Gatsby produces. This helps your site rank and perform better in search engines.
 
-By the end of this guide you'll have a `<SEO />` component that you can use in your pages to define metadata.
+By the end of this guide you'll have a SEO component that you can use in your pages to define metadata.
 
 ## Prerequisites
 
@@ -19,9 +17,171 @@ By the end of this guide you'll have a `<SEO />` component that you can use in y
 
 ## Directions
 
-### Adding `siteMetadata`
+### Add `siteMetadata`
 
-TODO
+The `siteMetadata` section of the `gatsby-config` file is available in the GraphQL datalayer. It's considered best practice to place your site metadata there. The `siteUrl` should be the URL of your deployed target (e.g. production domain) so that later metatags can point to absolute URLs.
+
+Add the following keys to your configuration:
+
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: `Using Gatsby Head`,
+    description: `Example project for the Gatsby Head API`,
+    twitterUsername: `@gatsbyjs`,
+    image: `/gatsby-icon.png`,
+    siteUrl: `https://www.yourdomain.tld`,
+  },
+}
+```
+
+You can always extend the `siteMetadata` object and subsequently customize the `<SEO />` component to your liking. When defining the `image` like above, make sure that you have an image with the same name and file extension in the [`static` folder](/docs/how-to/images-and-media/static-folder/).
+
+### Create a `useSiteMetadata` hook
+
+Since you need to use the information that you just placed inside `siteMetadata` with the SEO component, you can create a custom React hook called `useSiteMetadata` to fetch that information. This way you can reference these values in other places, too.
+
+Create a new file called `use-site-metadata.jsx` in `src/hooks`. Query the information from the `site` interface through a [useStaticQuery hook](/docs/how-to/querying-data/use-static-query/):
+
+```jsx:title=src/hooks/use-site-metadata.jsx
+import { graphql, useStaticQuery } from "gatsby"
+
+export const useSiteMetadata = () => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+          twitterUsername
+          image
+          siteUrl
+        }
+      }
+    }
+  `)
+
+  return data.site.siteMetadata
+}
+```
+
+You'll be able to directly get `title`, `description`, etc. from this hook.
+
+### SEO component
+
+Create a new file called `seo.jsx` in `src/components`. Your SEO component will receive things like `title`, `description`, `children`, etc. as props and the information from your `useSiteMetadata` hook is used as a fallback if no props are passed. For things that won't change on a per-page basis (e.g. the Twitter username) the `useSiteMetadata` hook data is directly used.
+
+Here's the complete SEO component:
+
+```jsx:title=src/components/seo.jsx
+import React from "react"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
+
+export const SEO = ({ title, description, pathname, children }) => {
+  const { title: defaultTitle, description: defaultDescription, image, siteUrl, twitterUsername } = useSiteMetadata()
+
+  const seo = {
+    title: title || defaultTitle,
+    description: description || defaultDescription,
+    image: `${siteUrl}${image}`,
+    url: `${siteUrl}${pathname || ``}`,
+    twitterUsername,
+  }
+
+  return (
+    <>
+      <title>{seo.title}</title>
+      <meta name="description" content={seo.description} />
+      <meta name="image" content={seo.image} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={seo.title} />
+      <meta name="twitter:url" content={seo.url} />
+      <meta name="twitter:description" content={seo.description} />
+      <meta name="twitter:image" content={seo.image} />
+      <meta name="twitter:creator" content={seo.twitterUsername} />
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>👤</text></svg>" />
+      {children}
+    </>
+  )
+}
+```
+
+All props are optional since each value has a default value or fallback. The `pathname` prop will be the relative path of the page so you need to construct an absolute URL with `siteUrl`.
+
+You can extend the `seo` object with other keys, but it's recommended to follow the pattern of `prop || fallback` so that no value is `undefined`.
+
+### Usage in pages
+
+When you just want to use the default values of your SEO component (e.g. on the homepage) you can import it and render it without any props:
+
+```jsx:title=src/pages/index.jsx
+import React from "react"
+import { SEO } from "../components/seo"
+
+const IndexPage = () => {
+  return (
+    <main>
+      Hello World
+    </main>
+  )
+}
+
+export default IndexPage
+
+// highlight-start
+export const Head = () => (
+  <SEO />
+)
+// highlight-end
+```
+
+To override individual values use the defined props on the SEO component:
+
+```jsx:title=src/pages/page-2.jsx
+import React from "react"
+import { SEO } from "../components/seo"
+
+const SecondPage = () => {
+  return (
+    <main>
+      Hello World
+    </main>
+  )
+}
+
+export default SecondPage
+
+// highlight-start
+export const Head = () => (
+  <SEO title="Page Two" />
+)
+// highlight-end
+```
+
+To add one-off metatags to a page, provide `children` to the SEO component:
+
+```jsx:title=src/pages/one-off.jsx
+import React from "react"
+import { SEO } from "../components/seo"
+
+const OneOffPage = () => {
+  return (
+    <main>
+      Hello World
+    </main>
+  )
+}
+
+export default OneOffPage
+
+// highlight-start
+export const Head = () => (
+  <SEO title="One Off Page">
+    <script type="application/ld+json">{JSON.stringify({})}</script>
+  </SEO>
+)
+// highlight-end
+```
 
 ## Additional Information
 
@@ -61,222 +221,3 @@ After deployment, their [Rich result status reports](https://support.google.com/
 - [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
 - [Blog posts about SEO in Gatsby](/blog/tags/seo/)
 - [Audit with Lighthouse](/docs/how-to/performance/audit-with-lighthouse/)
-
----
-
-Every site on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone shares your website, e.g. on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and have rich previews for other clients, smartphone users, and search engines.
-
-_Note: This component will use `useStaticQuery`. If you're unfamiliar with that, have a look at the [useStaticQuery documentation](/docs/how-to/querying-data/use-static-query/). You also have to have `react-helmet` installed for which you can have a look at [this document](/docs/add-page-metadata)._
-
-## gatsby-config.js
-
-Gatsby automatically exposes the `siteMetadata` section of the `gatsby-config` file in the GraphQL datalayer. It's considered best practice to place your site meta information there.
-
-```js:title=gatsby-config.js
-module.exports = {
-  siteMetadata: {
-    title: "Severus Snape",
-    titleTemplate: "%s · The Real Hero",
-    description:
-      "Hogwarts Potions master, Head of Slytherin house and former Death Eater.",
-    url: "https://www.doe.com", // No trailing slash allowed!
-    image: "/snape.jpg", // Path to the image placed in the 'static' folder, in the project's root directory.
-    twitterUsername: "@occlumency",
-  },
-}
-```
-
-## SEO component
-
-First create a new component with this initial boilerplate.
-
-```jsx:title=src/components/seo.js
-import React from "react"
-import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
-import { useLocation } from "@reach/router"
-import { useStaticQuery, graphql } from "gatsby"
-
-const SEO = ({ title, description, image, article }) => ()
-
-export default SEO
-
-SEO.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  image: PropTypes.string,
-  article: PropTypes.bool,
-}
-
-SEO.defaultProps = {
-  title: null,
-  description: null,
-  image: null,
-  article: false,
-}
-```
-
-**Note:** `propTypes` are included in this example to help you ensure you’re getting all the data you need in the component, and to help serve as a guide while destructuring / using those props.
-
-As the SEO component should also be usable in other files, e.g. a template file, the component also accepts properties for which you set sensible defaults in the `SEO.defaultProps` section. This way the information you put into `siteMetadata` gets used every time unless you define the property explicitly.
-
-Now define the query and pass it to `useStaticQuery`. You can also alias query items, so `title` gets renamed to `defaultTitle`.
-
-```jsx:title=src/components/seo.js
-const SEO = ({ title, description, image, article }) => {
-  const { pathname } = useLocation()
-  const { site } = useStaticQuery(query)
-
-  return null
-}
-
-export default SEO
-
-const query = graphql`
-  query SEO {
-    site {
-      siteMetadata {
-        defaultTitle: title
-        titleTemplate
-        defaultDescription: description
-        siteUrl: url
-        defaultImage: image
-        twitterUsername
-      }
-    }
-  }
-`
-```
-
-The next step is to destructure the data from the query and create an object that checks if the props were used. If not, the default values are applied. Aliasing the properties comes in handy here to avoid name collisions.
-
-```jsx:title=src/components/seo.js
-const SEO = ({ title, description, image, article }) => {
-  const { pathname } = useLocation()
-  const { site } = useStaticQuery(query)
-
-  const {
-    defaultTitle,
-    titleTemplate,
-    defaultDescription,
-    siteUrl,
-    defaultImage,
-    twitterUsername,
-  } = site.siteMetadata
-
-  const seo = {
-    title: title || defaultTitle,
-    description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`,
-  }
-
-  return null
-}
-
-export default SEO
-```
-
-The last step is to return this data with the help of `Helmet`. Your complete SEO component should look like this.
-
-```jsx:title=src/components/seo.js
-import React from "react"
-import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
-import { useLocation } from "@reach/router"
-import { useStaticQuery, graphql } from "gatsby"
-
-const SEO = ({ title, description, image, article }) => {
-  const { pathname } = useLocation()
-  const { site } = useStaticQuery(query)
-
-  const {
-    defaultTitle,
-    titleTemplate,
-    defaultDescription,
-    siteUrl,
-    defaultImage,
-    twitterUsername,
-  } = site.siteMetadata
-
-  const seo = {
-    title: title || defaultTitle,
-    description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`,
-  }
-
-  return (
-    <Helmet title={seo.title} titleTemplate={titleTemplate}>
-      <meta name="description" content={seo.description} />
-      <meta name="image" content={seo.image} />
-
-      {seo.url && <meta property="og:url" content={seo.url} />}
-
-      {(article ? true : null) && <meta property="og:type" content="article" />}
-
-      {seo.title && <meta property="og:title" content={seo.title} />}
-
-      {seo.description && (
-        <meta property="og:description" content={seo.description} />
-      )}
-
-      {seo.image && <meta property="og:image" content={seo.image} />}
-
-      <meta name="twitter:card" content="summary_large_image" />
-
-      {twitterUsername && (
-        <meta name="twitter:creator" content={twitterUsername} />
-      )}
-
-      {seo.title && <meta name="twitter:title" content={seo.title} />}
-
-      {seo.description && (
-        <meta name="twitter:description" content={seo.description} />
-      )}
-
-      {seo.image && <meta name="twitter:image" content={seo.image} />}
-    </Helmet>
-  )
-}
-
-export default SEO
-
-SEO.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  image: PropTypes.string,
-  article: PropTypes.bool,
-}
-
-SEO.defaultProps = {
-  title: null,
-  description: null,
-  image: null,
-  article: false,
-}
-
-const query = graphql`
-  query SEO {
-    site {
-      siteMetadata {
-        defaultTitle: title
-        titleTemplate
-        defaultDescription: description
-        siteUrl: url
-        defaultImage: image
-        twitterUsername
-      }
-    }
-  }
-`
-```
-
-## Examples
-
-You could also put the Facebook and Twitter meta-tags into their own components, add custom favicons you placed in your `static` folder, and add [schema.org](https://schema.org/) data (Google will use that for their [Structured Data](https://developers.google.com/search/docs/guides/intro-structured-data)). To see how that works you can have a look at these two examples:
-
-- [marisamorby.com](https://github.com/marisamorby/marisamorby.com/blob/master/packages/gatsby-theme-blog-sanity/src/components/seo.js)
-- [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic/blob/master/src/components/SEO/SEO.jsx)
-
-As mentioned at the beginning you are also able to use the component in templates, like in [this example](https://github.com/jlengstorf/marisamorby.com/blob/6e86f845185f9650ff95316d3475bb8ac86b15bf/src/templates/post.js#L12-L18).

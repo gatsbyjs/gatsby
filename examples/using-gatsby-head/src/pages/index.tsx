@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link, PageProps, HeadProps } from "gatsby"
+import { graphql, Link, PageProps, HeadFC } from "gatsby"
 import { SEO } from "../components/seo"
 
 type QueryReturn = { allPark: { nodes: { name: string; gatsbyPath: string }[] } }
@@ -29,7 +29,7 @@ const IndexPage: React.FC<PageProps<QueryReturn>> = ({ data }) => {
 
 export default IndexPage
 
-export const Head = ({}: HeadProps<QueryReturn>) => (
+export const Head: HeadFC<QueryReturn> = () => (
   <SEO />
 )
 

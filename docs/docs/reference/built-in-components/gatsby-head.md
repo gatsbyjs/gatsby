@@ -5,59 +5,137 @@ examples:
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-head"
 ---
 
-## Introduction
+> Support for the Gatsby Head API was added in `gatsby@4.19.0`.
 
-- faster
-- easier to use
-- smaller bundle size
+Gatsby includes a built-in `Head` export that allows you to add elements to the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
 
-In 2-3 sentences, give a high-level description of what this feature does,
-why it's important, and when it might be helpful for users.
+Compared to [react-helmet](https://github.com/nfl/react-helmet) or other similar solutions, Gatsby Head is easier to use, more performant, has a smaller bundle size, and is supporting all latest React features.
 
-## Feature Name
+## Using Gatsby Head in your page
 
-Break up this section into multiple headings, as needed.
+By exporting a named function called `Head` you can set the metadata for a page:
 
-Here are some general tips for helpful things to include:
+```jsx:title=src/pages/index.jsx
+import * as React from "react"
 
-- Diagrams or other visuals, to show key processes or architectures.
-  - Make sure to include alt text for accessibility! For
-    help writing great alt text, refer to the W3C alt decision
-    tree: https://www.w3.org/WAI/tutorials/images/decision-tree/
-- Code examples, to show how to use the feature in practice.
-  - Be sure to include all the necessary imports!
-  - Introduce the code snippet with a sentence describing what the code does
-    and which parts the reader should pay particular attention to.
-  - Code snippets should be as close to real-world examples as possible.
-    Avoid using "foobar" examples.
-- Lists of parameters, including:
-  - A description of what it does
-  - The expected data type
-  - The default value
-- Tips for troubleshooting.
-  - Are there any edge cases that readers should be aware of?
-  - What common error messages might readers encounter? How can they
-    resolve the problem?
+const Page = () => <div>Hello World</div>
+export default Page
+
+export function Head() {
+  return (
+    <title>Hello World</title>
+  )
+}
+```
+
+You can also use the arrow function syntax:
+
+```jsx
+export const Head = () => <title>Hello World</title>
+```
+
+When defining multiple metatags use React Fragments:
+
+```jsx
+export const Head = () => (
+  <>
+    <title>Hello World</title>
+    <meta name="description" content="Hello World" />
+  </>
+)
+```
+
+**Please Note:** You'll need to be aware of these things when using Gatsby Head:
+
+- The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
+- The `Head` function needs to return valid JSX.
+- All elements returned from the `Head` function need to be direct children, so no nesting is allowed.
+- Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, and `noscript`.
+- If you want to add `<script />` tags to your pages, use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/).
+
+## Properties
+
+The `Head` function receives these properties:
+
+- `location.pathname`: Returns the Location object's URL's path
+- `params`: The URL parameters when the page has a `matchPath`
+- `data`: Data passed into the page via an exported GraphQL query
+- `pageContext`: A context object which is passed in during the creation of the page
+
+## TypeScript
+
+You can use `HeadProps` to type your `Head` function.
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import type { HeadProps } from "gatsby"
+
+const Page = () => <div>Hello World</div>
+export default Page
+
+export function Head(props: HeadProps) {
+  return (
+    <title>Hello World</title>
+  )
+}
+```
+
+Similar to [`PageProps`](/docs/how-to/custom-configuration/typescript/#pageprops) the `HeadProps` can receive two [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType` and `PageContextType`). This way you can type the `data` prop that gets passed to the `Head` function.
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import { graphql, HeadProps, PageProps } from "gatsby"
+
+type DataProps = {
+  site: {
+    siteMetadata: {
+      title: string
+    }
+  }
+}
+
+const IndexRoute = ({ data: { site } }: PageProps<DataProps>) => {
+  return (
+    <main>
+      <h1>{site.siteMetadata.title}</h1>
+    </main>
+  )
+}
+
+export default IndexRoute
+
+export function Head(props: HeadProps<DataProps>) {
+  return (
+    <title>{props.data.site.siteMetadata.title}</title>
+  )
+}
+
+export const query = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
+
+If you’re using an anonymous function, you can also use the shorthand `HeadFC` type like this:
+
+```tsx
+export const Head: HeadFC<DataProps> = props => {
+  // your return value
+}
+```
 
 ## Current limitations
 
-- No `<html>`
-- No deduplication
+- You can't modify the `<html>` element
+- No deduplication happening for same metatags
 
 ## Additional Resources
 
 - [Adding an SEO component](/docs/how-to/adding-common-features/adding-seo-component)
 - [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#headprops)
 - [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
-
-Include other resources you think readers would benefit from or next steps
-they might want to take after reading your Reference Guide. You can also
-mention any resources that helped you write the article (blog posts, outside
-tutorials, etc.).
-
-- Link to a blog post
-- Link to a YouTube tutorial
-- Link to an example site
-- Link to source code for a live site
-- Links to relevant plugins
-- Links to starters
