@@ -175,7 +175,7 @@ export type HeadProps<DataType = object, PageContextType = object> = {
 /**
  * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
- export type Head<DataType = object, PageContextType = object> = (
+ export type HeadFC<DataType = object, PageContextType = object> = (
   props: HeadProps<DataType, PageContextType>
 ) => JSX.Element
 
