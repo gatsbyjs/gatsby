@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "gatsby": "^4.15.0",
+    "gatsby": "alpha-gatsby-metadata",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
