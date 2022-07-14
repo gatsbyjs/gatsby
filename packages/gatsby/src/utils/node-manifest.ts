@@ -7,6 +7,7 @@ import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
 import fastq from "fastq"
+import { IGatsbyNodePartial } from "../datastore/in-memory/indexing"
 
 interface INodeManifestPage {
   path?: string
@@ -60,9 +61,11 @@ const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit()
  */
 async function findPageOwnedByNode({
   nodeId,
+  fullNode,
   slug,
 }: {
   nodeId: string
+  fullNode: IGatsbyNodePartial
   slug?: string
 }): Promise<{
   page: INodeManifestPage
@@ -70,11 +73,35 @@ async function findPageOwnedByNode({
 }> {
   const state = store.getState()
   const { pages, nodes } = state
-  const { byNode } = state.queries
+  const { byNode, byConnection, trackedComponents } = state.queries
 
-  // the default page path is the first page found in
-  // node id to page query tracking
-  let pagePath = byNode?.get(nodeId)?.values()?.next()?.value
+  const { staticQueryComponents } = state
+  const nodeType = fullNode?.internal?.type
+
+  let pagePath =
+    // the default page path is the first page found in
+    // node id to page query tracking
+    byNode?.get(nodeId)?.values()?.next()?.value ||
+    // otherwise the first page that queries for a list of this node type.
+    // we don't currently store a list of node ids for connection fields to queries
+    // we just store the query to connection types.
+    byConnection.get(nodeType)?.values()?.next()?.value
+
+  // for static queries, we can only find the first page using that static query
+  if (pagePath.startsWith(`sq--`)) {
+    const staticQueryComponentPath =
+      staticQueryComponents.get(pagePath)?.componentPath
+
+    const firstPagePathUsingStaticQueryComponent: string | null =
+      staticQueryComponentPath
+        ? trackedComponents
+            .get(staticQueryComponentPath)
+            ?.pages?.values()
+            ?.next()?.value
+        : null
+
+    pagePath = firstPagePathUsingStaticQueryComponent
+  }
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
@@ -250,6 +277,7 @@ export async function processNodeManifest(
   // map the node to a page that was created
   const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNode({
     nodeId,
+    fullNode,
     // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
     slug: fullNode?.slug as string,
   })
