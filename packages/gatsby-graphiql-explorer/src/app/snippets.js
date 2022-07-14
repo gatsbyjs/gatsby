@@ -1,10 +1,18 @@
+export function removeQueryName(query) {
+  return query.replace(
+    /^[^{(]+([{(])/,
+    (_match, openingCurlyBracketsOrParenthesis) =>
+      `query ${openingCurlyBracketsOrParenthesis}`
+  )
+}
+
 const getQuery = (arg, spaceCount) => {
   const { operationDataList } = arg
-  const { query, name } = operationDataList[0]
-  const newQuery = name ? query : query.replace(/query\s.+{/gim, `{`)
+  const { query } = operationDataList[0]
+  const anonymousQuery = removeQueryName(query)
   return (
     ` `.repeat(spaceCount) +
-    newQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
+    anonymousQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
   )
 }
 
