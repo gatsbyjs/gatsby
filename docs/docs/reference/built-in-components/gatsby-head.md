@@ -45,8 +45,11 @@ export const Head = () => (
 )
 ```
 
-**Please Note:** You'll need to be aware of these things when using Gatsby Head:
+### Usage notes
 
+You'll need to be aware of these things when using Gatsby Head:
+
+- You can only define the `Head` export inside a page, not in a component.
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
 - All elements returned from the `Head` function need to be direct children, so no nesting is allowed.
@@ -61,6 +64,19 @@ The `Head` function receives these properties:
 - `params`: The URL parameters when the page has a `matchPath`
 - `data`: Data passed into the page via an exported GraphQL query
 - `pageContext`: A context object which is passed in during the creation of the page
+
+```jsx
+export const Head = ({ location, params, data, pageContext }) => (
+  <>
+    <title>{pageContext.title}</title>
+    <meta name="description" content={data.page.description} />
+    <meta
+      name="twitter:url"
+      content={`https://www.foobar.tld/${location.pathname}`}
+    />
+  </>
+)
+```
 
 ## Current limitations
 
