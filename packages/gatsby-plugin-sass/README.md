@@ -65,7 +65,8 @@ plugins: [
 ```
 
 ### additionalData
-Prepends Sass/SCSS code before the actual entry file. In this case, the sass-loader will not override the data option but just prepend the entry's content. You might use this to prepend things like environmental variables (as Sass/SCSS variables) or even prepend a global Sass/SCSS import to be used in other Sass/SCSS files (functions, mixins, variables, etc).
+
+Prepends Sass code before the actual entry file. In this case, the `sass-loader` will not override the data option but just prepend the entry's content. You might use this to prepend things like environmental variables (as Sass variables) or even prepend a global Sass import to be used in other Sass files (functions, mixins, variables, etc.).
 
 See [webpack's sass-loader documentation](https://webpack.js.org/loaders/sass-loader/#additionaldata) for reference.
 
@@ -79,6 +80,7 @@ plugins: [
   },
 ]
 ```
+
 ### Alternative Sass Implementations
 
 By default, the Dart implementation of Sass (`sass`) is used. To use the implementation written in Node (`node-sass`), you can install `node-sass` instead of `sass` and pass it into the options as the implementation:
