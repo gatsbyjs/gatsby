@@ -17,10 +17,31 @@ const removePrevHeadElements = () => {
   prevHeadNodes.forEach(e => e.remove())
 }
 
+const removePrevHtmlAttributes = () => {
+  htmlAttributesList.forEach(attributeName => {
+    const elementTag = document.getElementsByTagName(`html`)[0]
+    elementTag.removeAttribute(attributeName)
+  })
+}
+
+const htmlAttributesList = new Set()
+
+const updateAttribute = (tagName, attributeName, attributeValue) => {
+  const elementTag = document.getElementsByTagName(tagName)[0]
+
+  if (!elementTag) {
+    return
+  }
+
+  elementTag.setAttribute(attributeName, attributeValue)
+  htmlAttributesList.add(attributeName)
+}
+
 const onHeadRendered = () => {
   const validHeadNodes = []
 
   removePrevHeadElements()
+  removePrevHtmlAttributes()
 
   for (const node of hiddenRoot.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
@@ -28,9 +49,15 @@ const onHeadRendered = () => {
     if (!VALID_NODE_NAMES.includes(nodeName)) {
       warnForInvalidTags(nodeName)
     } else {
-      const clonedNode = node.cloneNode(true)
-      clonedNode.setAttribute(`data-gatsby-head`, true)
-      validHeadNodes.push(clonedNode)
+      if (nodeName === `html`) {
+        for (const attribute of node.attributes) {
+          updateAttribute(`html`, attribute.name, attribute.value)
+        }
+      } else {
+        const clonedNode = node.cloneNode(true)
+        clonedNode.setAttribute(`data-gatsby-head`, true)
+        validHeadNodes.push(clonedNode)
+      }
     }
   }
 
@@ -77,6 +104,7 @@ export function headHandlerForBrowser({
 
     return () => {
       removePrevHeadElements()
+      removePrevHtmlAttributes()
     }
   })
 }
