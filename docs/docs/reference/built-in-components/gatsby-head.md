@@ -52,7 +52,6 @@ You'll need to be aware of these things when using Gatsby Head:
 - You can only define the `Head` export inside a page, not in a component.
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
-- All elements returned from the `Head` function need to be direct children, so no nesting is allowed.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, and `noscript`.
 - If you want to add `<script />` tags to your pages, use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/).
 
@@ -61,7 +60,7 @@ You'll need to be aware of these things when using Gatsby Head:
 The `Head` function receives these properties:
 
 - `location.pathname`: Returns the Location object's URL's path
-- `params`: The URL parameters when the page has a `matchPath`
+- `params`: The URL parameters when the page has a `matchPath` (when using [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication/))
 - `data`: Data passed into the page via an exported GraphQL query
 - `pageContext`: A context object which is passed in during the creation of the page
 

@@ -211,6 +211,26 @@ For example, here is a structured data snippet in the [JSON-LD format](https://d
 </script>
 ```
 
+Use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) to add this snippet to your page:
+
+```jsx
+<Script type="application/ld+json" id="json-ld-organization">
+  {`
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://www.spookytech.com",
+      "name": "Spooky technologies",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+5-601-785-8543",
+        "contactType": "Customer Support"
+      }
+    }
+  `}
+</Script>
+```
+
 You can use the [Rich Results Test](https://search.google.com/test/rich-results) from Google during local development to check if you pass valid information.
 
 After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
