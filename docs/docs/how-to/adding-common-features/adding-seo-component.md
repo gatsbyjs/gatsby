@@ -1,14 +1,17 @@
 ---
 title: Adding an SEO Component
+examples:
+  - label: Using Gatsby Head
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-head"
 ---
 
 ## Introduction
 
 Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your content, and decide when to surface it in search results. This information also gets displayed when someone shares your website, e.g. on Twitter. Using the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/) you can change the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
 
-Gatsby automatically provides drop-in support for server rendering of metadata and it'll be added to the static HTML pages that Gatsby produces. This helps your site rank and perform better in search engines.
+Gatsby automatically provides drop-in support for server rendering of metadata and it'll be added to the static HTML pages that Gatsby produces. This helps your site rank and perform better in search engines. Gatsby does so in a performant and easy to use way.
 
-By the end of this guide you'll have a reusable `<SEO />` component that you can use in your pages.
+By the end of this guide you'll have a `<SEO />` component that you can use in your pages to define metadata.
 
 ## Prerequisites
 
@@ -48,15 +51,16 @@ For example, here is a structured data snippet in the [JSON-LD format](https://d
 </script>
 ```
 
-You can use the [Rich Results Test](https://search.google.com/test/rich-results) from Google during local development if you pass valid information.
+You can use the [Rich Results Test](https://search.google.com/test/rich-results) from Google during local development to check if you pass valid information.
 
 After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
 
 ## Additional Resources
 
+- [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#headprops)
+- [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
 - [Blog posts about SEO in Gatsby](/blog/tags/seo/)
 - [Audit with Lighthouse](/docs/how-to/performance/audit-with-lighthouse/)
-- [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
 
 ---
 

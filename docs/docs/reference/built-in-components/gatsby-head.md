@@ -1,8 +1,15 @@
 ---
 title: Gatsby Head API
+examples:
+  - label: Using Gatsby Head
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-head"
 ---
 
 ## Introduction
+
+- faster
+- easier to use
+- smaller bundle size
 
 In 2-3 sentences, give a high-level description of what this feature does,
 why it's important, and when it might be helpful for users.
@@ -32,9 +39,15 @@ Here are some general tips for helpful things to include:
   - What common error messages might readers encounter? How can they
     resolve the problem?
 
+## Current limitations
+
+- No `<html>`
+- No deduplication
+
 ## Additional Resources
 
 - [Adding an SEO component](/docs/how-to/adding-common-features/adding-seo-component)
+- [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#headprops)
 - [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
 
 Include other resources you think readers would benefit from or next steps

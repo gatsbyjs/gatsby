@@ -1,7 +1,7 @@
 ---
 title: TypeScript and Gatsby
 examples:
-  - label: Using Typescript
+  - label: Using TypeScript
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-typescript"
   - label: Using vanilla-extract
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract"
@@ -221,6 +221,10 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 ```
 
 Read the [Gatsby Node APIs documentation](/docs/reference/config-files/gatsby-node/) to learn more about its different APIs.
+
+### HeadProps
+
+TODO
 
 ### Local Plugins
 
