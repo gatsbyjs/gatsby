@@ -222,6 +222,73 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 
 Read the [Gatsby Node APIs documentation](/docs/reference/config-files/gatsby-node/) to learn more about its different APIs.
 
+### Gatsby Head API
+
+You can use `HeadProps` to type your [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import type { HeadProps } from "gatsby"
+
+const Page = () => <div>Hello World</div>
+export default Page
+
+export function Head(props: HeadProps) {
+  return (
+    <title>Hello World</title>
+  )
+}
+```
+
+Similar to [`PageProps`](#pageprops) the `HeadProps` can receive two [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType` and `PageContextType`). This way you can type the `data` prop that gets passed to the `Head` function.
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import { graphql, HeadProps, PageProps } from "gatsby"
+
+type DataProps = {
+  site: {
+    siteMetadata: {
+      title: string
+    }
+  }
+}
+
+const IndexRoute = ({ data: { site } }: PageProps<DataProps>) => {
+  return (
+    <main>
+      <h1>{site.siteMetadata.title}</h1>
+    </main>
+  )
+}
+
+export default IndexRoute
+
+export function Head(props: HeadProps<DataProps>) {
+  return (
+    <title>{props.data.site.siteMetadata.title}</title>
+  )
+}
+
+export const query = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
+
+If you’re using an anonymous function, you can also use the shorthand `HeadFC` type like this:
+
+```tsx
+export const Head: HeadFC<DataProps> = props => {
+  // your return value
+}
+```
+
 ### Local Plugins
 
 > Support added in `gatsby@4.9.0`
