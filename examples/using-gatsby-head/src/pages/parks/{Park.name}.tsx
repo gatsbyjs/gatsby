@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link, PageProps, HeadProps } from "gatsby"
 import { SEO } from "../../components/seo"
 
-type QueryReturn = { park: { name: string; description: string; gatsbyPath: string } }
+type QueryReturn = { park: { name: string; description: string } }
 
 const ParkPage: React.FC<PageProps<QueryReturn>> = ({ data }) => {
   return (
@@ -18,9 +18,9 @@ const ParkPage: React.FC<PageProps<QueryReturn>> = ({ data }) => {
 
 export default ParkPage
 
-export const Head = ({ data: { park } }: HeadProps<QueryReturn>) => (
-  <SEO title={park.name} description={park.description} pathname={park.gatsbyPath}>
-    <link key="favicon-emoji" rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>" />
+export const Head = ({ data: { park }, location }: HeadProps<QueryReturn>) => (
+  <SEO title={park.name} description={park.description} pathname={location.pathname}>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>" />
   </SEO>
 )
 
@@ -29,7 +29,6 @@ export const query = graphql`
     park(id: { eq: $id }) {
       name
       description
-      gatsbyPath(filePath: "/parks/{Park.name}")
     }
   }
 `

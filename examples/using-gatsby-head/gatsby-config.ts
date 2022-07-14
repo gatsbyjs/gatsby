@@ -8,6 +8,7 @@ const config: GatsbyConfig = {
     image: `/gatsby-icon.png`,
     siteUrl: `https://www.yourdomain.tld`,
   },
+  trailingSlash: `never`,
   plugins: [],
 }
 
