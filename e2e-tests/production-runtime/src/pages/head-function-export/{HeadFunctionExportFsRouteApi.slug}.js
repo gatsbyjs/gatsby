@@ -1,10 +1,9 @@
 import * as React from "react"
 
-export default function HeadFunctionExportFsRouteApi(props) {
+export default function HeadFunctionExportFsRouteApi() {
   return (
     <>
       <h1>I test usage for the Head function export with the FS Route API</h1>
-      <pre>{JSON.stringify(props, null, 2)}</pre>
     </>
   )
 }
