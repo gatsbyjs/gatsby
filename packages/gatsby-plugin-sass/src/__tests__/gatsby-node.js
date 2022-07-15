@@ -73,6 +73,7 @@ describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
       `"implementation" must be of type object`,
+      `"additionalData" must be one of [string, object]`,
       `"cssLoaderOptions" must be of type object`,
       `"postCssPlugins" must be an array`,
       `"sassRuleTest" must be of type object`,
@@ -99,6 +100,7 @@ describe(`pluginOptionsSchema`, () => {
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      additionalData: 123, // should be a string or an object
       implementation: `This should be a require() thing`,
       postCssPlugins: `This should be an array of postCss plugins`,
       cssLoaderOptions: `This should be an object of css-loader options`,
@@ -132,6 +134,7 @@ describe(`pluginOptionsSchema`, () => {
 
   it(`should validate the schema`, async () => {
     const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      additionalData: `$test: #000;`,
       implementation: require(`../gatsby-node.js`),
       cssLoaderOptions: { camelCase: false },
       postCssPlugins: [require(`autoprefixer`)],

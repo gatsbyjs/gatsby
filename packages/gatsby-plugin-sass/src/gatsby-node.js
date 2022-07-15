@@ -96,8 +96,8 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `By default the node implementation of Sass (node-sass) is used. To use the implementation written in Dart (dart-sass), you can install sass instead of node-sass and pass it into the options as the implementation`
       ),
-    additionalData: Joi.object({})
-      .unknown(true)
+    additionalData: Joi.alternatives()
+      .try(Joi.string(), Joi.function())
       .description(
         `Prepends Sass/SCSS code before the actual entry file. In this case, the sass-loader will not override the data option but just prepend the entry's content. Learn more at: https://webpack.js.org/loaders/sass-loader/#additionaldata`
       ),
