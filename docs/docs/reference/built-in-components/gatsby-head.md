@@ -28,7 +28,7 @@ export function Head() {
 }
 ```
 
-You can also use the arrow function syntax:
+The arrow function syntax is also valid:
 
 ```jsx
 export const Head = () => <title>Hello World</title>
@@ -43,6 +43,18 @@ export const Head = () => (
     <meta name="description" content="Hello World" />
   </>
 )
+```
+
+You can also re-export a `Head` function in your page from another file:
+
+```jsx:title=src/pages/index.jsx
+import * as React from "react"
+
+const Page = () => <div>Hello World</div>
+export default Page
+
+// highlight-next-line
+export { Head } from "../another/location"
 ```
 
 ### Usage notes
@@ -79,8 +91,8 @@ export const Head = ({ location, params, data, pageContext }) => (
 
 ## Current limitations
 
-- You can't modify the `<html>` element
-- No deduplication happening for same metatags
+- You can't modify the `<html>` element to e.g. set the `lang` attribute.
+- No deduplication happening for same metatags, e.g. if you set a favicon in the general SEO component and set it again in another page, both favicons are inserted.
 
 ## Additional Resources
 
