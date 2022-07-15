@@ -3,9 +3,9 @@ import headFunctionExportSharedData from "../../../shared-data/head-function-exp
 it(`Head function export receive correct props`, () => {
   cy.visit(headFunctionExportSharedData.page.deduplication).waitForRouteChange()
 
-  // icon has id and should be deduplicated
+  // deduplication link has id and should be deduplicated
   cy.get(`link[rel=deduplication]`).should("have.length", 1)
-  // last icon should win
+  // last deduplication link should win
   cy.get(`link[rel=deduplication]`).should("have.attr", "href", "/bar")
   // we should preserve id
   cy.get(`link[rel=deduplication]`).should(
