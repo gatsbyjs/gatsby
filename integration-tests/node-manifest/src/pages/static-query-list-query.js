@@ -1,7 +1,18 @@
 import React from "react"
 import { graphql } from "gatsby"
+import { useStaticQuery } from "gatsby"
 
-export default function TestConnectionStaticQueryListQueryType({ data }) {
+export default function TestConnectionStaticQueryListQueryType() {
+  const data = useStaticQuery(graphql`
+    query TestConnectionStaticQueryListQueryType {
+      allTestConnectionStaticQueryListQueryType {
+        nodes {
+          title
+        }
+      }
+    }
+  `)
+
   return (
     <div>
       <h1>TestConnectionStaticQueryListQueryType</h1>
@@ -11,13 +22,3 @@ export default function TestConnectionStaticQueryListQueryType({ data }) {
     </div>
   )
 }
-
-export const query = graphql`
-  query TestConnectionStaticQueryListQueryType {
-    allTestConnectionStaticQueryListQueryType {
-      nodes {
-        title
-      }
-    }
-  }
-`
