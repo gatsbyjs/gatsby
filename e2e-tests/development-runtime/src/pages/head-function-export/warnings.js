@@ -14,7 +14,6 @@ export function Head() {
   return (
     <>
       <h1 data-testid="h1">hello</h1>
-      <script data-testid="script">{`console.log('hello')`}</script>
     </>
   )
 }

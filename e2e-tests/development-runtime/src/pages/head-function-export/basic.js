@@ -28,6 +28,7 @@ export function Head() {
     style,
     link,
     extraMeta,
+    jsonLD
   } = data.static
 
   return (
@@ -50,6 +51,9 @@ export function Head() {
         name="extra-meta-for-hot-reloading"
         content="%SOME_EXTRA_META%"
       />
+      <script data-testid="jsonLD" type="application/ld+json">
+        {jsonLD}
+      </script>
     </>
   )
 }
