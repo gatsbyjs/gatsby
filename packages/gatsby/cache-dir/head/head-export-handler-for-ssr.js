@@ -15,6 +15,7 @@ const { VALID_NODE_NAMES } = require(`./constants`)
 export function headHandlerForSSR({
   pageComponent,
   setHeadComponents,
+  setHtmlAttributes,
   staticQueryContext,
   pageData,
   pagePath,
@@ -60,6 +61,9 @@ export function headHandlerForSSR({
       if (!VALID_NODE_NAMES.includes(rawTagName)) {
         warnForInvalidTags(rawTagName)
       } else {
+        if (rawTagName === `html`) {
+          setHtmlAttributes(attributes)
+        }
         const element = createElement(
           rawTagName,
           {

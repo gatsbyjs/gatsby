@@ -201,6 +201,7 @@ export default async function staticPage({
     headHandlerForSSR({
       pageComponent,
       setHeadComponents,
+      setHtmlAttributes,
       staticQueryContext,
       pageData,
       pagePath,
