@@ -640,7 +640,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(46)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
-    expect(actions.touchNode).toHaveBeenCalledTimes(32)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -730,7 +730,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(54)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
-    expect(actions.touchNode).toHaveBeenCalledTimes(72)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -883,7 +883,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(52)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(actions.touchNode).toHaveBeenCalledTimes(2)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -969,7 +969,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(54)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(actions.touchNode).toHaveBeenCalledTimes(2)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
