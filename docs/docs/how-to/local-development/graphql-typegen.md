@@ -31,7 +31,7 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
 1. Gatsby created a type generation file which you should see at `src/gatsby-types.d.ts`. It contains the TypeScript types for your queries. Your `tsconfig.json` should include this file so that you can access the `namespace Queries` everywhere in your project.
 1. Create a new page at `src/pages/typegen.tsx` with the following contents:
 
-   ```tsx
+   ```tsx:title=src/pages/typegen.tsx
    import * as React from "react"
    import { graphql, PageProps } from "gatsby"
 
@@ -63,17 +63,23 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
 
    It is important that your query has a name (here: `query TypegenPage {}`) as otherwise the automatic type generation doesn't work. We recommend naming the query the same as your React component and using [PascalCase](https://en.wiktionary.org/wiki/Pascal_case). You can enforce this requirement by using [`graphql-eslint`](#graphql-eslint).
 
-1. Access the `Queries` namespace and use the `TypegenPage` type in your React component like so:
+1. Access the `Queries` namespace and use the `TypegenPageQuery` type in your React component like so:
 
-   ```ts
-   ({ data }: PageProps<Queries.TypegenPage>)
+   ```tsx
+   ({ data }: PageProps<Queries.TypegenPageQuery>)
    ```
 
    When you type out the site title like this you should get TypeScript IntelliSense:
 
-   ```jsx
+   ```tsx
    <p>Site title: {data.site?.siteMetadata?.title}</p>
    ```
+
+### Configuring the gatsby-config option
+
+Instead of setting a boolean value for the `graphqlTypegen` option in `gatsby-config` you can also set an object to configure it. See all details in the [gatsby-config documentation](/docs/reference/config-files/gatsby-config/#graphqltypegen).
+
+If for example you use `typesOutputPath` to specify a different path, make sure to also update the `"include"` setting in your `tsconfig.json` to include the new path.
 
 ### Non-Nullable types
 
@@ -81,7 +87,7 @@ As Gatsby [infers all fields](/docs/glossary#inference) — unless an explicit s
 
 If you're sure that `siteMetadata.title` is always available you can use Gatsby's schema customization API to explicitly type your fields:
 
-```js:title=gatsby-node.ts
+```ts:title=gatsby-node.ts
 import { GatsbyNode } from "gatsby"
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }) => {
@@ -222,3 +228,4 @@ You can now use `npm run lint` and `npm run lint:fix` to check your GraphQL quer
 - [Gatsby with TypeScript](/docs/how-to/custom-configuration/typescript)
 - [VSCode GraphQL Plugin](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql)
 - [IntelliJ GraphQL Plugin](https://plugins.jetbrains.com/plugin/8097-graphql)
+- [gatsby-config Option](/docs/reference/config-files/gatsby-config/#graphqltypegen)

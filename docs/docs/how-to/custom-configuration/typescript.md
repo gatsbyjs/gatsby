@@ -292,31 +292,6 @@ Parcel is used for the compilation and it currently has [limitations on TypeScri
 - No support for `baseUrl` or `paths` inside `tsconfig.json`
 - It implicitly enables the [`isolatedModules`](https://www.typescriptlang.org/tsconfig#isolatedModules) option by default
 
-### `__dirname`
-
-You can't use `__dirname` and `__filename` in your files. You'll need to replace these instances with a `path.resolve` call. Example diff for a `gatsby-config` file:
-
-```diff
-+ import path from "path"
-
-const config = {
-  plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `your-name`,
-+       path: path.resolve(`some/folder`),
--       path: `${__dirname}/some/folder`,
-      },
-    },
-  ]
-}
-
-export default config
-```
-
-Progress on this is tracked in [Parcel #7611](https://github.com/parcel-bundler/parcel/issues/7611).
-
 ### `require.resolve`
 
 You can't use `require.resolve` in your files. You'll need to replace these instances with a `path.resolve` call. Example diff for a `gatsby-node` file:

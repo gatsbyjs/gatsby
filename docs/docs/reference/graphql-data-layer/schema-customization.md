@@ -1067,7 +1067,7 @@ export const query = graphql`
         name
         firstName
         email
-        __typeName
+        __typename
         ... on AuthorJson {
           joinedAt
         }
@@ -1085,12 +1085,12 @@ export const query = graphql`
 `
 ```
 
-Including the `__typeName` introspection field allows to check the node type when iterating
+Including the `__typename` introspection field allows to check the node type when iterating
 over the query results in your component:
 
 ```js
 data.allTeamMember.nodes.map(node => {
-  switch (node.__typeName) {
+  switch (node.__typename) {
     case `AuthorJson`:
       return <Author {...node} />
     case `ContributorJson`:

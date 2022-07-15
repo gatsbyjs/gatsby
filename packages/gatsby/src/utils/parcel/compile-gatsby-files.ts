@@ -1,12 +1,25 @@
 import { Parcel } from "@parcel/core"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
-import { ensureDir, emptyDir, existsSync } from "fs-extra"
+import { ensureDir, emptyDir, existsSync, remove } from "fs-extra"
 import telemetry from "gatsby-telemetry"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
 export const gatsbyFileRegex = `gatsby-+(node|config).ts`
+const RETRY_COUNT = 5
+
+function getCacheDir(siteRoot: string): string {
+  return `${siteRoot}/${PARCEL_CACHE_DIR}`
+}
+
+function exponentialBackoff(retry: number): Promise<void> {
+  if (retry === 0) {
+    return Promise.resolve()
+  }
+  const timeout = 50 * Math.pow(2, retry)
+  return new Promise(resolve => setTimeout(resolve, timeout))
+}
 
 /**
  * Construct Parcel with config.
@@ -31,7 +44,7 @@ export function constructParcel(siteRoot: string): Parcel {
         distDir: `${siteRoot}/${COMPILED_CACHE_DIR}`,
       },
     },
-    cacheDir: `${siteRoot}/${PARCEL_CACHE_DIR}`,
+    cacheDir: getCacheDir(siteRoot),
   })
 }
 
@@ -39,25 +52,72 @@ export function constructParcel(siteRoot: string): Parcel {
  * Compile known gatsby-* files (e.g. `gatsby-config`, `gatsby-node`)
  * and output in `<SITE_ROOT>/.cache/compiled`.
  */
-export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
+export async function compileGatsbyFiles(
+  siteRoot: string,
+  retry: number = 0
+): Promise<void> {
   try {
-    const parcel = constructParcel(siteRoot)
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
     await ensureDir(distDir)
     await emptyDir(distDir)
+
+    await exponentialBackoff(retry)
+
+    const parcel = constructParcel(siteRoot)
     const { bundleGraph } = await parcel.run()
 
-    if (telemetry.isTrackingEnabled()) {
-      const bundles = bundleGraph.getBundles()
+    await exponentialBackoff(retry)
 
-      if (bundles.length === 0) return
+    const bundles = bundleGraph.getBundles()
 
-      let compiledTSFilesCount = 0
-      for (const bundle of bundles) {
-        if (bundle?.getMainEntry()?.filePath?.endsWith(`.ts`)) {
+    if (bundles.length === 0) return
+
+    let compiledTSFilesCount = 0
+    for (const bundle of bundles) {
+      // validate that output exists and is valid
+      try {
+        delete require.cache[bundle.filePath]
+        require(bundle.filePath)
+      } catch (e) {
+        if (retry >= RETRY_COUNT) {
+          reporter.panic({
+            id: `11904`,
+            context: {
+              siteRoot,
+              retries: RETRY_COUNT,
+              compiledFileLocation: bundle.filePath,
+              sourceFileLocation: bundle.getMainEntry()?.filePath,
+            },
+          })
+        } else if (retry > 0) {
+          // first retry is most flaky and it seems it always get in good state
+          // after that - most likely cache clearing is the trick that fixes the problem
+          reporter.verbose(
+            `Failed to import compiled file "${
+              bundle.filePath
+            }" after retry, attempting another retry (#${
+              retry + 1
+            } of ${RETRY_COUNT}) - "${e.message}"`
+          )
+        }
+
+        // sometimes parcel cache gets in weird state
+        await remove(getCacheDir(siteRoot))
+
+        await compileGatsbyFiles(siteRoot, retry + 1)
+        return
+      }
+
+      const mainEntry = bundle.getMainEntry()?.filePath
+      // mainEntry won't exist for shared chunks
+      if (mainEntry) {
+        if (mainEntry.endsWith(`.ts`)) {
           compiledTSFilesCount = compiledTSFilesCount + 1
         }
       }
+    }
+
+    if (telemetry.isTrackingEnabled()) {
       telemetry.trackCli(`PARCEL_COMPILATION_END`, {
         valueInteger: compiledTSFilesCount,
         name: `count of compiled ts files`,
@@ -72,6 +132,7 @@ export async function compileGatsbyFiles(siteRoot: string): Promise<void> {
         error,
         context: {
           siteRoot,
+          sourceMessage: error.message,
         },
       })
     }

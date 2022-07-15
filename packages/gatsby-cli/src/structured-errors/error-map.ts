@@ -64,6 +64,17 @@ const errors = {
     type: Type.WEBPACK,
     level: Level.ERROR,
   },
+  "98011": {
+    text: (context): string =>
+      `Rendering Engines attempted to use unsupported "${
+        context.package
+      }" package${
+        context.importedBy ? ` (imported by "${context.importedBy}")` : ``
+      }${context.advisory ? `\n\n${context.advisory}` : ``}`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "98123": {
     text: (context): string =>
       `${context.stageLabel} failed\n\n${
@@ -366,6 +377,13 @@ const errors = {
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
       `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
       `\nare not supported in the root gatsby-config.`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "10127": {
+    text: (context): string =>
+      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js". Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -708,10 +726,25 @@ const errors = {
   },
   "11903": {
     text: (context): string =>
-      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.`,
+      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.\n${context.sourceMessage}`,
     level: Level.ERROR,
     type: Type.COMPILATION,
     category: ErrorCategory.USER,
+  },
+  "11904": {
+    text: (context): string =>
+      `Expected compiled files not found after compilation for ${
+        context.siteRoot
+      } after ${context.retries} retries.\nFile expected to be valid: ${
+        context.compiledFileLocation
+      }${
+        context.sourceFileLocation
+          ? `\nCompiled from: ${context.sourceFileLocation}`
+          : ``
+      }\n\nPlease run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.SYSTEM,
   },
   "12100": {
     text: (

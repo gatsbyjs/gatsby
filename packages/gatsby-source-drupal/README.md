@@ -70,6 +70,18 @@ When you're using Gatsby Image CDN you no longer need Gatsby to fetch all of the
   },
 ```
 
+Note that this option will cause this plugin to fetch extra image metadata for Image CDN. If you need to use the `skipFileDownloads` option but don't want to use Image CDN and fetch extra metadata, you can disable it by explicitly turning Image CDN off:
+
+```js
+  {
+    resolve: `gatsby-source-drupal`,
+    options: {
+      imageCDN: false,
+      // other plugin options go here
+    },
+  },
+```
+
 #### Local dev improvements
 
 Using Image CDN also speeds up your local development startup times when running `gatsby develop`. Instead of fetching all files locally, `gatsby develop` has a local Image CDN emulator.
@@ -218,6 +230,26 @@ module.exports = {
 }
 ```
 
+One case where custom headers can be useful is if your webserver returns a `406 Not Acceptable` response.
+This happens when it requires narrow conformance with the JSON:API MIME type (e.g. Apache2 with security
+module enabled).
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        // ...
+        headers: {
+          accept: "application/vnd.api+json",
+        },
+      },
+    },
+  ],
+}
+```
+
 ## GET Search Params
 
 You can append optional GET request params to the request url using `params` option.
@@ -306,6 +338,12 @@ module.exports = {
 ## Concurrent API Requests
 
 You can use the `concurrentAPIRequests` option to change how many simultaneous API requests are made to the server/service. 20 is the default and seems to be the fastest for most sites.
+
+## API Request Timeout
+
+You can use the `requestTimeoutMS` option to set the request timeout for API requests. API requests sometimes stall and we want to retry these instead of endlessly waiting.
+
+The default is 30000ms. Very large sites might need to increase this.
 
 ## Disallowed Link Types
 

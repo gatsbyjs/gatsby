@@ -225,6 +225,11 @@ export function queriesReducer(
       return state
     }
     case `MERGE_WORKER_QUERY_STATE`: {
+      // This action may be dispatched in cases where queries might not be included in the merge data
+      if (!action.payload.queryStateChunk) {
+        return state
+      }
+
       assertCorrectWorkerState(action.payload)
 
       state = mergeWorkerDataDependencies(state, action.payload)

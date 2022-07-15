@@ -111,7 +111,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler?: (
       args: yargs.Arguments,
       cmd: (args: yargs.Arguments) => void
-    ) => void
+    ) => void,
+    nodeEnv?: string | undefined
   ): (argv: yargs.Arguments) => void {
     return (argv: yargs.Arguments): void => {
       report.setVerbose(!!argv.verbose)
@@ -123,6 +124,12 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
       process.env.gatsby_executing_command = command
       report.verbose(`set gatsby_executing_command: "${command}"`)
+
+      // This is to make sure that the NODE_ENV is set before resolveLocalCommand is called
+      // This way, cache-lmdb uses the same DB files in main & workers
+      if (nodeEnv) {
+        process.env.NODE_ENV = nodeEnv
+      }
 
       const localCmd = resolveLocalCommand(command)
       const args = { ...argv, ...siteInfo, report, useYarn, setStore }
@@ -202,8 +209,6 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       getCommandHandler(
         `develop`,
         (args: yargs.Arguments, cmd: (args: yargs.Arguments) => unknown) => {
-          process.env.NODE_ENV = process.env.NODE_ENV || `development`
-
           if (Object.prototype.hasOwnProperty.call(args, `inspect`)) {
             args.inspect = args.inspect || 9229
           }
@@ -216,7 +221,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           // The development server shouldn't ever exit until the user directly
           // kills it so this is fine.
           return new Promise(() => {})
-        }
+        },
+        process.env.NODE_ENV || `development`
       )
     ),
   })
@@ -270,10 +276,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler: handlerP(
       getCommandHandler(
         `build`,
-        (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) => {
-          process.env.NODE_ENV = `production`
-          return cmd(args)
-        }
+        (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
+          cmd(args),
+        `production`
       )
     ),
   })
@@ -313,10 +318,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
     handler: getCommandHandler(
       `serve`,
-      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) => {
-        process.env.NODE_ENV = process.env.NODE_ENV || `production`
-        return cmd(args)
-      }
+      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
+        cmd(args),
+      process.env.NODE_ENV || `production`
     ),
   })
 
@@ -385,10 +389,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     describe: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.com/docs/gatsby-repl/)`,
     handler: getCommandHandler(
       `repl`,
-      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) => {
-        process.env.NODE_ENV = process.env.NODE_ENV || `development`
-        return cmd(args)
-      }
+      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
+        cmd(args),
+      process.env.NODE_ENV || `development`
     ),
   })
 

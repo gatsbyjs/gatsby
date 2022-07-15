@@ -10,7 +10,9 @@ including resizing, cropping, and creating responsive images.
 
 ## Install
 
-`npm install gatsby-transformer-sharp gatsby-plugin-sharp`
+```shell
+npm install gatsby-transformer-sharp gatsby-plugin-sharp
+```
 
 ## How to use
 

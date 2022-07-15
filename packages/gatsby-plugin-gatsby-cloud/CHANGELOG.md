@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.16.0/packages/gatsby-plugin-gatsby-cloud) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Chores
+
+- add note about auto installation [#35766](https://github.com/gatsbyjs/gatsby/issues/35766) ([1ea9358](https://github.com/gatsbyjs/gatsby/commit/1ea9358e1943f494608bf4523e3fda2f461560a0))
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.15.0/packages/gatsby-plugin-gatsby-cloud) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Features
+
+- Remove preview UI [#35586](https://github.com/gatsbyjs/gatsby/issues/35586) ([e3d57c0](https://github.com/gatsbyjs/gatsby/commit/e3d57c0fb8ab8a89b29fd613a519340574b1239a))
+
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.14.0/packages/gatsby-plugin-gatsby-cloud) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
