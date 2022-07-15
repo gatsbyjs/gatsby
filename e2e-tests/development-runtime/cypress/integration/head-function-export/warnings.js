@@ -18,11 +18,4 @@ describe(`Head function export should warn`, () => {
       )}`
     )
   })
-
-  it(`for scripts that could use the script component`, () => {
-    cy.get(`@consoleWarn`).should(
-      `be.calledWith`,
-      `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
-    )
-  })
 })
