@@ -9,7 +9,7 @@ examples:
 
 Gatsby includes a built-in `Head` export that allows you to add elements to the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
 
-Compared to [react-helmet](https://github.com/nfl/react-helmet) or other similar solutions, Gatsby Head is easier to use, more performant, has a smaller bundle size, and is supporting all latest React features.
+Compared to [react-helmet](https://github.com/nfl/react-helmet) or other similar solutions, Gatsby Head is easier to use, more performant, has a smaller bundle size, and supports the latest React features.
 
 ## Using Gatsby Head in your page
 
@@ -53,7 +53,7 @@ You'll need to be aware of these things when using Gatsby Head:
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, and `noscript`.
-- If you want to add `<script />` tags to your pages, use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/).
+- For most `<script>` tag use cases you should use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 
 ## Properties
 
