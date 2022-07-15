@@ -53,7 +53,7 @@ You'll need to be aware of these things when using Gatsby Head:
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, and `noscript`.
-- For most `<script>` tag use cases you should use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
+- Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 
 ## Properties
 
