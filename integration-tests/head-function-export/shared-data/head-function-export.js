@@ -7,6 +7,7 @@ const page = {
   staticQuery: `${path}/static-query-component/`,
   warnings: `${path}/warnings/`,
   allProps: `${path}/all-props/`,
+  deduplication: `${path}/deduplication/`,
 }
 
 const data = {

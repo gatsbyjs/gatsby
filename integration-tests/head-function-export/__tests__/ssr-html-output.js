@@ -73,4 +73,23 @@ describe(`Head function export SSR'ed HTML output`, () => {
     expect(style.text).toContain(data.queried.style)
     expect(link.attributes.href).toEqual(data.queried.link)
   })
+
+  it(`deduplicates multiple tags with same id`, () => {
+    const html = readFileSync(`${publicDir}${page.deduplication}/index.html`)
+    const dom = parse(html)
+
+    // deduplication link has id and should be deduplicated
+    expect(dom.querySelectorAll(`link[rel=deduplication]`)?.length).toEqual(1)
+    // last deduplication link should win
+    expect(
+      dom.querySelector(`link[rel=deduplication]`)?.attributes?.href
+    ).toEqual("/bar")
+    // we should preserve id
+    expect(
+      dom.querySelector(`link[rel=deduplication]`)?.attributes?.id
+    ).toEqual("deduplication-test")
+
+    // alternate links are not using id, so should have multiple instances
+    expect(dom.querySelectorAll(`link[rel=alternate]`)?.length).toEqual(2)
+  })
 })
