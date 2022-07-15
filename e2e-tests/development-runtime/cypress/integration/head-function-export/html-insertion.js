@@ -15,6 +15,7 @@ describe(`Head function export html insertion`, () => {
     cy.getTestElement(`link`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.link)
+    cy.getTestElement(`jsonLD`).should(`have.text`, data.static.jsonLD)
   })
 
   it(`should work with data from a page query`, () => {
@@ -47,6 +48,7 @@ describe(`Head function export html insertion`, () => {
     cy.getTestElement(`link`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.link)
+    cy.getTestElement(`jsonLD`).should(`have.text`, data.static.jsonLD)
   })
 
   it(`should work when an imported Head component with queried data is used`, () => {

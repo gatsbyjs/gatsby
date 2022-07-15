@@ -18,14 +18,15 @@ function getNodes(dom) {
   const noscript = dom.querySelector(`[data-testid=noscript]`)
   const style = dom.querySelector(`[data-testid=style]`)
   const link = dom.querySelector(`[data-testid=link]`)
-  return { base, title, meta, noscript, style, link }
+  const jsonLD = dom.querySelector(`[data-testid=jsonLD]`)
+  return { base, title, meta, noscript, style, link, jsonLD }
 }
 
 describe(`Head function export SSR'ed HTML output`, () => {
   it(`should work with static data`, () => {
     const html = readFileSync(`${publicDir}${page.basic}/index.html`)
     const dom = parse(html)
-    const { base, title, meta, noscript, style, link } = getNodes(dom)
+    const { base, title, meta, noscript, style, link, jsonLD } = getNodes(dom)
 
     expect(base.attributes.href).toEqual(data.static.base)
     expect(title.text).toEqual(data.static.title)
@@ -33,6 +34,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
     expect(noscript.text).toEqual(data.static.noscript)
     expect(style.text).toContain(data.static.style)
     expect(link.attributes.href).toEqual(data.static.link)
+    expect(jsonLD.text).toEqual(data.static.jsonLD)
   })
 
   it(`should work with data from a page query`, () => {
@@ -51,7 +53,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
   it(`should work when a Head function with static data is re-exported from the page`, () => {
     const html = readFileSync(`${publicDir}${page.reExport}/index.html`)
     const dom = parse(html)
-    const { base, title, meta, noscript, style, link } = getNodes(dom)
+    const { base, title, meta, noscript, style, link, jsonLD } = getNodes(dom)
 
     expect(base.attributes.href).toEqual(data.static.base)
     expect(title.text).toEqual(data.static.title)
@@ -59,6 +61,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
     expect(noscript.text).toEqual(data.static.noscript)
     expect(style.text).toContain(data.static.style)
     expect(link.attributes.href).toEqual(data.static.link)
+    expect(jsonLD.text).toEqual(data.static.jsonLD)
   })
 
   it(`should work when an imported Head component with queried data is used`, () => {
