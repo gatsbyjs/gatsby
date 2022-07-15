@@ -39,20 +39,15 @@ if (process.env.NODE_ENV !== `production`) {
   }
 }
 
-export { warnOnce }
-
 /**
  * Warn for invalid tags in head.
  * @param {string} tagName
  */
 export function warnForInvalidTags(tagName) {
   if (process.env.NODE_ENV !== `production`) {
-    const warning =
-      tagName !== `script`
-        ? `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
-            `, `
-          )}`
-        : `Do not add scripts here. Please use the <Script> component in your page template instead. For more info see: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-script/`
+    const warning = `<${tagName}> is not a valid head element. Please use one of the following: ${VALID_NODE_NAMES.join(
+      `, `
+    )}`
 
     warnOnce(warning)
   }
