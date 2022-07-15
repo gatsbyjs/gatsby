@@ -17,6 +17,7 @@ const data = {
     noscript: `You take romance - I will take Jell-O!`,
     style: `rebeccapurple`,
     link: `/used-by-head-function-export-basic.css`,
+    jsonLD: `{"@context":"https://schema.org","@type":"Organization","url":"https://www.spookytech.com","name":"Spookytechnologies","contactPoint":{"@type":"ContactPoint","telephone":"+5-601-785-8543","contactType":"CustomerSupport"}}`
   },
   queried: {
     base: `http://localhost:8000`,
