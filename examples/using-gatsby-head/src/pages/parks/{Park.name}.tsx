@@ -21,6 +21,21 @@ export default ParkPage
 export const Head: HeadFC<QueryReturn> = ({ data: { park }, location }) => (
   <SEO title={park.name} description={park.description} pathname={location.pathname}>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>" />
+    <script type="application/ld+json">
+      {`
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "url": "https://www.spookytech.com",
+  "name": "Spooky technologies",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+5-601-785-8543",
+    "contactType": "Customer Support"
+  }
+}
+      `}
+    </script>
   </SEO>
 )
 
