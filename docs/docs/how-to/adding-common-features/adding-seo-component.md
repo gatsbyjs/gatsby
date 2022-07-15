@@ -185,7 +185,7 @@ export const Head = () => (
 
 ## Additional Information
 
-If you want to add `<script />` tags to your pages, use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/).
+Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 
 ### Rich Snippets
 
@@ -209,26 +209,6 @@ For example, here is a structured data snippet in the [JSON-LD format](https://d
     }
   `}
 </script>
-```
-
-Use the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) to add this snippet to your page:
-
-```jsx
-<Script type="application/ld+json" id="json-ld-organization">
-  {`
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "url": "https://www.spookytech.com",
-      "name": "Spooky technologies",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+5-601-785-8543",
-        "contactType": "Customer Support"
-      }
-    }
-  `}
-</Script>
 ```
 
 You can use the [Rich Results Test](https://search.google.com/test/rich-results) from Google during local development to check if you pass valid information.
