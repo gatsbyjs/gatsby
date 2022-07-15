@@ -1,6 +1,6 @@
 import headFunctionExportSharedData from "../../../shared-data/head-function-export.js"
 
-it(`Deduplicates tags multiple tags with same id`, () => {
+it(`Deduplicates multiple tags with same id`, () => {
   cy.visit(headFunctionExportSharedData.page.deduplication).waitForRouteChange()
 
   // deduplication link has id and should be deduplicated
