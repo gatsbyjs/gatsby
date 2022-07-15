@@ -11,6 +11,7 @@ const page = {
   ssr: `${path}/ssr/`,
   invalidElements: `${path}/invalid-elements/`,
   fsRouteApi: `${path}/fs-route-api/`,
+  deduplication: `${path}/deduplication/`,
 }
 
 const data = {

@@ -13,11 +13,7 @@ export default function HeadFunctionExportBasic() {
 function SEO({ children }) {
   return (
     <>
-      <link
-        id="icon"
-        rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>👤</text></svg>"
-      />
+      <link rel="deduplication" id="deduplication-test" href="/foo" />
       <link
         rel="alternate"
         type="application/atom+xml"
@@ -32,11 +28,7 @@ function SEO({ children }) {
 export function Head() {
   return (
     <SEO>
-      <link
-        id="icon"
-        rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔥</text></svg>"
-      />
+      <link rel="deduplication" id="deduplication-test" href="/bar" />
       <link rel="alternate" hrefLang="de-DE" href="/de/" />
     </SEO>
   )
