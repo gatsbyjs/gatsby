@@ -87,6 +87,7 @@ async function findPageOwnedByNode({
     byConnection.get(nodeType)?.values()?.next()?.value
 
   // for static queries, we can only find the first page using that static query
+  // the reason we would find `sq--` here is because byConnection (above) can return a page path or a static query ID (which starts with `sq--`)
   if (pagePath?.startsWith(`sq--`)) {
     const staticQueryComponentPath =
       staticQueryComponents.get(pagePath)?.componentPath
