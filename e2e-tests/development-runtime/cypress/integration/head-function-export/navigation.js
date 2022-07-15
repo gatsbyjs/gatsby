@@ -42,6 +42,7 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
     cy.getTestElement(`link`)
       .invoke(`attr`, `href`)
       .should(`equal`, data.static.link)
+    cy.getTestElement(`jsonLD`).should(`have.text`, data.static.jsonLD)
 
     cy.getTestElement(`navigate-to-page-without-head-export`)
       .click()
@@ -53,6 +54,7 @@ describe(`Head function export behavior during CSR navigation (Gatsby Link)`, ()
     cy.getTestElement(`noscript`).should(`not.exist`)
     cy.getTestElement(`style`).should(`not.exist`)
     cy.getTestElement(`link`).should(`not.exist`)
+    cy.getTestElement(`jsonLD`).should(`not.exist`)
   })
 
   /**
