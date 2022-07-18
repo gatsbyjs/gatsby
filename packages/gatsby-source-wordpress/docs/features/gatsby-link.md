@@ -6,21 +6,19 @@ Anchor tags in html that are relative links automatically become `gatsby-link`'s
 
 ## `gatsby-plugin-catch-links`
 
-Because links in html fields are so common in WordPress, `gatsby-source-wordpress` auto-installs `gatsby-plugin-catch-links` for you. In 99% of cases this works well, but for some sites you may need to configure catch-links yourself. You can disable the automatically included version of `gatsby-plugin-catch-links` by setting the environment variable `WORDPRESS_CATCH_LINKS` to a string of `false`. Once it's disabled you can install it yourself and configure it's plugin options in your gatsby-config.js
+Because links in html fields are so common in WordPress, `gatsby-source-wordpress` auto-installs `gatsby-plugin-catch-links` for you. In 99% of cases this works well, but for some sites you may need to configure catch-links yourself. You can disable the automatically included version of `gatsby-plugin-catch-links` by setting the `catchLinks` plugin option to `false`. Once it's disabled you can install it yourself and configure its plugin options in your gatsby-config.js
 
-You can add it to a .env file:
-
-```.env
-WORDPRESS_CATCH_LINKS="false"
-```
-
-Or in your `gatsby-config.js` file:
+Example `gatsby-config.js` file:
 
 ```js
-process.env.WORDPRESS_CATCH_LINKS = "false"
-
 module.exports = {
   plugins: [
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        catchLinks: false,
+      },
+    },
     {
       resolve: `gatsby-plugin-catch-links`,
       options: {
