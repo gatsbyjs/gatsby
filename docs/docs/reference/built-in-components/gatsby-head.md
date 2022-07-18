@@ -57,6 +57,28 @@ export default Page
 export { Head } from "../another/location"
 ```
 
+### Deduplication
+
+To avoid duplicate tags in your `<head>` you can use the `id` property on your tags to make sure that only one is rendered. Given the following example:
+
+```jsx
+const SEO = ({ children }) => (
+  <>
+    <title>Hello World</title>
+    <link id="icon" rel="icon" href="global-icon" />
+    {children}
+  </>
+)
+
+export const Head = () => (
+  <SEO>
+    <link id="icon" rel="icon" href="icon-specific-for-this-page" />
+  </SEO>
+)
+```
+
+In this case only the second `<link id="icon" rel="icon" href="icon-specific-for-this-page" />` is rendered. In a list of items with the same `id`, the last item wins and is used in the HTML.
+
 ### Usage notes
 
 You'll need to be aware of these things when using Gatsby Head:
@@ -88,10 +110,6 @@ export const Head = ({ location, params, data, pageContext }) => (
   </>
 )
 ```
-
-## Current limitations
-
-- No deduplication happening for same metatags, e.g. if you set a favicon in the general SEO component and set it again in another page, both favicons are inserted. (Follow [PR #36138](https://github.com/gatsbyjs/gatsby/pull/36138) for progress)
 
 ## Editing `<html>` and `<body>`
 
