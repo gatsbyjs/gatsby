@@ -64,7 +64,7 @@ You'll need to be aware of these things when using Gatsby Head:
 - You can only define the `Head` export inside a page, not in a component.
 - The contents of Gatsby Head get cleared upon unmounting the page, so make sure that each page defines what it needs in its `<head>`.
 - The `Head` function needs to return valid JSX.
-- Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, and `noscript`.
+- Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, `script`, and `noscript`.
 - Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 
 ## Properties
@@ -91,8 +91,19 @@ export const Head = ({ location, params, data, pageContext }) => (
 
 ## Current limitations
 
-- You can't modify the `<html>` element to e.g. set the `lang` attribute.
-- No deduplication happening for same metatags, e.g. if you set a favicon in the general SEO component and set it again in another page, both favicons are inserted.
+- No deduplication happening for same metatags, e.g. if you set a favicon in the general SEO component and set it again in another page, both favicons are inserted. (Follow [PR #36138](https://github.com/gatsbyjs/gatsby/pull/36138) for progress)
+
+## Editing `<html>` and `<body>`
+
+The scope of Gatsby Head is to modify the `<head>` portion of your pages. To edit other parts like `<html>` or `<body>`, please use the [Gatsby Server Rendering APIs](/docs/reference/config-files/gatsby-ssr/).
+
+One common use case is to modify the `<html>` element to e.g. add a `lang` attribute. You can achieve this the following way:
+
+```js:title=gatsby-ssr.js
+exports.onRenderBody = ({ setHtmlAttributes }) => {
+  setHtmlAttributes({ lang: "en" })
+}
+```
 
 ## Additional Resources
 
