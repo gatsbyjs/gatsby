@@ -78,15 +78,14 @@ async function findPageOwnedByNode({
   const nodeType = fullNode?.internal?.type
 
   const firstPageWithNodeAsDataDependency =
-    // the default page path is the first page found in
-    // node id to page query tracking
+    // the first page found in node id to page query path tracking
     byNode?.get(nodeId)?.values()?.next()?.value
 
   const firstPagePathWithNodeInGraphQLListField =
     // the first page that queries for a list of this node type.
     // we don't currently store a list of node ids for connection fields to queries
     // we just store the query id or page path mapped to the connected GraphQL typename.
-    byConnection.get(nodeType)?.values()?.next()?.value
+    byConnection?.get(nodeType)?.values()?.next()?.value
 
   const defaultPagePath =
     firstPageWithNodeAsDataDependency || firstPagePathWithNodeInGraphQLListField
