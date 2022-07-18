@@ -543,7 +543,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
     buildHTMLActivityProgress.end()
   } else {
-    reporter.info(`There are no new or changed html files to build.`)
+    reporter.info(`There are no new or changed html files to build. TEST`)
   }
 
   if (_CFLAGS_.GATSBY_MAJOR !== `4` && !program.keepPageRenderer) {
