@@ -40,7 +40,7 @@ export function Head() {
   )
 }
 ```
-Just like page templates, `Head` also receive some set of props like `location`, `params`, `data` and `pageContext. Read more about [properties that `Head` export receives](https://www.gatsbyjs.com/docs/how-to/docs/docs/reference/built-in-components/gatsby-head.md#properties) in the [Gatsby Head API reference documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/).
+Just like page templates, `Head` also receive some set of props like `location`, `params`, `data` and `pageContext`. Read more about [properties that `Head` export receives](https://www.gatsbyjs.com/docs/how-to/docs/docs/reference/built-in-components/gatsby-head.md#properties) in the [Gatsby Head API reference documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/).
 
 Since `Head` is rendered like traditional react components, you can [create a SEO component](https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-seo-component.md) that defines defaults and reuse that across pages.
 
