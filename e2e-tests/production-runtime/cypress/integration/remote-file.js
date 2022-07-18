@@ -8,6 +8,7 @@ describe(
   () => {
   beforeEach(() => {
     cy.visit(`/remote-file/`).waitForRouteChange()
+    cy.wait(100)
 
     // trigger intersection observer
     cy.scrollTo("top")
@@ -25,6 +26,16 @@ describe(
       const res = await fetch(images[i].currentSrc, {
         method: "HEAD",
       })
+
+      console.log("\n\n\n\n")
+      const logObj = {}
+      for (const [key, value] of Object.entries(images[i])) {
+        logObj[key] = typeof value === "object" ? `[object keys=${Object.keys(value)}]` : value
+      }
+
+      console.log(JSON.stringify(logObj, null, 2))
+      console.log(`testImages - ${images[i].currentSrc}: ${JSON.stringify(res, null, 2)}\n\n\n\n`)
+
       expect(res.ok).to.be.true
       if (expectation.width) {
         expect(Math.ceil(images[i].getBoundingClientRect().width)).to.be.equal(
@@ -47,6 +58,9 @@ describe(
         const res = await fetch(url, {
           method: "HEAD",
         })
+        
+        console.log(`\n\nurls - ${url}: ${JSON.stringify(res, null, 2)}\n\n`)
+  
         expect(res.ok).to.be.true
       }
     })
