@@ -100,7 +100,7 @@ describe(`pluginOptionsSchema`, () => {
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      additionalData: 123, // should be a string or an object
+      additionalData: 123,
       implementation: `This should be a require() thing`,
       postCssPlugins: `This should be an array of postCss plugins`,
       cssLoaderOptions: `This should be an object of css-loader options`,

@@ -11,7 +11,7 @@ exports.onCreateWebpackConfig = (
     sassOptions = {},
     // eslint-disable-next-line no-unused-vars
     plugins,
-    additionalData,
+    additionalData = undefined,
     ...sassLoaderOptions
   }
 ) => {
