@@ -77,14 +77,21 @@ async function findPageOwnedByNode({
   const { staticQueryComponents } = state
   const nodeType = fullNode?.internal?.type
 
-  let pagePath =
+  const firstPageWithNodeAsDataDependency =
     // the default page path is the first page found in
     // node id to page query tracking
-    byNode?.get(nodeId)?.values()?.next()?.value ||
-    // otherwise the first page that queries for a list of this node type.
+    byNode?.get(nodeId)?.values()?.next()?.value
+
+  const firstPagePathWithNodeInGraphQLListField =
+    // the first page that queries for a list of this node type.
     // we don't currently store a list of node ids for connection fields to queries
-    // we just store the query to connection types.
+    // we just store the query id or page path mapped to the connected GraphQL typename.
     byConnection.get(nodeType)?.values()?.next()?.value
+
+  const defaultPagePath =
+    firstPageWithNodeAsDataDependency || firstPagePathWithNodeInGraphQLListField
+
+  let pagePath = defaultPagePath
 
   // for static queries, we can only find the first page using that static query
   // the reason we would find `sq--` here is because byConnection (above) can return a page path or a static query ID (which starts with `sq--`)
