@@ -8,7 +8,7 @@ Welcome to `gatsby@4.19.0` release (July 2022 #2)
 
 Key highlights of this release:
 
-- [Gatsby Head API]
+- [Gatsby Head API](#gatsby-head-api)
 - [Release Candidate for gatsby-plugin-mdx v4](#todo) - Support for MDX v2 and more!
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
