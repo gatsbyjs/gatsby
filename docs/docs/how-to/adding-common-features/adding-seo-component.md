@@ -187,6 +187,8 @@ export const Head = () => (
 
 Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 
+If you want to edit the `<html>` or `<body>`, please read the [Gatsby Head reference guide](/docs/reference/built-in-components/gatsby-head/#editing-html-and-body).
+
 ### Rich Snippets
 
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
@@ -218,6 +220,7 @@ After deployment, their [Rich result status reports](https://support.google.com/
 ## Additional Resources
 
 - [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#headprops)
+- [Gatsby Head Reference Guide](/docs/reference/built-in-components/gatsby-head/)
 - [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
 - [Blog posts about SEO in Gatsby](/blog/tags/seo/)
 - [Audit with Lighthouse](/docs/how-to/performance/audit-with-lighthouse/)
