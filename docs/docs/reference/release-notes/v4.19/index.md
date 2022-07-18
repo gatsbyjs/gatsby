@@ -24,7 +24,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 ## Gatsby Head API
 
 
-The new Head API lets you define your site metadata the Gatsby Way.  Previously, third partly libraries like[react-helmet](https://www.npmjs.com/package/react-helmet) have been the goto for adding `link`, `title`, `meta` and other document head tags. With the new Head API, you can easily add those to pages on your site without needing an external library.  
+The new Head API lets you define your site metadata the Gatsby Way.  Previously, third partly libraries like [react-helmet](https://www.npmjs.com/package/react-helmet) have been the goto for adding `link`, `title`, `meta` and other document head tags. With the new Head API, you can easily add those to pages on your site without needing an external library.  
 
 ```js
 import * as React from "react"
