@@ -54,8 +54,10 @@ export function headHandlerForSSR({
 
     const validHeadNodes = []
 
+    const seenIds = new Map()
     for (const node of headNodes) {
       const { rawTagName, attributes } = node
+      const id = attributes.id
 
       if (!VALID_NODE_NAMES.includes(rawTagName)) {
         warnForInvalidTags(rawTagName)
@@ -68,8 +70,17 @@ export function headHandlerForSSR({
           },
           node.childNodes[0]?.textContent
         )
-
-        validHeadNodes.push(element)
+        if (id) {
+          if (!seenIds.has(id)) {
+            validHeadNodes.push(element)
+            seenIds.set(id, validHeadNodes.length - 1)
+          } else {
+            const indexOfPreviouslyInsertedNode = seenIds.get(id)
+            validHeadNodes[indexOfPreviouslyInsertedNode] = element
+          }
+        } else {
+          validHeadNodes.push(element)
+        }
       }
     }
 

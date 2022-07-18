@@ -22,15 +22,28 @@ const onHeadRendered = () => {
 
   removePrevHeadElements()
 
+  const seenIds = new Map()
   for (const node of hiddenRoot.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
+    const id = node.attributes.id?.value
 
     if (!VALID_NODE_NAMES.includes(nodeName)) {
       warnForInvalidTags(nodeName)
     } else {
       const clonedNode = node.cloneNode(true)
       clonedNode.setAttribute(`data-gatsby-head`, true)
-      validHeadNodes.push(clonedNode)
+      if (id) {
+        if (!seenIds.has(id)) {
+          validHeadNodes.push(clonedNode)
+          seenIds.set(id, validHeadNodes.length - 1)
+        } else {
+          const indexOfPreviouslyInsertedNode = seenIds.get(id)
+          validHeadNodes[indexOfPreviouslyInsertedNode].remove()
+          validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
+        }
+      } else {
+        validHeadNodes.push(clonedNode)
+      }
     }
   }
 
