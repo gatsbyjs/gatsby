@@ -10,12 +10,13 @@ Find the latest hardware and software requirements for building with Gatsby. Not
 - Windows 10 ([setup instructions](/docs/how-to/local-development/gatsby-on-windows/))
 - Linux ([multiple distributions](/docs/how-to/local-development/gatsby-on-linux/))
 
+### Platform specific issues
+Gatsby (or at least the Sharp plugin) will not work on Linux if the CPU does not support SSE4.2, aka CPUs pre-2012. This requirement does not exist for Windows, it seems the windows binary is built with the bare minimum instruction set requirements (less optimized than the linux bin).
+- Experiencing platform specific issues check whether the platform you are running is supported by the Sharp library.
+
 ## Memory
 
 This will be variable depending on the size of your site. Gatsby sites have been known to work from 500mb to 1GB of RAM.
-
-## Platform specific issues
-- Experiencing platform specific issues check whether the platform you are running is supported by the Sharp library.
 
 ## Node.js ecosystem
 
