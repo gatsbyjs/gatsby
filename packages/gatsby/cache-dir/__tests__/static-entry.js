@@ -539,3 +539,52 @@ describe(`sanitizeComponents`, () => {
     expect(sanitizedComponents[0].props.href).toBe(`/blog/manifest.webmanifest`)
   })
 })
+
+describe(`reorderHeadComponents`, () => {
+  let reorderHeadComponents
+
+  beforeEach(() => {
+    fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
+    reorderHeadComponents = require(`../static-entry`).reorderHeadComponents
+  })
+
+  const exampleHead = [
+    <style key="style1"> .style1 {} </style>,
+    <style key="style2"> .style2 {} </style>,
+    <script key="json-ld" type="application/ld+json">
+      {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "url": "https://www.spookytech.com",
+          "name": "Spooky technologies",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+5-601-785-8543",
+            "contactType": "Customer Support"
+          }
+        }
+      `}
+    </script>,
+    <link key="canonical" rel="canonical" href="url" />,
+    <link key="icon" rel="icon" type="image/svg+xml" href="favicon" />,
+    <meta key="desc" name="description" content="desc 1" />,
+    <meta key="og:url" property="og:url" content="url" />,
+    <meta key="og:desc" property="og:description" content="desc 2" />,
+  ]
+
+  it(`reorders meta tags in front of other tags and keeps original order (for moved meta tags)`, () => {
+    const reordered = reorderHeadComponents(exampleHead)
+    const keyList = reordered.map(e => e.key)
+    expect(keyList).toEqual([
+      `desc`,
+      `og:url`,
+      `og:desc`,
+      `style1`,
+      `style2`,
+      `json-ld`,
+      `canonical`,
+      `icon`,
+    ])
+  })
+})
