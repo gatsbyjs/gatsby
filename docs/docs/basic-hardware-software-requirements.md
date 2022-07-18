@@ -14,6 +14,9 @@ Find the latest hardware and software requirements for building with Gatsby. Not
 
 This will be variable depending on the size of your site. Gatsby sites have been known to work from 500mb to 1GB of RAM.
 
+## Platform specific issues
+- Experiencing platform specific issues check whether the platform you are running is supported by the Sharp library.
+
 ## Node.js ecosystem
 
 To develop with Gatsby, you'll need to install:
