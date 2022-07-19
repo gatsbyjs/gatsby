@@ -8,7 +8,7 @@ Welcome to `gatsby@4.19.0` release (July 2022 #2)
 
 Key highlights of this release:
 
-- [Gatsby Head API](#gatsby-head-api)
+- [Gatsby Head API](#gatsby-head-api) - Better performance & more future-proof than `react-helmet`
 - [Release Candidate for gatsby-plugin-mdx v4](#todo) - Support for MDX v2 and more!
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
@@ -23,10 +23,11 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ## Gatsby Head API
 
+Gatsby now includes a built-in `Head` export that allows you to add elements to the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
 
-The new Head API lets you define your site metadata the Gatsby Way.  Previously, third partly libraries like [react-helmet](https://www.npmjs.com/package/react-helmet) have been the goto for adding `link`, `title`, `meta` and other document head tags. With the new Head API, you can easily add those to pages on your site without needing an external library.  
+Compared to [react-helmet](https://github.com/nfl/react-helmet) or other similar solutions, Gatsby Head is easier to use, more performant, has a smaller bundle size, and supports the latest React features. **You no longer need a third-party library to handle meta tags in Gatsby.** Gatsby Head also automatically places your meta tags into the generated HTML so you also no longer need a Gatsby plugin in your `gatsby-config.js`.
 
-```js
+```jsx:title=src/pages/index.jsx
 import * as React from "react"
 
 const Page = () => <div>Hello World</div>
@@ -34,31 +35,30 @@ export default Page
 
 export function Head() {
   return (
-    <>
-      <title>Hello World Page</title>
-    </>
+    <title>Hello World</title>
   )
 }
 ```
-Just like page templates, `Head` also receive some set of props like `location`, `params`, `data` and `pageContext`. Read more about [properties that `Head` export receives](https://www.gatsbyjs.com/docs/how-to/docs/docs/reference/built-in-components/gatsby-head.md#properties) in the [Gatsby Head API reference documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/).
 
-Since `Head` is rendered like traditional react components, you can [create a SEO component](https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-seo-component.md) that defines defaults and reuse that across pages.
-
-Unlike external libraries like react-helmet, the Gatsby Head API also adds the tags you define to server rendered HTML so you don't need any extra plugins to be SEO ready.
+The `Head` function has to return valid JSX which also means that you can use React's composition model and define a reusable React component to more easily handle default values for your pages. You can learn more about this in the [Adding an SEO component guide](/docs/how-to/adding-common-features/adding-seo-component).
 
 One thing to note is that every page that need to add some tags to document head needs to export or re-export a Head function. You may only do a re-export if the new page needs to have same tags as the previous.
 
-```js
+One important difference between Gatsby Head API and solutions like `react-helmet` is that (at the moment) you loose the ability to define global defaults (e.g. in a layout component) and have them automatically applied everywhere. With Gatsby Head API your pages have to export a `Head` function to define meta tags for this specific page. To help with that you can use an SEO component or re-export the `Head` function from somewhere else:
+
+```jsx:title=src/pages/index.jsx
 import * as React from "react"
 
 const Page = () => <div>Hello World</div>
 export default Page
 
 // highlight-next-line
-export { Head } from "../somewhere" 
+export { Head } from "../another/location"
 ```
 
-For full details, see the [Gatsby Head API reference documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/).
+For full details, see the [Gatsby Head API reference guide](/docs/reference/built-in-components/gatsby-head/). To learn how to use Gatsby Head API with TypeScript, head to the [TypeScript and Gatsby guide](/docs/how-to/custom-configuration/typescript/#headprops).
+
+This feature followed our RFC process, you can read [RFC: Gatsby Head API](https://github.com/gatsbyjs/gatsby/discussions/35841) to understand how the API was created.
 
 ## Release Candidate for gatsby-plugin-mdx v4
 
