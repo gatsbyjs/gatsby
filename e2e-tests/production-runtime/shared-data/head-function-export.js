@@ -12,6 +12,7 @@ const page = {
   invalidElements: `${path}/invalid-elements/`,
   fsRouteApi: `${path}/fs-route-api/`,
   deduplication: `${path}/deduplication/`,
+  pageWithUseLocation: `${path}/page-with-uselocation/`,
 }
 
 const data = {
