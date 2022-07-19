@@ -74,7 +74,7 @@ export async function startWebpackServer({
         const urls = prepareUrls(
           program.https ? `https` : `http`,
           program.host,
-          program.proxyPort
+          program.port
         )
         const isSuccessful = !stats.hasErrors()
 

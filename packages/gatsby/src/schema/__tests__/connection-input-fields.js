@@ -155,6 +155,7 @@ async function queryResult(nodes, query) {
     inferenceMetadata: store.getState().inferenceMetadata,
   })
   store.dispatch({ type: `SET_SCHEMA`, payload: schema })
+  store.dispatch({ type: `SET_SCHEMA_COMPOSER`, payload: schemaComposer })
 
   const context = { path: `foo` }
   return graphql(schema, query, undefined, {
