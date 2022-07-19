@@ -82,7 +82,7 @@ Click the link below to quickly try the workflow of developing, building, and de
 
 [<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog&utm_source=github&utm_medium=link&utm_campaign=onboarding&utm_content=oss)
 
-At the end of this process, you'll have
+At the end of this process, you'll have:
 
 1. a site working on Gatsby Cloud
 2. a new repository that is linked to that new site
