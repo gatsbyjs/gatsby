@@ -161,10 +161,12 @@ export async function createGraphqlEngineBundle(
       },
     },
     plugins: [
+      new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
       new webpack.DefinePlugin({
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
+        "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
