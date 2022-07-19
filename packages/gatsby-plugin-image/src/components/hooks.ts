@@ -54,7 +54,9 @@ export type ImageDataLike =
   | IGatsbyImageParent
   | IGatsbyImageData
 
-export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
+export const getImage = (
+  node: ImageDataLike | null
+): IGatsbyImageData | undefined => {
   // This checks both for gatsbyImageData and gatsbyImage
   if (isGatsbyImageData(node)) {
     return node
