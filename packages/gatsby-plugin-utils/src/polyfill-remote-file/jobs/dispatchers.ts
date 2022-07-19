@@ -30,7 +30,7 @@ export function dispatchLocalFileServiceJob(
 
   publicUrl.unshift(`public`)
   // get filename and remove querystring
-  const outputFilename = publicUrl.pop()?.split(`?`)[0]
+  const outputFilename = decodeURI(publicUrl.pop()?.split(`?`)[0])
 
   const httpHeaders = getRequestHeadersForUrl(url, store)
 
@@ -87,7 +87,7 @@ export function dispatchLocalImageServiceJob(
   ).split(`/`)
   publicUrl.unshift(`public`)
   // get filename and remove querystring
-  const outputFilename = publicUrl.pop()?.split(`?`)[0]
+  const outputFilename = decodeURI(publicUrl.pop()?.split(`?`)[0])
 
   const httpHeaders = getRequestHeadersForUrl(url, store) as
     | Record<string, string>
