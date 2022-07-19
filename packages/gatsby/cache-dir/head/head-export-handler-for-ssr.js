@@ -62,14 +62,28 @@ export function headHandlerForSSR({
       if (!VALID_NODE_NAMES.includes(rawTagName)) {
         warnForInvalidTags(rawTagName)
       } else {
-        const element = createElement(
-          rawTagName,
-          {
-            ...attributes,
-            "data-gatsby-head": true,
-          },
-          node.childNodes[0]?.textContent
-        )
+        let element
+        // Special hadling for script with data blocks to prevent react from escaping the text
+        if (
+          rawTagName === `script` &&
+          attributes.type === `application/ld+json`
+        ) {
+          element = (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: node.text,
+              }}
+            />
+          )
+        } else {
+          element = (
+            <node.rawTagName {...attributes}>
+              {node.childNodes[0]?.textContent}
+            </node.rawTagName>
+          )
+        }
+
         if (id) {
           if (!seenIds.has(id)) {
             validHeadNodes.push(element)
