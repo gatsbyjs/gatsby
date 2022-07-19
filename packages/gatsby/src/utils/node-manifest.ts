@@ -74,7 +74,6 @@ async function findPageOwnedByNode({
   const { pages, nodes, staticQueryComponents } = state
   const { byNode, byConnection, trackedComponents } = state.queries
 
-  const { staticQueryComponents } = state
   const nodeType = fullNode?.internal?.type
 
   const firstPageWithNodeAsDataDependency =
