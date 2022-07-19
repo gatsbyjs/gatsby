@@ -71,7 +71,7 @@ async function findPageOwnedByNode({
   foundPageBy: FoundPageBy
 }> {
   const state = store.getState()
-  const { pages, nodes } = state
+  const { pages, nodes, staticQueryComponents } = state
   const { byNode, byConnection, trackedComponents } = state.queries
 
   const { staticQueryComponents } = state
