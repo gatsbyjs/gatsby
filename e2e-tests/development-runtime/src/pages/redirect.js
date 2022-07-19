@@ -5,9 +5,10 @@ import SEO from "../components/seo"
 
 const Redirect = () => (
   <Layout>
-    <SEO title="Redirect" />
     <p>Redirecting...</p>
   </Layout>
 )
+
+export const Head = () => <SEO title="Redirect" />
 
 export default Redirect

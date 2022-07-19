@@ -8,8 +8,6 @@ import SEO from "../components/seo"
 const RemoteFile = ({ data }) => {
   return (
     <Layout>
-      <SEO title="Remote file" />
-
       {data.allMyRemoteFile.nodes.map(node => {
         return (
           <div key={node.id}>
@@ -45,6 +43,8 @@ const RemoteFile = ({ data }) => {
     </Layout>
   )
 }
+
+export const Head = () => <SEO title="Remote file" />
 
 export const pageQuery = graphql`
   {

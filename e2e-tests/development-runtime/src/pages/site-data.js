@@ -23,7 +23,6 @@ const SiteType = () => {
 
   return (
     <Layout>
-      <SEO title="Site Data" />
       <p data-testid="title">{data.site.siteMetadata.title}</p>
       <p data-testid="description">
         {data.site.siteMetadata.description === null
@@ -43,5 +42,7 @@ const SiteType = () => {
     </Layout>
   )
 }
+
+export const Head = () => <SEO title="Site Data" />
 
 export default SiteType

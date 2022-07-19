@@ -31,3 +31,7 @@ export const blogPostQuery = graphql`
     }
   }
 `
+
+export const Head = ({ data: { post } }) => (
+  <SEO title={post.frontmatter.title} description={post.excerpt} />
+)

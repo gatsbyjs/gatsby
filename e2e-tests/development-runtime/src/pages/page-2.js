@@ -7,7 +7,6 @@ import InstrumentPage from "../utils/instrument-page"
 
 const SecondPage = () => (
   <Layout>
-    <SEO title="Page two" />
     <h1 data-testid="page-2-message">Hi from the second page</h1>
     <p>Welcome to page 2</p>
     <Link to="/" data-testid="back-button">
@@ -18,5 +17,7 @@ const SecondPage = () => (
     </button>
   </Layout>
 )
+
+export const Head = () => <SEO title="Page two" />
 
 export default InstrumentPage(SecondPage)

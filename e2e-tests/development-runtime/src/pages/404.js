@@ -32,7 +32,6 @@ function QueryDataCachesWrapper({ data, slug, prefix, ...rest }) {
 
 const NotFoundPage = ({ data }) => (
   <Layout>
-    <SEO title="404: Not found" />
     <h1 data-testid="page-title">NOT FOUND</h1>
     <p>You just hit a route that does not exist... the sadness.</p>
     <fieldset>
@@ -67,6 +66,7 @@ const NotFoundPage = ({ data }) => (
     </fieldset>
   </Layout>
 )
+export const Head = () => <SEO title="404: Not found" />
 
 export default NotFoundPage
 

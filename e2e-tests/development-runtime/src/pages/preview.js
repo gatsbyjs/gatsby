@@ -6,7 +6,6 @@ import SEO from "../components/seo"
 
 const GatsbyPreview = ({ data }) => (
   <Layout>
-    <SEO title="Gatsby Preview e2e Test" />
     <h1>Gatsby Preview e2e test</h1>
     <ul id="fake-data">
       {data.allFakeData.nodes.map(node => (
@@ -26,6 +25,8 @@ const GatsbyPreview = ({ data }) => (
 )
 
 export default GatsbyPreview
+
+export const Head = () => <SEO title="Gatsby Preview e2e Test" />
 
 export const previewQuery = graphql`
   query {

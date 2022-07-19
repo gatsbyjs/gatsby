@@ -9,7 +9,6 @@ import InstrumentPage from "../utils/instrument-page"
 
 const IndexPage = ({ data }) => (
   <Layout>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <h1>Hi people</h1>
     <p data-testid="page-component">Welcome to your new %GATSBY_SITE%</p>
     <p>Now go build something great.</p>
@@ -82,3 +81,6 @@ export const indexQuery = graphql`
     }
   }
 `
+export const Head = () => (
+  <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+)
