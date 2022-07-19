@@ -27,8 +27,8 @@ export type IGatsbyImageDataParent<T = never> = T & {
 export type IGatsbyImageParent<T = never> = T & {
   gatsbyImage: IGatsbyImageData
 }
-export type FileNode = Node & {
-  childImageSharp?: IGatsbyImageDataParent<Node>
+export type FileNode = Partial<Node> & {
+  childImageSharp?: IGatsbyImageDataParent<Partial<Node>>
 }
 
 const isGatsbyImageData = (
@@ -55,6 +55,7 @@ export type ImageDataLike =
   | IGatsbyImageData
 
 export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
+  // This checks both for gatsbyImageData and gatsbyImage
   if (isGatsbyImageData(node)) {
     return node
   }
