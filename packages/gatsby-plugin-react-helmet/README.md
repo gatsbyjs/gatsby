@@ -13,7 +13,7 @@ This is important not just for site viewers, but also for SEO -- title and descr
 
 ## ⚠️ This package will be deprecated
 
-The `gatsby-plugin-react-helmet` package will be deprecated in the future. The new [Gatsby Head API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/) is easier to use, more performant, has a smaller bundle size, and supports the latest React features. Update to `gatsby@4.19.0` to use Gatsby Head API.
+The `gatsby-plugin-react-helmet` package will be deprecated in the future. The new [Gatsby Head API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/) is easier to use, more performant, has a smaller bundle size, and supports the latest React features. Update to `gatsby@^4.19.0` to use it.
 
 ## Install
 
