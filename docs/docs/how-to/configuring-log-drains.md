@@ -25,8 +25,7 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services, which allows de
 1. Enter the API key you created in DataDog from step 3<br/>![Add your Log Analytics service's API Key](add-api-key.png)
 1. Click Connect
 1. You will see a confirmation that DataDog is now connected<br/>![Connected confirmation message](connect-confirmation.png)
-1. View the [Live Tail](https://app.datadoghq.com/logs/livetail) for this Gatsby Site’s Logs in your DataDog account to confirm that you’re now receiving logs from Gatsby Cloud
-Note: It can take up to 10 minutes for your initial set of logs to appear
+1. View the [Live Tail](https://app.datadoghq.com/logs/livetail) for this Gatsby Site’s Logs in your DataDog account to confirm that you’re now receiving logs from Gatsby Cloud<br/>**Note**: It can take up to 10 minutes for your initial set of logs to appear
 
 ## Modify Log Drains
 1. Access your Site’s settings via the Site’s Site Settings in Gatsby Cloud
