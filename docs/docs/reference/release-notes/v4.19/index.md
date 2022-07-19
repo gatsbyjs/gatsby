@@ -77,6 +77,10 @@ You can now try out a release candidate version, head to the [MDX v2 RFC](https:
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [Timxyx](https://github.com/Timxyx): fix(gatsby-source-contentful): Add `proxy.protocol` to Joi schema [PR #36011](https://github.com/gatsbyjs/gatsby/pull/36011)
+- [ericapisani](https://github.com/ericapisani): chore(gatsby): upgrade lmdb to 2.5.3 [PR #36087](https://github.com/gatsbyjs/gatsby/pull/36087)
+- [openscript](https://github.com/openscript)
+  - chore(docs): Add `gatsby-link` to `transformIgnorePatterns` [PR #36076](https://github.com/gatsbyjs/gatsby/pull/36076)
+  - chore(docs): update jest.config.js [PR #36049](https://github.com/gatsbyjs/gatsby/pull/36049)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.19.0-next.0...gatsby@4.19.0
