@@ -9,7 +9,7 @@ Welcome to `gatsby@4.19.0` release (July 2022 #2)
 Key highlights of this release:
 
 - [Gatsby Head API](#gatsby-head-api) - Better performance & more future-proof than `react-helmet`
-- [Release Candidate for gatsby-plugin-mdx v4](#todo) - Support for MDX v2 and more!
+- [Release Candidate for gatsby-plugin-mdx v4](#release-candidate-for-gatsby-plugin-mdx-v4) - Support for MDX v2 and more!
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -60,9 +60,11 @@ For full details, see the [Gatsby Head API reference guide](/docs/reference/buil
 
 This feature followed our RFC process, you can read [RFC: Gatsby Head API](https://github.com/gatsbyjs/gatsby/discussions/35841) to understand how the API was created.
 
-## Release Candidate for gatsby-plugin-mdx v4
+## Release Candidate for `gatsby-plugin-mdx` v4
 
-TODO
+In case you missed it: We're working on a new major version of `gatsby-plugin-mdx` to support MDX v2, improve build & frontend performance, and simplify the API.
+
+You can now try out a release candidate version, head to the [MDX v2 RFC](https://github.com/gatsbyjs/gatsby/discussions/25068) to learn more.
 
 ## Notable bugfixes & improvements
 
