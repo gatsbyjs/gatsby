@@ -63,14 +63,14 @@ export function headHandlerForSSR({
         warnForInvalidTags(rawTagName)
       } else {
         let element
-        // Special handling for script with data blocks to prevent react from escaping the text
+        // Special handling for scripts with data block to prevent React from escaping the text
         if (
           rawTagName === `script` &&
           attributes.type === `application/ld+json`
         ) {
           element = (
             <script
-              type="application/ld+json"
+              type={attributes.type}
               dangerouslySetInnerHTML={{
                 __html: node.text,
               }}
