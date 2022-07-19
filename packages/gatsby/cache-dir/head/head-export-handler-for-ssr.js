@@ -70,7 +70,7 @@ export function headHandlerForSSR({
         ) {
           element = (
             <script
-              type={attributes.type}
+              {...attributes}
               dangerouslySetInnerHTML={{
                 __html: node.text,
               }}
