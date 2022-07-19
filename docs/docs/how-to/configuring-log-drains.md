@@ -3,7 +3,7 @@ title: Configuring Log Drains on Gatsby Cloud
 description: Learn how to connect Gatsby Cloud's hosting logs to third party log analytics providers like DataDog
 ---
 
-Gatsby Cloud can deliver hosting logs to the 3rd party services, which allows developers and marketers to review server side analytics, and accelerate the troubleshooting process when hosting layer errors occur.
+Gatsby Cloud can deliver hosting logs to the 3rd party services (currently only DataDog), which allows developers and marketers to review server side analytics, and accelerate the troubleshooting process when hosting layer errors occur.
 
 ## Prerequisites
 - The Log Drains feature is limited to Enterprise Plans in Gatsby cloud, therefore this feature will only appear within Site Settings for Sites within Enterprise Plans.
