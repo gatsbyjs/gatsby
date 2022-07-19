@@ -11,25 +11,24 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services, which allows de
 
 ## Enable Log Drains
 1. [Log in](https://app.datadoghq.com/account/login) to your DataDog account
-1. [Add a new API Key](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token), giving it a name that will help you remember that this key is used for receiving logs from Gatsby Cloud
-1. Note: If you’re enabling Log Drains for multiple Gatsby Cloud sites, we recommend that you create a separate API key for each Gatsby Cloud site.
+1. [Add a new API Key](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token), giving it a name that will help you remember that this key is used for receiving logs from Gatsby Cloud<br/>**Note**: If you’re enabling Log Drains for multiple Gatsby Cloud sites, we recommend that you create a separate API key for each Gatsby Cloud site.
 1. Copy the newly-created API Key
-1. Take note of the Region ([SITE in DataDog terminology](https://docs.datadoghq.com/getting_started/site/#pagetitle)) for your DataDog account
-  - **Note**: Your DataDog region may appear as the subdomain when logged into DataDog
+1. Take note of the Region ([SITE in DataDog terminology](https://docs.datadoghq.com/getting_started/site/#pagetitle)) for your DataDog account<br/>**Note**: Your DataDog region may appear as the subdomain when logged into DataDog
 1. [Log in](https://www.gatsbyjs.com/dashboard/login) to Gatsby Cloud
 1. Select the site whose logs you’d like to integrate with DataDog
 1. Access Site Settings for that site
-1. Select Log Drains in the left navigation
-Note: If you do not see Log Drains, then the selected site is not likely within an Enterprise Plan. Contact Us if you have any questions.
-Click Connect
-1. Select the appropriate region for your DataDog instance. 1. In DataDog, this is the value for [Site](https://docs.datadoghq.com/getting_started/site/#pagetitle)
-1. Enter the API key you created in DataDog from step 3
+1. Select Log Drains in the left navigation<br/>
+![Log Drains Navigation Item](log-drains-nav-item.png)<br/> **Note**: If you do not see Log Drains, then the selected site is not likely within an Enterprise Plan. Contact Us if you have any questions.
+1. Click Connect<br/>![Click Connect to configure log drains](connect-log-drains-1.png)
+1. Select the appropriate region for your DataDog instance.<br/>![Select the appropriate region](select-region-3.png)<br/>
+1. In DataDog, this is the value for [Site](https://docs.datadoghq.com/getting_started/site/#pagetitle)
+1. Enter the API key you created in DataDog from step 3<br/>![Add your Log Analytics service's API Key](add-api-key.png)
 1. Click Connect
-1. You will see a confirmation that DataDog is now connected
+1. You will see a confirmation that DataDog is now connected<br/>![Connected confirmation message](connect-confirmation.png)
 1. View the [Live Tail](https://app.datadoghq.com/logs/livetail) for this Gatsby Site’s Logs in your DataDog account to confirm that you’re now receiving logs from Gatsby Cloud
 Note: It can take up to 10 minutes for your initial set of logs to appear
 
-## Editing Log Drains configuration
+## Modify Log Drains
 1. Access your Site’s settings via the Site’s Site Settings in Gatsby Cloud
 1. Navigate to Log Drains in the left-hand navigation
 1. Click the ellipsis for Log Drains to expose the actions menu
@@ -37,7 +36,7 @@ Note: It can take up to 10 minutes for your initial set of logs to appear
 1. Update the settings accordingly
 1. Click Save
 
-## Disconnecting Log Drains
+## Disconnect Log Drains
 1. Access your Site’s settings via the Site’s Site Settings in Gatsby Cloud
 1. Navigate to Log Drains in the left-hand navigation
 1. Click the ellipsis for Log Drains to expose the actions menu
