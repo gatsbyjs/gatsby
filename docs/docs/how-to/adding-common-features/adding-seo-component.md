@@ -219,7 +219,7 @@ After deployment, their [Rich result status reports](https://support.google.com/
 
 ## Additional Resources
 
-- [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#headprops)
+- [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-head-api)
 - [Gatsby Head Reference Guide](/docs/reference/built-in-components/gatsby-head/)
 - [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
 - [Blog posts about SEO in Gatsby](/blog/tags/seo/)

@@ -126,5 +126,5 @@ exports.onRenderBody = ({ setHtmlAttributes }) => {
 ## Additional Resources
 
 - [Adding an SEO component](/docs/how-to/adding-common-features/adding-seo-component)
-- [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#headprops)
+- [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-head-api)
 - [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
