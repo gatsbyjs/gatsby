@@ -42,14 +42,14 @@ Note: It can take up to 10 minutes for your initial set of logs to appear
 1. Click the ellipsis for Log Drains to expose the actions menu
 1. Click Delete
 1. Confirm Deletion of this Configuration
-1. Confirm that you are no longer receiving Logs for this site via Live Tail in DataDog
+1. Confirm that you are no longer receiving Logs for this site via [Live Tail](https://app.datadoghq.com/logs/livetail) in DataDog
 
 ## Troubleshooting
 - After selecting the region and specifying my API key, I receive an error upon clicking Connect from Gatsby Cloud
   - Confirm that you’ve entered the DataDog API Key properly
   - Confirm that you’ve selected the appropriate Region in Step 10
-  - If all of these are correct, please Contact Us for support
+  - If all of these are correct, please [Contact Us](https://www.gatsbyjs.com/support/)
 - It’s been more than 10 minutes, and I still don’t see any logs in DataDog. What now?
   - Confirm that the corresponding site in Gatsby Cloud has indeed received visitor traffic historically
   - Visit the corresponding site in Gatsby Cloud yourself to ensure activities within the next drain interval and wait another 10 minutes to confirm events via [Live Tail](https://app.datadoghq.com/logs/livetail)
-  - If you still see no traffic in DataDog Live Tail, please Contact Us for help.
+  - If you still see no traffic in DataDog Live Tail, please [Contact Us](https://www.gatsbyjs.com/support/)
