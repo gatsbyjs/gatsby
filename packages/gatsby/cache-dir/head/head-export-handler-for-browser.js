@@ -1,6 +1,7 @@
 import React from "react"
 import { useEffect } from "react"
 import { StaticQueryContext } from "gatsby"
+import { LocationProvider } from "@gatsbyjs/reach-router"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
 import { VALID_NODE_NAMES } from "./constants"
@@ -81,7 +82,9 @@ export function headHandlerForBrowser({
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
           <StaticQueryContext.Provider value={staticQueryResults}>
-            <Head {...filterHeadProps(pageComponentProps)} />
+            <LocationProvider>
+              <Head {...filterHeadProps(pageComponentProps)} />
+            </LocationProvider>
           </StaticQueryContext.Provider>
         </FireCallbackInEffect>,
         hiddenRoot
