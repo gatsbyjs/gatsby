@@ -8,18 +8,18 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Configuration](#configuration)
-    - [Extensions](#extensions)
-    - [`gatsby-remark-*` plugins](#gatsby-remark--plugins)
-    - [mdxOptions](#mdxoptions)
-  - [Imports](#imports)
-  - [Layouts](#layouts)
-  - [Programmatically create MDX pages](#programmatically-create-mdx-pages)
-  - [GraphQL MDX Node structure](#graphql-mdx-node-structure)
-  - [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes)
-  - [Components](#components)
-    - [MDXProvider](#mdxprovider)
-    - [Shortcodes](#shortcodes)
+- [Configuration](#configuration)
+  - [Extensions](#extensions)
+  - [`gatsby-remark-*` plugins](#gatsby-remark--plugins)
+  - [mdxOptions](#mdxoptions)
+- [Imports](#imports)
+- [Layouts](#layouts)
+- [Programmatically create MDX pages](#programmatically-create-mdx-pages)
+- [GraphQL MDX Node structure](#graphql-mdx-node-structure)
+- [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes)
+- [Components](#components)
+  - [MDXProvider](#mdxprovider)
+  - [Shortcodes](#shortcodes)
 - [Migrating from v3 to v4](#migrating-from-v3-to-v4)
 - [Why MDX?](#why-mdx)
 - [Related](#related)
@@ -52,7 +52,11 @@ module.exports = {
 
 By default, this configuration will allow you to automatically create pages with `.mdx` files in `src/pages` and will process any Gatsby nodes with Markdown media types into MDX content.
 
-Note that `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present and configured to process local markdown files in order to generate the resulting Gatsby nodes.
+**Please Note:**
+
+- `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present and configured to process local markdown files in order to generate the resulting Gatsby nodes.
+- MDX syntax differs from Markdown as it only supports [CommonMark](https://commonmark.org/) by default. Nonstandard markdown features like [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) can be enabled with plugins (see [`mdxOptions` instructions](#mdxoptions)).
+- Certain features like HTML syntax doesn't work in MDX. Read the ["What is MDX?" guide](https://mdxjs.com/docs/what-is-mdx/#markdown) to learn more.
 
 To automatically create pages from MDX files outside of `src/pages` you'll need to configure `gatsby-plugin-page-creator` and `gatsby-source-filesystem` to point to this folder of files.
 
@@ -79,7 +83,7 @@ module.exports = {
 
 Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to/routing/mdx/) for more details.
 
-### Configuration
+## Configuration
 
 `gatsby-plugin-mdx` exposes a configuration API that can be used similarly to any other Gatsby plugin. You can define MDX extensions, layouts, global scope, and more.
 
@@ -89,7 +93,7 @@ Also check out the guide [Adding MDX Pages](https://www.gatsbyjs.com/docs/how-to
 | [`gatsbyRemarkPlugins`](#gatsby-remark--plugins) | `[]`       | Use Gatsby-specific remark plugins                                  |
 | [`mdxOptions`](#mdxOptions)                      | `{}`       | Options directly passed to `compile()` of `@mdx-js/mdx`             |
 
-#### Extensions
+### Extensions
 
 By default, only files with the `.mdx` file extension are treated as MDX when
 using `gatsby-source-filesystem`. To use `.md` or other file extensions, you can
@@ -109,7 +113,7 @@ module.exports = {
 }
 ```
 
-#### `gatsby-remark-*` plugins
+### `gatsby-remark-*` plugins
 
 This config option is used for compatibility with a set of plugins many people [use with remark](https://www.gatsbyjs.com/plugins/?=gatsby-remark-) that require the Gatsby environment to function properly. In some cases, like [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/), it makes more sense to use a library like [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer) to render codeblocks using a [React component](/api-reference/mdx-provider). In other cases, like [gatsby-remark-images](https://www.gatsbyjs.com/plugins/gatsby-remark-images/), the interaction with the Gatsby APIs is well deserved because the images can be optimized by Gatsby and you should continue using it.
 
@@ -139,7 +143,7 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
 
-#### mdxOptions
+### mdxOptions
 
 These configuration options are directly passed into the MDX compiler.
 
@@ -153,17 +157,18 @@ module.exports = {
       options: {
         mdxOptions: {
           remarkPlugins: [
-            require("remark-abbr"),
+            // Add GitHub Flavored Markdown (GFM) support
+            require(`remark-gfm`),
             // To pass options, use a 2-element array with the
             // configuration in an object in the second element
-            [require("remark-external-links"), { target: false }],
+            [require(`remark-external-links`), { target: false }],
           ],
           rehypePlugins: [
             // Generate heading ids for rehype-autolink-headings
-            require("rehype-slug"),
+            require(`rehype-slug`),
             // To pass options, use a 2-element array with the
             // configuration in an object in the second element
-            [require("rehype-autolink-headings"), { behavior: "wrap" }],
+            [require(`rehype-autolink-headings`), { behavior: `wrap` }],
           ],
         },
       },
@@ -172,7 +177,70 @@ module.exports = {
 }
 ```
 
-### Imports
+> The following note will be removed once Gatsby fully supports ESM
+
+**Please Note:** Most of the remark ecosystem is ESM which means that packages like `remark-gfm` currently don't work out of the box with Gatsby. You have three options until Gatsby fully supports ESM:
+
+1. Use an older version of the `remark-*`/`rehype-*` package that is not ESM
+1. Wrap the plugin with an async function (which doesn't work with every plugin):
+
+   ```js
+   const wrapESMPlugin = name =>
+     function wrapESM(opts) {
+       return async (...args) => {
+         const mod = await import(name)
+         const plugin = mod.default(opts)
+         return plugin(...args)
+       }
+     }
+   ```
+
+   You then can use it like this:
+
+   ```js:title=gatsby-config.js
+   module.exports = {
+     plugins: [
+       {
+         resolve: `gatsby-plugin-mdx`,
+         options: {
+           mdxOptions: {
+             rehypePlugins: [
+               wrapESMPlugin(`rehype-slug`),
+             ],
+           },
+         },
+       },
+     ],
+   }
+   ```
+
+1. Fork the source code (e.g. [`remark-gfm`](https://github.com/remarkjs/remark-gfm/blob/b7af7f28a64f334ddd5514296743ede5aa4ba184/index.js)) in a local file and transform it to use _Dynamic Imports_. Above source code could be transformed (and then used in `gatsby-config.js`) like this:
+
+   ```js
+   module.exports = function remarkGFMWrapper(opts) {
+     const data = this.data()
+     return async tree => {
+       // highlight-next-line
+       const { gfm } = await import("micromark-extension-gfm")
+       // highlight-next-line
+       const { gfmFromMarkdown, gfmToMarkdown } = await import("mdast-util-gfm")
+       add("micromarkExtensions", gfm(opts))
+       add("fromMarkdownExtensions", gfmFromMarkdown())
+       add("toMarkdownExtensions", gfmToMarkdown(opts))
+     }
+
+     function add(field, value) {
+       const list = /** @type {unknown[]} */ (
+         data[field] ? data[field] : (data[field] = [])
+       )
+       list.push(value)
+     }
+   }
+   ```
+
+   And then in the `remarkPlugins` section you'd `require("./path-to-remark-gfm-wrapper")`.
+
+## Imports
 
 When importing a React component into your MDX, you can import it using the `import` statement like in JavaScript.
 
@@ -188,7 +256,7 @@ Here's a color picker!
 
 **Note:** You should restart `gatsby develop` to update imports in MDX files. Otherwise, you'll get a `ReferenceError` for new imports. You can use the [shortcodes](#shortcodes) approach if that is an issue for you.
 
-### Layouts
+## Layouts
 
 You can use regular [layout components](https://www.gatsbyjs.com/docs/how-to/routing/layout-components/) to apply layout to your sub pages.
 
@@ -198,11 +266,11 @@ To inject them, you have several options:
 1. Add an `export default Layout` statement to your MDX file, see [MDX documentation on Layout](https://mdxjs.com/docs/using-mdx/#layout).
 1. When using the [`createPage` action](https://www.gatsbyjs.com/docs/reference/config-files/actions/#createPage) to programatically create pages, you should use the following URI pattern for your page component: `your-layout-component.js?__contentFilePath=absolute-path-to-your-mdx-file.mdx`. To learn more about this, head to the [programmatically creating pages](https://www.gatsbyjs.com/docs/how-to/routing/mdx#programmatically-creating-pages) guide.
 
-### Programmatically create MDX pages
+## Programmatically create MDX pages
 
 Read the MDX documentation on [programmatically creating pages](https://www.gatsbyjs.com/docs/how-to/routing/mdx#programmatically-creating-pages) to learn more.
 
-### GraphQL MDX Node structure
+## GraphQL MDX Node structure
 
 In your GraphQL schema, you will discover several additional data related to your MDX content. While your local [GraphiQL](http://localhost:8000/___graphql) will give you the most recent data, here are the most relevant properties of the `Mdx` entities:
 
@@ -212,9 +280,9 @@ In your GraphQL schema, you will discover several additional data related to you
 | excerpt         | A pruned variant of your content. By default trimmed to 140 characters. Based on [rehype-infer-description-meta](https://github.com/rehypejs/rehype-infer-description-meta) |
 | tableOfContents | Generates a recursive object structure to reflect a table of contents. Based on [mdast-util-toc](https://github.com/syntax-tree/mdast-util-toc)                             |
 
-### Extending the GraphQL MDX nodes
+## Extending the GraphQL MDX nodes
 
-#### timeToRead
+### timeToRead
 
 1. Install `reading-time` into your project:
    ```shell
@@ -223,14 +291,14 @@ In your GraphQL schema, you will discover several additional data related to you
 1. In your `gatsby-node` add a new field:
 
    ```js:title=gatsby-node.js
-   const readingTime = require("reading-time")
+   const readingTime = require(`reading-time`)
 
    exports.onCreateNode = ({ node, actions }) => {
      const { createNodeField } = actions
-     if (node.internal.type === "Mdx") {
+     if (node.internal.type === `Mdx`) {
        createNodeField({
          node,
-         name: "timeToRead",
+         name: `timeToRead`,
          value: readingTime(node.body)
        })
      }
@@ -253,11 +321,11 @@ In your GraphQL schema, you will discover several additional data related to you
    }
    ```
 
-#### wordCount
+### wordCount
 
 See [timeToRead](#timeToRead). It returns `timeToRead.words`.
 
-#### slug
+### slug
 
 This largely comes down to your own preference and how you want to wire things up. This here is one of many possible solutions to this:
 
@@ -268,14 +336,14 @@ This largely comes down to your own preference and how you want to wire things u
 1. In your `gatsby-node` add a new field:
 
    ```js:title=gatsby-node.js
-   const slugify = require("@sindresorhus/slugify")
+   const slugify = require(`@sindresorhus/slugify`)
 
    exports.onCreateNode = ({ node, actions }) => {
      const { createNodeField } = actions
-     if (node.internal.type === "Mdx") {
+     if (node.internal.type === `Mdx`) {
        createNodeField({
          node,
-         name: "slug",
+         name: `slug`,
          value: `/${slugify(node.frontmatter.title)}`
        })
      }
@@ -295,11 +363,11 @@ This largely comes down to your own preference and how you want to wire things u
 
 If you don't want to use the `frontmatter.title`, adjust what you input to `slugify()`. For example, if you want information from the `File` node, you could use `getNode(node.parent)`.
 
-### Components
+## Components
 
 MDX and `gatsby-plugin-mdx` use components for different things like rendering and component mappings.
 
-#### MDXProvider
+### MDXProvider
 
 `MDXProvider` is a React component that allows you to replace the
 rendering of tags in MDX content. It does this by providing a list of
@@ -309,7 +377,7 @@ rendering of base tags like `p` and `h1`.
 ```jsx
 import { MDXProvider } from "@mdx-js/react"
 
-const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
+const MyH1 = props => <h1 style={{ color: `tomato` }} {...props} />
 const MyParagraph = props => (
   <p style={{ fontSize: "18px", lineHeight: 1.6 }} {...props} />
 )
@@ -360,7 +428,7 @@ so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
 
-#### Shortcodes
+### Shortcodes
 
 If you want to allow usage of a component from anywhere (often referred to as a shortcode), you can pass it to the [MDXProvider](https://www.gatsbyjs.com/docs/how-to/routing/mdx#make-components-available-globally-as-shortcodes).
 
@@ -443,6 +511,11 @@ If you used any related plugins like `gatsby-remark-images`, also update them to
 - There's a new option called `mdxOptions` which is passed directly to the MDX compiler. See all available options in [the official documentation of `@mdx-js/mdx`](https://mdxjs.com/packages/mdx/#compilefile-options).
 - Only `extensions`, `gatsbyRemarkPlugins`, and `mdxOptions` exist as options now. Every other option got removed, including `defaultLayouts`. See the [layouts guide](#layouts) to learn how to use layouts with `gatsby-plugin-mdx@^4.0.0`.
 - Make sure that any `gatsby-remark-*` plugins are only listed inside the `gatsbyRemarkPlugins` array of `gatsby-plugin-mdx`, not inside the `plugins` array of `gatsby-config` or in any other place.
+
+### GFM & ESM-only packages
+
+- [GitHub flavored markdown (GFM)](https://mdxjs.com/guides/gfm/) support was removed from MDX v2. You can re-enable it with [`mdxOptions`](#mdxoptions)
+- Most of the remark ecosystem is ESM so just using the latest package version of `remark-*`/`rehype-*` most probably won't work. Check out the workarounds mentioned in [`mdxOptions`](#mdxoptions)
 
 ### Updating `createPage` action in `gatsby-node`
 
@@ -548,7 +621,10 @@ export default PostTemplate
 
 ### Update your MDX content
 
-As MDX v2 changed the way it handles content you might need to update your MDX files to be valid MDX now. See their [Update MDX content guide](https://mdxjs.com/migrating/v2/#update-mdx-content) for all details.
+As MDX v2 changed the way it handles content you might need to update your MDX files to be valid MDX now. See their [Update MDX content guide](https://mdxjs.com/migrating/v2/#update-mdx-content) for all details. In [What is MDX?](https://mdxjs.com/docs/what-is-mdx/#markdown) it is also laid out which features don't work. Most importantly for this migration:
+
+- HTML syntax doesn’t work in MDX as it’s replaced by JSX (`<img>` to `<img />`). Instead of HTML comments, you can use JavaScript comments in braces: `{/* comment! */}`
+- Unescaped left angle bracket / less than (`<`) and left curly brace (`{`) have to be escaped: `\<` or `\{` (or use expressions: `{'<'}`, `{'{'}`)
 
 In our testing, most of the time the issue were curly brackets that needed to be escaped with backticks:
 
@@ -563,6 +639,7 @@ In our testing, most of the time the issue were curly brackets that needed to be
 - Moved plugin options `remarkPlugins` and `rehypePlugins` into `mdxOptions`
 - Removed `timeToRead`, `rawBody`, `slug`, `headings`, `html`, `mdxAST`, `wordCount`, `fileAbsolutePath` from the query result. You can check [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) to learn how to re-implement some of them on your own.
 - `gatsby-plugin-mdx` only applies to local files (that are sourced with `gatsby-source-filesystem`)
+- All [MDX v2 migration](https://mdxjs.com/migrating/v2/) notes apply
 
 ## Why MDX?
 
