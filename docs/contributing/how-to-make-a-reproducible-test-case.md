@@ -25,8 +25,8 @@ A reproducible test case is a great way to share a specific environment that cau
 
 Instead of cloning `gatsby-starter-minimal` to your local computer and working on it there, you can also use Online IDEs that set up the environment for you. Available options:
 
-- [Codesandbox](https://githubbox.com/gatsbyjs/gatsby-starter-minimal)
-- [Stackblitz](https://githubblitz.com/gatsbyjs/gatsby-starter-minimal)
+- [CodeSandbox](https://githubbox.com/gatsbyjs/gatsby-starter-minimal)
+- [StackBlitz](https://githubblitz.com/gatsbyjs/gatsby-starter-minimal)
 
 ## Benefits of reproducible test cases
 
