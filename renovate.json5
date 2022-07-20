@@ -463,8 +463,7 @@
       ],
       "matchDepTypes": [
         "dependencies",
-        "devDependencies",
-        "parcelDependencies"
+        "devDependencies"
       ],
       "dependencyDashboardApproval": false
     },

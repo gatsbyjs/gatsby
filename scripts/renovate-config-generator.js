@@ -152,7 +152,7 @@ const globalPackageRules = [
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
     matchPackagePatterns: [`^@parcel/`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
-    matchDepTypes: [`dependencies`, `devDependencies`, `parcelDependencies`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
   {
