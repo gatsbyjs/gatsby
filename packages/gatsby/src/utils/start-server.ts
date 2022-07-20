@@ -800,12 +800,8 @@ export async function startServer(
    * Set up the HTTP server and socket.io.
    **/
   const server = new http.Server(app)
-
   const socket = websocketManager.init({ server })
-
-  // hardcoded `localhost`, because host should match `target` we set
-  // in http proxy in `develop-proxy`
-  const listener = server.listen(program.port, `localhost`)
+  const listener = server.listen(program.port, program.host)
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)
