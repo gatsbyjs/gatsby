@@ -12,7 +12,7 @@ import chokidar, { FSWatcher } from "chokidar"
 import { Span } from "opentracing"
 
 import path from "path"
-import { slash } from "gatsby-core-utils"
+import { getPathToLayoutComponent, slash } from "gatsby-core-utils"
 
 import { store, emitter } from "../redux/"
 import { actions } from "../redux/actions"
@@ -45,16 +45,24 @@ interface IQuery {
 interface IQuerySnapshot {
   components: Map<string, IComponent>
   staticQueryComponents: Map<string, IGatsbyStaticQueryComponents>
+  componentsWithCleanFilePaths: Set<string>
 }
 
 const getQueriesSnapshot = (): IQuerySnapshot => {
   const state = store.getState()
+
+  const componentsWithCleanFilePaths: Set<string> = new Set()
+
+  state.components.forEach(c => {
+    componentsWithCleanFilePaths.add(getPathToLayoutComponent(c.componentPath))
+  })
 
   const snapshot: IQuerySnapshot = {
     components: new Map<string, IComponent>(state.components),
     staticQueryComponents: new Map<string, IGatsbyStaticQueryComponents>(
       state.staticQueryComponents
     ),
+    componentsWithCleanFilePaths,
   }
 
   return snapshot
@@ -231,8 +239,7 @@ export const updateStateAndRunQueries = async (
   handleComponentsWithRemovedQueries(snapshot, queries)
 
   // Run action for each component
-  const { components } = snapshot
-  components.forEach(c => {
+  snapshot.components.forEach(c => {
     const { isStaticQuery = false, text = `` } =
       queries.get(c.componentPath) || {}
 
@@ -253,7 +260,12 @@ export const updateStateAndRunQueries = async (
       // Check if this is a page component.
       // If it is and this is our first run during bootstrap,
       // show a warning about having a query in a non-page component.
-    } else if (isFirstRun && !snapshot.components.has(component)) {
+    } else if (
+      isFirstRun &&
+      !snapshot.componentsWithCleanFilePaths.has(
+        getPathToLayoutComponent(component)
+      )
+    ) {
       report.warn(
         `The GraphQL query in the non-page component "${component}" will not be run.`
       )

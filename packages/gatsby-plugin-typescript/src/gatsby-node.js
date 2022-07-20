@@ -17,9 +17,7 @@ function onCreateBabelConfig({ actions }, options) {
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {
-  const jsLoader = loaders.js()
-
-  if (!jsLoader) {
+  if (typeof loaders?.js !== `function`) {
     return
   }
 
@@ -28,7 +26,12 @@ function onCreateWebpackConfig({ actions, loaders }) {
       rules: [
         {
           test: /\.tsx?$/,
-          use: jsLoader,
+          use: ({ resourceQuery, issuer }) => [
+            loaders.js({
+              isPageTemplate: /async-requires/.test(issuer),
+              resourceQuery,
+            }),
+          ],
         },
       ],
     },

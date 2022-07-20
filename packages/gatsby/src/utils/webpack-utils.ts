@@ -430,7 +430,7 @@ export const createWebpackUtils = (
           )
         },
         type: `javascript/auto`,
-        use: ({ issuer }): Array<RuleSetUseItem> => [
+        use: ({ resourceQuery, issuer }): Array<RuleSetUseItem> => [
           // If a JS import comes from async-requires, assume it is for a page component.
           // Using `issuer` allows us to avoid mutating async-requires for this case.
           //
@@ -445,6 +445,7 @@ export const createWebpackUtils = (
             configFile: true,
             compact: PRODUCTION,
             isPageTemplate: /async-requires/.test(issuer),
+            resourceQuery,
           }),
         ],
       }

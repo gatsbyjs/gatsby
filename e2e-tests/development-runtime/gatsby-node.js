@@ -1,5 +1,6 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const headFunctionExportSharedData = require("./shared-data/head-function-export")
 const {
   addRemoteFilePolyfillInterface,
   polyfillImageServiceDevRoutes,
@@ -21,6 +22,14 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
       }
     )
   )
+
+  actions.createTypes(`#graphql
+    type HeadFunctionExportFsRouteApi implements Node {
+      id: ID!
+      slug: String!
+      content: String!
+    }
+  `)
 }
 
 /** @type {import('gatsby').sourceNodes} */
@@ -65,6 +74,18 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
         contentDigest: createContentDigest(item.url),
       },
     })
+  })
+
+  actions.createNode({
+    id: createNodeId(`head-function-export-fs-route-api`),
+    slug: `/fs-route-api`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `HeadFunctionExportFsRouteApi`,
+      content: `Some words`,
+      contentDigest: createContentDigest(`Some words`),
+    },
   })
 }
 
@@ -164,6 +185,14 @@ exports.createPages = async function createPages({
   createPage({
     path: `/client-only-paths/static`,
     component: path.resolve(`src/templates/static-page.js`),
+  })
+
+  createPage({
+    path: `/head-function-export/correct-props`,
+    component: path.resolve(
+      `src/templates/head-function-export/correct-props.js`
+    ),
+    context: headFunctionExportSharedData.data.context,
   })
 
   createRedirect({

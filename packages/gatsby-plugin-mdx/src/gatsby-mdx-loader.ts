@@ -2,15 +2,14 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { NodePluginArgs } from "gatsby"
 import type { LoaderDefinition } from "webpack"
-import type { NodeMap } from "./types"
-
-import { getOptions } from "loader-utils"
-
+import { slash } from "gatsby-core-utils/path"
+import { createFileToMdxCacheKey } from "./cache-helpers"
 import { compileMDX } from "./compile-mdx"
 
 export interface IGatsbyMDXLoaderOptions {
   options: ProcessorOptions
-  nodeMap: NodeMap
+  getNode: NodePluginArgs["getNode"]
+  cache: NodePluginArgs["cache"]
   reporter: NodePluginArgs["reporter"]
 }
 
@@ -18,25 +17,32 @@ export interface IGatsbyMDXLoaderOptions {
 // This whole loaded could be replaced by @mdx-js/loader if MDX would
 // accept custom data passed to the unified pipeline via processor.data()
 const gatsbyMDXLoader: LoaderDefinition = async function (source) {
-  const { options, nodeMap, reporter }: IGatsbyMDXLoaderOptions =
-    getOptions(this)
-  const res = nodeMap.get(this.resourcePath)
+  const { options, getNode, cache, reporter } =
+    this.getOptions() as IGatsbyMDXLoaderOptions
+  const resourcePath = slash(this.resourcePath)
+  const mdxNodeId = await cache.get(createFileToMdxCacheKey(resourcePath))
 
-  if (!res) {
+  if (!mdxNodeId) {
     return source
   }
 
-  const { mdxNode, fileNode } = res
+  const mdxNode = getNode(mdxNodeId)
+  if (!mdxNode) {
+    return source
+  }
 
   const compileRes = await compileMDX(
     // We want to work with the transformed source from our layout plugin
-    { ...mdxNode, body: source },
-    fileNode,
+    {
+      absolutePath: resourcePath,
+      source: mdxNode.body as string,
+    },
     options,
+    cache,
     reporter
   )
 
-  if (compileRes && compileRes.processedMDX) {
+  if (compileRes?.processedMDX) {
     return compileRes.processedMDX
   }
 

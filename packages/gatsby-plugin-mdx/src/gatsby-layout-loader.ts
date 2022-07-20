@@ -1,82 +1,224 @@
 /* eslint-disable @babel/no-invalid-this */
+import path from "path"
+import type { NodePluginArgs } from "gatsby"
+import { slash } from "gatsby-core-utils/path"
+import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
+import type {
+  Program,
+  Declaration,
+  Expression,
+  ExportDefaultDeclaration,
+  Identifier,
+  FunctionDeclaration,
+} from "estree"
 import type { LoaderDefinition } from "webpack"
-import type { Options } from "mdast-util-to-markdown"
-import type { NodeMap } from "./types"
 import type { IMdxPluginOptions } from "./plugin-options"
-
-import { getOptions } from "loader-utils"
+import { ERROR_CODES } from "./error-utils"
 
 export interface IGatsbyLayoutLoaderOptions {
   options: IMdxPluginOptions
-  nodeMap: NodeMap
+  nodeExists: (path: string) => Promise<boolean>
+  reporter: NodePluginArgs["reporter"]
 }
 
 // Wrap MDX content with Gatsby Layout component
-const gatsbyLayoutLoader: LoaderDefinition = async function () {
-  const { options, nodeMap }: IGatsbyLayoutLoaderOptions = getOptions(this)
-
-  const res = nodeMap.get(this.resourcePath)
-
-  if (!res) {
-    throw new Error(
-      `Unable to locate GraphQL File node for ${this.resourcePath}`
-    )
-  }
-
-  if (!res.mdxNode.body) {
-    throw new Error(
-      `MDX node is empty: ${JSON.stringify(res.mdxNode, null, 2)}`
-    )
-  }
-
-  const { sourceInstanceName } = res.fileNode
-
-  // Get the default layout for the file source instance group name,
-  // or fall back to the default
-  const layoutPath =
-    (sourceInstanceName && options.defaultLayouts[sourceInstanceName]) ||
-    options.defaultLayouts[`default`]
-
-  // No default layout set? Nothing to do here!
-  if (!layoutPath) {
-    return res.mdxNode.body
-  }
-
-  const { fromMarkdown } = await import(`mdast-util-from-markdown`)
-  const { toMarkdown } = await import(`mdast-util-to-markdown`)
-
-  const { mdxjs } = await import(`micromark-extension-mdxjs`)
-  const { mdxFromMarkdown, mdxToMarkdown } = await import(`mdast-util-mdx`)
-
-  // Parse MDX to AST
-  const tree = fromMarkdown(res.mdxNode.body, {
-    extensions: [mdxjs()],
-    mdastExtensions: [mdxFromMarkdown()],
-  })
-
-  const hasDefaultExport = !!tree.children.find(
-    child =>
-      typeof child.value === `string` &&
-      child.value.indexOf(`export default`) !== -1
+const gatsbyLayoutLoader: LoaderDefinition = async function (
+  source
+): Promise<string | Buffer> {
+  const { nodeExists, reporter } =
+    this.getOptions() as IGatsbyLayoutLoaderOptions
+  // Figure out if the path to the MDX file is passed as a
+  // resource query param or if the MDX file is directly loaded as path.
+  const mdxPath = getPathToContentComponent(
+    `${this.resourcePath}${this.resourceQuery}`
   )
 
-  if (hasDefaultExport) {
-    return res.mdxNode.body
+  if (!(await nodeExists(mdxPath))) {
+    reporter.panicOnBuild({
+      id: ERROR_CODES.NonExistentFileNode,
+      context: {
+        resourcePath: this.resourcePath,
+      },
+    })
   }
 
-  tree.children.unshift({
-    type: `mdxjsEsm` as `text`,
-    value: `import GatsbyMDXLayout from "${layoutPath}"`,
-  })
-  tree.children.push({
-    type: `mdxjsEsm` as `text`,
-    value: `export default GatsbyMDXLayout`,
-  })
-  const out = toMarkdown(tree, {
-    extensions: [mdxToMarkdown() as Options],
-  })
+  // add mdx dependency to webpack
+  this.addDependency(path.resolve(mdxPath))
 
-  return out
+  const acorn = await import(`acorn`)
+  const { default: jsx } = await import(`acorn-jsx`)
+  const { generate } = await import(`astring`)
+  const { buildJsx } = await import(`estree-util-build-jsx`)
+
+  try {
+    const tree = acorn.Parser.extend(jsx()).parse(source, {
+      ecmaVersion: 2020,
+      sourceType: `module`,
+      locations: true,
+    })
+
+    const AST = tree as unknown as Program
+
+    // Throw when tree is not a Program
+    if (!AST.body && !AST.sourceType) {
+      reporter.panicOnBuild({
+        id: ERROR_CODES.InvalidAcornAST,
+        context: {
+          resourcePath: this.resourcePath,
+        },
+      })
+    }
+
+    /**
+     * Inject import to actual MDX file at the top of the file
+     * Input:
+     * [none]
+     * Output:
+     * import GATSBY_COMPILED_MDX from "/absolute/path/to/content.mdx"
+     */
+    AST.body.unshift({
+      type: `ImportDeclaration`,
+      specifiers: [
+        {
+          type: `ImportDefaultSpecifier`,
+          local: {
+            type: `Identifier`,
+            name: `GATSBY_COMPILED_MDX`,
+          },
+        },
+      ],
+      source: {
+        type: `Literal`,
+        value: slash(mdxPath),
+      },
+    })
+
+    /**
+     * Replace default export with wrapper function that injects compiled MDX as children
+     * Input:
+     * export default PageTemplate
+     * Output:
+     * export default (props) => <PageTemplate {...props}>{GATSBY_COMPILED_MDX}</PageTemplate>
+     **/
+    const newBody: Array<any> = []
+    AST.body.forEach(child => {
+      if (child.type !== `ExportDefaultDeclaration`) {
+        newBody.push(child)
+        return
+      }
+
+      const declaration = child.declaration as Declaration | Expression
+      const pageComponentName =
+        (declaration as FunctionDeclaration).id?.name ||
+        (declaration as Identifier).name ||
+        null
+
+      if (!pageComponentName) {
+        reporter.panicOnBuild({
+          id: ERROR_CODES.NonDeterminableExportName,
+          context: {
+            resourcePath: this.resourcePath,
+          },
+        })
+      }
+
+      newBody.push(declaration)
+
+      newBody.push({
+        type: `ExportDefaultDeclaration`,
+        declaration: {
+          type: `FunctionDeclaration`,
+          id: {
+            type: `Identifier`,
+            name: `GatsbyMDXWrapper`,
+          },
+          expression: true,
+          generator: false,
+          async: false,
+          params: [
+            {
+              type: `Identifier`,
+              name: `props`,
+            },
+          ],
+          body: {
+            type: `BlockStatement`,
+            body: [
+              {
+                type: `ReturnStatement`,
+                argument: {
+                  type: `JSXElement`,
+                  openingElement: {
+                    type: `JSXOpeningElement`,
+                    attributes: [
+                      {
+                        type: `JSXSpreadAttribute`,
+                        argument: {
+                          type: `Identifier`,
+                          name: `props`,
+                        },
+                      },
+                    ],
+                    name: {
+                      type: `JSXIdentifier`,
+                      name: pageComponentName,
+                    },
+                    selfClosing: false,
+                  },
+                  closingElement: {
+                    type: `JSXClosingElement`,
+                    name: {
+                      type: `JSXIdentifier`,
+                      name: pageComponentName,
+                    },
+                  },
+                  children: [
+                    {
+                      type: `JSXElement`,
+                      openingElement: {
+                        type: `JSXOpeningElement`,
+                        attributes: [
+                          {
+                            type: `JSXSpreadAttribute`,
+                            argument: {
+                              type: `Identifier`,
+                              name: `props`,
+                            },
+                          },
+                        ],
+                        name: {
+                          type: `JSXIdentifier`,
+                          name: `GATSBY_COMPILED_MDX`,
+                        },
+                        selfClosing: true,
+                      },
+                      children: [],
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      } as unknown as ExportDefaultDeclaration)
+    })
+    AST.body = newBody
+
+    buildJsx(AST)
+
+    const transformedSource = generate(AST)
+
+    return transformedSource
+  } catch (error) {
+    reporter.panicOnBuild({
+      id: ERROR_CODES.InvalidAcornAST,
+      context: {
+        resourcePath: this.resourcePath,
+      },
+      error,
+    })
+    return ``
+  }
 }
 
 export default gatsbyLayoutLoader

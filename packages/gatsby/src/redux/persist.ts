@@ -165,7 +165,6 @@ function prepareCacheFolder(
           counter: 0,
           owner: ``,
         },
-        __gatsby_resolved: {},
         fields: [],
       }
       nodesMap.set(dummyNode.id, dummyNode)

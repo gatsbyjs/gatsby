@@ -8,7 +8,11 @@ const { platform } = require(`os`)
 const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const { slash, createContentDigest } = require(`gatsby-core-utils`)
+const { slash } = require(`gatsby-core-utils/path`)
+const {
+  createContentDigest,
+} = require(`gatsby-core-utils/create-content-digest`)
+const { splitComponentPath } = require(`gatsby-core-utils/parse-component-path`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode, getDataStore } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
@@ -306,9 +310,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
+      const splitPath = splitComponentPath(page.component)
 
       // normalize component path
-      page.component = slash(page.component)
+      page.component = slash(splitPath[0])
       // check if path uses correct casing - incorrect casing will
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
@@ -358,6 +363,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         }
 
         page.component = trueComponentPath
+      }
+
+      if (splitPath.length > 1) {
+        page.component = `${page.component}?__contentFilePath=${splitPath[1]}`
       }
 
       pageComponentCache.set(originalPageComponent, page.component)
@@ -494,6 +503,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
+  const sanitizedPayload = sanitizeNode(internalPage)
+
   const actions = [
     {
       ...actionOptions,
@@ -501,7 +513,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       contextModified,
       componentModified,
       plugin,
-      payload: internalPage,
+      payload: sanitizedPayload,
     },
   ]
 

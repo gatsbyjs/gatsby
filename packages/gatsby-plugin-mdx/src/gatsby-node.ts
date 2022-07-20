@@ -1,23 +1,17 @@
 import type { GatsbyNode, NodeInput } from "gatsby"
 import type { FileSystemNode } from "gatsby-source-filesystem"
 import type { Options } from "rehype-infer-description-meta"
-import type { IFileNode, NodeMap } from "./types"
-
 import path from "path"
-import { sentenceCase } from "change-case"
 import fs from "fs-extra"
-import grayMatter from "gray-matter"
-
-import {
-  defaultOptions,
-  enhanceMdxOptions,
-  IMdxPluginOptions,
-} from "./plugin-options"
-import { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
+import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
+import { defaultOptions, enhanceMdxOptions } from "./plugin-options"
+import type { IGatsbyLayoutLoaderOptions } from "./gatsby-layout-loader"
+import { parseFrontmatter } from "./frontmatter"
 import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
-import { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
+import type { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
 import { ERROR_MAP } from "./error-utils"
+import { createFileToMdxCacheKey } from "./cache-helpers"
 
 /**
  * Add support for MDX files including using Gatsby layout components
@@ -25,21 +19,8 @@ import { ERROR_MAP } from "./error-utils"
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
   async (
     { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
-    pluginOptions: IMdxPluginOptions
+    pluginOptions
   ) => {
-    const mdxNodes = getNodesByType(`Mdx`)
-    const nodeMap: NodeMap = new Map()
-    mdxNodes.forEach(mdxNode => {
-      if (!mdxNode.parent) {
-        return
-      }
-      const fileNode: IFileNode | undefined = getNode(mdxNode.parent)
-      if (!fileNode || !fileNode.absolutePath) {
-        return
-      }
-      nodeMap.set(fileNode.absolutePath, { fileNode, mdxNode })
-    })
-
     const options = defaultOptions(pluginOptions)
 
     const mdxOptions = await enhanceMdxOptions(pluginOptions, {
@@ -52,13 +33,19 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
 
     const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
       options: mdxOptions,
-      nodeMap,
       reporter,
+      cache,
+      getNode,
     }
 
     const layoutLoaderOptions: IGatsbyLayoutLoaderOptions = {
       options,
-      nodeMap,
+      nodeExists: async function nodeExists(absolutePath): Promise<boolean> {
+        const entry = await cache.get(createFileToMdxCacheKey(absolutePath))
+
+        return !!entry
+      },
+      reporter,
     }
 
     actions.setWebpackConfig({
@@ -69,19 +56,18 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
             use: [
               loaders.js(),
               {
-                loader: path.join(
-                  `gatsby-plugin-mdx`,
-                  `dist`,
-                  `gatsby-mdx-loader`
-                ),
+                loader: path.join(__dirname, `gatsby-mdx-loader`),
                 options: mdxLoaderOptions,
               },
+            ],
+          },
+          {
+            test: /\.[tj]sx?$/,
+            resourceQuery: /__contentFilePath=.+\.mdx?$/,
+            use: [
+              loaders.js(),
               {
-                loader: path.join(
-                  `gatsby-plugin-mdx`,
-                  `dist`,
-                  `gatsby-layout-loader`
-                ),
+                loader: path.join(__dirname, `gatsby-layout-loader`),
                 options: layoutLoaderOptions,
               },
             ],
@@ -97,17 +83,23 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
  */
 export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
   _data,
-  pluginOptions: IMdxPluginOptions
+  pluginOptions
 ) => defaultOptions(pluginOptions).extensions
 
 /**
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries and render the pages.
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
-  { filename, contents, getNode, getNodesByType, pathPrefix, reporter, cache },
-  pluginOptions: IMdxPluginOptions
+  { filename, getNode, getNodesByType, pathPrefix, reporter, cache },
+  pluginOptions
 ) => {
-  const { extensions } = defaultOptions(pluginOptions)
+  const options = defaultOptions(pluginOptions)
+  const { extensions } = options
+  const mdxPath = getPathToContentComponent(filename)
+
+  if (!mdxPath) {
+    return undefined
+  }
 
   const mdxOptions = await enhanceMdxOptions(pluginOptions, {
     getNode,
@@ -117,30 +109,21 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     cache,
   })
 
-  const ext = path.extname(filename)
+  const ext = path.extname(mdxPath)
 
   if (!extensions.includes(ext)) {
     return undefined
   }
 
+  const contents = await fs.readFile(mdxPath)
+
   const compileRes = await compileMDX(
     {
-      id: ``,
-      children: [],
-      parent: ``,
-      internal: { contentDigest: ``, owner: ``, type: `` },
-      body: contents,
-      rawBody: ``,
-    },
-    {
-      id: ``,
-      children: [],
-      parent: ``,
-      internal: { contentDigest: ``, owner: ``, type: `` },
+      source: contents,
       absolutePath: filename,
-      sourceInstanceName: `mocked`,
     },
     mdxOptions,
+    cache,
     reporter
   )
 
@@ -153,24 +136,13 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
   async (
     { getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema },
-    pluginOptions: IMdxPluginOptions
+    pluginOptions
   ) => {
     const { createTypes } = actions
     const typeDefs = [
       schema.buildObjectType({
-        name: `MdxFrontmatter`,
-        fields: {
-          title: `String`,
-        },
-      }),
-      schema.buildObjectType({
         name: `Mdx`,
         fields: {
-          rawBody: `String!`,
-          body: `String!`,
-          frontmatter: `MdxFrontmatter!`,
-          slug: `String`,
-          title: `String`,
           excerpt: {
             type: `String`,
             args: {
@@ -185,23 +157,33 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
               ).default
 
               const descriptionOptions: Options = { truncateSize: pruneLength }
+              const fileNode = getNode(mdxNode.parent) as FileSystemNode
 
-              const result = await compileMDXWithCustomOptions({
-                mdxNode,
-                pluginOptions,
-                customOptions: {
-                  mdxOptions: {
-                    rehypePlugins: [
-                      [rehypeInferDescriptionMeta, descriptionOptions],
-                    ],
-                  },
+              if (!fileNode) {
+                return null
+              }
+
+              const result = await compileMDXWithCustomOptions(
+                {
+                  source: mdxNode.body,
+                  absolutePath: fileNode.absolutePath,
                 },
-                getNode,
-                getNodesByType,
-                pathPrefix,
-                reporter,
-                cache,
-              })
+                {
+                  pluginOptions,
+                  customOptions: {
+                    mdxOptions: {
+                      rehypePlugins: [
+                        [rehypeInferDescriptionMeta, descriptionOptions],
+                      ],
+                    },
+                  },
+                  getNode,
+                  getNodesByType,
+                  pathPrefix,
+                  reporter,
+                  cache,
+                }
+              )
 
               if (!result) {
                 return null
@@ -219,25 +201,38 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
               },
             },
             async resolve(mdxNode, { maxDepth }) {
-              const { visit } = await import(`unist-util-visit`)
-              const { toc } = await import(`mdast-util-toc`)
+              const [{ visit }, { toc }] = await Promise.all([
+                import(`unist-util-visit`),
+                import(`mdast-util-toc`),
+              ])
 
-              const result = await compileMDXWithCustomOptions({
-                mdxNode,
-                pluginOptions,
-                customOptions: {
-                  mdxOptions: {
-                    remarkPlugins: [
-                      [remarkInferTocMeta, { visit, toc, maxDepth }],
-                    ],
-                  },
+              const fileNode = getNode(mdxNode.parent) as FileSystemNode
+
+              if (!fileNode) {
+                return null
+              }
+
+              const result = await compileMDXWithCustomOptions(
+                {
+                  source: mdxNode.body,
+                  absolutePath: fileNode.absolutePath,
                 },
-                getNode,
-                getNodesByType,
-                pathPrefix,
-                reporter,
-                cache,
-              })
+                {
+                  pluginOptions,
+                  customOptions: {
+                    mdxOptions: {
+                      remarkPlugins: [
+                        [remarkInferTocMeta, { visit, toc, maxDepth }],
+                      ],
+                    },
+                  },
+                  getNode,
+                  getNodesByType,
+                  pathPrefix,
+                  reporter,
+                  cache,
+                }
+              )
 
               if (!result) {
                 return null
@@ -247,6 +242,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             },
           },
         },
+        extensions: {
+          infer: true,
+        },
         interfaces: [`Node`],
       }),
     ]
@@ -255,7 +253,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_shouldOnCreateNode: GatsbyNode["unstable_shouldOnCreateNode"] =
-  ({ node }: { node: FileSystemNode }, pluginOptions: IMdxPluginOptions) => {
+  ({ node }: { node: FileSystemNode }, pluginOptions) => {
     const { extensions } = defaultOptions(pluginOptions)
     return node.internal.type === `File` && extensions.includes(node.ext)
   }
@@ -268,56 +266,63 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
   loadNodeContent,
   actions: { createNode, createParentChildLink },
   createNodeId,
+  cache,
 }) => {
   const rawBody = await loadNodeContent(node)
 
-  const { data: frontmatter, content: body } = grayMatter(rawBody)
-
-  // Use slug from frontmatter, otherwise fall back to the file name and path
-  const slug =
-    frontmatter.slug ||
-    [node.relativeDirectory, node.name === `index` ? `` : node.name]
-      .filter(Boolean)
-      .join(`/`)
-
-  // Use title from frontmatter, otherwise fall back to the file name
-  const title = frontmatter.title || sentenceCase(node.name)
-
+  const { frontmatter, body } = parseFrontmatter(
+    node.internal.contentDigest,
+    rawBody
+  )
   const mdxNode: NodeInput = {
     id: createNodeId(`${node.id} >>> Mdx`),
     children: [],
     parent: node.id,
     internal: {
-      content: rawBody,
       type: `Mdx`,
       contentDigest: node.internal.contentDigest,
     },
-    rawBody,
     body,
-    slug,
-    title,
     frontmatter,
   }
 
   createNode(mdxNode)
   createParentChildLink({ parent: node, child: mdxNode })
+  await cache.set(createFileToMdxCacheKey(node.absolutePath), mdxNode.id)
 }
 
 /**
  * Add frontmatter as page context for MDX pages
  */
 export const onCreatePage: GatsbyNode["onCreatePage"] = async (
-  { page, actions },
-  pluginOptions: IMdxPluginOptions
+  { page, actions, getNodesByType },
+  pluginOptions
 ) => {
   const { createPage, deletePage } = actions
   const { extensions } = defaultOptions(pluginOptions)
-  const ext = path.extname(page.component)
 
-  // Only apply on pages based on .mdx files and avoid loops
-  if (extensions.includes(ext) && !page.context?.frontmatter) {
-    const content = await fs.readFile(page.component, `utf8`)
-    const { data: frontmatter } = grayMatter(content)
+  const mdxPath = getPathToContentComponent(page.component)
+  const ext = path.extname(mdxPath)
+
+  // Only apply on pages based on .mdx files
+  if (!extensions.includes(ext)) {
+    return
+  }
+
+  const fileNode = getNodesByType(`File`).find(
+    node => node.absolutePath === mdxPath
+  )
+  if (!fileNode) {
+    throw new Error(`Could not locate File node for ${mdxPath}`)
+  }
+
+  // Avoid loops
+  if (!page.context?.frontmatter) {
+    const content = await fs.readFile(mdxPath, `utf8`)
+    const { frontmatter } = parseFrontmatter(
+      fileNode.internal.contentDigest,
+      content
+    )
 
     deletePage(page)
     createPage({
@@ -348,43 +353,39 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .description(
         `Configure the file extensions that gatsby-plugin-mdx will process`
       ),
-    defaultLayouts: Joi.object()
-      .unknown(true)
-      .default({})
-      .description(`Set the layout components for MDX source types`),
     // @ts-ignore - subPlugins() exists in bootstrap/load-plugins
     gatsbyRemarkPlugins: Joi.subPlugins().description(
       `Use Gatsby-specific remark plugins`
     ),
     mdxOptions: Joi.object()
       .keys({
-        jsx: Joi.boolean().description(`Whether to keep JSX.`),
+        jsx: Joi.boolean().description(`Whether to keep JSX`),
         format: Joi.string()
           .valid(`mdx`, `md`)
           .description(`Format of the files to be processed`),
         outputFormat: Joi.string()
           .valid(`program`, `function-body`)
           .description(
-            `Whether to compile to a whole program or a function body..`
+            `Whether to compile to a whole program or a function body`
           ),
         mdExtensions: Joi.array()
           .items(Joi.string().regex(/^\./))
-          .description(`Extensions (with \`.\`) for markdown.`),
+          .description(`Extensions (with \`.\`) for markdown`),
         mdxExtensions: Joi.array()
           .items(Joi.string().regex(/^\./))
-          .description(`Extensions (with \`.\`) for MDX.`),
+          .description(`Extensions (with \`.\`) for MDX`),
         recmaPlugins: Joi.array().description(
-          `List of recma (esast, JavaScript) plugins.`
+          `List of recma (esast, JavaScript) plugins`
         ),
         remarkPlugins: Joi.array().description(
-          `List of remark (mdast, markdown) plugins.`
+          `List of remark (mdast, markdown) plugins`
         ),
         rehypePlugins: Joi.array().description(
-          `List of rehype (hast, HTML) plugins.`
+          `List of rehype (hast, HTML) plugins`
         ),
         remarkRehypeOptions: Joi.object()
           .unknown()
-          .description(`Options to pass through to \`remark-rehype\`.`),
+          .description(`Options to pass through to \`remark-rehype\``),
       })
       .unknown(true)
       .default({})

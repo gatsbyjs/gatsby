@@ -1,8 +1,7 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { GatsbyCache, NodePluginArgs } from "gatsby"
 import type { Pluggable } from "unified"
-
-import { IMdxPluginOptions } from "./plugin-options"
+import type { IMdxPluginOptions } from "./plugin-options"
 
 interface IGetSourcePluginsAsRemarkPlugins {
   gatsbyRemarkPlugins: IMdxPluginOptions["gatsbyRemarkPlugins"]
@@ -23,9 +22,9 @@ export async function getSourcePluginsAsRemarkPlugins({
 }: IGetSourcePluginsAsRemarkPlugins): Promise<
   ProcessorOptions["remarkPlugins"]
 > {
-  const userPluginsFiltered = gatsbyRemarkPlugins.filter(
-    plugin => typeof plugin.module === `function`
-  )
+  const userPluginsFiltered = gatsbyRemarkPlugins
+    ? gatsbyRemarkPlugins.filter(plugin => typeof plugin.module === `function`)
+    : []
 
   if (!userPluginsFiltered.length) {
     return []
@@ -36,7 +35,8 @@ export async function getSourcePluginsAsRemarkPlugins({
     const wrappedGatsbyPlugin: Pluggable<Array<any>> =
       function wrappedGatsbyPlugin() {
         // eslint-disable-next-line @babel/no-invalid-this
-        const mdxNode = this.data(`mdxNode`)
+        const mdxNode = getNode(this.data(`mdxNodeId`) as string)
+
         return async function transformer(markdownAST): Promise<any> {
           // Execute gatsby-remark-* plugin
           await requiredPlugin(
