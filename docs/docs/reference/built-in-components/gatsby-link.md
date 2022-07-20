@@ -290,6 +290,10 @@ const Form = () => (
 )
 ```
 
+### Navigate to the previous page
+
+You can use `navigate(-1)` (with any number) to go to a previously visited route. This is the Gatsy (or more precisely [Reach Routers](https://reach.tech/router/api/navigate)) way of using `history.back()`. However, the only way to check if there actually is a previous route is to [pass in an explicit state](#pass-state-as-props-to-the-linked-page) from your previously clicked internal link.
+
 ## Add the path prefix to paths using `withPrefix`
 
 It is common to host sites in a sub-directory of a site. Gatsby lets you [set
