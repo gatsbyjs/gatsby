@@ -3,7 +3,7 @@ import { resolve } from "@gatsbyjs/reach-router/lib/utils"
 import { applyTrailingSlashOption } from "gatsby-page-utils/apply-trailing-slash-option"
 import { parsePath } from "./parse-path"
 import { isLocalLink } from "./is-local-link"
-import { withPrefix } from "."
+import { withPrefix } from "./prefix-helpers"
 
 const isAbsolutePath = path => path?.startsWith(`/`)
 

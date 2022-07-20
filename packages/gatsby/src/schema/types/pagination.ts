@@ -7,7 +7,13 @@ import {
 } from "graphql-compose"
 import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
-import { distinct, group, max, min, sum } from "../resolvers"
+import {
+  createDistinctResolver,
+  createGroupResolver,
+  createMaxResolver,
+  createMinResolver,
+  createSumResolver,
+} from "../resolvers"
 
 export const getPageInfo = <TContext = any>({
   schemaComposer,
@@ -99,28 +105,28 @@ function createPagination<TSource = any, TContext = any>({
           args: {
             field: fieldsEnumTC.getTypeNonNull(),
           },
-          resolve: distinct,
+          resolve: createDistinctResolver(typeComposer.getTypeName()),
         },
         max: {
           type: `Float`,
           args: {
             field: fieldsEnumTC.getTypeNonNull(),
           },
-          resolve: max,
+          resolve: createMaxResolver(typeComposer.getTypeName()),
         },
         min: {
           type: `Float`,
           args: {
             field: fieldsEnumTC.getTypeNonNull(),
           },
-          resolve: min,
+          resolve: createMinResolver(typeComposer.getTypeName()),
         },
         sum: {
           type: `Float`,
           args: {
             field: fieldsEnumTC.getTypeNonNull(),
           },
-          resolve: sum,
+          resolve: createSumResolver(typeComposer.getTypeName()),
         },
         group: {
           type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],
@@ -129,7 +135,7 @@ function createPagination<TSource = any, TContext = any>({
             limit: `Int`,
             field: fieldsEnumTC.getTypeNonNull(),
           },
-          resolve: group,
+          resolve: createGroupResolver(typeComposer.getTypeName()),
         },
       }
 

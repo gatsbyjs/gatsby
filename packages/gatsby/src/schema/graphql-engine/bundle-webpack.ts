@@ -8,6 +8,9 @@ import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
+import { schemaCustomizationAPIs } from "./print-plugins"
+import type { GatsbyNodeAPI } from "../../redux/types"
+import * as nodeApis from "../../utils/api-node-docs"
 
 type Reporter = typeof reporter
 
@@ -20,6 +23,16 @@ const cacheLocation = path.join(
   `webpack`,
   `query-engine`
 )
+
+function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
+  const apisToKeep = new Set(schemaCustomizationAPIs)
+  apisToKeep.add(`onPluginInit`)
+
+  const apisToRemove = (Object.keys(nodeApis) as Array<GatsbyNodeAPI>).filter(
+    api => !apisToKeep.has(api)
+  )
+  return apisToRemove
+}
 
 export async function createGraphqlEngineBundle(
   rootDir: string,
@@ -83,18 +96,6 @@ export async function createGraphqlEngineBundle(
     module: {
       rules: [
         {
-          test: /\.ts$/,
-          exclude: /node_modules/,
-          use: {
-            loader: require.resolve(`babel-loader`),
-            options: {
-              presets: [
-                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
-              ],
-            },
-          },
-        },
-        {
           oneOf: [
             {
               // specific set of loaders for LMBD - our custom patch to massage lmdb to work with relocator -> relocator
@@ -116,7 +117,13 @@ export async function createGraphqlEngineBundle(
               use: [
                 assetRelocatorUseEntry,
                 {
-                  loader: require.resolve(`./webpack-remove-apis-loader`),
+                  loader: require.resolve(
+                    `../../utils/webpack/loaders/webpack-remove-exports-loader`
+                  ),
+                  options: {
+                    remove: getApisToRemoveForQueryEngine(),
+                    jsx: false,
+                  },
                 },
               ],
             },
@@ -129,6 +136,18 @@ export async function createGraphqlEngineBundle(
               use: assetRelocatorUseEntry,
             },
           ],
+        },
+        {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: require.resolve(`babel-loader`),
+            options: {
+              presets: [
+                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
+              ],
+            },
+          },
         },
         {
           test: /\.m?js$/,
@@ -161,10 +180,12 @@ export async function createGraphqlEngineBundle(
       },
     },
     plugins: [
+      new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
       new webpack.DefinePlugin({
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
+        "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),

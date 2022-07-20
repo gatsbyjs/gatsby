@@ -75,6 +75,12 @@ For this example to work you'll have to have a `title` inside your `siteMetadata
    <p>Site title: {data.site?.siteMetadata?.title}</p>
    ```
 
+### Configuring the gatsby-config option
+
+Instead of setting a boolean value for the `graphqlTypegen` option in `gatsby-config` you can also set an object to configure it. See all details in the [gatsby-config documentation](/docs/reference/config-files/gatsby-config/#graphqltypegen).
+
+If for example you use `typesOutputPath` to specify a different path, make sure to also update the `"include"` setting in your `tsconfig.json` to include the new path.
+
 ### Non-Nullable types
 
 As Gatsby [infers all fields](/docs/glossary#inference) — unless an explicit schema by the user is provided — they are nullable by default. For GraphQL Typegen this means that fields are possibly `null`. You can see this in the example above where you had to type `data.site?.siteMetadata?.title` as both `siteMetadata` and `title` are nullable.
@@ -222,3 +228,4 @@ You can now use `npm run lint` and `npm run lint:fix` to check your GraphQL quer
 - [Gatsby with TypeScript](/docs/how-to/custom-configuration/typescript)
 - [VSCode GraphQL Plugin](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql)
 - [IntelliJ GraphQL Plugin](https://plugins.jetbrains.com/plugin/8097-graphql)
+- [gatsby-config Option](/docs/reference/config-files/gatsby-config/#graphqltypegen)
