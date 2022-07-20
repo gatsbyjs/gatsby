@@ -30,11 +30,23 @@ const getCustomOptions = stage => {
  */
 const configItemsMemoCache = new Map()
 
-const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
-  const { stage, reactRuntime } = options
+const prepareOptions = (
+  babel,
+  customOptions = {},
+  resolve = require.resolve
+) => {
+  const {
+    stage,
+    reactRuntime,
+    reactImportSource,
+    isPageTemplate,
+    resourceQuery,
+  } = customOptions
 
-  if (configItemsMemoCache.has(stage)) {
-    return configItemsMemoCache.get(stage)
+  const configItemsMemoCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
+
+  if (configItemsMemoCache.has(configItemsMemoCacheKey)) {
+    return configItemsMemoCache.get(configItemsMemoCacheKey)
   }
 
   const pluginBabelConfig = loadCachedConfig()
@@ -54,14 +66,25 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
 
   if (
     _CFLAGS_.GATSBY_MAJOR === `4` &&
-    (stage === `develop` || stage === `build-javascript`)
+    (stage === `develop` || stage === `build-javascript`) &&
+    isPageTemplate
   ) {
+    const apis = [`getServerData`, `config`]
+
+    if (resourceQuery === `?export=default`) {
+      apis.push(`Head`)
+    }
+
+    if (resourceQuery === `?export=head`) {
+      apis.push(`default`)
+    }
+
     requiredPlugins.push(
       babel.createConfigItem(
         [
           resolve(`./babel/babel-plugin-remove-api`),
           {
-            apis: [`getServerData`],
+            apis,
           },
         ],
         {
@@ -74,7 +97,10 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   const requiredPresets = []
 
   // Stage specific plugins to add
-  if (stage === `build-html` || stage === `develop-html`) {
+  if (
+    _CFLAGS_.GATSBY_MAJOR !== `4` &&
+    (stage === `build-html` || stage === `develop-html`)
+  ) {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`babel-plugin-dynamic-import-node`)], {
         type: `plugin`,
@@ -100,6 +126,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
         {
           stage,
           reactRuntime,
+          reactImportSource,
         },
       ],
       {
@@ -136,7 +163,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     fallbackPresets,
   ]
 
-  configItemsMemoCache.set(stage, toReturn)
+  configItemsMemoCache.set(configItemsMemoCacheKey, toReturn)
 
   return toReturn
 }

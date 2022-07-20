@@ -27,9 +27,7 @@ Now that your Builds webhook is set up, when content is updated in WordPress you
 
 ## Setting Up Preview
 
-Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box. See the [feature page on Preview](../features/preview.md) for more information about how Preview works. WPGatsby has been updated to use Gatsby Cloud's new Content Sync service, which is a service that handles the loading view, error handling, and redirection for users that are previewing content. Make sure you've upgraded to the latest versions of WPGatsby, `gatsby`, and `gatsby-source-wordpress`. For documentation about legacy previews where the preview loader used to live on the WordPress side [see here](./configuring-previews-legacy.md).
-
-Note that this feature will work on the latest version of Gatsby but will be more reliable on `gatsby@3.13.0-alpha-node-manifests.26`.
+Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box. See the [feature page on Preview](../features/preview.md) for more information about how Preview works. WPGatsby has been updated to use Gatsby Cloud's new Content Sync service, which is a service that handles the loading view, error handling, and redirection for users that are previewing content. Make sure you've upgraded to the latest versions of WPGatsby, `gatsby` (v3 or v4), and `gatsby-source-wordpress`. For documentation about legacy previews where the preview loader used to live on the WordPress side [see here](./configuring-previews-legacy.md).
 
 ### Connecting Preview
 
@@ -39,9 +37,9 @@ To get started, set up a Preview instance on [Gatsby Cloud](https://www.gatsbyjs
 
 Navigate to your GatsbyJS WordPress settings by visiting this path in your WP instance `/wp-admin/options-general.php?page=gatsbyjs` or by hovering on "Settings" in the WordPress admin menu and clicking on "GatsbyJS".
 
-You will see 5 fields related to Gatsby Preview. "Enable Gatsby Preview?", "Use Gatsby Content Sync?", "Content Sync URL", "Preview Webhook", and "Preview JWT secret".
+You will see 5 fields related to Gatsby Preview. "Enable Gatsby Preview?", "Use Gatsby Content Sync?", "Content Sync URL", "Preview Webhook", and "Preview JWT secret". If you do not see "Use Gatsby Content Sync?" you're on the latest version of WPGatsby and this field isn't needed.
 
-If you don't see this settings page, or you don't see these 4 fields, make sure the latest version of [WPGatsby](https://github.com/gatsbyjs/wp-gatsby) is installed in your WordPress instance.
+If you don't see this settings page, or you don't see these fields, make sure the latest version of [WPGatsby](https://github.com/gatsbyjs/wp-gatsby) is installed in your WordPress instance.
 
 ![wp-gatsbyjs-preview-settings](../../docs/assets/wp-gatsbyjs-preview-settings.png)
 
@@ -53,11 +51,13 @@ When this checkbox is checked, WPGatsby will override the functionality of the W
 
 When this checkbox is checked, WPGatsby will use the new Gatsby Cloud Content Sync service for previews. Instead of WPGatsby handling loading previews and redirecting to the right page, Gatsby Cloud will now do it instead. This is optional but recommended as this will become the default in the future and [legacy previews](./configuring-previews-legacy.md) will be removed.
 
+**Note**: If you do not see this checkbox you're already on a version of WPGatsby where legacy preview has been removed.
+
 #### 3. Fill the "Gatsby Content Sync URL" Field
 
 This field should be filled with the Content Sync URL of your Gatsby Preview instance.
 
-To find your **Content Sync URL**, navigate to the "Site Settings" tab in [Gatsby Cloud](https://www.gatsbyjs.com/dashboard/sites), scroll down until you see the "Content Sync URL", and copy the URL displayed there.
+To find your **Content Sync URL**, navigate to the "Site Settings" tab in your [Gatsby Cloud](https://www.gatsbyjs.com/dashboard/sites) site dashboard, scroll down until you see the "Content Sync URL", and click to copy the URL displayed there.
 
 #### 4. Fill the "Preview Webhook" Field
 

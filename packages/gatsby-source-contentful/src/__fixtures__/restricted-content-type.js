@@ -1,3 +1,45 @@
+exports.contentTypeItems = () => [
+  {
+    sys: {
+      space: {
+        sys: {
+          type: `Link`,
+          linkType: `Space`,
+          id: `uzfinxahlog0`,
+          contentful_id: `uzfinxahlog0`,
+        },
+      },
+      id: `reference`,
+      type: `ContentType`,
+      createdAt: `2020-06-03T14:17:18.696Z`,
+      updatedAt: `2020-06-03T14:17:18.696Z`,
+      environment: {
+        sys: {
+          id: `master`,
+          type: `Link`,
+          linkType: `Environment`,
+        },
+      },
+      revision: 1,
+      contentful_id: `person`,
+    },
+    displayField: `name`,
+    name: `Reference`,
+    description: ``,
+    fields: [
+      {
+        id: `name`,
+        name: `Name`,
+        type: `Symbol`,
+        localized: false,
+        required: true,
+        disabled: false,
+        omitted: false,
+      },
+    ],
+  },
+]
+
 exports.initialSync = () => {
   return {
     currentSyncData: {
@@ -7,47 +49,6 @@ exports.initialSync = () => {
       deletedAssets: [],
       nextSyncToken: `12345`,
     },
-    contentTypeItems: [
-      {
-        sys: {
-          space: {
-            sys: {
-              type: `Link`,
-              linkType: `Space`,
-              id: `uzfinxahlog0`,
-              contentful_id: `uzfinxahlog0`,
-            },
-          },
-          id: `reference`,
-          type: `ContentType`,
-          createdAt: `2020-06-03T14:17:18.696Z`,
-          updatedAt: `2020-06-03T14:17:18.696Z`,
-          environment: {
-            sys: {
-              id: `master`,
-              type: `Link`,
-              linkType: `Environment`,
-            },
-          },
-          revision: 1,
-          contentful_id: `person`,
-        },
-        displayField: `name`,
-        name: `Reference`,
-        description: ``,
-        fields: [
-          {
-            id: `name`,
-            name: `Name`,
-            type: `Symbol`,
-            localized: false,
-            required: true,
-            disabled: false,
-            omitted: false,
-          },
-        ],
-      },
-    ],
     defaultLocale: `en-US`,
     locales: [
       {

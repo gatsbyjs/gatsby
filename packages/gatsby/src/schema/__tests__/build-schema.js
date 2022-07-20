@@ -20,6 +20,14 @@ import {
 } from "../types/type-builders"
 const withResolverContext = require(`../context`)
 
+/**
+ * Helper identity function to trigger syntax highlighting in code editors.
+ * (`gql` name serve as a hint)
+ */
+function gql(input) {
+  return input
+}
+
 const nodes = require(`./fixtures/node-model`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -28,6 +36,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    panic: jest.fn(console.error),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -1116,6 +1125,8 @@ describe(`Build schema`, () => {
         `internalComponentName`,
         `componentChunkName`,
         `matchPath`,
+        `pageContext`,
+        `pluginCreator`,
         `bar`,
         `id`,
         `parent`,
@@ -1154,6 +1165,8 @@ describe(`Build schema`, () => {
         `internalComponentName`,
         `componentChunkName`,
         `matchPath`,
+        `pageContext`,
+        `pluginCreator`,
         `bar`,
         `id`,
         `parent`,
@@ -1341,6 +1354,107 @@ describe(`Build schema`, () => {
         "type NestedNestedFoo {
           bar: Int
           baz: Int
+        }"
+      `)
+    })
+
+    it(`handles merging types when implemented interface wasn't defined yet`, async () => {
+      createTypes(gql`
+        # create initial type composer
+        type TypeThatWillImplementInterface {
+          sharedField: String
+          originalField: String
+        }
+
+        # adjust type to implement not yet defined interface
+        # this will trigger type merging
+        type TypeThatWillImplementInterface implements CustomInterface {
+          sharedField: String
+          newField: String
+        }
+
+        # actually define interface (last)
+        interface CustomInterface {
+          sharedField: String
+        }
+      `)
+      // implicit assertion is that building schema doesn't throw in the process
+      const schema = await buildSchema()
+      expect(printType(schema.getType(`CustomInterface`)))
+        .toMatchInlineSnapshot(`
+        "interface CustomInterface {
+          sharedField: String
+        }"
+      `)
+
+      expect(printType(schema.getType(`TypeThatWillImplementInterface`)))
+        .toMatchInlineSnapshot(`
+        "type TypeThatWillImplementInterface implements CustomInterface {
+          sharedField: String
+          originalField: String
+          newField: String
+        }"
+      `)
+    })
+
+    it(`Can reference derived types when merging types`, async () => {
+      createTypes(gql`
+        # create initial type composer
+        type TypeCreatedBySourcePlugin implements Node {
+          id: ID!
+          someField: String
+        }
+      `)
+      createTypes([
+        buildInterfaceType({
+          name: `SharedInterface`,
+          fields: {
+            id: `ID!`,
+            child_items: {
+              type: `[SharedInterface]`,
+              args: {
+                // referencing derived type
+                sort: `SharedInterfaceSortInput`,
+              },
+            },
+          },
+          interfaces: [`Node`],
+        }),
+        buildObjectType({
+          name: `TypeCreatedBySourcePlugin`,
+          fields: {
+            id: `ID!`,
+            child_items: {
+              type: `[SharedInterface]`,
+              args: {
+                sort: `SharedInterfaceSortInput`,
+              },
+              resolve: (_, args) => [],
+            },
+          },
+          interfaces: [`Node`, `SharedInterface`],
+        }),
+      ])
+
+      // implicit assertion is that building schema doesn't throw in the process
+      const schema = await buildSchema()
+      expect(printType(schema.getType(`TypeCreatedBySourcePlugin`)))
+        .toMatchInlineSnapshot(`
+        "type TypeCreatedBySourcePlugin implements Node & SharedInterface {
+          id: ID!
+          someField: String
+          child_items(sort: SharedInterfaceSortInput): [SharedInterface]
+          parent: Node
+          children: [Node!]!
+          internal: Internal!
+        }"
+      `)
+
+      expect(printType(schema.getType(`SharedInterfaceSortInput`)))
+        .toMatchInlineSnapshot(`
+        "input SharedInterfaceSortInput {
+          fields: [SharedInterfaceFieldsEnum]
+          order: [SortOrderEnum] = [ASC]
         }"
       `)
     })

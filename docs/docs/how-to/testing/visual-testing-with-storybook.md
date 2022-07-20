@@ -55,7 +55,7 @@ module.exports = {
 
 ## Configuration
 
-Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading. If you wish to streamline the process, jump to the [addon section](#using-an-addon) below.
+Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading. If you wish to streamline the process, jump to the [add-on section](#using-an-addon) below.
 
 ### Manual configuration
 
@@ -161,6 +161,8 @@ Storybook v6 has [out-of-the-box support for TypeScript](https://storybook.js.or
 ## Writing stories
 
 A complete guide to writing stories is beyond the scope of this guide, but we'll take a look at creating a story.
+
+> **Note:** Writing stories for components that use `StaticImage` from `gatsby-plugin-image` is currently not supported. Contributions to making this possible are welcome.
 
 First, create the story file. Storybook looks for all files with a `.stories.js` extension and loads them into Storybook for you. Generally, you will want your stories near where the component is defined. However, since this is Gatsby, you will have to create those files outside the `pages` directory if you want stories for your pages.
 

@@ -16,6 +16,15 @@ function matchesSnapshot(query) {
   expect(codeWithFileName).toMatchSnapshot()
 }
 
+function transform(query, filename) {
+  const { code } = babel.transform(query, {
+    presets: [`@babel/preset-react`],
+    plugins: [plugin],
+    filename,
+  })
+  return code
+}
+
 describe(`babel-plugin-remove-graphql-queries`, () => {
   it.todo(
     `Works correctly with the kitchen sink`
@@ -464,5 +473,55 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
     }
   \`
   `)
+  })
+
+  it(`Replaces graphql query inside config with global call`, () => {
+    matchesSnapshot(`
+  import * as React from 'react'
+  import { graphql } from "gatsby"
+
+  const Test = () => (
+    <div></div>
+  )
+
+  export default Test
+
+  export async function config() {
+    const data = graphql\`{ __typename }\`
+
+    return () => {
+      return {
+        defer: true
+      }
+    }
+  }
+  `)
+  })
+
+  it(`validates that config export is async`, () => {
+    const run = () =>
+      transform(`
+  import * as React from 'react'
+  import { graphql } from "gatsby"
+
+  const Test = () => (
+    <div></div>
+  )
+
+  export default Test
+
+  export function config() {
+    const data = graphql\`{ __typename }\`
+
+    return () => {
+      return {
+        defer: true
+      }
+    }
+  }
+  `)
+    expect(run).toThrowErrorMatchingInlineSnapshot(
+      `"unknown: BabelPluginRemoveGraphQLQueries: the \\"config\\" export must be async when using it with graphql"`
+    )
   })
 })

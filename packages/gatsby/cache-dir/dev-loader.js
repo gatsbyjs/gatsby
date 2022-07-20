@@ -7,16 +7,20 @@ import normalizePagePath from "./normalize-page-path"
 // TODO move away from lodash
 import isEqual from "lodash/isEqual"
 
-const preferDefault = m => (m && m.default) || m
-
 function mergePageEntry(cachedPage, newPageData) {
   return {
     ...cachedPage,
     payload: {
       ...cachedPage.payload,
-      json: newPageData.result,
+      json: {
+        // For SSR, cachedPage may contain "data" and "serverData"
+        // But newPageData may contain only "data" or only "serverData" depending on what was updated
+        ...cachedPage.payload.json,
+        ...newPageData.result,
+      },
       page: {
         ...cachedPage.payload.page,
+        getServerDataError: newPageData.getServerDataError,
         staticQueryResults: newPageData.staticQueryResults,
       },
     },
@@ -25,16 +29,15 @@ function mergePageEntry(cachedPage, newPageData) {
 
 class DevLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = chunkName => {
-      if (!this.asyncRequires.components[chunkName]) {
+    const loadComponent = (chunkName, exportType = `components`) => {
+      if (!this.asyncRequires[exportType][chunkName]) {
         throw new Error(
           `We couldn't find the correct component chunk with the name "${chunkName}"`
         )
       }
 
       return (
-        this.asyncRequires.components[chunkName]()
-          .then(preferDefault)
+        this.asyncRequires[exportType][chunkName]()
           // loader will handle the case when component is error
           .catch(err => err)
       )
@@ -54,6 +57,8 @@ class DevLoader extends BaseLoader {
           this.handlePageQueryResultHotUpdate(msg)
         } else if (msg.type === `stalePageData`) {
           this.handleStalePageDataMessage(msg)
+        } else if (msg.type === `staleServerData`) {
+          this.handleStaleServerDataMessage(msg)
         }
       })
     } else if (process.env.NODE_ENV !== `test`) {
@@ -85,7 +90,7 @@ class DevLoader extends BaseLoader {
         rawPath !== `/dev-404-page/`
       ) {
         console.error(
-          `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/`
+          `404 page could not be found. Checkout https://www.gatsbyjs.com/docs/how-to/adding-common-features/add-404-page/`
         )
         return this.loadPageDataJson(`/dev-404-page/`).then(result =>
           Object.assign({}, data, result)
@@ -114,10 +119,8 @@ class DevLoader extends BaseLoader {
     }
   }
 
-  handlePageQueryResultHotUpdate(msg) {
-    const newPageData = msg.payload.result
-
-    const pageDataDbCacheKey = normalizePagePath(msg.payload.id)
+  updatePageData = (pagePath, newPageData) => {
+    const pageDataDbCacheKey = normalizePagePath(pagePath)
     const cachedPageData = this.pageDataDb.get(pageDataDbCacheKey)?.payload
 
     if (!isEqual(newPageData, cachedPageData)) {
@@ -161,42 +164,78 @@ class DevLoader extends BaseLoader {
           }
         })
       }
+      return true
+    }
+    return false
+  }
 
-      ___emitter.emit(`pageQueryResult`, newPageData)
+  markAsStale = dirtyQueryId => {
+    if (dirtyQueryId === `/dev-404-page/` || dirtyQueryId === `/404.html`) {
+      // those pages are not on demand so skipping
+      return
+    }
+
+    const normalizedId = normalizePagePath(dirtyQueryId)
+
+    // We can't just delete items in caches, because then
+    // using history.back() would show dev-404 page
+    // due to our special handling of it in root.js (loader.isPageNotFound check)
+    // so instead we mark it as stale and instruct loader's async methods
+    // to refetch resources if they are marked as stale
+
+    const cachedPageData = this.pageDataDb.get(normalizedId)
+    if (cachedPageData) {
+      // if we have page data in cache, mark it as stale
+      this.pageDataDb.set(normalizedId, {
+        ...cachedPageData,
+        stale: true,
+      })
+    }
+
+    const cachedPage = this.pageDb.get(normalizedId)
+    if (cachedPage) {
+      // if we have page data in cache, mark it as stale
+      this.pageDb.set(normalizedId, {
+        ...cachedPage,
+        payload: { ...cachedPage.payload, stale: true },
+      })
+    }
+  }
+
+  handlePageQueryResultHotUpdate(msg) {
+    const updated = this.updatePageData(msg.payload.id, msg.payload.result)
+    if (updated) {
+      ___emitter.emit(`pageQueryResult`, msg.payload.result)
     }
   }
 
   handleStalePageDataMessage(msg) {
-    msg.payload.stalePageDataPaths.forEach(dirtyQueryId => {
-      if (dirtyQueryId === `/dev-404-page/` || dirtyQueryId === `/404.html`) {
-        // those pages are not on demand so skipping
-        return
+    for (const dirtyQueryId of msg.payload.stalePageDataPaths) {
+      this.markAsStale(dirtyQueryId)
+    }
+  }
+
+  handleStaleServerDataMessage() {
+    const activePath = normalizePagePath(location.pathname)
+
+    // For now just invalidate every single page with serverData
+    for (const [key, value] of this.pageDataDb) {
+      if (value?.payload?.result?.serverData) {
+        this.markAsStale(key)
       }
-
-      const normalizedId = normalizePagePath(dirtyQueryId)
-
-      // We can't just delete items in caches, because then
-      // using history.back() would show dev-404 page
-      // due to our special handling of it in root.js (loader.isPageNotFound check)
-      // so instead we mark it as stale and instruct loader's async methods
-      // to refetch resources if they are marked as stale
-
-      const cachedPageData = this.pageDataDb.get(normalizedId)
-      if (cachedPageData) {
-        // if we have page data in cache, mark it as stale
-        this.pageDataDb.set(normalizedId, {
-          ...cachedPageData,
-          stale: true,
-        })
+      if (activePath === normalizePagePath(key)) {
+        this.reFetchServerData(activePath)
       }
+    }
+  }
 
-      const cachedPage = this.pageDb.get(normalizedId)
-      if (cachedPage) {
-        // if we have page data in cache, mark it as stale
-        this.pageDb.set(normalizedId, {
-          ...cachedPage,
-          payload: { ...cachedPage.payload, stale: true },
-        })
+  reFetchServerData(pagePath) {
+    this.fetchPageDataJson({ pagePath }).then(data => {
+      const updated = this.updatePageData(data.pagePath, data.payload)
+      // SSR could be slow, so we should only emit serverDataResult
+      // when still on the same page
+      if (updated && pagePath === normalizePagePath(location.pathname)) {
+        ___emitter.emit(`serverDataResult`, data.payload)
       }
     })
   }

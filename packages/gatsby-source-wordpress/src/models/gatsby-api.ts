@@ -79,6 +79,7 @@ export interface IPluginOptions {
   production?: {
     hardCacheMediaFiles?: boolean
     allow404Images?: boolean
+    allow401Images?: boolean
   }
   auth?: {
     htaccess: {
@@ -98,10 +99,12 @@ export interface IPluginOptions {
   excludeFieldNames?: []
   html?: {
     useGatsbyImage?: boolean
+    gatsbyImageOptions?: Record<string, unknown>
     imageMaxWidth?: number
     fallbackImageMaxWidth?: number
     imageQuality?: number
     createStaticFiles?: boolean
+    placeholderType?: `blurred` | `dominantColor`
   }
   presets?: Array<IPluginOptionsPreset>
   type?: {
@@ -121,6 +124,8 @@ export interface IPluginOptions {
         maxFileSizeBytes?: number
         requestConcurrency?: number
       }
+
+      placeholderSizeName?: string
     }
   }
 }
@@ -153,6 +158,7 @@ const defaultPluginOptions: IPluginOptions = {
   production: {
     hardCacheMediaFiles: false,
     allow404Images: false,
+    allow401Images: false,
   },
   auth: {
     htaccess: {
@@ -185,6 +191,11 @@ const defaultPluginOptions: IPluginOptions = {
     // Transforms anchor links, video src's, and audio src's (that point to wp-content files) into local file static links
     // Also fetches those files if they don't already exist
     createStaticFiles: true,
+    //
+    // this adds image options to images in HTML fields when html.useGatsbyImage is also set
+    gatsbyImageOptions: {},
+
+    placeholderType: `blurred`,
   },
   presets: [previewOptimizationPreset],
   type: {
@@ -220,6 +231,8 @@ const defaultPluginOptions: IPluginOptions = {
       exclude: true,
     },
     MediaItem: {
+      exclude: false,
+      placeholderSizeName: `gatsby-image-placeholder`,
       lazyNodes: false,
       createFileNodes: true,
       localFile: {

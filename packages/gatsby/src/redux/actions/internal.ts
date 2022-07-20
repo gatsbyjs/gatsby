@@ -1,4 +1,3 @@
-import { IDeleteNodeManifests } from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -25,6 +24,9 @@ import {
   IApiFinishedAction,
   IQueryClearDirtyQueriesListToEmitViaWebsocket,
   ICreateJobV2FromInternalAction,
+  ICreatePageDependencyActionPayloadType,
+  IDeleteNodeManifests,
+  IClearGatsbyImageSourceUrlAction,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -35,30 +37,41 @@ import {
   removeInProgressJob,
   getInProcessJobPromise,
 } from "../../utils/jobs/manager"
+import { getEngineContext } from "../../utils/engine-context"
 
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.
  * @private
  */
-export const createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string; nodeId?: string; connection?: string },
+export const createPageDependencies = (
+  payload: Array<ICreatePageDependencyActionPayloadType>,
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: payload.map(({ path, nodeId, connection }) => {
+      return {
+        path,
+        nodeId,
+        connection,
+      }
+    }),
   }
 }
+
+/**
+ * Create a dependency between a page and data. Probably for
+ * internal use only.
+ *
+ * Shorthand for createPageDependencies.
+ * @private
+ */
+export const createPageDependency = (
+  payload: ICreatePageDependencyActionPayloadType,
+  plugin = ``
+): ICreatePageDependencyAction => createPageDependencies([payload], plugin)
 
 /**
  * Delete dependencies between an array of pages and data. Probably for
@@ -376,6 +389,22 @@ export const createJobV2FromInternalJob =
         currentState.jobsV2.complete.get(jobContentDigest)!.result
       )
     }
+    const engineContext = getEngineContext()
+
+    // Always set context, even if engineContext is undefined.
+    // We do this because the final list of jobs for a given engine request includes both:
+    //  - jobs with the same requestId
+    //  - jobs without requestId (technically with requestId === "")
+    //
+    // See https://nodejs.org/dist/latest-v16.x/docs/api/async_context.html#async_context_troubleshooting_context_loss
+    // on cases when async context could be lost.
+    dispatch({
+      type: `SET_JOB_V2_CONTEXT`,
+      payload: {
+        job: internalJob,
+        requestId: engineContext?.requestId ?? ``,
+      },
+    })
 
     const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
     if (inProgressJobPromise) {
@@ -408,4 +437,11 @@ export const createJobV2FromInternalJob =
 
       return result
     })
+  }
+
+export const clearGatsbyImageSourceUrls =
+  (): IClearGatsbyImageSourceUrlAction => {
+    return {
+      type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
+    }
   }

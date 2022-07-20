@@ -1,7 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from "react"
-import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
+import type { IGatsbyImageData } from "../gatsby-image.browser"
 
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(
@@ -11,27 +14,34 @@ jest.mock(
       strs.join(``)
 )
 
+let count = 0
+function generateImage(): IGatsbyImageData {
+  return {
+    width: 100,
+    height: 100,
+    layout: `fullWidth`,
+    images: {
+      fallback: { src: `some-src-fallback-${count++}.jpg`, sizes: `192x192` },
+    },
+    placeholder: { sources: [] },
+
+    backgroundColor: `red`,
+  }
+}
+
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
   let image: IGatsbyImageData
+  let GatsbyImage
 
   beforeEach(() => {
     console.warn = jest.fn()
     console.error = jest.fn()
     global.SERVER = true
     global.GATSBY___IMAGE = true
-  })
 
-  beforeEach(() => {
-    image = {
-      width: 100,
-      height: 100,
-      layout: `fullWidth`,
-      images: { fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` } },
-      placeholder: { sources: [] },
-
-      backgroundColor: `red`,
-    }
+    GatsbyImage = require(`../gatsby-image.browser`).GatsbyImage
+    image = generateImage()
 
     beforeHydrationContent = document.createElement(`div`)
     beforeHydrationContent.innerHTML = `
@@ -133,13 +143,18 @@ describe(`GatsbyImage browser`, () => {
       { container: beforeHydrationContent, hydrate: true }
     )
 
-    const placeholder = await waitFor(() =>
-      container.querySelector(`[data-placeholder-image=""]`)
+    const placeholder = await waitFor(
+      () =>
+        container.querySelector(`[data-placeholder-image=""]`) as HTMLElement
     )
-    const mainImage = container.querySelector(`[data-main-image=""]`)
+    const mainImage = container.querySelector(
+      `[data-main-image=""]`
+    ) as HTMLElement
 
     expect(placeholder).toBeDefined()
     expect(mainImage).toBeDefined()
+    expect(placeholder.style.opacity).toBe(`1`)
+    expect(mainImage.style.opacity).toBe(`0`)
   })
 
   it(`relies on native lazy loading when the SSR element exists and that the browser supports native lazy loading`, async () => {
@@ -149,11 +164,10 @@ describe(`GatsbyImage browser`, () => {
     // In this scenario,
     // hasSSRHtml is true and resolved through "beforeHydrationContent" and hydrate: true
     ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
-    ;(hooks as any).storeImageloaded = jest.fn()
 
     const { container } = render(
       <GatsbyImage
-        image={image}
+        image={generateImage()}
         alt="Alt content"
         onStartLoad={onStartLoadSpy}
         onLoad={onLoadSpy}
@@ -167,45 +181,7 @@ describe(`GatsbyImage browser`, () => {
 
     img?.dispatchEvent(new Event(`load`))
 
-    expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
+    expect(onStartLoadSpy).toBeCalledWith({ wasCached: true })
     expect(onLoadSpy).toBeCalled()
-    expect(hooks.storeImageloaded).toBeCalledWith(
-      `{"fallback":{"src":"some-src-fallback.jpg","sizes":"192x192"}}`
-    )
-  })
-
-  it(`relies on intersection observer when the SSR element is not resolved`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
-    const onStartLoadSpy = jest.fn()
-
-    const { container } = render(
-      <GatsbyImage
-        image={image}
-        alt="Alt content"
-        onStartLoad={onStartLoadSpy}
-      />
-    )
-
-    await waitFor(() => container.querySelector(`[data-main-image=""]`))
-
-    expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
-  })
-
-  it(`relies on intersection observer when browser does not support lazy loading`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => false
-    const onStartLoadSpy = jest.fn()
-
-    const { container } = render(
-      <GatsbyImage
-        image={image}
-        alt="Alt content"
-        onStartLoad={onStartLoadSpy}
-      />,
-      { container: beforeHydrationContent, hydrate: true }
-    )
-
-    await waitFor(() => container.querySelector(`[data-main-image=""]`))
-
-    expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
   })
 })

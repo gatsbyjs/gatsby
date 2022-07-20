@@ -1,5 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 // This is by no means a full test file for loader.js so feel free to add more tests.
 import mock from "xhr-mock"
+import { setImmediate } from "timers"
 import DevLoader from "../dev-loader"
 import emitter from "../emitter"
 
@@ -205,12 +210,16 @@ describe(`Dev loader`, () => {
 
       const expectation = {
         status: `error`,
-        pagePath: `/error-page`,
+        pagePath: `/500.html`,
+        internalServerError: true,
+        retries: 3,
       }
+
       expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual({
         status: `error`,
         pagePath: `/dev-404-page`,
         retries: 3,
+        internalServerError: true,
       })
       expect(devLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
@@ -279,6 +288,7 @@ describe(`Dev loader`, () => {
     const createAsyncRequires = components => {
       return {
         components,
+        head: components,
       }
     }
 
@@ -330,6 +340,7 @@ describe(`Dev loader`, () => {
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([
         `component`,
+        `head`,
         `json`,
         `page`,
         `staticQueryResults`,
@@ -429,7 +440,7 @@ describe(`Dev loader`, () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/`
+        `404 page could not be found. Checkout https://www.gatsbyjs.com/docs/how-to/adding-common-features/add-404-page/`
       )
 
       mock.error(defaultXHRMockErrorHandler)
@@ -478,26 +489,32 @@ describe(`Dev loader`, () => {
   describe(`prefetch`, () => {
     const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
-    it(`shouldn't prefetch when shouldPrefetch is false`, () => {
-      const devLoader = new DevLoader(asyncRequires, [])
+    it(`shouldn't prefetch when shouldPrefetch is false`, async () => {
+      jest.useFakeTimers()
+      const devLoader = new DevLoader(null, [])
       devLoader.shouldPrefetch = jest.fn(() => false)
       devLoader.doPrefetch = jest.fn()
       devLoader.apiRunner = jest.fn()
+      const prefetchPromise = devLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
 
-      expect(devLoader.prefetch(`/mypath/`)).toBe(false)
+      expect(await prefetchPromise).toBe(false)
       expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(devLoader.apiRunner).not.toHaveBeenCalled()
       expect(devLoader.doPrefetch).not.toHaveBeenCalled()
     })
 
-    it(`should trigger custom prefetch logic when core is disabled`, () => {
-      const devLoader = new DevLoader(asyncRequires, [])
+    it(`should trigger custom prefetch logic when core is disabled`, async () => {
+      jest.useFakeTimers()
+      const devLoader = new DevLoader(null, [])
       devLoader.shouldPrefetch = jest.fn(() => true)
       devLoader.doPrefetch = jest.fn()
       devLoader.apiRunner = jest.fn()
       devLoader.prefetchDisabled = true
 
-      expect(devLoader.prefetch(`/mypath/`)).toBe(false)
+      const prefetchPromise = devLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
+      expect(await prefetchPromise).toBe(false)
       expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(devLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
         pathname: `/mypath/`,
@@ -507,12 +524,14 @@ describe(`Dev loader`, () => {
 
     it(`should prefetch when not yet triggered`, async () => {
       jest.useFakeTimers()
-      const devLoader = new DevLoader(asyncRequires, [])
+      const devLoader = new DevLoader(null, [])
       devLoader.shouldPrefetch = jest.fn(() => true)
       devLoader.apiRunner = jest.fn()
       devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+      const prefetchPromise = devLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
 
-      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(await prefetchPromise).toBe(true)
 
       // wait for doPrefetchPromise
       await flushPromises()
@@ -526,31 +545,6 @@ describe(`Dev loader`, () => {
         {
           pathname: `/mypath/`,
         }
-      )
-    })
-
-    it(`should only run apis once`, async () => {
-      const devLoader = new DevLoader(asyncRequires, [])
-      devLoader.shouldPrefetch = jest.fn(() => true)
-      devLoader.apiRunner = jest.fn()
-      devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
-
-      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
-      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
-
-      // wait for doPrefetchPromise
-      await flushPromises()
-
-      expect(devLoader.apiRunner).toHaveBeenCalledTimes(2)
-      expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
-        1,
-        `onPrefetchPathname`,
-        expect.anything()
-      )
-      expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
-        2,
-        `onPostPrefetchPathname`,
-        expect.anything()
       )
     })
   })

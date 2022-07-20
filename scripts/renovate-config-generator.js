@@ -81,6 +81,14 @@ const globalPackageRules = [
     dependencyDashboardApproval: false,
   },
   {
+    groupName: `cypress`,
+    matchPaths: [`e2e-tests/**/package.json`, `examples/**/package.json`],
+    matchPackageNames: [`cypress`, `cypress-image-snapshot`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
     groupName: `chalk`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
     matchPackageNames: [`chalk`],
@@ -135,6 +143,22 @@ const globalPackageRules = [
     groupName: `chokidar`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
     matchPackageNames: [`chokidar`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `Parcel`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackagePatterns: [`^@parcel/`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `lmdb`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackagePatterns: [`lmdb`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -343,6 +367,7 @@ const renovateConfig = {
   postUpdateOptions: [`yarnDedupeHighest`],
   timezone: `GMT`,
   schedule: [`before 7am on the first day of the month`],
+  updateNotScheduled: false,
   packageRules: defaultPackageRules.concat(
     Array.from(packageRules.values()).flat()
   ),

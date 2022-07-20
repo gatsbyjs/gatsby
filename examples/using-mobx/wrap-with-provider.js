@@ -1,8 +1,12 @@
 import React from "react"
-import { Provider } from "mobx-react"
+import { enableStaticRendering, MobXProviderContext } from "mobx-react"
 import CounterStore from "./src/models/CounterModel"
 
-// eslint-disable-next-line react/display-name,react/prop-types
-export default ({ element }) => (
-  <Provider store={CounterStore}>{element}</Provider>
+// https://mobx.js.org/react-integration.html#static-rendering
+enableStaticRendering(true)
+
+const App =({ element }) => (
+  <MobXProviderContext.Provider value={CounterStore}>{element}</MobXProviderContext.Provider>
 )
+
+export default App;

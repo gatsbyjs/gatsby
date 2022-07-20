@@ -1,17 +1,20 @@
-const base64ImageExp = /data:image\/(jpeg|png|gif);base64,[a-zA-Z0-9/+]+=*/g
+const base64ImageExp = /data-placeholder-image/g
+const styleAttrExp = /style="[^"]+"/g
 
 // The base64 data of image previews might change over time
 // when Contentful adjusts their Image API
-function testWithBase64(elem) {
+// Also gatsby-plugin-image might change their css styles.
+// These are already tested elsewhere.
+function testWithGatsbyPluginImage(elem) {
   elem.invoke("prop", "outerHTML").then(html => {
     // Check if we have a valid base64 data
     expect(html).to.match(base64ImageExp)
 
-    // Remove all base64 data
-    const cleanHtml = html.replace(
-      base64ImageExp,
-      `data:image/redacted;base64,redacted`
-    )
+    // Remove all base64 data and styles to avoid broken snapshots
+    const cleanHtml = html
+      .replace(base64ImageExp, `data:image/redacted;base64,redacted`)
+      .replace(styleAttrExp, ``)
+      .replace(/data-gatsby-image-ssr=\"\"/gm, "")
 
     // Create a DOM element with the redacted base64 data
     cy.document().then(document => {
@@ -31,7 +34,7 @@ describe(`rich-text`, () => {
       duration: 500,
     })
     cy.wait(1000)
-    testWithBase64(cy.get(`[data-cy-id="rich-text-all-features"]`))
+    testWithGatsbyPluginImage(cy.get(`[data-cy-id="rich-text-all-features"]`))
   })
   it(`rich-text: Basic`, () => {
     cy.get(`[data-cy-id="rich-text-basic"]`).snapshot()
@@ -44,7 +47,7 @@ describe(`rich-text`, () => {
       duration: 500,
     })
     cy.wait(1000)
-    testWithBase64(cy.get(`[data-cy-id="rich-text-embedded-asset"]`))
+    testWithGatsbyPluginImage(cy.get(`[data-cy-id="rich-text-embedded-asset"]`))
   })
   it(`rich-text: Embedded Entry With Deep Reference Loop`, () => {
     cy.get(
@@ -72,5 +75,8 @@ describe(`rich-text`, () => {
   it(`rich-text: Localized`, () => {
     cy.get(`[data-cy-id="english-rich-text-localized"]`).snapshot()
     cy.get(`[data-cy-id="german-rich-text-localized"]`).snapshot()
+  })
+  it(`rich-text: Tables`, () => {
+    cy.get(`[data-cy-id="rich-text-tables"]`).snapshot()
   })
 })

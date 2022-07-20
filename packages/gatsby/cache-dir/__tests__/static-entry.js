@@ -34,11 +34,14 @@ jest.mock(
 )
 
 jest.mock(
-  `$virtual/sync-requires`,
+  `$virtual/async-requires`,
   () => {
     return {
       components: {
-        "page-component---src-pages-test-js": () => null,
+        "page-component---src-pages-test-js": () =>
+          Promise.resolve({
+            default: () => null,
+          }),
       },
     }
   },
@@ -60,9 +63,10 @@ jest.mock(
 const pageDataMock = {
   componentChunkName: `page-component---src-pages-test-js`,
   path: `/about/`,
-  webpackCompilationHash: `1234567890abcdef1234`,
   staticQueryHashes: [],
 }
+
+const webpackCompilationHash = `1234567890abcdef1234`
 
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
@@ -70,7 +74,7 @@ const MOCK_FILE_INFO = {
   [join(process.cwd(), `/public/page-data/about/page-data.json`)]:
     JSON.stringify(pageDataMock),
   [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
-    webpackCompilationHash: `1234567890abcdef1234`,
+    webpackCompilationHash,
   }),
 }
 
@@ -170,11 +174,10 @@ const SSR_DEV_MOCK_FILE_INFO = {
   [join(publicDir, `page-data/about/page-data.json`)]: JSON.stringify({
     componentChunkName: `page-component---src-pages-about-js`,
     path: `/about/`,
-    webpackCompilationHash: `1234567890abcdef1234`,
     staticQueryHashes: [],
   }),
   [join(publicDir, `page-data/app-data.json`)]: JSON.stringify({
-    webpackCompilationHash: `1234567890abcdef1234`,
+    webpackCompilationHash,
   }),
 }
 
@@ -191,62 +194,84 @@ describe(`develop-static-entry`, () => {
     global.__BASE_PATH__ = ``
     global.__ASSET_PREFIX__ = ``
     global.BROWSER_ESM_ONLY = false
+    global.HAS_REACT_18 = false
   })
 
-  test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
+  test(`SSR: onPreRenderHTML can be used to replace headComponents`, async () => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toMatchSnapshot()
   })
 
-  test(`SSR: onPreRenderHTML can be used to replace postBodyComponents`, done => {
+  test(`SSR: onPreRenderHTML can be used to replace postBodyComponents`, async () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Post`),
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toMatchSnapshot()
   })
 
-  test(`SSR: onPreRenderHTML can be used to replace preBodyComponents`, done => {
+  test(`SSR: onPreRenderHTML can be used to replace preBodyComponents`, async () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Pre`),
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toMatchSnapshot()
   })
 
-  test(`SSR: onPreRenderHTML adds metatag note for development environment`, done => {
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(
-        `<meta name="note" content="environment=development"/>`
-      )
-      done()
+  test(`SSR: onPreRenderHTML adds metatag note for development environment`, async () => {
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toContain(
+      `<meta name="note" content="environment=development"/>`
+    )
   })
 
-  test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
+  test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, async () => {
     global.plugins = [reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(
-        `<meta name="note" content="environment=development"/>`
-      )
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+
+    expect(html).toContain(
+      `<meta name="note" content="environment=development"/>`
+    )
   })
 
-  test(`SSR: replaceRenderer can be sync`, done => {
+  test(`SSR: replaceRenderer can be sync`, async () => {
     global.plugins = [
       {
         plugin: {
@@ -256,14 +281,17 @@ describe(`develop-static-entry`, () => {
       },
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(`i'm sync`)
-
-      done()
+    const html = await ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
+    expect(html).toContain(`i'm sync`)
   })
 
-  test(`SSR: replaceRenderer can be async`, done => {
+  test(`SSR: replaceRenderer can be async`, async () => {
     jest.useFakeTimers()
     global.plugins = [
       {
@@ -279,13 +307,16 @@ describe(`develop-static-entry`, () => {
       },
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
-      expect(html).toContain(`i'm async`)
-
-      done()
+    const htmlPromise = ssrDevelopStaticEntry({
+      pagePath: `/about/`,
+      isClientOnlyPage: false,
+      publicDir,
+      error: null,
+      serverData: undefined,
     })
     jest.runAllTimers()
     jest.useRealTimers()
+    expect(await htmlPromise).toContain(`i'm async`)
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, () => {
@@ -408,6 +439,7 @@ describe(`static-entry`, () => {
     styles: [],
     reversedStyles: [],
     reversedScripts: [],
+    webpackCompilationHash,
   }
 
   beforeEach(() => {
@@ -493,17 +525,66 @@ describe(`sanitizeComponents`, () => {
   })
 
   it(`strips assetPrefix for manifest link`, () => {
-    global.__PATH_PREFIX__ = `https://gatsbyjs.org/blog`
+    global.__PATH_PREFIX__ = `https://gatsbyjs.com/blog`
     global.__BASE_PATH__ = `/blog`
-    global.__ASSET_PREFIX__ = `https://gatsbyjs.org`
+    global.__ASSET_PREFIX__ = `https://gatsbyjs.com`
 
     const sanitizedComponents = sanitizeComponents([
       <link
         key="manifest"
         rel="manifest"
-        href="https://gatsbyjs.org/blog/manifest.webmanifest"
+        href="https://gatsbyjs.com/blog/manifest.webmanifest"
       />,
     ])
     expect(sanitizedComponents[0].props.href).toBe(`/blog/manifest.webmanifest`)
+  })
+})
+
+describe(`reorderHeadComponents`, () => {
+  let reorderHeadComponents
+
+  beforeEach(() => {
+    fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
+    reorderHeadComponents = require(`../static-entry`).reorderHeadComponents
+  })
+
+  const exampleHead = [
+    <style key="style1"> .style1 {} </style>,
+    <style key="style2"> .style2 {} </style>,
+    <script key="json-ld" type="application/ld+json">
+      {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "url": "https://www.spookytech.com",
+          "name": "Spooky technologies",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+5-601-785-8543",
+            "contactType": "Customer Support"
+          }
+        }
+      `}
+    </script>,
+    <link key="canonical" rel="canonical" href="url" />,
+    <link key="icon" rel="icon" type="image/svg+xml" href="favicon" />,
+    <meta key="desc" name="description" content="desc 1" />,
+    <meta key="og:url" property="og:url" content="url" />,
+    <meta key="og:desc" property="og:description" content="desc 2" />,
+  ]
+
+  it(`reorders meta tags in front of other tags and keeps original order (for moved meta tags)`, () => {
+    const reordered = reorderHeadComponents(exampleHead)
+    const keyList = reordered.map(e => e.key)
+    expect(keyList).toEqual([
+      `desc`,
+      `og:url`,
+      `og:desc`,
+      `style1`,
+      `style2`,
+      `json-ld`,
+      `canonical`,
+      `icon`,
+    ])
   })
 })

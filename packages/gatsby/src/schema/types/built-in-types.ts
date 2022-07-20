@@ -1,6 +1,6 @@
 import { parse, DocumentNode } from "graphql"
 
-// TODO v4: mark all built-in types with @dontInfer and add missing fields (maybe as `JSON` type)
+// TODO v5: mark File type as @dontInfer (requires @childOf directive to all children types like ImageSharp)
 
 const fileType = `
   type File implements Node @infer {
@@ -39,7 +39,7 @@ const fileType = `
 `
 
 const siteFunctionType = `
-  type SiteFunction implements Node @infer {
+  type SiteFunction implements Node @dontInfer {
     functionRoute: String!
     pluginName: String!
     originalAbsoluteFilePath: String!
@@ -51,7 +51,7 @@ const siteFunctionType = `
 `
 
 const directoryType = `
-  type Directory implements Node @infer {
+  type Directory implements Node @dontInfer {
     sourceInstanceName: String!
     absolutePath: String!
     relativePath: String!
@@ -101,17 +101,19 @@ const siteSiteMetadataType = `
 `
 
 const sitePageType = `
-  type SitePage implements Node @infer {
+  type SitePage implements Node @dontInfer {
     path: String!
     component: String!
     internalComponentName: String!
     componentChunkName: String!
     matchPath: String
+    pageContext: JSON @proxy(from: "context")
+    pluginCreator: SitePlugin @link(from: "pluginCreatorId")
   }
 `
 
 const sitePluginType = `
-  type SitePlugin implements Node @infer {
+  type SitePlugin implements Node @dontInfer {
     resolve: String
     name: String
     version: String
@@ -119,14 +121,13 @@ const sitePluginType = `
     browserAPIs: [String]
     ssrAPIs: [String]
     pluginFilepath: String
-    # TODO v4:
-    # pluginOptions: JSON
-    # packageJson: JSON
+    pluginOptions: JSON
+    packageJson: JSON
   }
 `
 
 const siteBuildMetadataType = `
-  type SiteBuildMetadata implements Node @infer {
+  type SiteBuildMetadata implements Node @dontInfer {
     buildTime: Date @dateformat
   }
 `
@@ -146,3 +147,24 @@ export const overridableBuiltInTypeNames = new Set([`SiteSiteMetadata`])
 
 export const builtInTypeDefinitions = (): Array<DocumentNode> =>
   allSdlTypes.map(type => parse(type))
+
+export const builtInScalarTypeNames = [
+  `Boolean`,
+  `Date`,
+  `Float`,
+  `ID`,
+  `Int`,
+  `JSON`,
+  `String`,
+  `GatsbyImageData`,
+]
+
+export const internalTypeNames = [
+  ...builtInScalarTypeNames,
+  `Buffer`,
+  `Internal`,
+  `InternalInput`,
+  `Node`,
+  `NodeInput`,
+  `Query`,
+]

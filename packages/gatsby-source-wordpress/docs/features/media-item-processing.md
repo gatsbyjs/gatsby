@@ -11,9 +11,9 @@ Media items in html are automatically sourced and image tags are swapped with `g
 
 This can be turned off with the `html.useGatsbyImage` boolean plugin option. See [plugin options](../plugin-options.md#html.usegatsbyimage-boolean) for more information.
 
-Image tag URL's in html that return 404's are logged to the terminal output with a link to which post or page the broken image is attached.
+Image tag URL's in html that return 404's or 401's are logged to the terminal output with a link to which post or page the broken image is attached.
 This allows you to easily discover and fix broken images that were deleted from the media library.
-By default 404's will fail the build to prevent deploying a broken site. You can disable this with the [`allow404Images`](../plugin-options.md#productionallow404images-boolean) option.
+By default 404's and 401's will fail the build to prevent deploying a broken site. You can disable this with the [`allow404Images`](../plugin-options.md#productionallow404images-boolean) or [`allow401Images`](../plugin-options.md#productionallow401images-boolean) option.
 
 ### Requirements for images in html to be converted to Gatsby images
 
@@ -26,7 +26,7 @@ For example, both of the following will be sourced:
 <img src="https://mysite.com/wp-content/uploads/2021/01/b.jpeg" />
 ```
 
-Note that there's currently a hard requirement for both kinds of url's to include `/wp-content/uploads` in order to be picked up. If your media items are stored in another directory they will not become Gatsby iamges.
+Note that there's currently a hard requirement for both kinds of url's to include `/wp-content/uploads` in order to be picked up. If your media items are stored in another directory they will not become Gatsby images.
 
 ## Preventing Image/File sourcing
 

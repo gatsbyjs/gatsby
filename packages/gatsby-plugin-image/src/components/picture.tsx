@@ -1,10 +1,4 @@
-/* eslint-disable filenames/match-regex */
-import React, {
-  FunctionComponent,
-  ImgHTMLAttributes,
-  forwardRef,
-  LegacyRef,
-} from "react"
+import React, { FunctionComponent, ImgHTMLAttributes } from "react"
 import * as PropTypes from "prop-types"
 
 export interface IResponsiveImageProps {
@@ -30,7 +24,6 @@ type ImageProps = ImgHTMLAttributes<HTMLImageElement> & {
   src: string
   alt: string
   shouldLoad: boolean
-  innerRef: LegacyRef<HTMLImageElement>
 }
 
 export type PictureProps = ImgHTMLAttributes<HTMLImageElement> & {
@@ -46,7 +39,6 @@ const Image: FunctionComponent<ImageProps> = function Image({
   loading,
   alt = ``,
   shouldLoad,
-  innerRef,
   ...props
 }) {
   return (
@@ -59,48 +51,41 @@ const Image: FunctionComponent<ImageProps> = function Image({
       srcSet={shouldLoad ? srcSet : undefined}
       data-srcset={!shouldLoad ? srcSet : undefined}
       alt={alt}
-      ref={innerRef}
     />
   )
 }
 
-export const Picture = forwardRef<HTMLImageElement, PictureProps>(
-  function Picture(
-    { fallback, sources = [], shouldLoad = true, ...props },
-    ref
-  ) {
-    const sizes = props.sizes || fallback?.sizes
-    const fallbackImage = (
-      <Image
-        {...props}
-        {...fallback}
-        sizes={sizes}
-        shouldLoad={shouldLoad}
-        innerRef={ref}
-      />
-    )
+export const Picture: React.FC<PictureProps> = function Picture({
+  fallback,
+  sources = [],
+  shouldLoad = true,
+  ...props
+}) {
+  const sizes = props.sizes || fallback?.sizes
+  const fallbackImage = (
+    <Image {...props} {...fallback} sizes={sizes} shouldLoad={shouldLoad} />
+  )
 
-    if (!sources.length) {
-      return fallbackImage
-    }
-
-    return (
-      <picture>
-        {sources.map(({ media, srcSet, type }) => (
-          <source
-            key={`${media}-${type}-${srcSet}`}
-            type={type}
-            media={media}
-            srcSet={shouldLoad ? srcSet : undefined}
-            data-srcset={!shouldLoad ? srcSet : undefined}
-            sizes={sizes}
-          />
-        ))}
-        {fallbackImage}
-      </picture>
-    )
+  if (!sources.length) {
+    return fallbackImage
   }
-)
+
+  return (
+    <picture>
+      {sources.map(({ media, srcSet, type }) => (
+        <source
+          key={`${media}-${type}-${srcSet}`}
+          type={type}
+          media={media}
+          srcSet={shouldLoad ? srcSet : undefined}
+          data-srcset={!shouldLoad ? srcSet : undefined}
+          sizes={sizes}
+        />
+      ))}
+      {fallbackImage}
+    </picture>
+  )
+}
 
 Image.propTypes = {
   src: PropTypes.string.isRequired,

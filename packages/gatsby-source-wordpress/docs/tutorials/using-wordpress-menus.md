@@ -12,7 +12,7 @@ In this tutorial we will cover how you can use WordPress Nav Menus in your Gatsb
   - Creating a Menu
 - Menus and Menu Items in WPGraphQL
 - Querying Menus and Menu Items in Gatsby
-  - Working with Hierarchcial Data
+  - Working with Hierarchical Data
 
 ## Overview of WordPress Nav Menus
 

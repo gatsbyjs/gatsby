@@ -19,6 +19,7 @@ export interface IProgram {
   open: boolean
   openTracingConfigFile: string
   port: number
+  // TODO(v5): remove
   proxyPort: number
   host: string
   report: Reporter
@@ -50,6 +51,4 @@ export enum Stage {
   DevelopHTML = `develop-html`,
   BuildJavascript = `build-javascript`,
   BuildHTML = `build-html`,
-  // TODO move to BuildHTML when queryengine pieces are merged
-  SSR = `build-ssr`,
 }

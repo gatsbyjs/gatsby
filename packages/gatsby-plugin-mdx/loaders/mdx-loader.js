@@ -5,7 +5,6 @@ const path = require(`path`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
 const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
-const { interopDefault } = require(`../utils/interop-default`)
 
 const {
   isImport,
@@ -83,7 +82,7 @@ const hasDefaultExport = (str, options) => {
     methods.splice(methods.indexOf(`paragraph`), 0, `esSyntax`)
   }
 
-  const { content } = grayMatter(str)
+  const { content } = grayMatter(str, options)
   unified()
     .use(toMDAST, options)
     .use(esSyntax)
@@ -111,7 +110,7 @@ module.exports = async function mdxLoader(content) {
 
   const resourceQuery = this.resourceQuery || ``
   if (isolateMDXComponent && !resourceQuery.includes(`type=component`)) {
-    const { data } = grayMatter(content)
+    const { data } = grayMatter(content, pluginOptions)
 
     const requestPath = slash(
       `/${path.relative(this.rootContext, this.resourcePath)}?type=component`
@@ -163,6 +162,7 @@ export const _frontmatter = ${JSON.stringify(data)};`
         id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
         node: fileNode,
         content,
+        options,
       })
     }
   } catch (e) {
@@ -180,11 +180,11 @@ export const _frontmatter = ${JSON.stringify(data)};`
   let code = content
   // after running mdx, the code *always* has a default export, so this
   // check needs to happen first.
-  if (!hasDefaultExport(content, DEFAULT_OPTIONS) && !!defaultLayout) {
+  if (!hasDefaultExport(content, options) && !!defaultLayout) {
     debug(`inserting default layout`, defaultLayout)
-    const { content: contentWithoutFrontmatter, matter } = grayMatter(content)
+    const { content: contentWithoutFrontmatter } = grayMatter(content, options)
 
-    code = `${matter ? matter : ``}
+    code = `
 
 import DefaultLayout from "${slash(defaultLayout)}"
 
@@ -206,11 +206,11 @@ ${contentWithoutFrontmatter}`
    */
   for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = interopDefault(require(plugin.resolve))
+    const requiredPlugin = plugin.module
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (const parserPlugin of requiredPlugin.setParserPlugins(
-        plugin.options || {}
+        plugin.pluginOptions || {}
       )) {
         if (_.isArray(parserPlugin)) {
           const [parser, parserPluginOptions] = parserPlugin

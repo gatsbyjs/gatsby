@@ -1,28 +1,13 @@
 import { runApisInSteps } from "./utils/run-steps"
 import * as steps from "./steps"
-import { INITIALIZE_PLUGIN_LIFECYCLE_NAME_MAP } from "./constants"
-
-let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
-
-try {
-  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
-    coreSupportsOnPluginInit = `stable`
-  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
-    coreSupportsOnPluginInit = `unstable`
-  }
-} catch (e) {
-  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
-}
-
-const initializePluginLifeCycleName: string =
-  INITIALIZE_PLUGIN_LIFECYCLE_NAME_MAP[coreSupportsOnPluginInit] || `onPreInit`
 
 module.exports = runApisInSteps({
-  [initializePluginLifeCycleName]: [
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  "onPluginInit|unstable_onPluginInit": [
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.tempPreventMultipleInstances,
+    steps.setRequestHeaders,
   ],
 
   pluginOptionsSchema: steps.pluginOptionsSchema,
@@ -53,6 +38,7 @@ module.exports = runApisInSteps({
   ],
 
   onCreateDevServer: [
+    steps.imageRoutes,
     steps.setImageNodeIdCache,
     steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,

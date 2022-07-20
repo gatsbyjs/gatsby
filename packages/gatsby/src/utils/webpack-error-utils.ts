@@ -6,8 +6,6 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 const stageCodeToReadableLabel: Record<StageEnum, string> = {
   [StageEnum.BuildJavascript]: `Generating JavaScript bundles`,
   [StageEnum.BuildHTML]: `Generating SSR bundle`,
-  // TODO remove when part of buildhtml
-  [StageEnum.SSR]: `Generating SSR bundle`,
   [StageEnum.DevelopHTML]: `Generating development SSR bundle`,
   [StageEnum.Develop]: `Generating development JavaScript bundle`,
 }

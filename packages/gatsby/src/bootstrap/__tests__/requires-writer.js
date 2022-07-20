@@ -10,12 +10,19 @@ const generatePagesState = pages => {
     state.set(page.path, {
       component: ``,
       componentChunkName: ``,
+      mode: `SSG`,
       ...page,
     })
   })
 
   return state
 }
+
+jest.mock(`../../utils/page-mode`, () => {
+  return {
+    getPageMode: jest.fn(page => page.mode),
+  }
+})
 
 jest.mock(`fs-extra`, () => {
   return {

@@ -18,7 +18,7 @@ const shadowDarkFlares = `0,0,0`
 // provides a "dark" mode along the initial color mode "light"
 const c = {
   ...colorsTokens,
-  // gatsbyjs.org specific stuff
+  // gatsbyjs.com specific stuff
   banner: colorsTokens.purple[70],
   // moved `text.placeholder` to `input.placeholder`
   // ref. e.g. https://github.com/system-ui/theme-ui/blob/702c43e804046a94389e7a12a8bba4c4f436b14e/packages/presets/src/tailwind.js#L6

@@ -3,6 +3,126 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.16.0/packages/gatsby-plugin-canonical-urls) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.15.0/packages/gatsby-plugin-canonical-urls) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.14.0/packages/gatsby-plugin-canonical-urls) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.13.0/packages/gatsby-plugin-canonical-urls) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.12.1/packages/gatsby-plugin-canonical-urls) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.12.0/packages/gatsby-plugin-canonical-urls) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.11.0/packages/gatsby-plugin-canonical-urls) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.10.0/packages/gatsby-plugin-canonical-urls) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.9.0/packages/gatsby-plugin-canonical-urls) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.8.0/packages/gatsby-plugin-canonical-urls) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.7.0/packages/gatsby-plugin-canonical-urls) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.6.0/packages/gatsby-plugin-canonical-urls) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.5.0/packages/gatsby-plugin-canonical-urls) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.4.0/packages/gatsby-plugin-canonical-urls) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.3.0/packages/gatsby-plugin-canonical-urls) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.2.0/packages/gatsby-plugin-canonical-urls) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.1.0/packages/gatsby-plugin-canonical-urls) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@4.0.0/packages/gatsby-plugin-canonical-urls) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@3.14.0/packages/gatsby-plugin-canonical-urls) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-canonical-urls@3.13.0/packages/gatsby-plugin-canonical-urls) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

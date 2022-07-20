@@ -27,3 +27,5 @@ export const setActivityTotal =
   boundActions.setActivityTotal as typeof actions.setActivityTotal
 export const activityTick =
   boundActions.activityTick as typeof actions.activityTick
+export const renderPageTree =
+  boundActions.renderPageTree as typeof actions.renderPageTree

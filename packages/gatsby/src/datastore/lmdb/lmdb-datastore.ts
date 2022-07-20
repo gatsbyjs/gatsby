@@ -1,4 +1,4 @@
-import { RootDatabase, open } from "lmdb-store"
+import { RootDatabase, open, ArrayLikeIterable } from "lmdb"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
@@ -27,6 +27,8 @@ const lmdbDatastore = {
   getNodesByType,
 }
 
+const preSyncDeletedNodeIdsCache = new Set()
+
 function getDefaultDbPath(): string {
   const dbFileName =
     process.env.NODE_ENV === `test`
@@ -45,22 +47,57 @@ let fullDbPath
 let rootDb
 let databases
 
+/* eslint-disable @typescript-eslint/no-namespace */
+declare global {
+  namespace NodeJS {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    interface Global {
+      __GATSBY_OPEN_LMDBS?: Map<string, ILmdbDatabases>
+      __GATSBY_OPEN_ROOT_LMDBS?: Map<string, RootDatabase>
+    }
+  }
+}
+
 function getRootDb(): RootDatabase {
   if (!rootDb) {
     if (!fullDbPath) {
       throw new Error(`LMDB path is not set!`)
     }
+
+    if (!globalThis.__GATSBY_OPEN_ROOT_LMDBS) {
+      globalThis.__GATSBY_OPEN_ROOT_LMDBS = new Map()
+    }
+    rootDb = globalThis.__GATSBY_OPEN_ROOT_LMDBS.get(fullDbPath)
+    if (rootDb) {
+      return rootDb
+    }
+
     rootDb = open({
       name: `root`,
       path: fullDbPath,
       compression: true,
     })
+
+    globalThis.__GATSBY_OPEN_ROOT_LMDBS.set(fullDbPath, rootDb)
   }
   return rootDb
 }
 
 function getDatabases(): ILmdbDatabases {
   if (!databases) {
+    // __GATSBY_OPEN_LMDBS tracks if we already opened given db in this process
+    // In `gatsby serve` case we might try to open it twice - once for engines
+    // and second to get access to `SitePage` nodes (to power trailing slashes
+    // redirect middleware). This ensure there is single instance within a process.
+    // Using more instances seems to cause weird random errors.
+    if (!globalThis.__GATSBY_OPEN_LMDBS) {
+      globalThis.__GATSBY_OPEN_LMDBS = new Map()
+    }
+    databases = globalThis.__GATSBY_OPEN_LMDBS.get(fullDbPath)
+    if (databases) {
+      return databases
+    }
+
     const rootDb = getRootDb()
     databases = {
       nodes: rootDb.openDB({
@@ -68,7 +105,12 @@ function getDatabases(): ILmdbDatabases {
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
         // sharedStructuresKey: Symbol.for(`structures`),
         // @ts-ignore
-        cache: true,
+        cache: {
+          // expirer: false disables LRU part and only take care of WeakRefs
+          // this way we don't retain nodes strongly, but will continue to
+          // reuse them if they are loaded already
+          expirer: false,
+        },
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
@@ -84,6 +126,7 @@ function getDatabases(): ILmdbDatabases {
         // dupSort: true
       }),
     }
+    globalThis.__GATSBY_OPEN_LMDBS.set(fullDbPath, databases)
   }
   return databases
 }
@@ -122,10 +165,8 @@ function iterateNodes(): GatsbyIterable<IGatsbyNode> {
   return new GatsbyIterable(
     nodesDb
       .getKeys({ snapshot: false })
-      .map(
-        nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined)!
-      )
-      .filter(Boolean)
+      .map(nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined))
+      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
   )
 }
 
@@ -134,13 +175,16 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
   return new GatsbyIterable(
     nodesByType
       .getValues(type)
-      .map(nodeId => getNode(nodeId)!)
-      .filter(Boolean)
+      .map(nodeId => getNode(nodeId))
+      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
   )
 }
 
 function getNode(id: string): IGatsbyNode | undefined {
-  if (!id) return undefined
+  if (!id || preSyncDeletedNodeIdsCache.has(id)) {
+    return undefined
+  }
+
   const { nodes } = getDatabases()
   return nodes.get(id)
 }
@@ -151,9 +195,11 @@ function getTypes(): Array<string> {
 
 function countNodes(typeName?: string): number {
   if (!typeName) {
-    const stats = getDatabases().nodes.getStats()
-    // @ts-ignore
-    return Number(stats.entryCount || 0) // FIXME: add -1 when restoring shared structures key
+    const stats = getDatabases().nodes.getStats() as { entryCount: number }
+    return Math.max(
+      Number(stats.entryCount) - preSyncDeletedNodeIdsCache.size,
+      0
+    ) // FIXME: add -1 when restoring shared structures key
   }
 
   const { nodesByType } = getDatabases()
@@ -179,10 +225,10 @@ function updateDataStore(action: ActionsUnion): void {
       const dbs = getDatabases()
       // Force sync commit
       dbs.nodes.transactionSync(() => {
-        dbs.nodes.clear()
-        dbs.nodesByType.clear()
-        dbs.metadata.clear()
-        dbs.indexes.clear()
+        dbs.nodes.clearSync()
+        dbs.nodesByType.clearSync()
+        dbs.metadata.clearSync()
+        dbs.indexes.clearSync()
       })
       break
     }
@@ -192,14 +238,31 @@ function updateDataStore(action: ActionsUnion): void {
       break
     }
     case `CREATE_NODE`:
+    case `DELETE_NODE`:
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
-    case `DELETE_NODE`: {
+    case `MATERIALIZE_PAGE_MODE`: {
       const dbs = getDatabases()
-      lastOperationPromise = Promise.all([
+      const operationPromise = Promise.all([
         updateNodes(dbs.nodes, action),
         updateNodesByType(dbs.nodesByType, action),
       ])
+      lastOperationPromise = operationPromise
+
+      // if create is used in the same transaction as delete we should remove it from cache
+      if (action.type === `CREATE_NODE`) {
+        preSyncDeletedNodeIdsCache.delete(action.payload.id)
+      }
+
+      if (action.type === `DELETE_NODE` && action.payload?.id) {
+        preSyncDeletedNodeIdsCache.add(action.payload.id)
+        operationPromise.then(() => {
+          // only clear if no other operations have been done in the meantime
+          if (lastOperationPromise === operationPromise) {
+            preSyncDeletedNodeIdsCache.clear()
+          }
+        })
+      }
     }
   }
 }
@@ -207,8 +270,8 @@ function updateDataStore(action: ActionsUnion): void {
 function clearIndexes(): void {
   const dbs = getDatabases()
   dbs.nodes.transactionSync(() => {
-    dbs.metadata.clear()
-    dbs.indexes.clear()
+    dbs.metadata.clearSync()
+    dbs.indexes.clearSync()
   })
 }
 

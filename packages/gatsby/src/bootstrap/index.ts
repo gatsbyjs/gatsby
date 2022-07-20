@@ -11,7 +11,6 @@ import {
   extractQueries,
   writeOutRedirects,
   postBootstrap,
-  rebuildSchemaWithSitePage,
 } from "../services"
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import { globalTracer } from "opentracing"
@@ -50,9 +49,10 @@ export async function bootstrap(
   const workerPool = context.workerPool
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    const directory = slash(context.store.getState().program.directory)
+    const program = context.store.getState().program
+    const directory = slash(program.directory)
 
-    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory })
+    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
   }
 
   await customizeSchema(context)
@@ -67,9 +67,7 @@ export async function bootstrap(
 
   await createPages(context)
 
-  await handleStalePageData()
-
-  await rebuildSchemaWithSitePage(context)
+  await handleStalePageData(parentSpan)
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     savePartialStateToDisk([`inferenceMetadata`])

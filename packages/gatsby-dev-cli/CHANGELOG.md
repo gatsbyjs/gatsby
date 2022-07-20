@@ -3,6 +3,154 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.16.0/packages/gatsby-dev-cli) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.15.0/packages/gatsby-dev-cli) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Chores
+
+- Update README ([2289a2c](https://github.com/gatsbyjs/gatsby/commit/2289a2c48328754da409803c79f056f1edbb4b53))
+- `yarn_pnp` tests uses `gatsby-dev-cli` instead of portals [#35699](https://github.com/gatsbyjs/gatsby/issues/35699) ([972e6e1](https://github.com/gatsbyjs/gatsby/commit/972e6e137150451d972c51259bf3ef29771a7d99))
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.14.0/packages/gatsby-dev-cli) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.13.0/packages/gatsby-dev-cli) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Bug Fixes
+
+- use package name not directory name [#35447](https://github.com/gatsbyjs/gatsby/issues/35447) ([028f348](https://github.com/gatsbyjs/gatsby/commit/028f3484c8ce70086ce8e3d121b5e183cc45f912))
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.12.1/packages/gatsby-dev-cli) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.12.0/packages/gatsby-dev-cli) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency signal-exit to ^3.0.7 for gatsby-dev-cli [#34978](https://github.com/gatsbyjs/gatsby/issues/34978) ([bf918c6](https://github.com/gatsbyjs/gatsby/commit/bf918c65859f188ccb19a911a4c5f952021a1891))
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.11.0/packages/gatsby-dev-cli) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.10.0/packages/gatsby-dev-cli) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+#### Chores
+
+- Deprecate create client paths plugin [#35124](https://github.com/gatsbyjs/gatsby/issues/35124) ([fb9c014](https://github.com/gatsbyjs/gatsby/commit/fb9c0144e53f5f514f87ab1f018b1975e9496987))
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.9.0/packages/gatsby-dev-cli) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.8.0/packages/gatsby-dev-cli) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.7.0/packages/gatsby-dev-cli) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.6.0/packages/gatsby-dev-cli) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+#### Bug Fixes
+
+- Do not ignore engines [#34461](https://github.com/gatsbyjs/gatsby/issues/34461) ([822c6ca](https://github.com/gatsbyjs/gatsby/commit/822c6ca376a18a00557f0dcb748c1bed39156862))
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.5.0/packages/gatsby-dev-cli) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.4.0/packages/gatsby-dev-cli) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-dev-cli [#34136](https://github.com/gatsbyjs/gatsby/issues/34136) ([9825955](https://github.com/gatsbyjs/gatsby/commit/9825955655e397f1bbdcbfdbff2b8ee96d34a0e8))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.3.0/packages/gatsby-dev-cli) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.2.0/packages/gatsby-dev-cli) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.1.0/packages/gatsby-dev-cli) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.0.0/packages/gatsby-dev-cli) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- resolve correct versions of packages with unpkg resolve [#33551](https://github.com/gatsbyjs/gatsby/issues/33551) ([31d5a5e](https://github.com/gatsbyjs/gatsby/commit/31d5a5e4d9e508eeeb41b630c3cd7d6f77333856))
+- update dependency signal-exit to ^3.0.5 for gatsby-dev-cli [#33369](https://github.com/gatsbyjs/gatsby/issues/33369) ([d9133d3](https://github.com/gatsbyjs/gatsby/commit/d9133d321c628ee53897e68c2a167724a8b23a6f))
+
+### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@3.14.1/packages/gatsby-dev-cli) (2021-10-18)
+
+#### Bug Fixes
+
+- resolve correct versions of packages with unpkg resolve [#33551](https://github.com/gatsbyjs/gatsby/issues/33551) resolve [#33570](https://github.com/gatsbyjs/gatsby/issues/33570) ([016bab7](https://github.com/gatsbyjs/gatsby/commit/016bab788b4bc1cb859cee15f92ded287cbdf661))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@3.14.0/packages/gatsby-dev-cli) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency chokidar to ^3.5.2 [#32985](https://github.com/gatsbyjs/gatsby/issues/32985) ([e710518](https://github.com/gatsbyjs/gatsby/commit/e710518ab85953e194ef6f6e8bc9828aa47d3ad4))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- upgrade got package [#32928](https://github.com/gatsbyjs/gatsby/issues/32928) ([2ac366e](https://github.com/gatsbyjs/gatsby/commit/2ac366e3745990d47c01f19875f185d0355c89b5))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@3.13.0/packages/gatsby-dev-cli) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

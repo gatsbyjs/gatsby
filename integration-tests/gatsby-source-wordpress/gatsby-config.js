@@ -15,17 +15,44 @@ const mediaItemTypeSettings = {
   },
 }
 
+const sharedTypeSettings = {
+  Settings: {
+    excludeFieldNames: [`generalSettingsEmail`],
+  },
+  GeneralSettings: {
+    excludeFieldNames: [`email`],
+  },
+  WPGatsby: {
+    exclude: true,
+  },
+  PostTypeSEO: {
+    excludeFieldNames: [`twitterImage`],
+  },
+  BlockAttributesObject: {
+    exclude: true,
+  },
+  BlockEditorPreview: {
+    exclude: true,
+  },
+  Post: { excludeFieldNames: [`pinged`] },
+}
+
+const debug = {
+  graphql: {
+    writeQueriesToDisk: true,
+    onlyReportCriticalErrors: false,
+    panicOnError: true,
+  },
+}
+
 // this is it's own conditional object so we can run
 // an int test with all default plugin options
 const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
   ? {
-      excludeFieldNames: [`commentCount`],
-      debug: {
-        graphql: {
-          writeQueriesToDisk: true,
-        },
-      },
+      excludeFieldNames: [`commentCount`, `generalSettingsEmail`],
+      debug,
       type: {
+        ...sharedTypeSettings,
         MediaItem: mediaItemTypeSettings,
         TypeLimitTest: {
           limit: 1,
@@ -65,24 +92,20 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
                 50
               : // and we don't actually need more than 1000 in production
                 1000,
-
-          beforeChangeNode: ({ remoteNode }) => {
-            console.log(`Hi from an inline fn!`)
-            remoteNode.beforeChangeNodeTest = `TEST-${remoteNode.id}`
-
-            return remoteNode
-          },
         },
         // excluding this because it causes Gatsby to throw errors
         BlockEditorContentNode: { exclude: true },
       },
     }
   : {
+      excludeFieldNames: [`generalSettingsEmail`],
       type: {
+        ...sharedTypeSettings,
         MediaItem: mediaItemTypeSettings,
         // excluding this because it causes Gatsby to throw errors
         BlockEditorContentNode: { exclude: true },
       },
+      debug,
     }
 
 module.exports = {
@@ -103,6 +126,7 @@ module.exports = {
         schema: {
           requestConcurrency: 7,
         },
+        debug,
         production: {
           hardCacheMediaFiles: true,
         },

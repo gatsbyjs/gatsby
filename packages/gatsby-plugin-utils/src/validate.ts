@@ -1,5 +1,5 @@
 import { ValidationOptions } from "joi"
-import { ObjectSchema } from "./joi"
+import { ObjectSchema, Joi } from "./joi"
 import { IPluginInfoOptions } from "./types"
 
 const validationOptions: ValidationOptions = {
@@ -10,6 +10,20 @@ const validationOptions: ValidationOptions = {
 
 interface IOptions {
   validateExternalRules?: boolean
+  returnWarnings?: boolean
+}
+
+interface IValidateAsyncResult {
+  value: IPluginInfoOptions
+  warning: {
+    message: string
+    details: Array<{
+      message: string
+      path: Array<string>
+      type: string
+      context: Array<Record<string, unknown>>
+    }>
+  }
 }
 
 export async function validateOptionsSchema(
@@ -17,14 +31,19 @@ export async function validateOptionsSchema(
   pluginOptions: IPluginInfoOptions,
   options: IOptions = {
     validateExternalRules: true,
+    returnWarnings: true,
   }
-): Promise<IPluginInfoOptions> {
-  const { validateExternalRules } = options
+): Promise<IValidateAsyncResult> {
+  const { validateExternalRules, returnWarnings } = options
 
-  const value = await pluginSchema.validateAsync(pluginOptions, {
+  const warnOnUnknownSchema = pluginSchema.pattern(
+    /.*/,
+    Joi.any().warning(`any.unknown`)
+  )
+
+  return (await warnOnUnknownSchema.validateAsync(pluginOptions, {
     ...validationOptions,
     externals: validateExternalRules,
-  })
-
-  return value
+    warnings: returnWarnings,
+  })) as Promise<IValidateAsyncResult>
 }

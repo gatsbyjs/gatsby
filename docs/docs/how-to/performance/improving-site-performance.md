@@ -67,19 +67,21 @@ For each script, it can be helpful to understand the business purpose, relative 
 
 There may also be relatively unimportant scripts that have a high performance costs; these are also good candidates for removal.
 
-#### Step 2: lazy load or inline scripts
+#### Step 2: Use the Gatsby Script component to load scripts performantly
 
-One of the lowest-hanging fruits is to set your scripts to load lazily rather than "eagerly" (the default). Any `<script>` tags being embedded manually can be set to `<script async>`.
+> Support for the Gatsby Script API was added in `gatsby@4.15.0`.
 
-For slightly more effort, you can get additional performance gains; rather than loading third-party scripts from external sources, you can inline scripts in your code to reduce the cost of a network call.
+Gatsby includes a built-in `<Script>` component that unlocks the ability to load your scripts with various strategies that are beneficial for performance:
 
-There are a number of places to put an inlined script, depending whether you need it to execute immediately upon loading or can defer execution.
+- After your page hydrates (`post-hydrate` strategy)
+- After the browser's main thread becomes idle (`idle` strategy)
+- In a web worker, avoiding doing any work on the main thread at all (`off-main-thread` strategy, experimental)
 
-- _No deferring_: This is a good default. Put the script in [onPreRenderHTML](/docs/ssr-apis/#onPreRenderHTML) to have it added to your document tree. You can place it lower in your DOM to have parsed and evaluated later.
-- _Some deferring_: You can place the script in [onClientEntry](/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
-- _More deferring_: You can place the script in [onInitialClientRender](/docs/browser-apis/#onInitialClientRender) to have it execute after the browser renders the page.
+Each strategy comes with its own set of considerations, but they are all more performant than the regular blocking `<script>`, `<script async>`, and `<script defer>`.
 
-Note that if you are using [html.js](/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`.
+The Gatsby `<Script>` component also supports inline scripts, so for your smaller scripts you can save the cost of a network request _and_ determine when the inline script is loaded.
+
+For more information, see the [Gatsby Script reference documentation](/docs/reference/built-in-components/gatsby-script/).
 
 ### Reduce your JavaScript bundle cost
 
@@ -125,7 +127,7 @@ For example, let's say you have a header that imports a JSON object in order to 
 
 There's a couple ways to detect this:
 
-- _Notice components and data that don't seem to be needed on every page._ If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon} from './icons/my-icon.js`.
+- _Notice components and data that don't seem to be needed on every page._ If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon } from './icons/my-icon.js'`.
 
 - _Watch for unexpectedly large data imports._ If you notice large JSON objects, and you do need the data (or some portion of it), there are a couple options.
 
@@ -192,13 +194,13 @@ Font optimizations are usually small, but easy performance wins.
 
 Media files are often the largest files on a site, and so can delay page load significantly while they are pulled over the network, especially if their location is not well-defined.
 
-[Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-image/) is our approach to optimizing image loading performance. It does three basic things:
+[Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/) is our approach to optimizing image loading performance. It does three basic things:
 
-1. It delays non-essential work for images not above the fold to avoid esource congestion.
+1. It delays non-essential work for images not above the fold to avoid resource congestion.
 2. It provides a placeholder during image fetch.
 3. It minimizes image file size to reduce request roundtrip time.
 
-The `gatsby-plugin-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/), or [how to implement Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/), to a [Gatsby Image reference](/docs/reference/built-in-components/gatsby-image/).
+The `gatsby-plugin-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/) to [how to implement Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 
 Implementing Gatsby Image is typically the bulk of image- and media-related performance optimization.
 

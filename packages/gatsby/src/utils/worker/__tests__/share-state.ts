@@ -12,6 +12,7 @@ jest.mock(`gatsby-telemetry`, () => {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
   }
 })
 
@@ -20,6 +21,7 @@ let worker: GatsbyTestWorkerPool | undefined
 const dummyPagePayload = {
   path: `/foo/`,
   component: `/foo`,
+  componentPath: `/foo`,
 }
 
 describe(`worker (share-state)`, () => {
@@ -27,9 +29,9 @@ describe(`worker (share-state)`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
   })
@@ -98,11 +100,13 @@ describe(`worker (share-state)`, () => {
           "/foo" => Object {
             "componentChunkName": undefined,
             "componentPath": "/foo",
+            "config": false,
             "isInBootstrap": true,
             "pages": Set {
               "/foo/",
             },
             "query": "",
+            "serverData": false,
           },
         },
       }
@@ -118,11 +122,13 @@ describe(`worker (share-state)`, () => {
           "/foo" => Object {
             "componentChunkName": undefined,
             "componentPath": "/foo",
+            "config": false,
             "isInBootstrap": true,
             "pages": Set {
               "/foo/",
             },
             "query": "",
+            "serverData": false,
           },
         },
         "staticQueryComponents": Map {
@@ -228,9 +234,11 @@ describe(`worker (share-state)`, () => {
     expect(components).toMatchInlineSnapshot(`
       Object {
         "componentPath": "/foo",
+        "config": false,
         "isInBootstrap": true,
         "pages": Object {},
         "query": "I'm a page query",
+        "serverData": false,
       }
     `)
 

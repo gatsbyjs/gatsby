@@ -19,3 +19,6 @@ export {
 
 export { pluginOptionsSchema } from "~/steps/declare-plugin-options-schema"
 export { logPostBuildWarnings } from "~/steps/log-post-build-warnings"
+export { imageRoutes } from "~/steps/image-routes"
+
+export { setRequestHeaders } from "./set-request-headers"

@@ -10,7 +10,8 @@ import {
   emitter,
   loadPartialStateFromDisk,
 } from "../../../redux"
-import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
+import { loadConfig } from "../../../bootstrap/load-config"
+import { loadPlugins } from "../../../bootstrap/load-plugins"
 import {
   createTestWorker,
   describeWhenLMDB,
@@ -21,6 +22,7 @@ import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
 import { runQueriesInWorkersQueue } from "../pool"
 import { readPageQueryResult } from "../../page-data"
+import { compileGatsbyFiles } from "../../parcel/compile-gatsby-files"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -49,6 +51,7 @@ jest.mock(`gatsby-telemetry`, () => {
     decorateEvent: jest.fn(),
     trackError: jest.fn(),
     trackCli: jest.fn(),
+    isTrackingEnabled: jest.fn(),
   }
 })
 
@@ -124,7 +127,11 @@ describeWhenLMDB(`worker (queries)`, () => {
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
-    await loadConfigAndPlugins({ siteDirectory })
+    await compileGatsbyFiles(siteDirectory)
+    const config = await loadConfig({
+      siteDirectory,
+    })
+    await loadPlugins(config, siteDirectory)
     await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
     await getDataStore().ready()
@@ -179,9 +186,9 @@ describeWhenLMDB(`worker (queries)`, () => {
     await Promise.all(worker.all.buildSchema())
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
     for (const watcher of mockWatchersToClose) {
@@ -196,7 +203,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueriesDependencies())
     // Pass "1" as workerId as the test only have one worker
-    const result = loadPartialStateFromDisk([`queries`], `1`)
+    const result = loadPartialStateFromDisk([`queries`, `telemetry`], `1`)
 
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -227,6 +234,9 @@ describeWhenLMDB(`worker (queries)`, () => {
               "running": 0,
             },
           },
+        },
+        "telemetry": Object {
+          "gatsbyImageSourceUrls": Set {},
         },
       }
     `)
@@ -298,7 +308,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     const spy = jest.spyOn(worker.single, `runQueries`)
 
     // @ts-ignore - worker is defined
-    await runQueriesInWorkersQueue(worker, queryIdsBig, 10)
+    await runQueriesInWorkersQueue(worker, queryIdsBig, { chunkSize: 10 })
     const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a

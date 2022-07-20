@@ -1,26 +1,43 @@
 import React, { useState, useLayoutEffect, createContext } from "react"
 import { getStore, onLogAction } from "../../redux"
-import { IGatsbyState } from "gatsby/src/redux/types"
+import { IGatsbyCLIState, ActionsUnion, ILog } from "../../redux/types"
+import { IRenderPageArgs } from "../../types"
+import { Actions } from "../../constants"
 
-// These weird castings we are doing in this file is because the way gatsby-cli works is that it starts with it's own store
-// but then quickly swaps it out with the store from the installed gatsby. This would benefit from a refactor later on
-// to not use it's own store temporarily.
-// By the time this is actually running, it will become an `IGatsbyState`
-const StoreStateContext = createContext<IGatsbyState>(
-  getStore().getState() as any as IGatsbyState
-)
+interface IStoreStateContext {
+  logs: IGatsbyCLIState
+  messages: Array<ILog>
+  pageTree: IRenderPageArgs | null
+}
+
+const StoreStateContext = createContext<IStoreStateContext>({
+  ...getStore().getState(),
+  messages: [],
+})
 
 export const StoreStateProvider: React.FC = ({
   children,
 }): React.ReactElement => {
-  const [state, setState] = useState(
-    getStore().getState() as any as IGatsbyState
-  )
+  const [state, setState] = useState<IStoreStateContext>({
+    ...getStore().getState(),
+    messages: [],
+  })
 
   useLayoutEffect(
     () =>
-      onLogAction(() => {
-        setState(getStore().getState() as any as IGatsbyState)
+      onLogAction((action: ActionsUnion) => {
+        if (action.type === Actions.Log) {
+          setState(state => {
+            return {
+              ...state,
+              messages: [...state.messages, action.payload],
+            }
+          })
+        } else {
+          setState(state => {
+            return { ...getStore().getState(), messages: state.messages }
+          })
+        }
       }),
     []
   )

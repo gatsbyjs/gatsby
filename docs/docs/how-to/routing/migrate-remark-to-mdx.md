@@ -13,7 +13,7 @@ For people who already have an existing blog using `gatsby-transformer-remark` b
 Add the `gatsby-plugin-mdx` plugin (and its peer dependencies) to your `package.json` file and remove the `gatsby-transformer-remark` plugin.
 
 ```shell
-npm install @mdx-js/mdx @mdx-js/react gatsby-plugin-mdx
+npm install @mdx-js/mdx@v1 @mdx-js/react@v1 gatsby-plugin-mdx
 npm remove gatsby-transformer-remark
 ```
 

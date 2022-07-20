@@ -96,7 +96,7 @@ If you want to protect a page your server will provide an encrypted, hard to gue
 </form>
 ```
 
-When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. Make sure that malicious websites don't have access to the CSRF token by using [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
+When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. Make sure that malicious websites don't have access to the CSRF token by using [HTTP Access Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
 
 #### Same-Site Cookies Attribute
 
@@ -107,7 +107,7 @@ Set-Cookie: example=1; SameSite=Strict
 ```
 
 Using the `SameSite` attribute allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
-Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
+Check out [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 This cookie attribute is not a replacement for a CSRF Token (and vice-versa). They can work together as security layers in your website. Otherwise, a Cross-Site Scripting attack can be used to defeat these CSRF mitigation techniques. Check out [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute) for more information.
 
@@ -155,7 +155,7 @@ Sometimes in your Gatsby website, you will need display sensitive data or handle
 Content Security Policy is a security layer added in web applications to detect and prevent attacks, e.g. the XSS attack mentioned above.
 
 To add it to your Gatsby website, add [gatsby-plugin-csp](/plugins/gatsby-plugin-csp/) to your `gatsby-config.js` with the desired configuration. Note that
-currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/plugins/gatsby-plugin-csp/) and other plugins that generate hashes in inline styles, including [gatsby-image](/plugins/gatsby-image).
+currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/issues/10890) between [gatsby-plugin-csp](/plugins/gatsby-plugin-csp/) and other plugins that generate hashes in inline styles, including [gatsby-plugin-image](/plugins/gatsby-plugin-image).
 
 > Note that not all browsers support CSP, check [can-i-use](https://caniuse.com/#feat=mdn-http_headers_csp_content-security-policy) for more information.
 

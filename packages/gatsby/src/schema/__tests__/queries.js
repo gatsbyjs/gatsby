@@ -7,7 +7,13 @@ const withResolverContext = require(`../context`)
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
-const nodes = require(`./fixtures/queries`)
+const mockActualOrderBy = jest.requireActual(`lodash`).orderBy
+jest.mock(`lodash/orderBy`, () => jest.fn(mockActualOrderBy))
+const orderBySpy = require(`lodash/orderBy`)
+
+const getTestNodes = require(`./fixtures/queries`)
+
+const { getDataStore, getNode } = require(`../../datastore`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -15,6 +21,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -29,6 +36,10 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       }
     },
   }
+})
+
+beforeEach(() => {
+  orderBySpy.mockClear()
 })
 
 describe(`Query schema`, () => {
@@ -56,18 +67,28 @@ describe(`Query schema`, () => {
               [`frontmatter.authorNames`]: {
                 type: `[String!]!`,
                 async resolve(source, args, context, info) {
-                  const authors = await context.nodeModel.runQuery({
+                  const { entries } = await context.nodeModel.findAll({
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },
-                    firstOnly: false,
                   })
-                  return authors.map(author => author.name)
+                  return entries.map(author => author.name)
                 },
               },
               [`frontmatter.anotherField`]: {
                 type: `Boolean`,
                 resolve() {
                   return true
+                },
+              },
+              [`frontmatter.priceInCents`]: {
+                type: `Int`,
+                resolve(source) {
+                  const parsedPrice = parseFloat(source.price)
+                  if (isNaN(parsedPrice)) {
+                    return null
+                  }
+
+                  return Math.ceil(parsedPrice * 100)
                 },
               },
             },
@@ -102,17 +123,8 @@ describe(`Query schema`, () => {
             },
             Author: {
               posts: {
-                resolve(source, args, context, info) {
-                  // NOTE: One of the differences between using `runQuery` and
-                  // `getAllNodes` is that the latter will always get the nodes
-                  // which will be queried directly from the store, while `runQuery`
-                  // will first try to call field resolvers, e.g. to expand
-                  // foreign-key fields to full nodes. Here for example we can
-                  // query `authors.email`.
-                  // Another thing to note is that we don't have to use the
-                  // `$elemMatch` operator when querying arrays of objects
-                  // (although we could).
-                  return context.nodeModel.runQuery({
+                async resolve(source, args, context, info) {
+                  const { entries } = await context.nodeModel.findAll({
                     type: `Markdown`,
                     query: {
                       filter: {
@@ -124,8 +136,8 @@ describe(`Query schema`, () => {
                         },
                       },
                     },
-                    firstOnly: false,
                   })
+                  return entries
                 },
               },
             },
@@ -149,13 +161,13 @@ describe(`Query schema`, () => {
     })
 
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    getTestNodes().forEach(node =>
+      actions.createNode({ ...node }, { name: `test` })(store.dispatch)
     )
 
     const typeDefs = [
       `type Markdown implements Node { frontmatter: Frontmatter! }`,
-      `type Frontmatter { authors: [Author] }`,
+      `type Frontmatter { authors: [Author], fileRef: File @fileByRelativePath }`,
       `type Author implements Node { posts: [Markdown] }`,
     ]
     typeDefs.forEach(def =>
@@ -861,6 +873,87 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
+      it(`recursively groups query results`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              group(field: frontmatter___title) {
+                fieldValue
+                group(field: frontmatter___authors___name) {
+                  fieldValue
+                  edges {
+                    node {
+                      frontmatter {
+                        title
+                        date(formatString: "YYYY-MM-DD")
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Markdown File 1`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    fieldValue: `Author 2`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                fieldValue: `Markdown File 2`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 2`,
+                            date: null,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
+
       it(`handles groups added in fragment`, async () => {
         const query = `
           fragment GroupTest on MarkdownConnection {
@@ -1121,6 +1214,111 @@ describe(`Query schema`, () => {
           }
         `)
       })
+
+      it(`works correctly if GC happen mid running`, async () => {
+        // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+        const v8 = require(`v8`)
+        const vm = require(`vm`)
+        v8.setFlagsFromString(`--expose_gc`)
+        const gc = vm.runInNewContext(`gc`)
+
+        const { clearKeptObjects } = require(`lmdb`)
+
+        orderBySpy.mockImplementationOnce((...args) => {
+          // eslint thinks that WeakRef is not defined for some reason :shrug:
+          // eslint-disable-next-line no-undef
+          const weakNode = new WeakRef(getNode(`md1`))
+
+          // spy is keeping nodes in memory due to `.calls` array
+          apiRunnerNode.mockClear()
+          // very implementation specific case:
+          // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+          // GCed mid execution of query. For this test we force all weakly held nodes to be
+          // dropped
+          clearKeptObjects()
+          gc()
+
+          // now we shouldn't have that node in memory
+          if (weakNode.deref()) {
+            throw new Error(
+              `Test setup is broken, something is keeping a node in memory`
+            )
+          }
+
+          return mockActualOrderBy(...args)
+        })
+
+        expect(orderBySpy).not.toBeCalled()
+
+        // sort added only to hit code path using `orderBy`,
+        // which we use to force GC to simulate node "randomly"
+        // releasing nodes from memory as they shouldn't be strongly
+        // held
+        const query = `
+          {
+            allMarkdown(sort: { fields: id }) {
+              group(field: frontmatter___authors___name) {
+                fieldValue
+                edges {
+                  node {
+                    frontmatter {
+                      title
+                      date(formatString: "YYYY-MM-DD")
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+
+        // make sure we released all nodes from memory in middle of the run
+        expect(orderBySpy).toBeCalled()
+
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Author 1`,
+                edges: [
+                  {
+                    node: {
+                      frontmatter: {
+                        title: `Markdown File 1`,
+                        date: `2019-01-01`,
+                      },
+                    },
+                  },
+                  {
+                    node: {
+                      frontmatter: {
+                        title: `Markdown File 2`,
+                        date: null,
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                fieldValue: `Author 2`,
+                edges: [
+                  {
+                    node: {
+                      frontmatter: {
+                        title: `Markdown File 1`,
+                        date: `2019-01-01`,
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
     })
 
     describe(`distinct field`, () => {
@@ -1203,124 +1401,402 @@ describe(`Query schema`, () => {
           }
         `)
       })
+
+      it(`works correctly if GC happen mid running`, async () => {
+        // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+        const v8 = require(`v8`)
+        const vm = require(`vm`)
+        v8.setFlagsFromString(`--expose_gc`)
+        const gc = vm.runInNewContext(`gc`)
+
+        const { clearKeptObjects } = require(`lmdb`)
+
+        orderBySpy.mockImplementationOnce((...args) => {
+          // eslint thinks that WeakRef is not defined for some reason :shrug:
+          // eslint-disable-next-line no-undef
+          const weakNode = new WeakRef(getNode(`md1`))
+
+          // spy is keeping nodes in memory due to `.calls` array
+          apiRunnerNode.mockClear()
+          // very implementation specific case:
+          // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+          // GCed mid execution of query. For this test we force all weakly held nodes to be
+          // dropped
+          clearKeptObjects()
+          gc()
+
+          // now we shouldn't have that node in memory
+          if (weakNode.deref()) {
+            throw new Error(
+              `Test setup is broken, something is keeping a node in memory`
+            )
+          }
+
+          return mockActualOrderBy(...args)
+        })
+
+        expect(orderBySpy).not.toBeCalled()
+
+        // sort added only to hit code path using `orderBy`,
+        // which we use to force GC to simulate node "randomly"
+        // releasing nodes from memory as they shouldn't be strongly
+        // held
+        const query = `
+          {
+            allMarkdown(sort: { fields: id }) {
+              distinct(field: frontmatter___authors___name)
+            }
+          }
+        `
+        const results = await runQuery(query)
+
+        // make sure we released all nodes from memory in middle of the run
+        expect(orderBySpy).toBeCalled()
+
+        const expected = {
+          allMarkdown: {
+            distinct: [`Author 1`, `Author 2`],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
     })
+
     describe(`aggregation fields`, () => {
-      it(`calculates max value of numeric field`, async () => {
-        const query = `
+      describe(`max`, () => {
+        it(`calculates max value of numeric field`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                max(field: frontmatter___views)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.max).toEqual(200)
+        })
+
+        it(`calculates max value of numeric string field`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                max(field: frontmatter___price)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.max).toEqual(3.99)
+        })
+
+        it(`returns null for max of non-numeric fields`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                max(field: frontmatter___title)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.max).toBeNull()
+        })
+
+        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+          const v8 = require(`v8`)
+          const vm = require(`vm`)
+          v8.setFlagsFromString(`--expose_gc`)
+          const gc = vm.runInNewContext(`gc`)
+
+          const { clearKeptObjects } = require(`lmdb`)
+
+          orderBySpy.mockImplementationOnce((...args) => {
+            // eslint thinks that WeakRef is not defined for some reason :shrug:
+            // eslint-disable-next-line no-undef
+            const weakNode = new WeakRef(getNode(`md1`))
+
+            // spy is keeping nodes in memory due to `.calls` array
+            apiRunnerNode.mockClear()
+            // very implementation specific case:
+            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+            // GCed mid execution of query. For this test we force all weakly held nodes to be
+            // dropped
+            clearKeptObjects()
+            gc()
+
+            // now we shouldn't have that node in memory
+            if (weakNode.deref()) {
+              throw new Error(
+                `Test setup is broken, something is keeping a node in memory`
+              )
+            }
+
+            return mockActualOrderBy(...args)
+          })
+
+          expect(orderBySpy).not.toBeCalled()
+
+          // sort added only to hit code path using `orderBy`,
+          // which we use to force GC to simulate node "randomly"
+          // releasing nodes from memory as they shouldn't be strongly
+          // held
+          const query = `
           {
-            allMarkdown {
-              max(field: frontmatter___views)
+            allMarkdown(sort: { fields: id }) {
+              max(field: frontmatter___priceInCents)
             }
           }
         `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
-        expect(results.data.allMarkdown.max).toEqual(200)
+          const results = await runQuery(query)
+
+          // make sure we released all nodes from memory in middle of the run
+          expect(orderBySpy).toBeCalled()
+
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.max).toEqual(399)
+        })
       })
 
-      it(`calculates max value of numeric string field`, async () => {
-        const query = `
+      describe(`min`, () => {
+        it(`calculates min value of numeric field`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                min(field: frontmatter___views)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.min).toEqual(100)
+        })
+
+        it(`calculates min value of numeric string field`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                min(field: frontmatter___price)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.min).toEqual(1.99)
+        })
+
+        it(`returns null for min of non-numeric fields`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                min(field: frontmatter___title)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.min).toBeNull()
+        })
+
+        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+          const v8 = require(`v8`)
+          const vm = require(`vm`)
+          v8.setFlagsFromString(`--expose_gc`)
+          const gc = vm.runInNewContext(`gc`)
+
+          const { clearKeptObjects } = require(`lmdb`)
+
+          orderBySpy.mockImplementationOnce((...args) => {
+            // eslint thinks that WeakRef is not defined for some reason :shrug:
+            // eslint-disable-next-line no-undef
+            const weakNode = new WeakRef(getNode(`md1`))
+
+            // spy is keeping nodes in memory due to `.calls` array
+            apiRunnerNode.mockClear()
+            // very implementation specific case:
+            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+            // GCed mid execution of query. For this test we force all weakly held nodes to be
+            // dropped
+            clearKeptObjects()
+            gc()
+
+            // now we shouldn't have that node in memory
+            if (weakNode.deref()) {
+              throw new Error(
+                `Test setup is broken, something is keeping a node in memory`
+              )
+            }
+
+            return mockActualOrderBy(...args)
+          })
+
+          expect(orderBySpy).not.toBeCalled()
+
+          // sort added only to hit code path using `orderBy`,
+          // which we use to force GC to simulate node "randomly"
+          // releasing nodes from memory as they shouldn't be strongly
+          // held
+          const query = `
           {
-            allMarkdown {
-              max(field: frontmatter___price)
+            allMarkdown(sort: { fields: id }) {
+              min(field: frontmatter___priceInCents)
             }
           }
         `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
-        expect(results.data.allMarkdown.max).toEqual(3.99)
+          const results = await runQuery(query)
+
+          // make sure we released all nodes from memory in middle of the run
+          expect(orderBySpy).toBeCalled()
+
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.min).toEqual(199)
+        })
       })
 
-      it(`calculates min value of numeric field`, async () => {
-        const query = `
+      describe(`sum`, () => {
+        it(`calculates sum of numeric field`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                sum(field: frontmatter___views)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.sum).toEqual(300)
+        })
+
+        it(`calculates sum of numeric string field`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                sum(field: frontmatter___price)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.sum).toEqual(5.98)
+        })
+        it(`returns null for sum of non-numeric fields`, async () => {
+          const query = `
+            {
+              allMarkdown {
+                sum(field: frontmatter___title)
+              }
+            }
+          `
+          const results = await runQuery(query)
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.sum).toBeNull()
+        })
+
+        it(`works correctly on fields with resolver if GC happen mid running`, async () => {
+          // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+          const v8 = require(`v8`)
+          const vm = require(`vm`)
+          v8.setFlagsFromString(`--expose_gc`)
+          const gc = vm.runInNewContext(`gc`)
+
+          const { clearKeptObjects } = require(`lmdb`)
+
+          orderBySpy.mockImplementationOnce((...args) => {
+            // eslint thinks that WeakRef is not defined for some reason :shrug:
+            // eslint-disable-next-line no-undef
+            const weakNode = new WeakRef(getNode(`md1`))
+
+            // spy is keeping nodes in memory due to `.calls` array
+            apiRunnerNode.mockClear()
+            // very implementation specific case:
+            // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+            // GCed mid execution of query. For this test we force all weakly held nodes to be
+            // dropped
+            clearKeptObjects()
+            gc()
+
+            // now we shouldn't have that node in memory
+            if (weakNode.deref()) {
+              throw new Error(
+                `Test setup is broken, something is keeping a node in memory`
+              )
+            }
+
+            return mockActualOrderBy(...args)
+          })
+
+          expect(orderBySpy).not.toBeCalled()
+
+          // sort added only to hit code path using `orderBy`,
+          // which we use to force GC to simulate node "randomly"
+          // releasing nodes from memory as they shouldn't be strongly
+          // held
+          const query = `
           {
-            allMarkdown {
-              min(field: frontmatter___views)
+            allMarkdown(sort: { fields: id }) {
+              sum(field: frontmatter___priceInCents)
             }
           }
         `
-        const results = await runQuery(query)
-        expect(results.errors).toBeUndefined()
-        expect(results.data.allMarkdown.min).toEqual(100)
+          const results = await runQuery(query)
+
+          // make sure we released all nodes from memory in middle of the run
+          expect(orderBySpy).toBeCalled()
+
+          expect(results.errors).toBeUndefined()
+          expect(results.data.allMarkdown.sum).toEqual(199 + 399)
+        })
       })
 
-      it(`calculates min value of numeric string field`, async () => {
+      it(`calculates aggregation in recursively grouped query results`, async () => {
         const query = `
-          {
-            allMarkdown {
-              min(field: frontmatter___price)
+        {
+          allMarkdown {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              group(field: frontmatter___title) {
+                fieldValue
+                max(field: frontmatter___price)
+              }
             }
           }
-        `
+        }
+      `
         const results = await runQuery(query)
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Author 1`,
+                group: [
+                  {
+                    fieldValue: `Markdown File 1`,
+                    max: 1.99,
+                  },
+                  {
+                    fieldValue: `Markdown File 2`,
+                    max: 3.99,
+                  },
+                ],
+              },
+              {
+                fieldValue: `Author 2`,
+                group: [
+                  {
+                    fieldValue: `Markdown File 1`,
+                    max: 1.99,
+                  },
+                ],
+              },
+            ],
+          },
+        }
         expect(results.errors).toBeUndefined()
-        expect(results.data.allMarkdown.min).toEqual(1.99)
+        expect(results.data).toEqual(expected)
       })
-    })
-
-    it(`calculates sum of numeric field`, async () => {
-      const query = `
-        {
-          allMarkdown {
-            sum(field: frontmatter___views)
-          }
-        }
-      `
-      const results = await runQuery(query)
-      expect(results.errors).toBeUndefined()
-      expect(results.data.allMarkdown.sum).toEqual(300)
-    })
-
-    it(`calculates sum of numeric string field`, async () => {
-      const query = `
-        {
-          allMarkdown {
-            sum(field: frontmatter___price)
-          }
-        }
-      `
-      const results = await runQuery(query)
-      expect(results.errors).toBeUndefined()
-      expect(results.data.allMarkdown.sum).toEqual(5.98)
-    })
-
-    it(`returns null for min of non-numeric fields`, async () => {
-      const query = `
-        {
-          allMarkdown {
-            min(field: frontmatter___title)
-          }
-        }
-      `
-      const results = await runQuery(query)
-      expect(results.errors).toBeUndefined()
-      expect(results.data.allMarkdown.min).toBeNull()
-    })
-
-    it(`returns null for max of non-numeric fields`, async () => {
-      const query = `
-        {
-          allMarkdown {
-            max(field: frontmatter___title)
-          }
-        }
-      `
-      const results = await runQuery(query)
-      expect(results.errors).toBeUndefined()
-      expect(results.data.allMarkdown.max).toBeNull()
-    })
-
-    it(`returns null for sum of non-numeric fields`, async () => {
-      const query = `
-        {
-          allMarkdown {
-            sum(field: frontmatter___title)
-          }
-        }
-      `
-      const results = await runQuery(query)
-      expect(results.errors).toBeUndefined()
-      expect(results.data.allMarkdown.sum).toBeNull()
     })
   })
 
@@ -1890,6 +2366,189 @@ describe(`Query schema`, () => {
           },
         }
       `)
+    })
+  })
+
+  describe(`id.eq fast path`, () => {
+    let datastoreRunQuerySpy
+    beforeAll(() => {
+      datastoreRunQuerySpy = jest.spyOn(getDataStore(), `runQuery`)
+    })
+
+    beforeEach(() => {
+      datastoreRunQuerySpy.mockClear()
+    })
+
+    afterAll(() => {
+      datastoreRunQuerySpy.mockRestore()
+    })
+
+    const queryEqId = `
+      query($id: String!) {
+        markdown(id: { eq: $id }) {
+          frontmatter {
+            title
+          }
+        }
+      }
+    `
+
+    it(`skips running datastore runQuery (there is node that satisfies filters)`, async () => {
+      const results = await runQuery(queryEqId, { id: `md2` })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "markdown": Object {
+              "frontmatter": Object {
+                "title": "Markdown File 2",
+              },
+            },
+          },
+        }
+      `)
+      expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+    })
+
+    it(`skips running datastore runQuery (there is no node that satisfies filters)`, async () => {
+      const results = await runQuery(queryEqId, { id: `that-should-not-exist` })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "markdown": null,
+          },
+        }
+      `)
+      expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+    })
+
+    it(`respect node type`, async () => {
+      const id = `file2`
+
+      {
+        const results = await runQuery(queryEqId, { id })
+        expect(results).toMatchInlineSnapshot(`
+          Object {
+            "data": Object {
+              "markdown": null,
+            },
+          }
+        `)
+        expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+      }
+
+      {
+        // we didn't find a node above, but let's make sure there is a node with given id
+        const results = await runQuery(
+          `
+            query($id: String!) {
+              file(id: { eq: $id }) {
+                name
+              }
+            }
+          `,
+          {
+            id,
+          }
+        )
+        expect(results).toMatchInlineSnapshot(`
+          Object {
+            "data": Object {
+              "file": Object {
+                "name": "2.md",
+              },
+            },
+          }
+        `)
+        expect(datastoreRunQuerySpy).toBeCalledTimes(0)
+      }
+    })
+
+    it(`@fileByRelativePath works`, async () => {
+      const query = `
+        {
+          markdown(id: { eq: "md1"}) {
+            frontmatter {
+              title
+              fileRef {
+                childMarkdown {
+                  frontmatter {
+                    title
+                  }
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+
+      expect(results?.errors).toBeUndefined()
+      expect(results?.data?.markdown?.frontmatter?.title).toEqual(
+        `Markdown File 1`
+      )
+
+      // main assertion - markdown.frontmatter.fileRef is a file referenced by local path
+      // we want to make sure it finds node correctly (and doesn't crash)
+      expect(
+        results?.data?.markdown?.frontmatter?.fileRef?.childMarkdown
+          ?.frontmatter?.title
+      ).toEqual(`Markdown File 2`)
+    })
+
+    describe(`doesn't try to use fast path if there are more or different filters than just id.eq`, () => {
+      it(`using single filter different than id.eq`, async () => {
+        const results = await runQuery(
+          `
+            query($title: String!) {
+              markdown(frontmatter: { title: { eq: $title } }) {
+                frontmatter {
+                  title
+                }
+              }
+            }
+          `,
+          { title: `Markdown File 2` }
+        )
+        expect(results).toMatchInlineSnapshot(`
+          Object {
+            "data": Object {
+              "markdown": Object {
+                "frontmatter": Object {
+                  "title": "Markdown File 2",
+                },
+              },
+            },
+          }
+        `)
+        expect(datastoreRunQuerySpy).toBeCalledTimes(1)
+      })
+    })
+
+    it(`using multiple filters `, async () => {
+      const results = await runQuery(
+        `
+          query($id: String!, $title: String!) {
+            markdown(id: { eq: $id }, frontmatter: { title: { eq: $title } }) {
+              frontmatter {
+                title
+              }
+            }
+          }
+        `,
+        { title: `Markdown File 2`, id: `md2` }
+      )
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "markdown": Object {
+              "frontmatter": Object {
+                "title": "Markdown File 2",
+              },
+            },
+          },
+        }
+      `)
+      expect(datastoreRunQuerySpy).toBeCalledTimes(1)
     })
   })
 })

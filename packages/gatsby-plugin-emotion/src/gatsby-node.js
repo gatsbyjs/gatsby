@@ -1,12 +1,23 @@
-export const onCreateBabelConfig = ({ actions }, pluginOptions) => {
-  actions.setBabelPreset({
-    name: require.resolve(`@emotion/babel-preset-css-prop`),
-    options: {
-      sourceMap: process.env.NODE_ENV !== `production`,
-      autoLabel: `dev-only`,
-      ...(pluginOptions ? pluginOptions : {}),
-    },
-  })
+export const onCreateBabelConfig = ({ actions, store }, pluginOptions) => {
+  if (store.getState().config.jsxRuntime === `automatic`) {
+    actions.setBabelPlugin({
+      name: require.resolve(`@emotion/babel-plugin`),
+      options: {
+        sourceMap: process.env.NODE_ENV !== `production`,
+        autoLabel: `dev-only`,
+        ...(pluginOptions ? pluginOptions : {}),
+      },
+    })
+  } else {
+    actions.setBabelPreset({
+      name: require.resolve(`@emotion/babel-preset-css-prop`),
+      options: {
+        sourceMap: process.env.NODE_ENV !== `production`,
+        autoLabel: `dev-only`,
+        ...(pluginOptions ? pluginOptions : {}),
+      },
+    })
+  }
 }
 
 exports.pluginOptionsSchema = ({ Joi }) =>

@@ -3,14 +3,15 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { generateHtmlPath, fixedPagePath } from "gatsby-core-utils"
+import { generateHtmlPath } from "gatsby-core-utils"
+import { truncate } from "lodash"
 
 import {
   readWebpackStats,
   getScriptsAndStylesForTemplate,
   clearCache as clearAssetsMappingCache,
 } from "../../client-assets-for-template"
-import type { IPageDataWithQueryResult } from "../../page-data"
+import { IPageDataWithQueryResult, readPageData } from "../../page-data"
 import type { IRenderHtmlResult } from "../../../commands/build-html"
 import {
   clearStaticQueryCaches,
@@ -50,21 +51,6 @@ function clearCaches(): void {
   inFlightResourcesForTemplate.clear()
 
   clearAssetsMappingCache()
-}
-
-async function readPageData(
-  publicDir: string,
-  pagePath: string
-): Promise<IPageDataWithQueryResult> {
-  const filePath = join(
-    publicDir,
-    `page-data`,
-    fixedPagePath(pagePath),
-    `page-data.json`
-  )
-  const rawPageData = await fs.readFile(filePath, `utf-8`)
-
-  return JSON.parse(rawPageData)
 }
 
 async function doGetResourcesForTemplate(
@@ -111,20 +97,38 @@ async function getResourcesForTemplate(
   return resources
 }
 
+const truncateObjStrings = (obj): IPageDataWithQueryResult => {
+  // Recursively truncate strings nested in object
+  // These objs can be quite large, but we want to preserve each field
+  for (const key in obj) {
+    if (typeof obj[key] === `object` && obj[key] !== null) {
+      truncateObjStrings(obj[key])
+    } else if (typeof obj[key] === `string`) {
+      obj[key] = truncate(obj[key], { length: 250 })
+    }
+  }
+
+  return obj
+}
+
 export const renderHTMLProd = async ({
   htmlComponentRendererPath,
   paths,
   envVars,
   sessionId,
+  webpackCompilationHash,
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
   envVars: Array<[string, string | undefined]>
   sessionId: number
+  webpackCompilationHash: string
 }): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
+  const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
   const unsafeBuiltinsUsageByPagePath = {}
+  const previewErrors = {}
 
   // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
   // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
@@ -158,6 +162,7 @@ export const renderHTMLProd = async ({
           await htmlComponentRenderer.default({
             pagePath,
             pageData,
+            webpackCompilationHash,
             ...resourcesForTemplate,
           })
 
@@ -165,7 +170,7 @@ export const renderHTMLProd = async ({
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
         }
 
-        return fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+        await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
       } catch (e) {
         if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
@@ -175,13 +180,38 @@ export const renderHTMLProd = async ({
           path: pagePath,
           unsafeBuiltinsUsageByPagePath,
         }
-        throw e
+
+        // If we're in Preview-mode, write out a simple error html file.
+        if (isPreview) {
+          const pageData = await readPageData(publicDir, pagePath)
+          const truncatedPageData = truncateObjStrings(pageData)
+
+          const html = `<h1>Preview build error</h1>
+        <p>There was an error when building the preview page for this page ("${pagePath}").</p>
+        <h3>Error</h3>
+        <pre><code>${e.stack}</code></pre>
+        <h3>Page component id</h3>
+        <p><code>${pageData.componentChunkName}</code></p>
+        <h3>Page data</h3>
+        <pre><code>${JSON.stringify(truncatedPageData, null, 4)}</code></pre>`
+
+          await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+          previewErrors[pagePath] = {
+            e,
+            message: e.message,
+            code: e.code,
+            stack: e.stack,
+            name: e.name,
+          }
+        } else {
+          throw e
+        }
       }
     },
     { concurrency: 2 }
   )
 
-  return { unsafeBuiltinsUsageByPagePath }
+  return { unsafeBuiltinsUsageByPagePath, previewErrors }
 }
 
 // TODO: remove when DEV_SSR is done

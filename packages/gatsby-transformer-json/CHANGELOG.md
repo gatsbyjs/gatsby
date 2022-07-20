@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.16.0/packages/gatsby-transformer-json) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.15.0/packages/gatsby-transformer-json) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.14.0/packages/gatsby-transformer-json) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.13.0/packages/gatsby-transformer-json) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.12.1/packages/gatsby-transformer-json) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.12.0/packages/gatsby-transformer-json) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.11.0/packages/gatsby-transformer-json) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.10.0/packages/gatsby-transformer-json) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.9.0/packages/gatsby-transformer-json) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.8.0/packages/gatsby-transformer-json) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.7.0/packages/gatsby-transformer-json) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.6.0/packages/gatsby-transformer-json) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.5.0/packages/gatsby-transformer-json) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.4.0/packages/gatsby-transformer-json) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.3.0/packages/gatsby-transformer-json) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Fix high memory consumption Fix [#34084](https://github.com/gatsbyjs/gatsby/issues/34084) ([2a94a48](https://github.com/gatsbyjs/gatsby/commit/2a94a48966c8baa2137252e178ba86b40006343d))
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.2.0/packages/gatsby-transformer-json) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.1.0/packages/gatsby-transformer-json) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.0.0/packages/gatsby-transformer-json) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- Prefix `id` and only use createNodeId fix [#28942](https://github.com/gatsbyjs/gatsby/issues/28942) ([c20d6f6](https://github.com/gatsbyjs/gatsby/commit/c20d6f68c485467898ba82f79450c356b26f6ec1))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@3.14.0/packages/gatsby-transformer-json) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@3.13.0/packages/gatsby-transformer-json) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

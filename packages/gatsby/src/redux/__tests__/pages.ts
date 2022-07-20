@@ -3,6 +3,7 @@ import { readFile } from "fs-extra"
 jest.mock(`fs-extra`, () => {
   return {
     readFile: jest.fn(() => `contents`),
+    readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
   }
 })
 import glob from "glob"

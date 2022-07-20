@@ -16,7 +16,7 @@ In certain instances, a developer may want to customize the content of the Markd
 
 There a few things that you should have some understanding with:
 
-- How to work with Remark in Gatsby as described in [Part Six](/docs/tutorial/part-six/) and [Part Seven](/docs/tutorial/part-seven/) of the Gatsby Tutorial.
+- How to work with Remark in Gatsby as described in [Part Six](/docs/tutorial/part-6/) and [Part Seven](/docs/tutorial/part-7/) of the Gatsby Tutorial.
 - Understanding of the Markdown Syntax.
 
 ## Understanding the Abstract Syntax Tree
@@ -323,7 +323,7 @@ A real-world example of this would be [`gatsby-remark-responsive-iframe`](https:
 
 ## Loading in changes and seeing effect
 
-At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
+At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-7/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
 
 ![Output](../docs/images/remark-ast-output.png)
 

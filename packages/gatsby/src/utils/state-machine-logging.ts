@@ -33,6 +33,7 @@ export function logTransitions<T = DefaultContext>(
       // actor. We don't need to worry about detaching the listener
       // because xstate handles that for us when the actor is stopped.
 
+      // @ts-ignore - TODO: Fix it
       if (isInterpreter(child) && !listeners.has(child)) {
         let sublast = child.state
         child.onTransition(substate => {

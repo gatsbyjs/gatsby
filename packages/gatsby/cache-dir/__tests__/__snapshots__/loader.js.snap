@@ -3,11 +3,13 @@
 exports[`Production loader loadPage should be successful when component can be loaded 1`] = `
 Object {
   "component": "instance",
+  "head": "instance",
   "json": Object {
     "pageContext": "something something",
   },
   "page": Object {
     "componentChunkName": "chunk",
+    "getServerDataError": undefined,
     "matchPath": undefined,
     "path": "/mypage/",
     "staticQueryHashes": Array [],

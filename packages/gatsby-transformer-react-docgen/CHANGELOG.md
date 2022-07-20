@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.16.0/packages/gatsby-transformer-react-docgen) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.15.0/packages/gatsby-transformer-react-docgen) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.14.0/packages/gatsby-transformer-react-docgen) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.13.0/packages/gatsby-transformer-react-docgen) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+### [7.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.12.1/packages/gatsby-transformer-react-docgen) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.12.0/packages/gatsby-transformer-react-docgen) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.11.0/packages/gatsby-transformer-react-docgen) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Refactoring
+
+- replace deprecated String.prototype.substr() [#35205](https://github.com/gatsbyjs/gatsby/issues/35205) ([21f7c65](https://github.com/gatsbyjs/gatsby/commit/21f7c654da647a949c83efb2e17b473eab4db3ed))
+
+## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.10.0/packages/gatsby-transformer-react-docgen) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.9.0/packages/gatsby-transformer-react-docgen) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [7.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.8.0/packages/gatsby-transformer-react-docgen) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.7.0/packages/gatsby-transformer-react-docgen) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- run user handlers before default ones [#34286](https://github.com/gatsbyjs/gatsby/issues/34286) ([94a1e97](https://github.com/gatsbyjs/gatsby/commit/94a1e97ee6ea175e4a708741a18fd045681eb61d))
+
+## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.6.0/packages/gatsby-transformer-react-docgen) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.5.0/packages/gatsby-transformer-react-docgen) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.4.0/packages/gatsby-transformer-react-docgen) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency common-tags to ^1.8.2 for gatsby-transformer-react-docgen [#34126](https://github.com/gatsbyjs/gatsby/issues/34126) ([b81d162](https://github.com/gatsbyjs/gatsby/commit/b81d162a833f38c3ac1a230988a26d92f5811967))
+
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.3.0/packages/gatsby-transformer-react-docgen) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.2.0/packages/gatsby-transformer-react-docgen) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.1.0/packages/gatsby-transformer-react-docgen) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.0.0/packages/gatsby-transformer-react-docgen) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@6.14.0/packages/gatsby-transformer-react-docgen) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
 ## [6.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@6.13.0/packages/gatsby-transformer-react-docgen) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

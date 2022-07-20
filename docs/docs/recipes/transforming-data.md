@@ -53,7 +53,7 @@ export const query = graphql`
 
 ### Additional resources
 
-- [Tutorial on transforming Markdown to HTML](/docs/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
+- [Tutorial on transforming Markdown to HTML](/docs/tutorial/part-6/#transformer-plugins) using `gatsby-transformer-remark`
 - Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)
 
 ## Transforming images into grayscale using GraphQL

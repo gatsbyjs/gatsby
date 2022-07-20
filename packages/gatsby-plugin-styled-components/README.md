@@ -6,7 +6,9 @@ built-in server-side rendering support.
 
 ## Install
 
-`npm install gatsby-plugin-styled-components styled-components babel-plugin-styled-components`
+```shell
+npm install gatsby-plugin-styled-components styled-components babel-plugin-styled-components
+```
 
 ## How to use
 
@@ -38,3 +40,13 @@ options: {
 ```
 
 Note: The `ssr` option will be ignored. Gatsby will apply it automatically when needed.
+
+### Disabling vendor prefixing
+
+If you don't require vendor prefixes for adding legacy CSS properties then this can be disabled by supplying the `disableVendorPrefixes` option:
+
+```js
+options: {
+  disableVendorPrefixes: true
+}
+```

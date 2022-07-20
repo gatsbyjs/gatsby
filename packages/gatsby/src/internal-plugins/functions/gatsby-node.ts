@@ -3,20 +3,15 @@ import glob from "glob"
 import path from "path"
 import webpack from "webpack"
 import _ from "lodash"
-import multer from "multer"
-import * as express from "express"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
 import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
-// We use an ancient version of path-to-regexp as it has breaking changes to express v4
-// see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
-import pathToRegexp from "path-to-regexp"
-import cookie from "cookie"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
 import { IGatsbyFunction } from "../../redux/types"
+import { functionMiddlewares } from "./middleware"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -27,14 +22,8 @@ interface IGlobPattern {
   rootPath: string
   /** The glob pattern **/
   globPattern: string
-}
-
-interface IPathToRegexpKey {
-  name: string | number
-  prefix: string
-  suffix: string
-  pattern: string
-  modifier: string
+  /** The glob ignore pattern */
+  ignorePattern: Array<string>
 }
 
 // During development, we lazily compile functions only when they're requested.
@@ -80,9 +69,23 @@ async function ensureFunctionIsCompiled(
 const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   const globs: Array<IGlobPattern> = []
 
+  function globIgnorePatterns(
+    root: string,
+    pluginName?: string
+  ): Array<string> {
+    const nestedFolder = pluginName ? `/${pluginName}/**/` : `/**/`
+
+    return [
+      `${root}/src/api${nestedFolder}__tests__/**/*.+(js|ts)`, // Jest tests
+      `${root}/src/api${nestedFolder}+(*.)+(spec|test).+(js|ts)`,
+      `${root}/src/api${nestedFolder}+(*.)+(d).ts`, // .d.ts files
+    ]
+  }
+
   // Add the default site src/api directory.
   globs.push({
     globPattern: `${siteDirectoryPath}/src/api/**/*.{js,ts}`,
+    ignorePattern: globIgnorePatterns(siteDirectoryPath),
     rootPath: path.join(siteDirectoryPath, `src/api`),
     pluginName: `default-site-plugin`,
   })
@@ -109,6 +112,7 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
 
     const glob = {
       globPattern: `${plugin.resolve}/src/api/${plugin.name}/**/*.{js,ts}`,
+      ignorePattern: globIgnorePatterns(plugin.resolve, plugin.name),
       rootPath: path.join(plugin.resolve, `src/api`),
       pluginName: plugin.name,
     } as IGlobPattern
@@ -155,7 +159,9 @@ const createWebpackConfig = async ({
   const allFunctions = await Promise.all(
     globs.map(async (glob): Promise<Array<IGatsbyFunction>> => {
       const knownFunctions: Array<IGatsbyFunction> = []
-      const files = await globAsync(glob.globPattern)
+      const files = await globAsync(glob.globPattern, {
+        ignore: glob.ignorePattern,
+      })
       files.map(file => {
         const originalAbsoluteFilePath = file
         const originalRelativeFilePath = path.relative(glob.rootPath, file)
@@ -197,7 +203,7 @@ const createWebpackConfig = async ({
     JSON.stringify(knownFunctions, null, 4)
   )
 
-  // Load environment variables from process.env.GATSBY_* and .env.* files.
+  // Load environment variables from process.env.* and .env.* files.
   // Logic is shared with webpack.config.js
 
   // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
@@ -307,6 +313,38 @@ const createWebpackConfig = async ({
     // watch: !isProductionEnv,
     module: {
       rules: [
+        // Webpack expects extensions when importing ESM modules as that's what the spec describes.
+        // Not all libraries have adapted so we don't enforce its behaviour
+        // @see https://github.com/webpack/webpack/issues/11467
+        {
+          test: /\.mjs$/i,
+          resolve: {
+            byDependency: {
+              esm: {
+                fullySpecified: false,
+              },
+            },
+          },
+        },
+        {
+          test: /\.js$/i,
+          descriptionData: {
+            type: `module`,
+          },
+          resolve: {
+            byDependency: {
+              esm: {
+                fullySpecified: false,
+              },
+            },
+          },
+          use: {
+            loader: `babel-loader`,
+            options: {
+              presets: [`@babel/typescript`],
+            },
+          },
+        },
         {
           test: [/.js$/, /.ts$/],
           exclude: /node_modules/,
@@ -319,7 +357,20 @@ const createWebpackConfig = async ({
         },
       ],
     },
-    plugins: [new webpack.DefinePlugin(processEnvVars)],
+    plugins: [
+      new webpack.DefinePlugin(processEnvVars),
+      new webpack.IgnorePlugin({
+        checkResource(resource): boolean {
+          if (resource === `lmdb`) {
+            reporter.warn(
+              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.\nIf you are importing utils from \`gatsby-core-utils\`, make sure to import from a specific module (for example \`gatsby-core-utils/create-content-digest\`).`
+            )
+            return true
+          }
+          return false
+        },
+      }),
+    ],
   }
 }
 
@@ -327,8 +378,11 @@ let isFirstBuild = true
 export async function onPreBootstrap({
   reporter,
   store,
+  parentSpan,
 }: ParentSpanPluginArgs): Promise<void> {
-  const activity = reporter.activityTimer(`Compiling Gatsby Functions`)
+  const activity = reporter.activityTimer(`Compiling Gatsby Functions`, {
+    parentSpan,
+  })
   activity.start()
 
   const {
@@ -356,22 +410,28 @@ export async function onPreBootstrap({
         reporter,
       })
 
-      function callback(err, stats): any {
-        const rawMessages = stats.toJson({ moduleTrace: false })
-        if (rawMessages.warnings.length > 0) {
+      function callback(err, stats?: webpack.Stats): void {
+        const rawMessages = stats?.toJson({
+          all: false,
+          warnings: true,
+          errors: true,
+        })
+        if (rawMessages?.warnings && rawMessages.warnings.length > 0) {
           reportWebpackWarnings(rawMessages.warnings, reporter)
         }
 
         if (err) return reject(err)
-        const errors = stats.compilation.errors || []
+        const errors = stats?.compilation.errors || []
 
         // If there's errors, reject in production and print to the console
         // in development.
         if (isProductionEnv) {
-          if (errors.length > 0) return reject(stats.compilation.errors)
+          if (errors.length > 0) return reject(errors)
         } else {
           const formatted = formatWebpackMessages({
-            errors: rawMessages.errors.map(e => e.message),
+            errors: rawMessages?.errors
+              ? rawMessages.errors.map(e => e.message)
+              : [],
             warnings: [],
           })
           reporter.error(formatted.errors)
@@ -436,8 +496,12 @@ export async function onPreBootstrap({
           })
       }
     })
-  } catch (e) {
-    activity.panic(`Failed to compile Gatsby Functions.`, e)
+  } catch (error) {
+    activity.panic({
+      id: `11332`,
+      error,
+      context: {},
+    })
   }
 
   activity.end()
@@ -462,99 +526,17 @@ export async function onCreateDevServer({
 
   app.use(
     `/api/*`,
-    multer().any(),
-    express.urlencoded({ extended: true }),
-    (req, _, next) => {
-      const cookies = req.headers.cookie
-
-      if (!cookies) {
-        return next()
-      }
-
-      req.cookies = cookie.parse(cookies)
-
-      return next()
-    },
-    express.text(),
-    express.json(),
-    express.raw(),
-    async (req, res, next) => {
-      const { "0": pathFragment } = req.params
-
-      const { functions }: { functions: Array<IGatsbyFunction> } =
-        store.getState()
-
-      // Check first for exact matches.
-      let functionObj = functions.find(
-        ({ functionRoute }) => functionRoute === pathFragment
-      )
-
-      if (!functionObj) {
-        // Check if there's any matchPaths that match.
-        // We loop until we find the first match.
-        functions.some(f => {
-          let exp
-          const keys: Array<IPathToRegexpKey> = []
-          if (f.matchPath) {
-            exp = pathToRegexp(f.matchPath, keys)
-          }
-          if (exp && exp.exec(pathFragment) !== null) {
-            functionObj = f
-            const matches = [...pathFragment.match(exp)].slice(1)
-            const newParams = {}
-            matches.forEach(
-              (match, index) => (newParams[keys[index].name] = match)
-            )
-            req.params = newParams
-
-            return true
-          } else {
-            return false
-          }
-        })
-      }
-
-      if (functionObj) {
+    ...functionMiddlewares({
+      getFunctions(): Array<IGatsbyFunction> {
+        const { functions }: { functions: Array<IGatsbyFunction> } =
+          store.getState()
+        return functions
+      },
+      async prepareFn(functionObj: IGatsbyFunction): Promise<void> {
         activeDevelopmentFunctions.add(functionObj)
-
         await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
-
-        reporter.verbose(`Running ${functionObj.functionRoute}`)
-        const start = Date.now()
-        const pathToFunction = functionObj.absoluteCompiledFilePath
-
-        try {
-          delete require.cache[require.resolve(pathToFunction)]
-          const fn = require(pathToFunction)
-
-          const fnToExecute = (fn && fn.default) || fn
-
-          await Promise.resolve(fnToExecute(req, res))
-        } catch (e) {
-          // Override the default error with something more specific.
-          if (e.message.includes(`fnToExecute is not a function`)) {
-            e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
-          }
-          reporter.error(e)
-          // Don't send the error if that would cause another error.
-          if (!res.headersSent) {
-            res
-              .status(500)
-              .send(
-                `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
-              )
-          }
-        }
-
-        const end = Date.now()
-        reporter.log(
-          `Executed function "/api/${functionObj.functionRoute}" in ${
-            end - start
-          }ms`
-        )
-      } else {
-        next()
-      }
-    }
+      },
+      showDebugMessageInResponse: true,
+    })
   )
 }

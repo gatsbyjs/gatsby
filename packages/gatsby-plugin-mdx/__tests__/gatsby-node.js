@@ -8,8 +8,8 @@ describe(`pluginOptionsSchema`, () => {
       `"extensions[1]" must be a string`,
       `"extensions[2]" must be a string`,
       `"defaultLayouts" must be of type object`,
-      `"gatsbyRemarkPlugins[0]" does not match any of the allowed types`,
-      `"gatsbyRemarkPlugins[1]" does not match any of the allowed types`,
+      `"gatsbyRemarkPlugins[0]" must be one of [string, object]`,
+      `"gatsbyRemarkPlugins[1].not" is not allowed`,
       `"remarkPlugins" must be an array`,
       `"rehypePlugins" must be an array`,
       `"plugins[0]" does not match any of the allowed types`,
@@ -17,6 +17,7 @@ describe(`pluginOptionsSchema`, () => {
       `"mediaTypes[1]" must be a string`,
       `"shouldBlockNodeFromTransformation" must have an arity lesser or equal to 1`,
       `"root" must be a string`,
+      `"JSFrontmatterEngine" must be a boolean`,
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
@@ -29,6 +30,7 @@ describe(`pluginOptionsSchema`, () => {
       mediaTypes: [1, 2],
       shouldBlockNodeFromTransformation: (wrong, number) => null,
       root: 1,
+      JSFrontmatterEngine: `this should be a boolean`,
     })
 
     expect(errors).toEqual(expectedErrors)
@@ -63,6 +65,8 @@ describe(`pluginOptionsSchema`, () => {
       mediaTypes: [`text/markdown`, `text/x-markdown`, `custom-media/type`],
       shouldBlockNodeFromTransformation: node => Boolean(node),
       root: `james-holden`,
+      commonmark: true,
+      JSFrontmatterEngine: true,
     })
 
     expect(isValid).toBe(true)

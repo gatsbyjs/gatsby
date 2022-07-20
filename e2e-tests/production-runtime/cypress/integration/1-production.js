@@ -131,6 +131,21 @@ describe(`Production build tests`, () => {
   })
 
   describe(`Supports unicode characters in urls`, () => {
+    describe(`DSG pages`, () => {
+      it(`Can navigate directly`, () => {
+        cy.visit(encodeURI(`/한글-URL`)).waitForRouteChange()
+        cy.getTestElement(`dom-marker`).contains("page-2")
+      })
+
+      it(`Can navigate on client`, () => {
+        cy.visit(`/`).waitForRouteChange()
+        cy.getTestElement(`dsg-page-with-unicode-path`)
+          .click()
+          .waitForRouteChange()
+        cy.getTestElement(`dom-marker`).contains("page-2")
+      })
+    })
+
     it(`Can navigate directly`, () => {
       cy.visit(encodeURI(`/안녕/`), {
         // Cypress seems to think it's 404
@@ -205,6 +220,56 @@ describe(`Production build tests`, () => {
         .waitForRouteChange()
 
       cy.getTestElement(`404`).should(`exist`)
+    })
+  })
+
+  describe(`Keeps search query`, () => {
+    describe(`No trailing slash canonical path (/slashes/no-trailing)`, () => {
+      it(`/slashes/no-trailing?param=value`, () => {
+        cy.visit(`/slashes/no-trailing?param=value`).waitForRouteChange()
+
+        cy.getTestElement(`search-marker`)
+          .invoke(`text`)
+          .should(`equal`, `?param=value`)
+
+        cy.location(`pathname`).should(`equal`, `/slashes/no-trailing`)
+        cy.location(`search`).should(`equal`, `?param=value`)
+      })
+
+      it(`/slashes/no-trailing/?param=value`, () => {
+        cy.visit(`/slashes/no-trailing/?param=value`).waitForRouteChange()
+
+        cy.getTestElement(`search-marker`)
+          .invoke(`text`)
+          .should(`equal`, `?param=value`)
+
+        cy.location(`pathname`).should(`equal`, `/slashes/no-trailing`)
+        cy.location(`search`).should(`equal`, `?param=value`)
+      })
+    })
+
+    describe(`With trailing slash canonical path (/slashes/with-trailing/)`, () => {
+      it(`/slashes/with-trailing?param=value`, () => {
+        cy.visit(`/slashes/with-trailing?param=value`).waitForRouteChange()
+
+        cy.getTestElement(`search-marker`)
+          .invoke(`text`)
+          .should(`equal`, `?param=value`)
+
+        cy.location(`pathname`).should(`equal`, `/slashes/with-trailing/`)
+        cy.location(`search`).should(`equal`, `?param=value`)
+      })
+
+      it(`/slashes/with-trailing/?param=value`, () => {
+        cy.visit(`/slashes/with-trailing/?param=value`).waitForRouteChange()
+
+        cy.getTestElement(`search-marker`)
+          .invoke(`text`)
+          .should(`equal`, `?param=value`)
+
+        cy.location(`pathname`).should(`equal`, `/slashes/with-trailing/`)
+        cy.location(`search`).should(`equal`, `?param=value`)
+      })
     })
   })
 })

@@ -3,6 +3,188 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.16.0/packages/gatsby-source-graphql) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.15.0/packages/gatsby-source-graphql) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.14.0/packages/gatsby-source-graphql) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-graphql [#35545](https://github.com/gatsbyjs/gatsby/issues/35545) ([17cbc7c](https://github.com/gatsbyjs/gatsby/commit/17cbc7c92f2e0733bae44f8f1f45836dea0a5a99))
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.13.0/packages/gatsby-source-graphql) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.12.1/packages/gatsby-source-graphql) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.12.0/packages/gatsby-source-graphql) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-graphql [#35297](https://github.com/gatsbyjs/gatsby/issues/35297) ([e138218](https://github.com/gatsbyjs/gatsby/commit/e1382186889cd9da6dce946ad5a68976b9c90f47))
+
+### [4.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.11.1/packages/gatsby-source-graphql) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.11.0/packages/gatsby-source-graphql) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Features
+
+- upgrade apollo & graphql-tools deps [#34772](https://github.com/gatsbyjs/gatsby/issues/34772) ([d9fe5df](https://github.com/gatsbyjs/gatsby/commit/d9fe5df4effb7a4d59a798025626682542318007))
+
+### [4.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.10.1/packages/gatsby-source-graphql) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.10.0/packages/gatsby-source-graphql) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.9.1/packages/gatsby-source-graphql) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.9.0/packages/gatsby-source-graphql) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [4.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.8.2/packages/gatsby-source-graphql) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.8.1/packages/gatsby-source-graphql) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.8.0/packages/gatsby-source-graphql) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.7.0/packages/gatsby-source-graphql) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.7 for gatsby-source-graphql [#34647](https://github.com/gatsbyjs/gatsby/issues/34647) ([9590a44](https://github.com/gatsbyjs/gatsby/commit/9590a44c42a5253bda965a42f1682673baad6c29))
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.6.0/packages/gatsby-source-graphql) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.5.2/packages/gatsby-source-graphql) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.5.1/packages/gatsby-source-graphql) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.5.0/packages/gatsby-source-graphql) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.4.0/packages/gatsby-source-graphql) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.3.0/packages/gatsby-source-graphql) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Use default export from node-fetch [#33977](https://github.com/gatsbyjs/gatsby/issues/33977) ([82864cb](https://github.com/gatsbyjs/gatsby/commit/82864cb917ead6b11079b48dc4601b4fa3e3968c))
+
+#### Chores
+
+- warn people that source-graphql is slow for larger sites [#33970](https://github.com/gatsbyjs/gatsby/issues/33970) ([e98e4e1](https://github.com/gatsbyjs/gatsby/commit/e98e4e1cc88f31fab8f0c7c19a4c933314fda6a5))
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.2.0/packages/gatsby-source-graphql) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-graphql [#32981](https://github.com/gatsbyjs/gatsby/issues/32981) ([aceaba4](https://github.com/gatsbyjs/gatsby/commit/aceaba408ca5a0c23268fe485a83f545ac858ab2))
+
+### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.3/packages/gatsby-source-graphql) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.2/packages/gatsby-source-graphql) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.1/packages/gatsby-source-graphql) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.0/packages/gatsby-source-graphql) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.0.0/packages/gatsby-source-graphql) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- move away from old default uuid [#33275](https://github.com/gatsbyjs/gatsby/issues/33275) ([325fdf4](https://github.com/gatsbyjs/gatsby/commit/325fdf4a068acf755ed124cb522e133ea5c31157))
+
+#### Bug Fixes
+
+- support Gatsby 4 [#33310](https://github.com/gatsbyjs/gatsby/issues/33310) ([98ae718](https://github.com/gatsbyjs/gatsby/commit/98ae718ae803f03546b5ad65f04ba3c09ec5993a))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@3.14.0/packages/gatsby-source-graphql) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@3.13.0/packages/gatsby-source-graphql) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

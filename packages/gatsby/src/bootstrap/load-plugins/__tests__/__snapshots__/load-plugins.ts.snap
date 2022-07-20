@@ -48,7 +48,7 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "prod-404",
+    "name": "prod-404-500",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -91,8 +91,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -110,7 +110,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
@@ -131,7 +131,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
@@ -152,7 +152,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
@@ -173,10 +173,10 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404-500/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -194,7 +194,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
@@ -215,7 +215,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/bundle-optimisations/src/pages",
@@ -236,7 +236,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/functions/src/pages",
@@ -280,6 +280,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "resolvedCompiledGatsbyNode": undefined,
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
@@ -292,7 +293,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "/src/pages",
@@ -302,6 +303,27 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "wrapRootElement",
+      "onRenderBody",
+    ],
     "version": "1.0.0",
   },
 ]
@@ -355,7 +377,7 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "prod-404",
+    "name": "prod-404-500",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -398,8 +420,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -429,7 +451,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
@@ -450,7 +472,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
@@ -471,7 +493,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
@@ -492,10 +514,10 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404-500/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -513,7 +535,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
@@ -534,7 +556,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/bundle-optimisations/src/pages",
@@ -555,7 +577,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/functions/src/pages",
@@ -576,7 +598,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "__TEST__/src/pages",
@@ -620,6 +642,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "resolvedCompiledGatsbyNode": undefined,
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
@@ -632,7 +655,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "/src/pages",
@@ -642,6 +665,27 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "wrapRootElement",
+      "onRenderBody",
+    ],
     "version": "1.0.0",
   },
 ]
@@ -695,7 +739,7 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "prod-404",
+    "name": "prod-404-500",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -738,8 +782,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -757,7 +801,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "ignore": Array [
@@ -780,7 +824,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/dev-404-page/src/pages",
@@ -801,7 +845,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/load-babel-config/src/pages",
@@ -822,7 +866,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/internal-data-bridge/src/pages",
@@ -843,10 +887,10 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404-500/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -864,7 +908,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/src/pages",
@@ -885,7 +929,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/bundle-optimisations/src/pages",
@@ -906,7 +950,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/functions/src/pages",
@@ -927,7 +971,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "<PROJECT_ROOT>/packages/gatsby-plugin-page-creator/src/pages",
@@ -971,6 +1015,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
+    "resolvedCompiledGatsbyNode": undefined,
     "ssrAPIs": Array [],
     "version": "1.0.0",
   },
@@ -983,7 +1028,7 @@ Array [
     "nodeAPIs": Array [
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
-      "onPreInit",
+      "onPluginInit",
     ],
     "pluginOptions": Object {
       "path": "/src/pages",
@@ -993,6 +1038,27 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "wrapRootElement",
+      "onRenderBody",
+    ],
     "version": "1.0.0",
   },
 ]

@@ -27,11 +27,29 @@ import {
 import { IGatsbyNode } from "../redux/types"
 import { IQueryResult } from "../datastore/types"
 import { GatsbyIterable } from "../datastore/common/iterable"
+import { getResolvedFields, fieldPathNeedToResolve } from "./utils"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
 type nestedListOfStrings = Array<string | nestedListOfStrings>
 type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
+
+function getMaybeResolvedValue(
+  node: IGatsbyNode,
+  field: string,
+  nodeInterfaceName: string
+): any {
+  if (
+    fieldPathNeedToResolve({
+      selector: field,
+      type: nodeInterfaceName,
+    })
+  ) {
+    return getValueAt(getResolvedFields(node) as Record<string, unknown>, field)
+  } else {
+    return getValueAt(node, field)
+  }
+}
 
 export function findOne<TSource, TArgs>(
   typeName: string
@@ -40,10 +58,9 @@ export function findOne<TSource, TArgs>(
     if (context.stats) {
       context.stats.totalRunQuery++
     }
-    return context.nodeModel.runQuery(
+    return context.nodeModel.findOne(
       {
         query: { filter: args },
-        firstOnly: true,
         type: info.schema.getType(typeName),
         stats: context.stats,
         tracer: context.tracer,
@@ -113,103 +130,105 @@ interface IFieldConnectionArgs {
   field: string
 }
 
-export const distinct: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function distinctResolver(source, args): Array<string> {
-  const { field } = args
-  const { edges } = source
+export function createDistinctResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function distinctResolver(source, args): Array<string> {
+    const { field } = args
+    const { edges } = source
 
-  const values = new Set<string>()
-  edges.forEach(({ node }) => {
-    const value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
-    if (value === null || value === undefined) {
-      return
-    }
-    if (Array.isArray(value)) {
-      value.forEach(subValue =>
-        values.add(subValue instanceof Date ? subValue.toISOString() : subValue)
-      )
-    } else if (value instanceof Date) {
-      values.add(value.toISOString())
-    } else {
-      values.add(value)
-    }
-  })
-  return Array.from(values).sort()
-}
-
-export const min: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function minResolver(source, args): number | null {
-  const { field } = args
-  const { edges } = source
-
-  let min = Number.MAX_SAFE_INTEGER
-
-  edges.forEach(({ node }) => {
-    let value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
-
-    if (typeof value !== `number`) {
-      value = Number(value)
-    }
-    if (!isNaN(value) && value < min) {
-      min = value
-    }
-  })
-  if (min === Number.MAX_SAFE_INTEGER) {
-    return null
+    const values = new Set<string>()
+    edges.forEach(({ node }) => {
+      const value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+      if (value === null || value === undefined) {
+        return
+      }
+      if (Array.isArray(value)) {
+        value.forEach(subValue =>
+          values.add(
+            subValue instanceof Date ? subValue.toISOString() : subValue
+          )
+        )
+      } else if (value instanceof Date) {
+        values.add(value.toISOString())
+      } else {
+        values.add(value)
+      }
+    })
+    return Array.from(values).sort()
   }
-  return min
 }
 
-export const max: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function maxResolver(source, args): number | null {
-  const { field } = args
-  const { edges } = source
+export function createMinResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function minResolver(source, args): number | null {
+    const { field } = args
+    const { edges } = source
 
-  let max = Number.MIN_SAFE_INTEGER
+    let min = Number.MAX_SAFE_INTEGER
 
-  edges.forEach(({ node }) => {
-    let value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
-    if (typeof value !== `number`) {
-      value = Number(value)
+    edges.forEach(({ node }) => {
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+
+      if (typeof value !== `number`) {
+        value = Number(value)
+      }
+      if (!isNaN(value) && value < min) {
+        min = value
+      }
+    })
+    if (min === Number.MAX_SAFE_INTEGER) {
+      return null
     }
-    if (!isNaN(value) && value > max) {
-      max = value
-    }
-  })
-  if (max === Number.MIN_SAFE_INTEGER) {
-    return null
+    return min
   }
-  return max
 }
 
-export const sum: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function sumResolver(source, args): number | null {
-  const { field } = args
-  const { edges } = source
+export function createMaxResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function maxResolver(source, args): number | null {
+    const { field } = args
+    const { edges } = source
 
-  return edges.reduce<number | null>((prev, { node }) => {
-    let value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
+    let max = Number.MIN_SAFE_INTEGER
 
-    if (typeof value !== `number`) {
-      value = Number(value)
+    edges.forEach(({ node }) => {
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+      if (typeof value !== `number`) {
+        value = Number(value)
+      }
+      if (!isNaN(value) && value > max) {
+        max = value
+      }
+    })
+    if (max === Number.MIN_SAFE_INTEGER) {
+      return null
     }
-    if (!isNaN(value)) {
-      return (prev || 0) + value
-    }
-    return prev
-  }, null)
+    return max
+  }
+}
+
+export function createSumResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function sumResolver(source, args): number | null {
+    const { field } = args
+    const { edges } = source
+
+    return edges.reduce<number | null>((prev, { node }) => {
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+
+      if (typeof value !== `number`) {
+        value = Number(value)
+      }
+      if (!isNaN(value)) {
+        return (prev || 0) + value
+      }
+      return prev
+    }, null)
+  }
 }
 
 type IGatsbyGroupReturnValue<NodeType> = Array<
@@ -219,49 +238,57 @@ type IGatsbyGroupReturnValue<NodeType> = Array<
   }
 >
 
-export const group: GatsbyResolver<
+export function createGroupResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<
   IGatsbyConnection<IGatsbyNode>,
   PaginatedArgs<IFieldConnectionArgs>
-> = function groupResolver(source, args): IGatsbyGroupReturnValue<IGatsbyNode> {
-  const { field } = args
-  const { edges } = source
-  const groupedResults: Record<string, Array<IGatsbyNode>> = edges.reduce(
-    (acc, { node }) => {
-      const value =
-        getValueAt(node, `__gatsby_resolved.${field}`) ||
-        getValueAt(node, field)
-      const values = Array.isArray(value) ? value : [value]
-      values
-        .filter(value => value != null)
-        .forEach(value => {
-          const key = value instanceof Date ? value.toISOString() : value
-          acc[key] = (acc[key] || []).concat(node)
-        })
-      return acc
-      // Note: using Object.create on purpose:
-      //   object key may be arbitrary string including reserved words (i.e. `constructor`)
-      //   see: https://github.com/gatsbyjs/gatsby/issues/22508
-    },
-    Object.create(null)
-  )
+> {
+  return function groupResolver(
+    source,
+    args
+  ): IGatsbyGroupReturnValue<IGatsbyNode> {
+    const { field } = args
+    const { edges } = source
+    const groupedResults: Record<string, Array<IGatsbyNode>> = edges.reduce(
+      (acc, { node }) => {
+        const value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+        const values = Array.isArray(value) ? value : [value]
+        values
+          .filter(value => value != null)
+          .forEach(value => {
+            const key = value instanceof Date ? value.toISOString() : value
+            acc[key] = (acc[key] || []).concat(node)
+          })
+        return acc
+        // Note: using Object.create on purpose:
+        //   object key may be arbitrary string including reserved words (i.e. `constructor`)
+        //   see: https://github.com/gatsbyjs/gatsby/issues/22508
+      },
+      Object.create(null)
+    )
 
-  return Object.keys(groupedResults)
-    .sort()
-    .reduce((acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
-      const entries = groupedResults[fieldValue] || []
-      acc.push({
-        ...paginate(
-          {
-            entries: new GatsbyIterable(entries),
-            totalCount: async () => entries.length,
-          },
-          args
-        ),
-        field,
-        fieldValue,
-      })
-      return acc
-    }, [])
+    return Object.keys(groupedResults)
+      .sort()
+      .reduce(
+        (acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
+          const entries = groupedResults[fieldValue] || []
+          acc.push({
+            ...paginate(
+              {
+                entries: new GatsbyIterable(entries),
+                totalCount: async () => entries.length,
+              },
+              args
+            ),
+            field,
+            fieldValue,
+          })
+          return acc
+        },
+        []
+      )
+  }
 }
 
 export function paginate(
@@ -317,7 +344,7 @@ export function link<TSource, TArgs>(
     by: string
     type?: GraphQLType
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {
     by: `id`,
   },
@@ -404,25 +431,33 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const resultOrPromise = context.nodeModel.runQuery(
-      {
-        query: runQueryArgs,
-        firstOnly,
-        type,
-        stats: context.stats,
-        tracer: context.tracer,
-      },
-      { path: context.path }
-    )
-
-    // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (typeof resultOrPromise?.then === `function`) {
-      return resultOrPromise.then(result =>
-        linkResolverQueryResult(fieldValue, result, returnType)
-      )
+    if (firstOnly) {
+      return context.nodeModel
+        .findOne(
+          {
+            query: runQueryArgs,
+            type,
+            stats: context.stats,
+            tracer: context.tracer,
+          },
+          { path: context.path }
+        )
+        .then(result => linkResolverQueryResult(fieldValue, result, returnType))
     }
 
-    return linkResolverQueryResult(fieldValue, resultOrPromise, returnType)
+    return context.nodeModel
+      .findAll(
+        {
+          query: runQueryArgs,
+          type,
+          stats: context.stats,
+          tracer: context.tracer,
+        },
+        { path: context.path }
+      )
+      .then(({ entries }) =>
+        linkResolverQueryResult(fieldValue, Array.from(entries), returnType)
+      )
   }
 
   function linkResolverQueryResult(
@@ -447,7 +482,7 @@ export function link<TSource, TArgs>(
 export function fileByPath<TSource, TArgs>(
   options: {
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {},
   fieldConfig
 ): GatsbyResolver<TSource, TArgs> {
@@ -493,7 +528,7 @@ export function fileByPath<TSource, TArgs>(
     }
 
     function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
-      return context.nodeModel.runQuery({
+      return context.nodeModel.findOne({
         query: {
           filter: {
             absolutePath: {
@@ -501,7 +536,6 @@ export function fileByPath<TSource, TArgs>(
             },
           },
         },
-        firstOnly: true,
         type: `File`,
       })
     }
@@ -641,7 +675,11 @@ export function wrappingResolver<TSource, TArgs>(
   //       it does not return a promise and this makes a significant difference at scale.
   //       GraphQL will gracefully handle the resolver result of a promise or non-promise.
 
-  return function wrappedTracingResolver(
+  if (resolver[`isTracingResolver`]) {
+    return resolver
+  }
+
+  const wrappedTracingResolver = function wrappedTracingResolver(
     parent,
     args,
     context,
@@ -658,6 +696,7 @@ export function wrappingResolver<TSource, TArgs>(
     }
 
     let activity
+    let time
     if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
@@ -665,13 +704,23 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
+    if (context?.telemetryResolverTimings) {
+      time = process.hrtime.bigint()
+    }
+
     const result = resolver(parent, args, context, info)
 
-    if (!activity) {
+    if (!activity && !time) {
       return result
     }
 
     const endActivity = (): void => {
+      if (context?.telemetryResolverTimings) {
+        context.telemetryResolverTimings.push({
+          name: `${info.parentType}.${info.fieldName}`,
+          duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,
+        })
+      }
       if (activity) {
         activity.end()
       }
@@ -683,6 +732,10 @@ export function wrappingResolver<TSource, TArgs>(
     }
     return result
   }
+
+  wrappedTracingResolver.isTracingResolver = true
+
+  return wrappedTracingResolver
 }
 
 export const defaultResolver = wrappingResolver(defaultFieldResolver)

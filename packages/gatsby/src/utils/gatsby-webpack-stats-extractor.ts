@@ -8,7 +8,9 @@ export class GatsbyWebpackStatsExtractor {
     this.plugin = { name: `GatsbyWebpackStatsExtractor` }
   }
   apply(compiler: Compiler): void {
-    compiler.hooks.done.tapAsync(this.plugin.name, (stats, done) => {
+    let previousChunkMapJson: string | undefined
+    let previousWebpackStatsJson: string | undefined
+    compiler.hooks.done.tapAsync(this.plugin.name, async (stats, done) => {
       const assets = {}
       const assetsMap = {}
       const childAssets = {}
@@ -54,17 +56,26 @@ export class GatsbyWebpackStatsExtractor {
         assetsByChunkName: assets,
         childAssetsByChunkName: childAssets,
       }
-      fs.writeFile(
-        path.join(`public`, `chunk-map.json`),
-        JSON.stringify(assetsMap),
-        () => {
-          fs.writeFile(
-            path.join(`public`, `webpack.stats.json`),
-            JSON.stringify(webpackStats),
-            done
-          )
-        }
-      )
+
+      const newChunkMapJson = JSON.stringify(assetsMap)
+      if (newChunkMapJson !== previousChunkMapJson) {
+        await fs.writeFile(
+          path.join(`public`, `chunk-map.json`),
+          newChunkMapJson
+        )
+        previousChunkMapJson = newChunkMapJson
+      }
+
+      const newWebpackStatsJson = JSON.stringify(webpackStats)
+      if (newWebpackStatsJson !== previousWebpackStatsJson) {
+        await fs.writeFile(
+          path.join(`public`, `webpack.stats.json`),
+          newWebpackStatsJson
+        )
+        previousWebpackStatsJson = newWebpackStatsJson
+      }
+
+      done()
     })
   }
 }

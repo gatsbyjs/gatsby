@@ -20,7 +20,10 @@ import {
   getNodesByType,
   getTypes,
 } from "../datastore"
-import { isIterable } from "../datastore/common/iterable"
+import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
+import { reportOnce } from "../utils/report-once"
+import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
+import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -69,13 +72,18 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, schemaComposer, createPageDependency }) {
+  constructor({
+    schema,
+    schemaComposer,
+    createPageDependency,
+    _rootNodeMap,
+    _trackedRootNodes,
+  }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.createPageDependencyActionCreator = createPageDependency
-
-    this._rootNodeMap = new WeakMap()
-    this._trackedRootNodes = new WeakSet()
+    this._rootNodeMap = _rootNodeMap || new WeakMap()
+    this._trackedRootNodes = _trackedRootNodes || new WeakSet()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
@@ -148,7 +156,7 @@ class LocalNodeModel {
       this.trackInlineObjectsInRootNode(node)
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNode(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -179,20 +187,24 @@ class LocalNodeModel {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
    * Get all nodes in the store, or all nodes of a specified type. Note that
    * this adds connectionType tracking by default if type is passed.
    *
+   * @deprecated Since version 4.0 - Use nodeModel.findAll() instead
    * @param {Object} args
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
    * @param {PageDependencies} [pageDependencies]
    * @returns {Node[]}
    */
   getAllNodes(args, pageDependencies = {}) {
-    // TODO: deprecate this method in favor of runQuery
+    // TODO(v5): Remove API
+    reportOnce(
+      `nodeModel.getAllNodes() is deprecated. Use nodeModel.findAll() with an empty query instead.`
+    )
     const { type = `Node` } = args || {}
 
     let result
@@ -216,12 +228,13 @@ class LocalNodeModel {
         typeof type === `string` ? type : type.name
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
    * Get nodes of a type matching the specified query.
    *
+   * @deprecated Since version 4.0 - Use nodeModel.findAll() or nodeModel.findOne() instead
    * @param {Object} args
    * @param {Object} args.query Query arguments (`filter` and `sort`)
    * @param {(string|GraphQLOutputType)} args.type Type
@@ -230,10 +243,10 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies = {}) {
-    // TODO: show deprecation warning in v4
-    // reporter.warn(
-    //   `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead`
-    // )
+    // TODO(v5): Remove API
+    reportOnce(
+      `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead.`
+    )
     if (args.firstOnly) {
       return this.findOne(args, pageDependencies)
     }
@@ -243,7 +256,7 @@ class LocalNodeModel {
   }
 
   async _query(args) {
-    const { query, type, stats, tracer } = args || {}
+    const { query = {}, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -254,6 +267,37 @@ class LocalNodeModel {
     )
 
     const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
+
+    let runQueryActivity
+
+    // check if we can get node by id and skip
+    // more expensive query pipeline
+    if (
+      typeof query?.filter?.id?.eq !== `undefined` &&
+      Object.keys(query.filter).length === 1 &&
+      Object.keys(query.filter.id).length === 1
+    ) {
+      if (tracer) {
+        runQueryActivity = reporter.phantomActivity(`runQuerySimpleIdEq`, {
+          parentSpan: tracer.getParentActivity().span,
+        })
+        runQueryActivity.start()
+      }
+      const nodeFoundById = this.getNodeById({
+        id: query.filter.id.eq,
+        type: gqlType,
+      })
+
+      if (runQueryActivity) {
+        runQueryActivity.end()
+      }
+
+      return {
+        gqlType,
+        entries: new GatsbyIterable(nodeFoundById ? [nodeFoundById] : []),
+        totalCount: async () => (nodeFoundById ? 1 : 0),
+      }
+    }
 
     let materializationActivity
     if (tracer) {
@@ -271,12 +315,12 @@ class LocalNodeModel {
       min: query.min,
       sum: query.sum,
     })
+
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
       this.schema,
       gqlType,
-      fields,
-      nodeTypeNames
+      fields
     )
 
     for (const nodeTypeName of nodeTypeNames) {
@@ -288,7 +332,6 @@ class LocalNodeModel {
       materializationActivity.end()
     }
 
-    let runQueryActivity
     if (tracer) {
       runQueryActivity = reporter.phantomActivity(`runQuery`, {
         parentSpan: tracer.getParentActivity().span,
@@ -322,8 +365,17 @@ class LocalNodeModel {
     }
   }
 
+  /**
+   * Get all nodes in the store, or all nodes of a specified type (optionally with limit/skip).
+   * Returns slice of result as iterable and total count of nodes.
+   *
+   * @param {*} args
+   * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @return {Promise<Object>} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
+   */
   async findAll(args, pageDependencies = {}) {
-    // TODO: add this as a public API in v4 (together with deprecating runQuery)
     const { gqlType, ...result } = await this._query(args, pageDependencies)
 
     // Tracking connections by default:
@@ -331,22 +383,29 @@ class LocalNodeModel {
       pageDependencies.connectionType = gqlType.name
     }
     this.trackPageDependencies(result.entries, pageDependencies)
-    return result
+    return {
+      entries: wrapNodes(result.entries),
+      totalCount: result.totalCount,
+    }
   }
 
+  /**
+   * Get one node in the store. Only returns the first result.
+   *
+   * @param {*} args
+   * @param {Object} args.query Query arguments (e.g. `filter`). Doesn't support `sort`, `limit`, `skip`.
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Promise<Node>}
+   */
   async findOne(args, pageDependencies = {}) {
-    // TODO: add this as a public API in v4 (together with deprecating runQuery)
-    const { query } = args
+    const { query = {} } = args
     if (query.sort?.fields?.length > 0) {
       // If we support sorting and return the first node based on sorting
       // we'll have to always track connection not an individual node
-      reporter.warn(
-        `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead`
+      throw new Error(
+        `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead.`
       )
-      // TODO: throw in v4
-      // throw new Error(
-      //   `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead`
-      // )
     }
     const { gqlType, entries } = await this._query({
       ...args,
@@ -364,7 +423,7 @@ class LocalNodeModel {
       //  the query whenever any node of this type changes.
       pageDependencies.connectionType = gqlType.name
     }
-    return this.trackPageDependencies(first, pageDependencies)
+    return wrapNode(this.trackPageDependencies(first, pageDependencies))
   }
 
   prepareNodes(type, queryFields, fieldsToResolve) {
@@ -430,13 +489,8 @@ class LocalNodeModel {
           queryFields,
           actualFieldsToResolve
         )
-        if (!node.__gatsby_resolved) {
-          node.__gatsby_resolved = {}
-        }
-        resolvedNodes.set(
-          node.id,
-          _.merge(node.__gatsby_resolved, resolvedFields)
-        )
+
+        resolvedNodes.set(node.id, resolvedFields)
       }
       if (resolvedNodes.size) {
         await saveResolvedNodes(typeName, resolvedNodes)
@@ -632,21 +686,6 @@ class ContextualNodeModel {
 
 const getNodeById = id => (id != null ? getNode(id) : null)
 
-const toNodeTypeNames = (schema, gqlTypeName) => {
-  const gqlType =
-    typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
-
-  if (!gqlType) return []
-
-  const possibleTypes = isAbstractType(gqlType)
-    ? schema.getPossibleTypes(gqlType)
-    : [gqlType]
-
-  return possibleTypes
-    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
-    .map(type => type.name)
-}
-
 const getQueryFields = ({ filter, sort, group, distinct, max, min, sum }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
   const sortFields = (sort && sort.fields) || []
@@ -765,7 +804,7 @@ async function resolveRecursive(
         )
       } else if (
         isCompositeType(gqlFieldType) &&
-        _.isArray(innerValue) &&
+        (_.isArray(innerValue) || innerValue instanceof GatsbyIterable) &&
         gqlNonNullType instanceof GraphQLList
       ) {
         innerValue = await Promise.all(
@@ -844,8 +883,7 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames,
-  isNestedType = false
+  isNestedAndParentNeedsResolve = false
 ) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
@@ -854,17 +892,14 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    const possibleTCs = [
+
+    const needsResolve = fieldNeedToResolve({
+      schema,
+      gqlType: type,
       typeComposer,
-      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
-    ]
-    let needsResolve = false
-    for (const tc of possibleTCs) {
-      needsResolve = tc.getFieldExtension(fieldName, `needsResolve`) || false
-      if (needsResolve) {
-        break
-      }
-    }
+      schemaComposer,
+      fieldName,
+    })
 
     if (_.isObject(field) && gqlField) {
       const innerResolved = determineResolvableFields(
@@ -872,8 +907,7 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType),
-        true
+        isNestedAndParentNeedsResolve || needsResolve
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
@@ -883,7 +917,7 @@ const determineResolvableFields = (
     if (!fieldsToResolve[fieldName] && needsResolve) {
       fieldsToResolve[fieldName] = true
     }
-    if (!fieldsToResolve[fieldName] && isNestedType) {
+    if (!fieldsToResolve[fieldName] && isNestedAndParentNeedsResolve) {
       // If parent field needs to be resolved - all nested fields should be added as well
       // See https://github.com/gatsbyjs/gatsby/issues/26056
       fieldsToResolve[fieldName] = true
@@ -918,7 +952,7 @@ const addRootNodeToInlineObject = (
   }
 }
 
-const saveResolvedNodes = async (typeName, resolvedNodes) => {
+const saveResolvedNodes = (typeName, resolvedNodes) => {
   store.dispatch({
     type: `SET_RESOLVED_NODES`,
     payload: {

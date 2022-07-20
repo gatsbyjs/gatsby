@@ -115,9 +115,9 @@
     }
   },
   {
-    "resolve": "<PROJECT_ROOT>/examples/gatsbygram/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "resolve": "<PROJECT_ROOT>/examples/gatsbygram/node_modules/gatsby/dist/internal-plugins/prod-404-500",
     "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
-    "name": "prod-404",
+    "name": "prod-404-500",
     "version": "1.0.0",
     "pluginOptions": {
       "plugins": []
@@ -125,9 +125,9 @@
     "nodeAPIs": ["onCreatePage"],
     "browserAPIs": [],
     "ssrAPIs": [],
-    "pluginFilepath": "<PROJECT_ROOT>/examples/gatsbygram/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "pluginFilepath": "<PROJECT_ROOT>/examples/gatsbygram/node_modules/gatsby/dist/internal-plugins/prod-404-500",
     "packageJson": {
-      "name": "prod-404",
+      "name": "prod-404-500",
       "description": "Internal plugin to detect various flavors of 404 pages and ensure there's a 404.html path created as well to ensure compatibility with static hosts",
       "version": "1.0.0",
       "main": "index.js",

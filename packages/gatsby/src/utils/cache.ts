@@ -29,7 +29,12 @@ export default class GatsbyCache {
   constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
     this.name = name
     this.store = store
-    this.directory = path.join(process.cwd(), `.cache/caches/${name}`)
+    this.directory = path.join(
+      global.__GATSBY?.root ?? process.cwd(),
+      `.cache`,
+      `caches`,
+      name
+    )
   }
 
   init(): GatsbyCache {

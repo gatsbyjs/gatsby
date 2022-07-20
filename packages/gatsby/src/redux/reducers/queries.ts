@@ -152,13 +152,17 @@ export function queriesReducer(
       return state
     }
     case `CREATE_COMPONENT_DEPENDENCY`: {
-      const { path: queryId, nodeId, connection } = action.payload
-      if (nodeId) {
-        state = addNodeDependency(state, queryId, nodeId)
-      }
-      if (connection) {
-        state = addConnectionDependency(state, queryId, connection)
-      }
+      action.payload.forEach(dep => {
+        const { path: queryId, nodeId, connection } = dep
+
+        if (nodeId) {
+          state = addNodeDependency(state, queryId, nodeId)
+        }
+        if (connection) {
+          state = addConnectionDependency(state, queryId, connection)
+        }
+      })
+
       return state
     }
     case `QUERY_START`: {
@@ -221,6 +225,11 @@ export function queriesReducer(
       return state
     }
     case `MERGE_WORKER_QUERY_STATE`: {
+      // This action may be dispatched in cases where queries might not be included in the merge data
+      if (!action.payload.queryStateChunk) {
+        return state
+      }
+
       assertCorrectWorkerState(action.payload)
 
       state = mergeWorkerDataDependencies(state, action.payload)

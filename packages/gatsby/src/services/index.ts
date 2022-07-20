@@ -1,5 +1,4 @@
 export { startWebpackServer } from "./start-webpack-server"
-export { rebuildSchemaWithSitePage } from "./rebuild-schema-with-site-pages"
 export { extractQueries } from "./extract-queries"
 export { writeOutRedirects } from "./write-out-redirects"
 export { postBootstrap } from "./post-bootstrap"
@@ -16,5 +15,6 @@ export { runPageQueries } from "./run-page-queries"
 export { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 export { runMutationBatch } from "./run-mutation-batch"
 export { recompile } from "./recompile"
+export { graphQLTypegen } from "./graphql-typegen"
 
 export * from "./types"

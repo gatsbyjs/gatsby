@@ -1,5 +1,5 @@
 import { nodesReducer } from "./nodes"
-import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
+import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducers/logs"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -28,7 +28,10 @@ import { queriesReducer } from "./queries"
 import { visitedPagesReducer } from "./visited-page"
 import { htmlReducer } from "./html"
 import { functionsReducer } from "./functions"
+import { telemetryReducer } from "./telemetry"
 import { nodeManifestReducer } from "./node-manifest"
+import { reducer as pageTreeReducer } from "gatsby-cli/lib/reporter/redux/reducers/page-tree"
+import { setRequestHeadersReducer } from "./set-request-headers"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -65,4 +68,7 @@ export {
   htmlReducer as html,
   functionsReducer as functions,
   nodeManifestReducer as nodeManifests,
+  pageTreeReducer as pageTree,
+  setRequestHeadersReducer as requestHeaders,
+  telemetryReducer as telemetry,
 }

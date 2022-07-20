@@ -50,10 +50,12 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -62,10 +64,12 @@ Map {
   "/hi/pizza/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/pizza/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -76,14 +80,17 @@ Map {
 
 exports[`Add pages allows you to add pages 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -102,10 +109,12 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -116,16 +125,19 @@ Map {
 
 exports[`Add pages allows you to add pages with context 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
     },
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -144,12 +156,14 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
     },
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -160,14 +174,17 @@ Map {
 
 exports[`Add pages allows you to add pages with matchPath 1`] = `
 Object {
+  "componentModified": false,
   "contextModified": false,
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": "/hi-from-somewhere-else/",
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -186,10 +203,12 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": "/hi-from-somewhere-else/",
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -205,10 +224,12 @@ Map {
   "/hi/" => Object {
     "component": "/whatever2/index.js",
     "componentChunkName": "component---whatever-2-index-js",
+    "componentPath": "/whatever2/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
     "matchPath": undefined,
+    "mode": "SSG",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",

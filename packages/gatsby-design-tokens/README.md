@@ -1,7 +1,3 @@
-<img src="https://user-images.githubusercontent.com/21834/74070062-35b91980-4a00-11ea-93a8-b77bde7b4c37.png" width="48" height="48" alt="rebeccapurple dot" />
-<br>
-<br>
-
 # gatsby-design-tokens
 
 <a href="https://www.npmjs.org/package/gatsby-design-tokens">
@@ -100,8 +96,6 @@ import {
 - `rem` values are based on a `font-size` of `16px` for the root element.
 - All tokens work in the context of [Theme UI's Theme Scales](https://theme-ui.com/theme-spec/#theme-scales), with the exception of `breakpoints`: Use `breakpointsArray` for `theme-ui` and its [responsive styles](https://theme-ui.com/getting-started/#responsive-styles) feature.
 
-Find a work-in-progress list of design tokens in the design tokens documentation at [gatsbyjs.org/guidelines/design-tokens](https://www.gatsbyjs.org/guidelines/design-tokens/).
-
 ## `theme-ui` themes 🎨
 
 ### `theme`
@@ -136,7 +130,7 @@ import {
 
 ### `theme-gatsbyjs-org`
 
-The theme currently in use on gatsbyjs.org via `gatsby-plugin-theme-ui`:
+The theme currently in use on gatsbyjs.com via `gatsby-plugin-theme-ui`:
 
 - Extends the base theme's `colors` with a couple .org-specific things, and provides a `dark` mode (ref. https://theme-ui.com/color-modes).
 - Adds .org-specific `sizes` and `zIndices`.
@@ -171,11 +165,11 @@ import {
 
 ## Local development
 
-The Gatsby monorepo, which hosts this package, also contains the source for gatsbyjs.org, aka `www` — where `theme-gatsbyjs-org` is in use. Using a little helper called `gatsby-dev` we can develop and test both of them locally.
+The Gatsby monorepo, which hosts this package, also contains the source for gatsbyjs.com, aka `www` — where `theme-gatsbyjs-org` is in use. Using a little helper called `gatsby-dev` we can develop and test both of them locally.
 
 ### 1. Clone the `gatsby` monorepo and set it up for local dev
 
-Follow the [official guide](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#fork-clone-and-branch-the-repository) to clone/fork and set up the Gatsby monorepo. This will roughly look like this:
+Follow the [official guide](https://www.gatsbyjs.com/contributing/setting-up-your-local-dev-environment/#fork-clone-and-branch-the-repository) to clone/fork and set up the Gatsby monorepo. This will roughly look like this:
 
 ```shell
 # clone the repo/your fork
@@ -194,7 +188,7 @@ git checkout -b topics/new-feature-name
 
 #### Install `gatsby-dev-cli` to ease testing your local changes to `packages`
 
-Assuming `gatsby-cli` [is installed](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes), let's install [`gatsby-dev-cli`](<(https://www.npmjs.com/package/gatsby-dev-cli)>) with
+Assuming `gatsby-cli` [is installed](https://www.gatsbyjs.com/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes), let's install [`gatsby-dev-cli`](<(https://www.npmjs.com/package/gatsby-dev-cli)>) with
 
 ```shell
 yarn global add gatsby-dev-cli
@@ -218,7 +212,7 @@ Follow the [README instructions](https://github.com/gatsbyjs/gatsby/blob/master/
 
 > […] skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image
 
-Run `yarn develop`, which thanks to the previous step shouldn't take ~40 minutes but way less. Hopefully you should be able to browse a local version of gatsbyjs.org after this. Let's leave `yarn develop` running!
+Run `yarn develop`, which thanks to the previous step shouldn't take ~40 minutes but way less. Hopefully you should be able to browse a local version of gatsbyjs.com after this. Let's leave `yarn develop` running!
 
 ### 3. Rebuild `gatsby-design-tokens` when it changes, and use `gatsby-dev` to copy the changed-and-compiled package over to `www/node_modules`
 

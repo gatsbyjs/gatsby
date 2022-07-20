@@ -30,6 +30,10 @@ it("generates the expected api output", done => {
           "wrapPageElement": Object {},
           "wrapRootElement": Object {},
         },
+        "features": Array [
+          "image-cdn",
+          "graphql-typegen",
+        ],
         "node": Object {
           "createPages": Object {},
           "createPagesStatefully": Object {},
@@ -44,6 +48,9 @@ it("generates the expected api output", done => {
           "onCreateNode": Object {},
           "onCreatePage": Object {},
           "onCreateWebpackConfig": Object {},
+          "onPluginInit": Object {
+            "version": "3.9.0",
+          },
           "onPostBootstrap": Object {},
           "onPostBuild": Object {},
           "onPreBootstrap": Object {},
@@ -57,9 +64,6 @@ it("generates the expected api output", done => {
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},
           "sourceNodes": Object {},
-          "unstable_onPluginInit": Object {
-            "version": "3.9.0",
-          },
           "unstable_shouldOnCreateNode": Object {
             "version": "2.24.80",
           },

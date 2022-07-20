@@ -21,6 +21,7 @@
 - [production](#production)
   - [production.hardCacheMediaFiles](#productionhardcachemediafiles)
   - [production.allow404Images](#productionallow404images)
+  - [production.allow401Images](#productionallow401images)
 - [develop](#develop)
   - [develop.nodeUpdateInterval](#developnodeupdateinterval)
   - [develop.hardCacheMediaFiles](#develophardcachemediafiles)
@@ -41,13 +42,17 @@
 - [searchAndReplace](#searchandreplace)
   - [searchAndReplace[].search](#searchandreplacesearch)
   - [searchAndReplace[].replace](#searchandreplacereplace)
+- [catchLinks](#catchlinks)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
+  - [html.gatsbyImageOptions](#htmlgatsbyimageoptions)
   - [html.imageMaxWidth](#htmlimagemaxwidth)
   - [html.fallbackImageMaxWidth](#htmlfallbackimagemaxwidth)
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
   - [html.generateWebpImages](#htmlgeneratewebpimages)
+  - [html.generateAvifImages](#htmlgenerateavifimages)
+  - [html.placeholderType](#htmlplaceholdertype)
 - [type](#type)
   - [type.\_\_all](#type__all)
     - [type.\_\_all.where](#type__allwhere)
@@ -58,12 +63,14 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.placeholderSizeName](#typemediaitemplaceholdersizename)
     - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
     - [type.MediaItem.localFile](#typemediaitemlocalfile)
       - [type.MediaItem.localFile.excludeByMimeTypes](#typemediaitemlocalfileexcludebymimetypes)
       - [type.MediaItem.localFile.maxFileSizeBytes](#typemediaitemlocalfilemaxfilesizebytes)
       - [type.MediaItem.localFile.requestConcurrency](#typemediaitemlocalfilerequestconcurrency)
+    - [type.MediaItem.exclude](#typemediaitemexclude)
 - [presets](#presets)
   - [presets[].presetName](#presetspresetname)
   - [presets[].useIf](#presetsuseif)
@@ -441,6 +448,26 @@ This option allows images url's that return a 404 to not fail production builds.
   options: {
     production: {
       allow404Images: true,
+    },
+  },
+}
+
+```
+
+### production.allow401Images
+
+This option allows images url's that return a 401 to not fail production builds. 401s are sometimes returned in place of 404's for protected content to hide whether the content exists.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    production: {
+      allow401Images: true,
     },
   },
 }
@@ -844,6 +871,24 @@ The replacement string for each regex match.
 
 ```
 
+## catchLinks
+
+Turns on/off an automatically included copy of gatsby-plugin-catch-links which is used to catch anchor tags in html fields to perform client-side routing instead of full page refreshes.
+
+**Field type**: `Boolean`
+
+**Default value**: `true`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    catchLinks: false,
+  },
+}
+
+```
+
 ## html
 
 Options related to html field processing.
@@ -882,6 +927,27 @@ Causes the source plugin to find/replace images in html with Gatsby images.
 
 ```
 
+### html.gatsbyImageOptions
+
+Set custom options for your Gatsby Images.
+
+**Field type**: `Object`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      gatsbyImageOptions: {
+        [your - option - key]: "your-option-value",
+        [your - option - key - 2]: "your-option-value-2",
+      },
+    },
+  },
+}
+
+```
+
 ### html.imageMaxWidth
 
 Adds a limit to the max width an image can be. If the image size selected in WP is smaller or the image file width is smaller than this those values will be used instead.
@@ -908,7 +974,7 @@ If a max width can't be inferred from html this value will be passed to Sharp. I
 
 **Field type**: `Number`
 
-**Default value**: `100`
+**Default value**: `1024`
 
 ```js
 {
@@ -928,7 +994,7 @@ Determines the image quality that Sharp will use when generating inline html ima
 
 **Field type**: `Number`
 
-**Default value**: `90`
+**Default value**: `70`
 
 ```js
 {
@@ -968,7 +1034,7 @@ When this is true, .webp images will be generated for images in html fields in a
 
 **Field type**: `Boolean`
 
-**Default value**: `false`
+**Default value**: `true`
 
 ```js
 {
@@ -981,6 +1047,34 @@ When this is true, .webp images will be generated for images in html fields in a
 }
 
 ```
+
+### html.generateAvifImages
+
+When this is true, .avif images will be generated for images in html fields in addition to the images gatsby-image normally generates.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      generateAvifImages: false,
+    },
+  },
+}
+
+```
+
+### html.placeholderType
+
+This can be either "blurred" or "dominantColor". This is the type of placeholder image to be used in Gatsby Images in HTML fields.
+
+**Field type**: `String`
+
+**Default value**: `dominantColor`
 
 ## type
 
@@ -1136,6 +1230,14 @@ A special type which is applied to any non-node root fields that are ingested an
 
 **Field type**: `Object`
 
+#### type.MediaItem.placeholderSizeName
+
+This option allows you to choose the placeholder size used in the new Gatsby image service (currently in ALPHA/BETA) for the small placeholder image. Please make this image size very small for better performance. 20px or smaller width is recommended. To use, create a new image size in WP and name it "gatsby-image-placeholder" (or the name that you pass to this option) and that new size will be used automatically for placeholder images in the Gatsby build.
+
+**Field type**: `String`
+
+**Default value**: `gatsby-image-placeholder`
+
 #### type.MediaItem.createFileNodes
 
 This option controls whether or not a File node will be automatically created for each MediaItem node (available on MediaItem.localFile). Set this to false if you don't want Gatsby to download the corresponding file for each media item.
@@ -1262,6 +1364,26 @@ Amount of images to download concurrently. Try lowering this if wordpress server
 
 ```
 
+#### type.MediaItem.exclude
+
+Completely excludes MediaItem nodes from node sourcing and from the ingested schema. Setting this to true also disables the html.createStaticFiles, html.useGatsbyImage, and type.MediaItem.createFileNodes options.
+
+**Field type**: `Boolean`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    type: {
+      MediaItem: {
+        exclude: true,
+      },
+    },
+  },
+}
+
+```
+
 ## presets
 
 An array of plugin options presets that are applied if the useIf function on each returns true. The default includes an optimization for when in Gatsby Preview mode.
@@ -1359,7 +1481,7 @@ Any valid options except for `url` and `presets`.
   options: {
     presets: [
       {
-        name: `DEVELOP`,
+        presetName: `DEVELOP`,
         useIf: () => process.env.NODE_ENV === `development`,
         options: {
           type: {

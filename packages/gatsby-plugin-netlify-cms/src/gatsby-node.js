@@ -1,6 +1,6 @@
 import path from "path"
 import { mapValues, isPlainObject, trim } from "lodash"
-import webpack from "webpack"
+import webpack from "gatsby/webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import { HtmlWebpackSkipAssetsPlugin } from "html-webpack-skip-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
@@ -170,6 +170,7 @@ exports.onCreateWebpackConfig = (
         new FriendlyErrorsPlugin({
           clearConsole: false,
           compilationSuccessInfo: {
+            // TODO(v5): change proxyPort back in port
             messages: [
               `Netlify CMS is running at ${
                 program.https ? `https://` : `http://`
@@ -200,9 +201,11 @@ exports.onCreateWebpackConfig = (
       }),
 
       // Pass in needed Gatsby config values.
-      new webpack.DefinePlugin({
+      plugins.define({
         __PATH__PREFIX__: pathPrefix,
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        CMS_MANUAL_INIT: JSON.stringify(manualInit),
+        PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
 
       new CopyPlugin({
@@ -210,11 +213,23 @@ exports.onCreateWebpackConfig = (
           ({ name, assetName, sourceMap, assetDir }) =>
             [
               {
-                from: require.resolve(path.join(name, assetDir, assetName)),
+                from: path.join(
+                  path.dirname(
+                    require.resolve(path.join(name, `package.json`))
+                  ),
+                  assetDir,
+                  assetName
+                ),
                 to: assetName,
               },
               sourceMap && {
-                from: require.resolve(path.join(name, assetDir, sourceMap)),
+                from: path.join(
+                  path.dirname(
+                    require.resolve(path.join(name, `package.json`))
+                  ),
+                  assetDir,
+                  sourceMap
+                ),
                 to: sourceMap,
               },
             ].filter(Boolean)
@@ -224,11 +239,6 @@ exports.onCreateWebpackConfig = (
       new HtmlWebpackTagsPlugin({
         tags: externals.map(({ assetName }) => assetName),
         append: false,
-      }),
-
-      new webpack.DefinePlugin({
-        CMS_MANUAL_INIT: JSON.stringify(manualInit),
-        PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
     ].filter(p => p),
 
@@ -281,7 +291,7 @@ exports.onCreateWebpackConfig = (
     plugins: enableIdentityWidget
       ? []
       : [
-          new webpack.IgnorePlugin({
+          plugins.ignore({
             resourceRegExp: /^netlify-identity-widget$/,
           }),
         ],

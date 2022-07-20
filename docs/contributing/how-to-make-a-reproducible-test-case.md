@@ -16,14 +16,14 @@ A reproducible test case is a great way to share a specific environment that cau
 
 ## Steps to create a reproducible test case
 
-- Create a new Gatsby site with a starter, the official `hello-world` starter is a great 'barebones' starting point here: `gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-hello-world`
+- Create a new Gatsby site with a starter, the official `gatsby-starter-minimal` starter is a great 'barebones' starting point here: `gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-minimal`
 - Add any Gatsby plugins that relate to the issue. For example, if you're having problems with Gatsby MDX you should install and configure [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
 - Add the code needed to recreate the error you've seen.
 - Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/).
 
 ## Places to develop a reproducible test case
 
-- Locally with a starter: You can start with a [Starter](/docs/starters) locally and then build it on your own machine. Gatsby's official [`hello-world`](https://github.com/gatsbyjs/gatsby/tree/master/starters/hello-world) or [`default`](https://github.com/gatsbyjs/gatsby-starter-default) starter are both good foundations for a reproducible test case.
+- Locally with a starter: You can start with a starter locally and then build it on your own machine. Gatsby's official [`gatsby-starter-minimal`](https://github.com/gatsbyjs/gatsby-starter-minimal) is a good foundation for a reproducible test case.
 - Host on CodeSandbox: You can develop a Gatsby site straight from your browser with CodeSandbox using their [Gatsby template](https://codesandbox.io/s/github/gatsbyjs/gatsby-starter-default). CodeSandbox also hosts your site automatically, which can be useful to demonstrate the behavior of your site.
 
 ## Benefits of reproducible test cases

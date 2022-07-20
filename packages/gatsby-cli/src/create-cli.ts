@@ -111,7 +111,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler?: (
       args: yargs.Arguments,
       cmd: (args: yargs.Arguments) => void
-    ) => void
+    ) => void,
+    nodeEnv?: string | undefined
   ): (argv: yargs.Arguments) => void {
     return (argv: yargs.Arguments): void => {
       report.setVerbose(!!argv.verbose)
@@ -123,6 +124,12 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
       process.env.gatsby_executing_command = command
       report.verbose(`set gatsby_executing_command: "${command}"`)
+
+      // This is to make sure that the NODE_ENV is set before resolveLocalCommand is called
+      // This way, cache-lmdb uses the same DB files in main & workers
+      if (nodeEnv) {
+        process.env.NODE_ENV = nodeEnv
+      }
 
       const localCmd = resolveLocalCommand(command)
       const args = { ...argv, ...siteInfo, report, useYarn, setStore }
@@ -202,18 +209,11 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       getCommandHandler(
         `develop`,
         (args: yargs.Arguments, cmd: (args: yargs.Arguments) => unknown) => {
-          process.env.NODE_ENV = process.env.NODE_ENV || `development`
-
-          if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
-            const { startGraphQLServer } = require(`gatsby-recipes`)
-            startGraphQLServer(siteInfo.directory, true)
-          }
-
-          if (args.hasOwnProperty(`inspect`)) {
+          if (Object.prototype.hasOwnProperty.call(args, `inspect`)) {
             args.inspect = args.inspect || 9229
           }
-          if (args.hasOwnProperty(`inspect-brk`)) {
-            args.inspect = args.inspect || 9229
+          if (Object.prototype.hasOwnProperty.call(args, `inspect-brk`)) {
+            args.inspectBrk = args[`inspect-brk`] || 9229
           }
 
           cmd(args)
@@ -221,7 +221,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           // The development server shouldn't ever exit until the user directly
           // kills it so this is fine.
           return new Promise(() => {})
-        }
+        },
+        process.env.NODE_ENV || `development`
       )
     ),
   })
@@ -275,10 +276,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler: handlerP(
       getCommandHandler(
         `build`,
-        (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) => {
-          process.env.NODE_ENV = `production`
-          return cmd(args)
-        }
+        (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
+          cmd(args),
+        `production`
       )
     ),
   })
@@ -310,9 +310,18 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
             process.env.PREFIX_PATHS === `true` ||
             process.env.PREFIX_PATHS === `1`,
           describe: `Serve site with link paths prefixed with the pathPrefix value in gatsby-config.js.Default is env.PREFIX_PATHS or false.`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
 
-    handler: getCommandHandler(`serve`),
+    handler: getCommandHandler(
+      `serve`,
+      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
+        cmd(args),
+      process.env.NODE_ENV || `production`
+    ),
   })
 
   cli.command({
@@ -380,53 +389,21 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     describe: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.com/docs/gatsby-repl/)`,
     handler: getCommandHandler(
       `repl`,
-      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) => {
-        process.env.NODE_ENV = process.env.NODE_ENV || `development`
-        return cmd(args)
-      }
+      (args: yargs.Arguments, cmd: (args: yargs.Arguments) => void) =>
+        cmd(args),
+      process.env.NODE_ENV || `development`
     ),
-  })
-
-  cli.command({
-    command: `recipes [recipe]`,
-    describe: `[EXPERIMENTAL] Run a recipe`,
-    builder: _ =>
-      _.option(`D`, {
-        alias: `develop`,
-        type: `boolean`,
-        default: false,
-        describe: `Start recipe in develop mode to live-develop your recipe (defaults to false)`,
-      }).option(`I`, {
-        alias: `install`,
-        type: `boolean`,
-        default: false,
-        describe: `Install recipe (defaults to plan mode)`,
-      }),
-    handler: handlerP(async ({ recipe, develop, install }: yargs.Arguments) => {
-      const { recipesHandler } = require(`./recipes`)
-      await recipesHandler(
-        siteInfo.directory,
-        recipe as string,
-        develop as boolean,
-        install as boolean
-      )
-    }),
   })
 
   cli.command({
     command: `plugin <cmd> [plugins...]`,
     describe: `Useful commands relating to Gatsby plugins`,
     builder: yargs =>
-      yargs
-        .positional(`cmd`, {
-          choices: [`docs`, `ls`],
-          describe: "Valid commands include `docs`, `ls`.",
-          type: `string`,
-        })
-        .positional(`plugins`, {
-          describe: `The plugin names`,
-          type: `string`,
-        }),
+      yargs.positional(`cmd`, {
+        choices: [`docs`, `ls`],
+        describe: "Valid commands include `docs`, `ls`.",
+        type: `string`,
+      }),
     handler: async ({
       cmd,
     }: yargs.Arguments<{

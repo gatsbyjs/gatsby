@@ -9,7 +9,6 @@ import { eslintConfig } from "./eslint-config"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { Compiler } from "webpack"
 import { GraphQLSchema } from "graphql"
-import { reactHasJsxRuntime } from "./webpack-utils"
 import ESLintPlugin from "eslint-webpack-plugin"
 export class GatsbyWebpackEslintGraphqlSchemaReload {
   private plugin: { name: string }
@@ -29,7 +28,7 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
 
   apply(compiler: Compiler): void {
     compiler.hooks.compile.tap(this.plugin.name, () => {
-      const { schema, program } = store.getState()
+      const { schema, program, config } = store.getState()
 
       if (!this.schema) {
         // initial build
@@ -51,7 +50,10 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
 
       // Hackish but works:
       // replacing original eslint options object with updated config
-      Object.assign(options, eslintConfig(schema, reactHasJsxRuntime()))
+      Object.assign(
+        options,
+        eslintConfig(schema, config.jsxRuntime === `automatic`)
+      )
     })
   }
 }

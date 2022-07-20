@@ -1,7 +1,7 @@
 const deepMapKeys = require(`deep-map-keys`)
 
 const conflictFieldPrefix = `lever_`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+// restrictedNodeFields from here https://www.gatsbyjs.com/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 /**

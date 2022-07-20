@@ -1,21 +1,21 @@
-import fs from "fs"
+import * as fs from "fs-extra"
 import * as t from "@babel/types"
 import traverse from "@babel/traverse"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
-import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import report from "gatsby-cli/lib/reporter"
-
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { testRequireError } from "../utils/test-require-error"
+import { resolveModule } from "../utils/module-resolver"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
-  resolver = require.resolve
+  resolver = resolveModule
 ): Array<string> => {
   let absPath: string | undefined
   const exportNames: Array<string> = []
 
   try {
-    absPath = resolver(modulePath)
+    absPath = resolver(modulePath) as string
   } catch (err) {
     return exportNames // doesn't exist
   }
@@ -188,12 +188,12 @@ https://gatsby.dev/no-mixed-modules
  */
 export const resolveModuleExports = (
   modulePath: string,
-  { mode = `analysis`, resolver = require.resolve } = {}
+  { mode = `analysis`, resolver = resolveModule } = {}
 ): Array<string> => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {
-      absPath = resolver(modulePath)
+      absPath = require.resolve(modulePath)
       return Object.keys(require(modulePath)).filter(
         exportName => exportName !== `__esModule`
       )

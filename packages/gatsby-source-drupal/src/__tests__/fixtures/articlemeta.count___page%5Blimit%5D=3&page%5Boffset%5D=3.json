@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "type": "node--article",
+      "id": "article-2",
+      "attributes": {
+        "id": 22,
+        "uuid": "article-2",
+        "title": "Article #2",
+        "body": "Proin pulvinar hendrerit magna nec maximus. Donec rhoncus libero ac nisi porttitor pulvinar. Quisque semper ultricies nulla sit amet vestibulum. Ut vel libero erat. Ut ultrices eleifend scelerisque. Nam non massa sit amet magna molestie tempus vel non neque. Praesent ac est congue, euismod mi ut, tristique mi. Etiam dapibus feugiat lectus, vel condimentum nisl maximus et. Praesent et placerat magna. Sed nec risus non ipsum venenatis placerat. Vestibulum vitae felis eget nunc mattis congue. Morbi volutpat odio purus. Donec placerat massa sed neque molestie, sed finibus nibh scelerisque. In faucibus ante tortor, in efficitur lectus feugiat vitae. Aliquam sodales mollis consectetur."
+      },
+      "relationships": {
+        "field_main_image": {
+          "data": {
+            "type": "file--file",
+            "id": "file-1"
+          }
+        },
+        "field_secondary_image": {
+          "data": [
+            {
+              "type": "file--file",
+              "id": "file-4"
+            }
+          ]
+        },
+        "field_secondary_multiple_image": {
+          "data": [
+            {
+              "type": "file--file",
+              "id": "file-3"
+            },
+            {
+              "type": "file--file",
+              "id": "file-4"
+            }
+          ]
+        },
+        "field_tertiary_image": {
+          "data": {
+            "type": "file--file",
+            "id": "file-4"
+          }
+        },
+        "field_tags": {
+          "data": null
+        }
+      }
+    }
+  ]
+}
+

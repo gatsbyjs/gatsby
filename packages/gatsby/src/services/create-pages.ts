@@ -7,6 +7,8 @@ import { actions } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
 import { getDataStore } from "../datastore"
 
+const isInitialCreatePages = true
+let createPagesCount = 0
 export async function createPages({
   parentSpan,
   gatsbyNodeGraphQLFunction,
@@ -44,11 +46,15 @@ export async function createPages({
     return returnValue
   }
 
+  createPagesCount += 1
+  const traceId = isInitialCreatePages
+    ? `initial-createPages`
+    : `createPages #${createPagesCount}`
   await apiRunnerNode(
     `createPages`,
     {
       graphql: wrappedGraphQL,
-      traceId: `initial-createPages`,
+      traceId,
       waitForCascadingActions: true,
       parentSpan: activity.span,
       deferNodeMutation,
@@ -107,7 +113,9 @@ export async function createPages({
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
   )
 
-  const tim = reporter.activityTimer(`Checking for changed pages`)
+  const tim = reporter.activityTimer(`Checking for changed pages`, {
+    parentSpan,
+  })
   tim.start()
 
   const { changedPages } = findChangedPages(

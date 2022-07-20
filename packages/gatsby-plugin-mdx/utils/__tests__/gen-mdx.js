@@ -16,6 +16,7 @@ console.log('hello world')
 
 describe(`find imports`, () => {
   it(`allows injecting imports via plugins`, async () => {
+    const testPluginModulePath = path.join(__dirname, `fixtures`, `test-plugin`)
     const results = await findImports({
       node: {
         id: `bbffffbb-bfff-bfff-bfff-dededededede`,
@@ -37,7 +38,10 @@ describe(`find imports`, () => {
       options: {
         remarkPlugins: [],
         gatsbyRemarkPlugins: [
-          { resolve: path.join(__dirname, `fixtures`, `test-plugin`) },
+          {
+            resolve: testPluginModulePath,
+            module: require(testPluginModulePath),
+          },
         ],
       },
       getNode: () => null,
