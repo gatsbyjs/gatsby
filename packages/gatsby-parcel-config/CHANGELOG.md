@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.10.1/packages/gatsby-parcel-config) (2022-07-20)
+
+#### Chores
+
+- Adjust peerDep [#36185](https://github.com/gatsbyjs/gatsby/issues/36185) [#36191](https://github.com/gatsbyjs/gatsby/issues/36191) ([0cdad26](https://github.com/gatsbyjs/gatsby/commit/0cdad26d534eab0fb8b28c9b51b1dc76bd8ef131))
+
+## [0.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.10.0/packages/gatsby-parcel-config) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Bug Fixes
+
+- update parcel to v2.6.2 [#36036](https://github.com/gatsbyjs/gatsby/issues/36036) ([99944e8](https://github.com/gatsbyjs/gatsby/commit/99944e8daee00daede7c77ec36f9d2a282b612a9))
+
+### [0.9.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.9.2/packages/gatsby-parcel-config) (2022-07-13)
+
+**Note:** Version bump only for package gatsby-parcel-config
+
+### [0.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.9.1/packages/gatsby-parcel-config) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-parcel-config
+
+## [0.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.9.0/packages/gatsby-parcel-config) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Chores
+
+- Add gatsby-parcel-config & update gatsby-script [#35978](https://github.com/gatsbyjs/gatsby/issues/35978) ([5feeea6](https://github.com/gatsbyjs/gatsby/commit/5feeea6866a9a4882672dcb2b5878c6826e229fc))
+
 ## [0.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.8.0/packages/gatsby-parcel-config) (2022-06-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
