@@ -288,6 +288,7 @@ describe(`Dev loader`, () => {
     const createAsyncRequires = components => {
       return {
         components,
+        head: components,
       }
     }
 
@@ -339,6 +340,7 @@ describe(`Dev loader`, () => {
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([
         `component`,
+        `head`,
         `json`,
         `page`,
         `staticQueryResults`,

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "3.19.0-next.1",
+  "version": "3.20.0-next.0",
   "description": "MDX integration for Gatsby",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,8 +29,8 @@
     "@mdx-js/mdx": "^2.1.1",
     "deepmerge": "^4.2.2",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.19.0-next.1",
-    "gatsby-plugin-utils": "^3.13.0-next.1",
+    "gatsby-core-utils": "^3.20.0-next.0",
+    "gatsby-plugin-utils": "^3.14.0-next.0",
     "gray-matter": "^4.0.3",
     "mdast-util-mdx": "^2.0.0",
     "mdast-util-toc": "^6.1.0",
@@ -49,7 +49,7 @@
     "@babel/core": "^7.18.2",
     "@types/estree": "^0.0.50",
     "@types/mdast": "^3.0.10",
-    "babel-preset-gatsby-package": "^2.19.0-next.1",
+    "babel-preset-gatsby-package": "^2.20.0-next.0",
     "cross-env": "^7.0.3",
     "typescript": "^4.7.2",
     "webpack": "^5.72.1"
