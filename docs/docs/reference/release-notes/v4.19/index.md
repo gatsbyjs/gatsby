@@ -44,7 +44,7 @@ The `Head` function has to return valid JSX which also means that you can use Re
 
 One thing to note is that every page that need to add some tags to document head needs to export or re-export a Head function. You may only do a re-export if the new page needs to have same tags as the previous.
 
-One important difference between Gatsby Head API and solutions like `react-helmet` is that (at the moment) you loose the ability to define global defaults (e.g. in a layout component) and have them automatically applied everywhere. With Gatsby Head API your pages have to export a `Head` function to define meta tags for this specific page. To help with that you can use an SEO component or re-export the `Head` function from somewhere else:
+One important difference between Gatsby Head API and solutions like `react-helmet` is that (at the moment) you lose the ability to define global defaults (e.g. in a layout component) and have them automatically applied everywhere. With Gatsby Head API your pages have to export a `Head` function to define meta tags for this specific page. To help with that you can use an SEO component or re-export the `Head` function from somewhere else:
 
 ```jsx:title=src/pages/index.jsx
 import * as React from "react"
