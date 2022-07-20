@@ -56,18 +56,15 @@ export function headHandlerForSSR({
 
     const seenIds = new Map()
     for (const node of headNodes) {
-      const { rawTagName, attributes } = node
-      const id = attributes.id
+      const { rawTagName } = node
+      const id = node.attributes.id
 
       if (!VALID_NODE_NAMES.includes(rawTagName)) {
         warnForInvalidTags(rawTagName)
       } else {
         let element
-        const attributes = { ...attributes, "data-gatsby-head": true }
-        if (
-          rawTagName === `script` &&
-          attributes.type === `application/ld+json`
-        ) {
+        const attributes = { ...node.attributes, "data-gatsby-head": true }
+        if (rawTagName === `script`) {
           element = (
             <script
               {...attributes}
