@@ -12,17 +12,26 @@ export function reactDOMUtils() {
   let hydrate
 
   if (HAS_REACT_18) {
-    const reactDomClient = require(`react-dom/client`)
+    const { createRoot, hydrateRoot } = require(`react-dom/client`)
+    const { startTransition } = require(`react`)
 
     render = (Component, el) => {
       let root = map.get(el)
       if (!root) {
-        map.set(el, (root = reactDomClient.createRoot(el)))
+        map.set(el, (root = createRoot(el)))
       }
       root.render(Component)
     }
 
-    hydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
+    hydrate = (Component, el) => {
+      requestIdleCallback ? requestIdleCallback(() => {
+        startTransition(() => {
+          hydrateRoot(el, Component)
+        })
+      }) : startTransition(() => {
+        hydrateRoot(el, Component)
+      })
+    }
   } else {
     const reactDomClient = require(`react-dom`)
     render = reactDomClient.render
