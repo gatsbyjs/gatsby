@@ -63,7 +63,7 @@ export function headHandlerForSSR({
         warnForInvalidTags(rawTagName)
       } else {
         let element
-        // Special handling for scripts with data block to prevent React from escaping the text
+        const attributes = { ...attributes, "data-gatsby-head": true }
         if (
           rawTagName === `script` &&
           attributes.type === `application/ld+json`
