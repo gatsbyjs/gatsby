@@ -160,6 +160,38 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
     expect(recentlyUpdatedNodeManifest.node.id).toBe(recentlyUpdatedNodeId)
   })
+
+  it(`Creates a correct node manifest for nodes in connection list queries`, async () => {
+    const manifestFileContents1 = await getManifestContents(
+      `connection-list-query-node`
+    )
+
+    expect(manifestFileContents1.node.id).toBe(`connection-list-query-node`)
+    expect(manifestFileContents1.page.path).toBe(`/connection-list-query-page/`)
+
+    const manifestFileContents2 = await getManifestContents(
+      `connection-list-query-node-2`
+    )
+
+    expect(manifestFileContents2.node.id).toBe(`connection-list-query-node-2`)
+    expect(manifestFileContents2.page.path).toBe(`/connection-list-query-page/`)
+  })
+
+  it(`Creates a correct node manifest for nodes in connection list queries using staticQuery()`, async () => {
+    const manifestFileContents1 = await getManifestContents(
+      `static-query-list-query-node`
+    )
+
+    expect(manifestFileContents1.node.id).toBe(`static-query-list-query-node`)
+    expect(manifestFileContents1.page.path).toBe(`/static-query-list-query/`)
+
+    const manifestFileContents2 = await getManifestContents(
+      `static-query-list-query-node-2`
+    )
+
+    expect(manifestFileContents2.node.id).toBe(`static-query-list-query-node-2`)
+    expect(manifestFileContents2.page.path).toBe(`/static-query-list-query/`)
+  })
 })
 
 describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
