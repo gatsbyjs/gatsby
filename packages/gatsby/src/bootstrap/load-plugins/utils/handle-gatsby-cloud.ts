@@ -16,7 +16,7 @@ function addCloudPluginWhenInstalled(
   if (cloudPluginLocation) {
     const processedGatsbyCloudPlugin = processPlugin(
       {
-        resolve: cloudPluginLocation,
+        resolve: name,
         options: {},
       },
       rootDir

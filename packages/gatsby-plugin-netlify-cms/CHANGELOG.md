@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.19.0/packages/gatsby-plugin-netlify-cms) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Chores
+
+- remove other services [#35675](https://github.com/gatsbyjs/gatsby/issues/35675) ([7a410e3](https://github.com/gatsbyjs/gatsby/commit/7a410e377cb8efde8f0d64a96cef990a935ad4ae))
+
+## [6.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.18.0/packages/gatsby-plugin-netlify-cms) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.17.0/packages/gatsby-plugin-netlify-cms) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.16.0/packages/gatsby-plugin-netlify-cms) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+## [6.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.15.0/packages/gatsby-plugin-netlify-cms) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 ## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.14.0/packages/gatsby-plugin-netlify-cms) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

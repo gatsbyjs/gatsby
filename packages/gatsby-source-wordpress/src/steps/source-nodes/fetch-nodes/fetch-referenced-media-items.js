@@ -555,8 +555,13 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
 }) {
   const state = store.getState()
   const queryInfo = state.remoteSchema.nodeQueries.mediaItems
-
   const { helpers, pluginOptions } = state.gatsbyApi
+
+  // don't fetch media items if they are excluded via pluginOptions
+  if (pluginOptions.type?.MediaItem?.exclude) {
+    return []
+  }
+
   const { createContentDigest, actions } = helpers
   const { url } = pluginOptions
   const { typeInfo, settings, selectionSet, builtFragments } = queryInfo

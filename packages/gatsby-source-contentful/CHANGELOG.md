@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.17.0/packages/gatsby-source-contentful) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Bug Fixes
+
+- remove faulty parent [#36043](https://github.com/gatsbyjs/gatsby/issues/36043) ([68e7dfe](https://github.com/gatsbyjs/gatsby/commit/68e7dfeb15465b57e1e99c6dc47a5464f41d6761))
+- Add `proxy.protocol` to Joi schema [#36011](https://github.com/gatsbyjs/gatsby/issues/36011) ([538c0cd](https://github.com/gatsbyjs/gatsby/commit/538c0cdc55066e48b8c3a6693b16e5814b3a7e02))
+
+#### Chores
+
+- Update READMEs for better instructions ([0890a5c](https://github.com/gatsbyjs/gatsby/commit/0890a5cf2c881b49193113a1e1bd5fe13a2c328f))
+
+### [7.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.16.1/packages/gatsby-source-contentful) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [7.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.16.0/packages/gatsby-source-contentful) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- update dependency @vercel/fetch-retry to ^5.1.3 for gatsby-source-contentful [#34987](https://github.com/gatsbyjs/gatsby/issues/34987) ([b5cbdba](https://github.com/gatsbyjs/gatsby/commit/b5cbdba7005a71259eb846f559d0b2a9afff27f0))
+
+## [7.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.15.0/packages/gatsby-source-contentful) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Chores
+
+- add peer deps to gatsby-source-contentful docs [#35854](https://github.com/gatsbyjs/gatsby/issues/35854) ([a8405cb](https://github.com/gatsbyjs/gatsby/commit/a8405cb279f3dc07029df6d89ae50db3ccbfc388))
+
+## [7.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.14.0/packages/gatsby-source-contentful) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+- new useContentfulHook to create images on client side [#29263](https://github.com/gatsbyjs/gatsby/issues/29263) ([8d8a800](https://github.com/gatsbyjs/gatsby/commit/8d8a800a40da84c839b1ad73a25648abbc736250))
+
+#### Bug Fixes
+
+- Update `createRemoteFileNode` args [#35422](https://github.com/gatsbyjs/gatsby/issues/35422) fixes [#35363](https://github.com/gatsbyjs/gatsby/issues/35363) ([caaf7a5](https://github.com/gatsbyjs/gatsby/commit/caaf7a555bb42043044f05743eec0ac1ad372cc4))
+
+#### Other Changes
+
+- respect gatsby-plugin-image defaults and extend tests [#33536](https://github.com/gatsbyjs/gatsby/issues/33536) ([2fc7732](https://github.com/gatsbyjs/gatsby/commit/2fc773223bcc5154332b8c0d28f728654998d57d))
+
+### [7.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.13.1/packages/gatsby-source-contentful) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [7.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.13.0/packages/gatsby-source-contentful) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Other Changes
+
+- Add RemoteFile interface [#35617](https://github.com/gatsbyjs/gatsby/issues/35617) ([55a4550](https://github.com/gatsbyjs/gatsby/commit/55a4550d7ba70a5b549a58484496113f27a8315a))
+
 ## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.12.0/packages/gatsby-source-contentful) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

@@ -1,6 +1,10 @@
 const execa = require(`execa`)
 const { Octokit } = require(`@octokit/rest`)
-const { getAllPackageNames, updateChangelog } = require(`./generate`)
+const {
+  getAllPackageNames,
+  updateChangelog,
+  changelogRelativePath,
+} = require(`./generate`)
 
 if (!process.env.GITHUB_BOT_AUTH_TOKEN) {
   throw new Error(`GITHUB_BOT_AUTH_TOKEN env var not set`)
@@ -32,9 +36,12 @@ async function run() {
   }
 
   const commitMessage = `chore(changelogs): update changelogs`
-  const updatedChangelogs = updatedPackages.map(
-    pkg => `packages/${pkg}/CHANGELOG.md`
+  const updatedChangelogs = updatedPackages.map(pkg =>
+    changelogRelativePath(pkg)
   )
+  await execa(`npx`, [`prettier`, `--write`, `packages/**/CHANGELOG.md`], {
+    stdio: `inherit`,
+  })
   await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
   try {

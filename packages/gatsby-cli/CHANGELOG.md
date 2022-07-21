@@ -3,6 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.19.0/packages/gatsby-cli) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-cli
+
+### [4.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.18.1/packages/gatsby-cli) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.18.0/packages/gatsby-cli) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- add retry mechanism for gatsby-node/config.ts compilation [#35974](https://github.com/gatsbyjs/gatsby/issues/35974) ([2acc6ed](https://github.com/gatsbyjs/gatsby/commit/2acc6ed3c59fca15c73388c3494b162e6187cc42))
+- Set `NODE_ENV` earlier in commandHandler [#35968](https://github.com/gatsbyjs/gatsby/issues/35968) ([0e1ea58](https://github.com/gatsbyjs/gatsby/commit/0e1ea584e15fc661f27041f7a3b728ae7ab3270d))
+
+#### Chores
+
+- reduce lodash usage [#35947](https://github.com/gatsbyjs/gatsby/issues/35947) ([91fdf73](https://github.com/gatsbyjs/gatsby/commit/91fdf73b3635f4c2167f34303c5a8f39969cdb02))
+
+### [4.17.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.17.1/packages/gatsby-cli) (2022-06-24)
+
+#### Bug Fixes
+
+- add retry mechanism for gatsby-node/config.ts compilation [#35974](https://github.com/gatsbyjs/gatsby/issues/35974) [#35981](https://github.com/gatsbyjs/gatsby/issues/35981) ([d337eaf](https://github.com/gatsbyjs/gatsby/commit/d337eaf06f9f50ea7cbe1739ab65e5efaa870de8))
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.17.0/packages/gatsby-cli) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Bug Fixes
+
+- show meaningful error message when engines try to bundle ts-node [#35762](https://github.com/gatsbyjs/gatsby/issues/35762) ([123f202](https://github.com/gatsbyjs/gatsby/commit/123f2020c38344da37476cfa64f70b23db1761fe))
+
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.16.0/packages/gatsby-cli) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Bug Fixes
+
+- Improve get-config-file error handling [#35776](https://github.com/gatsbyjs/gatsby/issues/35776) ([160bbf0](https://github.com/gatsbyjs/gatsby/commit/160bbf0423df87296f75cf717ebecbd8e4337245))
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+- Migrate from `source-map` to `@jridgewell/trace-mapping` [#35621](https://github.com/gatsbyjs/gatsby/issues/35621) ([fc5df03](https://github.com/gatsbyjs/gatsby/commit/fc5df037f69bd69b236d6c91916f0552eb830fd8))
+- Run Unit Tests on Node 16 and 18 [#35622](https://github.com/gatsbyjs/gatsby/issues/35622) ([d22a86e](https://github.com/gatsbyjs/gatsby/commit/d22a86ef82e918c4df03046891a9fefb12bd9bd1))
+- Update snapshots for plugin add handler ([9eab90f](https://github.com/gatsbyjs/gatsby/commit/9eab90fe5329271d6389f4dea2e96b178c4f8a19))
+- Add GraphQL Typegen [#35584](https://github.com/gatsbyjs/gatsby/issues/35584) ([1c392e6](https://github.com/gatsbyjs/gatsby/commit/1c392e630b49df5acaccd5221526b171ac53bbfc))
+
+### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.15.1/packages/gatsby-cli) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.15.0/packages/gatsby-cli) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Features
+
+- Apply production node env to gatsby serve [#35693](https://github.com/gatsbyjs/gatsby/issues/35693) ([3b477be](https://github.com/gatsbyjs/gatsby/commit/3b477be6f2d46d14395b761c44b21d85136be306))
+
+#### Bug Fixes
+
+- Throw Typegen errors & add `IGatsbyImageData` to output [#35683](https://github.com/gatsbyjs/gatsby/issues/35683) ([e7fc88b](https://github.com/gatsbyjs/gatsby/commit/e7fc88b024c84a3e9f732deec7441621024e1f95))
+
+#### Chores
+
+- don't use npm-run-all to build packages ([fb4de37](https://github.com/gatsbyjs/gatsby/commit/fb4de379e914892c8ce437d4613b60499cfeb897))
+- remove old unused UUID dependency [#35657](https://github.com/gatsbyjs/gatsby/issues/35657) ([d4aaa2a](https://github.com/gatsbyjs/gatsby/commit/d4aaa2a3c01541effd50db3cf57d1445776ce487))
+- workaround lerna + npm-run-all weirdness [#35595](https://github.com/gatsbyjs/gatsby/issues/35595) ([8cc0970](https://github.com/gatsbyjs/gatsby/commit/8cc09702f9a2767c51cf5267233108c07e4ac073))
+
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.14.0/packages/gatsby-cli) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

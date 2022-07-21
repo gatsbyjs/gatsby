@@ -1,8 +1,14 @@
+const {
+  data: headFunctionExportData,
+} = require(`./shared-data/head-function-export.js`)
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
     author: `Kyle Mathews`,
     description: `This is site for production runtime e2e tests`,
+    // Separate to avoid needing to change other tests that rely on site metadata
+    headFunctionExport: headFunctionExportData.queried,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

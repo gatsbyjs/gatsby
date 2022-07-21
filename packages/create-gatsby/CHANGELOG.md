@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.19.0/packages/create-gatsby) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Publish some packages as ESM & CJS [#36012](https://github.com/gatsbyjs/gatsby/issues/36012) ([5bd3063](https://github.com/gatsbyjs/gatsby/commit/5bd3063a1e72c6f98447bfac2bf767cca781330b))
+
+### [2.18.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.18.1/packages/create-gatsby) (2022-07-12)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.18.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.18.0/packages/create-gatsby) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.17.0/packages/create-gatsby) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.16.0/packages/create-gatsby) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package create-gatsby
+
+### [2.15.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.15.1/packages/create-gatsby) (2022-06-01)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.15.0/packages/create-gatsby) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package create-gatsby
+
 ## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.14.0/packages/create-gatsby) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

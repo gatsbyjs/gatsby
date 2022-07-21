@@ -1,4 +1,4 @@
-exports.onRouteUpdate = (
+export const onRouteUpdate = (
   { location },
   pluginOptions = { stripQueryString: false }
 ) => {

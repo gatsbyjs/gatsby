@@ -24,7 +24,12 @@ jest.mock(`fs-extra`, () => {
       if (process.env.DEBUG) {
         console.log({ manifestFilePath, finalManifest })
       }
-      return { manifestFilePath, finalManifest }
+      return new Promise(resolve =>
+        resolve({
+          manifestFilePath,
+          finalManifest,
+        })
+      )
     }),
   }
 })

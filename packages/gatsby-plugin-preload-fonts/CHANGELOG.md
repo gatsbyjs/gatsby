@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.19.0/packages/gatsby-plugin-preload-fonts) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+### [3.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.18.1/packages/gatsby-plugin-preload-fonts) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [3.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.18.0/packages/gatsby-plugin-preload-fonts) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [3.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.17.0/packages/gatsby-plugin-preload-fonts) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.16.0/packages/gatsby-plugin-preload-fonts) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Bug Fixes
+
+- disable cache [#34633](https://github.com/gatsbyjs/gatsby/issues/34633) Closes [#34632](https://github.com/gatsbyjs/gatsby/issues/34632) ([e7db715](https://github.com/gatsbyjs/gatsby/commit/e7db7154cb23dcf14dd70b5c8b467cccc4839eed))
+
+### [3.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.15.1/packages/gatsby-plugin-preload-fonts) (2022-06-01)
+
+#### Bug Fixes
+
+- disable cache [#34633](https://github.com/gatsbyjs/gatsby/issues/34633) [#35790](https://github.com/gatsbyjs/gatsby/issues/35790) Closes [#34632](https://github.com/gatsbyjs/gatsby/issues/34632) ([629b30f](https://github.com/gatsbyjs/gatsby/commit/629b30ff6ff4dc9b97feaac923008c9e46640cf6))
+
+## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.15.0/packages/gatsby-plugin-preload-fonts) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.14.0/packages/gatsby-plugin-preload-fonts) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

@@ -289,7 +289,7 @@ export async function startServer(
     res.end()
   })
 
-  addImageRoutes(app)
+  addImageRoutes(app, store)
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -406,7 +406,7 @@ export async function startServer(
     }
   )
 
-  app.get(`/__original-stack-frame`, async (req, res) => {
+  app.get(`/__original-stack-frame`, (req, res) => {
     const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
@@ -454,10 +454,7 @@ export async function startServer(
       line: lineNumber,
       column: columnNumber,
     }
-    const result = await findOriginalSourcePositionAndContent(
-      sourceMap,
-      position
-    )
+    const result = findOriginalSourcePositionAndContent(sourceMap, position)
 
     const sourcePosition = result?.sourcePosition
     const sourceLine = sourcePosition?.line
@@ -599,21 +596,35 @@ export async function startServer(
         return next()
       }
 
+      const allowTimedFallback = !req.headers[`x-gatsby-wait-for-dev-ssr`]
+
       await appendPreloadHeaders(pathObj.path, res)
 
       const htmlActivity = report.phantomActivity(`building HTML for path`, {})
       htmlActivity.start()
 
       try {
-        const renderResponse = await renderDevHTML({
+        const { html: renderResponse, serverData } = await renderDevHTML({
           path: pathObj.path,
           page: pathObj,
           skipSsr: Object.prototype.hasOwnProperty.call(req.query, `skip-ssr`),
           store,
+          allowTimedFallback,
           htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,
+          req,
         })
-        res.status(200).send(renderResponse)
+
+        if (serverData?.headers) {
+          for (const [name, value] of Object.entries(serverData.headers)) {
+            res.setHeader(name, value)
+          }
+        }
+        let statusCode = 200
+        if (serverData?.status) {
+          statusCode = serverData.status
+        }
+        res.status(statusCode).send(renderResponse)
       } catch (error) {
         // The page errored but couldn't read the page component.
         // This is a race condition when a page is deleted but its requested
@@ -673,7 +684,7 @@ export async function startServer(
 
         try {
           // Generate a shell for client-only content -- for the error overlay
-          const clientOnlyShell = await renderDevHTML({
+          const { html: clientOnlyShell } = await renderDevHTML({
             path: pathObj.path,
             page: pathObj,
             skipSsr: true,
@@ -681,6 +692,8 @@ export async function startServer(
             error: message,
             htmlComponentRendererPath: PAGE_RENDERER_PATH,
             directory: program.directory,
+            req,
+            allowTimedFallback,
           })
 
           res.send(clientOnlyShell)
@@ -737,14 +750,16 @@ export async function startServer(
 
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         try {
-          const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)
-          const renderResponse = await renderDevHTML({
+          const allowTimedFallback = !req.headers[`x-gatsby-wait-for-dev-ssr`]
+          const { html: renderResponse } = await renderDevHTML({
             path: `/dev-404-page/`,
             // Let renderDevHTML figure it out.
             page: undefined,
             store,
             htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
+            req,
+            allowTimedFallback,
           })
           res.status(404).send(renderResponse)
         } catch (e) {
@@ -785,12 +800,8 @@ export async function startServer(
    * Set up the HTTP server and socket.io.
    **/
   const server = new http.Server(app)
-
   const socket = websocketManager.init({ server })
-
-  // hardcoded `localhost`, because host should match `target` we set
-  // in http proxy in `develop-proxy`
-  const listener = server.listen(program.port, `localhost`)
+  const listener = server.listen(program.port, program.host)
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)
