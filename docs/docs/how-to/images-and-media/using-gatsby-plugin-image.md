@@ -237,7 +237,7 @@ module.exports = {
 
 Image CDN is Gatsby Clouds image hosting and transformation service. It speeds up your build times by deferring image downloading and processing until the first user requests an image. Image CDN also speeds up your frontend performance by serving CDN hosted images on the same domain as your Gatsby Cloud site. In our testing this can shave up to 300ms off of frontend page load times and as a result improve your lighthouse scores.
 
-For more information on what Image CDN is, how to use it, what the platform limits are, and which source plugins currently support it, visit the [Gatsby Cloud knowledge base article on "What Is Image CDN?"](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-). To learn how to enable and use Image CDN on Gatsby Cloud take a look at the ["How-to Enable Image CDN" article](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171).
+For more information on what Image CDN is, how to use it, and what the platform limits are, visit the [Gatsby Cloud knowledge base article on "What Is Image CDN?"](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-). To learn which source plugins currently support it and how to enable and use Image CDN on Gatsby Cloud take a look at the ["How-to Enable Image CDN" article](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171).
 
 For all supported source plugins, the query syntax and feature-set is identical.
 
