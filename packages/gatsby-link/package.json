@@ -11,7 +11,8 @@
   "module": "dist/index.modern.mjs",
   "types": "index.d.ts",
   "files": [
-    "dist/*"
+    "dist/*",
+    "index.d.ts"
   ],
   "sideEffects": false,
   "scripts": {
