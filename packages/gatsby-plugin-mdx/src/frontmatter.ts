@@ -23,7 +23,7 @@ export function parseFrontmatter(
       },
     },
   })
-  cacheMap.set(cacheKey, { content, data })
+  cacheMap.set(cacheKey, { body: content, frontmatter: data })
 
   return { body: content, frontmatter: data }
 }

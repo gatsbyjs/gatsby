@@ -10,6 +10,10 @@ Find the latest hardware and software requirements for building with Gatsby. Not
 - Windows 10 ([setup instructions](/docs/how-to/local-development/gatsby-on-windows/))
 - Linux ([multiple distributions](/docs/how-to/local-development/gatsby-on-linux/))
 
+### Platform specific issues
+
+- Gatsby (or at least the [sharp library](https://sharp.pixelplumbing.com/) which is used in Gatsby's image pipeline) will not work on Linux if the CPU does not support SSE4.2 (e.g. CPUs pre-2012). If you're experiencing problems, check if your platform is supported by `sharp`.
+
 ## Memory
 
 This will be variable depending on the size of your site. Gatsby sites have been known to work from 500mb to 1GB of RAM.

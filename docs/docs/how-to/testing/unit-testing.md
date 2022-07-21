@@ -50,11 +50,13 @@ module.exports = {
     ], // Workaround for https://github.com/facebook/jest/issues/9771
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script|gatsby-link)/)`],
   globals: {
     __PATH_PREFIX__: ``,
   },
-  testURL: `http://localhost`,
+  testEnvironmentOptions: {
+    url: `http://localhost`,
+  },
   setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```

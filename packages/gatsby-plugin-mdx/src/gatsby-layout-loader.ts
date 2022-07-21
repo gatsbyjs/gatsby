@@ -1,34 +1,49 @@
 /* eslint-disable @babel/no-invalid-this */
+import path from "path"
+import type { NodePluginArgs } from "gatsby"
+import { slash } from "gatsby-core-utils/path"
+import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
+import type {
+  Program,
+  Declaration,
+  Expression,
+  ExportDefaultDeclaration,
+  Identifier,
+  FunctionDeclaration,
+} from "estree"
 import type { LoaderDefinition } from "webpack"
-import type { Program, Identifier, ExportDefaultDeclaration } from "estree"
-import type { NodeMap } from "./types"
 import type { IMdxPluginOptions } from "./plugin-options"
-
-import { getPathToContentComponent } from "gatsby-core-utils"
-
-import { getOptions } from "loader-utils"
+import { ERROR_CODES } from "./error-utils"
 
 export interface IGatsbyLayoutLoaderOptions {
   options: IMdxPluginOptions
-  nodeMap: NodeMap
+  nodeExists: (path: string) => Promise<boolean>
+  reporter: NodePluginArgs["reporter"]
 }
 
 // Wrap MDX content with Gatsby Layout component
-const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
-  const { nodeMap }: IGatsbyLayoutLoaderOptions = getOptions(this)
+const gatsbyLayoutLoader: LoaderDefinition = async function (
+  source
+): Promise<string | Buffer> {
+  const { nodeExists, reporter } =
+    this.getOptions() as IGatsbyLayoutLoaderOptions
   // Figure out if the path to the MDX file is passed as a
   // resource query param or if the MDX file is directly loaded as path.
   const mdxPath = getPathToContentComponent(
     `${this.resourcePath}${this.resourceQuery}`
   )
 
-  const res = nodeMap.get(mdxPath)
-
-  if (!res) {
-    throw new Error(
-      `Unable to locate GraphQL File node for ${this.resourcePath}`
-    )
+  if (!(await nodeExists(mdxPath))) {
+    reporter.panicOnBuild({
+      id: ERROR_CODES.NonExistentFileNode,
+      context: {
+        resourcePath: this.resourcePath,
+      },
+    })
   }
+
+  // add mdx dependency to webpack
+  this.addDependency(path.resolve(mdxPath))
 
   const acorn = await import(`acorn`)
   const { default: jsx } = await import(`acorn-jsx`)
@@ -46,9 +61,12 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
 
     // Throw when tree is not a Program
     if (!AST.body && !AST.sourceType) {
-      throw new Error(
-        `Invalid AST. Parsed source code did not return a Program`
-      )
+      reporter.panicOnBuild({
+        id: ERROR_CODES.InvalidAcornAST,
+        context: {
+          resourcePath: this.resourcePath,
+        },
+      })
     }
 
     /**
@@ -71,7 +89,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
       ],
       source: {
         type: `Literal`,
-        value: mdxPath,
+        value: slash(mdxPath),
       },
     })
 
@@ -82,22 +100,38 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
      * Output:
      * export default (props) => <PageTemplate {...props}>{GATSBY_COMPILED_MDX}</PageTemplate>
      **/
-    AST.body = AST.body.map(child => {
+    const newBody: Array<any> = []
+    AST.body.forEach(child => {
       if (child.type !== `ExportDefaultDeclaration`) {
-        return child
-      }
-      const declaration = child.declaration as unknown as Identifier
-      if (!declaration.name) {
-        throw new Error(`Unable to determine default export name`)
+        newBody.push(child)
+        return
       }
 
-      const pageComponentName = declaration.name
+      const declaration = child.declaration as Declaration | Expression
+      const pageComponentName =
+        (declaration as FunctionDeclaration).id?.name ||
+        (declaration as Identifier).name ||
+        null
 
-      return {
+      if (!pageComponentName) {
+        reporter.panicOnBuild({
+          id: ERROR_CODES.NonDeterminableExportName,
+          context: {
+            resourcePath: this.resourcePath,
+          },
+        })
+      }
+
+      newBody.push(declaration)
+
+      newBody.push({
         type: `ExportDefaultDeclaration`,
         declaration: {
-          type: `ArrowFunctionExpression`,
-          id: null,
+          type: `FunctionDeclaration`,
+          id: {
+            type: `Identifier`,
+            name: `GatsbyMDXWrapper`,
+          },
           expression: true,
           generator: false,
           async: false,
@@ -108,59 +142,82 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (source) {
             },
           ],
           body: {
-            type: `JSXElement`,
-            openingElement: {
-              type: `JSXOpeningElement`,
-              attributes: [
-                {
-                  type: `JSXSpreadAttribute`,
-                  argument: {
-                    type: `Identifier`,
-                    name: `props`,
-                  },
-                },
-              ],
-              name: {
-                type: `JSXIdentifier`,
-                name: pageComponentName,
-              },
-              selfClosing: false,
-            },
-            closingElement: {
-              type: `JSXClosingElement`,
-              name: {
-                type: `JSXIdentifier`,
-                name: pageComponentName,
-              },
-            },
-            children: [
+            type: `BlockStatement`,
+            body: [
               {
-                type: `JSXExpressionContainer`,
-                expression: {
-                  type: `CallExpression`,
-                  callee: {
-                    type: `Identifier`,
-                    name: `GATSBY_COMPILED_MDX`,
+                type: `ReturnStatement`,
+                argument: {
+                  type: `JSXElement`,
+                  openingElement: {
+                    type: `JSXOpeningElement`,
+                    attributes: [
+                      {
+                        type: `JSXSpreadAttribute`,
+                        argument: {
+                          type: `Identifier`,
+                          name: `props`,
+                        },
+                      },
+                    ],
+                    name: {
+                      type: `JSXIdentifier`,
+                      name: pageComponentName,
+                    },
+                    selfClosing: false,
                   },
-                  arguments: [],
-                  optional: false,
+                  closingElement: {
+                    type: `JSXClosingElement`,
+                    name: {
+                      type: `JSXIdentifier`,
+                      name: pageComponentName,
+                    },
+                  },
+                  children: [
+                    {
+                      type: `JSXElement`,
+                      openingElement: {
+                        type: `JSXOpeningElement`,
+                        attributes: [
+                          {
+                            type: `JSXSpreadAttribute`,
+                            argument: {
+                              type: `Identifier`,
+                              name: `props`,
+                            },
+                          },
+                        ],
+                        name: {
+                          type: `JSXIdentifier`,
+                          name: `GATSBY_COMPILED_MDX`,
+                        },
+                        selfClosing: true,
+                      },
+                      children: [],
+                    },
+                  ],
                 },
               },
             ],
           },
         },
-      } as unknown as ExportDefaultDeclaration
+      } as unknown as ExportDefaultDeclaration)
     })
+    AST.body = newBody
 
     buildJsx(AST)
 
     const transformedSource = generate(AST)
 
     return transformedSource
-  } catch (e) {
-    throw new Error(
-      `Unable to inject MDX into JS template:\n${this.resourcePath}\n${e}`
-    )
+  } catch (error) {
+    reporter.panicOnBuild({
+      id: ERROR_CODES.InvalidAcornAST,
+      context: {
+        resourcePath: this.resourcePath,
+      },
+      error,
+    })
+    return ``
   }
 }
 

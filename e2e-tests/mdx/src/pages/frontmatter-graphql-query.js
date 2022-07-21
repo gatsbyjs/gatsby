@@ -17,13 +17,6 @@ export const query = graphql`
         body
         excerpt
         tableOfContents
-        timeToRead
-        wordCount {
-          paragraphs
-          sentences
-          words
-        }
-        mdxAST
       }
     }
   }

@@ -1,3 +1,4 @@
+import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
 import { generateComponentChunkName } from "../js-chunk-names"
 
 jest.mock(`../../redux`, () => {
@@ -12,25 +13,35 @@ jest.mock(`../../redux`, () => {
   }
 })
 
+jest.mock(`babel-plugin-remove-graphql-queries/murmur`)
+
 describe(`js-chunk-names`, () => {
+  beforeEach(() => {
+    murmurhash.mockReturnValue(`1234567890`)
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
   it(`supports dynamic routes`, () => {
     expect(generateComponentChunkName(`/src/pages/user/[id].js`)).toEqual(
-      `component---3845912056-src-pages-user-[id]-js`
+      `component---1234567890-src-pages-user-[id]-js`
     )
 
     expect(
       generateComponentChunkName(`/src/pages/user/[id]/[name].js`)
-    ).toEqual(`component---1572610615-src-pages-user-[id]-[name]-js`)
+    ).toEqual(`component---1234567890-src-pages-user-[id]-[name]-js`)
   })
 
   it(`supports collection routes`, () => {
     expect(generateComponentChunkName(`/src/pages/user/{id}.js`)).toEqual(
-      `component---3475764800-src-pages-user-{id}-js`
+      `component---1234567890-src-pages-user-{id}-js`
     )
 
     expect(
       generateComponentChunkName(`/src/pages/user/{id}/{name}.js`)
-    ).toEqual(`component---2365858180-src-pages-user-{id}-{name}-js`)
+    ).toEqual(`component---1234567890-src-pages-user-{id}-{name}-js`)
   })
 
   it(`it ensures chunk names can not exceed 255 characters`, () => {
@@ -39,7 +50,7 @@ describe(`js-chunk-names`, () => {
     )
     expect(`${shortenedChunkName}.js.map`.length).toBeLessThan(255)
     expect(shortenedChunkName).toEqual(
-      `component---2271333819-ortis-eros-a-lacinia-leo-pellentesque-convallis-volutpat-mdx`
+      `component---1234567890-ortis-eros-a-lacinia-leo-pellentesque-convallis-volutpat-mdx`
     )
   })
 })

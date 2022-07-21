@@ -1,5 +1,4 @@
 import type { Plugin } from "unified"
-
 import type { BlockContent, DefinitionContent, ListItem } from "mdast"
 import type { IMdxVFile } from "./types"
 

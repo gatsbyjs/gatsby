@@ -25,4 +25,4 @@ This is a Gatsby e-commerce example based on https://www.gatsbyjs.com/tutorial/e
 
 ### 💫 Build, Preview, and Deploy to Gatsby Cloud
 
-[<img src="https://www.gatsbyjs.com/deploynow.png" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial)
+[![Deploy to Gatsby](https://www.gatsbyjs.com/deploynow.png "Deploy to Gatsby")](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial)

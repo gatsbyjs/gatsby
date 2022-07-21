@@ -33,20 +33,6 @@ describe(`webpack loader`, () => {
     })
   })
 
-  describe(`---json frontmatter`, () => {
-    beforeEach(() => {
-      cy.visit(page.json).waitForRouteChange()
-    })
-
-    it(`should parse`, () => {
-      cy.get(selector).invoke(`text`).should(`eq`, titles.parsed)
-    })
-
-    it(`should not leak into the page`, () => {
-      cy.contains(otherKey).should(`not.exist`)
-    })
-  })
-
   describe(`---js frontmatter`, () => {
     beforeEach(() => {
       cy.visit(page.js).waitForRouteChange()
