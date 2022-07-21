@@ -14,6 +14,7 @@ export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = () => {
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({
   actions,
   schema,
+  store,
 }) => {
   const { createTypes } = actions
   const typeDefs = `
@@ -33,6 +34,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       {
         schema,
         actions,
+        store,
       }
     )
   )
