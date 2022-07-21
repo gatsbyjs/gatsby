@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@wordpress/block-library": "^2.29.3",
-    "gatsby": "^4.17.1",
+    "gatsby": "^4.17.2",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-image": "^2.16.1",
     "gatsby-plugin-manifest": "^4.17.0",
