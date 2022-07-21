@@ -4,6 +4,8 @@ import {
   InputTypeComposer,
   InterfaceTypeComposer,
   ObjectTypeComposerFieldConfigMapDefinition,
+  UnionTypeComposer,
+  ScalarTypeComposer,
 } from "graphql-compose"
 // import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
@@ -14,6 +16,8 @@ import {
   createMinResolver,
   createSumResolver,
 } from "../resolvers"
+import { convertToNestedInputType, IVisitContext } from "./utils"
+import { SORTABLE_ENUM } from "./sort"
 
 export const getPageInfo = <TContext = any>({
   schemaComposer,
@@ -87,64 +91,90 @@ function createPagination<TSource = any, TContext = any>({
   typeName: string
   fields?: ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
 }): ObjectTypeComposer {
-  const inputTypeComposer: InputTypeComposer =
-    typeComposer.getInputTypeComposer()
+  // const inputTypeComposer: InputTypeComposer =
+  //   typeComposer.getInputTypeComposer()
   // const fieldsEnumTC = getFieldsEnum({
   //   schemaComposer,
   //   typeComposer,
   //   inputTypeComposer,
   // })
+  const fieldTC = convertToNestedInputType({
+    schemaComposer,
+    typeComposer,
+    onEnter: ({ fieldName, typeComposer }): IVisitContext => {
+      const sortable =
+        typeComposer instanceof UnionTypeComposer ||
+        typeComposer instanceof ScalarTypeComposer
+          ? undefined
+          : typeComposer.getFieldExtension(fieldName, `sortable`)
+      if (sortable === SORTABLE_ENUM.NOT_SORTABLE) {
+        // stop traversing
+        return null
+      } else if (sortable === SORTABLE_ENUM.DEPRECATED_SORTABLE) {
+        // mark this and all nested fields as deprecated
+        return {
+          deprecationReason: `Sorting on fields that need arguments to resolve is deprecated.`,
+        }
+      }
+
+      // continue
+      return undefined
+    },
+    // @ts-ignore TODO: correct types
+    leafInputComposer: { type: `Boolean` },
+  }).getTypeNonNull()
+
   const paginationTypeComposer: ObjectTypeComposer =
     schemaComposer.getOrCreateOTC(typeName, tc => {
       // getGroup() will create a recursive call to pagination,
       // so only add it and other aggregate functions on onCreate.
       // Cast into their own category to avoid Typescript conflicts.
-      // const aggregationFields: { [key: string]: any } = {
-      //   distinct: {
-      //     type: [`String!`],
-      //     args: {
-      //       field: fieldsEnumTC.getTypeNonNull(),
-      //     },
-      //     resolve: createDistinctResolver(typeComposer.getTypeName()),
-      //   },
-      //   max: {
-      //     type: `Float`,
-      //     args: {
-      //       field: fieldsEnumTC.getTypeNonNull(),
-      //     },
-      //     resolve: createMaxResolver(typeComposer.getTypeName()),
-      //   },
-      //   min: {
-      //     type: `Float`,
-      //     args: {
-      //       field: fieldsEnumTC.getTypeNonNull(),
-      //     },
-      //     resolve: createMinResolver(typeComposer.getTypeName()),
-      //   },
-      //   sum: {
-      //     type: `Float`,
-      //     args: {
-      //       field: fieldsEnumTC.getTypeNonNull(),
-      //     },
-      //     resolve: createSumResolver(typeComposer.getTypeName()),
-      //   },
-      //   group: {
-      //     type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],
-      //     args: {
-      //       skip: `Int`,
-      //       limit: `Int`,
-      //       field: fieldsEnumTC.getTypeNonNull(),
-      //     },
-      //     resolve: createGroupResolver(typeComposer.getTypeName()),
-      //   },
-      // }
+      const aggregationFields: { [key: string]: any } = {
+        distinct: {
+          type: [`String!`],
+          args: {
+            field: fieldTC,
+          },
+          resolve: createDistinctResolver(typeComposer.getTypeName()),
+        },
+        max: {
+          type: `Float`,
+          args: {
+            field: fieldTC,
+          },
+          resolve: createMaxResolver(typeComposer.getTypeName()),
+        },
+        min: {
+          type: `Float`,
+          args: {
+            field: fieldTC,
+          },
+          resolve: createMinResolver(typeComposer.getTypeName()),
+        },
+        sum: {
+          type: `Float`,
+          args: {
+            field: fieldTC,
+          },
+          resolve: createSumResolver(typeComposer.getTypeName()),
+        },
+        group: {
+          type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],
+          args: {
+            skip: `Int`,
+            limit: `Int`,
+            field: fieldTC,
+          },
+          resolve: createGroupResolver(typeComposer.getTypeName()),
+        },
+      }
 
       tc.addFields({
         totalCount: `Int!`,
         edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
         nodes: [typeComposer.getTypeNonNull()],
         pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
-        // ...aggregationFields,
+        ...aggregationFields,
         ...fields,
       })
     })
