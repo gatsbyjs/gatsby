@@ -63,7 +63,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
           },
           {
             test: /\.[tj]sx?$/,
-            resourceQuery: /__contentFilePath=.+\.mdx?$/,
+            resourceQuery: /__contentFilePath=.+\.mdx?(&export=.*)?$/,
             use: [
               loaders.js(),
               {
