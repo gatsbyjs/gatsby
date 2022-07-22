@@ -14,10 +14,12 @@ import type {
 type ChunkGroup = Compilation["chunkGroups"][0]
 type EntryPoint = Compilation["asyncEntrypoints"][0]
 
-// Remove the export query param from a path that can
-// a) contain only the ?export= query param
-// b) but also contain ?__contentFilePath&export=
-const removeExportQueryParam = (
+/**
+ * Remove the export query param from a path that can
+ * a) contain only the ?export= query param
+ * b) but also contain ?__contentFilePath&export=
+ */
+export const removeExportQueryParam = (
   path: string | undefined
 ): string | undefined => {
   if (!path?.includes(`?`)) {

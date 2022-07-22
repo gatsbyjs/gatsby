@@ -3,7 +3,6 @@ import { kebabCase as _kebabCase } from "lodash"
 import { murmurhash as _murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
 import path from "path"
 import { store } from "../redux"
-import { getPathToContentComponent } from "gatsby-core-utils/parse-component-path"
 
 const kebabCase = memoize(_kebabCase)
 const pathRelative = memoize(path.relative)
