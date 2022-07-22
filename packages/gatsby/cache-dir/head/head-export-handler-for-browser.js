@@ -31,8 +31,19 @@ const onHeadRendered = () => {
     if (!VALID_NODE_NAMES.includes(nodeName)) {
       warnForInvalidTags(nodeName)
     } else {
-      const clonedNode = node.cloneNode(true)
+      let clonedNode = node.cloneNode(true)
       clonedNode.setAttribute(`data-gatsby-head`, true)
+
+      // Create an element for scripts to make script work
+      if (clonedNode.nodeName.toLowerCase() === `script`) {
+        const script = document.createElement(`script`)
+        for (const attr of clonedNode.attributes) {
+          script.setAttribute(attr.name, attr.value)
+        }
+        script.innerHTML = clonedNode.innerHTML
+        clonedNode = script
+      }
+
       if (id) {
         if (!seenIds.has(id)) {
           validHeadNodes.push(clonedNode)
