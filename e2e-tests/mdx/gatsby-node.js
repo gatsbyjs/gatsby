@@ -1,11 +1,25 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
+const slugify = require(`@sindresorhus/slugify`)
+const runtime = require("react/jsx-runtime")
+const { compileMDX } = require("gatsby-plugin-mdx")
+const { renderToStaticMarkup } = require("react-dom/server")
+
 exports.onPostBuild = async ({ graphql }) => {
   const results = await graphql(`
     {
-      mdx(slug: { eq: "html" }) {
-        html
+      file(base: { eq: "html.mdx" }) {
+        name
+        sourceInstanceName
+        root
+        base
+        childMdx {
+          fields {
+            slug
+            html
+          }
+        }
       }
     }
   `)
@@ -28,4 +42,81 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
     }
   `)
+}
+
+// Add a HTML field for the RSS plugin
+exports.onCreateNode = async ({ node, actions, getNode, reporter, cache }) => {
+  const { createNodeField } = actions
+  if (node.internal.type === `Mdx`) {
+    // Set slug based on frontmatter, fall back to filename
+    const fileNode = getNode(node.parent)
+
+    if (!fileNode) {
+      return
+    }
+
+    const slug = []
+    if (fileNode.relativeDirectory) {
+      slug.push(fileNode.relativeDirectory)
+    }
+
+    if (node.frontmatter.slug) {
+      slug.push(slugify(node.frontmatter.slug))
+    } else if (fileNode.name !== `index`) {
+      slug.push(slugify(fileNode.name))
+    }
+
+    createNodeField({
+      node,
+      name: `slug`,
+      value: `/${slug.join(`/`)}`,
+    })
+
+
+    createNodeField({
+      node,
+      name: `date`,
+      value: fileNode.ctime,
+    })
+
+    // Render as HTML for the RSS feed
+    if (fileNode.sourceInstanceName !== `posts`) {
+      return
+    }
+
+    const result = await compileMDX(
+      {
+        source: node.body,
+        absolutePath: fileNode.absolutePath,
+      },
+      {
+        // These options are requried to allow rendering to string
+        outputFormat: `function-body`,
+        useDynamicImport: true,
+        // providerImportSource: "#",
+        // Add any custom options or plugins here
+      },
+      cache,
+      reporter
+    )
+
+    if (result && result.processedMDX) {
+      const { run } = await import("@mdx-js/mdx")
+      const args = {
+        ...runtime,
+        // useMDXComponents: () => ({ 
+        //   // Example: import("./src/components/example.js")
+        // }),
+      }
+      const { default: Content } = await run(result.processedMDX, args)
+
+      const value = renderToStaticMarkup(Content(args))
+
+      createNodeField({
+        node,
+        name: `html`,
+        value,
+      })
+    }
+  }
 }

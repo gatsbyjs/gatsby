@@ -4,10 +4,13 @@
   "version": "1.0.0",
   "dependencies": {
     "@mdx-js/react": "^2",
+    "@sindresorhus/slugify": "^1.0.0",
     "cypress": "^9.7.0",
     "fs-extra": "^8.1.0",
     "gatsby": "next",
+    "gatsby-plugin-feed": "next",
     "gatsby-plugin-mdx": "next",
+    "gatsby-plugin-page-creator": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
     "gatsby-remark-images": "next",
