@@ -134,6 +134,18 @@ describe(`no-anonymous-exports-page-templates`, () => {
         errors: [{ messageId: `limitedExportsPageTemplates` }],
       }),
       test({
+        code: `import { graphql } from "gatsby"\nexport { default } from './Template'\nexport const hello = 10, query = graphql\`test\``,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nconst query = graphql\`test\`\nexport { query }\nexport { default } from './Template'\nexport function Test() {}`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { Template as default } from './Template'\nexport const query = graphql\`test\`\nexport function Test() {}`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport class NotHead extends React.Component { render() { return null } }`,
         errors: [{ messageId: `limitedExportsPageTemplates` }],
       }),
