@@ -54,6 +54,11 @@ export function Head() {
       <script data-testid="jsonLD" type="application/ld+json">
         {jsonLD}
       </script>
+      <script type="text/javascript" data-testid="inline-script">
+      {`
+        console.log("I am an inline script")
+      `}
+    </script>
     </>
   )
 }
