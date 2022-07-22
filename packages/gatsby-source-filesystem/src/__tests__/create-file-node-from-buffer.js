@@ -2,6 +2,8 @@ jest.mock(`fs-extra`, () => {
   return {
     ensureDir: jest.fn(() => true),
     writeFile: jest.fn((_f, _b, cb) => cb()),
+    ensureDirSync: jest.fn(() => true),
+    writeFileSync: jest.fn(() => {}),
     stat: jest.fn(() => {
       return {
         isDirectory: jest.fn(),
