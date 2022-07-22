@@ -8,6 +8,7 @@ export const CODES = {
   Authentication: `111005`,
   Timeout: `111006`,
   WordPress500ishError: `111007`,
+  SelfSignedCert: `111008`,
 
   /* GraphQL Errors */
   RemoteGraphQLError: `112001`,
@@ -68,6 +69,11 @@ export const ERROR_MAP: IErrorMap = {
     category: `SYSTEM`,
   },
   [CODES.WordPress500ishError]: {
+    text: getErrorText,
+    level: `ERROR`,
+    category: `THIRD_PARTY`,
+  },
+  [CODES.SelfSignedCert]: {
     text: getErrorText,
     level: `ERROR`,
     category: `THIRD_PARTY`,

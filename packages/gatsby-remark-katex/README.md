@@ -5,7 +5,9 @@
 
 ## Install
 
-`npm install gatsby-transformer-remark gatsby-remark-katex katex`
+```shell
+npm install gatsby-transformer-remark gatsby-remark-katex katex
+```
 
 ## How to use
 
@@ -58,7 +60,7 @@ a^2 + b^2 = c^2
 $$
 ```
 
-[1]: https://www.gatsbyjs.org/packages/gatsby-remark-katex/
+[1]: https://www.gatsbyjs.com/plugins/gatsby-remark-katex/
 [2]: https://github.com/Rokt33r/remark-math
 [3]: https://github.com/KaTeX/KaTeX
 [4]: https://github.com/gatsbyjs/gatsby/blob/master/examples/using-remark/src/templates/template-blog-post.js

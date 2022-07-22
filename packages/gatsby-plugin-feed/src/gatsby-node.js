@@ -22,7 +22,7 @@ exports.onPostBuild = async ({ graphql, reporter }, pluginOptions) => {
 
   const baseQuery = await runQuery(graphql, options.query)
 
-  for (let { ...feed } of options.feeds) {
+  for (const { ...feed } of options.feeds) {
     if (feed.query) {
       feed.query = await runQuery(graphql, feed.query).then(result =>
         merge({}, baseQuery, result)
@@ -46,7 +46,7 @@ exports.onPostBuild = async ({ graphql, reporter }, pluginOptions) => {
 
       const outputPath = path.join(publicPath, feed.output)
       const outputDir = path.dirname(outputPath)
-      if (!(await fs.exists(outputDir))) {
+      if (!(await fs.pathExists(outputDir))) {
         await fs.mkdirp(outputDir)
       }
       await fs.writeFile(outputPath, rssFeed.xml())

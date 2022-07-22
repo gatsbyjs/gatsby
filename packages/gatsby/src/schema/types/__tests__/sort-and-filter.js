@@ -272,11 +272,11 @@ describe(`GraphQL Input args from fields`, () => {
     const json = inferredFields.scal_json.type
     isJsonInput(json)
 
-    const custom_scalar = inferredFields.scal_odd.type
-    isCustomScalarInput(custom_scalar, fields.scal_odd.type)
+    const customScalar = inferredFields.scal_odd.type
+    isCustomScalarInput(customScalar, fields.scal_odd.type)
 
-    const custom_enum = inferredFields.scal_enum.type
-    isEnumInput(custom_enum, fields.scal_enum.type)
+    const customEnum = inferredFields.scal_enum.type
+    isEnumInput(customEnum, fields.scal_enum.type)
   })
 
   it(`recursively converts object types`, async () => {

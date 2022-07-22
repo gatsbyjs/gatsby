@@ -4,7 +4,8 @@ import { ISetStatus } from "../types"
 jest.useFakeTimers()
 
 describe(`integration`, () => {
-  let dispatchSpy, internalActions
+  let dispatchSpy
+  let internalActions
 
   const getDispatchedSetStatusActions = (): Array<ISetStatus> =>
     dispatchSpy.mock.calls
@@ -19,11 +20,8 @@ describe(`integration`, () => {
   })
 
   test(`Doesn't dispatch pre-emptive SUCCESS `, async () => {
-    const {
-      createPendingActivity,
-      endActivity,
-      startActivity,
-    } = internalActions
+    const { createPendingActivity, endActivity, startActivity } =
+      internalActions
 
     startActivity({
       id: `activity-1`,

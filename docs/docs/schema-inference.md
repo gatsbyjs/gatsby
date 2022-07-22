@@ -87,7 +87,7 @@ Fields on the node that were created directly by the source and transform plugin
 The creation of these fields is handled by the [`inferObjectStructureFromNodes`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
 1. It involves a mapping in [gatsby-config.js](/docs/reference/config-files/gatsby-config/#mapping-node-types)
-2. It's value is a foreign key reference to some other node (ends in `___NODE`)
+2. Its value is a foreign key reference to some other node (ends in `___NODE`)
 3. It's a plain object or value (e.g. String, number, etc)
 
 #### Mapping field
@@ -104,7 +104,7 @@ mapping: {
 
 The field generation in this case is handled by [`inferFromMapping`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L129). The first step is to find the type that is mapped to. In this case, `AuthorYaml`. This is known as the `linkedType`. That type will have a field to link by. In this case `name`. If one is not supplied, it defaults to `id`. This field is known as `linkedField`
 
-Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which we look up in list of other `gqlTypes`). The field resolver will get the value for the node (in this case, the author string), and then search through the react nodes until it finds one whose type is `AuthorYaml` and whose `name` field matches the author string.
+Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which we look up in list of other `gqlTypes`). The field resolver will get the value for the node (in this case, the author string), and then search through the React nodes until it finds one whose type is `AuthorYaml` and whose `name` field matches the author string.
 
 #### Foreign Key reference (`___NODE`)
 
@@ -164,7 +164,7 @@ query {
 }
 ```
 
-To resolve `file.childMarkdownRemark`, we take the node we're resolving, and filter over all of its `children` until we find one of type `markdownRemark`, which is returned. Remember that `children` is a collection of IDs. So as part of this, we lookup the node by ID in Redux too.
+To resolve `file.childMarkdownRemark`, we take the node we're resolving, and filter over all of its `children` until we find one of type `markdownRemark`, which is returned. Remember that `children` is a collection of IDs. So as part of this, we look up the node by ID in Redux too.
 
 But before we return from the resolve function, remember that we might be running this query within the context of a page. If that's the case, then whenever the node changes, the page will need to be rerendered. To record that fact, we call [createPageDependency](/docs/page-node-dependencies/) with the node ID and the page, which is a field in the `context` object in the resolve function signature.
 

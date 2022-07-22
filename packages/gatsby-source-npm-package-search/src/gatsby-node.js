@@ -37,7 +37,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       lastPublisher: NPMPackageOwner
       _searchInternal: NPMPackage_searchInternal
     }
-    type NPMPackageReadme implements Node @dontInfer {
+    type NPMPackageReadme implements Node @dontInfer @mimeTypes(types: ["text/markdown"]) {
       slug: String!
     }
     type NPMPackageRepository {

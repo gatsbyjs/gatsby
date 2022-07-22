@@ -57,5 +57,5 @@ Where is node-tracking used? First up, nodes are tracked in 2 places. Firstly, i
 
 Now, where do we use this information? In 2 places.
 
-1. In the `File` type resolver. It is used to lookup the node's root, which should be of type `File`. We can then use that root node's base directory attribute to create the full path of the resolved field's value, and therefore find the actual `File` node that the string value is describing. See [File GqlType inference](/docs/schema-gql-type/#file-types) for more info.
+1. In the `File` type resolver. It is used to look up the node's root, which should be of type `File`. We can then use that root node's base directory attribute to create the full path of the resolved field's value, and therefore find the actual `File` node that the string value is describing. See [File GqlType inference](/docs/schema-gql-type/#file-types) for more info.
 2. To recursively look up node descriptions in [type-conflict-reporter.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer/type-conflict-reporter.ts)

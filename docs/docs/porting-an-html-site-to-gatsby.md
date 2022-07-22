@@ -41,7 +41,7 @@ No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on 
 
 ### Development environment
 
-Gatsby generates websites and web applications for production through a compilation and build process, and it also has tools optimized for local development. To set up the Gatsby [CLI](/docs/glossary#cli) and development environment (if you haven't already) check out [Part Zero of the Gatsby tutorial](/docs/tutorial/part-zero/).
+Gatsby generates websites and web applications for production through a compilation and build process, and it also has tools optimized for local development. To set up the Gatsby [CLI](/docs/glossary#cli) and development environment (if you haven't already) check out [Part Zero of the Gatsby tutorial](/docs/tutorial/part-0/).
 
 ### Gatsby Project
 
@@ -560,7 +560,7 @@ website-domain
 
 ## Next steps
 
-Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also the [Gatsby Image](/docs/reference/built-in-components/gatsby-image/) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
+Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
 The [building with components doc](/docs/conceptual/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 
@@ -568,4 +568,4 @@ The [building with components doc](/docs/conceptual/building-with-components/) h
 
 Short guides can be found at the [recipes section](/docs/recipes) for adding functionality such as optimizing and querying local images, adding Markdown support and integrating various modern CSS tools. The [adding website functionality page](/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication, and fetching data with client-side JavaScript.
 
-Gatsby is dedicated to making you feel welcome! Learn more and engage with the community by starting a conversation or contributing yourself. The [community page](/contributing/community/) has further information and channels where you can get support.
+Gatsby is dedicated to making you feel welcome! Learn more and engage with the community by starting a conversation or contributing yourself. The [contributing page](/contributing/) has further information and channels where you can get support.

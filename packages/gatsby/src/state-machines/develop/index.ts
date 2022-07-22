@@ -1,4 +1,10 @@
-import { MachineConfig, AnyEventObject, forwardTo, Machine } from "xstate"
+import {
+  MachineConfig,
+  AnyEventObject,
+  forwardTo,
+  createMachine,
+  assign,
+} from "xstate"
 import { IDataLayerContext } from "../data-layer/types"
 import { IQueryRunningContext } from "../query-running/types"
 import { IWaitingContext } from "../waiting/types"
@@ -7,6 +13,9 @@ import { developServices } from "./services"
 import { IBuildContext } from "../../services"
 
 const RECOMPILE_PANIC_LIMIT = 6
+
+const getGraphqlTypegenConfig = (ctx: IBuildContext): boolean =>
+  !!ctx.store!.getState().config.graphqlTypegen
 
 /**
  * This is the top-level state machine for the `gatsby develop` command
@@ -33,6 +42,16 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     QUERY_RUN_REQUESTED: {
       actions: `trackRequestedQueryRun`,
+    },
+    SET_SCHEMA: {
+      actions: `schemaTypegen`,
+      cond: (ctx: IBuildContext): boolean =>
+        getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
+    },
+    SET_GRAPHQL_DEFINITIONS: {
+      actions: `definitionsTypegen`,
+      cond: (ctx: IBuildContext): boolean =>
+        getGraphqlTypegenConfig(ctx) && !ctx.shouldRunInitialTypegen,
     },
   },
   states: {
@@ -71,12 +90,17 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           parentSpan,
           store,
           webhookBody,
+          program,
+          reporter,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
             store,
             webhookBody,
+            shouldRunCreatePagesStatefully: true,
             deferNodeMutation: true,
+            program,
+            reporter,
           }
         },
         onDone: {
@@ -125,6 +149,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           graphqlRunner,
           websocketManager,
           pendingQueryRuns,
+          reporter,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -134,6 +159,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             graphqlRunner,
             websocketManager,
             pendingQueryRuns,
+            reporter,
           }
         },
         onDone: [
@@ -184,13 +210,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           target: `waiting`,
         },
       },
+      exit: assign<IBuildContext>({ shouldRunInitialTypegen: false }),
     },
     // Recompile the JS bundle
     recompiling: {
       // Important: mark source files as clean when recompiling starts
       // Doing this `onDone` will wipe all file change events that occur **during** recompilation
       // See https://github.com/gatsbyjs/gatsby/issues/27609
-      entry: `markSourceFilesClean`,
+      entry: [`setRecompiledFiles`, `markSourceFilesClean`],
       invoke: {
         src: `recompile`,
         onDone: {
@@ -206,16 +233,30 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     startingDevServers: {
       invoke: {
         src: `startWebpackServer`,
-        onDone: {
-          target: `waiting`,
-          actions: [
-            `assignServers`,
-            `spawnWebpackListener`,
-            `markSourceFilesClean`,
-          ],
-        },
+        onDone: [
+          {
+            target: `initialGraphQLTypegen`,
+            cond: (ctx: IBuildContext): boolean => getGraphqlTypegenConfig(ctx),
+          },
+          {
+            target: `waiting`,
+          },
+        ],
         onError: {
           actions: `panic`,
+          target: `waiting`,
+        },
+      },
+      exit: [`assignServers`, `spawnWebpackListener`, `markSourceFilesClean`],
+    },
+    initialGraphQLTypegen: {
+      invoke: {
+        src: `graphQLTypegen`,
+        onDone: {
+          target: `waiting`,
+        },
+        onError: {
+          actions: `logError`,
           target: `waiting`,
         },
       },
@@ -276,8 +317,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         ADD_NODE_MUTATION: {
           actions: `callApi`,
         },
-        // Ignore, because we're about to extract them anyway
-        SOURCE_FILE_CHANGED: undefined,
       },
       invoke: {
         src: `reloadData`,
@@ -286,6 +325,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           store,
           webhookBody,
           webhookSourcePluginName,
+          program,
+          reporter,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
@@ -294,6 +335,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             webhookSourcePluginName,
             refresh: true,
             deferNodeMutation: true,
+            shouldRunCreatePagesStatefully: false,
+            program,
+            reporter,
           }
         },
         onDone: {
@@ -321,8 +365,20 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       invoke: {
         id: `recreate-pages`,
         src: `recreatePages`,
-        data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
-          return { parentSpan, store, deferNodeMutation: true }
+        data: ({
+          parentSpan,
+          store,
+          program,
+          reporter,
+        }: IBuildContext): IDataLayerContext => {
+          return {
+            parentSpan,
+            store,
+            program,
+            deferNodeMutation: true,
+            shouldRunCreatePagesStatefully: false,
+            reporter,
+          }
         },
         onDone: {
           actions: `assignServiceResult`,
@@ -337,7 +393,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
   },
 }
 
-export const developMachine = Machine(developConfig, {
+export const developMachine = createMachine(developConfig, {
   services: developServices,
   actions: buildActions,
 })

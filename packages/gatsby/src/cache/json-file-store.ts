@@ -1,5 +1,5 @@
 // Initial file from https://github.com/rolandstarke/node-cache-manager-fs-hash @ af52d2d
-/*!
+/* !
 The MIT License (MIT)
 
 Copyright (c) 2017 Roland Starke
@@ -27,10 +27,15 @@ const promisify = require(`util`).promisify
 const fs = require(`fs`)
 const zlib = require(`zlib`)
 
+interface IExternalBuffer {
+  index: number
+  buffer: Buffer
+}
+
 exports.write = async function (path, data, options): Promise<void> {
-  const externalBuffers = []
-  let dataString = JSON.stringify(data, function replacerFunction(k, value) {
-    //Buffers searilize to {data: [...], type: "Buffer"}
+  const externalBuffers: Array<IExternalBuffer> = []
+  let dataString = JSON.stringify(data, function replacerFunction(_k, value) {
+    // Buffers searilize to {data: [...], type: "Buffer"}
     if (
       value &&
       value.type === `Buffer` &&
@@ -60,14 +65,14 @@ exports.write = async function (path, data, options): Promise<void> {
     zipExtension = `.gz`
     dataString = await promisify(zlib.deflate)(dataString)
   }
-  //save main json file
+  // save main json file
   await promisify(fs.writeFile)(
     path + `.json` + zipExtension,
     dataString,
     `utf8`
   )
 
-  //save external buffers
+  // save external buffers
   await Promise.all(
     externalBuffers.map(async function (externalBuffer) {
       let buffer = externalBuffer.buffer
@@ -89,7 +94,7 @@ exports.read = async function (path, options): Promise<string> {
     zipExtension = `.gz`
   }
 
-  //read main json file
+  // read main json file
   let dataString
   if (options.zip) {
     const compressedData = await promisify(fs.readFile)(
@@ -103,10 +108,10 @@ exports.read = async function (path, options): Promise<string> {
     )
   }
 
-  const externalBuffers = []
+  const externalBuffers: Array<IExternalBuffer> = []
   let data
   try {
-    data = JSON.parse(dataString, function bufferReceiver(k, value) {
+    data = JSON.parse(dataString, function bufferReceiver(_k, value) {
       if (value && value.type === `Buffer` && value.data) {
         return Buffer.from(value.data)
       } else if (
@@ -115,7 +120,7 @@ exports.read = async function (path, options): Promise<string> {
         typeof value.index === `number` &&
         typeof value.size === `number`
       ) {
-        //JSON.parse is sync so we need to return a buffer sync, we will fill the buffer later
+        // JSON.parse is sync so we need to return a buffer sync, we will fill the buffer later
         const buffer = Buffer.alloc(value.size)
         externalBuffers.push({
           index: +value.index,
@@ -139,7 +144,7 @@ exports.read = async function (path, options): Promise<string> {
     )
   }
 
-  //read external buffers
+  // read external buffers
   await Promise.all(
     externalBuffers.map(async function (externalBuffer) {
       if (options.zip) {
@@ -175,7 +180,7 @@ exports.delete = async function (path, options): Promise<void> {
 
   await promisify(fs.unlink)(path + `.json` + zipExtension)
 
-  //delete binary files
+  // delete binary files
   try {
     for (let i = 0; i < Infinity; i++) {
       await promisify(fs.unlink)(path + `-` + i + `.bin` + zipExtension)

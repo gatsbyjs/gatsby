@@ -8,6 +8,13 @@ const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
     context.plugin ? `\nPlugin: ${context.plugin}` : ``
   }`
 
+const getSharedNodeManifestWarning = (inputManifest: {
+  manifestId: string
+  node: { id: string }
+  pluginName: string
+}): string =>
+  `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
+
 export enum ErrorCategory {
   USER = `USER`,
   SYSTEM = `SYSTEM`,
@@ -20,7 +27,7 @@ const errors = {
       const sourceMessage =
         context && context.sourceMessage
           ? context.sourceMessage
-          : `There was an error`
+          : `There was an unhandled error and we could not retrieve more information. Please run the command with the --verbose flag again.`
       return sourceMessage
     },
     level: Level.ERROR,
@@ -40,6 +47,34 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  "95314": {
+    text: (context): string => context.errorMessage,
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/debug-html`,
+  },
+  "95315": {
+    text: (context): string =>
+      `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "98001": {
+    text: (): string =>
+      `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+  },
+  "98011": {
+    text: (context): string =>
+      `Rendering Engines attempted to use unsupported "${
+        context.package
+      }" package${
+        context.importedBy ? ` (imported by "${context.importedBy}")` : ``
+      }${context.advisory ? `\n\n${context.advisory}` : ``}`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "98123": {
     text: (context): string =>
       `${context.stageLabel} failed\n\n${
@@ -49,8 +84,15 @@ const errors = {
     level: Level.ERROR,
   },
   "98124": {
-    text: (context): string =>
-      `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`,
+    text: (context): string => {
+      let message = `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`
+
+      if (context.deprecationReason) {
+        message += `\n\n${context.deprecationReason}`
+      }
+
+      return message
+    },
     type: Type.WEBPACK,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -108,7 +150,7 @@ const errors = {
       `),
     type: Type.GRAPHQL,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/graphql/`,
+    docsUrl: `https://www.gatsbyjs.com/docs/graphql/`,
     category: ErrorCategory.USER,
   },
   "85911": {
@@ -197,14 +239,14 @@ const errors = {
 
       If you're not using a page query but a useStaticQuery / StaticQuery you see this error because they currently don't support variables. To learn more about the limitations of useStaticQuery / StaticQuery, please visit these docs:
 
-      https://www.gatsbyjs.org/docs/use-static-query/
-      https://www.gatsbyjs.org/docs/static-query/`)
+      https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
+      https://www.gatsbyjs.com/docs/how-to/querying-data/static-query/`)
 
       const generalMessage = stripIndents(`Suggestion 2:
 
       You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
 
-      https://www.gatsbyjs.org/docs/page-query/#how-to-add-query-variables-to-a-page-query`)
+      https://www.gatsbyjs.com/docs/how-to/querying-data/page-query#how-to-add-query-variables-to-a-page-query`)
 
       return stripIndent(`
         There was an error in your GraphQL query:\n\n${
@@ -231,21 +273,21 @@ const errors = {
       ${context.sourceMessage}
 
       This can happen if you e.g. accidentally added { } to the field "${context.fieldName}". If you didn't expect "${context.fieldName}" to be of type "${context.fieldType}" make sure that your input source and/or plugin is correct.
-      However, if you expect "value" to exist, the field might be accessible in another subfield. Please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have.
+      However, if you expect "value" to exist, the field might be accessible in another subfield. Please try your query in GraphiQL.
 
-      It is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned
-      "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":
-      https://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions`,
+      It is recommended to explicitly type your GraphQL schema if you want to use optional fields.`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/creating-type-definitions`,
   },
   "85923": {
     text: (context): string =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo.\nHowever, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node.js/gatsby-config.js, please try a restart of your development server\n- The field might be accessible in another subfield, please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere. Therefore Gatsby can't infer the type and add it to the GraphQL schema. A quick fix is to add at least one entry with that field ("dummy content")\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":\nhttps://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions`,
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo. However, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node/gatsby-config, please try a restart of your development server.\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere.\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields.`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/creating-type-definitions`,
   },
   "85924": {
     text: (context): string =>
@@ -266,7 +308,7 @@ const errors = {
         context.sourceMessage
       }\n\nThe field "${
         context.field
-      }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.js. If you're using a plugin/theme, you can learn more here on how to fix field types:\nhttps://www.gatsbyjs.org/docs/schema-customization/#fixing-field-types${optionalGraphQLInfo(
+      }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.js. If you're using a plugin/theme, you can learn more here on how to fix field types:\nhttps://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization#fixing-field-types${optionalGraphQLInfo(
         context
       )}`,
     type: Type.GRAPHQL,
@@ -283,6 +325,18 @@ const errors = {
   "85927": {
     text: (context): string =>
       `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nSee if ${context.variable} has a typo or ${context.operation} doesn't actually require this variable.`,
+    type: Type.GRAPHQL,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "85928": {
+    text: (): string =>
+      `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
+    level: Level.ERROR,
+  },
+  "85929": {
+    text: (context): string =>
+      `The "${context.exportName}" export must be async when using it with graphql:\n\n${context.codeFrame}`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -327,6 +381,13 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "10127": {
+    text: (context): string =>
+      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js". Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "10226": {
     text: (context): string =>
       [
@@ -361,7 +422,7 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -373,13 +434,13 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
   "11324": {
     text: (context): string =>
-      `${context.message}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      `${context.message}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
     level: Level.ERROR,
   },
   "11325": {
@@ -392,7 +453,7 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -408,7 +469,7 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
@@ -431,7 +492,7 @@ const errors = {
         stripIndent(`
           Your plugins must export known APIs from their gatsby-${context.exportType}.js.
 
-          See https://www.gatsbyjs.org/docs/${context.exportType}-apis/ for the list of Gatsby ${context.exportType} APIs.
+          See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-${context.exportType}/ for the list of Gatsby ${context.exportType} APIs.
         `),
       ]
         .concat([``].concat(context.errors))
@@ -459,7 +520,9 @@ const errors = {
         context.api
       } lifecycle.\nLearn more about ${
         context.api
-      } here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
+      } here: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#${
+        context.api
+      }`,
     type: Type.PLUGIN,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -483,6 +546,14 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "11332": {
+    text: (): string =>
+      `Failed to compile Gatsby Functions. See the error below for more details.\nNote: The src/api folder is a reserved folder for Gatsby Functions and can't be used for any other files.`,
+    type: Type.COMPILATION,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>
@@ -496,62 +567,73 @@ const errors = {
         .filter(Boolean)
         .join(`\n\n`),
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/actions/#createNode`,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createNode`,
   },
   // local SSL certificate errors
   "11521": {
     text: (): string =>
       `for custom ssl --https, --cert-file, and --key-file must be used together`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#custom-key-and-certificate-files`,
+    docsUrl: `https://www.gatsbyjs.com/docs/local-https#custom-key-and-certificate-files`,
     category: ErrorCategory.USER,
   },
   "11522": {
     text: (): string => `Failed to generate dev SSL certificate`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#setup`,
+    docsUrl: `https://www.gatsbyjs.com/docs/local-https#setup`,
   },
   // cli new command errors
   "11610": {
     text: (context): string =>
       `It looks like you gave wrong argument orders . Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
     category: ErrorCategory.USER,
   },
   "11611": {
     text: (context): string =>
       `It looks like you passed a URL to your project name. Try running instead "gatsby new new-gatsby-project ${context.rootPath}"`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
     category: ErrorCategory.USER,
   },
   "11612": {
     text: (context): string =>
       `Could not create a project in "${context.path}" because it's not a valid path`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
     category: ErrorCategory.USER,
   },
   "11613": {
     text: (context): string =>
       `Directory ${context.rootPath} is already an npm project`,
     level: Level.ERROR,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
   },
   "11614": {
-    text: ({
-      path,
-      filePath,
-      line,
-      column,
-    }): string => `The path "${path}" errored during SSR.
-
-    Edit its component ${filePath}${
-      line ? `:${line}:${column}` : ``
-    } to resolve the error.`,
+    text: (context): string =>
+      stripIndent(`
+        The path "${context.path}" errored during SSR.
+        Edit its component ${context.filePath}${
+        context.line ? `:${context.line}:${context.column}` : ``
+      } to resolve the error.`),
     level: Level.WARNING,
-    docsUrl: `https://gatsby.dev/debug-html`,
+  },
+  "11615": {
+    text: (context): string =>
+      stripIndent(`
+        There was an error while trying to load dev-404-page:
+        ${context.sourceMessage}`),
+    level: Level.ERROR,
+    category: ErrorCategory.SYSTEM,
+  },
+  "11616": {
+    text: (context): string =>
+      stripIndent(`
+        There was an error while trying to create the client-only shell for displaying SSR errors:
+        ${context.sourceMessage}`),
+    level: Level.ERROR,
+    category: ErrorCategory.SYSTEM,
   },
   // Watchdog
   "11701": {
@@ -564,8 +646,116 @@ const errors = {
         3
       )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${
         context.stuckStatusDiagnosticMessage
-      }`,
+      }${context.additionalOutput}`,
     level: Level.ERROR,
+    docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
+  },
+
+  /** Node Manifest warnings */
+  "11801": {
+    text: ({ inputManifest }): string => `${getSharedNodeManifestWarning(
+      inputManifest
+    )} but Gatsby couldn't find a page for this node.
+      If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a ownerNodeId is added to createPage() if you're not using the Filesystem Route API). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.\n`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
+  "11802": {
+    text: ({ inputManifest, pagePath }): string =>
+      `${getSharedNodeManifestWarning(
+        inputManifest
+      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.id in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
+  "11805": {
+    text: ({ inputManifest, pagePath }): string =>
+      `${getSharedNodeManifestWarning(
+        inputManifest
+      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.slug in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
+  "11803": {
+    text: ({ inputManifest, pagePath }): string =>
+      `${getSharedNodeManifestWarning(
+        inputManifest
+      )} but Gatsby didn't find an ownerNodeId for the page at ${pagePath}\nUsing the first page where this node is queried.\nThis may result in an inaccurate node manifest (for previews or other purposes). See https://www.gatsbyjs.com/docs/conceptual/content-sync for more info.`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+  "11804": {
+    text: ({ pluginName, nodeId }): string =>
+      `Plugin ${pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+  /** End Node Manifest warnings */
+  // Parcel Compilation Errors
+  "11901": {
+    text: (context): string =>
+      stripIndent(`
+    Failed to compile Gatsby files ${
+      context.origin ? `(${context.origin})` : ``
+    }:
+    
+    ${context.generalMessage}. ${context.specificMessage ?? ``}
+    ${
+      context.hints
+        ? context.hints.map(
+            h => `
+    Hints:
+    - ${h}\n`
+          )
+        : ``
+    }
+    ${context.filePath ? `File path: ${context.filePath}` : ``}`),
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
+  "11902": {
+    text: (context): string =>
+      `We encountered an error while trying to compile your site's ${context.configName}. Check the current limitations (https://gatsby.dev/ts-limitations), fix the error, and try again.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
+  "11903": {
+    text: (context): string =>
+      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.\n${context.sourceMessage}`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.USER,
+  },
+  "11904": {
+    text: (context): string =>
+      `Expected compiled files not found after compilation for ${
+        context.siteRoot
+      } after ${context.retries} retries.\nFile expected to be valid: ${
+        context.compiledFileLocation
+      }${
+        context.sourceFileLocation
+          ? `\nCompiled from: ${context.sourceFileLocation}`
+          : ``
+      }\n\nPlease run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.SYSTEM,
+  },
+  "12100": {
+    text: (
+      context
+    ): string => `There was an error while trying to generate TS types from your GraphQL queries:
+    
+    ${context.sourceMessage}`,
+    level: Level.ERROR,
+    type: Type.GRAPHQL,
+    category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/graphql-typegen`,
   },
 }
 

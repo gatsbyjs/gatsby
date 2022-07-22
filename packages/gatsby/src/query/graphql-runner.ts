@@ -20,9 +20,22 @@ import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
+import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
 import GraphQLSpanTracer from "./graphql-span-tracer"
 
+// Preserve these caches across graphql instances.
+const _rootNodeMap = new WeakMap()
+const _trackedRootNodes = new WeakSet()
+
 type Query = string | Source
+
+export interface IQueryOptions {
+  parentSpan: Span | undefined
+  queryName: string
+  componentPath?: string | undefined
+  forceGraphqlTracing?: boolean
+  telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
+}
 
 export interface IGraphQLRunnerOptions {
   collectStats?: boolean
@@ -53,6 +66,8 @@ export class GraphQLRunner {
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
+      _rootNodeMap,
+      _trackedRootNodes,
     })
     this.schema = schema
     this.parseCache = new Map()
@@ -145,11 +160,9 @@ export class GraphQLRunner {
       parentSpan,
       queryName,
       componentPath,
-    }: {
-      parentSpan: Span | undefined
-      queryName: string
-      componentPath?: string | undefined
-    }
+      forceGraphqlTracing = false,
+      telemetryResolverTimings,
+    }: IQueryOptions
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -191,7 +204,7 @@ export class GraphQLRunner {
     }
 
     let tracer
-    if (this.graphqlTracing && parentSpan) {
+    if ((this.graphqlTracing || forceGraphqlTracing) && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
         parentSpan,
         tags: {
@@ -216,6 +229,7 @@ export class GraphQLRunner {
           nodeModel: this.nodeModel,
           stats: this.stats,
           tracer,
+          telemetryResolverTimings,
         }),
         variableValues: context,
       })

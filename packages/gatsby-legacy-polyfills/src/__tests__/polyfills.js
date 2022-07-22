@@ -1,5 +1,5 @@
 const path = require(`path`)
-const { SourceMapConsumer } = require(`source-map`)
+const { TraceMap } = require(`@jridgewell/trace-mapping`)
 const execa = require(`execa`)
 const fs = require(`fs-extra`)
 
@@ -35,23 +35,25 @@ describe(`polyfills`, () => {
     const polyfillMap = path.join(packageRoot, tmpDir, `polyfills.js.map`)
     expect(fs.existsSync(polyfillMap)).toBe(true)
 
-    const fileMap = polyfills.map(
-      polyfill =>
-        `core-js/modules/${polyfill
-          .replace(/^(features|modules)\//, `es.`)
-          .replace(`/`, `.`)}`
-    )
+    const fileMap = polyfills.map(polyfill => {
+      if (polyfill === `features/dom-collections`) {
+        return `core-js/modules/web.dom-collections`
+      }
+
+      return `core-js/modules/${polyfill
+        .replace(/^(features|modules)\//, `es.`)
+        .replace(`/`, `.`)}`
+    })
 
     const polyfillMapSource = fs.readFileSync(polyfillMap, `utf8`)
-    SourceMapConsumer.with(polyfillMapSource, null, consumer => {
-      const sources = consumer.sources
+    const tracer = new TraceMap(polyfillMapSource)
+    const sources = tracer.sources.map(source =>
+      source.replace(/.*\/node_modules\//, ``)
+    )
 
-      // check if all polyfills are in the bundle
-      expect(sources).toEqual(
-        expect.arrayContaining(
-          fileMap.map(file => expect.stringContaining(file))
-        )
-      )
-    })
+    // check if all polyfills are in the bundle
+    expect(sources).toEqual(
+      expect.arrayContaining(fileMap.map(file => expect.stringContaining(file)))
+    )
   })
 })

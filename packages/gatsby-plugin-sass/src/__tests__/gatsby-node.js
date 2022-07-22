@@ -45,16 +45,26 @@ describe(`gatsby-plugin-sass`, () => {
       "sass rule modules test options": {
         sassRuleModulesTest: /\.global\.s(a|c)ss$/,
       },
+      "css-loader use commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
   }
 
   tests.stages.forEach(stage => {
-    for (let label in tests.options) {
-      const options = tests.options[label]
-      it(`Stage: ${stage} / ${label}`, () => {
-        onCreateWebpackConfig({ actions, loaders, stage }, options)
-        expect(actions.setWebpackConfig).toMatchSnapshot()
-      })
+    for (const label in tests.options) {
+      if (tests.options[label]) {
+        const options = tests.options[label]
+        it(`Stage: ${stage} / ${label}`, () => {
+          onCreateWebpackConfig({ actions, loaders, stage }, options)
+          expect(actions.setWebpackConfig).toMatchSnapshot()
+        })
+      }
     }
   })
 })
@@ -63,6 +73,7 @@ describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
     const expectedErrors = [
       `"implementation" must be of type object`,
+      `"additionalData" must be one of [string, object]`,
       `"cssLoaderOptions" must be of type object`,
       `"postCssPlugins" must be an array`,
       `"sassRuleTest" must be of type object`,
@@ -89,6 +100,7 @@ describe(`pluginOptionsSchema`, () => {
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      additionalData: 123,
       implementation: `This should be a require() thing`,
       postCssPlugins: `This should be an array of postCss plugins`,
       cssLoaderOptions: `This should be an object of css-loader options`,
@@ -122,6 +134,7 @@ describe(`pluginOptionsSchema`, () => {
 
   it(`should validate the schema`, async () => {
     const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      additionalData: `$test: #000;`,
       implementation: require(`../gatsby-node.js`),
       cssLoaderOptions: { camelCase: false },
       postCssPlugins: [require(`autoprefixer`)],
@@ -160,10 +173,14 @@ describe(`pluginOptionsSchema`, () => {
   })
 
   it(`should allow unknown options`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      webpackImporter: `unknown option`,
-    })
+    const { isValid, hasWarnings } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        webpackImporter: `unknown option`,
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(hasWarnings).toBe(true)
   })
 })

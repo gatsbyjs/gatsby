@@ -13,10 +13,7 @@ const persistPreviouslyCachedImages: Step = async (): Promise<void> => {
 
   // and touch them so they aren't garbage collected.
   // we will remove them as needed when receiving DELETE events from WP
-
-  // TODO: In order to be able to remove the ts-ignore, update to new touchNode signature
-  // @ts-ignore
-  mediaItemNodes.forEach(({ id }) => helpers.actions.touchNode({ nodeId: id }))
+  mediaItemNodes.forEach(node => helpers.actions.touchNode(node))
 
   const imageNodeMetaByUrl = await getPersistentCache({
     key: `image-node-meta-by-url`,

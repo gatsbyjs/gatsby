@@ -1,0 +1,32 @@
+{
+  "name": "gatsby-functions-google-oauth-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example of using Gatsby Functions with Google OAuth",
+  "author": "Grayson Hicks",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "babel-preset-gatsby": "^1.5.0",
+    "gatsby": "next",
+    "gatsby-plugin-gatsby-cloud": "next",
+    "gatsby-plugin-sass": "next",
+    "googleapis": "^73.0.0",
+    "node-fetch": "^2.6.1",
+    "query-string": "^7.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "sass": "^1.32.13"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.13.13"
+  }
+}

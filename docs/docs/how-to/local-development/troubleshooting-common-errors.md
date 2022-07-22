@@ -36,7 +36,7 @@ Here are some examples of plugins that require you to install more than just the
 - [gatsby-plugin-styled-components](/plugins/gatsby-plugin-styled-components/): `styled-components`, and `babel-plugin-styled-components`
 - [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/): `node-sass`, or `sass`
 - [gatsby-plugin-material-ui](/plugins/gatsby-plugin-material-ui/): `@material-ui/styles`
-- [gatsby-image](/plugins/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
+- [gatsby-plugin-image](/plugins/gatsby-plugin-image/): `gatsby-source-filesystem`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
 
 Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of Sass.
 
@@ -76,9 +76,11 @@ Some packages, like Babel, bring `fs` along for the ride anyway. In order to pre
 ```javascript:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
-    node: {
-      fs: "empty", // highlight-line
-    },
+    resolve: {
+      fallback: {
+        fs: false // highlight-line
+      }
+    }
   })
 }
 ```
@@ -88,6 +90,8 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 The following errors are related to styles in your site, using CSS, preprocessors, or CSS-in-JS solutions.
 
 ### Inconsistent CSS styles between develop and build using styled-components or emotion
+
+_NOTE: We're in process of adding SSR support to the develop server. To use it now, enable the `DEV_SSR` flag in your gatsby-config.js — https://github.com/gatsbyjs/gatsby/discussions/28138_
 
 A common problem that trips up users that install and begin to use styled-components or emotion is not including the related plugin in the config. Because `gatsby develop` doesn't run server-side rendering, the build may look different if the plugin is not included to tell Gatsby to server-side render the styles for the CSS-in-JS solution being used.
 
@@ -127,7 +131,7 @@ Comparing your GraphQL query to your site's schema in `http://localhost:8000/___
 
 - neither any source plugins you are using nor your own implementation of the [`sourceNodes` API](/docs/reference/config-files/gatsby-node/#sourceNodes) are misconfigured
 
-## Errors using gatsby-image and sharp
+## Errors using gatsby-plugin-image and sharp
 
 Gatsby's image processing is broken up into different packages which need to work together to source images and transform them into different optimized versions. You might run into these errors getting them to play together nicely.
 
@@ -156,9 +160,7 @@ allMdx {
     title
     image {
       childImageSharp {
-        fluid {
-          srcSet
-        }
+        gatsbyImageData
       }
     }
   }
@@ -173,7 +175,7 @@ Another possibility that could cause this issue is from empty strings used for i
 
 ### Problems installing `sharp` with `gatsby-plugin-sharp` - gyp ERR! build error
 
-If you see an error message in the console when installing dependencies that look related to sharp like `gyp ERR! build error` and `npm ERR! Failed at the sharp@x.x.x install script`, they can often be resolved by deleting the `node_nodules` folder in the root of your project and installing dependencies again:
+If you see an error message in the console when installing dependencies that look related to sharp like `gyp ERR! build error` and `npm ERR! Failed at the sharp@x.x.x install script`, they can often be resolved by deleting the `node_modules` folder in the root of your project and installing dependencies again:
 
 ```shell
 # be careful as this command will delete all files recursively in

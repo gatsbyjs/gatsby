@@ -2,14 +2,14 @@
 title: Deploying to 21YunBox
 ---
 
-[21YunBox](https://www.21yunbox.com) provides blazing fast Chinese CDN, [continuous deployment](/docs/glossary/continuous-deployment), one-click HTTPS and [other services like managed databases and backend web services](https://www.21yunbox.com/docs/v2/index.html), providing an avenue to launch web projects in China.
+[21YunBox](https://www.21yunbox.com) provides blazing fast Chinese CDN, [continuous deployment](/docs/glossary/continuous-deployment), one-click HTTPS and [other services like managed databases and backend web services](https://www.21yunbox.com/docs/), providing an avenue to launch web projects in China.
 
 21YunBox includes the following features:
 
 - Continuous, automatic builds & deploys from GitHub and Gitee
 - Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org)
 - Instant cache invalidation with a blazing fast, Chinese CDN
-- Unlimited [custom domains](https://www.21yunbox.com/docs/v2/custom-domains.html)
+- Unlimited [custom domains](https://www.21yunbox.com/docs/#/custom-domains)
 - Automatic [Brotli compression](https://en.wikipedia.org/wiki/Brotli) for faster sites
 - Native HTTP/2 support
 - Automatic HTTP → HTTPS redirects
@@ -17,7 +17,7 @@ title: Deploying to 21YunBox
 
 ## Prerequisites
 
-This guide assumes you already have a Gatsby project to deploy. If you need a project, use the [quick Start](/docs/quick-start) to get started or fork 21YunBox's [Gatsby Example](https://github.com/tobyglei/gatsby) before continuing.
+This guide assumes you already have a Gatsby project to deploy. If you need a project, use the [Quick Start](/docs/quick-start) to get started or fork 21YunBox's [Gatsby Example](https://gitee.com/eryiyunbox-examples/gatsby) before continuing.
 
 ## Setup
 
@@ -46,4 +46,4 @@ Every deploy automatically and instantly invalidates the CDN cache, so your user
 
 ## Custom domains
 
-Add your own domains to your site easily using 21YunBox's [custom domains](https://www.21yunbox.com/docs/v2/custom-domains.html) guide.
+Add your own domains to your site easily using 21YunBox's [custom domains](https://www.21yunbox.com/docs/#/custom-domains) guide.

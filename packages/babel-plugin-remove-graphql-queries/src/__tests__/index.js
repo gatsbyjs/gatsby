@@ -11,8 +11,18 @@ function matchesSnapshot(query) {
     plugins: [plugin],
     filename: `src/components/test.js`,
   })
+
   expect(codeWithoutFileName).toMatchSnapshot()
   expect(codeWithFileName).toMatchSnapshot()
+}
+
+function transform(query, filename) {
+  const { code } = babel.transform(query, {
+    presets: [`@babel/preset-react`],
+    plugins: [plugin],
+    filename,
+  })
+  return code
 }
 
 describe(`babel-plugin-remove-graphql-queries`, () => {
@@ -49,6 +59,21 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   import { graphql, useStaticQuery } from 'gatsby'
 
   export default () => {
+    const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+  })
+
+  it(`Transforms queries in useStaticQuery that use commonjs`, () => {
+    matchesSnapshot(`
+  const React = require("react")
+  const { graphql, useStaticQuery } = require("gatsby")
+
+  module.exports = () => {
     const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
 
     return (
@@ -448,5 +473,55 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
     }
   \`
   `)
+  })
+
+  it(`Replaces graphql query inside config with global call`, () => {
+    matchesSnapshot(`
+  import * as React from 'react'
+  import { graphql } from "gatsby"
+
+  const Test = () => (
+    <div></div>
+  )
+
+  export default Test
+
+  export async function config() {
+    const data = graphql\`{ __typename }\`
+
+    return () => {
+      return {
+        defer: true
+      }
+    }
+  }
+  `)
+  })
+
+  it(`validates that config export is async`, () => {
+    const run = () =>
+      transform(`
+  import * as React from 'react'
+  import { graphql } from "gatsby"
+
+  const Test = () => (
+    <div></div>
+  )
+
+  export default Test
+
+  export function config() {
+    const data = graphql\`{ __typename }\`
+
+    return () => {
+      return {
+        defer: true
+      }
+    }
+  }
+  `)
+    expect(run).toThrowErrorMatchingInlineSnapshot(
+      `"unknown: BabelPluginRemoveGraphQLQueries: the \\"config\\" export must be async when using it with graphql"`
+    )
   })
 })

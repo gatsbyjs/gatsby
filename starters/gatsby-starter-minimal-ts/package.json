@@ -1,0 +1,30 @@
+{
+  "name": "gatsby-starter-minimal-ts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A Gatsby starter written in TypeScript with no plugins and a single welcome page.",
+  "author": "Jude Agboola",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "0BSD",
+  "dependencies": {
+    "gatsby": "^4.19.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.45",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "typescript": "^4.7.4"
+  }
+}

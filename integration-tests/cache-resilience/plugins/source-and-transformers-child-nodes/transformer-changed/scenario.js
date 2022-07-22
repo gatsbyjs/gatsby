@@ -78,8 +78,8 @@ const nodesTest = ({
       +   \\"foo\\": \\"baz\\",
           \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
           \\"internal\\": Object {
-      -     \\"contentDigest\\": \\"25ad44d8db6f7cee17e248d3b4c94538\\",
-      +     \\"contentDigest\\": \\"3c57fc662e03b2b443b47575f7e82ec0\\",
+      -     \\"contentDigest\\": \\"04b03439f5e1d249d999e6763e23f306\\",
+      +     \\"contentDigest\\": \\"66875f4e1170801ce795d9d863a12b2a\\",
             \\"owner\\": \\"source-and-transformers-child-nodes/transformer-changed/gatsby-transformer\\",
             \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
           },
@@ -139,22 +139,24 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoChild\\": Object {
           \\"fields\\": Array [
             Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
-            Object {
               \\"name\\": \\"children\\",
+            },
+            Object {
+    -         \\"name\\": \\"first\\",
+    -       },
+    -       Object {
+              \\"name\\": \\"foo\\",
+            },
+            Object {
+              \\"name\\": \\"id\\",
             },
             Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-              \\"name\\": \\"foo\\",
-            },
-            Object {
-    -         \\"name\\": \\"first\\",
+              \\"name\\": \\"parent\\",
+    +       },
+    +       Object {
     +         \\"name\\": \\"second\\",
             },
           ],
@@ -162,25 +164,25 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
             Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
+              \\"name\\": \\"childChildOfParentChildChangeForTransformer\\",
             },
             Object {
               \\"name\\": \\"children\\",
             },
             Object {
-              \\"name\\": \\"internal\\",
+              \\"name\\": \\"childrenChildOfParentChildChangeForTransformer\\",
             },
             Object {
               \\"name\\": \\"foo\\",
             },
             Object {
-              \\"name\\": \\"childrenChildOfParentChildChangeForTransformer\\",
+              \\"name\\": \\"id\\",
             },
             Object {
-              \\"name\\": \\"childChildOfParentChildChangeForTransformer\\",
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
             },
           ],
         },

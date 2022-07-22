@@ -1,5 +1,8 @@
 ---
 title: Unit Testing
+examples:
+  - label: Using Jest
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest"
 ---
 
 Unit testing is a great way to protect against errors in your code before you
@@ -39,16 +42,26 @@ module.exports = {
   moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
+    "^gatsby-page-utils/(.*)$": `gatsby-page-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
+    "^gatsby-core-utils/(.*)$": `gatsby-core-utils/dist/$1`, // Workaround for https://github.com/facebook/jest/issues/9771
+    "^gatsby-plugin-utils/(.*)$": [
+      `gatsby-plugin-utils/dist/$1`,
+      `gatsby-plugin-utils/$1`,
+    ], // Workaround for https://github.com/facebook/jest/issues/9771
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script|gatsby-link)/)`],
   globals: {
     __PATH_PREFIX__: ``,
   },
-  testURL: `http://localhost`,
+  testEnvironmentOptions: {
+    url: `http://localhost`,
+  },
   setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
+
+> **Note:** If you're using Jest 28 or above, you can skip adding the `moduleNameMapper` options for `gatsby-page-utils`, `gatsby-core-utils`, and `gatsby-plugin-utils`. The mentioned bug was fixed in Jest 28.
 
 Go over the content of this configuration file:
 
@@ -62,8 +75,11 @@ const babelOptions = {
   presets: ["babel-preset-gatsby"],
 }
 
-module.exports = require("babel-jest").createTransformer(babelOptions)
+module.exports = require("babel-jest").default.createTransformer(babelOptions)
 ```
+
+> **Note:** If you're using Jest 26.6.3 or below, the last line has to be changed to
+> `module.exports = require("babel-jest").createTransformer(babelOptions)`
 
 - The next option is `moduleNameMapper`. This
   section works a bit like webpack rules and tells Jest how to handle imports.
@@ -241,6 +257,36 @@ const babelOptions = {
 ```
 
 Once this is changed, you can write your tests in TypeScript using the `.ts` or `.tsx` extensions.
+
+### Using tsconfig paths
+
+If you are using [tsconfig paths](https://www.typescriptlang.org/tsconfig#paths) there is a single change to your config.
+
+1. Add [ts-jest](https://github.com/kulshekhar/ts-jest)
+
+```shell
+npm install --save-dev ts-jest
+```
+
+2. Update `jest.config.js` to import and map `tsconfig.json` paths
+
+```js:title=jest.config.js
+const { compilerOptions } = require("./tsconfig.json")
+const { pathsToModuleNameMapper } = require("ts-jest/utils")
+const paths = pathsToModuleNameMapper(compilerOptions.paths, {
+  prefix: "<rootDir>/",
+})
+```
+
+3. Add paths to `jest.config.js` moduleNameMapper
+
+```js:title=jest.config.js
+  moduleNameMapper: {
+    '.+\\.(css|styl|less|sass|scss)$': `identity-obj-proxy`,
+    '.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': `<rootDir>/__mocks__/file-mock.js`,
+    ...paths,
+  },
+```
 
 ## Other resources
 

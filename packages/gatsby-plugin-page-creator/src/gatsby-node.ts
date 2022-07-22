@@ -15,6 +15,7 @@ import {
   createPath,
   watchDirectory,
   IPathIgnoreOptions,
+  applyTrailingSlashOption,
 } from "gatsby-page-utils"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createPage } from "./create-page-wrapper"
@@ -22,6 +23,19 @@ import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
 import { CODES, ERROR_MAP, prefixId } from "./error-utils"
+
+let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
+
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
+    coreSupportsOnPluginInit = `stable`
+  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
+    coreSupportsOnPluginInit = `unstable`
+  }
+} catch (e) {
+  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
+}
 
 interface IOptions extends PluginOptions {
   path: string
@@ -56,7 +70,8 @@ export async function createPagesStatefully(
 ): Promise<void> {
   try {
     const { deletePage } = actions
-    const { program } = store.getState()
+    const { program, config } = store.getState()
+    const { trailingSlash = `legacy` } = config
 
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
@@ -66,7 +81,7 @@ export async function createPagesStatefully(
         context: {
           sourceMessage: `"path" is a required option for gatsby-plugin-page-creator
 
-See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`,
+See docs here - https://www.gatsbyjs.com/plugins/gatsby-plugin-page-creator/`,
         },
       })
     }
@@ -97,6 +112,7 @@ Please pick a path to an existing directory.`,
         actions,
         graphql,
         reporter,
+        trailingSlash,
         ignore,
         slugifyOptions
       )
@@ -116,6 +132,7 @@ Please pick a path to an existing directory.`,
               actions,
               graphql,
               reporter,
+              trailingSlash,
               ignore,
               slugifyOptions
             )
@@ -166,9 +183,10 @@ Please pick a path to an existing directory.`,
 export function setFieldsOnGraphQLNodeType(
   { getNode, type, store, reporter }: SetFieldsOnGraphQLNodeTypeArgs,
   { slugify: slugifyOptions }: PluginOptions & { slugify: ISlugifyOptions }
-): object {
+): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
+    const { trailingSlash = `legacy` } = store.getState().config
     const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
@@ -180,7 +198,7 @@ export function setFieldsOnGraphQLNodeType(
             },
           },
           resolve: (
-            source: object,
+            source: Record<string, unknown>,
             { filePath }: { filePath: string }
           ): string => {
             // This is a quick hack for attaching parents to the node.
@@ -202,8 +220,17 @@ export function setFieldsOnGraphQLNodeType(
               reporter,
               slugifyOptions
             )
+            // TODO(v5): Remove legacy handling
+            const isLegacy = trailingSlash === `legacy`
+            const hasTrailingSlash = derivedPath.endsWith(`/`)
+            const path = createPath(
+              derivedPath,
+              isLegacy || hasTrailingSlash,
+              true
+            )
+            const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
-            return createPath(derivedPath)
+            return modifiedPath
           },
         },
       }
@@ -221,7 +248,7 @@ export function setFieldsOnGraphQLNodeType(
   }
 }
 
-export async function onPreInit(
+async function initializePlugin(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
@@ -264,4 +291,13 @@ export async function onPreInit(
       },
     })
   }
+}
+
+if (coreSupportsOnPluginInit === `stable`) {
+  // need to conditionally export otherwise it throws an error for older versions
+  exports.onPluginInit = initializePlugin
+} else if (coreSupportsOnPluginInit === `unstable`) {
+  exports.unstable_onPluginInit = initializePlugin
+} else {
+  exports.onPreInit = initializePlugin
 }

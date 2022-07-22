@@ -1,12 +1,14 @@
 # gatsby-plugin-nprogress
 
-Automatically shows the [nprogress](http://ricostacruz.com/nprogress/) indicator
+Automatically shows the [accessible-nprogress](https://github.com/nmackey/accessible-nprogress) indicator
 when a page is delayed in loading (which Gatsby considers as one second after
 clicking on a link).
 
 ## Install
 
-`npm install gatsby-plugin-nprogress`
+```shell
+npm install gatsby-plugin-nprogress
+```
 
 ## How to use
 
@@ -25,8 +27,4 @@ plugins: [
 ]
 ```
 
-In addition to `color` – a configuration option specific to
-`gatsby-plugin-nprogress` that saves some time
-[customizing the nprogress CSS](https://github.com/rstacruz/nprogress#customization)
-to match your site colors – you may pass all available
-[nprogress configuration options](https://github.com/rstacruz/nprogress#configuration).
+You can pass in the custom configuration option `color` to [customize the accessible-nprogress CSS](https://github.com/nmackey/accessible-nprogress#customization). You may also pass all available [accessible-nprogress configuration options](https://github.com/nmackey/accessible-nprogress#configuration) into the plugin, too.

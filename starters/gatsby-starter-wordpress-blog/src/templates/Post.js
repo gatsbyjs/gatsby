@@ -14,7 +14,7 @@ import SEO from "../components/seo"
 const BlogPostTemplate = ({ data: { previous, next, post } }) => {
   const featuredImage = {
     fluid: post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
-    alt: post.featuredImage?.node?.alt || ``,
+    alt: post.featuredImage?.node?.altText || ``,
   }
 
   return (

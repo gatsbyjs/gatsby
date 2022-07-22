@@ -5,6 +5,10 @@ import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
+import fetchReferencedMediaItemsAndCreateNodes, {
+  addImageCDNFieldsToNode,
+} from "../../fetch-nodes/fetch-referenced-media-items"
+
 import { dump } from "dumper.js"
 import { atob } from "atob"
 
@@ -20,9 +24,9 @@ export const fetchAndCreateSingleNode = async ({
   id,
   actionType,
   cachedNodeIds,
-  isDraft,
   token = null,
   isPreview = false,
+  isDraft = false,
   userDatabaseId = null,
 }) => {
   function getNodeQuery() {
@@ -41,7 +45,7 @@ export const fetchAndCreateSingleNode = async ({
   const query = getNodeQuery()
 
   const {
-    helpers: { reporter },
+    helpers: { reporter, getNode },
     pluginOptions,
   } = getGatsbyApi()
 
@@ -71,7 +75,7 @@ export const fetchAndCreateSingleNode = async ({
     errorContext: `Error occurred while updating a single "${singleName}" node.`,
   })
 
-  const remoteNode = data[singleName]
+  let remoteNode = data[singleName]
 
   if (!data || !remoteNode) {
     reporter.warn(
@@ -79,6 +83,16 @@ export const fetchAndCreateSingleNode = async ({
         `${id} ${singleName} was updated, but no data was returned for this node.`
       )
     )
+
+    reporter.info({
+      singleName,
+      id,
+      actionType,
+      cachedNodeIds,
+      token,
+      isPreview,
+      userDatabaseId,
+    })
 
     return { node: null }
   }
@@ -88,6 +102,35 @@ export const fetchAndCreateSingleNode = async ({
     singleName,
     id,
   })
+
+  if (isPreview && `slug` in remoteNode && !remoteNode.slug) {
+    // sometimes preview nodes do not have a slug - but some users will use slugs to build page urls. So we should make sure we have something for the slug.
+    remoteNode.slug = id
+  }
+
+  if (isPreview) {
+    const existingNode = getNode(id)
+
+    /**
+     * For Preview, revisions of a node type can have data that updates unecessarily
+     * This code block fixes that. The result being that less queries
+     * are invalidated in Gatsby. For example if you have a query where you're getting the latest published post using the date field, that should be static but each preview updates the date field on the node being previewed (because the revision has a new date). So if we prevent the following fields from changing, this will be less problematic.
+     */
+    if (existingNode) {
+      remoteNode = {
+        ...remoteNode,
+        databaseId: existingNode.databaseId,
+        date: existingNode.date,
+        dateGmt: existingNode.dateGmt,
+        slug: existingNode.slug,
+        guid: existingNode.guid,
+        id: existingNode.id,
+        link: existingNode.link,
+        uri: existingNode.uri,
+        status: existingNode.status,
+      }
+    }
+  }
 
   data[singleName] = remoteNode
 
@@ -136,32 +179,42 @@ export const createSingleNode = async ({
     type: typeInfo.nodesTypeName,
   }
 
-  const processedNode = await processNode({
+  const { processedNode, nodeMediaItemIdReferences } = await processNode({
     node: updatedNodeContent,
     pluginOptions,
     wpUrl,
     helpers,
   })
 
+  await fetchReferencedMediaItemsAndCreateNodes({
+    referencedMediaItemNodeIds: nodeMediaItemIdReferences,
+  })
+
   const { actions } = helpers
 
   const { createContentDigest } = helpers
 
-  let remoteNode = {
-    ...processedNode,
-    id: id,
-    parent: null,
-    internal: {
-      contentDigest: createContentDigest(updatedNodeContent),
-      type: buildTypeName(typeInfo.nodesTypeName),
+  const builtTypename = buildTypeName(typeInfo.nodesTypeName)
+
+  let remoteNode = addImageCDNFieldsToNode(
+    {
+      ...processedNode,
+      __typename: builtTypename,
+      id: id,
+      parent: null,
+      internal: {
+        contentDigest: createContentDigest(updatedNodeContent),
+        type: builtTypename,
+      },
     },
-  }
+    pluginOptions
+  )
 
   const typeSettings = getTypeSettingsByType({
     name: typeInfo.nodesTypeName,
   })
 
-  let additionalNodeIds
+  let additionalNodeIds = nodeMediaItemIdReferences || []
   let cancelUpdate
 
   if (
@@ -172,20 +225,23 @@ export const createSingleNode = async ({
       additionalNodeIds: receivedAdditionalNodeIds,
       remoteNode: receivedRemoteNode,
       cancelUpdate: receivedCancelUpdate,
-    } =
-      (await typeSettings.beforeChangeNode({
-        actionType: actionType,
-        remoteNode,
-        actions,
-        helpers,
-        fetchGraphql,
-        typeSettings,
-        buildTypeName,
-        type: typeInfo.nodesTypeName,
-        wpStore: store,
-      })) || {}
+    } = (await typeSettings.beforeChangeNode({
+      actionType: actionType,
+      remoteNode,
+      actions,
+      helpers,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      type: typeInfo.nodesTypeName,
+      wpStore: store,
+    })) || {}
 
-    additionalNodeIds = receivedAdditionalNodeIds
+    additionalNodeIds = [
+      ...additionalNodeIds,
+      ...(receivedAdditionalNodeIds || []),
+    ]
+
     cancelUpdate = receivedCancelUpdate
 
     if (receivedRemoteNode) {
@@ -254,8 +310,8 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
     await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
 
     if (existingNode) {
-      await actions.touchNode({ nodeId })
-      await actions.deleteNode({ node: existingNode })
+      await actions.touchNode(existingNode)
+      await actions.deleteNode(existingNode)
       reportUpdate({ setAction: `DELETE` })
     }
 

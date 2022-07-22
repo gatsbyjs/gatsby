@@ -30,9 +30,9 @@ The examples on this page cover the basic Markdown syntax and are adapted from
 ---
 
 This is intended as a quick reference and showcase. For more complete info, see
-[John Gruber's original spec](http://daringfireball.net/projects/markdown/) and
+[John Gruber's original spec](https://daringfireball.net/projects/markdown/) and
 the
-[GitHub-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
+[GitHub-flavored Markdown info page](https://github.github.com/github-flavored-markdown/).
 
 ##### Table of Contents
 
@@ -173,8 +173,8 @@ example.com (but not on GitHub, for example).
 Some text to show that the reference links can follow later.
 
 [arbitrary case-insensitive reference text]: https://www.mozilla.org
-[1]: http://slashdot.org
-[link text itself]: http://www.reddit.com
+[1]: https://slashdot.org
+[link text itself]: https://www.reddit.com
 ```
 
 [I'm an inline-style link](https://www.google.com)

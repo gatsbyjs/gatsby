@@ -2,6 +2,8 @@
 title: Gatsby Image API
 ---
 
+_This document talks about the deprecated image plugin. Please check out how to work with the new [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image)_
+
 Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
 
 > _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
@@ -37,7 +39,7 @@ _For in-depth install instructions, check out the docs on [Using Gatsby Image](/
 
 ### Gatsby image starts with a query
 
-To feed file data in to Gatsby Image, set up a [GraphQL query](/docs/graphql-reference/) and either pass it into a component as props or write it directly in the component. One technique is to leverage the [`useStaticQuery`](/docs/how-to/querying-data/use-static-query/) hook.
+To feed file data into Gatsby Image, set up a [GraphQL query](/docs/graphql-reference/) and either pass it into a component as props or write it directly in the component. One technique is to leverage the [`useStaticQuery`](/docs/how-to/querying-data/use-static-query/) hook.
 
 Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem](/plugins/gatsby-source-filesystem/), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/), but ultimately the options available to you will depend on your content sources.
 

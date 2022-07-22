@@ -46,7 +46,7 @@ gatsby build && gatsby serve
 
 ### Additional resources
 
-- Walk through building and deploying an example site in [tutorial part one](/docs/tutorial/part-one/#deploying-a-gatsby-site)
+- Walk through building and deploying an example site in [tutorial part one](/docs/tutorial/part-1/#deploying-a-gatsby-site)
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/preparing-for-deployment/)
 - Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them

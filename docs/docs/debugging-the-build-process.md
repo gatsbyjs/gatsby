@@ -29,7 +29,7 @@ exports.onCreateNode = args => {
 
 There is a bug in this code and using it will produce the error below:
 
-```js
+```shell
 TypeError: Cannot read property 'internal' of undefined
 
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]
@@ -156,14 +156,11 @@ After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` c
 
 ### Running Gatsby with the `inspect` flag
 
-In your project directory instead of running `npm run develop` run the following command:
+In your project directory with the global Gatsby CLI installed run the following command:
 
 ```shell
-node --no-lazy node_modules/.bin/gatsby develop --inspect-brk
+gatsby develop --inspect
 ```
-
-- `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
-- `--no-lazy` - this will force Node's V8 engine to disable lazy compilation and will help with using breakpoints.
 
 ### Connecting DevTools
 
@@ -185,7 +182,7 @@ This example has problematic code in your local `gatsby-node.js` file, so add th
 
 ### Using DevTools
 
-Go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left click on a line number:
+Go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left-click on a line number:
 
 ![Added breakpoint](./images/chrome-devtools-new-breakpoint.png)
 
@@ -205,7 +202,7 @@ You can now see the problem - `args` doesn't contain `Node` - it contains `node`
 
 You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use the debugger. Thankfully there are other methods that make it simpler to start such as the ones outlined above.
 
-- This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports Node.js debugging).
+- This was an introduction to Node.js debugging. Using information from this section you can set up debugging in your code editor or IDE of choice (if it supports Node.js debugging).
 - You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
 - Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
 

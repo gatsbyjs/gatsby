@@ -13,8 +13,9 @@ const fallback = (filename: string): NodeRequire => {
   const mod = new Module(filename) as Module & IModulePrivateMethods
 
   mod.filename = filename
-  mod.paths = (Module as typeof Module &
-    IModulePrivateMethods)._nodeModulePaths(path.dirname(filename))
+  mod.paths = (
+    Module as typeof Module & IModulePrivateMethods
+  )._nodeModulePaths(path.dirname(filename))
   mod._compile(`module.exports = require;`, filename)
 
   return mod.exports

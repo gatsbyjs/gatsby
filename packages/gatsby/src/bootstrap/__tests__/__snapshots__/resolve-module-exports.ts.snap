@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Resolve module exports Show meaningful error message for invalid JavaScript 1`] = `
+Array [
+  "Syntax error in \\"/bad/file\\":
+Missing initializer in const declaration. (1:13)
+> 1 | const exports.blah = () = }}}
+    |             ^",
+]
+`;

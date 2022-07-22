@@ -1,46 +1,53 @@
 {
   "name": "gatsby-link",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
-  "version": "3.0.0-next.0",
+  "version": "4.20.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.mjs",
+  "types": "index.d.ts",
+  "files": [
+    "dist/*",
+    "index.d.ts"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "microbundle -f cjs,modern --jsx React.createElement --generateTypes false",
+    "watch": "npm run build watch --no-compress",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "clean": "del-cli dist/*"
+  },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
-    "@types/reach__router": "^1.3.7",
-    "prop-types": "^15.7.2"
+    "@types/reach__router": "^1.3.10",
+    "gatsby-page-utils": "^2.20.0-next.0",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@testing-library/react": "^9.5.0",
-    "babel-preset-gatsby-package": "^1.0.0-next.0",
-    "cross-env": "^7.0.3"
+    "@testing-library/react": "^11.2.7",
+    "cross-env": "^7.0.3",
+    "del-cli": "^3.0.1",
+    "microbundle": "^0.15.0"
   },
   "peerDependencies": {
-    "@reach/router": "^1.3.3",
-    "react": "^16.4.2 || ^17.0.0",
-    "react-dom": "^16.4.2 || ^17.0.0"
+    "@gatsbyjs/reach-router": "^1.3.5",
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-link"
   },
-  "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
-  },
-  "types": "index.d.ts",
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

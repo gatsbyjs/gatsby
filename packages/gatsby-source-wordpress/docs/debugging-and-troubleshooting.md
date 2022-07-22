@@ -7,6 +7,7 @@
     - [WordPress 50\* errors](#wordpress-50-errors)
     - [Node Sourcing Timeouts](#node-sourcing-timeouts)
   - [Media File Download Errors](#media-file-download-errors)
+  - [Media File Download Skipped](#media-file-download-skipped)
   - [Broken Preview templates](#broken-preview-templates)
   - [Previews Don't Update](#previews-dont-update)
   - [Preview debug mode](#preview-debug-mode)
@@ -39,7 +40,7 @@ Take that query and make the query directly to your WP instance GraphQL API like
 {
   pages {
     nodes {
-    	id
+      id
       title
     }
   }
@@ -54,10 +55,10 @@ Take that query and make the query directly to your WP instance GraphQL API like
    ```js
    {
      resolve: `gatsby-source-wordpress`,
-   	options: {
-   		debug: {
+     options: {
+       debug: {
          graphql: {
-         	writeQueriesToDisk: true,
+           writeQueriesToDisk: true,
          },
        },
      },
@@ -87,14 +88,14 @@ Take that query and make the query directly to your WP instance GraphQL API like
 
     #### If it does have missing data:
 
-    this means you're experiencing a bug on the WPGraphQL side of things. Seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL Github repo](https://github.com/wp-graphql/wp-graphql), or the Github repo for the WPGraphQL extension that manages the fields you're having trouble with.
+    this means you're experiencing a bug on the WPGraphQL side of things. Seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL GitHub repo](https://github.com/wp-graphql/wp-graphql), or the GitHub repo for the WPGraphQL extension that manages the fields you're having trouble with.
     To help them debug you should narrow down exactly which combination of fields in the generated query you copied is causing issues. Comment out fields 1 by 1 until the problem goes away to determine which combination of fields isn't working.
 
     **Note:** A common cause of this problem is that you're using ACF and you've named multiple fields with the same name but in different field groups. Identify conflicting field names and rename them.
 
     #### If it does not have missing data:
 
-    This means it's a `gatsby-source-wordpress` bug. Open an issue in the [Github repo](https://github.com/gatsbyjs/gatsby/issues/new).
+    This means it's a `gatsby-source-wordpress` bug. Open an issue in the [GitHub repo](https://github.com/gatsbyjs/gatsby/issues/new).
 
 ### Node Sourcing GraphQL errors
 
@@ -103,10 +104,10 @@ If your build is erroring on a GraphQL error returned in the response from a Gra
 ```js
 {
   resolve: `gatsby-source-wordpress`,
-	options: {
-		debug: {
+  options: {
+    debug: {
       graphql: {
-      	writeQueriesToDisk: true,
+        writeQueriesToDisk: true,
       },
     },
   },
@@ -117,7 +118,7 @@ Now run `gatsby develop` or `gatsby build` again. When the process exits on your
 
 Within this file will be the query made during node sourcing to fetch data from WPGraphQL into Gatsby.
 
-You can use this query to reproduce your error message and debug your error message outside of Gatsby. If you're stuck seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL Github repo](https://github.com/wp-graphql/wp-graphql), or the Github repo for the WPGraphQL extension that manages the fields you're having trouble with.
+You can use this query to reproduce your error message and debug your error message outside of Gatsby. If you're stuck seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL GitHub repo](https://github.com/wp-graphql/wp-graphql), or the GitHub repo for the WPGraphQL extension that manages the fields you're having trouble with.
 
 ### WordPress 50\* errors
 
@@ -136,8 +137,8 @@ To determine how many concurrent GraphQL requests your server can handle, enable
 ```js
 {
   resolve: `gatsby-source-wordpress`,
-	options: {
-		verbose: true,
+  options: {
+    verbose: true,
   },
 },
 ```
@@ -155,6 +156,42 @@ Note that `GATSBY_CONCURRENCT_DOWNLOAD` has been retired, now [`schema.requestCo
 ## Media File Download Errors
 
 The main error that occurs while fetching media files is overwhelming the remote server due to too many concurrent requests. You can set the [`schema.requestConcurrency`](./plugin-options.md#schema.requestconcurrency-int) plugin option below it's default of `100`. You will need to experiment a bit to determine what the maximum number of concurrent requests for media files your server can handle is.
+
+## Media File Download Skipped
+
+This might happen for several reasons, but two of the most common are that the file was excluded due to the file's size exceeding the `maxFileSizeBytes` config option or because its mime type was included in the `excludeByMimeTypes` config option.
+
+In order to determine what media items were not downloaded on account of `maxFileSizeBytes`, start your gatsby develop server and run the following GraphQL query.
+
+> ️⚠️ Ensure that you replace the number in the `gt` filter with the value of `maxFileSizeBytes` found in your gatsby config
+
+```graphql
+query TOO_LARGE_FILES {
+  allWpMediaItem(filter: { fileSize: { gt: 15728640 } }) {
+    nodes {
+      id
+      sourceUrl
+      fileSize
+    }
+  }
+}
+```
+
+If you want to investigate which images weren't downloaded due to the `excludeByMimeTypes` option, start up a gatsby develop server and run the following.
+
+> ⚠️ Ensure that the array of mime types passed to the `in` filter in the following query matches the value of `excludeByMimeTypes` in your gatsby config
+
+```graphql
+query MIME_TYPE_EXCLUDED {
+  allWpMediaItem(filter: { mimeType: { in: ["image/jpeg", "video/mp4"] } }) {
+    nodes {
+      id
+      sourceUrl
+      mimeType
+    }
+  }
+}
+```
 
 ## Broken Preview templates
 
@@ -176,7 +213,7 @@ If post revisions are enabled on your site and previews are still not working, p
 
 ## Preview debug mode
 
-You can enable Preview debug mode to help you debug issues with the Gatsby Preview build process. Visit the [plugin options page](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debugpreview-boolean) to see how to enable this debug option. This option will log addition info to the terminal output including the contents of the webhook body that was sent to the Gatsby process, a list of the Preview change events Gatsby receives, as well as the node Preview data that was sourced during the Preview.
+You can enable Preview debug mode to help you debug issues with the Gatsby Preview build process. Visit the [plugin options page](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debugpreview-boolean) to see how to enable this debug option or enable this option by setting the env variable `WP_GATSBY_PREVIEW_DEBUG`. This option will log addition info to the terminal output including the contents of the webhook body that was sent to the Gatsby process, a list of the Preview change events Gatsby receives, as well as the node Preview data that was sourced during the Preview.
 
 # Up Next :point_right:
 

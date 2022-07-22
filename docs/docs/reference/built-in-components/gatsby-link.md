@@ -2,11 +2,17 @@
 title: Gatsby Link API
 ---
 
-For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function which is used for programmatic navigation.
-
-Gatsby's `<Link>` component enables linking to internal pages as well as a powerful performance feature called preloading. Preloading is used to prefetch resources so that the resources are fetched by the time the user navigates with this component. We use an `IntersectionObserver` to fetch a low-priority request when the `Link` is in the viewport and then use an `onMouseOver` event to trigger a high-priority request when it is likely that a user will navigate to the requested resource.
+For internal navigation, Gatsby includes a built-in `<Link>` component for creating links between internal pages as well as a `navigate` function for programmatic navigation.
 
 The component is a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link) that adds useful enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
+
+## `<Link>` drives Gatsby's fast page navigation
+
+The `<Link>` component drives a powerful performance feature called preloading. Preloading is used to prefetch page resources so that the resources are available by the time the user navigates to the page. We use the browser's [`Intersection Observer API`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to observe when a `<Link>` component enters the user viewport and then start a low-priority request for the linked page's resources. Then when a user moves their mouse over a link and the `onMouseOver` event is triggered, we upgrade the fetches to high-priority.
+
+This two stage preloading helps ensure the page is ready to be rendered as soon as the user clicks to navigate.
+
+Intelligent preloading like this eliminates the latency users experience when clicking on links in sites built in most other frameworks.
 
 ## How to use Gatsby Link
 
@@ -17,7 +23,14 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 ### Replace `a` tags with the `Link` tag for local links
 
-In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag.
+In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag. The two elements work much the same except `href` is now `to`.
+
+```diff
+-<a href="/blog">Blog</a>
++<Link to="/blog">Blog</Link>
+```
+
+A full example:
 
 ```jsx
 import React from "react"
@@ -277,6 +290,12 @@ const Form = () => (
 )
 ```
 
+### Navigate to the previous page
+
+You can use `navigate(-1)` to go to a previously visited route. This is [Reach Router's](https://reach.tech/router/api/navigate) way of using `history.back()`. You can use any number as it uses [`history.go()`](https://developer.mozilla.org/en-US/docs/Web/API/History/go) under the hood. The `delta` parameter will be the number you pass in to `navigate()`.
+
+If you want to check if there was a previous route you should [pass in an explicit state](#pass-state-as-props-to-the-linked-page) from your previously clicked internal link.
+
 ## Add the path prefix to paths using `withPrefix`
 
 It is common to host sites in a sub-directory of a site. Gatsby lets you [set
@@ -379,10 +398,10 @@ You can similarly check for file downloads:
 
 ## Recommendations for programmatic, in-app navigation
 
-Neither `<Link>` nor `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package--which Gatsby already depends upon--to make use of its `navigate` function, like so:
+If you need this behavior, you should either use an anchor tag or import the `navigate` helper from `gatsby`, like so:
 
 ```jsx
-import { navigate } from '@reach/router';
+import { navigate } from 'gatsby';
 
 ...
 

@@ -20,6 +20,14 @@ import {
 } from "../types/type-builders"
 const withResolverContext = require(`../context`)
 
+/**
+ * Helper identity function to trigger syntax highlighting in code editors.
+ * (`gql` name serve as a hint)
+ */
+function gql(input) {
+  return input
+}
+
 const nodes = require(`./fixtures/node-model`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -28,6 +36,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    panic: jest.fn(console.error),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -890,6 +899,178 @@ describe(`Build schema`, () => {
       expect(report.warn).not.toHaveBeenCalled()
     })
 
+    it(`merges interfaces extending other interfaces`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          `interface Bar { bar: String }`,
+          `interface Baz implements Foo { foo: String }`,
+          `interface Baz implements Bar & Node { bar: String, id: ID! }`,
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Baz = schema.getType(`Baz`)
+      const interfaces = Baz.getInterfaces().map(iface => iface.name)
+      expect(interfaces).toEqual([`Foo`, `Bar`, `Node`])
+    })
+
+    it(`merges interfaces extending other interfaces (Type Builder)`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          buildInterfaceType({
+            name: `Bar`,
+            fields: {
+              bar: `String`,
+            },
+          }),
+          buildInterfaceType({
+            name: `Baz`,
+            fields: {
+              foo: `String`,
+            },
+            interfaces: [`Foo`],
+          }),
+          buildInterfaceType({
+            name: `Baz`,
+            fields: {
+              id: `ID!`,
+              bar: `String`,
+            },
+            interfaces: [`Bar`, `Node`],
+          }),
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Baz = schema.getType(`Baz`)
+      const interfaces = Baz.getInterfaces().map(iface => iface.name)
+      expect(interfaces).toEqual([`Foo`, `Bar`, `Node`])
+    })
+
+    it(`merges interfaces extending other interfaces (graphql-js)`, async () => {
+      const Foo = new GraphQLInterfaceType({
+        name: `Foo`,
+        fields: {
+          foo: { type: GraphQLString },
+        },
+      })
+      const Bar = new GraphQLInterfaceType({
+        name: `Bar`,
+        fields: {
+          bar: { type: GraphQLString },
+        },
+      })
+      const Baz1 = new GraphQLInterfaceType({
+        name: `Baz`,
+        fields: {
+          foo: { type: GraphQLString },
+        },
+        interfaces: [Foo],
+      })
+      const Baz2 = new GraphQLInterfaceType({
+        name: `Baz`,
+        fields: {
+          bar: { type: GraphQLString },
+        },
+        interfaces: [Bar],
+      })
+
+      createTypes([Foo, Bar, Baz1, Baz2], { name: `default-site-plugin` })
+      const schema = await buildSchema()
+      const Baz = schema.getType(`Baz`)
+      const interfaces = Baz.getInterfaces().map(iface => iface.name)
+      expect(interfaces).toEqual([`Foo`, `Bar`])
+    })
+
+    it(`merges resolveType for abstract types (Type Builder)`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          `
+            type Fizz { id: ID! }
+            type Buzz { id: ID! }
+            union FizzBuzz = Fizz | Buzz
+          `,
+          buildInterfaceType({
+            name: `Foo`,
+            fields: { id: `ID!` },
+            resolveType: source => source.expectedType,
+          }),
+          buildUnionType({
+            name: `FizzBuzz`,
+            resolveType: source => (source.isFizz ? `Fizz` : `Buzz`),
+          }),
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Foo = schema.getType(`Foo`)
+      expect(Foo.resolveType({ expectedType: `Bar` })).toEqual(`Bar`)
+
+      const FizzBuzz = schema.getType(`FizzBuzz`)
+      expect(FizzBuzz.resolveType({ isFizz: true })).toEqual(`Fizz`)
+      expect(FizzBuzz.resolveType({ isFizz: false })).toEqual(`Buzz`)
+    })
+
+    it(`merges resolveType for abstract types (graphql-js)`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          `
+            type Fizz { id: ID! }
+            type Buzz { id: ID! }
+            union FizzBuzz = Fizz | Buzz
+          `,
+          new GraphQLInterfaceType({
+            name: `Foo`,
+            fields: { foo: { type: GraphQLString } },
+            resolveType: source => source.expectedType,
+          }),
+          new GraphQLUnionType({
+            name: `FizzBuzz`,
+            resolveType: source => (source.isFizz ? `Fizz` : `Buzz`),
+          }),
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Foo = schema.getType(`Foo`)
+      expect(Foo.resolveType({ expectedType: `Bar` })).toEqual(`Bar`)
+
+      const FizzBuzz = schema.getType(`FizzBuzz`)
+      expect(FizzBuzz.resolveType({ isFizz: true })).toEqual(`Fizz`)
+      expect(FizzBuzz.resolveType({ isFizz: false })).toEqual(`Buzz`)
+    })
+
+    it(`falls back to default resolveType when merging with placeholder `, async () => {
+      createTypes(
+        [
+          buildObjectType({
+            name: `Foo`,
+            fields: { id: `ID!` },
+            interfaces: [`Bar`],
+          }),
+          `interface Bar { id: ID! }`,
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Bar = schema.getType(`Bar`)
+      expect(Bar.resolveType({ internal: { type: `Foo` } })).toEqual(`Foo`)
+    })
+
     it(`merges plugin-defined type (Type Builder) with overridable built-in type without warning`, async () => {
       createTypes(
         [
@@ -944,6 +1125,8 @@ describe(`Build schema`, () => {
         `internalComponentName`,
         `componentChunkName`,
         `matchPath`,
+        `pageContext`,
+        `pluginCreator`,
         `bar`,
         `id`,
         `parent`,
@@ -982,6 +1165,8 @@ describe(`Build schema`, () => {
         `internalComponentName`,
         `componentChunkName`,
         `matchPath`,
+        `pageContext`,
+        `pluginCreator`,
         `bar`,
         `id`,
         `parent`,
@@ -1169,6 +1354,107 @@ describe(`Build schema`, () => {
         "type NestedNestedFoo {
           bar: Int
           baz: Int
+        }"
+      `)
+    })
+
+    it(`handles merging types when implemented interface wasn't defined yet`, async () => {
+      createTypes(gql`
+        # create initial type composer
+        type TypeThatWillImplementInterface {
+          sharedField: String
+          originalField: String
+        }
+
+        # adjust type to implement not yet defined interface
+        # this will trigger type merging
+        type TypeThatWillImplementInterface implements CustomInterface {
+          sharedField: String
+          newField: String
+        }
+
+        # actually define interface (last)
+        interface CustomInterface {
+          sharedField: String
+        }
+      `)
+      // implicit assertion is that building schema doesn't throw in the process
+      const schema = await buildSchema()
+      expect(printType(schema.getType(`CustomInterface`)))
+        .toMatchInlineSnapshot(`
+        "interface CustomInterface {
+          sharedField: String
+        }"
+      `)
+
+      expect(printType(schema.getType(`TypeThatWillImplementInterface`)))
+        .toMatchInlineSnapshot(`
+        "type TypeThatWillImplementInterface implements CustomInterface {
+          sharedField: String
+          originalField: String
+          newField: String
+        }"
+      `)
+    })
+
+    it(`Can reference derived types when merging types`, async () => {
+      createTypes(gql`
+        # create initial type composer
+        type TypeCreatedBySourcePlugin implements Node {
+          id: ID!
+          someField: String
+        }
+      `)
+      createTypes([
+        buildInterfaceType({
+          name: `SharedInterface`,
+          fields: {
+            id: `ID!`,
+            child_items: {
+              type: `[SharedInterface]`,
+              args: {
+                // referencing derived type
+                sort: `SharedInterfaceSortInput`,
+              },
+            },
+          },
+          interfaces: [`Node`],
+        }),
+        buildObjectType({
+          name: `TypeCreatedBySourcePlugin`,
+          fields: {
+            id: `ID!`,
+            child_items: {
+              type: `[SharedInterface]`,
+              args: {
+                sort: `SharedInterfaceSortInput`,
+              },
+              resolve: (_, args) => [],
+            },
+          },
+          interfaces: [`Node`, `SharedInterface`],
+        }),
+      ])
+
+      // implicit assertion is that building schema doesn't throw in the process
+      const schema = await buildSchema()
+      expect(printType(schema.getType(`TypeCreatedBySourcePlugin`)))
+        .toMatchInlineSnapshot(`
+        "type TypeCreatedBySourcePlugin implements Node & SharedInterface {
+          id: ID!
+          someField: String
+          child_items(sort: SharedInterfaceSortInput): [SharedInterface]
+          parent: Node
+          children: [Node!]!
+          internal: Internal!
+        }"
+      `)
+
+      expect(printType(schema.getType(`SharedInterfaceSortInput`)))
+        .toMatchInlineSnapshot(`
+        "input SharedInterfaceSortInput {
+          fields: [SharedInterfaceFieldsEnum]
+          order: [SortOrderEnum] = [ASC]
         }"
       `)
     })

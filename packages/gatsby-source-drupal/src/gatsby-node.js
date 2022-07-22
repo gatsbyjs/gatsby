@@ -1,8 +1,116 @@
-const axios = require(`axios`)
+const got = require(`got`)
 const _ = require(`lodash`)
+const urlJoin = require(`url-join`)
+import HttpAgent from "agentkeepalive"
+// const http2wrapper = require(`http2-wrapper`)
+const opentracing = require(`opentracing`)
+const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
-const { handleReferences, handleWebhookUpdate } = require(`./utils`)
+const {
+  polyfillImageServiceDevRoutes,
+  addRemoteFilePolyfillInterface,
+} = require(`gatsby-plugin-utils/polyfill-remote-file`)
+
+const { HttpsAgent } = HttpAgent
+
+const { setOptions, getOptions } = require(`./plugin-options`)
+
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  imageCDNState,
+} = require(`./normalize`)
+const {
+  handleReferences,
+  handleWebhookUpdate,
+  createNodeIfItDoesNotExist,
+  handleDeletedNode,
+  drupalCreateNodeManifest,
+  getExtendedFileNodeData,
+} = require(`./utils`)
+
+const imageCdnDocs = `https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme`
+
+const agent = {
+  http: new HttpAgent(),
+  https: new HttpsAgent(),
+  // http2: new http2wrapper.Agent(),
+}
+
+let start
+let apiRequestCount = 0
+let initialSourcing = true
+let globalReporter
+async function worker([url, options]) {
+  const tracer = opentracing.globalTracer()
+  const httpSpan = tracer.startSpan(`http.get`, {
+    childOf: options.parentSpan,
+  })
+  const parsedUrl = new URL(url)
+  httpSpan.setTag(SemanticAttributes.HTTP_URL, url)
+  httpSpan.setTag(SemanticAttributes.HTTP_HOST, parsedUrl.host)
+  httpSpan.setTag(
+    SemanticAttributes.HTTP_SCHEME,
+    parsedUrl.protocol.replace(/:$/, ``)
+  )
+  httpSpan.setTag(SemanticAttributes.HTTP_TARGET, parsedUrl.pathname)
+  httpSpan.setTag(`plugin`, `gatsby-source-drupal`)
+
+  // Log out progress during the initial sourcing.
+  if (initialSourcing) {
+    apiRequestCount += 1
+    if (!start) {
+      start = Date.now()
+    }
+    const queueLength = requestQueue.length()
+    if (apiRequestCount % 50 === 0) {
+      globalReporter.verbose(
+        `gatsby-source-drupal has ${queueLength} API requests queued and the current request rate is ${(
+          apiRequestCount /
+          ((Date.now() - start) / 1000)
+        ).toFixed(2)} requests / second`
+      )
+    }
+  }
+
+  if (typeof options.searchParams === `object`) {
+    url = new URL(url)
+    const searchParams = new URLSearchParams(options.searchParams)
+    const searchKeys = Array.from(searchParams.keys())
+    searchKeys.forEach(searchKey => {
+      // Only add search params to url if it has not already been
+      // added.
+      if (!url.searchParams.has(searchKey)) {
+        url.searchParams.set(searchKey, searchParams.get(searchKey))
+      }
+    })
+    url = url.toString()
+  }
+  delete options.searchParams
+
+  const response = await got(url, {
+    agent,
+    cache: false,
+    // request: http2wrapper.auto,
+    // http2: true,
+    ...options,
+  })
+
+  httpSpan.setTag(SemanticAttributes.HTTP_STATUS_CODE, response?.statusCode)
+  httpSpan.setTag(SemanticAttributes.HTTP_METHOD, `GET`)
+  httpSpan.setTag(SemanticAttributes.NET_PEER_IP, response?.ip)
+  httpSpan.setTag(
+    SemanticAttributes.HTTP_RESPONSE_CONTENT_LENGTH,
+    response?.rawBody?.length
+  )
+
+  httpSpan.finish()
+
+  return response
+}
+
+const requestQueue = require(`fastq`).promise(worker, 20)
 
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
@@ -22,6 +130,10 @@ function gracefullyRethrow(activity, error) {
   }
 }
 
+exports.onPreBootstrap = (_, pluginOptions) => {
+  setOptions(pluginOptions)
+}
+
 exports.sourceNodes = async (
   {
     actions,
@@ -38,19 +150,49 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  let {
+  const tracer = opentracing.globalTracer()
+
+  globalReporter = reporter
+  const {
     baseUrl,
-    apiBase,
-    basicAuth,
+    apiBase = `jsonapi`,
+    basicAuth = {},
     filters,
     headers,
-    params,
-    concurrentFileRequests,
-    disallowedLinkTypes,
-    skipFileDownloads,
-    fastBuilds,
+    params = {},
+    concurrentFileRequests = 20,
+    concurrentAPIRequests = 20,
+    requestTimeoutMS,
+    disallowedLinkTypes = [
+      `self`,
+      `describedby`,
+      `contact_message--feedback`,
+      `contact_message--personal`,
+    ],
+    skipFileDownloads = false,
+    fastBuilds = false,
+    entityReferenceRevisions = [],
+    languageConfig = {
+      defaultLanguage: `und`,
+      enabledLanguages: [`und`],
+      translatableEntities: [],
+      nonTranslatableEntities: [],
+    },
   } = pluginOptions
-  const { createNode, setPluginStatus, touchNode } = actions
+
+  // older versions of Gatsby didn't use Joi's default value for plugin options
+  if (!(`imageCDN` in pluginOptions)) {
+    pluginOptions.imageCDN = true
+  }
+
+  const {
+    createNode,
+    setPluginStatus,
+    touchNode,
+    unstable_createNodeManifest,
+  } = actions
+  // Update the concurrency limit from the plugin options
+  requestQueue.concurrency = concurrentAPIRequests
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -62,7 +204,7 @@ exports.sourceNodes = async (
     changesActivity.start()
 
     try {
-      const { secret, action, id, data } = webhookBody
+      const { secret, action, data } = webhookBody
       if (pluginOptions.secret && pluginOptions.secret !== secret) {
         reporter.warn(
           `The secret in this request did not match your plugin options secret.`
@@ -70,9 +212,37 @@ exports.sourceNodes = async (
         changesActivity.end()
         return
       }
+
+      if (!action || !data) {
+        reporter.warn(
+          `The webhook body was malformed
+
+${JSON.stringify(webhookBody, null, 4)}`
+        )
+
+        changesActivity.end()
+        return
+      }
+
       if (action === `delete`) {
-        actions.deleteNode(getNode(createNodeId(id)))
-        reporter.log(`Deleted node: ${id}`)
+        let nodesToDelete = data
+        if (!Array.isArray(data)) {
+          nodesToDelete = [data]
+        }
+
+        for (const nodeToDelete of nodesToDelete) {
+          const deletedNode = await handleDeletedNode({
+            actions,
+            getNode,
+            cache,
+            node: nodeToDelete,
+            createNodeId,
+            createContentDigest,
+            entityReferenceRevisions,
+          })
+          reporter.log(`Deleted node: ${deletedNode.id}`)
+        }
+
         changesActivity.end()
         return
       }
@@ -80,6 +250,17 @@ exports.sourceNodes = async (
       let nodesToUpdate = data
       if (!Array.isArray(data)) {
         nodesToUpdate = [data]
+      }
+
+      for (const nodeToUpdate of nodesToUpdate) {
+        await createNodeIfItDoesNotExist({
+          nodeToUpdate,
+          actions,
+          createNodeId,
+          createContentDigest,
+          getNode,
+          reporter,
+        })
       }
 
       for (const nodeToUpdate of nodesToUpdate) {
@@ -94,6 +275,7 @@ exports.sourceNodes = async (
             getNode,
             reporter,
             store,
+            languageConfig,
           },
           pluginOptions
         )
@@ -106,104 +288,191 @@ exports.sourceNodes = async (
     return
   }
 
-  fastBuilds = fastBuilds || false
   if (fastBuilds) {
-    let lastFetched =
-      store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
-      0
+    const fastBuildsSpan = tracer.startSpan(`sourceNodes.fetch`, {
+      childOf: parentSpan,
+    })
+    fastBuildsSpan.setTag(`plugin`, `gatsby-source-drupal`)
+    fastBuildsSpan.setTag(`sourceNodes.fetch.type`, `delta`)
 
-    const drupalFetchIncrementalActivity = reporter.activityTimer(
-      `Fetch incremental changes from Drupal`
+    const lastFetched =
+      store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched
+
+    reporter.verbose(
+      `[gatsby-source-drupal]: value of lastFetched for fastbuilds "${lastFetched}"`
     )
+
     let requireFullRebuild = false
 
-    drupalFetchIncrementalActivity.start()
-
-    try {
-      // Hit fastbuilds endpoint with the lastFetched date.
-      const data = await axios.get(
-        `${baseUrl}/gatsby-fastbuilds/sync/${lastFetched}`,
-        {
-          auth: basicAuth,
-          headers,
-          params,
-        }
+    // lastFetched isn't set so do a full rebuild.
+    if (!lastFetched) {
+      setPluginStatus({ lastFetched: Math.floor(new Date().getTime() / 1000) })
+      requireFullRebuild = true
+    } else {
+      const drupalFetchIncrementalActivity = reporter.activityTimer(
+        `Fetch incremental changes from Drupal`,
+        { parentSpan: fastBuildsSpan }
       )
 
-      if (data.data.status === -1) {
-        // The incremental data is expired or this is the first fetch.
-        reporter.info(`Unable to pull incremental data changes from Drupal`)
-        setPluginStatus({ lastFetched: data.data.timestamp })
-        requireFullRebuild = true
-      } else {
-        // Touch nodes so they are not garbage collected by Gatsby.
-        getNodes().forEach(node => {
-          if (node.internal.owner === `gatsby-source-drupal`) {
-            touchNode(node)
-          }
-        })
+      drupalFetchIncrementalActivity.start()
 
-        // Process sync data from Drupal.
-        let nodesToSync = data.data.entities
-        for (const nodeSyncData of nodesToSync) {
-          if (nodeSyncData.action === `delete`) {
-            actions.deleteNode(getNode(createNodeId(nodeSyncData.id)))
-          } else {
-            // The data could be a single Drupal entity or an array of Drupal
-            // entities to update.
+      try {
+        // Hit fastbuilds endpoint with the lastFetched date.
+        const res = await requestQueue.push([
+          urlJoin(
+            baseUrl,
+            `gatsby-fastbuilds/sync/`,
+            Math.floor(lastFetched).toString()
+          ),
+          {
+            username: basicAuth.username,
+            password: basicAuth.password,
+            headers,
+            searchParams: params,
+            responseType: `json`,
+            parentSpan: fastBuildsSpan,
+            timeout: {
+              // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+              request: requestTimeoutMS,
+            },
+          },
+        ])
+
+        // Fastbuilds returns a -1 if:
+        // - the timestamp has expired
+        // - if old fastbuild logs were purged
+        // - it's been a really long time since you synced so you just do a full fetch.
+        if (res.body.status === -1) {
+          // The incremental data is expired or this is the first fetch.
+          reporter.info(`Unable to pull incremental data changes from Drupal`)
+          setPluginStatus({ lastFetched: res.body.timestamp })
+          requireFullRebuild = true
+        } else {
+          // Touch nodes so they are not garbage collected by Gatsby.
+          if (initialSourcing) {
+            const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
+              childOf: fastBuildsSpan,
+            })
+            touchNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+            let touchCount = 0
+            getNodes().forEach(node => {
+              if (node.internal.owner === `gatsby-source-drupal`) {
+                touchCount += 1
+                touchNode(node)
+              }
+            })
+            touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
+            touchNodesSpan.finish()
+          }
+
+          const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
+            childOf: parentSpan,
+          })
+          createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+          createNodesSpan.setTag(`sourceNodes.fetch.type`, `delta`)
+          createNodesSpan.setTag(
+            `sourceNodes.createNodes.count`,
+            res.body.entities?.length
+          )
+
+          // Process sync data from Drupal.
+          const nodesToSync = res.body.entities
+
+          // First create all nodes that we haven't seen before. That
+          // way we can create relationships correctly next as the nodes
+          // will exist in Gatsby.
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              continue
+            }
+
             let nodesToUpdate = nodeSyncData.data
             if (!Array.isArray(nodeSyncData.data)) {
               nodesToUpdate = [nodeSyncData.data]
             }
-
             for (const nodeToUpdate of nodesToUpdate) {
-              await handleWebhookUpdate(
-                {
-                  nodeToUpdate,
-                  actions,
-                  cache,
-                  createNodeId,
-                  createContentDigest,
-                  getCache,
-                  getNode,
-                  reporter,
-                  store,
-                },
-                pluginOptions
-              )
+              await createNodeIfItDoesNotExist({
+                nodeToUpdate,
+                actions,
+                createNodeId,
+                createContentDigest,
+                getNode,
+                reporter,
+              })
             }
           }
+
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              handleDeletedNode({
+                actions,
+                getNode,
+                cache,
+                node: nodeSyncData,
+                createNodeId,
+                createContentDigest,
+                entityReferenceRevisions,
+              })
+            } else {
+              // The data could be a single Drupal entity or an array of Drupal
+              // entities to update.
+              let nodesToUpdate = nodeSyncData.data
+              if (!Array.isArray(nodeSyncData.data)) {
+                nodesToUpdate = [nodeSyncData.data]
+              }
+
+              for (const nodeToUpdate of nodesToUpdate) {
+                await handleWebhookUpdate(
+                  {
+                    nodeToUpdate,
+                    actions,
+                    cache,
+                    createNodeId,
+                    createContentDigest,
+                    getCache,
+                    getNode,
+                    reporter,
+                    store,
+                    languageConfig,
+                  },
+                  pluginOptions
+                )
+              }
+            }
+          }
+
+          createNodesSpan.finish()
+          setPluginStatus({ lastFetched: res.body.timestamp })
         }
+      } catch (e) {
+        gracefullyRethrow(drupalFetchIncrementalActivity, e)
 
-        setPluginStatus({ lastFetched: data.data.timestamp })
+        drupalFetchIncrementalActivity.end()
+        fastBuildsSpan.finish()
+        return
       }
-    } catch (e) {
-      gracefullyRethrow(drupalFetchIncrementalActivity, e)
-      return
-    }
 
-    drupalFetchIncrementalActivity.end()
+      drupalFetchIncrementalActivity.end()
+      fastBuildsSpan.finish()
 
-    if (!requireFullRebuild) {
-      return
+      // We're now done with the initial (fastbuilds flavored) sourcing.
+      initialSourcing = false
+
+      if (!requireFullRebuild) {
+        return
+      }
     }
   }
 
   const drupalFetchActivity = reporter.activityTimer(
-    `Fetch all data from Drupal`
+    `Fetch all data from Drupal`,
+    { parentSpan }
   )
-
-  // Default apiBase to `jsonapi`
-  apiBase = apiBase || `jsonapi`
-
-  // Default disallowedLinkTypes to self, describedby.
-  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
-
-  // Default concurrentFileRequests to `20`
-  concurrentFileRequests = concurrentFileRequests || 20
-
-  // Default skipFileDownloads to false.
-  skipFileDownloads = skipFileDownloads || false
+  const fullFetchSpan = tracer.startSpan(`sourceNodes.fetch`, {
+    childOf: parentSpan,
+  })
+  fullFetchSpan.setTag(`plugin`, `gatsby-source-drupal`)
+  fullFetchSpan.setTag(`sourceNodes.fetch.type`, `full`)
 
   // Fetch articles.
   reporter.info(`Starting to fetch all data from Drupal`)
@@ -211,18 +480,36 @@ exports.sourceNodes = async (
   drupalFetchActivity.start()
 
   let allData
+  const typeRequestsQueued = new Set()
   try {
-    const data = await axios.get(`${baseUrl}/${apiBase}`, {
-      auth: basicAuth,
-      headers,
-      params,
-    })
+    const res = await requestQueue.push([
+      urlJoin(baseUrl, apiBase),
+      {
+        username: basicAuth.username,
+        password: basicAuth.password,
+        headers,
+        searchParams: params,
+        responseType: `json`,
+        parentSpan: fullFetchSpan,
+        timeout: {
+          // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+          request: requestTimeoutMS,
+        },
+      },
+    ])
     allData = await Promise.all(
-      _.map(data.data.links, async (url, type) => {
+      _.map(res.body.links, async (url, type) => {
+        const dataArray = []
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return
-        const getNext = async (url, data = []) => {
+
+        // Lookup this type in our list of language alterable entities.
+        const isTranslatable = languageConfig.translatableEntities.some(
+          entityType => entityType === type
+        )
+
+        const getNext = async (url, currentLanguage) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
             url = url.href
@@ -232,48 +519,129 @@ exports.sourceNodes = async (
             // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
             if (typeof filters === `object`) {
               if (filters.hasOwnProperty(type)) {
-                url = url + `?${filters[type]}`
+                url = new URL(url)
+                const filterParams = new URLSearchParams(filters[type])
+                const filterKeys = Array.from(filterParams.keys())
+                filterKeys.forEach(filterKey => {
+                  // Only add filter params to url if it has not already been
+                  // added.
+                  if (!url.searchParams.has(filterKey)) {
+                    url.searchParams.set(filterKey, filterParams.get(filterKey))
+                  }
+                })
+                url = url.toString()
               }
             }
           }
 
           let d
           try {
-            d = await axios.get(url, {
-              auth: basicAuth,
-              headers,
-              params,
-            })
+            d = await requestQueue.push([
+              url,
+              {
+                username: basicAuth.username,
+                password: basicAuth.password,
+                headers,
+                searchParams: params,
+                responseType: `json`,
+                parentSpan: fullFetchSpan,
+                timeout: {
+                  // Occasionally requests to Drupal stall. Set a (default) 30s timeout to retry in this case.
+                  request: requestTimeoutMS,
+                },
+              },
+            ])
           } catch (error) {
-            if (error.response && error.response.status == 405) {
+            if (error.response && error.response.statusCode == 405) {
               // The endpoint doesn't support the GET method, so just skip it.
-              return []
+              return
             } else {
               console.error(`Failed to fetch ${url}`, error.message)
-              console.log(error.data)
+              console.log(error)
               throw error
             }
           }
-          data = data.concat(d.data.data)
+          if (d.body.data) {
+            dataArray.push(...d.body.data)
+          }
           // Add support for includes. Includes allow entity data to be expanded
           // based on relationships. The expanded data is exposed as `included`
           // in the JSON API response.
           // See https://www.drupal.org/docs/8/modules/jsonapi/includes
-          if (d.data.included) {
-            data = data.concat(d.data.included)
-          }
-          if (d.data.links && d.data.links.next) {
-            data = await getNext(d.data.links.next, data)
+          if (d.body.included) {
+            dataArray.push(...d.body.included)
           }
 
-          return data
+          // If JSON:API extras is configured to add the resource count, we can queue
+          // all API requests immediately instead of waiting for each request to return
+          // the next URL. This lets us request resources in parallel vs. sequentially
+          // which is much faster.
+          if (d.body.meta?.count) {
+            const typeLangKey = type + currentLanguage
+            // If we hadn't added urls yet
+            if (
+              d.body.links.next?.href &&
+              !typeRequestsQueued.has(typeLangKey)
+            ) {
+              typeRequestsQueued.add(typeLangKey)
+
+              // Get count of API requests
+              // We round down as we've already gotten the first page at this point.
+              const pageSize = new URL(d.body.links.next.href).searchParams.get(
+                `page[limit]`
+              )
+              const requestsCount = Math.floor(d.body.meta.count / pageSize)
+
+              reporter.verbose(
+                `queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
+              )
+
+              const newUrl = new URL(d.body.links.next.href)
+              await Promise.all(
+                _.range(requestsCount).map(pageOffset => {
+                  // We're starting 1 ahead.
+                  pageOffset += 1
+                  // Construct URL with new pageOffset.
+                  newUrl.searchParams.set(`page[offset]`, pageOffset * pageSize)
+                  return getNext(newUrl.toString(), currentLanguage)
+                })
+              )
+            }
+          } else if (d.body.links?.next) {
+            await getNext(d.body.links.next, currentLanguage)
+          }
         }
 
-        const data = await getNext(url)
+        if (isTranslatable === false) {
+          await getNext(url, ``)
+        } else {
+          for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
+            let currentLanguage = languageConfig.enabledLanguages[i]
+            const urlPath = url.href.split(`${apiBase}/`).pop()
+            const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
+            // The default language's JSON API is at the root.
+            if (
+              currentLanguage === getOptions().languageConfig.defaultLanguage ||
+              baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
+                currentLanguage
+            ) {
+              currentLanguage = ``
+            }
+
+            const joinedUrl = urlJoin(
+              baseUrlWithoutTrailingSlash,
+              currentLanguage,
+              apiBase,
+              urlPath
+            )
+
+            await getNext(joinedUrl, currentLanguage)
+          }
+        }
 
         const result = {
           type,
-          data,
+          data: dataArray,
         }
 
         // eslint-disable-next-line consistent-return
@@ -286,26 +654,70 @@ exports.sourceNodes = async (
   }
 
   drupalFetchActivity.end()
+  fullFetchSpan.finish()
+
+  const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
+    childOf: parentSpan,
+  })
+  createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+  createNodesSpan.setTag(`sourceNodes.fetch.type`, `full`)
 
   const nodes = new Map()
+  const fileNodesExtendedData = getExtendedFileNodeData(allData)
 
   // first pass - create basic nodes
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (!datum) return
-      const node = nodeFromData(datum, createNodeId)
+  for (const contentType of allData) {
+    if (!contentType) {
+      continue
+    }
+
+    await asyncPool(concurrentFileRequests, contentType.data, async datum => {
+      if (!datum) {
+        return
+      }
+
+      const node = await nodeFromData(
+        datum,
+        createNodeId,
+        entityReferenceRevisions,
+        pluginOptions,
+        fileNodesExtendedData,
+        reporter
+      )
+
+      drupalCreateNodeManifest({
+        attributes: datum?.attributes,
+        gatsbyNode: node,
+        unstable_createNodeManifest,
+      })
+
       nodes.set(node.id, node)
     })
-  })
+  }
+
+  if (
+    skipFileDownloads &&
+    !imageCDNState.foundPlaceholderStyle &&
+    !imageCDNState.hasLoggedNoPlaceholderStyle
+  ) {
+    imageCDNState.hasLoggedNoPlaceholderStyle = true
+    reporter.warn(
+      `[gatsby-source-drupal]\nNo Gatsby Image CDN placeholder style found. Please ensure that you have a placeholder style in your Drupal site for the fastest builds. See the docs for more info on gatsby-source-drupal Image CDN support:\n${imageCdnDocs}\n`
+    )
+  }
+
+  createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
-  nodes.forEach(node => {
-    handleReferences(node, {
+  for (const node of Array.from(nodes.values())) {
+    await handleReferences(node, {
       getNode: nodes.get.bind(nodes),
+      mutateNode: true,
       createNodeId,
+      cache,
+      entityReferenceRevisions,
     })
-  })
+  }
 
   if (skipFileDownloads) {
     reporter.info(`Skipping remote file download from Drupal`)
@@ -317,7 +729,8 @@ exports.sourceNodes = async (
 
     if (fileNodes.length) {
       const downloadingFilesActivity = reporter.activityTimer(
-        `Remote file download`
+        `Remote file download`,
+        { parentSpan }
       )
       downloadingFilesActivity.start()
       try {
@@ -349,6 +762,10 @@ exports.sourceNodes = async (
     createNode(node)
   }
 
+  // We're now done with the initial sourcing.
+  initialSourcing = false
+
+  createNodesSpan.finish()
   return
 }
 
@@ -409,4 +826,78 @@ exports.onCreateDevServer = (
       }
     }
   )
+}
+
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    baseUrl: Joi.string()
+      .required()
+      .description(`The URL to root of your Drupal instance`),
+    apiBase: Joi.string().description(
+      `The path to the root of the JSONAPI — defaults to "jsonapi"`
+    ),
+    basicAuth: Joi.object({
+      username: Joi.string().required(),
+      password: Joi.string().required(),
+    }).description(`Enables basicAuth`),
+    filters: Joi.object().description(
+      `Pass filters to the JSON API for specific collections`
+    ),
+    headers: Joi.object().description(
+      `Set request headers for requests to the JSON API`
+    ),
+    params: Joi.object().description(`Append optional GET params to requests`),
+    concurrentFileRequests: Joi.number().integer().default(20).min(1),
+    concurrentAPIRequests: Joi.number().integer().default(20).min(1),
+    requestTimeoutMS: Joi.number().integer().default(30000).min(1),
+    disallowedLinkTypes: Joi.array().items(Joi.string()),
+    skipFileDownloads: Joi.boolean(),
+    imageCDN: Joi.boolean().default(true),
+    fastBuilds: Joi.boolean(),
+    entityReferenceRevisions: Joi.array().items(Joi.string()),
+    secret: Joi.string().description(
+      `an optional secret token for added security shared between your Drupal instance and Gatsby preview`
+    ),
+    languageConfig: Joi.object({
+      defaultLanguage: Joi.string().required(),
+      enabledLanguages: Joi.array().items(Joi.string()).required(),
+      translatableEntities: Joi.array().items(Joi.string()).required(),
+      nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
+    }),
+    placeholderStyleName: Joi.string().description(
+      `The machine name of the Gatsby Image CDN placeholder style in Drupal. The default is "placeholder".`
+    ),
+  })
+
+exports.onCreateDevServer = async ({ app, store }) => {
+  // this makes the gatsby develop image CDN emulator work on earlier versions of Gatsby.
+  polyfillImageServiceDevRoutes(app, store)
+}
+
+exports.createSchemaCustomization = (
+  { actions, schema, store, reporter },
+  pluginOptions
+) => {
+  if (pluginOptions.skipFileDownloads && pluginOptions.imageCDN) {
+    actions.createTypes([
+      // polyfill so image CDN works on older versions of Gatsby
+      addRemoteFilePolyfillInterface(
+        // this type is merged in with the inferred file__file type, adding Image CDN support via the gatsbyImage GraphQL field. The `RemoteFile` interface as well as the polyfill above are what add the gatsbyImage field.
+        schema.buildObjectType({
+          name: `file__file`,
+          fields: {},
+          interfaces: [`Node`, `RemoteFile`],
+        }),
+        {
+          schema,
+          actions,
+          store,
+        }
+      ),
+    ])
+  } else {
+    reporter.info(
+      `[gatsby-source-drupal] Enable the skipFileDownloads option to use Gatsby's Image CDN. See the docs for more info:\n${imageCdnDocs}\n`
+    )
+  }
 }

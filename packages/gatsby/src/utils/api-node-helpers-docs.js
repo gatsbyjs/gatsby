@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-/** */
+/***/
 const GatsbyReporter = {
   /**
    * @callback GatsbyReporterFn
@@ -58,9 +58,28 @@ const GatsbyReporter = {
    * reporter.verbose(`text`)
    */
   verbose: true,
+
+  /**
+   * @callback GatsbyReporterActivityTimerFn
+   * @param {string} message Timer message to display
+   * @returns {ITimerReporter}
+   */
+
+  /**
+   * Creates a new activity timer with the provided message.
+   * Check the full [return type definition here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/src/reporter/reporter-timer.ts#L19).
+   * @type {GatsbyReporterActivityTimerFn}
+   * @example
+   * const activity = reporter.activityTimer(`Timer text`)
+   *
+   * activity.start()
+   * activity.setStatus(`status text`)
+   * activity.end()
+   */
+  activityTimer: true,
 };
 
-/** */
+/***/
 const GatsbyCache = {
   /**
    * Retrieve cached value
@@ -80,9 +99,18 @@ const GatsbyCache = {
    * await cache.set(`unique-key`, value)
    */
   set: true,
+
+  /**
+   * Deletes cached value
+   * @param {string} key Cache key
+   * @returns {Promise<void>} Promise resolving once key is deleted from cache
+   * @example
+   * await cache.del(`unique-key`)
+   */
+  del: true,
 };
 
-/** */
+/***/
 const GatsbyTracing = {
   /**
    * Global tracer instance. Check
@@ -131,7 +159,7 @@ const GatsbyTracing = {
 /**
  * Get cache instance by name - this should only be used by plugins that
  * accept subplugins.
- * @param {string} id Test
+ * @param {string} id id of the node
  * @returns {GatsbyCache} See [`cache`](#cache) section for reference.
  */
 module.exports.getCache = true;
@@ -266,7 +294,7 @@ module.exports.createNodeId = true;
 /**
  * Set of utilities that allow adding more detailed tracing for plugins.
  * Check
- * [Performance tracing](https://www.gatsbyjs.org/docs/performance-tracing)
+ * [Performance tracing](https://www.gatsbyjs.com/docs/performance-tracing)
  * page for more details.
  * @type {GatsbyTracing}
  */
@@ -274,9 +302,21 @@ module.exports.tracing = true;
 
 /**
  * Use to prefix resources URLs. `pathPrefix` will be either empty string or
- * path that starts with slash and doesn't end with slash. Check
- * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix/)
+ * path that starts with slash and doesn't end with slash. `pathPrefix` also
+ * becomes `<assetPrefix>/<pathPrefix>` when you pass both `assetPrefix` and
+ * `pathPrefix` in your `gatsby-config.js`.
+ *
+ * See [Adding a Path Prefix](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/)
  * page for details about path prefixing.
  * @type {string}
  */
 module.exports.pathPrefix = true;
+
+/**
+ * This is the same as `pathPrefix` passed in `gatsby-config.js`.
+ * It's an empty string if you don't pass `pathPrefix`.
+ * When using assetPrefix, you can use this instead of pathPrefix to recieve the string you set in `gatsby-config.js`.
+ * It won't include the `assetPrefix`.
+ * @type {string}
+ */
+module.exports.basePath = true;

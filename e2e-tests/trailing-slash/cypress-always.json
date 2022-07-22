@@ -1,0 +1,5 @@
+{
+  "videoUploadOnPasses": false,
+  "chromeWebSecurity": false,
+  "testFiles": ["always.js", "functions.js", "static.js"]
+}

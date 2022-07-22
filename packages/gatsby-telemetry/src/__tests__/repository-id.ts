@@ -65,7 +65,7 @@ describe(`Repository ID Helpers`, () => {
     process.env.NETLIFY = `1`
     process.env.REPOSITORY_URL = `https://x-access-token:v1.6a60ab57393b6e8a11baf6435ae6f8097157033d@github.com/user/repo`
 
-    //`https://x-access-token:v1.6xxxxxxxxxxxxxxxxx@github.com/user/repo`
+    // `https://x-access-token:v1.6xxxxxxxxxxxxxxxxx@github.com/user/repo`
     const id = getRepositoryId()
     expect(id).toEqual({
       repositoryId: `git:${hash(mockGitRemote)}`,

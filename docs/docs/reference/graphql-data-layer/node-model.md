@@ -15,9 +15,9 @@ createResolvers({
   Query: {
     mood: {
       type: `String`,
-      resolve(source, args, context, info) {
-        const coffee = context.nodeModel.getAllNodes({ type: `Coffee` })
-        if (!coffee.length) {
+      resolve: async (source, args, context, info) => {
+        const item = await context.nodeModel.findOne({ type: `Coffee` })
+        if (!item) {
           return 😞
         }
         return 😊

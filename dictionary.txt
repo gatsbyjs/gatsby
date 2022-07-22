@@ -58,7 +58,6 @@ APIs
 APIs.
 AppSync
 architecting
-Archlinux
 arg
 args
 args.
@@ -270,7 +269,6 @@ devcert
 devcert-cli
 devDependencies
 developMiddleware
-Devops
 DevOps
 DevTools
 Dgraph

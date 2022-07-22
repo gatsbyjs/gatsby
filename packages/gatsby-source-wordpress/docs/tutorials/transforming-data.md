@@ -24,7 +24,7 @@ const defaultPluginOptions = {
           actionType === `CREATE` ||
           actionType === `UPDATE`
         ) {
-          const createdMediaItem = await createRemoteMediaItemNode({
+          const createdMediaItem = await createLocalFileNode({
             mediaItemNode: remoteNode,
             parentName: `Node action ${actionType}`,
           })
@@ -76,9 +76,7 @@ export const menuBeforeChangeNode = async api => {
 
     // delete each child menu item
     allMenuItemsNodesWithThisMenuIdAsAParent?.forEach(menuItemNode =>
-      actions.deleteNode({
-        node: menuItemNode,
-      })
+      actions.deleteNode(menuItemNode)
     )
   }
 }

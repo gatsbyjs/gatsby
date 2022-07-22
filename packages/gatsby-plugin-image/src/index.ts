@@ -1,3 +1,4 @@
+import "./global"
 export { GatsbyImage } from "./components/gatsby-image.server"
 export {
   GatsbyImageProps,
@@ -9,14 +10,17 @@ export { StaticImage } from "./components/static-image.server"
 export {
   getImage,
   getSrc,
+  getSrcSet,
   getImageData,
   withArtDirection,
   IArtDirectedImage,
   IGetImageDataArgs,
   IUrlBuilderArgs,
+  ImageDataLike,
 } from "./components/hooks"
 export {
   generateImageData,
+  getLowResolutionImageURL,
   IGatsbyImageHelperArgs,
   ISharpGatsbyImageArgs,
   IImage,

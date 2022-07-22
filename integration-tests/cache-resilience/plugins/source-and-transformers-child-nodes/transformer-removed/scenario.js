@@ -85,7 +85,7 @@ const nodesTest = ({
           \\"foo\\": \\"run-1\\",
           \\"id\\": \\"parent_childDeletionForTransformer\\",
           \\"internal\\": Object {
-            \\"contentDigest\\": \\"872081fdfb66891ee6ccdcd13716a5ce\\",
+            \\"contentDigest\\": \\"6140f27e9454bda710ae6da2cda698f0\\",
             \\"owner\\": \\"source-and-transformers-child-nodes/transformer-removed/gatsby-source\\",
             \\"type\\": \\"Parent_ChildDeletionForTransformer\\",
           },
@@ -146,45 +146,45 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
     -   \\"typeinfoChild\\": Object {
     -     \\"fields\\": Array [
     -       Object {
-    -         \\"name\\": \\"id\\",
-    -       },
-    -       Object {
-    -         \\"name\\": \\"parent\\",
-    -       },
-    -       Object {
     -         \\"name\\": \\"children\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"foo\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"id\\",
     -       },
     -       Object {
     -         \\"name\\": \\"internal\\",
     -       },
     -       Object {
-    -         \\"name\\": \\"foo\\",
+    -         \\"name\\": \\"parent\\",
     -       },
     -     ],
     -   },
     +   \\"typeinfoChild\\": null,
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
-            Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
+    -       Object {
+    -         \\"name\\": \\"childChildOfParentChildDeletionForTransformer\\",
+    -       },
             Object {
               \\"name\\": \\"children\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"childrenChildOfParentChildDeletionForTransformer\\",
+            },
+            Object {
+              \\"name\\": \\"foo\\",
+            },
+            Object {
+              \\"name\\": \\"id\\",
             },
             Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-              \\"name\\": \\"foo\\",
-    -       },
-    -       Object {
-    -         \\"name\\": \\"childrenChildOfParentChildDeletionForTransformer\\",
-    -       },
-    -       Object {
-    -         \\"name\\": \\"childChildOfParentChildDeletionForTransformer\\",
+              \\"name\\": \\"parent\\",
             },
           ],
         },

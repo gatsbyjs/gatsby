@@ -8,9 +8,10 @@
   font-size: 10rem;
   line-height: 1.5;
   text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
+}
+
+.link:hover {
+  text-decoration: underline;
 }
 
 .header {

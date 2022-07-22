@@ -256,7 +256,7 @@ Then, below the component we created, add the following:
 
 ```js
 export const query = graphql`
-  query($id: String) {
+  query ($id: String) {
     wpPost(id: { eq: $id }) {
       id
       title
@@ -307,7 +307,7 @@ For this, we would want to query for the Post's author, in addition to whatever 
 We might end up with a query like so:
 
 ```graphql
-query($id: String) {
+query ($id: String) {
   wpPost(id: { eq: $id }) {
     id
     title
@@ -383,7 +383,7 @@ const WpPost = ({ data }) => {
 }
 
 export const query = graphql`
-  query($id: String) {
+  query ($id: String) {
     wpPost(id: { eq: $id }) {
       id
       title

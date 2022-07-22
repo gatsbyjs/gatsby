@@ -105,9 +105,6 @@ export {
   graphql,
   parsePath,
   navigate,
-  push, // TODO replace for v3
-  replace, // TODO remove replace for v3
-  navigateTo, // TODO: remove navigateTo for v3
   useScrollRestoration,
   StaticQueryContext,
   StaticQuery,
@@ -115,3 +112,5 @@ export {
   useStaticQuery,
   prefetchPathname,
 }
+
+export * from "gatsby-script"

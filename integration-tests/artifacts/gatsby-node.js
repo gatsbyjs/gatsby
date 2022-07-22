@@ -31,12 +31,14 @@ exports.onPreInit = ({ emitter }) => {
 }
 
 let previouslyCreatedNodes = new Map()
+let didRemoveTrailingSlashForTestedPage = false
 
 exports.sourceNodes = ({
   actions,
   createContentDigest,
   webhookBody,
   reporter,
+  getNode,
 }) => {
   if (webhookBody && webhookBody.runNumber) {
     runNumber = webhookBody.runNumber
@@ -114,6 +116,17 @@ exports.sourceNodes = ({
     label: `This is${isFirstRun ? `` : ` not`} a first run`, // this will be queried - we want to invalidate html here
   })
 
+  for (let prevRun = 1; prevRun < runNumber; prevRun++) {
+    const node = getNode(`node-created-in-run-${prevRun}`)
+    if (node) {
+      actions.touchNode(node)
+    }
+  }
+  createNodeHelper(`NodeCounterTest`, {
+    id: `node-created-in-run-${runNumber}`,
+    label: `Node created in run ${runNumber}`,
+  })
+
   for (const prevNode of previouslyCreatedNodes.values()) {
     if (!currentlyCreatedNodes.has(prevNode.id)) {
       actions.deleteNode({ node: prevNode })
@@ -145,6 +158,20 @@ exports.createPages = async ({ actions, graphql }) => {
     createPageHelper(`only-not-in-first`)
   }
 
+  createPageHelper(
+    `sometimes-i-have-trailing-slash-sometimes-i-dont${
+      runNumber % 2 === 0 ? `/` : ``
+    }`
+  )
+
+  actions.createPage({
+    path: `/changing-context/`,
+    component: require.resolve(`./src/templates/dummy`),
+    context: {
+      dummyId: `runNumber: ${runNumber}`,
+    },
+  })
+
   const { data } = await graphql(`
     {
       allDepPageQuery {
@@ -170,6 +197,18 @@ exports.createPages = async ({ actions, graphql }) => {
   }
 }
 
+exports.createPagesStatefully = async ({ actions }) => {
+  if (runNumber !== 3) {
+    actions.createPage({
+      path: `/stateful-page-not-recreated-in-third-run/`,
+      component: require.resolve(`./src/templates/dummy`),
+      context: {
+        dummyId: `stateful-page`,
+      },
+    })
+  }
+}
+
 exports.onPreBuild = () => {
   console.log(`[test] onPreBuild`)
   changedBrowserCompilationHash = `not-changed`
@@ -179,8 +218,15 @@ exports.onPreBuild = () => {
 }
 
 let counter = 1
-exports.onPostBuild = async ({ graphql }) => {
+exports.onPostBuild = async ({ graphql, getNodes }) => {
   console.log(`[test] onPostBuild`)
+
+  if (!didRemoveTrailingSlashForTestedPage) {
+    throw new Error(
+      `Test setup failed - didn't remove trailing slash for /pages-that-will-have-trailing-slash-removed/ page`
+    )
+  }
+
   const { data } = await graphql(`
     {
       allSitePage(filter: { path: { ne: "/dev-404-page/" } }) {
@@ -198,6 +244,7 @@ exports.onPostBuild = async ({ graphql }) => {
       `build-manifest-for-test-${counter++}.json`
     ),
     {
+      allNodeCounters: getNodes().map(node => [node.id, node.internal.counter]),
       allPages: data.allSitePage.nodes.map(node => node.path),
       changedBrowserCompilationHash,
       changedSsrCompilationHash,
@@ -205,4 +252,16 @@ exports.onPostBuild = async ({ graphql }) => {
       removed: deletedPages,
     }
   )
+}
+
+// simulating "gatsby-plugin-remove-trailing-slashes" scenario
+exports.onCreatePage = ({ page, actions }) => {
+  if (page.path === `/page-that-will-have-trailing-slash-removed/`) {
+    actions.deletePage(page)
+    actions.createPage({
+      ...page,
+      path: `/page-that-will-have-trailing-slash-removed`,
+    })
+    didRemoveTrailingSlashForTestedPage = true
+  }
 }

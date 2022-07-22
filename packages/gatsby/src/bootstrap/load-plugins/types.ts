@@ -17,6 +17,9 @@ export interface IPluginInfo {
   /** The absolute path to the plugin */
   resolve: string
 
+  /** The absolute path to the compiled plugin's gatsby-node module, if there is one */
+  resolvedCompiledGatsbyNode?: string
+
   /** The plugin name */
   name: string
 
@@ -25,6 +28,10 @@ export interface IPluginInfo {
 
   /** Options passed to the plugin */
   pluginOptions?: IPluginInfoOptions
+
+  subPluginPaths?: Array<string>
+  module?: any
+  modulePath?: string
 }
 
 export interface IPluginInfoOptions {
@@ -44,6 +51,9 @@ export interface IPluginRefObject {
   resolve: string
   options?: IPluginRefOptions
   parentDir?: string
+  subPluginPaths?: Array<string>
+  module?: any
+  modulePath?: string
 }
 
 export type PluginRef = string | IPluginRefObject

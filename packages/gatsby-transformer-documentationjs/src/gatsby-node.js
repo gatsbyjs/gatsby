@@ -42,7 +42,7 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
   return descriptionNode
 }
 
-exports.sourceNodes = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node
@@ -189,6 +189,7 @@ function unstable_shouldOnCreateNode({ node }) {
   return (
     node.internal.type === `File` &&
     (node.internal.mediaType === `application/javascript` ||
+      node.extension === `jsx` ||
       node.extension === `tsx` ||
       node.extension === `ts`)
   )

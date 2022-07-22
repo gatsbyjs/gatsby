@@ -1,0 +1,44 @@
+{
+  "name": "gatsby-plugin-graphql-config",
+  "description": "Gatsby plugin to write out a graphql-config with develop process endpoint configured",
+  "version": "1.15.0-next.0",
+  "author": "Rikki Schulte <rikki.schulte@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.15.4",
+    "fs-extra": "^10.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^2.15.0-next.0",
+    "cross-env": "^7.0.3"
+  },
+  "peerDependencies": {
+    "gatsby": "^4.0.0-next"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-graphql-config#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "graphql",
+    "config"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-graphql-config"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  }
+}

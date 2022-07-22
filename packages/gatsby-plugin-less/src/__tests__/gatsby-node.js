@@ -49,11 +49,19 @@ describe(`gatsby-plugin-less`, () => {
           camelCase: false,
         },
       },
+      "css-loader use commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
   }
 
   tests.stages.forEach(stage => {
-    for (let label in tests.options) {
+    for (const label in tests.options) {
       const options = tests.options[label]
       it(`Stage: ${stage} / ${label}`, () => {
         onCreateWebpackConfig({ actions, loaders, stage }, options)

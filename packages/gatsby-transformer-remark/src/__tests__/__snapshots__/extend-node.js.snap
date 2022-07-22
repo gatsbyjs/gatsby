@@ -631,7 +631,9 @@ Object {
 <li><a href=\\"/my%20little%20pony/#second-title\\">second title</a></li>
 </ul>
 </li>
-<li><a href=\\"/my%20little%20pony/#third-title\\">third title</a></li>
+<li>
+<p><a href=\\"/my%20little%20pony/#third-title\\">third title</a></p>
+</li>
 </ul>",
 }
 `;
@@ -648,7 +650,9 @@ Object {
 <li><a href=\\"#second-title\\">second title</a></li>
 </ul>
 </li>
-<li><a href=\\"#third-title\\">third title</a></li>
+<li>
+<p><a href=\\"#third-title\\">third title</a></p>
+</li>
 </ul>",
 }
 `;

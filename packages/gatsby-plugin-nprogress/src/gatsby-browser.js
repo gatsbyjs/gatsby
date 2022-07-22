@@ -1,8 +1,8 @@
-import NProgress from "nprogress"
+import NProgress from "accessible-nprogress"
 
 const defaultOptions = { color: `#29d` }
 
-export const onClientEntry = (a, pluginOptions = {}) => {
+export const onClientEntry = (_gatsbyApi, pluginOptions = {}) => {
   // Merge default options with user defined options in `gatsby-config.js`
   const options = { ...defaultOptions, ...pluginOptions }
 

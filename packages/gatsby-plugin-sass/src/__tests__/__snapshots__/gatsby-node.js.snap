@@ -17,8 +17,9 @@ exports[`gatsby-plugin-sass Stage: build-html / No options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -27,6 +28,14 @@ exports[`gatsby-plugin-sass Stage: build-html / No options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -62,8 +71,9 @@ exports[`gatsby-plugin-sass Stage: build-html / PostCss plugins 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -72,6 +82,14 @@ exports[`gatsby-plugin-sass Stage: build-html / PostCss plugins 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -107,13 +125,14 @@ exports[`gatsby-plugin-sass Stage: build-html / Sass options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {
                           "includePaths": Array [
                             "absolute/path/a",
                             "absolute/path/b",
                           ],
                         },
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -122,6 +141,19 @@ exports[`gatsby-plugin-sass Stage: build-html / Sass options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {
+                          "includePaths": Array [
+                            "absolute/path/a",
+                            "absolute/path/b",
+                          ],
+                        },
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -157,8 +189,9 @@ exports[`gatsby-plugin-sass Stage: build-html / css-loader options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -167,6 +200,68 @@ exports[`gatsby-plugin-sass Stage: build-html / css-loader options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: build-html / css-loader use commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "css({\\"importLoaders\\":2,\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false}})",
+                    "postcss({})",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -202,8 +297,9 @@ exports[`gatsby-plugin-sass Stage: build-html / sass rule modules test options 1
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -212,6 +308,14 @@ exports[`gatsby-plugin-sass Stage: build-html / sass rule modules test options 1
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -247,8 +351,9 @@ exports[`gatsby-plugin-sass Stage: build-html / sass rule test options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -257,6 +362,14 @@ exports[`gatsby-plugin-sass Stage: build-html / sass rule test options 1`] = `
                   "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -293,8 +406,9 @@ exports[`gatsby-plugin-sass Stage: build-javascript / No options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -303,13 +417,14 @@ exports[`gatsby-plugin-sass Stage: build-javascript / No options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -348,8 +463,9 @@ exports[`gatsby-plugin-sass Stage: build-javascript / PostCss plugins 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -358,13 +474,14 @@ exports[`gatsby-plugin-sass Stage: build-javascript / PostCss plugins 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -403,13 +520,14 @@ exports[`gatsby-plugin-sass Stage: build-javascript / Sass options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {
                           "includePaths": Array [
                             "absolute/path/a",
                             "absolute/path/b",
                           ],
                         },
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -418,18 +536,19 @@ exports[`gatsby-plugin-sass Stage: build-javascript / Sass options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {
                           "includePaths": Array [
                             "absolute/path/a",
                             "absolute/path/b",
                           ],
                         },
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -468,8 +587,9 @@ exports[`gatsby-plugin-sass Stage: build-javascript / css-loader options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -478,13 +598,71 @@ exports[`gatsby-plugin-sass Stage: build-javascript / css-loader options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2,\\"camelCase\\":false})",
+                    "css({\\"importLoaders\\":2,\\"camelCase\\":false,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: build-javascript / css-loader use commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":2,\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false}})",
+                    "postcss({})",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":2,\\"esModule\\":false,\\"modules\\":false})",
+                    "postcss({})",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -523,8 +701,9 @@ exports[`gatsby-plugin-sass Stage: build-javascript / sass rule modules test opt
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -533,13 +712,14 @@ exports[`gatsby-plugin-sass Stage: build-javascript / sass rule modules test opt
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -578,8 +758,9 @@ exports[`gatsby-plugin-sass Stage: build-javascript / sass rule test options 1`]
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -588,13 +769,14 @@ exports[`gatsby-plugin-sass Stage: build-javascript / sass rule test options 1`]
                   "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -633,8 +815,9 @@ exports[`gatsby-plugin-sass Stage: develop / No options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -643,13 +826,14 @@ exports[`gatsby-plugin-sass Stage: develop / No options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -688,8 +872,9 @@ exports[`gatsby-plugin-sass Stage: develop / PostCss plugins 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -698,13 +883,14 @@ exports[`gatsby-plugin-sass Stage: develop / PostCss plugins 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -743,13 +929,14 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {
                           "includePaths": Array [
                             "absolute/path/a",
                             "absolute/path/b",
                           ],
                         },
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -758,18 +945,19 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {
                           "includePaths": Array [
                             "absolute/path/a",
                             "absolute/path/b",
                           ],
                         },
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -808,8 +996,9 @@ exports[`gatsby-plugin-sass Stage: develop / css-loader options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -818,13 +1007,71 @@ exports[`gatsby-plugin-sass Stage: develop / css-loader options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2,\\"camelCase\\":false})",
+                    "css({\\"importLoaders\\":2,\\"camelCase\\":false,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: develop / css-loader use commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":2,\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false}})",
+                    "postcss({})",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css({\\"importLoaders\\":2,\\"esModule\\":false,\\"modules\\":false})",
+                    "postcss({})",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -863,8 +1110,9 @@ exports[`gatsby-plugin-sass Stage: develop / sass rule modules test options 1`] 
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -873,13 +1121,14 @@ exports[`gatsby-plugin-sass Stage: develop / sass rule modules test options 1`] 
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -918,8 +1167,9 @@ exports[`gatsby-plugin-sass Stage: develop / sass rule test options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -928,13 +1178,14 @@ exports[`gatsby-plugin-sass Stage: develop / sass rule test options 1`] = `
                   "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":false})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": true,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -972,8 +1223,9 @@ exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -982,6 +1234,14 @@ exports[`gatsby-plugin-sass Stage: develop-html / No options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -1017,8 +1277,9 @@ exports[`gatsby-plugin-sass Stage: develop-html / PostCss plugins 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -1027,6 +1288,14 @@ exports[`gatsby-plugin-sass Stage: develop-html / PostCss plugins 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -1062,13 +1331,14 @@ exports[`gatsby-plugin-sass Stage: develop-html / Sass options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {
                           "includePaths": Array [
                             "absolute/path/a",
                             "absolute/path/b",
                           ],
                         },
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -1077,6 +1347,19 @@ exports[`gatsby-plugin-sass Stage: develop-html / Sass options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {
+                          "includePaths": Array [
+                            "absolute/path/a",
+                            "absolute/path/b",
+                          ],
+                        },
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -1112,8 +1395,9 @@ exports[`gatsby-plugin-sass Stage: develop-html / css-loader options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -1122,6 +1406,68 @@ exports[`gatsby-plugin-sass Stage: develop-html / css-loader options 1`] = `
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sass Stage: develop-html / css-loader use commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "css({\\"importLoaders\\":2,\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false}})",
+                    "postcss({})",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+                  "use": Array [
+                    "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -1157,8 +1503,9 @@ exports[`gatsby-plugin-sass Stage: develop-html / sass rule modules test options
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -1167,6 +1514,14 @@ exports[`gatsby-plugin-sass Stage: develop-html / sass rule modules test options
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],
@@ -1202,8 +1557,9 @@ exports[`gatsby-plugin-sass Stage: develop-html / sass rule test options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
+                        "additionalData": undefined,
                         "sassOptions": Object {},
-                        "sourceMap": false,
+                        "sourceMap": undefined,
                       },
                     },
                   ],
@@ -1212,6 +1568,14 @@ exports[`gatsby-plugin-sass Stage: develop-html / sass rule test options 1`] = `
                   "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "null",
+                    Object {
+                      "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
+                      "options": Object {
+                        "additionalData": undefined,
+                        "sassOptions": Object {},
+                        "sourceMap": undefined,
+                      },
+                    },
                   ],
                 },
               ],

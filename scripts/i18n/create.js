@@ -37,7 +37,7 @@ const issueBody = makeProgressIssue()
 async function getIssue(issueNo) {
   const { repository } = await graphql(
     `
-      query($issueRepo: String!, $owner: String!, $issueNo: Int!) {
+      query ($issueRepo: String!, $owner: String!, $issueNo: Int!) {
         repository(name: $issueRepo, owner: $owner) {
           issue(number: $issueNo) {
             id
@@ -111,7 +111,7 @@ Please refer to the [Translation Progress Issue](${transRepo.url}/issues/1) to s
 Useful Links:
 
 * [Style Guide](/style-guide.md)
-* [Gatsby Translation Guide](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/)
+* [Gatsby Translation Guide](https://www.gatsbyjs.com/contributing/gatsby-docs-translation-guide/)
 * [Gatsby Discord](https://gatsby.dev/discord)
 
 (Feel free to translate this document and add any content you feel would be useful to contributors).
@@ -135,7 +135,7 @@ async function createRepoOnGitHub(repoName, langName) {
   logger.debug(`getting organization info from github`)
   const { organization } = await graphql(
     `
-      query($owner: String!) {
+      query ($owner: String!) {
         organization(login: $owner) {
           id
         }
@@ -153,7 +153,7 @@ async function createRepoOnGitHub(repoName, langName) {
   logger.info(`creating repository ${repoName} on github`)
   const { createRepository } = await graphql(
     `
-      mutation($input: CreateRepositoryInput!) {
+      mutation ($input: CreateRepositoryInput!) {
         createRepository(input: $input) {
           repository {
             id
@@ -185,7 +185,7 @@ async function createBranchProtections(repo) {
   logger.info(`creating branch protections for ${repo.name}`)
   return await graphql(
     `
-      mutation($input: CreateBranchProtectionRuleInput!) {
+      mutation ($input: CreateBranchProtectionRuleInput!) {
         createBranchProtectionRule(input: $input) {
           branchProtectionRule {
             id
@@ -216,7 +216,7 @@ async function createProgressIssue(repo, langName) {
     createIssue: { issue },
   } = await graphql(
     `
-      mutation($input: CreateIssueInput!) {
+      mutation ($input: CreateIssueInput!) {
         createIssue(input: $input) {
           issue {
             id
@@ -238,7 +238,7 @@ async function createProgressIssue(repo, langName) {
   )
   await graphql(
     `
-      mutation($input: PinIssueInput!) {
+      mutation ($input: PinIssueInput!) {
         pinIssue(input: $input) {
           issue {
             id
@@ -277,7 +277,7 @@ If you are not already a member of the [gatsbyjs GitHub organization](https://gi
 
 You're free to use the [Gatsby Discord](https://gatsby.dev/discord) to discuss translations. Ask a moderator to create a channel for you in the \`#translations\` channel.
 
-Finally, make sure to check out the [maintainer responsibilities](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
+Finally, make sure to check out the [maintainer responsibilities](https://www.gatsbyjs.com/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
 
 Feel free to reach out to the Gatsby team if you need any help!
 
@@ -286,7 +286,7 @@ Happy translating!
   logger.info(`responding to original issue`)
   return await graphql(
     `
-      mutation($input: AddCommentInput!) {
+      mutation ($input: AddCommentInput!) {
         addComment(input: $input) {
           clientMutationId
         }
@@ -308,7 +308,7 @@ async function closeRequestIssue(issueId) {
   logger.info(`closing original issue`)
   await graphql(
     `
-      mutation($input: CloseIssueInput!) {
+      mutation ($input: CloseIssueInput!) {
         closeIssue(input: $input) {
           clientMutationId
         }

@@ -1,10 +1,7 @@
 ---
 date: "2021-01-19"
 version: "2.31.0"
----
-
-# [v2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.0...gatsby@2.31.0) (January 2021 #2)
-
+title: "v2.31 Release Notes"
 ---
 
 Welcome to `gatsby@2.31.0` release (January 2021 #2)
@@ -115,7 +112,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
   - chore(docs): plugin contentful - fix brand name, code blocks for names [PR #28915](https://github.com/gatsbyjs/gatsby/pull/28915)
   - readme(gatsby-plugin-emotion): fix table [PR #28906](https://github.com/gatsbyjs/gatsby/pull/28906)
   - chore(docs): google plugin analytics - upgrade to gtag, fix code [PR #28918](https://github.com/gatsbyjs/gatsby/pull/28918)
-  - chore(docs): realease notes - code fences, code language [PR #28936](https://github.com/gatsbyjs/gatsby/pull/28936)
+  - chore(docs): release notes - code fences, code language [PR #28936](https://github.com/gatsbyjs/gatsby/pull/28936)
   - chore(docs): typography - brand name [PR #28931](https://github.com/gatsbyjs/gatsby/pull/28931)
   - chore(docs): routing - brand name, code language, code block [PR #28929](https://github.com/gatsbyjs/gatsby/pull/28929)
 

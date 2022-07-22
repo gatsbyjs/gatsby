@@ -1,17 +1,21 @@
 import { Span } from "opentracing"
+import reporter from "gatsby-cli/lib/reporter"
 import { IProgram } from "../commands/types"
 import { Runner } from "../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { Store, AnyAction } from "redux"
-import { IGatsbyState } from "../redux/types"
+import { IGatsbyPage, IGatsbyState } from "../redux/types"
 import { Express } from "express"
-import JestWorker from "jest-worker"
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { Actor, AnyEventObject } from "xstate"
 import { Compiler } from "webpack"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
+
+type Reporter = typeof reporter
+
 export interface IGroupedQueryIds {
-  pageQueryIds: Array<string>
+  pageQueryIds: Array<IGatsbyPage>
   staticQueryIds: Array<string>
 }
 
@@ -20,8 +24,11 @@ export interface IMutationAction {
   payload: Array<unknown>
   resolve?: (result: unknown) => void
 }
+
 export interface IBuildContext {
-  program?: IProgram
+  reporter?: Reporter
+  shouldRunInitialTypegen?: boolean
+  program: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
   gatsbyNodeGraphQLFunction?: Runner
@@ -30,7 +37,7 @@ export interface IBuildContext {
   webhookBody?: Record<string, unknown>
   webhookSourcePluginName?: string
   refresh?: boolean
-  workerPool?: JestWorker
+  workerPool?: GatsbyWorkerPool
   app?: Express
   nodesMutatedDuringQueryRun?: boolean
   nodesMutatedDuringQueryRunRecompileCount?: number
@@ -42,5 +49,7 @@ export interface IBuildContext {
   webpackListener?: Actor<unknown, AnyEventObject>
   queryFilesDirty?: boolean
   sourceFilesDirty?: boolean
+  changedSourceFiles?: Set<string> // not available in "recompile" service
+  recompiledFiles?: Set<string> // available in "recompile" service
   pendingQueryRuns?: Set<string>
 }

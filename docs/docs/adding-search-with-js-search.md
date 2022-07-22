@@ -1,5 +1,8 @@
 ---
 title: Adding Search with JS Search
+examples:
+  - label: Using js-search
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search"
 ---
 
 ## Prerequisites
@@ -91,7 +94,7 @@ class Search extends Component {
     const { bookList } = this.state
     const dataToSearch = new JsSearch.Search("isbn")
     /**
-     *  defines a indexing strategy for the data
+     * defines an indexing strategy for the data
      * more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
      */
     dataToSearch.indexStrategy = new JsSearch.PrefixIndexStrategy()

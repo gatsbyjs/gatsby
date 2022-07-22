@@ -10,7 +10,7 @@ type MettHandler<EventName, Payload> = (
 export interface IMett {
   on(eventName: EventName, callback: MettHandler<EventName, Payload>): void
   off(eventName: EventName, callback: MettHandler<EventName, Payload>): void
-  emit(eventName: EventName, e: Payload): void
+  emit(eventName: EventName, e?: Payload): void
 }
 
 type EventName = string

@@ -9,7 +9,7 @@ import {
 } from "./helpers"
 
 const unionType = typeBuilderApi => {
-  const { typeDefs, schema, type, pluginOptions } = typeBuilderApi
+  const { schema, type, pluginOptions } = typeBuilderApi
 
   const types = type.possibleTypes
     .filter(
@@ -22,17 +22,13 @@ const unionType = typeBuilderApi => {
     .map(possibleType => buildTypeName(possibleType.name))
 
   if (!types || !types.length) {
-    return
+    return false
   }
 
   let unionType = {
     name: buildTypeName(type.name),
     types,
     resolveType: node => {
-      if (node.type) {
-        return buildTypeName(node.type)
-      }
-
       if (node.__typename) {
         return buildTypeName(node.__typename)
       }
@@ -47,18 +43,12 @@ const unionType = typeBuilderApi => {
   // @todo add this as a plugin option
   unionType = filterTypeDefinition(unionType, typeBuilderApi, `UNION`)
 
-  typeDefs.push(schema.buildUnionType(unionType))
+  return schema.buildUnionType(unionType)
 }
 
 const interfaceType = typeBuilderApi => {
-  const {
-    type,
-    typeDefs,
-    schema,
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
-  } = typeBuilderApi
+  const { type, schema, gatsbyNodeTypes, fieldAliases, fieldBlacklist } =
+    typeBuilderApi
 
   const state = store.getState()
   const { ingestibles, typeMap } = state.remoteSchema
@@ -101,17 +91,17 @@ const interfaceType = typeBuilderApi => {
     // so we can add them to node interfaces as well in order to filter
     // by a couple different content types
     typeDef.fields[`nodeType`] = `String`
-    typeDef.extensions.nodeInterface = {}
+    typeDef.interfaces = [`Node`]
   } else {
     // otherwise this is a regular interface type so we need to resolve the type name
     typeDef.resolveType = node =>
-      node && node.__typename ? buildTypeName(node.__typename) : null
+      node?.__typename ? buildTypeName(node.__typename) : null
   }
 
   // @todo add this as a plugin option
   typeDef = filterTypeDefinition(typeDef, typeBuilderApi, `INTERFACE`)
 
-  typeDefs.push(schema.buildInterfaceType(typeDef))
+  return schema.buildInterfaceType(typeDef)
 }
 
 const objectType = typeBuilderApi => {
@@ -120,7 +110,6 @@ const objectType = typeBuilderApi => {
     gatsbyNodeTypes,
     fieldAliases,
     fieldBlacklist,
-    typeDefs,
     schema,
     isAGatsbyNode,
   } = typeBuilderApi
@@ -134,8 +123,11 @@ const objectType = typeBuilderApi => {
   })
 
   // if all child fields are excluded, this type shouldn't exist.
-  if (!Object.keys(transformedFields).length) {
-    return
+  // check null first, otherwise cause:
+  // TypeError: Cannot convert undefined or null to object at Function.keys (<anonymous>)
+  // Also cause wordpress blog site build failure in createSchemaCustomization step
+  if (!transformedFields || !Object.keys(transformedFields).length) {
+    return false
   }
 
   let objectType = {
@@ -177,21 +169,18 @@ const objectType = typeBuilderApi => {
   // @todo add this as a plugin option
   objectType = filterTypeDefinition(objectType, typeBuilderApi, `OBJECT`)
 
-  typeDefs.push(schema.buildObjectType(objectType))
+  return schema.buildObjectType(objectType)
 }
 
-const enumType = ({ typeDefs, schema, type }) => {
-  typeDefs.push(
-    schema.buildEnumType({
-      name: buildTypeName(type.name),
-      values: type.enumValues.reduce((accumulator, { name }) => {
-        accumulator[name] = { name }
+const enumType = ({ schema, type }) =>
+  schema.buildEnumType({
+    name: buildTypeName(type.name),
+    values: type.enumValues.reduce((accumulator, { name }) => {
+      accumulator[name] = { name }
 
-        return accumulator
-      }, {}),
-      description: type.description,
-    })
-  )
-}
+      return accumulator
+    }, {}),
+    description: type.description,
+  })
 
 export default { unionType, interfaceType, objectType, enumType }

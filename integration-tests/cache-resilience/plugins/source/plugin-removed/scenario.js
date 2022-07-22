@@ -63,6 +63,9 @@ const queriesTest = ({ typesFirstRun, typesSecondRun }) => {
       "typeinfo": Object {
         "fields": Array [
           Object {
+            "name": "foo",
+          },
+          Object {
             "name": "id",
           },
           Object {
@@ -73,9 +76,6 @@ const queriesTest = ({ typesFirstRun, typesSecondRun }) => {
           },
           Object {
             "name": "internal",
-          },
-          Object {
-            "name": "foo",
           },
         ],
       },

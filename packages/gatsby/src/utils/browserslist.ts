@@ -1,5 +1,6 @@
 import path from "path"
 import browserslist from "browserslist/node"
+import query from "browserslist"
 
 const installedGatsbyVersion = (directory: string): number | undefined => {
   try {
@@ -29,4 +30,9 @@ export const getBrowsersList = (directory: string): Array<string> => {
   }
 
   return fallback
+}
+
+export const hasES6ModuleSupport = (directory: string): boolean => {
+  const browserslist = getBrowsersList(directory)
+  return query(browserslist + `, not supports es6-module`).length === 0
 }

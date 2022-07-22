@@ -6,7 +6,7 @@ const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
 import { preferDefault } from "../prefer-default"
 import { getConfigFile } from "../get-config-file"
-const { resolvePlugin } = require(`../load-plugins/load`)
+import { resolvePlugin } from "../load-plugins/resolve-plugin"
 const reporter = require(`gatsby-cli/lib/reporter`)
 
 // get the gatsby-config file for a theme
@@ -31,13 +31,13 @@ const resolveTheme = async (
     // local themes with same name that do different things and name being
     // main identifier that Gatsby uses right now, it's safer not to support it for now.
     if (isMainConfig) {
-      pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
+      pathToLocalTheme = path.join(rootDir, `plugins`, themeName)
       // is a local plugin OR it doesn't exist
       try {
         const { resolve } = resolvePlugin(themeName, rootDir)
         themeDir = resolve
       } catch (localErr) {
-        // catch shouldn't be empty :shrug:
+        reporter.panic(`Failed to resolve ${themeName}`, localErr)
       }
     }
 

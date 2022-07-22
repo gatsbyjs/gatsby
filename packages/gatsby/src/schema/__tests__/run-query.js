@@ -1,6 +1,6 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { runFastFiltersAndSort } = require(`../../redux/run-fast-filters`)
+const { isLmdbStore, getDataStore } = require(`../../datastore`)
 
 const makeNodesUneven = () => [
   // Note: This is assumed to be an uneven node count
@@ -16,6 +16,7 @@ const makeNodesUneven = () => [
     anArray: [1, 2, 3, 4],
     strArray: `["testing", "serialization", "hacks"]`,
     nullArray: [1, null, 3, 4],
+    duplicates: [`foo`],
     key: {
       withEmptyArray: [],
     },
@@ -67,6 +68,7 @@ const makeNodesUneven = () => [
     singleArray: [8],
     strArray: `[5,6,7,8]`,
     nullArray: [1, 3, 4],
+    duplicates: `bar`,
     waxOnly: {
       foo: true,
       bar: { baz: true },
@@ -139,6 +141,7 @@ const makeNodesUneven = () => [
     hair: 0,
     date: `2006-07-29T22:39:53.000Z`,
     waxOnly: null,
+    duplicates: [`foo`, `bar`],
     anotherKey: {
       withANested: {
         nestedKey: `bar`,
@@ -229,18 +232,23 @@ const makeNodesNeNull = () => [
     internal: { type: `Test`, contentDigest: `1` },
     desc: `first start of path is null`,
     a: null,
+    b: true,
+    c: false,
   },
   {
     id: `2`,
     internal: { type: `Test`, contentDigest: `2` },
     desc: `second start of path is undefined`,
     a: {},
+    b: true,
   },
   {
     id: `3`,
     internal: { type: `Test`, contentDigest: `3` },
     desc: `second start of path is null`,
     a: { b: null },
+    b: true,
+    c: true,
   },
   {
     id: `4`,
@@ -280,6 +288,41 @@ const makeNodesNeNull = () => [
   },
 ]
 
+const makeNodesMultiFilter = () => [
+  {
+    id: `1`,
+    internal: { type: `Test`, contentDigest: `1` },
+    locale: `en`,
+    author: 1,
+    date: `2021-08-06`,
+    category: `foo`,
+  },
+  {
+    id: `2`,
+    internal: { type: `Test`, contentDigest: `2` },
+    locale: `en`,
+    author: 2,
+    date: `2021-08-07`,
+    category: `foo`,
+  },
+  {
+    id: `3`,
+    internal: { type: `Test`, contentDigest: `3` },
+    locale: `it`,
+    author: 1,
+    date: `2021-08-07`,
+    category: `foo`,
+  },
+  {
+    id: `4`,
+    internal: { type: `Test`, contentDigest: `4` },
+    locale: `it`,
+    author: 1,
+    date: `2021-08-08`,
+    category: `foo`,
+  },
+]
+
 function make100Nodes(even) {
   const arr = []
 
@@ -312,15 +355,16 @@ function makeGqlType(nodes) {
   return { sc, type: tc.getType() }
 }
 
-function resetDb(nodes) {
+async function resetDb(nodes) {
   store.dispatch({ type: `DELETE_CACHE` })
   nodes.forEach(node =>
     actions.createNode(node, { name: `test` })(store.dispatch)
   )
+  await getDataStore().ready()
 }
 
 async function runQuery(queryArgs, nodes = makeNodesUneven()) {
-  resetDb(nodes)
+  await resetDb(nodes)
   const { sc, type: gqlType } = makeGqlType(nodes)
   const args = {
     gqlType,
@@ -330,8 +374,8 @@ async function runQuery(queryArgs, nodes = makeNodesUneven()) {
     nodeTypeNames: [gqlType.name],
     filtersCache: new Map(),
   }
-
-  return runFastFiltersAndSort(args)
+  const { entries } = await getDataStore().runQuery(args)
+  return Array.from(entries)
 }
 
 async function runQuery2(queryArgs) {
@@ -473,7 +517,7 @@ describe(`Filter fields`, () => {
       })
 
       // Note: no coercion, so [8]=='8' is true but the comparison is strict
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
     })
   })
 
@@ -724,15 +768,7 @@ describe(`Filter fields`, () => {
         // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
         // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
         for (const needle of [
-          0,
-          1.5,
-          33.5,
-          49.5,
-          50.5,
-          66.5,
-          98.5,
-          99.5,
-          100.5,
+          0, 1.5, 33.5, 49.5, 50.5, 66.5, 98.5, 99.5, 100.5,
         ]) {
           it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
             // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -769,7 +805,7 @@ describe(`Filter fields`, () => {
 
       // Nothing is lt null so zero nodes should match
       // (Note: this is different from `lte`, which does return nulls here!)
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
       expect(
         allNodes.filter(node => node.nil === needle).length
       ).toBeGreaterThan(0) // They should _exist_...
@@ -825,15 +861,7 @@ describe(`Filter fields`, () => {
         // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
         // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
         for (const needle of [
-          0,
-          1.5,
-          33.5,
-          49.5,
-          50.5,
-          66.5,
-          98.5,
-          99.5,
-          100.5,
+          0, 1.5, 33.5, 49.5, 50.5, 66.5, 98.5, 99.5, 100.5,
         ]) {
           it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
             // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -926,15 +954,7 @@ describe(`Filter fields`, () => {
         // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
         // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
         for (const needle of [
-          0,
-          1.5,
-          33.5,
-          49.5,
-          50.5,
-          66.5,
-          98.5,
-          99.5,
-          100.5,
+          0, 1.5, 33.5, 49.5, 50.5, 66.5, 98.5, 99.5, 100.5,
         ]) {
           it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
             // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -972,7 +992,7 @@ describe(`Filter fields`, () => {
       // Nothing is gt null so zero nodes should match
       // (Note: this is different from `gte`, which does return nulls here!)
       expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
       expect(
         allNodes.filter(node => node.nil === needle).length
       ).toBeGreaterThan(0) // They should _exist_...
@@ -1028,15 +1048,7 @@ describe(`Filter fields`, () => {
         // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
         // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
         for (const needle of [
-          0,
-          1.5,
-          33.5,
-          49.5,
-          50.5,
-          66.5,
-          98.5,
-          99.5,
-          100.5,
+          0, 1.5, 33.5, 49.5, 50.5, 66.5, 98.5, 99.5, 100.5,
         ]) {
           it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
             // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -1188,7 +1200,7 @@ describe(`Filter fields`, () => {
         name: { regex: `/"/` },
       })
 
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
       expect(allNodes.filter(node => node.name === `"`).length).toEqual(0)
     })
   })
@@ -1400,6 +1412,15 @@ describe(`Filter fields`, () => {
       )
     })
 
+    it(`sorts correctly`, async () => {
+      const needle = [`foo`, `bar`]
+      const result = await runQuery({
+        filter: { duplicates: { in: needle } },
+        sort: { fields: [`id`], order: [] },
+      })
+      expect(result.map(r => r.id)).toEqual([`0`, `1`, `2`])
+    })
+
     it(`refuses a non-arg number argument`, async () => {
       await expect(
         runFilter({
@@ -1506,7 +1527,7 @@ describe(`Filter fields`, () => {
         },
       })
 
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
     })
 
     it(`handles the elemMatch operator for array of objects (1)`, async () => {
@@ -1802,9 +1823,97 @@ describe(`Filter fields`, () => {
   })
 })
 
+describe(`Multiple filter fields`, () => {
+  let nodes
+  beforeEach(() => {
+    nodes = makeNodesMultiFilter()
+  })
+
+  describe(`$eq + $eq`, () => {
+    it(`supports simple query`, async () => {
+      const result = await runQuery(
+        {
+          filter: {
+            author: { eq: 1 },
+            locale: { eq: `en` },
+          },
+        },
+        nodes
+      )
+      expect(result).toEqual([nodes[0]])
+    })
+  })
+
+  describe(`$ne + $ne`, () => {
+    it(`should deal with ne null on both fields`, async () => {
+      const needle = null
+      const allNodes = makeNodesNeNull()
+      const result = await runQuery(
+        {
+          filter: {
+            b: { ne: needle },
+            c: { ne: needle },
+          },
+        },
+        allNodes
+      )
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
+      expect(result).toEqual(
+        allNodes.filter(node => node?.b != null && node?.c != null)
+      )
+      expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+      result.forEach(node => expect(node?.b).not.toEqual(needle))
+      result.forEach(node => expect(node?.c).not.toEqual(needle))
+    })
+  })
+
+  describe(`$eq + $gte`, () => {
+    it(`supports simple query`, async () => {
+      const result = await runQuery(
+        {
+          filter: {
+            locale: { eq: `en` },
+            date: { gte: `2021-08-06` },
+          },
+        },
+        nodes
+      )
+      const ids = result.map(n => n.id)
+      expect(ids).toEqual([`1`, `2`])
+    })
+
+    it(`supports query with sort by a different field`, async () => {
+      const result = await runQuery(
+        {
+          filter: {
+            locale: { eq: `en` },
+            date: { gte: `2021-08-06` },
+          },
+          sort: {
+            fields: [`author`],
+            order: [`DESC`],
+          },
+        },
+        nodes
+      )
+      const ids = result.map(n => n.id)
+      expect(ids).toEqual([`2`, `1`])
+    })
+  })
+
+  // TODO:
+  describe(`$eq + $in`, () => {})
+  describe(`$eq + $lt`, () => {})
+  describe(`$eq + $gt + $lt`, () => {})
+  describe(`$in + $in`, () => {})
+  describe(`$in + $gt`, () => {})
+  describe(`$gt + $gt`, () => {})
+  describe(`$gt + $lt`, () => {})
+})
+
 describe(`collection fields`, () => {
   it(`orders by given field desc with limit`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter.blue`],
@@ -1813,9 +1922,19 @@ describe(`collection fields`, () => {
     })
 
     expect(result.length).toEqual(3)
-    expect(result[0].id).toEqual(`1`)
-    expect(result[1].id).toEqual(`2`)
-    expect(result[2].id).toEqual(`0`)
+
+    // Nodes 1 and 2 both have value 10010, so correct sorting order is undefined
+    //  LMDB actually sorts according to node.counter in addition to main sorting
+    //  and the old fast filters do not do any secondary sorting, hence the difference
+    if (process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES) {
+      expect(result[0].id).toEqual(`2`)
+      expect(result[1].id).toEqual(`1`)
+      expect(result[2].id).toEqual(`0`)
+    } else {
+      expect(result[0].id).toEqual(`1`)
+      expect(result[1].id).toEqual(`2`)
+      expect(result[2].id).toEqual(`0`)
+    }
   })
 
   describe(`num, null, and nullable order`, () => {
@@ -1833,7 +1952,7 @@ describe(`collection fields`, () => {
     //  - not_num_null
 
     it(`sorts num_null_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_null_not`],
           order: [`asc`],
@@ -1847,7 +1966,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts num_null_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_null_not`],
           order: [`desc`],
@@ -1861,7 +1980,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts num_not_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_not_null`],
           order: [`asc`],
@@ -1875,7 +1994,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts num_not_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_not_null`],
           order: [`desc`],
@@ -1889,7 +2008,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_num_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_num_not`],
           order: [`asc`],
@@ -1903,7 +2022,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_num_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_num_not`],
           order: [`desc`],
@@ -1917,7 +2036,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_num asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_num`],
           order: [`asc`],
@@ -1931,7 +2050,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_num desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_num`],
           order: [`desc`],
@@ -1945,7 +2064,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_num asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_num`],
           order: [`asc`],
@@ -1959,7 +2078,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_num desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_num`],
           order: [`desc`],
@@ -1973,7 +2092,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_num_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_num_null`],
           order: [`asc`],
@@ -1987,7 +2106,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_num_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_num_null`],
           order: [`desc`],
@@ -2016,7 +2135,7 @@ describe(`collection fields`, () => {
     //  - not_str_null
 
     it(`sorts str_null_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_null_not`],
           order: [`asc`],
@@ -2030,7 +2149,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts str_null_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_null_not`],
           order: [`desc`],
@@ -2044,7 +2163,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts str_not_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_not_null`],
           order: [`asc`],
@@ -2058,7 +2177,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts str_not_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_not_null`],
           order: [`desc`],
@@ -2072,7 +2191,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_str_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_str_not`],
           order: [`asc`],
@@ -2086,7 +2205,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_str_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_str_not`],
           order: [`desc`],
@@ -2100,7 +2219,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_str asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_str`],
           order: [`asc`],
@@ -2114,7 +2233,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_str desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_str`],
           order: [`desc`],
@@ -2128,7 +2247,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_str asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_str`],
           order: [`asc`],
@@ -2142,7 +2261,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_str desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_str`],
           order: [`desc`],
@@ -2156,7 +2275,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_str_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_str_null`],
           order: [`asc`],
@@ -2170,7 +2289,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_str_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_str_null`],
           order: [`desc`],
@@ -2199,7 +2318,7 @@ describe(`collection fields`, () => {
     //  - not_obj_null
 
     it(`sorts obj_null_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_null_not`],
           order: [`asc`],
@@ -2213,7 +2332,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts obj_null_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_null_not`],
           order: [`desc`],
@@ -2227,7 +2346,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts obj_not_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_not_null`],
           order: [`asc`],
@@ -2241,7 +2360,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts obj_not_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_not_null`],
           order: [`desc`],
@@ -2255,7 +2374,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_obj_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_obj_not`],
           order: [`asc`],
@@ -2269,7 +2388,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_obj_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_obj_not`],
           order: [`desc`],
@@ -2283,7 +2402,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_obj asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_obj`],
           order: [`asc`],
@@ -2297,7 +2416,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_obj desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_obj`],
           order: [`desc`],
@@ -2311,7 +2430,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_obj asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_obj`],
           order: [`asc`],
@@ -2325,7 +2444,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_obj desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_obj`],
           order: [`desc`],
@@ -2339,7 +2458,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_obj_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_obj_null`],
           order: [`asc`],
@@ -2353,7 +2472,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_obj_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_obj_null`],
           order: [`desc`],
@@ -2368,7 +2487,7 @@ describe(`collection fields`, () => {
   })
 
   it(`sorts results with desc has null fields first vs obj second`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`waxOnly`],
@@ -2376,7 +2495,7 @@ describe(`collection fields`, () => {
       },
     })
 
-    // 0 doesnt have it, 1 has it as an object, 2 has it as null
+    // 0 doesn't have it, 1 has it as an object, 2 has it as null
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`0`)
@@ -2385,7 +2504,7 @@ describe(`collection fields`, () => {
   })
 
   it(`sorts results with asc has null fields last vs obj first`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`waxOnly`],
@@ -2393,7 +2512,7 @@ describe(`collection fields`, () => {
       },
     })
 
-    // 0 doesnt have it, 1 has it as an object, 2 has it as null
+    // 0 doesn't have it, 1 has it as an object, 2 has it as null
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`1`)
@@ -2402,7 +2521,7 @@ describe(`collection fields`, () => {
   })
 
   it(`applies specified sort order, and sorts asc by default`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter.blue`, `id`],
@@ -2417,7 +2536,7 @@ describe(`collection fields`, () => {
   })
 
   it(`applies specified sort order per field`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter.blue`, `id`],

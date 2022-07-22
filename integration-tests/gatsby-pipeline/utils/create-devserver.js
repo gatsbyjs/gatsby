@@ -1,28 +1,35 @@
 const execa = require(`execa`)
 const path = require(`path`)
+const kill = require("tree-kill")
 const basePath = path.resolve(__dirname, `../`)
 
 const killProcess = devProcess =>
   new Promise(resolve => {
+    let timeout = setTimeout(() => {
+      kill(devProcess.pid)
+    }, 3000)
+
     devProcess.on(`exit`, () => {
-      // give it some time to exit
+      clearTimeout(timeout)
+
       setTimeout(() => {
         resolve()
-      }, 0)
+      }, 100)
     })
 
-    // If pid is less than -1, then sig is sent to every process in the process group whose ID is -pid.
-    // @see https://stackoverflow.com/a/33367711
-    process.kill(-devProcess.pid)
+    devProcess.cancel()
   })
 
-module.exports = () =>
-  new Promise(resolve => {
-    const devProcess = execa(`yarn`, [`develop`], {
-      cwd: basePath,
-      env: { NODE_ENV: `development` },
-      detached: true,
-    })
+function runDevelop() {
+  return new Promise((resolve, reject) => {
+    const devProcess = execa(
+      process.execPath,
+      [`./node_modules/gatsby/cli.js`, `develop`],
+      {
+        cwd: basePath,
+        env: { NODE_ENV: `development` },
+      }
+    )
 
     devProcess.stdout.on(`data`, chunk => {
       if (chunk.toString().includes(`You can now view`)) {
@@ -31,3 +38,14 @@ module.exports = () =>
       }
     })
   })
+}
+
+exports.clean = async function clean() {
+  try {
+    await execa(process.execPath, [`./node_modules/gatsby/cli.js`, `clean`], {
+      cwd: basePath,
+    })
+  } catch (err) {}
+}
+
+exports.createDevServer = async () => runDevelop()

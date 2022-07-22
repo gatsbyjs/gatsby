@@ -2,9 +2,9 @@ import { stripIndent } from "common-tags"
 import terminalLink from "terminal-link"
 import Joi from "joi"
 import pluginSchemas from "./plugin-schemas.json"
-import cmses from "./cmses.json"
-import styles from "./styles.json"
-import c from "ansi-colors"
+import cmses from "./questions/cmses.json"
+import styles from "./questions/styles.json"
+import colors from "ansi-colors"
 
 const supportedOptionTypes = [`string`, `boolean`, `number`]
 
@@ -45,7 +45,7 @@ function getName(key: string): string | undefined {
 }
 
 function docsLink(pluginName: string): string {
-  return c.blueBright(
+  return colors.blueBright(
     terminalLink(
       `the plugin docs`,
       `https://www.gatsbyjs.com/plugins/${pluginName}/`,
@@ -101,7 +101,7 @@ export const makePluginConfigQuestions = (
           See ${docsLink(pluginName)} for help.
           ${
             choices.length > 1
-              ? c.green(
+              ? colors.green(
                   `Use arrow keys to move between fields, and enter to finish`
                 )
               : ``

@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const { spawnSync } = require(`child_process`)
 const path = require(`path`)
+const os = require(`os`)
 const _ = require(`lodash`)
 const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
@@ -30,13 +31,7 @@ const getDiskCacheSnapshotSubStateByPlugins = (state, pluginNamesArray) =>
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 const { compareState } = require(`../utils/nodes-diff`)
 
@@ -380,6 +375,10 @@ describe(`Some plugins changed between gatsby runs`, () => {
 
   describe(`Query results`, () => {
     const getQueryResultTestArgs = scenarioName => {
+      if (os.platform() === "win32") {
+        scenarioName = scenarioName.replace("/", "\\")
+      }
+
       const result = {
         dataFirstRun: states.queryResults.firstRun[scenarioName].data,
         dataSecondRun: states.queryResults.secondRun[scenarioName].data,

@@ -303,10 +303,10 @@ export function transformField({
   const isAGatsbyNode =
     // if this is a gatsby node type
     gatsbyNodesInfo.typeNames.includes(typeName) ||
-    // or this type has a possible type which is a gatsby node type
+    // or all possible types on this type are Gatsby node types
     typeMap
       .get(typeName)
-      ?.possibleTypes?.find(possibleType =>
+      ?.possibleTypes?.every(possibleType =>
         gatsbyNodesInfo.typeNames.includes(possibleType.name)
       )
 
@@ -599,14 +599,15 @@ const transformFields = ({
         })
 
         if (transformedField?.inlineFragments?.length) {
-          transformedField.inlineFragments = transformedField.inlineFragments.filter(
-            fieldInlineFragment =>
-              // yes this is a horrible use of .find(). @todo refactor this for better perf
-              !fragment.inlineFragments.find(
-                fragmentInlineFragment =>
-                  fragmentInlineFragment.name === fieldInlineFragment.name
-              )
-          )
+          transformedField.inlineFragments =
+            transformedField.inlineFragments.filter(
+              fieldInlineFragment =>
+                // yes this is a horrible use of .find(). @todo refactor this for better perf
+                !fragment.inlineFragments.find(
+                  fragmentInlineFragment =>
+                    fragmentInlineFragment.name === fieldInlineFragment.name
+                )
+            )
         }
       }
 

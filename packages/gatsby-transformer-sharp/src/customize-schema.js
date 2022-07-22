@@ -17,6 +17,7 @@ const {
   traceSVG,
   generateImageData,
 } = require(`gatsby-plugin-sharp`)
+const { hasFeature } = require(`gatsby-plugin-utils`)
 
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
@@ -43,6 +44,18 @@ const {
 } = require(`./types`)
 const { stripIndent } = require(`common-tags`)
 const { prefixId, CODES } = require(`./error-utils`)
+
+let warnedForDeprecation = false
+
+function warnForDeprecation() {
+  if (warnedForDeprecation) {
+    return
+  }
+  warnedForDeprecation = true
+  console.warn(
+    `[gatsby-transformer-sharp] The "fixed" and "fluid" resolvers are now deprecated. Switch to "gatsby-plugin-image" for better performance and a simpler API. See https://gatsby.dev/migrate-images to learn how.`
+  )
+}
 
 function toArray(buf) {
   const arr = new Array(buf.length)
@@ -200,6 +213,7 @@ const fixedNodeType = ({
       },
     },
     resolve: (image, fieldArgs, context) => {
+      warnForDeprecation()
       const file = getNodeAndSavePathDependency(image.parent, context.path)
       const args = { ...fieldArgs, pathPrefix }
       return Promise.resolve(
@@ -366,6 +380,7 @@ const fluidNodeType = ({
       },
     },
     resolve: (image, fieldArgs, context) => {
+      warnForDeprecation()
       const file = getNodeAndSavePathDependency(image.parent, context.path)
       const args = { ...fieldArgs, pathPrefix }
       return Promise.resolve(
@@ -386,8 +401,6 @@ const fluidNodeType = ({
   }
 }
 
-let warnedForBeta = false
-
 const imageNodeType = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -395,7 +408,9 @@ const imageNodeType = ({
   cache,
 }) => {
   return {
-    type: new GraphQLNonNull(GraphQLJSON),
+    type: hasFeature(`graphql-typegen`)
+      ? `GatsbyImageData!`
+      : new GraphQLNonNull(GraphQLJSON),
     args: {
       layout: {
         type: ImageLayoutType,
@@ -453,7 +468,6 @@ const imageNodeType = ({
         not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
         both PNG and JPG is not supported and will be ignored.
         `,
-        defaultValue: [``, `webp`],
       },
       outputPixelDensities: {
         type: GraphQLList(GraphQLFloat),
@@ -514,13 +528,6 @@ const imageNodeType = ({
       if (!generateImageData) {
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
         return null
-      }
-      if (!warnedForBeta) {
-        reporter.warn(
-          stripIndent`
-        Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
-        )
-        warnedForBeta = true
       }
       const imageData = await generateImageData({
         file,
@@ -589,21 +596,26 @@ const createFields = ({
           // keep track of in progress copy, we should rely on `existsSync` but
           // a race condition exists between the exists check and the copy
           inProgressCopy.add(publicPath)
-          fs.copy(details.absolutePath, publicPath, err => {
-            // this is no longer in progress
-            inProgressCopy.delete(publicPath)
-            if (err) {
-              reporter.panic(
-                {
-                  id: prefixId(CODES.MissingResource),
-                  context: {
-                    sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+          fs.copy(
+            details.absolutePath,
+            publicPath,
+            { dereference: true },
+            err => {
+              // this is no longer in progress
+              inProgressCopy.delete(publicPath)
+              if (err) {
+                reporter.panic(
+                  {
+                    id: prefixId(CODES.MissingResource),
+                    context: {
+                      sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+                    },
                   },
-                },
-                err
-              )
+                  err
+                )
+              }
             }
-          })
+          )
         }
 
         return {

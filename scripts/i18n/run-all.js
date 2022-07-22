@@ -2,7 +2,7 @@
 const fs = require(`fs`)
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
-let logger = log4js.getLogger(`run-all`)
+const logger = log4js.getLogger(`run-all`)
 
 require(`dotenv`).config()
 

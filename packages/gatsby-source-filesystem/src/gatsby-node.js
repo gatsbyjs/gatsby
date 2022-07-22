@@ -45,7 +45,7 @@ const createFSMachine = (
   // After 'ready', we handle the 'add' event without putting it into a queue.
   let pathQueue = []
   const flushPathQueue = () => {
-    let queue = pathQueue.slice()
+    const queue = pathQueue.slice()
     pathQueue = null
     return Promise.all(
       // eslint-disable-next-line consistent-return
@@ -171,7 +171,7 @@ exports.sourceNodes = (api, pluginOptions) => {
 The path passed to gatsby-source-filesystem does not exist on your file system:
 ${pluginOptions.path}
 Please pick a path to an existing directory.
-See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
+See docs here - https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/
       `)
   }
 

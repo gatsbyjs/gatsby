@@ -11,7 +11,7 @@
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "next",
-    "gatsby-plugin-square-payment-form": "next",
+    "gatsby-plugin-square-payment-form": "latest",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-sharp": "next",
     "prop-types": "^15.7.2",
@@ -22,9 +22,7 @@
   "devDependencies": {
     "prettier": "2.1.1"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",

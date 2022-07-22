@@ -1,17 +1,18 @@
-const chalk = require(`chalk`)
+// @ts-check
+import chalk from "chalk"
+import _ from "lodash"
 
-const _ = require(`lodash`)
-
-const DEFAULT_PAGE_LIMIT = 100
+const DEFAULT_PAGE_LIMIT = 1000
 
 const defaultOptions = {
   host: `cdn.contentful.com`,
   environment: `master`,
   downloadLocal: false,
   localeFilter: () => true,
-  forceFullSync: false,
+  contentTypeFilter: () => true,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
+  enableTags: false,
 }
 
 const createPluginConfig = pluginOptions => {

@@ -1,1 +1,1 @@
-import "./style.css"
+export * from './dist/gatsby-browser'

@@ -13,7 +13,7 @@ For people who already have an existing blog using `gatsby-transformer-remark` b
 Add the `gatsby-plugin-mdx` plugin (and its peer dependencies) to your `package.json` file and remove the `gatsby-transformer-remark` plugin.
 
 ```shell
-npm install @mdx-js/mdx @mdx-js/react gatsby-plugin-mdx
+npm install @mdx-js/mdx@v1 @mdx-js/react@v1 gatsby-plugin-mdx
 npm remove gatsby-transformer-remark
 ```
 
@@ -126,5 +126,5 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 
 ## Additional resources
 
-- Follow [Importing and Using Components in MDX](/docs/how-to/routing/mdx/importing-and-using-components) to find out how you can insert React components in your MDX files.
-- Follow [Using MDX Plugins](/docs/how-to/routing/advanced/mdx-plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.
+- Follow [Importing and Using Components in MDX](/docs/mdx/importing-and-using-components/) to find out how you can insert React components in your MDX files.
+- Follow [Using MDX Plugins](/docs/how-to/routing/mdx-plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.

@@ -51,7 +51,14 @@ const getDerivedTypes = ({
   typeComposer,
 }: {
   typeComposer: AllTypeComposer
-}): Set<string> => typeComposer.getExtension(`derivedTypes`) || new Set()
+}): Set<string> => {
+  const derivedTypes = typeComposer.getExtension(`derivedTypes`)
+  if (derivedTypes) {
+    return derivedTypes as Set<string>
+  }
+
+  return new Set()
+}
 
 export const deleteFieldsOfDerivedTypes = ({ typeComposer }): void => {
   const derivedTypes = getDerivedTypes({ typeComposer })
@@ -63,6 +70,15 @@ export const deleteFieldsOfDerivedTypes = ({ typeComposer }): void => {
       typeComposer.removeField(fieldName)
     }
   })
+}
+
+const removeTypeFromSchemaComposer = ({
+  schemaComposer,
+  typeComposer,
+}): void => {
+  schemaComposer.delete(typeComposer.getTypeName())
+  schemaComposer.delete((typeComposer as any)._gqType)
+  schemaComposer.delete(typeComposer)
 }
 
 export const clearDerivedTypes = ({
@@ -77,15 +93,21 @@ export const clearDerivedTypes = ({
   for (const typeName of derivedTypes.values()) {
     const derivedTypeComposer = schemaComposer.getAnyTC(typeName)
     clearDerivedTypes({ schemaComposer, typeComposer: derivedTypeComposer })
-    schemaComposer.delete(typeName)
-    schemaComposer.delete((derivedTypeComposer as any)._gqType)
-    schemaComposer.delete(derivedTypeComposer)
+    removeTypeFromSchemaComposer({
+      schemaComposer,
+      typeComposer: derivedTypeComposer,
+    })
   }
 
   if (
     typeComposer instanceof ObjectTypeComposer ||
     typeComposer instanceof InterfaceTypeComposer
   ) {
+    const inputTypeComposer = typeComposer.getInputTypeComposer()
+    removeTypeFromSchemaComposer({
+      schemaComposer,
+      typeComposer: inputTypeComposer,
+    })
     typeComposer.removeInputTypeComposer()
   }
 

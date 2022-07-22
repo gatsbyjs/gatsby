@@ -1,7 +1,15 @@
+export function removeQueryName(query) {
+  return query.replace(
+    /^[^{(]+([{(])/,
+    (_match, openingCurlyBracketsOrParenthesis) =>
+      `query ${openingCurlyBracketsOrParenthesis}`
+  )
+}
+
 const getQuery = (arg, spaceCount) => {
   const { operationDataList } = arg
   const { query } = operationDataList[0]
-  const anonymousQuery = query.replace(/query\s.+{/gim, `{`)
+  const anonymousQuery = removeQueryName(query)
   return (
     ` `.repeat(spaceCount) +
     anonymousQuery.replace(/\n/g, `\n` + ` `.repeat(spaceCount))
@@ -16,13 +24,13 @@ const pageQuery = {
   generate: arg => `import React from "react"
 import { graphql } from "gatsby"
 
-const ComponentName = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
+const Page = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
 
 export const query = graphql\`
 ${getQuery(arg, 2)}
 \`
 
-export default ComponentName
+export default Page
 
 `,
 }
@@ -69,4 +77,35 @@ export default ComponentName
 `,
 }
 
-export default [pageQuery, staticHook, staticQuery]
+const createPages = {
+  name: `createPages`,
+  language: `JavaScript`,
+  codeMirrorMode: `javascript`,
+  options: [],
+  generate: arg => `const path = require(\`path\`)
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  const result = await graphql(\`
+${getQuery(arg, 4)}
+  \`)
+  const templatePath = path.resolve(\`PATH/TO/TEMPLATE.js\`)
+  
+  result.data.${
+    arg.operationDataList[0].operationDefinition.selectionSet.selections[0].name
+      .value
+  }.forEach((node) => {
+    createPage({
+      path: NODE_SLUG,
+      component: templatePath,
+      context: {
+        slug: NODE_SLUG,
+      },
+    })
+  })
+}
+`,
+}
+
+export default [pageQuery, staticHook, staticQuery, createPages]

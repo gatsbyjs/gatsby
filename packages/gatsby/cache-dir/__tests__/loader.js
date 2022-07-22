@@ -1,5 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 // This is by no means a full test file for loader.js so feel free to add more tests.
 import mock from "xhr-mock"
+import { setImmediate } from "timers"
 import { ProdLoader } from "../loader"
 import emitter from "../emitter"
 
@@ -187,20 +192,50 @@ describe(`Production loader`, () => {
       expect(xhrCount).toBe(2)
     })
 
-    it(`should return an error when status is 500`, async () => {
+    it(`should return an error when status is 500 and 500.html is not available`, async () => {
       const prodLoader = new ProdLoader(null, [])
 
       mockPageData(`/error-page`, 500)
 
       const expectation = {
         status: `error`,
-        pagePath: `/error-page`,
+        pagePath: `/500.html`,
+        internalServerError: true,
+        retries: 3,
       }
       expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
+    })
+
+    it(`should return an error when status is 500 and 500.html is available`, async () => {
+      const prodLoader = new ProdLoader(null, [])
+
+      mockPageData(`/error-page`, 500)
+      mockPageData(
+        `/500.html`,
+        200,
+        {
+          path: `/500.html`,
+        },
+        true
+      )
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/500.html`,
+        internalServerError: true,
+        payload: {
+          path: `/500.html`,
+        },
+      }
+      expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
+        expectation
+      )
+      expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
+      expect(xhrCount).toBe(2)
     })
 
     it(`should retry 3 times before returning an error`, async () => {
@@ -311,6 +346,7 @@ describe(`Production loader`, () => {
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([
         `component`,
+        `head`,
         `json`,
         `page`,
         `staticQueryResults`,
@@ -486,26 +522,32 @@ describe(`Production loader`, () => {
   describe(`prefetch`, () => {
     const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
-    it(`shouldn't prefetch when shouldPrefetch is false`, () => {
+    it(`shouldn't prefetch when shouldPrefetch is false`, async () => {
+      jest.useFakeTimers()
       const prodLoader = new ProdLoader(null, [])
       prodLoader.shouldPrefetch = jest.fn(() => false)
       prodLoader.doPrefetch = jest.fn()
       prodLoader.apiRunner = jest.fn()
+      const prefetchPromise = prodLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
 
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(false)
+      expect(await prefetchPromise).toBe(false)
       expect(prodLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(prodLoader.apiRunner).not.toHaveBeenCalled()
       expect(prodLoader.doPrefetch).not.toHaveBeenCalled()
     })
 
-    it(`should trigger custom prefetch logic when core is disabled`, () => {
+    it(`should trigger custom prefetch logic when core is disabled`, async () => {
+      jest.useFakeTimers()
       const prodLoader = new ProdLoader(null, [])
       prodLoader.shouldPrefetch = jest.fn(() => true)
       prodLoader.doPrefetch = jest.fn()
       prodLoader.apiRunner = jest.fn()
       prodLoader.prefetchDisabled = true
 
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(false)
+      const prefetchPromise = prodLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
+      expect(await prefetchPromise).toBe(false)
       expect(prodLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(prodLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
         pathname: `/mypath/`,
@@ -519,8 +561,10 @@ describe(`Production loader`, () => {
       prodLoader.shouldPrefetch = jest.fn(() => true)
       prodLoader.apiRunner = jest.fn()
       prodLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+      const prefetchPromise = prodLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
 
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(await prefetchPromise).toBe(true)
 
       // wait for doPrefetchPromise
       await flushPromises()
@@ -538,13 +582,17 @@ describe(`Production loader`, () => {
     })
 
     it(`should only run apis once`, async () => {
+      jest.useFakeTimers()
       const prodLoader = new ProdLoader(null, [])
       prodLoader.shouldPrefetch = jest.fn(() => true)
       prodLoader.apiRunner = jest.fn()
       prodLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+      const prefetchPromise = prodLoader.prefetch(`/mypath/`)
+      const prefetchPromise2 = prodLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
 
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(true)
-      expect(prodLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(await prefetchPromise).toBe(true)
+      expect(await prefetchPromise2).toBe(true)
 
       // wait for doPrefetchPromise
       await flushPromises()

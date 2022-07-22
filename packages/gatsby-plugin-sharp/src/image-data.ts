@@ -1,21 +1,28 @@
 /* eslint-disable no-unused-expressions */
 import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { Reporter } from "gatsby/reporter"
+import fs from "fs-extra"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
-import { createTransformObject, mergeDefaults } from "./plugin-options"
+import {
+  createTransformObject,
+  getPluginOptions,
+  mergeDefaults,
+} from "./plugin-options"
 import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
+
+const DOMINANT_COLOR_IMAGE_SIZE = 200
 
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 
 export type FileNode = Node & {
-  absolutePath?: string
+  absolutePath: string
   extension: string
 }
 
@@ -31,31 +38,57 @@ const metadataCache = new Map<string, IImageMetadata>()
 
 export async function getImageMetadata(
   file: FileNode,
-  getDominantColor?: boolean
+  getDominantColor?: boolean,
+  cache?: GatsbyCache
 ): Promise<IImageMetadata> {
   if (!getDominantColor) {
     // If we don't need the dominant color we can use the cheaper size function
     const { width, height, type } = await getImageSizeAsync(file)
     return { width, height, format: type }
   }
-  let metadata = metadataCache.get(file.internal.contentDigest)
+
+  let metadata: IImageMetadata | undefined
+  const METADATA_KEY = `metadata-${file.internal.contentDigest}`
+
+  if (cache) {
+    // Use plugin cache
+    metadata = await cache.get(METADATA_KEY)
+  } else {
+    // Use in-memory cache instead
+    metadata = metadataCache.get(METADATA_KEY)
+  }
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
   }
 
   try {
-    const pipeline = sharp(file.absolutePath)
+    const pipeline = sharp({ failOnError: !!getPluginOptions().failOnError })
+
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
 
     const { width, height, density, format } = await pipeline.metadata()
 
-    const { dominant } = await pipeline.stats()
+    // Downsize the image before calculating the dominant color
+    const buffer = await pipeline
+      .resize(DOMINANT_COLOR_IMAGE_SIZE, DOMINANT_COLOR_IMAGE_SIZE, {
+        fit: `inside`,
+        withoutEnlargement: true,
+      })
+      .toBuffer()
+
+    const { dominant } = await sharp(buffer).stats()
+
     // Fallback in case sharp doesn't support dominant
     const dominantColor = dominant
       ? rgbToHex(dominant.r, dominant.g, dominant.b)
       : `#000000`
 
     metadata = { width, height, density, format, dominantColor }
-    metadataCache.set(file.internal.contentDigest, metadata)
+    if (cache) {
+      await cache.set(METADATA_KEY, metadata)
+    } else {
+      metadataCache.set(METADATA_KEY, metadata)
+    }
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err)
     return {}
@@ -124,7 +157,11 @@ export async function generateImageData({
     )
   }
 
-  const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
+  const metadata = await getImageMetadata(
+    file,
+    placeholder === `dominantColor`,
+    cache
+  )
 
   if ((args.width || args.height) && layout === `fullWidth`) {
     reporter.warn(
@@ -236,7 +273,9 @@ export async function generateImageData({
   const primaryIndex =
     layout === `fullWidth`
       ? imageSizes.sizes.length - 1 // The largest image
-      : imageSizes.sizes.findIndex(size => size === imageSizes.unscaledWidth)
+      : imageSizes.sizes.findIndex(
+          size => size === Math.round(imageSizes.unscaledWidth)
+        )
 
   if (primaryIndex === -1) {
     reporter.error(
@@ -250,7 +289,11 @@ export async function generateImageData({
   if (!images?.length) {
     return undefined
   }
-  const imageProps: IGatsbyImageData = {
+  const imageProps: Pick<
+    IGatsbyImageData,
+    "backgroundColor" | "layout" | "placeholder" | "images"
+  > &
+    Partial<Pick<IGatsbyImageData, "width" | "height">> = {
     layout,
     placeholder: undefined,
     backgroundColor,
@@ -371,5 +414,5 @@ export async function generateImageData({
       imageProps.width = args.width || primaryImage.width || 1
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio
   }
-  return imageProps
+  return imageProps as IGatsbyImageData
 }

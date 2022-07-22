@@ -4,16 +4,13 @@ const path = require(`path`)
 const { namedTypes: types } = require(`ast-types`)
 const { utils } = require(`react-docgen`)
 
-const {
-  getMemberValuePath,
-  getNameOrValue,
-  isExportsOrModuleAssignment,
-} = utils
+const { getMemberValuePath, getNameOrValue, isExportsOrModuleAssignment } =
+  utils
 
 const DEFAULT_NAME = `UnknownComponent`
 
 function getNameFromPath(path: NodePath): ?string {
-  var node = path.node
+  const node = path.node
   switch (node.type) {
     case types.Identifier.name:
     case types.Literal.name:

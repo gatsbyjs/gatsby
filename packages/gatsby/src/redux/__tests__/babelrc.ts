@@ -3,6 +3,7 @@ import { babelrcReducer } from "../reducers/babelrc"
 import {
   prepareOptions,
   mergeConfigItemOptions,
+  addRequiredPresetOptions,
 } from "../../utils/babel-loader-helpers"
 
 describe(`Babelrc actions/reducer`, () => {
@@ -79,6 +80,20 @@ describe(`Babelrc actions/reducer`, () => {
     const babel = { createConfigItem: jest.fn() }
 
     prepareOptions(babel, { stage: `test` }, fakeResolver)
+
+    expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
+  })
+
+  it(`adds stage option to babel-preset-gatsby defined with userland babelrc`, () => {
+    const fakeResolver = (moduleName): string => `/path/to/module/${moduleName}`
+    const babel = { createConfigItem: jest.fn() }
+    const presets: any = [
+      {
+        file: { resolved: fakeResolver(`babel-preset-gatsby`) },
+      },
+    ]
+
+    addRequiredPresetOptions(babel, presets, { stage: `develop` }, fakeResolver)
 
     expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
   })

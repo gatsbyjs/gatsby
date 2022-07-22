@@ -1,0 +1,20 @@
+{
+  "plugins": [
+    [
+      "babel-plugin-search-and-replace",
+      {
+        "rules": [
+          {
+            "search": "babel-rc-test",
+            "replace": "babel-rc-added",
+            "searchTemplateStrings": true
+          }
+          
+        ]
+      }
+    ]
+  ],
+  "presets": [
+    "babel-preset-gatsby"
+  ]
+}

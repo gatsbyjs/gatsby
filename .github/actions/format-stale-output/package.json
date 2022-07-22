@@ -1,0 +1,19 @@
+{
+  "name": "format-stale-output",
+  "version": "1.0.0",
+  "description": "Format the output of actions/stale into something that a Slack bot can use",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx @vercel/ncc build index.js --license licenses.txt"
+  },
+  "keywords": [
+    "github actions",
+    "stale",
+    "slack"
+  ],
+  "author": "LekoArts <lekoarts@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.6.0"
+  }
+}

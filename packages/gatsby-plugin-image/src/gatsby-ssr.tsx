@@ -21,8 +21,10 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     position: relative;
     overflow: hidden;
   }
+  .gatsby-image-wrapper picture.object-fit-polyfill {
+    position: static !important;
+  }
   .gatsby-image-wrapper img {
-    all: inherit;
     bottom: 0;
     height: 100%;
     left: 0;
@@ -43,6 +45,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   }
   .gatsby-image-wrapper-constrained {
     display: inline-block;
+    vertical-align: top;
   }
     `)}
     />,
@@ -68,18 +71,17 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
   if (hasNativeLazyLoadSupport) {
     document.body.addEventListener('load', function gatsbyImageNativeLoader(e) {
+      const target = e.target;
+
       // if image is not tagged with Main Image we bail
-      if (typeof e.target.dataset["mainImage"] === 'undefined') {
+      if (typeof target.dataset["mainImage"] === 'undefined') {
         return
       }
 
       // if a main image does not have a ssr tag, we know it's not the first run anymore
-      if (typeof e.target.dataset["gatsbyImageSsr"] === 'undefined') {
+      if (typeof target.dataset["gatsbyImageSsr"] === 'undefined') {
         return;
       }
-
-
-      const target = e.target;
 
       let imageWrapper = null;
       let parentElement = target;
@@ -90,7 +92,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
         parentElement = parentElement.parentNode;
       }
       const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
-
 
       const img = new Image();
       img.src = target.currentSrc;

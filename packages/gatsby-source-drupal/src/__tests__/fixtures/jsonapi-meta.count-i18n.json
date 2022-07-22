@@ -1,0 +1,14 @@
+{
+  "data": [],
+  "links": {
+    "self": "http://fixture/jsonapi",
+    "node--article": {
+      "href": "http://fixture/jsonapi-meta.count-i18n/node/article-meta.count-i18n"
+    },
+    "describedby": {
+      "href":"http://fixture/jsonapi/schema"
+    }
+  }
+}
+
+

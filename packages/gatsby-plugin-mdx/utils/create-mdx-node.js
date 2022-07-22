@@ -5,10 +5,10 @@ const extractExports = require(`../utils/extract-exports`)
 
 const { findImportsExports } = require(`../utils/gen-mdx`)
 
-async function createMdxNodeExtraBabel({ id, node, content }) {
+async function createMdxNodeExtraBabel({ id, node, content, options }) {
   let code
   try {
-    code = await mdx(content)
+    code = await mdx(content, { filepath: node.absolutePath, ...options })
   } catch (e) {
     // add the path of the file to simplify debugging error messages
     e.message += `${node.absolutePath}: ${e.message}`
@@ -51,17 +51,13 @@ async function createMdxNodeExtraBabel({ id, node, content }) {
 }
 
 async function createMdxNodeLessBabel({ id, node, content, ...helpers }) {
-  const {
-    frontmatter,
-    scopeImports,
-    scopeExports,
-    scopeIdentifiers,
-  } = await findImportsExports({
-    mdxNode: node,
-    rawInput: content,
-    absolutePath: node.absolutePath,
-    ...helpers,
-  })
+  const { frontmatter, scopeImports, scopeExports, scopeIdentifiers } =
+    await findImportsExports({
+      mdxNode: node,
+      rawInput: content,
+      absolutePath: node.absolutePath,
+      ...helpers,
+    })
 
   const mdxNode = {
     id,
