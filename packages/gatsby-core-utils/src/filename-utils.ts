@@ -1,6 +1,7 @@
 import path from "path"
 import crypto from "crypto"
 import Url from "url"
+import fs from "fs-extra"
 
 /**
  * getParsedPath
@@ -54,6 +55,17 @@ export function createFilePath(
 ): string {
   const purgedFileName = filename.replace(filenamePurgeRegex, `-`)
   const shouldAddHash = purgedFileName !== filename
+
+  fs.ensureDirSync(directory)
+
+  fs.writeFileSync(
+    path.join(directory, `${filename}-metadata.json`),
+    JSON.stringify({
+      filename,
+      purgedFileName,
+      shouldAddHash,
+    })
+  )
 
   if (shouldAddHash) {
     return path.join(
