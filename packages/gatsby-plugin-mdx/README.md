@@ -6,23 +6,36 @@ MDX is markdown for the component era. It lets you write JSX embedded inside mar
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-  - [Extensions](#extensions)
-  - [`gatsby-remark-*` plugins](#gatsby-remark--plugins)
-  - [mdxOptions](#mdxoptions)
-- [Imports](#imports)
-- [Layouts](#layouts)
-- [Programmatically create MDX pages](#programmatically-create-mdx-pages)
-- [GraphQL MDX Node structure](#graphql-mdx-node-structure)
-- [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes)
-- [Components](#components)
-  - [MDXProvider](#mdxprovider)
-  - [Shortcodes](#shortcodes)
-- [Migrating from v3 to v4](#migrating-from-v3-to-v4)
-- [Why MDX?](#why-mdx)
-- [Related](#related)
+- [gatsby-plugin-mdx](#gatsby-plugin-mdx)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Configuration](#configuration)
+    - [Extensions](#extensions)
+    - [`gatsby-remark-*` plugins](#gatsby-remark--plugins)
+    - [mdxOptions](#mdxoptions)
+  - [Imports](#imports)
+  - [Layouts](#layouts)
+  - [Programmatically create MDX pages](#programmatically-create-mdx-pages)
+  - [GraphQL MDX Node structure](#graphql-mdx-node-structure)
+  - [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes)
+    - [timeToRead](#timetoread)
+    - [wordCount](#wordcount)
+    - [slug](#slug)
+    - [html](#html)
+  - [Components](#components)
+    - [MDXProvider](#mdxprovider)
+    - [Shortcodes](#shortcodes)
+  - [Migrating from v3 to v4](#migrating-from-v3-to-v4)
+    - [Update dependencies](#update-dependencies)
+    - [New options in `gatsby-config`](#new-options-in-gatsby-config)
+    - [GFM & ESM-only packages](#gfm--esm-only-packages)
+    - [Updating `createPage` action in `gatsby-node`](#updating-createpage-action-in-gatsby-node)
+    - [Updating page templates](#updating-page-templates)
+    - [Update your MDX content](#update-your-mdx-content)
+    - [v3 to v4: Breaking Changes](#v3-to-v4-breaking-changes)
+  - [Why MDX?](#why-mdx)
+  - [Related](#related)
 
 ## Installation
 
@@ -362,6 +375,74 @@ This largely comes down to your own preference and how you want to wire things u
    ```
 
 If you don't want to use the `frontmatter.title`, adjust what you input to `slugify()`. For example, if you want information from the `File` node, you could use `getNode(node.parent)`.
+
+### html
+
+To recieve the HTML that gets generated out of your MDX, you have to compile it with MDX by yourself and expose the resulting data as an field.
+
+1. In your `gatsby-node` add a new field:
+
+   ```js:title=gatsby-node.js
+   const runtime = require("react/jsx-runtime")
+   const { compileMDX } = require("gatsby-plugin-mdx")
+   const { renderToStaticMarkup } = require("react-dom/server")
+
+   exports.onCreateNode = async ({ node, actions, getNode, reporter, cache }) => {
+      const { createNodeField } = actions
+      if (node.internal.type === `Mdx`) {
+        const fileNode = getNode(node.parent)
+
+        if (!fileNode) {
+          return
+        }
+
+        const result = await compileMDX(
+          {
+            source: node.body,
+            absolutePath: fileNode.absolutePath,
+          },
+          {
+            // These options are requried to allow rendering to string
+            outputFormat: `function-body`,
+            useDynamicImport: true,
+            // Add any custom options or plugins here
+          },
+          cache,
+          reporter
+        )
+
+        if (result && result.processedMDX) {
+          const { run } = await import("@mdx-js/mdx")
+          const args = {
+            ...runtime,
+            useMDXComponents: () => ({
+              Example: import("./src/components/example.js")
+            }),
+          }
+          const { default: Content } = await run(result.processedMDX, args)
+
+          const value = renderToStaticMarkup(Content(args))
+
+          createNodeField({
+            node,
+            name: `html`,
+            value,
+          })
+        }
+      }
+    }
+   ```
+
+1. You're now able to query the information on the MDX node:
+   ```graphql
+   query {
+     mdx {
+       fields {
+         html
+       }
+     }
+   }
+   ```
 
 ## Components
 
