@@ -12,6 +12,7 @@ import {
 } from "./utils"
 
 const hiddenRoot = document.createElement(`div`)
+let prevInnerHTML = ``
 
 const removePrevHeadElements = () => {
   const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
@@ -20,6 +21,14 @@ const removePrevHeadElements = () => {
 
 const onHeadRendered = () => {
   const validHeadNodes = []
+
+  if (!prevInnerHTML) {
+    prevInnerHTML = hiddenRoot.innerHTML
+  } else {
+    if (prevInnerHTML === hiddenRoot.innerHTML) {
+      return
+    }
+  }
 
   removePrevHeadElements()
 
