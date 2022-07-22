@@ -1258,6 +1258,9 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const queryName = fieldNames.query(typeName)
   const queryNamePlural = fieldNames.queryAll(typeName)
 
+  // hack
+  process.env.GATSBY_SORT_AND_AGGR_CHANGE = true
+
   schemaComposer.Query.addFields({
     [queryName]: {
       type: typeComposer,
