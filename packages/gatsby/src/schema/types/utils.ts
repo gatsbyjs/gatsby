@@ -15,6 +15,7 @@ import {
   InterfaceTypeComposer,
   UnionTypeComposer,
   ScalarTypeComposer,
+  NonNullComposer,
 } from "graphql-compose"
 
 type Context = any
@@ -75,10 +76,13 @@ export type OnEnter = (visitorContext: {
 
 export type LeafInput =
   | InputTypeComposer<Context>
+  | NonNullComposer<InputTypeComposer<Context>>
   | ((arg: {
       type: GraphQLScalarType | GraphQLEnumType
       schemaComposer: SchemaComposer<Context>
     }) => InputTypeComposer<Context>)
+  | EnumTypeComposer<Context>
+  | NonNullComposer<EnumTypeComposer<Context>>
 
 export type ListInput = (arg: {
   inputTypeComposer: InputTypeComposer

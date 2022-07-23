@@ -120,8 +120,17 @@ function createPagination<TSource = any, TContext = any>({
       // continue
       return undefined
     },
-    // @ts-ignore TODO: correct types
-    leafInputComposer: { type: `Boolean` },
+    leafInputComposer: schemaComposer.getOrCreateETC(
+      `FieldSelectorEnum`,
+      etc => {
+        etc.setFields({
+          // GraphQL spec doesn't allow using "true" (or "false" or "null") as enum values
+          // so we "SELECT"
+          SELECT: { value: `SELECT` },
+        })
+      }
+    ),
+    postfix: `FieldSelector`,
   }).getTypeNonNull()
 
   const paginationTypeComposer: ObjectTypeComposer =
