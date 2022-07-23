@@ -4251,6 +4251,14 @@
   resolved "https://registry.yarnpkg.com/@types/js-levenshtein/-/js-levenshtein-1.1.1.tgz#ba05426a43f9e4e30b631941e0aa17bf0c890ed5"
   integrity sha512-qC4bCqYGy1y/NP7dDVr7KJarn+PbX1nSpwA7JXdu0HxT3QYjO8MJ+cntENtHFVy2dRAyBV23OZ6MxsW1AM1L8g==
 
+"@types/jscodeshift@^0.11.5":
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/@types/jscodeshift/-/jscodeshift-0.11.5.tgz#51198aa72ceb66d36ceba3918e1ab445b868f29b"
+  integrity sha512-7JV0qdblTeWFigevmwFUgROXX395F+MQx6v0YqPn8Bx0B4Sng6alEejz9PENzgLYpG+zL0O4tGdBzc4gKZH8XA==
+  dependencies:
+    ast-types "^0.14.1"
+    recast "^0.20.3"
+
 "@types/json-schema@*", "@types/json-schema@^7.0.4", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.7", "@types/json-schema@^7.0.8":
   version "7.0.11"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
@@ -5604,7 +5612,7 @@ ast-types-flow@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
 
-ast-types@0.14.2, ast-types@^0.14.2:
+ast-types@0.14.2, ast-types@^0.14.1, ast-types@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.14.2.tgz#600b882df8583e3cd4f2df5fa20fa83759d4bdfd"
   integrity sha512-O0yuUDnZeQDL+ncNGlJ78BiO4jnYI3bvMsD5prT0/nsgijG/LpNBIr63gTjVTNsiGkgQhiyCShTgxt8oXOrklA==
@@ -20230,7 +20238,7 @@ readline-sync@^1.4.9:
   resolved "https://registry.yarnpkg.com/readline-sync/-/readline-sync-1.4.9.tgz#3eda8e65f23cd2a17e61301b1f0003396af5ecda"
   integrity sha1-PtqOZfI80qF+YTAbHwADOWr17No=
 
-recast@^0.20.4, recast@^0.20.5:
+recast@^0.20.3, recast@^0.20.4, recast@^0.20.5:
   version "0.20.5"
   resolved "https://registry.yarnpkg.com/recast/-/recast-0.20.5.tgz#8e2c6c96827a1b339c634dd232957d230553ceae"
   integrity sha512-E5qICoPoNL4yU0H0NoBDntNB0Q5oMSNh9usFctYniLBluTthi3RsQVBXIJNbApOlvSwW/RGxIuokPcAc59J5fQ==
