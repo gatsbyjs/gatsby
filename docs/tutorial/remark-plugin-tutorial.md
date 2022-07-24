@@ -223,6 +223,8 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 }
 ```
 
+**Note**: If you get an error "require() of ES modules is not supported", it's because your version of `unist-util-visit` is an ESM module, while Gatsby config and Node APIs don't fully support ESM yet. Try downgrading `unist-util-visit` to the last version that uses Common JS, 2.0.3.
+
 Next, by visiting all heading nodes and passing them into a transformer function, you can manipulate the particular nodes to match your use case.
 
 Looking again at the AST node for heading:
