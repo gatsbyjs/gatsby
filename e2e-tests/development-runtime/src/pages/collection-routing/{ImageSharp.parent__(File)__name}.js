@@ -3,9 +3,12 @@ import { Link, graphql } from "gatsby"
 import Image from "gatsby-image"
 
 import Layout from "../../components/layout"
-import SEO from "../../components/seo"
+import Seo from "../../components/seo"
 
-export default function BlogPost({ data: { image }, pageContext: { parent__name } }) {
+export default function BlogPost({
+  data: { image },
+  pageContext: { parent__name },
+}) {
   return (
     <Layout>
       <h2 data-testid="name">{image.parent.name}</h2>
@@ -31,4 +34,4 @@ export const blogPostQuery = graphql`
   }
 `
 
-export const Head = () => <SEO title="Blog Post" />
+export const Head = () => <Seo title="Blog Post" />

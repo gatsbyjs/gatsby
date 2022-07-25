@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 const GatsbyPreview = ({ data }) => (
   <Layout>
@@ -26,7 +26,7 @@ const GatsbyPreview = ({ data }) => (
 
 export default GatsbyPreview
 
-export const Head = () => <SEO title="Gatsby Preview e2e Test" />
+export const Head = () => <Seo title="Gatsby Preview e2e Test" />
 
 export const previewQuery = graphql`
   query {

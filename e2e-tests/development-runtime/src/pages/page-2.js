@@ -2,7 +2,7 @@ import React from "react"
 import { Link, navigate } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 import InstrumentPage from "../utils/instrument-page"
 
 const SecondPage = () => (
@@ -18,6 +18,6 @@ const SecondPage = () => (
   </Layout>
 )
 
-export const Head = () => <SEO title="Page two" />
+export const Head = () => <Seo title="Page two" />
 
 export default InstrumentPage(SecondPage)

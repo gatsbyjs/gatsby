@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 function PreviewItem({ data: { item } }) {
   return (
@@ -16,7 +16,7 @@ function PreviewItem({ data: { item } }) {
 }
 
 export const Head = ({ data: { item } }) => (
-  <SEO title={item.title} description={item.message} />
+  <Seo title={item.title} description={item.message} />
 )
 
 export default PreviewItem

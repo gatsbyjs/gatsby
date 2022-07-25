@@ -1,7 +1,7 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 const Redirect = () => (
   <Layout>
@@ -9,6 +9,6 @@ const Redirect = () => (
   </Layout>
 )
 
-export const Head = () => <SEO title="Redirect" />
+export const Head = () => <Seo title="Redirect" />
 
 export default Redirect

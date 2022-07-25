@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery } from "gatsby"
 
-function SEO({ description, lang, meta, keywords, title }) {
+function Seo({ children, description, lang, keywords }) {
   const data = useStaticQuery(graphql`
     query DefaultSEOQuery {
       site {
@@ -18,12 +18,11 @@ function SEO({ description, lang, meta, keywords, title }) {
   `)
 
   const metaDescription = description || data.site.siteMetadata.description
+  const { title } = data.site.siteMetadata
 
   return (
     <>
-      <title>
-        {title} | {data.site.siteMetadata.title}
-      </title>
+      <title>{title}</title>
       <html lang={lang} />
       <meta name="description" content={metaDescription} />
       <meta name="og:title" content={title} />
@@ -37,22 +36,20 @@ function SEO({ description, lang, meta, keywords, title }) {
       <meta name="twitter:description" content={metaDescription} />
       <meta name="og:type" content="website" />
       <meta name="keywords" content={keywords && keywords.join(",")} />
+      {children}
     </>
   )
 }
 
-SEO.defaultProps = {
+Seo.defaultProps = {
   lang: `en`,
-  meta: [],
   keywords: [],
 }
 
-SEO.propTypes = {
+Seo.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
-  meta: PropTypes.array,
   keywords: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.string.isRequired,
 }
 
-export default SEO
+export default Seo

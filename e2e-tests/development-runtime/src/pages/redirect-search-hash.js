@@ -1,7 +1,7 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 const RedirectSearchHash = () => (
   <Layout>
@@ -9,6 +9,6 @@ const RedirectSearchHash = () => (
   </Layout>
 )
 
-export const Head = () => <SEO title="Redirect with Search & Hash" />
+export const Head = () => <Seo title="Redirect with Search & Hash" />
 
 export default RedirectSearchHash

@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 function BlogPost({ data: { post } }) {
   return (
@@ -18,7 +18,7 @@ function BlogPost({ data: { post } }) {
 export default BlogPost
 
 export const Head = ({ data: { post } }) => (
-  <SEO title={post.frontmatter.title} description={post.excerpt} />
+  <Seo title={post.frontmatter.title} description={post.excerpt} />
 )
 
 export const blogPostQuery = graphql`

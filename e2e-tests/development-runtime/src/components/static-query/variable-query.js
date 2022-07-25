@@ -4,7 +4,7 @@ import { StaticQuery, graphql } from "gatsby"
 function Variable(props) {
   return (
     <StaticQuery
-      query={fakeDataPluginQuery}
+      query={pluginQuery}
       render={data => (
         <div>
           <p {...props}>
@@ -16,8 +16,8 @@ function Variable(props) {
   )
 }
 
-const fakeDataPluginQuery = graphql`
-  query FakeDataPluginQuery {
+const pluginQuery = graphql`
+  query PluginQuery {
     sitePlugin(name: { eq: "gatsby-source-fake-data" }) {
       name
       version

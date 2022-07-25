@@ -2,7 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 import { QueryDataCachesView } from "../components/query-data-caches/view"
 import { use404LinkStaticQuery } from "../components/query-data-caches/static-query-404-link"
@@ -66,7 +66,7 @@ const NotFoundPage = ({ data }) => (
     </fieldset>
   </Layout>
 )
-export const Head = () => <SEO title="404: Not found" />
+export const Head = () => <Seo title="404: Not found" />
 
 export default NotFoundPage
 
