@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 describe("Accessibility tests", () => {
   beforeEach(() => {
       cy.visit("/").get("main")
