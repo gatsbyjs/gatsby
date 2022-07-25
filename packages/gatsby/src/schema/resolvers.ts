@@ -123,7 +123,7 @@ function maybeConvertSortInputObjectToSortPath<TArgs>(
     return args
   }
 
-  if (process.env.GATSBY_SORT_AND_AGGR_CHANGE) {
+  if (process.env.GATSBY_GRAPHQL_NESTED_SORT_AND_AGGREGATE) {
     let sorts = args.sort
     if (!isArray(sorts)) {
       sorts = [sorts]
@@ -139,8 +139,6 @@ function maybeConvertSortInputObjectToSortPath<TArgs>(
       modifiedSort.fields.push(path)
       modifiedSort.order.push(leaf)
     }
-
-    // console.log({ modifiedSort })
 
     return {
       ...args,
@@ -360,7 +358,10 @@ export function createGroupResolver(
               },
               args
             ),
-            field,
+            field:
+              typeof field === `string`
+                ? field
+                : pathObjectToPathString(field).path,
             fieldValue,
           })
           return acc

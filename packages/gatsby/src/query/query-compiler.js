@@ -34,6 +34,7 @@ import { actions } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
 import { getPathToLayoutComponent } from "gatsby-core-utils"
+import { transformUsingGraphQLCodemods } from "./transform-document"
 const { default: FileParser } = require(`./file-parser`)
 const {
   graphqlError,
@@ -202,12 +203,29 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
     text,
     templateLoc,
     hash,
-    doc,
+    doc: originalDoc,
     isHook,
     isStaticQuery,
     isConfigQuery,
   } of parsedQueries) {
-    const errors = validate(schema, doc, preValidationRules)
+    let doc = originalDoc
+
+    let errors = validate(schema, doc, preValidationRules)
+    if (errors && errors.length) {
+      const { ast: transformedDocument, hasChanged } =
+        transformUsingGraphQLCodemods(doc)
+      if (hasChanged) {
+        let newErrors = validate(
+          schema,
+          transformedDocument,
+          preValidationRules
+        )
+        if (newErrors.length === 0) {
+          doc = transformedDocument
+          errors = newErrors
+        }
+      }
+    }
 
     if (errors && errors.length) {
       addError(

@@ -44,10 +44,9 @@ const {
 } = require(`./extensions`)
 import { getPagination } from "./types/pagination"
 import {
-  // getSortInput,
   SORTABLE_ENUM,
-  getSortInputProposal2,
-  // getSortInputProposal3,
+  getSortInput,
+  getSortInputNestedObjects,
 } from "./types/sort"
 import { getFilterInput, SEARCHABLE_ENUM } from "./types/filter"
 import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
@@ -1240,10 +1239,6 @@ const createChildField = typeName => {
 }
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
-  // const sortInputTC = getSortInput({
-  //   schemaComposer,
-  //   typeComposer,
-  // })
   const filterInputTC = getFilterInput({
     schemaComposer,
     typeComposer,
@@ -1258,9 +1253,6 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const queryName = fieldNames.query(typeName)
   const queryNamePlural = fieldNames.queryAll(typeName)
 
-  // hack
-  process.env.GATSBY_SORT_AND_AGGR_CHANGE = true
-
   schemaComposer.Query.addFields({
     [queryName]: {
       type: typeComposer,
@@ -1273,11 +1265,13 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       type: paginationTC,
       args: {
         filter: filterInputTC,
-        // sort: sortInputTC,
-        // sortProposal1: `String`,
-        // sortProposal2: getSortInputProposal2({ schemaComposer, typeComposer }),
-        // sortProposal3: getSortInputProposal3({ schemaComposer, typeComposer }),
-        sort: getSortInputProposal2({ schemaComposer, typeComposer }),
+        sort: process.env.GATSBY_GRAPHQL_NESTED_SORT_AND_AGGREGATE
+          ? getSortInputNestedObjects({ schemaComposer, typeComposer })
+          : getSortInput({
+              schemaComposer,
+              typeComposer,
+            }),
+
         skip: `Int`,
         limit: `Int`,
       },

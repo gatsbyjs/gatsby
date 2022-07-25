@@ -238,13 +238,13 @@ function pathSegmentsToAst(
   )
 }
 
-function processGraphQLQuery(query: string): {
+export function processGraphQLQuery(query: string | graphql.DocumentNode): {
   ast: graphql.DocumentNode
   hasChanged: boolean
 } {
   try {
     let hasChanged = false // this is sort of a hack, but print changes formatting and we only want to use it when we have to
-    const ast = graphql.parse(query)
+    const ast = typeof query === `string` ? graphql.parse(query) : query
 
     graphql.visit(ast, {
       Argument(node) {

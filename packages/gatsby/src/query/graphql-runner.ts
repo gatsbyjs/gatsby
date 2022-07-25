@@ -22,6 +22,7 @@ import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
 import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
 import GraphQLSpanTracer from "./graphql-span-tracer"
+import { transformUsingGraphQLCodemods } from "./transform-document"
 
 // Preserve these caches across graphql instances.
 const _rootNodeMap = new WeakMap()
@@ -50,7 +51,7 @@ export class GraphQLRunner {
 
   schema: GraphQLSchema
 
-  validDocuments: WeakSet<DocumentNode>
+  validDocuments: WeakMap<DocumentNode, DocumentNode>
   scheduleClearCache: () => void
 
   stats: IGraphQLRunnerStats | null
@@ -71,7 +72,7 @@ export class GraphQLRunner {
     })
     this.schema = schema
     this.parseCache = new Map()
-    this.validDocuments = new WeakSet()
+    this.validDocuments = new WeakMap()
     this.scheduleClearCache = debounce(this.clearCache.bind(this), 5000)
 
     this.graphqlTracing = graphqlTracing || false
@@ -97,7 +98,7 @@ export class GraphQLRunner {
 
   clearCache(): void {
     this.parseCache.clear()
-    this.validDocuments = new WeakSet()
+    this.validDocuments = new WeakMap()
   }
 
   parse(query: Query): DocumentNode {
@@ -109,21 +110,34 @@ export class GraphQLRunner {
 
   validate(
     schema: GraphQLSchema,
-    document: DocumentNode
+    document: DocumentNode,
+    originalDocument: DocumentNode = document
   ): {
     errors: ReadonlyArray<GraphQLError>
     warnings: ReadonlyArray<GraphQLError>
+    document: DocumentNode
   } {
     let errors: ReadonlyArray<GraphQLError> = []
     let warnings: ReadonlyArray<GraphQLError> = []
-    if (!this.validDocuments.has(document)) {
-      errors = validate(schema, document)
-      warnings = validate(schema, document, [NoDeprecatedCustomRule])
-      if (!errors.length) {
-        this.validDocuments.add(document)
+    const validatedDocument = this.validDocuments.get(document)
+    if (validatedDocument) {
+      return { errors: [], warnings: [], document: validatedDocument }
+    }
+
+    errors = validate(schema, document)
+    warnings = validate(schema, document, [NoDeprecatedCustomRule])
+
+    if (!errors.length) {
+      this.validDocuments.set(originalDocument, document)
+    } else {
+      const { ast: transformedDocument, hasChanged } =
+        transformUsingGraphQLCodemods(document)
+      if (hasChanged) {
+        return this.validate(schema, transformedDocument, originalDocument)
       }
     }
-    return { errors, warnings }
+
+    return { errors, warnings, document }
   }
 
   getStats(): IGraphQLRunnerStatResults | null {
@@ -183,8 +197,10 @@ export class GraphQLRunner {
       )
     }
 
-    const document = this.parse(query)
-    const { errors, warnings } = this.validate(schema, document)
+    const { errors, warnings, document } = this.validate(
+      schema,
+      this.parse(query)
+    )
 
     // Queries are usually executed in batch. But after the batch is finished
     // cache just wastes memory without much benefits.
