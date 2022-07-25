@@ -208,7 +208,7 @@ function visitor(node) {
 
 Here, it finds all text nodes and will `console.log` the nodes. The second argument can be replaced with any type described in Unist's [Markdown AST (mdast) specification](https://github.com/syntax-tree/mdast#nodes) including types such as `paragraph`, `blockquote`, `link`, `image` or in our usecase, `heading`.
 
-To be able to use, install it into your plugin:
+To be able to use `unist-util-visit`, install it into your plugin:
 
 ```shell
 npm install unist-util-visit@^2
