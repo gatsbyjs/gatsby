@@ -189,7 +189,7 @@ However, if the sub-plugin is published and installed via npm, simply refer to i
 
 When modifying nodes, you'll want to walk the tree and then implement new functionality on specific nodes.
 
-A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist (Unified Syntax Tree) is a standard for Markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
+A node module to help with this is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist (Unified Syntax Tree) is a standard for Markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
 
 As an example from `unist-util-visit`'s README file, it allows for an interface to visit particular nodes based on a particular type:
 
@@ -208,6 +208,14 @@ function visitor(node) {
 
 Here, it finds all text nodes and will `console.log` the nodes. The second argument can be replaced with any type described in Unist's [Markdown AST (mdast) specification](https://github.com/syntax-tree/mdast#nodes) including types such as `paragraph`, `blockquote`, `link`, `image` or in our usecase, `heading`.
 
+To be able to use, install it into your plugin:
+
+```shell
+npm install unist-util-visit@^2
+```
+
+**Please note**: You're installing v2 of `unist-util-visit` as newer major versions are ESM and Gatsby doesn't fully support that yet.
+
 With this technique in mind, you can similarly traverse the AST from your plugin and add additional functionality, like so:
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
@@ -222,8 +230,6 @@ module.exports = ({ markdownAST }, pluginOptions) => {
   return markdownAST
 }
 ```
-
-**Note**: If you get an error "require() of ES modules is not supported", it's because your version of `unist-util-visit` is an ESM module, while Gatsby config and Node APIs don't fully support ESM yet. Try downgrading `unist-util-visit` to the last version that uses Common JS, 2.0.3.
 
 Next, by visiting all heading nodes and passing them into a transformer function, you can manipulate the particular nodes to match your use case.
 
