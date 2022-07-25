@@ -29,6 +29,7 @@
     "@sindresorhus/slugify": "^1.1.2",
     "chokidar": "^3.5.3",
     "fs-exists-cached": "^1.0.0",
+    "fs-extra": "^10.1.0",
     "gatsby-core-utils": "^3.20.0-next.0",
     "gatsby-page-utils": "^2.20.0-next.0",
     "gatsby-plugin-utils": "^3.14.0-next.1",
