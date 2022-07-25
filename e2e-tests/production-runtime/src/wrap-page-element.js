@@ -8,7 +8,7 @@ export default ({ element, props }) => {
   return (
     <>
       {element}
-      {props?.path?.includes(gatsbyScriptTestPage) && (
+      {props?.location?.pathname?.includes(gatsbyScriptTestPage) && (
         <>
           <Script src={scripts.three} strategy="post-hydrate" />
           <Script src={scripts.marked} strategy="idle" />
