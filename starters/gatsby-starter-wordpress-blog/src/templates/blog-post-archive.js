@@ -15,7 +15,6 @@ const BlogIndex = ({
   if (!posts.length) {
     return (
       <Layout isHomePage>
-        <SEO title="All posts" />
         <Bio />
         <p>
           No blog posts found. Add posts to your WordPress site and they'll
@@ -27,9 +26,8 @@ const BlogIndex = ({
 
   return (
     <Layout isHomePage>
-      <SEO title="All posts" />
-
       <Bio />
+
 
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
@@ -67,6 +65,8 @@ const BlogIndex = ({
     </Layout>
   )
 }
+
+export const Head = () => <SEO title="All posts" />
 
 export default BlogIndex
 
