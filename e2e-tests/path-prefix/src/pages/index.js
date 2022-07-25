@@ -3,6 +3,7 @@ import { Link, navigate, graphql } from "gatsby"
 import { StaticImage, GatsbyImage, getImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
+import Seo from '../components/seo'
 
 const IndexPage = ({ data }) => {
   const image = getImage(data.file)
@@ -43,6 +44,8 @@ const IndexPage = ({ data }) => {
     </Layout>
   )
 }
+
+export const Head = ()=> <Seo/>
 
 export const query = graphql`
   query {
