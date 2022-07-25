@@ -23,7 +23,8 @@
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
-    "semver": "^7.3.7"
+    "semver": "^7.3.7",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
