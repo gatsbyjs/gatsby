@@ -13,7 +13,7 @@ To run Gatsby's development server and Cypress at the same time, you'll use the 
 npm install --save-dev cypress start-server-and-test
 ```
 
-Next we want to create a config file for Cypress at the root of the project called `cypress.config.js`. We can use it to preface the URLs used by `cy.visit()` or `cy.request` as well as set the folder the tests are in by adding the following:
+You need to create a config file for Cypress at the root of the project called `cypress.config.js`. You can use it to preface the URLs used by `cy.visit()` or `cy.request` as well as set the folder the tests are in by adding the following:
 
 ```js:title=cypress.config.js
 const { defineConfig } = require('cypress')
