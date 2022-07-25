@@ -2,8 +2,9 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 
 const slugify = require(`@sindresorhus/slugify`)
-const runtime = require("react/jsx-runtime")
 const { compileMDX } = require("gatsby-plugin-mdx")
+const React = require(`react`)
+const runtime = require("react/jsx-runtime")
 const { renderToStaticMarkup } = require("react-dom/server")
 
 exports.onPostBuild = async ({ graphql }) => {
@@ -72,7 +73,6 @@ exports.onCreateNode = async ({ node, actions, getNode, reporter, cache }) => {
       value: `/${slug.join(`/`)}`,
     })
 
-
     createNodeField({
       node,
       name: `date`,
@@ -93,7 +93,6 @@ exports.onCreateNode = async ({ node, actions, getNode, reporter, cache }) => {
         // These options are requried to allow rendering to string
         outputFormat: `function-body`,
         useDynamicImport: true,
-        // providerImportSource: "#",
         // Add any custom options or plugins here
       },
       cache,
@@ -102,15 +101,16 @@ exports.onCreateNode = async ({ node, actions, getNode, reporter, cache }) => {
 
     if (result && result.processedMDX) {
       const { run } = await import("@mdx-js/mdx")
-      const args = {
-        ...runtime,
-        // useMDXComponents: () => ({ 
-        //   // Example: import("./src/components/example.js")
-        // }),
-      }
-      const { default: Content } = await run(result.processedMDX, args)
+      const runRes = await run(result.processedMDX, runtime)
 
-      const value = renderToStaticMarkup(Content(args))
+      const elem = React.createElement(runRes.default, {
+        components: {
+          // @todo how to get external components working? Do we need bundler context?
+          Example: props => React.createElement("span", props, "!"),
+        },
+      })
+
+      const value = renderToStaticMarkup(elem)
 
       createNodeField({
         node,
