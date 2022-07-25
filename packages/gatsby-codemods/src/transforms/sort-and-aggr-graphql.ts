@@ -79,6 +79,15 @@ interface IState {
   }
 }
 
+function isValidGraphQLQuery(query: string): boolean {
+  try {
+    graphql.parse(query)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 export function updateSortAndAggrField(): PluginObj<IState> {
   return {
     visitor: {
@@ -99,6 +108,18 @@ export function updateSortAndAggrField(): PluginObj<IState> {
             node.quasi.quasis[0].value.raw = graphql.print(
               transformedGraphQLQuery
             )
+            state.opts.hasChanged = true
+          }
+        }
+      },
+      TemplateLiteral({ node }, state): void {
+        const query = node.quasis?.[0]?.value?.raw
+        if (isValidGraphQLQuery(query)) {
+          const { ast: transformedGraphQLQuery, hasChanged } =
+            processGraphQLQuery(query)
+
+          if (hasChanged) {
+            node.quasis[0].value.raw = graphql.print(transformedGraphQLQuery)
             state.opts.hasChanged = true
           }
         }
