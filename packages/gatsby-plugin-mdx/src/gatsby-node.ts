@@ -63,7 +63,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
           },
           {
             test: /\.[tj]sx?$/,
-            resourceQuery: /__contentFilePath=.+\.mdx?$/,
+            resourceQuery: /__contentFilePath=.+\.mdx?(&export=.*)?$/,
             use: [
               loaders.js(),
               {
@@ -281,6 +281,7 @@ export const onCreateNode: GatsbyNode<FileSystemNode>["onCreateNode"] = async ({
     internal: {
       type: `Mdx`,
       contentDigest: node.internal.contentDigest,
+      contentFilePath: node.absolutePath,
     },
     body,
     frontmatter,

@@ -15,7 +15,7 @@ function WrappedAccordionItem({ error, open }) {
   const columnNumber = codeFrameInformation?.columnNumber
   const name = codeFrameInformation?.functionName
   // With the introduction of Metadata management the modulePath can have a resourceQuery that needs to be removed first
-  const filePath = modulePath.replace(/\?export=(default|head)$/, ``)
+  const filePath = modulePath.replace(/(\?|&)export=(default|head)$/, ``)
 
   const res = useStackFrame({ moduleId: modulePath, lineNumber, columnNumber })
   const line = res.sourcePosition?.line
