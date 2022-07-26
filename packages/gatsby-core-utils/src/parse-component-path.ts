@@ -12,21 +12,19 @@ export const splitComponentPath = (componentPath: string): Array<string> => {
     return [componentPath]
   }
 
-  const splitPath = componentPath.split(CONTENT_FILE_PATH_QUERY)
+  const cleanedComponentPath = componentPath.replace(
+    /&export=(default|head)$/,
+    ``
+  )
+  const splitPath = cleanedComponentPath.split(CONTENT_FILE_PATH_QUERY)
 
   // We only support URI paths with the `?__contentFilePath=` parameter
   if (splitPath.length !== 2) {
     throw new Error(
-      `The following page component must contain '${CONTENT_FILE_PATH_QUERY}':\n${componentPath}`
+      `The following page component must contain '${CONTENT_FILE_PATH_QUERY}':\n${cleanedComponentPath}`
     )
   }
 
-  // Other URI parameters are not supported
-  if (splitPath[1].includes(`&`)) {
-    throw new Error(
-      `You can not pass any other parameters to a page component URI as 'contentFilePath'. Remove the ampersand (&):\n${componentPath}`
-    )
-  }
   return splitPath
 }
 

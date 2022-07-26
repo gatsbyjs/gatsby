@@ -17,7 +17,7 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen"
+export type AvailableFeatures = "image-cdn" | "graphql-typegen" | "content-file-path"
 
 export {
   default as Link,
@@ -1633,6 +1633,7 @@ export interface NodeInput {
     content?: string
     contentDigest: string
     description?: string
+    contentFilePath?: string
   }
   [key: string]: unknown
 }

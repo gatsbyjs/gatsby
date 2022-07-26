@@ -38,6 +38,8 @@ const ROOT_POINTS = 1
 const isRootSegment = (segment: string): boolean => segment === ``
 const isDynamic = (segment: string): boolean => paramRe.test(segment)
 const isSplat = (segment: string): boolean => segment === `*`
+const hasContentFilePath = (componentPath: string): boolean =>
+  componentPath.includes(`?__contentFilePath=`)
 
 const segmentize = (uri: string): Array<string> =>
   uri
@@ -259,9 +261,13 @@ const preferDefault = m => (m && m.default) || m
           c.component
         )
 
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`
-        )}?export=default" /* webpackChunkName: "${c.componentChunkName}" */)`
+        )}${rqPrefix}export=default" /* webpackChunkName: "${
+          c.componentChunkName
+        }" */)`
       })
       .join(`,\n`)}
 }\n\n
@@ -274,9 +280,13 @@ exports.head = {\n${components
           c.component
         )
 
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`
-        )}?export=head" /* webpackChunkName: "${c.componentChunkName}head" */)`
+        )}${rqPrefix}export=head" /* webpackChunkName: "${
+          c.componentChunkName
+        }head" */)`
       })
       .join(`,\n`)}
 }\n\n`

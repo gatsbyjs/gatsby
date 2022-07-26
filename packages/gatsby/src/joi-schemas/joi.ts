@@ -134,6 +134,7 @@ export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
         description: Joi.string(),
         ignoreType: Joi.boolean(),
         counter: Joi.number(),
+        contentFilePath: Joi.string(),
       })
       .unknown(false), // Don't allow non-standard fields
   })

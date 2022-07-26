@@ -1,3 +1,4 @@
+import { hasFeature } from "gatsby-plugin-utils"
 import _ from "lodash"
 import path from "path"
 import {
@@ -52,7 +53,7 @@ export function reverseLookupParams(
   return reversedParams
 }
 
-// Changes something like `/Users/site/src/pages/foo/{Model.id}/{Model.baz}` to `id,baz`.
+// Changes something like `/Users/site/src/pages/foo/{Model.id}/{Model.baz}` to `id,baz,internal{contentFilePath}`.
 // Also supports prefixes/postfixes, e.g. `/foo/prefix-{Model.id}` to `id`
 function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(path.sep)
@@ -60,6 +61,11 @@ function extractUrlParamsForQuery(createdPath: string): string {
   // always add `id` to queries
   if (parts.some(s => s.includes(`.id}`)) === false) {
     parts.push(`{Model.id}`)
+  }
+
+  // Always add internal { contentFilePath } if feature is available
+  if (hasFeature(`content-file-path`)) {
+    parts.push(`{Model.internal__contentFilePath}`)
   }
 
   return parts
