@@ -61,9 +61,7 @@ const BlogPostTemplate = ({
   )
 }
 
-export const Head = ({ data }) => {
-  const post = data.markdownRemark
-
+export const Head = ({ data: { markdownRemark: post } }) => {
   return (
     <Seo
       title={post.frontmatter.title}
