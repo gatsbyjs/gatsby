@@ -280,10 +280,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           frontmatter {
             slug
           }
-          parent {
-            ... on File {
-              absolutePath
-            }
+          internal {
+            contentFilePath
           }
         }
       }
@@ -304,7 +302,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // like slugify to create a slug
       path: node.frontmatter.slug,
       // Provide the path to the MDX content file so webpack can pick it up and transform it into JSX
-      component: node.parent.absolutePath,
+      component: node.internal.contentFilePath,
       // You can use the values in this context in
       // our page layout component
       context: { id: node.id },
@@ -364,7 +362,7 @@ Change your `gatsby-node.js` as following:
 createPage({
   path: node.frontmatter.slug,
 -  component: node.parent.absolutePath,
-+  component: `${path.resolve(`./src/components/posts-page-layout.js`)}?__contentFilePath=${node.parent.absolutePath}`,
++  component: `${path.resolve(`./src/components/posts-page-layout.js`)}?__contentFilePath=${node.internal.contentFilePath}`,
   context: { id: node.id },
 })
 ```
