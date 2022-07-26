@@ -6,10 +6,10 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 const BlogPostTemplate = ({
-  data: { previous, next, markdownRemark: post },
+  data: { previous, next, site, markdownRemark: post },
   location,
 }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
+  const siteTitle = site.siteMetadata?.title || `Title`
 
   return (
     <Layout location={location} title={siteTitle}>
