@@ -1,7 +1,7 @@
 {
   "name": "gatsby-starter-wordpress-blog",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "A starter for a blog powered by Gatsby and WordPress",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com> and Tyler Barnes <tylerdbarnes@gmail.com>",
   "bugs": {
@@ -30,14 +30,15 @@
     "dumper.js": "^1.3.1",
     "prettier": "2.7.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby-starter-wordpress-blog#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "wordpress"
   ],
   "license": "0BSD",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git+https://github.com/gatsbyjs/gatsby-starter-wordpress-blog.git"
   },
   "scripts": {
     "build": "gatsby build",
