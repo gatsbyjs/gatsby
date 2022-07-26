@@ -10,7 +10,6 @@ export default function BlogPost({
 }) {
   return (
     <Layout>
-      <Seo title={post.frontmatter.title} description={post.excerpt} />
       <h1>{post.frontmatter.title}</h1>
       <h2 data-testid="slug">{post.fields.slug}</h2>
       <p data-testid="pagecontext">{fields__slug}</p>
