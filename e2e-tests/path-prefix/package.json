@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "cypress": "^9.7.0",
-    "gatsby": "4.20.0-next.1-dev-1658743128734",
+    "gatsby": "next",
     "gatsby-plugin-feed": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-manifest": "next",
