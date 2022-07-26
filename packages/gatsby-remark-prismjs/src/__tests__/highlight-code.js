@@ -1,6 +1,7 @@
 describe(`highlight code and lines with PrismJS`, () => {
   afterEach(() => {
     jest.resetModules()
+    jest.clearAllMocks()
   })
 
   it(`for language cpp`, () => {
@@ -55,9 +56,33 @@ export default Counter
     expect(/<span[^>]*>[^<]*\n[^<]*<\/span>/g.exec(processed)).not.toBeTruthy()
   })
 
+  it(`for language diff-typescript`, () => {
+    const highlightCode = require(`../highlight-code`)
+    const language = `diff`
+    const diffLanguage = `typescript`
+    const lineNumbersHighlight = []
+    const code = `
+-    let foo = bar.baz([1, 2, 3]);
+-    foo = foo + 1;
++    const foo = bar.baz([1, 2, 3]) + 1;
+     console.log(foo);
+`
+
+    expect(
+      highlightCode(
+        language,
+        code,
+        {},
+        lineNumbersHighlight,
+        false,
+        diffLanguage
+      )
+    ).toMatchSnapshot()
+  })
+
   describe(`with language-text`, () => {
     it(`escapes &, <, " elements and warns`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language = `text`
@@ -72,7 +97,7 @@ export default Counter
     })
 
     it(`can warn about languages missing from inline code`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language = `text`
@@ -85,7 +110,7 @@ export default Counter
     })
 
     it(`warns once per language`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language1 = `text`

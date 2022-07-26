@@ -1,8 +1,7 @@
-/// <reference types="Cypress" />
-
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/").get("main").injectAxe()
+      cy.visit("/").get("main")
+      cy.injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -17,7 +16,7 @@ describe("Accessibility tests", () => {
 
     cy.focused()
       .should("have.text", "Gatsby")
-      .should("have.attr", "href", "https://www.gatsbyjs.org")
+      .should("have.attr", "href", "https://www.gatsbyjs.com")
       .should("not.have.css", "outline-width", "0px")
   })
 })

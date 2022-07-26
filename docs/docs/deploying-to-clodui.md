@@ -22,7 +22,7 @@ Clodui supports the following features to improve your website speed and develop
 
 Follow these steps to deploy your website to Clodui.
 
-1. [Sign up](https://app.clodui.com/auth/signup) to create an account using your email and password.  
+1. [Sign up](https://app.clodui.com/auth/signup) to create an account using your email and password.
    _**Note :** Don't use social login like Google or Facebook to sign up because Clodui CLI doesn't support it yet._
 2. Install the [Clodui CLI]:
    ```shell
@@ -89,7 +89,7 @@ Here Clodui credentials and website id are fetched from the GitHub secret store.
 
 - [Clodui CLI documentation](https://www.clodui.com/docs/clodui-cli/)
 - [Clodui Actions marketplace](https://github.com/marketplace/actions/clodui-actions)
-- [Clodui CLI NPM package](https://www.npmjs.com/package/@clodui/cli)
+- [Clodui CLI npm package](https://www.npmjs.com/package/@clodui/cli)
 
 [clodui]: https://www.clodui.com
 [clodui cli]: https://www.npmjs.com/package/@clodui/cli

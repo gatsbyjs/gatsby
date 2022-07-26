@@ -1,41 +1,38 @@
-const Promise = require(`bluebird`)
 const csv = require(`csvtojson`)
 const _ = require(`lodash`)
 
 const { typeNameFromFile } = require(`./index`)
 
 const convertToJson = (data, options) =>
-  new Promise((res, rej) => {
-    csv(options)
-      .fromString(data)
-      .on(`end_parsed`, jsonData => {
-        if (!jsonData) {
-          rej(`CSV to JSON conversion failed!`)
-        }
-        res(jsonData)
-      })
-  })
+  csv(options)
+    .fromString(data)
+    .then(jsonData => jsonData, new Error(`CSV to JSON conversion failed!`))
+
+function unstable_shouldOnCreateNode({ node }, pluginOptions = {}) {
+  const { extension } = node
+  const { extensions } = pluginOptions
+
+  return extensions ? extensions.includes(extension) : extension === `csv`
+}
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
+  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
+    return
+  }
+
   const { createNode, createParentChildLink } = actions
 
   // Destructure out our custom options
-  const { typeName, nodePerFile, extensions, ...options } = pluginOptions || {}
-
-  // Filter out unwanted content
-  const filterExtensions = extensions ?? [`csv`]
-  if (!filterExtensions.includes(node.extension)) {
-    return
-  }
+  const { typeName, nodePerFile, ...options } = pluginOptions || {}
 
   // Load file contents
   const content = await loadNodeContent(node)
 
   // Parse
-  let parsedContent = await convertToJson(content, options)
+  const parsedContent = await convertToJson(content, options)
 
   // Generate the type
   function getType({ node, object }) {
@@ -87,4 +84,5 @@ async function onCreateNode(
   return
 }
 
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 exports.onCreateNode = onCreateNode

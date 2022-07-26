@@ -5,7 +5,7 @@ A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for
 
 ## Install
 
-`npm install --save gatsby-plugin-cxs cxs`
+`npm install gatsby-plugin-cxs cxs`
 
 ## How to use
 

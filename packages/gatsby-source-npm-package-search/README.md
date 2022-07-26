@@ -4,7 +4,7 @@ This plugin uses Yarn's Algolia search to import all gatsby-related package info
 
 ## Install
 
-`npm install --save gatsby-source-npm`
+`npm install gatsby-source-npm`
 
 ## How to use
 

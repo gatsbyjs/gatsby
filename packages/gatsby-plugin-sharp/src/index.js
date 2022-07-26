@@ -1,12 +1,12 @@
 const sharp = require(`./safe-sharp`)
-
+const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
+const { isCI } = require(`gatsby-core-utils/ci`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const { scheduleJob } = require(`./scheduler`)
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
 const {
@@ -18,8 +18,32 @@ const {
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
+const { getDimensionsAndAspectRatio } = require(`./utils`)
+const { getDominantColor } = require(`./utils`)
 
 const imageSizeCache = new Map()
+
+const getImageSizeAsync = async file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  }
+  const input = fs.createReadStream(file.absolutePath)
+  const dimensions = await imageSize(input)
+
+  if (!dimensions) {
+    reportError(
+      `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+      ``
+    )
+  }
+
+  imageSizeCache.set(file.internal.contentDigest, dimensions)
+  return dimensions
+}
+// Remove in next major as it's really slow
 const getImageSize = file => {
   if (
     process.env.NODE_ENV !== `test` &&
@@ -27,9 +51,7 @@ const getImageSize = file => {
   ) {
     return imageSizeCache.get(file.internal.contentDigest)
   } else {
-    const dimensions = imageSize.sync(
-      toArray(fs.readFileSync(file.absolutePath))
-    )
+    const dimensions = imageSize.sync(fs.readFileSync(file.absolutePath))
 
     if (!dimensions) {
       reportError(
@@ -43,81 +65,30 @@ const getImageSize = file => {
   }
 }
 
-// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// Actions should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let boundActionCreators
-exports.setBoundActionCreators = actions => {
-  boundActionCreators = actions
+let actions
+exports.setActions = _actions => {
+  actions = _actions
 }
 
+exports.generateImageData = generateImageData
+
 function calculateImageDimensionsAndAspectRatio(file, options) {
-  // Calculate the eventual width/height of the image.
   const dimensions = getImageSize(file)
-  const imageAspectRatio = dimensions.width / dimensions.height
-
-  let width = options.width
-  let height = options.height
-
-  switch (options.fit) {
-    case sharp.fit.fill: {
-      width = options.width ? options.width : dimensions.width
-      height = options.height ? options.height : dimensions.height
-      break
-    }
-    case sharp.fit.inside: {
-      const widthOption = options.width
-        ? options.width
-        : Number.MAX_SAFE_INTEGER
-      const heightOption = options.height
-        ? options.height
-        : Number.MAX_SAFE_INTEGER
-
-      width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
-      height = Math.min(
-        heightOption,
-        Math.round(widthOption / imageAspectRatio)
-      )
-      break
-    }
-    case sharp.fit.outside: {
-      const widthOption = options.width ? options.width : 0
-      const heightOption = options.height ? options.height : 0
-
-      width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
-      height = Math.max(
-        heightOption,
-        Math.round(widthOption / imageAspectRatio)
-      )
-      break
-    }
-
-    default: {
-      if (options.width && !options.height) {
-        width = options.width
-        height = Math.round(options.width / imageAspectRatio)
-      }
-
-      if (options.height && !options.width) {
-        width = Math.round(options.height * imageAspectRatio)
-        height = options.height
-      }
-    }
-  }
-
-  return {
-    width,
-    height,
-    aspectRatio: width / height,
-  }
+  return getDimensionsAndAspectRatio(dimensions, options)
 }
 
 function prepareQueue({ file, args }) {
-  const { pathPrefix, ...options } = args
-  const argsDigestShort = createArgsDigest(options)
-  const imgSrc = `/${file.name}.${options.toFormat}`
+  const { pathPrefix, duotone, ...rest } = args
+  // Duotone is a nested object inside transformOptions and has a [Object: Null Prototype]
+  // So it's flattened into a new object so that createArgsDigest also takes duotone into account
+  const digestArgs = Object.assign(rest, duotone)
+  const argsDigestShort = createArgsDigest(digestArgs)
+  const imgSrc = `/${file.name}.${args.toFormat}`
   const outputDir = path.join(
     process.cwd(),
     `public`,
@@ -131,11 +102,11 @@ function prepareQueue({ file, args }) {
 
   const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,
-    options
+    args
   )
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${args.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
@@ -156,7 +127,7 @@ function prepareQueue({ file, args }) {
 }
 
 function createJob(job, { reporter }) {
-  if (!boundActionCreators) {
+  if (!actions) {
     reporter.panic(
       `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
     )
@@ -169,31 +140,28 @@ function createJob(job, { reporter }) {
   // in resolve / reject handlers). If we would use async/await
   // entire closure would keep duplicate job in memory until
   // initial job finish.
-  let promise = null
-  if (boundActionCreators.createJobV2) {
-    promise = boundActionCreators.createJobV2(job)
-  } else {
-    promise = scheduleJob(job, boundActionCreators, reporter)
-  }
-
-  promise.catch(err => {
-    reporter.panic(err)
+  const promise = actions.createJobV2(job).catch(err => {
+    reporter.panic(`error converting image`, err)
   })
 
   return promise
 }
 
+function lazyJobsEnabled() {
+  return (
+    process.env.gatsby_executing_command === `develop` &&
+    !isCI() &&
+    !(
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+    )
+  )
+}
+
 function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
-  const {
-    src,
-    width,
-    height,
-    aspectRatio,
-    relativePath,
-    outputDir,
-    options,
-  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
+  const { src, width, height, aspectRatio, relativePath, outputDir, options } =
+    prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -202,6 +170,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
       inputPaths: [file.absolutePath],
       outputDir,
       args: {
+        isLazy: lazyJobsEnabled(),
         operations: [
           {
             outputPath: relativePath,
@@ -269,6 +238,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         file.internal.contentDigest
       ),
       args: {
+        isLazy: lazyJobsEnabled(),
         operations,
         pluginOptions: getPluginOptions(),
       },
@@ -283,20 +253,21 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   })
 }
 
-// A value in pixels(Int)
-const defaultBase64Width = () => getPluginOptions().base64Width || 20
 async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: defaultBase64Width(),
+    // Should already be set to base64Width by `fluid()`/`fixed()` methods
+    // calling `generateBase64()`. Useful in Jest tests still.
+    width: args.base64Width || pluginOptions.base64Width,
   })
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath)
+    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
@@ -306,10 +277,10 @@ async function generateBase64({ file, args = {}, reporter }) {
     pipeline = pipeline.trim(options.trim)
   }
 
-  const forceBase64Format =
-    args.toFormatBase64 || pluginOptions.forceBase64Format
-  if (forceBase64Format) {
-    args.toFormat = forceBase64Format
+  const changedBase64Format =
+    options.toFormatBase64 || pluginOptions.forceBase64Format
+  if (changedBase64Format) {
+    options.toFormat = changedBase64Format
   }
 
   pipeline
@@ -323,16 +294,16 @@ async function generateBase64({ file, args = {}, reporter }) {
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: args.toFormat === `png`,
+      force: options.toFormat === `png`,
     })
     .jpeg({
       quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
+      force: options.toFormat === `jpg`,
     })
     .webp({
       quality: options.webpQuality || options.quality,
-      force: args.toFormat === `webp`,
+      force: options.toFormat === `webp`,
     })
 
   // grayscale
@@ -347,11 +318,32 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, args.toFormat, pipeline)
+    if (options.duotone.highlight && options.duotone.shadow) {
+      pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    } else {
+      reporter.warn(
+        `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`
+      )
+    }
   }
-  const { data: buffer, info } = await pipeline.toBuffer({
-    resolveWithObject: true,
-  })
+  let buffer
+  let info
+  try {
+    const result = await pipeline.toBuffer({
+      resolveWithObject: true,
+    })
+    buffer = result.data
+    info = result.info
+  } catch (err) {
+    reportError(
+      `Failed to process image ${file.absolutePath}.
+It is probably corrupt, so please try replacing it.  If it still fails, please open an issue with the image attached.`,
+      err,
+      reporter
+    )
+    return null
+  }
+
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
@@ -362,7 +354,8 @@ async function generateBase64({ file, args = {}, reporter }) {
   return base64output
 }
 
-const generateCacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+const generateCacheKey = ({ file, args }) =>
+  `${file.internal.contentDigest}${JSON.stringify(args)}`
 
 const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
@@ -414,7 +407,10 @@ async function getTracedSVG({ file, options, cache, reporter }) {
 async function stats({ file, reporter }) {
   let imgStats
   try {
-    imgStats = await sharp(file.absolutePath).stats()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    imgStats = await pipeline.stats()
   } catch (err) {
     reportError(
       `Failed to get stats for image ${file.absolutePath}`,
@@ -432,27 +428,12 @@ async function stats({ file, reporter }) {
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
-  if (options.sizeByPixelDensity) {
-    /*
-     * We learned that `sizeByPixelDensity` is only valid for vector images,
-     * and Gatsby’s implementation of Sharp doesn’t support vector images.
-     * This means we should remove this option in the next major version of
-     * Gatsby, but for now we can no-op and warn.
-     *
-     * See https://github.com/gatsbyjs/gatsby/issues/12743
-     *
-     * TODO: remove the sizeByPixelDensity option in the next breaking release
-     */
-    reporter.warn(
-      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
-    )
-  }
-
-  // Account for images with a high pixel density. We assume that these types of
-  // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    metadata = await sharp(file.absolutePath).metadata()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    metadata = await pipeline.metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
@@ -543,7 +524,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
 
     if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
-      arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
+      if (options.fit === sharp.fit.inside) {
+        arrrgs.height = Math.round(size * (maxHeight / maxWidth))
+      } else {
+        arrrgs.height = Math.round(
+          size * (options.maxHeight / options.maxWidth)
+        )
+      }
     }
 
     return arrrgs
@@ -557,12 +544,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
-    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -604,6 +592,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
         break
       case `webp`:
         srcSetType = `image/webp`
+        break
+      case `avif`:
+        srcSetType = `image/avif`
         break
       case ``:
       case `no_change`:
@@ -649,7 +640,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  const dimensions = getImageSize(file)
+  const dimensions = await getImageSizeAsync(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
@@ -692,12 +683,13 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
-    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -754,23 +746,19 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 }
 
-function toArray(buf) {
-  var arr = new Array(buf.length)
-
-  for (var i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
-  }
-
-  return arr
-}
-
 exports.queueImageResizing = queueImageResizing
+exports.batchQueueImageResizing = batchQueueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
+exports.generateBase64 = generateBase64
 exports.traceSVG = traceSVG
 exports.sizes = fluid
 exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.getImageSizeAsync = getImageSizeAsync
+exports.getDominantColor = getDominantColor
 exports.stats = stats
+exports._unstable_createJob = createJob
+exports._lazyJobsEnabled = lazyJobsEnabled

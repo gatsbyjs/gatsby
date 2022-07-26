@@ -3,8 +3,7 @@ const path = require(`path`)
 const fileType = require(`file-type`)
 
 const { createFileNode } = require(`./create-file-node`)
-const { createFilePath } = require(`./utils`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, createFilePath } = require(`gatsby-core-utils`)
 const cacheId = hash => `create-file-node-from-buffer-${hash}`
 
 /********************
@@ -70,12 +69,11 @@ async function processBufferNode({
     // If the user did not provide an extension and we couldn't get
     // one from remote file, try and guess one
     if (typeof ext === `undefined`) {
-      const filetype = fileType(buffer)
+      const filetype = await fileType.fromBuffer(buffer)
       ext = filetype ? `.${filetype.ext}` : `.bin`
     }
-
-    await fs.ensureDir(path.join(pluginCacheDir, hash))
     filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
+    await fs.ensureDir(path.dirname(filename))
 
     // Cache the buffer contents
     await writeBuffer(filename, buffer)
@@ -126,7 +124,7 @@ module.exports = ({
   parentNodeId = null,
   createNodeId,
   ext,
-  name = hash,
+  name,
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -155,6 +153,10 @@ module.exports = ({
 
   if (!hash) {
     hash = createContentDigest(buffer)
+  }
+
+  if (!name) {
+    name = hash
   }
 
   // Check if we already requested node for this remote file

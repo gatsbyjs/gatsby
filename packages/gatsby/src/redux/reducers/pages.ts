@@ -1,17 +1,25 @@
-import normalize from "normalize-path"
-import { ActionsUnion, IGatsbyPage, IGatsbyState } from "../types"
+import {
+  IGatsbyState,
+  IGatsbyPage,
+  IDeleteCacheAction,
+  ICreatePageAction,
+  IDeletePageAction,
+  IMaterializePageMode,
+} from "../types"
 
 export const pagesReducer = (
   state: IGatsbyState["pages"] = new Map<string, IGatsbyPage>(),
-  action: ActionsUnion
+  action:
+    | IDeleteCacheAction
+    | ICreatePageAction
+    | IDeletePageAction
+    | IMaterializePageMode
 ): IGatsbyState["pages"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
 
     case `CREATE_PAGE`: {
-      action.payload.component = normalize(action.payload.component)
-
       // throws an error if the page is not created by a plugin
       if (!action.plugin?.name) {
         console.log(``)
@@ -23,10 +31,6 @@ export const pagesReducer = (
         )
       }
 
-      // Link page to its plugin.
-      action.payload.pluginCreator___NODE = action.plugin.id ?? ``
-      action.payload.pluginCreatorId = action.plugin.id ?? ``
-
       // Add page to the state with the path as key
       state.set(action.payload.path, action.payload)
 
@@ -36,6 +40,15 @@ export const pagesReducer = (
     case `DELETE_PAGE`: {
       state.delete(action.payload.path)
 
+      return state
+    }
+
+    case `MATERIALIZE_PAGE_MODE`: {
+      const page = state.get(action.payload.path)
+      if (!page) {
+        throw new Error(`Could not find page by path: ${action.payload.path}`)
+      }
+      page.mode = action.payload.pageMode
       return state
     }
 

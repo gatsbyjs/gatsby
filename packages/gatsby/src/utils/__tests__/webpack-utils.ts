@@ -1,3 +1,4 @@
+import * as os from "os"
 import { createWebpackUtils } from "../webpack-utils"
 import { Stage, IProgram } from "../../commands/types"
 
@@ -5,7 +6,7 @@ import autoprefixer from "autoprefixer"
 
 jest.mock(`../browserslist`, () => {
   return {
-    getBrowsersList: (): string[] => [],
+    getBrowsersList: (): Array<string> => [],
   }
 })
 
@@ -27,7 +28,9 @@ jest.mock(`autoprefixer`, () =>
 let config
 
 beforeAll(() => {
-  config = createWebpackUtils(Stage.Develop, {} as IProgram)
+  config = createWebpackUtils(Stage.Develop, {
+    directory: `${os.tmpdir()}/test`,
+  } as IProgram)
 })
 
 describe(`webpack utils`, () => {
@@ -35,17 +38,22 @@ describe(`webpack utils`, () => {
     it(`adds .js rule`, () => {
       expect(config.rules.js).toEqual(expect.any(Function))
     })
-
-    it(`returns default values without any options`, () => {
+    it(`uses the babel loader`, () => {
       const rule = config.rules.js([])
-
-      expect(rule).toMatchSnapshot({
-        use: [
-          {
-            loader: expect.stringContaining(`babel-loader`),
-          },
-        ],
-      })
+      const { loader } = rule.use({ issuer: `` })[0]
+      expect(loader).toInclude(`babel-loader`)
+    })
+    it(`has default options`, () => {
+      const rule = config.rules.js([])
+      const { options } = rule.use({ issuer: `` })[0]
+      expect(options).toMatchSnapshot()
+    })
+    it(`recognizes issuers for page templates`, () => {
+      const rule = config.rules.js([])
+      const { options } = rule.use({
+        issuer: `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/_this_is_virtual_fs_path_/async-requires.js`,
+      })[0]
+      expect(options.isPageTemplate).toBeTrue()
     })
     describe(`include function`, () => {
       let js
@@ -185,7 +193,7 @@ describe(`webpack utils`, () => {
         postcss = config.loaders.postcss()
       })
       it(`initialises autoprefixer with defaults`, () => {
-        postcss.options.plugins(postcss.loader)
+        postcss.options.postcssOptions(postcss.loader)
         expect(autoprefixer).toBeCalled()
         expect(autoprefixer).toBeCalledWith({
           flexbox: `no-2009`,
@@ -206,7 +214,7 @@ describe(`webpack utils`, () => {
         })
       })
       it(`initialises autoprefixer with overrides`, () => {
-        postcss.options.plugins(postcss.loader)
+        postcss.options.postcssOptions(postcss.loader)
         expect(autoprefixer).toBeCalled()
         expect(autoprefixer).toBeCalledWith({
           flexbox: `no-2009`,

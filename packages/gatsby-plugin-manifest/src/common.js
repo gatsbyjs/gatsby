@@ -1,4 +1,3 @@
-import fs from "fs"
 import sysPath from "path"
 
 exports.favicons = [
@@ -52,23 +51,6 @@ exports.defaultIcons = [
     type: `image/png`,
   },
 ]
-
-/**
- * Check if the icon exists on the filesystem
- *
- * @param {String} srcIcon Path of the icon
- */
-exports.doesIconExist = function doesIconExist(srcIcon) {
-  try {
-    return fs.statSync(srcIcon).isFile()
-  } catch (e) {
-    if (e.code !== `ENOENT`) {
-      throw e
-    }
-
-    return false
-  }
-}
 
 /**
  * @param {string} path The generic path to an icon

@@ -1,5 +1,6 @@
 const {
   DEFAULT_OPTIONS,
+  EMPTY_ALT,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -15,6 +16,16 @@ const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
+
+// Should be the same as https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/supported-extensions.js
+const supportedExtensions = {
+  jpeg: true,
+  jpg: true,
+  png: true,
+  webp: true,
+  tif: true,
+  tiff: true,
+}
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -32,10 +43,11 @@ module.exports = (
     reporter,
     cache,
     compiler,
+    getRemarkFileDependency,
   },
   pluginOptions
 ) => {
-  const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
+  const options = _.defaults({}, pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -49,7 +61,7 @@ module.exports = (
 
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
-  let rawHtmlNodes = []
+  const rawHtmlNodes = []
   visitWithParents(markdownAST, [`html`, `jsx`], (node, ancestors) => {
     const inLink = ancestors.some(findParentLinks)
 
@@ -57,7 +69,7 @@ module.exports = (
   })
 
   // This will only work for markdown syntax image tags
-  let markdownImageNodes = []
+  const markdownImageNodes = []
 
   visitWithParents(
     markdownAST,
@@ -95,6 +107,9 @@ module.exports = (
               }
               break
             case `alt`:
+              if (node.alt === EMPTY_ALT || overWrites.alt === EMPTY_ALT) {
+                return ``
+              }
               if (overWrites.alt) {
                 return overWrites.alt
               }
@@ -128,7 +143,31 @@ module.exports = (
   ) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the image isn't hosted locally.
-    const parentNode = getNode(markdownNode.parent)
+    let parentNode = getNode(markdownNode.parent)
+    // check if the parent node is a File node, otherwise go up the chain and
+    // search for the closest parent File node. This is necessary in case
+    // you have markdown in child nodes (e.g. gatsby-plugin-json-remark).
+    if (
+      parentNode &&
+      parentNode.internal &&
+      parentNode.internal.type !== `File`
+    ) {
+      let tempParentNode = parentNode
+      while (
+        tempParentNode &&
+        tempParentNode.internal &&
+        tempParentNode.internal.type !== `File`
+      ) {
+        tempParentNode = getNode(tempParentNode.parent)
+      }
+      if (
+        tempParentNode &&
+        tempParentNode.internal &&
+        tempParentNode.internal.type === `File`
+      ) {
+        parentNode = tempParentNode
+      }
+    }
     let imagePath
     if (parentNode && parentNode.dir) {
       imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
@@ -136,18 +175,28 @@ module.exports = (
       return null
     }
 
-    const imageNode = _.find(files, file => {
-      if (file && file.absolutePath) {
-        return file.absolutePath === imagePath
-      }
-      return null
-    })
+    let imageNode
+    if (getRemarkFileDependency) {
+      imageNode = await getRemarkFileDependency({
+        absolutePath: {
+          eq: imagePath,
+        },
+      })
+    } else {
+      // Legacy: no context, slower version of image query
+      imageNode = _.find(files, file => {
+        if (file && file.absolutePath) {
+          return file.absolutePath === imagePath
+        }
+        return null
+      })
+    }
 
     if (!imageNode || !imageNode.absolutePath) {
       return resolve()
     }
 
-    let fluidResult = await fluid({
+    const fluidResult = await fluid({
       file: imageNode,
       args: options,
       reporter,
@@ -168,10 +217,13 @@ module.exports = (
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    const isEmptyAlt = node.alt === EMPTY_ALT
 
-    const alt = _.escape(
-      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
-    )
+    const alt = isEmptyAlt
+      ? ``
+      : _.escape(
+          overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+        )
 
     const title = node.title ? _.escape(node.title) : alt
 
@@ -183,6 +235,18 @@ module.exports = (
         ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
           `loading`
         )} option. Please pass one of "lazy", "eager" or "auto".
+      `)
+      )
+    }
+
+    const decoding = options.decoding
+
+    if (![`async`, `sync`, `auto`].includes(decoding)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(decoding)} is an invalid value for the ${chalk.bold(
+          `decoding`
+        )} option. Please pass one of "async", "sync" or "auto".
       `)
       )
     }
@@ -207,48 +271,79 @@ module.exports = (
         sizes="${fluidResult.sizes}"
         style="${imageStyle}"
         loading="${loading}"
+        decoding="${decoding}"
       />
     `.trim()
 
-    // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
-    if (options.withWebp) {
-      const webpFluidResult = await fluid({
-        file: imageNode,
-        args: _.defaults(
-          { toFormat: `WEBP` },
-          // override options if it's an object, otherwise just pass through defaults
-          options.withWebp === true ? {} : options.withWebp,
-          pluginOptions,
-          DEFAULT_OPTIONS
-        ),
-        reporter,
-      })
+    const formatConfigs = [
+      {
+        propertyName: `withAvif`,
+        format: `AVIF`,
+      },
+      {
+        propertyName: `withWebp`,
+        format: `WEBP`,
+      },
+    ]
 
-      if (!webpFluidResult) {
+    const enabledFormatConfigs = formatConfigs.filter(
+      ({ propertyName }) => options[propertyName]
+    )
+
+    if (enabledFormatConfigs.length) {
+      const sourcesHtmlPromises = enabledFormatConfigs.map(
+        async ({ format, propertyName }) => {
+          const formatFluidResult = await fluid({
+            file: imageNode,
+            args: _.defaults(
+              { toFormat: format },
+              // override options if it's an object, otherwise just pass through defaults
+              options[propertyName] === true ? {} : options[propertyName],
+              options
+            ),
+            reporter,
+          })
+
+          if (!formatFluidResult) {
+            return null
+          }
+
+          return `
+            <source
+              srcset="${formatFluidResult.srcSet}"
+              sizes="${formatFluidResult.sizes}"
+              type="${formatFluidResult.srcSetType}"
+            />
+          `.trim()
+        }
+      )
+
+      const sourcesHtml = (await Promise.all(sourcesHtmlPromises)).filter(
+        sourceHtml => sourceHtml !== null
+      )
+
+      if (!sourcesHtml.length) {
         return resolve()
       }
 
       imageTag = `
-      <picture>
-        <source
-          srcset="${webpFluidResult.srcSet}"
-          sizes="${webpFluidResult.sizes}"
-          type="${webpFluidResult.srcSetType}"
-        />
-        <source
-          srcset="${srcSet}"
-          sizes="${fluidResult.sizes}"
-          type="${fluidResult.srcSetType}"
-        />
-        <img
-          class="${imageClass}"
-          src="${fallbackSrc}"
-          alt="${alt}"
-          title="${title}"
-          loading="${loading}"
-          style="${imageStyle}"
-        />
-      </picture>
+        <picture>
+          ${sourcesHtml.join(``)}
+          <source
+            srcset="${srcSet}"
+            sizes="${fluidResult.sizes}"
+            type="${fluidResult.srcSetType}"
+          />
+          <img
+            class="${imageClass}"
+            src="${fallbackSrc}"
+            alt="${alt}"
+            title="${title}"
+            loading="${loading}"
+            decoding="${decoding}"
+            style="${imageStyle}"
+          />
+        </picture>
       `.trim()
     }
 
@@ -259,7 +354,7 @@ module.exports = (
       let args = typeof options.tracedSVG === `object` ? options.tracedSVG : {}
 
       // Translate Potrace constants (e.g. TURNPOLICY_LEFT, COLOR_AUTO) to the values Potrace expects
-      const { Potrace } = require(`potrace`)
+      const { Potrace } = require(`@gatsbyjs/potrace`)
       const argsKeys = Object.keys(args)
       args = argsKeys.reduce((result, key) => {
         const value = args[key]
@@ -354,14 +449,14 @@ module.exports = (
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
       ({ node, inLink }) =>
-        new Promise(async (resolve, reject) => {
+        new Promise(resolve => {
           const overWrites = {}
           let refNode
           if (
             !node.hasOwnProperty(`url`) &&
             node.hasOwnProperty(`identifier`)
           ) {
-            //consider as imageReference node
+            // consider as imageReference node
             refNode = node
             node = definitions(refNode.identifier)
             // pass original alt from referencing node
@@ -374,29 +469,25 @@ module.exports = (
           }
           const fileType = getImageInfo(node.url).ext
 
-          // Ignore gifs as we can't process them,
-          // svgs as they are already responsive by definition
-          if (
-            isRelativeUrl(node.url) &&
-            fileType !== `gif` &&
-            fileType !== `svg`
-          ) {
-            const rawHTML = await generateImagesAndUpdateNode(
+          // Only attempt to convert supported extensions
+          if (isRelativeUrl(node.url) && supportedExtensions[fileType]) {
+            return generateImagesAndUpdateNode(
               node,
               resolve,
               inLink,
               overWrites
-            )
-
-            if (rawHTML) {
-              // Replace the image or ref node with an inline HTML node.
-              if (refNode) {
-                node = refNode
+            ).then(rawHTML => {
+              if (rawHTML) {
+                // Replace the image or ref node with an inline HTML node.
+                if (refNode) {
+                  node = refNode
+                }
+                node.type = `html`
+                node.value = rawHTML
               }
-              node.type = `html`
-              node.value = rawHTML
-            }
-            return resolve(node)
+
+              return resolve(node)
+            })
           } else {
             // Image isn't relative so there's nothing for us to do.
             return resolve()
@@ -409,6 +500,7 @@ module.exports = (
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         ({ node, inLink }) =>
+          // eslint-disable-next-line no-async-promise-executor
           new Promise(async (resolve, reject) => {
             if (!node.value) {
               return resolve()
@@ -420,14 +512,15 @@ module.exports = (
               return resolve()
             }
 
-            let imageRefs = []
+            const imageRefs = []
             $(`img`).each(function () {
+              // eslint-disable-next-line @babel/no-invalid-this
               imageRefs.push($(this))
             })
 
-            for (let thisImg of imageRefs) {
+            for (const thisImg of imageRefs) {
               // Get the details we need.
-              let formattedImgTag = {}
+              const formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)
@@ -438,12 +531,10 @@ module.exports = (
 
               const fileType = getImageInfo(formattedImgTag.url).ext
 
-              // Ignore gifs as we can't process them,
-              // svgs as they are already responsive by definition
+              // Only attempt to convert supported extensions
               if (
                 isRelativeUrl(formattedImgTag.url) &&
-                fileType !== `gif` &&
-                fileType !== `svg`
+                supportedExtensions[fileType]
               ) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,

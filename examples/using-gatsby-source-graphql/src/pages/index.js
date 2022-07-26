@@ -7,7 +7,7 @@ export default ({ data }) => (
   <div>
     <h1>My Gatsby Blog</h1>
     <p>
-      <a href="https://www.gatsbyjs.org/packages/gatsby-source-graphql/">
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-source-graphql/">
         Using gatsby-source-graphql
       </a>
     </p>

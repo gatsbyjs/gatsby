@@ -1,4 +1,4 @@
-const { visit, visitInParallel, Kind } = require(`graphql`)
+const { visit, visitInParallel, Kind } = require(`gatsby/graphql`)
 const _ = require(`lodash`)
 
 const Prefix = {

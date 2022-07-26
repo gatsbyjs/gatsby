@@ -20,7 +20,7 @@ The `cache-control` header should be `cache-control: public, max-age=0, must-rev
 
 ## App data
 
-The new `app-data.json` file which contains the build hash for the current deployment of the site should also share the same `cache-control` header as `page-data.json`. This is to ensure that the version of the site loaded in the browser is always synchronised with the currently deployed version.
+The new `app-data.json` file which contains the build hash for the current deployment of the site should also share the same `cache-control` header as `page-data.json`. This is to ensure that the version of the site loaded in the browser is always synchronized with the currently deployed version.
 
 The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`<sup>1</sup>
 
@@ -40,11 +40,11 @@ The only exception to this is the file `/sw.js`, which needs to be revalidated u
 
 ## Setting up caching on different hosts
 
-How you setup your caching depends on how you host your site. We encourage people to create Gatsby plugins per host to automate the creation of caching headers.
+How you set up your caching depends on how you host your site. We encourage people to create Gatsby plugins per host to automate the creation of caching headers.
 
 The following plugins have been created:
 
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+- [gatsby-plugin-netlify](/plugins/gatsby-plugin-netlify/)
 - [gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3)
 
 When deploying with Vercel, follow the instructions in the [Vercel documentation](https://vercel.com/guides/deploying-gatsby-with-vercel#bonus:-cache-your-gatsby-assets).

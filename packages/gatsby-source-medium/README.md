@@ -6,7 +6,7 @@ endpoint. Unfortunately the JSON endpoint does not provide the complete stories,
 
 ## Install
 
-`npm install --save gatsby-source-medium`
+`npm install gatsby-source-medium`
 
 ## How to use
 

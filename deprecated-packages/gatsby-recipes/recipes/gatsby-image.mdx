@@ -1,0 +1,46 @@
+# Set up speedy, optimized images with Gatsby Image
+
+This recipe installs and configures all
+the necessary NPM packages & Gatsby plugins
+to enable speedy, optimized images with Gatsby Image
+in your React code.
+
+Based on https://www.gatsbyjs.com/docs/working-with-images-in-markdown/
+
+This recipe:
+
+---
+
+Installs NPM Packages.
+
+<NPMPackage name="gatsby-source-filesystem" />
+<NPMPackage name="gatsby-image" />
+<NPMPackage name="gatsby-plugin-sharp" />
+<NPMPackage name="gatsby-transformer-sharp" />
+
+---
+
+Adds Gatsby plugin `gatsby-source-filesystem` to read images from the `src/images`
+directory.
+
+<GatsbyPlugin
+  name="gatsby-source-filesystem"
+  key="src/images"
+  options={{
+    name: `Images`,
+    path: `src/images/`,
+  }}
+/>
+
+---
+
+Adds `gatsby-plugin-sharp` and `gatsby-transformer-sharp` to handle
+image processing.
+
+<GatsbyPlugin name="gatsby-plugin-sharp" />
+<GatsbyPlugin name="gatsby-transformer-sharp" />
+
+---
+
+Once you've installed this recipe, you can start adding
+speedy, optimized images to your React components.

@@ -34,7 +34,7 @@ const getMetaData = name =>
   )
     .then(response => response.json())
     .then(data => {
-      var page = data.query.pages[Object.keys(data.query.pages)[0]]
+      const page = data.query.pages[Object.keys(data.query.pages)[0]]
 
       if (`missing` in page) {
         return { err: `Not found` }

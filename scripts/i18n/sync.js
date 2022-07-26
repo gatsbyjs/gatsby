@@ -19,7 +19,7 @@ const syncLabelName = `sync`
 
 // get the git short hash
 function getShortHash(hash) {
-  return hash.substr(0, 7)
+  return hash.slice(0, 7)
 }
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
@@ -53,7 +53,7 @@ async function graphql(query, params) {
 async function getRepository(owner, name) {
   const { repository } = await graphql(
     `
-      query($owner: String!, $name: String!, $syncLabel: String!) {
+      query ($owner: String!, $name: String!, $syncLabel: String!) {
         repository(owner: $owner, name: $name) {
           id
           syncPullRequests: pullRequests(labels: [$syncLabel], first: 1) {
@@ -79,7 +79,7 @@ async function getRepository(owner, name) {
 async function createLabel(input) {
   const { createLabel } = await graphql(
     `
-      mutation($input: CreateLabelInput!) {
+      mutation ($input: CreateLabelInput!) {
         createLabel(input: $input) {
           label {
             id
@@ -100,7 +100,7 @@ async function createLabel(input) {
 async function createPullRequest(input) {
   const { createPullRequest } = await graphql(
     `
-      mutation($input: CreatePullRequestInput!) {
+      mutation ($input: CreatePullRequestInput!) {
         createPullRequest(input: $input) {
           pullRequest {
             id
@@ -122,7 +122,7 @@ async function createPullRequest(input) {
 async function addLabelToPullRequest(pullRequest, label) {
   await graphql(
     `
-      mutation($input: AddLabelsToLabelableInput!) {
+      mutation ($input: AddLabelsToLabelableInput!) {
         addLabelsToLabelable(input: $input) {
           clientMutationId
         }
@@ -144,7 +144,7 @@ function conflictPRBody(conflictFiles, comparisonUrl, prNumber) {
   return `
 Sync conflicts with the source repo. Please update the translations based on updated source content.
 
-For more information on how to resolve sync conflicts, check out the [guide for syncing translations](https://gatsbyjs.org/contributing/translation/sync-guide/).
+For more information on how to resolve sync conflicts, check out the [guide for syncing translations](https://gatsbyjs.com/contributing/translation/sync-guide/).
 
 <details ${conflictFiles.length <= 10 ? `open` : ``}>
 <summary>The following ${
@@ -294,7 +294,7 @@ async function syncTranslationRepo(code) {
   // Message is of the form:
   // CONFLICT (content): Merge conflict in {file path}
   const conflictFiles = conflictLines.map(line =>
-    line.substr(line.lastIndexOf(` `) + 1)
+    line.slice(line.lastIndexOf(` `) + 1)
   )
   // Do a soft reset and unstage non-conflicted files
   shell.exec(`git reset`, { silent: true })

@@ -2,8 +2,9 @@ import groupBy from "lodash/groupBy"
 import path from "path"
 import gatsbyNode from "../gatsby-node"
 
-describe(`transformer-react-doc-gen: onCreateNode`, () => {
-  let createdNodes, updatedNodes
+describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
+  let createdNodes
+  let updatedNodes
   const createNodeId = jest.fn(id => id)
   const createContentDigest = jest.fn().mockReturnValue(`content-digest`)
 
@@ -46,90 +47,113 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     )
   }
 
-  describe(`Simple example`, () => {
-    beforeAll(async () => {
-      await run(getFileNode(`code.js`))
+  const extensionsToTest = [`.js`, `.jsx`]
+
+  for (const extension of extensionsToTest) {
+    describe(`Simple example (${extension})`, () => {
+      beforeAll(async () => {
+        await run(getFileNode(`code${extension}`))
+      })
+
+      it(`creates doc json apple node`, () => {
+        const appleNode = createdNodes.find(node => node.name === `apple`)
+        expect(appleNode).toBeDefined()
+      })
+
+      it(`should extract out a description, params, and examples`, () => {
+        const appleNode = createdNodes.find(node => node.name === `apple`)
+
+        expect(appleNode.examples.length).toBe(1)
+        expect(appleNode.examples[0]).toMatchSnapshot(`example`)
+
+        const appleDescriptionNode = createdNodes.find(
+          node => node.id === appleNode.description___NODE
+        )
+
+        expect(appleDescriptionNode).toBeDefined()
+        expect(appleDescriptionNode.internal.content).toMatchSnapshot(
+          `description content`
+        )
+
+        const paramNode = createdNodes.find(
+          node => node.id === appleNode.params___NODE[0]
+        )
+
+        expect(paramNode).toBeDefined()
+        expect(paramNode.name).toMatchSnapshot(`param name`)
+
+        const paramDescriptionNode = createdNodes.find(
+          node => node.id === paramNode.description___NODE
+        )
+
+        expect(paramDescriptionNode).toBeDefined()
+        expect(paramDescriptionNode.internal.content).toMatchSnapshot(
+          `param description`
+        )
+      })
+
+      it(`should extract out a captions from examples`, () => {
+        const pearNode = createdNodes.find(node => node.name === `pear`)
+
+        expect(pearNode.examples.length).toBe(2)
+        expect(pearNode.examples).toMatchSnapshot(`examplesWithCaptions`)
+
+        expect(pearNode.examples[1].caption).toBeDefined()
+
+        const pearDescriptionNode = createdNodes.find(
+          node => node.id === pearNode.description___NODE
+        )
+
+        expect(pearDescriptionNode).toBeDefined()
+        expect(pearDescriptionNode.internal.content).toMatchSnapshot(
+          `description content`
+        )
+      })
+
+      it(`should extract code and docs location`, () => {
+        const appleNode = createdNodes.find(node => node.name === `apple`)
+
+        expect(appleNode.docsLocation).toBeDefined()
+        expect(appleNode.docsLocation).toEqual(
+          expect.objectContaining({
+            start: expect.objectContaining({
+              line: 1,
+            }),
+            end: expect.objectContaining({
+              line: 7,
+            }),
+          })
+        )
+
+        expect(appleNode.codeLocation).toBeDefined()
+        expect(appleNode.codeLocation).toEqual(
+          expect.objectContaining({
+            start: expect.objectContaining({
+              line: 8,
+            }),
+            end: expect.objectContaining({
+              line: 10,
+            }),
+          })
+        )
+      })
+
+      it(`doesn't create multiple nodes with same id`, () => {
+        const groupedById = groupBy(createdNodes, `id`)
+        Object.keys(groupedById).forEach(id =>
+          expect(groupedById[id].length).toBe(1)
+        )
+      })
     })
-
-    it(`creates doc json apple node`, () => {
-      const appleNode = createdNodes.find(node => node.name === `apple`)
-      expect(appleNode).toBeDefined()
-    })
-
-    it(`should extract out a description, params, and examples`, () => {
-      const appleNode = createdNodes.find(node => node.name === `apple`)
-
-      expect(appleNode.examples.length).toBe(1)
-      expect(appleNode.examples[0]).toMatchSnapshot(`example`)
-
-      const appleDescriptionNode = createdNodes.find(
-        node => node.id === appleNode.description___NODE
-      )
-
-      expect(appleDescriptionNode).toBeDefined()
-      expect(appleDescriptionNode.internal.content).toMatchSnapshot(
-        `description content`
-      )
-
-      const paramNode = createdNodes.find(
-        node => node.id === appleNode.params___NODE[0]
-      )
-
-      expect(paramNode).toBeDefined()
-      expect(paramNode.name).toMatchSnapshot(`param name`)
-
-      const paramDescriptionNode = createdNodes.find(
-        node => node.id === paramNode.description___NODE
-      )
-
-      expect(paramDescriptionNode).toBeDefined()
-      expect(paramDescriptionNode.internal.content).toMatchSnapshot(
-        `param description`
-      )
-    })
-
-    it(`should extract code and docs location`, () => {
-      const appleNode = createdNodes.find(node => node.name === `apple`)
-
-      expect(appleNode.docsLocation).toBeDefined()
-      expect(appleNode.docsLocation).toEqual(
-        expect.objectContaining({
-          start: expect.objectContaining({
-            line: 1,
-          }),
-          end: expect.objectContaining({
-            line: 7,
-          }),
-        })
-      )
-
-      expect(appleNode.codeLocation).toBeDefined()
-      expect(appleNode.codeLocation).toEqual(
-        expect.objectContaining({
-          start: expect.objectContaining({
-            line: 8,
-          }),
-          end: expect.objectContaining({
-            line: 10,
-          }),
-        })
-      )
-    })
-
-    it(`doesn't create multiple nodes with same id`, () => {
-      const groupedById = groupBy(createdNodes, `id`)
-      Object.keys(groupedById).forEach(id =>
-        expect(groupedById[id].length).toBe(1)
-      )
-    })
-  })
+  }
 
   describe(`Complex example`, () => {
     beforeAll(async () => {
       await run(getFileNode(`complex-example.js`))
     })
 
-    let callbackNode, typedefNode
+    let callbackNode
+    let typedefNode
 
     it(`should create top-level node for callback`, () => {
       callbackNode = createdNodes.find(
@@ -152,7 +176,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         expect(typedefNode).toBeDefined()
       })
 
-      let readyNode, nestedNode
+      let readyNode
+      let nestedNode
 
       it(`should have property nodes for typedef`, () => {
         expect(typedefNode.properties___NODE).toBeDefined()
@@ -166,19 +191,18 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         expect(readyNode).toMatchSnapshot()
       })
 
-      let nestedFooNode, nestedOptionalNode, nestedCallbackNode
+      let nestedFooNode
+      let nestedOptionalNode
+      let nestedCallbackNode
 
       it(`should have second param as nested object`, () => {
         expect(nestedNode.name).toBe(`nested`)
         expect(nestedNode.properties___NODE).toBeDefined()
         expect(nestedNode.properties___NODE.length).toBe(3)
-        ;[
-          nestedFooNode,
-          nestedOptionalNode,
-          nestedCallbackNode,
-        ] = nestedNode.properties___NODE.map(paramID =>
-          createdNodes.find(node => node.id === paramID)
-        )
+        ;[nestedFooNode, nestedOptionalNode, nestedCallbackNode] =
+          nestedNode.properties___NODE.map(paramID =>
+            createdNodes.find(node => node.id === paramID)
+          )
       })
 
       it(`should strip prefixes from nested nodes`, () => {
@@ -211,7 +235,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     describe(`should handle members`, () => {
-      let complexNode, memberNode
+      let complexNode
+      let memberNode
       beforeAll(() => {
         complexNode = createdNodes.find(
           node => node.name === `complex` && node.parent === `node_1`
@@ -331,7 +356,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
   describe(`Sanity checks`, () => {
     it(`should extract create description nodes with markdown types`, () => {
-      let types = groupBy(createdNodes, `internal.type`)
+      const types = groupBy(createdNodes, `internal.type`)
       expect(
         types.DocumentationJSComponentDescription.every(
           d => d.internal.mediaType === `text/markdown`
@@ -361,4 +386,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       expect(createdNodes.length).toBeGreaterThan(0)
     })
   })
+
+  it(`doesn't cause a stack overflow for nodes of the same name`, () =>
+    expect(run(getFileNode(`same-name.ts`))).resolves.toBeUndefined())
 })

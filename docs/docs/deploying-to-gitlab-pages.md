@@ -13,13 +13,13 @@ git add .
 git push -u origin master
 ```
 
-You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the `.gitlab-ci.yml` file.
+You can deploy sites on GitLab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to set up your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the `.gitlab-ci.yml` file.
 
 ## Add Path Prefix to Gatsby
 
 As the site will be hosted under yourname.gitlab.io/examplerepository/, you will need to configure Gatsby to use the Path Prefix plugin.
 
-In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link paths. The `pathPrefix` should be the project name in your repository. (ex. `https://gitlab.com/yourname/examplerepository/` - your `pathPrefix` should be `/examplerepository`). See [the docs page on path prefixing for more](/docs/path-prefix/).
+In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link paths. The `pathPrefix` should be the project name in your repository. (ex. `https://gitlab.com/yourname/examplerepository/` - your `pathPrefix` should be `/examplerepository`). See [the docs page on path prefixing for more](/docs/how-to/previews-deploys-hosting/path-prefix/).
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -33,7 +33,7 @@ To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml` 
 
 The online editor on the [GitLab](https://gitlab.com) website contains a pre-built template for Gatsby deployment.
 
-To use the template open your repository on their website, select the 'Setup CI/CD' option on the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now select the 'Apply a GitLab CI Yaml Template' drop-down, and type 'Gatsby' into the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
+To use the template open your repository on their website, select the 'Setup CI/CD' option on the center menu, and it will create a new blank `.gitlab-ci.yml` for you. Now select the 'Apply a GitLab CI YAML Template' drop-down, and type 'Gatsby' into the filter. Select the Gatsby option, click 'Commit Changes', and you are done!
 
 If adding this manually to your project, the file needs to contain a few required fields:
 
@@ -41,7 +41,7 @@ If adding this manually to your project, the file needs to contain a few require
 image: node:latest
 
 # This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+# https://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
     - node_modules/
@@ -50,6 +50,7 @@ cache:
     - public/
 
 pages:
+  stage: deploy
   script:
     - npm install
     - ./node_modules/.bin/gatsby build --prefix-paths
@@ -69,4 +70,4 @@ Add that configuration, and with the next master branch push, your site should h
 
 If all went well, you should now be able to access your site. It will be hosted under gitlab.io - for example if you have a repository under your namespace, the url will be yourname.gitlab.io/examplerepository.
 
-Visit the [GitLab Pages](https://gitlab.com/help/user/project/pages/getting_started_part_one.md) to learn how to setup custom domains and find out about advanced configurations.
+Visit the [GitLab Pages](https://gitlab.com/help/user/project/pages/getting_started_part_one.md) to learn how to set up custom domains and find out about advanced configurations.

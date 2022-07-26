@@ -9,6 +9,7 @@ const getSourcePluginsAsRemarkPlugins = require(`./get-source-plugins-as-remark-
 const htmlAttrToJSXAttr = require(`./babel-plugin-html-attr-to-jsx-attr`)
 const removeExportKeywords = require(`./babel-plugin-remove-export-keywords`)
 const BabelPluginPluckImports = require(`./babel-plugin-pluck-imports`)
+const { parseImportBindings } = require(`./import-parser`)
 
 /*
  * function mutateNode({
@@ -39,23 +40,25 @@ const BabelPluginPluckImports = require(`./babel-plugin-pluck-imports`)
  * }
  *  */
 
-module.exports = async function genMDX(
+async function genMDX(
   {
     isLoader,
     node,
     options,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
+    isolateMDXComponent,
     ...helpers
   },
   { forceDisableCache = false } = {}
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
   const payloadCacheKey = node =>
-    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}`
+    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}-${isolateMDXComponent}`
 
   if (!forceDisableCache) {
     const cachedPayload = await cache.get(payloadCacheKey(node))
@@ -64,7 +67,7 @@ module.exports = async function genMDX(
     }
   }
 
-  let results = {
+  const results = {
     mdast: undefined,
     hast: undefined,
     html: undefined,
@@ -86,8 +89,14 @@ module.exports = async function genMDX(
 
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
-  const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
-  const content = `${frontMatterCodeResult}
+  const { data, content: frontMatterCodeResult } = grayMatter(
+    node.rawBody,
+    options
+  )
+
+  const content = isolateMDXComponent
+    ? frontMatterCodeResult
+    : `${frontMatterCodeResult}
 
 export const _frontmatter = ${JSON.stringify(data)}`
 
@@ -106,13 +115,14 @@ export const _frontmatter = ${JSON.stringify(data)}`
    *   cache
    * }); */
 
-  const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
-    {
+  const gatsbyRemarkPluginsAsremarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode: node,
       //          files,
       getNode,
       getNodes,
+      getNodesByType,
       reporter,
       cache,
       pathPrefix,
@@ -121,11 +131,10 @@ export const _frontmatter = ${JSON.stringify(data)}`
         generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
-    }
-  )
+    })
 
   debug(`running mdx`)
-  let code = await mdx(content, {
+  const code = await mdx(content, {
     filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
@@ -154,7 +163,7 @@ ${code}`
           require(`@babel/preset-env`),
           {
             useBuiltIns: `entry`,
-            corejs: 2,
+            corejs: 3,
             modules: false,
           },
         ],
@@ -189,3 +198,167 @@ ${code}`
   }
   return results
 }
+
+module.exports = genMDX // Legacy API, drop in v3 in favor of named export
+module.exports.genMDX = genMDX
+
+async function findImports({
+  node,
+  options,
+  getNode,
+  getNodes,
+  getNodesByType,
+  reporter,
+  cache,
+  pathPrefix,
+  ...helpers
+}) {
+  const { content } = grayMatter(node.rawBody, options)
+
+  const gatsbyRemarkPluginsAsremarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
+      gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
+      mdxNode: node,
+      getNode,
+      getNodes,
+      getNodesByType,
+      reporter,
+      cache,
+      pathPrefix,
+      compiler: {
+        parseString: () => compiler.parse.bind(compiler),
+        generateHTML: ast => mdx(ast, options),
+      },
+      ...helpers,
+    })
+
+  const compilerOptions = {
+    filepath: node.fileAbsolutePath,
+    ...options,
+    remarkPlugins: [
+      ...options.remarkPlugins,
+      ...gatsbyRemarkPluginsAsremarkPlugins,
+    ],
+  }
+  const compiler = mdx.createCompiler(compilerOptions)
+
+  const fileOpts = { contents: content }
+  if (node.fileAbsolutePath) {
+    fileOpts.path = node.fileAbsolutePath
+  }
+
+  let mdast = await compiler.parse(fileOpts)
+  mdast = await compiler.run(mdast, fileOpts)
+
+  // Assuming valid code, identifiers must be unique (they are consts) so
+  // we don't need to dedupe the symbols here.
+  const identifiers = []
+  const imports = []
+
+  mdast.children.forEach(node => {
+    if (node.type !== `import`) return
+
+    const importCode = node.value
+
+    imports.push(importCode)
+
+    const bindings = parseImportBindings(importCode)
+    identifiers.push(...bindings)
+  })
+
+  if (!identifiers.includes(`React`)) {
+    identifiers.push(`React`)
+    imports.push(`import * as React from 'react'`)
+  }
+
+  return {
+    scopeImports: imports,
+    scopeIdentifiers: identifiers,
+  }
+}
+
+module.exports.findImports = findImports
+
+async function findImportsExports({
+  mdxNode,
+  rawInput,
+  absolutePath = null,
+  options,
+  getNode,
+  getNodes,
+  getNodesByType,
+  reporter,
+  cache,
+  pathPrefix,
+  ...helpers
+}) {
+  const { data: frontmatter, content } = grayMatter(rawInput, options)
+
+  const gatsbyRemarkPluginsAsRemarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
+      gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
+      mdxNode,
+      getNode,
+      getNodes,
+      getNodesByType,
+      reporter,
+      cache,
+      pathPrefix,
+      compiler: {
+        parseString: () => compiler.parse.bind(compiler),
+        generateHTML: ast => mdx(ast, options),
+      },
+      ...helpers,
+    })
+
+  const compilerOptions = {
+    filepath: absolutePath,
+    ...options,
+    remarkPlugins: [
+      ...options.remarkPlugins,
+      ...gatsbyRemarkPluginsAsRemarkPlugins,
+    ],
+  }
+  const compiler = mdx.createCompiler(compilerOptions)
+
+  const fileOpts = { contents: content }
+  if (absolutePath) {
+    fileOpts.path = absolutePath
+  }
+
+  let mdast = await compiler.parse(fileOpts)
+  mdast = await compiler.run(mdast, fileOpts)
+
+  // Assuming valid code, identifiers must be unique (they are consts) so
+  // we don't need to dedupe the symbols here.
+  const identifiers = []
+  const imports = []
+  const exports = []
+
+  mdast.children.forEach(node => {
+    if (node.type === `import`) {
+      const importCode = node.value
+
+      imports.push(importCode)
+
+      const bindings = parseImportBindings(importCode)
+      identifiers.push(...bindings)
+    } else if (node.type === `export`) {
+      exports.push(node.value)
+    }
+  })
+
+  if (!identifiers.includes(`React`)) {
+    identifiers.push(`React`)
+    imports.push(`import * as React from 'react'`)
+  }
+
+  return {
+    frontmatter,
+    scopeImports: imports,
+    scopeExports: exports,
+    scopeIdentifiers: identifiers,
+  }
+}
+
+module.exports.findImportsExports = findImportsExports

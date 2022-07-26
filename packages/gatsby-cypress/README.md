@@ -6,7 +6,7 @@ This package provides additional [Cypress](https://cypress.io/) commands for [te
 
 To use these commands, first install the necessary packages:
 
-```bash
+```shell
 npm install cypress gatsby-cypress start-server-and-test --save-dev
 ```
 

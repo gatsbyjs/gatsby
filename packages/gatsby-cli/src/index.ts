@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import "@babel/polyfill"
 import os from "os"
 import semver from "semver"
 import util from "util"
@@ -24,7 +23,7 @@ if (os.platform() === `win32`) {
 // Check if update is available
 updateNotifier({ pkg }).notify({ isGlobal: true })
 
-const MIN_NODE_VERSION = `10.13.0`
+const MIN_NODE_VERSION = `14.15.0`
 // const NEXT_MIN_NODE_VERSION = `10.13.0`
 
 const { version } = process
@@ -46,7 +45,7 @@ if (semver.prerelease(version)) {
   report.warn(
     report.stripIndent(`
     You are currently using a prerelease version of Node (${version}), which is not supported.
-    You can use this for testing, but we do not recommend it in production. 
+    You can use this for testing, but we do not recommend it in production.
     Before reporting any bugs, please test with a supported version of Node (>=${MIN_NODE_VERSION}).`)
   )
 }

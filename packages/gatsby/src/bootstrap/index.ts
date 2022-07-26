@@ -1,3 +1,5 @@
+import reporter from "gatsby-cli/lib/reporter"
+import { slash } from "gatsby-core-utils"
 import { startRedirectListener } from "./redirects-writer"
 import {
   IBuildContext,
@@ -5,31 +7,52 @@ import {
   customizeSchema,
   sourceNodes,
   buildSchema,
-  writeOutRequires,
   createPages,
-  createPagesStatefully,
   extractQueries,
   writeOutRedirects,
   postBootstrap,
-  rebuildSchemaWithSitePage,
 } from "../services"
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
-import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { handleStalePageData } from "../utils/page-data"
+import { savePartialStateToDisk } from "../redux"
+import { IProgram } from "../commands/types"
+
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: IBuildContext
-): Promise<{ gatsbyNodeGraphQLFunction: Runner }> {
+  initialContext: Partial<IBuildContext> & { program: IProgram }
+): Promise<{
+  gatsbyNodeGraphQLFunction: Runner
+  workerPool: GatsbyWorkerPool
+}> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
     : {}
 
-  initialContext.parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
+  const parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
+
+  const bootstrapContext: IBuildContext & {
+    shouldRunCreatePagesStatefully: boolean
+  } = {
+    ...initialContext,
+    parentSpan,
+    shouldRunCreatePagesStatefully: true,
+  }
 
   const context = {
-    ...initialContext,
-    ...(await initialize(initialContext)),
+    ...bootstrapContext,
+    ...(await initialize(bootstrapContext)),
+  }
+
+  const workerPool = context.workerPool
+
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    const program = context.store.getState().program
+    const directory = slash(program.directory)
+
+    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
   }
 
   await customizeSchema(context)
@@ -44,13 +67,19 @@ export async function bootstrap(
 
   await createPages(context)
 
-  await createPagesStatefully(context)
+  await handleStalePageData(parentSpan)
 
-  await rebuildSchemaWithSitePage(context)
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    savePartialStateToDisk([`inferenceMetadata`])
+
+    workerPool.all.buildSchema()
+  }
 
   await extractQueries(context)
 
-  await writeOutRequires(context)
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    savePartialStateToDisk([`components`, `staticQueryComponents`])
+  }
 
   await writeOutRedirects(context)
 
@@ -58,7 +87,10 @@ export async function bootstrap(
 
   await postBootstrap(context)
 
-  initialContext.parentSpan.finish()
+  parentSpan.finish()
 
-  return { gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction }
+  return {
+    gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,
+    workerPool,
+  }
 }

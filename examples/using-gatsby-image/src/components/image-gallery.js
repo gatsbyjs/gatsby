@@ -1,10 +1,11 @@
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import styled from "@emotion/styled"
-import numeral from "numeral"
 
 import { mq, gutter, offset, offsetXxl } from "../utils/presets"
 import { options, scale } from "../utils/typography"
+
+const Buffer = require("buffer/").Buffer
 
 const OuterContainer = styled(`div`)`
   background: #fff;
@@ -56,19 +57,16 @@ const GridItem = styled(`div`)`
   }
 `
 
-const GridItemImage = styled(Img)`
+const GridItemImage = styled(GatsbyImage)`
   &:hover {
-    div + img {
+    [data-placeholder-image] {
       opacity: 1 !important;
       transition: none !important;
     }
 
-    img + picture > img {
+    [data-main-image] {
       opacity: 0 !important;
-    }
-
-    span: {
-      opacity: 1 !important;
+      transition: none !important;
     }
   }
 `
@@ -91,25 +89,27 @@ const Badge = styled(`span`)`
 const ImageGallery = edges => (
   <OuterContainer>
     <Grid>
-      {edges.images.map((image, index) => (
-        <GridItem key={index}>
-          <GridItemImage
-            fluid={image.node.localFile.childImageSharp.fluid}
-            title={`“${image.node.title}” by ${image.node.credit} (via unsplash.com)`}
-          />
-          <Badge>
-            SVG
-            {` `}
-            {numeral(
-              Buffer.byteLength(
-                image.node.localFile.childImageSharp.fluid.tracedSVG,
-                `utf8`
-              )
-            ).format()}
-            {` `}B
-          </Badge>
-        </GridItem>
-      ))}
+      {edges.images.map(image => {
+        const img = getImage(image.node.localFile)
+        console.log({ image })
+        const fallbackString =
+          img?.placeholder?.fallback ?? img?.backgroundColor
+        const byteLength = Buffer.byteLength(fallbackString, `utf8`)
+        return (
+          <GridItem key={fallbackString}>
+            <GridItemImage
+              image={img}
+              alt={`“${image.node.title}” by ${image.node.credit} (via unsplash.com)`}
+            />
+
+            {byteLength > 1000 ? (
+              <Badge>Placeholder {(byteLength / 1000).toFixed(1)}kB</Badge>
+            ) : (
+              <Badge>Placeholder {byteLength.toFixed(1)}B</Badge>
+            )}
+          </GridItem>
+        )
+      })}
     </Grid>
   </OuterContainer>
 )

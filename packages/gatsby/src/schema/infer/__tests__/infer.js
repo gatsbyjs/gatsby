@@ -1,14 +1,13 @@
 // NOTE: Previously `infer-graphql-type-test.js`
 
 const { graphql } = require(`graphql`)
-const nodeStore = require(`../../../db/nodes`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
-const { buildObjectType } = require(`../../types/type-builders`)
+import { buildObjectType } from "../../types/type-builders"
 const { hasNodes } = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 const withResolverContext = require(`../../context`)
@@ -19,6 +18,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -37,6 +37,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => {
   report.error.mockClear()
+  report.warn.mockClear()
 })
 
 const makeNodes = () => [
@@ -117,7 +118,7 @@ const addNodes = nodes => {
 
 const deleteNodes = nodes => {
   nodes.forEach(node => {
-    store.dispatch(actions.deleteNode({ node }, { name: `test` }))
+    store.dispatch(actions.deleteNode(node, { name: `test` }))
   })
 }
 
@@ -246,7 +247,6 @@ describe(`GraphQL type inference`, () => {
     const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: typeDefs || [],
       fieldExtensions,
       thirdPartySchemas: [],
@@ -526,7 +526,12 @@ describe(`GraphQL type inference`, () => {
           name: `Repro`,
           interfaces: [`Node`],
           fields: {
-            field_that_needs_to_be_sanitized_: `String`,
+            field_that_needs_to_be_sanitized_: {
+              type: `String`,
+              extensions: {
+                proxy: { from: `field_that_needs_to_be_sanitized?` },
+              },
+            },
             _another__field_that_needs_to_be_sanitized: {
               type: `String`,
               resolve: source =>
@@ -1009,7 +1014,7 @@ Object {
         },
       ].concat(getFileNodes())
 
-      let result = await getQueryResult(
+      const result = await getQueryResult(
         nodes,
         `
           file {
@@ -1034,7 +1039,7 @@ Object {
         },
       ].concat(getFileNodes())
 
-      let result = await getQueryResult(
+      const result = await getQueryResult(
         nodes,
         `
           files {

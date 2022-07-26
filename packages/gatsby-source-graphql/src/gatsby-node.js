@@ -1,13 +1,13 @@
-const uuidv4 = require(`uuid/v4`)
+const { uuid } = require(`gatsby-core-utils`)
 const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
-  transformSchema,
+  wrapSchema,
   introspectSchema,
   RenameTypes,
-} = require(`graphql-tools`)
-const { createHttpLink } = require(`apollo-link-http`)
-const nodeFetch = require(`node-fetch`)
-const invariant = require(`invariant`)
+} = require(`@graphql-tools/wrap`)
+const { linkToExecutor } = require(`@graphql-tools/links`)
+const { createHttpLink } = require(`@apollo/client`)
+const { fetchWrapper } = require(`./fetch`)
 const { createDataloaderLink } = require(`./batching/dataloader-link`)
 
 const {
@@ -15,36 +15,37 @@ const {
   StripNonQueryTransform,
 } = require(`./transforms`)
 
-exports.sourceNodes = async (
-  { actions, createNodeId, cache, createContentDigest },
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    url: Joi.string(),
+    typeName: Joi.string().required(),
+    fieldName: Joi.string().required(),
+    headers: Joi.alternatives().try(Joi.object(), Joi.function()),
+    fetch: Joi.function(),
+    fetchOptions: Joi.object(),
+    createLink: Joi.function(),
+    createSchema: Joi.function(),
+    batch: Joi.boolean(),
+    transformSchema: Joi.function(),
+  }).or(`url`, `createLink`)
+
+exports.createSchemaCustomization = async (
+  { actions, createNodeId, cache },
   options
 ) => {
-  const { addThirdPartySchema, createNode } = actions
+  const { addThirdPartySchema } = actions
   const {
     url,
     typeName,
     fieldName,
     headers = {},
-    fetch = nodeFetch,
+    fetch = fetchWrapper,
     fetchOptions = {},
     createLink,
     createSchema,
-    refetchInterval,
     batch = false,
+    transformSchema,
   } = options
-
-  invariant(
-    typeName && typeName.length > 0,
-    `gatsby-source-graphql requires option \`typeName\` to be specified`
-  )
-  invariant(
-    fieldName && fieldName.length > 0,
-    `gatsby-source-graphql requires option \`fieldName\` to be specified`
-  )
-  invariant(
-    (url && url.length > 0) || createLink,
-    `gatsby-source-graphql requires either option \`url\` or \`createLink\` callback`
-  )
 
   let link
   if (createLink) {
@@ -68,7 +69,7 @@ exports.sourceNodes = async (
     let sdl = await cache.get(cacheKey)
 
     if (!sdl) {
-      introspectionSchema = await introspectSchema(link)
+      introspectionSchema = await introspectSchema(linkToExecutor(link))
       sdl = printSchema(introspectionSchema)
     } else {
       introspectionSchema = buildSchema(sdl)
@@ -77,14 +78,8 @@ exports.sourceNodes = async (
     await cache.set(cacheKey, sdl)
   }
 
-  const nodeId = createNodeId(`gatsby-source-graphql-${typeName}`)
-  const node = createSchemaNode({
-    id: nodeId,
-    typeName,
-    fieldName,
-    createContentDigest,
-  })
-  createNode(node)
+  // This node is created in `sourceNodes`.
+  const nodeId = createSchemaNodeId({ typeName, createNodeId })
 
   const resolver = (parent, args, context) => {
     context.nodeModel.createPageDependency({
@@ -94,23 +89,48 @@ exports.sourceNodes = async (
     return {}
   }
 
-  const schema = transformSchema(
-    {
-      schema: introspectionSchema,
-      link,
-    },
-    [
-      new StripNonQueryTransform(),
-      new RenameTypes(name => `${typeName}_${name}`),
-      new NamespaceUnderFieldTransform({
-        typeName,
-        fieldName,
+  const defaultTransforms = [
+    new StripNonQueryTransform(),
+    new RenameTypes(name => `${typeName}_${name}`),
+    new NamespaceUnderFieldTransform({
+      typeName,
+      fieldName,
+      resolver,
+    }),
+  ]
+
+  const schema = transformSchema
+    ? transformSchema({
+        schema: introspectionSchema,
+        link,
         resolver,
-      }),
-    ]
-  )
+        defaultTransforms,
+        options,
+      })
+    : wrapSchema({
+        schema: introspectionSchema,
+        executor: linkToExecutor(link),
+        transforms: defaultTransforms,
+      })
 
   addThirdPartySchema({ schema })
+}
+
+exports.sourceNodes = async (
+  { actions, createNodeId, createContentDigest },
+  options
+) => {
+  const { createNode } = actions
+  const { typeName, fieldName, refetchInterval } = options
+
+  const nodeId = createSchemaNodeId({ typeName, createNodeId })
+  const node = createSchemaNode({
+    id: nodeId,
+    typeName,
+    fieldName,
+    createContentDigest,
+  })
+  createNode(node)
 
   if (process.env.NODE_ENV !== `production`) {
     if (refetchInterval) {
@@ -131,8 +151,12 @@ exports.sourceNodes = async (
   }
 }
 
+function createSchemaNodeId({ typeName, createNodeId }) {
+  return createNodeId(`gatsby-source-graphql-${typeName}`)
+}
+
 function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
-  const nodeContent = uuidv4()
+  const nodeContent = uuid.v4()
   const nodeContentDigest = createContentDigest(nodeContent)
   return {
     id,

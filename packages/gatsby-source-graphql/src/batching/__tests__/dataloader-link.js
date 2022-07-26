@@ -1,5 +1,5 @@
-const { parse } = require(`graphql`)
-const { execute } = require(`apollo-link`)
+const { parse } = require(`gatsby/graphql`)
+const { execute } = require(`@apollo/client`)
 const { createDataloaderLink } = require(`../dataloader-link`)
 
 const sampleQuery = parse(`{ foo }`)

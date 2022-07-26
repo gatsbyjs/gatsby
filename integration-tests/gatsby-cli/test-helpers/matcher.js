@@ -1,29 +1,15 @@
-import strip from "strip-ansi"
-
 export const createLogsMatcher = output => {
-  const logs = output.map(strip)
-
   return {
-    // Useful for debuggging
+    // Useful for debugging
     logOutput() {
-      console.log(logs.join("\n"))
+      console.log(output)
     },
 
     should: {
       contain: match => {
-        const foundMatch = logs.reduce(
-          (matches, log) => matches || new RegExp(match).test(log),
-          false
-        )
-
-        if (!foundMatch) {
-          // This will never pass, but lets user see the issues
-          expect(logs).toBe(match)
-          return
-        }
-
-        // track an assertion that passes!
-        expect(match).toBe(match)
+        // ink will auto wrap things, so we need to get rid of any whitespace specific checks
+        // and let it just make sure there is whitespace
+        expect(output).toMatch(new RegExp(match.replace(/\s+/g, `\\s+`)))
       },
     },
   }

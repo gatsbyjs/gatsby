@@ -2,7 +2,7 @@
  * This module is used when calling reporter.
  * these logs
  */
-import * as reporterActions from "./redux/actions"
+import * as reporterActionsForTypes from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
@@ -14,6 +14,7 @@ interface ICreateTimerReporterArguments {
   id: string
   span: Span
   reporter: typeof gatsbyReporter
+  reporterActions: typeof reporterActionsForTypes
 }
 
 export interface ITimerReporter {
@@ -21,9 +22,9 @@ export interface ITimerReporter {
   setStatus(statusText: string): void
   panicOnBuild(
     arg: any,
-    ...otherArgs: any[]
-  ): IStructuredError | IStructuredError[]
-  panic(arg: any, ...otherArgs: any[]): void
+    ...otherArgs: Array<any>
+  ): IStructuredError | Array<IStructuredError>
+  panic(arg: any, ...otherArgs: Array<any>): void
   end(): void
   span: Span
 }
@@ -33,6 +34,7 @@ export const createTimerReporter = ({
   id,
   span,
   reporter,
+  reporterActions,
 }: ICreateTimerReporterArguments): ITimerReporter => {
   return {
     start(): void {
@@ -52,8 +54,8 @@ export const createTimerReporter = ({
 
     panicOnBuild(
       errorMeta: ErrorMeta,
-      error?: Error | Error[]
-    ): IStructuredError | IStructuredError[] {
+      error?: Error | Array<Error>
+    ): IStructuredError | Array<IStructuredError> {
       span.finish()
 
       reporterActions.setActivityErrored({
@@ -63,7 +65,7 @@ export const createTimerReporter = ({
       return reporter.panicOnBuild(errorMeta, error)
     },
 
-    panic(errorMeta: ErrorMeta, error?: Error | Error[]): void {
+    panic(errorMeta: ErrorMeta, error?: Error | Array<Error>): void {
       span.finish()
 
       reporterActions.endActivity({

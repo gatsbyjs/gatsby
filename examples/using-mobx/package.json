@@ -7,8 +7,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint **/*.{js,jsx} --quiet -o linterrors.txt --ignore-path .gitignore"
+    "format": "prettier --write \"src/**/*.js\""
   },
   "keywords": [
     "gatsby",
@@ -16,22 +15,14 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.23.3",
-    "mobx": "^5.15.4",
-    "mobx-react": "^6.2.2",
-    "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "gatsby": "next",
+    "mobx": "^6.3.10",
+    "mobx-react": "^7.2.1",
+    "prop-types": "^15.8.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.0",
-    "prettier": "2.0.5"
+    "prettier": "2.1.1"
   }
 }

@@ -11,7 +11,7 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
 
 ## Install
 
-`npm install --save gatsby-source-lever`
+`npm install gatsby-source-lever`
 
 ## How to use
 

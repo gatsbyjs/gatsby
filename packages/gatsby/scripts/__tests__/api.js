@@ -25,14 +25,15 @@ it("generates the expected api output", done => {
           "onServiceWorkerUpdateFound": Object {},
           "onServiceWorkerUpdateReady": Object {},
           "registerServiceWorker": Object {},
-          "replaceComponentRenderer": Object {
-            "deprecated": true,
-          },
           "replaceHydrateFunction": Object {},
           "shouldUpdateScroll": Object {},
           "wrapPageElement": Object {},
           "wrapRootElement": Object {},
         },
+        "features": Array [
+          "image-cdn",
+          "graphql-typegen",
+        ],
         "node": Object {
           "createPages": Object {},
           "createPagesStatefully": Object {},
@@ -42,22 +43,30 @@ it("generates the expected api output", done => {
           "createSchemaCustomization": Object {
             "version": "2.12.0",
           },
-          "generateSideEffects": Object {},
           "onCreateBabelConfig": Object {},
           "onCreateDevServer": Object {},
           "onCreateNode": Object {},
           "onCreatePage": Object {},
           "onCreateWebpackConfig": Object {},
+          "onPluginInit": Object {
+            "version": "3.9.0",
+          },
           "onPostBootstrap": Object {},
           "onPostBuild": Object {},
           "onPreBootstrap": Object {},
           "onPreBuild": Object {},
           "onPreExtractQueries": Object {},
           "onPreInit": Object {},
+          "pluginOptionsSchema": Object {
+            "version": "2.25.0",
+          },
           "preprocessSource": Object {},
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},
           "sourceNodes": Object {},
+          "unstable_shouldOnCreateNode": Object {
+            "version": "2.24.80",
+          },
         },
         "ssr": Object {
           "onPreRenderHTML": Object {},

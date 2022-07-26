@@ -1,9 +1,11 @@
 jest.mock(`fs`, () => {
   return {
+    ...jest.requireActual(`fs`),
     existsSync: jest.fn().mockImplementation(() => true),
     writeFileSync: jest.fn(),
     mkdirSync: jest.fn(),
     readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
+    copyFileSync: jest.fn(),
     statSync: jest.fn(),
   }
 })
@@ -14,7 +16,7 @@ jest.mock(`fs`, () => {
  */
 
 jest.mock(`sharp`, () => {
-  let sharp = jest.fn(
+  const sharp = jest.fn(
     () =>
       new (class {
         resize() {
@@ -27,6 +29,7 @@ jest.mock(`sharp`, () => {
           return {
             width: 128,
             height: 128,
+            format: `png`,
           }
         }
       })()
@@ -58,7 +61,8 @@ const reporter = {
     }
   }),
 }
-const { onPostBootstrap } = require(`../gatsby-node`)
+const { onPostBootstrap, pluginOptionsSchema } = require(`../gatsby-node`)
+const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
 
 const apiArgs = {
   reporter,
@@ -98,12 +102,8 @@ describe(`Test plugin manifest options`, () => {
     fs.writeFileSync.mockReset()
     fs.mkdirSync.mockReset()
     fs.existsSync.mockReset()
+    fs.copyFileSync.mockReset()
     sharp.mockClear()
-  })
-
-  // the require of gatsby-node performs the invoking
-  it(`invokes sharp.simd for optimization`, () => {
-    expect(sharp.simd).toHaveBeenCalledTimes(1)
   })
 
   it(`correctly works with default parameters`, async () => {
@@ -161,8 +161,12 @@ describe(`Test plugin manifest options`, () => {
     // No sharp calls because this is manual mode: user provides all icon sizes
     // rather than the plugin generating them
     expect(sharp).toHaveBeenCalledTimes(0)
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath)
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath, {
+      recursive: true,
+    })
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath, {
+      recursive: true,
+    })
   })
 
   it(`invokes sharp if icon argument specified`, async () => {
@@ -225,6 +229,7 @@ describe(`Test plugin manifest options`, () => {
     // disabled by the `include_favicon` option.
     expect(sharp).toHaveBeenCalledTimes(2)
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
+    expect(fs.copyFileSync).toHaveBeenCalledTimes(0)
   })
 
   it(`fails on non existing icon`, async () => {
@@ -484,5 +489,49 @@ describe(`Test plugin manifest options`, () => {
       expect.anything(),
       JSON.stringify(expectedResults[2])
     )
+  })
+
+  it(`writes SVG to public if src icon is SVG`, async () => {
+    sharp.mockReturnValueOnce({
+      metadata: () => {
+        return { format: `svg` }
+      },
+    })
+    const icon = `this/is/an/icon.svg`
+    const specificOptions = {
+      ...manifestOptions,
+      icon: icon,
+    }
+
+    await onPostBootstrap({ ...apiArgs }, specificOptions)
+
+    expect(fs.copyFileSync).toHaveBeenCalledWith(
+      expect.stringContaining(`icon.svg`),
+      expect.stringContaining(`favicon.svg`)
+    )
+
+    expect(fs.copyFileSync).toHaveBeenCalledTimes(1)
+  })
+
+  it(`does not write SVG to public if src icon is PNG`, async () => {
+    const specificOptions = {
+      ...manifestOptions,
+      icon: `this/is/an/icon.png`,
+    }
+
+    await onPostBootstrap({ ...apiArgs }, specificOptions)
+
+    expect(fs.copyFileSync).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe(`pluginOptionsSchema`, () => {
+  it(`validates options correctly`, async () => {
+    const { isValid } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      manifestOptions
+    )
+
+    expect(isValid).toBe(true)
   })
 })

@@ -4,7 +4,6 @@ const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildSchema } = require(`../../schema`)
 const { LocalNodeModel } = require(`../../node-model`)
-const nodeStore = require(`../../../db/nodes`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 import { createPageDependency } from "../../../redux/actions/add-page-dependency"
@@ -15,6 +14,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -40,7 +40,6 @@ const buildTestSchema = async nodes => {
   const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
-    nodeStore,
     types: [],
     thirdPartySchemas: [],
     inferenceMetadata: store.getState().inferenceMetadata,
@@ -52,7 +51,6 @@ const queryResult = async (nodes, query) => {
   return graphql(schema, query, undefined, {
     nodeModel: new LocalNodeModel({
       schema,
-      nodeStore,
       createPageDependency,
       schemaComposer,
     }),
@@ -82,7 +80,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -108,7 +106,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -134,7 +132,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -160,7 +158,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -191,7 +189,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "linked___NODE" is not defined by type BarFilterInput.`
+      `Field "linked___NODE" is not defined by type "BarFilterInput".`
     )
   })
 

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`structureWebpackErrors stage: build-html Can't resolve (98124) 1`] = `
+Object {
+  "context": Object {
+    "packageName": "wat.js",
+    "sourceMessage": "Can't resolve 'wat.js' in 'foo.js'",
+    "stage": "build-html",
+    "stageLabel": "Generating SSR bundle",
+  },
+  "filePath": "foo.js",
+  "id": "98124",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;
+
+exports[`structureWebpackErrors stage: build-javascript Can't resolve (98124) 1`] = `
+Object {
+  "context": Object {
+    "packageName": "wat.js",
+    "sourceMessage": "Can't resolve 'wat.js' in 'foo.js'",
+    "stage": "build-javascript",
+    "stageLabel": "Generating JavaScript bundles",
+  },
+  "filePath": "foo.js",
+  "id": "98124",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;
+
+exports[`structureWebpackErrors stage: develop Can't resolve (98124) 1`] = `
+Object {
+  "context": Object {
+    "packageName": "wat.js",
+    "sourceMessage": "Can't resolve 'wat.js' in 'foo.js'",
+    "stage": "develop",
+    "stageLabel": "Generating development JavaScript bundle",
+  },
+  "filePath": "foo.js",
+  "id": "98124",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;
+
+exports[`structureWebpackErrors stage: develop-html Can't resolve (98124) 1`] = `
+Object {
+  "context": Object {
+    "packageName": "wat.js",
+    "sourceMessage": "Can't resolve 'wat.js' in 'foo.js'",
+    "stage": "develop-html",
+    "stageLabel": "Generating development SSR bundle",
+  },
+  "filePath": "foo.js",
+  "id": "98124",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;

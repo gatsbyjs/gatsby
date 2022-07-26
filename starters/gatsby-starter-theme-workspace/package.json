@@ -2,8 +2,7 @@
   "name": "gatsby-starter-theme-workspace",
   "private": true,
   "version": "0.0.1",
-  "main": "index.js",
-  "license": "MIT",
+  "license": "0BSD",
   "scripts": {
     "build": "yarn workspace example build"
   },

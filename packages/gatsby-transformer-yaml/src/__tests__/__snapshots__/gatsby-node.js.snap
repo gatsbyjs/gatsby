@@ -313,12 +313,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "some",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "FooBarYaml",
       },
       "parent": "whatever",
+      "yamlId": "some",
     },
   ],
 ]
@@ -332,12 +333,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "some",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "FooBarYaml",
         },
         "parent": "whatever",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -368,12 +370,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "some",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "fixed",
       },
       "parent": "whatever",
+      "yamlId": "some",
     },
   ],
 ]
@@ -387,12 +390,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "some",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "fixed",
         },
         "parent": "whatever",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -423,12 +427,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "some",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "yup",
       },
       "parent": "whatever",
+      "yamlId": "some",
     },
   ],
 ]
@@ -442,12 +447,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "some",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "yup",
         },
         "parent": "whatever",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -772,12 +778,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "some",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "OtherYaml",
       },
       "parent": "whatever",
+      "yamlId": "some",
     },
   ],
 ]
@@ -791,12 +798,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "some",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "OtherYaml",
         },
         "parent": "whatever",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -825,12 +833,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "some",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "fixed",
       },
       "parent": "whatever",
+      "yamlId": "some",
     },
   ],
 ]
@@ -844,12 +853,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "some",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "fixed",
         },
         "parent": "whatever",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -878,12 +888,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "some",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "yup",
       },
       "parent": "whatever",
+      "yamlId": "some",
     },
   ],
 ]
@@ -897,12 +908,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "some",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "yup",
         },
         "parent": "whatever",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],

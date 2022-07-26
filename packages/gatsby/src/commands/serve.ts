@@ -4,10 +4,9 @@ import fs from "fs-extra"
 import compression from "compression"
 import express from "express"
 import chalk from "chalk"
-import { match as reachMatch } from "@reach/router/lib/utils"
+import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
-
 import telemetry from "gatsby-telemetry"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
@@ -15,6 +14,24 @@ import { getConfigFile } from "../bootstrap/get-config-file"
 import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
+import {
+  IGatsbyConfig,
+  IGatsbyFunction,
+  IGatsbyPage,
+  IGatsbyState,
+} from "../redux/types"
+import { reverseFixedPagePath } from "../utils/page-data"
+import { initTracer } from "../utils/tracer"
+import { configureTrailingSlash } from "../utils/express-middlewares"
+import { getDataStore, detectLmdbStore } from "../datastore"
+import { functionMiddlewares } from "../internal-plugins/functions/middleware"
+import {
+  thirdPartyProxyPath,
+  partytownProxy,
+} from "../internal-plugins/partytown/proxy"
+
+process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
+detectLmdbStore()
 
 interface IMatchPath {
   path: string
@@ -31,7 +48,7 @@ onExit(() => {
 
 const readMatchPaths = async (
   program: IServeProgram
-): Promise<IMatchPath[]> => {
+): Promise<Array<IMatchPath>> => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
   try {
@@ -49,42 +66,47 @@ const readMatchPaths = async (
       )}?`
     )
   }
-  return JSON.parse(rawJSON) as IMatchPath[]
+  return JSON.parse(rawJSON) as Array<IMatchPath>
 }
 
-const matchPathRouter = (
-  matchPaths: IMatchPath[],
-  options: {
-    root: string
-  }
-) => (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-): void => {
-  const { url } = req
-  if (req.accepts(`html`)) {
-    const matchPath = matchPaths.find(
-      ({ matchPath }) => reachMatch(matchPath, url) !== null
-    )
-    if (matchPath) {
-      return res.sendFile(
-        path.join(matchPath.path, `index.html`),
-        options,
-        err => {
-          if (err) {
-            next()
-          }
-        }
-      )
+const matchPathRouter =
+  (
+    matchPaths: Array<IMatchPath>,
+    options: {
+      root: string
     }
+  ) =>
+  (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ): void => {
+    const { url } = req
+    if (req.accepts(`html`)) {
+      const matchPath = matchPaths.find(
+        ({ matchPath }) => reachMatch(matchPath, url) !== null
+      )
+      if (matchPath) {
+        return res.sendFile(
+          path.join(matchPath.path, `index.html`),
+          options,
+          err => {
+            if (err) {
+              next()
+            }
+          }
+        )
+      }
+    }
+    return next()
   }
-  return next()
-}
 
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
+  await initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
@@ -92,23 +114,208 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     program.directory,
     `gatsby-config`
   )
-  const config = preferDefault(configModule)
+  const config: IGatsbyConfig = preferDefault(configModule)
 
-  const { pathPrefix: configPathPrefix } = config || {}
+  const { pathPrefix: configPathPrefix, trailingSlash } = config || {}
 
   const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
   const root = path.join(program.directory, `public`)
 
   const app = express()
+
+  // Proxy gatsby-script using off-main-thread strategy
+  const { partytownProxiedURLs = [] } = config || {}
+
+  app.use(thirdPartyProxyPath, partytownProxy(partytownProxiedURLs))
+
+  // eslint-disable-next-line new-cap
   const router = express.Router()
 
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
+
+  router.use(
+    configureTrailingSlash(
+      () =>
+        ({
+          pages: {
+            get(pathName: string): IGatsbyPage | undefined {
+              return getDataStore().getNode(`SitePage ${pathName}`) as
+                | IGatsbyPage
+                | undefined
+            },
+            values(): Iterable<IGatsbyPage> {
+              return getDataStore().iterateNodesByType(
+                `SitePage`
+              ) as Iterable<IGatsbyPage>
+            },
+          },
+        } as unknown as IGatsbyState),
+      trailingSlash
+    )
+  )
+
   router.use(express.static(`public`, { dotfiles: `allow` }))
+
+  const compiledFunctionsDir = path.join(
+    program.directory,
+    `.cache`,
+    `functions`
+  )
+
+  let functions: Array<IGatsbyFunction> = []
+  try {
+    functions = JSON.parse(
+      fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`), `utf-8`)
+    )
+  } catch (e) {
+    // ignore
+  }
+
+  if (functions) {
+    app.use(
+      `/api/*`,
+      ...functionMiddlewares({
+        getFunctions(): Array<IGatsbyFunction> {
+          return functions
+        },
+      })
+    )
+  }
+
+  // Handle SSR & DSG Pages
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    try {
+      const { GraphQLEngine } = require(path.join(
+        program.directory,
+        `.cache`,
+        `query-engine`
+      )) as typeof import("../schema/graphql-engine/entry")
+      const { getData, renderPageData, renderHTML } = require(path.join(
+        program.directory,
+        `.cache`,
+        `page-ssr`
+      )) as typeof import("../utils/page-ssr-module/entry")
+      const graphqlEngine = new GraphQLEngine({
+        dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
+      })
+
+      router.get(
+        `/page-data/:pagePath(*)/page-data.json`,
+        async (req, res, next) => {
+          const requestedPagePath = req.params.pagePath
+          if (!requestedPagePath) {
+            return void next()
+          }
+
+          const potentialPagePath = reverseFixedPagePath(requestedPagePath)
+          const page = graphqlEngine.findPageByPath(potentialPagePath)
+
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+            const requestActivity = report.phantomActivity(
+              `request for "${req.path}"`
+            )
+            requestActivity.start()
+            try {
+              const spanContext = requestActivity.span.context()
+              const data = await getData({
+                pathName: req.path,
+                graphqlEngine,
+                req,
+                spanContext,
+              })
+              const results = await renderPageData({ data, spanContext })
+              if (page.mode === `SSR` && data.serverDataHeaders) {
+                for (const [name, value] of Object.entries(
+                  data.serverDataHeaders
+                )) {
+                  res.setHeader(name, value)
+                }
+              }
+
+              if (page.mode === `SSR` && data.serverDataStatus) {
+                return void res.status(data.serverDataStatus).send(results)
+              } else {
+                return void res.send(results)
+              }
+            } catch (e) {
+              report.error(
+                `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
+                e
+              )
+              return res
+                .status(500)
+                .contentType(`text/plain`)
+                .send(`Internal server error.`)
+            } finally {
+              requestActivity.end()
+            }
+          }
+
+          return void next()
+        }
+      )
+
+      router.use(async (req, res, next) => {
+        if (req.accepts(`html`)) {
+          const potentialPagePath = req.path
+          const page = graphqlEngine.findPageByPath(potentialPagePath)
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+            const requestActivity = report.phantomActivity(
+              `request for "${req.path}"`
+            )
+            requestActivity.start()
+
+            try {
+              const spanContext = requestActivity.span.context()
+              const data = await getData({
+                pathName: potentialPagePath,
+                graphqlEngine,
+                req,
+                spanContext,
+              })
+              const results = await renderHTML({ data, spanContext })
+              if (page.mode === `SSR` && data.serverDataHeaders) {
+                for (const [name, value] of Object.entries(
+                  data.serverDataHeaders
+                )) {
+                  res.setHeader(name, value)
+                }
+              }
+
+              if (page.mode === `SSR` && data.serverDataStatus) {
+                return void res.status(data.serverDataStatus).send(results)
+              } else {
+                return void res.send(results)
+              }
+            } catch (e) {
+              report.error(
+                `Rendering html for "${potentialPagePath}" failed.`,
+                e
+              )
+              return res.status(500).sendFile(`500.html`, { root }, err => {
+                if (err) {
+                  res.contentType(`text/plain`).send(`Internal server error.`)
+                }
+              })
+            } finally {
+              requestActivity.end()
+            }
+          }
+        }
+        return next()
+      })
+    } catch (error) {
+      // TODO: Handle case of engine not being generated
+    }
+  }
+
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
+
+  // TODO: Remove/merge with above same block
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })

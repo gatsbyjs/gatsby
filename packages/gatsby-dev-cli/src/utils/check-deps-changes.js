@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const {
   getMonorepoPackageJsonPath,
 } = require(`./get-monorepo-package-json-path`)
-const request = require(`request`)
+const got = require(`got`)
 
 function difference(object, base) {
   function changes(object, base) {
@@ -31,9 +31,9 @@ exports.checkDepsChanges = async ({
   newPath,
   packageName,
   monoRepoPackages,
-  root,
   isInitialScan,
   ignoredPackageJSON,
+  packageNameToPath,
 }) => {
   let localPKGjson
   let packageNotInstalled = false
@@ -60,21 +60,16 @@ exports.checkDepsChanges = async ({
     // this allow us to not publish to local repository
     // and save some time/work
     try {
-      localPKGjson = await new Promise((resolve, reject) => {
-        request(
-          `https://unpkg.com/${packageName}/package.json`,
-          (error, response, body) => {
-            if (response && response.statusCode === 200) {
-              return resolve(JSON.parse(body))
-            }
-
-            return reject(error)
-          }
-        )
-      })
-    } catch {
+      const version = getPackageVersion(packageName)
+      const url = `https://unpkg.com/${packageName}@${version}/package.json`
+      const response = await got(url)
+      if (response?.statusCode !== 200) {
+        throw new Error(`No response or non 200 code for ${url}`)
+      }
+      localPKGjson = JSON.parse(response.body)
+    } catch (e) {
       console.log(
-        `'${packageName}' doesn't seem to be installed and is not published on NPM.`
+        `'${packageName}' doesn't seem to be installed and is not published on NPM. Error: ${e.message}`
       )
       return {
         didDepsChanged: true,
@@ -85,7 +80,7 @@ exports.checkDepsChanges = async ({
 
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
-    root,
+    packageNameToPath,
   })
   const monorepoPKGjsonString = fs.readFileSync(
     monoRepoPackageJsonPath,
@@ -186,4 +181,13 @@ exports.checkDepsChanges = async ({
     didDepsChanged: false,
     packageNotInstalled,
   }
+}
+
+function getPackageVersion(packageName) {
+  const projectPackageJson = JSON.parse(
+    fs.readFileSync(`./package.json`, `utf-8`)
+  )
+  const { dependencies = {}, devDependencies = {} } = projectPackageJson
+  const version = dependencies[packageName] || devDependencies[packageName]
+  return version || `latest`
 }

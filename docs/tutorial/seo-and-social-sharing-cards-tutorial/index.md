@@ -2,7 +2,7 @@
 title: Search Engine Optimization (SEO) and Social Sharing Cards with Gatsby
 ---
 
-Perhaps you've been approached by an SEO _expert_ who can maximize your revenue and page views just by following these **Three Simple Tricks**! Relatively few people make the concerted effort to implement SEO in their web app. This tutorial will share some of the ins and outs of SEO and how you can implement common SEO patterns in your Gatsby web app, today. By the end of this post you'll know how to do the following:
+Perhaps you've been approached by an SEO _expert_ who can maximize your revenue and page views by following these **Three Simple Tricks**! Relatively few people make the concerted effort to implement SEO in their web app. This tutorial will share some of the ins and outs of SEO and how you can implement common SEO patterns in your Gatsby web app, today. By the end of this post you'll know how to do the following:
 
 - Implement SEO patterns with [react-helmet][react-helmet]
 - Create an optimized social sharing card for Twitter, Facebook, and Slack
@@ -492,7 +492,7 @@ Let's see how an attached image will look like. For this tutorial, you can use t
 
 The image will need to be located at `content/blog/2019-01-04-hello-world-seo/images/featured.jpg`.
 
-Make sure to use appropriately sized images for social sharing. Facebook and Twitter have restrictions beyond which they will simply ignore your image.
+Make sure to use appropriately sized images for social sharing. Facebook and Twitter have restrictions beyond which they will ignore your image.
 
 #### Querying with GraphQL
 

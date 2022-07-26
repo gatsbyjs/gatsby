@@ -1,11 +1,11 @@
 # gatsby-remark-prismjs
 
 Adds syntax highlighting to code blocks in markdown files using
-[PrismJS](http://prismjs.com/).
+[PrismJS](https://prismjs.com/).
 
 ## Install
 
-`npm install --save gatsby-transformer-remark gatsby-remark-prismjs prismjs`
+`npm install gatsby-transformer-remark gatsby-remark-prismjs prismjs`
 
 ## How to use
 
@@ -94,7 +94,7 @@ plugins: [
 PrismJS ships with a number of [themes][5] (previewable on the [PrismJS
 website][6]) that you can easily include in your Gatsby site, or you can build
 your own by copying and modifying an example (which is what we've done for
-[gatsbyjs.org](https://gatsbyjs.org)).
+[gatsbyjs.com](https://gatsbyjs.com)).
 
 To load a theme, just require its CSS file in your `gatsby-browser.js` file, e.g.
 
@@ -373,26 +373,34 @@ plugins: [
 
 ### Shell prompt
 
-To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+To show fancy prompts next to shell commands (only triggers on `bash` and `shell`), either set `prompt.global` to `true` in `gatsby-config.js`,
 or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
 
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
 to the language.
 
 ````
-```bash{outputLines: 2-10,12}
+```shell{outputLines: 2-10,12}
 ````
 
 The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
 unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
 
 ````
-```bash{promptUser: alice}{promptHost: dev.localhost}
+```shell{promptUser: alice}{promptHost: dev.localhost}
+````
+
+### Diff code blocks
+
+You can specify language for `diff` code blocks by using `diff-[language]` to enable syntax highlighting in diffs:
+
+````
+```diff-javascript
 ````
 
 ### Line hiding
 
-As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).
+As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.com/plugins/gatsby-remark-embed-snippet/).
 
 As with highlighting lines, you can control which lines to hide by adding directives as comments in your source code.
 
@@ -489,7 +497,7 @@ it would result in the following when a match is found:
 ### Line highlighting
 
 Please note that we do _not_ use PrismJS's
-[line highlighting plugin](http://prismjs.com/plugins/line-highlight/). Here's
+[line highlighting plugin](https://prismjs.com/plugins/line-highlight/). Here's
 why:
 
 - [PrismJS plugins][3] assume you're running things client side, but we are
@@ -524,9 +532,9 @@ See the [client-side PrismJS implementation][8] for reference.
 
 [1]: https://github.com/PrismJS/prism/tree/8eb0ab6f76484ca47fa7acbf77657fab17b03ca7/plugins/line-highlight
 [2]: https://github.com/facebook/react/blob/00ba97a354e841701b4b83983c3a3904895e7b87/docs/_config.yml#L10
-[3]: http://prismjs.com/#plugins
+[3]: https://prismjs.com/#plugins
 [4]: https://reactjs.org/tutorial/tutorial.html
 [5]: https://github.com/PrismJS/prism/tree/1d5047df37aacc900f8270b1c6215028f6988eb1/themes
-[6]: http://prismjs.com/
+[6]: https://prismjs.com/
 [7]: https://prismjs.com/plugins/line-numbers/
 [8]: https://github.com/PrismJS/prism/blob/master/plugins/line-numbers/prism-line-numbers.js#L69-L115

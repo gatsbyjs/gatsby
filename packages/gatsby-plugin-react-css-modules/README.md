@@ -11,7 +11,7 @@ for details.
 
 ## Install
 
-`npm install --save gatsby-plugin-react-css-modules`
+`npm install gatsby-plugin-react-css-modules`
 
 ## How to use
 
@@ -39,4 +39,4 @@ plugins: [
 
 Files must be named using the pattern `filename.module.css` for Gatsby to treat
 them as CSS modules. You can change this behavior using a custom webpack config
-https://www.gatsbyjs.org/docs/add-custom-webpack-config/
+https://www.gatsbyjs.com/docs/add-custom-webpack-config/

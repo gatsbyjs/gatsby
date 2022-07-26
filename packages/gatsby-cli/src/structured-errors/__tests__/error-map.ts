@@ -7,7 +7,9 @@ test(`it defaults to generic error`, () => {
     })
   )
 
-  expect(defaultError.text({})).toEqual(`There was an error`)
+  expect(defaultError.text({})).toEqual(
+    `There was an unhandled error and we could not retrieve more information. Please run the command with the --verbose flag again.`
+  )
 })
 
 test(`it supports structured lookups`, () => {

@@ -108,6 +108,20 @@ describe(`remark prism plugin`, () => {
     })
   })
 
+  describe(`diff`, () => {
+    test(`supports language specifier`, () => {
+      const code = `\`\`\`diff-javascript
+-    let foo = bar.baz([1, 2, 3]);
+-    foo = foo + 1;
++    const foo = bar.baz([1, 2, 3]) + 1;
+     console.log(foo);
+\`\`\``
+      const markdownAST = remark.parse(code)
+      plugin({ markdownAST })
+      expect(markdownAST).toMatchSnapshot()
+    })
+  })
+
   describe(`numberLines`, () => {
     it(`adds line-number markup when necessary`, () => {
       const code = `\`\`\`js{numberLines:5}\n//.foo { \ncolor: red;\n }\``
@@ -186,7 +200,7 @@ describe(`remark prism plugin`, () => {
 
   describe(`warnings`, () => {
     it(`warns if the language is not specified for a code block`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
       const code = `\`\`\`\n// Fake\n\`\`\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST }, { noInlineHighlight: true })
@@ -197,7 +211,7 @@ describe(`remark prism plugin`, () => {
     })
 
     it(`gives a different warning if inline code can be highlighted`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
       const code = `\`foo bar\``
       const markdownAST = remark.parse(code)
       plugin({ markdownAST })

@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const { spawnSync } = require(`child_process`)
 const path = require(`path`)
+const os = require(`os`)
 const _ = require(`lodash`)
 const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
@@ -30,26 +31,20 @@ const getDiskCacheSnapshotSubStateByPlugins = (state, pluginNamesArray) =>
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 const { compareState } = require(`../utils/nodes-diff`)
 
 const stdio = `inherit`
 
 const build = ({ updatePlugins } = {}) => {
-  spawnSync(gatsbyBin, [`clean`], { stdio })
+  spawnSync(process.execPath, [gatsbyBin, `clean`], { stdio })
   selectConfiguration(1)
 
   let processOutput
 
   // First run, get state
-  processOutput = spawnSync(gatsbyBin, [`build`], {
+  processOutput = spawnSync(process.execPath, [gatsbyBin, `build`], {
     stdio,
     env: {
       ...process.env,
@@ -71,7 +66,7 @@ const build = ({ updatePlugins } = {}) => {
   }
 
   // Second run, get state and compare with state from previous run
-  processOutput = spawnSync(gatsbyBin, [`build`], {
+  processOutput = spawnSync(process.execPath, [gatsbyBin, `build`], {
     stdio,
     env: {
       ...process.env,
@@ -380,6 +375,10 @@ describe(`Some plugins changed between gatsby runs`, () => {
 
   describe(`Query results`, () => {
     const getQueryResultTestArgs = scenarioName => {
+      if (os.platform() === "win32") {
+        scenarioName = scenarioName.replace("/", "\\")
+      }
+
       const result = {
         dataFirstRun: states.queryResults.firstRun[scenarioName].data,
         dataSecondRun: states.queryResults.secondRun[scenarioName].data,

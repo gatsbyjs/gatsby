@@ -15,7 +15,7 @@ it(`does not crash when no pluginConfig is provided`, () => {
 
 const DO_NOT_TRACK_STRING = `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
 
-it(`adds a preconnect link for Google Analytics`, () => {
+it(`adds a preconnect link for Google Tag Manager`, () => {
   const mocks = {
     setHeadComponents: jest.fn(),
     setPostBodyComponents: jest.fn(),
@@ -30,9 +30,14 @@ it(`adds a preconnect link for Google Analytics`, () => {
 
   expect(link).toEqual(
     <link
-      rel="preconnect dns-prefetch"
-      key="preconnect-google-analytics"
-      href="https://www.google-analytics.com"
+      rel="preconnect"
+      key="preconnect-google-gtag"
+      href="https://www.googletagmanager.com"
+    />,
+    <link
+      rel="dns-prefetch"
+      key="dns-prefetch-google-gtag"
+      href="https://www.googletagmanager.com"
     />
   )
 })
@@ -75,23 +80,50 @@ describe(`respectDNT`, () => {
       DO_NOT_TRACK_STRING
     )
   })
+})
 
-  it(`listens to respectDNT deprecated option`, () => {
+describe(`selfHostedOrigin`, () => {
+  it(`should set selfHostedOrigin as googletagmanager.com by default`, () => {
     const mocks = {
       setHeadComponents: jest.fn(),
       setPostBodyComponents: jest.fn(),
     }
     const pluginOptions = {
       trackingIds: [`GA_TRACKING_ID`],
-      respectDNT: true,
-      pluginConfig: {},
     }
 
     onRenderBody(mocks, pluginOptions)
-    const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
+    const [bodyConfig] = mocks.setPostBodyComponents.mock.calls[0][0]
+    const headConfig = mocks.setHeadComponents.mock.calls[0][0]
 
-    expect(config.props.dangerouslySetInnerHTML.__html).toContain(
-      DO_NOT_TRACK_STRING
+    expect(bodyConfig.props.src).toContain(`https://www.googletagmanager.com`)
+    expect(headConfig[0].props.href).toContain(
+      `https://www.googletagmanager.com`
     )
+    expect(headConfig[1].props.href).toContain(
+      `https://www.googletagmanager.com`
+    )
+  })
+
+  it(`should set selfHostedOrigin`, () => {
+    const origin = `YOUR_SELF_HOSTED_ORIGIN`
+    const mocks = {
+      setHeadComponents: jest.fn(),
+      setPostBodyComponents: jest.fn(),
+    }
+    const pluginOptions = {
+      trackingIds: [`GA_TRACKING_ID`],
+      pluginConfig: {
+        origin: origin,
+      },
+    }
+
+    onRenderBody(mocks, pluginOptions)
+    const [bodyConfig] = mocks.setPostBodyComponents.mock.calls[0][0]
+    const headConfig = mocks.setHeadComponents.mock.calls[0][0]
+
+    expect(bodyConfig.props.src).toContain(origin)
+    expect(headConfig[0].props.href).toContain(origin)
+    expect(headConfig[1].props.href).toContain(origin)
   })
 })

@@ -1,12 +1,28 @@
+const fs = require("fs")
 const unified = require("unified")
 
+const dictionary = fs.readFileSync("./dictionary.txt")
+
 module.exports = {
+  options: {
+    silentlyIgnore: true,
+    quiet: true,
+    frail: true,
+    extensions: ["md"]
+  },
   plugins: [
     ["remark-frontmatter", "yaml"],
     [
       "remark-retext",
       unified()
         .use(require("retext-english"))
+        .use(require("retext-syntax-urls"))
+        .use(require("retext-syntax-mentions"))
+        .use(require("retext-emoji"))
+        .use(require("retext-spell"), {
+          dictionary: require("dictionary-en"),
+          personal: dictionary,
+        })
         .use(require("retext-diacritics"))
         .use(require("retext-indefinite-article"))
         .use(require("retext-redundant-acronyms"))
@@ -45,6 +61,6 @@ module.exports = {
     ["remark-lint-no-shortcut-reference-link", false],
     // We use brackets in a lot of places as argument lists and do not want to escape them.
     ["remark-lint-no-undefined-references", false],
-    ["remark-lint-first-heading-level", 2]
+    ["remark-lint-first-heading-level", 2],
   ],
 }

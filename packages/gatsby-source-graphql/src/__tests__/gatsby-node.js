@@ -1,16 +1,17 @@
-jest.mock(`graphql-tools`, () => {
+jest.mock(`@graphql-tools/wrap`, () => {
   return {
-    transformSchema: jest.fn(),
+    wrapSchema: jest.fn(),
     introspectSchema: jest.fn(),
     RenameTypes: jest.fn(),
   }
 })
-jest.mock(`apollo-link-http`, () => {
+jest.mock(`@apollo/client`, () => {
   return {
     createHttpLink: jest.fn(),
   }
 })
-const { createHttpLink } = require(`apollo-link-http`)
+const { createHttpLink } = require(`@apollo/client`)
+const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
 jest.mock(`gatsby/graphql`, () => {
   const graphql = jest.requireActual(`gatsby/graphql`)
   return {
@@ -19,8 +20,12 @@ jest.mock(`gatsby/graphql`, () => {
     printSchema: jest.fn(),
   }
 })
-const { sourceNodes } = require(`../gatsby-node`)
-const nodeFetch = require(`node-fetch`)
+const {
+  createSchemaCustomization,
+  sourceNodes,
+  pluginOptionsSchema,
+} = require(`../gatsby-node`)
+const { fetchWrapper } = require(`../fetch`)
 
 const getInternalGatsbyAPI = () => {
   const actions = {
@@ -41,22 +46,55 @@ const getInternalGatsbyAPI = () => {
 }
 
 describe(`validation`, () => {
-  ;[
-    [
-      `throws on missing typename`,
-      { fieldName: `github`, url: `https://github.com` },
-    ],
-    [
-      `throws on missing fieldName`,
-      { typeName: `Github`, url: `https://github.com` },
-    ],
-    [`throws on missing url`, { typeName: `Github`, fieldName: `github` }],
-  ].forEach(([testName, pluginOptions]) => {
-    it(testName, () => {
-      expect(
-        sourceNodes(getInternalGatsbyAPI(), pluginOptions)
-      ).rejects.toThrowErrorMatchingSnapshot()
+  it(`should validate minimal, valid config`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      url: `https://github.com`,
+      typeName: `GitHub`,
+      fieldName: `github`,
     })
+
+    expect(isValid).toEqual(true)
+  })
+
+  it(`should invalidate a config missing required vars`, async () => {
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {}
+    )
+
+    expect(isValid).toEqual(false)
+    expect(errors).toMatchInlineSnapshot(`
+      Array [
+        "\\"typeName\\" is required",
+        "\\"fieldName\\" is required",
+        "\\"value\\" must contain at least one of [url, createLink]",
+      ]
+    `)
+  })
+
+  it(`should validate a fully custom config`, async () => {
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        url: `https://github.com`,
+        typeName: `GitHub`,
+        fieldName: `github`,
+        headers: () => {
+          return {
+            Authorization: `Bearer abc`,
+          }
+        },
+        fetch: () => {},
+        fetchOptions: {},
+        createLink: () => {},
+        createSchema: () => {},
+        batch: true,
+        transformSchema: () => {},
+      }
+    )
+
+    expect(errors).toEqual([])
+    expect(isValid).toEqual(true)
   })
 })
 
@@ -78,7 +116,7 @@ describe(`createHttpLink`, () => {
   it(`use passed in fetch if provided`, async () => {
     const api = getInternalGatsbyAPI()
     const mockFetch = jest.fn()
-    await sourceNodes(api, {
+    await createSchemaCustomization(api, {
       typeName: `Github foo`,
       fieldName: `github`,
       url: `https://github.com`,
@@ -91,14 +129,14 @@ describe(`createHttpLink`, () => {
   })
   it(`use default fetch if not provided`, async () => {
     const api = getInternalGatsbyAPI()
-    await sourceNodes(api, {
+    await createSchemaCustomization(api, {
       typeName: `Github foo`,
       fieldName: `github`,
       url: `https://github.com`,
     })
 
     expect(createHttpLink).toHaveBeenCalledWith(
-      expect.objectContaining({ fetch: nodeFetch })
+      expect.objectContaining({ fetch: fetchWrapper })
     )
   })
 })

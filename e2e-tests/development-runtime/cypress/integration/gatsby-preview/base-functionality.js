@@ -5,10 +5,10 @@ beforeEach(() => {
 
 describe(`Gatsby Preview, base functionality`, () => {
   it(`has data, by default`, () => {
-    cy.get(`ul`).its(`length`).should(`equal`, 1)
+    cy.get(`ul#fake-data`).its(`length`).should(`equal`, 1)
   })
 
   it(`displays correct data/id`, () => {
-    cy.get(`li`).invoke(`text`).should(`equal`, `Hello World (1)`)
+    cy.get(`#fake-data li`).should(`have.text`, `Hello World (1)`)
   })
 })

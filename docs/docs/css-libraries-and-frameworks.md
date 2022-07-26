@@ -1,6 +1,5 @@
 ---
 title: CSS Libraries and Frameworks
-overview: true
 ---
 
 There are many other CSS style libraries and frameworks that you can use in your Gatsby project.

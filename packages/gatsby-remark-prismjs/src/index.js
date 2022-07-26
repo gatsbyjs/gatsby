@@ -6,6 +6,8 @@ const addLineNumbers = require(`./add-line-numbers`)
 const commandLine = require(`./command-line`)
 const loadPrismShowInvisibles = require(`./plugins/prism-show-invisibles`)
 
+const DIFF_HIGHLIGHT_SYNTAX = /^(diff)-([\w-]+)/i
+
 module.exports = (
   { markdownAST },
   {
@@ -29,12 +31,13 @@ module.exports = (
     return aliases[lower] || lower
   }
 
-  //Load language extension if defined
+  // Load language extension if defined
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
     let language = node.meta ? node.lang + node.meta : node.lang
-    let {
+    let diffLanguage
+    const {
       splitLanguage,
       highlightLines,
       showLineNumbersLocal,
@@ -46,7 +49,16 @@ module.exports = (
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     const promptUser = promptUserLocal || prompt.user
     const promptHost = promptHostLocal || prompt.host
-    language = splitLanguage
+    const match = splitLanguage
+      ? splitLanguage.match(DIFF_HIGHLIGHT_SYNTAX)
+      : null
+
+    if (match) {
+      language = match[1]
+      diffLanguage = normalizeLanguage(match[2])
+    } else {
+      language = splitLanguage
+    }
 
     // PrismJS's theme styles are targeting pre[class*="language-"]
     // to apply its styles. We do the same here so that users
@@ -65,7 +77,9 @@ module.exports = (
     // re-process our already-highlighted markup.
     //
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
-    const className = `${classPrefix}${languageName}`
+    const className = `${classPrefix}${languageName}${
+      diffLanguage ? `-${diffLanguage}` : ``
+    }`
 
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
@@ -80,10 +94,13 @@ module.exports = (
       node.value,
       escapeEntities,
       highlightLines,
-      noInlineHighlight
+      noInlineHighlight,
+      diffLanguage
     )
 
-    let numLinesStyle, numLinesClass, numLinesNumber
+    let numLinesStyle
+    let numLinesClass
+    let numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (showLineNumbers) {
       numLinesStyle = ` style="counter-reset: linenumber ${
@@ -122,7 +139,10 @@ module.exports = (
       let languageName = `text`
 
       if (inlineCodeMarker) {
-        let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
+        const [language, restOfValue] = node.value.split(
+          `${inlineCodeMarker}`,
+          2
+        )
         if (language && restOfValue) {
           languageName = normalizeLanguage(language)
           node.value = restOfValue

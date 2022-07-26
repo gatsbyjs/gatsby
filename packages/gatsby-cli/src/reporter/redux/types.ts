@@ -1,8 +1,9 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
 import { IStructuredError } from "../../structured-errors/types"
+import { ErrorCategory } from "../../structured-errors/error-map"
+import { IRenderPageArgs } from "../types"
 
 export interface IGatsbyCLIState {
-  messages: ILog[]
   activities: {
     [id: string]: IActivity
   }
@@ -19,6 +20,7 @@ export type ActionsUnion =
   | IUpdateActivity
   | IActivityErrored
   | ISetLogs
+  | IRenderPageTree
 
 export interface IActivity {
   startTime?: [number, number]
@@ -34,7 +36,7 @@ export interface IActivity {
   errored?: boolean
 }
 
-interface ILog {
+export interface ILog {
   level: string
   text: string | undefined
   statusText: string | undefined
@@ -42,6 +44,7 @@ interface ILog {
   group: string | undefined
   code: string | undefined
   type: string | undefined
+  category?: keyof typeof ErrorCategory
   filePath: string | undefined
   location: IStructuredError["location"] | undefined
   docsUrl: string | undefined
@@ -52,6 +55,7 @@ interface ILog {
   activity_uuid: string | undefined
   timestamp: string
   stack: IStructuredError["stack"] | undefined
+  pluginName: string | undefined
 }
 
 export interface ICreateLog {
@@ -70,6 +74,7 @@ export interface IPendingActivity {
     id: string
     type: ActivityTypes
     status: ActivityStatuses
+    startTime?: [number, number]
   }
 }
 
@@ -120,4 +125,9 @@ export interface IActivityErrored {
 export interface ISetLogs {
   type: Actions.SetLogs
   payload: IGatsbyCLIState
+}
+
+export interface IRenderPageTree {
+  type: Actions.RenderPageTree
+  payload: IRenderPageArgs
 }

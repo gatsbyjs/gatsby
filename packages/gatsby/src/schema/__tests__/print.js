@@ -1,7 +1,13 @@
 const { build } = require(`..`)
-const { buildObjectType } = require(`../types/type-builders`)
+import {
+  buildObjectType,
+  buildEnumType,
+  buildScalarType,
+} from "../types/type-builders"
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions/restricted`)
+const { actions: publicActions } = require(`../../redux/actions/public`)
+const { createParentChildLink } = publicActions
 const { printTypeDefinitions } = actions
 
 jest.mock(`fs-extra`)
@@ -16,6 +22,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    panic: jest.fn(console.error),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -41,14 +48,35 @@ jest.spyOn(global.Date.prototype, `toISOString`).mockReturnValue(`2019-01-01`)
 describe(`Print type definitions`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
-    const node = {
+    const node1 = {
       id: `test1`,
       internal: {
         type: `Test`,
       },
+      children: [],
       foo: 26,
     }
-    store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    const node2 = {
+      id: `test2`,
+      parent: `test1`,
+      internal: {
+        type: `FooChild`,
+      },
+      bar: `bar`,
+    }
+    const node3 = {
+      id: `test3`,
+      parent: `test1`,
+      internal: {
+        type: `BarChild`,
+      },
+      bar: `bar`,
+    }
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node1 } })
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node2 } })
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node3 } })
+    createParentChildLink({ parent: node1, child: node2 })
+    createParentChildLink({ parent: node1, child: node3 })
     const typeDefs = []
     typeDefs.push(`
       type AnotherTest implements Node & ITest {
@@ -66,11 +94,22 @@ describe(`Print type definitions`, () => {
       type OneMoreTest implements Node @infer {
         bar: Boolean
       }
-      interface ITest @nodeInterface {
+      interface ITest implements Node {
+        id: ID!
+        date: Date @dateformat(formatString: "YYYY")
+      }
+      interface ITest2 implements Node {
         id: ID!
         date: Date @dateformat(formatString: "YYYY")
       }
       union ThisOrThat = AnotherTest | OneMoreTest
+
+      enum SDLEnumSimple {
+        One
+        Two
+      }
+
+      scalar SDLScalar
     `)
     typeDefs.push(
       buildObjectType({
@@ -96,6 +135,47 @@ describe(`Print type definitions`, () => {
             types: [`OneMoreTest`],
           },
         },
+      }),
+      buildObjectType({
+        name: `BarChild`,
+        fields: {
+          id: `ID!`,
+          fieldWithArgsAndDescription: {
+            type: `String`,
+            args: {
+              withDefault: {
+                type: `String`,
+                description: `This is description`,
+                defaultValue: `Test`,
+              },
+              withoutDefault: {
+                type: `String`,
+                description: `This is description too`,
+              },
+              usingDerivedType: `BarChildSortInput`,
+            },
+          },
+        },
+        interfaces: [`Node`],
+        extensions: {
+          childOf: {
+            types: [`Test`],
+          },
+        },
+      }),
+      buildEnumType({
+        name: `BuilderEnum`,
+        values: {
+          One: {
+            value: `One`,
+          },
+          Two: {
+            value: `Two`,
+          },
+        },
+      }),
+      buildScalarType({
+        name: `BuilderScalar`,
       })
     )
     store.dispatch({
@@ -107,6 +187,16 @@ describe(`Print type definitions`, () => {
       type: `CREATE_TYPES`,
       payload: typeDefs[1],
       plugin: { name: `gatsby-plugin-another-test` },
+    })
+    store.dispatch({
+      type: `CREATE_TYPES`,
+      payload: typeDefs[2],
+      plugin: { name: `gatsby-plugin-another-test` },
+    })
+    store.dispatch({
+      type: `CREATE_TYPES`,
+      payload: [typeDefs[3], typeDefs[4]],
+      plugin: { name: `gatsby-plugin-shared` },
     })
   })
 

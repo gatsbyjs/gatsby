@@ -1,8 +1,14 @@
+const {
+  data: headFunctionExportData,
+} = require(`./shared-data/head-function-export.js`)
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
     author: `Kyle Mathews`,
     description: `This is site for production runtime e2e tests`,
+    // Separate to avoid needing to change other tests that rely on site metadata
+    headFunctionExport: headFunctionExportData.queried,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -20,5 +26,12 @@ module.exports = {
       },
     },
     `gatsby-plugin-local-worker`,
+    `gatsby-ssr-tsx`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-less`,
+    `gatsby-plugin-stylus`,
   ].concat(process.env.TEST_PLUGIN_OFFLINE ? [`gatsby-plugin-offline`] : []),
+  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
 }

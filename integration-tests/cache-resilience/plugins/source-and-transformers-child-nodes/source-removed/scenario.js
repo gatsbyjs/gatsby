@@ -108,41 +108,44 @@ const queriesTest = ({ typesFirstRun, typesSecondRun, dataFirstRun }) => {
       "typeinfoChild": Object {
         "fields": Array [
           Object {
-            "name": "id",
-          },
-          Object {
-            "name": "parent",
-          },
-          Object {
             "name": "children",
+          },
+          Object {
+            "name": "foo",
+          },
+          Object {
+            "name": "id",
           },
           Object {
             "name": "internal",
           },
           Object {
-            "name": "foo",
+            "name": "parent",
           },
         ],
       },
       "typeinfoParent": Object {
         "fields": Array [
           Object {
-            "name": "id",
-          },
-          Object {
-            "name": "parent",
+            "name": "childChildOfParentParentDeletionForTransformer",
           },
           Object {
             "name": "children",
           },
           Object {
-            "name": "internal",
+            "name": "childrenChildOfParentParentDeletionForTransformer",
           },
           Object {
             "name": "foo",
           },
           Object {
-            "name": "childChildOfParentParentDeletionForTransformer",
+            "name": "id",
+          },
+          Object {
+            "name": "internal",
+          },
+          Object {
+            "name": "parent",
           },
         ],
       },

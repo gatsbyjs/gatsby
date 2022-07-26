@@ -24,13 +24,13 @@ The `my-awesome-pdf.pdf` file will be copied to the root directory (i.e., `publi
 
 ## Install plugin
 
-`npm install --save gatsby-remark-copy-linked-files`
+`npm install gatsby-remark-copy-linked-files`
 
 ## Add plugin to Gatsby Config
 
 **Default settings:**
 
-Add `gatsby-remark-copy-linked-files` plugin as a plugin to [`gatsby-transformer-remark`](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/):
+Add `gatsby-remark-copy-linked-files` plugin as a plugin to [`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/):
 
 ```javascript
 // In your gatsby-config.js

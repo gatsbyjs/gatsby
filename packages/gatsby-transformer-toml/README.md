@@ -4,7 +4,7 @@ Parses TOML files.
 
 ## Install
 
-`npm install --save gatsby-transformer-toml`
+`npm install gatsby-transformer-toml`
 
 ## How to use
 

@@ -2,3 +2,4 @@
 !index.js
 yarn.lock
 transforms/*
+bin/*

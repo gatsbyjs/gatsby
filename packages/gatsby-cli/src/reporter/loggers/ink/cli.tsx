@@ -7,7 +7,8 @@ import { ProgressBar } from "./components/progress-bar"
 import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
 import Develop from "./components/develop"
-import { IGatsbyCLIState, IActivity } from "../../redux/types"
+import PageTree from "./components/pageTree"
+import { IGatsbyCLIState, IActivity, ILog } from "../../redux/types"
 import { ActivityLogLevels } from "../../constants"
 import { IStructuredError } from "../../../structured-errors/types"
 
@@ -15,7 +16,9 @@ const showProgress = isTTY()
 
 interface ICLIProps {
   logs: IGatsbyCLIState
+  messages: Array<ILog>
   showStatusBar: boolean
+  showPageTree: boolean
 }
 
 interface ICLIState {
@@ -27,14 +30,15 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
   readonly state: ICLIState = {
     hasError: false,
   }
-  memoizedReactElementsForMessages: React.ReactElement[] = []
+  memoizedReactElementsForMessages: Array<React.ReactElement> = []
 
   componentDidCatch(error: Error, info: React.ErrorInfo): void {
     trackBuildError(`INK`, {
       error: {
-        stack: info.componentStack,
+        error: {
+          stack: info.componentStack,
+        },
         text: error.message,
-        context: {},
       },
     })
   }
@@ -45,8 +49,10 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
 
   render(): React.ReactElement {
     const {
-      logs: { messages, activities },
+      logs: { activities },
+      messages,
       showStatusBar,
+      showPageTree,
     } = this.props
 
     const { hasError, error } = this.state
@@ -61,30 +67,6 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
           />
         </Box>
       )
-    }
-
-    /*
-      Only operation on messages array is to push new message into it. Once
-      message is there it can't change. Because of that we can do single
-      transform from message object to react element and store it.
-      This will avoid calling React.createElement completely for every message
-      that can't change.
-    */
-    if (messages.length > this.memoizedReactElementsForMessages.length) {
-      for (
-        let index = this.memoizedReactElementsForMessages.length;
-        index < messages.length;
-        index++
-      ) {
-        const msg = messages[index]
-        this.memoizedReactElementsForMessages.push(
-          msg.level === `ERROR` ? (
-            <ErrorComponent details={msg as IStructuredError} key={index} />
-          ) : (
-            <Message key={index} {...(msg as IMessageProps)} />
-          )
-        )
-      }
     }
 
     const spinners: Array<IActivity> = []
@@ -107,7 +89,22 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
     return (
       <Box flexDirection="column">
         <Box flexDirection="column">
-          <Static>{this.memoizedReactElementsForMessages}</Static>
+          <Static items={messages}>
+            {(message): React.ReactElement =>
+              message.level === `ERROR` ? (
+                <ErrorComponent
+                  details={message as IStructuredError}
+                  key={messages.indexOf(message)}
+                />
+              ) : (
+                <Message
+                  key={messages.indexOf(message)}
+                  {...(message as IMessageProps)}
+                />
+              )
+            }
+          </Static>
+          {showPageTree && <PageTree />}
 
           {spinners.map(activity => (
             <Spinner key={activity.id} {...activity} />
@@ -123,6 +120,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
             />
           ))}
         </Box>
+
         {showStatusBar && <Develop />}
       </Box>
     )

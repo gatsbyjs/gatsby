@@ -6,7 +6,7 @@
 
 ## Install
 
-`npm install --save gatsby-plugin-subfont`
+`npm install gatsby-plugin-subfont`
 
 If you want the ability to run font subsetting locally you'l need Python and install fonttools with this command line:
 
@@ -22,7 +22,7 @@ module.exports = {
       resolve: `gatsby-plugin-subfont`,
       options: {
         silent: true,
-        fallback: false,
+        fallbacks: false,
         inlineFonts: true,
       },
     },
@@ -38,7 +38,7 @@ See [subfont](https://github.com/Munter/subfont/blob/4b5a59afd17008ca35b6c32b52e
 | --------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `root`          | `public`                | Path to your web root                                                                                             |
 | `canonicalRoot` |                         | URI root where the site will be deployed. Must be either an absolute, a protocol-relative, or a root-relative url |
-| `output`        |                         | Directory where results should be written to                                                                      |  |  |
+| `output`        |                         | Directory where results should be written to                                                                      |
 | `fallbacks`     | `true`                  | Include fallbacks so the original font will be loaded when dynamic content gets injected at runtime.              |
 | `dynamic`       | `false`                 | Also trace the usage of fonts in a headless browser with JavaScript enabled                                       |
 | `inPlace`       | `true`                  | Modify HTML-files in-place. Only use on build artifacts                                                           |

@@ -14,11 +14,9 @@ exports.onCreateNode = async (
   if (filter(node)) {
     const fileNode = await createRemoteFileNode({
       url: node.url,
-      store,
       cache,
       createNode,
       createNodeId: createContentDigest,
-      reporter,
     })
 
     if (fileNode) {
@@ -26,4 +24,19 @@ exports.onCreateNode = async (
       node[fileNodeLink] = fileNode.id
     }
   }
+}
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type UnsplashImagesYaml implements Node {
+      url: String
+      title: String
+      credit: String
+      gallery: Boolean
+      localFile: File @link(from: "localFile___NODE")
+    }
+
+  `)
 }

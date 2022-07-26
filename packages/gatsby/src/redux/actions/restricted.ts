@@ -37,9 +37,10 @@ export const actions = {
    * Add a third-party schema to be merged into main schema. Schema has to be a
    * graphql-js GraphQLSchema object.
    *
-   * This schema is going to be merged as-is. This can easily break the main
-   * Gatsby schema, so it's user's responsibility to make sure it doesn't happen
-   * (by e.g. namespacing the schema).
+   * This schema is going to be merged as-is. Merging it in this way will
+   * easily break the main Gatsby Schema. Since we do not want that, therefore
+   * it is the user's responsibility to make sure that it does not happen.
+   * One such way of avoiding it is by namespacing the schema.
    *
    * @availableIn [createSchemaCustomization, sourceNodes]
    *
@@ -204,8 +205,8 @@ export const actions = {
     types:
       | string
       | GraphQLOutputType
-      | GatsbyGraphQLType
-      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
+      | GatsbyGraphQLType<any, any>
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType<any, any>>,
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateTypes => {
@@ -260,38 +261,42 @@ export const actions = {
    *   })
    * }
    */
-  createFieldExtension: (
-    extension: GraphQLFieldExtensionDefinition,
-    plugin: IGatsbyPlugin,
-    traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateFieldExtension> => (
-    dispatch,
-    getState
-  ): void => {
-    const { name } = extension || {}
-    const { fieldExtensions } = getState().schemaCustomization
+  createFieldExtension:
+    (
+      extension: GraphQLFieldExtensionDefinition,
+      plugin: IGatsbyPlugin,
+      traceId?: string
+    ): ThunkAction<
+      void,
+      IGatsbyState,
+      Record<string, unknown>,
+      ICreateFieldExtension
+    > =>
+    (dispatch, getState): void => {
+      const { name } = extension || {}
+      const { fieldExtensions } = getState().schemaCustomization
 
-    if (!name) {
-      report.error(
-        `The provided field extension must have a \`name\` property.`
-      )
-    } else if (reservedExtensionNames.includes(name)) {
-      report.error(
-        `The field extension name \`${name}\` is reserved for internal use.`
-      )
-    } else if (fieldExtensions[name]) {
-      report.error(
-        `A field extension with the name \`${name}\` has already been registered.`
-      )
-    } else {
-      dispatch({
-        type: `CREATE_FIELD_EXTENSION`,
-        plugin,
-        traceId,
-        payload: { name, extension },
-      })
-    }
-  },
+      if (!name) {
+        report.error(
+          `The provided field extension must have a \`name\` property.`
+        )
+      } else if (reservedExtensionNames.includes(name)) {
+        report.error(
+          `The field extension name \`${name}\` is reserved for internal use.`
+        )
+      } else if (fieldExtensions[name]) {
+        report.error(
+          `A field extension with the name \`${name}\` has already been registered.`
+        )
+      } else {
+        dispatch({
+          type: `CREATE_FIELD_EXTENSION`,
+          plugin,
+          traceId,
+          payload: { name, extension },
+        })
+      }
+    },
 
   /**
    * Write GraphQL schema to file
@@ -303,6 +308,8 @@ export const actions = {
    * list of types to include/exclude. This is recommended to avoid including
    * definitions for plugin-created types.
    *
+   * The first object parameter is required, however all the fields in the object are optional.
+   *
    * @availableIn [createSchemaCustomization]
    *
    * @param {object} $0
@@ -313,7 +320,17 @@ export const actions = {
    * @param {object} [$0.exclude] Configure types to exclude
    * @param {string[]} [$0.exclude.types] Do not include these types
    * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
-   * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
+   * @param {boolean} [$0.withFieldTypes] Include field types, defaults to `true`
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`.
+   *   actions.printTypeDefinitions({})
+   * }
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`, but this time it does not include field types.
+   *   actions.printTypeDefinitions({ withFieldTypes: false })
+   * }
    */
   printTypeDefinitions: (
     {
@@ -357,7 +374,7 @@ export const actions = {
    *   actions.createResolverContext({ getHtml })
    * }
    * // The context value can then be accessed in any field resolver like this:
-   * exports.createSchemaCustomization = ({ actions }) => {
+   * exports.createSchemaCustomization = ({ actions, schema }) => {
    *   actions.createTypes(schema.buildObjectType({
    *     name: 'Test',
    *     interfaces: ['Node'],
@@ -373,51 +390,56 @@ export const actions = {
    *   }))
    * }
    */
-  createResolverContext: (
-    context: IGatsbyPluginContext,
-    plugin: IGatsbyPlugin,
-    traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateResolverContext> => (
-    dispatch
-  ): void => {
-    if (!context || typeof context !== `object`) {
-      report.error(
-        `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
-      )
-    } else {
-      const { name } = plugin || {}
-      const payload =
-        !name || name === `default-site-plugin`
-          ? context
-          : { [camelCase(name.replace(/^gatsby-/, ``))]: context }
-      dispatch({
-        type: `CREATE_RESOLVER_CONTEXT`,
-        plugin,
-        traceId,
-        payload,
-      })
-    }
-  },
+  createResolverContext:
+    (
+      context: IGatsbyPluginContext,
+      plugin: IGatsbyPlugin,
+      traceId?: string
+    ): ThunkAction<
+      void,
+      IGatsbyState,
+      Record<string, unknown>,
+      ICreateResolverContext
+    > =>
+    (dispatch): void => {
+      if (!context || typeof context !== `object`) {
+        report.error(
+          `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
+        )
+      } else {
+        const { name } = plugin || {}
+        const payload =
+          !name || name === `default-site-plugin`
+            ? context
+            : { [camelCase(name.replace(/^gatsby-/, ``))]: context }
+        dispatch({
+          type: `CREATE_RESOLVER_CONTEXT`,
+          plugin,
+          traceId,
+          payload,
+        })
+      }
+    },
 }
 
-const withDeprecationWarning = (
-  actionName: RestrictionActionNames,
-  action: SomeActionCreator,
-  api: API,
-  allowedIn: API[]
-): SomeActionCreator => (...args: any[]): ReturnType<ActionCreator<any>> => {
-  report.warn(
-    `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
-      `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
-  )
-  return action(...args)
-}
+const withDeprecationWarning =
+  (
+    actionName: RestrictionActionNames,
+    action: SomeActionCreator,
+    api: API,
+    allowedIn: Array<API>
+  ): SomeActionCreator =>
+  (...args: Array<any>): ReturnType<ActionCreator<any>> => {
+    report.warn(
+      `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
+        `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+    )
+    return action(...args)
+  }
 
-const withErrorMessage = (
-  actionName: RestrictionActionNames,
-  api: API,
-  allowedIn: API[]
-) => () =>
+const withErrorMessage =
+  (actionName: RestrictionActionNames, api: API, allowedIn: Array<API>) =>
+  () =>
   // return a thunk that does not dispatch anything
   (): void => {
     report.error(
@@ -436,8 +458,8 @@ type API = string
 type Restrictions = Record<
   RestrictionActionNames,
   Partial<{
-    ALLOWED_IN: API[]
-    DEPRECATED_IN: API[]
+    ALLOWED_IN: Array<API>
+    DEPRECATED_IN: Array<API>
   }>
 >
 
@@ -447,7 +469,7 @@ type AvailableActionsByAPI = Record<
 >
 
 const set = (
-  availableActionsByAPI: {},
+  availableActionsByAPI: Record<string, any>,
   api: API,
   actionName: RestrictionActionNames,
   action: SomeActionCreator
@@ -461,16 +483,19 @@ const mapAvailableActionsToAPIs = (
 ): AvailableActionsByAPI => {
   const availableActionsByAPI: AvailableActionsByAPI = {}
 
-  const actionNames = Object.keys(restrictions) as (keyof typeof restrictions)[]
+  const actionNames = Object.keys(restrictions) as Array<
+    keyof typeof restrictions
+  >
   actionNames.forEach(actionName => {
     const action = actions[actionName]
 
-    const allowedIn: API[] = restrictions[actionName][ALLOWED_IN] || []
+    const allowedIn: Array<API> = restrictions[actionName][ALLOWED_IN] || []
     allowedIn.forEach(api =>
       set(availableActionsByAPI, api, actionName, action)
     )
 
-    const deprecatedIn: API[] = restrictions[actionName][DEPRECATED_IN] || []
+    const deprecatedIn: Array<API> =
+      restrictions[actionName][DEPRECATED_IN] || []
     deprecatedIn.forEach(api =>
       set(
         availableActionsByAPI,
@@ -498,18 +523,19 @@ const mapAvailableActionsToAPIs = (
 
 export const availableActionsByAPI = mapAvailableActionsToAPIs({
   createFieldExtension: {
-    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [DEPRECATED_IN]: [`sourceNodes`],
   },
   createTypes: {
-    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`, `sourceNodes`],
   },
   createResolverContext: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
   },
   addThirdPartySchema: {
-    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`, `sourceNodes`],
   },
   printTypeDefinitions: {
     [ALLOWED_IN]: [`createSchemaCustomization`],

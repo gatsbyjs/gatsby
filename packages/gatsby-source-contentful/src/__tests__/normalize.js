@@ -1,4 +1,16 @@
-const normalize = require(`../normalize`)
+// @ts-check
+import {
+  buildEntryList,
+  buildResolvableSet,
+  buildForeignReferenceMap,
+  createNodesForContentType,
+  createAssetNodes,
+  buildFallbackChain,
+  getLocalizedField,
+  makeId,
+} from "../normalize"
+import { createPluginConfig } from "../plugin-options"
+
 const {
   currentSyncData,
   contentTypeItems,
@@ -8,7 +20,7 @@ const {
 } = require(`./data.json`)
 
 const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+// restrictedNodeFields from here https://www.gatsbyjs.com/docs/node-interface/
 const restrictedNodeFields = [
   `id`,
   `children`,
@@ -18,337 +30,439 @@ const restrictedNodeFields = [
   `internal`,
 ]
 
-describe(`Process contentful data (by name)`, () => {
-  let entryList
-  let resolvable
-  let foreignReferenceMap
+const pluginConfig = createPluginConfig({})
 
+const unstable_createNodeManifest = jest.fn()
+
+// Counts the created nodes per node type
+function countCreatedNodeTypesFromMock(mock) {
+  const nodeTypeCounts = {}
+  mock.calls.forEach(callArgs => {
+    const node = callArgs[0]
+    const nodeType = node.internal.type
+    if (!nodeTypeCounts[nodeType]) {
+      nodeTypeCounts[nodeType] = 0
+    }
+    nodeTypeCounts[nodeType]++
+  })
+  return nodeTypeCounts
+}
+
+describe(`generic`, () => {
   it(`builds entry list`, () => {
-    entryList = normalize.buildEntryList({
+    const entryList = buildEntryList({
       currentSyncData,
       contentTypeItems,
     })
-    expect(entryList).toMatchSnapshot()
+
+    expect(entryList).toHaveLength(contentTypeItems.length)
+
+    expect(entryList[0][0].sys.contentType.sys.id).toBe(
+      `6XwpTaSiiI2Ak2Ww0oi6qa`
+    )
+    expect(entryList[0]).toHaveLength(2)
+    expect(entryList[1][0].sys.contentType.sys.id).toBe(`sFzTZbSuM8coEwygeUYes`)
+    expect(entryList[1]).toHaveLength(3)
+    expect(entryList[2][0].sys.contentType.sys.id).toBe(
+      `2PqfXUJwE8qSYKuM0U6w8M`
+    )
+    expect(entryList[2]).toHaveLength(4)
+    expect(entryList[3][0].sys.contentType.sys.id).toBe(`jsonTest`)
+    expect(entryList[3]).toHaveLength(1)
+
+    expect(entryList[4][0].sys.contentType.sys.id).toBe(`remarkTest`)
   })
 
   it(`builds list of resolvable data`, () => {
-    resolvable = normalize.buildResolvableSet({
+    const entryList = buildEntryList({
+      currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
-      defaultLocale,
-      locales,
     })
-    expect(resolvable).toMatchSnapshot()
-  })
 
+    const allNodes = [...currentSyncData.entries, ...currentSyncData.assets]
+
+    allNodes.forEach(node =>
+      expect(resolvable).toContain(`${node.sys.id}___${node.sys.type}`)
+    )
+  })
   it(`builds foreignReferenceMap`, () => {
-    foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const entryList = buildEntryList({
+      currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+    })
+
+    const foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
-      locales,
       space,
       useNameForId: true,
     })
-    expect(foreignReferenceMap).toMatchSnapshot()
+    const referenceKeys = Object.keys(foreignReferenceMap)
+    const expectedReferenceKeys = [
+      `2Y8LhXLnYAYqKCGEWG4EKI___Asset`,
+      `3wtvPBbBjiMKqKKga8I2Cu___Asset`,
+      `4LgMotpNF6W20YKmuemW0a___Entry`,
+      `4zj1ZOfHgQ8oqgaSKm4Qo2___Asset`,
+      `6m5AJ9vMPKc8OUoQeoCS4o___Asset`,
+      `6t4HKjytPi0mYgs240wkG___Asset`,
+      `7LAnCobuuWYSqks6wAwY2a___Entry`,
+      `10TkaLheGeQG6qQGqWYqUI___Asset`,
+      `24DPGBDeGEaYy8ms4Y8QMQ___Entry`,
+      `651CQ8rLoIYCeY6G0QG22q___Entry`,
+      `JrePkDVYomE8AwcuCUyMi___Entry`,
+      `KTRF62Q4gg60q6WCsWKw8___Asset`,
+      `wtrHxeu3zEoEce2MokCSi___Asset`,
+      `Xc0ny7GWsMEMCeASWO2um___Asset`,
+    ]
+    expect(referenceKeys).toHaveLength(expectedReferenceKeys.length)
+    expect(referenceKeys).toEqual(expect.arrayContaining(expectedReferenceKeys))
+
+    Object.keys(foreignReferenceMap).forEach(referenceId => {
+      expect(resolvable).toContain(referenceId)
+
+      let expectedLength = 1
+      if (referenceId === `651CQ8rLoIYCeY6G0QG22q___Entry`) {
+        expectedLength = 2
+      }
+      if (referenceId === `7LAnCobuuWYSqks6wAwY2a___Entry`) {
+        expectedLength = 3
+      }
+      expect(foreignReferenceMap[referenceId]).toHaveLength(expectedLength)
+    })
+  })
+})
+
+describe(`Process contentful data (by name)`, () => {
+  it(`builds foreignReferenceMap`, () => {
+    const entryList = buildEntryList({
+      currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+    })
+
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      space,
+      useNameForId: true,
+    })
+
+    expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
+      `product___NODE`
+    )
+
+    expect(foreignReferenceMap[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0].name).toBe(
+      `brand___NODE`
+    )
   })
 
   it(`creates nodes for each entry`, () => {
+    const entryList = buildEntryList({
+      currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+    })
+
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      space,
+      useNameForId: true,
+    })
+
     const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(() => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
-      entryList[i].forEach(normalize.fixIds)
-      normalize.createNodesForContentType({
+      createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
+        unstable_createNodeManifest,
       })
     })
-    expect(createNode.mock.calls).toMatchSnapshot()
+
+    const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
+
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
+
+    expect(nodeTypeCounts).toEqual(
+      expect.objectContaining({
+        // 3 Brand Contentful entries
+        ContentfulBrand: 6,
+        contentfulBrandCompanyDescriptionTextNode: 6,
+        contentfulBrandCompanyNameTextNode: 6,
+        // 2 Category Contentful entries
+        ContentfulCategory: 4,
+        contentfulCategoryCategoryDescriptionTextNode: 4,
+        contentfulCategoryTitleTextNode: 4,
+        ContentfulContentType: contentTypeItems.length,
+        // 1 JSON Test Contentful entry
+        ContentfulJsonTest: 2,
+        contentfulJsonTestJsonStringTestJsonNode: 2,
+        contentfulJsonTestJsonTestJsonNode: 2,
+        // 4 Product Contentful entries
+        ContentfulProduct: 8,
+        contentfulProductProductDescriptionTextNode: 8,
+        contentfulProductProductNameTextNode: 8,
+        // 1 Remark Test Contentful entry
+        ContentfulRemarkTest: 2,
+        contentfulRemarkTestContentTextNode: 2,
+      })
+    )
+
+    // Relevant to compare to compare warm and cold situation
+    expect(createNode.mock.calls.length).toBe(69) // "cold build entries" count
   })
 
   it(`creates nodes for each asset`, () => {
-    const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createNode = jest.fn(() => Promise.resolve())
+    const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
-      normalize.createAssetNodes({
+      createAssetNodes({
         assetItem,
         createNode,
         createNodeId,
         defaultLocale,
         locales,
         space,
+        pluginConfig,
       })
     })
-    expect(createNode.mock.calls).toMatchSnapshot()
+    const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
+
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(1)
+    expect(nodeTypeCounts).toHaveProperty(`ContentfulAsset`)
   })
 })
 
-describe(`Process contentful data (by id)`, () => {
-  let entryList
-  let resolvable
-  let foreignReferenceMap
-
-  it(`builds entry list`, () => {
-    entryList = normalize.buildEntryList({
+describe(`Process existing mutated nodes in warm build`, () => {
+  it(`creates nodes for each entry`, () => {
+    const entryList = buildEntryList({
       currentSyncData,
       contentTypeItems,
     })
-    expect(entryList).toMatchSnapshot()
-  })
 
-  it(`builds list of resolvable data`, () => {
-    resolvable = normalize.buildResolvableSet({
+    const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
-      defaultLocale,
-      locales,
     })
-    expect(resolvable).toMatchSnapshot()
-  })
 
-  it(`builds foreignReferenceMap`, () => {
-    foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
-      locales,
       space,
-      useNameForId: false,
+      useNameForId: true,
     })
-    expect(foreignReferenceMap).toMatchSnapshot()
-  })
 
-  it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createNodeId = jest.fn(id => id)
+    let doReturn = true
+    const getNode = jest.fn(id => {
+      if (doReturn) {
+        doReturn = false
+        // Note: the relevant part for this test is that the same digest is returned
+        // so it skips generating the node and any of its children. Actual shape of
+        // returned is not relevant to test so update if anything breaks.
+        return {
+          id,
+          internal: {
+            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+          },
+        }
+      }
+      // All other nodes are new ("unknown")
+      return undefined
+    })
     contentTypeItems.forEach((contentTypeItem, i) => {
-      entryList[i].forEach(normalize.fixIds)
-      normalize.createNodesForContentType({
+      createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: true,
+        pluginConfig,
+        unstable_createNodeManifest,
+      })
+    })
+
+    const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
+
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
+
+    expect(nodeTypeCounts).toEqual(
+      expect.objectContaining({
+        // 3 Brand Contentful entries
+        ContentfulBrand: 6,
+        contentfulBrandCompanyDescriptionTextNode: 6,
+        contentfulBrandCompanyNameTextNode: 6,
+        // 2 Category Contentful entries
+        ContentfulCategory: 4,
+        contentfulCategoryCategoryDescriptionTextNode: 4,
+        contentfulCategoryTitleTextNode: 4,
+        ContentfulContentType: contentTypeItems.length,
+        // 1 JSON Test Contentful entry
+        ContentfulJsonTest: 2,
+        contentfulJsonTestJsonStringTestJsonNode: 2,
+        contentfulJsonTestJsonTestJsonNode: 2,
+        // 4 Product Contentful entries
+        ContentfulProduct: 8,
+        contentfulProductProductDescriptionTextNode: 8,
+        contentfulProductProductNameTextNode: 8,
+        // 1 Remark Test Contentful entry
+        ContentfulRemarkTest: 2,
+        contentfulRemarkTestContentTextNode: 2,
+      })
+    )
+
+    // Relevant to compare to compare warm and cold situation
+    // This number ought to be the same as the cold build
+    expect(createNode.mock.calls.length).toBe(69) // "warm build where entry was changed" count
+  })
+})
+
+describe(`Process contentful data (by id)`, () => {
+  it(`builds foreignReferenceMap`, () => {
+    const entryList = buildEntryList({
+      currentSyncData,
+      contentTypeItems,
+    })
+    const resolvable = buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+    })
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      space,
+      useNameForId: false,
+    })
+
+    expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
+      `2pqfxujwe8qsykum0u6w8m___NODE`
+    )
+
+    expect(foreignReferenceMap[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0].name).toBe(
+      `sfztzbsum8coewygeuyes___NODE`
+    )
+  })
+
+  it(`creates nodes for each entry`, () => {
+    const entryList = buildEntryList({
+      currentSyncData,
+      contentTypeItems,
+    })
+    const resolvable = buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+    })
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      space,
+      useNameForId: false,
+    })
+
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(() => undefined) // All nodes are new
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      createNodesForContentType({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
         space,
         useNameForId: false,
+        pluginConfig,
+        unstable_createNodeManifest,
       })
     })
-    expect(createNode.mock.calls).toMatchSnapshot()
-  })
+    const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 
-  it(`creates nodes for each asset`, () => {
-    const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    const assets = currentSyncData.assets
-    assets.forEach(assetItem => {
-      normalize.createAssetNodes({
-        assetItem,
-        createNode,
-        createNodeId,
-        defaultLocale,
-        locales,
-        space,
+    expect(Object.keys(nodeTypeCounts)).toHaveLength(15)
+
+    expect(nodeTypeCounts).toEqual(
+      expect.objectContaining({
+        // 3 Brand Contentful entries
+        ContentfulSFzTZbSuM8CoEwygeUYes: 6,
+        contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode: 6,
+        contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode: 6,
+        // 2 Category Contentful entries
+        Contentful6XwpTaSiiI2Ak2Ww0Oi6Qa: 4,
+        contentful6XwpTaSiiI2Ak2Ww0Oi6QaCategoryDescriptionTextNode: 4,
+        contentful6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode: 4,
+        ContentfulContentType: contentTypeItems.length,
+        // 1 JSON Test Contentful entry
+        ContentfulJsonTest: 2,
+        contentfulJsonTestJsonStringTestJsonNode: 2,
+        contentfulJsonTestJsonTestJsonNode: 2,
+        // 4 Product Contentful entries
+        Contentful2PqfXuJwE8QSyKuM0U6W8M: 8,
+        contentful2PqfXuJwE8QSyKuM0U6W8MProductDescriptionTextNode: 8,
+        contentful2PqfXuJwE8QSyKuM0U6W8MProductNameTextNode: 8,
+        // 1 Remark Test Contentful entry
+        ContentfulRemarkTest: 2,
+        contentfulRemarkTestContentTextNode: 2,
       })
-    })
-    expect(createNode.mock.calls).toMatchSnapshot()
-  })
-})
-
-describe(`Fix contentful IDs`, () => {
-  it(`leaves ids that start with a string the same`, () => {
-    expect(normalize.fixId(`a123`)).toEqual(`a123`)
-  })
-  it(`left pads ids that start with a number of a "c"`, () => {
-    expect(normalize.fixId(`123`)).toEqual(`c123`)
-  })
-  it(`does not change entries that are null/undefined`, () => {
-    const a = null
-    normalize.fixIds(a)
-    expect(a).toBeNull()
-  })
-  it(`does not change entries that are not object/array`, () => {
-    const a = 123
-    const expected = 123
-    normalize.fixIds(a)
-    expect(a).toEqual(expected)
-  })
-
-  it(`does not check/change falsy values in arrays`, () => {
-    const a = {
-      b: [
-        {
-          sys: {
-            id: 500,
-          },
-        },
-        null,
-        {},
-      ],
-    }
-
-    const expected = {
-      b: [
-        {
-          sys: {
-            contentful_id: 500,
-            id: `c500`,
-          },
-        },
-        null,
-        {},
-      ],
-    }
-    normalize.fixIds(a)
-    expect(a).toEqual(expected)
-  })
-
-  it(`does not check/change falsy values in objects`, () => {
-    const a = {
-      b: {
-        sys: {
-          id: 500,
-        },
-        value: null,
-      },
-    }
-
-    const expected = {
-      b: {
-        sys: {
-          contentful_id: 500,
-          id: `c500`,
-        },
-        value: null,
-      },
-    }
-    normalize.fixIds(a)
-    expect(a).toEqual(expected)
-  })
-
-  describe(`cycles`, () => {
-    it(`should return undefined`, () => {
-      const a = {}
-      a.b = a
-      expect(normalize.fixIds(a)).toEqual(undefined)
-    })
-
-    it(`should not change cycles without sys`, () => {
-      const a = {}
-      a.b = a
-
-      const b = {}
-      b.b = b
-
-      normalize.fixIds(a)
-      expect(a).toEqual(b)
-    })
-
-    it(`cycle with sys + id`, () => {
-      const original = {
-        sys: {
-          id: 500,
-        },
-      }
-      original.b = original
-
-      const fixed = {
-        sys: {
-          contentful_id: 500,
-          id: `c500`,
-        },
-      }
-      fixed.b = fixed
-
-      expect(original).not.toEqual(fixed)
-      normalize.fixIds(original)
-      expect(original).toEqual(fixed)
-    })
-
-    it(`cycle with nested sys v1`, () => {
-      const original = {
-        sys: {
-          id: 500,
-          fii: {
-            sys: {
-              id: `300x`,
-            },
-          },
-        },
-      }
-      original.b = original
-
-      const fixed = {
-        sys: {
-          id: `c500`,
-          contentful_id: 500,
-          fii: {
-            sys: {
-              id: `c300x`,
-              contentful_id: `300x`,
-            },
-          },
-        },
-      }
-      fixed.b = fixed
-
-      expect(original).not.toEqual(fixed)
-      normalize.fixIds(original)
-      expect(original).toEqual(fixed)
-    })
-
-    it(`cycle with nested sys v2`, () => {
-      const original = {
-        sys: {
-          id: 500,
-          fii: {
-            sys: {
-              id: `300x`,
-            },
-          },
-        },
-      }
-      original.sys.fii.repeat = original
-
-      const fixed = {
-        sys: {
-          id: `c500`,
-          contentful_id: 500,
-          fii: {
-            sys: {
-              id: `c300x`,
-              contentful_id: `300x`,
-            },
-          },
-        },
-      }
-      fixed.sys.fii.repeat = fixed
-
-      expect(original).not.toEqual(fixed)
-      normalize.fixIds(original)
-      expect(original).toEqual(fixed)
-    })
+    )
   })
 })
 
@@ -362,10 +476,10 @@ describe(`Gets field value based on current locale`, () => {
     { code: `de`, fallbackCode: `en-US` },
     { code: `gsw_CH`, fallbackCode: `de` },
   ]
-  const localesFallback = normalize.buildFallbackChain(locales)
+  const localesFallback = buildFallbackChain(locales)
   it(`Gets the specified locale`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -374,7 +488,7 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`en-US`])
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -389,7 +503,7 @@ describe(`Gets field value based on current locale`, () => {
       "en-US": false,
     }
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field: falseyField,
         localesFallback,
         locale: {
@@ -399,7 +513,7 @@ describe(`Gets field value based on current locale`, () => {
     ).toBe(falseyField[`en-US`])
 
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field: falseyField,
         localesFallback,
         locale: {
@@ -410,7 +524,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`falls back to the locale's fallback locale if passed a locale that doesn't have a localized field`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -421,7 +535,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`returns null if passed a locale that doesn't have a field on a localized field`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback: { "es-ES": null, de: null },
         locale: {
@@ -432,7 +546,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -446,22 +560,24 @@ describe(`Gets field value based on current locale`, () => {
 describe(`Make IDs`, () => {
   it(`It doesn't postfix the spaceId and the id if its the default locale`, () => {
     expect(
-      normalize.makeId({
+      makeId({
         spaceId: `spaceId`,
         id: `id`,
+        type: `type`,
         defaultLocale: `en-US`,
         currentLocale: `en-US`,
       })
-    ).toBe(`spaceId___id`)
+    ).toBe(`spaceId___id___type`)
   })
   it(`It does postfix the spaceId and the id if its not the default locale`, () => {
     expect(
-      normalize.makeId({
+      makeId({
         spaceId: `spaceId`,
         id: `id`,
+        type: `type`,
         defaultLocale: `en-US`,
         currentLocale: `en-GB`,
       })
-    ).toBe(`spaceId___id___en-GB`)
+    ).toBe(`spaceId___id___type___en-GB`)
   })
 })

@@ -1,4 +1,6 @@
 import "@testing-library/cypress/add-commands"
+import { addMatchImageSnapshotCommand } from "cypress-image-snapshot/command"
+import "gatsby-cypress"
 
 Cypress.Commands.add(`lifecycleCallCount`, action =>
   cy
@@ -9,6 +11,39 @@ Cypress.Commands.add(`lifecycleCallCount`, action =>
           entry => entry.action === action
         ).length
     )
+)
+
+// This command is to find out that the lifecycle methods have
+// been called in the expected order, not to check the exact order.
+// It checks an array and makes sure that each item in the array is called at some point after the last.
+// It will return a boolean value if the order has been called correctly according to what has been passed in.
+Cypress.Commands.add(`lifecycleCallOrder`, expectedActionCallOrder =>
+  cy.window().then(win => {
+    const actions = win.___PageComponentLifecycleCallsLog
+    const expectedActionCallOrderLength = expectedActionCallOrder.length
+    const actionsLength = actions.length
+
+    if (expectedActionCallOrderLength > actionsLength) {
+      return false
+    }
+
+    let prevActionIndex = -1
+    for (let i = 0; i < actionsLength; i += 1) {
+      const nextActionIndex = prevActionIndex + 1
+
+      // if the next action is found in the correct order
+      if (actions[i].action === expectedActionCallOrder[nextActionIndex]) {
+        prevActionIndex = nextActionIndex
+      }
+    }
+
+    // if not all actions have been found then it has failed
+    if (prevActionIndex !== expectedActionCallOrderLength - 1) {
+      return false
+    }
+
+    return true
+  })
 )
 
 Cypress.Commands.add(`assertRouterWrapperFocus`, (shouldBeFocused = true) =>
@@ -47,3 +82,57 @@ Cypress.Commands.add(
       .then(() => subject)
   }
 )
+
+Cypress.Commands.add(`assertRoute`, route => {
+  cy.url().should(`equal`, `${window.location.origin}${route}`)
+})
+
+// overwriting visit and creating a waitForHmr function to help us deal with HMR
+Cypress.Commands.overwrite("visit", (orig, url, options = {}) => {
+  const newOptions = {
+    ...options,
+    onBeforeLoad: win => {
+      if (options.onBeforeLoad) {
+        options.onBeforeLoad(win)
+      }
+
+      cy.spy(win.console, "log").as(`hmrConsoleLog`)
+    },
+  }
+
+  return orig(url, newOptions)
+})
+
+Cypress.Commands.add(`waitForHmr`, (message = `App is up to date`) => {
+  cy.get(`@hmrConsoleLog`).should(`be.calledWithMatch`, message)
+  cy.wait(1000)
+})
+
+Cypress.Commands.add(`getFastRefreshOverlay`, () =>
+  cy.get(`gatsby-fast-refresh`).shadow()
+)
+
+Cypress.Commands.add(`assertNoFastRefreshOverlay`, () =>
+  cy.get(`gatsby-fast-refresh`).should(`not.exist`)
+)
+
+addMatchImageSnapshotCommand({
+  customDiffDir: `/__diff_output__`,
+  customDiffConfig: {
+    threshold: 0.1,
+  },
+  failureThreshold: 0.08,
+  failureThresholdType: `percent`,
+})
+
+/**
+ * Get a record from a table cell in one of the test components.
+ * @example cy.getRecord(Script.dayjs, ResourceRecord.fetchStart)
+ * @example cy.getRecord(`${ScriptStrategy.preHydrate}-${InlineScript.dangerouslySet}`, MarkRecord.executeStart)
+ */
+Cypress.Commands.add(`getRecord`, (key, metric, raw = false) => {
+  return cy
+    .get(`[id=${key}] [id=${metric}]`)
+    .invoke(`text`)
+    .then(value => (raw ? value : Number(value)))
+})

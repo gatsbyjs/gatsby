@@ -1,7 +1,8 @@
 import React, { Fragment } from "react"
 import { Helmet } from "react-helmet"
 import styled from "@emotion/styled"
-import { css, Global } from "@emotion/core"
+import { Global } from "@emotion/react"
+import { css } from "@emotion/css"
 
 // Emotion supports different styling options, all of which are supported by gatsby-plugin-emotion out of the box
 
@@ -64,7 +65,7 @@ const IndexPage = () => (
         }}
       >
         <a
-          href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/"
+          href="https://www.gatsbyjs.com/plugins/gatsby-plugin-emotion/"
           // Styling “inline” via css prop and a template literal
           css={css`
             color: inherit;

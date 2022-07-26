@@ -6,6 +6,15 @@ exports[`highlight code and lines with PrismJS for language cpp 1`] = `
 "
 `;
 
+exports[`highlight code and lines with PrismJS for language diff-typescript 1`] = `
+"
+<span class=\\"token deleted-sign deleted language-typescript\\"><span class=\\"token prefix deleted\\">-</span>    <span class=\\"token keyword\\">let</span> foo <span class=\\"token operator\\">=</span> bar<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">baz</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">[</span><span class=\\"token number\\">1</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">2</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">3</span><span class=\\"token punctuation\\">]</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>
+<span class=\\"token prefix deleted\\">-</span>    foo <span class=\\"token operator\\">=</span> foo <span class=\\"token operator\\">+</span> <span class=\\"token number\\">1</span><span class=\\"token punctuation\\">;</span>
+</span><span class=\\"token inserted-sign inserted language-typescript\\"><span class=\\"token prefix inserted\\">+</span>    <span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> bar<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">baz</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">[</span><span class=\\"token number\\">1</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">2</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">3</span><span class=\\"token punctuation\\">]</span><span class=\\"token punctuation\\">)</span> <span class=\\"token operator\\">+</span> <span class=\\"token number\\">1</span><span class=\\"token punctuation\\">;</span>
+</span><span class=\\"token unchanged language-typescript\\"><span class=\\"token prefix unchanged\\"> </span>    <span class=\\"token builtin\\">console</span><span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span>foo<span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>
+</span>"
+`;
+
 exports[`highlight code and lines with PrismJS for language jsx 1`] = `
 "
 <span class=\\"token keyword\\">import</span> React <span class=\\"token keyword\\">from</span> <span class=\\"token string\\">\\"react\\"</span>

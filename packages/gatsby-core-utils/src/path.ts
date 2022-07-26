@@ -5,7 +5,7 @@ import os from "os"
  * Joins all given path segments and converts
  * @param paths A sequence of path segments
  */
-export function joinPath(...paths: string[]): string {
+export function joinPath(...paths: Array<string>): string {
   const joinedPath = path.join(...paths)
   if (os.platform() === `win32`) {
     return joinedPath.replace(/\\/g, `\\\\`)

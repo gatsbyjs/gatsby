@@ -9,8 +9,8 @@ const Article = ({ data: { article } }) => {
       <Link to="/">Go back to index page</Link>
       <div>
         <h2>{article.title}</h2>
-        {!!article.featuredImage?.remoteFile?.childImageSharp && (
-          <Img fluid={article.featuredImage.remoteFile.childImageSharp.fluid} />
+        {!!article.featuredImage?.node?.localFile?.childImageSharp && (
+          <Img fluid={article.featuredImage.node.localFile.childImageSharp.fluid} />
         )}
         <div dangerouslySetInnerHTML={{ __html: article.content }} />
       </div>
@@ -26,10 +26,12 @@ export const query = graphql`
       title
       content
       featuredImage {
-        remoteFile {
-          childImageSharp {
-            fluid(maxWidth: 960, quality: 90) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+        node {
+          localFile {
+            childImageSharp {
+              fluid(maxWidth: 960, quality: 90) {
+                ...GatsbyImageSharpFluid_withWebp_tracedSVG
+              }
             }
           }
         }

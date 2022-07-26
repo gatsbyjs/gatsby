@@ -1,7 +1,7 @@
 import meant from "meant"
 
 export const KNOWN_CONFIG_KEYS = [
-  `__experimentalThemes`,
+  `flags`,
   `polyfill`,
   `assetPrefix`,
   `pathPrefix`,
@@ -10,11 +10,15 @@ export const KNOWN_CONFIG_KEYS = [
   `plugins`,
   `proxy`,
   `developMiddleware`,
+  `jsxRuntime`,
+  `jsxImportSource`,
+  `trailingSlash`,
+  `graphqlTypegen`,
 ]
 
 export function didYouMean(
   configKey: string,
-  commands: string[] = KNOWN_CONFIG_KEYS
+  commands: Array<string> = KNOWN_CONFIG_KEYS
 ): string {
   const bestSimilarity = meant(configKey, commands)
 

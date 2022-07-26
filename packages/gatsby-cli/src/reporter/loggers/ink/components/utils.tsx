@@ -1,14 +1,11 @@
 import React, { FunctionComponent } from "react"
-import { Color, ColorProps } from "ink"
+import { Text, TextProps } from "ink"
 
-export const ColorSwitcher: FunctionComponent<ColorProps> = ({
-  children,
-  ...props
-}) => <Color {...props}>{children}</Color>
-
-export const createLabel = (
-  text: string,
-  color: string
-): FunctionComponent<ColorProps> => (...props): JSX.Element => (
-  <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
-)
+export const createLabel =
+  (text: string, color: string): FunctionComponent<TextProps> =>
+  (...props): JSX.Element =>
+    (
+      <Text color={color} {...props}>
+        {text}
+      </Text>
+    )

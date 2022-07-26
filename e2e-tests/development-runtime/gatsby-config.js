@@ -1,16 +1,23 @@
-// isomorphic-fetch sets global.fetch which seems to conflicts with source-map@<0.8.0 where it does a
-// simple browser check if (global.fetch) which is true when isomorphic-fetch is used. This creates an
-// exception in react-hot-loader. @see https://github.com/gatsbyjs/gatsby/pull/13713
-require(`isomorphic-fetch`)
+const {
+  data: headFunctionExportData,
+} = require(`./shared-data/head-function-export.js`)
 
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
     social: {
       twitter: `kylemathews`,
     },
+    // Separate to avoid needing to change other tests that rely on site metadata
+    headFunctionExport: headFunctionExportData.queried,
+  },
+  graphqlTypegen: true,
+  flags: {
+    DEV_SSR: false,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -29,11 +36,16 @@ module.exports = {
       },
     },
     `gatsby-source-fake-data`,
+    `gatsby-source-pinc-data`,
+    `gatsby-source-query-on-demand-data`,
+    `gatsby-browser-tsx`,
+    `gatsby-node-typegen`,
     `gatsby-transformer-sharp`,
+    `gatsby-transformer-json`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-subcache`],
+        plugins: [`gatsby-remark-subcache`, `gatsby-remark-images`],
       },
     },
     `gatsby-plugin-sharp`,
@@ -49,8 +61,13 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-less`,
+    `gatsby-plugin-stylus`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
   ],
+  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
 }

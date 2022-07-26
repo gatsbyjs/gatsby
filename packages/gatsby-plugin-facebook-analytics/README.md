@@ -8,7 +8,7 @@ This loads the Facebook JavaScript SDK which means that [Social Plugins](https:/
 
 ## Install
 
-`npm install --save gatsby-plugin-facebook-analytics`
+`npm install gatsby-plugin-facebook-analytics`
 
 ## How to use
 

@@ -32,7 +32,7 @@ const DetailPage = ({ classes }: Props) => (
     <h1 className={classes.heading}>Detail page</h1>
     <main className={classes.main}>
       <Link to="/">Go to Home page</Link>
-      <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-jss/">
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-jss/">
         gatsby-plugin-jss docs
       </a>
     </main>

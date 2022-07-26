@@ -1,29 +1,39 @@
+const { URL } = require(`url`)
 const axios = require(`axios`)
 
-const getBase64Img = async url => {
-  const response = await axios({
-    method: `GET`,
-    responseType: `arraybuffer`,
-    url: `${url}`,
-  })
+// This should be replaced with the solution for https://github.com/gatsbyjs/gatsby/issues/24220
+const getBase64Img = async (url, reporter) => {
+  try {
+    const response = await axios({
+      method: `GET`,
+      responseType: `arraybuffer`,
+      url: `${url}`,
+    })
 
-  const base64Img = `data:${
-    response.headers[`content-type`]
-  };base64,${new Buffer(response.data).toString(`base64`)}`
+    const base64Img = `data:${
+      response.headers[`content-type`]
+    };base64,${new Buffer(response.data).toString(`base64`)}`
 
-  return base64Img
+    return base64Img
+  } catch (err) {
+    reporter.panic(`Failed downloading the base64 image for ${url}`, err)
+    return undefined
+  }
 }
 
-const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
-  const { width, height, density } = metadata
-  const { sizeByPixelDensity, maxWidth, sizes } = options
-  const aspectRatio = width / height
-  const pixelRatio =
-    sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / 72
-      : 1
+const buildResponsiveSizes = async (
+  { metadata, imageUrl, options = {} },
+  reporter
+) => {
+  const imageURL = new URL(
+    imageUrl.indexOf(`/`) === 0 ? `https:${imageUrl}` : imageUrl
+  )
 
-  const presentationWidth = Math.min(maxWidth, Math.round(width / pixelRatio))
+  const { width, height, density } = metadata
+  const { maxWidth, sizes } = options
+  const aspectRatio = width / height
+
+  const presentationWidth = Math.min(maxWidth, width)
   const presentationHeight = Math.round(presentationWidth * (height / width))
   const sizesQuery =
     sizes || `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
@@ -41,17 +51,20 @@ const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
 
   filteredSizes.push(width)
 
-  const base64Img = await getBase64Img(`${imageUrl}?w=40`)
+  imageURL.searchParams.set(`w`, `40`)
 
-  const srcSet = filteredSizes
-    .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
-    .join(`,\n`)
+  const base64Img = await getBase64Img(imageURL.href, reporter)
 
-  const webpSrcSet = filteredSizes
-    .map(
-      size => `${imageUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`
-    )
-    .join(`,\n`)
+  const getSrcSetUrl = size => {
+    imageURL.searchParams.set(`w`, `${Math.round(size)}`)
+    return `${imageURL.href} ${Math.round(size)}w`
+  }
+
+  const srcSet = filteredSizes.map(getSrcSetUrl).join(`,\n`)
+
+  imageURL.searchParams.set(`fm`, `webp`)
+
+  const webpSrcSet = filteredSizes.map(getSrcSetUrl).join(`,\n`)
 
   // TODO think about a better structure to save srcset types instead of adding them to the root
   return {

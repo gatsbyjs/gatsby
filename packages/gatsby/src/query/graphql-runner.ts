@@ -9,9 +9,10 @@ import {
   Source,
   GraphQLError,
   ExecutionResult,
+  NoDeprecatedCustomRule,
 } from "graphql"
 import { debounce } from "lodash"
-import * as nodeStore from "../db/nodes"
+import reporter from "gatsby-cli/lib/reporter"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
@@ -19,9 +20,27 @@ import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
+import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
 import GraphQLSpanTracer from "./graphql-span-tracer"
 
+// Preserve these caches across graphql instances.
+const _rootNodeMap = new WeakMap()
+const _trackedRootNodes = new WeakSet()
+
 type Query = string | Source
+
+export interface IQueryOptions {
+  parentSpan: Span | undefined
+  queryName: string
+  componentPath?: string | undefined
+  forceGraphqlTracing?: boolean
+  telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
+}
+
+export interface IGraphQLRunnerOptions {
+  collectStats?: boolean
+  graphqlTracing?: boolean
+}
 
 export class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
@@ -39,21 +58,16 @@ export class GraphQLRunner {
 
   constructor(
     protected store: Store<IGatsbyState>,
-    {
-      collectStats,
-      graphqlTracing,
-    }: {
-      collectStats?: boolean
-      graphqlTracing?: boolean
-    } = {}
+    { collectStats, graphqlTracing }: IGraphQLRunnerOptions = {}
   ) {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
-      nodeStore,
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
+      _rootNodeMap,
+      _trackedRootNodes,
     })
     this.schema = schema
     this.parseCache = new Map()
@@ -96,15 +110,20 @@ export class GraphQLRunner {
   validate(
     schema: GraphQLSchema,
     document: DocumentNode
-  ): readonly GraphQLError[] {
+  ): {
+    errors: ReadonlyArray<GraphQLError>
+    warnings: ReadonlyArray<GraphQLError>
+  } {
+    let errors: ReadonlyArray<GraphQLError> = []
+    let warnings: ReadonlyArray<GraphQLError> = []
     if (!this.validDocuments.has(document)) {
-      const errors = validate(schema, document)
+      errors = validate(schema, document)
+      warnings = validate(schema, document, [NoDeprecatedCustomRule])
       if (!errors.length) {
         this.validDocuments.add(document)
       }
-      return errors as Array<GraphQLError>
     }
-    return []
+    return { errors, warnings }
   }
 
   getStats(): IGraphQLRunnerStatResults | null {
@@ -134,13 +153,16 @@ export class GraphQLRunner {
     }
   }
 
-  query(
+  async query(
     query: Query,
     context: Record<string, unknown>,
     {
       parentSpan,
       queryName,
-    }: { parentSpan: Span | undefined; queryName: string }
+      componentPath,
+      forceGraphqlTracing = false,
+      telemetryResolverTimings,
+    }: IQueryOptions
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -162,10 +184,27 @@ export class GraphQLRunner {
     }
 
     const document = this.parse(query)
-    const errors = this.validate(schema, document)
+    const { errors, warnings } = this.validate(schema, document)
+
+    // Queries are usually executed in batch. But after the batch is finished
+    // cache just wastes memory without much benefits.
+    // TODO: consider a better strategy for cache purging/invalidation
+    this.scheduleClearCache()
+
+    if (warnings.length > 0) {
+      // TODO: move those warnings to the caller side, e.g. query-runner.ts
+      warnings.forEach(err => {
+        const message = componentPath ? `\nQueried in ${componentPath}` : ``
+        reporter.warn(err.message + message)
+      })
+    }
+
+    if (errors.length > 0) {
+      return { errors }
+    }
 
     let tracer
-    if (this.graphqlTracing && parentSpan) {
+    if ((this.graphqlTracing || forceGraphqlTracing) && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
         parentSpan,
         tags: {
@@ -177,31 +216,23 @@ export class GraphQLRunner {
     }
 
     try {
-      const result =
-        errors.length > 0
-          ? { errors }
-          : execute({
-              schema,
-              document,
-              rootValue: context,
-              contextValue: withResolverContext({
-                schema,
-                schemaComposer: schemaCustomization.composer,
-                context,
-                customContext: schemaCustomization.context,
-                nodeModel: this.nodeModel,
-                stats: this.stats,
-                tracer,
-              }),
-              variableValues: context,
-            })
-
-      // Queries are usually executed in batch. But after the batch is finished
-      // cache just wastes memory without much benefits.
-      // TODO: consider a better strategy for cache purging/invalidation
-      this.scheduleClearCache()
-
-      return Promise.resolve(result)
+      // `execute` will return a promise
+      return await execute({
+        schema,
+        document,
+        rootValue: context,
+        contextValue: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context,
+          customContext: schemaCustomization.context,
+          nodeModel: this.nodeModel,
+          stats: this.stats,
+          tracer,
+          telemetryResolverTimings,
+        }),
+        variableValues: context,
+      })
     } finally {
       if (tracer) {
         tracer.end()

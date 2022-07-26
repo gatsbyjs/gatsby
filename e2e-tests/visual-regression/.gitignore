@@ -1,0 +1,14 @@
+# Project dependencies
+.cache
+node_modules
+yarn-error.log
+
+# Build directory
+/public
+.DS_Store
+
+# Cypress output
+cypress/videos/
+cypress/screenshots/
+cypress/results/
+__diff_output__

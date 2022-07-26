@@ -1,16 +1,29 @@
 import fs from "fs-extra"
 import path from "path"
+import findCacheDir from "find-cache-dir"
 
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import { IProgram } from "./types"
 
 module.exports = async function clean(program: IProgram): Promise<void> {
   const { directory, report } = program
 
-  const directories = [`.cache`, `public`]
+  const directories = [
+    `.cache`,
+    `public`,
+    // Ensure we clean babel loader cache
+    findCacheDir({
+      name: `babel-loader`,
+    }),
+    findCacheDir({
+      name: `terser-webpack-plugin`,
+    }),
+  ].filter(Boolean)
 
   report.info(`Deleting ${directories.join(`, `)}`)
 
@@ -20,7 +33,9 @@ module.exports = async function clean(program: IProgram): Promise<void> {
 
   report.info(`Successfully deleted directories`)
 
-  if (await userPassesFeedbackRequestHeuristic()) {
+  if (await userGetsSevenDayFeedback()) {
+    showSevenDayFeedbackRequest()
+  } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
 }

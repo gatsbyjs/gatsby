@@ -1,5 +1,6 @@
-import Joi from "@hapi/joi"
+import Joi from "joi"
 import { IGatsbyConfig, IGatsbyPage, IGatsbyNode } from "../redux/types"
+import { DEFAULT_TYPES_OUTPUT_PATH } from "../utils/graphql-typegen/ts-codegen"
 
 const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.replace(/(\w)\/+$/, `$1`)
@@ -12,7 +13,7 @@ const addLeadingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
 
 export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
   .keys({
-    __experimentalThemes: Joi.array(),
+    flags: Joi.object(),
     polyfill: Joi.boolean().default(true),
     assetPrefix: stripTrailingSlash(
       Joi.string().uri({
@@ -48,7 +49,31 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         })
       )
       .single(),
+    partytownProxiedURLs: Joi.array().items(Joi.string()),
     developMiddleware: Joi.func(),
+    jsxRuntime: Joi.string().valid(`automatic`, `classic`).default(`classic`),
+    jsxImportSource: Joi.string(),
+    trailingSlash: Joi.string()
+      .valid(`always`, `never`, `ignore`, `legacy`) // TODO(v5): Remove legacy
+      .default(`legacy`),
+    graphqlTypegen: Joi.alternatives(
+      Joi.boolean(),
+      Joi.object()
+        .keys({
+          typesOutputPath: Joi.string().default(DEFAULT_TYPES_OUTPUT_PATH),
+        })
+        .unknown(false)
+    )
+      .default(false)
+      .custom(value => {
+        if (value === true) {
+          return {
+            typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
+          }
+        }
+
+        return value
+      }),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(
@@ -86,6 +111,7 @@ export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
     component: Joi.string().required(),
     componentChunkName: Joi.string().required(),
     context: Joi.object(),
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     pluginCreator___NODE: Joi.string(),
     pluginCreatorId: Joi.string(),
   })

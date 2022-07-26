@@ -1,0 +1,68 @@
+# Setup MDX pages within Gatsby
+
+MDX is markdown for the component era.
+
+Write markdown with embedded React components.
+Awesome 🤯
+
+This recipe installs and configures all
+the necessary NPM packages & Gatsby Plugins
+to enable auto-creation of MDX pages within
+src/pages.
+
+This recipe:
+
+---
+
+Installs NPM Packages.
+
+<NPMPackage
+  name="gatsby-source-filesystem"
+/>
+<NPMPackage
+  name="gatsby-plugin-mdx"
+/>
+<NPMPackage
+  name="@mdx-js/mdx"
+/>
+<NPMPackage
+  name="@mdx-js/react"
+/>
+
+---
+
+Adds `gatsby-source-filesystem` to read the MDX files in the src/pages
+directory.
+
+<GatsbyPlugin
+  name="gatsby-source-filesystem"
+  key="src/pages"
+  options={{
+    name: `MDXPages`,
+    path: `src/pages/`,
+  }}
+/>
+
+---
+
+Adds `gatsby-plugin-mdx` to convert MDX files to pages.
+
+<GatsbyPlugin name="gatsby-plugin-mdx" />
+
+---
+
+Adds an example MDX page for you to play with.
+
+<File
+  path="src/pages/test-mdx.mdx"
+  content="https://gist.githubusercontent.com/KyleAMathews/70103d56afb44f1a56f01d68962e8a77/raw/1c6e08d1fc18644d31681d06ed568369d50f6cb4/test-page.mdx"
+/>
+
+---
+
+Once you've installed this recipe, you can start writing MDX pages on your Gatsby site.
+
+Once this recipe is installed, try editing the `test-mdx.mdx` file as well as adding your own file.
+
+Read more about MDX at https://mdxjs.com/.
+

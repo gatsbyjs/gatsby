@@ -7,7 +7,6 @@
  */
 import path from "path"
 import tmp from "tmp"
-import lockfile from "proper-lockfile"
 import fs from "fs-extra"
 import xdgBasedir from "xdg-basedir"
 import { createContentDigest } from "./create-content-digest"
@@ -30,7 +29,12 @@ const lockfileOptions = {
   stale: 5000,
 }
 
-type UnlockFn = () => Promise<void>
+export type UnlockFn = () => Promise<void>
+
+// proper-lockfile has a side-effect that we only want to set when needed
+function getLockFileInstance(): typeof import("proper-lockfile") {
+  return import(`proper-lockfile`)
+}
 
 const memoryServices = {}
 export const createServiceLock = async (
@@ -58,6 +62,7 @@ export const createServiceLock = async (
   try {
     await fs.writeFile(serviceDataFile, JSON.stringify(content))
 
+    const lockfile = await getLockFileInstance()
     const unlock = await lockfile.lock(serviceDataFile, lockfileOptions)
 
     return unlock
@@ -66,17 +71,22 @@ export const createServiceLock = async (
   }
 }
 
-export const getService = async (
+export const getService = async <T = Record<string, unknown>>(
   programPath: string,
-  serviceName: string
-): Promise<string | null> => {
+  serviceName: string,
+  ignoreLockfile: boolean = false
+): Promise<T | null> => {
   if (isCI()) return memoryServices[serviceName] || null
 
   const siteDir = getSiteDir(programPath)
   const serviceDataFile = getDataFilePath(siteDir, serviceName)
 
   try {
-    if (await lockfile.check(serviceDataFile, lockfileOptions)) {
+    const lockfile = await getLockFileInstance()
+    if (
+      ignoreLockfile ||
+      (await lockfile.check(serviceDataFile, lockfileOptions))
+    ) {
       return JSON.parse(
         await fs.readFile(serviceDataFile, `utf8`).catch(() => `null`)
       )
@@ -99,7 +109,7 @@ export const getServices = async (programPath: string): Promise<any> => {
   const services = {}
   await Promise.all(
     serviceNames.map(async service => {
-      services[service] = await getService(programPath, service)
+      services[service] = await getService(programPath, service, true)
     })
   )
 

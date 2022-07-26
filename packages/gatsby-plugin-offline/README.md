@@ -10,7 +10,7 @@ in the service worker.
 
 ## Install
 
-`npm install --save gatsby-plugin-offline`
+`npm install gatsby-plugin-offline`
 
 ## How to use
 
@@ -146,13 +146,15 @@ const options = {
       handler: `CacheFirst`,
     },
     {
-      // page-data.json files are not content hashed
-      urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-      handler: `NetworkFirst`,
+      // page-data.json files, static query results and app-data.json
+      // are not content hashed
+      urlPattern: /^https?:.*\/page-data\/.*\.json/,
+      handler: `StaleWhileRevalidate`,
     },
     {
       // Add runtime caching of various other page resources
-      urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+      urlPattern:
+        /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
       handler: `StaleWhileRevalidate`,
     },
     {
@@ -172,7 +174,7 @@ If you want to remove `gatsby-plugin-offline` from your site at a later point,
 substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
 to safely remove the service worker. First, install the new package:
 
-```bash
+```shell
 npm install gatsby-plugin-remove-serviceworker
 npm uninstall gatsby-plugin-offline
 ```
@@ -233,7 +235,7 @@ In order to solve this, update your `gatsby-config.js` as follows:
    resolve: 'gatsby-plugin-offline',
    options: {
       workboxConfig: {
-         globPatterns: ['**/*']
+         globPatterns: ['**/icon-path*']
       }
    }
 }
@@ -241,3 +243,4 @@ In order to solve this, update your `gatsby-config.js` as follows:
 
 Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
 Adding the `globPatterns` makes sure that the offline plugin will cache everything.
+Note that you have to prefix your icon with `icon-path` or whatever you may call it

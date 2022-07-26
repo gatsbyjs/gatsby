@@ -2,7 +2,7 @@ const { performance } = require(`perf_hooks`)
 
 const { sync: glob } = require(`fast-glob`)
 const nodeFetch = require(`node-fetch`)
-const uuidv4 = require(`uuid/v4`)
+const { uuid } = require(`gatsby-core-utils`)
 const { execSync } = require(`child_process`)
 const fs = require(`fs`)
 
@@ -167,7 +167,7 @@ class BenchMeta {
 
     return {
       time: this.localTime,
-      sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
+      sessionId: process.gatsbyTelemetrySessionId || uuid.v4(),
       cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
@@ -293,7 +293,7 @@ function init(lifecycle) {
 }
 
 process.on(`exit`, () => {
-  if (benchMeta && !benchMeta.flushed) {
+  if (benchMeta && !benchMeta.flushed && BENCHMARK_REPORTING_URL) {
     // This is probably already a non-zero exit as otherwise node should wait for the last promise to complete
     reportError(
       `gatsby-plugin-benchmark-reporting error`,

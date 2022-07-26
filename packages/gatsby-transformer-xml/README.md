@@ -4,7 +4,7 @@ Parses XML files. It also supports attributes
 
 ## Install
 
-`npm install --save gatsby-transformer-xml`
+`npm install gatsby-transformer-xml`
 
 ## How to use
 

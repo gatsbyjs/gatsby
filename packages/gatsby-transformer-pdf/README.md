@@ -4,7 +4,7 @@ Use [pdf2Json](https://github.com/modesty/pdf2json) to extract textual content o
 
 ## Install
 
-`npm install --save gatsby-transformer-pdf`
+`npm install gatsby-transformer-pdf`
 
 You also need to have gatsby-source-filesystem installed and configured so it points to your files.
 

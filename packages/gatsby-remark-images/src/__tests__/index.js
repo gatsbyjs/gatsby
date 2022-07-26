@@ -25,7 +25,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 })
 
 const Remark = require(`remark`)
-const { Potrace } = require(`potrace`)
+const { Potrace } = require(`@gatsbyjs/potrace`)
 const queryString = require(`query-string`)
 const cheerio = require(`cheerio`)
 const toHAST = require(`mdast-util-to-hast`)
@@ -63,7 +63,42 @@ const createNode = content => {
   return markdownNode
 }
 
-const createPluginOptions = (content, imagePaths = `/`) => {
+const createPluginOptions = (
+  content,
+  imagePaths = `/`,
+  passGetRemarkFileDependency = false
+) => {
+  const dirName = `not-a-real-dir`
+  const mockGetImageNode = imagePath => {
+    return {
+      absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
+    }
+  }
+
+  let getRemarkFileDependency
+  if (passGetRemarkFileDependency) {
+    getRemarkFileDependency = jest.fn(fileQuery =>
+      mockGetImageNode(fileQuery.absolutePath.eq)
+    )
+  }
+
+  return {
+    files: [].concat(imagePaths).map(mockGetImageNode),
+    markdownNode: createNode(content),
+    markdownAST: remark.parse(content),
+    getNode: () => {
+      return {
+        dir: dirName,
+      }
+    },
+    compiler: {
+      parseString: remark.parse.bind(remark),
+      generateHTML: node => hastToHTML(toHAST(node)),
+    },
+    getRemarkFileDependency,
+  }
+}
+const createRecursivePluginOptions = (content, imagePaths = `/`) => {
   const dirName = `not-a-real-dir`
   return {
     files: [].concat(imagePaths).map(imagePath => {
@@ -73,9 +108,19 @@ const createPluginOptions = (content, imagePaths = `/`) => {
     }),
     markdownNode: createNode(content),
     markdownAST: remark.parse(content),
-    getNode: () => {
+    getNode: id => {
+      if (id === 1234) {
+        return {
+          id: 1234,
+          internal: { type: `JsonRemarkProperty` },
+          parent: 2345,
+        }
+      }
       return {
         dir: dirName,
+        internal: {
+          type: `File`,
+        },
       }
     },
     compiler: {
@@ -108,6 +153,37 @@ test(`it leaves non-relative images alone`, async () => {
   expect(result).toEqual([])
 })
 
+test(`it leaves files with unsupported file extensions alone`, async () => {
+  const imagePath = `video/my-video.mp4`
+  const content = `
+![video](./${imagePath})
+  `.trim()
+
+  const result = await plugin(createPluginOptions(content, imagePath))
+
+  expect(result).toEqual([])
+})
+
+test(`it transforms images in markdown and uses getRemarkFileDependency when given`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const pluginOptions = createPluginOptions(content, imagePath, true)
+  const nodes = await plugin(pluginOptions)
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+
+  expect(pluginOptions.getRemarkFileDependency.mock.calls.length).toBe(1)
+})
+
 test(`it transforms images in markdown`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `
@@ -116,6 +192,23 @@ test(`it transforms images in markdown`, async () => {
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms images in markdown in nested markdown node`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createRecursivePluginOptions(content, imagePath))
 
   expect(nodes.length).toBe(1)
 
@@ -134,6 +227,25 @@ test(`it transforms images in markdown with the "withWebp" option`, async () => 
 
   const nodes = await plugin(createPluginOptions(content, imagePath), {
     withWebp: true,
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms images in markdown with the "withAvif" option`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    withAvif: true,
   })
 
   expect(nodes.length).toBe(1)
@@ -669,5 +781,43 @@ describe(`disableBgImage`, () => {
     const node = nodes.pop()
     expect(node.type).toBe(`html`)
     expect(node.value).toMatchSnapshot()
+  })
+})
+
+describe(`image alt attribute`, () => {
+  it(`should be generated correctly`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![testing-if-alt-is-correct](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(`testing-if-alt-is-correct`)
+  })
+
+  it(`should use escaped filename as fallback`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(`my image`)
+  })
+
+  it(`should be able to consider EMPTY_ALT`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![GATSBY_EMPTY_ALT](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(``)
   })
 })

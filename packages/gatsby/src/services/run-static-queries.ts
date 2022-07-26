@@ -1,6 +1,7 @@
 import { processStaticQueries } from "../query"
-import { IBuildContext } from "./"
 import reporter from "gatsby-cli/lib/reporter"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
+import { assertStore } from "../utils/assert-store"
 
 export async function runStaticQueries({
   parentSpan,
@@ -8,10 +9,9 @@ export async function runStaticQueries({
   store,
   program,
   graphqlRunner,
-}: Partial<IBuildContext>): Promise<void> {
-  if (!store) {
-    reporter.panic(`Cannot run service without a redux store`)
-  }
+}: Partial<IQueryRunningContext>): Promise<void> {
+  assertStore(store)
+
   if (!queryIds) {
     return
   }
@@ -31,7 +31,11 @@ export async function runStaticQueries({
     }
   )
 
-  activity.start()
+  // TODO: This is hacky, remove with a refactor of PQR itself
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.start()
+  }
+
   await processStaticQueries(staticQueryIds, {
     state,
     activity,
@@ -39,5 +43,7 @@ export async function runStaticQueries({
     graphqlTracing: program?.graphqlTracing,
   })
 
-  activity.done()
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.done()
+  }
 }

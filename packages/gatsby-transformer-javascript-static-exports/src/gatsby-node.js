@@ -2,6 +2,11 @@ const _ = require(`lodash`)
 const babylon = require(`@babel/parser`)
 const traverse = require(`@babel/traverse`).default
 
+function unstable_shouldOnCreateNode({ node }) {
+  // This only processes JavaScript files.
+  return node.internal.mediaType === `application/javascript`
+}
+
 async function onCreateNode({
   node,
   getNode,
@@ -10,12 +15,11 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  const { createNode, createParentChildLink } = actions
-
-  // This only processes JavaScript files.
-  if (node.internal.mediaType !== `application/javascript`) {
+  if (!unstable_shouldOnCreateNode({ node })) {
     return
   }
+
+  const { createNode, createParentChildLink } = actions
 
   const code = await loadNodeContent(node)
   const options = {
@@ -52,7 +56,8 @@ async function onCreateNode({
     ],
   }
 
-  let exportsData, data
+  let exportsData
+  let data
   try {
     const ast = babylon.parse(code, options)
 
@@ -150,4 +155,5 @@ async function onCreateNode({
   }
 }
 
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 exports.onCreateNode = onCreateNode

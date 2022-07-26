@@ -1,28 +1,25 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
-
-import FloatingImage from "../components/floating-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import ImageGallery from "../components/image-gallery"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
 
 const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.localFile.childImageSharp.fluid}
+    image={getImage(data.coverImage.localFile)}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
-    <FloatingImage
-      imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
-      imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
-      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.floatingImage.localFile)}
+      alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
-
     <p>
-      The default Blur Up technique uses progressive loading to make a fast,
-      visually pleasing experience without waiting for a full-resolution image
-      with a blank screen.
+      The Blur Up technique uses progressive loading to make a fast, visually
+      pleasing experience without waiting for a full-resolution image with a
+      blank screen.
     </p>
     <h2>Progressive Loading with Minimal Effort</h2>
     <p>
@@ -34,15 +31,11 @@ const BlurUp = ({ data, location }) => (
       lower-resolution image to help with perceived performance, while the
       larger image downloads and everything works automatically.
     </p>
-    <p>
-      This technique is the default behavior when querying for an image with
-      QraphQL and providing a fragment like <code>GatsbyImageSharpFixed</code>.
-      If you don’t want to use the blur-up effect, choose a fragment with{` `}
-      <code>noBase64</code> at the end.
-    </p>
-    <Img
-      fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
-      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
+    <h2>Unsplash Blurred Gallery</h2>
+    <ImageGallery images={data.galleryImagesCropped.edges} />
+    <GatsbyImage
+      image={getImage(data.fullWidthImage.localFile)}
+      alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
 )
@@ -50,35 +43,27 @@ const BlurUp = ({ data, location }) => (
 export default BlurUp
 
 export const query = graphql`
-  query {
+  {
     coverImage: unsplashImagesYaml(title: { eq: "Plant with leaves" }) {
       credit
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 720) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(
+            width: 720
+            aspectRatio: 0.5
+            layout: CONSTRAINED
+            placeholder: BLURRED
+          )
         }
       }
     }
-    floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
-      localFile {
-        childImageSharp {
-          fixed(width: 120) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
-    }
-    floatingImage: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
+    floatingImage: unsplashImagesYaml(title: { eq: "Pug without hoodie" }) {
       credit
       title
       localFile {
         childImageSharp {
-          fixed(width: 200) {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(width: 200, layout: CONSTRAINED, placeholder: BLURRED)
         }
       }
     }
@@ -87,8 +72,28 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid
+          gatsbyImageData(width: 600, layout: CONSTRAINED)
+        }
+      }
+    }
+    galleryImagesCropped: allUnsplashImagesYaml(
+      filter: { gallery: { eq: true } }
+      skip: 10
+    ) {
+      edges {
+        node {
+          credit
+          title
+          localFile {
+            childImageSharp {
+              gatsbyImageData(
+                width: 380
+                height: 380
+                quality: 70
+                placeholder: BLURRED
+                layout: CONSTRAINED
+              )
+            }
           }
         }
       }

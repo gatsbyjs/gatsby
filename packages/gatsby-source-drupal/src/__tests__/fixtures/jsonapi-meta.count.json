@@ -1,0 +1,11 @@
+{
+  "data": [],
+  "links": {
+    "self": "http://fixture/jsonapi",
+    "node--article": "http://fixture/jsonapi/node/article-meta.count",
+    "describedby": {
+      "href":"http://fixture/jsonapi/schema"
+    }
+  }
+}
+

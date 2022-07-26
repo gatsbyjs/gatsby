@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import { css } from "emotion"
+import { css } from "@emotion/css"
 import get from "lodash/get"
 import { rhythm, scale } from "../utils/typography"
 

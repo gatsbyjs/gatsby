@@ -35,25 +35,90 @@ export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
   return pluginBabelConfig.stages[stage].options
 }
 
-export const prepareOptions = (
-  babel: typeof Babel,
-  options: { stage?: Stage } = {},
-  resolve: RequireResolve = require.resolve
-): Array<PluginItem[]> => {
-  const pluginBabelConfig = loadCachedConfig()
+/**
+ * https://babeljs.io/docs/en/babel-core#createconfigitem
+ * If this function is called multiple times for a given plugin,
+ * Babel will call the plugin's function itself multiple times.
+ * If you have a clear set of expected plugins and presets to inject,
+ * pre-constructing the config items would be recommended.
+ */
+const configItemsMemoCache = new Map()
 
-  const { stage } = options
+interface ICustomOptions extends Record<string, unknown> {
+  stage: Stage
+}
+
+const prepareOptions = (
+  babel: typeof Babel,
+  customOptions: ICustomOptions,
+  resolve: RequireResolve = require.resolve
+): Array<Array<PluginItem>> => {
+  const {
+    stage,
+    reactRuntime,
+    reactImportSource,
+    isPageTemplate,
+    resourceQuery,
+  } = customOptions
+
+  const configItemsMemoCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
+
+  if (configItemsMemoCache.has(configItemsMemoCacheKey)) {
+    return configItemsMemoCache.get(configItemsMemoCacheKey)
+  }
+
+  const pluginBabelConfig = loadCachedConfig()
 
   // Required plugins/presets
   const requiredPlugins = [
-    babel.createConfigItem([resolve(`babel-plugin-remove-graphql-queries`)], {
-      type: `plugin`,
-    }),
+    babel.createConfigItem(
+      [
+        resolve(`babel-plugin-remove-graphql-queries`),
+        { stage, staticQueryDir: `page-data/sq/d` },
+      ],
+      {
+        type: `plugin`,
+      }
+    ),
   ]
-  const requiredPresets: PluginItem[] = []
+
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    (stage === `develop` || stage === `build-javascript`) &&
+    isPageTemplate
+  ) {
+    const apis = [`getServerData`, `config`]
+
+    if (resourceQuery === `?export=default`) {
+      apis.push(`Head`)
+    }
+
+    if (resourceQuery === `?export=head`) {
+      apis.push(`default`)
+    }
+
+    requiredPlugins.push(
+      babel.createConfigItem(
+        [
+          resolve(`./babel/babel-plugin-remove-api`),
+          {
+            apis,
+          },
+        ],
+        {
+          type: `plugin`,
+        }
+      )
+    )
+  }
+
+  const requiredPresets: Array<PluginItem> = []
 
   // Stage specific plugins to add
-  if (stage === `build-html` || stage === `develop-html`) {
+  if (
+    _CFLAGS_.GATSBY_MAJOR !== `4` &&
+    (stage === `build-html` || stage === `develop-html`)
+  ) {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`babel-plugin-dynamic-import-node`)], {
         type: `plugin`,
@@ -61,17 +126,16 @@ export const prepareOptions = (
     )
   }
 
-  // TODO: Remove entire block when we make fast-refresh the default
-  if (stage === `develop` && process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
+  if (stage === `develop`) {
     requiredPlugins.push(
-      babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
+      babel.createConfigItem([resolve(`react-refresh/babel`)], {
         type: `plugin`,
       })
     )
   }
 
   // Fallback preset
-  const fallbackPresets: ConfigItem[] = []
+  const fallbackPresets: Array<ConfigItem> = []
 
   fallbackPresets.push(
     babel.createConfigItem(
@@ -79,6 +143,8 @@ export const prepareOptions = (
         resolve(`babel-preset-gatsby`),
         {
           stage,
+          reactRuntime,
+          reactImportSource,
         },
       ],
       {
@@ -88,14 +154,14 @@ export const prepareOptions = (
   )
 
   // Go through babel state and create config items for presets/plugins from.
-  const reduxPlugins: PluginItem[] = []
-  const reduxPresets: PluginItem[] = []
+  const reduxPlugins: Array<PluginItem> = []
+  const reduxPresets: Array<PluginItem> = []
 
   if (stage) {
     pluginBabelConfig.stages[stage].plugins.forEach(plugin => {
       reduxPlugins.push(
         babel.createConfigItem([resolve(plugin.name), plugin.options], {
-          name: plugin.name,
+          dirname: plugin.name,
           type: `plugin`,
         })
       )
@@ -103,20 +169,49 @@ export const prepareOptions = (
     pluginBabelConfig.stages[stage].presets.forEach(preset => {
       reduxPresets.push(
         babel.createConfigItem([resolve(preset.name), preset.options], {
-          name: preset.name,
+          dirname: preset.name,
           type: `preset`,
         })
       )
     })
   }
 
-  return [
+  const toReturn = [
     reduxPresets,
     reduxPlugins,
     requiredPresets,
     requiredPlugins,
     fallbackPresets,
   ]
+
+  configItemsMemoCache.set(configItemsMemoCacheKey, toReturn)
+
+  return toReturn
+}
+
+const addRequiredPresetOptions = (
+  babel: typeof Babel,
+  presets: Array<ConfigItem>,
+  options: { stage?: Stage } = {},
+  resolve: RequireResolve = require.resolve
+): Array<PluginItem> => {
+  // Always pass `stage` option to babel-preset-gatsby
+  //  (even if defined in custom babelrc)
+  const gatsbyPresetResolved = resolve(`babel-preset-gatsby`)
+  const index = presets.findIndex(
+    p => p.file!.resolved === gatsbyPresetResolved
+  )
+
+  if (index !== -1) {
+    presets[index] = babel.createConfigItem(
+      [
+        gatsbyPresetResolved,
+        { ...presets[index].options, stage: options.stage },
+      ],
+      { type: `preset` }
+    )
+  }
+  return presets
 }
 
 export const mergeConfigItemOptions = ({
@@ -125,11 +220,11 @@ export const mergeConfigItemOptions = ({
   type,
   babel,
 }: {
-  items: ConfigItem[]
+  items: Array<ConfigItem>
   itemToMerge: ConfigItem
   type: CreateConfigItemOptions["type"]
   babel: typeof Babel
-}): ConfigItem[] => {
+}): Array<ConfigItem> => {
   const index = _.findIndex(
     items,
     i => i.file?.resolved === itemToMerge.file?.resolved
@@ -152,3 +247,10 @@ export const mergeConfigItemOptions = ({
 
   return items
 }
+
+exports.getCustomOptions = getCustomOptions
+
+// Export helper functions for testing
+exports.prepareOptions = prepareOptions
+exports.mergeConfigItemOptions = mergeConfigItemOptions
+exports.addRequiredPresetOptions = addRequiredPresetOptions

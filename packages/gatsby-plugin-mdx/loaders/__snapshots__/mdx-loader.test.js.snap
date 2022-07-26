@@ -7,17 +7,6 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const _frontmatter = {};
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   _frontmatter,
 };
@@ -51,20 +40,79 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   _frontmatter,
 };
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-isDevelopStage 1`] = `
+import MDXContent from "/frontmatter-isDevelopStage?type=component";
+export default MDXContent;
+export * from "/frontmatter-isDevelopStage?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/frontmatter-isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/frontmatter-isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
 const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {
   return (
@@ -95,17 +143,115 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
+const layoutProps = {
+  _frontmatter,
+};
 
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-isDevelopStage 1`] = `
+import MDXContent from "/frontmatter-layout-isDevelopStage?type=component";
+export default MDXContent;
+export * from "/frontmatter-layout-isDevelopStage?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/frontmatter-layout-isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/frontmatter-layout-isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3],
+};
 const layoutProps = {
   _frontmatter,
 };
@@ -144,17 +290,6 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   meta,
   _frontmatter,
@@ -162,6 +297,162 @@ const layoutProps = {
 
 const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-namedExports-isDevelopStage 1`] = `
+import MDXContent from "/frontmatter-layout-namedExports-isDevelopStage?type=component";
+export default MDXContent;
+export * from "/frontmatter-layout-namedExports-isDevelopStage?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-namedExports-isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-namedExports-isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/frontmatter-layout-namedExports-isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/frontmatter-layout-namedExports-isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-namedExports-isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-layout-namedExports-lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3],
+};
+const layoutProps = {
+  meta,
+  _frontmatter,
+};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3],
+};
+const layoutProps = {
+  _frontmatter,
+};
+const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {
   return (
     <MDXLayout
@@ -194,21 +485,197 @@ export const _frontmatter = {
   three: 4,
   array: [1, 2, 3],
 };
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   meta,
   _frontmatter,
 };
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-namedExports-isDevelopStage 1`] = `
+import MDXContent from "/frontmatter-namedExports-isDevelopStage?type=component";
+export default MDXContent;
+export * from "/frontmatter-namedExports-isDevelopStage?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-namedExports-isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-namedExports-isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/frontmatter-namedExports-isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/frontmatter-namedExports-isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = { one: "two", three: 4, array: [1, 2, 3] };
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-namedExports-isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with frontmatter-namedExports-lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+export const _frontmatter = {
+  one: "two",
+  three: 4,
+  array: [1, 2, 3],
+};
+const layoutProps = {
+  meta,
+  _frontmatter,
+};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with isDevelopStage 1`] = `
+import MDXContent from "/isDevelopStage?type=component";
+export default MDXContent;
+export * from "/isDevelopStage?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
 const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {
   return (
@@ -235,17 +702,111 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const _frontmatter = {};
+const layoutProps = {
+  _frontmatter,
+};
 
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with layout-isDevelopStage 1`] = `
+import MDXContent from "/layout-isDevelopStage?type=component";
+export default MDXContent;
+export * from "/layout-isDevelopStage?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with layout-isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with layout-isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/layout-isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/layout-isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with layout-isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+const layoutProps = {};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with layout-lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const _frontmatter = {};
 const layoutProps = {
   _frontmatter,
 };
@@ -280,17 +841,6 @@ export const meta = {
   author: "chris",
 };
 export const _frontmatter = {};
-
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
-
 const layoutProps = {
   meta,
   _frontmatter,
@@ -298,6 +848,154 @@ const layoutProps = {
 
 const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
 
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with layout-namedExports-isDevelopStage 1`] = `
+import MDXContent from "/layout-namedExports-isDevelopStage?type=component";
+export default MDXContent;
+export * from "/layout-namedExports-isDevelopStage?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with layout-namedExports-isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with layout-namedExports-isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/layout-namedExports-isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/layout-namedExports-isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with layout-namedExports-isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with layout-namedExports-lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+export const _frontmatter = {};
+const layoutProps = {
+  meta,
+  _frontmatter,
+};
+
+const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
+
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const _frontmatter = {};
+const layoutProps = {
+  _frontmatter,
+};
+const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {
   return (
     <MDXLayout
@@ -326,17 +1024,119 @@ export const meta = {
   author: "chris",
 };
 export const _frontmatter = {};
+const layoutProps = {
+  meta,
+  _frontmatter,
+};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
 
-const makeShortcode = (name) =>
-  function MDXDefaultShortcode(props) {
-    console.warn(
-      "Component " +
-        name +
-        " was not imported, exported, or provided by MDXProvider as global scope"
-    );
-    return <div {...props} />;
-  };
+`;
 
+exports[`mdx-loader snapshot with namedExports-isDevelopStage 1`] = `
+import MDXContent from "/namedExports-isDevelopStage?type=component";
+export default MDXContent;
+export * from "/namedExports-isDevelopStage?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with namedExports-isDevelopStage 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with namedExports-isDevelopStage-lessBabel 1`] = `
+import MDXContent from "/namedExports-isDevelopStage-lessBabel?type=component";
+export default MDXContent;
+export * from "/namedExports-isDevelopStage-lessBabel?type=component";
+
+export const _frontmatter = {};
+
+`;
+
+exports[`mdx-loader snapshot with namedExports-isDevelopStage-lessBabel 2`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+const layoutProps = {
+  meta,
+};
+const MDXLayout = "wrapper";
+export default function MDXContent({ components, ...props }) {
+  return (
+    <MDXLayout
+      {...layoutProps}
+      {...props}
+      components={components}
+      mdxType="MDXLayout"
+    >
+      <h1>{\`Some title\`}</h1>
+      <p>{\`a bit of a paragraph\`}</p>
+      <p>{\`some content\`}</p>
+    </MDXLayout>
+  );
+}
+MDXContent.isMDXComponent = true;
+
+`;
+
+exports[`mdx-loader snapshot with namedExports-lessBabel 1`] = `
+import * as React from "react";
+/* @jsx mdx */
+import { mdx } from "@mdx-js/react";
+/* @jsx mdx */
+
+export const meta = {
+  author: "chris",
+};
+export const _frontmatter = {};
 const layoutProps = {
   meta,
   _frontmatter,

@@ -1,0 +1,565 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`image generation generates the correct images for test image: aspectRatio 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 125,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/e260b/sighisoara.jpg",
+      },
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/49f40/sighisoara.jpg",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/8b0b1/sighisoara.jpg",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/6bc8e/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 125,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/775a0/sighisoara.avif",
+      },
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/0871e/sighisoara.avif",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/88400/sighisoara.avif",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/fd21d/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 125,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/e40ff/sighisoara.webp",
+      },
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/1828c/sighisoara.webp",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/9f72e/sighisoara.webp",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/aa61a/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: constrained 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/99f43/sighisoara.jpg",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/26cfb/sighisoara.jpg",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/1b035/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/ea46c/sighisoara.avif",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/569a0/sighisoara.avif",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/ea316/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/48571/sighisoara.webp",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/921bf/sighisoara.webp",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/b7ef5/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: constrained-square 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 125,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/8bb35/sighisoara.jpg",
+      },
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/f505e/sighisoara.jpg",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/be5ed/sighisoara.jpg",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/5a7c3/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 125,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/3ebc4/sighisoara.avif",
+      },
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/a9ff4/sighisoara.avif",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/a61b1/sighisoara.avif",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/9ef3c/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 125,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/d66e1/sighisoara.webp",
+      },
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/e7160/sighisoara.webp",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/5f169/sighisoara.webp",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/3cd29/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: fixed 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/1b035/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/ea316/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/b7ef5/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: fixed-aspectRatio 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/8b0b1/sighisoara.jpg",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/6bc8e/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/88400/sighisoara.avif",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/fd21d/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/9f72e/sighisoara.webp",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/aa61a/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: fixed-square 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 300,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/0fdf4/sighisoara.jpg",
+      },
+      Object {
+        "size": 600,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/a89ca/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 300,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/aa5b9/sighisoara.avif",
+      },
+      Object {
+        "size": 600,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/0c8d0/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 300,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/078c3/sighisoara.webp",
+      },
+      Object {
+        "size": 600,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/6d09e/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: forcePNG 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 125,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/8bb35/sighisoara.jpg",
+      },
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/f505e/sighisoara.jpg",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/be5ed/sighisoara.jpg",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/5a7c3/sighisoara.jpg",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: fullWidth-aspectRatio 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/5d30b/sighisoara.jpg",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/29c4b/sighisoara.jpg",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/6bfa7/sighisoara.jpg",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/0772e/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/c92f7/sighisoara.avif",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/bd57f/sighisoara.avif",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/d9624/sighisoara.avif",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/fbe86/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/316e8/sighisoara.webp",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/8386b/sighisoara.webp",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/46618/sighisoara.webp",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/15204/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: fullwidth 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/7284f/sighisoara.jpg",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/29ba9/sighisoara.jpg",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/c8896/sighisoara.jpg",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/5267c/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/b0356/sighisoara.avif",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/48f75/sighisoara.avif",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/a5094/sighisoara.avif",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/f46cf/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/57584/sighisoara.webp",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/984df/sighisoara.webp",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/4a276/sighisoara.webp",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/9c00f/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: fullwidth-bp 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/7284f/sighisoara.jpg",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/29ba9/sighisoara.jpg",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/c8896/sighisoara.jpg",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/5267c/sighisoara.jpg",
+      },
+    ],
+  },
+  Object {
+    "format": "image/avif",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/b0356/sighisoara.avif",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/48f75/sighisoara.avif",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/a5094/sighisoara.avif",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/f46cf/sighisoara.avif",
+      },
+    ],
+  },
+  Object {
+    "format": "image/webp",
+    "srcset": Array [
+      Object {
+        "size": 750,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/57584/sighisoara.webp",
+      },
+      Object {
+        "size": 1080,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/984df/sighisoara.webp",
+      },
+      Object {
+        "size": 1366,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/4a276/sighisoara.webp",
+      },
+      Object {
+        "size": 1920,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/9c00f/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;
+
+exports[`image generation generates the correct images for test image: no-jpg 1`] = `
+Array [
+  Object {
+    "format": "auto",
+    "srcset": Array [
+      Object {
+        "size": 250,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/48571/sighisoara.webp",
+      },
+      Object {
+        "size": 500,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/921bf/sighisoara.webp",
+      },
+      Object {
+        "size": 1000,
+        "src": "/static/3dc14781080130c49ec2f3d768d5d244/b7ef5/sighisoara.webp",
+      },
+    ],
+  },
+]
+`;

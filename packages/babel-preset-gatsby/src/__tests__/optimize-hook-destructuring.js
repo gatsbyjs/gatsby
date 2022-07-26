@@ -1,5 +1,5 @@
 import { transform } from "@babel/core"
-import preset from "babel-preset-gatsby"
+import preset from "../index"
 import plugin from "../optimize-hook-destructuring"
 
 const trim = s => s.join(`\n`).trim().replace(/^\s+/gm, ``)

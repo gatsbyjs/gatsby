@@ -17,8 +17,8 @@ exports.onRenderBody = (
     icons: pluginIcons,
     include_favicon: insertFaviconLinkTag,
     theme_color_in_head: insertMetaTag,
-    theme_color,
-    crossOrigin,
+    theme_color: themeColor,
+    crossOrigin = `anonymous`,
   }
 ) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
@@ -34,14 +34,27 @@ exports.onRenderBody = (
       favicons.forEach(favicon => {
         headComponents.push(
           <link
-            key={`gatsby-plugin-manifest-icon-link`}
+            key={`gatsby-plugin-manifest-icon-link-png`}
             rel="icon"
             href={withPrefix(
               addDigestToPath(favicon.src, cacheDigest, cacheBusting)
             )}
+            type="image/png"
           />
         )
       })
+      if (icon?.endsWith(`.svg`)) {
+        headComponents.push(
+          <link
+            key={`gatsby-plugin-manifest-icon-link-svg`}
+            rel="icon"
+            href={withPrefix(
+              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
+            )}
+            type="image/svg+xml"
+          />
+        )
+      }
     }
   }
 
@@ -50,18 +63,18 @@ exports.onRenderBody = (
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href={withPrefix(`/${manifestFileName}`)}
+      href={fallbackWithPrefix(`/${manifestFileName}`)}
       crossOrigin={crossOrigin}
     />
   )
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
-  if (theme_color && insertMetaTag) {
+  if (themeColor && insertMetaTag) {
     headComponents.push(
       <meta
         key={`gatsby-plugin-manifest-meta`}
         name="theme-color"
-        content={theme_color}
+        content={themeColor}
       />
     )
   }

@@ -2,6 +2,12 @@
 
 Source plugin for pulling data into Gatsby from MongoDB collections.
 
+## Installation
+
+```shell
+npm install gatsby-source-mongodb
+```
+
 ## How to use
 
 ```javascript
@@ -16,6 +22,7 @@ module.exports = {
     {
       resolve: `gatsby-source-mongodb`,
       options: { dbName: `local`, collection: `documents` },
+      query: { documents: { as_of: { $gte: 1604397088013 } } },
     },
   ],
 }
@@ -39,8 +46,10 @@ module.exports = {
 
 - **connectionString**: if you need to use a connection string compatible with later versions of MongoDB, or for connections to MongoDB Atlas, you can enter the entire string, minus the `dbName` and `extraParams`. In this case, the authentication information should already be embedded in the string ex. `mongodb+srv://<USERNAME>:<PASSWORD>@<SERVERNANE>-fsokc.mongodb.net`. Pass `dbName` and `extraParams` as options per below.
 - **dbName**: indicates the database name that you want to use
+- **typePrefix**: the prefix you want to add to your entity types (dbName by default)
 - **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
+- **query**: add a query when retriving a collection. This is a key value object where key's are collection names, and value is the query object. Defaults to {} (i.e. the whole collection)
 - **server**: contains the server info, with sub properties address and port ex.
   server: { address: `ds143532.mlab.com`, port: 43532 }. Defaults to a server
   running locally on the default port.
@@ -89,7 +98,7 @@ The GraphQL query to get the transformed markdown would look something like
 this.
 
 ```graphql
-query($id: String!) {
+query ($id: String!) {
   mongodbCloudDocuments(id: { eq: $id }) {
     id
     name

@@ -1,25 +1,36 @@
 import { gatsbyConfigSchema, nodeSchema } from "../joi"
 
 describe(`gatsby config`, () => {
-  it(`returns empty pathPrefix when not set`, async () => {
+  it(`returns empty pathPrefix when not set`, () => {
     const config = {}
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
       expect.objectContaining({
         pathPrefix: ``,
       })
     )
   })
 
-  it(`strips trailing slashes from url fields`, async () => {
+  it(`throws when linkPrefix is set`, () => {
+    const config = {
+      linkPrefix: `/blog/`,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[Error: "linkPrefix" should be changed to "pathPrefix"]`
+    )
+  })
+
+  it(`strips trailing slashes from url fields`, () => {
     const config = {
       pathPrefix: `/blog///`,
       assetPrefix: `https://cdn.example.com/`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
       expect.objectContaining({
         pathPrefix: `/blog`,
         assetPrefix: `https://cdn.example.com`,
@@ -27,46 +38,46 @@ describe(`gatsby config`, () => {
     )
   })
 
-  it(`allows assetPrefix to be full URL`, async () => {
+  it(`allows assetPrefix to be full URL`, () => {
     const config = {
       assetPrefix: `https://cdn.example.com/`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
       expect.objectContaining({
         assetPrefix: `https://cdn.example.com`,
       })
     )
   })
 
-  it(`allows assetPrefix to be a URL with nested paths`, async () => {
+  it(`allows assetPrefix to be a URL with nested paths`, () => {
     const config = {
       assetPrefix: `https://cdn.example.com/some/nested/path`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(expect.objectContaining(config))
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(expect.objectContaining(config))
   })
 
-  it(`allows relative paths for url fields`, async () => {
+  it(`allows relative paths for url fields`, () => {
     const config = {
       pathPrefix: `/blog`,
       assetPrefix: `https://cdn.example.com`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(expect.objectContaining(config))
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(expect.objectContaining(config))
   })
 
-  it(`strips trailing slash and add leading slash to pathPrefix`, async () => {
+  it(`strips trailing slash and add leading slash to pathPrefix`, () => {
     const config = {
       pathPrefix: `blog/`,
       assetPrefix: `https://cdn.example.com/`,
     }
 
-    const result = await gatsbyConfigSchema.validate(config)
-    expect(result).toEqual(
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
       expect.objectContaining({
         pathPrefix: `/blog`,
         assetPrefix: `https://cdn.example.com`,
@@ -74,36 +85,148 @@ describe(`gatsby config`, () => {
     )
   })
 
-  it(`does not allow pathPrefix to be full URL`, async () => {
-    expect.assertions(1)
+  it(`does not allow pathPrefix to be full URL`, () => {
     const config = {
       pathPrefix: `https://google.com`,
     }
 
-    try {
-      await gatsbyConfigSchema.validate(config)
-    } catch (err) {
-      expect(err.message).toMatchSnapshot()
-    }
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "pathPrefix" must be a valid relative uri]`
+    )
   })
 
-  it(`throws when relative path used for both assetPrefix and pathPrefix`, async () => {
-    expect.assertions(1)
+  it(`throws when relative path used for both assetPrefix and pathPrefix`, () => {
     const config = {
       assetPrefix: `/assets`,
       pathPrefix: `/blog`,
     }
 
-    try {
-      await gatsbyConfigSchema.validate(config)
-    } catch (err) {
-      expect(err.message).toMatchSnapshot()
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[Error: assetPrefix must be an absolute URI when used with pathPrefix]`
+    )
+  })
+
+  it(`returns "legacy" for trailingSlash when not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        trailingSlash: `legacy`,
+      })
+    )
+  })
+
+  it(`throws when trailingSlash is not valid string`, () => {
+    const config = {
+      trailingSlash: `arrakis`,
     }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
+    )
+  })
+
+  it(`throws when trailingSlash is not a string`, () => {
+    const config = {
+      trailingSlash: true,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
+    )
+  })
+
+  it(`return false for graphqlTypegen when not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: false,
+      })
+    )
+  })
+
+  it(`throws when graphqlTypegen is not valid option`, () => {
+    const config = {
+      graphqlTypegen: `foo-bar`,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "graphqlTypegen" must be one of [boolean, object]]`
+    )
+  })
+
+  it(`throws when graphqlTypegen has invalid keys`, () => {
+    const config = {
+      graphqlTypegen: {
+        invalid: true,
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(
+      `[ValidationError: "graphqlTypegen.invalid" is not allowed]`
+    )
+  })
+
+  it(`return defaults for graphqlTypegen when empty object is set`, () => {
+    const config = {
+      graphqlTypegen: {},
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+        },
+      })
+    )
+  })
+
+  it(`return defaults for graphqlTypegen when true is set`, () => {
+    const config = {
+      graphqlTypegen: true,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `src/gatsby-types.d.ts`,
+        },
+      })
+    )
+  })
+
+  // TODO: Write "return partial defaults for graphqlTypegen when partial options object is set" test with more graphqlTypegen options
+  it(`graphqlTypegen config object can be overwritten`, () => {
+    const config = {
+      graphqlTypegen: {
+        typesOutputPath: `gatsby-types.d.ts`,
+      },
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        graphqlTypegen: {
+          typesOutputPath: `gatsby-types.d.ts`,
+        },
+      })
+    )
   })
 })
 
 describe(`node schema`, () => {
-  it(`allows correct nodes`, async () => {
+  it(`allows correct nodes`, () => {
     const node = {
       id: `foo`,
       internal: {
@@ -119,7 +242,7 @@ describe(`node schema`, () => {
     expect(error).toBeFalsy()
   })
 
-  it(`force id type`, async () => {
+  it(`force id type`, () => {
     const node = {
       id: 5,
       internal: {
@@ -134,10 +257,10 @@ describe(`node schema`, () => {
     const { error } = nodeSchema.validate(node)
     expect(error).toBeTruthy()
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(error!.message).toMatchSnapshot()
+    expect(error!.message).toMatchInlineSnapshot(`"\\"id\\" must be a string"`)
   })
 
-  it(`doesn't allow unknown internal fields`, async () => {
+  it(`doesn't allow unknown internal fields`, () => {
     const node = {
       id: `foo`,
       internal: {
@@ -154,6 +277,8 @@ describe(`node schema`, () => {
     const { error } = nodeSchema.validate(node)
     expect(error).toBeTruthy()
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(error!.message).toMatchSnapshot()
+    expect(error!.message).toMatchInlineSnapshot(
+      `"\\"internal.customField\\" is not allowed"`
+    )
   })
 })

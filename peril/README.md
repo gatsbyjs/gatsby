@@ -34,7 +34,6 @@ The Peril instance can also be configured to run events on a schedule.
 ### What is this project?
 
 - [EmptyBody](./rules/emptybody.ts): Automatically requests more information from a user who opens a new issue with a blank body.
-- [InviteCollaborator](./rules/invite-collaborator.ts): Automatically invite all contributors who merge a PR into the GatsbyJS org to become members of the [@gatsbyjs/maintainers](https://github.com/orgs/gatsbyjs/teams/maintainers) team.
 
 ### To Develop
 
@@ -64,7 +63,3 @@ Add the following env var to the Heroku app: `DEBUG=octokit:rest*`. This will en
 Huge thanks to [@SD10](https://github.com/SD10) for the initial setup help and for additional guidance along the way.
 
 And thanks to [@orta](https://github.com/orta) for creating [Peril](https://github.com/danger/peril). This makes our lives so much easier.
-
-## Roadmap
-
-See [this epic](https://github.com/gatsbyjs/gatsby/issues/6728) for additional work planned in this repo. (Works best with the [ZenHub extension](https://www.zenhub.com/extension).)
