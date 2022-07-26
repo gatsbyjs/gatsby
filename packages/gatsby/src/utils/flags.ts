@@ -252,7 +252,7 @@ const activeFlags: Array<IFlag> = [
     command: `all`,
     telemetryId: `GraphQLNestedSortAndAggregate`,
     description: `Change enums used to define sorting and aggregation to nested input objects. This lowers memory usage and improve schema building performance.`,
-    umbrellaIssue: `TBD`,
+    umbrellaIssue: `https://gatsby.dev/graphql-nested-sort-and-aggregate`,
     experimental: true,
     testFitness: (): fitnessEnum => true,
   },
