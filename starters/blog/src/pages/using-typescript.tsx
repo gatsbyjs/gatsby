@@ -1,6 +1,6 @@
 // If you don't want to use TypeScript you can delete this file!
 import * as React from "react"
-import { PageProps, Link, graphql } from "gatsby"
+import { PageProps, Link, graphql, HeadFC } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -42,7 +42,7 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({
   </Layout>
 )
 
-export const Head = () => <Seo title="Using TypeScript" />
+export const Head: HeadFC<DataProps> = () => <Seo title="Using TypeScript" />
 
 export default UsingTypescript
 
