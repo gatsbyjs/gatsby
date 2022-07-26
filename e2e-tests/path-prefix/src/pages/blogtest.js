@@ -2,8 +2,7 @@ import * as React from "react"
 import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Seo from '../components/seo'
-
+import Seo from "../components/seo"
 
 const Blogtest = () => (
   <Layout>
@@ -15,6 +14,6 @@ const Blogtest = () => (
   </Layout>
 )
 
-export const Head = ()=> <Seo/>
+export const Head = () => <Seo />
 
 export default Blogtest

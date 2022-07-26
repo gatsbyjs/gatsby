@@ -14,6 +14,6 @@ const SecondPage = () => (
   </Layout>
 )
 
-export const Head = ()=> <Seo/>
+export const Head = () => <Seo />
 
 export default SecondPage
