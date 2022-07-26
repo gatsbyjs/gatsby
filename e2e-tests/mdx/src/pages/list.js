@@ -9,34 +9,42 @@ const ListPage = ({ data }) => {
 
   return (
     <div>
-      <div data-testid="mdx-slug">{anotherPage.slug}</div>
-      <div data-testid="md-slug">{blogPage.slug}</div>
-      <div data-testid="complex-slug">{aboutPage.slug}</div>
-      <div data-testid="embed-slug">{embedPage.slug}</div>
+      <div data-testid="mdx-slug">{anotherPage.fields.slug}</div>
+      <div data-testid="md-slug">{blogPage.fields.slug}</div>
+      <div data-testid="complex-slug">{aboutPage.fields.slug}</div>
+      <div data-testid="embed-slug">{embedPage.fields.slug}</div>
     </div>
   )
 }
 
 export const query = graphql`
   {
-    another: allMdx(filter: { slug: { eq: "another" } }) {
+    another: allMdx(filter: { fields: { slug: { eq: "/another" } } }) {
       nodes {
-        slug
+        fields {
+          slug
+        }
       }
     }
-    blog: allMdx(filter: { slug: { eq: "my-blog" } }) {
+    blog: allMdx(filter: { fields: { slug: { eq: "/my-blog" } } }) {
       nodes {
-        slug
+        fields {
+          slug
+        }
       }
     }
-    complex: allMdx(filter: { slug: { eq: "about" } }) {
+    complex: allMdx(filter: { fields: { slug: { eq: "/about" } } }) {
       nodes {
-        slug
+        fields {
+          slug
+        }
       }
     }
-    embed: allMdx(filter: { slug: { eq: "about/embedded" } }) {
+    embed: allMdx(filter: { fields: { slug: { eq: "/about/embedded" } } }) {
       nodes {
-        slug
+        fields {
+          slug
+        }
       }
     }
   }
