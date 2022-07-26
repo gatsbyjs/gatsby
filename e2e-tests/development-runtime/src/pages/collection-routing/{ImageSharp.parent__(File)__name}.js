@@ -34,4 +34,6 @@ export const blogPostQuery = graphql`
   }
 `
 
-export const Head = () => <Seo title="Blog Post" />
+export const Head = ({ data: { image } }) => {
+  return <Seo title={image.parent.name} />
+}
