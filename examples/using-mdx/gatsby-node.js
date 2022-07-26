@@ -11,10 +11,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           frontmatter {
             slug
           }
-          parent {
-            ... on File {
-              absolutePath
-            }
+          internal {
+            contentFilePath
           }
         }
       }
@@ -25,20 +23,26 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     reporter.panicOnBuild('Error loading MDX result', result.errors)
   }
 
-  // Create blog post pages.
   const posts = result.data.allMdx.nodes
 
-  // you'll call `createPage` for each result
   posts.forEach(node => {
-    createPage({
-      // As mentioned above you could also query something else like frontmatter.title above and use a helper function
-      // like slugify to create a slug
-      path: node.frontmatter.slug,
-      // Provide the path to the MDX content file so webpack can pick it up and transform it into JSX
-      component: `${path.resolve(`./src/components/posts-page-layout.jsx`)}?__contentFilePath=${node.parent.absolutePath}`,
-      // You can use the values in this context in
-      // our page layout component
-      context: { id: node.id },
-    })
+    // Don't create a page for src/pages/chart-info.mdx since this already gets created
+    if (node.frontmatter.slug !== `/chart-info`) {
+      if (node.frontmatter.slug === `/blog-1`) {
+        // For /blog-1 create a page without defining a contentFilePath and just using the layout defined in src/components/layout.jsx
+        createPage({
+          path: node.frontmatter.slug,
+          component: node.internal.contentFilePath,
+          context: { id: node.id },
+        })
+      } else {
+        // For /blog-2 define a contentFilePath and thus have two layouts. The src/components/layout.jsx and nested inside that the src/components/posts-page-layout.jsx
+        createPage({
+          path: node.frontmatter.slug,
+          component: `${path.resolve(`./src/components/posts-page-layout.jsx`)}?__contentFilePath=${node.internal.contentFilePath}`,
+          context: { id: node.id },
+        })
+      }
+    }
   })
 }

@@ -23,6 +23,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
+        mdxOptions: {
+          remarkPlugins: [require(`remark-gfm`), require(`remark-unwrap-images`)]
+        },
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,
