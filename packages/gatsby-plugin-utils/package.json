@@ -70,7 +70,7 @@
   },
   "peerDependencies": {
     "gatsby": "^4.0.0-next",
-    "graphql": "^14.2.0 || ^15.0.0 || ^16.0.0"
+    "graphql": "^15.0.0"
   },
   "files": [
     "dist/"
