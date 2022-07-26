@@ -1,32 +1,23 @@
 {
-  "name": "using-mdx-example",
+  "name": "using-mdx",
   "private": true,
   "description": "Showing how to use MDX in Gatsby",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "version": "0.0.1",
+  "author": "LekoArts",
   "dependencies": {
-    "@mdx-js/mdx": "^2.1.2",
     "@mdx-js/react": "^2.1.2",
-    "@nivo/bar": "0.78.0",
-    "@nivo/bump": "^0.79.1",
-    "@nivo/core": "0.78.0",
-    "@nivo/line": "0.78.0",
+    "@nivo/core": "^0.79.0",
+    "@nivo/line": "^0.79.1",
     "gatsby": "next",
-    "gatsby-image": "next",
-    "gatsby-plugin-image": "next",
     "gatsby-plugin-mdx": "next",
-    "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "next",
+    "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
-    "gatsby-transformer-sharp": "next",
-    "react": "^18.0.0",
-    "react-charts": "^2.0.1",
-    "react-chat-elements": "^10.10.2",
-    "react-dom": "^18.0.0",
-    "react-helmet": "^5.2.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "prettier": "2.1.1"
+    "prettier": "^2.7.1"
   },
   "keywords": [
     "gatsby"
@@ -36,7 +27,6 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
