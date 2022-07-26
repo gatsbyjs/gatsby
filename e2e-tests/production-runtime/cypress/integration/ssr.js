@@ -3,6 +3,12 @@ const paramPath = `/ssr/param-path/`
 const wildcardPath = `/ssr/wildcard-path/`
 const pathRaking = `/ssr/path-ranking/`
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423')) {
+    return false
+  }
+})
+
 describe(`Static path ('${staticPath}')`, () => {
   it(`Direct visit no query params`, () => {
     cy.visit(staticPath).waitForRouteChange()

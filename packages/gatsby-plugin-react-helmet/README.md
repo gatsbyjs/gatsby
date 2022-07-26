@@ -11,9 +11,15 @@ attributes, etc. will get added to the static HTML pages Gatsby builds.
 
 This is important not just for site viewers, but also for SEO -- title and description metadata stored in the document head is a key component used by Google in determining placement in search results.
 
+## ⚠️ This package will be deprecated
+
+The `gatsby-plugin-react-helmet` package will be deprecated in the future. The new [Gatsby Head API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/) is easier to use, more performant, has a smaller bundle size, and supports the latest React features. Update to `gatsby@^4.19.0` to use it.
+
 ## Install
 
-`npm install gatsby-plugin-react-helmet react-helmet`
+```shell
+npm install gatsby-plugin-react-helmet react-helmet
+```
 
 ## How to use
 
@@ -38,7 +44,3 @@ If you are using this plugin with React hooks, you may notice some errors like `
 - You have updated to the latest version of `gatsby-plugin-react-helmet`
 - You are using version 6.0.0-beta or later of `react-helmet`
 - You are importing React Helmet using `import { Helmet } from 'react-helmet'` rather than the old `import Helmet from 'react-helmet'`
-
-## Examples
-
-- [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby/blob/master/starters/blog/src/components/seo.js)

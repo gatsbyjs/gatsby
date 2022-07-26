@@ -50,7 +50,7 @@ const isBrowser = typeof window !== "undefined"
 export default function MyComponent() {
   let loggedIn = false
   if (isBrowser) {
-    window.localstorage.getItem("isLoggedIn") === "true"
+    window.localStorage.getItem("isLoggedIn") === "true"
   }
 
   return <div>Am I logged in? {loggedIn}</div>

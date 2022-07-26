@@ -1,0 +1,9 @@
+DOCKER_ID=$(./scripts/docker-get-id)
+
+if [ -z "$DOCKER_ID" ]; then
+  echo "\nNo gatsby-generic-benchmark is running. Start one with \`yarn docker:start\`.\n"
+  return 1
+fi
+
+echo "Connecting to container $DOCKER_ID...\n"
+docker exec -it $DOCKER_ID bash

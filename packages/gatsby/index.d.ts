@@ -151,6 +151,35 @@ export type PageProps<
 }
 
 /**
+ * A props object passed into the Head function for [Gatsby Head API](https://gatsby.dev/gatsby-head).
+ */
+export type HeadProps<DataType = object, PageContextType = object> = {
+  location: {
+    /**
+     * Returns the Location object's URL's path.
+     */
+    pathname: string;
+  }
+  /** The URL parameters when the page has a `matchPath` */
+  params: Record<string, string>
+  /**
+   * Data passed into the page via an exported GraphQL query.
+   */
+  data: DataType
+  /**
+   * A context object which is passed in during the creation of the page.
+   */
+  pageContext: PageContextType
+}
+
+/**
+ * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
+ */
+ export type HeadFC<DataType = object, PageContextType = object> = (
+  props: HeadProps<DataType, PageContextType>
+) => JSX.Element
+
+/**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
 export type GetServerDataProps = {
@@ -227,6 +256,10 @@ export class StaticQuery<T = any> extends React.Component<
  */
 export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
+export interface GraphQLTypegenOptions {
+  typesOutputPath?: string
+}
+
 /**
  * Gatsby configuration API.
  *
@@ -245,8 +278,8 @@ export interface GatsbyConfig {
   trailingSlash?: "always" | "never" | "ignore" | "legacy"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
-  /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. */
-  graphqlTypegen?: boolean
+  /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. If set to true, the default GraphQLTypegenOptions are used. See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/ for all options. */
+  graphqlTypegen?: boolean | GraphQLTypegenOptions
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
@@ -1280,10 +1313,7 @@ export interface Actions {
   ): Promise<unknown>
 
   /** @see https://www.gatsbyjs.com/docs/actions/#addGatsbyImageSourceUrl */
-  addGatsbyImageSourceUrl(
-    this: void,
-    sourceUrl: string,
-  ): void
+  addGatsbyImageSourceUrl(this: void, sourceUrl: string): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#setJob */
   setJob(
@@ -1620,7 +1650,7 @@ export interface Page<TContext = Record<string, unknown>> {
   path: string
   matchPath?: string
   component: string
-  context: TContext
+  context?: TContext
   ownerNodeId?: string
   defer?: boolean
 }

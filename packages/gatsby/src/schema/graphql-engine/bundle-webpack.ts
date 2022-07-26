@@ -2,11 +2,15 @@
 
 import * as path from "path"
 import * as fs from "fs-extra"
-import webpack from "webpack"
+import webpack, { Module, NormalModule, Compilation } from "webpack"
+import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
+import { schemaCustomizationAPIs } from "./print-plugins"
+import type { GatsbyNodeAPI } from "../../redux/types"
+import * as nodeApis from "../../utils/api-node-docs"
 
 type Reporter = typeof reporter
 
@@ -19,6 +23,16 @@ const cacheLocation = path.join(
   `webpack`,
   `query-engine`
 )
+
+function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
+  const apisToKeep = new Set(schemaCustomizationAPIs)
+  apisToKeep.add(`onPluginInit`)
+
+  const apisToRemove = (Object.keys(nodeApis) as Array<GatsbyNodeAPI>).filter(
+    api => !apisToKeep.has(api)
+  )
+  return apisToRemove
+}
 
 export async function createGraphqlEngineBundle(
   rootDir: string,
@@ -37,6 +51,10 @@ export async function createGraphqlEngineBundle(
       outputAssetBase: `assets`,
     },
   }
+
+  const gatsbyPluginTSRequire = mod.createRequire(
+    require.resolve(`gatsby-plugin-typescript`)
+  )
 
   const compiler = webpack({
     name: `Query Engine`,
@@ -93,25 +111,43 @@ export async function createGraphqlEngineBundle(
             },
             {
               // specific set of loaders for gatsby-node files - our babel transform that removes lifecycles not needed for engine -> relocator
-              test: /gatsby-node\.([cm]?js)$/,
+              test: /gatsby-node\.(cjs|mjs|js|ts)$/,
               // it is recommended for Node builds to turn off AMD support
               parser: { amd: false },
               use: [
                 assetRelocatorUseEntry,
                 {
-                  loader: require.resolve(`./webpack-remove-apis-loader`),
+                  loader: require.resolve(
+                    `../../utils/webpack/loaders/webpack-remove-exports-loader`
+                  ),
+                  options: {
+                    remove: getApisToRemoveForQueryEngine(),
+                    jsx: false,
+                  },
                 },
               ],
             },
             {
               // generic loader for all other cases than lmdb or gatsby-node - we don't do anything special other than using relocator on it
               // For node binary relocations, include ".node" files as well here
-              test: /\.([cm]?js|node)$/,
+              test: /\.(cjs|mjs|js|ts|node)$/,
               // it is recommended for Node builds to turn off AMD support
               parser: { amd: false },
               use: assetRelocatorUseEntry,
             },
           ],
+        },
+        {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: require.resolve(`babel-loader`),
+            options: {
+              presets: [
+                gatsbyPluginTSRequire.resolve(`@babel/preset-typescript`),
+              ],
+            },
+          },
         },
         {
           test: /\.m?js$/,
@@ -121,16 +157,6 @@ export async function createGraphqlEngineBundle(
               esm: {
                 fullySpecified: false,
               },
-            },
-          },
-        },
-        {
-          test: /\.ts$/,
-          exclude: /node_modules/,
-          use: {
-            loader: `babel-loader`,
-            options: {
-              presets: [`@babel/preset-typescript`],
             },
           },
         },
@@ -150,13 +176,16 @@ export async function createGraphqlEngineBundle(
         inquirer: false,
         // only load one version of lmdb
         lmdb: require.resolve(`lmdb`),
+        "ts-node": require.resolve(`./shims/ts-node`),
       },
     },
     plugins: [
+      new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
       new webpack.DefinePlugin({
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
+        "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
@@ -166,16 +195,71 @@ export async function createGraphqlEngineBundle(
   })
 
   return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
-      compiler.close(closeErr => {
-        if (err) {
-          return reject(err)
+    compiler.run((err, stats): void => {
+      function getResourcePath(
+        webpackModule?: Module | NormalModule | ConcatenatedModule | null
+      ): string | undefined {
+        if (webpackModule && !(webpackModule instanceof ConcatenatedModule)) {
+          return (webpackModule as NormalModule).resource
         }
-        if (closeErr) {
-          return reject(closeErr)
+
+        if (webpackModule?.modules) {
+          // ConcatenatedModule is a collection of modules so we have to go deeper to actually get a path,
+          // at this point we won't know which one so we just grab first module here
+          const [firstSubModule] = webpackModule.modules
+          return getResourcePath(firstSubModule)
         }
-        return resolve(stats?.compilation)
-      })
+
+        return undefined
+      }
+
+      function iterateModules(
+        webpackModules: Set<Module>,
+        compilation: Compilation
+      ): void {
+        for (const webpackModule of webpackModules) {
+          if (webpackModule instanceof ConcatenatedModule) {
+            iterateModules(
+              (webpackModule as ConcatenatedModule).modules,
+              compilation
+            )
+          } else {
+            const resourcePath = getResourcePath(webpackModule)
+            if (resourcePath?.includes(`ts-node`)) {
+              const importedBy = getResourcePath(
+                compilation.moduleGraph.getIssuer(webpackModule)
+              )
+              const structuredError = {
+                id: `98011`,
+                context: {
+                  package: `ts-node`,
+                  importedBy,
+                  advisory: `Gatsby is supporting TypeScript natively (see https://gatsby.dev/typescript). "ts-node" might not be needed anymore at all, consider removing it.`,
+                },
+              }
+              throw structuredError
+            }
+          }
+        }
+      }
+
+      try {
+        if (stats?.compilation.modules) {
+          iterateModules(stats.compilation.modules, stats.compilation)
+        }
+
+        compiler.close(closeErr => {
+          if (err) {
+            return reject(err)
+          }
+          if (closeErr) {
+            return reject(closeErr)
+          }
+          return resolve(stats?.compilation)
+        })
+      } catch (e) {
+        reject(e)
+      }
     })
   })
 }
