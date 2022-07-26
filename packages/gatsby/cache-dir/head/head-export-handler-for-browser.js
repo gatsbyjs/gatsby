@@ -13,6 +13,7 @@ import {
 
 const hiddenRoot = document.createElement(`div`)
 let prevInnerHTML = ``
+let prevPagePath = ``
 
 const removePrevHeadElements = () => {
   const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
@@ -20,15 +21,23 @@ const removePrevHeadElements = () => {
 }
 
 const onHeadRendered = () => {
-  const validHeadNodes = []
-
-  if (!prevInnerHTML) {
-    prevInnerHTML = hiddenRoot.innerHTML
-  } else {
-    if (prevInnerHTML === hiddenRoot.innerHTML) {
-      return
-    }
+  /**
+   * Bailout if page path and innerHTML did not change
+   *
+   * This function gets called by mutation observer and useEffect.
+   * This early bailout makes sure we don't run this callback twice for the same page.
+   */
+  if (
+    prevInnerHTML === hiddenRoot.innerHTML &&
+    prevPagePath === window.location.pathname
+  ) {
+    return
   }
+
+  prevInnerHTML = hiddenRoot.innerHTML
+  prevPagePath = window.location.pathname
+
+  const validHeadNodes = []
 
   removePrevHeadElements()
 
