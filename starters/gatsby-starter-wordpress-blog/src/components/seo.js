@@ -31,24 +31,20 @@ const SEO = ({ description, title, children }) => {
   const metaDescription = description || wp.generalSettings?.description
   const defaultTitle = wp.generalSettings?.title
 
-  return(
+  return (
     <>
-    <title> {defaultTitle ? `${title} | ${defaultTitle}` : title} </title>
-    <meta name="description" content={metaDescription} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={metaDescription} />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
-    <meta
-      name="twitter:creator"
-      content={ wpUser?.twitter || ``}
-    />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={metaDescription} />
-    {children}
-  </>
+      <title> {defaultTitle ? `${title} | ${defaultTitle}` : title} </title>
+      <meta name="description" content={metaDescription} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:creator" content={wpUser?.twitter || ``} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={metaDescription} />
+      {children}
+    </>
   )
-
 }
 
 SEO.defaultProps = {
