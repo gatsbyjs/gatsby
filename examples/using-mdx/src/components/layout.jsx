@@ -1,6 +1,8 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import { MDXProvider } from "@mdx-js/react"
 import { Header } from "./header"
+import { components } from "./shortcodes"
 import "./layout.css"
 
 export const Layout = ({ children }) => {
@@ -24,7 +26,9 @@ export const Layout = ({ children }) => {
           padding: `0 1.0875rem 1.45rem`,
         }}
       >
-        <main>{children}</main>
+        <main>
+          <MDXProvider components={components}>{children}</MDXProvider>
+        </main>
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
