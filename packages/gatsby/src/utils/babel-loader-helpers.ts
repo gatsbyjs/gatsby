@@ -48,7 +48,7 @@ interface ICustomOptions extends Record<string, unknown> {
   stage: Stage
 }
 
-const prepareOptions = (
+export const prepareOptions = (
   babel: typeof Babel,
   customOptions: ICustomOptions,
   resolve: RequireResolve = require.resolve
@@ -189,7 +189,7 @@ const prepareOptions = (
   return toReturn
 }
 
-const addRequiredPresetOptions = (
+export const addRequiredPresetOptions = (
   babel: typeof Babel,
   presets: Array<ConfigItem>,
   options: { stage?: Stage } = {},
@@ -247,10 +247,3 @@ export const mergeConfigItemOptions = ({
 
   return items
 }
-
-exports.getCustomOptions = getCustomOptions
-
-// Export helper functions for testing
-exports.prepareOptions = prepareOptions
-exports.mergeConfigItemOptions = mergeConfigItemOptions
-exports.addRequiredPresetOptions = addRequiredPresetOptions
