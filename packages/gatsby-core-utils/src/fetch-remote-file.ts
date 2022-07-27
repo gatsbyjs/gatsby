@@ -44,7 +44,10 @@ export async function fetchRemoteFile(
 
     if (info?.cacheKey === args.cacheKey && fileDirectory) {
       const cachedPath = path.join(info.directory, info.path)
-      const downloadPath = path.join(fileDirectory, info.path)
+      const downloadPath = path.join(
+        fileDirectory,
+        args.name ?? getRemoteFileName(args.url)
+      )
 
       if (await fs.pathExists(cachedPath)) {
         // If the cached directory is not part of the public directory, we don't need to copy it
