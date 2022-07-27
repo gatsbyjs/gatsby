@@ -115,40 +115,30 @@ export class PageQueryStore extends React.Component {
   }
 }
 
-export class StaticQueryStore extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      staticQueryData: { ...getStaticQueryResults() },
-    }
-  }
+export const StaticQueryStore = ({ children }) => {
+  const [staticQueryData, setStaticQueryData] = React.useState({
+    ...getStaticQueryResults(),
+  })
 
-  handleMittEvent = () => {
-    this.setState({
-      staticQueryData: { ...getStaticQueryResults() },
+  const handleMittEvent = () => {
+    setStaticQueryData({
+      ...getStaticQueryResults(),
     })
   }
 
-  componentDidMount() {
-    ___emitter.on(`staticQueryResult`, this.handleMittEvent)
-    ___emitter.on(`onPostLoadPageResources`, this.handleMittEvent)
-  }
+  const handleEvent = React.useCallback(handleMittEvent, [staticQueryData])
 
-  componentWillUnmount() {
-    ___emitter.off(`staticQueryResult`, this.handleMittEvent)
-    ___emitter.off(`onPostLoadPageResources`, this.handleMittEvent)
-  }
+  React.useEffect(() => {
+    ___emitter.on(`staticQueryResult`, handleMittEvent)
+    ___emitter.on(`onPostLoadPageResources`, handleMittEvent)
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // We want to update this component when:
-    // - static query results changed
+    return () => {
+      ___emitter.off(`staticQueryResult`, handleMittEvent)
+      ___emitter.off(`onPostLoadPageResources`, handleMittEvent)
+    }
+  }, [handleEvent])
 
-    return this.state.staticQueryData !== nextState.staticQueryData
-  }
+  staticQuerySingleton.set(staticQueryData)
 
-  render() {
-    staticQuerySingleton.set(this.state.staticQueryData)
-
-    return <>{this.props.children}</>
-  }
+  return children
 }
