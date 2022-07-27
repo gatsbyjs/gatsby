@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react"
 import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
+import { Location } from "@gatsbyjs/reach-router"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -29,6 +30,7 @@ const handledProps = new Set([
   `onError`,
 ])
 
+// Used for de-duplication
 export const scriptCache: Set<string> = new Set()
 export const scriptCallbackCache: Map<
   string,
@@ -44,8 +46,37 @@ export const scriptCallbackCache: Map<
   }
 > = new Map()
 
-export function Script(props: ScriptProps): ReactElement | null {
-  const { id, src, strategy = ScriptStrategy.postHydrate } = props || {}
+// Used for Partytown configuration during SSR
+function collectScriptSSR(pathname: string, newScript: ScriptProps): void {
+  if (!globalThis.__collectedScripts) {
+    globalThis.__collectedScripts = new Map()
+  }
+
+  const currentCollectedScripts =
+    globalThis.__collectedScripts.get(pathname) || []
+
+  currentCollectedScripts.push(newScript)
+
+  globalThis.__collectedScripts.set(pathname, currentCollectedScripts)
+}
+
+export function Script(props: ScriptProps): JSX.Element {
+  return (
+    <Location>
+      {({ location }): JSX.Element => (
+        <ScriptImplementation {...props} pathname={location.pathname} />
+      )}
+    </Location>
+  )
+}
+
+function ScriptImplementation(
+  props: ScriptProps & { pathname: string }
+): ReactElement | null {
+  const { pathname, ...scriptProps } = props || {}
+  const { src, strategy = ScriptStrategy.postHydrate } = scriptProps || {}
+
+  // Used for Partytown configuration during CSR
   const { collectScript } = useContext(PartytownContext)
 
   useEffect(() => {
@@ -53,16 +84,16 @@ export function Script(props: ScriptProps): ReactElement | null {
 
     switch (strategy) {
       case ScriptStrategy.postHydrate:
-        details = injectScript(props)
+        details = injectScript(scriptProps)
         break
       case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          details = injectScript(props)
+          details = injectScript(scriptProps)
         })
         break
       case ScriptStrategy.offMainThread:
         if (collectScript) {
-          const attributes = resolveAttributes(props)
+          const attributes = resolveAttributes(scriptProps)
           collectScript(attributes)
         }
         break
@@ -84,19 +115,11 @@ export function Script(props: ScriptProps): ReactElement | null {
   }, [])
 
   if (strategy === ScriptStrategy.offMainThread) {
-    const inlineScript = resolveInlineScript(props)
-    const attributes = resolveAttributes(props)
+    const inlineScript = resolveInlineScript(scriptProps)
+    const attributes = resolveAttributes(scriptProps)
 
     if (typeof window === `undefined`) {
-      if (collectScript) {
-        collectScript(attributes)
-      } else {
-        console.warn(
-          `Unable to collect off-main-thread script '${
-            id || src || `no-id-or-src`
-          }' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
-        )
-      }
+      collectScriptSSR(pathname, attributes)
     }
 
     if (inlineScript) {
@@ -106,7 +129,7 @@ export function Script(props: ScriptProps): ReactElement | null {
           data-strategy={strategy}
           crossOrigin="anonymous"
           {...attributes}
-          dangerouslySetInnerHTML={{ __html: resolveInlineScript(props) }}
+          dangerouslySetInnerHTML={{ __html: resolveInlineScript(scriptProps) }}
         />
       )
     }
