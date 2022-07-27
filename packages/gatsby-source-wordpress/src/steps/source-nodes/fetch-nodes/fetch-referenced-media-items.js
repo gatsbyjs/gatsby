@@ -15,7 +15,7 @@ import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { getPlaceholderUrlFromMediaItemNode } from "../create-nodes/process-node"
 
-const nodeFetchConcurrency = 2
+const nodeFetchConcurrency = 100
 
 const concurrency = Number(process.env.GATSBY_CONCURRENT_DOWNLOAD ?? 200)
 const adjustedConcurrency = Number(concurrency ?? 200) - nodeFetchConcurrency
@@ -351,7 +351,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   } = getPluginOptions()
 
   // chunk up all our uncached media items
-  const mediaItemUrlsPages = chunk(uncachedMediaItemUrls, perPage)
+  const mediaItemUrlsPages = chunk(uncachedMediaItemUrls, 20)
 
   // since we're using an async queue, we need a way to know when it's finished
   // we pass this resolve function into the queue function so it can let us

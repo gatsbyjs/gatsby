@@ -11,7 +11,8 @@ import retry from "async-retry"
 import { formatLogMessage } from "./format-log-message"
 import store from "~/store"
 import { getPluginOptions } from "./get-gatsby-api"
-import urlUtil from "url"
+// import urlUtil from "url"
+import compress from "graphql-query-compress"
 import { CODES } from "./report"
 
 let http = null
@@ -726,7 +727,13 @@ const fetchGraphql = async ({
     const requestOptions: AxiosRequestConfig = {
       timeout,
       headers,
+      params: {
+        query: compress(query),
+        variables: JSON.stringify(variables),
+      },
     }
+
+    // console.log(requestOptions)
 
     if (!missingCredentials) {
       requestOptions.auth = htaccessCredentials
@@ -736,8 +743,9 @@ const fetchGraphql = async ({
       (bail: (e: Error) => void) =>
         moduleHelpers
           .getHttp(limit)
-          .post(url, { query, variables }, requestOptions)
+          .get(url, requestOptions)
           .catch(e => {
+            console.error(e)
             if (!errorIs500ish(e)) {
               // for any error that is not a 50x error, we bail, meaning we stop retrying. error will be thrown one level higher
               bail(e)
@@ -755,17 +763,23 @@ const fetchGraphql = async ({
       throw new Error(`GraphQL request returned an empty string.`)
     }
 
-    const { path }: { path: string } = urlUtil.parse(url)
+    // const { path }: { path: string } = urlUtil.parse(url)
 
-    const responsePath = response.request.path
+    // const responsePath = response.request.path
 
-    if (
-      path !== responsePath &&
-      responsePath !== undefined &&
-      responsePath !== url
-    ) {
-      throw new Error(`GraphQL request was redirected to ${responsePath}`)
-    }
+    // console.log({
+    //   responsePath,
+    //   path,
+    //   response,
+    // })
+
+    // if (
+    //   path !== responsePath &&
+    //   responsePath !== undefined &&
+    //   responsePath !== url
+    // ) {
+    //   throw new Error(`GraphQL request was redirected to ${responsePath}`)
+    // }
 
     const contentType: string = response.headers[`content-type`]
 
