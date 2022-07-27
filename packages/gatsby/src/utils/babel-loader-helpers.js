@@ -168,27 +168,69 @@ const prepareOptions = (
   return toReturn
 }
 
-const addRequiredPresetOptions = (
+function convertCustomPresetsToPlugins(
   babel,
-  presets,
-  options = {},
-  resolve = require.resolve
-) => {
-  // Always pass `stage` option to babel-preset-gatsby
-  //  (even if defined in custom babelrc)
-  const gatsbyPresetResolved = resolve(`babel-preset-gatsby`)
-  const index = presets.findIndex(p => p.file.resolved === gatsbyPresetResolved)
-
-  if (index !== -1) {
-    presets[index] = babel.createConfigItem(
-      [
-        gatsbyPresetResolved,
-        { ...presets[index].options, stage: options.stage },
-      ],
-      { type: `preset` }
-    )
+  { presets, plugins },
+  options,
+  resolve = require.resolve,
+  { presetsToReturn, pluginsToReturn } = {
+    presetsToReturn: [],
+    pluginsToReturn: [],
   }
-  return presets
+) {
+  if (plugins && Array.isArray(plugins) && plugins.length > 0) {
+    pluginsToReturn.push(...plugins)
+  }
+
+  const gatsbyPresetResolved = resolve(`babel-preset-gatsby`)
+
+  if (presets && Array.isArray(presets) && presets.length > 0) {
+    for (const preset of presets) {
+      if (preset.file.resolved === gatsbyPresetResolved) {
+        const presetWithRequiredOptions = babel.createConfigItem(
+          [gatsbyPresetResolved, { ...preset.options, stage: options.stage }],
+          { type: `preset`, dirname: preset.dirname }
+        )
+        presetsToReturn.push(presetWithRequiredOptions)
+      } else {
+        // custom preset - let's materialize it and inspect
+        const materializedPresetConfig = preset.value(babel, preset.options)
+
+        const materializedPreset = {
+          ...materializedPresetConfig,
+          plugins: materializedPresetConfig.plugins
+            ? materializedPresetConfig.plugins.map(nestedPlugin => {
+                return babel.createConfigItem(nestedPlugin, {
+                  type: `plugin`,
+                  dirname: path.dirname(preset.file.resolved),
+                })
+              })
+            : undefined,
+          presets: materializedPresetConfig.presets
+            ? materializedPresetConfig.presets.map(nestedPreset => {
+                return babel.createConfigItem(nestedPreset, {
+                  type: `preset`,
+                  dirname: path.dirname(preset.file.resolved),
+                })
+              })
+            : undefined,
+        }
+
+        convertCustomPresetsToPlugins(
+          babel,
+          materializedPreset,
+          options,
+          resolve,
+          { presetsToReturn, pluginsToReturn }
+        )
+      }
+    }
+  }
+
+  return {
+    plugins: pluginsToReturn,
+    presets: presetsToReturn,
+  }
 }
 
 const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
@@ -220,4 +262,4 @@ exports.getCustomOptions = getCustomOptions
 // Export helper functions for testing
 exports.prepareOptions = prepareOptions
 exports.mergeConfigItemOptions = mergeConfigItemOptions
-exports.addRequiredPresetOptions = addRequiredPresetOptions
+exports.convertCustomPresetsToPlugins = convertCustomPresetsToPlugins
