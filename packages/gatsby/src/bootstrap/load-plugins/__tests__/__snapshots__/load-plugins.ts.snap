@@ -321,7 +321,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",
@@ -683,7 +682,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",
@@ -1056,7 +1054,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",
