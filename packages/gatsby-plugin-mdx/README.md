@@ -117,6 +117,8 @@ module.exports = {
 
 This config option is used for compatibility with a set of plugins many people [use with remark](https://www.gatsbyjs.com/plugins/?=gatsby-remark-) that require the Gatsby environment to function properly. In some cases, like [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/), it makes more sense to use a library like [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer) to render codeblocks using a [React component](/api-reference/mdx-provider). In other cases, like [gatsby-remark-images](https://www.gatsbyjs.com/plugins/gatsby-remark-images/), the interaction with the Gatsby APIs is well deserved because the images can be optimized by Gatsby and you should continue using it.
 
+When using these `gatsby-remark-*` plugins, be sure to also install their required peer dependencies. You can find that information in their respective README.
+
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [

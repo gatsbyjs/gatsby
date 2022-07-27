@@ -49,7 +49,7 @@ If you already have a Gatsby site that you'd like to add MDX to, you can follow 
    }
    ```
 
-3. Restart your local development server by running `gatsby develop`.
+1. Restart your local development server by running `gatsby develop`.
 
 ## Writing pages in MDX
 
@@ -397,3 +397,14 @@ Here's a paragraph, followed by a paragraph with data!
   )}
 />
 ```
+
+## `gatsby-remark-*` and `remark` plugins
+
+`gatsby-plugin-mdx` can also use `gatsby-remark-*` (e.g. `gatsby-remark-images`) and `remark` (e.g. `remark-gfm`) plugins. You can learn more about this in the [configuration section](/plugins/gatsby-plugin-mdx#configuration) of `gatsby-plugin-mdx`'s README.
+
+## Additional Resources
+
+- [gatsby-plugin-mdx README](/plugins/gatsby-plugin-mdx)
+- [What is MDX](https://mdxjs.com/docs/what-is-mdx/)
+- [Using MDX](https://mdxjs.com/docs/using-mdx/)
+- [Troubleshooting MDX](https://mdxjs.com/docs/troubleshooting-mdx/)
