@@ -298,3 +298,13 @@ In it you’re going to see something like this.
 ```
 
 Edit your `packageManager` value, save and you’re good to go for your next project using `gatsby new`.
+
+### Autocomplete
+
+<a href="https://fig.io/" target="_blank"><img src="https://fig.io/badges/Logo.svg" width="15" height="15"/></a> [Fig](https://fig.io/) provides IDE-style autocompletions for Gatsby. It works in bash, zsh, and fish.
+
+To install, run:
+
+```shell
+brew install fig
+```
