@@ -1,9 +1,9 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
-import { components } from "./shortcodes"
+import { components } from "../components/shortcodes"
 
-export default function PageTemplate({ data, children }) {
+const PostsTemplate = ({ data, children }) => {
   return (
     <>
       <h1>{data.mdx.frontmatter.title}</h1>
@@ -13,6 +13,10 @@ export default function PageTemplate({ data, children }) {
     </>
   )
 }
+
+export default PostsTemplate
+
+export const Head = ({ data }) => <title>{data.mdx.frontmatter.title}</title>
 
 export const query = graphql`
   query($id: String!) {
