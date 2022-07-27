@@ -112,7 +112,11 @@ describe(`Babelrc actions/reducer`, () => {
     const { presets: convertedPresets } = convertCustomPresetsToPlugins(
       babel,
       { presets, plugins: [] },
-      { stage: `develop` },
+      {
+        stage: `develop`,
+        reactRuntime: `automatic`,
+        reactImportSource: `@emotion/react`,
+      },
       fakeResolver
     )
 
@@ -122,6 +126,8 @@ describe(`Babelrc actions/reducer`, () => {
 
     expect(babelPresetGatsbyPreset?.options).toMatchInlineSnapshot(`
       Object {
+        "reactImportSource": "@emotion/react",
+        "reactRuntime": "automatic",
         "stage": "develop",
       }
     `)
@@ -174,7 +180,11 @@ describe(`Babelrc actions/reducer`, () => {
       convertCustomPresetsToPlugins(
         babel,
         { presets, plugins: [] },
-        { stage: `develop` },
+        {
+          stage: `develop`,
+          reactRuntime: `automatic`,
+          reactImportSource: `@emotion/react`,
+        },
         fakeResolver
       )
 
@@ -184,6 +194,8 @@ describe(`Babelrc actions/reducer`, () => {
 
     expect(babelPresetGatsbyPreset?.options).toMatchInlineSnapshot(`
       Object {
+        "reactImportSource": "@emotion/react",
+        "reactRuntime": "automatic",
         "stage": "develop",
       }
     `)

@@ -187,8 +187,17 @@ function convertCustomPresetsToPlugins(
   if (presets && Array.isArray(presets) && presets.length > 0) {
     for (const preset of presets) {
       if (preset.file.resolved === gatsbyPresetResolved) {
+        // make sure we are passing needed options
         const presetWithRequiredOptions = babel.createConfigItem(
-          [gatsbyPresetResolved, { ...preset.options, stage: options.stage }],
+          [
+            gatsbyPresetResolved,
+            {
+              ...preset.options,
+              stage: options.stage,
+              reactRuntime: options.reactRuntime,
+              reactImportSource: options.reactImportSource,
+            },
+          ],
           { type: `preset`, dirname: preset.dirname }
         )
         presetsToReturn.push(presetWithRequiredOptions)
@@ -199,20 +208,20 @@ function convertCustomPresetsToPlugins(
         const materializedPreset = {
           ...materializedPresetConfig,
           plugins: materializedPresetConfig.plugins
-            ? materializedPresetConfig.plugins.map(nestedPlugin => {
-                return babel.createConfigItem(nestedPlugin, {
+            ? materializedPresetConfig.plugins.map(nestedPlugin =>
+                babel.createConfigItem(nestedPlugin, {
                   type: `plugin`,
                   dirname: path.dirname(preset.file.resolved),
                 })
-              })
+              )
             : undefined,
           presets: materializedPresetConfig.presets
-            ? materializedPresetConfig.presets.map(nestedPreset => {
-                return babel.createConfigItem(nestedPreset, {
+            ? materializedPresetConfig.presets.map(nestedPreset =>
+                babel.createConfigItem(nestedPreset, {
                   type: `preset`,
                   dirname: path.dirname(preset.file.resolved),
                 })
-              })
+              )
             : undefined,
         }
 
