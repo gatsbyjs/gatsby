@@ -1,5 +1,6 @@
 ---
-title: Enable Image CDN
+title: "Enable Image CDN"
+description: "Learn how to accelerate builds locally and in Gatsby Cloud by offloading image processing to Gatsby's Image CDN"
 ---
 
 Before continuing, make sure you understand What is Image CDN. Also, note that Image CDN only works on sites hosted on Gatsby cloud and doesn't work with other hosting integrations.

@@ -1,7 +1,7 @@
 ---
 title: "Working with Redirects and Rewrites"
 description: "Learn how to leverage redirects, rewrites, and reverse proxies in Gatsby Cloud"
-label: cloud
+label: "cloud"
 ---
 
 ## What is a redirect?
