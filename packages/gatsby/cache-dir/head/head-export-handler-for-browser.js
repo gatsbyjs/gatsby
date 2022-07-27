@@ -9,11 +9,10 @@ import {
   headExportValidator,
   filterHeadProps,
   warnForInvalidTags,
+  isEqualNode,
 } from "./utils"
 
 const hiddenRoot = document.createElement(`div`)
-let prevInnerHTML = ``
-let prevPagePath = ``
 
 const removePrevHeadElements = () => {
   const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
@@ -21,25 +20,7 @@ const removePrevHeadElements = () => {
 }
 
 const onHeadRendered = () => {
-  /**
-   * Bailout if page path and innerHTML did not change
-   *
-   * This function gets called by mutation observer and useEffect.
-   * This early bailout makes sure we don't run this callback twice for the same page.
-   */
-  if (
-    prevInnerHTML === hiddenRoot.innerHTML &&
-    prevPagePath === window.location.pathname
-  ) {
-    return
-  }
-
-  prevInnerHTML = hiddenRoot.innerHTML
-  prevPagePath = window.location.pathname
-
   const validHeadNodes = []
-
-  removePrevHeadElements()
 
   const seenIds = new Map()
   for (const node of hiddenRoot.childNodes) {
@@ -77,7 +58,23 @@ const onHeadRendered = () => {
     }
   }
 
-  document.head.append(...validHeadNodes)
+  const diffedHeadNodes = []
+
+  const existingHeadElements = [
+    ...document.querySelectorAll(`[data-gatsby-head]`),
+  ]
+
+  for (const validHeadNode of validHeadNodes) {
+    const isInExistingHead = existingHeadElements.some(e =>
+      isEqualNode(e, validHeadNode)
+    )
+
+    if (!isInExistingHead) {
+      diffedHeadNodes.push(validHeadNode)
+    }
+  }
+
+  document.head.append(...diffedHeadNodes)
 }
 
 if (process.env.BUILD_STAGE === `develop`) {
