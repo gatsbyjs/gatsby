@@ -1,7 +1,8 @@
+import { staticQuerySingleton } from "../static-query"
+
 const React = require(`react`)
 const { grabMatchParams } = require(`../find-path`)
 const { createElement } = require(`react`)
-const { StaticQueryContext } = require(`gatsby`)
 const {
   headExportValidator,
   filterHeadProps,
@@ -15,7 +16,7 @@ const { VALID_NODE_NAMES } = require(`./constants`)
 export function headHandlerForSSR({
   pageComponent,
   setHeadComponents,
-  staticQueryContext,
+  staticQueryResults,
   pageData,
   pagePath,
 }) {
@@ -35,17 +36,17 @@ export function headHandlerForSSR({
       return createElement(pageComponent.Head, filterHeadProps(_props))
     }
 
+    staticQuerySingleton.set(staticQueryResults)
+
     const routerElement = (
-      <StaticQueryContext.Provider value={staticQueryContext}>
-        <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-          <Router
-            baseuri={__BASE_PATH__}
-            component={({ children }) => <>{children}</>}
-          >
-            <HeadRouteHandler path="/*" />
-          </Router>
-        </ServerLocation>
-      </StaticQueryContext.Provider>
+      <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+        <Router
+          baseuri={__BASE_PATH__}
+          component={({ children }) => <>{children}</>}
+        >
+          <HeadRouteHandler path="/*" />
+        </Router>
+      </ServerLocation>
     )
 
     // extract head nodes from string

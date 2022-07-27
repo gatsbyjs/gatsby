@@ -1,5 +1,4 @@
 import React from "react"
-import { StaticQueryContext } from "gatsby"
 import {
   registerPath as socketRegisterPath,
   unregisterPath as socketUnregisterPath,
@@ -7,6 +6,7 @@ import {
 import PageRenderer from "./page-renderer"
 import normalizePagePath from "./normalize-page-path"
 import loader, { getStaticQueryResults } from "./loader"
+import { staticQuerySingleton } from "./static-query"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
@@ -147,10 +147,8 @@ export class StaticQueryStore extends React.Component {
   }
 
   render() {
-    return (
-      <StaticQueryContext.Provider value={this.state.staticQueryData}>
-        {this.props.children}
-      </StaticQueryContext.Provider>
-    )
+    staticQuerySingleton.set(this.state.staticQueryData)
+
+    return <>{this.props.children}</>
   }
 }

@@ -2,7 +2,6 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { StaticQueryContext } from "gatsby"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -20,6 +19,7 @@ import {
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
+import { staticQuerySingleton } from "./static-query"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
@@ -66,24 +66,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   )
 
   const DataContext = React.createContext({})
-
   class GatsbyRoot extends React.Component {
     render() {
       const { children } = this.props
+
+      const staticQueryResults = getStaticQueryResults()
+      staticQuerySingleton.set(staticQueryResults)
+
       return (
         <Location>
           {({ location }) => (
             <EnsureResources location={location}>
-              {({ pageResources, location }) => {
-                const staticQueryResults = getStaticQueryResults()
-                return (
-                  <StaticQueryContext.Provider value={staticQueryResults}>
-                    <DataContext.Provider value={{ pageResources, location }}>
-                      {children}
-                    </DataContext.Provider>
-                  </StaticQueryContext.Provider>
-                )
-              }}
+              {({ pageResources, location }) => (
+                <DataContext.Provider value={{ pageResources, location }}>
+                  {children}
+                </DataContext.Provider>
+              )}
             </EnsureResources>
           )}
         </Location>

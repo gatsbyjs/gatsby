@@ -1,6 +1,5 @@
 import React from "react"
 import { useEffect } from "react"
-import { StaticQueryContext } from "gatsby"
 import { LocationProvider } from "@gatsbyjs/reach-router"
 import { reactDOMUtils } from "../react-dom-utils"
 import { FireCallbackInEffect } from "./components/fire-callback-in-effect"
@@ -10,6 +9,7 @@ import {
   filterHeadProps,
   warnForInvalidTags,
 } from "./utils"
+import { staticQuerySingleton } from "../static-query"
 
 const hiddenRoot = document.createElement(`div`)
 
@@ -73,19 +73,18 @@ export function headHandlerForBrowser({
       headExportValidator(pageComponent.Head)
 
       const { render } = reactDOMUtils()
-
       const Head = pageComponent.Head
+
+      staticQuerySingleton.set(staticQueryResults)
 
       render(
         // just a hack to call the callback after react has done first render
         // Note: In dev, we call onHeadRendered twice( in FireCallbackInEffect and after mutualution observer dectects initail render into hiddenRoot) this is for hot reloading
         // In Prod we only call onHeadRendered in FireCallbackInEffect to render to head
         <FireCallbackInEffect callback={onHeadRendered}>
-          <StaticQueryContext.Provider value={staticQueryResults}>
-            <LocationProvider>
-              <Head {...filterHeadProps(pageComponentProps)} />
-            </LocationProvider>
-          </StaticQueryContext.Provider>
+          <LocationProvider>
+            <Head {...filterHeadProps(pageComponentProps)} />
+          </LocationProvider>
         </FireCallbackInEffect>,
         hiddenRoot
       )

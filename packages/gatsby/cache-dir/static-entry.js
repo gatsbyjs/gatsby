@@ -8,7 +8,6 @@ const {
 } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const merge = require(`deepmerge`)
-const { StaticQueryContext } = require(`gatsby`)
 const fs = require(`fs`)
 const { WritableAsPromise } = require(`./server-utils/writable-as-promise`)
 
@@ -19,6 +18,7 @@ const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 const chunkMapping = require(`../public/chunk-map.json`)
 const { headHandlerForSSR } = require(`./head/head-export-handler-for-ssr`)
+const { staticQuerySingleton } = require(`./static-query`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
@@ -108,7 +108,7 @@ export const reorderHeadComponents = headComponents => {
 export default async function staticPage({
   pagePath,
   pageData,
-  staticQueryContext,
+  staticQueryContext: staticQueryResults,
   styles,
   scripts,
   reversedStyles,
@@ -216,7 +216,7 @@ export default async function staticPage({
     headHandlerForSSR({
       pageComponent,
       setHeadComponents,
-      staticQueryContext,
+      staticQueryResults,
       pageData,
       pagePath,
     })
@@ -256,8 +256,10 @@ export default async function staticPage({
       </ServerLocation>
     )
 
+    staticQuerySingleton.set(staticQueryResults)
+
     const bodyComponent = (
-      <StaticQueryContext.Provider value={staticQueryContext}>
+      <>
         {apiRunner(
           `wrapRootElement`,
           { element: routerElement, pathname: pagePath },
@@ -266,7 +268,7 @@ export default async function staticPage({
             return { element: result, pathname: pagePath }
           }
         ).pop()}
-      </StaticQueryContext.Provider>
+      </>
     )
 
     // Let the site or plugin render the page component.
