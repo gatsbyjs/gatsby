@@ -24,6 +24,7 @@ import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
 import { reportOnce } from "../utils/report-once"
 import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
 import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
+import withResolverContext from "./context"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -847,7 +848,6 @@ async function resolveRecursive(
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
 
-const withResolverContext = require(`./context`).default
 function resolveField(
   nodeModel,
   schemaComposer,
