@@ -64,12 +64,31 @@ const onHeadRendered = () => {
     ...document.querySelectorAll(`[data-gatsby-head]`),
   ]
 
+  if (existingHeadElements.length === 0) {
+    document.head.append(...validHeadNodes)
+    return
+  }
+
+  const elementsToRemove = []
+
+  for (const existingHeadElement of existingHeadElements) {
+    const isInValidNodes = validHeadNodes.some(e =>
+      isEqualNode(e, existingHeadElement)
+    )
+
+    if (!isInValidNodes) {
+      elementsToRemove.push(existingHeadElement)
+    }
+  }
+
+  elementsToRemove.forEach(e => e.remove())
+
   for (const validHeadNode of validHeadNodes) {
-    const isInExistingHead = existingHeadElements.some(e =>
+    const isInExistingHeadElementsList = existingHeadElements.some(e =>
       isEqualNode(e, validHeadNode)
     )
 
-    if (!isInExistingHead) {
+    if (!isInExistingHeadElementsList) {
       diffedHeadNodes.push(validHeadNode)
     }
   }
