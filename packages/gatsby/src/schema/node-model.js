@@ -847,7 +847,7 @@ async function resolveRecursive(
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
 
-const withResolverContext = require(`./context`)
+const withResolverContext = require(`./context`).default
 function resolveField(
   nodeModel,
   schemaComposer,
