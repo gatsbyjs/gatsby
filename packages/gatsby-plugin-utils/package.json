@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "3.14.0-next.0",
+  "version": "3.14.0-next.2",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "exports": {
@@ -48,6 +48,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@gatsbyjs/potrace": "^2.2.0",
+    "fastq": "^1.13.0",
     "fs-extra": "^10.1.0",
     "gatsby-core-utils": "^3.20.0-next.0",
     "gatsby-sharp": "^0.14.0-next.0",
@@ -68,7 +69,8 @@
     "typescript": "^4.7.2"
   },
   "peerDependencies": {
-    "gatsby": "^4.0.0-next"
+    "gatsby": "^4.0.0-next",
+    "graphql": "^15.0.0"
   },
   "files": [
     "dist/"
