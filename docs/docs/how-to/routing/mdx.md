@@ -11,7 +11,11 @@ examples:
 
 This is useful in content-driven sites where you want the ability to introduce components like charts or alerts without having to configure a plugin. MDX also shines in interactive blog posts, documenting design systems, or long form articles with immersive or dynamic interactions.
 
-## Getting Started with MDX
+## Prerequisites
+
+- A Gatsby project set up with `gatsby@4.20.0` or later.
+
+## Installation and configuration
 
 If you already have a Gatsby site that you'd like to add MDX to, you can follow these steps for configuring the [gatsby-plugin-mdx](/plugins/gatsby-plugin-mdx/) plugin.
 
@@ -21,15 +25,15 @@ If you already have a Gatsby site that you'd like to add MDX to, you can follow 
 >
 > **Already using Remark?** Check out the How-To Guide on [Migrating from Remark to MDX](/docs/how-to/routing/migrate-remark-to-mdx).
 
-1. **Add `gatsby-plugin-mdx`**, `gatsby-source-filesystem`, and MDX as dependencies
+1. Install the required dependencies:
 
    ```shell
    npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
    ```
 
-2. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx` and `gatsby-source-filesystem`
+1. Update your `gatsby-config.js` to use `gatsby-plugin-mdx` and `gatsby-source-filesystem`
 
-   ```javascript:title=gatsby-config.js
+   ```js:title=gatsby-config.js
    module.exports = {
      plugins: [
         // Your other plugins...
@@ -45,9 +49,9 @@ If you already have a Gatsby site that you'd like to add MDX to, you can follow 
    }
    ```
 
-3. **Restart your local development server** by running `gatsby develop`.
+3. Restart your local development server by running `gatsby develop`.
 
-## Writing Pages in MDX
+## Writing pages in MDX
 
 After installing `gatsby-plugin-mdx`, MDX files located in the `src/pages` directory will automatically be turned into pages.
 
@@ -55,7 +59,7 @@ After installing `gatsby-plugin-mdx`, MDX files located in the `src/pages` direc
 
 Pages are rendered at a URL that is constructed from the filesystem path inside `src/pages`. For example, an MDX file at `src/pages/awesome.mdx` will result in a page being rendered at `yoursite.com/awesome`.
 
-**Create a new `.mdx` file** in the `src/pages` directory. You can use [Markdown syntax](/docs/reference/markdown-syntax) to add different HTML elements.
+Create a new `.mdx` file in the `src/pages` directory (e.g. `src/pages/chart-info.mdx`). You can use [Markdown syntax](/docs/reference/markdown-syntax) to add different HTML elements.
 
 ### Using frontmatter in MDX
 
@@ -128,7 +132,7 @@ You can import your own components.
 
 To avoid having to import the same component inside of every MDX document you author, you can add components to an `MDXProvider` to make them globally available in MDX pages. This pattern is sometimes referred to as _shortcodes_.
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.jsx
 import React from "react"
 // highlight-start
 import { MDXProvider } from "@mdx-js/react"
@@ -175,7 +179,7 @@ To inject them, you have several options:
 1. Add an `export default Layout` statement to your MDX file, see [MDX documentation on Layout](https://mdxjs.com/docs/using-mdx/#layout).
 1. When using the [`createPage` action](/docs/reference/config-files/actions/#createPage) to programatically create pages, you should use the following URI pattern for your page component: `your-layout-component.js?__contentFilePath=absolute-path-to-your-mdx-file.mdx`. To learn more about this, head to the [programmatically creating pages](#programmatically-creating-pages) section just below.
 
-## Programmatically Creating Pages
+## Programmatically creating pages
 
 Sometimes you want to be able to programmatically create pages using MDX content that lives at arbitrary locations outside of `src/pages` or in a remote CMS.
 
@@ -187,7 +191,7 @@ To let Gatsby know that you'll be working with MDX content you need to add `gats
 
 You'll need to use `gatsby-source-filesystem` and tell it to source "posts" from a folder called `content/posts` located in the project's root.
 
-```javascript:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-mdx`,
@@ -266,7 +270,7 @@ query {
 }
 ```
 
-```javascript:title=gatsby-node.js
+```js:title=gatsby-node.js
 const path = require("path")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -315,14 +319,9 @@ For further reading, check out the [createPages](/docs/reference/config-files/ga
 
 ### Make a layout template for your posts
 
-You can create a file called `posts-page-layout.js` in `src/components` - this component
-will be rendered as the template for all posts.
+You can create a file called `posts.jsx` in `src/templates` - this component will be rendered as the template for all posts. Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title:
 
-For now, to update imports within `.mdx` files, you should restart `gatsby develop`. Otherwise, it will raise a `ReferenceError`. To import things dynamically, you can use the `MDXProvider` component and provide it all the common components you'll be using, such as `Link`.
-
-Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title:
-
-```jsx:title=src/components/posts-page-layout.js
+```jsx:title=src/templates/posts.jsx
 import React from "react"
 import { graphql } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
@@ -362,12 +361,12 @@ Change your `gatsby-node.js` as following:
 createPage({
   path: node.frontmatter.slug,
 -  component: node.parent.absolutePath,
-+  component: `${path.resolve(`./src/components/posts-page-layout.js`)}?__contentFilePath=${node.internal.contentFilePath}`,
++  component: `${path.resolve(`./src/templates/posts.jsx`)}?__contentFilePath=${node.internal.contentFilePath}`,
   context: { id: node.id },
 })
 ```
 
-That's it, you're done. Run `gatsby develop` to see your posts wrapped with `posts-page-layout`.
+That's it, you're done. Run `gatsby develop` to see your posts wrapped with `posts.jsx`.
 
 ## Making GraphQL queries in an MDX File
 
