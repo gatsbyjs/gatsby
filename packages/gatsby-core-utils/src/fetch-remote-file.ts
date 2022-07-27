@@ -46,7 +46,7 @@ export async function fetchRemoteFile(
       const cachedPath = path.join(info.directory, info.path)
       const downloadPath = path.join(
         fileDirectory,
-        args.name ?? getRemoteFileName(args.url)
+        (args.name ?? getRemoteFileName(args.url)) + args.ext
       )
 
       if (await fs.pathExists(cachedPath)) {
