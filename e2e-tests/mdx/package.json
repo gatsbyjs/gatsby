@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@mdx-js/react": "^2",
+    "@sindresorhus/slugify": "^1.0.0",
     "cypress": "^9.7.0",
     "fs-extra": "^8.1.0",
     "gatsby": "next",
