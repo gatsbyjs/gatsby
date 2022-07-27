@@ -341,6 +341,10 @@ This largely comes down to your own preference and how you want to wire things u
 
 If you don't want to use the `frontmatter.title`, adjust what you input to `slugify()`. For example, if you want information from the `File` node, you could use `getNode(node.parent)`.
 
+### html
+
+TODO
+
 ## Components
 
 MDX and `gatsby-plugin-mdx` use components for different things like rendering and component mappings.
