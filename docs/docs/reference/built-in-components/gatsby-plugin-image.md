@@ -361,14 +361,14 @@ The first argument is the default image. This is displayed when no media queries
 import { GatsbyImage, getImage, withArtDirection } from "gatsby-plugin-image"
 
 export function MyImage({ data }) {
-  const images = withArtDirection(getImage(data.largeImage), [
+  const imageObject = withArtDirection(getImage(data.largeImage), [
     {
       media: "(max-width: 1024px)",
       image: getImage(data.smallImage),
     },
   ])
 
-  return <GatsbyImage image={images} />
+  return <GatsbyImage image={imageObject} />
 }
 ```
 
@@ -392,13 +392,13 @@ import { GatsbyImage, getImage, withArtDirection } from "gatsby-plugin-image"
 import "./style.css"
 
 export function MyImage({ data }) {
-  const images = withArtDirection(getImage(data.largeImage), [
+  const imageObject = withArtDirection(getImage(data.largeImage), [
     {
       media: "(max-width: 1024px)",
       image: getImage(data.smallImage),
     },
   ])
 
-  return <GatsbyImage className="art-directed" image={images} />
+  return <GatsbyImage className="art-directed" image={imageObject} />
 }
 ```
