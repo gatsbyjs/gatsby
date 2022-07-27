@@ -847,6 +847,7 @@ async function resolveRecursive(
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
 
+const withResolverContext = require(`./context`)
 function resolveField(
   nodeModel,
   schemaComposer,
@@ -858,7 +859,7 @@ function resolveField(
   if (!gqlField?.resolve) {
     return node[fieldName]
   }
-  const withResolverContext = require(`./context`)
+
   return gqlField.resolve(
     node,
     gqlField.args.reduce((acc, arg) => {
