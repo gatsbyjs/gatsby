@@ -194,8 +194,17 @@ function convertCustomPresetsToPlugins(
             {
               ...preset.options,
               stage: options.stage,
-              reactRuntime: options.reactRuntime,
-              reactImportSource: options.reactImportSource,
+              // if preset options doesn't contains either `reactRuntime` or `reactImportSource`,
+              // use global ones (set in gatsby-config)
+              ...(!(
+                preset.options?.reactRuntime ||
+                preset.options?.reactImportSource
+              )
+                ? {
+                    reactRuntime: options.reactRuntime,
+                    reactImportSource: options.reactImportSource,
+                  }
+                : {}),
             },
           ],
           { type: `preset`, dirname: preset.dirname }

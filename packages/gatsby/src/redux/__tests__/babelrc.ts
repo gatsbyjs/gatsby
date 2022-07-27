@@ -211,6 +211,57 @@ describe(`Babelrc actions/reducer`, () => {
     `)
   })
 
+  it(`prefers reactRuntime/reactImportSource from preset options over ones from gatsby-config`, () => {
+    const fakeResolver = (moduleName): string => `/path/to/module/${moduleName}`
+
+    const BabelPresetGatsbyConfigItem = {
+      file: { resolved: fakeResolver(`babel-preset-gatsby`) },
+      options: {
+        reactRuntime: `classic`,
+      },
+    }
+
+    const babel = {
+      createConfigItem: jest.fn((presetDescriptor: any): any => {
+        if (!Array.isArray(presetDescriptor)) {
+          presetDescriptor = [presetDescriptor]
+        }
+
+        const name = presetDescriptor[0]
+        if (name.includes(`babel-preset-gatsby`)) {
+          return {
+            ...BabelPresetGatsbyConfigItem,
+            options: presetDescriptor[1],
+          }
+        }
+        return undefined
+      }),
+    }
+    const presets: any = [BabelPresetGatsbyConfigItem]
+
+    const { presets: convertedPresets } = convertCustomPresetsToPlugins(
+      babel,
+      { presets, plugins: [] },
+      {
+        stage: `develop`,
+        reactRuntime: `automatic`,
+        reactImportSource: `@emotion/react`,
+      },
+      fakeResolver
+    )
+
+    const babelPresetGatsbyPreset = convertedPresets.find(preset =>
+      preset?.file?.resolved?.includes(`babel-preset-gatsby`)
+    )
+
+    expect(babelPresetGatsbyPreset?.options).toMatchInlineSnapshot(`
+      Object {
+        "reactRuntime": "classic",
+        "stage": "develop",
+      }
+    `)
+  })
+
   it(`allows setting options`, () => {
     const action = actions.setBabelOptions(
       { options: { sourceMaps: `inline` } },
