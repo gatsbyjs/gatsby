@@ -24,7 +24,6 @@ import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
 import { reportOnce } from "../utils/report-once"
 import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
 import { toNodeTypeNames, fieldNeedToResolve } from "./utils"
-import withResolverContext from "./context"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -847,7 +846,7 @@ async function resolveRecursive(
 
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
-
+let withResolverContext
 function resolveField(
   nodeModel,
   schemaComposer,
@@ -858,6 +857,12 @@ function resolveField(
 ) {
   if (!gqlField?.resolve) {
     return node[fieldName]
+  }
+  
+  // We require this inline as there's a circular dependency from context back to this file.
+  // https://github.com/gatsbyjs/gatsby/blob/9d33b107d167e3e9e2aa282924a0c409f6afd5a0/packages/gatsby/src/schema/context.ts#L5
+  if (!withResolverContext) {
+    withResolverContext = require(`./context`)
   }
 
   return gqlField.resolve(
