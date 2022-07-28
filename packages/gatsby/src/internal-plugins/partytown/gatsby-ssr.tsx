@@ -1,8 +1,8 @@
 import React from "react"
-import { Partytown } from "@builder.io/partytown/react"
 import { collectedScriptsByPage } from "gatsby-script"
+import { getForwards } from "./utils/get-forwards"
+import { partytownSnippet } from "@builder.io/partytown/integration"
 import type { GatsbySSR } from "gatsby"
-import type { ScriptProps } from "gatsby-script"
 
 export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
   pathname,
@@ -14,11 +14,22 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
     return
   }
 
-  const collectedForwards: Array<string> = collectedScripts?.flatMap(
-    (script: ScriptProps) => script?.forward || []
-  )
+  const forwards = getForwards(collectedScripts)
 
-  setHeadComponents([<Partytown key="partytown" forward={collectedForwards} />])
+  // Adapted from https://github.com/BuilderIO/partytown/blob/main/src/react/snippet.tsx to only include SSR logic
+  setHeadComponents([
+    <script
+      key="partytown"
+      data-partytown=""
+      suppressHydrationWarning={true}
+      dangerouslySetInnerHTML={{
+        __html: `
+          ${partytownSnippet({ forward: forwards })}
+          document.currentScript.dataset.partytown=""
+        `,
+      }}
+    />,
+  ])
 
   collectedScriptsByPage.delete(pathname)
 }
