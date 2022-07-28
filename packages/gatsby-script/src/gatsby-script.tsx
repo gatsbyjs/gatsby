@@ -2,7 +2,16 @@ import React, { useEffect, useContext } from "react"
 import { PartytownContext } from "./partytown-context"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
-import { Location } from "@gatsbyjs/reach-router"
+
+/**
+ * Deliberiately import from the `@reach/router` path alias set in our tsconfig.
+ *
+ * Importing from `@gatsbyjs/reach-router` resolves the CJS module relative to the site root,
+ * so location context is not the same as what is available in Gatsby core.
+ *
+ * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/tsconfig.json}
+ */
+import { useLocation } from "@reach/router"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -60,21 +69,10 @@ function collectScriptSSR(pathname: string, newScript: ScriptProps): void {
   globalThis.__collectedScripts.set(pathname, currentCollectedScripts)
 }
 
-export function Script(props: ScriptProps): JSX.Element {
-  return (
-    <Location>
-      {({ location }): JSX.Element => (
-        <ScriptImplementation {...props} pathname={location.pathname} />
-      )}
-    </Location>
-  )
-}
+export function Script(props: ScriptProps): ReactElement | null {
+  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
 
-function ScriptImplementation(
-  props: ScriptProps & { pathname: string }
-): ReactElement | null {
-  const { pathname, ...scriptProps } = props || {}
-  const { src, strategy = ScriptStrategy.postHydrate } = scriptProps || {}
+  const { pathname } = useLocation()
 
   // Used for Partytown configuration during CSR
   const { collectScript } = useContext(PartytownContext)
@@ -84,16 +82,16 @@ function ScriptImplementation(
 
     switch (strategy) {
       case ScriptStrategy.postHydrate:
-        details = injectScript(scriptProps)
+        details = injectScript(props)
         break
       case ScriptStrategy.idle:
         requestIdleCallback(() => {
-          details = injectScript(scriptProps)
+          details = injectScript(props)
         })
         break
       case ScriptStrategy.offMainThread:
         if (collectScript) {
-          const attributes = resolveAttributes(scriptProps)
+          const attributes = resolveAttributes(props)
           collectScript(attributes)
         }
         break
@@ -115,8 +113,8 @@ function ScriptImplementation(
   }, [])
 
   if (strategy === ScriptStrategy.offMainThread) {
-    const inlineScript = resolveInlineScript(scriptProps)
-    const attributes = resolveAttributes(scriptProps)
+    const inlineScript = resolveInlineScript(props)
+    const attributes = resolveAttributes(props)
 
     if (typeof window === `undefined`) {
       collectScriptSSR(pathname, attributes)
@@ -129,7 +127,7 @@ function ScriptImplementation(
           data-strategy={strategy}
           crossOrigin="anonymous"
           {...attributes}
-          dangerouslySetInnerHTML={{ __html: resolveInlineScript(scriptProps) }}
+          dangerouslySetInnerHTML={{ __html: resolveInlineScript(props) }}
         />
       )
     }
