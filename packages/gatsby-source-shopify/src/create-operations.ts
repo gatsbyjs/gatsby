@@ -57,9 +57,11 @@ export function createOperations(
   }
 
   async function finishLastOperation(): Promise<void> {
-    const warningInterval = 60 * 1000
-    let warningCount = 0
     const queryStartTime = Date.now()
+    let lastWarningTime = queryStartTime
+    const baseWarningInterval = 60 * 1000
+    let warningInterval = baseWarningInterval
+    let warningCount = 0
 
     let { currentBulkOperation } = await currentOperation()
     if (currentBulkOperation && currentBulkOperation.id) {
@@ -76,13 +78,22 @@ export function createOperations(
           // add warning for CI environments
           if (
             process.env.CI &&
-            Date.now() > queryStartTime + (warningCount + 1) * warningInterval
+            Date.now() > lastWarningTime + warningInterval
           ) {
-            warningCount += 1
-            const runtime = (warningInterval * warningCount) / 1000
+            lastWarningTime = Date.now()
+            const runtime = Math.floor(
+              (lastWarningTime - queryStartTime) / 1000
+            )
             gatsbyApi.reporter.warn(
               `Operation ${currentBulkOperation.id} is still running after ${runtime} seconds with status "${currentBulkOperation.status}"`
             )
+
+            // handle next interval, slowly increase time so we don't flood every minute
+            warningCount += 1
+            warningInterval =
+              warningCount <= 5
+                ? baseWarningInterval
+                : baseWarningInterval * 2 * (warningCount - 5)
           }
 
           timer.setStatus(
