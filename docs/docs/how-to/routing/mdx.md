@@ -375,9 +375,9 @@ To extend your GraphQL nodes, you can use [`onCreateNode` API](/docs/reference/c
 You can find examples in the README of `gatsby-plugin-mdx`:
 [Extending GraphQL MDX nodes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes)
 
-## Making GraphQL queries in an MDX File
+## Making GraphQL queries within an MDX File
 
-You can fetch data to use in your MDX file by using `StaticQuery`:
+You can fetch data to use within your MDX file by using `StaticQuery`:
 
 <!-- prettier-ignore -->
 ```mdx
