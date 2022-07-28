@@ -1,24 +1,24 @@
 import React from "react"
-import type { GatsbySSR } from "gatsby"
 import { Partytown } from "@builder.io/partytown/react"
-import { ScriptProps } from "gatsby-script"
+import { collectedScriptsByPage } from "gatsby-script"
+import type { GatsbySSR } from "gatsby"
+import type { ScriptProps } from "gatsby-script"
 
 export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
   pathname,
   setHeadComponents,
 }) => {
-  const collectedScriptsOnPage =
-    globalThis?.__collectedScripts?.get(pathname) || []
+  const collectedScripts = collectedScriptsByPage.get(pathname)
 
-  if (!collectedScriptsOnPage?.length) {
+  if (!collectedScripts?.length) {
     return
   }
 
-  const collectedForwards: Array<string> = collectedScriptsOnPage?.flatMap(
+  const collectedForwards: Array<string> = collectedScripts?.flatMap(
     (script: ScriptProps) => script?.forward || []
   )
 
   setHeadComponents([<Partytown key="partytown" forward={collectedForwards} />])
 
-  globalThis.__collectedScripts.delete(pathname)
+  collectedScriptsByPage.delete(pathname)
 }

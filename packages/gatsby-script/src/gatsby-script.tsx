@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from "react"
-import { PartytownContext } from "./partytown-context"
+import React, { useEffect } from "react"
+import { collectedScriptsByPage } from "./collected-scripts-by-page"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
 
@@ -55,27 +55,10 @@ export const scriptCallbackCache: Map<
   }
 > = new Map()
 
-// Used for Partytown configuration during SSR
-function collectScriptSSR(pathname: string, newScript: ScriptProps): void {
-  if (!globalThis.__collectedScripts) {
-    globalThis.__collectedScripts = new Map()
-  }
-
-  const currentCollectedScripts =
-    globalThis.__collectedScripts.get(pathname) || []
-
-  currentCollectedScripts.push(newScript)
-
-  globalThis.__collectedScripts.set(pathname, currentCollectedScripts)
-}
-
 export function Script(props: ScriptProps): ReactElement | null {
   const { src, strategy = ScriptStrategy.postHydrate } = props || {}
 
   const { pathname } = useLocation()
-
-  // Used for Partytown configuration during CSR
-  const { collectScript } = useContext(PartytownContext)
 
   useEffect(() => {
     let details: IInjectedScriptDetails | null
@@ -90,9 +73,9 @@ export function Script(props: ScriptProps): ReactElement | null {
         })
         break
       case ScriptStrategy.offMainThread:
-        if (collectScript) {
+        {
           const attributes = resolveAttributes(props)
-          collectScript(attributes)
+          collectedScriptsByPage.set(pathname, attributes)
         }
         break
     }
@@ -117,7 +100,7 @@ export function Script(props: ScriptProps): ReactElement | null {
     const attributes = resolveAttributes(props)
 
     if (typeof window === `undefined`) {
-      collectScriptSSR(pathname, attributes)
+      collectedScriptsByPage.set(pathname, attributes)
     }
 
     if (inlineScript) {
