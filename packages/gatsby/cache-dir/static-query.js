@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// Global state of static query results
+// Global private state of static query results
 let _staticQueryResults = {}
 
 const _staticQuerySingleton = {
@@ -13,9 +13,12 @@ const _staticQuerySingleton = {
   },
 }
 
+/**
+ * Use this singleton to set and get data for Gatsby's static query components
+ */
 export const staticQuerySingleton = Object.freeze(_staticQuerySingleton)
 
-function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
+const StaticQueryDataRenderer = ({ staticQueryData, data, query, render }) => {
   const finalData = data
     ? data.data
     : staticQueryData[query] && staticQueryData[query].data
@@ -39,6 +42,13 @@ export const StaticQuery = ({ data, query, render, children }) => {
       staticQueryData={staticQueryData}
     />
   )
+}
+
+StaticQuery.propTypes = {
+  data: PropTypes.object,
+  query: PropTypes.string.isRequired,
+  render: PropTypes.func,
+  children: PropTypes.func,
 }
 
 export const useStaticQuery = query => {
@@ -65,11 +75,4 @@ useStaticQuery(graphql\`${query}\`);
         `please open an issue in https://github.com/gatsbyjs/gatsby/issues`
     )
   }
-}
-
-StaticQuery.propTypes = {
-  data: PropTypes.object,
-  query: PropTypes.string.isRequired,
-  render: PropTypes.func,
-  children: PropTypes.func,
 }
