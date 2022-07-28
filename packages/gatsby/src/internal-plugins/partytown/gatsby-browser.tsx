@@ -1,10 +1,9 @@
 import { collectedScriptsByPage } from "gatsby-script"
+import { partytownSnippet } from "@builder.io/partytown/integration"
 import type { GatsbyBrowser } from "gatsby"
 import type { ScriptProps } from "gatsby-script"
-import { partytownSnippet } from "@builder.io/partytown/integration"
 
-function getForwards(pathname: string): Array<string> {
-  const collectedScripts = collectedScriptsByPage.get(pathname)
+function getForwards(collectedScripts: Array<ScriptProps>): Array<string> {
   const forwards = collectedScripts?.flatMap(
     (script: ScriptProps) => script?.forward || []
   )
@@ -12,13 +11,19 @@ function getForwards(pathname: string): Array<string> {
 }
 
 function injectPartytownSnippet(pathname: string): void {
+  const collectedScripts = collectedScriptsByPage.get(pathname)
+
+  if (!collectedScripts.length) {
+    return
+  }
+
   const existingSnippet = document.querySelector(`[data-partytown]`)
 
   if (existingSnippet) {
     existingSnippet.remove()
   }
 
-  const forwards = getForwards(pathname)
+  const forwards = getForwards(collectedScripts)
 
   const snippet = document.createElement(`script`)
   snippet.dataset.partytown = ``
