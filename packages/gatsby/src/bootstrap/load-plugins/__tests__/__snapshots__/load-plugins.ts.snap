@@ -307,7 +307,8 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
+      "onRouteUpdate",
     ],
     "id": "",
     "name": "partytown",
@@ -668,7 +669,8 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
+      "onRouteUpdate",
     ],
     "id": "",
     "name": "partytown",
@@ -1040,7 +1042,8 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
+      "onRouteUpdate",
     ],
     "id": "",
     "name": "partytown",
