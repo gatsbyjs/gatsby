@@ -119,8 +119,10 @@ export const StaticQueryStore = ({ children }) => {
   const [staticQueryUpdateDate, setstaticQueryUpdateDate] = React.useState(
     Date.now()
   )
+  const isFirstRender = React.useRef(false)
 
   const handleMittEvent = () => {
+    staticQuerySingleton.set(getStaticQueryResults())
     setstaticQueryUpdateDate(Date.now())
   }
 
@@ -136,7 +138,10 @@ export const StaticQueryStore = ({ children }) => {
     }
   }, [handleEvent])
 
-  staticQuerySingleton.set(getStaticQueryResults())
+  if (!isFirstRender.current) {
+    staticQuerySingleton.set(getStaticQueryResults())
+    isFirstRender.current = true
+  }
 
   // React.Children.toArray doesn't traverse into fragments (see https://github.com/facebook/react/issues/6889)
   // But this is fine since we only care about the next level of nesting anyways
