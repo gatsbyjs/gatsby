@@ -236,8 +236,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       port: developPort,
       // TODO(v5): remove
       proxyPort: developPort,
-      // Don't pass SSL options down to the develop process, it should always use HTTP
-      ssl: null,
       debugInfo,
     })};
     cmd(args);

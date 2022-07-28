@@ -1,6 +1,6 @@
 import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
-import apiRunner from "./api-runner-node"
+import { sourceNodesApiRunner } from "./source-nodes-api-runner"
 import { store } from "../redux"
 import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
@@ -106,12 +106,11 @@ export default async ({
   const traceId = isInitialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
-  await apiRunner(`sourceNodes`, {
+  await sourceNodesApiRunner({
     traceId,
-    waitForCascadingActions: true,
     deferNodeMutation,
     parentSpan,
-    webhookBody: webhookBody || {},
+    webhookBody,
     pluginName,
   })
 
