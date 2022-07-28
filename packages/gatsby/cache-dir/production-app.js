@@ -69,9 +69,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   class GatsbyRoot extends React.Component {
     render() {
       const { children } = this.props
-
-      const staticQueryResults = getStaticQueryResults()
-      staticQuerySingleton.set(staticQueryResults)
+      staticQuerySingleton.set(getStaticQueryResults())
 
       return (
         <Location>
