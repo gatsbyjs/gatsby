@@ -55,3 +55,4 @@ describe(`transform gatsby-remark plugins into regular plugins`, () => {
 
     expect(module).toHaveBeenCalled()
   })
+})
