@@ -128,6 +128,16 @@ You can import your own components.
 
 > **Note:** If you would like to include frontmatter metadata _and_ import components, the frontmatter needs to appear at the top of the file and then imports can follow.
 
+## Defining a layout
+
+You can use regular [layout components](/docs/how-to/routing/layout-components/) to apply layout to your sub pages.
+
+To inject them, you have several options:
+
+1. Use the [`wrapPageElement` API](/docs/reference/config-files/gatsby-browser/#wrapPageElement) including its [SSR counterpart](/docs/reference/config-files/gatsby-ssr/#wrapPageElement).
+1. Add an `export default Layout` statement to your MDX file, see [MDX documentation on Layout](https://mdxjs.com/docs/using-mdx/#layout).
+1. When using the [`createPage` action](/docs/reference/config-files/actions/#createPage) to programatically create pages, you should use the following URI pattern for your page component: `your-layout-component.js?__contentFilePath=absolute-path-to-your-mdx-file.mdx`. To learn more about this, head to the [programmatically creating pages](#programmatically-creating-pages) section just below.
+
 ### Make components available globally as shortcodes
 
 To avoid having to import the same component inside of every MDX document you author, you can add components to an `MDXProvider` to make them globally available in MDX pages. This pattern is sometimes referred to as _shortcodes_.
@@ -168,16 +178,6 @@ The Chart is also available since it was passed into the MDXProvider:
 ```
 
 Because the `<Message />` and `<Chart />` components were passed into the provider, they are available for use in all MDX documents.
-
-## Defining a layout
-
-You can use regular [layout components](/docs/how-to/routing/layout-components/) to apply layout to your sub pages.
-
-To inject them, you have several options:
-
-1. Use the [`wrapPageElement` API](/docs/reference/config-files/gatsby-browser/#wrapPageElement) including its [SSR counterpart](/docs/reference/config-files/gatsby-ssr/#wrapPageElement).
-1. Add an `export default Layout` statement to your MDX file, see [MDX documentation on Layout](https://mdxjs.com/docs/using-mdx/#layout).
-1. When using the [`createPage` action](/docs/reference/config-files/actions/#createPage) to programatically create pages, you should use the following URI pattern for your page component: `your-layout-component.js?__contentFilePath=absolute-path-to-your-mdx-file.mdx`. To learn more about this, head to the [programmatically creating pages](#programmatically-creating-pages) section just below.
 
 ## Programmatically creating pages
 
