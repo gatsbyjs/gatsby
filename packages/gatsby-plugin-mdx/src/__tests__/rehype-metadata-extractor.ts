@@ -13,6 +13,8 @@ it(`rehype: extracts metadata and exposes it through processor.data()`, async ()
     .use(rehypeMdxMetadataInjector)
     .use(rehypeMetadataExtractor)
 
+  processor.data(`mdxMetadata`, {})
+
   processor.processSync(``)
 
   expect(processor.data(`mdxMetadata`)).toMatchObject({ injected: true })
