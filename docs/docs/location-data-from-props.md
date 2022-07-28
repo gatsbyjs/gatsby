@@ -95,6 +95,31 @@ const SomePageComponent = ({ location }) => {
 }
 ```
 
+### TypeScript types for location state
+
+
+```jsx:title=some-page-component.ts
+import { PageProps } from 'gatsby'
+
+// You extend the PageProps' `LocationState` (third Generic) with your state type, then pick only the location attribute.
+type Props = {
+  location: PageProps<
+    unknown,
+    unknown,
+    { modal: boolean }
+  >['location']
+}
+
+const SomePageComponent: React.FC<Props> = ({ location }) => {
+  const { state = {} } = location
+  const { modal } = state
+  return modal ? (
+    <dialog className="modal">I'm a modal of Some Page Component!</dialog>
+  ) : (
+    <div>Welcome to the Some Page Component!</div>
+  )
+}
+
 ## Other resources
 
 - [Gatsby Link API](/docs/reference/built-in-components/gatsby-link/)
