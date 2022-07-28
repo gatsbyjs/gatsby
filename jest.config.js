@@ -98,6 +98,10 @@ const esModules = [
   `remark-parse`,
   `zwitch`,
   `longest-streak`,
+  `estree-walker`,
+  `periscopic`,
+  `hast-util-to-estree`,
+  `estree-util-attach-comments`,
 ].join(`|`)
 
 module.exports = {
@@ -133,6 +137,7 @@ module.exports = {
       `gatsby-plugin-utils/dist/$1`,
       `gatsby-plugin-utils/$1`,
     ], // Workaround for https://github.com/facebook/jest/issues/9771
+    "^estree-walker$": `<rootDir>/node_modules/estree-walker/src/index.js`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
