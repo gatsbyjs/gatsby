@@ -252,7 +252,7 @@ Gatsby is the best
 
 ### Create pages from sourced MDX files
 
-In order to create pages from the sourced MDX files, you need to construct a query that finds all MDX nodes and pulls out the `slug` field from the `frontmatter` you defined. You could also use something like [`@sindresorhus/slugify`](https://github.com/sindresorhus/slugify) to slugify the `title` field.
+In order to create pages from the sourced MDX files, you need to construct a query that finds all MDX nodes and pulls out the `slug` field from the `frontmatter` you defined.
 
 > **Note**: You can open up a GraphiQL console for query testing
 > in your browser at `http://localhost:8000/___graphql`
@@ -367,6 +367,13 @@ createPage({
 ```
 
 That's it, you're done. Run `gatsby develop` to see your posts wrapped with `posts.jsx`.
+
+## Adding additional fields to your GraphQL MDX nodes
+
+To extend your GraphQL nodes, you can use [`onCreateNode` API](/docs/reference/config-files/gatsby-node/#onCreateNode)
+
+You can find examples in the README of `gatsby-plugin-mdx`:
+[Extending GraphQL MDX nodes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes)
 
 ## Making GraphQL queries in an MDX File
 
