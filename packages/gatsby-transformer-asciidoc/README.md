@@ -4,7 +4,9 @@ Parses AsciiDoc files using [Asciidoctor.js](https://asciidoctor.org/docs/asciid
 
 ## Install
 
-`npm install gatsby-transformer-asciidoc`
+```shell
+npm install gatsby-transformer-asciidoc
+```
 
 ## How to use
 

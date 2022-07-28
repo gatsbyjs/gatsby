@@ -202,7 +202,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
       })
 
-      app.get(
+      router.get(
         `/page-data/:pagePath(*)/page-data.json`,
         async (req, res, next) => {
           const requestedPagePath = req.params.pagePath

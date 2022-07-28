@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.19.0/packages/gatsby-source-filesystem) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+### [4.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.18.1/packages/gatsby-source-filesystem) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.18.0/packages/gatsby-source-filesystem) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- update dependency chokidar to ^3.5.3 [#34643](https://github.com/gatsbyjs/gatsby/issues/34643) ([9b308cb](https://github.com/gatsbyjs/gatsby/commit/9b308cb744047beeea3a5b2f500fbf5a8b8ef2d5))
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.17.0/packages/gatsby-source-filesystem) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.16.0/packages/gatsby-source-filesystem) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

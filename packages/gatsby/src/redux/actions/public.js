@@ -495,6 +495,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
+  const sanitizedPayload = sanitizeNode(internalPage)
+
   const actions = [
     {
       ...actionOptions,
@@ -502,7 +505,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       contextModified,
       componentModified,
       plugin,
-      payload: internalPage,
+      payload: sanitizedPayload,
     },
   ]
 

@@ -15,6 +15,7 @@ import {
 } from "graphql"
 import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
+import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -59,7 +60,7 @@ type ActivityTracker = any // TODO: Replace this with proper type once reporter 
 
 interface IServer {
   compiler: webpack.Compiler
-  listener: http.Server
+  listener: http.Server | https.Server
   webpackActivity: ActivityTracker
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
@@ -799,13 +800,11 @@ export async function startServer(
   /**
    * Set up the HTTP server and socket.io.
    **/
-  const server = new http.Server(app)
-
+  const server = program.ssl
+    ? new https.Server(program.ssl, app)
+    : new http.Server(app)
   const socket = websocketManager.init({ server })
-
-  // hardcoded `localhost`, because host should match `target` we set
-  // in http proxy in `develop-proxy`
-  const listener = server.listen(program.port, `localhost`)
+  const listener = server.listen(program.port, program.host)
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)

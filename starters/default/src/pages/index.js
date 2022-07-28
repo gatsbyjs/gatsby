@@ -119,4 +119,6 @@ const IndexPage = () => (
   </Layout>
 )
 
+export const Head = () => <Seo title="Home" />
+
 export default IndexPage

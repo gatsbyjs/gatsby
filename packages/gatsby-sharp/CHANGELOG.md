@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.13.0/packages/gatsby-sharp) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-sharp
+
+## [0.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.12.0/packages/gatsby-sharp) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- Support scoped packages in changelog generation [#35986](https://github.com/gatsbyjs/gatsby/issues/35986) ([9c1ecc1](https://github.com/gatsbyjs/gatsby/commit/9c1ecc148ee5a1c02030e21c0496db46d0adb487))
+
 ## [0.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-sharp@0.11.0/packages/gatsby-sharp) (2022-06-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
