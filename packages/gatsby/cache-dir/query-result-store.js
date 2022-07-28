@@ -116,17 +116,16 @@ export class PageQueryStore extends React.Component {
 }
 
 export const StaticQueryStore = ({ children }) => {
-  const [staticQueryData, setStaticQueryData] = React.useState({
-    ...getStaticQueryResults(),
-  })
+  const [staticQueryUpdateDate, setstaticQueryUpdateDate] = React.useState(
+    Date.now()
+  )
 
   const handleMittEvent = () => {
-    setStaticQueryData({
-      ...getStaticQueryResults(),
-    })
+    staticQuerySingleton.set(getStaticQueryResults())
+    setstaticQueryUpdateDate(Date.now())
   }
 
-  const handleEvent = React.useCallback(handleMittEvent, [staticQueryData])
+  const handleEvent = React.useCallback(handleMittEvent, [])
 
   React.useEffect(() => {
     ___emitter.on(`staticQueryResult`, handleMittEvent)
@@ -138,7 +137,11 @@ export const StaticQueryStore = ({ children }) => {
     }
   }, [handleEvent])
 
-  staticQuerySingleton.set(staticQueryData)
+  staticQuerySingleton.set(getStaticQueryResults())
 
-  return children
+  // React.Children.toArray doesn't traverse into fragments (see https://github.com/facebook/react/issues/6889)
+  // But this is fine since we only care about the next level of nesting anyways
+  return React.Children.toArray(children).map(child =>
+    React.cloneElement(child, { key: staticQueryUpdateDate })
+  )
 }
