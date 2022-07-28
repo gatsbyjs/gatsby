@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.4.0/packages/gatsby-script) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Publish some packages as ESM & CJS [#36012](https://github.com/gatsbyjs/gatsby/issues/36012) ([5bd3063](https://github.com/gatsbyjs/gatsby/commit/5bd3063a1e72c6f98447bfac2bf767cca781330b))
+
+## [1.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.3.0/packages/gatsby-script) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Chores
+
+- Add gatsby-parcel-config & update gatsby-script [#35978](https://github.com/gatsbyjs/gatsby/issues/35978) ([5feeea6](https://github.com/gatsbyjs/gatsby/commit/5feeea6866a9a4882672dcb2b5878c6826e229fc))
+
 ## [1.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.2.0/packages/gatsby-script) (2022-06-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)

@@ -1,4 +1,4 @@
-import { resolve } from "@gatsbyjs/reach-router/lib/utils"
+import { resolve } from "@gatsbyjs/reach-router"
 // Specific import to treeshake Node.js stuff
 import { applyTrailingSlashOption } from "gatsby-page-utils/apply-trailing-slash-option"
 import { parsePath } from "./parse-path"
