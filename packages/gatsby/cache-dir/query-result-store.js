@@ -121,7 +121,6 @@ export const StaticQueryStore = ({ children }) => {
   )
 
   const handleMittEvent = () => {
-    staticQuerySingleton.set(getStaticQueryResults())
     setstaticQueryUpdateDate(Date.now())
   }
 
