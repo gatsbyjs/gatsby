@@ -58,6 +58,16 @@ describe(`navigate`, () => {
         .location(`pathname`)
         .should(`eq`, `${pathPrefix}/subdirectory/page-2`)
     })
+
+    it(`can navigate to SSR page`, () => {
+      cy.getTestElement(`page-ssr-button-link`)
+        .click()
+        .waitForRouteChange()
+        .location(`pathname`)
+        .should(`eq`, withTrailingSlash(`${pathPrefix}/ssr`))
+
+      cy.getTestElement(`server-data`).contains(`foo`)
+    })
   })
 
   it(`can navigate to 404`, () => {
