@@ -3,13 +3,13 @@ title: "Enable Image CDN"
 description: "Learn how to accelerate builds locally and in Gatsby Cloud by offloading image processing to Gatsby's Image CDN"
 ---
 
-Before continuing, make sure you understand What is Image CDN. Also, note that Image CDN only works on sites hosted on Gatsby cloud and doesn't work with other hosting integrations.
+Before continuing, make sure you understand [What is Image CDN](../../../reference/cloud/image-cdn/). Also, note that Image CDN only works on sites hosted on Gatsby cloud and doesn't work with other [hosting integrations](https://support.gatsbyjs.com/hc/en-us/articles/1500000907821-Hosting-and-Data-Source-Integrations).
 
 ## 1. Enable Image CDN
 
 Image CDN is enabled per site on Gatsby Cloud. Go to Site Settings → Images → Enable Image CDN.
 
-image-cdn-enable.png
+![How to enable Gatsby's Image CDN](../../images/image-cdn-enable.png)
 
 ## 2. Upgrade packages
 
@@ -18,7 +18,9 @@ Image CDN requires the latest Gatsby 4 version. Upgrade core dependencies:
 ```shell
 npm install gatsby@latest gatsby-plugin-image@latest gatsby-plugin-sharp@latest gatsby-transformer-sharp@latest
 ```
-// or
+
+ or
+
 ```shell
 yarn add gatsby@latest gatsby-plugin-image@latest gatsby-plugin-sharp@latest gatsby-transformer-sharp@latest
 ```
@@ -42,9 +44,9 @@ If your site didn’t use gatsbyImageData previously, check the docs on Gatsby I
 
 Notable differences between gatsbyImage and gatsbyImageData:
 
-- In gatsbyImage a width or height argument is now required.
-- TRACED_SVG isn’t not currently supported as a placeholder for gatsbyImage
-- Using Image CDN varies by CMS. Make sure to review per-CMS instructions for using Image CDN: read more.
+- In `gatsbyImage` a `width` or `height` argument is now required.
+- `TRACED_SVG` isn’t not currently supported as a placeholder for `gatsbyImage`
+- Using Image CDN varies by CMS. Make sure to review per-CMS instructions for using Image CDN: [read more](https://support.gatsbyjs.com/hc/en-us/articles/4522338898579).
 
 ## 5. Commit and push
 
