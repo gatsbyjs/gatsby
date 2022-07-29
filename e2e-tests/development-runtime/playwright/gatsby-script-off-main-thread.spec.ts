@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test"
+import { waitForRouteChange } from "./fixtures/wait-for-route-change"
 
 const id = {
   // Acutual <Script>
@@ -15,9 +16,7 @@ test.describe(`off-main-thread scripts`, () => {
     page,
   }) => {
     await page.goto(`/gatsby-script-off-main-thread/`)
-    await page.evaluate(
-      () => location.pathname === `/gatsby-script-off-main-thread/`
-    )
+    await waitForRouteChange(page, `/gatsby-script-off-main-thread/`)
 
     const partytownSnippet = page.locator(`[data-partytown]`)
     const scriptWithSrc = page.locator(`[id=${id.three}]`)
@@ -34,12 +33,9 @@ test.describe(`off-main-thread scripts`, () => {
     page,
   }) => {
     await page.goto(`/`)
-    await page.evaluate(() => location.pathname === `/`)
-
+    await waitForRouteChange(page, `/`)
     await page.locator(`[data-testid=off-main-thread]`).click()
-    await page.evaluate(
-      () => location.pathname === `/gatsby-script-off-main-thread/`
-    )
+    await waitForRouteChange(page, `/gatsby-script-off-main-thread/`)
 
     const partytownSnippet = page.locator(`[data-partytown]`)
     const scriptWithSrc = page.locator(`[id=${id.three}]`)
@@ -56,19 +52,14 @@ test.describe(`off-main-thread scripts`, () => {
     page,
   }) => {
     await page.goto(`/gatsby-script-off-main-thread/`)
-    await page.evaluate(
-      () => location.pathname === `/gatsby-script-off-main-thread/`
-    )
-
+    await waitForRouteChange(page, `/gatsby-script-off-main-thread/`)
     await page.locator(`[data-testid=off-main-thread-2]`).click()
-    await page.evaluate(
-      () => location.pathname === `/gatsby-script-off-main-thread-2/`
-    )
+    await waitForRouteChange(page, `/gatsby-script-off-main-thread-2/`)
 
     const partytownSnippet = page.locator(`[data-partytown]`)
-    const scriptWithSrc = page.locator(`[id=${id.scriptWithSrc}]`)
     const templateLiteral = page.locator(`[id=${id.templateLiteral}-2]`)
     const dangerouslySet = page.locator(`[id=${id.dangerouslySet}-2]`)
+    const scriptWithSrc = page.locator(`[id=${id.scriptWithSrc}]`)
 
     await expect(partytownSnippet).toContainText(/some-other-forward/) // Forwards configured
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}-2: success`) // Template literal inline scripts loaded
