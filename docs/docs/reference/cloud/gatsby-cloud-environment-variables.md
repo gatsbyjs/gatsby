@@ -1,6 +1,6 @@
 ---
 title: "Environment Variables Specific to Gatsby Cloud"
-description: ""
+description: "Learn all about the special environment variables support to configure your Gatsby Cloud site"
 ---
 
 The environment variables below allow you to configure features of Gatsby Cloud:
