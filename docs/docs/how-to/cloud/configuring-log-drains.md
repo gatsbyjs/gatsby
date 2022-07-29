@@ -15,9 +15,13 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services (currently only 
 1. [Log in](https://app.datadoghq.com/account/login) to your DataDog account
 1. [Add a new API Key](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token), giving it a name that will help you remember that this key is used for receiving logs from Gatsby Cloud.
 
-   **Note**: If you’re enabling Log Drains for multiple Gatsby Cloud sites, we recommend that you create a separate API key for each Gatsby Cloud site.
+   **Notes**: 
+   - If you’re enabling Log Drains for multiple Gatsby Cloud sites, we recommend that you create a separate `API Key` for each Gatsby Cloud site.
+   - Be sure you create an `API Key` in DataDog, not an Application Key.
 
-1. Copy the newly-created API Key
+   ![Be sure to create an API Key, not an Application Key](../../images/log-drains-datadog-api-key.png)
+
+1. Copy the newly-created `API Key`
 1. Take note of the region (["SITE" in DataDog terminology](https://docs.datadoghq.com/getting_started/site/#pagetitle)) for your DataDog account.
 
    **Note**: Your DataDog region may appear as the subdomain when logged into DataDog
@@ -40,7 +44,7 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services (currently only 
    ![Select the appropriate region](../../images/select-region-3.png)
 
 1. In DataDog, this is the value for [Site](https://docs.datadoghq.com/getting_started/site/#pagetitle)
-1. Enter the API key you created in DataDog from step 3
+1. Enter the `API Key` you created in DataDog from step 3
 
    ![Add your Log Analytics service's API Key](../../images/add-api-key.png)
 
@@ -73,8 +77,8 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services (currently only 
 
 ## Troubleshooting
 
-- After selecting the region and specifying my API key, I receive an error upon clicking Connect from Gatsby Cloud
-  - Confirm that you’ve entered the DataDog API Key properly
+- After selecting the region and specifying my `API Key`, I receive an error upon clicking Connect from Gatsby Cloud
+  - Confirm that you’ve entered the DataDog `API Key` properly
   - Confirm that you’ve selected the appropriate Region in Step 10
   - If all of these are correct, please [Contact us](/support/)
 - It’s been more than 10 minutes, and I still don’t see any logs in DataDog. What now?
