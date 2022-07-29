@@ -73,6 +73,8 @@ test.describe(`off-main-thread scripts`, () => {
     await expect(partytownSnippet).toContainText(/some-other-forward/) // Forwards configured
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}-2: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}-2: success`) // Dangerously set inline scripts loaded
-    await expect(scriptWithSrc).toHaveText(`${id.scriptWithSrc}: success`) // Scripts with sources loaded
+    await expect(scriptWithSrc).toHaveText(`${id.scriptWithSrc}: success`, {
+      timeout: 10000,
+    }) // Scripts with sources loaded
   })
 })
