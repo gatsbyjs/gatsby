@@ -375,7 +375,10 @@ export async function generateImageData({
         ...options,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
-        height: Math.round(placeholderWidth / imageSizes.aspectRatio),
+        height: Math.max(
+          1,
+          Math.round(placeholderWidth / imageSizes.aspectRatio)
+        ),
       },
       reporter,
     })
