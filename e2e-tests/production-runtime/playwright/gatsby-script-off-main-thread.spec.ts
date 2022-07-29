@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test"
-import { waitForRouteChange } from "./fixtures/wait-for-route-change"
 
 const id = {
   // Acutual <Script>
@@ -16,7 +15,6 @@ test.describe(`off-main-thread scripts`, () => {
     page,
   }) => {
     await page.goto(`/gatsby-script-off-main-thread/`)
-    await waitForRouteChange(page, `/gatsby-script-off-main-thread/`)
 
     const partytownSnippet = page.locator(`[data-partytown]`)
     const scriptWithSrc = page.locator(`[id=${id.three}]`)
@@ -33,9 +31,7 @@ test.describe(`off-main-thread scripts`, () => {
     page,
   }) => {
     await page.goto(`/`)
-    await waitForRouteChange(page, `/`)
     await page.locator(`[data-testid=off-main-thread]`).click()
-    await waitForRouteChange(page, `/gatsby-script-off-main-thread/`)
 
     const partytownSnippet = page.locator(`[data-partytown]`)
     const scriptWithSrc = page.locator(`[id=${id.three}]`)
@@ -52,9 +48,14 @@ test.describe(`off-main-thread scripts`, () => {
     page,
   }) => {
     await page.goto(`/gatsby-script-off-main-thread/`)
-    await waitForRouteChange(page, `/gatsby-script-off-main-thread/`)
-    await page.locator(`[data-testid=off-main-thread-2]`).click()
-    await waitForRouteChange(page, `/gatsby-script-off-main-thread-2/`)
+
+    // Bizarre wait pattern from https://playwright.dev/docs/events#waiting-for-event
+    await Promise.all([
+      await page.locator(`[data-testid=off-main-thread-2]`).click(),
+      await page.evaluate(
+        () => location.pathname === `/gatsby-script-off-main-thread-2/`
+      ),
+    ])
 
     const partytownSnippet = page.locator(`[data-partytown]`)
     const templateLiteral = page.locator(`[id=${id.templateLiteral}-2]`)
