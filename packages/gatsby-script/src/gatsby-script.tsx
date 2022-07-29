@@ -4,7 +4,7 @@ import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
 
 /**
- * Deliberiately import from the `@reach/router` path alias set in our tsconfig.
+ * Deliberately import from the `@reach/router` path alias set in our tsconfig.
  *
  * Importing from `@gatsbyjs/reach-router` resolves the CJS module relative to the site root,
  * so location context is not the same as what is available in Gatsby core.
