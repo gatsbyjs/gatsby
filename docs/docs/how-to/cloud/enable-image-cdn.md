@@ -17,7 +17,9 @@ Image CDN requires the latest Gatsby 4 version. Upgrade core dependencies:
 
 npm install gatsby@latest gatsby-plugin-image@latest gatsby-plugin-sharp@latest gatsby-transformer-sharp@latest
 // or
+```shell
 yarn add gatsby@latest gatsby-plugin-image@latest gatsby-plugin-sharp@latest gatsby-transformer-sharp@latest
+```
 (note that on later npm versions you may need to install with the `--legacy-peer-deps` npm flag)
 
 ## 3. Upgrade source plugins
