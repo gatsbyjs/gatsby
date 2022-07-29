@@ -11,7 +11,7 @@ import { requestIdleCallback } from "./request-idle-callback-shim"
  *
  * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/tsconfig.json}
  */
-import { useLocation } from "@reach/router"
+import { Location, useLocation } from "@reach/router"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -55,7 +55,18 @@ export const scriptCallbackCache: Map<
   }
 > = new Map()
 
-export function Script(props: ScriptProps): ReactElement | null {
+/**
+ * In static-entry we wrap the tree with `<ServerLocation>`, but we do not have a location
+ * provider by default in the gatsby-browser-entry. Wrap with `<Location>` here to conditionally
+ * wrap a location provider if there isn't one. Gatsby Link does the same thing.
+ *
+ * @see {@link https://github.com/gatsbyjs/reach-router/blob/master/src/index.js}
+ */
+function GatsbyScriptLocationWrapper(props: ScriptProps): JSX.Element {
+  return <Location>{(): JSX.Element => <GatsbyScript {...props} />}</Location>
+}
+
+function GatsbyScript(props: ScriptProps): ReactElement | null {
   const { src, strategy = ScriptStrategy.postHydrate } = props || {}
 
   const { pathname } = useLocation()
@@ -268,3 +279,5 @@ function onEventCallback(
 
   scriptCallbackCache.set(scriptKey, { [eventName]: { event } })
 }
+
+export { GatsbyScriptLocationWrapper as Script }
