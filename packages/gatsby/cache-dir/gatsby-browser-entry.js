@@ -113,4 +113,4 @@ export {
   prefetchPathname,
 }
 
-export * from "gatsby-script"
+export * from "./script"

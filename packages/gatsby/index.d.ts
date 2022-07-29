@@ -27,7 +27,7 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
-export * from "gatsby-script"
+export * from "./cache-dir/script"
 
 export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>
@@ -158,7 +158,7 @@ export type HeadProps<DataType = object, PageContextType = object> = {
     /**
      * Returns the Location object's URL's path.
      */
-    pathname: string;
+    pathname: string
   }
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
@@ -175,7 +175,7 @@ export type HeadProps<DataType = object, PageContextType = object> = {
 /**
  * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
- export type HeadFC<DataType = object, PageContextType = object> = (
+export type HeadFC<DataType = object, PageContextType = object> = (
   props: HeadProps<DataType, PageContextType>
 ) => JSX.Element
 
@@ -294,7 +294,7 @@ export interface GatsbyConfig {
     url: string
   }
   /**
-   * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
+   * A list of trusted URLs that will be proxied for use with the gatsby script off-main-thread strategy.
    * @see https://gatsby.dev/gatsby-script
    */
   partytownProxiedURLs?: Array<string>

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react"
-import type { GatsbySSR } from "gatsby"
 import { Partytown } from "@builder.io/partytown/react"
-import { PartytownContext, ScriptProps } from "gatsby-script"
+import { PartytownContext } from "gatsby"
+import type { GatsbySSR, ScriptProps } from "gatsby"
 
 interface ICollectedForwardsState {
   collectedForwards: Set<string>

@@ -1,7 +1,7 @@
 import React from "react"
-import type { GatsbySSR } from "gatsby"
 import { Partytown } from "@builder.io/partytown/react"
-import { PartytownContext, ScriptProps } from "gatsby-script"
+import { PartytownContext } from "gatsby"
+import type { GatsbySSR, ScriptProps } from "gatsby"
 
 const collectedScripts: Map<string, Array<ScriptProps>> = new Map()
 
