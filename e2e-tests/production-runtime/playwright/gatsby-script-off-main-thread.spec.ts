@@ -25,9 +25,9 @@ test.describe(`off-main-thread scripts`, () => {
     const dangerouslySet = page.locator(`[id=${id.dangerouslySet}]`)
 
     await expect(partytownSnippet).toContainText(/THREE/) // Forwards configured
-    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}: success`) // Dangerously set inline scripts loaded
+    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded
   })
 
   test(`should load successfully when navigating via Gatsby Link to a page with off-main-thread scripts`, async ({
@@ -47,9 +47,9 @@ test.describe(`off-main-thread scripts`, () => {
     const dangerouslySet = page.locator(`[id=${id.dangerouslySet}]`)
 
     await expect(partytownSnippet).toContainText(/THREE/) // Forwards configured
-    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded, use `type` attr Partytown mutates on success as proxy
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}: success`) // Dangerously set inline scripts loaded
+    await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded, use `type` attr Partytown mutates on success as proxy
   })
 
   test(`should load successfully when navigating via Gatsby Link between pages with off-main-thread scripts`, async ({
@@ -71,8 +71,8 @@ test.describe(`off-main-thread scripts`, () => {
     const dangerouslySet = page.locator(`[id=${id.dangerouslySet}-2]`)
 
     await expect(partytownSnippet).toContainText(/some-other-forward/) // Forwards configured
-    await expect(scriptWithSrc).toHaveText(`${id.scriptWithSrc}: success`) // Scripts with sources loaded
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}-2: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}-2: success`) // Dangerously set inline scripts loaded
+    await expect(scriptWithSrc).toHaveText(`${id.scriptWithSrc}: success`) // Scripts with sources loaded
   })
 })
