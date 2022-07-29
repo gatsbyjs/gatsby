@@ -35,7 +35,7 @@ const config: PlaywrightTestConfig = {
     // launchOptions: {
     //   slowMo: 5 * 1000,
     // },
-    headless: process.env.CI,
+    headless: !!process.env.CI,
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
