@@ -3,14 +3,7 @@ import { collectedScriptsByPage } from "./collected-scripts-by-page"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
 
-/**
- * Deliberately import from the `@reach/router` path alias set in our tsconfig.
- *
- * Importing from `@gatsbyjs/reach-router` resolves the CJS module relative to the site root,
- * so location context is not the same as what is available in Gatsby core.
- *
- * @see {@link https://github.com/gatsbyjs/gatsby/blob/master/tsconfig.json}
- */
+// For some reason @gatsbyjs/reach-router does not resolve the same module that core uses, but this does
 import { Location, useLocation } from "@reach/router"
 
 export enum ScriptStrategy {
@@ -55,13 +48,7 @@ export const scriptCallbackCache: Map<
   }
 > = new Map()
 
-/**
- * In static-entry we wrap the tree with `<ServerLocation>`, but we do not have a location
- * provider by default in the gatsby-browser-entry. Wrap with `<Location>` here to conditionally
- * wrap a location provider if there isn't one. Gatsby Link does the same thing.
- *
- * @see {@link https://github.com/gatsbyjs/reach-router/blob/master/src/index.js}
- */
+// Same pattern is used in Gatsby Link
 function GatsbyScriptLocationWrapper(props: ScriptProps): JSX.Element {
   return <Location>{(): JSX.Element => <GatsbyScript {...props} />}</Location>
 }
