@@ -160,9 +160,9 @@ describe(`Babelrc actions/reducer`, () => {
         ],
         itemToMerge: {
           value: (): null => null,
-          dirname: `hi 2`,
+          dirname: `hi2`,
           options: { wat: 2 },
-          file: { resolved: `hi 2`, request: `hello2` },
+          file: { resolved: `hi2`, request: `hello2` },
         },
         type: `plugin`,
         babel,
