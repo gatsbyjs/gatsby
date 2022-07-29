@@ -3,7 +3,7 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { generateHtmlPath } from "gatsby-core-utils"
+import { generatePageDataPath, generateHtmlPath } from "gatsby-core-utils"
 import { truncate } from "lodash"
 
 import {
@@ -260,4 +260,58 @@ export const renderHTMLDev = async ({
     },
     { concurrency: 2 }
   )
+}
+
+export const renderServerComponents = async ({
+  htmlComponentRendererPath,
+  paths,
+  envVars,
+  sessionId,
+}: {
+  htmlComponentRendererPath: string
+  paths: Array<string>
+  envVars: Array<[string, string | undefined]>
+  sessionId: number
+}): Promise<void> => {
+  const publicDir = join(process.cwd(), `public`)
+
+  // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
+  // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
+  if (sessionId !== lastSessionId) {
+    clearCaches()
+
+    // This is being executed in child process, so we need to set some vars
+    // for modules that aren't bundled by webpack.
+    envVars.forEach(([key, value]) => (process.env[key] = value))
+
+    htmlComponentRenderer = require(htmlComponentRendererPath)
+
+    lastSessionId = sessionId
+  }
+
+  for (const pagePath of paths) {
+    try {
+      const pageData = await readPageData(publicDir, pagePath)
+      const { staticQueryContext } = await getStaticQueryContext(
+        pageData.staticQueryHashes
+      )
+      const serverComponentOutput =
+        await htmlComponentRenderer.renderServerComponent({
+          pagePath,
+          pageData,
+          staticQueryContext,
+        })
+
+      await fs.outputFile(
+        generatePageDataPath(publicDir, pagePath).replace(`.json`, `.rsc`),
+        serverComponentOutput
+      )
+    } catch (e) {
+      // add some context to error so we can display more helpful message
+      e.context = {
+        path: pagePath,
+      }
+      throw e
+    }
+  }
 }

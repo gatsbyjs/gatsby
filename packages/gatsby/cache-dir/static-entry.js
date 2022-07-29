@@ -6,6 +6,9 @@ const {
   renderToStaticMarkup,
   renderToPipeableStream,
 } = require(`react-dom/server`)
+const {
+  renderToPipeableStream: ServerComponentsStream,
+} = require(`react-server-dom-webpack/writer.node.server`)
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const merge = require(`deepmerge`)
 const { StaticQueryContext } = require(`gatsby`)
@@ -120,6 +123,7 @@ export default async function staticPage({
   global.unsafeBuiltinUsage = []
 
   try {
+    let serverComponentData = ``
     let bodyHtml = ``
     let headComponents = [
       <meta
@@ -133,6 +137,9 @@ export default async function staticPage({
     let preBodyComponents = []
     let postBodyComponents = []
     let bodyProps = {}
+
+    // todo remove
+    serverComponentData += ``
 
     function loadPageDataSync(_pagePath) {
       if (_pagePath === pagePath) {
@@ -223,6 +230,7 @@ export default async function staticPage({
 
     class RouteHandler extends React.Component {
       render() {
+        // console.log(this.props)
         const props = {
           ...this.props,
           ...pageData.result,
@@ -303,6 +311,7 @@ export default async function staticPage({
           bodyHtml = renderToString(bodyComponent)
         }
       } catch (e) {
+        console.log(e.message)
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e
       }
@@ -445,7 +454,11 @@ export default async function staticPage({
       />
     )}`
 
-    return { html, unsafeBuiltinsUsage: global.unsafeBuiltinUsage }
+    return {
+      html,
+      serverComponentData,
+      unsafeBuiltinsUsage: global.unsafeBuiltinUsage,
+    }
   } catch (e) {
     e.unsafeBuiltinsUsage = global.unsafeBuiltinUsage
     throw e
@@ -454,4 +467,39 @@ export default async function staticPage({
 
 export function getPageChunk({ componentChunkName }) {
   return asyncRequires.components[componentChunkName]()
+}
+
+export async function renderServerComponent({
+  pagePath,
+  pageData,
+  staticQueryContext,
+  clientComponentsManifest,
+}) {
+  const { componentChunkName } = pageData
+  const pageComponent = await asyncRequires.components[componentChunkName]()
+
+  const rscWritableStream = new WritableAsPromise()
+
+  const props = {
+    ...pageData.result,
+    params: {
+      ...grabMatchParams(pagePath),
+    },
+    location: {
+      pagePath,
+    },
+  }
+
+  const Component = pageComponent.default
+  const { pipe } = ServerComponentsStream(
+    <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        <Component {...props} />
+      </StaticQueryContext.Provider>
+    </ServerLocation>,
+    clientComponentsManifest
+  )
+  pipe(rscWritableStream)
+
+  return rscWritableStream
 }

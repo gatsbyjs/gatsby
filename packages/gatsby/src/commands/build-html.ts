@@ -283,6 +283,14 @@ const renderHTMLQueue = async (
         webpackCompilationHash,
       })
 
+      // TODO Guard on compiler and REACT 18
+      await workerPool.single.renderServerComponents({
+        envVars,
+        htmlComponentRendererPath,
+        paths: pageSegment,
+        sessionId,
+      })
+
       if (isPreview) {
         const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
         const seenErrors = new Set()
