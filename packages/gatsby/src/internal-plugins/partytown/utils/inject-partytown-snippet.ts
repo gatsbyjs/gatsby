@@ -10,10 +10,17 @@ export function injectPartytownSnippet(
     return
   }
 
-  const existingSnippet = document.querySelector(`[data-partytown]`)
+  const existingSnippet = document.querySelector(`script[data-partytown]`)
+  const existingSandbox = document.querySelector(
+    `iframe[src*="~partytown/partytown-sandbox-sw"]`
+  )
 
   if (existingSnippet) {
     existingSnippet.remove()
+  }
+
+  if (existingSandbox) {
+    existingSandbox.remove()
   }
 
   const forwards = getForwards(collectedScripts)
