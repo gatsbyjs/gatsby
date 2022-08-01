@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import Layout from "../components/layout"
+import Seo from "../components/seo"
 
 const UseEnv = ({ heading, envVar }) => (
   <React.Fragment>
@@ -25,5 +26,7 @@ const SecondPage = () => (
     />
   </Layout>
 )
+
+export const Head = () => <Seo />
 
 export default SecondPage
