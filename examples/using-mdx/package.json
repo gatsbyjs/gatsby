@@ -8,17 +8,19 @@
     "@mdx-js/react": "^2.1.2",
     "@nivo/core": "^0.79.0",
     "@nivo/line": "^0.79.1",
-    "@sindresorhus/slugify": "^1.0.0",
+    "@sindresorhus/slugify": "^1",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
+    "mdast-util-to-string": "^2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reading-time": "^1.5.0",
     "remark-gfm": "^1",
-    "remark-unwrap-images": "^2"
+    "remark-unwrap-images": "^2",
+    "unist-util-visit": "^2"
   },
   "devDependencies": {
     "prettier": "^2.7.1"

@@ -311,7 +311,7 @@ This largely comes down to your own preference and how you want to wire things u
 
 1. Install `@sindresorhus/slugify` into your project (v1 as v2 is ESM-only):
    ```shell
-   npm install @sindresorhus/slugify@^1.0.0
+   npm install @sindresorhus/slugify@^1
    ```
 1. In your `gatsby-node` add a new field:
 
@@ -342,6 +342,114 @@ This largely comes down to your own preference and how you want to wire things u
    ```
 
 If you don't want to use the `frontmatter.title`, adjust what you input to `slugify()`. For example, if you want information from the `File` node, you could use `getNode(node.parent)`.
+
+### headings
+
+1. Install necessary dependencies into your project:
+   ```shell
+   npm install mdast-util-to-string@^2 unist-util-visit@^2
+   ```
+1. Create a new file called `remark-headings-plugin.js` at the site root:
+
+   ```js
+   const visit = require(`unist-util-visit`)
+   const toString = require(`mdast-util-to-string`)
+
+   exports.remarkHeadingsPlugin = function remarkHeadingsPlugin() {
+     return async function transformer(tree, file) {
+       let headings = []
+
+       visit(tree, `heading`, heading => {
+         headings.push({
+           value: toString(heading),
+           depth: heading.depth,
+         })
+       })
+
+       const mdxFile = file
+       if (!mdxFile.data.meta) {
+         mdxFile.data.meta = {}
+       }
+
+       mdxFile.data.meta.headings = headings
+     }
+   }
+   ```
+
+1. Add a new `headings` field resolver to your `Mdx` nodes through `createSchemaCustomization` API:
+
+   ```js:title=gatsby-node.js
+   const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
+   const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
+
+   exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema }) => {
+     const { createTypes } = actions
+
+     const headingsResolver = schema.buildObjectType({
+       name: `Mdx`,
+       fields: {
+         headings: {
+           type: `[MdxHeading]`,
+           async resolve(mdxNode) {
+             const fileNode = getNode(mdxNode.parent)
+
+             if (!fileNode) {
+               return null
+             }
+
+             const result = await compileMDXWithCustomOptions(
+               {
+                 source: mdxNode.body,
+                 absolutePath: fileNode.absolutePath,
+               },
+               {
+                 pluginOptions: {},
+                 customOptions: {
+                   mdxOptions: {
+                     remarkPlugins: [remarkHeadingsPlugin],
+                   },
+                 },
+                 getNode,
+                 getNodesByType,
+                 pathPrefix,
+                 reporter,
+                 cache,
+               }
+             )
+
+             if (!result) {
+               return null
+             }
+
+             return result.metadata.headings
+           }
+         }
+       }
+     })
+
+     createTypes([
+       `
+         type MdxHeading {
+           value: String
+           depth: Int
+         }
+       `,
+       headingsResolver,
+     ])
+   }
+   ```
+
+1. You're now able to query the information on the MDX node:
+   ```graphql
+   query {
+     mdx {
+       headings {
+         value
+         depth
+       }
+     }
+   }
+   ```
 
 ## Components
 
@@ -622,7 +730,7 @@ Here's an example of an updated query (if you re-implemented most features):
 -  timeToRead
 -  rawBody
 -  slug
--  headings
+   headings
 -  html
 -  mdxAST
 -  wordCount
@@ -660,7 +768,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(`#graphql
     type Mdx implements Node {
       # You can also use other keys from fields.timeToRead if you don't want "minutes"
-      timeToRead: JSON @proxy(from: "fields.timeToRead.minutes")
+      timeToRead: Float @proxy(from: "fields.timeToRead.minutes")
       wordCount: Int @proxy(from: "fields.timeToRead.words")
     }
   `)

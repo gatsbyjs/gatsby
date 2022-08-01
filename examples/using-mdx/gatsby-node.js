@@ -1,6 +1,8 @@
 const path = require("path")
 const readingTime = require(`reading-time`)
 const slugify = require(`@sindresorhus/slugify`)
+const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
+const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
@@ -19,15 +21,64 @@ exports.onCreateNode = ({ node, actions }) => {
   }
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
+exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema }) => {
   const { createTypes } = actions
 
-  createTypes(`#graphql
-    type Mdx implements Node {
-      timeToRead: JSON @proxy(from: "fields.timeToRead.minutes")
-      wordCount: Int @proxy(from: "fields.timeToRead.words")
+  const headingsResolver = schema.buildObjectType({
+    name: `Mdx`,
+    fields: {
+      headings: {
+        type: `[MdxHeading]`,
+        async resolve(mdxNode) {
+          const fileNode = getNode(mdxNode.parent)
+
+          if (!fileNode) {
+            return null
+          }
+
+          const result = await compileMDXWithCustomOptions(
+            {
+              source: mdxNode.body,
+              absolutePath: fileNode.absolutePath,
+            },
+            {
+              pluginOptions: {},
+              customOptions: {
+                mdxOptions: {
+                  remarkPlugins: [remarkHeadingsPlugin],
+                },
+              },
+              getNode,
+              getNodesByType,
+              pathPrefix,
+              reporter,
+              cache,
+            }
+          )
+
+          if (!result) {
+            return null
+          }
+
+          return result.metadata.headings
+        }
+      }
     }
-  `)
+  })
+
+  createTypes([
+    `#graphql
+      type Mdx implements Node {
+        timeToRead: Float @proxy(from: "fields.timeToRead.minutes")
+        wordCount: Int @proxy(from: "fields.timeToRead.words")
+      }
+      type MdxHeading {
+        value: String
+        depth: Int
+      }
+    `,
+    headingsResolver,
+  ])
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
