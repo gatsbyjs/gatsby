@@ -9,9 +9,6 @@ function Seo({ children, description, lang, keywords, title }) {
         siteMetadata {
           title
           description
-          social {
-            twitter
-          }
         }
       }
     }
@@ -29,10 +26,6 @@ function Seo({ children, description, lang, keywords, title }) {
       <meta name="og:title" content={title} />
       <meta name="og:description" content={metaDescription} />
       <meta name="twitter:card" content="summary" />
-      <meta
-        name="twitter:creator"
-        content={data.site.siteMetadata.social.twitter}
-      />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={metaDescription} />
       <meta name="og:type" content="website" />

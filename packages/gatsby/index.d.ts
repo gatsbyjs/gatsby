@@ -959,6 +959,7 @@ export interface PreInitArgs extends ParentSpanPluginArgs {
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
+  webhookBody: any
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {

@@ -1,4 +1,85 @@
 const path = require("path")
+const readingTime = require(`reading-time`)
+const slugify = require(`@sindresorhus/slugify`)
+const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
+const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
+
+exports.onCreateNode = ({ node, actions }) => {
+  const { createNodeField } = actions
+  if (node.internal.type === `Mdx`) {
+    createNodeField({
+      node,
+      name: `timeToRead`,
+      value: readingTime(node.body)
+    })
+
+    createNodeField({
+      node,
+      name: `slug`,
+      value: `/${slugify(node.frontmatter.title)}`
+    })
+  }
+}
+
+exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema }) => {
+  const { createTypes } = actions
+
+  const headingsResolver = schema.buildObjectType({
+    name: `Mdx`,
+    fields: {
+      headings: {
+        type: `[MdxHeading]`,
+        async resolve(mdxNode) {
+          const fileNode = getNode(mdxNode.parent)
+
+          if (!fileNode) {
+            return null
+          }
+
+          const result = await compileMDXWithCustomOptions(
+            {
+              source: mdxNode.body,
+              absolutePath: fileNode.absolutePath,
+            },
+            {
+              pluginOptions: {},
+              customOptions: {
+                mdxOptions: {
+                  remarkPlugins: [remarkHeadingsPlugin],
+                },
+              },
+              getNode,
+              getNodesByType,
+              pathPrefix,
+              reporter,
+              cache,
+            }
+          )
+
+          if (!result) {
+            return null
+          }
+
+          return result.metadata.headings
+        }
+      }
+    }
+  })
+
+  createTypes([
+    `#graphql
+      type Mdx implements Node {
+        timeToRead: Float @proxy(from: "fields.timeToRead.minutes")
+        wordCount: Int @proxy(from: "fields.timeToRead.words")
+      }
+      type MdxHeading {
+        value: String
+        depth: Int
+      }
+    `,
+    headingsResolver,
+  ])
+}
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
