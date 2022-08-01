@@ -1,7 +1,6 @@
 ---
 title: "Working with Redirects and Rewrites"
 description: "Learn how to leverage redirects, rewrites, and reverse proxies in Gatsby Cloud"
-label: "cloud"
 ---
 
 ## Introduction
@@ -20,14 +19,13 @@ For instance, while rebuilding your cooking blog, you might want to move all of 
 1. In `gatsby-node.js`, export the `createPages` method and use the `createRedirects` action to generate any redirects that you want to add. Here's an example showing the lasagna recipe above:
 
 ```javascript:title=gatsby-node.js
-// gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
 	const { createRedirect } = actions;
 
 	createRedirect({
-  fromPath: `/blog/recipes/mouthwatering-lasagna`,
-  toPath: `/recipes/mouthwatering-lasagna`,
-});
+    fromPath: `/blog/recipes/mouthwatering-lasagna`,
+    toPath: `/recipes/mouthwatering-lasagna`,
+  });
 }
 ```
 

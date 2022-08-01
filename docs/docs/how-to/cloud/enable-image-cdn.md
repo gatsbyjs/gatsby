@@ -3,7 +3,7 @@ title: "Enable Image CDN"
 description: "Learn how to accelerate builds locally and in Gatsby Cloud by offloading image processing to Gatsby's Image CDN"
 ---
 
-Before continuing, make sure you understand [What is Image CDN](../../../reference/cloud/image-cdn/). Also, note that Image CDN only works on sites hosted on Gatsby cloud and doesn't work with other [hosting integrations](https://support.gatsbyjs.com/hc/en-us/articles/1500000907821-Hosting-and-Data-Source-Integrations).
+Before continuing, make sure you understand [What is Image CDN](/docs/reference/cloud/image-cdn/). Also, note that Image CDN only works on sites hosted on Gatsby cloud and doesn't work with other [hosting integrations](https://support.gatsbyjs.com/hc/en-us/articles/1500000907821-Hosting-and-Data-Source-Integrations).
 
 ## 1. Enable Image CDN
 
@@ -18,13 +18,6 @@ Image CDN requires the latest Gatsby 4 version. Upgrade core dependencies:
 ```shell
 npm install gatsby@latest gatsby-plugin-image@latest gatsby-plugin-sharp@latest gatsby-transformer-sharp@latest
 ```
-
- or
-
-```shell
-yarn add gatsby@latest gatsby-plugin-image@latest gatsby-plugin-sharp@latest gatsby-transformer-sharp@latest
-```
-(note that on later npm versions you may need to install with the `--legacy-peer-deps` npm flag)
 
 ## 3. Upgrade source plugins
 
@@ -46,7 +39,7 @@ Notable differences between gatsbyImage and gatsbyImageData:
 
 - In `gatsbyImage` a `width` or `height` argument is now required.
 - `TRACED_SVG` isn’t not currently supported as a placeholder for `gatsbyImage`
-- Using Image CDN varies by CMS. Make sure to review per-CMS instructions for using Image CDN: [read more](https://support.gatsbyjs.com/hc/en-us/articles/4522338898579).
+- Using Image CDN varies by CMS. Make sure to [review per-CMS instructions for using Image CDN](https://support.gatsbyjs.com/hc/en-us/articles/4522338898579).
 
 ## 5. Commit and push
 
@@ -54,4 +47,6 @@ Push these code changes to your site. This code update should trigger a new buil
 
 To verify Image CDN is working, your images should be served from a relative URL similar to below:
 
+```
 \_gatsby/image/aHR0cHM6Ly9pbWFnZXMuY3RmYXNzZXRzLm5ldC92NnVlNGdyZ2ZhN2IvNE56d0RTRGxHRUNHSWlva0tvbXN5SS9kOTY0ODFhNzBmZjU4NGQxNzViY2I5YWVmMTJjNjRkYi9kZW55cy1uZXZvemhhaS0xMDA2OTUuanBn/dz03NTAmaD0zNzUmZm09anBnJnE9NzU=/denys-nevozhai-100695.jpg
+```
