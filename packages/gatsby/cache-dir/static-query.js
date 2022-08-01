@@ -18,7 +18,12 @@ const _staticQuerySingleton = {
  */
 export const staticQuerySingleton = Object.freeze(_staticQuerySingleton)
 
-const StaticQueryDataRenderer = function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
+const StaticQueryDataRenderer = function StaticQueryDataRenderer({
+  staticQueryData,
+  data,
+  query,
+  render,
+}) {
   const finalData = data
     ? data.data
     : staticQueryData[query] && staticQueryData[query].data
@@ -31,7 +36,12 @@ const StaticQueryDataRenderer = function StaticQueryDataRenderer({ staticQueryDa
   )
 }
 
-export const StaticQuery = function StaticQuery({ data, query, render, children }) {
+export const StaticQuery = function StaticQuery({
+  data,
+  query,
+  render,
+  children,
+}) {
   const staticQueryData = staticQuerySingleton.get()
 
   return (
