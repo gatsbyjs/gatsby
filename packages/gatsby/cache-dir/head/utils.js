@@ -85,22 +85,20 @@ export function isEqualNode(oldTag, newTag) {
 
 export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
   for (const existingHeadElement of oldNodes) {
-    const isInValidNodes = newNodes.some(e =>
+    const indexInNewNodes = newNodes.findIndex(e =>
       isEqualNode(e, existingHeadElement)
     )
 
-    if (!isInValidNodes) {
+    if (indexInNewNodes === -1) {
       onStale(existingHeadElement)
+    } else {
+      // this node is re-created as-is, so we keep old node, and remove it from list of new nodes (as we handled it already here)
+      newNodes.splice(indexInNewNodes, 1)
     }
   }
 
-  for (const validHeadNode of newNodes) {
-    const isInExistingHeadElementsList = oldNodes.some(e =>
-      isEqualNode(e, validHeadNode)
-    )
-
-    if (!isInExistingHeadElementsList) {
-      onNew(validHeadNode)
-    }
+  // remaing new nodes didn't have matching old node, so need to be added
+  for (const newNode of newNodes) {
+    onNew(newNode)
   }
 }
