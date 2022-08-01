@@ -1,5 +1,5 @@
 ---
-title: Adding a Custom Domain to your site on Gatsby Cloud
+title: Adding a Custom Domain to Your Site on Gatsby Cloud
 description: Learn how to add a custom domain to your site on Gatsby Cloud
 ---
 
