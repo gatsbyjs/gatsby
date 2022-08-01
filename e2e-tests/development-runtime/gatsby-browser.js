@@ -19,7 +19,6 @@ export const onPreRouteUpdate = ({ location }) => {
 
 export const onRouteUpdate = ({ location }) => {
   addLogEntry(`onRouteUpdate`, location)
-  console.log(`onRouteUpdate: ${location.pathname}`) // Used for Playwright CSR waits
 }
 export const onPrefetchPathname = ({ pathname }) => {
   addLogEntry(`onPrefetchPathname`, pathname)

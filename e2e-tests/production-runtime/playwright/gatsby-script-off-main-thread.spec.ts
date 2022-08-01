@@ -27,7 +27,7 @@ test.describe(`off-main-thread scripts`, () => {
     await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded
   })
 
-  // This behavior actually works, but after several hours I can't figure out how to fix the wait in Playwright to not be flakey in the CI. Skip for now.
+  // This behavior actually works, but I can't figure out how to fix the wait on CSR navigation in Playwright to not be flakey in the CI
   test.skip(`should load successfully when navigating via Gatsby Link to a page with off-main-thread scripts`, async ({
     page,
   }) => {
@@ -45,19 +45,12 @@ test.describe(`off-main-thread scripts`, () => {
     await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded, use `type` attr Partytown mutates on success as proxy
   })
 
-  // This behavior actually works, but after several hours I can't figure out how to fix the wait in Playwright to not be flakey in the CI. Skip for now.
+  // This behavior actually works, but I can't figure out how to fix the wait on CSR navigation in Playwright to not be flakey in the CI
   test.skip(`should load successfully when navigating via Gatsby Link between pages with off-main-thread scripts`, async ({
     page,
   }) => {
     await page.goto(`/gatsby-script-off-main-thread/`)
-
-    // Bizarre wait pattern from https://playwright.dev/docs/events#waiting-for-event
-    await Promise.all([
-      await page.locator(`[data-testid=off-main-thread-2]`).click(),
-      await page.evaluate(
-        () => location.pathname === `/gatsby-script-off-main-thread-2/`
-      ),
-    ])
+    await page.locator(`[data-testid=off-main-thread-2]`).click()
 
     const partytownSnippet = page.locator(`[data-partytown]`)
     const templateLiteral = page.locator(`[id=${id.templateLiteral}-2]`)
