@@ -16,7 +16,7 @@ export const onRouteUpdate: GatsbyBrowser[`onRouteUpdate`] = ({
     return
   }
 
-  collectedScriptsByPage.delete(window.location.pathname)
+  collectedScriptsByPage.delete(location.pathname)
 
   setTimeout(() => {
     injectPartytownSnippet(location.pathname)
