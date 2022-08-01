@@ -8,6 +8,7 @@
     "@mdx-js/react": "^2.1.2",
     "@nivo/core": "^0.79.0",
     "@nivo/line": "^0.79.1",
+    "@sindresorhus/slugify": "^1.0.0",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
@@ -15,6 +16,7 @@
     "gatsby-source-filesystem": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "reading-time": "^1.5.0",
     "remark-gfm": "^1",
     "remark-unwrap-images": "^2"
   },

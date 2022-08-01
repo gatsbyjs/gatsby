@@ -260,6 +260,8 @@ In your GraphQL schema, you will discover several additional data related to you
 
 ## Extending the GraphQL MDX nodes
 
+Use the [`createNodeField`](https://www.gatsbyjs.com/docs/reference/config-files/actions/#createNodeField) action to extend MDX nodes. All new items will be placed under the `fields` key. You can [alias your `fields`](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#aliasing-fields) to have them at the root of the GraphQL node.
+
 ### timeToRead
 
 1. Install `reading-time` into your project:
@@ -340,10 +342,6 @@ This largely comes down to your own preference and how you want to wire things u
    ```
 
 If you don't want to use the `frontmatter.title`, adjust what you input to `slugify()`. For example, if you want information from the `File` node, you could use `getNode(node.parent)`.
-
-### html
-
-TODO
 
 ## Components
 
@@ -448,7 +446,7 @@ Read more about injecting your own components in the [official MDX provider guid
 
 **Please Note:** Loading MDX from other sources as the file system is not yet supported in `gatsby-plugin-mdx@^4.0.0`.
 
-### Update dependencies
+### Updating dependencies
 
 During the Release Candidate phase, use these install instructions:
 
@@ -599,7 +597,7 @@ export const pageQuery = graphql`
 export default PostTemplate
 ```
 
-### Update your MDX content
+### Updating MDX content
 
 As MDX v2 changed the way it handles content you might need to update your MDX files to be valid MDX now. See their [Update MDX content guide](https://mdxjs.com/migrating/v2/#update-mdx-content) for all details. In [What is MDX?](https://mdxjs.com/docs/what-is-mdx/#markdown) it is also laid out which features don't work. Most importantly for this migration:
 
@@ -613,11 +611,67 @@ In our testing, most of the time the issue were curly brackets that needed to be
 + You can upload this to `Git{Hub,Lab}`
 ```
 
+### Updating MDX nodes
+
+Since most MDX nodes are moved to userland you'll have to [extend the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) and update your queries accordingly. However, you can [alias your `fields`](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#aliasing-fields) to have them at the root of the GraphQL node.
+
+Here's an example of an updated query (if you re-implemented most features):
+
+```diff
+ {
+-  timeToRead
+-  rawBody
+-  slug
+-  headings
+-  html
+-  mdxAST
+-  wordCount
+-  fileAbsolutePath
++  body
++  fields {
++    timeToRead
++    slug
++  }
++  internal {
++    contentFilePath
++  }
+ }
+```
+
+Here's an example on how you'd alias your `fields` to keep the shape of the MDX node the same:
+
+```js:title=gatsby-node.js
+const readingTime = require(`reading-time`)
+
+exports.onCreateNode = ({ node, actions }) => {
+  const { createNodeField } = actions
+  if (node.internal.type === `Mdx`) {
+    createNodeField({
+      node,
+      name: `timeToRead`,
+      value: readingTime(node.body)
+    })
+  }
+}
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`#graphql
+    type Mdx implements Node {
+      # You can also use other keys from fields.timeToRead if you don't want "minutes"
+      timeToRead: JSON @proxy(from: "fields.timeToRead.minutes")
+      wordCount: Int @proxy(from: "fields.timeToRead.words")
+    }
+  `)
+}
+```
+
 ### v3 to v4: Breaking Changes
 
 - Removed plugin options: `defaultLayouts`, `mediaTypes`, `lessBabel`, `shouldBlockNodeFromTransformation`, `commonmark`
 - Moved plugin options `remarkPlugins` and `rehypePlugins` into `mdxOptions`
-- Removed `timeToRead`, `rawBody`, `slug`, `headings`, `html`, `mdxAST`, `wordCount`, `fileAbsolutePath` from the query result. You can check [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) to learn how to re-implement some of them on your own.
+- Removed `timeToRead`, `rawBody`, `slug`, `headings`, `html`, `mdxAST`, `wordCount`, `fileAbsolutePath` from the query result. You can check [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) to learn how to re-implement some of them on your own. Also check [Updating MDX nodes](#updating-mdx-nodes) for guidance on changing your queries
 - `gatsby-plugin-mdx` only applies to local files (that are sourced with `gatsby-source-filesystem`)
 - All [MDX v2 migration](https://mdxjs.com/migrating/v2/) notes apply
 
