@@ -115,7 +115,7 @@ export class PageQueryStore extends React.Component {
   }
 }
 
-export const StaticQueryStore = ({ children }) => {
+export const StaticQueryStore = function StaticQueryStore({ children }) {
   const [staticQueryUpdateDate, setstaticQueryUpdateDate] = React.useState(
     Date.now()
   )
