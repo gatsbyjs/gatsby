@@ -58,8 +58,6 @@ const onHeadRendered = () => {
     }
   }
 
-  const newHeadNodes = []
-
   const existingHeadElements = [
     ...document.querySelectorAll(`[data-gatsby-head]`),
   ]
@@ -69,6 +67,7 @@ const onHeadRendered = () => {
     return
   }
 
+  const newHeadNodes = []
   diffNodes({
     oldNodes: existingHeadElements,
     newNodes: validHeadNodes,
