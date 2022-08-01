@@ -4,19 +4,20 @@ description: "Learn how to leverage redirects, rewrites, and reverse proxies in 
 label: "cloud"
 ---
 
-## What is a redirect?
+## Introduction
 
 Redirects are settings in the network layer that allow you to route traffic from one url path to another with little to no disruption.
 
 For instance, while rebuilding your cooking blog, you might want to move all of your recipes from their old path of blog/recipes to a new path of recipes. To make sure that all the existing links to your recipes still work, you would need a way to redirect your users from blog/recipes/mouthwatering-lasagna to recipes/mouthwatering-lasagna. No one wants to lose access to such a, well, mouthwatering recipe.
 
-## How to create redirects in Gatsby Hosting
+## Prerequisites
 
-In order to use redirects, you must include the gatsby-plugin-gatsby-cloud in your project.
+1. In order to use redirects, you must include the gatsby-plugin-gatsby-cloud in your project.
+1. If your Gatsby project doesn't already have a gatsby-node.js file, add one at that top level of your project (alongside your gatsby-config.js).
 
-If your Gatsby project doesn't already have a gatsby-node.js file, add one at that top level of your project (alongside your gatsby-config.js).
+## Directions
 
-In gatsby-node.js file, you'll want to export the createPages method and use the createRedirects action to generate any redirects that you want to add. Here's an example showing the lasagna recipe above:
+1. In `gatsby-node.js`, export the `createPages` method and use the `createRedirects` action to generate any redirects that you want to add. Here's an example showing the lasagna recipe above:
 
 ```javascript:title=gatsby-node.js
 // gatsby-node.js
@@ -24,15 +25,13 @@ exports.createPages = async ({ graphql, actions }) => {
 	const { createRedirect } = actions;
 
 	createRedirect({
-    fromPath: `/blog/recipes/mouthwatering-lasagna`,
-    toPath: `/recipes/mouthwatering-lasagna`,
-  });
+  fromPath: `/blog/recipes/mouthwatering-lasagna`,
+  toPath: `/recipes/mouthwatering-lasagna`,
+});
 }
 ```
 
-Once you've made these changes and deployed the changes through Gatsby Cloud, you should be able to test your changes once the CDN cache has been purged.
-
-There are a few extra options that you can add for redirects, so make sure that you checkout the Gatsby Docs for more details.
+2 . Once you've made these changes and deployed the changes through Gatsby Cloud, you should be able to test your changes once the CDN cache has been purged.
 
 ## Advanced Use Cases
 
