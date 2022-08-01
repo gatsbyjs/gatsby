@@ -141,6 +141,8 @@ export const StaticQueryStore = function StaticQueryStore({ children }) {
   if (!isFirstRender.current) {
     staticQuerySingleton.set(getStaticQueryResults())
     isFirstRender.current = true
+
+    return children
   }
 
   // React.Children.toArray doesn't traverse into fragments (see https://github.com/facebook/react/issues/6889)
