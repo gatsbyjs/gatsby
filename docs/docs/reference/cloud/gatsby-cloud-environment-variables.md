@@ -10,7 +10,7 @@ The environment variables below allow you to configure features of Gatsby Cloud:
 - `NPM_REGISTRY`: Use to set the URL of a private registry.
 - `YARN_FLAGS`: Flags that are passed through to the yarn command.
 - `NODE_OPTIONS`: Passed through as options for Node.js. For example, - `NODE_OPTIONS=--max-old-space-size=4096`.
-- `PREFIX_PATHS`: Set to true to enable the `--prefix-paths` flag during `gatsby build`. See the docs on [prefix-paths](https://support.gatsbyjs.com/hc/en-us/articles/360053096433).
+- `PREFIX_PATHS`: Set to true to enable the `--prefix-paths` flag during `gatsby build`. See the docs on [prefix-paths](../../how-to/previews-deploys-hosting/path-prefix.md).
 
 ## Read-only variables
 
