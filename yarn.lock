@@ -9231,14 +9231,6 @@ del-cli@^3.0.1:
     del "^5.1.0"
     meow "^6.1.1"
 
-del-cli@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/del-cli/-/del-cli-4.0.1.tgz#2303ccaa45708ee8c6211568344cf87336abf30a"
-  integrity sha512-KtR/6cBfZkGDAP2NA7z+bP4p1OMob3wjN9mq13+SWvExx6jT9gFWfLgXEeX8J2B47OKeNCq9yTONmtryQ+m+6g==
-  dependencies:
-    del "^6.0.0"
-    meow "^10.1.0"
-
 del-cli@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/del-cli/-/del-cli-5.0.0.tgz#fa79fd57e888ecaaf8a468d87e8a175142a24aa9"
@@ -16499,7 +16491,7 @@ memorystream@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
 
-meow@^10.1.0, meow@^10.1.3:
+meow@^10.1.3:
   version "10.1.3"
   resolved "https://registry.yarnpkg.com/meow/-/meow-10.1.3.tgz#21689959a7d00e8901aff30d208acb2122eb8088"
   integrity sha512-0WL7RMCPPdUTE00+GxJjL4d5Dm6eUbmAzxlzywJWiRUKCW093owmZ7/q74tH9VI91vxw9KJJNxAcvdpxb2G4iA==
