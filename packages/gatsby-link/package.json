@@ -29,7 +29,7 @@
   "devDependencies": {
     "@testing-library/react": "^11.2.7",
     "cross-env": "^7.0.3",
-    "del-cli": "^3.0.1",
+    "del-cli": "^5.0.0",
     "microbundle": "^0.15.0"
   },
   "peerDependencies": {

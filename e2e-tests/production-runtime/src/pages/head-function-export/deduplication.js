@@ -10,7 +10,7 @@ export default function HeadFunctionDeduplication() {
   )
 }
 
-function SEO({ children }) {
+function Seo({ children }) {
   return (
     <>
       <link rel="deduplication" id="deduplication-test" href="/foo" />
@@ -27,9 +27,9 @@ function SEO({ children }) {
 
 export function Head() {
   return (
-    <SEO>
+    <Seo>
       <link rel="deduplication" id="deduplication-test" href="/bar" />
       <link rel="alternate" hrefLang="de-DE" href="/de/" />
-    </SEO>
+    </Seo>
   )
 }
