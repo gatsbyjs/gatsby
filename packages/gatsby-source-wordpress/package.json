@@ -40,7 +40,7 @@
     "read-chunk": "^3.2.0",
     "replaceall": "^0.1.6",
     "semver": "^7.3.7",
-    "sharp": "^0.30.3",
+    "sharp": "^0.30.7",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
