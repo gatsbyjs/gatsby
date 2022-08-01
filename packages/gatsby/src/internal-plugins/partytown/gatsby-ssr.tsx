@@ -31,5 +31,6 @@ export const onRenderBody: GatsbySSR[`onRenderBody`] = ({
     />,
   ])
 
+  // Clear scripts after we've used them to avoid leaky behavior
   collectedScriptsByPage.delete(pathname)
 }

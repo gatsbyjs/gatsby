@@ -1,10 +1,11 @@
 import { partytownSnippet } from "@builder.io/partytown/integration"
-import { collectedScriptsByPage } from "gatsby-script"
+import { ScriptProps } from "gatsby-script"
 import { getForwards } from "./get-forwards"
 
-export function injectPartytownSnippet(pathname: string): void {
-  const collectedScripts = collectedScriptsByPage.get(pathname)
-
+// Adapted from https://github.com/BuilderIO/partytown/blob/main/src/react/snippet.tsx to only include CSR logic
+export function injectPartytownSnippet(
+  collectedScripts: Array<ScriptProps>
+): void {
   if (!collectedScripts.length) {
     return
   }
