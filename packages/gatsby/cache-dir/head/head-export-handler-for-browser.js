@@ -9,7 +9,7 @@ import {
   headExportValidator,
   filterHeadProps,
   warnForInvalidTags,
-  isEqualNode,
+  diffNodes,
 } from "./utils"
 
 const hiddenRoot = document.createElement(`div`)
@@ -69,25 +69,12 @@ const onHeadRendered = () => {
     return
   }
 
-  for (const existingHeadElement of existingHeadElements) {
-    const isInValidNodes = validHeadNodes.some(e =>
-      isEqualNode(e, existingHeadElement)
-    )
-
-    if (!isInValidNodes) {
-      existingHeadElement.remove()
-    }
-  }
-
-  for (const validHeadNode of validHeadNodes) {
-    const isInExistingHeadElementsList = existingHeadElements.some(e =>
-      isEqualNode(e, validHeadNode)
-    )
-
-    if (!isInExistingHeadElementsList) {
-      newHeadNodes.push(validHeadNode)
-    }
-  }
+  diffNodes({
+    oldNodes: existingHeadElements,
+    newNodes: validHeadNodes,
+    onStale: node => node.remove(),
+    onNew: node => newHeadNodes.push(node),
+  })
 
   document.head.append(...newHeadNodes)
 }

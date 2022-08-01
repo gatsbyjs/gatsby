@@ -82,3 +82,25 @@ export function isEqualNode(oldTag, newTag) {
 
   return oldTag.isEqualNode(newTag)
 }
+
+export function diffNodes({ oldNodes, newNodes, onStale, onNew }) {
+  for (const existingHeadElement of oldNodes) {
+    const isInValidNodes = newNodes.some(e =>
+      isEqualNode(e, existingHeadElement)
+    )
+
+    if (!isInValidNodes) {
+      onStale(existingHeadElement)
+    }
+  }
+
+  for (const validHeadNode of newNodes) {
+    const isInExistingHeadElementsList = oldNodes.some(e =>
+      isEqualNode(e, validHeadNode)
+    )
+
+    if (!isInExistingHeadElementsList) {
+      onNew(validHeadNode)
+    }
+  }
+}
