@@ -1,11 +1,6 @@
-/**
- * @jest-environment node
- */
-
 import { readFileSync } from "fs"
 import path from "path"
-
-import { NodePluginArgs } from "gatsby"
+import { mockGatsbyApi } from "../__fixtures__/test-utils"
 
 import { compileMDX, compileMDXWithCustomOptions } from "../compile-mdx"
 
@@ -17,43 +12,51 @@ const exampleMdxPath = path.resolve(
 )
 const exampleMdxContent = readFileSync(exampleMdxPath)
 
-const cache = {
-  directory: __dirname,
-} as unknown as NodePluginArgs["cache"]
-
-const reporter = {
-  info: jest.fn(),
-  verbose: jest.fn(),
-  warn: jest.fn(),
-  panic: jest.fn(e => {
-    throw e
-  }),
-  panicOnBuild: jest.fn(e => {
-    throw e
-  }),
-} as unknown as NodePluginArgs["reporter"]
+const { reporter, cache } = mockGatsbyApi()
 
 describe(`compiles MDX`, () => {
   it(`default`, async () => {
-    console.log(exampleMdxContent.toString())
-    try {
-      await compileMDX(
+    await expect(
+      compileMDX(
         { absolutePath: exampleMdxPath, source: exampleMdxContent.toString() },
         {},
         cache,
         reporter
       )
-    } catch (err) {
-      console.dir(err)
-      console.error(err)
-    }
-    // await expect(
-    //   compileMDX(
-    //     { absolutePath: exampleMdxPath, source: exampleMdxContent.toString() },
-    //     {},
-    //     cache,
-    //     reporter
-    //   )
-    // ).resolves.toMatchInlineSnapshot()
+    ).resolves.toMatchInlineSnapshot(`
+            Object {
+              "metadata": Object {},
+              "processedMDX": "/*@jsxRuntime automatic @jsxImportSource react*/
+            import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
+            function MDXContent(props = {}) {
+              const {wrapper: MDXLayout} = props.components || ({});
+              return MDXLayout ? _jsx(MDXLayout, Object.assign({}, props, {
+                children: _jsx(_createMdxContent, {})
+              })) : _createMdxContent();
+              function _createMdxContent() {
+                const _components = Object.assign({
+                  h1: \\"h1\\",
+                  p: \\"p\\",
+                  strong: \\"strong\\"
+                }, props.components), {Example} = _components;
+                if (!Example) _missingMdxReference(\\"Example\\", true);
+                return _jsxs(_Fragment, {
+                  children: [_jsx(_components.h1, {
+                    children: \\"Hello\\"
+                  }), \\"/n\\", _jsxs(_components.p, {
+                    children: [\\"This is \\", _jsx(_components.strong, {
+                      children: \\"MDX\\"
+                    })]
+                  }), \\"/n\\", _jsx(Example, {})]
+                });
+              }
+            }
+            export default MDXContent;
+            function _missingMdxReference(id, component) {
+              throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
+            }
+            ",
+            }
+          `)
   })
 })

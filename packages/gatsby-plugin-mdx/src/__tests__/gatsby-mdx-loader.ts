@@ -4,12 +4,14 @@ import gatsbyMDXLoader from "../gatsby-mdx-loader"
 import { mockGatsbyApi } from "../__fixtures__/test-utils"
 
 const source = `---
-title: layout test
+title: Some Frontmatter Data
 ---
 
-# Layout test
+import Example from "./example"
 
-Does it wrap?
+# MDX test
+
+Does it parse and transform?
 
 <Example/>
 `
@@ -46,13 +48,34 @@ describe(`webpack loader: parses MDX and transforms it into JSX`, () => {
       source
     )
     await expect(transformedSourcePromise).resolves.toMatchInlineSnapshot(`
-            "---
-            title: layout test
-            ---
-
-            # Layout test
-
-            Does it wrap?"
+            "/*@jsxRuntime automatic @jsxImportSource react*/
+            import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
+            import Example from \\"./example\\";
+            function MDXContent(props = {}) {
+              const {wrapper: MDXLayout} = props.components || ({});
+              return MDXLayout ? _jsx(MDXLayout, Object.assign({}, props, {
+                children: _jsx(_createMdxContent, {})
+              })) : _createMdxContent();
+              function _createMdxContent() {
+                const _components = Object.assign({
+                  hr: \\"hr\\",
+                  h2: \\"h2\\",
+                  h1: \\"h1\\",
+                  p: \\"p\\"
+                }, props.components);
+                return _jsxs(_Fragment, {
+                  children: [_jsx(_components.hr, {}), \\"/n\\", _jsx(_components.h2, {
+                    children: \\"title: Some Frontmatter Data\\"
+                  }), \\"/n\\", \\"/n\\", _jsx(_components.h1, {
+                    children: \\"MDX test\\"
+                  }), \\"/n\\", _jsx(_components.p, {
+                    children: \\"Does it parse and transform?\\"
+                  }), \\"/n\\", _jsx(Example, {})]
+                });
+              }
+            }
+            export default MDXContent;
+            "
           `)
   })
 })

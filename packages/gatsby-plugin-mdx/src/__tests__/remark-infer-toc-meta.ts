@@ -1,8 +1,8 @@
-import { visit } from "unist-util-visit"
+import { createProcessor } from "@mdx-js/mdx"
 import { toc } from "mdast-util-toc"
-
+import { visit } from "unist-util-visit"
+import rehypeMetadataExtractor from "../rehype-metadata-extractor"
 import remarkInferTocMeta from "../remark-infer-toc-meta"
-import remark from "remark"
 
 const source = `# Headline
 
@@ -14,13 +14,28 @@ With some text beneath`
 
 describe(`remark: infer ToC meta`, () => {
   it(`parses ToC and attaches it to our meta object`, async () => {
-    const processor = remark().use(remarkInferTocMeta, {
-      toc,
-      visit,
-      maxDepth: 6,
+    const processor = createProcessor({
+      remarkPlugins: [[remarkInferTocMeta, { toc, visit }]],
+      rehypePlugins: [rehypeMetadataExtractor],
     })
-    await processor.parse(source)
 
-    expect(processor.data(`meta`)).toMatchInlineSnapshot()
+    await processor.process(source)
+    const meta = processor.data(`mdxMetadata`)
+    expect(meta).toMatchObject({
+      toc: {
+        items: [
+          {
+            items: [
+              {
+                title: `Headline 2`,
+                url: `#headline-2`,
+              },
+            ],
+            title: `Headline`,
+            url: `#headline`,
+          },
+        ],
+      },
+    })
   })
 })

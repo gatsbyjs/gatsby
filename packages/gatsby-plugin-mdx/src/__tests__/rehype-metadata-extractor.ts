@@ -1,5 +1,6 @@
 import type { Plugin } from "unified"
-import { rehype } from "rehype"
+
+import { createProcessor } from "@mdx-js/mdx"
 import rehypeMetadataExtractor from "../rehype-metadata-extractor"
 
 const rehypeMdxMetadataInjector: Plugin = function () {
@@ -9,13 +10,11 @@ const rehypeMdxMetadataInjector: Plugin = function () {
 }
 
 it(`rehype: extracts metadata and exposes it through processor.data()`, async () => {
-  const processor = rehype()
-    .use(rehypeMdxMetadataInjector)
-    .use(rehypeMetadataExtractor)
+  const processor = createProcessor({
+    rehypePlugins: [rehypeMdxMetadataInjector, rehypeMetadataExtractor],
+  })
 
-  processor.data(`mdxMetadata`, {})
-
-  processor.processSync(``)
+  await processor.process(``)
 
   expect(processor.data(`mdxMetadata`)).toMatchObject({ injected: true })
 })

@@ -1,39 +1,76 @@
-import { unified } from "unified"
-import remarkMdx from "remark-mdx"
-import remarkStringify from "remark-stringify"
-import remarkParse from "remark-parse"
+import type { Node } from "unist"
 
+import { visit } from "unist-util-visit"
+import { createProcessor } from "@mdx-js/mdx"
 import { remarkMdxHtmlPlugin } from "../remark-mdx-html-plugin"
 
-const source = `# Some MDX
-
-<img src="mocked"/>
-`
-
-describe(`remark: infer ToC meta`, () => {
-  it(`parses ToC and attaches it to our meta object`, async () => {
-    const processor = unified()
-      .use(remarkParse)
-      .use(remarkMdx)
-      .use(remarkMdxHtmlPlugin)
-      .use(remarkStringify)
-    const res = await processor.process(source)
-
-    expect(res).toMatchInlineSnapshot(`
-      VFile {
-        "contents": "# Headline
-
-      Some text with *formatting*.
-
-      ## Headline 2
-
-      With some text beneath
-      ",
-        "cwd": "<PROJECT_ROOT>",
-        "data": Object {},
-        "history": Array [],
-        "messages": Array [],
+export const remarkHTMLInjector = () =>
+  async function transformer(markdownAST: Node): Promise<Node> {
+    visit(markdownAST, [`root`], node => {
+      if (Array.isArray(node.children)) {
+        node.children.push({ type: `html`, value: `<hr/>` })
+        node.children.push({
+          type: `raw`,
+          value: `<marquee direction="up">Things from the past</marquee>`,
+        })
       }
-    `)
+    })
+    return markdownAST
+  }
+
+const source = `# Headline`
+
+describe(`remark: support old remark plugins that add raw and html nodes`, () => {
+  it(`turn html and raw nodes into `, async () => {
+    const processor = createProcessor({
+      remarkPlugins: [remarkHTMLInjector, remarkMdxHtmlPlugin],
+    })
+
+    await expect(processor.process(source)).resolves.toMatchInlineSnapshot(`
+            VFile {
+              "cwd": "<PROJECT_ROOT>",
+              "data": Object {},
+              "history": Array [],
+              "messages": Array [],
+              "value": "/*@jsxRuntime automatic @jsxImportSource react*/
+            import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
+            function MDXContent(props = {}) {
+              const {wrapper: MDXLayout} = props.components || ({});
+              return MDXLayout ? _jsx(MDXLayout, Object.assign({}, props, {
+                children: _jsx(_createMdxContent, {})
+              })) : _createMdxContent();
+              function _createMdxContent() {
+                const _components = Object.assign({
+                  h1: \\"h1\\",
+                  div: \\"div\\"
+                }, props.components);
+                return _jsxs(_Fragment, {
+                  children: [_jsx(_components.h1, {
+                    children: \\"Headline\\"
+                  }), \\"/n\\", _jsx(_components.div, {
+                    dangerouslySetInnerHTML: {
+                      __html: \\"<hr/>\\"
+                    }
+                  }), \\"/n\\", _jsx(_components.div, {
+                    dangerouslySetInnerHTML: {
+                      __html: \\"<marquee direction=/\\"up/\\">Things from the past</marquee>\\"
+                    }
+                  })]
+                });
+              }
+            }
+            export default MDXContent;
+            ",
+            }
+          `)
+  })
+  it(`fails when plugin is missing but remark plugins add html/raw nodes`, async () => {
+    const processor = createProcessor({
+      remarkPlugins: [remarkHTMLInjector],
+    })
+
+    await expect(processor.process(source)).rejects.toMatchInlineSnapshot(
+      `[Error: Cannot handle unknown node \`raw\`]`
+    )
   })
 })
