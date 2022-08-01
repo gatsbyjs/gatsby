@@ -13,6 +13,7 @@ The environment variables below allow you to configure features of Gatsby Cloud:
 - `PREFIX_PATHS`: Set to true to enable the `--prefix-paths` flag during `gatsby build`. See the docs on [prefix-paths](https://support.gatsbyjs.com/hc/en-us/articles/360053096433).
 
 ## Read-only variables
+
 These variables are pre-defined for both Builds and Preview environments. They are set automatically and cannot be changed. You can reference them in your `gatsby-config.js` or anywhere else you would normally reference an environment variable.
 
 - `BRANCH`: The name of the current git branch. Useful for swapping environment variables depending on the branch.
@@ -20,7 +21,7 @@ These variables are pre-defined for both Builds and Preview environments. They a
 - `GATSBY_CLOUD`: Always true. Useful for checking if your build is running on Gatsby Cloud.
 - `GATSBY_IS_PREVIEW`: true only in the CMS Preview environment, for both [legacy preview builder and incremental preview builder](https://support.gatsbyjs.com/hc/en-us/articles/360055676874).
 - `NODE_ENV`:
-    - is `production` for Production Builds and Pull Request Builds
-    - is `development` for CMS Previews which use the [legacy preview builder](https://support.gatsbyjs.com/hc/en-us/articles/360055676874)
-    - is `production` for CMS Previews that use the new [incremental preview builder](https://support.gatsbyjs.com/hc/en-us/articles/360055676874)
-    - Regardless of the environment variable value, CMS Preview builds still use preview data
+  - is `production` for Production Builds and Pull Request Builds
+  - is `development` for CMS Previews which use the [legacy preview builder](https://support.gatsbyjs.com/hc/en-us/articles/360055676874)
+  - is `production` for CMS Previews that use the new [incremental preview builder](https://support.gatsbyjs.com/hc/en-us/articles/360055676874)
+  - Regardless of the environment variable value, CMS Preview builds still use preview data
