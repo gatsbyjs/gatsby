@@ -58,7 +58,7 @@ const onHeadRendered = () => {
     }
   }
 
-  const diffedHeadNodes = []
+  const newHeadNodes = []
 
   const existingHeadElements = [
     ...document.querySelectorAll(`[data-gatsby-head]`),
@@ -69,19 +69,15 @@ const onHeadRendered = () => {
     return
   }
 
-  const elementsToRemove = []
-
   for (const existingHeadElement of existingHeadElements) {
     const isInValidNodes = validHeadNodes.some(e =>
       isEqualNode(e, existingHeadElement)
     )
 
     if (!isInValidNodes) {
-      elementsToRemove.push(existingHeadElement)
+      existingHeadElement.remove()
     }
   }
-
-  elementsToRemove.forEach(e => e.remove())
 
   for (const validHeadNode of validHeadNodes) {
     const isInExistingHeadElementsList = existingHeadElements.some(e =>
@@ -89,11 +85,11 @@ const onHeadRendered = () => {
     )
 
     if (!isInExistingHeadElementsList) {
-      diffedHeadNodes.push(validHeadNode)
+      newHeadNodes.push(validHeadNode)
     }
   }
 
-  document.head.append(...diffedHeadNodes)
+  document.head.append(...newHeadNodes)
 }
 
 if (process.env.BUILD_STAGE === `develop`) {
