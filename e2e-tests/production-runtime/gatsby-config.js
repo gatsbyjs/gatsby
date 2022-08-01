@@ -11,7 +11,6 @@ module.exports = {
     headFunctionExport: headFunctionExportData.queried,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-global-style`,
     {
       resolve: `gatsby-plugin-manifest`,
