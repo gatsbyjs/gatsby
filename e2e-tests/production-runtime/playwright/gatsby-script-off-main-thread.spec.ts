@@ -27,7 +27,7 @@ test.describe(`off-main-thread scripts`, () => {
     await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded
   })
 
-  // This behavior actually works, but I can't figure out how to fix the wait on CSR navigation in Playwright to not be flakey in the CI
+  // This behavior is broken upstream in Partytown, see https://github.com/BuilderIO/partytown/issues/74
   test.skip(`should load successfully when navigating via Gatsby Link to a page with off-main-thread scripts`, async ({
     page,
   }) => {
@@ -45,7 +45,7 @@ test.describe(`off-main-thread scripts`, () => {
     await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded, use `type` attr Partytown mutates on success as proxy
   })
 
-  // This behavior actually works, but I can't figure out how to fix the wait on CSR navigation in Playwright to not be flakey in the CI
+  // This behavior is broken upstream in Partytown, see https://github.com/BuilderIO/partytown/issues/74
   test.skip(`should load successfully when navigating via Gatsby Link between pages with off-main-thread scripts`, async ({
     page,
   }) => {
