@@ -1,5 +1,3 @@
-import { staticQuerySingleton } from "../static-query"
-
 const React = require(`react`)
 const { grabMatchParams } = require(`../find-path`)
 const { createElement } = require(`react`)
@@ -12,6 +10,7 @@ const { ServerLocation, Router } = require(`@gatsbyjs/reach-router`)
 const { renderToString } = require(`react-dom/server`)
 const { parse } = require(`node-html-parser`)
 const { VALID_NODE_NAMES } = require(`./constants`)
+const { staticQuerySingleton } = require(`../static-query`)
 
 export function headHandlerForSSR({
   pageComponent,
