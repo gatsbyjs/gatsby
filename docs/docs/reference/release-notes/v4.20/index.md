@@ -8,6 +8,7 @@ Welcome to `gatsby@4.20.0` release (August 2022 #1)
 
 Key highlights of this release:
 
+- [RFC for changes in `sort` and aggregation fields in Gatsby GraphQL Schema](#rfc-for-changes-in-sort-and-aggregation-fields-in-gatsby-graphql-schema)
 - [Release Candidate for gatsby-plugin-mdx v4](#release-candidate-for-gatsby-plugin-mdx-v4) - Support for MDX v2 and more!
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
@@ -19,6 +20,38 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 [Full changelog][full-changelog]
 
 ---
+
+## RFC for changes in `sort` and aggregation fields in Gatsby GraphQL Schema
+
+We are proposing Breaking Changes for next major version of Gatsby to our GraphQL API with goal of increasing performance and redusing resource usage of builds. Proposed changes impact `sort` and aggregation fields (`group`, `min`, `max`, `sum`, `distinct`).
+
+Basic example of proposed change:
+
+Current:
+
+```graphql
+{
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    nodes {
+      ...fields
+    }
+  }
+}
+```
+
+Proposed:
+
+```jsx
+{
+  allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    nodes {
+      ...fields
+    }
+  }
+}
+```
+
+To read more, head over to [RFC: Change to sort and aggregation fields API](https://github.com/gatsbyjs/gatsby/discussions/36242). We appreciate any feedback there.
 
 ## Release Candidate for `gatsby-plugin-mdx` v4
 
