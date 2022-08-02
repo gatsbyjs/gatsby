@@ -23,7 +23,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ## RFC for changes in `sort` and aggregation fields in Gatsby GraphQL Schema
 
-We are proposing Breaking Changes for next major version of Gatsby to our GraphQL API with goal of increasing performance and redusing resource usage of builds. Proposed changes impact `sort` and aggregation fields (`group`, `min`, `max`, `sum`, `distinct`).
+We are proposing Breaking Changes for the next major version of Gatsby to our GraphQL API. The goal of this change is increasing performance and reducing resource usage of builds. Proposed changes impact `sort` and aggregation fields (`group`, `min`, `max`, `sum`, `distinct`).
 
 Basic example of proposed change:
 
