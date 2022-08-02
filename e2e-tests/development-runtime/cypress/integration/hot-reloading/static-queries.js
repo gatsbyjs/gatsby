@@ -35,5 +35,18 @@ describe(`hot-reloading static queries`, () => {
         .invoke(`text`)
         .should(`contain`, author)
     })
+
+    it(`is updated when data source changes`, () => {
+      const replacement = `DATA_UPDATE`
+      cy.exec(
+        `npm run update -- --file content/data-update.md --replacements "%CHANGE_ME%:${replacement}" --exact`
+      )
+
+      cy.waitForHmr()
+
+      cy.getTestElement(`use-static-query-data-update`)
+        .invoke(`text`)
+        .should(`contain`, replacement)
+    })
   })
 })
