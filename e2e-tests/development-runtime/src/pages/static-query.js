@@ -24,7 +24,6 @@ const StaticQueryPage = () => (
     </h2>
     <StaticQuery.Hot data-testid="hot" />
     <UseStaticQuery.Hot data-testid="use-static-query-hot" />
-    <UseStaticQuery.DataUpdate data-testid="use-static-query-data-update" />
   </Layout>
 )
 
