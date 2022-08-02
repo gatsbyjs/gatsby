@@ -77,8 +77,7 @@ describe(`navigation`, () => {
     })
   })
 
-  describe.only(`non-existent route`, { retries: { runMode: 0,
-    openMode: 0, } }, () => {
+  describe(`non-existent route`, () => {
     beforeEach(() => {
       cy.getTestElement(`broken-link`).click().waitForRouteChange()
     })

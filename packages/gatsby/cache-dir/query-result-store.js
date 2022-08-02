@@ -119,31 +119,20 @@ export const StaticQueryStore = function StaticQueryStore({ children }) {
   const [staticQueryUpdateDate, setstaticQueryUpdateDate] = React.useState(
     Date.now()
   )
-  const isFirstRender = React.useRef(false)
 
-  const handleMittEvent = () => {
-    staticQuerySingleton.set(getStaticQueryResults())
+  const handleStaticQueryResult = () => {
     setstaticQueryUpdateDate(Date.now())
   }
 
-  const handleEvent = React.useCallback(handleMittEvent, [])
+  const handleSQEvent = React.useCallback(handleStaticQueryResult, [])
 
   React.useEffect(() => {
-    ___emitter.on(`staticQueryResult`, handleMittEvent)
-    ___emitter.on(`onPostLoadPageResources`, handleMittEvent)
+    ___emitter.on(`staticQueryResult`, handleSQEvent)
 
     return () => {
-      ___emitter.off(`staticQueryResult`, handleMittEvent)
-      ___emitter.off(`onPostLoadPageResources`, handleMittEvent)
+      ___emitter.off(`staticQueryResult`, handleSQEvent)
     }
-  }, [handleEvent])
-
-  if (!isFirstRender.current) {
-    staticQuerySingleton.set(getStaticQueryResults())
-    isFirstRender.current = true
-
-    return children
-  }
+  }, [handleSQEvent])
 
   // React.Children.toArray doesn't traverse into fragments (see https://github.com/facebook/react/issues/6889)
   // But this is fine since we only care about the next level of nesting anyways

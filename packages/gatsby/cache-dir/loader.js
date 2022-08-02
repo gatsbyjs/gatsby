@@ -1,6 +1,7 @@
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
+import { staticQuerySingleton } from "./static-query"
 
 /**
  * Available resource loading statuses
@@ -639,6 +640,7 @@ let instance
 
 export const setLoader = _loader => {
   instance = _loader
+  staticQuerySingleton.set(getStaticQueryResults())
 }
 
 export const publicLoader = {
