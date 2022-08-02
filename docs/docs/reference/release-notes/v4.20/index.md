@@ -83,6 +83,21 @@ You can now try out a release candidate version, head to the [MDX v2 RFC](https:
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO: generate this before merging
+- [bytrangle](https://github.com/bytrangle): chore(docs): Instruct to install v2 of `unist-util-visit` in remark tutorial [PR #36221](https://github.com/gatsbyjs/gatsby/pull/36221)
+- [laneparton](https://github.com/laneparton): fix(gatsby-plugin-sass): Add support for additionalData option [PR #36086](https://github.com/gatsbyjs/gatsby/pull/36086)
+- [edlucas](https://github.com/edlucas): chore(docs): Clarify note in "local font" how-to [PR #36224](https://github.com/gatsbyjs/gatsby/pull/36224)
+- [Shubhdeep12](https://github.com/Shubhdeep12): chore(docs): Typo fix in debugging-html-builds [PR #36228](https://github.com/gatsbyjs/gatsby/pull/36228)
+- [RajputUsman](https://github.com/RajputUsman): chore(docs): Update to Basic Hardware and Software Requirements [PR #36153](https://github.com/gatsbyjs/gatsby/pull/36153)
+- [chrispecoraro](https://github.com/chrispecoraro): chore(docs): Typo in 4.19 release notes [PR #36176](https://github.com/gatsbyjs/gatsby/pull/36176)
+- [tordans](https://github.com/tordans): chore(docs): Add section about `navigate(-1)` [PR #36184](https://github.com/gatsbyjs/gatsby/pull/36184)
+- [yanneves](https://github.com/yanneves): fix(gatsby): Allow `export { default }` named exports in page templates [PR #29553](https://github.com/gatsbyjs/gatsby/pull/29553)
+- [openscript](https://github.com/openscript): chore(docs): Add dependency for TypeScript testing [PR #36050](https://github.com/gatsbyjs/gatsby/pull/36050)
+- [ThomasVandenhede](https://github.com/ThomasVandenhede): fix(gatsby-plugin-sharp): Ensure min 1px height for `BLURRED` placeholder [PR #35914](https://github.com/gatsbyjs/gatsby/pull/35914)
+- [Hunta88](https://github.com/Hunta88): Grammar typo fixed [PR #36219](https://github.com/gatsbyjs/gatsby/pull/36219)
+- [billybrown-iii](https://github.com/billybrown-iii): chore(docs): fix outdated link [PR #36145](https://github.com/gatsbyjs/gatsby/pull/36145)
+- [dan-mba](https://github.com/dan-mba): chore(docs): Add `react-helmet` note in Gatsby Head reference [PR #36216](https://github.com/gatsbyjs/gatsby/pull/36216)
+- [Auspicus](https://github.com/Auspicus): fix(gatsby-source-drupal): Add langcode to manifest ID [PR #35514](https://github.com/gatsbyjs/gatsby/pull/35514)
+- [merceyz](https://github.com/merceyz): fix: add missing dependencies [PR #36230](https://github.com/gatsbyjs/gatsby/pull/36230)
+- [axe312ger](https://github.com/axe312ger): chore(gatsby-source-contentful): migrate to latest Contentful SDK [PR #35501](https://github.com/gatsbyjs/gatsby/pull/35501)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.20.0-next.0...gatsby@4.20.0
