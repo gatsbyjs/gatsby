@@ -61,7 +61,23 @@ You can now try out a release candidate version, head to the [MDX v2 RFC](https:
 
 ## Notable bugfixes & improvements
 
-TODO:
+- `gatsby`
+  - Preserve relative order of `<head>` meta tags, via [PR #36158](https://github.com/gatsbyjs/gatsby/pull/36158)
+  - Fixed `--host` and `--https` options for `gatsby develop`, via [PR #36186](https://github.com/gatsbyjs/gatsby/pull/36186) and [PR #36248](https://github.com/gatsbyjs/gatsby/pull/36248)
+  - Improved ContentSync mapping to also check Static Queries and type connections, via [PR #36132](https://github.com/gatsbyjs/gatsby/pull/36132)
+  - Allow `export { default }` syntax to export page template, via [PR #29553](https://github.com/gatsbyjs/gatsby/pull/29553)
+  - Fixed `pathPrefix` handling for DSG/SSR in `gatsby serve`, via [PR #36231](https://github.com/gatsbyjs/gatsby/pull/36231)
+  - Improved performance of sorting, filtering and aggregation on fields with custom resolvers, via [PR #36253](https://github.com/gatsbyjs/gatsby/pull/36253)
+- `gatsby-plugin-sass`
+  - Added support for `additionalData` option, via [PR #36086](https://github.com/gatsbyjs/gatsby/pull/36086)
+- `gatsby-plugin-sharp`
+  - Ensure min 1px height for `BLURRED` placeholder, via [PR #35914](https://github.com/gatsbyjs/gatsby/pull/35914)
+- `gatsby-plugin-utils`
+  - fixed `IMAGE_CDN` and `FILE_CDN` handling for urls requiring encoding, via [PR #36179](https://github.com/gatsbyjs/gatsby/pull/36179)
+- `gatsby-source-wordpress`
+  - Added option to disable automatic use of `gatsby-plugin-catch-link` through setting `catchLinks: false` in `gatsby-source-wordpress` plugin options, via [PR #36141](https://github.com/gatsbyjs/gatsby/pull/36141)
+- `gatsby-source-drupal`
+  - Added support for translated content in Content Sync, via [PR #35514](https://github.com/gatsbyjs/gatsby/pull/35514)
 
 ## Contributors
 
