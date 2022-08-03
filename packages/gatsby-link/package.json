@@ -16,8 +16,12 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "microbundle -f cjs,modern --jsx React.createElement --generateTypes false",
-    "watch": "npm run build watch --no-compress",
+    "build": "npm-run-all --npm-path npm -s build:cjs build:esm",
+    "build:cjs": "microbundle -f cjs --jsx React.createElement --generateTypes false",
+    "build:esm": "microbundle -f modern --jsx React.createElement --generateTypes false -i src/index-esm.js",
+    "watch": "npm-run-all --npm-path npm -p watch:cjs watch:esm",
+    "watch:cjs": "npm run build:cjs watch --no-compress",
+    "watch:esm": "npm run build:esm watch --no-compress",
     "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
   },
