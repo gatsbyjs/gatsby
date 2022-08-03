@@ -615,9 +615,10 @@ You'll need to do two things to continue using your old layout file:
 1. You have to attach this MDX file via the `__contentFilePath` query param to your layout file
 
 ```diff
+const postTemplate = path.resolve(`./src/templates/post.js`)
 actions.createPage({
--  component: `/path/to/template.js`,
-+  component: `/path/to/template.js?__contentFilePath=/path/to/content.mdx`,
+-  component: postTemplate,
++  component: `${postTemplate}?__contentFilePath=/path/to/content.mdx`,
 })
 ```
 
@@ -642,10 +643,12 @@ const { data } = await graphql(`
   }
 `)
 
+const postTemplate = path.resolve(`./src/templates/post.js`)
+
 data.allMdx.nodes.forEach(node => {
   actions.createPage({
     path: node.frontmatter.slug,
-    component: `/path/to/your/template.js?__contentFilePath=${node.internal.contentFilePath}`, // highlight-line
+    component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`, // highlight-line
     context: {
       id: node.id,
     },
@@ -660,6 +663,7 @@ Note: You could also directly pass the MDX file to the `component` like this:
 ```js
 actions.createPage({
   component: `/path/to/content.mdx`,
+  // or: component: node.internal.contentFilePath
 })
 ```
 
