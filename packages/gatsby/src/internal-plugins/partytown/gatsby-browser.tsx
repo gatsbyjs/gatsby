@@ -5,6 +5,10 @@ import type { GatsbyBrowser } from "gatsby"
 // Makes sure off-main-thread scripts are loaded in `gatsby develop`
 export const onInitialClientRender: GatsbyBrowser[`onInitialClientRender`] =
   (): void => {
+    if (process.env.NODE_ENV !== `development`) {
+      return
+    }
+
     injectPartytownSnippet(collectedScriptsByPage.get(window.location.pathname))
 
     // Clear scripts after we've used them to avoid leaky behavior
