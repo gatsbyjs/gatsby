@@ -68,5 +68,8 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
   ],
-  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
+  partytownProxiedURLs: [
+    `https://unpkg.com/three@0.139.1/build/three.js`,
+    `http://localhost:8000/used-by-off-main-thread-2.js`,
+  ],
 }

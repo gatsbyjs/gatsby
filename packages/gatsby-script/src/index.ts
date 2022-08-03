@@ -1,2 +1,2 @@
 export * from "./gatsby-script"
-export * from "./partytown-context"
+export * from "./collected-scripts-by-page"
