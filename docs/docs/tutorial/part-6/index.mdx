@@ -66,13 +66,15 @@ According to the API, you need to decide on two things before creating a collect
 
 Since your blog posts are written in MDX, you'll use MDX as the node type to create pages from. But which field on the MDX nodes should you use?
 
-`gatsby-plugin-mdx` automatically adds a `slug` field to each MDX node, which contains a string of the filename for the `.mdx` file (with the `.mdx` extension removed). You can see the `slug` field's value for each MDX node in GraphiQL. If you run the following query:
+Fortunately, we added the information we need to our frontmatter already. If you check the `.mdx` files we did create in the last part of this tutorial, you will see that their frontmatter has a `slug` field. If you run the following query:
 
 ```graphql
 {
   allMdx {
     nodes {
-      slug
+      frontmatter{
+        slug
+      }
     }
   }
 }
@@ -86,13 +88,19 @@ Since your blog posts are written in MDX, you'll use MDX as the node type to cre
     "allMdx": {
       "nodes": [
         {
-          "slug": "my-first-post"
+          frontmatter: {
+            "slug": "my-first-post"
+          }
         },
         {
-          "slug": "yet-another-post"
+          frontmatter: {
+            "slug": "yet-another-post"
+          }
         },
         {
-          "slug": "another-post"
+          frontmatter: {
+            "slug": "another-post"
+          }
         }
       ]
     }
@@ -105,13 +113,13 @@ That looks like a good format for a URL!
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** In this case, the `slug` field is a good choice because it's human readable, which means the URLs for your blog posts will be easier for users to understand. But you can use any field in your routes, even if it contains special characters or whitespace, as Gatsby will ["slugify"](/docs/reference/routing/file-system-route-api/#routing-and-linking) every route. For example, `I ♥ Dogs` will be converted to `i-love-dogs`.
+**Note:** In this case, we use data we added to frontmatter to make the URLs for your blog posts easier for users to understand. If you don't want to enter this information for every blog post, the [readme of gatsby-plugin-mdx](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-mdx/README.md#slug) demonstrates how to programatically implement a `slug` field.
 
 </Announcement>
 
 ### Task: Create blog post page template
 
-Now that you know what node type and field to use, you can plug them into the File System Routes naming convention. To create new pages from the `slug` field of your MDX nodes, you should make a new file at `src/pages/{mdx.slug}.js`.
+Now that you know what node type and field to use, you can plug them into the File System Routes naming convention. To create new pages from the `slug` field of your MDX nodes, you should make a new file at `src/pages/{mdx.frontmatter__slug}.js`.
 
 The diagram below shows the different routes that Gatsby will create when it builds your site:
 
@@ -125,17 +133,17 @@ When you build your site, Gatsby looks at the page components in your `src/pages
 
 * `src/pages/index.js` lives at the `/` route.
 * `src/pages/blog.js` lives at the `/blog` route.
-* `src/pages/{mdx.slug}.js` gets turned into multiple routes - one for each MDX node in the data layer.
+* `src/pages/{mdx.frontmatter__slug}.js` gets turned into multiple routes - one for each MDX node in the data layer.
     * Gatsby uses the MDX node with slug `my-first-post` to build a page that lives at the `/my-first-post` route.
     * Gatsby uses the MDX node with slug `another-post` to build a page that lives at the `/another-post` route.
     * Gatsby uses the MDX node with slug `yet-another-post` to build a page that lives at the `/yet-another-post` route.
 
 </Collapsible>
 
-1. Create a new file in your `src/pages` directory called `{mdx.slug}.js`. This will be the file for your blog post page template.
+1. Create a new file in your `src/pages` directory called `{mdx.frontmatter_slug}.js`. This will be the file for your blog post page template.
 
-2. Create a basic page component in your new `{mdx.slug}.js` file. For now, add in the `Layout` component, but hard code the page title and page contents. (You'll make those dynamic later on.)
-    ```js:title=src/pages/{mdx.slug}.js
+2. Create a basic page component in your new `{mdx.frontmatter_slug}.js` file. For now, add in the `Layout` component, but hard code the page title and page contents. (You'll make those dynamic later on.)
+    ```js:title=src/pages/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import Layout from '../components/layout'
 
@@ -182,7 +190,7 @@ When Gatsby builds the pages for your site, it creates routes based on the folde
 
 * `src/pages/index.js` still lives at the `/` route.
 * `src/pages/blog/index.js` lives at the `/blog` route.
-* `src/pages/blog/{mdx.slug}.js` gets turned into multiple routes - one for each MDX node in the data layer.
+* `src/pages/blog/{mdx.frontmatter__slug}.js` gets turned into multiple routes - one for each MDX node in the data layer.
     * Gatsby uses the MDX node with slug `my-first-post` to build a page that lives at the `blog/my-first-post` route.
     * Gatsby uses the MDX node with slug `another-post` to build a page that lives at the `blog/another-post` route.
     * Gatsby uses the MDX node with slug `yet-another-post` to build a page that lives at the `blog/yet-another-post` route.
@@ -191,8 +199,8 @@ When Gatsby builds the pages for your site, it creates routes based on the folde
 
 1. Create a new folder in your `src/pages` directory, and call it `blog`.
 
-2. Move the `src/pages/{mdx.slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` component to reflect the new folder structure:
-    ```js:title=src/pages/blog/{mdx.slug}.js
+2. Move the `src/pages/{mdx.frontmatter__slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` component to reflect the new folder structure:
+    ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import Layout from '../../components/layout' // highlight-line
 
@@ -243,7 +251,7 @@ Let's take a look at an example in GraphiQL. In [Part 5](/docs/tutorial/part-5/)
 
 ```graphql
 query MyQuery {
-  mdx(slug: {eq: "another-post"}) {
+  mdx(frontmatter___slug: {eq: "another-post"}) {
     frontmatter {
       title
     }
@@ -285,7 +293,7 @@ For example, here's how you would update the previous query to use query variabl
 
 ```graphql
 query MyQuery($slug: String) {
-  mdx(slug: {eq: $slug}) {
+  mdx(frontmatter___slug: {eq: $slug}) {
     frontmatter {
       title
     }
@@ -318,7 +326,7 @@ Under the hood, Gatsby makes both of these values available to use as query vari
 
 **Want to take a closer look?**
 
-1. Add a `console.log` statement to print out the props for your `BlogPost` page component in `src/pages/blog/{mdx.slug}.js`.
+1. Add a `console.log` statement to print out the props for your `BlogPost` page component in `src/pages/blog/{mdx.frontmatter__slug}.js`.
 2. In a web browser, go to `localhost:8000/blog/my-first-post` and open the developer tools. In the console tab, you should see an object similar to the one below:
     ```js
     Object {
@@ -345,7 +353,6 @@ The keys in the `pageContext` object get added when you create a page using the 
           title
           date(formatString: "MMMM D, YYYY")
         }
-        body
       }
     }
     ```
@@ -367,7 +374,7 @@ The JSON object in the Query Variables section should look something like the on
 2. Add your page query to the blog post page template.
     * Don't forget to import the `graphql` tag!
     * You should also delete the query name `MyQuery` or replace it with a unique name.
-    ```js:title=src/pages/blog/{mdx.slug}.js
+    ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import { graphql } from 'gatsby' // highlight-line
     import Layout from '../../components/layout'
@@ -388,7 +395,6 @@ The JSON object in the Query Variables section should look something like the on
             title
             date(formatString: "MMMM D, YYYY")
           }
-          body
         }
       }
     `
@@ -397,21 +403,18 @@ The JSON object in the Query Variables section should look something like the on
     export default BlogPost
     ```
 
-3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. (Remember to import `MDXRenderer` so that you can render the body of your post!)
-    ```js:title=src/pages/blog/{mdx.slug}.js
+3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. The actual MDX content, ready to render, will be passed as a `children` prop to the page component.
+    ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import { graphql } from 'gatsby'
-    import { MDXRenderer } from 'gatsby-plugin-mdx' // highlight-line
     import Layout from '../../components/layout'
 
-    const BlogPost = ({ data }) => { // highlight-line
+    const BlogPost = ({ data, children }) => { // highlight-line
       return (
         {/* highlight-start */}
         <Layout pageTitle={data.mdx.frontmatter.title}>
           <p>{data.mdx.frontmatter.date}</p>
-          <MDXRenderer>
-            {data.mdx.body}
-          </MDXRenderer>
+          {children}
         {/* highlight-end */}
         </Layout>
       )
@@ -424,7 +427,6 @@ The JSON object in the Query Variables section should look something like the on
             title
             date(formatString: "MMMM D, YYYY")
           }
-          body
         }
       }
     `
@@ -441,47 +443,9 @@ The JSON object in the Query Variables section should look something like the on
 
 So far, you've used the File System Route API and GraphQL query variables to create separate pages for each of your blog posts.
 
-The last step of Part 6 is to clean up your Blog page. Instead of rendering the full contents of your blog posts, the Blog page should link out to the new post pages you just created.
+The last step of Part 6 is to clean up your Blog page. Instead of rendering a preview of your blog posts only, the Blog page should link out to the new post pages you just created.
 
-1. In your `src/pages/blog/index.js` file, remove the `body` field from your JSX and your page query. You can also get rid of the `MDXRenderer` component.
-    ```js:title=src/pages/blog/index.js
-    import * as React from 'react'
-    import { graphql } from 'gatsby'
-    import Layout from '../../components/layout'
-
-    const BlogPage = ({ data }) => {
-      return (
-        <Layout pageTitle="My Blog Posts">
-          {
-            data.allMdx.nodes.map(node => (
-              <article key={node.id}>
-                <h2>{node.frontmatter.title}</h2>
-                <p>Posted: {node.frontmatter.date}</p>
-              </article>
-            ))
-          }
-        </Layout>
-      )
-    }
-    
-    export const query = graphql`
-      query {
-        allMdx(sort: {fields: frontmatter___date, order: DESC}) {
-          nodes {
-            frontmatter {
-              date(formatString: "MMMM D, YYYY")
-              title
-            }
-            id
-          }
-        }
-      }
-    `
-
-    export default BlogPage
-    ```
-
-2. Add the `slug` field to your page query, and use it to turn the post title into a link to the post page.
+1. Add the `slug` field to your page query, and use it to turn the post title into a link to the post page.
     * Since these links are between pages on your own site, you can use Gatsby's `Link` component to get some extra performance benefits.
     * If you use absolute URLs, you'll need to add the extra `/blog/` path parameter, since the `slug` field only contains the last part of the path (like `my-first-post`).
     ```js:title=src/pages/blog/index.js
@@ -497,12 +461,13 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
               <article key={node.id}>
                 {/* highlight-start */}
                 <h2>
-                  <Link to={`/blog/${node.slug}`}>
+                  <Link to={`/blog/${node.frontmatter.slug}`}>
                     {node.frontmatter.title}
                   </Link>
                 </h2>
                 {/* highlight-end */}
                 <p>Posted: {node.frontmatter.date}</p>
+                <p>{node.excerpt}</p>
               </article>
             ))
           }
@@ -517,9 +482,9 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
             frontmatter {
               date(formatString: "MMMM D, YYYY")
               title
+              slug // highlight-line
             }
             id
-            slug // highlight-line
           }
         }
       }
@@ -528,7 +493,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
     export default BlogPage
     ```
 
-3. In a web browser, go to `localhost:8000/blog`. Your Blog page should now show links to each of your blog post pages. 
+2. In a web browser, go to `localhost:8000/blog`. Your Blog page should now show links to each of your blog post pages. 
     ![A screenshot of the Blog page in a web browser. It shows the title and date for each post, and each post title is a link to the page for that post.](./blog-page-with-links.png)
 
 Congratulations, you now have a multi-page blog site! Try adding some new `.mdx` files to your top-level `blog` directory. They should get added to your Blog page automatically when your site rebuilds!
