@@ -227,3 +227,7 @@ export default React.forwardRef((props, ref) => (
 export const navigate = (to, options) => {
   window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
 }
+
+// This is to deal with microbundle not adding this property were converting to commonjs
+// while babel interops depend on existence of this export
+export const __esModule = true
