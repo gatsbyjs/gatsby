@@ -38,16 +38,16 @@ In our example above, you've explicitly redirected one of your recipe urls, and 
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
-	const { createRedirect } = actions
+  const { createRedirect } = actions
 
-	createRedirect({
+  createRedirect({
     fromPath: `/blog/recipes/mouthwatering-lasagna`,
     toPath: `/recipes/mouthwatering-lasagna`,
   })
 
 	// All your other redirects
 
-	createRedirect({
+  createRedirect({
     fromPath: `/blog/recipes/*`,
     toPath: `/recipes`,
   })
@@ -60,9 +60,9 @@ Extending our wildcard example above, you may have a high degree confidence that
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
-	const { createRedirect } = actions
+  const { createRedirect } = actions
 
-	createRedirect({
+  createRedirect({
     fromPath: `/blog/recipes/*`,
     toPath: `/recipes/*`,
   })
