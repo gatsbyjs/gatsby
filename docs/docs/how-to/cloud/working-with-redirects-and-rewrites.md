@@ -31,7 +31,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 2 . Once you've made these changes and deployed the changes through Gatsby Cloud, you should be able to test your changes once the CDN cache has been purged.
 
-## Advanced Use Cases
+## Advanced use cases
 
 Wildcard Path Redirects
 In our example above, you've explicitly redirected one of your recipe urls, and after adding a few others, you realize that you won't have time to get all the old urls. So you decide that any other url that uses your old path `blog/recipes/*` should just be redirected to the new `/recipes` path. Here's how you'd handle that:
@@ -54,7 +54,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-### Splat Redirects
+### Splat redirects
 
 Extending our wildcard example above, you may have a high degree confidence that all of your old recipes that lived at `/blog/recipes` have been migrated to `/recipe`. In that case, you can use a `*` marker in the toPath to indicate that you want the redirect to include everything after the base url. In that case `/blog/recipes/any-awesome-url-path` would become `/recipes/any-awesome-url-path`. Here's how you'd handle that:
 
@@ -69,7 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-### Country Based Redirects
+### Country based redirects
 
 If your site has multi-national pages, Gatsby provides the ability of redirecting based in the country that the request is made. We use a Two-letter country code based on the regional indicator symbol standard to define the country you might want to redirect. If you would like a certain page redirected to its language equivalent you can use the conditions: `{ country: ""}` key in `createRedirect`. `country` can either be a string or an array of strings.
 
@@ -121,7 +121,7 @@ createRedirect({
 
 If you have defined a custom status page: 404, 403, 451, 500, that custom page will be rendered and sent to your users. If you haven’t defined a custom status page, Gatsby Cloud will return a generic status page. Only if you give `createRedirect` a redirect statusCode: 3XX will it return a redirect to the user.
 
-## Query Param redirects
+## Query param redirects
 
 Query params allows you to further control URL matches. For example, `/param?id=7redirects` to `/gatsby_file.pdf`
 
@@ -163,7 +163,7 @@ createRedirect({
 })
 ```
 
-### Tip: Using a Static File to Manage Redirects
+### Tip: Using a static file to manage redirects
 
 You might want to simplify managing your redirects by using a static file to store redirects. Storing that file in your Gatsby project can simplify your code and make it easier fo other contributors to add more redirects.
 
@@ -198,7 +198,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-### Rewrites/Reverse Proxies
+### Rewrites and reverse proxies
 
 Whenever you set a statusCode of 200 on createRedirect you create a rewrite or a reverse proxy. If your toPath is a page that already exists as part of your Gatsby site it will render that page. If the toPath is an external URL, then we will proxy that request. Maybe you have one site sitting in front of multiple other domains and you want to use rewrites to proxy the traffic. Imagine awesomesite.com was actually several different sites. Docs, dashboard, and marketing, for example. You could have all traffic start out routed to awesomesite.com and then rewrite to the other sites as needed. Such as:
 
@@ -212,7 +212,7 @@ createRedirect({
 
 The important part here is that you have an external toPath with a complete URL and a statusCode of 200 to indicate the rewrite.
 
-### Current Limitations
+### Current limitations
 
 - Infinitely looping rules, where the “from” and “to” resolve to the same location, are incorrect and will be ignored.
 - We limit internal rewrites to one “hop” — you cannot proxy from Gatsby Site A to Gatsby Site B to Gatsby Site C in a single request.
