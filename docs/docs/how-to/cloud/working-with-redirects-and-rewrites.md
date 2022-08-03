@@ -20,12 +20,12 @@ For instance, while rebuilding your cooking blog, you might want to move all of 
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
-	const { createRedirect } = actions;
+	const { createRedirect } = actions
 
 	createRedirect({
     fromPath: `/blog/recipes/mouthwatering-lasagna`,
     toPath: `/recipes/mouthwatering-lasagna`,
-  });
+  })
 }
 ```
 
@@ -38,19 +38,19 @@ In our example above, you've explicitly redirected one of your recipe urls, and 
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
-	const { createRedirect } = actions;
+	const { createRedirect } = actions
 
 	createRedirect({
     fromPath: `/blog/recipes/mouthwatering-lasagna`,
     toPath: `/recipes/mouthwatering-lasagna`,
-  });
+  })
 
 	// All your other redirects
 
 	createRedirect({
     fromPath: `/blog/recipes/*`,
     toPath: `/recipes`,
-  });
+  })
 }
 ```
 
@@ -60,12 +60,12 @@ Extending our wildcard example above, you may have a high degree confidence that
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
-	const { createRedirect } = actions;
+	const { createRedirect } = actions
 
 	createRedirect({
     fromPath: `/blog/recipes/*`,
     toPath: `/recipes/*`,
-  });
+  })
 }
 ```
 
@@ -185,16 +185,16 @@ Here's how you could do it for our recipes site using a JSON file:
 ```
 
 ```js:title=gatsby-node.js
-const redirects = require("./redirects.json");
+const redirects = require("./redirects.json")
 exports.createPages = async ({ graphql, actions }) => {
-  const { createRedirect } = actions;
+  const { createRedirect } = actions
 
   redirects.forEach(redirect =>
     createRedirect({
       fromPath: redirect.fromPath,
       toPath: redirect.toPath,
-    });
-  );
+    })
+  )
 }
 ```
 
