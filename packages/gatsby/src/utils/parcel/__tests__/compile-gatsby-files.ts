@@ -62,54 +62,6 @@ afterAll(() => {
   process.chdir(cwdToRestore)
 })
 
-describe(`misnamed gatsby-node files`, () => {
-  beforeEach(() => {
-    reporterPanicMock.mockClear()
-  })
-  it(`should not panic on gatsby-node.js`, async () => {
-    process.chdir(dir.js)
-    await remove(`${dir.js}/.cache`)
-    await compileGatsbyFiles(dir.js)
-
-    expect(reporterPanicMock).not.toHaveBeenCalled()
-  })
-  it(`should not panic on gatsby-node.ts`, async () => {
-    process.chdir(dir.ts)
-    await remove(`${dir.ts}/.cache`)
-    await compileGatsbyFiles(dir.ts)
-
-    expect(reporterPanicMock).not.toHaveBeenCalled()
-  })
-  it(`should panic on gatsby-node.jsx`, async () => {
-    process.chdir(dir.misnamedJS)
-    await remove(`${dir.misnamedJS}/.cache`)
-    await compileGatsbyFiles(dir.misnamedJS)
-
-    expect(reporterPanicMock).toBeCalledWith({
-      id: `10128`,
-      context: {
-        configName: `gatsby-node`,
-        isTSX: false,
-        nearMatch: `gatsby-node.jsx`,
-      },
-    })
-  })
-  it(`should panic on gatsby-node.tsx`, async () => {
-    process.chdir(dir.misnamedTS)
-    await remove(`${dir.misnamedTS}/.cache`)
-    await compileGatsbyFiles(dir.misnamedTS)
-
-    expect(reporterPanicMock).toBeCalledWith({
-      id: `10128`,
-      context: {
-        configName: `gatsby-node`,
-        isTSX: true,
-        nearMatch: `gatsby-node.tsx`,
-      },
-    })
-  })
-})
-
 describe(`gatsby file compilation`, () => {
   describe(`constructBundler`, () => {
     it(`should construct Parcel relative to passed directory`, () => {
@@ -205,6 +157,54 @@ describe(`gatsby file compilation`, () => {
 
         expect(compiledGatsbyNode).toContain(`gatsby-node is working`)
       })
+    })
+  })
+})
+
+describe(`misnamed gatsby-node files`, () => {
+  beforeEach(() => {
+    reporterPanicMock.mockClear()
+  })
+  it(`should not panic on gatsby-node.js`, async () => {
+    process.chdir(dir.js)
+    await remove(`${dir.js}/.cache`)
+    await compileGatsbyFiles(dir.js)
+
+    expect(reporterPanicMock).not.toHaveBeenCalled()
+  })
+  it(`should not panic on gatsby-node.ts`, async () => {
+    process.chdir(dir.ts)
+    await remove(`${dir.ts}/.cache`)
+    await compileGatsbyFiles(dir.ts)
+
+    expect(reporterPanicMock).not.toHaveBeenCalled()
+  })
+  it(`should panic on gatsby-node.jsx`, async () => {
+    process.chdir(dir.misnamedJS)
+    await remove(`${dir.misnamedJS}/.cache`)
+    await compileGatsbyFiles(dir.misnamedJS)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10128`,
+      context: {
+        configName: `gatsby-node`,
+        isTSX: false,
+        nearMatch: `gatsby-node.jsx`,
+      },
+    })
+  })
+  it(`should panic on gatsby-node.tsx`, async () => {
+    process.chdir(dir.misnamedTS)
+    await remove(`${dir.misnamedTS}/.cache`)
+    await compileGatsbyFiles(dir.misnamedTS)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10128`,
+      context: {
+        configName: `gatsby-node`,
+        isTSX: true,
+        nearMatch: `gatsby-node.tsx`,
+      },
     })
   })
 })
