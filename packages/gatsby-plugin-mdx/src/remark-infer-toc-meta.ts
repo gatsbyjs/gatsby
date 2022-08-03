@@ -1,11 +1,28 @@
 import type { Plugin } from "unified"
-import type { BlockContent, DefinitionContent, ListItem } from "mdast"
+import type { Node } from "unist"
+import type {
+  BlockContent,
+  DefinitionContent,
+  ListItem,
+  TableCell,
+} from "mdast"
 import type { IMdxVFile } from "./types"
+import type { Options, toc } from "mdast-util-toc"
+import type { visit } from "unist-util-visit"
 
 type TocNodeType = BlockContent | DefinitionContent | ListItem
 
-const remarkInferTocMeta: Plugin = (options = { maxDepth: 6 }) => {
-  const { toc, visit, maxDepth } = options
+interface IRemarkTocOptions {
+  maxDepth?: Options["maxDepth"]
+  toc: typeof toc
+  visit: typeof visit
+}
+
+const remarkInferTocMeta: Plugin<[IRemarkTocOptions]> = options => {
+  const { toc, visit, maxDepth }: IRemarkTocOptions = {
+    maxDepth: 6,
+    ...options,
+  }
 
   const processToC = (
     node: TocNodeType,
@@ -38,14 +55,14 @@ const remarkInferTocMeta: Plugin = (options = { maxDepth: 6 }) => {
     return {}
   }
 
-  return (tree, file): void => {
-    const generatedToC = toc(tree, { maxDepth })
+  return (tree: Node, file): void => {
+    const generatedToC = toc(tree as TableCell, { maxDepth })
     const mdxFile: IMdxVFile = file
     if (!mdxFile.data.meta) {
       mdxFile.data.meta = {}
     }
 
-    mdxFile.data.meta.toc = processToC(generatedToC.map, {})
+    mdxFile.data.meta.toc = processToC(generatedToC.map as TocNodeType, {})
   }
 }
 

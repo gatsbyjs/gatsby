@@ -21664,7 +21664,7 @@ remark-parse@8.0.3:
 
 remark-parse@^10.0.0:
   version "10.0.1"
-  resolved "https://registry.npmjs.org/remark-parse/-/remark-parse-10.0.1.tgz#6f60ae53edbf0cf38ea223fe643db64d112e0775"
+  resolved "https://registry.yarnpkg.com/remark-parse/-/remark-parse-10.0.1.tgz#6f60ae53edbf0cf38ea223fe643db64d112e0775"
   integrity sha512-1fUyHr2jLsVOkhbvPRBJ5zTKZZyD6yZzYaWCS6BPBdQ8vEMBCH+9zNCDA6tET/zHCi/jLqjCWtlJZUPk+DbnFw==
   dependencies:
     "@types/mdast" "^3.0.0"
