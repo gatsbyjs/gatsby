@@ -1,11 +1,14 @@
 import type { Node } from "unist-util-visit"
+import { cachedImport } from "./cache-helpers"
 
 // This plugin replaces html nodes with JSX divs that render given HTML via dangerouslySetInnerHTML
 // We have to find out if this is really a good idea, but its processing footprint is very low
 // compared to other solutions that would traverse the given HTML.
 export const remarkMdxHtmlPlugin = () =>
   async function transformer(markdownAST: Node): Promise<Node> {
-    const { visit } = await import(`unist-util-visit`)
+    const { visit } = await cachedImport<typeof import("unist-util-visit")>(
+      `unist-util-visit`
+    )
 
     visit(markdownAST, node => {
       if (![`html`, `raw`].includes(node.type)) {

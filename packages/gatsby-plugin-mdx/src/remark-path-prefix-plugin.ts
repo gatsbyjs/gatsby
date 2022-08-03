@@ -1,4 +1,5 @@
 import type { Node } from "unist-util-visit"
+import { cachedImport } from "./cache-helpers"
 
 // ensure only one `/` in new url
 const withPathPrefix = (url: string, pathPrefix: string): string =>
@@ -10,7 +11,9 @@ export const remarkPathPlugin = ({ pathPrefix }: { pathPrefix: string }) =>
     if (!pathPrefix) {
       return markdownAST
     }
-    const { visit } = await import(`unist-util-visit`)
+    const { visit } = await cachedImport<typeof import("unist-util-visit")>(
+      `unist-util-visit`
+    )
 
     visit(markdownAST, [`link`, `definition`], node => {
       if (

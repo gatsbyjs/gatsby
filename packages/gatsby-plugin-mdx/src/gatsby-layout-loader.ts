@@ -14,6 +14,7 @@ import type {
 import type { LoaderDefinition } from "webpack"
 import type { IMdxPluginOptions } from "./plugin-options"
 import { ERROR_CODES } from "./error-utils"
+import { cachedImport } from "./cache-helpers"
 
 export interface IGatsbyLayoutLoaderOptions {
   options: IMdxPluginOptions
@@ -45,13 +46,17 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
   // add mdx dependency to webpack
   this.addDependency(path.resolve(mdxPath))
 
-  const acorn = await import(`acorn`)
-  const { default: jsx } = await import(`acorn-jsx`)
-  const { generate } = await import(`astring`)
-  const { buildJsx } = await import(`estree-util-build-jsx`)
+  const acorn = await cachedImport<typeof import("acorn")>(`acorn`)
+  const { default: jsx } = await cachedImport(`acorn-jsx`)
+  const { generate } = await cachedImport<typeof import("astring")>(`astring`)
+  const { buildJsx } = await cachedImport<
+    typeof import("estree-util-build-jsx")
+  >(`estree-util-build-jsx`)
+
+  const JSX = jsx as typeof import("acorn-jsx")
 
   try {
-    const tree = acorn.Parser.extend(jsx()).parse(source, {
+    const tree = acorn.Parser.extend(JSX()).parse(source, {
       ecmaVersion: 2020,
       sourceType: `module`,
       locations: true,

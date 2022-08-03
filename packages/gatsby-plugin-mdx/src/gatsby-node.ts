@@ -11,7 +11,7 @@ import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import type { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
 import { ERROR_MAP } from "./error-utils"
-import { createFileToMdxCacheKey } from "./cache-helpers"
+import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers"
 
 /**
  * Add support for MDX files including using Gatsby layout components
@@ -159,7 +159,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             },
             async resolve(mdxNode, { pruneLength }: { pruneLength: number }) {
               const rehypeInferDescriptionMeta = (
-                await import(`rehype-infer-description-meta`)
+                await cachedImport<
+                  typeof import("rehype-infer-description-meta")
+                >(`rehype-infer-description-meta`)
               ).default
 
               const descriptionOptions: Options = { truncateSize: pruneLength }
