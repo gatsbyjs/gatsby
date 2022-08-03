@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.20.0/packages/gatsby-plugin-react-helmet) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- Add deprecation notice [#36166](https://github.com/gatsbyjs/gatsby/issues/36166) ([c6627e3](https://github.com/gatsbyjs/gatsby/commit/c6627e3353d0299bb6bc743512eb8dbe77d52dbc))
+
 ## [5.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.19.0/packages/gatsby-plugin-react-helmet) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.20.0/packages/gatsby) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Features
+
+- allow deduplicating head elements on `id` [#36138](https://github.com/gatsbyjs/gatsby/issues/36138) ([b08ef18](https://github.com/gatsbyjs/gatsby/commit/b08ef185dc80c21bc0bb08b1cbe1deb7063cb6b0))
+
+#### Bug Fixes
+
+- Add DEV_SSR note to 95312 error [#36295](https://github.com/gatsbyjs/gatsby/issues/36295) [#36300](https://github.com/gatsbyjs/gatsby/issues/36300) ([718d693](https://github.com/gatsbyjs/gatsby/commit/718d69319ea37acb078b0bfe9a94ebe56394264d))
+- Make <script> in Head behave correctly [#36212](https://github.com/gatsbyjs/gatsby/issues/36212) [#36299](https://github.com/gatsbyjs/gatsby/issues/36299) ([6c0316e](https://github.com/gatsbyjs/gatsby/commit/6c0316e3ce5fabed852cd0d5bc6323bc59d3d1ec))
+- move require out of hot function [#36253](https://github.com/gatsbyjs/gatsby/issues/36253) ([32ad041](https://github.com/gatsbyjs/gatsby/commit/32ad0411c234e247b7cea13204fe15ee2daff31a))
+- add `webhookBody` to `SourceNodesArgs` interface [#36255](https://github.com/gatsbyjs/gatsby/issues/36255) ([483d18e](https://github.com/gatsbyjs/gatsby/commit/483d18e51473cffef18a39f21fae96d99a953cfe))
+- refactor sourceNodes api and add I&C/CFLOW as a codeowner [#36244](https://github.com/gatsbyjs/gatsby/issues/36244) ([9d33b10](https://github.com/gatsbyjs/gatsby/commit/9d33b107d167e3e9e2aa282924a0c409f6afd5a0))
+- fix --https option for develop fix [#36248](https://github.com/gatsbyjs/gatsby/issues/36248) ([abc65a6](https://github.com/gatsbyjs/gatsby/commit/abc65a6d494c0e354f204022f6f3965b686c0194))
+- use pathPrefix for SSR/DSG page-data requests with `gatsby serve` fix [#36231](https://github.com/gatsbyjs/gatsby/issues/36231) ([3dee0f6](https://github.com/gatsbyjs/gatsby/commit/3dee0f603c4827286308419ac793f8110c2482fa))
+- Update resolve import resolve [#36229](https://github.com/gatsbyjs/gatsby/issues/36229) ([b125296](https://github.com/gatsbyjs/gatsby/commit/b125296961f21f6cf94568125a9f894b5ff68334))
+- Allow `export { default }` named exports in page templates [#29553](https://github.com/gatsbyjs/gatsby/issues/29553) ([a558313](https://github.com/gatsbyjs/gatsby/commit/a55831382907c94f9130bb87c05c42f14ea15dea))
+- content sync connection and static query page tracking [#36132](https://github.com/gatsbyjs/gatsby/issues/36132) ([028b1de](https://github.com/gatsbyjs/gatsby/commit/028b1de84385603256822ce38809de2ad77e46e2))
+- prevent escaping textContent for scripts [#36174](https://github.com/gatsbyjs/gatsby/issues/36174) ([d42243c](https://github.com/gatsbyjs/gatsby/commit/d42243cdb7739ed261be94c4be40bb1b055af3b7))
+- use host param for express again [#36186](https://github.com/gatsbyjs/gatsby/issues/36186) ([f35fda7](https://github.com/gatsbyjs/gatsby/commit/f35fda74ad4fa3f477606e28c9aa45067d4105fe))
+- add GATSBY_CLOUD_IMAGE_CDN [#36172](https://github.com/gatsbyjs/gatsby/issues/36172) ([7d3988c](https://github.com/gatsbyjs/gatsby/commit/7d3988c2ef2ecf56c4b54488b8505c386f031ade))
+- Wrap Head with <Location> [#36160](https://github.com/gatsbyjs/gatsby/issues/36160) ([c3c6a5b](https://github.com/gatsbyjs/gatsby/commit/c3c6a5b54ae695309c3eec1daeff3b2c4e6bf393))
+- Keep order in moved meta tags [#36158](https://github.com/gatsbyjs/gatsby/issues/36158) ([997db76](https://github.com/gatsbyjs/gatsby/commit/997db7639db59de0785db1a1d24842939a21fb34))
+- Allow script in Gatsby Head [#36136](https://github.com/gatsbyjs/gatsby/issues/36136) ([cc65f34](https://github.com/gatsbyjs/gatsby/commit/cc65f341e03108a5eaf1c6b3fa7761f2d842d3d6))
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+### [4.19.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.19.2/packages/gatsby) (2022-07-21)
+
+**Note:** Version bump only for package gatsby
+
 ### [4.19.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.19.1/packages/gatsby) (2022-07-20)
 
 #### Bug Fixes

@@ -12,7 +12,10 @@ export default function HeadFunctionExportBasic() {
       <Link data-testid="gatsby-link" to="/head-function-export/page-query">
         Navigate to page-query via Gatsby Link
       </Link>
-      <Link data-testid="navigate-to-page-without-head-export" to="/without-head">
+      <Link
+        data-testid="navigate-to-page-without-head-export"
+        to="/without-head"
+      >
         Navigate to without head export
       </Link>
     </>
@@ -28,7 +31,7 @@ export function Head() {
     style,
     link,
     extraMeta,
-    jsonLD
+    jsonLD,
   } = data.static
 
   return (
@@ -53,6 +56,9 @@ export function Head() {
       />
       <script data-testid="jsonLD" type="application/ld+json">
         {jsonLD}
+      </script>
+      <script type="text/javascript">
+        {`window.__SOME_GLOBAL_TO_CHECK_CALL_COUNT__ = (window.__SOME_GLOBAL_TO_CHECK_CALL_COUNT__ || 0 ) + 1`}
       </script>
     </>
   )

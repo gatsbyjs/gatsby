@@ -50,7 +50,7 @@ exports.sourceNodes = ({ actions }) => {
     const updatedAtUTC = new Date(
       randomIntFromInterval(
         LOWER_CREATED_AT_TIME_LIMIT,
-        UPPER_CREATED_AT_TIME_LIMIT,
+        UPPER_CREATED_AT_TIME_LIMIT
       )
     ).toUTCString()
 
@@ -112,6 +112,64 @@ exports.sourceNodes = ({ actions }) => {
     manifestId: createManifestId(nodeUpdated2.id),
     node: nodeUpdated2,
     updatedAtUTC: nodeUpdated2.updatedAt,
+  })
+
+  const nodeForConnectionListQuery1 = {
+    id: `connection-list-query-node`,
+    title: `First connection list query node`,
+    internal: {
+      type: `TestConnectionListQueryType`,
+      contentDigest: `1`,
+    },
+  }
+  const nodeForConnectionListQuery2 = {
+    id: `connection-list-query-node-2`,
+    title: `Second connection list query node`,
+    internal: {
+      type: `TestConnectionListQueryType`,
+      contentDigest: `2`,
+    },
+  }
+
+  actions.createNode(nodeForConnectionListQuery1)
+  actions.unstable_createNodeManifest({
+    manifestId: createManifestId(nodeForConnectionListQuery1.id),
+    node: nodeForConnectionListQuery1,
+  })
+
+  actions.createNode(nodeForConnectionListQuery2)
+  actions.unstable_createNodeManifest({
+    manifestId: createManifestId(nodeForConnectionListQuery2.id),
+    node: nodeForConnectionListQuery2,
+  })
+
+  const nodeForStaticQueryList1 = {
+    id: `static-query-list-query-node`,
+    title: `First static query list query node`,
+    internal: {
+      type: `TestConnectionStaticQueryListQueryType`,
+      contentDigest: `1`,
+    },
+  }
+  const nodeForStaticQueryList2 = {
+    id: `static-query-list-query-node-2`,
+    title: `Second static query list query node`,
+    internal: {
+      type: `TestConnectionStaticQueryListQueryType`,
+      contentDigest: `2`,
+    },
+  }
+
+  actions.createNode(nodeForStaticQueryList1)
+  actions.unstable_createNodeManifest({
+    manifestId: createManifestId(nodeForStaticQueryList1.id),
+    node: nodeForStaticQueryList1,
+  })
+
+  actions.createNode(nodeForStaticQueryList2)
+  actions.unstable_createNodeManifest({
+    manifestId: createManifestId(nodeForStaticQueryList2.id),
+    node: nodeForStaticQueryList2,
   })
 }
 

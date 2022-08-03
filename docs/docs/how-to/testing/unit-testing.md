@@ -237,7 +237,7 @@ If you are using TypeScript, you need to install typings packages and make
 two changes to your config.
 
 ```shell
-npm install --save-dev @types/jest @types/react-test-renderer
+npm install --save-dev @types/jest @types/react-test-renderer @babel/preset-typescript
 ```
 
 Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory.
