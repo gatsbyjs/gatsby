@@ -60,6 +60,7 @@ const dir = path.resolve(__dirname, `../__mocks__/get-config`)
 const compiledDir = `${dir}/compiled-dir`
 const userRequireDir = `${dir}/user-require-dir`
 const tsDir = `${dir}/ts-dir`
+const tsxDir = `${dir}/tsx-dir`
 const nearMatchDir = `${dir}/near-match-dir`
 const srcDir = `${dir}/src-dir`
 
@@ -144,7 +145,24 @@ describe(`getConfigFile`, () => {
       error: expect.toBeObject(),
       context: {
         configName: `gatsby-config`,
+        isTSX: false,
         nearMatch: `gatsby-confi.js`,
+      },
+    })
+  })
+
+  it(`should handle .tsx extension`, async () => {
+    testRequireErrorMock.mockImplementationOnce(() => true)
+
+    await getConfigFile(tsxDir, `gatsby-config`)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10124`,
+      error: expect.toBeObject(),
+      context: {
+        configName: `gatsby-config`,
+        isTSX: true,
+        nearMatch: `gatsby-confi.tsx`,
       },
     })
   })

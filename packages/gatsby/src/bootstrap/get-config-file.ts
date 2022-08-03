@@ -108,12 +108,14 @@ export async function getConfigFile(
 
       // gatsby-config is misnamed
       if (nearMatch) {
+        const isTSX = nearMatch.endsWith(`.tsx`)
         report.panic({
           id: `10124`,
           error: innerError,
           context: {
             configName,
             nearMatch,
+            isTSX,
           },
         })
       }
