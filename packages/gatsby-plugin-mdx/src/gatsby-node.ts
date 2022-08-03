@@ -362,7 +362,6 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .description(
         `Configure the file extensions that gatsby-plugin-mdx will process`
       ),
-    // @ts-ignore - subPlugins() exists in bootstrap/load-plugins
     gatsbyRemarkPlugins: Joi.subPlugins().description(
       `Use Gatsby-specific remark plugins`
     ),
