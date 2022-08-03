@@ -6,8 +6,8 @@
   "author": "LekoArts",
   "dependencies": {
     "@mdx-js/react": "^2.1.2",
-    "@nivo/core": "^0.79.0",
-    "@nivo/line": "^0.79.1",
+    "@nivo/core": "0.78.0",
+    "@nivo/line": "0.78.0",
     "@sindresorhus/slugify": "^1",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",
