@@ -23,12 +23,11 @@ export async function compileMDX(
     const processor = createProcessor(options)
 
     // Pass required custom data into the processor
-    const metadata: IMdxMetadata = {}
     processor.data(
       `mdxNodeId`,
       await cache.get(createFileToMdxCacheKey(absolutePath))
     )
-    processor.data(`mdxMetadata`, metadata)
+    processor.data(`mdxMetadata`, {})
 
     const result = await processor.process(
       // Inject path to original file for remark plugins. See: https://github.com/gatsbyjs/gatsby/issues/26914

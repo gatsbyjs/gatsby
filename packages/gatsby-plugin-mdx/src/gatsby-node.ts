@@ -53,8 +53,11 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
         rules: [
           {
             test: /\.mdx?$/,
-            use: [
-              loaders.js(),
+            use: ({ resourceQuery, issuer }): Array<any> => [
+              loaders.js({
+                isPageTemplate: /async-requires/.test(issuer),
+                resourceQuery,
+              }),
               {
                 loader: path.join(__dirname, `gatsby-mdx-loader`),
                 options: mdxLoaderOptions,
@@ -64,8 +67,11 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
           {
             test: /\.[tj]sx?$/,
             resourceQuery: /__contentFilePath=.+\.mdx?(&export=.*)?$/,
-            use: [
-              loaders.js(),
+            use: ({ resourceQuery, issuer }): Array<any> => [
+              loaders.js({
+                isPageTemplate: /async-requires/.test(issuer),
+                resourceQuery,
+              }),
               {
                 loader: path.join(__dirname, `gatsby-layout-loader`),
                 options: layoutLoaderOptions,
