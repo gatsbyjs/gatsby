@@ -3,7 +3,7 @@ import { babelrcReducer } from "../reducers/babelrc"
 import {
   prepareOptions,
   mergeConfigItemOptions,
-  addRequiredPresetOptions,
+  convertCustomPresetsToPlugins,
 } from "../../utils/babel-loader-helpers"
 
 describe(`Babelrc actions/reducer`, () => {
@@ -86,16 +86,180 @@ describe(`Babelrc actions/reducer`, () => {
 
   it(`adds stage option to babel-preset-gatsby defined with userland babelrc`, () => {
     const fakeResolver = (moduleName): string => `/path/to/module/${moduleName}`
-    const babel = { createConfigItem: jest.fn() }
-    const presets: any = [
+
+    const BabelPresetGatsbyConfigItem = {
+      file: { resolved: fakeResolver(`babel-preset-gatsby`) },
+    }
+
+    const babel = {
+      createConfigItem: jest.fn((presetDescriptor: any): any => {
+        if (!Array.isArray(presetDescriptor)) {
+          presetDescriptor = [presetDescriptor]
+        }
+
+        const name = presetDescriptor[0]
+        if (name.includes(`babel-preset-gatsby`)) {
+          return {
+            ...BabelPresetGatsbyConfigItem,
+            options: presetDescriptor[1],
+          }
+        }
+        return undefined
+      }),
+    }
+    const presets: any = [BabelPresetGatsbyConfigItem]
+
+    const { presets: convertedPresets } = convertCustomPresetsToPlugins(
+      babel,
+      { presets, plugins: [] },
       {
-        file: { resolved: fakeResolver(`babel-preset-gatsby`) },
+        stage: `develop`,
+        reactRuntime: `automatic`,
+        reactImportSource: `@emotion/react`,
       },
-    ]
+      fakeResolver
+    )
 
-    addRequiredPresetOptions(babel, presets, { stage: `develop` }, fakeResolver)
+    const babelPresetGatsbyPreset = convertedPresets.find(preset =>
+      preset?.file?.resolved?.includes(`babel-preset-gatsby`)
+    )
 
-    expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
+    expect(babelPresetGatsbyPreset?.options).toMatchInlineSnapshot(`
+      Object {
+        "reactImportSource": "@emotion/react",
+        "reactRuntime": "automatic",
+        "stage": "develop",
+      }
+    `)
+  })
+
+  it(`adds stage option to babel-preset-gatsby defined in nested preset`, () => {
+    const fakeResolver = (moduleName): string => `/path/to/module/${moduleName}`
+
+    const BabelPresetGatsbyConfigItem = {
+      file: { resolved: fakeResolver(`babel-preset-gatsby`) },
+    }
+
+    const CustomPresetGatsbyConfigItem = {
+      file: { resolved: fakeResolver(`custome-preset`) },
+      value: (): any => {
+        return {
+          presets: [`babel-preset-gatsby`],
+          plugins: [[`babel-plugin-testing-stuff`, { foo: `bar` }]],
+        }
+      },
+    }
+
+    const babel = {
+      createConfigItem: jest.fn((presetDescriptor: any): any => {
+        if (!Array.isArray(presetDescriptor)) {
+          presetDescriptor = [presetDescriptor]
+        }
+
+        const name = presetDescriptor[0]
+        if (name.includes(`babel-preset-gatsby`)) {
+          return {
+            ...BabelPresetGatsbyConfigItem,
+            options: presetDescriptor[1],
+          }
+        }
+
+        if (name.includes(`babel-plugin-testing-stuff`)) {
+          return {
+            options: presetDescriptor[1],
+            file: { resolved: fakeResolver(`babel-plugin-testing-stuff`) },
+          }
+        }
+
+        return undefined
+      }),
+    }
+    const presets: any = [CustomPresetGatsbyConfigItem]
+
+    const { presets: convertedPresets, plugins: convertedPlugins } =
+      convertCustomPresetsToPlugins(
+        babel,
+        { presets, plugins: [] },
+        {
+          stage: `develop`,
+          reactRuntime: `automatic`,
+          reactImportSource: `@emotion/react`,
+        },
+        fakeResolver
+      )
+
+    const babelPresetGatsbyPreset = convertedPresets.find(preset =>
+      preset?.file?.resolved?.includes(`babel-preset-gatsby`)
+    )
+
+    expect(babelPresetGatsbyPreset?.options).toMatchInlineSnapshot(`
+      Object {
+        "reactImportSource": "@emotion/react",
+        "reactRuntime": "automatic",
+        "stage": "develop",
+      }
+    `)
+
+    // make sure we preserve options for plugins from the custom preset
+    const pluginFromCustomPreset = convertedPlugins.find(plugin =>
+      plugin?.file?.resolved?.includes(`babel-plugin-testing-stuff`)
+    )
+    expect(pluginFromCustomPreset?.options).toMatchInlineSnapshot(`
+      Object {
+        "foo": "bar",
+      }
+    `)
+  })
+
+  it(`prefers reactRuntime/reactImportSource from preset options over ones from gatsby-config`, () => {
+    const fakeResolver = (moduleName): string => `/path/to/module/${moduleName}`
+
+    const BabelPresetGatsbyConfigItem = {
+      file: { resolved: fakeResolver(`babel-preset-gatsby`) },
+      options: {
+        reactRuntime: `classic`,
+      },
+    }
+
+    const babel = {
+      createConfigItem: jest.fn((presetDescriptor: any): any => {
+        if (!Array.isArray(presetDescriptor)) {
+          presetDescriptor = [presetDescriptor]
+        }
+
+        const name = presetDescriptor[0]
+        if (name.includes(`babel-preset-gatsby`)) {
+          return {
+            ...BabelPresetGatsbyConfigItem,
+            options: presetDescriptor[1],
+          }
+        }
+        return undefined
+      }),
+    }
+    const presets: any = [BabelPresetGatsbyConfigItem]
+
+    const { presets: convertedPresets } = convertCustomPresetsToPlugins(
+      babel,
+      { presets, plugins: [] },
+      {
+        stage: `develop`,
+        reactRuntime: `automatic`,
+        reactImportSource: `@emotion/react`,
+      },
+      fakeResolver
+    )
+
+    const babelPresetGatsbyPreset = convertedPresets.find(preset =>
+      preset?.file?.resolved?.includes(`babel-preset-gatsby`)
+    )
+
+    expect(babelPresetGatsbyPreset?.options).toMatchInlineSnapshot(`
+      Object {
+        "reactRuntime": "classic",
+        "stage": "develop",
+      }
+    `)
   })
 
   it(`allows setting options`, () => {
