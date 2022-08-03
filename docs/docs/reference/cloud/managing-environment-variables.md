@@ -13,7 +13,7 @@ When working with Gatsby Cloud you will have two environments you can configure 
 
 This guide covers how to set environment variables and assumes you already have your site created.
 
-## Setting Environment Variables
+## Setting environment variables
 
 Environment variables can be accessed via the dashboard menu by clicking **Site Settings > General > Environment Variables**.
 
@@ -29,7 +29,7 @@ When you are done editing both your Builds and Preview variables, click **Save**
 
 **Note**: Editing environment variables will trigger a new build of your site.
 
-### Bulk Copy/Add Variables
+### Bulk copy/add variables
 
 As a convenience, you can copy/add environment variables in bulk. Copy all variables for the Build or Preview environment by clicking Edit Variables and then the Bulk Copy Variables button.
 

@@ -14,7 +14,7 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services (currently only 
 
 ## Directions
 
-### Enable Log Drains
+### Enable log drains
 
 1. [Log in](https://app.datadoghq.com/account/login) to your DataDog account
 1. [Add a new API Key](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token), giving it a name that will help you remember that this key is used for receiving logs from Gatsby Cloud.
@@ -52,7 +52,7 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services (currently only 
 
    **Note**: It can take up to 10 minutes for your initial set of logs to appear
 
-### Modify Log Drains
+### Modify log drains
 
 1. Access your site’s "Site Settings" in Gatsby Cloud
 1. Navigate to "Log Drains" in the left-hand navigation
@@ -61,7 +61,7 @@ Gatsby Cloud can deliver hosting logs to the 3rd party services (currently only 
 1. Update the settings accordingly
 1. Click Save
 
-### Disconnect Log Drains
+### Disconnect log drains
 
 1. Access your site’s "Site Settings" in Gatsby Cloud
 1. Navigate to "Log Drains" in the left-hand navigation

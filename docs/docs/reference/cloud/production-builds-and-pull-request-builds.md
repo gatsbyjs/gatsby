@@ -3,15 +3,15 @@ title: "Production Builds and Pull Request Builds"
 description: "Production Builds and Pull Request Builds operate slightly differently. In this article, we'll explain the differences."
 ---
 
-Production Builds and Pull Request Builds are used for readying your site for deployment. When you add a site to Gatsby Cloud, you will find them under the **Deploys** tab of the **Site Overview** page.
+Production Builds and Pull Request Builds are used for readying your site for deployment. When you add a site to Gatsby Cloud, you will find them under the **"Deploys"** tab of the Site Overview page.
 
-## Production Builds
+## Production builds
 
-A **Production Build** is a build of your site's production branch, i.e., the repository branch you select when creating a site. Production builds are suitable for hosting on the internet. If you enable Gatsby Hosting or connect your site to a 3rd party hosting service, the site will automatically deploy after a Production Build completes.
+A Production Build is a build of your site's production branch, i.e., the repository branch you select when creating a site. Production builds are suitable for hosting on the internet. If you enable Gatsby Hosting or connect your site to a 3rd party hosting service, the site will automatically deploy after a Production Build completes.
 
 ![Production Builds Overview](../../images/production-builds-overview.png)
 
-### How Production Builds are Triggered
+### How production builds are triggered
 
 A Production Build may be triggered when any of the following events occur:
 
@@ -31,13 +31,13 @@ You can search for a specific production build. Here's how:
 - Filter by build type
 - Search: Can search multiple keywords. The search spans Github commit messages, Github commit ID as well as GitHub user id. Any match found in these areas will be listed.
 
-## Pull Request Build
+## Pull request builds
 
 A Pull Request Build is a build of a non-production branch of your site. Pull Request Builds are intended to show the impact of potential code changes before merging those changes into your production branch.
 
 ![Pull request builds](../../images/pull-request-build.png)
 
-### How Pull Request Builds are Triggered
+### How pull request builds are triggered
 
 A **Pull Request** Build will be triggered when any of the following events occur:
 
