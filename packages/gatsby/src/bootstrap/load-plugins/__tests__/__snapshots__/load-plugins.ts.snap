@@ -307,7 +307,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
     ],
     "id": "",
     "name": "partytown",
@@ -321,7 +321,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",
@@ -669,7 +668,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
     ],
     "id": "",
     "name": "partytown",
@@ -683,7 +682,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",
@@ -1042,7 +1040,7 @@ Array [
   },
   Object {
     "browserAPIs": Array [
-      "wrapRootElement",
+      "onInitialClientRender",
     ],
     "id": "",
     "name": "partytown",
@@ -1056,7 +1054,6 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [
-      "wrapRootElement",
       "onRenderBody",
     ],
     "version": "1.0.0",

@@ -69,6 +69,9 @@ const IndexPage = ({ data }) => (
         </li>
       ))}
     </ul>
+    <Link to="/gatsby-script-off-main-thread/" data-testid="off-main-thread">
+      Go to off-main-thread scripts page
+    </Link>
   </Layout>
 )
 

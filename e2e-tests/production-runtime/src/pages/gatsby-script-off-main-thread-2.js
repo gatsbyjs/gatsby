@@ -1,35 +1,26 @@
 import * as React from "react"
-import { Link, Script } from "gatsby"
-import { scripts } from "../../gatsby-script-scripts"
+import { Script } from "gatsby"
 
-function OffMainThreadScripts() {
+function OffMainThreadScriptsTwo() {
   return (
     <main style={{ margin: `1em` }}>
       <h1>Script component e2e test</h1>
 
-      <Link
-        to="/gatsby-script-off-main-thread-2/"
-        data-testid="off-main-thread-2"
-      >
-        Go to off-main-thread-2 scripts page
-      </Link>
-
       <Script
-        id="three"
-        src={scripts.three}
+        src="http://localhost:9000/used-by-off-main-thread-2.js"
         strategy="off-main-thread"
-        forward={[`THREE`]}
+        forward={[`some-other-forward`]}
       />
 
       <Script id="inline-script-template-literal" strategy="off-main-thread">
-        {createScript(`inline-script-template-literal`)}
+        {createScript(`inline-script-template-literal-2`)}
       </Script>
 
       <Script
         id="inline-script-dangerously-set"
         strategy="off-main-thread"
         dangerouslySetInnerHTML={{
-          __html: createScript(`inline-script-dangerously-set`),
+          __html: createScript(`inline-script-dangerously-set-2`),
         }}
       />
     </main>
@@ -48,4 +39,4 @@ function createScript(id) {
   `
 }
 
-export default OffMainThreadScripts
+export default OffMainThreadScriptsTwo
