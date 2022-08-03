@@ -26,7 +26,7 @@ export const onRenderBody = ({
   const titleComponent = helmet.title.toComponent()
 
   setHeadComponents(
-    titleComponent[0]?.props.children
+    titleComponent[0]?.props?.children
       ? [titleComponent, ...components]
       : components
   )
