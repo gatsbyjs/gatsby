@@ -615,7 +615,7 @@ You'll need to do two things to continue using your old layout file:
 1. You have to attach this MDX file via the `__contentFilePath` query param to your layout file
 
 ```diff
-const postTemplate = path.resolve(`./src/templates/post.js`)
+const postTemplate = path.resolve(`./src/templates/post.jsx`)
 actions.createPage({
 -  component: postTemplate,
 +  component: `${postTemplate}?__contentFilePath=/path/to/content.mdx`,

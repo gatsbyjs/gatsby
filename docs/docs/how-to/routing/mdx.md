@@ -358,10 +358,11 @@ From an absolute path to your component (e.g. `/absolute/path/to/layout-componen
 Change your `gatsby-node.js` as following:
 
 ```diff
++ const postTemplate = path.resolve(`./src/templates/post.jsx`)
 createPage({
   path: node.frontmatter.slug,
--  component: node.parent.absolutePath,
-+  component: `${path.resolve(`./src/templates/posts.jsx`)}?__contentFilePath=${node.internal.contentFilePath}`,
+-  component: node.internal.contentFilePath,
++  component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
   context: { id: node.id },
 })
 ```
