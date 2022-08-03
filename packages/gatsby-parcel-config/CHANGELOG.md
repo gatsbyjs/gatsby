@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.11.0/packages/gatsby-parcel-config) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- Adjust peerDep [#36185](https://github.com/gatsbyjs/gatsby/issues/36185) ([49a8fc0](https://github.com/gatsbyjs/gatsby/commit/49a8fc02a8dbe49a02d62132d5fb7b7fd85cdf5d))
+
 ### [0.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.10.1/packages/gatsby-parcel-config) (2022-07-20)
 
 #### Chores

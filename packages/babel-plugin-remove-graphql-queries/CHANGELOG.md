@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@4.20.0/packages/babel-plugin-remove-graphql-queries) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- add missing dependencies [#36230](https://github.com/gatsbyjs/gatsby/issues/36230) ([5443479](https://github.com/gatsbyjs/gatsby/commit/5443479c98a05f60ba12efad3fe2f986c80ed296))
+
 ## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/babel-plugin-remove-graphql-queries@4.19.0/packages/babel-plugin-remove-graphql-queries) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
