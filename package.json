@@ -1,5 +1,5 @@
 {
-  "packageManager": "yarn@1.21.0",
+  "packageManager": "yarn@1.22.19",
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.4",
