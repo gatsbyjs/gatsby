@@ -130,7 +130,7 @@ Object {
   "docsUrl": "https://gatsby.dev/debug-html",
   "level": "ERROR",
   "stack": Array [],
-  "text": "\\"navigator\\" is not available during server side rendering.",
+  "text": "\\"navigator\\" is not available during Server-Side Rendering. Enable \\"DEV_SSR\\" to debug this during \\"gatsby develop\\".",
 }
 `;
 

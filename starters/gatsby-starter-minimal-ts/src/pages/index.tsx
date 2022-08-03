@@ -1,6 +1,6 @@
 import * as React from "react"
+import type { HeadFC } from "gatsby"
 
-// styles
 const pageStyles = {
   color: "#232129",
   padding: 96,
@@ -90,7 +90,6 @@ const badgeStyle = {
   lineHeight: 1,
 }
 
-// data
 const links = [
   {
     text: "Tutorial",
@@ -137,16 +136,13 @@ const links = [
   },
 ]
 
-// markup
 const IndexPage = () => {
   return (
     <main style={pageStyles}>
-      <title>Home Page</title>
       <h1 style={headingStyles}>
         Congratulations
         <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! </span>
-        🎉🎉🎉
+        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
       </h1>
       <p style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
@@ -193,3 +189,5 @@ const IndexPage = () => {
 }
 
 export default IndexPage
+
+export const Head: HeadFC = () => <title>Home Page</title>

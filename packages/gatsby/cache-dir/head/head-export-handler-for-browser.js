@@ -8,6 +8,7 @@ import {
   headExportValidator,
   filterHeadProps,
   warnForInvalidTags,
+  diffNodes,
 } from "./utils"
 import { staticQuerySingleton } from "../static-query"
 
@@ -21,8 +22,6 @@ const removePrevHeadElements = () => {
 const onHeadRendered = () => {
   const validHeadNodes = []
 
-  removePrevHeadElements()
-
   const seenIds = new Map()
   for (const node of hiddenRoot.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
@@ -31,8 +30,19 @@ const onHeadRendered = () => {
     if (!VALID_NODE_NAMES.includes(nodeName)) {
       warnForInvalidTags(nodeName)
     } else {
-      const clonedNode = node.cloneNode(true)
+      let clonedNode = node.cloneNode(true)
       clonedNode.setAttribute(`data-gatsby-head`, true)
+
+      // Create an element for scripts to make script work
+      if (clonedNode.nodeName.toLowerCase() === `script`) {
+        const script = document.createElement(`script`)
+        for (const attr of clonedNode.attributes) {
+          script.setAttribute(attr.name, attr.value)
+        }
+        script.innerHTML = clonedNode.innerHTML
+        clonedNode = script
+      }
+
       if (id) {
         if (!seenIds.has(id)) {
           validHeadNodes.push(clonedNode)
@@ -48,7 +58,24 @@ const onHeadRendered = () => {
     }
   }
 
-  document.head.append(...validHeadNodes)
+  const existingHeadElements = [
+    ...document.querySelectorAll(`[data-gatsby-head]`),
+  ]
+
+  if (existingHeadElements.length === 0) {
+    document.head.append(...validHeadNodes)
+    return
+  }
+
+  const newHeadNodes = []
+  diffNodes({
+    oldNodes: existingHeadElements,
+    newNodes: validHeadNodes,
+    onStale: node => node.remove(),
+    onNew: node => newHeadNodes.push(node),
+  })
+
+  document.head.append(...newHeadNodes)
 }
 
 if (process.env.BUILD_STAGE === `develop`) {
