@@ -390,6 +390,15 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "10128": {
+    text: (context): string =>
+      `It looks like you were trying to add the gatsby-node file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "10226": {
     text: (context): string =>
       [
