@@ -4333,6 +4333,44 @@
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.0.tgz#14264692a9d6e2fa4db3df5e56e94b5e25647ac0"
   integrity sha512-iIgQNzCm0v7QMhhe4Jjn9uRh+I6GoPmt03CbEtwx3ao8/EfoQcmgtqH4vQ5Db/lxiIGaWDv6nwvunuh0RyX0+A==
 
+"@types/babel-core@^6.25.7":
+  version "6.25.7"
+  resolved "https://registry.yarnpkg.com/@types/babel-core/-/babel-core-6.25.7.tgz#f9c22d5c085686da2f6ffbdae778edb3e6017671"
+  integrity sha512-WPnyzNFVRo6bxpr7bcL27qXtNKNQ3iToziNBpibaXHyKGWQA0+tTLt73QQxC/5zzbM544ih6Ni5L5xrck6rGwg==
+  dependencies:
+    "@types/babel-generator" "*"
+    "@types/babel-template" "*"
+    "@types/babel-traverse" "*"
+    "@types/babel-types" "*"
+    "@types/babylon" "*"
+
+"@types/babel-generator@*":
+  version "6.25.5"
+  resolved "https://registry.yarnpkg.com/@types/babel-generator/-/babel-generator-6.25.5.tgz#b02723fd589349b05524376e5530228d3675d878"
+  integrity sha512-lhbwMlAy5rfWG+R6l8aPtJdEFX/kcv6LMFIuvUb0i89ehqgD24je9YcB+0fRspQhgJGlEsUImxpw4pQeKS/+8Q==
+  dependencies:
+    "@types/babel-types" "*"
+
+"@types/babel-template@*":
+  version "6.25.2"
+  resolved "https://registry.yarnpkg.com/@types/babel-template/-/babel-template-6.25.2.tgz#3c4cde02dbcbbf461a58d095a9f69f35eabd5f06"
+  integrity sha512-QKtDQRJmAz3Y1HSxfMl0syIHebMc/NnOeH/8qeD0zjgU2juD0uyC922biMxCy5xjTNvHinigML2l8kxE8eEBmw==
+  dependencies:
+    "@types/babel-types" "*"
+    "@types/babylon" "*"
+
+"@types/babel-traverse@*":
+  version "6.25.7"
+  resolved "https://registry.yarnpkg.com/@types/babel-traverse/-/babel-traverse-6.25.7.tgz#bc75fce23d8394534562a36a32dec94a54d11835"
+  integrity sha512-BeQiEGLnVzypzBdsexEpZAHUx+WucOMXW6srEWDkl4SegBlaCy+iBvRO+4vz6EZ+BNQg22G4MCdDdvZxf+jW5A==
+  dependencies:
+    "@types/babel-types" "*"
+
+"@types/babel-types@*":
+  version "7.0.11"
+  resolved "https://registry.yarnpkg.com/@types/babel-types/-/babel-types-7.0.11.tgz#263b113fa396fac4373188d73225297fb86f19a9"
+  integrity sha512-pkPtJUUY+Vwv6B1inAz55rQvivClHJxc9aVEPPmaq2cbyeMLCiDpbKpcKyX4LAwpNGi+SHBv0tHv6+0gXv0P2A==
+
 "@types/babel__code-frame@^7.0.2":
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/@types/babel__code-frame/-/babel__code-frame-7.0.2.tgz#e0c0f1648cbc09a9d4e5b4ed2ae9a6f7c8f5aeb0"
@@ -4370,6 +4408,13 @@
   integrity sha512-K2waXdXBi2302XUdcHcR1jCeU0LL4TD9HRs/gk0N2Xvrht+G/BfJa4QObBQZfhMdxiCpV3COl5Nfq4uKTeTnJA==
   dependencies:
     "@babel/types" "^7.3.0"
+
+"@types/babylon@*":
+  version "6.16.6"
+  resolved "https://registry.yarnpkg.com/@types/babylon/-/babylon-6.16.6.tgz#a1e7e01567b26a5ebad321a74d10299189d8d932"
+  integrity sha512-G4yqdVlhr6YhzLXFKy5F7HtRBU8Y23+iWy7UKthMq/OSQnL1hbsoeXESQ2LY8zEDlknipDG3nRGhUC9tkwvy/w==
+  dependencies:
+    "@types/babel-types" "*"
 
 "@types/better-queue@^3.8.2":
   version "3.8.2"
