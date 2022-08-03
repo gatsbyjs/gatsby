@@ -370,10 +370,9 @@ That's it, you're done. Run `gatsby develop` to see your posts wrapped with `pos
 
 ## Adding additional fields to your GraphQL MDX nodes
 
-To extend your GraphQL nodes, you can use [`onCreateNode` API](/docs/reference/config-files/gatsby-node/#onCreateNode)
+To extend your GraphQL nodes, you can use the [`onCreateNode` API](/docs/reference/config-files/gatsby-node/#onCreateNode).
 
-You can find examples in the README of `gatsby-plugin-mdx`:
-[Extending GraphQL MDX nodes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes)
+You can find examples in the [README of `gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes).
 
 ## Making GraphQL queries within an MDX File
 
