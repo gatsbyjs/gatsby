@@ -32,6 +32,48 @@ describe(`webpack loader`, () => {
       cy.contains(otherKey).should(`not.exist`)
     })
   })
+
+  describe(`---json frontmatter`, () => {
+    beforeEach(() => {
+      cy.visit(page.json).waitForRouteChange()
+    })
+
+    it(`should parse`, () => {
+      cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
+    })
+
+    it(`should not leak into the page`, () => {
+      cy.contains(otherKey).should(`not.exist`)
+    })
+  })
+
+  describe(`---js frontmatter`, () => {
+    beforeEach(() => {
+      cy.visit(page.js).waitForRouteChange()
+    })
+
+    it(`should parse`, () => {
+      cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
+    })
+
+    it(`should not leak into the page`, () => {
+      cy.contains(otherKey).should(`not.exist`)
+    })
+  })
+
+  describe(`---javascript frontmatter`, () => {
+    beforeEach(() => {
+      cy.visit(page.javascript).waitForRouteChange()
+    })
+
+    it(`should parse`, () => {
+      cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
+    })
+
+    it(`should not leak into the page`, () => {
+      cy.contains(otherKey).should(`not.exist`)
+    })
+  })
 })
 
 describe(`data layer`, () => {

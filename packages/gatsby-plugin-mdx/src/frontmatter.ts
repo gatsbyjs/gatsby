@@ -21,6 +21,9 @@ export function parseFrontmatter(
       javascript: () => {
         return {}
       },
+      json: () => {
+        return {}
+      },
     },
   })
   cacheMap.set(cacheKey, { body: content, frontmatter: data })
