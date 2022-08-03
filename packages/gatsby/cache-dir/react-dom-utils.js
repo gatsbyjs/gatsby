@@ -20,7 +20,9 @@ export function reactDOMUtils() {
       if (!root) {
         map.set(el, (root = createRoot(el)))
       }
-      root.render(Component)
+      startTransition(() => {
+        root.render(Component)
+      })
     }
 
     hydrate = (Component, el) => {
