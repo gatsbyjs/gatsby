@@ -83,7 +83,7 @@ exports.createPages = async function ({ actions, graphql }) {
 
 The data for creating these pages doesn't necessarily have to come from Gatsby's internal GraphQL data layer. For example, you can source local files or make async calls to remote APIs. For more information, please see [Creating and Modifying Pages](/docs/creating-and-modifying-pages/).
 
-`path` must not be pre-encoded (ie. using `encodeURI`) however unicode characters are supported. So for a path like `/exámple` just pass the string directly. Do not pass `encodeURI('/exámple')` or `/ex%C3%A1mple`. If you receive pre-encoded paths from your CMS you may want to run them through `decodeURI` first to ensure the special characters (eg. `%C3%A1`) are turned back into unicode.
+`path` must not be pre-encoded (ie. using `encodeURI`) however unicode characters are supported. So for a path like `/exámple` pass the string directly. Do not pass `encodeURI('/exámple')` or `/ex%C3%A1mple`. If you receive pre-encoded paths from your CMS you may want to run them through `decodeURI` first to ensure the special characters (eg. `%C3%A1`) are turned back into unicode.
 
 ## Conflicting Routes
 
