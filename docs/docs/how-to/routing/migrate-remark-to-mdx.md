@@ -144,3 +144,4 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 ## Additional resources
 
 - [Adding MDX pages](/docs/how-to/routing/mdx)
+- [gatsby-plugin-mdx README](/plugins/gatsby-plugin-mdx)

@@ -13,7 +13,7 @@ This is useful in content-driven sites where you want the ability to introduce c
 
 ## Prerequisites
 
-- A Gatsby project set up with `gatsby@4.20.0` or later.
+- A Gatsby project set up with `gatsby@4.21.0` or later.
 
 ## Installation and configuration
 
@@ -140,7 +140,7 @@ To inject them, you have several options:
 
 ### Make components available globally as shortcodes
 
-To avoid having to import the same component inside of every MDX document you author, you can add components to an `MDXProvider` to make them globally available in MDX pages. This pattern is sometimes referred to as _shortcodes_.
+To avoid having to import the same component inside of every MDX document you author, you can add components to an `MDXProvider` to make them globally available in MDX pages. This pattern is sometimes referred to as **shortcodes**.
 
 ```jsx:title=src/components/layout.jsx
 import React from "react"
@@ -358,7 +358,11 @@ From an absolute path to your component (e.g. `/absolute/path/to/layout-componen
 Change your `gatsby-node.js` as following:
 
 ```diff
+const path = require("path")
 + const postTemplate = path.resolve(`./src/templates/post.jsx`)
+
+// Rest of the createPages API...
+
 createPage({
   path: node.frontmatter.slug,
 -  component: node.internal.contentFilePath,
