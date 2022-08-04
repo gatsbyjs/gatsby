@@ -13,7 +13,7 @@ import { Span } from "opentracing"
 
 import path from "path"
 import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
-import { slash } from "gatsby-core-utils/slash"
+import { slash } from "gatsby-core-utils/path"
 
 import { store, emitter } from "../redux/"
 import { actions } from "../redux/actions"
