@@ -10,5 +10,12 @@ export async function cachedImport<Type>(packageName: string): Promise<Type> {
   }
   const importedPackage = await import(packageName)
 
+  if (
+    Object.keys(importedPackage).length === 1 &&
+    Object.hasOwn(importedPackage, `default`)
+  ) {
+    return importedPackage.default
+  }
+
   return importedPackage
 }
