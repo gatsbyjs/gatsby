@@ -1,4 +1,4 @@
-import * as Link from "./index-esm.js"
+import * as Link from "./index.js"
 
 module.exports = Link.default
 

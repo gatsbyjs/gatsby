@@ -6,7 +6,6 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "source": "src/index.js",
   "main": "dist/index.js",
   "module": "dist/index.modern.mjs",
   "types": "index.d.ts",
@@ -17,8 +16,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "npm-run-all --npm-path npm -s build:cjs build:esm",
-    "build:cjs": "microbundle -f cjs --jsx React.createElement --generateTypes false  -i src/index-cjs.js",
-    "build:esm": "microbundle -f modern --jsx React.createElement --generateTypes false",
+    "build:cjs": "microbundle -f cjs --jsx React.createElement --generateTypes false  -i src/index-cjs.js -o dist/index.js",
+    "build:esm": "microbundle -f modern --jsx React.createElement --generateTypes false -o dist/index.mjs",
     "watch": "npm-run-all --npm-path npm -p watch:cjs watch:esm",
     "watch:cjs": "npm run build:cjs watch --no-compress",
     "watch:esm": "npm run build:esm watch --no-compress",
