@@ -46,6 +46,7 @@ const configItemsMemoCache = new Map()
 
 interface ICustomOptions extends Record<string, unknown> {
   stage: Stage
+  resourceQuery: string
 }
 
 export const prepareOptions = (
