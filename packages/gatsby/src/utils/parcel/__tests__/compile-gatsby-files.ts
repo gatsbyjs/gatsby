@@ -90,11 +90,16 @@ describe(`gatsby file compilation`, () => {
         await compileGatsbyFiles(dir.js)
       })
 
+      beforeEach(() => {
+        reporterPanicMock.mockClear()
+      })
+
       it(`should not compile gatsby-config.js`, async () => {
         const isCompiled = await pathExists(
           `${dir.js}/.cache/compiled/gatsby-config.js`
         )
         expect(isCompiled).toEqual(false)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
 
       it(`should not compile gatsby-node.js`, async () => {
@@ -102,6 +107,7 @@ describe(`gatsby file compilation`, () => {
           `${dir.js}/.cache/compiled/gatsby-node.js`
         )
         expect(isCompiled).toEqual(false)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
     })
 
@@ -110,6 +116,10 @@ describe(`gatsby file compilation`, () => {
         process.chdir(dir.ts)
         await remove(`${dir.ts}/.cache`)
         await compileGatsbyFiles(dir.ts)
+      })
+
+      beforeEach(() => {
+        reporterPanicMock.mockClear()
       })
 
       it(`should compile gatsby-config.ts`, async () => {
@@ -121,6 +131,7 @@ describe(`gatsby file compilation`, () => {
         expect(compiledGatsbyConfig).toContain(siteMetadata.title)
         expect(compiledGatsbyConfig).toContain(siteMetadata.siteUrl)
         expect(compiledGatsbyConfig).toContain(moreDataConfig.options.name)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
 
       it(`should compile gatsby-node.ts`, async () => {
@@ -130,6 +141,7 @@ describe(`gatsby file compilation`, () => {
         )
 
         expect(compiledGatsbyNode).toContain(`I am working!`)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
     })
 
@@ -164,20 +176,6 @@ describe(`gatsby file compilation`, () => {
 describe(`misnamed gatsby-node files`, () => {
   beforeEach(() => {
     reporterPanicMock.mockClear()
-  })
-  it(`should not panic on gatsby-node.js`, async () => {
-    process.chdir(dir.js)
-    await remove(`${dir.js}/.cache`)
-    await compileGatsbyFiles(dir.js)
-
-    expect(reporterPanicMock).not.toHaveBeenCalled()
-  })
-  it(`should not panic on gatsby-node.ts`, async () => {
-    process.chdir(dir.ts)
-    await remove(`${dir.ts}/.cache`)
-    await compileGatsbyFiles(dir.ts)
-
-    expect(reporterPanicMock).not.toHaveBeenCalled()
   })
   it(`should panic on gatsby-node.jsx`, async () => {
     process.chdir(dir.misnamedJS)
