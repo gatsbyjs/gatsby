@@ -1,5 +1,5 @@
 import babelLoader from "babel-loader"
-import { Compiler } from "webpack"
+import type { Compiler } from "webpack"
 import Babel, { ConfigItem } from "@babel/core"
 import {
   prepareOptions,
@@ -8,7 +8,7 @@ import {
   addRequiredPresetOptions,
   ICustomOptions,
 } from "./babel-loader-helpers"
-import { Stage } from "../commands/types"
+import type { Stage } from "../commands/types"
 import { getBrowsersList } from "./browserslist"
 
 /**
