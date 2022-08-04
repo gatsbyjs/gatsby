@@ -151,6 +151,35 @@ export type PageProps<
 }
 
 /**
+ * A props object passed into the Head function for [Gatsby Head API](https://gatsby.dev/gatsby-head).
+ */
+export type HeadProps<DataType = object, PageContextType = object> = {
+  location: {
+    /**
+     * Returns the Location object's URL's path.
+     */
+    pathname: string;
+  }
+  /** The URL parameters when the page has a `matchPath` */
+  params: Record<string, string>
+  /**
+   * Data passed into the page via an exported GraphQL query.
+   */
+  data: DataType
+  /**
+   * A context object which is passed in during the creation of the page.
+   */
+  pageContext: PageContextType
+}
+
+/**
+ * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
+ */
+ export type HeadFC<DataType = object, PageContextType = object> = (
+  props: HeadProps<DataType, PageContextType>
+) => JSX.Element
+
+/**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
 export type GetServerDataProps = {
@@ -930,6 +959,7 @@ export interface PreInitArgs extends ParentSpanPluginArgs {
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
+  webhookBody: any
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {

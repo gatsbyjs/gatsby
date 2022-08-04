@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../../components/layout"
+import Seo from "../../components/seo"
 
 export default function Root(props) {
   return (
@@ -19,6 +20,8 @@ export default function Root(props) {
     </Layout>
   )
 }
+
+export const Head = () => <Seo />
 
 export const query = graphql`
   query AllProducts {

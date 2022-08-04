@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.20.0/packages/gatsby-cli) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- Add DEV_SSR note to 95312 error [#36295](https://github.com/gatsbyjs/gatsby/issues/36295) [#36300](https://github.com/gatsbyjs/gatsby/issues/36300) ([718d693](https://github.com/gatsbyjs/gatsby/commit/718d69319ea37acb078b0bfe9a94ebe56394264d))
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.19.0/packages/gatsby-cli) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-cli
+
+### [4.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.18.1/packages/gatsby-cli) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.18.0/packages/gatsby-cli) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- add retry mechanism for gatsby-node/config.ts compilation [#35974](https://github.com/gatsbyjs/gatsby/issues/35974) ([2acc6ed](https://github.com/gatsbyjs/gatsby/commit/2acc6ed3c59fca15c73388c3494b162e6187cc42))
+- Set `NODE_ENV` earlier in commandHandler [#35968](https://github.com/gatsbyjs/gatsby/issues/35968) ([0e1ea58](https://github.com/gatsbyjs/gatsby/commit/0e1ea584e15fc661f27041f7a3b728ae7ab3270d))
+
+#### Chores
+
+- reduce lodash usage [#35947](https://github.com/gatsbyjs/gatsby/issues/35947) ([91fdf73](https://github.com/gatsbyjs/gatsby/commit/91fdf73b3635f4c2167f34303c5a8f39969cdb02))
+
+### [4.17.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.17.1/packages/gatsby-cli) (2022-06-24)
+
+#### Bug Fixes
+
+- add retry mechanism for gatsby-node/config.ts compilation [#35974](https://github.com/gatsbyjs/gatsby/issues/35974) [#35981](https://github.com/gatsbyjs/gatsby/issues/35981) ([d337eaf](https://github.com/gatsbyjs/gatsby/commit/d337eaf06f9f50ea7cbe1739ab65e5efaa870de8))
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.17.0/packages/gatsby-cli) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Bug Fixes
+
+- show meaningful error message when engines try to bundle ts-node [#35762](https://github.com/gatsbyjs/gatsby/issues/35762) ([123f202](https://github.com/gatsbyjs/gatsby/commit/123f2020c38344da37476cfa64f70b23db1761fe))
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.16.0/packages/gatsby-cli) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
