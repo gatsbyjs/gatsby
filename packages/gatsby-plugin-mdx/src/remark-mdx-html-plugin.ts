@@ -1,4 +1,5 @@
 import type { Node } from "unist-util-visit"
+import type { Definition } from "mdast"
 import { cachedImport } from "./cache-helpers"
 
 // This plugin replaces html nodes with JSX divs that render given HTML via dangerouslySetInnerHTML
@@ -9,11 +10,30 @@ export const remarkMdxHtmlPlugin = () =>
     const { visit } = await cachedImport<typeof import("unist-util-visit")>(
       `unist-util-visit`
     )
+    const { toHast } = await cachedImport<typeof import("mdast-util-to-hast")>(
+      `mdast-util-to-hast`
+    )
 
+    // Turn mdast nodes into hast nodes
+    // Required to support gatsby-plugin-autolink-headers
+    visit(markdownAST, node => {
+      if (node.data && Object.keys(node.data).includes(`hChildren`)) {
+        const converted = toHast(node as Definition, {
+          allowDangerousHtml: true,
+        })
+        if (converted) {
+          Object.assign(node, converted)
+        }
+      }
+    })
+
+    // Turn raw & html nodes into JSX divs with dangerouslySetInnerHTML
+    // Required to support gatsby-remark-images & gatsby-remark-autolink-headers
     visit(markdownAST, node => {
       if (![`html`, `raw`].includes(node.type)) {
         return
       }
+
       node.type = `mdxJsxFlowElement`
       node.name = `div`
       node.attributes = [
