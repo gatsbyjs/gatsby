@@ -34,7 +34,7 @@ const errors = {
   },
   "95312": {
     text: (context): string =>
-      `"${context.ref}" is not available during server side rendering.`,
+      `"${context.ref}" is not available during Server-Side Rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,

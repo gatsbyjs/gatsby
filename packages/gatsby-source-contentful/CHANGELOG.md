@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.18.0/packages/gatsby-source-contentful) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Features
+
+- skip expensive touchNode step when unnecessary [#36134](https://github.com/gatsbyjs/gatsby/issues/36134) ([ecc7530](https://github.com/gatsbyjs/gatsby/commit/ecc7530b6a935d300c5d7913df0079e04120ec0c))
+
+#### Chores
+
+- migrate to latest Contentful SDK [#35501](https://github.com/gatsbyjs/gatsby/issues/35501) ([40073f8](https://github.com/gatsbyjs/gatsby/commit/40073f8bbca274287b7887b3503159eb709a2987))
+
 ## [7.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.17.0/packages/gatsby-source-contentful) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

@@ -13,7 +13,8 @@ When working with Gatsby Cloud you will have two environments you can configure 
 
 This guide covers how to set environment variables and assumes you already have your site created.
 
-## Setting Environment Variables
+## Setting environment variables
+
 Environment variables can be accessed via the dashboard menu by clicking **Site Settings > General > Environment Variables**.
 
 ![Setting environment variables in Gatsby Cloud](../../images/env_vars.png)
@@ -22,23 +23,21 @@ Click the **Edit Variables** icon to add or update variables. The first field is
 
 - **Build variables** apply to Production Builds and Pull Request Builds
 - **Preview variables** apply to CMS Previews
-![Editing environment variables in Gatsby Cloud](../../images/edit_vars.png)
+  ![Editing environment variables in Gatsby Cloud](../../images/edit_vars.png)
 
 When you are done editing both your Builds and Preview variables, click **Save** to confirm changes.
 
 **Note**: Editing environment variables will trigger a new build of your site.
 
+### Bulk copy/add variables
 
-### Bulk Copy/Add Variables
 As a convenience, you can copy/add environment variables in bulk. Copy all variables for the Build or Preview environment by clicking Edit Variables and then the Bulk Copy Variables button.
 
-To add variables in bulk, click the Bulk Add Variables button. Use the format name=value and enter each variable on a new line. 
+To add variables in bulk, click the Bulk Add Variables button. Use the format name=value and enter each variable on a new line.
 
 ![Add many environment variables at once](../../images/env_var_bulk.png)
 
 Variables added in bulk do not overwrite existing variables, they are appended to the current list. However, you can delete the old variables after you have added the new ones.
-
- 
 
 Accessing Environment Variables
 The environment variables you set can be accessed in source code by referencing `process.env.<variable name>`. For example:
@@ -46,10 +45,10 @@ The environment variables you set can be accessed in source code by referencing 
 ```javascript
 const contentfulConfig = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN, 
-};
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+}
 
 if (process.env.CONTENTFUL_HOST) {
-  contentfulConfig.host = process.env.CONTENTFUL_HOST;
+  contentfulConfig.host = process.env.CONTENTFUL_HOST
 }
 ```
