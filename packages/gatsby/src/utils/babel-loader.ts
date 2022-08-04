@@ -1,8 +1,6 @@
-const babelLoader = require(`babel-loader`)
-
+import babelLoader from "babel-loader"
 import { Compiler } from "webpack"
 import Babel, { ConfigItem } from "@babel/core"
-
 import {
   prepareOptions,
   getCustomOptions,
@@ -11,8 +9,7 @@ import {
   ICustomOptions,
 } from "./babel-loader-helpers"
 import { Stage } from "../commands/types"
-
-const { getBrowsersList } = require(`./browserslist`)
+import { getBrowsersList } from "./browserslist"
 
 /**
  * Gatsby's custom loader for webpack & babel
@@ -39,7 +36,7 @@ const customOptionsCache = new Map()
 const configCache = new Map()
 const babelrcFileToCacheKey = new Map()
 
-module.exports = babelLoader.custom(babel => {
+const customBabelLoader = babelLoader.custom(babel => {
   return {
     // Passed the loader options.
     customOptions({
@@ -172,6 +169,8 @@ module.exports = babelLoader.custom(babel => {
     },
   }
 })
+
+export default customBabelLoader
 
 export class BabelConfigItemsCacheInvalidatorPlugin {
   name: string
