@@ -44,7 +44,7 @@ export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
  */
 const configItemsMemoCache = new Map()
 
-interface ICustomOptions extends Record<string, unknown> {
+export interface ICustomOptions extends Record<string, unknown> {
   stage: Stage
 }
 
