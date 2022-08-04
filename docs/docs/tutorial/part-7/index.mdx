@@ -22,7 +22,7 @@ By the end of this part of the Tutorial, you will be able to:
 
 If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 7.
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NQj3H2Z9vn0?start=229" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -386,7 +386,7 @@ import Layout from '../../components/layout'
 
 2. Use the `getImage` helper function to get back the `gatsbyImageData` object from the `hero_image` field.
 
-```js:title=src/pages/blog/{mdx.frontmatter_slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
 // imports
 
 const BlogPost = ({ data, children }) => {
@@ -411,7 +411,7 @@ Without the `getImage` helper function, you'd have to type out `data.mdx.frontma
 3. Use the `GatsbyImage` component from `gatsby-plugin-image` to render the hero image data. You should pass `GatsbyImage` two props:
     * `image`: the `gatsbyImageData` object for your `hero_image` field
     * `alt`: the alternative text for your image, from the `hero_image_alt` field
-    ```js:title=src/pages/blog/{mdx.frontmatter_slug}.js
+    ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     return (
       <Layout pageTitle={data.mdx.frontmatter.title}>
         <p>Posted: {data.mdx.frontmatter.date}</p>
@@ -447,7 +447,7 @@ Remember, Gatsby's `Link` component only gives performance benefits for internal
 
 
 
-```js:title=src/pages/blog/{mdx.frontmatter_slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
 // imports
 
 const BlogPost = ({ data, children }) => {
@@ -492,7 +492,7 @@ Try removing the `{" "}` and see what happens. The paragraph text should end up 
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 

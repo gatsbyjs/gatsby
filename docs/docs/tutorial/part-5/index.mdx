@@ -32,9 +32,9 @@ By the end of this part of the Tutorial, you will be able to:
 
 **Prefer a video?**
 
-If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 5.
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 5. **Please note:** At the time of recording an older version of `gatsby-plugin-mdx` was used and thus the video contents and text contents are different. Please always follow the written instructions. We'll do our best to record a new version in the future, thanks for understanding!
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/k9n9HnRG3Ys?start=554" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -72,7 +72,7 @@ Once you get used to what all the different symbols mean, Markdown can be easier
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks. 
+**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks.
 
 </Announcement>
 
@@ -98,7 +98,7 @@ You'll learn more about how to access the frontmatter for your posts later on.
 
 Add some Markdown content to each of the `.mdx` files you created in your `/blog` directory in Part 4. 
 
-Include frontmatter with fields for the title of each post and the date it was published. (Give each post a different date, to make it easier to add sorting later on.) After the frontmatter, write some post content using some Markdown syntax.
+Include frontmatter with fields for the title of each post, the date it was published, and a [slug](https://developer.mozilla.org/en-US/docs/Glossary/Slug). The slug will be used to construct the final URL of each post. Give each post a different date, to make it easier to add sorting later on. After the frontmatter, write some post content using some Markdown syntax.
 
 Here are some example posts that you can use for inspiration:
 
@@ -155,7 +155,7 @@ To render your posts on the Blog page, you'll complete a few different steps:
 
 1. Install and configure the `gatsby-plugin-mdx` transformer plugin and its dependencies.
 2. Update the Blog page query to use the `allMdx` field from `gatsby-plugin-mdx` instead of `allFile`.
-3. Render your post's previews in your Blog page.
+3. Render your post's excerpt in your Blog page.
 
 
 ### Task: Install and configure the MDX transformer plugin (and dependencies)
@@ -190,7 +190,7 @@ The `gatsby-plugin-mdx` package requires a one additional dependencies to run: `
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Tip:** There are a variety of [remark](https://remark.js.org/) plugins that you can use to add extra features to your Markdown. You can configure them using the [`gatsbyRemarkPlugins`](/plugins/gatsby-plugin-mdx/#gatsby-remark-plugins) option when you configure `gatsby-plugin-mdx` in your `gatsby-config.js` file.
+**Tip:** There are a variety of [remark](https://remark.js.org/) plugins that you can use to add extra features to your Markdown. You can configure them using the [`gatsbyRemarkPlugins`](/plugins/gatsby-plugin-mdx/#gatsby-remark--plugins) option when you configure `gatsby-plugin-mdx` in your `gatsby-config.js` file.
 
 Here are some popular remark plugins:
 
@@ -410,7 +410,7 @@ query MyQuery {
 </Announcement>
 
 
-### Task: Render your post's previews in your Blog page
+### Task: Render your post's excerpt in your Blog page
 
 Now that your GraphQL query is all set up, it's time to replace the page query in your Blog page component.
 
@@ -491,7 +491,7 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
 
 ![A screenshot of the Blog page in a web browser. Underneath the page heading, there are three posts listed: "Yet Another Post" (posted July 25, 2021), "Another Post" (posted July 24, 2021), and "My First Post" (posted July 23, 2021).](./blog-page-with-frontmatter.png)
 
-4. The final step in this part of the Tutorial is to render the preview of your MDX blog posts. In the JSX for your Blog page render the value of the `excerpt` field:
+4. The final step in this part of the Tutorial is to render the excerpt of your MDX blog posts. In the JSX for your Blog page render the value of the `excerpt` field:
 
 ```js:title=src/pages/blog.js
 import * as React from 'react'
@@ -535,14 +535,14 @@ export const query = graphql`
 export default BlogPage
 ```
 
-5. When you refresh your Blog page in the web browser, you should see your post contents rendered!
-    ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the contents of the blog post are also being rendered.](./blog-page-with-full-posts.png)
+5. When you refresh your Blog page in the web browser, you should see your post excerpt rendered!
+    ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the excerpt of the blog post are also being rendered.](./blog-page-with-full-posts.png)
 
 Nice work! Your site now has a blog page with actual content.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 
@@ -590,7 +590,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-Right now, all your blog posts and their contents are being rendered in one long page. It would be better if each post lived on its own page, and then the Blog page could link out to all the different posts.
+Right now, all your blog posts and their excerpts are being rendered in one long page. It would be better if each post lived on its own page, and then the Blog page could link out to all the different posts.
 
 In Part 6, you'll learn how to use Gatsby's filesystem route API to dynamically create new pages for each of your blog posts.
 
