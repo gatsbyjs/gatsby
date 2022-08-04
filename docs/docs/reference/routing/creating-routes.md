@@ -83,6 +83,8 @@ exports.createPages = async function ({ actions, graphql }) {
 
 The data for creating these pages doesn't necessarily have to come from Gatsby's internal GraphQL data layer. For example, you can source local files or make async calls to remote APIs. For more information, please see [Creating and Modifying Pages](/docs/creating-and-modifying-pages/).
 
+`path` must not be pre-encoded (ie. using `encodeURI`) however unicode characters are supported. So for a path like `/exámple` just pass the string directly. Do not pass `encodeURI('/exámple')` or `/ex%C3%A1mple`. If you receive pre-encoded paths from your CMS you may want to run them through `decodeURI` first to ensure the special characters (eg. `%C3%A1`) are turned back into unicode.
+
 ## Conflicting Routes
 
 Since there are multiple ways to create a page, different plugins, themes, or sections of code in your `gatsby-node` file may accidentally create multiple pages that are meant to be accessed by the same path. When this happens, Gatsby will show a warning at build time, but the site will still build successfully. In this situation, the page that was built last will be accessible and any other conflicting pages will not be. Changing any conflicting paths to produce unique URLs should clear up the problem.
