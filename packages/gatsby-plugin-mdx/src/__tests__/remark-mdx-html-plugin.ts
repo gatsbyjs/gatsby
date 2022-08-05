@@ -18,6 +18,33 @@ export const remarkHTMLInjector = () =>
     return markdownAST
   }
 
+export const remarkMDASTInjector = () =>
+  async function transformer(markdownAST: Node): Promise<Node> {
+    visit(markdownAST, [`root`], node => {
+      if (Array.isArray(node.children)) {
+        node.children.push({
+          type: `link`,
+          url: `#`,
+          title: null,
+          children: [],
+          data: {
+            hProperties: {
+              "aria-label": `some permalink`,
+              class: `customClass`,
+            },
+            hChildren: [
+              {
+                type: `raw`,
+                value: `<img src="" alt="" />`,
+              },
+            ],
+          },
+        })
+      }
+    })
+    return markdownAST
+  }
+
 const source = `# Headline`
 
 describe(`remark: support old remark plugins that add raw and html nodes`, () => {
@@ -27,42 +54,42 @@ describe(`remark: support old remark plugins that add raw and html nodes`, () =>
     })
 
     await expect(processor.process(source)).resolves.toMatchInlineSnapshot(`
-            VFile {
-              "cwd": "<PROJECT_ROOT>",
-              "data": Object {},
-              "history": Array [],
-              "messages": Array [],
-              "value": "/*@jsxRuntime automatic @jsxImportSource react*/
-            import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
-            function MDXContent(props = {}) {
-              const {wrapper: MDXLayout} = props.components || ({});
-              return MDXLayout ? _jsx(MDXLayout, Object.assign({}, props, {
-                children: _jsx(_createMdxContent, {})
-              })) : _createMdxContent();
-              function _createMdxContent() {
-                const _components = Object.assign({
-                  h1: \\"h1\\",
-                  div: \\"div\\"
-                }, props.components);
-                return _jsxs(_Fragment, {
-                  children: [_jsx(_components.h1, {
-                    children: \\"Headline\\"
-                  }), \\"/n\\", _jsx(_components.div, {
-                    dangerouslySetInnerHTML: {
-                      __html: \\"<hr/>\\"
-                    }
-                  }), \\"/n\\", _jsx(_components.div, {
-                    dangerouslySetInnerHTML: {
-                      __html: \\"<marquee direction=/\\"up/\\">Things from the past</marquee>\\"
-                    }
-                  })]
-                });
+      VFile {
+        "cwd": "<PROJECT_ROOT>",
+        "data": Object {},
+        "history": Array [],
+        "messages": Array [],
+        "value": "/*@jsxRuntime automatic @jsxImportSource react*/
+      import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
+      function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? _jsx(MDXLayout, Object.assign({}, props, {
+          children: _jsx(_createMdxContent, {})
+        })) : _createMdxContent();
+        function _createMdxContent() {
+          const _components = Object.assign({
+            h1: \\"h1\\",
+            div: \\"div\\"
+          }, props.components);
+          return _jsxs(_Fragment, {
+            children: [_jsx(_components.h1, {
+              children: \\"Headline\\"
+            }), \\"/n\\", _jsx(_components.div, {
+              dangerouslySetInnerHTML: {
+                __html: \\"<hr/>\\"
               }
-            }
-            export default MDXContent;
-            ",
-            }
-          `)
+            }), \\"/n\\", _jsx(_components.div, {
+              dangerouslySetInnerHTML: {
+                __html: \\"<marquee direction=/\\"up/\\">Things from the past</marquee>\\"
+              }
+            })]
+          });
+        }
+      }
+      export default MDXContent;
+      ",
+      }
+    `)
   })
   it(`fails when plugin is missing but remark plugins add html/raw nodes`, async () => {
     const processor = createProcessor({
@@ -72,5 +99,48 @@ describe(`remark: support old remark plugins that add raw and html nodes`, () =>
     await expect(processor.process(source)).rejects.toMatchInlineSnapshot(
       `[Error: Cannot handle unknown node \`raw\`]`
     )
+  })
+  it(`turns MDAST nodes created by some gatsby-remark-* plugins into HAST nodes`, async () => {
+    const processor = createProcessor({
+      remarkPlugins: [remarkMDASTInjector, remarkMdxHtmlPlugin],
+    })
+
+    await expect(processor.process(source)).resolves.toMatchInlineSnapshot(`
+      VFile {
+        "cwd": "<PROJECT_ROOT>",
+        "data": Object {},
+        "history": Array [],
+        "messages": Array [],
+        "value": "/*@jsxRuntime automatic @jsxImportSource react*/
+      import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
+      function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? _jsx(MDXLayout, Object.assign({}, props, {
+          children: _jsx(_createMdxContent, {})
+        })) : _createMdxContent();
+        function _createMdxContent() {
+          const _components = Object.assign({
+            h1: \\"h1\\",
+            div: \\"div\\"
+          }, props.components);
+          return _jsxs(_Fragment, {
+            children: [_jsx(_components.h1, {
+              children: \\"Headline\\"
+            }), \\"/n\\", _jsx(_components.div, {
+              \\"aria-label\\": \\"some permalink\\",
+              className: \\"customClass\\",
+              children: _jsx(_components.div, {
+                dangerouslySetInnerHTML: {
+                  __html: \\"<img src=/\\"/\\" alt=/\\"/\\" />\\"
+                }
+              })
+            })]
+          });
+        }
+      }
+      export default MDXContent;
+      ",
+      }
+    `)
   })
 })
