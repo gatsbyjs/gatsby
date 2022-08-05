@@ -51,6 +51,7 @@
     "@babel/core": "^7.18.2",
     "@types/estree": "^0.0.50",
     "@types/mdast": "^3.0.10",
+    "@types/unist": "^2.0.6",
     "babel-preset-gatsby-package": "^2.21.0-next.0",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
