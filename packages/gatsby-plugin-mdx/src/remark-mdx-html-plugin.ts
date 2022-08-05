@@ -1,5 +1,7 @@
 import type { Node } from "unist-util-visit"
 import type { Definition } from "mdast"
+import toHast from "mdast-util-to-hast"
+
 import { cachedImport } from "./cache-helpers"
 
 // This plugin replaces html nodes with JSX divs that render given HTML via dangerouslySetInnerHTML
@@ -9,9 +11,6 @@ export const remarkMdxHtmlPlugin = () =>
   async function transformer(markdownAST: Node): Promise<Node> {
     const { visit } = await cachedImport<typeof import("unist-util-visit")>(
       `unist-util-visit`
-    )
-    const { toHast } = await cachedImport<typeof import("mdast-util-to-hast")>(
-      `mdast-util-to-hast`
     )
 
     // Turn mdast nodes into hast nodes
