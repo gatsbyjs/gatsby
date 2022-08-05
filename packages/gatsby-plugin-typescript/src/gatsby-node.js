@@ -26,7 +26,7 @@ function onCreateWebpackConfig({ actions, loaders }) {
     const { version } = require(`gatsby/package.json`)
     const [major, minor] = version.split(`.`).map(Number)
     doesUsedGatsbyVersionSupportResourceQuery =
-    (major === 4 && minor >= 19) || major > 4
+      (major === 4 && minor >= 19) || major > 4
   } catch {
     doesUsedGatsbyVersionSupportResourceQuery = true
   }
