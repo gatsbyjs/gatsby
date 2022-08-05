@@ -112,6 +112,12 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
     options.mdxOptions.rehypePlugins = []
   }
 
+  const passThrough = [`element`]
+  if (!options.mdxOptions.remarkRehypeOptions) {
+    options.mdxOptions.remarkRehypeOptions = {}
+  }
+  options.mdxOptions.remarkRehypeOptions.passThrough = passThrough
+
   // Extract metadata generated from by rehype-infer-* and similar plugins
   options.mdxOptions.rehypePlugins.push(rehypeMdxMetadataExtractor)
 
