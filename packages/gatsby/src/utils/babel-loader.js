@@ -1,11 +1,12 @@
 const babelLoader = require(`babel-loader`)
 
-const {
+import {
   prepareOptions,
   getCustomOptions,
   mergeConfigItemOptions,
   addRequiredPresetOptions,
-} = require(`./babel-loader-helpers`)
+} from "./babel-loader-helpers"
+
 const { getBrowsersList } = require(`./browserslist`)
 
 /**
