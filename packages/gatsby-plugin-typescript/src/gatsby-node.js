@@ -21,10 +21,15 @@ function onCreateWebpackConfig({ actions, loaders }) {
     return
   }
 
-  const { version } = require(`gatsby/package.json`)
-  const [major, minor] = version.split(`.`).map(Number)
-  const doesUsedGatsbyVersionSupportResourceQuery =
+  let doesUsedGatsbyVersionSupportResourceQuery
+  try {
+    const { version } = require(`gatsby/package.json`)
+    const [major, minor] = version.split(`.`).map(Number)
+    doesUsedGatsbyVersionSupportResourceQuery =
     (major === 4 && minor >= 19) || major > 4
+  } catch {
+    doesUsedGatsbyVersionSupportResourceQuery = true
+  }
 
   actions.setWebpackConfig({
     module: {
