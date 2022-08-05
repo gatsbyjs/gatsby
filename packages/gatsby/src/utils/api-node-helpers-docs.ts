@@ -79,7 +79,7 @@ const GatsbyReporter = {
    * activity.end()
    */
   activityTimer: true,
-};
+}
 
 /***/
 // @ts-ignore unused variable
@@ -111,7 +111,7 @@ const GatsbyCache = {
    * await cache.del(`unique-key`)
    */
   del: true,
-};
+}
 
 /***/
 // @ts-ignore unused variable
@@ -158,7 +158,7 @@ const GatsbyTracing = {
    * }
    */
   startSpan: true,
-};
+}
 
 /**
  * Get cache instance by name - this should only be used by plugins that
@@ -166,14 +166,14 @@ const GatsbyTracing = {
  * @param {string} id id of the node
  * @returns {GatsbyCache} See [`cache`](#cache) section for reference.
  */
-export const getCache = true;
+export const getCache = true
 
 /**
  * Key-value store used to persist results of time/memory/cpu intensive
  * tasks. All functions are async and return promises.
  * @type {GatsbyCache}
  */
-export const cache = true;
+export const cache = true
 
 /**
  * Create a stable content digest from a string or object, you can use the
@@ -191,7 +191,7 @@ export const cache = true;
  *   }
  * }
  */
-export const createContentDigest = true;
+export const createContentDigest = true
 
 /**
  * Collection of functions used to programmatically modify Gatsby’s internal state.
@@ -199,7 +199,7 @@ export const createContentDigest = true;
  * See [`actions`](/docs/actions/) reference.
  * @type {Actions}
  */
-export const actions = true;
+export const actions = true
 
 /**
  * Get content for a node from the plugin that created it.
@@ -216,7 +216,7 @@ export const actions = true;
  *   }
  * }
  */
-export const loadNodeContent = true;
+export const loadNodeContent = true
 
 /**
  * Internal redux state used for application state. Do not use, unless you
@@ -224,14 +224,14 @@ export const loadNodeContent = true;
  * any version.
  * @type {Redux.Store}
  */
-export const store = true;
+export const store = true
 
 /**
  * Internal event emitter / listener.  Do not use, unless you absolutely
  * must. Emitter is considered a private API and can change with any version.
  * @type {Emitter}
  */
-export const emitter = true;
+export const emitter = true
 
 /**
  * Get array of all nodes.
@@ -239,7 +239,7 @@ export const emitter = true;
  * @example
  * const allNodes = getNodes()
  */
-export const getNodes = true;
+export const getNodes = true
 
 /**
  * Get single node by given ID.
@@ -250,7 +250,7 @@ export const getNodes = true;
  * @example
  * const node = getNode(id)
  */
-export const getNode = true;
+export const getNode = true
 
 /**
  * Get array of nodes of given type.
@@ -259,13 +259,13 @@ export const getNode = true;
  * @example
  * const markdownNodes = getNodesByType(`MarkdownRemark`)
  */
-export const getNodesByType = true;
+export const getNodesByType = true
 
 /**
  * Set of utilities to output information to user
  * @type {GatsbyReporter}
  */
-export const reporter = true;
+export const reporter = true
 
 /**
  * Get single node by given ID and create dependency for given path.
@@ -278,7 +278,7 @@ export const reporter = true;
  * @param {string} path of the node.
  * @returns {Node} Single node instance.
  */
-export const getNodeAndSavePathDependency = true;
+export const getNodeAndSavePathDependency = true
 
 /**
  * Utility function useful to generate globally unique and stable node IDs.
@@ -293,7 +293,7 @@ export const getNodeAndSavePathDependency = true;
  *   ...restOfNodeData
  * }
  */
-export const createNodeId = true;
+export const createNodeId = true
 
 /**
  * Set of utilities that allow adding more detailed tracing for plugins.
@@ -302,7 +302,7 @@ export const createNodeId = true;
  * page for more details.
  * @type {GatsbyTracing}
  */
-export const tracing = true;
+export const tracing = true
 
 /**
  * Use to prefix resources URLs. `pathPrefix` will be either empty string or
@@ -314,7 +314,7 @@ export const tracing = true;
  * page for details about path prefixing.
  * @type {string}
  */
-export const pathPrefix = true;
+export const pathPrefix = true
 
 /**
  * This is the same as `pathPrefix` passed in `gatsby-config.js`.
@@ -323,4 +323,4 @@ export const pathPrefix = true;
  * It won't include the `assetPrefix`.
  * @type {string}
  */
-export const basePath = true;
+export const basePath = true
