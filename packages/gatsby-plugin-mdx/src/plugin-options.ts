@@ -51,10 +51,11 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
 ) => {
   const options = defaultOptions(pluginOptions)
 
-  // Set jsxRuntime based on Gatsby project config
+  // Set jsxRuntime & jsxImportSource based on Gatsby project config
   const { config } = helpers.store.getState()
-  const { jsxRuntime } = config
+  const { jsxRuntime, jsxImportSource } = config
   options.mdxOptions.jsxRuntime = jsxRuntime || `classic`
+  options.mdxOptions.jsxImportSource = jsxImportSource || `react`
 
   if (!options.mdxOptions.remarkPlugins) {
     options.mdxOptions.remarkPlugins = []
