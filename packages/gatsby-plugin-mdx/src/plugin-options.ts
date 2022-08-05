@@ -1,5 +1,5 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
-import type { GatsbyCache, NodePluginArgs, PluginOptions } from "gatsby"
+import type { GatsbyCache, NodePluginArgs, PluginOptions, Store } from "gatsby"
 import deepmerge from "deepmerge"
 import type { IPluginRefObject } from "gatsby-plugin-utils/types"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
@@ -18,6 +18,7 @@ interface IHelpers {
   pathPrefix: NodePluginArgs["pathPrefix"]
   reporter: NodePluginArgs["reporter"]
   cache: GatsbyCache
+  store: Store
 }
 type MdxDefaultOptions = (pluginOptions: PluginOptions) => IMdxPluginOptions
 
@@ -26,7 +27,6 @@ export const defaultOptions: MdxDefaultOptions = pluginOptions => {
     format: `mdx`,
     useDynamicImport: true,
     providerImportSource: `@mdx-js/react`,
-    jsxRuntime: `classic`,
   }
   const defaults = {
     extensions: [`.mdx`],
@@ -50,6 +50,11 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
   helpers
 ) => {
   const options = defaultOptions(pluginOptions)
+
+  // Set jsxRuntime based on Gatsby project config
+  const { config } = helpers.store.getState()
+  const { jsxRuntime } = config
+  options.mdxOptions.jsxRuntime = jsxRuntime || `classic`
 
   if (!options.mdxOptions.remarkPlugins) {
     options.mdxOptions.remarkPlugins = []

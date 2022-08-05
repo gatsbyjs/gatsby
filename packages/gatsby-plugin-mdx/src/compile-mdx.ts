@@ -71,6 +71,7 @@ export const compileMDXWithCustomOptions = async (
     pathPrefix,
     reporter,
     cache,
+    store,
   }: {
     pluginOptions: PluginOptions
     customOptions: Partial<IMdxPluginOptions>
@@ -79,6 +80,7 @@ export const compileMDXWithCustomOptions = async (
     pathPrefix: string
     reporter: NodePluginArgs["reporter"]
     cache: NodePluginArgs["cache"]
+    store: NodePluginArgs["store"]
   }
 ): Promise<{
   processedMDX: string
@@ -96,6 +98,7 @@ export const compileMDXWithCustomOptions = async (
     pathPrefix,
     reporter,
     cache,
+    store,
   })
 
   // Compile MDX and extract metadata

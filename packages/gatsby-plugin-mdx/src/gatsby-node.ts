@@ -18,7 +18,16 @@ import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers"
  */
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
   async (
-    { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
+    {
+      actions,
+      loaders,
+      getNode,
+      getNodesByType,
+      pathPrefix,
+      reporter,
+      cache,
+      store,
+    },
     pluginOptions
   ) => {
     const options = defaultOptions(pluginOptions)
@@ -29,6 +38,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
       pathPrefix,
       reporter,
       cache,
+      store,
     })
 
     const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
@@ -96,7 +106,7 @@ export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries and render the pages.
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
-  { filename, getNode, getNodesByType, pathPrefix, reporter, cache },
+  { filename, getNode, getNodesByType, pathPrefix, reporter, cache, store },
   pluginOptions
 ) => {
   const options = defaultOptions(pluginOptions)
@@ -113,6 +123,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     pathPrefix,
     reporter,
     cache,
+    store,
   })
 
   const ext = path.extname(mdxPath)
@@ -141,7 +152,16 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
   async (
-    { getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema },
+    {
+      getNode,
+      getNodesByType,
+      pathPrefix,
+      reporter,
+      cache,
+      actions,
+      schema,
+      store,
+    },
     pluginOptions
   ) => {
     const { createTypes } = actions
@@ -190,6 +210,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                   pathPrefix,
                   reporter,
                   cache,
+                  store,
                 }
               )
 
@@ -239,6 +260,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                   pathPrefix,
                   reporter,
                   cache,
+                  store,
                 }
               )
 
