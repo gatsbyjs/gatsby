@@ -47,14 +47,16 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
   this.addDependency(path.resolve(mdxPath))
 
   const acorn = await cachedImport<typeof import("acorn")>(`acorn`)
-  const jsx = await cachedImport<typeof import("acorn-jsx")>(`acorn-jsx`)
+  const { default: jsx } = await cachedImport(`acorn-jsx`)
   const { generate } = await cachedImport<typeof import("astring")>(`astring`)
   const { buildJsx } = await cachedImport<
     typeof import("estree-util-build-jsx")
   >(`estree-util-build-jsx`)
 
+  const JSX = jsx as typeof import("acorn-jsx")
+
   try {
-    const tree = acorn.Parser.extend(jsx()).parse(source, {
+    const tree = acorn.Parser.extend(JSX()).parse(source, {
       ecmaVersion: 2020,
       sourceType: `module`,
       locations: true,
