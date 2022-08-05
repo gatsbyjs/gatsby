@@ -11,7 +11,7 @@ const url = require(`url`)
 const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode, getDataStore } = require(`../../datastore`)
-const sanitizeNode = require(`../../utils/sanitize-node`)
+import sanitizeNode from "../../utils/sanitize-node"
 const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
