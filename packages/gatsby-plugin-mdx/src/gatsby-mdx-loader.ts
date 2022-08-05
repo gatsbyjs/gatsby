@@ -13,9 +13,7 @@ export interface IGatsbyMDXLoaderOptions {
   reporter: NodePluginArgs["reporter"]
 }
 
-// Custom MDX Loader that injects the GraphQL MDX node into plugin data
-// This whole loaded could be replaced by @mdx-js/loader if MDX would
-// accept custom data passed to the unified pipeline via processor.data()
+// Custom MDX Loader that compiles MDX to JSX
 const gatsbyMDXLoader: LoaderDefinition = async function (source) {
   const { options, getNode, cache, reporter } =
     this.getOptions() as IGatsbyMDXLoaderOptions
