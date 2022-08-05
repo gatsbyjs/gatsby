@@ -12,7 +12,8 @@ import chokidar, { FSWatcher } from "chokidar"
 import { Span } from "opentracing"
 
 import path from "path"
-import { getPathToLayoutComponent, slash } from "gatsby-core-utils"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
+import { slash } from "gatsby-core-utils/path"
 
 import { store, emitter } from "../redux/"
 import { actions } from "../redux/actions"

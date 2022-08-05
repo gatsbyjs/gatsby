@@ -23,6 +23,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `sizes`,
   `backgroundColor`,
   `breakpoints`,
+  `outputPixelDensities`,
 ])
 
 export function normalizeProps(

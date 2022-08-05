@@ -1,6 +1,6 @@
 import path from "path"
 import fs from "fs-extra"
-import { getPathToLayoutComponent } from "gatsby-core-utils"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 import { IGatsbyPage } from "../redux/types"
 
 const validationCache = new Set<string>()

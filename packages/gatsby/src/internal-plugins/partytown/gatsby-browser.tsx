@@ -1,64 +1,21 @@
-import React, { ReactElement, useState } from "react"
-import type { GatsbySSR } from "gatsby"
-import { Partytown } from "@builder.io/partytown/react"
-import { PartytownContext, ScriptProps } from "gatsby-script"
+import { collectedScriptsByPage } from "gatsby-script"
+import { injectPartytownSnippet } from "./utils/inject-partytown-snippet"
+import type { GatsbyBrowser } from "gatsby"
 
-interface ICollectedForwardsState {
-  collectedForwards: Set<string>
-  collectedAnyScript: boolean
-}
+// Makes sure off-main-thread scripts are loaded in `gatsby develop`
+export const onInitialClientRender: GatsbyBrowser[`onInitialClientRender`] =
+  (): void => {
+    if (process.env.NODE_ENV !== `development`) {
+      return
+    }
 
-function PartytownProvider({ children }): ReactElement {
-  const [{ collectedForwards, collectedAnyScript }, setState] =
-    useState<ICollectedForwardsState>({
-      collectedForwards: new Set(),
-      collectedAnyScript: false,
-    })
+    injectPartytownSnippet(collectedScriptsByPage.get(window.location.pathname))
 
-  return (
-    <PartytownContext.Provider
-      value={{
-        collectScript: (newScript: ScriptProps): void => {
-          let stateShouldChange = false
-          const potentialNewState = {
-            collectedAnyScript,
-            collectedForwards,
-          }
+    // Clear scripts after we've used them to avoid leaky behavior
+    collectedScriptsByPage.delete(window.location.pathname)
+  }
 
-          if (!collectedAnyScript) {
-            potentialNewState.collectedAnyScript = true
-            stateShouldChange = true
-          }
-
-          if (newScript?.forward) {
-            if (Array.isArray(newScript.forward)) {
-              for (const singleForward of newScript.forward) {
-                if (!potentialNewState.collectedForwards.has(singleForward)) {
-                  potentialNewState.collectedForwards.add(singleForward)
-                  stateShouldChange = true
-                }
-              }
-            } else {
-              if (process.env.NODE_ENV === `development`) {
-                console.log(`unexpected shape of forward`, newScript)
-              }
-            }
-          }
-
-          if (stateShouldChange) {
-            setState(potentialNewState)
-          }
-        },
-      }}
-    >
-      {children}
-      {collectedAnyScript && (
-        <Partytown key="partytown" forward={Array.from(collectedForwards)} />
-      )}
-    </PartytownContext.Provider>
-  )
-}
-
-export const wrapRootElement: GatsbySSR[`wrapRootElement`] = ({ element }) => (
-  <PartytownProvider>{element}</PartytownProvider>
-)
+// Client-side navigation (CSR, e.g. Gatsby Link navigations) are broken upstream in Partytown.
+// We need an official API from Partytown for handling re-configuration and on-demand script loading.
+// Until then, `off-main-thread` scripts load only on server-side navigation (SSR).
+// See https://github.com/BuilderIO/partytown/issues/74 for more details.

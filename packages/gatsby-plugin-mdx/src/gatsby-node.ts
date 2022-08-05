@@ -11,14 +11,23 @@ import { compileMDX, compileMDXWithCustomOptions } from "./compile-mdx"
 import type { IGatsbyMDXLoaderOptions } from "./gatsby-mdx-loader"
 import remarkInferTocMeta from "./remark-infer-toc-meta"
 import { ERROR_MAP } from "./error-utils"
-import { createFileToMdxCacheKey } from "./cache-helpers"
+import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers"
 
 /**
  * Add support for MDX files including using Gatsby layout components
  */
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
   async (
-    { actions, loaders, getNode, getNodesByType, pathPrefix, reporter, cache },
+    {
+      actions,
+      loaders,
+      getNode,
+      getNodesByType,
+      pathPrefix,
+      reporter,
+      cache,
+      store,
+    },
     pluginOptions
   ) => {
     const options = defaultOptions(pluginOptions)
@@ -29,6 +38,7 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] =
       pathPrefix,
       reporter,
       cache,
+      store,
     })
 
     const mdxLoaderOptions: IGatsbyMDXLoaderOptions = {
@@ -96,7 +106,7 @@ export const resolvableExtensions: GatsbyNode["resolvableExtensions"] = (
  * Convert MDX to JSX so that Gatsby can extract the GraphQL queries and render the pages.
  */
 export const preprocessSource: GatsbyNode["preprocessSource"] = async (
-  { filename, getNode, getNodesByType, pathPrefix, reporter, cache },
+  { filename, getNode, getNodesByType, pathPrefix, reporter, cache, store },
   pluginOptions
 ) => {
   const options = defaultOptions(pluginOptions)
@@ -113,6 +123,7 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
     pathPrefix,
     reporter,
     cache,
+    store,
   })
 
   const ext = path.extname(mdxPath)
@@ -141,7 +152,16 @@ export const preprocessSource: GatsbyNode["preprocessSource"] = async (
 
 export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
   async (
-    { getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema },
+    {
+      getNode,
+      getNodesByType,
+      pathPrefix,
+      reporter,
+      cache,
+      actions,
+      schema,
+      store,
+    },
     pluginOptions
   ) => {
     const { createTypes } = actions
@@ -159,7 +179,9 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
             },
             async resolve(mdxNode, { pruneLength }: { pruneLength: number }) {
               const rehypeInferDescriptionMeta = (
-                await import(`rehype-infer-description-meta`)
+                await cachedImport<
+                  typeof import("rehype-infer-description-meta")
+                >(`rehype-infer-description-meta`)
               ).default
 
               const descriptionOptions: Options = { truncateSize: pruneLength }
@@ -188,6 +210,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                   pathPrefix,
                   reporter,
                   cache,
+                  store,
                 }
               )
 
@@ -237,6 +260,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
                   pathPrefix,
                   reporter,
                   cache,
+                  store,
                 }
               )
 
@@ -360,7 +384,6 @@ export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
       .description(
         `Configure the file extensions that gatsby-plugin-mdx will process`
       ),
-    // @ts-ignore - subPlugins() exists in bootstrap/load-plugins
     gatsbyRemarkPlugins: Joi.subPlugins().description(
       `Use Gatsby-specific remark plugins`
     ),

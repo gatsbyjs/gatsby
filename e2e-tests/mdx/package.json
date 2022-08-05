@@ -11,6 +11,7 @@
     "gatsby-plugin-mdx": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
+    "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
     "react": "^17.0.2",

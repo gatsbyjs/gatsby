@@ -4,7 +4,7 @@ import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { IMdxMetadata } from "./types"
 import { enhanceMdxOptions, IMdxPluginOptions } from "./plugin-options"
 import { ERROR_CODES } from "./error-utils"
-import { createFileToMdxCacheKey } from "./cache-helpers"
+import { cachedImport, createFileToMdxCacheKey } from "./cache-helpers"
 
 // Compiles MDX into JS
 // Differences to original @mdx-js/loader:
@@ -17,8 +17,10 @@ export async function compileMDX(
   reporter: NodePluginArgs["reporter"]
 ): Promise<{ processedMDX: string; metadata: IMdxMetadata } | null> {
   try {
-    const { createProcessor } = await import(`@mdx-js/mdx`)
-    const { VFile } = await import(`vfile`)
+    const { createProcessor } = await cachedImport<
+      typeof import("@mdx-js/mdx")
+    >(`@mdx-js/mdx`)
+    const { VFile } = await cachedImport<typeof import("vfile")>(`vfile`)
 
     const processor = createProcessor(options)
 
@@ -69,6 +71,7 @@ export const compileMDXWithCustomOptions = async (
     pathPrefix,
     reporter,
     cache,
+    store,
   }: {
     pluginOptions: PluginOptions
     customOptions: Partial<IMdxPluginOptions>
@@ -77,6 +80,7 @@ export const compileMDXWithCustomOptions = async (
     pathPrefix: string
     reporter: NodePluginArgs["reporter"]
     cache: NodePluginArgs["cache"]
+    store: NodePluginArgs["store"]
   }
 ): Promise<{
   processedMDX: string
@@ -94,6 +98,7 @@ export const compileMDXWithCustomOptions = async (
     pathPrefix,
     reporter,
     cache,
+    store,
   })
 
   // Compile MDX and extract metadata
