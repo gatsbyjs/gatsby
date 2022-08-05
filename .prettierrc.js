@@ -7,7 +7,7 @@ module.exports = {
       // package (used to parse jsdoc and provide content for API reference pages)
       // behaviour is inconsistent when not using semicolons after
       // object declarations.
-      files: ["**/api-node-helpers-docs.js"],
+      files: ["**/api-node-helpers-docs.ts"],
       options: {
         semi: true,
       },

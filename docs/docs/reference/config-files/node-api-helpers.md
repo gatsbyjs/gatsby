@@ -1,7 +1,7 @@
 ---
 title: Node API Helpers
 description: Documentation on API helpers for creating nodes within Gatsby's GraphQL data layer
-jsdoc: ["src/utils/api-node-helpers-docs.js"]
+jsdoc: ["src/utils/api-node-helpers-docs.ts"]
 apiCalls: NodeAPIHelpers
 contentsHeading: Shared helpers
 showTopLevelSignatures: true
