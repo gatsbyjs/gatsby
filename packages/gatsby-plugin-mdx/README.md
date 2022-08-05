@@ -787,11 +787,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 - `gatsby-plugin-mdx` only applies to local files (that are sourced with `gatsby-source-filesystem`)
 - All [MDX v2 migration](https://mdxjs.com/migrating/v2/) notes apply
 
-#### About the removal of the `html` field:
-
-For compatability and performance reasons, we do not provide a `html` field anymore. If you need your MDX rendered for plugins like `gatsby-plugin-feed`, you can use the `excerpt` field.
-
-As soon we find a feasable solution to provide MDX rendered in HTML, including custom components, we will update the plugin. Any suggestions are very welcome.
+As mentioned above the `html` field was removed from the GraphQL node. We know that some of you used this for e.g. `gatsby-plugin-feed`. Unfortunately, for compatibility and performance reasons we had to remove it. We recommend using the `excerpt` field in the meantime until we find a feasible solution to provide MDX rendered as HTML. If you have any suggestions, please comment on the [GitHub Discussion](https://github.com/gatsbyjs/gatsby/discussions/25068).
 
 ## Why MDX?
 
