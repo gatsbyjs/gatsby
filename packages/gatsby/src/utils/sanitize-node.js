@@ -15,7 +15,7 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
 
     const returnData = isPlainObject ? {} : []
     let anyFieldChanged = false
-    _.each(data, (o, key) => {
+    _.forOwn(data, (o, key) => {
       if (isNode && key === `internal`) {
         returnData[key] = o
         return
