@@ -15,7 +15,7 @@ import {
 const hiddenRoot = document.createElement(`div`)
 
 const removePrevHeadElements = () => {
-  const prevHeadNodes = [...document.querySelectorAll(`[data-gatsby-head]`)]
+  const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
   prevHeadNodes.forEach(e => e.remove())
 }
 
@@ -58,9 +58,7 @@ const onHeadRendered = () => {
     }
   }
 
-  const existingHeadElements = [
-    ...document.querySelectorAll(`[data-gatsby-head]`),
-  ]
+  const existingHeadElements = document.querySelectorAll(`[data-gatsby-head]`)
 
   if (existingHeadElements.length === 0) {
     document.head.append(...validHeadNodes)
