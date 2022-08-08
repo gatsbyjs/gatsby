@@ -235,7 +235,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     failOnError: Joi.boolean().default(true),
     failOn: Joi.any()
       .valid(`none`, `truncated`, `error`, `warning`)
-      .default(`error`)
+      .default(`warning`)
       .description(`Level of sensitivity to invalid images`),
     defaults: Joi.object({
       formats: Joi.array().items(

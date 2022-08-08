@@ -72,7 +72,7 @@ const pluginDefaults = {
   stripMetadata: true,
   lazyImageGeneration: true,
   defaultQuality: 50,
-  failOn: `error` as FailOnOptions,
+  failOn: `warning` as FailOnOptions,
 }
 
 const generalArgs: Partial<IGeneralArgs> = {

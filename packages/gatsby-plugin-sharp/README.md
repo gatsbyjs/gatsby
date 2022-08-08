@@ -52,7 +52,7 @@ plugins: [
 - `defaults`: default values used for `gatsbyImageData` and `StaticImage` from [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image).
   Available options are: `formats`,`placeholder`,`quality`,`breakpoints`,`backgroundColor`,`tracedSVGOptions`,`blurredOptions`,`jpgOptions`,`pngOptions`,`webpOptions`,`avifOptions`.
   For details of these, see [the reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
-- `failOn`: default = `error`. By default builds will fail if there is a corrupted image. Set to `none` to continue the build on error. The image will return `undefined`. You can customize this option, see [`options.failOn`](https://sharp.pixelplumbing.com/api-constructor#parameters).
+- `failOn`: default = `warning`. By default builds will fail if there is a corrupted image. Set to `none` to continue the build on error. The image will return `undefined`. You can customize this option, see [`options.failOn`](https://sharp.pixelplumbing.com/api-constructor#parameters).
 
 Other options are deprecated, and should only be used for the legacy `fixed` and `fluid` functions.
 
