@@ -615,15 +615,21 @@ You'll need to do two things to continue using your old layout file:
 1. You have to attach this MDX file via the `__contentFilePath` query param to your layout file
 
 ```diff
+const postTemplate = path.resolve(`./src/templates/post.jsx`)
+
 actions.createPage({
--  component: `/path/to/template.js`,
-+  component: `/path/to/template.js?__contentFilePath=/path/to/content.mdx`,
+-  component: postTemplate,
++  component: `${postTemplate}?__contentFilePath=/path/to/content.mdx`,
 })
 ```
 
 Or a more complete example:
 
 ```js
+const postTemplate = path.resolve(`./src/templates/post.jsx`)
+
+// Rest of createPages API...
+
 const { data } = await graphql(`
   {
     allMdx {
@@ -645,7 +651,7 @@ const { data } = await graphql(`
 data.allMdx.nodes.forEach(node => {
   actions.createPage({
     path: node.frontmatter.slug,
-    component: `/path/to/your/template.js?__contentFilePath=${node.internal.contentFilePath}`, // highlight-line
+    component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`, // highlight-line
     context: {
       id: node.id,
     },
@@ -660,6 +666,8 @@ Note: You could also directly pass the MDX file to the `component` like this:
 ```js
 actions.createPage({
   component: `/path/to/content.mdx`,
+  // If you don't want to construct it yourself, use internal.contentFilePath
+  // component: node.internal.contentFilePath
 })
 ```
 
@@ -782,6 +790,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 - Removed `timeToRead`, `rawBody`, `slug`, `headings`, `html`, `mdxAST`, `wordCount`, `fileAbsolutePath` from the query result. You can check [Extending the GraphQL MDX nodes](#extending-the-graphql-mdx-nodes) to learn how to re-implement some of them on your own. Also check [Updating MDX nodes](#updating-mdx-nodes) for guidance on changing your queries
 - `gatsby-plugin-mdx` only applies to local files (that are sourced with `gatsby-source-filesystem`)
 - All [MDX v2 migration](https://mdxjs.com/migrating/v2/) notes apply
+
+As mentioned above the `html` field was removed from the GraphQL node. We know that some of you used this for e.g. `gatsby-plugin-feed`. Unfortunately, for compatibility and performance reasons we had to remove it. We recommend using the `excerpt` field in the meantime until we find a feasible solution to provide MDX rendered as HTML. If you have any suggestions, please comment on the [GitHub Discussion](https://github.com/gatsbyjs/gatsby/discussions/25068).
 
 ## Why MDX?
 
