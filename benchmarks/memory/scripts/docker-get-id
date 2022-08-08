@@ -1,8 +1,0 @@
-DOCKER_ID=$(\
-  docker ps --format '{{.Image}}:{{.ID}}' | \
-  grep "gatsby-memory" | \
-  head -n 1 | \
-  sed 's/gatsby\-memory://'\
-)
-
-echo $DOCKER_ID

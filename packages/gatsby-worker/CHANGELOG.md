@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.20.0/packages/gatsby-worker) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [1.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.19.0/packages/gatsby-worker) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-worker
+
+## [1.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.18.0/packages/gatsby-worker) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-worker
+
+## [1.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.17.0/packages/gatsby-worker) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-worker
+
 ## [1.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.16.0/packages/gatsby-worker) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

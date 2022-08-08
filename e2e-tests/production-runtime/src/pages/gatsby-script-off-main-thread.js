@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Script } from "gatsby"
+import { Link, Script } from "gatsby"
 import { scripts } from "../../gatsby-script-scripts"
 
 function OffMainThreadScripts() {
@@ -7,10 +7,15 @@ function OffMainThreadScripts() {
     <main style={{ margin: `1em` }}>
       <h1>Script component e2e test</h1>
 
-      <br />
-      <h2>Scripts with sources</h2>
+      <Link
+        to="/gatsby-script-off-main-thread-2/"
+        data-testid="off-main-thread-2"
+      >
+        Go to off-main-thread-2 scripts page
+      </Link>
 
       <Script
+        id="three"
         src={scripts.three}
         strategy="off-main-thread"
         forward={[`THREE`]}
@@ -33,12 +38,14 @@ function OffMainThreadScripts() {
 
 function createScript(id) {
   return `
-     const main = document.querySelector('main');
-     const elem = document.createElement('div');
-     elem.id = '${id}-mutation';
-     elem.textContent = '${id}-mutation: success';
-     main.appendChild(elem);
-   `
+    {
+      const main = document.querySelector('main');
+      const elem = document.createElement('div');
+      elem.id = 'mutation-${id}';
+      elem.textContent = 'mutation-${id}: success';
+      main.appendChild(elem);
+    }
+  `
 }
 
 export default OffMainThreadScripts
