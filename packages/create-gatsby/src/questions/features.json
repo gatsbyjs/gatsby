@@ -16,10 +16,6 @@
       }
     }
   },
-  "gatsby-plugin-react-helmet": {
-    "message": "Add page meta tags with React Helmet",
-    "dependencies": ["react-helmet"]
-  },
   "gatsby-plugin-sitemap": { "message": "Add an automatic sitemap" },
   "gatsby-plugin-manifest": {
     "message": "Generate a manifest file",

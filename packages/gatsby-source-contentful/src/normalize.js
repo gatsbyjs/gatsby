@@ -503,7 +503,7 @@ export const createNodesForContentType = ({
           contentful_id: entryItem.sys.id,
           createdAt: entryItem.sys.createdAt,
           updatedAt: entryItem.sys.updatedAt,
-          parent: contentTypeItemId,
+          parent: null,
           children: [],
           internal: {
             type: `${makeTypeName(contentTypeItemId)}`,

@@ -80,7 +80,7 @@ exports.sourceNodes = ({
       siteMetadata: {
         ...configCopy.siteMetadata,
       },
-      port: program.proxyPort,
+      port: program.port,
       host: program.host,
       ...configCopy,
     }

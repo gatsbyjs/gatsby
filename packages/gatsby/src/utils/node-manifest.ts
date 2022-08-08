@@ -1,6 +1,6 @@
 import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
 import { getNode } from "./../datastore"
-import { IGatsbyPage, INodeManifest } from "./../redux/types"
+import { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
@@ -60,21 +60,52 @@ const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit()
  */
 async function findPageOwnedByNode({
   nodeId,
+  fullNode,
   slug,
 }: {
   nodeId: string
+  fullNode: IGatsbyNode
   slug?: string
 }): Promise<{
   page: INodeManifestPage
   foundPageBy: FoundPageBy
 }> {
   const state = store.getState()
-  const { pages, nodes } = state
-  const { byNode } = state.queries
+  const { pages, nodes, staticQueryComponents } = state
+  const { byNode, byConnection, trackedComponents } = state.queries
 
-  // the default page path is the first page found in
-  // node id to page query tracking
-  let pagePath = byNode?.get(nodeId)?.values()?.next()?.value
+  const nodeType = fullNode?.internal?.type
+
+  const firstPagePathWithNodeAsDataDependency =
+    // the first page found in node id to page query path tracking
+    byNode?.get(nodeId)?.values()?.next()?.value
+
+  const firstPagePathWithNodeInGraphQLListField =
+    // the first page that queries for a list of this node type.
+    // we don't currently store a list of node ids for connection fields to queries
+    // we just store the query id or page path mapped to the connected GraphQL typename.
+    byConnection?.get(nodeType)?.values()?.next()?.value
+
+  let pagePath =
+    firstPagePathWithNodeAsDataDependency ||
+    firstPagePathWithNodeInGraphQLListField
+
+  // for static queries, we can only find the first page using that static query
+  // the reason we would find `sq--` here is because byConnection (above) can return a page path or a static query ID (which starts with `sq--`)
+  if (pagePath?.startsWith(`sq--`)) {
+    const staticQueryComponentPath =
+      staticQueryComponents?.get(pagePath)?.componentPath
+
+    const firstPagePathUsingStaticQueryComponent: string | null =
+      staticQueryComponentPath
+        ? trackedComponents
+            ?.get(staticQueryComponentPath)
+            ?.pages?.values()
+            ?.next()?.value
+        : null
+
+    pagePath = firstPagePathUsingStaticQueryComponent
+  }
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
@@ -250,6 +281,7 @@ export async function processNodeManifest(
   // map the node to a page that was created
   const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNode({
     nodeId,
+    fullNode,
     // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
     slug: fullNode?.slug as string,
   })
