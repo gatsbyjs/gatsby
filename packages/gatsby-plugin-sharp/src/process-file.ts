@@ -1,13 +1,17 @@
-const sharp = require(`./safe-sharp`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp`)
-const duotone = require(`./duotone`)
-const { healOptions } = require(`./plugin-options`)
-const { SharpError } = require(`./sharp-error`)
-const {
-  createContentDigest,
-} = require(`gatsby-core-utils/create-content-digest`)
+import sharp from "./safe-sharp"
+import fs from "fs-extra"
+import path from "path"
+import debug from "debug"
+import { createContentDigest } from "gatsby-core-utils/create-content-digest"
+import duotone from "./duotone"
+import {
+  healOptions,
+  ITransformArgs,
+  ISharpPluginOptions,
+} from "./plugin-options"
+import { SharpError } from "./sharp-error"
+
+const log = debug(`gatsby:gatsby-plugin-sharp`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -18,50 +22,20 @@ sharp.simd(true)
 // Concurrency is handled in gatsby-worker queue instead
 sharp.concurrency(1)
 
-/**
- * @typedef DuotoneArgs
- * @property {string} highlight
- * @property {string} shadow
- * @property {number} opacity
- */
+interface ITransform {
+  outputPath: string
+  args: ITransformArgs
+}
 
-/**
- * @typedef {Object} TransformArgs
- * @property {number} height
- * @property {number} width
- * @property {number} cropFocus
- * @property {string} toFormat
- * @property {number} pngCompressionLevel
- * @property {number} quality
- * @property {number} jpegQuality
- * @property {number} pngQuality
- * @property {number} webpQuality
- * @property {boolean} jpegProgressive
- * @property {boolean} grayscale
- * @property {number} rotate
- * @property {number} trim
- * @property {DuotoneArgs} duotone
- * @property {string} background
- * @property {import('sharp').FitEnum} fit
- */
-
-/** +
- * @typedef {Object} Transform
- * @property {string} outputPath
- * @property {TransformArgs} args
- */
-
-/**
- * @param {String} file
- * @param {Transform[]} transforms
- */
-exports.processFile = async (file, transforms, options = {}) => {
+export const processFile = async (
+  file: string,
+  transforms: Array<ITransform>,
+  options: ISharpPluginOptions = {}
+): Promise<Array<ITransform>> => {
   let pipeline
   try {
     const inputBuffer = await fs.readFile(file)
-    pipeline = !options.failOnError
-      ? sharp(inputBuffer, { failOnError: false })
-      : sharp(inputBuffer)
+    pipeline = sharp(inputBuffer, { failOn: options.failOn })
 
     // Keep Metadata
     if (!options.stripMetadata) {
@@ -75,11 +49,11 @@ exports.processFile = async (file, transforms, options = {}) => {
     transforms.map(async transform => {
       try {
         const { outputPath, args } = transform
-        debug(`Start processing ${outputPath}`)
+        log(`Start processing ${outputPath}`)
         await fs.ensureDir(path.dirname(outputPath))
 
         const transformArgs = healOptions(
-          { defaultQuality: options.defaultQuality },
+          { defaultQuality: options.defaultQuality as number },
           args
         )
 
@@ -177,7 +151,7 @@ exports.processFile = async (file, transforms, options = {}) => {
   )
 }
 
-exports.createArgsDigest = args => {
+export const createArgsDigest = (args: unknown): string => {
   const argsDigest = createContentDigest(args)
 
   return argsDigest.slice(-5)
