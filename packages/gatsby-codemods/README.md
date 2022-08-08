@@ -1,10 +1,10 @@
-## gatsby-codemods
+# gatsby-codemods
 
 A collection of codemod scripts for use with [JSCodeshift](https://github.com/facebook/jscodeshift) that help migrate to newer versions of Gatsby.
 
 > **Note:** Codemods are designed to rewrite your project's files. Ensure you have a backup before going any further.
 
-### Setup & Run
+## Setup & Run
 
 There are two ways to run codemods on this package.
 
@@ -49,9 +49,9 @@ Structure of a jscodeshift call:
   - use the `--extensions` option if your files have different extensions than `.js` (for example, `--extensions js,jsx`)
   - see all available [jscodeshift options](https://github.com/facebook/jscodeshift#usage-cli).
 
-### Included scripts
+## Included scripts
 
-#### `global-graphql-calls`
+### `global-graphql-calls`
 
 Add a `graphql` import to modules that use the `graphql` tag function without an import. This was supported in Gatsby v1 and deprecated for Gatsby v2.
 
@@ -82,7 +82,7 @@ export const query = graphql`
 `
 ```
 
-#### `import-link`
+### `import-link`
 
 Import `Link` from `gatsby` instead of `gatsby-link` and remove the `gatsby-link` import.
 
@@ -103,7 +103,7 @@ export default props => (
 )
 ```
 
-#### `navigate-calls`
+### `navigate-calls`
 
 Change the deprecated `navigateTo` method from `gatsby-link` to `navigate` from the `gatsby` module.
 
@@ -128,7 +128,7 @@ export default props => (
 )
 ```
 
-#### `rename-bound-action-creators`
+### `rename-bound-action-creators`
 
 Rename `boundActionCreators` to `actions`. `boundActionCreators` has been deprecated in Gatsby v2
 
@@ -158,7 +158,7 @@ Example result:
 }
 ```
 
-### More scripts
+## More scripts
 
 Check out [issue 5038 in the Gatsby repo for additional codemod ideas](https://github.com/gatsbyjs/gatsby/issues/5038#issuecomment-411516865).
 

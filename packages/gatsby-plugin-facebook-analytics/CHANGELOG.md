@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-facebook-analytics@4.20.0/packages/gatsby-plugin-facebook-analytics) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-facebook-analytics@4.19.0/packages/gatsby-plugin-facebook-analytics) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-facebook-analytics@4.18.0/packages/gatsby-plugin-facebook-analytics) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- use proper babelrc configs for compiling packages [#35948](https://github.com/gatsbyjs/gatsby/issues/35948) ([384e801](https://github.com/gatsbyjs/gatsby/commit/384e8019152ad9bfa221e3e8b6da54675c93f293))
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-facebook-analytics@4.17.0/packages/gatsby-plugin-facebook-analytics) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-facebook-analytics@4.16.0/packages/gatsby-plugin-facebook-analytics) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

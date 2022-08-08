@@ -1,6 +1,6 @@
 // If you don't want to use TypeScript you can delete this file!
 import * as React from "react"
-import { PageProps, Link, graphql } from "gatsby"
+import { PageProps, Link, graphql, HeadFC } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -16,7 +16,6 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({
   location,
 }) => (
   <Layout>
-    <Seo title="Using TypeScript" />
     <h1>
       Gatsby supports <b>TypeScript by default</b>
     </h1>
@@ -35,7 +34,7 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({
     </p>
     <p>
       To learn more, head over to our{" "}
-      <a href="https://www.gatsbyjs.com/docs/typescript/">
+      <a href="https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/">
         documentation about TypeScript
       </a>
       .
@@ -43,6 +42,8 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({
     <Link to="/">Go back to the homepage</Link>
   </Layout>
 )
+
+export const Head: HeadFC<DataProps> = () => <Seo title="Using TypeScript" />
 
 export default UsingTypescript
 

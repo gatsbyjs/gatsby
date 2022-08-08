@@ -139,4 +139,42 @@ describe(`publicResolver`, () => {
       expect.any(Object)
     )
   })
+
+  it(`should dispatch with decoded filename`, () => {
+    const actions = {
+      createJobV2: jest.fn(() => jest.fn()),
+    }
+
+    dispatchers.shouldDispatch.mockImplementationOnce(() => true)
+
+    const file = {
+      id: `1`,
+      mimeType: `image/jpeg`,
+      url: `https://example.com/my report.pdf`,
+      filename: `my report.pdf`,
+      parent: null,
+      children: [],
+      internal: {
+        type: `Test`,
+        owner: `test`,
+        contentDigest: `1`,
+      },
+    }
+    publicUrlResolver(file, actions, store)
+    expect(actions.createJobV2).toHaveBeenCalledWith(
+      expect.objectContaining({
+        args: {
+          contentDigest: `1`,
+          filename: expect.stringContaining(`my report.pdf`),
+          url: file.url,
+        },
+        inputPaths: [],
+        name: `FILE_CDN`,
+        outputDir: expect.stringContaining(
+          path.join(`public`, `_gatsby`, `file`)
+        ),
+      }),
+      expect.any(Object)
+    )
+  })
 })

@@ -13,15 +13,20 @@ To run Gatsby's development server and Cypress at the same time, you'll use the 
 npm install --save-dev cypress start-server-and-test
 ```
 
-We also want the URLs used by `cy.visit()` or `cy.request()` to be prefixed, hence you have to create the file `cypress.json` at the root of your project with the following content:
+You need to create a config file for Cypress at the root of the project called `cypress.config.js`. You can use it to preface the URLs used by `cy.visit()` or `cy.request` as well as set the folder the tests are in by adding the following:
 
-```json:title=cypress.json
-{
-  "baseUrl": "http://localhost:8000/"
-}
+```js:title=cypress.config.js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:8000',
+    specPattern: "cypress/e2e"
+  }
+})
 ```
 
-Last but not least you add additional scripts to your `package.json` to run Cypress:
+You also need to add additional scripts to your `package.json` to run Cypress:
 
 ```json:title=package.json
 {
@@ -37,7 +42,7 @@ Last but not least you add additional scripts to your `package.json` to run Cypr
 
 Type `npm run test:e2e` in your command line and see Cypress running for the first time. A folder named `cypress` will be created at the root of your project and a new application window will pop up. [Cypress' getting started guide](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#) is a good start to learn how to write tests!
 
-_Important note_: If you are running Gatsby with the `--https` flag, whether using your own or automatically generated certificates, you will also need to tell `start-server-and-test` to disable HTTPS certificate checks (otherwise it will wait forever and never actually launch Cypress. You do this by passing in an environmental variable: `START_SERVER_AND_TEST_INSECURE=1`. [start-server-and-test docs](https://github.com/bahmutov/start-server-and-test#disable-https-certificate-checks)).
+**Please note:** If you are running Gatsby with the `--https` flag, whether using your own or automatically generated certificates, you will also need to tell `start-server-and-test` to disable HTTPS certificate checks (otherwise it will wait forever and never actually launch Cypress. You do this by passing in an environmental variable: `START_SERVER_AND_TEST_INSECURE=1`. [start-server-and-test docs](https://github.com/bahmutov/start-server-and-test#disable-https-certificate-checks)).
 
 This means your `test:e2e` script would look like this:
 
@@ -75,26 +80,16 @@ To use cypress-axe, you have to install the `cypress-axe` and [axe-core](https:/
 npm install --save-dev cypress-axe axe-core @testing-library/cypress
 ```
 
-Then you add the `cypress-axe` and `@testing-library/cypress` commands in `cypress/support/index.js`:
+Then you add the `cypress-axe` and `@testing-library/cypress` commands in `cypress/support/e2e.js`:
 
-```js:title=cypress/support/index.js
-import "./commands"
+```js:title=cypress/support/e2e.js
 //highlight-start
 import "cypress-axe"
 import "@testing-library/cypress/add-commands"
 //highlight-end
 ```
 
-Cypress will look for tests inside the `cypress/integration` folder, but you can change the default test folder if you want. Because you're writing end-to-end tests, create a new folder called `cypress/e2e`, and use it as your `integrationFolder` in your `cypress.json`:
-
-```json:title=cypress.json
-{
-  "baseUrl": "http://localhost:8000/",
-  "integrationFolder": "cypress/e2e" // highlight-line
-}
-```
-
-Create a new file inside `cypress/e2e` folder and name it `accessibility.test.js`.
+Create a folder inside the cypress folder and a new file inside `cypress/e2e` folder and name it `accessibility.test.js`.
 
 You'll use the `beforeEach` hook to run some commands before each test. This is what they do:
 
@@ -109,7 +104,8 @@ Finally, inside the first test, you'll use the `checkA11y` command from `cypress
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/").get("main").injectAxe()
+      cy.visit("/").get("main")
+      cy.injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -132,7 +128,8 @@ The following test is for the [gatsby-default-starter](https://github.com/gatsby
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/").get("main").injectAxe()
+      cy.visit("/").get("main")
+      cy.injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -156,11 +153,13 @@ You'll now write another test for the `gatsby-default-starter` homepage. In this
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/").get("main").injectAxe()
+      cy.visit("/").get("main")
+      cy.injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
   })
+
   it("Navigates to page 2 and checks for accessibility violations", () => {
     cy.findByText(/go to page 2/i)
       .click()

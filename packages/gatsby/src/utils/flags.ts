@@ -97,7 +97,7 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `DevSsr`,
     experimental: false,
-    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
+    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => true,
   },
