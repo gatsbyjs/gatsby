@@ -14,7 +14,7 @@
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-sharp#readme",
   "dependencies": {
-    "@types/sharp": "^0.30.4",
+    "@types/sharp": "^0.30.5",
     "sharp": "^0.30.7"
   },
   "devDependencies": {
