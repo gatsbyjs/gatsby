@@ -16,7 +16,10 @@ const hiddenRoot = document.createElement(`div`)
 
 const removePrevHeadElements = () => {
   const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
-  prevHeadNodes.forEach(e => e.remove())
+
+  for (const node of prevHeadNodes) {
+    node.remove()
+  }
 }
 
 const onHeadRendered = () => {
