@@ -127,6 +127,8 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         })
       }
 
+      newBody.push(declaration)
+
       newBody.push({
         type: `ExportDefaultDeclaration`,
         declaration: {
