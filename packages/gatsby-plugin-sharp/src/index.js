@@ -262,7 +262,7 @@ async function generateBase64({ file, args = {}, reporter }) {
   })
   let pipeline
   try {
-    pipeline = sharp({ failOn: options.failOn })
+    pipeline = sharp({ failOn: pluginOptions.failOn })
 
     if (!options.rotate) {
       pipeline.rotate()

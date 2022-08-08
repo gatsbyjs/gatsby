@@ -30,7 +30,7 @@ interface ITransform {
 export const processFile = async (
   file: string,
   transforms: Array<ITransform>,
-  options: ISharpPluginOptions = {}
+  options = {} as ISharpPluginOptions
 ): Promise<Array<ITransform>> => {
   let pipeline
   try {

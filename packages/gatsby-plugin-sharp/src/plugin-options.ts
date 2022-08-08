@@ -23,7 +23,7 @@ export interface ISharpPluginOptions {
   useMozJpeg?: boolean
   stripMetadata?: boolean
   lazyImageGeneration?: boolean
-  defaultQuality?: number
+  defaultQuality: number
   failOn?: SharpOptions["failOn"]
   defaults?: PluginOptionsDefaults
 }
@@ -162,7 +162,7 @@ export const healOptions = (
   {
     defaultQuality: quality,
     base64Width,
-  }: { defaultQuality: number; base64Width?: number },
+  }: Pick<ISharpPluginOptions, "defaultQuality" | "base64Width">,
   args: ITransformArgs,
   fileExtension = ``,
   defaultArgs = {}
