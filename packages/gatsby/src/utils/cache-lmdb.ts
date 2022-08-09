@@ -1,6 +1,6 @@
 import { open, RootDatabase, Database, DatabaseOptions } from "lmdb"
-import fs from "fs-extra"
-import path from "path"
+import * as fs from "fs-extra"
+import * as path from "path"
 
 // Since the regular GatsbyCache saves to "caches" this should be "caches-lmdb"
 const cacheDbFile =
@@ -57,9 +57,11 @@ export default class GatsbyCacheLmdb {
       return rootDb
     }
 
+    console.trace(`open ${dbPath}`)
+
     rootDb = open({
       name: `root`,
-      path: path.join(dbPath),
+      path: dbPath,
       compression: true,
       maxDbs: 200,
     })
@@ -96,6 +98,7 @@ export default class GatsbyCacheLmdb {
 export async function resetCache(): Promise<void> {
   const store = getAlreadyOpenedStore()
   if (store) {
+    console.trace(`reset / close ${dbPath}`)
     await store.close()
     globalThis.__GATSBY_OPEN_ROOT_LMDBS.delete(dbPath)
   }
