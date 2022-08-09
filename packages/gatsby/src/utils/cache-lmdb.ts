@@ -14,7 +14,7 @@ const cacheDbFile =
     : `caches-lmdb`
 
 export default class GatsbyCacheLmdb {
-  private static store
+  private static store: RootDatabase | undefined
   private db: Database | undefined
   private encoding: DatabaseOptions["encoding"]
   public readonly name: string
@@ -63,6 +63,13 @@ export default class GatsbyCacheLmdb {
       })
     }
     return this.db
+  }
+
+  async close(): Promise<void> {
+    if (GatsbyCacheLmdb.store) {
+      await GatsbyCacheLmdb.store.close()
+      GatsbyCacheLmdb.store = undefined
+    }
   }
 
   async get<T = unknown>(key): Promise<T | undefined> {
