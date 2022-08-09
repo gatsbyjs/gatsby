@@ -18,7 +18,7 @@ const removePrevHeadElements = () => {
   const prevHeadNodes = document.querySelectorAll(`[data-gatsby-head]`)
 
   for (const node of prevHeadNodes) {
-    node.remove()
+    node.parentNode.removeChild(node)
   }
 }
 
@@ -52,7 +52,9 @@ const onHeadRendered = () => {
           seenIds.set(id, validHeadNodes.length - 1)
         } else {
           const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode].remove()
+          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode.removeChild(
+            validHeadNodes[indexOfPreviouslyInsertedNode]
+          )
           validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
         }
       } else {
@@ -72,7 +74,7 @@ const onHeadRendered = () => {
   diffNodes({
     oldNodes: existingHeadElements,
     newNodes: validHeadNodes,
-    onStale: node => node.remove(),
+    onStale: node => node.parentNode.removeChild(node),
     onNew: node => newHeadNodes.push(node),
   })
 
