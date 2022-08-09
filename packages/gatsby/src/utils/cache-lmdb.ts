@@ -65,6 +65,17 @@ export default class GatsbyCacheLmdb {
     return this.db
   }
 
+  public async reset(): Promise<GatsbyCacheLmdb> {
+    if (GatsbyCacheLmdb.store) {
+      await GatsbyCacheLmdb.store.close()
+      GatsbyCacheLmdb.store = undefined
+    }
+
+    await fs.emptyDir(path.join(process.cwd(), `.cache/${cacheDbFile}`))
+
+    return this
+  }
+
   async get<T = unknown>(key): Promise<T | undefined> {
     return this.getDb().get(key)
   }

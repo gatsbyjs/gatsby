@@ -13,12 +13,9 @@ describeWhenLMDB(`cache-lmdb`, () => {
 
   beforeAll(async () => {
     const { default: GatsbyCacheLmdb } = await import(`../cache-lmdb`)
+
     cache = new GatsbyCacheLmdb({ name: `__test__` }).init()
-    const fileDir = path.join(
-      process.cwd(),
-      `.cache/caches-lmdb-${process.env.JEST_WORKER_ID}`
-    )
-    await fs.emptyDir(fileDir)
+    await cache.reset()
   })
 
   it(`it can be instantiated`, () => {
