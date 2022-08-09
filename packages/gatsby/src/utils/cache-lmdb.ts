@@ -13,8 +13,16 @@ const cacheDbFile =
       }`
     : `caches-lmdb`
 
+const dbPath = path.join(process.cwd(), `.cache/${cacheDbFile}`)
+
+function getAlreadyOpenedStore(): RootDatabase | undefined {
+  if (!globalThis.__GATSBY_OPEN_ROOT_LMDBS) {
+    globalThis.__GATSBY_OPEN_ROOT_LMDBS = new Map()
+  }
+  return globalThis.__GATSBY_OPEN_ROOT_LMDBS.get(dbPath)
+}
+
 export default class GatsbyCacheLmdb {
-  private static store
   private db: Database | undefined
   private encoding: DatabaseOptions["encoding"]
   public readonly name: string
@@ -44,15 +52,21 @@ export default class GatsbyCacheLmdb {
   }
 
   private static getStore(): RootDatabase {
-    if (!GatsbyCacheLmdb.store) {
-      GatsbyCacheLmdb.store = open({
-        name: `root`,
-        path: path.join(process.cwd(), `.cache/${cacheDbFile}`),
-        compression: true,
-        maxDbs: 200,
-      })
+    let rootDb = getAlreadyOpenedStore()
+    if (rootDb) {
+      return rootDb
     }
-    return GatsbyCacheLmdb.store
+
+    rootDb = open({
+      name: `root`,
+      path: path.join(dbPath),
+      compression: true,
+      maxDbs: 200,
+    })
+
+    globalThis.__GATSBY_OPEN_ROOT_LMDBS.set(dbPath, rootDb)
+
+    return rootDb
   }
 
   private getDb(): Database {
@@ -63,17 +77,6 @@ export default class GatsbyCacheLmdb {
       })
     }
     return this.db
-  }
-
-  public async reset(): Promise<GatsbyCacheLmdb> {
-    if (GatsbyCacheLmdb.store) {
-      await GatsbyCacheLmdb.store.close()
-      GatsbyCacheLmdb.store = undefined
-    }
-
-    await fs.emptyDir(path.join(process.cwd(), `.cache/${cacheDbFile}`))
-
-    return this
   }
 
   async get<T = unknown>(key): Promise<T | undefined> {
@@ -88,4 +91,14 @@ export default class GatsbyCacheLmdb {
   async del(key: string): Promise<void> {
     return this.getDb().remove(key) as unknown as Promise<void>
   }
+}
+
+export async function resetCache(): Promise<void> {
+  const store = getAlreadyOpenedStore()
+  if (store) {
+    await store.close()
+    globalThis.__GATSBY_OPEN_ROOT_LMDBS.delete(dbPath)
+  }
+
+  await fs.emptyDir(dbPath)
 }

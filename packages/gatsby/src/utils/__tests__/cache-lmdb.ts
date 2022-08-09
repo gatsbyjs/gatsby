@@ -12,10 +12,12 @@ describeWhenLMDB(`cache-lmdb`, () => {
   let cache
 
   beforeAll(async () => {
-    const { default: GatsbyCacheLmdb } = await import(`../cache-lmdb`)
+    const { default: GatsbyCacheLmdb, resetCache } = await import(
+      `../cache-lmdb`
+    )
 
+    await resetCache()
     cache = new GatsbyCacheLmdb({ name: `__test__` }).init()
-    await cache.reset()
   })
 
   it(`it can be instantiated`, () => {
