@@ -1,4 +1,3 @@
-
 const visit = require(`unist-util-visit`)
 const toString = require(`mdast-util-to-string`)
 

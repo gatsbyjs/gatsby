@@ -12,7 +12,7 @@ export function parseFrontmatter(
 
   const { content, data } = grayMatter(source, {
     language: `yaml`,
-    // Disable JS frontmatter parsing.
+    // Disable JS/JSON frontmatter parsing.
     // See: https://github.com/gatsbyjs/gatsby/pull/35830
     engines: {
       js: () => {
