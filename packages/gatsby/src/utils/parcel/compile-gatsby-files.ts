@@ -1,8 +1,10 @@
 import { Parcel } from "@parcel/core"
+import path from "path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
-import { ensureDir, emptyDir, existsSync, remove } from "fs-extra"
+import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
 import telemetry from "gatsby-telemetry"
+import { isNearMatch } from "../is-near-match"
 
 export const COMPILED_CACHE_DIR = `.cache/compiled`
 export const PARCEL_CACHE_DIR = `.cache/.parcel-cache`
@@ -57,6 +59,41 @@ export async function compileGatsbyFiles(
   retry: number = 0
 ): Promise<void> {
   try {
+    // Check for gatsby-node.jsx and gatsby-node.tsx (or other misnamed variations)
+    const files = await readdir(siteRoot)
+
+    let nearMatch = ``
+    const configName = `gatsby-node`
+
+    for (const file of files) {
+      if (nearMatch) {
+        break
+      }
+
+      const { name } = path.parse(file)
+      // Of course, allow valid gatsby-node files
+      if (file === `gatsby-node.js` || file === `gatsby-node.ts`) {
+        break
+      }
+
+      if (isNearMatch(name, configName, 3)) {
+        nearMatch = file
+      }
+    }
+
+    // gatsby-node is misnamed
+    if (nearMatch) {
+      const isTSX = nearMatch.endsWith(`.tsx`)
+      reporter.panic({
+        id: `10128`,
+        context: {
+          configName,
+          nearMatch,
+          isTSX,
+        },
+      })
+    }
+
     const distDir = `${siteRoot}/${COMPILED_CACHE_DIR}`
     await ensureDir(distDir)
     await emptyDir(distDir)

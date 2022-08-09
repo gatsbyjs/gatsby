@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "chokidar": "^3.5.3",
-    "file-type": "^16.5.3",
+    "file-type": "^16.5.4",
     "fs-extra": "^10.1.0",
     "gatsby-core-utils": "^3.21.0-next.1",
     "got": "^9.6.0",
