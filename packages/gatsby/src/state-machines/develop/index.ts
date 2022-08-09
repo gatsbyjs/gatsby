@@ -21,6 +21,7 @@ const getGraphqlTypegenConfig = (ctx: IBuildContext): boolean =>
  * This is the top-level state machine for the `gatsby develop` command
  */
 const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
+  predictableActionArguments: true,
   id: `build`,
   initial: `initializing`,
   // These are mutation events, sent to this machine by the mutation listener
