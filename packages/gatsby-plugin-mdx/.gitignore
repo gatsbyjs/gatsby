@@ -28,6 +28,3 @@ node_modules
 
 decls
 dist
-
-/*.js
-!index.js
