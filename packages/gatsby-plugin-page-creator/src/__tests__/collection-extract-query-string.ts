@@ -36,7 +36,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query from the route with minimal length`, async () => {
@@ -53,7 +55,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allP{nodes{n,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allP{nodes{n,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query from the route with a prefix variant 1`, async () => {
@@ -70,7 +74,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query from the route with a prefix variant 2`, async () => {
@@ -87,7 +93,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query from the route with a prefix variant 3`, async () => {
@@ -104,7 +112,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query from the route with a postfix`, async () => {
@@ -121,7 +131,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query with multiple entries`, async () => {
@@ -138,7 +150,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,color,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query with multiple entries and different delimiters variant 1`, async () => {
@@ -155,7 +169,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,color,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query with multiple entries and different delimiters variant 1`, async () => {
@@ -172,7 +188,9 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,color,id,internal{contentFilePath}}}}"`
+    )
   })
 
   it(`will create a basic query with multiple entries and different delimiters variant 1`, async () => {
@@ -189,6 +207,8 @@ describe(`collectionExtractQueryString`, () => {
       reporter
     )
 
-    expect(query).toMatchInlineSnapshot(`"{allProduct{nodes{name,color,id}}}"`)
+    expect(query).toMatchInlineSnapshot(
+      `"{allProduct{nodes{name,color,id,internal{contentFilePath}}}}"`
+    )
   })
 })
