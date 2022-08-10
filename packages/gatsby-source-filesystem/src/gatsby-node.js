@@ -61,7 +61,7 @@ const createFSMachine = (
   }
 
   const log = expr => (ctx, action, meta) => {
-    if (meta.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+    if (machineInstance.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
       reporter.info(expr(ctx, action, meta))
     }
   }
@@ -151,7 +151,8 @@ const createFSMachine = (
       },
     }
   )
-  return interpret(fsMachine).start()
+  const machineInstance = interpret(fsMachine).start()
+  return machineInstance
 }
 
 exports.pluginOptionsSchema = ({ Joi }) =>
