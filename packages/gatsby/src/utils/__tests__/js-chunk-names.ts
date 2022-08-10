@@ -26,22 +26,22 @@ describe(`js-chunk-names`, () => {
 
   it(`supports dynamic routes`, () => {
     expect(generateComponentChunkName(`/src/pages/user/[id].js`)).toEqual(
-      `component---1234567890-src-pages-user-[id]-js`
+      `component---src-pages-user-[id]-js`
     )
 
     expect(
       generateComponentChunkName(`/src/pages/user/[id]/[name].js`)
-    ).toEqual(`component---1234567890-src-pages-user-[id]-[name]-js`)
+    ).toEqual(`component---src-pages-user-[id]-[name]-js`)
   })
 
   it(`supports collection routes`, () => {
     expect(generateComponentChunkName(`/src/pages/user/{id}.js`)).toEqual(
-      `component---1234567890-src-pages-user-{id}-js`
+      `component---src-pages-user-{id}-js`
     )
 
     expect(
       generateComponentChunkName(`/src/pages/user/{id}/{name}.js`)
-    ).toEqual(`component---1234567890-src-pages-user-{id}-{name}-js`)
+    ).toEqual(`component---src-pages-user-{id}-{name}-js`)
   })
 
   it(`it ensures chunk names can not exceed 255 characters`, () => {

@@ -170,8 +170,8 @@ function assertHTMLCorrectness(runNumber) {
   describe(`/page-query-template-change/`, () => {
     const expectedComponentChunkName =
       runNumber <= 1
-        ? `component---835968464-src-templates-deps-page-query-js`
-        : `component---2431610089-src-templates-deps-page-query-alternative-js`
+        ? `component---src-templates-deps-page-query-js`
+        : `component---src-templates-deps-page-query-alternative-js`
 
     const expectedBackground =
       runNumber < 8 ? `white` : runNumber === 8 ? `yellow` : `green`

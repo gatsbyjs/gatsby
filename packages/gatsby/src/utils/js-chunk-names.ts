@@ -46,17 +46,25 @@ export function generateComponentChunkName(componentPath: string): string {
     const { program } = store.getState()
     const directory = program?.directory || `/`
     let name = pathRelative(directory, componentPath)
+    name = replaceUnifiedRoutesKeys(kebabCase(name), name)
+
+    /**
+     * File names should not exceed 255 characters
+     * minus 12 for `component---`
+     * minus 7 for `.js.map`
+     */
+    const maxLength = 236
+    const shouldTruncate = name.length > maxLength
 
     /**
      * To prevent long file name errors, we truncate the name to a maximum of 60 characters.
      */
-    const hash = murmurhash(name)
-    name = `${hash}-${name.substring(name.length - 60)}`
+    if (shouldTruncate) {
+      const hash = murmurhash(name)
+      name = `${hash}-${name.substring(name.length - 60)}`
+    }
 
-    const chunkName = `component---${replaceUnifiedRoutesKeys(
-      kebabCase(name),
-      name
-    )}`
+    const chunkName = `component---${name}`
 
     chunkNameCache.set(componentPath, chunkName)
 
