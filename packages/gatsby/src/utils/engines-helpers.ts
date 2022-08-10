@@ -19,7 +19,7 @@ emitter.on(`SET_COMPONENT_FEATURES`, (action: ISetComponentFeatures) => {
   if (action.payload.serverData) generate = true
   if (action.payload.config) generate = true
   if (action.payload.Head && shouldSendTelemetryForHeadAPI) {
-    trackFeatureIsUsed(`HEAD-API`)
+    trackFeatureIsUsed(`HeadAPI`)
     shouldSendTelemetryForHeadAPI = false
   }
 })
