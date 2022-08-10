@@ -556,25 +556,12 @@ Read more about injecting your own components in the [official MDX provider guid
 
 ### Updating dependencies
 
-During the Release Candidate phase, use these install instructions:
-
-```shell
-npm remove @mdx-js/mdx
-npm install --save-exact gatsby@mdxv4-rc gatsby-plugin-mdx@mdxv4-rc @mdx-js/react@latest
-```
-
-If you used any related plugins like `gatsby-remark-images`, also update them to their `@mdxv4-rc` version (if available).
-
-<!--
-
 ```shell
 npm remove @mdx-js/mdx
 npm install gatsby@latest gatsby-plugin-mdx@latest @mdx-js/react@latest
 ```
 
 If you used any related plugins like `gatsby-remark-images`, also update them to their `@latest` version.
-
--->
 
 ### New options in `gatsby-config`
 
