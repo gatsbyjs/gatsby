@@ -123,6 +123,19 @@ exports.onRenderBody = ({ setHtmlAttributes }) => {
 }
 ```
 
+Or even using data provided dynamically through the page context:
+
+```js:title=gatsby-ssr.js
+exports.onRenderBody = ({pathname, setHtmlAttributes, loadPageDataSync}) => {
+  if (process.env.NODE_ENV !== 'development') {
+    const {
+      result: { pageContext: { langKey } },
+    } = loadPageDataSync(pathname);
+    setHtmlAttributes({ lang: langKey });
+  }
+}
+```
+
 ## Additional Resources
 
 - [Adding an SEO component](/docs/how-to/adding-common-features/adding-seo-component)
