@@ -52,7 +52,7 @@ const onHeadRendered = () => {
           seenIds.set(id, validHeadNodes.length - 1)
         } else {
           const indexOfPreviouslyInsertedNode = seenIds.get(id)
-          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode.removeChild(
+          validHeadNodes[indexOfPreviouslyInsertedNode].parentNode?.removeChild(
             validHeadNodes[indexOfPreviouslyInsertedNode]
           )
           validHeadNodes[indexOfPreviouslyInsertedNode] = clonedNode
