@@ -57,8 +57,6 @@ export default class GatsbyCacheLmdb {
       return rootDb
     }
 
-    console.trace(`open ${dbPath}`)
-
     rootDb = open({
       name: `root`,
       path: dbPath,
@@ -98,7 +96,6 @@ export default class GatsbyCacheLmdb {
 export async function resetCache(): Promise<void> {
   const store = getAlreadyOpenedStore()
   if (store) {
-    console.trace(`reset / close ${dbPath}`)
     await store.close()
     globalThis.__GATSBY_OPEN_ROOT_LMDBS.delete(dbPath)
   }

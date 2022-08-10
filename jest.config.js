@@ -55,7 +55,11 @@ module.exports = {
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
-  reporters: [`default`].concat(useCoverage ? `jest-junit` : []),
+  reporters: process.env.CI
+    ? [[`jest-silent-reporter`, { useDots: true, showPaths: true }]].concat(
+        useCoverage ? `jest-junit` : []
+      )
+    : [`default`].concat(useCoverage ? `jest-junit` : []),
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
   setupFilesAfterEnv: [`jest-extended`],
