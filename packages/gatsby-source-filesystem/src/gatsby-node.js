@@ -60,7 +60,7 @@ const createFSMachine = (
     )
   }
 
-  const log = expr => (ctx, action) => {
+  const log = expr => (ctx, action, meta) => {
     if (ctx.bootstrapped) {
       reporter.info(expr(ctx, action, meta))
     }
