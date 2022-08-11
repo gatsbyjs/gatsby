@@ -67,6 +67,7 @@
     "devcert": "^1.2.0",
     "dotenv": "^8.6.0",
     "enhanced-resolve": "^5.8.3",
+    "error-stack-parser": "^2.1.4",
     "eslint": "^7.32.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.10.0",
