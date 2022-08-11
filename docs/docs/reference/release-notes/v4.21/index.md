@@ -28,4 +28,4 @@ A big **Thank You** to [our community who contributed][full-changelog] to this r
 
 [TBD]
 
-[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.21.0-next.0...gatsby@4.21.0
+[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.21.0-next.0...gatsby@4.22.0-next.0
