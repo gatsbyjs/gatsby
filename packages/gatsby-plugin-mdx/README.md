@@ -706,6 +706,7 @@ As MDX v2 changed the way it handles content you might need to update your MDX f
 
 - HTML syntax doesn’t work in MDX as it’s replaced by JSX (`<img>` to `<img />`). Instead of HTML comments, you can use JavaScript comments in braces: `{/* comment! */}`
 - Unescaped left angle bracket / less than (`<`) and left curly brace (`{`) have to be escaped: `\<` or `\{` (or use expressions: `{'<'}`, `{'{'}`)
+  - If you're using the `enableCustomId` option from `gatsby-remark-autolink-headers` you'll run into problems due to the above. You need to disable this option and use [`rehype-slug-custom-id`](https://github.com/unicorn-utterances/rehype-slug-custom-id) instead.
 
 In our testing, most of the time the issue were curly brackets that needed to be escaped with backticks:
 
