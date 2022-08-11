@@ -44,8 +44,9 @@ export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
  */
 const configItemsMemoCache = new Map()
 
-interface ICustomOptions extends Record<string, unknown> {
+export interface ICustomOptions extends Record<string, unknown> {
   stage: Stage
+  resourceQuery: string
 }
 
 export const prepareOptions = (
@@ -89,11 +90,17 @@ export const prepareOptions = (
   ) {
     const apis = [`getServerData`, `config`]
 
-    if (resourceQuery === `?export=default`) {
+    if (
+      resourceQuery.includes(`?export=default`) ||
+      resourceQuery.includes(`&export=default`)
+    ) {
       apis.push(`Head`)
     }
 
-    if (resourceQuery === `?export=head`) {
+    if (
+      resourceQuery.includes(`?export=head`) ||
+      resourceQuery.includes(`&export=head`)
+    ) {
       apis.push(`default`)
     }
 

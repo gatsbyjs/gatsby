@@ -4,7 +4,5 @@ import Example from "./example"
 
 const shortcodes = { Example }
 export default function Layout({ children }) {
-    return (
-        <MDXProvider components={shortcodes}>{children}</MDXProvider>
-    )
+  return <MDXProvider components={shortcodes}>{children}</MDXProvider>
 }
