@@ -6,7 +6,6 @@ import util from "util"
 import { createCli } from "./create-cli"
 import report from "./reporter"
 import pkg from "../package.json"
-import updateNotifier from "update-notifier"
 import { ensureWindowsDriveLetterIsUppercase } from "./util/ensure-windows-drive-letter-is-uppercase"
 
 const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
@@ -21,7 +20,9 @@ if (os.platform() === `win32`) {
 }
 
 // Check if update is available
-updateNotifier({ pkg }).notify({ isGlobal: true })
+import(`update-notifier`).then(updateNotifier =>
+  updateNotifier.default({ pkg }).notify({ isGlobal: true })
+)
 
 const MIN_NODE_VERSION = `14.15.0`
 // const NEXT_MIN_NODE_VERSION = `10.13.0`
