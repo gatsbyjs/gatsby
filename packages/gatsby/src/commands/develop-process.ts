@@ -164,7 +164,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   const service = interpret(machine)
 
   if (program.verbose) {
-    // @ts-ignore - I don't understand this failure
     logTransitions(service)
   }
 
