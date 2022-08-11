@@ -22,7 +22,7 @@ const omitUndefined: omitUndefined = data => {
 
 /**
  * @param {*} data
- * @return {boolean}
+ * @return {boolean} 
  */
 type isTypeSupported = (data: data) => boolean
 
