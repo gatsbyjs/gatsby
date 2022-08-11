@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "3.21.0-next.1",
+  "version": "4.0.0-next.1",
   "description": "MDX integration for Gatsby",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,8 +34,8 @@
     "deepmerge": "^4.2.2",
     "estree-util-build-jsx": "^2.1.0",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.21.0-next.1",
-    "gatsby-plugin-utils": "^3.15.0-next.1",
+    "gatsby-core-utils": "^3.21.0-next.2",
+    "gatsby-plugin-utils": "^3.15.0-next.2",
     "gray-matter": "^4.0.3",
     "mdast-util-mdx": "^2.0.0",
     "mdast-util-to-hast": "^10.2.0",
