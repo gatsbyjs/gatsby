@@ -2,6 +2,7 @@
 import React, { ReactElement, useContext } from "react"
 import { Box, Text, BoxProps, Spacer } from "ink"
 import path from "path"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 import StoreStateContext from "../context"
 import {
   generatePageTree,
@@ -117,7 +118,8 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
   const componentWithPages = new Map<string, IComponentWithPageModes>()
 
   for (const { componentPath, pages } of state.pageTree!.components.values()) {
-    const pagesByMode = {
+    const layoutComponent = getPathToLayoutComponent(componentPath)
+    const pagesByMode = componentWithPages.get(layoutComponent) || {
       SSG: new Set<string>(),
       DSG: new Set<string>(),
       SSR: new Set<string>(),
@@ -128,8 +130,7 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
 
       pagesByMode[gatsbyPage!.mode].add(pagePath)
     })
-
-    componentWithPages.set(componentPath, pagesByMode)
+    componentWithPages.set(layoutComponent, pagesByMode)
   }
 
   for (const {

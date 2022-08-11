@@ -434,15 +434,12 @@ jobs:
           test_path: e2e-tests/themes
           test_command: cd production-runtime; yarn test
 
-  mdx_e2e_tests:
+  e2e_tests_mdx:
     <<: *e2e-executor
     steps:
       - e2e-test:
           test_path: e2e-tests/mdx
           test_command: CYPRESS_PROJECT_ID=spbj28 CYPRESS_RECORD_KEY=af30ea46-121f-4fb7-97dd-f17ec224402e yarn test
-      - e2e-test:
-          test_path: e2e-tests/mdx-less-babel
-          test_command: CYPRESS_PROJECT_ID=xo139a CYPRESS_RECORD_KEY=74d485b5-3ba6-40e1-a7d4-e63c0a8d2a4d yarn test
 
   e2e_tests_visual-regression:
     <<: *e2e-executor
@@ -646,6 +643,8 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_contentful:
           <<: *e2e-test-workflow
+      - e2e_tests_mdx:
+          <<: *e2e-test-workflow
       - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
@@ -659,8 +658,6 @@ workflows:
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - themes_e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
-      - mdx_e2e_tests:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master
