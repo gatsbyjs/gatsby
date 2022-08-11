@@ -104,7 +104,7 @@
     "gatsby-worker": "^1.21.0-next.0",
     "glob": "^7.2.3",
     "globby": "^11.1.0",
-    "got": "^11.8.2",
+    "got": "^11.8.5",
     "graphql": "^15.7.2",
     "graphql-compose": "^9.0.7",
     "graphql-playground-middleware-express": "^1.7.22",
