@@ -1,13 +1,15 @@
-const babelLoader = require(`babel-loader`)
-
+import babelLoader from "babel-loader"
+import type { Compiler } from "webpack"
+import Babel, { ConfigItem } from "@babel/core"
 import {
   prepareOptions,
   getCustomOptions,
   mergeConfigItemOptions,
   addRequiredPresetOptions,
+  ICustomOptions,
 } from "./babel-loader-helpers"
-
-const { getBrowsersList } = require(`./browserslist`)
+import type { Stage } from "../commands/types"
+import { getBrowsersList } from "./browserslist"
 
 /**
  * Gatsby's custom loader for webpack & babel
@@ -25,22 +27,27 @@ const { getBrowsersList } = require(`./browserslist`)
  * You can find documentation for the custom loader here: https://babeljs.io/docs/en/next/babel-core.html#loadpartialconfig
  */
 
+interface IBabelCustomLoader {
+  custom: ICustomOptions
+  loader: Record<string, unknown>
+}
+
 const customOptionsCache = new Map()
 const configCache = new Map()
 const babelrcFileToCacheKey = new Map()
 
-module.exports = babelLoader.custom(babel => {
+const customBabelLoader = babelLoader.custom(babel => {
   return {
     // Passed the loader options.
     customOptions({
-      stage = `test`,
+      stage = `test` as Stage,
       reactRuntime = `classic`,
       reactImportSource,
       isPageTemplate,
       resourceQuery,
       rootDir = process.cwd(),
       ...options
-    }) {
+    }): IBabelCustomLoader {
       const customOptionsCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
 
       if (customOptionsCache.has(customOptionsCacheKey)) {
@@ -63,7 +70,7 @@ module.exports = babelLoader.custom(babel => {
             env: babel.getEnv(),
           }),
           sourceType: `unambiguous`,
-          ...getCustomOptions(stage),
+          ...getCustomOptions(stage as Stage),
           ...options,
         },
       }
@@ -74,7 +81,7 @@ module.exports = babelLoader.custom(babel => {
     },
 
     // Passed Babel's 'PartialConfig' object.
-    config(partialConfig, { customOptions }) {
+    config(partialConfig, { customOptions }): Babel.TransformOptions {
       const { stage, isPageTemplate, resourceQuery } = customOptions
       let configCacheKey = `${stage}-${isPageTemplate}-${resourceQuery}`
 
@@ -134,7 +141,7 @@ module.exports = babelLoader.custom(babel => {
       reduxPresets.forEach(preset => {
         options.presets = mergeConfigItemOptions({
           items: options.presets,
-          itemToMerge: preset,
+          itemToMerge: preset as ConfigItem,
           type: `preset`,
           babel,
         })
@@ -143,7 +150,7 @@ module.exports = babelLoader.custom(babel => {
       reduxPlugins.forEach(plugin => {
         options.plugins = mergeConfigItemOptions({
           items: options.plugins,
-          itemToMerge: plugin,
+          itemToMerge: plugin as ConfigItem,
           type: `plugin`,
           babel,
         })
@@ -163,12 +170,16 @@ module.exports = babelLoader.custom(babel => {
   }
 })
 
-module.exports.BabelConfigItemsCacheInvalidatorPlugin = class BabelConfigItemsCacheInvalidatorPlugin {
+export default customBabelLoader
+
+export class BabelConfigItemsCacheInvalidatorPlugin {
+  name: string
+
   constructor() {
     this.name = `BabelConfigItemsCacheInvalidatorPlugin`
   }
 
-  apply(compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.invalid.tap(this.name, function (file) {
       const cacheKeysToInvalidate = babelrcFileToCacheKey.get(file)
 
