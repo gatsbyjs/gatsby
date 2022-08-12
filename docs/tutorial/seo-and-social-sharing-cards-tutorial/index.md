@@ -4,7 +4,7 @@ title: Search Engine Optimization (SEO) and Social Sharing Cards with Gatsby
 
 Perhaps you've been approached by an SEO _expert_ who can maximize your revenue and page views by following these **Three Simple Tricks**! Relatively few people make the concerted effort to implement SEO in their web app. This tutorial will share some of the ins and outs of SEO and how you can implement common SEO patterns in your Gatsby web app, today. By the end of this post you'll know how to do the following:
 
-- Implement SEO patterns with [react-helmet][react-helmet]
+- Implement SEO patterns with the [Gatsby Head API](/reference/built-in-components/gatsby-head/)
 - Create an optimized social sharing card for Twitter, Facebook, and Slack
 - Tweak the SEO component exposed in the default gatsby starter ([`gatsby-starter-default`][gatsby-starter-default])
 
@@ -38,16 +38,12 @@ Gatsby distinguishes between page-level queries and component queries. The forme
 
 ### Creating the SEO component
 
-Using the power and flexibility of React, you can create a React component to power this functionality.
-
-> Note: `react-helmet` is enabled, by default, in gatsby-starter-default and gatsby-starter-blog.
->
-> If you're not using those starters, [follow this guide for installation instructions][gatsby-plugin-react-helmet]
+Using the power and flexibility of React, you can create a React component to power this functionality while
+bringing it to life with the [Gatsby Head API](/reference/built-in-components/gatsby-head/)
 
 ```jsx:title=src/components/seo.js
 import React from "react"
 // highlight-start
-import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 // highlight-end
 
@@ -82,10 +78,9 @@ This component doesn't _do_ anything yet, but it's the foundation for a useful, 
 
 ```jsx:title=src/components/seo.js
 import React from "react"
-import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-function SEO({ description, lang, meta }) {
+function SEO({ description, meta }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -104,30 +99,19 @@ function SEO({ description, lang, meta }) {
 
   const metaDescription = description || site.siteMetadata.description
 
+
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        // highlight-start
-        {
-          name: "keywords",
-          content: site.siteMetadata.keywords.join(","),
-        },
-        // highlight-end
-      ]}
-    />
+    <>
+      // highlight-start
+      <meta name ="description" content={metaDescription}>
+      <meta name ="keywords" content={site.siteMetadata.keywords.join(",")}>
+      // highlight-end
+    </>
   )
 }
 
 // highlight-start
 SEO.defaultProps = {
-  lang: `en`,
   meta: [],
   description: ``,
 }
@@ -136,9 +120,21 @@ SEO.defaultProps = {
 export default SEO
 ```
 
-Whew, getting closer! This will now render the `meta` `description` tag, and will do so using content injected at build-time with the `useStaticQuery` hook. Additionally, it will add the `lang="en"` attribute to the root-level `html` tag to silence that pesky Lighthouse warning 😉.
+Whew, getting closer! This will now render the `meta` `description` tag, and will do so using content injected at build-time with the `useStaticQuery` hook.
 
 This is still the bare bones, rudimentary approach to SEO. An additional step is to enhance this functionality and get some useful functionality for sharing a page via social networks like Facebook, Twitter, and Slack.
+
+#### Add HTML lang atrribute
+
+Lighthouse will show warnigns if root-level `html` tag tag doesn't have the `lang` attribute. To set this, you'd need to add the code below to your `gatsby-ssr.js` file — this file should be in the root of your site.
+
+```js:title=gatsby-ssr.js
+exports.onRenderBody = ({ setHtmlAttributes }) => {
+  setHtmlAttributes({ lang: "en" })
+}
+```
+
+This adds a`lang="en"` attribute to the root-level `html` and silences that pesky Lighthouse warning 😉.
 
 ### Implementing social SEO
 
@@ -151,11 +147,10 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types" // highlight-line
-import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
-function SEO({ description, lang, meta, image: metaImage, title }) {
+function SEO({ description, meta, image: metaImage, title }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -181,89 +176,40 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
   // highlight-end
 
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          name: "keywords",
-          content: site.siteMetadata.keywords.join(","),
-        },
-        {
-          property: `og:title`,
-          content: title,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:creator`,
-          content: site.siteMetadata.author,
-        },
-        {
-          name: `twitter:title`,
-          content: title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-        // highlight-start
-      ]
-        .concat(
-          metaImage
-            ? [
-                {
-                  property: "og:image",
-                  content: image,
-                },
-                {
-                  property: "og:image:width",
-                  content: metaImage.width,
-                },
-                {
-                  property: "og:image:height",
-                  content: metaImage.height,
-                },
-                {
-                  name: "twitter:card",
-                  content: "summary_large_image",
-                },
-              ]
-            : [
-                {
-                  name: "twitter:card",
-                  content: "summary",
-                },
-              ]
-          // highlight-end
-        )
-        .concat(meta)}
-    />
+    <>
+      <title>{`${title} | ${site.siteMetadata.title}`}</title>
+      <meta name="description" content={metaDescription}/>
+      <meta name="keywords" content={site.siteMetadata.keywords.join(",")}/>
+      <meta property="og:title" content={title}/>
+      <meta name="og:description" content={metaDescription}/>
+      <meta property="og:type" content="website"/>
+      <meta property="twitter:creator" content={site.siteMetadata.author}/>
+      <meta property="twitter:title" content={title}/>
+      <meta property="twitter:description" content={metaDescription}/>
+      {/* highlight-start */}
+      {metaImage ? (
+        <>
+          <meta property="og:image" content={image}/>
+          <meta property="og:image:width" content={metaImage.width}/>
+          <meta property="og:image:height" content={metaImage.height}/>
+          <meta property="twitter:card" content="summary_large_image"/>
+        </>
+      ): <>
+          <meta property="twitter:card" content="summary"/>
+         </>
+      }
+      {/* highlight-end */}
+    </>
   )
 }
 
 SEO.defaultProps = {
-  lang: `en`,
   meta: [],
   description: ``,
 }
 
 SEO.propTypes = {
   description: PropTypes.string,
-  lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
   // highlight-start
@@ -289,16 +235,15 @@ To implement this functionality, you need to do the following:
 1. Enable passing a `pathname` prop to your SEO component
 2. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
    - A canonical link should be _absolute_ (e.g. `https://your-site.com/canonical-link`), so you will need to prefix with this `siteUrl`
-3. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
+3. Render a `<link rel="canonical">`tag with the canonical link
 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
-function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
+function SEO({ description, meta, image: metaImage, title, pathname }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -325,99 +270,39 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
   // highlight-end
 
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
-      // highlight-start
-      link={
-        canonical
-          ? [
-              {
-                rel: "canonical",
-                href: canonical,
-              },
-            ]
-          : []
+    <>
+      <title>{`${title} | ${site.siteMetadata.title}`}</title>
+      <meta name="description" content={metaDescription}/>
+      <meta name="keywords" content={site.siteMetadata.keywords.join(",")}/>
+      <meta property="og:title" content={title}/>
+      <meta name="og:description" content={metaDescription}/>
+      <meta property="og:type" content="website"/>
+      <meta property="twitter:creator" content={site.siteMetadata.author}/>
+      <meta property="twitter:title" content={title}/>
+      <meta property="twitter:description" content={metaDescription}/>
+      {metaImage ? (
+        <>
+          <meta property="og:image" content={image}/>
+          <meta property="og:image:width" content={metaImage.width}/>
+          <meta property="og:image:height" content={metaImage.height}/>
+          <meta property="twitter:card" content="summary_large_image"/>
+        </>
+      ): <>
+          <meta property="twitter:card" content="summary"/>
+         </>
       }
-      //highlight-end
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          name: "keywords",
-          content: site.siteMetadata.keywords.join(","),
-        },
-        {
-          property: `og:title`,
-          content: title,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:creator`,
-          content: site.siteMetadata.author,
-        },
-        {
-          name: `twitter:title`,
-          content: title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-      ]
-        .concat(
-          metaImage
-            ? [
-                {
-                  property: "og:image",
-                  content: image,
-                },
-                {
-                  property: "og:image:width",
-                  content: metaImage.width,
-                },
-                {
-                  property: "og:image:height",
-                  content: metaImage.height,
-                },
-                {
-                  name: "twitter:card",
-                  content: "summary_large_image",
-                },
-              ]
-            : [
-                {
-                  name: "twitter:card",
-                  content: "summary",
-                },
-              ]
-        )
-        .concat(meta)}
-    />
+      {canonical && <link rel="canonical" href={canonical}/>} {/* highlight-line */}
+    </>
   )
 }
 
 SEO.defaultProps = {
-  lang: `en`,
   meta: [],
   description: ``,
 }
 
 SEO.propTypes = {
   description: PropTypes.string,
-  lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
   image: PropTypes.shape({
@@ -438,24 +323,28 @@ To bring it all home, it's time to begin actually _using_ this extensible SEO co
 
 ## Using the SEO component
 
-You created an extensible SEO component. It takes a `title` prop and then (optionally) `description`, `meta`, `image`, and `pathname` props.
+You created an extensible SEO component. It takes a `title` prop and then (optionally) `description`, `meta`, `image`, and `pathname` props. To use it in templates and pages, we'd levere on the [Gatsby Head API](/reference/built-in-components/gatsby-head/) which is a built in funtionaly that help you add elements to the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) of your pages.
 
 ### In a page component
 
 ```jsx:title=src/pages/index.js
 import React from "react"
-
 import Layout from "../components/layout"
 import SEO from "../components/seo" // highlight-line
 
 function Index() {
   return (
     <Layout>
-      <SEO title="My Amazing Gatsby App" /> {/* highlight-line */}
       <h1>lol - pretend this is meaningful content</h1>
     </Layout>
   )
 }
+
+//higlight-start
+export const Head = () => (
+  <SEO title="My Amazing Gatsby App" />
+)
+//higlight-end
 
 export default Index
 ```
@@ -505,30 +394,34 @@ import Layout from "../components/layout"
 import SEO from "../components/seo" // highlight-line
 import { rhythm, scale } from "../utils/typography"
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
-    const siteTitle = this.props.data.site.siteMetadata.title
-    const image = post.frontmatter.image
-      ? post.frontmatter.image.childImageSharp.resize
-      : null // highlight-line
+function BlogPostTemplate(){
+  const post = this.props.data.markdownRemark
+  const siteTitle = this.props.data.site.siteMetadata.title
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        {/* highlight-start */}
-        <SEO
-          title={post.frontmatter.title}
-          description={post.frontmatter.description || post.excerpt}
-          image={image}
-          pathname={this.props.location.pathname}
-        />
-        {/* highlight-end */}
-        <h1>{post.frontmatter.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      </Layout>
-    )
-  }
+  return (
+    <Layout location={this.props.location} title={siteTitle}>
+      <h1>{post.frontmatter.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+    </Layout>
+  )
 }
+
+// highlight-start
+export const Head = ({ data:{ markdownRemark: post }}) => {
+   const image = post.frontmatter.image
+    ? post.frontmatter.image.childImageSharp.resize
+    : null // highlight-line
+
+  return (
+    <SEO
+      title={post.frontmatter.title}
+      description={post.frontmatter.description || post.excerpt}
+      image={image}
+      pathname={this.props.location.pathname}
+    />
+  )
+}
+// highlight-end
 
 export default BlogPostTemplate
 
@@ -621,8 +514,8 @@ This tutorial is merely a shallow dive into the depths of SEO. Consider it a pri
 [gatsby-starter-default]: https://github.com/gatsbyjs/gatsby-starter-default
 [gatsby-static-query]: /docs/static-query/
 [gatsby-markdown-blog]: /docs/adding-markdown-pages/
-[gatsby-plugin-react-helmet]: /packages/gatsby-plugin-react-helmet/
-[react-helmet]: https://github.com/nfl/react-helmet
+
+[Gatsby Head API](/reference/built-in-components/gatsby-head/)
 [unstructured-data]: /docs/using-gatsby-without-graphql/
 [og]: https://developers.facebook.com/docs/sharing/webmasters/#markup
 [twitter-cards]: https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards.html
