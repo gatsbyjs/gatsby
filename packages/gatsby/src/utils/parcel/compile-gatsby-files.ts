@@ -102,7 +102,7 @@ export async function compileGatsbyFiles(
 
     await exponentialBackoff(retry)
 
-    // for whatever reason TS things LMDBCache is some browser Cache and not actually Parcel's Cache
+    // for whatever reason TS thinks LMDBCache is some browser Cache and not actually Parcel's Cache
     // so we force type it to Parcel's Cache
     const cache = new LMDBCache(getCacheDir(siteRoot)) as any as Cache
     const parcel = constructParcel(siteRoot, cache)
