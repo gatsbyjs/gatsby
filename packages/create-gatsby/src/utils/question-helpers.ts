@@ -9,7 +9,7 @@ import { reporter } from "./reporter"
 import { IFlags } from "./parse-args"
 
 // eslint-disable-next-line no-control-regex
-const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
+const INVALID_FILENAMES = /[<>:"|?*\u0000-\u001F]/g
 const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 
 export const makeChoices = (
