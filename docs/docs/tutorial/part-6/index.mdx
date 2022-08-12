@@ -146,6 +146,10 @@ When you build your site, Gatsby looks at the page components in your `src/pages
       )
     }
 
+    export const Head = () => (
+      <title>Super Cool Blog Posts</title>
+    )
+
     export default BlogPost
     ```
 
@@ -393,6 +397,10 @@ The JSON object in the Query Variables section should look something like the on
     `
     // highlight-end
 
+    export const Head = () => (
+      <title> Super Cool Blog Posts </title>
+    )
+
     export default BlogPost
     ```
 
@@ -427,6 +435,12 @@ The JSON object in the Query Variables section should look something like the on
         }
       }
     `
+
+    export const Head = ({ data }) => {
+      return(
+        <title>{data.mdx.frontmatter.title}</title>
+      )
+    }
 
     export default BlogPost
     ```
@@ -477,6 +491,11 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
       }
     `
 
+    export const Head = () => (
+      <title> My Blog Posts </title>
+    )
+
+
     export default BlogPage
     ```
 
@@ -523,6 +542,10 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
         }
       }
     `
+
+     export const Head = () => (
+      <title> My Blog Posts </title>
+    )
 
     export default BlogPage
     ```

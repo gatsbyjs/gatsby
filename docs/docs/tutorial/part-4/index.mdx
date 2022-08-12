@@ -392,7 +392,6 @@ const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}>
       {/* highlight-start */}
-      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       <header>{data.site.siteMetadata.title}</header>
       {/* highlight-end */}
       <nav>
@@ -419,8 +418,6 @@ const Layout = ({ pageTitle, children }) => {
 
 export default Layout
 ```
-
-![A screenshot of the home page in a web browser. The title of the page in the browser tab now says, "Home Page | My First Gatsby Site", and the top of the page has an unstyled paragraph that says, "My First Gatsby Site".](./index-page-with-site-title.png)
 
 4. Now that the site title is showing up on the page, it's time to add some style! Define some styles for the site title below the existing styles in your `layout.module.css` file.
 
@@ -462,7 +459,6 @@ const Layout = ({ pageTitle, children }) => {
 
   return (
     <div className={container}>
-      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       {/* highlight-next-line */}
       <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
@@ -523,6 +519,10 @@ const BlogPage = () => {
   )
 }
 
+export const Head = ({ data })=> (
+   <title> My Blog Posts | {data.site.siteMetadata.title}</title>
+)
+
 export default BlogPage
 ```
 
@@ -544,7 +544,6 @@ const Layout = ({ pageTitle, children }) => {
 
   return (
     <div className={container}>
-      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
@@ -769,6 +768,10 @@ const BlogPage = () => {
     </Layout>
   )
 }
+
+export const Head = ({ data })=> (
+   <title> My Blog Posts | {data.site.siteMetadata.title}</title>
+)
 
 export default BlogPage
 ```

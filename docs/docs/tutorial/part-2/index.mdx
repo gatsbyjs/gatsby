@@ -15,6 +15,7 @@ To build out the basic page structure for your blog site, you'll need to know ab
 By the end of this part of the Tutorial, you will be able to:
 
 * Create **page components** to add new pages to your site.
+* Add title to your site using the **Gatsby Head API**
 * Import and use a **pre-built component** from another package.
 * Create your own **reusable "building block" component**.
 * Use component **props** to change the way a component renders.
@@ -183,12 +184,13 @@ import * as React from 'react'
 const IndexPage = () => {
   return (
     <main>
-      <title>Home Page</title>
       <h1>Welcome to my Gatsby site!</h1>
       <p>I'm making this by following the Gatsby Tutorial.</p>
     </main>
   )
 }
+
+export const Head = () => <title>Home Page</title>
 
 // Step 3: Export your component
 export default IndexPage
@@ -222,14 +224,16 @@ import * as React from 'react'
 const AboutPage = () => {
   return (
     <main>
-      <title>About Me</title>
       <h1>About Me</h1>
       <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
     </main>
   )
 }
 
-// Step 3: Export your component
+// Step 3: Add a page title
+export const Head = () => <title>Home Page</title>
+
+// Step 4: Export your component
 export default AboutPage
 ```
 
@@ -343,7 +347,6 @@ import { Link } from 'gatsby'
 const IndexPage = () => {
   return (
     <main>
-      <title>Home Page</title>
       <h1>Welcome to my Gatsby site!</h1>
       {/* highlight-next-line */}
       <Link to="/about">About</Link>
@@ -351,6 +354,8 @@ const IndexPage = () => {
     </main>
   )
 }
+
+export const Head = () => <title>Home Page</title>
 
 export default IndexPage
 ```
@@ -365,7 +370,6 @@ import { Link } from 'gatsby' // highlight-line
 const AboutPage = () => {
   return (
     <main>
-      <title>About Me</title>
       <h1>About Me</h1>
       {/* highlight-next-line */}
       <Link to="/">Back to Home</Link>
@@ -373,6 +377,8 @@ const AboutPage = () => {
     </main>
   )
 }
+
+export const Head = () => <title>Home Page</title>
 
 export default AboutPage
 ```
@@ -478,7 +484,6 @@ import { Link } from 'gatsby'
 const Layout = ({ pageTitle, children }) => {
   return (
     <div>
-      <title>{pageTitle}</title>
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
@@ -643,7 +648,6 @@ import { container } from './layout.module.css' // highlight-line
 const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}> // highlight-line
-      <title>{pageTitle}</title>
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
@@ -721,7 +725,6 @@ import {
 const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}>
-      <title>{pageTitle}</title>
       <nav>
         <ul className={navLinks}> // highlight-line
           <li className={navLinkItem}> // highlight-line
@@ -773,6 +776,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 
 * What's the difference between a page component and a building-block component?
 * How do you add a new page to your Gatsby site?
+* How do you add title to page?
 * What are the three steps for writing a new React component?
 * What are props and when might you use them?
 * What is the `children` prop and why is it useful?

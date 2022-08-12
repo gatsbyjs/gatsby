@@ -557,6 +557,10 @@ const BlogPage = ({ data }) => {
   )
 }
 
+const Head = () => (
+  <title>My Blog Posts</title>
+)
+
 export const query = graphql`
   query {
     allMdx(sort: {fields: frontmatter___date, order: DESC}) {
