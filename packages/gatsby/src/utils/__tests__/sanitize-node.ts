@@ -12,7 +12,7 @@ describe(`node sanitization`, () => {
         down2: {},
       },
     }
-    // @ts-ignore edge test case
+    //  @ts-ignore edge test case
     indirectCircular.down1.down2.deepCircular = indirectCircular
 
     testNode = {
