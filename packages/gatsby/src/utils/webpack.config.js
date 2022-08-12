@@ -25,7 +25,7 @@ import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
 import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
-const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
+import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
