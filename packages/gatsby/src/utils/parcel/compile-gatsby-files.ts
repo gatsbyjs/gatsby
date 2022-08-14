@@ -104,7 +104,7 @@ export async function compileGatsbyFiles(
 
     // for whatever reason TS thinks LMDBCache is some browser Cache and not actually Parcel's Cache
     // so we force type it to Parcel's Cache
-    const cache = new LMDBCache(getCacheDir(siteRoot)) as any as Cache
+    const cache = new LMDBCache(getCacheDir(siteRoot)) as unknown as Cache
     const parcel = constructParcel(siteRoot, cache)
     const { bundleGraph } = await parcel.run()
     let cacheClosePromise = Promise.resolve()
