@@ -54,7 +54,7 @@ export function generateComponentChunkName(componentPath: string): string {
      * minus 7 for `.js.map`
      * minus 20 for `-[hash].js`
      */
-    const maxLength = 216
+    const maxLength = 215
     const shouldTruncate = name.length > maxLength
 
     /**
