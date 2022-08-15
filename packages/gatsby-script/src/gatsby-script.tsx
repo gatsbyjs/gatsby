@@ -2,9 +2,7 @@ import React, { useEffect } from "react"
 import { collectedScriptsByPage } from "./collected-scripts-by-page"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
-
-// For some reason @gatsbyjs/reach-router does not resolve the same module that core uses, but this does
-import { Location, useLocation } from "@reach/router"
+import { Location, useLocation } from "@gatsbyjs/reach-router"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
