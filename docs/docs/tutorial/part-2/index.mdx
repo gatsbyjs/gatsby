@@ -190,6 +190,7 @@ const IndexPage = () => {
   )
 }
 
+// Page title that shows up on the browser tab
 export const Head = () => <title>Home Page</title>
 
 // Step 3: Export your component
@@ -230,16 +231,35 @@ const AboutPage = () => {
   )
 }
 
-// Step 3: Add a page title
-export const Head = () => <title>Home Page</title>
-
 // Step 4: Export your component
 export default AboutPage
 ```
 
-2. In a web browser, visit `localhost:8000/about`. When your development server finishes rebuilding your site, the About page should look something like this:
+2. Add a page title: Gatsby lets you define a title and other [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) related tags with the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
+When you export a `Head` component from your page file, It automatically picks all the head tags in your JSX and adds them to the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head).
+This is important because it helps search engines like Google to better understand your site. For this tutorial we'll only be adding a title to this page but you can also add `<meta>`, `<links>` and other head related tags
 
-![A screenshot of "localhost:8000/about" in a web browser. It has a heading that says, "About Me", and a paragraph that says, "Hi there! I'm the proud creator of this site, which I built with Gatsby."](./about-page.png)
+```js:title=src/pages/about.js
+import * as React from 'react'
+
+const AboutPage = () => {
+  return (
+    <main>
+      <h1>About Me</h1>
+      <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
+    </main>
+  )
+}
+
+// Yay! We defined a page title. This shows up on the browser tab
+export const Head = () => <title>About Me<title/>
+
+export default AboutPage
+```
+
+3. In a web browser, visit `localhost:8000/about`. When your development server finishes rebuilding your site, the About page should look something like this:
+
+![A screenshot of "localhost:8000/about" in a web browser. It has a heading and page title that says, "About Me", and a paragraph that says, "Hi there! I'm the proud creator of this site, which I built with Gatsby."](./about-page.png)
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -378,7 +398,7 @@ const AboutPage = () => {
   )
 }
 
-export const Head = () => <title>Home Page</title>
+export const Head = () => <title>About Page</title>
 
 export default AboutPage
 ```
