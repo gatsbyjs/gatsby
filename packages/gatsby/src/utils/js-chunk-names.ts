@@ -52,8 +52,9 @@ export function generateComponentChunkName(componentPath: string): string {
      * File names should not exceed 255 characters
      * minus 12 for `component---`
      * minus 7 for `.js.map`
+     * minus 20 for `-[hash].js`
      */
-    const maxLength = 236
+    const maxLength = 215
     const shouldTruncate = name.length > maxLength
 
     /**
