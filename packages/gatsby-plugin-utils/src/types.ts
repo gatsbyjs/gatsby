@@ -33,6 +33,9 @@ export interface IPluginInfo {
 
   /** Options passed to the plugin */
   pluginOptions?: IPluginInfoOptions
+
+  module?: any
+  modulePath?: string
 }
 
 export interface IPluginInfoOptions {
