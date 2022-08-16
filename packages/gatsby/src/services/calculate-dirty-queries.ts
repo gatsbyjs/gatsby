@@ -8,8 +8,8 @@ export async function calculateDirtyQueries(
   {
     pendingQueryRuns: currentlyHandledPendingQueryRuns,
   }: {
-    pendingQueryRuns: Set<string>
-  }
+    pendingQueryRuns?: Set<string>
+  } = {}
 ): Promise<{
   queryIds: IGroupedQueryIds
 }> {
