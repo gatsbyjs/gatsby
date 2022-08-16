@@ -9,6 +9,7 @@ Welcome to `gatsby@4.21.0` release (August 2022 #2)
 Key highlights of this release:
 
 - [`gatsby-plugin-mdx` v4](#gatsby-plugin-mdx-v4)
+- [Open RFCs](#open-rfcs)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -57,6 +58,65 @@ We did our best to strike a balance between introducing meaningful breaking chan
 If you have any questions along the way, post them either into the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/25068) or into the [`mdx-v2` channel on Discord](https://gatsby.dev/discord).
 
 The [using-mdx example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-mdx) also showcases some of the necessary migration steps.
+
+## Open RFCs
+
+### Slices API
+
+We are adding a new API that we are calling “Slices”. By using a new `<Slice />` React component in combination with a `src/slices` directory or `createSlice` API for common UI features, Gatsby will be able to build and deploy individual pieces of your site that had content changes, not entire pages.
+
+To create a slice, simply:
+
+1. Create the slice by adding a `slices/footer.js` file, or using the `createPages` API action:
+
+    ```
+    actions.createSlice({
+      id: `footer`,
+      component: require.resolve(`./src/components/footer.js`),
+    })
+    ```
+
+2. Add a `<Slice />` component on your site, providing an `alias` string prop, where `alias` is either name of the file (in our case, `footer`). Any additional props passed will be handed down to the underlying component.
+    
+    ```jsx
+    <Header className="my-header" />
+    {children}
+    <Slice alias="footer" />
+    ```
+
+To read more, head over to [RFC: Slices API](https://github.com/gatsbyjs/gatsby/discussions/36339). We appreciate any feedback there.
+
+### Changes in `sort` and aggregation fields in Gatsby GraphQL Schema
+
+We are proposing Breaking Changes for the next major version of Gatsby to our GraphQL API. The goal of this change is increasing performance and reducing resource usage of builds. Proposed changes impact `sort` and aggregation fields (`group`, `min`, `max`, `sum`, `distinct`).
+
+Basic example of proposed change:
+
+Current:
+
+```graphql
+{
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    nodes {
+      ...fields
+    }
+  }
+}
+```
+
+Proposed:
+
+```jsx
+{
+  allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    nodes {
+      ...fields
+    }
+  }
+}
+```
+
+To read more, head over to [RFC: Change to sort and aggregation fields API](https://github.com/gatsbyjs/gatsby/discussions/36242). We appreciate any feedback there.
 
 ## Notable bugfixes & improvements
 
