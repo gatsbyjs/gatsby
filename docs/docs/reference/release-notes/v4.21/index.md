@@ -61,6 +61,13 @@ The [using-mdx example](https://github.com/gatsbyjs/gatsby/tree/master/examples/
 ## Notable bugfixes & improvements
 
 - `gatsby-plugin-sharp`: `sharp` was updated to `0.30.7` (also in all other related packages). This deprecates the `failOnError` option as it's being replaced by the `failOn` option, via [PR #35539](https://github.com/gatsbyjs/gatsby/pull/35539)
+- `gatsby`:
+  - Fix `e.remove()` is not a function error when using Gatsby Head API, via [PR #36338](https://github.com/gatsbyjs/gatsby/pull/36338)
+  - Make inline scripts run in develop, via [PR #36372](https://github.com/gatsbyjs/gatsby/pull/36372)
+  - Make runtime error overlay work in non-v8 browsers, via [PR #36365](https://github.com/gatsbyjs/gatsby/pull/36365)
+- `gatsby-source-contentful`: Correctly overwrite field type on Assets, via [PR #36337](https://github.com/gatsbyjs/gatsby/pull/36337)
+- `gatsby-plugin-react-helment`: Stop appending empty title tags, via [PR #36303](https://github.com/gatsbyjs/gatsby/pull/36303)
+- `gatsby-link`: Correctly export default for CommonJS, via [PR #36312](https://github.com/gatsbyjs/gatsby/pull/36312)
 
 ## Contributors
 
