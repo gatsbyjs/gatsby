@@ -23,5 +23,4 @@ export interface IQueryRunningContext {
   websocketManager?: WebsocketManager
   filesDirty?: boolean
   pendingQueryRuns?: Set<string>
-  currentlyHandledPendingQueryRuns?: Set<string>
 }

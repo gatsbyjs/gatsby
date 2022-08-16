@@ -62,21 +62,15 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     calculatingDirtyQueries: {
-      entry: assign<IQueryRunningContext>(({ pendingQueryRuns }) => {
-        return {
-          pendingQueryRuns: new Set(),
-          currentlyHandledPendingQueryRuns: pendingQueryRuns,
-        }
+      entry: assign({
+        pendingQueryRuns: new Set(),
       }),
       invoke: {
         id: `calculating-dirty-queries`,
         src: `calculateDirtyQueries`,
         onDone: {
           target: `runningStaticQueries`,
-          actions: [
-            `assignDirtyQueries`,
-            `clearCurrentlyHandledPendingQueryRuns`,
-          ],
+          actions: [`assignDirtyQueries`],
         },
       },
     },

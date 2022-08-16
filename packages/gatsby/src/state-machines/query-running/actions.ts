@@ -42,16 +42,10 @@ export const trackRequestedQueryRun = assign<
   },
 })
 
-export const clearCurrentlyHandledPendingQueryRuns =
-  assign<IQueryRunningContext>({
-    currentlyHandledPendingQueryRuns: undefined,
-  })
-
 export const queryActions: ActionFunctionMap<IQueryRunningContext, any> = {
   assignDirtyQueries,
   flushPageData,
   markSourceFilesDirty,
   markSourceFilesClean,
   trackRequestedQueryRun,
-  clearCurrentlyHandledPendingQueryRuns,
 }

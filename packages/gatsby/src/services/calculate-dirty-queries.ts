@@ -3,11 +3,14 @@ import { IGroupedQueryIds } from "./"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
 
-export async function calculateDirtyQueries({
-  store,
-  websocketManager,
-  currentlyHandledPendingQueryRuns,
-}: Partial<IQueryRunningContext>): Promise<{
+export async function calculateDirtyQueries(
+  { store, websocketManager }: Partial<IQueryRunningContext>,
+  {
+    pendingQueryRuns: currentlyHandledPendingQueryRuns,
+  }: {
+    pendingQueryRuns: Set<string>
+  }
+): Promise<{
   queryIds: IGroupedQueryIds
 }> {
   assertStore(store)
