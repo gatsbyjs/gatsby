@@ -79,11 +79,13 @@ To create a slice, simply:
 2. Add a `<Slice />` component on your site, providing an `alias` string prop, where `alias` is either name of the file (in our case, `footer`). Any additional props passed will be handed down to the underlying component.
 
    ```jsx
-   ;<Header className="my-header" />
-   {
-     children
-   }
-   ;<Slice alias="footer" />
+   return (
+     <>
+       <Header className="my-header" />
+       {children}
+       <Slice alias="footer" />
+     </>
+   )
    ```
 
 To read more, head over to [RFC: Slices API](https://github.com/gatsbyjs/gatsby/discussions/36339). We appreciate any feedback there.
