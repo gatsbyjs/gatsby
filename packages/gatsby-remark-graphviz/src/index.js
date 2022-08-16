@@ -11,19 +11,9 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   const codeNodes = []
 
   visit(markdownAST, `code`, node => {
-    const chunks = (node.lang || ``).match(/^(\S+)(\s+(.+))?/)
-
-    if (!chunks || !chunks.length) {
-      return node
-    }
-
-    const lang = chunks[1]
-    const attrString = chunks[3]
-
     // Only act on languages supported by graphviz
-    if (validLanguages.includes(lang)) {
-      node.lang = lang
-      codeNodes.push({ node, attrString: attrString })
+    if (validLanguages.includes(node.lang)) {
+      codeNodes.push({ node, attrString: node.meta })
     }
     return node
   })
