@@ -235,9 +235,8 @@ const AboutPage = () => {
 export default AboutPage
 ```
 
-2. Add a page title: Gatsby lets you define a title and other [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) related tags with the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
-When you export a `Head` component from your page file, It automatically picks all the head tags in your JSX and adds them to the [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head).
-This is important because it helps search engines like Google to better understand your site. For this tutorial we'll only be adding a title to this page but you can also add `<meta>`, `<links>` and other head related tags
+2. Add a page title to your page. Gatsby lets you define a `<title>` and other [document metadata](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) with the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/). You have to export a component called `Head` from your page to apply the metadata.
+Adding such metadata helps search engines like Google to better understand your site. For this tutorial we'll only be adding a title to this page but you can also later add other metadata.
 
 ```js:title=src/pages/about.js
 import * as React from 'react'
