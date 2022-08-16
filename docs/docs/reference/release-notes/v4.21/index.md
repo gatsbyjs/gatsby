@@ -69,20 +69,22 @@ To create a slice, simply:
 
 1. Create the slice by adding a `slices/footer.js` file, or using the `createPages` API action:
 
-    ```
-    actions.createSlice({
-      id: `footer`,
-      component: require.resolve(`./src/components/footer.js`),
-    })
-    ```
+   ```js
+   actions.createSlice({
+     id: `footer`,
+     component: require.resolve(`./src/components/footer.js`),
+   })
+   ```
 
 2. Add a `<Slice />` component on your site, providing an `alias` string prop, where `alias` is either name of the file (in our case, `footer`). Any additional props passed will be handed down to the underlying component.
-    
-    ```jsx
-    <Header className="my-header" />
-    {children}
-    <Slice alias="footer" />
-    ```
+
+   ```jsx
+   ;<Header className="my-header" />
+   {
+     children
+   }
+   ;<Slice alias="footer" />
+   ```
 
 To read more, head over to [RFC: Slices API](https://github.com/gatsbyjs/gatsby/discussions/36339). We appreciate any feedback there.
 
