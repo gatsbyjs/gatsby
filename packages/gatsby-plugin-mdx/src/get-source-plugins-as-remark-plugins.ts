@@ -32,30 +32,29 @@ export async function getSourcePluginsAsRemarkPlugins({
 
   const userPlugins = userPluginsFiltered.map(plugin => {
     const requiredPlugin = plugin.module
-    const wrappedGatsbyPlugin: Pluggable<Array<any>> =
-      function wrappedGatsbyPlugin() {
-        // eslint-disable-next-line @babel/no-invalid-this
-        const mdxNode = getNode(this.data(`mdxNodeId`) as string)
+    const wrappedGatsbyPlugin: Pluggable<any> = function wrappedGatsbyPlugin() {
+      // eslint-disable-next-line @babel/no-invalid-this
+      const mdxNode = getNode(this.data(`mdxNodeId`) as string)
 
-        return async function transformer(markdownAST): Promise<any> {
-          // Execute gatsby-remark-* plugin
-          await requiredPlugin(
-            {
-              markdownAST,
-              markdownNode: mdxNode,
-              getNode,
-              getNodesByType,
-              get files() {
-                return getNodesByType(`File`)
-              },
-              pathPrefix,
-              reporter,
-              cache,
+      return async function transformer(markdownAST): Promise<any> {
+        // Execute gatsby-remark-* plugin
+        await requiredPlugin(
+          {
+            markdownAST,
+            markdownNode: mdxNode,
+            getNode,
+            getNodesByType,
+            get files() {
+              return getNodesByType(`File`)
             },
-            plugin.options || {}
-          )
-        }
+            pathPrefix,
+            reporter,
+            cache,
+          },
+          plugin.pluginOptions || {}
+        )
       }
+    }
 
     return wrappedGatsbyPlugin
   })
