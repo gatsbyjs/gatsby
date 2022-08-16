@@ -73,6 +73,9 @@ The [using-mdx example](https://github.com/gatsbyjs/gatsby/tree/master/examples/
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [Bi11](https://github.com/Bi11): fix(gatsby-plugin-image): Add `outputPixelDensities` to `SHARP_ATTRIBUTES` [PR #36203](https://github.com/gatsbyjs/gatsby/pull/36203)
+- [Kornil](https://github.com/Kornil): chore(gatsby): convert babel-loader-helpers to typescript [PR #36237](https://github.com/gatsbyjs/gatsby/pull/36237)
+- [Auspicus](https://github.com/Auspicus): chore(docs): Pre-encoded unicode characters can't be used in paths [PR #36325](https://github.com/gatsbyjs/gatsby/pull/36325)
+- [axe312ger](https://github.com/axe312ger): BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [PR #35650](https://github.com/gatsbyjs/gatsby/pull/35650)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.21.0-next.0...gatsby@4.21.0
