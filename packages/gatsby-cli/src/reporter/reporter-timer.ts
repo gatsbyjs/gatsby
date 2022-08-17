@@ -82,6 +82,7 @@ export const createTimerReporter = ({
       reporterActions.endActivity({
         id,
         status: ActivityStatuses.Success,
+        meta: reporter.getMetadata(),
       })
     },
 

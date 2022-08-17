@@ -101,6 +101,7 @@ export const createProgressReporter = ({
       reporterActions.endActivity({
         id,
         status: ActivityStatuses.Failed,
+        meta: reporter.getMetadata(),
       })
 
       return reporter.panic(errorMeta, error)
@@ -112,6 +113,7 @@ export const createProgressReporter = ({
       reporterActions.endActivity({
         id,
         status: ActivityStatuses.Success,
+        meta: reporter.getMetadata(),
       })
     },
 
@@ -122,6 +124,7 @@ export const createProgressReporter = ({
       reporterActions.endActivity({
         id,
         status: ActivityStatuses.Success,
+        meta: reporter.getMetadata(),
       })
     },
 

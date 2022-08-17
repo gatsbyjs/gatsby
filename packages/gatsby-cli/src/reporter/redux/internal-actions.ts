@@ -104,6 +104,7 @@ export const createLog = ({
   activity_uuid,
   stack,
   pluginName,
+  meta,
 }: {
   level: string
   text?: string
@@ -123,6 +124,7 @@ export const createLog = ({
   activity_uuid?: string
   stack?: IStructuredError["stack"]
   pluginName?: string
+  meta?: { [k: string]: any }
 }): ICreateLog => {
   return {
     type: Actions.Log,
@@ -146,6 +148,7 @@ export const createLog = ({
       timestamp: new Date().toJSON(),
       stack,
       pluginName,
+      meta,
     },
   }
 }
@@ -219,9 +222,11 @@ type QueuedEndActivity = Array<
 export const endActivity = ({
   id,
   status,
+  meta,
 }: {
   id: string
   status: ActivityStatuses
+  meta?: { [k: string]: any }
 }): QueuedEndActivity | null => {
   const activity = getActivity(id)
   if (!activity) {
@@ -280,6 +285,7 @@ export const endActivity = ({
           activity_current: activity.current,
           activity_total: activity.total,
           activity_type: activity.type,
+          meta,
         })
       )
     }

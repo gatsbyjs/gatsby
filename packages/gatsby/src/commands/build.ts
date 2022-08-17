@@ -53,7 +53,6 @@ import {
   writeQueryContext,
 } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
-import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
 import {
   materializePageMode,
@@ -63,6 +62,7 @@ import {
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
+import { version } from "gatsby/package.json"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -74,6 +74,10 @@ module.exports = async function build(
     buildId: uuid.v4(),
     root: program!.directory,
   }
+
+  report.addMetadata({
+    version,
+  })
 
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
@@ -202,7 +206,7 @@ module.exports = async function build(
       )
       await Promise.all(engineBundlingPromises)
     } catch (err) {
-      reporter.panic(err)
+      report.panic(err)
     } finally {
       buildActivityTimer.end()
     }
@@ -238,7 +242,7 @@ module.exports = async function build(
   try {
     await preparePageTemplateConfigs(gatsbyNodeGraphQLFunction)
   } catch (err) {
-    reporter.panic(err)
+    report.panic(err)
   } finally {
     pageConfigActivity.end()
   }
@@ -466,7 +470,7 @@ module.exports = async function build(
   await db.saveState()
 
   const state = store.getState()
-  reporter._renderPageTree({
+  report._renderPageTree({
     components: state.components,
     functions: state.functions,
     pages: state.pages,

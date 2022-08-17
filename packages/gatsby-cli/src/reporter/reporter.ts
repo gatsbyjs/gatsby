@@ -36,6 +36,10 @@ export interface IActivityArgs {
   tags?: { [key: string]: any }
 }
 
+interface ReporterMetadata {
+  [key: string]: any
+}
+
 let isVerbose = isTruthy(process.env.GATSBY_REPORTER_ISVERBOSE)
 
 function isLogIntentMessage(msg: any): msg is ILogIntent {
@@ -55,6 +59,8 @@ class Reporter {
 
   errorMap: Record<ErrorId, IErrorMapEntry> = {}
 
+  metadata: ReporterMetadata = {}
+
   /**
    * Set a custom error map to the reporter. This allows
    * the reporter to extend the internal error map
@@ -68,6 +74,25 @@ class Reporter {
       ...this.errorMap,
       ...entry,
     }
+  }
+
+  /**
+   * Add specific metadata to this reporter to be sent with every log
+   * Note: this does not recursively merge nested objects
+   */
+
+  addMetadata = (metadata: { [key: string]: any }): void => {
+    this.metadata = {
+      ...this.metadata,
+      ...metadata,
+    }
+  }
+
+  /**
+   * Get the metadata assigned to this reporter
+   */
+  getMetadata = (): ReporterMetadata => {
+    return { ...this.metadata }
   }
 
   /**
@@ -208,23 +233,43 @@ class Reporter {
     this.verbose(`${prefix}: ${(process.uptime() * 1000).toFixed(3)}ms`)
   }
 
-  verbose = (text: string): void => {
+  verbose = (text: string, meta?: { [k: string]: any }): void => {
     if (isVerbose) {
       reporterActions.createLog({
         level: LogLevels.Debug,
         text,
+        meta: { ...this.metadata, ...meta },
       })
     }
   }
 
-  success = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Success, text })
-  info = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Info, text })
-  warn = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Warning, text })
-  log = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Log, text })
+  success = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
+    reporterActions.createLog({
+      level: LogLevels.Success,
+      text,
+      meta: { ...this.metadata, ...meta },
+    })
+
+  info = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
+    reporterActions.createLog({
+      level: LogLevels.Info,
+      text,
+      meta: { ...this.metadata, ...meta },
+    })
+
+  warn = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
+    reporterActions.createLog({
+      level: LogLevels.Warning,
+      text,
+      meta: { ...this.metadata, ...meta },
+    })
+
+  log = (text?: string, meta?: { [k: string]: any }): CreateLogAction =>
+    reporterActions.createLog({
+      level: LogLevels.Log,
+      text,
+      meta: { ...this.metadata, ...meta },
+    })
 
   pendingActivity = reporterActions.createPendingActivity
 
@@ -232,7 +277,7 @@ class Reporter {
     id: string,
     status: ActivityStatuses = ActivityStatuses.Success
   ): void => {
-    reporterActions.endActivity({ id, status })
+    reporterActions.endActivity({ id, status, meta: this.metadata })
   }
 
   /**
