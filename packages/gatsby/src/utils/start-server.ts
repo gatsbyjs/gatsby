@@ -733,6 +733,7 @@ export async function startServer(
   }
 
   app.use(async (req, res) => {
+    console.log({ req })
     // in this catch-all block we don't support POST so we should 404
     if (req.method === `POST`) {
       res.status(404).end()
@@ -780,7 +781,13 @@ export async function startServer(
           res.send(e).status(500)
         }
       } else {
-        const potentialPagePath = reverseFixedPagePath(decodeURI(req.path))
+        let requestPath
+        try {
+          requestPath = decodeURIComponent(encodeURIComponent(req.path))
+        } catch {
+          requestPath = req.path
+        }
+        const potentialPagePath = reverseFixedPagePath(requestPath)
         const page = findPageByPath(store.getState(), potentialPagePath, false)
 
         // When we can't find a page we send 404
