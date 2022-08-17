@@ -169,7 +169,7 @@
     "webpack-merge": "^5.8.0",
     "webpack-stats-plugin": "^1.0.3",
     "webpack-virtual-modules": "^0.3.2",
-    "xstate": "^4.26.0",
+    "xstate": "4.32.1",
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
