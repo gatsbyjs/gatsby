@@ -36,7 +36,7 @@ export interface IActivityArgs {
   tags?: { [key: string]: any }
 }
 
-interface ReporterMetadata {
+interface IReporterMetadata {
   [key: string]: any
 }
 
@@ -59,7 +59,7 @@ class Reporter {
 
   errorMap: Record<ErrorId, IErrorMapEntry> = {}
 
-  metadata: ReporterMetadata = {}
+  metadata: IReporterMetadata = {}
 
   /**
    * Set a custom error map to the reporter. This allows
@@ -81,7 +81,7 @@ class Reporter {
    * Note: this does not recursively merge nested objects
    */
 
-  addMetadata = (metadata: { [key: string]: any }): void => {
+  addMetadata = (metadata: IReporterMetadata): void => {
     this.metadata = {
       ...this.metadata,
       ...metadata,
@@ -91,7 +91,7 @@ class Reporter {
   /**
    * Get the metadata assigned to this reporter
    */
-  getMetadata = (): ReporterMetadata => {
+  getMetadata = (): IReporterMetadata => {
     return { ...this.metadata }
   }
 
