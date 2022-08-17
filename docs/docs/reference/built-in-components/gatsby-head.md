@@ -88,7 +88,6 @@ You'll need to be aware of these things when using Gatsby Head:
 - The `Head` function needs to return valid JSX.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, `script`, and `noscript`.
 - Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
-- Using the Head API and [react-helmet](https://github.com/nfl/react-helmet) in the same page is not supported as it can generate unexpected results.
 
 ## Properties
 
