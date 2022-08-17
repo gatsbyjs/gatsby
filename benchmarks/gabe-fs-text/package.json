@@ -28,8 +28,8 @@
   ],
   "dependencies": {
     "faker": "^4.1.0",
-    "gatsby": "^2",
-    "gatsby-source-filesystem": "^2",
+    "gatsby": "^4.0.0",
+    "gatsby-source-filesystem": "^4.21.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }
