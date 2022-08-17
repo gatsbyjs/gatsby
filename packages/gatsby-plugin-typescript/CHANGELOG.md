@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typescript@4.21.0/packages/gatsby-plugin-typescript) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- only use resourceQuery for supported version of gatsby [#36328](https://github.com/gatsbyjs/gatsby/issues/36328) ([564a8f7](https://github.com/gatsbyjs/gatsby/commit/564a8f7358edd2599199e79c902468fa83f916b2))
+
 ## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typescript@4.20.0/packages/gatsby-plugin-typescript) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
