@@ -23,6 +23,7 @@ import {
   registerAdditionalDiagnosticOutputHandler,
   AdditionalDiagnosticsOutputHandler,
 } from "./redux/diagnostics"
+import { isTruthy } from "gatsby-core-utils/is-truthy"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
@@ -35,7 +36,7 @@ export interface IActivityArgs {
   tags?: { [key: string]: any }
 }
 
-let isVerbose = false
+let isVerbose = isTruthy(process.env.GATSBY_REPORTER_ISVERBOSE)
 
 function isLogIntentMessage(msg: any): msg is ILogIntent {
   return msg && msg.type === `LOG_INTENT`
@@ -74,6 +75,7 @@ class Reporter {
    */
   setVerbose = (_isVerbose: boolean = true): void => {
     isVerbose = _isVerbose
+    process.env.GATSBY_REPORTER_ISVERBOSE = isVerbose ? `1` : `0`
   }
 
   /**
