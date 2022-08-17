@@ -80,6 +80,7 @@ export interface IGatsbyFunction {
 
 export interface IGraphQLTypegenOptions {
   typesOutputPath: string
+  gatsbyBuild: boolean
 }
 
 export interface IGatsbyConfig {

@@ -61,6 +61,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       Joi.object()
         .keys({
           typesOutputPath: Joi.string().default(DEFAULT_TYPES_OUTPUT_PATH),
+          gatsbyBuild: Joi.boolean().default(false),
         })
         .unknown(false)
     )
@@ -69,6 +70,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         if (value === true) {
           return {
             typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
+            gatsbyBuild: false,
           }
         }
 

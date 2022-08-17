@@ -206,6 +206,10 @@ module.exports = {
 
 You can specifiy the path of the generated TypeScript types file relative to the site root. Default: `src/gatsby-types.d.ts`.
 
+### gatsbyBuild
+
+By default, `graphqlTypegen` is only run during `gatsby develop`. Set this option to `true` to create the `src/gatsby-types.d.ts` file also during `gatsby build`. Default: `false`.
+
 ## polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
