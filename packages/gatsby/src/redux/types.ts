@@ -449,6 +449,7 @@ export interface ISetComponentFeatures {
     componentPath: string
     serverData: boolean
     config: boolean
+    Head: boolean
   }
 }
 

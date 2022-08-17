@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "2.21.0-next.2",
+  "version": "2.22.0-next.2",
   "scripts": {
     "build": "npm-run-all --npm-path npm -s clean -p build:*",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",
@@ -77,13 +77,13 @@
     "@babel/runtime": "^7.15.4",
     "@babel/traverse": "^7.15.4",
     "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "^4.21.0-next.2",
+    "babel-plugin-remove-graphql-queries": "^4.22.0-next.0",
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.3",
     "common-tags": "^1.8.2",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.21.0-next.2",
-    "gatsby-plugin-utils": "^3.15.0-next.2",
+    "gatsby-core-utils": "^3.22.0-next.0",
+    "gatsby-plugin-utils": "^3.16.0-next.1",
     "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.8.1"
   },

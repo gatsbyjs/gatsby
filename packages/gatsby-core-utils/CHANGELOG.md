@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.21.0/packages/gatsby-core-utils) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update dependency del-cli to v5 for gatsby-core-utils [#36286](https://github.com/gatsbyjs/gatsby/issues/36286) ([a4f92b4](https://github.com/gatsbyjs/gatsby/commit/a4f92b4c2bcb75a84f01a857c4ed786fd40d27e7))
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
 ## [3.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.20.0/packages/gatsby-core-utils) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)

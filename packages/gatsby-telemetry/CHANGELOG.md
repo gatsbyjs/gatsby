@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@3.21.0/packages/gatsby-telemetry) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- upgrade git-up [#36358](https://github.com/gatsbyjs/gatsby/issues/36358) ([f2f0acf](https://github.com/gatsbyjs/gatsby/commit/f2f0acf0f8c40312a4ba7988ffa5265eb892e9d2))
+
 ## [3.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@3.20.0/packages/gatsby-telemetry) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
