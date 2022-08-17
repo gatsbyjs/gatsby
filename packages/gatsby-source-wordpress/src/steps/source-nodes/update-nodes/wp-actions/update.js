@@ -6,7 +6,7 @@ import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
 import fetchReferencedMediaItemsAndCreateNodes, {
-  addImageCDNFieldsToNode,
+  normalizeNodeForImageCDN,
 } from "../../fetch-nodes/fetch-referenced-media-items"
 
 import { dump } from "dumper.js"
@@ -196,7 +196,7 @@ export const createSingleNode = async ({
 
   const builtTypename = buildTypeName(typeInfo.nodesTypeName)
 
-  let remoteNode = addImageCDNFieldsToNode(
+  let remoteNode = normalizeNodeForImageCDN(
     {
       ...processedNode,
       __typename: builtTypename,
@@ -209,6 +209,10 @@ export const createSingleNode = async ({
     },
     pluginOptions
   )
+
+  if (!remoteNode) {
+    return { additionalNodeIds: [], node: remoteNode }
+  }
 
   const typeSettings = getTypeSettingsByType({
     name: typeInfo.nodesTypeName,

@@ -14,6 +14,7 @@ import path from "path"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { getPlaceholderUrlFromMediaItemNode } from "../create-nodes/process-node"
+import { getGatsbyApi } from "~/utils/get-gatsby-api"
 
 const nodeFetchConcurrency = 2
 
@@ -107,7 +108,7 @@ const pushPromiseOntoRetryQueue = ({
   })
 }
 
-export const addImageCDNFieldsToNode = (node, pluginOptions) => {
+export const normalizeNodeForImageCDN = (node, pluginOptions) => {
   if (!node?.__typename?.includes(`MediaItem`)) {
     return node
   }
@@ -120,7 +121,7 @@ export const addImageCDNFieldsToNode = (node, pluginOptions) => {
     node?.mediaDetails?.file?.split(`/`)?.pop() ||
     path.basename(urlUtil.parse(url).pathname)
 
-  return {
+  const newNode = {
     ...node,
     url,
     contentType: node.contentType,
@@ -132,6 +133,18 @@ export const addImageCDNFieldsToNode = (node, pluginOptions) => {
     placeholderUrl:
       placeholderUrl ?? node?.mediaDetails?.sizes?.[0]?.sourceUrl ?? url,
   }
+
+  if (!newNode.width || !newNode.height || !newNode.url) {
+    const { helpers } = getGatsbyApi()
+
+    helpers.reporter.warn(
+      `MediaItem node ${node.id} is missing a width, height, or url. Skipping this node.`
+    )
+
+    return null
+  }
+
+  return newNode
 }
 
 export const createMediaItemNode = async ({
@@ -207,7 +220,7 @@ export const createMediaItemNode = async ({
         )
       }
 
-      node = addImageCDNFieldsToNode(
+      node = normalizeNodeForImageCDN(
         {
           ...node,
           parent: null,
@@ -218,6 +231,10 @@ export const createMediaItemNode = async ({
         },
         pluginOptions
       )
+
+      if (!node) {
+        return resolveFutureNode(null)
+      }
 
       if (localFileNode?.id) {
         node.localFile = {
