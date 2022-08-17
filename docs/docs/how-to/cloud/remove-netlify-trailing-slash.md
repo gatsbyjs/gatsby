@@ -7,7 +7,7 @@ description: "How to Remove the Trailing Slash in Sites Deployed to Netlify"
 
 This guide will show you how to remove the trailing slash on sites built with Gatsby Cloud and deployed to Netlify.
 
-### Remove Trailing Slash
+### Remove trailing slash
 
 In some cases, sites deployed to Netlify will automatically perform `301` redirects from paths without a trailing slash to paths with a trailing slash, e.g.:
 

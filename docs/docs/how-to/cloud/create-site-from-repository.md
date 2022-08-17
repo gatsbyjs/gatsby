@@ -12,7 +12,7 @@ There are two workflows for adding a new Gatsby Cloud site:
 
 This lesson covers the "Import from a Git Repository" flow.
 
-### 1. Prepare a Repository
+### 1. Prepare a repository
 
 For this lesson we will use the [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog). Since this is a [Gatsby starter](https://www.gatsbyjs.com/starters/?v=2), you can use Gatsby CLI to prepare this project on your machine.
 
@@ -28,7 +28,7 @@ git clone https://github.com/gatsbyjs/gatsby-starter-blog
 
 After you have the project, push it to your remote GitHub repository.
 
-### 2. Select a Git Provider
+### 2. Select a git provider
 
 From your Gatsby Cloud Dashboard, click the **Add a Site** button.
 
@@ -38,7 +38,7 @@ In the "Import from a Git repository" section, choose your Git provider and inst
 
 ![Import from a Repository](../../images/import-from-repo.png)
 
-### 3. Specify Repository Details
+### 3. Specify repository details
 
 Once connected to your Git provider, find the repository you would like to add to Gatsby Cloud and click **Import**. You can then provide the details for your site:
 
@@ -50,13 +50,13 @@ Once connected to your Git provider, find the repository you would like to add t
 
 After you enter the site details, click **Next**.
 
-### 4. Add Optional Integrations
+### 4. Add optional integrations
 
 Next you will be prompted to connect an optional content management system (CMS) to your site. This step will vary depending on the CMS provider, so there are [separate tutorials](https://support.gatsbyjs.com/hc/en-us/articles/1500000746742) for each supported CMS. However, for this specific example, you can scroll past this card to continue on.
 
 ![No Supported Integrations Found](../../images/no-integrations.png)
 
-### 5. Configure Environment Variables
+### 5. Configure environment variables
 
 Now, you will be asked to [set up environment variables](../../reference/cloud/managing-environment-variables) for your site. The "Blog" starter does not use any environment variables so we will skip this step as well. Click **Build Site** to continue.
 
@@ -66,13 +66,13 @@ Now, you will be asked to [set up environment variables](../../reference/cloud/m
 
 Once your site is done building, you can view the site in two places:
 
-#### Private Build URL
+#### Private build uRL
 
 Use the build URL to preview the deployed site. This URL is not indexed and is only accessible via direct link.
 
 ![Private Build URL link](../../images/private-build-link.png)
 
-#### Public Default Domain
+#### Public default domain
 
 Use your Gatsby Hosting provided default domain to access the public deployment of your site. Gatsby Hosting is turned on by default and the default domain is listed under Site Settings > Hosting.
 

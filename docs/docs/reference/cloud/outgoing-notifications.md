@@ -11,7 +11,7 @@ When your Gatsby site is built and/or deployed on Gatsby Cloud, you now have the
 
 By default, the Pull Request comments are already set up for existing and new sites in Gatsby Cloud.
 
-### Adding Webhook Notifications
+### Adding webhook notifications
 
 1. First, navigate to Site Settings. In the sidebar menu under "General", select **Outgoing Notifications**. Then click **Add Notification** and choose the Webhooks option.
 
@@ -32,7 +32,7 @@ By default, the Pull Request comments are already set up for existing and new si
 
 ![Add Notification](../../images/add-notification.png)
 
-#### Webhook Message Payload
+#### Webhook message payload
 
 You can expect the message payload to appear as follows:
 
@@ -51,7 +51,7 @@ You can expect the message payload to appear as follows:
 }
 ```
 
-### Adding Slack Notifications
+### Adding slack notifications
 
 To take advantage of Slack notifications, you first need to create a custom Slack application to handle the webhook message.
 
