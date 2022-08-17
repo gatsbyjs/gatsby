@@ -583,6 +583,16 @@ export const replaceNodeHtmlImages = async ({
               pluginOptions
             )
 
+            const { width, height } = imageNode.mediaDetails
+
+            if (!imageUrl || !width || !height) {
+              reporter.warn(
+                `Could not get image url or width/height for ${imageUrl} in html field. Skipping.`
+              )
+
+              return null
+            }
+
             const formats = [`auto`]
             if (pluginOptions.html.generateWebpImages) {
               formats.push(`webp`)
@@ -596,8 +606,8 @@ export const replaceNodeHtmlImages = async ({
                 url: imageUrl,
                 placeholderUrl,
                 mimeType: imageNode.mimeType,
-                width: imageNode.mediaDetails.width,
-                height: imageNode.mediaDetails.height,
+                width,
+                height,
                 filename: path.basename(imageNode.mediaDetails.file),
                 internal: {
                   contentDigest: imageNode.modifiedGmt,
