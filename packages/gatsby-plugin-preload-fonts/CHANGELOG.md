@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.21.0/packages/gatsby-plugin-preload-fonts) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update dependency del-cli to v5 for gatsby-plugin-preload-fonts [#36288](https://github.com/gatsbyjs/gatsby/issues/36288) ([a90f40f](https://github.com/gatsbyjs/gatsby/commit/a90f40fdbf368fea8590f57662a357cb670a2cf1))
+
 ## [3.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.20.0/packages/gatsby-plugin-preload-fonts) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
