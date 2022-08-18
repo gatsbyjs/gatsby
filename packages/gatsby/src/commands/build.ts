@@ -76,7 +76,9 @@ module.exports = async function build(
   }
 
   report.addMetadata({
-    version,
+    versions: {
+      gatsby: version,
+    },
   })
 
   if (isTruthy(process.env.VERBOSE)) {
