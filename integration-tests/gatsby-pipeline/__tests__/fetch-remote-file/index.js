@@ -18,7 +18,6 @@ describe(`fetch-remote-file`, () => {
     })
   }, 60 * 1000)
 
-  // If a test fails here, it's possible that the image changed on Unsplash
   it("should have the correct md5", async () => {
     expect(
       await md5File(
@@ -28,7 +27,7 @@ describe(`fetch-remote-file`, () => {
           "public/images/50c58a791de3c2303e62084d731799eb/photoA.jpg"
         )
       )
-    ).toEqual("a9e57a66a10b2d26a1999a4685d7c9ef")
+    ).toEqual("37287aaa726d254eabcf3e7ede51a93b")
     expect(
       await md5File(
         path.join(
@@ -37,7 +36,7 @@ describe(`fetch-remote-file`, () => {
           "public/images/4910e745c3c453b8795d6ba65c79d99b/photoB.jpg"
         )
       )
-    ).toEqual("c305dc5c5db45cc773231a507af5116d")
+    ).toEqual("cef966aac5cfc7972e91e5c5c96829cb")
     expect(
       await md5File(
         path.join(
