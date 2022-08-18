@@ -27,6 +27,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     createSchema: Joi.function(),
     batch: Joi.boolean(),
     transformSchema: Joi.function(),
+    graphqlSourceName: Joi.string(),
   }).or(`url`, `createLink`)
 
 exports.createSchemaCustomization = async (
@@ -121,7 +122,7 @@ exports.sourceNodes = async (
   options
 ) => {
   const { createNode } = actions
-  const { typeName, fieldName, refetchInterval } = options
+  const { typeName, fieldName, refetchInterval, graphqlSourceName } = options
 
   const nodeId = createSchemaNodeId({ typeName, createNodeId })
   const node = createSchemaNode({
@@ -129,6 +130,7 @@ exports.sourceNodes = async (
     typeName,
     fieldName,
     createContentDigest,
+    graphqlSourceName,
   })
   createNode(node)
 
@@ -142,6 +144,7 @@ exports.sourceNodes = async (
             typeName,
             fieldName,
             createContentDigest,
+            graphqlSourceName,
           })
         )
         setTimeout(refetcher, msRefetchInterval)
@@ -155,7 +158,7 @@ function createSchemaNodeId({ typeName, createNodeId }) {
   return createNodeId(`gatsby-source-graphql-${typeName}`)
 }
 
-function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
+function createSchemaNode({ id, typeName, fieldName, createContentDigest, graphqlSourceName }) {
   const nodeContent = uuid.v4()
   const nodeContentDigest = createContentDigest(nodeContent)
   return {
@@ -165,7 +168,7 @@ function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
     parent: null,
     children: [],
     internal: {
-      type: `GraphQLSource`,
+      type: (graphqlSourceName) ? graphqlSourceName : `GraphQLSource`,
       contentDigest: nodeContentDigest,
       ignoreType: true,
     },
