@@ -30,6 +30,7 @@
     "@graphql-tools/load": "^7.5.10",
     "@jridgewell/trace-mapping": "^0.3.13",
     "@nodelib/fs.walk": "^1.2.8",
+    "@parcel/cache": "2.6.2",
     "@parcel/core": "2.6.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@types/http-proxy": "^1.17.7",
@@ -169,7 +170,7 @@
     "webpack-merge": "^5.8.0",
     "webpack-stats-plugin": "^1.0.3",
     "webpack-virtual-modules": "^0.3.2",
-    "xstate": "^4.26.0",
+    "xstate": "4.32.1",
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
