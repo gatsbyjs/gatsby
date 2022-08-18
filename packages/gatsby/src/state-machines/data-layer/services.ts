@@ -1,4 +1,4 @@
-import { ServiceConfig } from "xstate"
+import { MachineOptions } from "xstate"
 import {
   customizeSchema,
   createPages,
@@ -8,10 +8,10 @@ import {
 } from "../../services"
 import { IDataLayerContext } from "./types"
 
-export const dataLayerServices: Record<
-  string,
-  ServiceConfig<IDataLayerContext>
-> = {
+export const dataLayerServices: MachineOptions<
+  IDataLayerContext,
+  any
+>["services"] = {
   customizeSchema,
   sourceNodes,
   createPages,
