@@ -14,7 +14,7 @@ You'll learn how to import a site from a Git repository.
 
 ### 1. Prepare a repository
 
-For this lesson we will use the [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog). Since this is a [Gatsby starter](https://www.gatsbyjs.com/starters/?v=2), you can use Gatsby CLI to prepare this project on your machine.
+You can use the [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) as a starting point. Since this is a [Gatsby starter](https://www.gatsbyjs.com/starters/?v=2), you can use Gatsby CLI to prepare this project on your machine.
 
 ```shell
 gatsby new my-gatsby-project https://github.com/gatsbyjs/gatsby-starter-blog
@@ -34,7 +34,7 @@ From your Gatsby Cloud Dashboard, click the **Add a Site** button.
 
 ![Add a Site](../../images//add-site.png)
 
-In the "Import from a Git repository" section, choose your Git provider and install the Gatsby Cloud app. For the sake of this article we'll use GitHub, however GitLab and Bitbucket are also supported.
+In the "Import from a Git repository" section, choose your Git provider and install the Gatsby Cloud app. For the sake of this article you'll use GitHub, however GitLab and Bitbucket are also supported.
 
 ![Import from a Repository](../../images/import-from-repo.png)
 
@@ -58,7 +58,7 @@ Next you will be prompted to connect an optional content management system (CMS)
 
 ### 5. Configure environment variables
 
-Now, you will be asked to [set up environment variables](../../reference/cloud/managing-environment-variables) for your site. The "Blog" starter does not use any environment variables so we will skip this step as well. Click **Build Site** to continue.
+Now, you will be asked to [set up environment variables](../../reference/cloud/managing-environment-variables) for your site. The "Default" starter does not use any environment variables so you will skip this step as well. Click **Build Site** to continue.
 
 ![No Environment Variables](../../images/no-environment-variables.png)
 
@@ -83,4 +83,4 @@ Use your Gatsby Hosting provided default domain to access the public deployment 
 When creating a site from a Github repository, you'll be asked to authenticate with Github. In instances where you're having trouble authenticating and importing your site:
 
 1. Log out and log back in. If you are still aren't able to import the site, your Github repository is part of a Github organization, and you are not an owner of that organization, then you may not have sufficient permission to install the Gatsby Cloud app to Github.
-2. When you try to import your repository to Gatsby Cloud, we send an email to the owner(s) of that organization to authorize Gatsby Cloud. Once they authorize via the link in that email, then you will be able to import your repository into Gatsby Cloud.
+2. When you try to import your repository to Gatsby Cloud, an email is sent to the owner(s) of that organization to authorize Gatsby Cloud. Once they authorize via the link in that email, then you will be able to import your repository into Gatsby Cloud.

@@ -10,7 +10,7 @@ There are two workflows for adding a new Gatsby Cloud site:
 1. Cloning a Starter from Gatsby's [Starter Library](https://www.gatsbyjs.com/starters/).
 2. Importing from a Git Repository.
 
-In this lesson, we'll use the "Clone a Starter" flow. Note, cloning of starters is only supported for GitHub. If you use GitLab or BitBucket, you'll have to follow the [Create a Site from a Repository](/docs/how-to/cloud/create-site-from-repository/) guide instead.
+This guide covers the "Clone a Starter" flow. Note, cloning of starters is only supported for GitHub. If you use GitLab or BitBucket, you'll have to follow the [Create a Site from a Repository](/docs/how-to/cloud/create-site-from-repository/) guide instead.
 
 ### 1. Choose your starter template
 
