@@ -419,7 +419,7 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-![A screenshot of the home page in a web browser. The title of the page in the browser tab now says, "Home Page | My First Gatsby Site", and the top of the page has an unstyled paragraph that says, "My First Gatsby Site".](./index-page-with-site-title.png)
+![A screenshot of the home page in a web browser. The title of the page in the browser tab now says, "Home Page", and the top of the page has an unstyled paragraph that says, "My First Gatsby Site".](./index-page-with-site-title.png)
 
 4. Now that the site title is showing up on the page, it's time to add some style! Define some styles for the site title below the existing styles in your `layout.module.css` file.
 
@@ -521,9 +521,7 @@ const BlogPage = () => {
   )
 }
 
-export const Head = ({ data }) => (
-   <title>My Blog Posts | {data.site.siteMetadata.title}</title>
-)
+export const Head = () => <title>My Blog Posts</title>
 
 export default BlogPage
 ```
@@ -771,9 +769,7 @@ const BlogPage = () => {
   )
 }
 
-export const Head = ({ data }) => (
-   <title> My Blog Posts | {data.site.siteMetadata.title}</title>
-)
+export const Head = () => <title>My Blog Posts</title>
 
 export default BlogPage
 ```
