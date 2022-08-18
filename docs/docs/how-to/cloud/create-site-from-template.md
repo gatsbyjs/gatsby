@@ -1,6 +1,6 @@
 ---
 title: "Create a Site from a Template"
-description: "How to Create a Gatsby Cloud Site from a Template"
+description: "How to create a Gatsby Cloud site from a template"
 ---
 
 ## Introduction

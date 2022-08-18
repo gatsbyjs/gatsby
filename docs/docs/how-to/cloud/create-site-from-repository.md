@@ -1,6 +1,6 @@
 ---
 title: "Create a Site from a Repository"
-description: "How to create a Gatsby Cloud Site From a Repository"
+description: "How to create a Gatsby Cloud site from a repository"
 ---
 
 ## Introduction
@@ -10,7 +10,7 @@ There are two workflows for adding a new Gatsby Cloud site:
 - Cloning a Starter.
 - Importing from a Git Repository.
 
-This lesson covers the "Import from a Git Repository" flow.
+You'll learn how to import a site from a Git repository.
 
 ### 1. Prepare a repository
 

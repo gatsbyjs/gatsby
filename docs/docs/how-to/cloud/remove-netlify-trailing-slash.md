@@ -1,6 +1,6 @@
 ---
 title: "Remove Trailing Slash in Netlify URLs"
-description: "How to Remove the Trailing Slash in Sites Deployed to Netlify"
+description: "How to remove the trailing slash in sites deployed to Netlify"
 ---
 
 ## Introduction
