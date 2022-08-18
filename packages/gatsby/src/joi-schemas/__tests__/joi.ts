@@ -186,7 +186,7 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         graphqlTypegen: {
           typesOutputPath: `src/gatsby-types.d.ts`,
-          gatsbyBuild: false,
+          generateOnBuild: false,
         },
       })
     )
@@ -202,7 +202,7 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         graphqlTypegen: {
           typesOutputPath: `src/gatsby-types.d.ts`,
-          gatsbyBuild: false,
+          generateOnBuild: false,
         },
       })
     )
@@ -220,7 +220,7 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         graphqlTypegen: {
           typesOutputPath: `gatsby-types.d.ts`,
-          gatsbyBuild: false,
+          generateOnBuild: false,
         },
       })
     )
@@ -229,7 +229,7 @@ describe(`gatsby config`, () => {
   it(`returns partial defaults for graphqlTypegen when partial options object is set`, () => {
     const config = {
       graphqlTypegen: {
-        gatsbyBuild: true,
+        generateOnBuild: true,
       },
     }
 
@@ -238,7 +238,7 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         graphqlTypegen: {
           typesOutputPath: `src/gatsby-types.d.ts`,
-          gatsbyBuild: true,
+          generateOnBuild: true,
         },
       })
     )

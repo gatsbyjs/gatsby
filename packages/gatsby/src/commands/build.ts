@@ -427,7 +427,7 @@ module.exports = async function build(
     const graphqlTypegenOptions = config.graphqlTypegen
 
     // Only generate types when the option is enabled
-    if (graphqlTypegenOptions && graphqlTypegenOptions.gatsbyBuild) {
+    if (graphqlTypegenOptions && graphqlTypegenOptions.generateOnBuild) {
       const typegenActivity = reporter.activityTimer(
         `Generating TypeScript types`,
         {
