@@ -659,10 +659,12 @@ export async function initialize({
 
   const workerPool = WorkerPool.create()
 
-  // This is only run during `gatsby develop`
   if (state.config.graphqlTypegen) {
     telemetry.trackFeatureIsUsed(`GraphQLTypegen`)
-    writeGraphQLConfig(program)
+    // This is only run during `gatsby develop`
+    if (process.env.gatsby_executing_command === `develop`) {
+      writeGraphQLConfig(program)
+    }
   }
 
   return {

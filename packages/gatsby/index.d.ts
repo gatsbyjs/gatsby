@@ -258,6 +258,7 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 export interface GraphQLTypegenOptions {
   typesOutputPath?: string
+  generateOnBuild?: boolean
 }
 
 /**
