@@ -259,8 +259,22 @@ export default AboutPage
 
 **Key Gatsby Concept** 💡
 
-You just added a title to the About page using the [Gastby Head API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/). You'll notice that the title is now displayed on the browser tab.
-With this API, you can also add other metadata to your site. For example, you can add a description to your site that shows up in search engines like Google.
+You can use the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/) by exporting a named function called `Head` in your pages and templates that are used to create pages. 
+
+Be sure to capitalize `Head` and please note that exporting this named function inside a component won't add the metadata to the `<head>`. The above works because you're exporting `Head` in a page inside `src/pages`.
+
+You can add any valid `<head>` tags inside the function and they'll be added to the page, for example:
+
+```js
+export const Head = () => (
+  <>
+    <title>About Me<title/>
+    <meta name="description" content="Your description" />
+  </>
+)
+```
+
+After going through this tutorial, be sure to check out [Adding an SEO Component](/docs/how-to/adding-common-features/adding-seo-component/).
 
 </Announcement>
 
