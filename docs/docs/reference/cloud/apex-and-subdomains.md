@@ -1,5 +1,5 @@
 ---
-title: "Apex and www Subdomains"
+title: "Apex and Subdomains"
 description: "How to configure your apex and subdomains in Gatsby Cloud"
 ---
 
