@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.21.0/packages/gatsby-link) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Correctly export default for CJS [#36312](https://github.com/gatsbyjs/gatsby/issues/36312) ([abb0baa](https://github.com/gatsbyjs/gatsby/commit/abb0baac94dee30043d669ac39a88a830784603b))
+
+#### Chores
+
+- update dependency del-cli to v5 for gatsby-link [#36287](https://github.com/gatsbyjs/gatsby/issues/36287) ([272b419](https://github.com/gatsbyjs/gatsby/commit/272b419cd85926c4d820f4d37a986d9b1c2326bf))
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.20.0/packages/gatsby-link) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- Update resolve import resolve [#36229](https://github.com/gatsbyjs/gatsby/issues/36229) ([b125296](https://github.com/gatsbyjs/gatsby/commit/b125296961f21f6cf94568125a9f894b5ff68334))
+- Publish types [#36199](https://github.com/gatsbyjs/gatsby/issues/36199) ([6d6f034](https://github.com/gatsbyjs/gatsby/commit/6d6f03482482f87b13193855d11bf3d85d58cdb4))
+
+### [4.19.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.19.1/packages/gatsby-link) (2022-07-21)
+
+#### Bug Fixes
+
+- Publish types [#36199](https://github.com/gatsbyjs/gatsby/issues/36199) [#36200](https://github.com/gatsbyjs/gatsby/issues/36200) ([c4adb3e](https://github.com/gatsbyjs/gatsby/commit/c4adb3e7da572dca2296268db80e40d94c466b88))
+
 ## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.19.0/packages/gatsby-link) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

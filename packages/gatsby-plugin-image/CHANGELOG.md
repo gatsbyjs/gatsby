@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.21.0/packages/gatsby-plugin-image) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Add `outputPixelDensities` to `SHARP_ATTRIBUTES` [#36203](https://github.com/gatsbyjs/gatsby/issues/36203) ([ae226b5](https://github.com/gatsbyjs/gatsby/commit/ae226b589369e3b724cc3b5ded5b7b1b1a907afb))
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.20.0/packages/gatsby-plugin-image) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- Correct type for getImage [#36169](https://github.com/gatsbyjs/gatsby/issues/36169) ([b3f434b](https://github.com/gatsbyjs/gatsby/commit/b3f434b38b9a5cbcbfb6d4afca260b39cdeb76a4))
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
 ## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.19.0/packages/gatsby-plugin-image) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

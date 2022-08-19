@@ -17,7 +17,7 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen"
+export type AvailableFeatures = "image-cdn" | "graphql-typegen" | "content-file-path"
 
 export {
   default as Link,
@@ -258,6 +258,7 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 export interface GraphQLTypegenOptions {
   typesOutputPath?: string
+  generateOnBuild?: boolean
 }
 
 /**
@@ -502,7 +503,7 @@ export interface GatsbyNode<
     args: PreprocessSourceArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
-  ): void | Promise<void>
+  ): void | string | Promise<void | string>
 
   /**
    * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
@@ -959,6 +960,7 @@ export interface PreInitArgs extends ParentSpanPluginArgs {
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
+  webhookBody: any
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
@@ -1633,6 +1635,7 @@ export interface NodeInput {
     content?: string
     contentDigest: string
     description?: string
+    contentFilePath?: string
   }
   [key: string]: unknown
 }

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sharp",
   "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
-  "version": "4.20.0-next.0",
+  "version": "4.22.0-next.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,25 +14,22 @@
     "debug": "^4.3.4",
     "filenamify": "^4.3.0",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.20.0-next.0",
-    "gatsby-plugin-utils": "^3.14.0-next.0",
-    "gatsby-telemetry": "^3.20.0-next.0",
-    "got": "^11.8.5",
+    "gatsby-core-utils": "^3.22.0-next.0",
+    "gatsby-plugin-utils": "^3.16.0-next.1",
     "lodash": "^4.17.21",
     "mini-svg-data-uri": "^1.4.4",
     "probe-image-size": "^7.2.3",
-    "progress": "^2.0.3",
     "semver": "^7.3.7",
-    "sharp": "^0.30.3",
+    "sharp": "^0.30.7",
     "svgo": "1.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "@types/sharp": "^0.30.0",
-    "babel-preset-gatsby-package": "^2.20.0-next.0",
+    "@types/sharp": "^0.30.5",
+    "babel-preset-gatsby-package": "^2.22.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^2.20.0-next.0"
+    "gatsby-plugin-image": "^2.22.0-next.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#readme",
   "keywords": [

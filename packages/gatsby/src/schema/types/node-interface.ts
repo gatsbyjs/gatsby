@@ -26,6 +26,7 @@ const getOrCreateNodeInterface = <TSource, TArgs>(
       mediaType: `String`,
       owner: `String!`,
       type: `String!`,
+      contentFilePath: `String`,
     })
     // TODO: Can be removed with graphql-compose 5.11
     tc.getInputTypeComposer()

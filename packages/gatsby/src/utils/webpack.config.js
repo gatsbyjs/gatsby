@@ -25,7 +25,7 @@ import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
 import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
-const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
+import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -249,7 +249,6 @@ module.exports = async (
             new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
-            plugins.eslintGraphqlSchemaReload(),
             new StaticQueryMapper(store),
           ])
           .filter(Boolean)
@@ -266,12 +265,10 @@ module.exports = async (
         }
 
         const isCustomEslint = hasLocalEslint(program.directory)
-        // get schema to pass to eslint config and program for directory
-        const { schema } = store.getState()
 
         // if no local eslint config, then add gatsby config
         if (!isCustomEslint) {
-          configPlugins.push(plugins.eslint(schema))
+          configPlugins.push(plugins.eslint())
         }
 
         // Enforce fast-refresh rules even with local eslint config

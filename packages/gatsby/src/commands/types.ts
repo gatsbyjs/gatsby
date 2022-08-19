@@ -3,8 +3,8 @@ import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 
 export interface ICert {
-  key: Buffer
-  cert: Buffer
+  key: string
+  cert: string
 }
 
 export interface IDebugInfo {
@@ -33,6 +33,7 @@ export interface IProgram {
   inspectBrk?: number
   graphqlTracing?: boolean
   verbose?: boolean
+  prefixPaths?: boolean
   setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 

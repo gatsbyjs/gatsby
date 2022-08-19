@@ -2,6 +2,7 @@ import * as React from "react"
 
 import Layout from "../components/layout"
 import InstrumentPage from "../utils/instrument-page"
+import Seo from "../components/seo"
 
 const DeepLinkPage = () => (
   <Layout>
@@ -12,5 +13,7 @@ const DeepLinkPage = () => (
     </p>
   </Layout>
 )
+
+export const Head = () => <Seo />
 
 export default InstrumentPage(DeepLinkPage)

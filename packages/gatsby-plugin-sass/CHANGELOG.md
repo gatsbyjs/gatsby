@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.21.0/packages/gatsby-plugin-sass) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.20.0/packages/gatsby-plugin-sass) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- Add support for additionalData option [#36086](https://github.com/gatsbyjs/gatsby/issues/36086) ([9a58b36](https://github.com/gatsbyjs/gatsby/commit/9a58b362bb148d1d215f5aaee15062656d39fc44))
+
 ## [5.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.19.0/packages/gatsby-plugin-sass) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

@@ -325,7 +325,10 @@ You may need to adjust your dev tools to the verbose log level in order to see t
 
 By leveraging [Partytown](https://partytown.builder.io), scripts that use the `off-main-thread` strategy must also be aware of the [limitations mentioned in the Partytown documentation](https://partytown.builder.io/trade-offs). While the strategy can be powerful, it may not be the best solution for all scenarios.
 
-In addition, the `off-main-thread` strategy does not support the `onLoad` and `onError` callbacks.
+In addition, there are other limitations that require upstream changes from Partytown to enable:
+
+- The `onLoad` and `onError` callbacks are not supported. See [discussion #199 in the Partytown repo](https://github.com/BuilderIO/partytown/discussions/199).
+- Scripts load only on server-side rendering (SSR) navigation (e.g. regular `<a>` tag navigation), and not on client-side rendering (CSR) navigation (e.g. Gatsby `<Link>` navigation). See [issue #74 in the Partytown repo](https://github.com/BuilderIO/partytown/issues/74).
 
 ## Usage in Gatsby SSR and Browser APIs
 
