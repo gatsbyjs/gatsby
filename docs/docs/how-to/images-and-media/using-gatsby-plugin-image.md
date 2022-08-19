@@ -239,7 +239,7 @@ Image CDN is Gatsby Clouds image hosting and transformation service. It speeds u
 
 For more information on what Image CDN is, how to use it, and what the platform limits are, visit the [Gatsby Cloud knowledge base article on "What Is Image CDN?"](https://support.gatsbyjs.com/hc/en-us/articles/4426379634835-What-is-Image-CDN-). To learn which source plugins currently support it and how to enable and use Image CDN on Gatsby Cloud take a look at the ["How-to Enable Image CDN" article](https://support.gatsbyjs.com/hc/en-us/articles/4426393233171).
 
-For all supported source plugins, the query syntax and feature-set is identical.
+For all supported source plugins, the query syntax and feature-set is identical. Check your source plugin's documentation or the [Gatsby Cloud knowledge base article on "Configuring source plugins for Image CDN"](https://support.gatsbyjs.com/hc/en-us/articles/4522338898579-Configuring-Source-Plugins-for-Image-CDN) for more info.
 
 ### Source plugins with their own CDN
 
