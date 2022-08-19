@@ -146,6 +146,7 @@ When you build your site, Gatsby looks at the page components in your `src/pages
     ```js:title=src/pages/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import Layout from '../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPost = () => {
       return (
@@ -155,7 +156,7 @@ When you build your site, Gatsby looks at the page components in your `src/pages
       )
     }
 
-    export const Head = () => <title>Super Cool Blog Posts</title>
+    export const Head = () => <Seo title="Super Cool Blog Posts" />
 
     export default BlogPost
     ```
@@ -379,6 +380,7 @@ The JSON object in the Query Variables section should look something like the on
     import * as React from 'react'
     import { graphql } from 'gatsby' // highlight-line
     import Layout from '../../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPost = () => {
       return (
@@ -401,16 +403,17 @@ The JSON object in the Query Variables section should look something like the on
     `
     // highlight-end
 
-    export const Head = () => <title>Super Cool Blog Posts</title>
+    export const Head = () => <Seo title="Super Cool Blog Posts" />
 
     export default BlogPost
     ```
 
-3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. The actual MDX content, ready to render, will be passed as a `children` prop to the page component.
+3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. It also passes `data` to the Gatsby Head API. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. The actual MDX content, ready to render, will be passed as a `children` prop to the page component.
     ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import { graphql } from 'gatsby'
     import Layout from '../../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPost = ({ data, children }) => { // highlight-line
       return (
@@ -433,7 +436,9 @@ The JSON object in the Query Variables section should look something like the on
         }
       }
     `
-    export const Head = ({ data }) => <title>{data.mdx.frontmatter.title}</title>
+
+    // highlight-next-line
+    export const Head = ({ data }) => <Seo title={data.mdx.frontmatter.title} />
     
     export default BlogPost
     ```
@@ -456,6 +461,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering an e
     import * as React from 'react'
     import { Link, graphql } from 'gatsby' // highlight-line
     import Layout from '../../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPage = ({ data }) => {
       return (
@@ -493,7 +499,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering an e
       }
     `
 
-    export const Head = () => <title>My Blog Posts</title>
+    export const Head = () => <Seo title="My Blog Posts" />
 
     export default BlogPage
     ```
