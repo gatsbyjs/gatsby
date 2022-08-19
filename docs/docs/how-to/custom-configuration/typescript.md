@@ -1,7 +1,7 @@
 ---
 title: TypeScript and Gatsby
 examples:
-  - label: Using Typescript
+  - label: Using TypeScript
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-typescript"
   - label: Using vanilla-extract
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract"
@@ -48,7 +48,7 @@ export default IndexRoute
 
 The example above uses the power of TypeScript, in combination with exported types from Gatsby (`PageProps`) to tell this code what props is. This can greatly improve your developer experience by letting your IDE show you what properties are injected by Gatsby.
 
-`PageProps` can receive a couple of [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), most notably the `DataType` one. This way you can type the resulting `data` prop.
+`PageProps` can receive a couple of [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), most notably the `DataType` one. This way you can type the resulting `data` prop. Others are: `PageContextType`, `LocationState`, and `ServerDataType`.
 
 ```tsx:title=src/pages/index.tsx
 import * as React from "react"
@@ -82,6 +82,8 @@ export const query = graphql`
   }
 `
 ```
+
+If you don't want to manually type out `DataProps` you can use Gatsby's [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen) feature.
 
 ### `gatsby-browser.tsx` / `gatsby-ssr.tsx`
 
@@ -150,7 +152,7 @@ export async function getServerData(
 If you’re using an anonymous function, you can also use the shorthand `GetServerData` type like this:
 
 ```tsx
-const getServerData: GetServerData<ServerDataProps> = async props => {
+export const getServerData: GetServerData<ServerDataProps> = async props => {
   // your function body
 }
 ```
@@ -159,7 +161,7 @@ const getServerData: GetServerData<ServerDataProps> = async props => {
 
 > Support added in `gatsby@4.9.0`
 
-You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config` file.
+You can import the type `GatsbyConfig` to type your config object. **Please note:** There are currently no type hints for `plugins` and you'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-config.ts` file.
 
 ```ts:title=gatsby-config.ts
 import type { GatsbyConfig } from "gatsby"
@@ -174,11 +176,13 @@ const config: GatsbyConfig = {
 export default config
 ```
 
+Read the [Gatsby Config API documentation](/docs/reference/config-files/gatsby-config/) to learn more about its different options.
+
 ### `gatsby-node.ts`
 
 > Support added in `gatsby@4.9.0`
 
-You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node` file.
+You can import the type `GatsbyNode` to type your APIs by accessing keys on `GatsbyNode`, e.g. `GatsbyNode["sourceNodes"]`. **Please note:** You'll need to check the [current limitations](#current-limitations) and see if they apply to your `gatsby-node.ts` file.
 
 ```ts:title=gatsby-node.ts
 import type { GatsbyNode } from "gatsby"
@@ -213,6 +217,75 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async ({
 
     createNode(node)
   })
+}
+```
+
+Read the [Gatsby Node APIs documentation](/docs/reference/config-files/gatsby-node/) to learn more about its different APIs.
+
+### Gatsby Head API
+
+You can use `HeadProps` to type your [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import type { HeadProps } from "gatsby"
+
+const Page = () => <div>Hello World</div>
+export default Page
+
+export function Head(props: HeadProps) {
+  return (
+    <title>Hello World</title>
+  )
+}
+```
+
+Similar to [`PageProps`](#pageprops) the `HeadProps` can receive two [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType` and `PageContextType`). This way you can type the `data` prop that gets passed to the `Head` function.
+
+```tsx:title=src/pages/index.tsx
+import * as React from "react"
+import { graphql, HeadProps, PageProps } from "gatsby"
+
+type DataProps = {
+  site: {
+    siteMetadata: {
+      title: string
+    }
+  }
+}
+
+const IndexRoute = ({ data: { site } }: PageProps<DataProps>) => {
+  return (
+    <main>
+      <h1>{site.siteMetadata.title}</h1>
+    </main>
+  )
+}
+
+export default IndexRoute
+
+export function Head(props: HeadProps<DataProps>) {
+  return (
+    <title>{props.data.site.siteMetadata.title}</title>
+  )
+}
+
+export const query = graphql`
+  {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
+
+If you’re using an anonymous function, you can also use the shorthand `HeadFC` type like this:
+
+```tsx
+export const Head: HeadFC<DataProps> = props => {
+  // your return value
 }
 ```
 
@@ -286,31 +359,6 @@ Parcel is used for the compilation and it currently has [limitations on TypeScri
 - No support for `baseUrl` or `paths` inside `tsconfig.json`
 - It implicitly enables the [`isolatedModules`](https://www.typescriptlang.org/tsconfig#isolatedModules) option by default
 
-### `__dirname`
-
-You can't use `__dirname` and `__filename` in your files. You'll need to replace these instances with a `path.resolve` call. Example diff for a `gatsby-config` file:
-
-```diff
-+ import path from "path"
-
-const config = {
-  plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `your-name`,
-+       path: path.resolve(`some/folder`),
--       path: `${__dirname}/some/folder`,
-      },
-    },
-  ]
-}
-
-export default config
-```
-
-Progress on this is tracked in [Parcel #7611](https://github.com/parcel-bundler/parcel/issues/7611).
-
 ### `require.resolve`
 
 You can't use `require.resolve` in your files. You'll need to replace these instances with a `path.resolve` call. Example diff for a `gatsby-node` file:
@@ -332,6 +380,8 @@ Progress on this is tracked in [Parcel #6925](https://github.com/parcel-bundler/
 ## Other Resources
 
 TypeScript integration for pages is supported through automatically including [`gatsby-plugin-typescript`](/plugins/gatsby-plugin-typescript/). Visit that link to see configuration options and limitations of this setup.
+
+You can also use Gatsby's [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen) feature to have type-safety for your GraphQL results and autocompletion in your favorite IDE.
 
 If you are new to TypeScript, check out these other resources to learn more:
 

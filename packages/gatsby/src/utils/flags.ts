@@ -1,8 +1,6 @@
 import _ from "lodash"
 import semver from "semver"
 
-import sampleSiteForExperiment from "./sample-site-for-experiment"
-
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
@@ -87,7 +85,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      // `DEV_SSR`, - not working with serverdata atm
+      `DEV_SSR`,
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `DEV_WEBPACK_CACHE`,
     ],
@@ -99,20 +97,9 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `DevSsr`,
     experimental: false,
-    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
+    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (): fitnessEnum => {
-      // TODO Re-enable after gatsybcamp
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return false
-      }
-
-      if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `QUERY_ON_DEMAND`,
@@ -234,6 +221,18 @@ const activeFlags: Array<IFlag> = [
     description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.`,
     experimental: false,
     testFitness: (): fitnessEnum => true,
+  },
+  {
+    name: `GRAPHQL_TYPEGEN`,
+    env: `GATSBY_GRAPHQL_TYPEGEN`,
+    command: `develop`,
+    telemetryId: `GraphQLTypegen`,
+    description: `More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/35420`,
+    experimental: false,
+    noCI: true,
+    testFitness: (): fitnessEnum => false,
+    requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
   },
 ]
 

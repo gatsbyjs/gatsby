@@ -18,18 +18,22 @@ module.exports = {
       },
     },
     `gatsby-plugin-test-regression1`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        lessBabel: false,
         extensions: [`.mdx`, `.md`],
-        defaultLayouts: {
-          default: require.resolve("./src/components/layout.js"),
+        gatsbyRemarkPlugins: [
+          `gatsby-remark-images`,
+          `gatsby-remark-autolink-headers`,
+        ],
+        mdxOptions: {
+          remarkPlugins: [remarkRequireFilePathPlugin],
         },
-        remarkPlugins: [remarkRequireFilePathPlugin],
       },
     },
-  ],
+    !process.env.CI && `gatsby-plugin-webpack-bundle-analyser-v2`,
+  ].filter(Boolean),
 }
 
 /**
@@ -37,7 +41,7 @@ module.exports = {
  * See #26914 for more info.
  */
 function remarkRequireFilePathPlugin() {
-  return function transformer(tree, file) {
+  return function transformer(_, file) {
     if (!file.dirname) {
       throw new Error("No directory name for this markdown file!")
     }

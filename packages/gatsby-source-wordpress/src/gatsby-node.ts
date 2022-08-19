@@ -7,6 +7,7 @@ module.exports = runApisInSteps({
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.tempPreventMultipleInstances,
+    steps.setRequestHeaders,
   ],
 
   pluginOptionsSchema: steps.pluginOptionsSchema,

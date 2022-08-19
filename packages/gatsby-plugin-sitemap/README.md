@@ -2,11 +2,13 @@
 
 Create a sitemap for your Gatsby site.
 
-_NOTE: This plugin only generates output when run in `production` mode! To test your sitemap, run: `gatsby build && gatsby serve`_
+**Please note:** This plugin only generates output when run in `production` mode! To test your sitemap, run: `gatsby build && gatsby serve`.
 
 ## Install
 
-`npm install gatsby-plugin-sitemap`
+```shell
+npm install gatsby-plugin-sitemap
+```
 
 ## How to Use
 
@@ -192,7 +194,7 @@ allPages.filter(
 | Param         | Type                | Description                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------- |
 | page          | <code>object</code> |                                                                                     |
-| excludedRoute | <code>string</code> | Element from `exclude` Array in plugin config.                                      |
+| excludedRoute | <code>string</code> | Element from `excludes` Array in plugin config                                      |
 | tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
 
 <a id="serialize"></a>

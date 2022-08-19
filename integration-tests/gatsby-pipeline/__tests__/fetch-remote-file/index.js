@@ -4,20 +4,13 @@
 
 const execa = require(`execa`)
 const path = require(`path`)
-const glob = require(`glob`)
-const fs = require(`fs-extra`)
 const md5File = require(`md5-file`)
+const { clean } = require("../../utils/create-devserver")
 const basePath = path.resolve(__dirname, `../../`)
-
-const cleanDirs = () =>
-  Promise.all([
-    fs.emptyDir(`${basePath}/public`),
-    fs.emptyDir(`${basePath}/.cache`),
-  ])
 
 describe(`fetch-remote-file`, () => {
   beforeAll(async () => {
-    await cleanDirs()
+    await clean()
     await execa(`yarn`, [`build`], {
       cwd: basePath,
       // we want to force 1 query per worker
@@ -31,36 +24,27 @@ describe(`fetch-remote-file`, () => {
         path.join(
           __dirname,
           "../..",
-          "public/images/50c58a791de3c2303e62084d731799eb/photoA.jpg"
+          "public/images/ce61bf418df0d6677d2701c4aeff1023/photoA.jpg"
         )
       )
-    ).toEqual("a9e57a66a10b2d26a1999a4685d7c9ef")
+    ).toEqual("37287aaa726d254eabcf3e7ede51a93b")
     expect(
       await md5File(
         path.join(
           __dirname,
           "../..",
-          "public/images/4910e745c3c453b8795d6ba65c79d99b/photoB.jpg"
+          "public/images/adeb4bc975f3ce4081c6772a0c96ca7b/photoB.jpg"
         )
       )
-    ).toEqual("c305dc5c5db45cc773231a507af5116d")
+    ).toEqual("cef966aac5cfc7972e91e5c5c96829cb")
     expect(
       await md5File(
         path.join(
           __dirname,
           "../..",
-          "public/images/fb673e75e9534b3cc2d2e24085386d48/photoC.jpg"
+          "public/images/48315d9e12fde935993d8b406f2d6684/photoC.jpg"
         )
       )
-    ).toEqual("4ba953ba27236727d7abe7d5b8916432")
-  })
-
-  /**
-   * this is a bit of a cheeky test but we just want to make sure we're actually running on multiple workers
-   */
-  it("should have conflict between workers", async () => {
-    const files = await fs.readdir(path.join(__dirname, "../../.cache/workers"))
-
-    expect(files.length).toBeGreaterThan(1)
+    ).toEqual("c3d2efe723cd58311db404fd1b1f76a7")
   })
 })

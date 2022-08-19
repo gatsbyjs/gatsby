@@ -2,9 +2,9 @@
 title: Gatsby Config API
 ---
 
-The file `gatsby-config.js` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site.
+The file `gatsby-config.js`/`gatsby-config.ts` defines your site's metadata, plugins, and other general configuration. This file should be in the root of your Gatsby site. You can author the file in JavaScript or [TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-configts).
 
-If you created a Gatsby site with the `gatsby new` command, there should already be a sample configuration file in your site's directory.
+If you created a Gatsby site with the `npm init gatsby` command, there should already be a sample configuration file in your site's directory.
 _Note: There are many sample configs which may be helpful to reference in the different [Gatsby Example Websites](https://github.com/gatsbyjs/gatsby/tree/master/examples)._
 
 ## Set up the configuration file
@@ -37,6 +37,8 @@ module.exports = {
 }
 ```
 
+The [TypeScript and Gatsby documentation](/docs/how-to/custom-configuration/typescript/#gatsby-configts) shows how to set up a configuration file in TypeScript.
+
 ## Configuration options
 
 Options available to set within `gatsby-config.js` include:
@@ -46,6 +48,7 @@ Options available to set within `gatsby-config.js` include:
 1. [flags](#flags) (object)
 1. [pathPrefix](#pathprefix) (string)
 1. [trailingSlash](#trailingslash) (string)
+1. [graphqlTypegen](#graphqltypegen) (boolean)
 1. [polyfill](#polyfill) (boolean)
 1. [mapping](#mapping-node-types) (object)
 1. [proxy](#proxy) (object)
@@ -69,7 +72,7 @@ module.exports = {
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
 
-See a full description and sample usage in [Gatsby.js Tutorial Part Four](/docs/tutorial/part-4/#data-in-gatsby).
+See a full description and sample usage in [Gatsby Tutorial Part Four](/docs/tutorial/part-4/#data-in-gatsby).
 
 ## plugins
 
@@ -147,7 +150,7 @@ Flags let sites enable experimental or upcoming changes that are still in testin
 ```javascript:title=gatsby-config.js
 module.exports = {
   flags: {
-    QUERY_ON_DEMAND: true,
+    DEV_SSR: true,
   },
 }
 ```
@@ -166,6 +169,8 @@ See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path
 
 ## trailingSlash
 
+> Support added in `gatsby@4.7.0`
+
 Configures the creation of URLs for pages, and whether to remove, append, or ignore trailing slashes.
 
 - `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
@@ -174,11 +179,42 @@ Configures the creation of URLs for pages, and whether to remove, append, or ign
 
 The default setting for this option is `legacy` in order to preserve existing behavior for current users. In Gatsby v5 the default mode will be `always`. Gatsby Cloud automatically handles and supports the `trailingSlash` option. Alternate hosting providers (or if you're managing this on your own) should follow the "Redirects, and expected behavior from the hosting provider" section on the [initial RFC](https://github.com/gatsbyjs/gatsby/discussions/34205).
 
+## graphqlTypegen
+
+> Support added in `gatsby@4.15.0`
+
+You can enable the [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen) feature by setting `graphqlTypegen` to `true`. It'll allow you to more easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  graphqlTypegen: true,
+}
+```
+
+Optionally, you can configure its behavior by passing an object to `graphqlTypegen`, see the options below. If you don't pass an object (but `graphqlTypegen: true`), the default value for each option will be used.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  graphqlTypegen: {
+    typesOutputPath: `gatsby-types.d.ts`,
+    // Other options...
+  },
+}
+```
+
+### typesOutputPath
+
+You can specifiy the path of the generated TypeScript types file relative to the site root. Default: `src/gatsby-types.d.ts`.
+
+### generateOnBuild
+
+By default, `graphqlTypegen` is only run during `gatsby develop`. Set this option to `true` to create the `src/gatsby-types.d.ts` file also during `gatsby build`. Default: `false`.
+
 ## polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
 
-If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.
+If you'd like to provide your own Promise polyfill, you can set `polyfill` to `false`.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -370,7 +406,7 @@ See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
 
 ## jsxRuntime
 
-Setting to "automatic" allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
+Setting to `automatic` allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -380,10 +416,13 @@ module.exports = {
 
 ## jsxImportSource
 
-With the new jsxRuntime you can set which package React should use as underlying jsx transformer. For example you can set it to "@emotion/react" so by default @emotion/react is used instead of the react package.
+When `jsxRuntime` is set you can choose which package React should use as underlying JSX transformer with `jsxImportSource`. For example you can set it to `@emotion/react` so by default `@emotion/react` is used instead of the `react` package.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
+  jsxRuntime: "automatic",
   jsxImportSource: "@emotion/react",
 }
 ```
+
+**Please note:** For now you'll also need to set this configuration inside `babel-preset-gatsby`, see [its jsxImportSource documentation](https://github.com/gatsbyjs/gatsby/blob/master/packages/babel-preset-gatsby/README.md#reactImportSource).

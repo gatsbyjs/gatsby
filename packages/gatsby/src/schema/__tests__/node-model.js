@@ -629,6 +629,7 @@ describe(`NodeModel`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     let resolveSlugMock
+    let materializationSpy
     beforeEach(async () => {
       const nodes = (() => [
         {
@@ -708,6 +709,24 @@ describe(`NodeModel`, () => {
             contentDigest: `7`,
           },
         },
+        {
+          id: `id8`,
+          toBeResolvedInAnotherField: 2,
+          enabled: true,
+          internal: {
+            type: `Test6`,
+            contentDigest: `8`,
+          },
+        },
+        {
+          id: `id9`,
+          toBeResolvedInAnotherField: 1,
+          enabled: true,
+          internal: {
+            type: `Test6`,
+            contentDigest: `9`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -784,6 +803,22 @@ describe(`NodeModel`, () => {
                   return source.id
                 },
               },
+
+              // for concurrent materialization test
+              intentionallySlowResolver1: {
+                type: `Boolean!`,
+                resolve: async () => {
+                  await new Promise(resolve => setTimeout(resolve, 1000))
+                  return true
+                },
+              },
+              intentionallySlowResolver2: {
+                type: `Boolean!`,
+                resolve: async () => {
+                  await new Promise(resolve => setTimeout(resolve, 1000))
+                  return true
+                },
+              },
             },
           }),
           typeBuilders.buildObjectType({
@@ -835,6 +870,16 @@ describe(`NodeModel`, () => {
               },
             },
           }),
+          typeBuilders.buildObjectType({
+            name: `Test6`,
+            interfaces: [`Node`],
+            fields: {
+              sort_order: {
+                type: `Int!`,
+                resolve: source => source.toBeResolvedInAnotherField,
+              },
+            },
+          }),
         ],
       })
 
@@ -849,6 +894,7 @@ describe(`NodeModel`, () => {
         schemaComposer,
         createPageDependency,
       })
+      materializationSpy = jest.spyOn(nodeModel, `_doResolvePrepareNodesQueue`)
     })
 
     it(`should not resolve prepared nodes more than once`, async () => {
@@ -1100,6 +1146,58 @@ describe(`NodeModel`, () => {
       expect(result2.map(node => node.id)).toEqual([`id7`, `id6`])
     })
 
+    it(`sorts correctly by fields with custom resolvers if GC happen mid query`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      // populate filters cache
+      await nodeModel.findAll(
+        {
+          query: {},
+          type: `Test6`,
+        },
+        { path: `/` }
+      )
+
+      // borrowed from https://unpkg.com/browse/expose-gc@1.0.0/function.js
+      const v8 = require(`v8`)
+      const vm = require(`vm`)
+      v8.setFlagsFromString(`--expose_gc`)
+      const gc = vm.runInNewContext(`gc`)
+
+      const { clearKeptObjects } = require(`lmdb`)
+
+      const actualOrderBy = jest.requireActual(`lodash`).orderBy
+      const spy = jest.spyOn(require(`lodash`), `orderBy`)
+      spy.mockImplementationOnce((...args) => {
+        // very implementation specific case:
+        // We don't hold full nodes strongly in gatsby anymore so they can be potentially
+        // GCed mid execution of query. For this test we force all weakly held nodes to be
+        // dropped
+        clearKeptObjects()
+        gc()
+        return actualOrderBy(...args)
+      })
+
+      // query will use same filters cache as previous query (important)
+      // but will use sorting that requires Materialization (sort_order has custom resolver)
+      const { entries } = await nodeModel.findAll(
+        {
+          query: {
+            sort: {
+              fields: [`sort_order`],
+              order: [`asc`],
+            },
+          },
+          type: `Test6`,
+        },
+        { path: `/` }
+      )
+      const result = Array.from(entries)
+      expect(result.length).toEqual(2)
+      expect(result[0].id).toEqual(`id9`)
+      expect(result[1].id).toEqual(`id8`)
+    })
+
     it(`handles nulish values within array of interface type`, async () => {
       nodeModel.replaceFiltersCache()
       const { entries, totalCount } = await nodeModel.findAll(
@@ -1131,6 +1229,72 @@ describe(`NodeModel`, () => {
       )
       expect(result).toBeTruthy()
       expect(result.id).toEqual(`id3`)
+    })
+
+    it(`correctly merges resolved fields when multiple concurrent materializations happen for same node`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      const query1Promise = nodeModel.findAll(
+        {
+          query: {
+            filter: { intentionallySlowResolver1: { eq: true } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      // we batch and merge materialization runs scheduled in same event loop turn
+      // so just triggering adding small time delay so that we run 2 concurrent ones instead
+
+      await new Promise(resolve => process.nextTick(resolve))
+
+      const query2Promise = nodeModel.findAll(
+        {
+          query: {
+            filter: { intentionallySlowResolver2: { eq: true } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      await Promise.all([query1Promise, query2Promise])
+
+      // make sure materialization wasn't batched (test setup is correct)
+      expect(materializationSpy).toBeCalledTimes(2)
+
+      const resolvedFieldsForTestNodes = store
+        .getState()
+        .resolvedNodesCache.get(`Test`)
+
+      // resolvedFieldsForTestNodes should contain both intentionallySlowResolver1 and intentionallySlowResolver2
+      // so something like this:
+      // Map {
+      //   "id1" => Object {
+      //     "intentionallySlowResolver1": true,
+      //     "intentionallySlowResolver2": true,
+      //   },
+      //   "id2" => Object {
+      //     "intentionallySlowResolver1": true,
+      //     "intentionallySlowResolver2": true,
+      //   },
+      // }
+
+      // we should have resolved fields for all nodes
+      expect(Array.from(resolvedFieldsForTestNodes.keys())).toEqual(
+        nodeModel.getAllNodes({ type: `Test` }).map(node => node.id)
+      )
+
+      // we should have all fields merged on all nodes
+      expect(Array.from(resolvedFieldsForTestNodes.values())).toEqual(
+        expect.arrayContaining([
+          {
+            intentionallySlowResolver1: true,
+            intentionallySlowResolver2: true,
+          },
+        ])
+      )
     })
   })
 

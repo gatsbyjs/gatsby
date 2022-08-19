@@ -3,6 +3,137 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.15.0/packages/gatsby-plugin-utils) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) [#36395](https://github.com/gatsbyjs/gatsby/issues/36395) ([3253a38](https://github.com/gatsbyjs/gatsby/commit/3253a3860c9c74bce23c8c2fd1df651e549566b9))
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.14.0/packages/gatsby-plugin-utils) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- add missing dependencies [#36230](https://github.com/gatsbyjs/gatsby/issues/36230) ([5443479](https://github.com/gatsbyjs/gatsby/commit/5443479c98a05f60ba12efad3fe2f986c80ed296))
+- fix encoding issue for image-cdn fix [#36179](https://github.com/gatsbyjs/gatsby/issues/36179) ([b6d9784](https://github.com/gatsbyjs/gatsby/commit/b6d9784b746cb344c5583cb2a0fbccee14502286))
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.13.0/packages/gatsby-plugin-utils) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Chores
+
+- update dependency msw to ^0.42.3 for gatsby-plugin-utils [#36028](https://github.com/gatsbyjs/gatsby/issues/36028) ([2263c8c](https://github.com/gatsbyjs/gatsby/commit/2263c8c9b96fdfab38d65b5eea0abc30c364a490))
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.12.1/packages/gatsby-plugin-utils) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.12.0/packages/gatsby-plugin-utils) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Chores
+
+- update dependency msw to ^0.42.0 for gatsby-plugin-utils [#35807](https://github.com/gatsbyjs/gatsby/issues/35807) ([ecff91d](https://github.com/gatsbyjs/gatsby/commit/ecff91db66a11c199edaac3b3d667740311f312a))
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.11.0/packages/gatsby-plugin-utils) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) ([7a5b5c1](https://github.com/gatsbyjs/gatsby/commit/7a5b5c124cea2c448f110c487e81194344dedb7d))
+- add `contentDigest` to image cdn args [#35816](https://github.com/gatsbyjs/gatsby/issues/35816) ([8257bca](https://github.com/gatsbyjs/gatsby/commit/8257bca2a1d352fef7d4a261926e7d455154bf2e))
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.10.0/packages/gatsby-plugin-utils) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) [#35863](https://github.com/gatsbyjs/gatsby/issues/35863) ([aacb781](https://github.com/gatsbyjs/gatsby/commit/aacb781438760e2c3f8bfa64132a0a87fa2d55ff))
+- add `contentDigest` to image cdn args [#35816](https://github.com/gatsbyjs/gatsby/issues/35816) [#35860](https://github.com/gatsbyjs/gatsby/issues/35860) ([cedbdb8](https://github.com/gatsbyjs/gatsby/commit/cedbdb89153a21bd4e22e612f677bf291aadceee))
+- Add setRequestHeaders action/api [#35655](https://github.com/gatsbyjs/gatsby/issues/35655) ([f520e59](https://github.com/gatsbyjs/gatsby/commit/f520e59599a237b0a8ed105bff931c5058e2bfa8))
+
+#### Bug Fixes
+
+- Make `GatsbyImageData` nullable [#35777](https://github.com/gatsbyjs/gatsby/issues/35777) ([ca09aa7](https://github.com/gatsbyjs/gatsby/commit/ca09aa7a7b1fbb719ef3cd0c64bbe663d30d73c2))
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+
+### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.9.1/packages/gatsby-plugin-utils) (2022-06-01)
+
+#### Bug Fixes
+
+- Make `GatsbyImageData` nullable [#35777](https://github.com/gatsbyjs/gatsby/issues/35777) [#35785](https://github.com/gatsbyjs/gatsby/issues/35785) ([e7a3e6e](https://github.com/gatsbyjs/gatsby/commit/e7a3e6ebca645bd15f668aa3c2e763d93d648ea0))
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.9.0/packages/gatsby-plugin-utils) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Throw Typegen errors & add `IGatsbyImageData` to output [#35683](https://github.com/gatsbyjs/gatsby/issues/35683) ([e7fc88b](https://github.com/gatsbyjs/gatsby/commit/e7fc88b024c84a3e9f732deec7441621024e1f95))
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.8.0/packages/gatsby-plugin-utils) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+
+#### Chores
+
+- update dependency typescript to ^4.6.4 [#34984](https://github.com/gatsbyjs/gatsby/issues/34984) ([71eb414](https://github.com/gatsbyjs/gatsby/commit/71eb414ad5abf1c835a2c243f01ac98ea5ee7e37))
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.7.0/packages/gatsby-plugin-utils) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+#### Features
+
+- bring back defaults before image_cdn [#35370](https://github.com/gatsbyjs/gatsby/issues/35370) ([027acf8](https://github.com/gatsbyjs/gatsby/commit/027acf8e44ad649c6e4d7a46946d3dfe1baa501a))
+- enable tracedsvg [#35328](https://github.com/gatsbyjs/gatsby/issues/35328) ([a246011](https://github.com/gatsbyjs/gatsby/commit/a246011dafdba0230847b02c2812b6bda298f8e1))
+
+### [3.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.1/packages/gatsby-plugin-utils) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.6.0/packages/gatsby-plugin-utils) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- path pieces too long and url safe base64 encoding [#35160](https://github.com/gatsbyjs/gatsby/issues/35160) ([3f12544](https://github.com/gatsbyjs/gatsby/commit/3f1254492bacfbe1957c5d2ce866392ec8105b50))
+
+#### Chores
+
+- update dependency msw to ^0.39.2 for gatsby-plugin-utils [#35300](https://github.com/gatsbyjs/gatsby/issues/35300) ([aa0f61a](https://github.com/gatsbyjs/gatsby/commit/aa0f61ab40560183745e96bcef834577bc4be156))
+
+### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.1/packages/gatsby-plugin-utils) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
 ## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.5.0/packages/gatsby-plugin-utils) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

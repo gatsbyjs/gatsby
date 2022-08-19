@@ -1,3 +1,10 @@
+const {
+  data: headFunctionExportData,
+} = require(`./shared-data/head-function-export.js`)
+
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -5,12 +12,14 @@ module.exports = {
     social: {
       twitter: `kylemathews`,
     },
+    // Separate to avoid needing to change other tests that rely on site metadata
+    headFunctionExport: headFunctionExportData.queried,
   },
+  graphqlTypegen: true,
   flags: {
     DEV_SSR: false,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -29,15 +38,13 @@ module.exports = {
     `gatsby-source-pinc-data`,
     `gatsby-source-query-on-demand-data`,
     `gatsby-browser-tsx`,
+    `gatsby-node-typegen`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [
-          `gatsby-remark-subcache`,
-          `gatsby-remark-images`
-        ],
+        plugins: [`gatsby-remark-subcache`, `gatsby-remark-images`],
       },
     },
     `gatsby-plugin-sharp`,
@@ -60,5 +67,9 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
+  ],
+  partytownProxiedURLs: [
+    `https://unpkg.com/three@0.139.1/build/three.js`,
+    `http://localhost:8000/used-by-off-main-thread-2.js`,
   ],
 }

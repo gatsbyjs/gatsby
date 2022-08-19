@@ -231,7 +231,12 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
     stripMetadata: Joi.boolean().default(true),
     defaultQuality: Joi.number().default(50),
+    // TODO(v5): Remove deprecated failOnError option
     failOnError: Joi.boolean().default(true),
+    failOn: Joi.any()
+      .valid(`none`, `truncated`, `error`, `warning`)
+      .default(`warning`)
+      .description(`Level of sensitivity to invalid images`),
     defaults: Joi.object({
       formats: Joi.array().items(
         Joi.string().valid(`auto`, `png`, `jpg`, `webp`, `avif`)
@@ -255,4 +260,24 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     }).description(
       `Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/`
     ),
+  }).custom(value => {
+    const shouldNotFailOnError = !value.failOnError
+
+    if (shouldNotFailOnError) {
+      // show this warning only once in main process
+      if (!process.env.GATSBY_WORKER_ID) {
+        console.warn(
+          `[gatsby-plugin-sharp]: The "failOnError" option is deprecated. Please use "failOn" instead.`
+        )
+      }
+
+      return {
+        ...value,
+        failOn: `none`,
+      }
+    }
+
+    return {
+      ...value,
+    }
   })

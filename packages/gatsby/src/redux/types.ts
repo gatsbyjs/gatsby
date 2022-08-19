@@ -1,7 +1,12 @@
 import type { TrailingSlash } from "gatsby-page-utils"
-import { IProgram } from "../commands/types"
+import { IProgram, Stage } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
-import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
+import {
+  DocumentNode,
+  GraphQLSchema,
+  DefinitionNode,
+  SourceLocation,
+} from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { ThunkAction } from "redux-thunk"
@@ -73,9 +78,14 @@ export interface IGatsbyFunction {
   pluginName: string
 }
 
+export interface IGraphQLTypegenOptions {
+  typesOutputPath: string
+  generateOnBuild: boolean
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
-    // This is the name of the plugin like `gatsby-plugin-manifest
+    // This is the name of the plugin like `gatsby-plugin-manifest`
     resolve: string
     options: {
       [key: string]: unknown
@@ -93,12 +103,14 @@ export interface IGatsbyConfig {
   polyfill?: boolean
   developMiddleware?: any
   proxy?: any
+  partytownProxiedURLs?: Array<string>
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
   trailingSlash?: TrailingSlash
+  graphqlTypegen?: IGraphQLTypegenOptions
 }
 
 export interface IGatsbyNode {
@@ -114,7 +126,6 @@ export interface IGatsbyNode {
     content?: string
     description?: string
   }
-  __gatsby_resolved: any // TODO
   [key: string]: unknown
   fields: Array<string>
 }
@@ -153,12 +164,13 @@ export interface IDefinitionMeta {
   def: DefinitionNode
   filePath: string
   text: string
-  templateLoc: any
-  printedAst: string
+  templateLoc: SourceLocation
+  printedAst: string | null
   isHook: boolean
   isStaticQuery: boolean
   isFragment: boolean
-  hash: string
+  isConfigQuery: boolean
+  hash: number
 }
 
 type GatsbyNodes = Map<string, IGatsbyNode>
@@ -179,24 +191,18 @@ export interface IGatsbyCompleteJobV2 {
 
 export interface IPlugin {
   name: string
-  options: Record<string, any>
+  options: Record<string, unknown>
 }
 
 export interface IBabelStage {
   plugins: Array<IPlugin>
   presets: Array<IPlugin>
-  options: {
+  options?: {
     cacheDirectory: boolean
     sourceType: string
     sourceMaps?: string
   }
 }
-
-type BabelStageKeys =
-  | "develop"
-  | "develop-html"
-  | "build-html"
-  | "build-javascript"
 
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
@@ -244,6 +250,8 @@ export interface IGatsbyState {
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   nodeManifests: Array<INodeManifest>
+  requestHeaders: Map<string, { [header: string]: string }>
+  telemetry: ITelemetry
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -309,7 +317,7 @@ export interface IGatsbyState {
   redirects: Array<IRedirect>
   babelrc: {
     stages: {
-      [key in BabelStageKeys]: IBabelStage
+      [key in Stage]: IBabelStage
     }
   }
   schemaCustomization: {
@@ -432,6 +440,9 @@ export type ActionsUnion =
   | IMaterializePageMode
   | ISetJobV2Context
   | IClearJobV2Context
+  | ISetDomainRequestHeaders
+  | IProcessGatsbyImageSourceUrlAction
+  | IClearGatsbyImageSourceUrlAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -439,6 +450,7 @@ export interface ISetComponentFeatures {
     componentPath: string
     serverData: boolean
     config: boolean
+    Head: boolean
   }
 }
 
@@ -452,7 +464,7 @@ export interface IApiFinishedAction {
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -461,7 +473,7 @@ interface ISetBabelPluginAction {
 interface ISetBabelPresetAction {
   type: `SET_BABEL_PRESET`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -470,7 +482,7 @@ interface ISetBabelPresetAction {
 interface ISetBabelOptionsAction {
   type: `SET_BABEL_OPTIONS`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -951,11 +963,37 @@ export interface INodeManifest {
   }
 }
 
+export interface ISetDomainRequestHeaders {
+  type: `SET_REQUEST_HEADERS`
+  payload: {
+    domain: string
+    headers: {
+      [header: string]: string
+    }
+  }
+}
+
+export interface IProcessGatsbyImageSourceUrlAction {
+  type: `PROCESS_GATSBY_IMAGE_SOURCE_URL`
+  payload: {
+    sourceUrl: string
+  }
+}
+
+export interface IClearGatsbyImageSourceUrlAction {
+  type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`
+}
+
+export interface ITelemetry {
+  gatsbyImageSourceUrls: Set<string>
+}
+
 export interface IMergeWorkerQueryState {
   type: `MERGE_WORKER_QUERY_STATE`
   payload: {
     workerId: number
     queryStateChunk: IGatsbyState["queries"]
+    queryStateTelemetryChunk: IGatsbyState["telemetry"]
   }
 }
 

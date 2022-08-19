@@ -5,27 +5,35 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@contentful/rich-text-types": "^14.1.2",
-    "cypress": "^6.8.0",
-    "cypress-image-snapshot": "^4.0.1",
-    "gatsby": "^3.1.1",
-    "gatsby-image": "^3.3.0",
-    "gatsby-plugin-image": "^1.3.1",
-    "gatsby-plugin-sharp": "^3.1.2",
-    "gatsby-source-contentful": "^5.1.1",
-    "gatsby-transformer-remark": "^4.0.0",
-    "gatsby-transformer-sharp": "^3.3.0",
-    "gatsby-transformer-sqip": "3.3.1",
+    "gatsby": "next",
+    "gatsby-plugin-image": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-contentful": "next",
+    "gatsby-transformer-remark": "next",
+    "gatsby-transformer-sharp": "next",
+    "gatsby-transformer-sqip": "next",
     "modern-normalize": "^1.0.0",
     "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "slugify": "^1.5.0"
+  },
+  "devDependencies": {
+    "@cypress/snapshot": "^2.1.7",
+    "cross-env": "^7.0.3",
+    "cypress": "^9.7.0",
+    "cypress-image-snapshot": "^4.0.1",
+    "gatsby-cypress": "next",
+    "prettier": "^2.6.2",
+    "srcset": "^5.0.0",
+    "start-server-and-test": "^1.7.1"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
   "scripts": {
+    "clean": "gatsby clean",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
@@ -34,15 +42,6 @@
     "serve": "gatsby serve",
     "cy:open": "cypress open",
     "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
-  },
-  "devDependencies": {
-    "@cypress/snapshot": "^2.1.7",
-    "cross-env": "^7.0.3",
-    "gatsby-cypress": "^1.3.0",
-    "is-ci": "^3.0.0",
-    "prettier": "2.2.1",
-    "srcset": "^5.0.0",
-    "start-server-and-test": "^1.7.1"
   },
   "repository": {
     "type": "git",

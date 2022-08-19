@@ -23,7 +23,7 @@ describe(`limited-exports-page-templates`, () => {
   it(`should initially not log to console`, () => {
     cy.get(`@hmrConsoleLog`).should(
       `not.be.calledWithMatch`,
-      /13:1 {2}warning {2}In page templates only a default export of a valid React component and the named exports of a page query, getServerData or config are allowed./i
+      /13:1 {2}warning {2}In page templates only a default export of a valid React component and the named exports of a page query, getServerData, Head or config are allowed./i
     )
   })
   it(`should log warning to console for invalid export`, () => {
@@ -34,11 +34,11 @@ describe(`limited-exports-page-templates`, () => {
 
     cy.get(`@hmrConsoleLog`).should(
       `be.calledWithMatch`,
-      /13:1 {2}warning {2}In page templates only a default export of a valid React component and the named exports of a page query, getServerData or config are allowed./i
+      /13:1 {2}warning {2}In page templates only a default export of a valid React component and the named exports of a page query, getServerData, Head or config are allowed./i
     )
     cy.get(`@hmrConsoleLog`).should(
       `not.be.calledWithMatch`,
-      /15:1 {2}warning {2}In page templates only a default export of a valid React component and the named exports of a page query, getServerData or config are allowed./i
+      /15:1 {2}warning {2}In page templates only a default export of a valid React component and the named exports of a page query, getServerData, Head or config are allowed./i
     )
   })
 })

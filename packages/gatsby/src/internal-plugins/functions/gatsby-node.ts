@@ -3,18 +3,15 @@ import glob from "glob"
 import path from "path"
 import webpack from "webpack"
 import _ from "lodash"
-import multer from "multer"
-import * as express from "express"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
 import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
-import { match } from "@gatsbyjs/reach-router/lib/utils"
-import cookie from "cookie"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
 import { IGatsbyFunction } from "../../redux/types"
+import { functionMiddlewares } from "./middleware"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -316,6 +313,38 @@ const createWebpackConfig = async ({
     // watch: !isProductionEnv,
     module: {
       rules: [
+        // Webpack expects extensions when importing ESM modules as that's what the spec describes.
+        // Not all libraries have adapted so we don't enforce its behaviour
+        // @see https://github.com/webpack/webpack/issues/11467
+        {
+          test: /\.mjs$/i,
+          resolve: {
+            byDependency: {
+              esm: {
+                fullySpecified: false,
+              },
+            },
+          },
+        },
+        {
+          test: /\.js$/i,
+          descriptionData: {
+            type: `module`,
+          },
+          resolve: {
+            byDependency: {
+              esm: {
+                fullySpecified: false,
+              },
+            },
+          },
+          use: {
+            loader: `babel-loader`,
+            options: {
+              presets: [`@babel/typescript`],
+            },
+          },
+        },
         {
           test: [/.js$/, /.ts$/],
           exclude: /node_modules/,
@@ -328,7 +357,20 @@ const createWebpackConfig = async ({
         },
       ],
     },
-    plugins: [new webpack.DefinePlugin(processEnvVars)],
+    plugins: [
+      new webpack.DefinePlugin(processEnvVars),
+      new webpack.IgnorePlugin({
+        checkResource(resource): boolean {
+          if (resource === `lmdb`) {
+            reporter.warn(
+              `LMDB and other modules with native dependencies are not supported in Gatsby Functions.\nIf you are importing utils from \`gatsby-core-utils\`, make sure to import from a specific module (for example \`gatsby-core-utils/create-content-digest\`).`
+            )
+            return true
+          }
+          return false
+        },
+      }),
+    ],
   }
 }
 
@@ -368,22 +410,28 @@ export async function onPreBootstrap({
         reporter,
       })
 
-      function callback(err, stats): any {
-        const rawMessages = stats.toJson({ moduleTrace: false })
-        if (rawMessages.warnings.length > 0) {
+      function callback(err, stats?: webpack.Stats): void {
+        const rawMessages = stats?.toJson({
+          all: false,
+          warnings: true,
+          errors: true,
+        })
+        if (rawMessages?.warnings && rawMessages.warnings.length > 0) {
           reportWebpackWarnings(rawMessages.warnings, reporter)
         }
 
         if (err) return reject(err)
-        const errors = stats.compilation.errors || []
+        const errors = stats?.compilation.errors || []
 
         // If there's errors, reject in production and print to the console
         // in development.
         if (isProductionEnv) {
-          if (errors.length > 0) return reject(stats.compilation.errors)
+          if (errors.length > 0) return reject(errors)
         } else {
           const formatted = formatWebpackMessages({
-            errors: rawMessages.errors.map(e => e.message),
+            errors: rawMessages?.errors
+              ? rawMessages.errors.map(e => e.message)
+              : [],
             warnings: [],
           })
           reporter.error(formatted.errors)
@@ -478,97 +526,17 @@ export async function onCreateDevServer({
 
   app.use(
     `/api/*`,
-    multer().any(),
-    express.urlencoded({ extended: true }),
-    (req, _, next) => {
-      const cookies = req.headers.cookie
-
-      if (!cookies) {
-        return next()
-      }
-
-      req.cookies = cookie.parse(cookies)
-
-      return next()
-    },
-    express.text(),
-    express.json(),
-    express.raw(),
-    async (req, res, next) => {
-      const { "0": pathFragment } = req.params
-
-      const { functions }: { functions: Array<IGatsbyFunction> } =
-        store.getState()
-
-      // Check first for exact matches.
-      let functionObj = functions.find(
-        ({ functionRoute }) => functionRoute === pathFragment
-      )
-
-      if (!functionObj) {
-        // Check if there's any matchPaths that match.
-        // We loop until we find the first match.
-        functions.some(f => {
-          if (f.matchPath) {
-            const matchResult = match(f.matchPath, pathFragment)
-            if (matchResult) {
-              req.params = matchResult.params
-              if (req.params[`*`]) {
-                // Backwards compatability for v3
-                // TODO remove in v5
-                req.params[`0`] = req.params[`*`]
-              }
-              functionObj = f
-
-              return true
-            }
-          }
-
-          return false
-        })
-      }
-
-      if (functionObj) {
+    ...functionMiddlewares({
+      getFunctions(): Array<IGatsbyFunction> {
+        const { functions }: { functions: Array<IGatsbyFunction> } =
+          store.getState()
+        return functions
+      },
+      async prepareFn(functionObj: IGatsbyFunction): Promise<void> {
         activeDevelopmentFunctions.add(functionObj)
-
         await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
-
-        reporter.verbose(`Running ${functionObj.functionRoute}`)
-        const start = Date.now()
-        const pathToFunction = functionObj.absoluteCompiledFilePath
-
-        try {
-          delete require.cache[require.resolve(pathToFunction)]
-          const fn = require(pathToFunction)
-
-          const fnToExecute = (fn && fn.default) || fn
-
-          await Promise.resolve(fnToExecute(req, res))
-        } catch (e) {
-          // Override the default error with something more specific.
-          if (e.message.includes(`fnToExecute is not a function`)) {
-            e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
-          }
-          reporter.error(e)
-          // Don't send the error if that would cause another error.
-          if (!res.headersSent) {
-            res
-              .status(500)
-              .send(
-                `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
-              )
-          }
-        }
-
-        const end = Date.now()
-        reporter.log(
-          `Executed function "/api/${functionObj.functionRoute}" in ${
-            end - start
-          }ms`
-        )
-      } else {
-        next()
-      }
-    }
+      },
+      showDebugMessageInResponse: true,
+    })
   )
 }

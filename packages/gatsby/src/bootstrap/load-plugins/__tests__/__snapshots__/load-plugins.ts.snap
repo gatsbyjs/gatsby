@@ -91,8 +91,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -305,6 +305,26 @@ Array [
     "subPluginPaths": undefined,
     "version": "1.0.0",
   },
+  Object {
+    "browserAPIs": Array [
+      "onInitialClientRender",
+    ],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "onRenderBody",
+    ],
+    "version": "1.0.0",
+  },
 ]
 `;
 
@@ -399,8 +419,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -646,6 +666,26 @@ Array [
     "subPluginPaths": undefined,
     "version": "1.0.0",
   },
+  Object {
+    "browserAPIs": Array [
+      "onInitialClientRender",
+    ],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "onRenderBody",
+    ],
+    "version": "1.0.0",
+  },
 ]
 `;
 
@@ -740,8 +780,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -996,6 +1036,26 @@ Array [
     "resolve": "",
     "ssrAPIs": Array [],
     "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [
+      "onInitialClientRender",
+    ],
+    "id": "",
+    "name": "partytown",
+    "nodeAPIs": Array [
+      "onCreateDevServer",
+      "onPreBootstrap",
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "onRenderBody",
+    ],
     "version": "1.0.0",
   },
 ]

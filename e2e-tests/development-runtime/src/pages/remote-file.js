@@ -3,13 +3,11 @@ import React from "react"
 
 import { GatsbyImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 const RemoteFile = ({ data }) => {
   return (
     <Layout>
-      <SEO title="Remote file" />
-
       {data.allMyRemoteFile.nodes.map(node => {
         return (
           <div key={node.id}>
@@ -32,6 +30,11 @@ const RemoteFile = ({ data }) => {
                 image={node.constrained}
                 alt=""
               />
+              <GatsbyImage
+                className="constrained_traced"
+                image={node.constrained_traced}
+                alt=""
+              />
               <GatsbyImage className="full" image={node.full} alt="" />
             </div>
           </div>
@@ -40,6 +43,8 @@ const RemoteFile = ({ data }) => {
     </Layout>
   )
 }
+
+export const Head = () => <Seo title="Remote file" />
 
 export const pageQuery = graphql`
   {
@@ -63,6 +68,11 @@ export const pageQuery = graphql`
           layout: CONSTRAINED
           width: 300
           placeholder: BLURRED
+        )
+        constrained_traced: gatsbyImage(
+          layout: CONSTRAINED
+          width: 300
+          placeholder: TRACED_SVG
         )
         full: gatsbyImage(layout: FULL_WIDTH, width: 500, placeholder: NONE)
       }

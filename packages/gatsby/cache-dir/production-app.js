@@ -1,4 +1,3 @@
-/* global HAS_REACT_18 */
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
@@ -24,19 +23,13 @@ import stripPrefix from "./strip-prefix"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
+import { reactDOMUtils } from "./react-dom-utils"
 
 const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
-let reactHydrate
-if (HAS_REACT_18) {
-  const reactDomClient = require(`react-dom/client`)
-  reactHydrate = (Component, el) => reactDomClient.hydrateRoot(el, Component)
-} else {
-  const reactDomClient = require(`react-dom`)
-  reactHydrate = reactDomClient.hydrate
-}
+const { render, hydrate } = reactDOMUtils()
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -258,10 +251,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return <GatsbyRoot>{SiteRoot}</GatsbyRoot>
     }
 
+    const focusEl = document.getElementById(`gatsby-focus-wrapper`)
+
+    // Client only pages have any empty body so we just do a normal
+    // render to avoid React complaining about hydration mis-matches.
+    let defaultRenderer = render
+    if (focusEl && focusEl.children.length) {
+      defaultRenderer = hydrate
+    }
+
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      reactHydrate
+      defaultRenderer
     )[0]
 
     function runRender() {

@@ -1,0 +1,8 @@
+DOCKER_ID=$(\
+  docker ps --format '{{.Image}}:{{.ID}}' | \
+  grep "gatsby-generic-benchmark" | \
+  head -n 1 | \
+  sed 's/gatsby\-generic\-benchmark://'\
+)
+
+echo $DOCKER_ID

@@ -1,6 +1,6 @@
 import * as React from "react"
+import type { HeadFC } from "gatsby"
 
-// styles
 const pageStyles = {
   color: "#232129",
   padding: 96,
@@ -28,6 +28,9 @@ const listStyles = {
   marginBottom: 96,
   paddingLeft: 0,
 }
+const doclistStyles = {
+  paddingLeft: 0,
+}
 const listItemStyles = {
   fontWeight: 300,
   fontSize: 24,
@@ -45,7 +48,9 @@ const linkStyle = {
 const docLinkStyle = {
   ...linkStyle,
   listStyleType: "none",
+  display: `inline-block`,
   marginBottom: 24,
+  marginRight: 12,
 }
 
 const descriptionStyle = {
@@ -56,11 +61,18 @@ const descriptionStyle = {
   lineHeight: 1.25,
 }
 
-const docLink = {
-  text: "TypeScript Documentation",
-  url: "https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/",
-  color: "#8954A8",
-}
+const docLinks = [
+  {
+    text: "TypeScript Documentation",
+    url: "https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/",
+    color: "#8954A8",
+  },
+  {
+    text: "GraphQL Typegen Documentation",
+    url: "https://www.gatsbyjs.com/docs/how-to/local-development/graphql-typegen/",
+    color: "#8954A8",
+  }
+]
 
 const badgeStyle = {
   color: "#fff",
@@ -78,7 +90,6 @@ const badgeStyle = {
   lineHeight: 1,
 }
 
-// data
 const links = [
   {
     text: "Tutorial",
@@ -125,30 +136,31 @@ const links = [
   },
 ]
 
-// markup
 const IndexPage = () => {
   return (
     <main style={pageStyles}>
-      <title>Home Page</title>
       <h1 style={headingStyles}>
         Congratulations
         <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! </span>
-        🎉🎉🎉
+        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
       </h1>
       <p style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
         update in real-time. 😎
       </p>
+      <ul style={doclistStyles}>
+        {docLinks.map(doc => (
+          <li key={doc.url} style={docLinkStyle}>
+            <a
+              style={linkStyle}
+              href={`${doc.url}?utm_source=starter&utm_medium=ts-docs&utm_campaign=minimal-starter-ts`}
+            >
+              {doc.text}
+            </a>
+          </li>
+        ))}
+      </ul>
       <ul style={listStyles}>
-        <li style={docLinkStyle}>
-          <a
-            style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=ts-docs&utm_campaign=minimal-starter-ts`}
-          >
-            {docLink.text}
-          </a>
-        </li>
         {links.map(link => (
           <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
             <span>
@@ -177,3 +189,5 @@ const IndexPage = () => {
 }
 
 export default IndexPage
+
+export const Head: HeadFC = () => <title>Home Page</title>

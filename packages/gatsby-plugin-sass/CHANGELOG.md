@@ -3,6 +3,88 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.21.0/packages/gatsby-plugin-sass) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.20.0/packages/gatsby-plugin-sass) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- Add support for additionalData option [#36086](https://github.com/gatsbyjs/gatsby/issues/36086) ([9a58b36](https://github.com/gatsbyjs/gatsby/commit/9a58b362bb148d1d215f5aaee15062656d39fc44))
+
+## [5.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.19.0/packages/gatsby-plugin-sass) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+### [5.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.18.1/packages/gatsby-plugin-sass) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.18.0/packages/gatsby-plugin-sass) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Chores
+
+- update dependency autoprefixer to ^10.4.7 for gatsby-plugin-sass [#35538](https://github.com/gatsbyjs/gatsby/issues/35538) ([de28b0a](https://github.com/gatsbyjs/gatsby/commit/de28b0a762a6bd9f24060759e0a7be9f31df768b))
+
+## [5.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.17.0/packages/gatsby-plugin-sass) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.16.0/packages/gatsby-plugin-sass) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+### [5.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.15.1/packages/gatsby-plugin-sass) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.15.0/packages/gatsby-plugin-sass) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.14.0/packages/gatsby-plugin-sass) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.13.0/packages/gatsby-plugin-sass) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.12.1/packages/gatsby-plugin-sass) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.12.0/packages/gatsby-plugin-sass) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Chores
+
+- update dependency autoprefixer to ^10.4.4 for gatsby-plugin-sass [#35277](https://github.com/gatsbyjs/gatsby/issues/35277) ([1956121](https://github.com/gatsbyjs/gatsby/commit/19561210069a3b4d7fcfc8e0eb35ef1f32e3a141))
+
+### [5.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.11.1/packages/gatsby-plugin-sass) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.11.0/packages/gatsby-plugin-sass) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

@@ -54,6 +54,21 @@
       "pull_request.opened": [
         "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
       ]
+    },
+    "gatsbyjs/gatsby-starter-wordpress-blog": {
+      "pull_request.opened": [
+        "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
+      ]
+    },
+    "gatsbyjs/gatsby-starter-minimal": {
+      "pull_request.opened": [
+        "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
+      ]
+    },
+    "gatsbyjs/gatsby-starter-minimal-ts": {
+      "pull_request.opened": [
+        "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
+      ]
     }
   }
 }

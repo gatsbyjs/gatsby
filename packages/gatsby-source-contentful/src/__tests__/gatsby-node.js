@@ -12,6 +12,8 @@ import { makeId } from "../normalize"
 import startersBlogFixture from "../__fixtures__/starter-blog-data"
 import richTextFixture from "../__fixtures__/rich-text-data"
 import restrictedContentTypeFixture from "../__fixtures__/restricted-content-type"
+import unpublishedFieldDelivery from "../__fixtures__/unpublished-fields-delivery"
+import unpublishedFieldPreview from "../__fixtures__/unpublished-fields-preview"
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
@@ -120,14 +122,30 @@ describe(`gatsby-node`, () => {
   const getNodes = () => Array.from(currentNodeMap.values()).map(_.cloneDeep)
   const getNode = id => _.cloneDeep(currentNodeMap.get(id))
 
-  const getFieldValue = (value, locale, defaultLocale) =>
-    value[locale] ?? value[defaultLocale]
+  const getFieldValue = (
+    value,
+    locale,
+    defaultLocale,
+    localized = false,
+    noLocaleFallback = false
+  ) => {
+    if (!value) {
+      return null
+    }
+    if (!localized) {
+      return value[defaultLocale]
+    }
+    if (noLocaleFallback) {
+      return value[locale] ?? null
+    }
+    return value[locale] ?? value[defaultLocale]
+  }
 
   const simulateGatsbyBuild = async function (
     pluginOptions = defaultPluginOptions
   ) {
     await createSchemaCustomization(
-      { schema, actions, reporter, cache, store },
+      { schema, actions, reporter, cache },
       pluginOptions
     )
 
@@ -158,7 +176,12 @@ describe(`gatsby-node`, () => {
     })
   }
 
-  const testIfEntriesExists = (entries, contentTypes, locales) => {
+  const testIfEntriesExists = (
+    entries,
+    contentTypes,
+    locales,
+    noLocaleFallback = false
+  ) => {
     const defaultLocale = locales[0]
 
     const nodeMap = new Map()
@@ -181,15 +204,18 @@ describe(`gatsby-node`, () => {
 
         const matchedObject = {}
         Object.keys(entry.fields).forEach(field => {
-          const value = getFieldValue(
-            entry.fields[field],
-            locale,
-            defaultLocale
-          )
-
           const fieldDefinition = currentContentType.fields.find(
             cField => cField.id === field
           )
+
+          const value = getFieldValue(
+            entry.fields[field],
+            locale,
+            defaultLocale,
+            fieldDefinition.localized,
+            noLocaleFallback
+          )
+
           switch (fieldDefinition.type) {
             case `Link`: {
               const linkId = createNodeId(
@@ -229,7 +255,7 @@ describe(`gatsby-node`, () => {
               break
             }
             default:
-              matchedObject[field] = value
+              matchedObject[field] = value ?? null
           }
         })
 
@@ -303,7 +329,11 @@ describe(`gatsby-node`, () => {
     })
   }
 
-  const testIfAssetsExistsAndMatch = (assets, locales) => {
+  const testIfAssetsExistsAndMatch = (
+    assets,
+    locales,
+    noLocaleFallback = false
+  ) => {
     const defaultLocale = locales[0]
     locales.forEach(locale => {
       assets.forEach(asset => {
@@ -317,15 +347,35 @@ describe(`gatsby-node`, () => {
           })
         )
 
+        const file = getFieldValue(
+          asset.fields.file,
+          locale,
+          defaultLocale,
+          true,
+          noLocaleFallback
+        )
+        if (!file) {
+          return
+        }
+
         // check if asset exists
         expect(getNode(assetId)).toMatchObject({
-          title: getFieldValue(asset.fields.title, locale, defaultLocale),
-          description: getFieldValue(
-            asset.fields.description,
+          title: getFieldValue(
+            asset.fields.title,
             locale,
-            defaultLocale
+            defaultLocale,
+            true,
+            noLocaleFallback
           ),
-          file: getFieldValue(asset.fields.file, locale, defaultLocale),
+          description:
+            getFieldValue(
+              asset.fields.description,
+              locale,
+              defaultLocale,
+              true,
+              noLocaleFallback
+            ) || ``,
+          file,
         })
       })
     })
@@ -590,7 +640,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(46)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
-    expect(actions.touchNode).toHaveBeenCalledTimes(32)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -680,7 +730,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(54)
     expect(actions.deleteNode).toHaveBeenCalledTimes(0)
-    expect(actions.touchNode).toHaveBeenCalledTimes(72)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -833,7 +883,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(52)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(actions.touchNode).toHaveBeenCalledTimes(2)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -919,7 +969,7 @@ describe(`gatsby-node`, () => {
 
     expect(actions.createNode).toHaveBeenCalledTimes(54)
     expect(actions.deleteNode).toHaveBeenCalledTimes(2)
-    expect(actions.touchNode).toHaveBeenCalledTimes(74)
+    expect(actions.touchNode).toHaveBeenCalledTimes(2)
     expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -973,6 +1023,138 @@ describe(`gatsby-node`, () => {
     })
   })
 
+  it(`is able to render unpublished fields in Delivery API`, async () => {
+    const locales = [`en-US`, `nl`]
+
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(unpublishedFieldDelivery.initialSync)
+    // @ts-ignore
+    fetchContentTypes.mockImplementationOnce(
+      unpublishedFieldDelivery.contentTypeItems
+    )
+
+    // initial sync
+    await simulateGatsbyBuild()
+
+    testIfContentTypesExists(unpublishedFieldDelivery.contentTypeItems())
+    testIfEntriesExists(
+      unpublishedFieldDelivery.initialSync().currentSyncData.entries,
+      unpublishedFieldDelivery.contentTypeItems(),
+      locales,
+      true
+    )
+
+    testIfAssetsExistsAndMatch(
+      unpublishedFieldDelivery.initialSync().currentSyncData.assets,
+      locales,
+      true
+    )
+
+    expect(actions.createNode).toHaveBeenCalledTimes(10)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 3 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 3 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 3 Contentful Type With Text Field nodes",
+        ],
+        Array [
+          "Creating 3 Contentful asset nodes",
+        ],
+      ]
+    `)
+  })
+
+  it(`is able to render unpublished fields in Preview API`, async () => {
+    const locales = [`en-US`, `nl`]
+
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(unpublishedFieldPreview.initialSync)
+    // @ts-ignore
+    fetchContentTypes.mockImplementationOnce(
+      unpublishedFieldPreview.contentTypeItems
+    )
+
+    // initial sync
+    await simulateGatsbyBuild()
+
+    testIfContentTypesExists(unpublishedFieldPreview.contentTypeItems())
+    testIfEntriesExists(
+      unpublishedFieldPreview.initialSync().currentSyncData.entries,
+      unpublishedFieldPreview.contentTypeItems(),
+      locales,
+      true
+    )
+
+    testIfAssetsExistsAndMatch(
+      unpublishedFieldPreview.initialSync().currentSyncData.assets,
+      locales,
+      true
+    )
+
+    expect(actions.createNode).toHaveBeenCalledTimes(16)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 0 new entries",
+        ],
+        Array [
+          "Contentful: 5 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 3 new assets",
+        ],
+        Array [
+          "Contentful: 2 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 5 Contentful Type With Text Field nodes",
+        ],
+        Array [
+          "Creating 5 Contentful asset nodes",
+        ],
+      ]
+    `)
+  })
+
   it(`panics when localeFilter reduces locale list to 0`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
@@ -989,6 +1171,88 @@ describe(`gatsby-node`, () => {
           sourceMessage: `Please check if your localeFilter is configured properly. Locales '${locales.join(
             `,`
           )}' were found but were filtered down to none.`,
+        },
+      })
+    )
+  })
+
+  it(`filters content type with contentTypeFilter`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      contentTypeFilter: contentTypeItem => contentTypeItem.sys.id !== `person`,
+    })
+
+    expect(actions.createNode).toHaveBeenCalledTimes(27)
+    expect(actions.deleteNode).toHaveBeenCalledTimes(0)
+    expect(actions.touchNode).toHaveBeenCalledTimes(0)
+    expect(reporter.info.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "Contentful: 4 new entries",
+        ],
+        Array [
+          "Contentful: 0 updated entries",
+        ],
+        Array [
+          "Contentful: 0 deleted entries",
+        ],
+        Array [
+          "Contentful: 0 cached entries",
+        ],
+        Array [
+          "Contentful: 4 new assets",
+        ],
+        Array [
+          "Contentful: 0 updated assets",
+        ],
+        Array [
+          "Contentful: 0 cached assets",
+        ],
+        Array [
+          "Contentful: 0 deleted assets",
+        ],
+        Array [
+          "Creating 3 Contentful Blog Post nodes",
+        ],
+        Array [
+          "Creating 4 Contentful asset nodes",
+        ],
+      ]
+    `)
+    expect(getNode(createNodeId(`Person`))).toBeUndefined()
+    expect(getNode(createNodeId(`Blog Post`))).not.toBeUndefined()
+    const fixtureData = startersBlogFixture.initialSync()
+    const personEntry = fixtureData.currentSyncData.entries.find(
+      entry => entry.sys.contentType.sys.id === `person`
+    )
+    const personId = createNodeId(
+      makeId({
+        spaceId: personEntry.sys.space.sys.id,
+        currentLocale: fixtureData.locales[0].code,
+        defaultLocale: fixtureData.locales[0].code,
+        id: personEntry.sys.id,
+        type: personEntry.sys.type,
+      })
+    )
+    expect(getNode(personId)).toBeUndefined()
+  })
+
+  it(`panics when contentTypeFilter reduces content type list to none`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
+
+    await simulateGatsbyBuild({
+      ...defaultPluginOptions,
+      contentTypeFilter: () => false,
+    })
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Please check if your contentTypeFilter is configured properly. Content types were filtered down to none.`,
         },
       })
     )

@@ -1,9 +1,9 @@
-import { resolve } from "@gatsbyjs/reach-router/lib/utils"
+import { resolve } from "@gatsbyjs/reach-router"
 // Specific import to treeshake Node.js stuff
 import { applyTrailingSlashOption } from "gatsby-page-utils/apply-trailing-slash-option"
 import { parsePath } from "./parse-path"
 import { isLocalLink } from "./is-local-link"
-import { withPrefix } from "."
+import { withPrefix } from "./prefix-helpers"
 
 const isAbsolutePath = path => path?.startsWith(`/`)
 
@@ -15,7 +15,15 @@ function absolutify(path, current) {
   if (isAbsolutePath(path)) {
     return path
   }
-  return resolve(path, current)
+
+  const option = getGlobalTrailingSlash()
+  const absolutePath = resolve(path, current)
+
+  if (option === `always` || option === `never`) {
+    return applyTrailingSlashOption(absolutePath, option)
+  }
+
+  return absolutePath
 }
 
 export const rewriteLinkPath = (path, relativeTo) => {
