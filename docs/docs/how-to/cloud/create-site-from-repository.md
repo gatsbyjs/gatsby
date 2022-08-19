@@ -15,13 +15,13 @@ You can use the [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter
 
 ## Directions
 
-### 1. Select a git provider
+### 1. Select a Git provider
 
 From your Gatsby Cloud dashboard, click the **Add a Site** button.
 
 ![Button to add a site from the Gatsby Cloud dashboard](../../images//add-site.png)
 
-In the "Import from a Git repository" section, choose your Git provider and install the Gatsby Cloud app. For the sake of this article you'll use GitHub, however GitLab and Bitbucket are also supported.
+In the "Import from a Git repository" section, choose your Git provider and install the Gatsby Cloud app. For the sake of this article you'll use Github, however GitLab and BitBucket are also supported.
 
 ![List of Git Providers](../../images/import-from-repo.png)
 

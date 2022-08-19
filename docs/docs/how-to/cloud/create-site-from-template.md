@@ -5,7 +5,7 @@ description: "How to create a Gatsby Cloud site from a template"
 
 ## Introduction
 
-This guide covers how to create a Gatsby Cloud site by cloning a Gatsby starter. Note, cloning of starters is only supported for GitHub. If you use GitLab or BitBucket, you'll have to follow the [Create a Site from a Repository](/docs/how-to/cloud/create-site-from-repository/) guide instead.
+This guide covers how to create a Gatsby Cloud site by cloning a Gatsby starter. Note, cloning of starters is only supported for Github. If you use GitLab or BitBucket, you'll have to follow the [Create a Site from a Repository](/docs/how-to/cloud/create-site-from-repository/) guide instead.
 
 ## Directions
 
@@ -21,15 +21,15 @@ On the right hand side, click on the card labeled "Gatsby Default Starter".
 
 ### 2. Configure your repository
 
-The first time you set up a Gatsby Cloud site, you will need to connect your Gatsby account to GitHub by clicking on the "GitHub" icon in the Create a Git repository card.
+The first time you set up a Gatsby Cloud site, you will need to connect your Gatsby account to Github by clicking on the "Github" icon in the Create a Git repository card.
 
 ![Create a Git Repository](../../images/create-git-repo.png)
 
-Next, a pop up window should appear and prompt you to install the Gatsby Cloud app to your GitHub personal account. Click **Install**.
+Next, a pop up window should appear and prompt you to install the Gatsby Cloud app to your Github personal account. Click **Install**.
 
 ![Gatsby Cloud app permissions](../../images/install-gatsby-cloud-app.png)
 
-After the GitHub app is installed, you will return to Gatsby Cloud. Here you can select a different GitHub organization to host the repository under as well as change the name of the repository that will be created if you prefer. Then click **Next** to create the site.
+After the Github app is installed, you will return to Gatsby Cloud. Here you can select a different Github organization to host the repository under as well as change the name of the repository that will be created if you prefer. Then click **Next** to create the site.
 
 ![Configure Git repository settings](../../images/configure-repository.png)
 

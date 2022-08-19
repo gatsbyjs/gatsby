@@ -7,7 +7,7 @@ When your Gatsby site is built and deployed on Gatsby Cloud, you now have the op
 
 1. A generic webhook.
 1. A webhook that sends a Slack message.
-1. Pull Request comments in GitHub or GitLab.
+1. Pull Request comments in Github or GitLab.
 
 By default, the Pull Request comments are already set up for existing and new sites in Gatsby Cloud.
 
