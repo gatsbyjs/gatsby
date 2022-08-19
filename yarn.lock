@@ -12338,15 +12338,10 @@ graphql-ws@^4.1.0:
   resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-4.3.2.tgz#c58b03acc3bd5d4a92a6e9f729d29ba5e90d46a3"
   integrity sha512-jsW6eOlko7fJek1iaSGQFj97AWuhexL9A3PuxYtyke/VlMdbSFzmDR4PlPPCTBBskRg6tNRb5RTbBVSd2T60JQ==
 
-graphql@^15.7.2, graphql@^15.8.0:
+graphql@^15.7.2, graphql@^15.8.0, graphql@^16.3.0:
   version "15.8.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.8.0.tgz#33410e96b012fa3bdb1091cc99a94769db212b38"
   integrity sha512-5gghUc24tP9HRznNpV2+FIoq3xKkj5dTQqf4v0CpdPbFVwFkWoxOM+o+2OC9ZSvjEMTjfmG9QT+gcvggTwW1zw==
-
-graphql@^16.3.0:
-  version "16.5.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.5.0.tgz#41b5c1182eaac7f3d47164fb247f61e4dfb69c85"
-  integrity sha512-qbHgh8Ix+j/qY+a/ZcJnFQ+j8ezakqPiHwPiZhV/3PgGlgf96QMBB5/f2rkiC9sgLoy/xvT6TSiaf2nTHJh5iA==
 
 gray-matter@^2.1.0:
   version "2.1.1"
@@ -20106,15 +20101,14 @@ react-refresh@^0.9.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.9.0.tgz#71863337adc3e5c2f8a6bfddd12ae3bfe32aafbf"
   integrity sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ==
 
-react-server-dom-webpack@^0.0.0-experimental-2c7dea736-20220726:
-  version "0.0.0-experimental-fe905f152-20220107"
-  resolved "https://registry.yarnpkg.com/react-server-dom-webpack/-/react-server-dom-webpack-0.0.0-experimental-fe905f152-20220107.tgz#255d4b11864714c41b723894650deb5b523d1aab"
-  integrity sha512-YLQnmkg4nORcd9BoRxK093uDfDdUfFaBlp52uMcScPHZdd121TK66djNM9HkbRyP7hZ9oxMq+/fylR7bJxX9lg==
+react-server-dom-webpack@^0.0.0-experimental-19e9a4c68-20220818:
+  version "0.0.0-experimental-19e9a4c68-20220818"
+  resolved "https://registry.yarnpkg.com/react-server-dom-webpack/-/react-server-dom-webpack-0.0.0-experimental-19e9a4c68-20220818.tgz#40b0ad58719f6d6be489b9dbfd9c7d7444f3eccc"
+  integrity sha512-IfaXXJFgkHuSwcDXKls1u8zO2+zcVzLOWWifdovB7aQ2VpLbHQY3kAwKqmyxukcvhRH8Mzz1FCfHbyKLTHCKAQ==
   dependencies:
     acorn "^6.2.1"
     loose-envify "^1.1.0"
     neo-async "^2.6.1"
-    object-assign "^4.1.1"
 
 react-test-renderer@^16.13.1, react-test-renderer@^16.14.0:
   version "16.14.0"
