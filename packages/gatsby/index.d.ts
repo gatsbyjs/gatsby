@@ -1,7 +1,11 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
+import {
+  WindowLocation,
+  NavigateFn,
+  NavigateOptions,
+} from "@gatsbyjs/reach-router"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { Span } from "opentracing"
 export { Reporter }
@@ -158,7 +162,7 @@ export type HeadProps<DataType = object, PageContextType = object> = {
     /**
      * Returns the Location object's URL's path.
      */
-    pathname: string;
+    pathname: string
   }
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
@@ -175,7 +179,7 @@ export type HeadProps<DataType = object, PageContextType = object> = {
 /**
  * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
- export type HeadFC<DataType = object, PageContextType = object> = (
+export type HeadFC<DataType = object, PageContextType = object> = (
   props: HeadProps<DataType, PageContextType>
 ) => JSX.Element
 
