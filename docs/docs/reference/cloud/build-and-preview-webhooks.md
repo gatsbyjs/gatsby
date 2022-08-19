@@ -1,9 +1,9 @@
 ---
 title: "Build and Preview Webhooks"
-description: "A webhook is an action that runs when the application providing the webhook is notified. The webhook has a URL which can receive HTTP requests (usually POST). A request sent to this URL lets the application know that an event has happened and it may or may not contain a message."
+description: "This guide outlines the functionality of and differences between Gatsby's Build and Preview webhooks"
 ---
 
-In this guide, you'll learn the differences between build and preview webhooks, and how each interacts with your Gatsby Cloud site.
+In this guide, you'll learn the differences between Build and Preview webhooks, and how each interacts with your Gatsby Cloud site.
 
 ## Using webhooks
 
@@ -41,9 +41,9 @@ Note: The `x-gatsby-cloud-data-source` header value must include "gatsby-source"
 
 ## Clearing the cache
 
-If you need to trigger a cache clear before you build, you can do this by making a POST request to `https://webhook.gatsbyjs.com/hooks/builds/trigger/:siteId` with the header `x-gatsby-cache:` false will trigger a build with no cache. If you want to use this for previews, add an additional header: `x-runner-type: PREVIEW`.
-Using curl, the request would look like this for clearing cache on a build:
+If you need to trigger a cache clear before you build, you can do this by making a `POST` request to `https://webhook.gatsbyjs.com/hooks/builds/trigger/:siteId` with the header `x-gatsby-cache: false`, which will trigger a build with no cache. If you want to use this for previews, add an additional header: `x-runner-type: PREVIEW`.
+Using `curl`, the request would look like this for clearing cache on a build:
 
 ```shell
->curl -X POST https://webhook.gatsbyjs.com/hooks/builds/trigger/<site id> --header "x-gatsby-cache: false"
+curl -X POST https://webhook.gatsbyjs.com/hooks/builds/trigger/<site id> --header "x-gatsby-cache: false"
 ```

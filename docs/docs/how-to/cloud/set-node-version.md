@@ -16,7 +16,7 @@ You can set your Node.js version using the `NODE_VERSION` environment variable i
 
 ### Using nvm
 
-You can include a `.nvmrc` file in your project repository, and Gatsby Cloud will read the node version from that file.
+You can include a `.nvmrc` file in your project repository, and Gatsby Cloud will read the Node version from that file.
 
 Example format:
 

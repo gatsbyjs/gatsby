@@ -3,11 +3,11 @@ title: "Outgoing Notifications"
 description: "Learn how to set outgoing notifications based on your build and deploy status"
 ---
 
-When your Gatsby site is built and/or deployed on Gatsby Cloud, you now have the option to hook up a set of outgoing notifications about the status of that build. You can send notifications via:
+When your Gatsby site is built and deployed on Gatsby Cloud, you now have the option to hook up a set of outgoing notifications regarding the status of that build. You can send notifications via:
 
-- A generic webhook.
-- A webhook that sends a Slack message.
-- Pull Request comments in GitHub or GitLab.
+1. A generic webhook.
+1. A webhook that sends a Slack message.
+1. Pull Request comments in GitHub or GitLab.
 
 By default, the Pull Request comments are already set up for existing and new sites in Gatsby Cloud.
 
@@ -15,7 +15,7 @@ By default, the Pull Request comments are already set up for existing and new si
 
 1. First, navigate to Site Settings. In the sidebar menu under "General", select **Outgoing Notifications**. Then click **Add Notification** and choose the Webhooks option.
 
-![Adding a Webhook Notification](../../images/webhook-notification.png)
+![Steps to add a webhook notification](../../images/webhook-notification.png)
 
 2. Next, you will be prompted to add a webhook that will receive the payload of information about your build or deploy. There are the following options for event notifications:
 
@@ -28,9 +28,9 @@ By default, the Pull Request comments are already set up for existing and new si
 - deploy succeeded
 - deploy failed
 
-3. Paste your webhook into the Outgoing webhook URL field, choose an Event to listen to, then click **Save**. If you want to trigger notifications for multiple events, add a new notification for each.
+3. Paste your webhook into the Outgoing webhook URL field, choose an event to listen to, then click **Save**. If you want to trigger notifications for multiple events, add a new notification for each.
 
-![Add Notification](../../images/add-notification.png)
+![Button to add a notification](../../images/add-notification.png)
 
 #### Webhook message payload
 
@@ -57,11 +57,11 @@ To take advantage of Slack notifications, you first need to create a custom Slac
 
 1. First, visit https://api.slack.com/apps?new_app=1 to add a new Slack app. Add one for a workspace where you have [appropriate permissions](https://slack.com/help/articles/201314026-Permissions-by-role-in-Slack#apps-integrations).
 
-![Create a Slack App](../../images/create-slack-app.png)
+![Modal to create a slack app](../../images/create-slack-app.png)
 
 2. Next, add the Incoming Webhook feature and activate it. Then, at the bottom of that page, click **Add New Webhook to Workspace**:
 
-![Incoming Webhook](../../images/incoming-webhook.png)
+![Slack Incoming Webhooks feature](../../images/incoming-webhook.png)
 
 3. Now, select an appropriate channel for your notifications and click **Allow:**
 
@@ -69,8 +69,8 @@ To take advantage of Slack notifications, you first need to create a custom Slac
 
 After that, you will see a success message and a new webhook URL will be generated. Copy the webhook URL.
 
-![Webhook URL](../../images/webhook-url.png)
+![Example of a Webhook URL](../../images/webhook-url.png)
 
-4. Finally, return to Gatsby Cloud and navigate to the Outgoing Notifications settings. Click **Add Notification** and choose the Slack option. Paste the Slack application's webhook URL that you previously copied into the Outgoing webhook URL field.
+4. Finally, return to Gatsby Cloud and navigate to the Outgoing Ntifications settings. Click **Add Notification** and choose the Slack option. Paste the Slack application's webhook URL that you previously copied into the Outgoing webhook URL field.
 
 5. Choose which Event to listen to and then click Save. You can reuse the same Slack application webhook for all four event types. If you want to send a notification to multiple channels, you must generate additional webhook URLs for your Slack app and create additional notifications as described above.
