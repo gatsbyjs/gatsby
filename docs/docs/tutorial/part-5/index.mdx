@@ -419,6 +419,7 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
     import * as React from 'react'
     import { graphql } from 'gatsby'
     import Layout from '../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPage = ({ data }) => {
       return (
@@ -442,6 +443,8 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
       }
     `
     // highlight-end
+
+    export const Head = () => <Seo title="My Blog Posts" />
 
     export default BlogPage
     ```
@@ -484,6 +487,8 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
       }
     `
 
+    export const Head = () => <Seo title="My Blog Posts" />
+
     export default BlogPage
     ```
 
@@ -497,6 +502,7 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
 import * as React from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
+import Seo from '../../components/seo'
 
 const BlogPage = ({ data }) => {
   return (
@@ -530,6 +536,8 @@ export const query = graphql`
     }
   }
 `
+
+export const Head = () => <Seo title="My Blog Posts" />
 
 export default BlogPage
 ```
