@@ -243,7 +243,7 @@ For all supported source plugins, the query syntax and feature-set is identical.
 
 ### Source plugins with their own CDN
 
-Many source plugins have native support for `gatsby-plugin-image`, with images served directly from that CMS's content delivery network (CDN). This means that builds are faster that local images, because there is no need to download images and process them. While this is faster for builds, it isn't as performant on the frontend as [Gatsby Cloud's Image CDN](#gatsby-cloud-image-cdn) due to images being served from a different domain than the domain your site is hosted on.
+Many source plugins have native support for `gatsby-plugin-image`, with images served directly from that CMS's content delivery network (CDN). This means that builds are faster than local images because there is no need to download images and process them. While this is faster for builds, it isn't as performant on the frontend as [Gatsby Cloud's Image CDN](#gatsby-cloud-image-cdn) due to images being served from a different domain than the domain your site is hosted on.
 
 The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
 
