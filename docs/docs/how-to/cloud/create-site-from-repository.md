@@ -53,7 +53,7 @@ Now, you will be asked to [set up environment variables](/docs/reference/cloud/m
 
 Once your site is done building, you can view the site in two places:
 
-#### Private build uRL
+#### Private build URL
 
 Use the build URL to preview the deployed site. This URL is not indexed and is only accessible via direct link.
 
