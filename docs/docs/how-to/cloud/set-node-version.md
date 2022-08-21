@@ -12,7 +12,7 @@ You can specify a Node.js version for site in Gatsby Cloud in two different ways
 
 ### Environment variable
 
-You can set your Node.js version using the `NODE_VERSION` environment variable inside Gatsby Cloud. Read more about setting environment variables [here](../../reference/cloud/managing-environment-variables).
+You can set your Node.js version using the `NODE_VERSION` environment variable inside Gatsby Cloud. Read more about setting environment variables [here](/docs/reference/cloud/managing-environment-variables).
 
 ### Using nvm
 

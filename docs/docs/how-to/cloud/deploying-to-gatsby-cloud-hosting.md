@@ -11,7 +11,7 @@ This tutorial assumes you have already set up a Gatsby Cloud site.
 
 ## Enable Gatsby Hosting
 
-In the Gatsby Cloud Site Hosting Settings, select **Enable Deploys to Gatsby Cloud Hosting**.
+In the Gatsby Cloud Site Hosting Settings, select **"Enable Deploys to Gatsby Cloud Hosting"**.
 
 ![steps to enable gatsby cloud hosting](../../images/enable-gatsby-cloud-hosting.png)
 
@@ -19,7 +19,7 @@ This will trigger a new Production Build for your site. When that Production Bui
 
 ### Default domain
 
-You will receive a default domain for your site base: `YOUR_SITE_PREFIX.gatsbyjs.io`. This domain has [HTTPS](https://developer.mozilla.org/en-US/docs/Glossary/https) on by default. Visit the `https://<default domain>` URL to see your hosted site.
+You will receive a "default domain" for your site base: `YOUR_SITE_PREFIX.gatsbyjs.io`. This domain has [HTTPS](https://developer.mozilla.org/en-US/docs/Glossary/https) on by default. Visit the `https://<default domain>` URL to see your hosted site.
 
 ![default domain in gatsby cloud hosting settings](../../images/hosting-domain-default.png)
 
