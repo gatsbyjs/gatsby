@@ -13,7 +13,6 @@ import { getBrowsersList } from "./browserslist"
 import ESLintPlugin from "eslint-webpack-plugin"
 import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
-import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 import {
   GatsbyWebpackVirtualModules,
   VIRTUAL_MODULES_BASE_PATH,
@@ -38,7 +37,7 @@ type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
   external?: RuleFactory<T>
 }
 
-type PluginFactory = (...args: any) => WebpackPluginInstance
+type PluginFactory = (...args: any) => WebpackPluginInstance | null
 
 type BuiltinPlugins = typeof builtinPlugins
 
@@ -785,14 +784,13 @@ export const createWebpackUtils = (
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor()
 
-  plugins.eslintGraphqlSchemaReload =
-    (): GatsbyWebpackEslintGraphqlSchemaReload =>
-      new GatsbyWebpackEslintGraphqlSchemaReload()
+  // TODO: remove this in v5
+  plugins.eslintGraphqlSchemaReload = (): null => null
 
   plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
     new GatsbyWebpackVirtualModules()
 
-  plugins.eslint = (schema: GraphQLSchema): WebpackPluginInstance => {
+  plugins.eslint = (): WebpackPluginInstance => {
     const options = {
       extensions: [`js`, `jsx`],
       exclude: [
@@ -800,7 +798,7 @@ export const createWebpackUtils = (
         `/bower_components/`,
         VIRTUAL_MODULES_BASE_PATH,
       ],
-      ...eslintConfig(schema, config.jsxRuntime === `automatic`),
+      ...eslintConfig(config.jsxRuntime === `automatic`),
     }
     // @ts-ignore
     return new ESLintPlugin(options)

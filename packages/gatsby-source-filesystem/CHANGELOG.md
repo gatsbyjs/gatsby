@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.21.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.21.1/packages/gatsby-source-filesystem) (2022-08-18)
+
+#### Chores
+
+- pin xstate [#36398](https://github.com/gatsbyjs/gatsby/issues/36398) [#36415](https://github.com/gatsbyjs/gatsby/issues/36415) ([29c7ad1](https://github.com/gatsbyjs/gatsby/commit/29c7ad1335cf25af3a326ea2813399ddfd8ea877))
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.21.0/packages/gatsby-source-filesystem) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- update dependency file-type to ^16.5.4 for gatsby-source-filesystem [#36276](https://github.com/gatsbyjs/gatsby/issues/36276) ([2bbe96d](https://github.com/gatsbyjs/gatsby/commit/2bbe96d9099e1c3d9b64ab3bb5c9b257c40386b9))
+
+#### Chores
+
+- Update `got` [#36366](https://github.com/gatsbyjs/gatsby/issues/36366) ([ab55e4e](https://github.com/gatsbyjs/gatsby/commit/ab55e4e30a023d56e4c4332dfd278015a0f49ee0))
+
 ## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.20.0/packages/gatsby-source-filesystem) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)

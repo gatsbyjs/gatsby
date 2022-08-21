@@ -80,6 +80,7 @@ export interface IGatsbyFunction {
 
 export interface IGraphQLTypegenOptions {
   typesOutputPath: string
+  generateOnBuild: boolean
 }
 
 export interface IGatsbyConfig {

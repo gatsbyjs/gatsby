@@ -28,7 +28,7 @@ const onHeadRendered = () => {
   const seenIds = new Map()
   for (const node of hiddenRoot.childNodes) {
     const nodeName = node.nodeName.toLowerCase()
-    const id = node.attributes.id?.value
+    const id = node.attributes?.id?.value
 
     if (!VALID_NODE_NAMES.includes(nodeName)) {
       warnForInvalidTags(nodeName)

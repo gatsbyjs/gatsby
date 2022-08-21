@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.21.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.21.1/packages/gatsby-source-wordpress) (2022-08-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.21.0/packages/gatsby-source-wordpress) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+- update dependency @types/semver to ^7.3.10 [#36027](https://github.com/gatsbyjs/gatsby/issues/36027) ([a529451](https://github.com/gatsbyjs/gatsby/commit/a5294515f966b336db6c910168bdc06897d2a42b))
+
 ## [6.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.20.0/packages/gatsby-source-wordpress) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
