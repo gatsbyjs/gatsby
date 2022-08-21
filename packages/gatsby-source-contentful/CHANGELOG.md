@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [7.19.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.19.1/packages/gatsby-source-contentful) (2022-08-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [7.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.19.0/packages/gatsby-source-contentful) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Correctly overwrite field type on Assets [#36337](https://github.com/gatsbyjs/gatsby/issues/36337) ([6ecfe4a](https://github.com/gatsbyjs/gatsby/commit/6ecfe4a05e8f84cd3bac99f45c30be3f1c9d8aa3))
+
+#### Chores
+
+- Update `got` [#36366](https://github.com/gatsbyjs/gatsby/issues/36366) ([ab55e4e](https://github.com/gatsbyjs/gatsby/commit/ab55e4e30a023d56e4c4332dfd278015a0f49ee0))
+
 ## [7.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.18.0/packages/gatsby-source-contentful) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)

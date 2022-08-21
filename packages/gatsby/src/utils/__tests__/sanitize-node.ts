@@ -1,23 +1,25 @@
-const sanitizeNode = require(`../sanitize-node`)
+import sanitizeNode from "../sanitize-node"
 
 describe(`node sanitization`, () => {
   let testNode
 
   beforeEach(() => {
     const circularReference = {}
+    // @ts-ignore edge test case
     circularReference.self = circularReference
     const indirectCircular = {
       down1: {
         down2: {},
       },
     }
+    //  @ts-ignore edge test case
     indirectCircular.down1.down2.deepCircular = indirectCircular
 
     testNode = {
       id: `id1`,
       parent: null,
       children: [],
-      unsupported: () => {},
+      unsupported: (): void => {},
       inlineObject: {
         field: `fieldOfFirstNode`,
         re: /re/,
@@ -26,7 +28,7 @@ describe(`node sanitization`, () => {
       repeat2: `bar`,
       repeat3: {
         repeat3: {
-          test: () => {},
+          test: (): void => {},
           repeat: `bar`,
         },
       },
@@ -46,8 +48,11 @@ describe(`node sanitization`, () => {
   it(`Remove not supported fields / values`, () => {
     const result = sanitizeNode(testNode)
     expect(result).toMatchSnapshot()
+    // @ts-ignore test properties that shouldn't be there are not there
     expect(result.unsupported).not.toBeDefined()
+    // @ts-ignore test properties that shouldn't be there are not there
     expect(result.inlineObject.re).not.toBeDefined()
+    // @ts-ignore test properties that shouldn't be there are not there
     expect(result.inlineArray[3]).not.toBeDefined()
   })
 
@@ -66,7 +71,7 @@ describe(`node sanitization`, () => {
   it(`Doesn't create clones if it doesn't have to`, () => {
     const testNodeWithoutUnserializableData = {
       id: `id1`,
-      parent: null,
+      parent: ``,
       children: [],
       inlineObject: {
         field: `fieldOfFirstNode`,
@@ -76,7 +81,9 @@ describe(`node sanitization`, () => {
         type: `Test`,
         contentDigest: `digest1`,
         owner: `test`,
+        counter: 0,
       },
+      fields: [],
     }
 
     const result = sanitizeNode(testNodeWithoutUnserializableData)

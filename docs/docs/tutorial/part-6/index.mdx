@@ -51,7 +51,7 @@ To create a collection route:
 1. Decide what type of node you want to create pages from.
 2. Choose which field on that node to use in the route (the URL) for your pages.
 3. Create a new page component in your `src/pages` directory using the following naming convention: `{nodeType.field}.js`.
-    * Don't forget to include the curly braces (`{}`) in your filenames to indicate the dynamic part of the route! 
+    * Don't forget to include the curly braces (`{}`) in your filenames to indicate the dynamic part of the route!
 
 For example, if you wanted to create a separate page for each `Product` node, and you wanted to use the product's `name` field in the URL, you'd create a new file at `src/pages/{Product.name}.js`. Then Gatsby would create those pages at routes like `/water-bottle` or `/sweatshirt` or `/notebook`.
 
@@ -146,6 +146,7 @@ When you build your site, Gatsby looks at the page components in your `src/pages
     ```js:title=src/pages/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import Layout from '../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPost = () => {
       return (
@@ -154,6 +155,8 @@ When you build your site, Gatsby looks at the page components in your `src/pages
         </Layout>
       )
     }
+
+    export const Head = () => <Seo title="Super Cool Blog Posts" />
 
     export default BlogPost
     ```
@@ -330,7 +333,7 @@ Under the hood, Gatsby makes both of these values available to use as query vari
     ```js
     Object {
       // ...
-      pageContext: Object { 
+      pageContext: Object {
         id: "11b3a825-30c5-551d-a713-dd748e7d554a"
         frontmatter__slug: "my-first-post"
       }
@@ -377,6 +380,7 @@ The JSON object in the Query Variables section should look something like the on
     import * as React from 'react'
     import { graphql } from 'gatsby' // highlight-line
     import Layout from '../../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPost = () => {
       return (
@@ -399,14 +403,17 @@ The JSON object in the Query Variables section should look something like the on
     `
     // highlight-end
 
+    export const Head = () => <Seo title="Super Cool Blog Posts" />
+
     export default BlogPost
     ```
 
-3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. The actual MDX content, ready to render, will be passed as a `children` prop to the page component.
+3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. It also passes `data` to the Gatsby Head API. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. The actual MDX content, ready to render, will be passed as a `children` prop to the page component.
     ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import { graphql } from 'gatsby'
     import Layout from '../../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPost = ({ data, children }) => { // highlight-line
       return (
@@ -430,6 +437,9 @@ The JSON object in the Query Variables section should look something like the on
       }
     `
 
+    // highlight-next-line
+    export const Head = ({ data }) => <Seo title={data.mdx.frontmatter.title} />
+    
     export default BlogPost
     ```
 
@@ -451,6 +461,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering an e
     import * as React from 'react'
     import { Link, graphql } from 'gatsby' // highlight-line
     import Layout from '../../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPage = ({ data }) => {
       return (
@@ -487,6 +498,8 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering an e
         }
       }
     `
+
+    export const Head = () => <Seo title="My Blog Posts" />
 
     export default BlogPage
     ```

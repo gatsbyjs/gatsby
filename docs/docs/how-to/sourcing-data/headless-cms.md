@@ -51,7 +51,8 @@ The following CMSs have high popularity among Gatsby users and support key funct
 | [Forestry](https://forestry.io/)          | [guide](/docs/sourcing-from-forestry/)                                      |                                                     |                                                             |
 | [Gentics Mesh](https://getmesh.io)        | [guide](/docs/sourcing-from-gentics-mesh)                                   |                                                     |                                                             |
 | [Builder.io](https://www.builder.io/)     | [guide](/docs/sourcing-from-builder-io/)                                    | [docs](/plugins/@builder.io/gatsby/)                |                                                             |
-| [Flotiq](https://flotiq.com/)             | [guide](/docs/sourcing-from-flotiq/)                                        | [docs](/plugins/gatsby-source-flotiq)               |                                                             |
+| [Flotiq](https://flotiq.com/)             | [guide](/docs/sourcing-from-flotiq/)                                        | [docs](/plugins/gatsby-source-flotiq)               |
+| [Webiny](https://www.webiny.com/)         | [guide](https://www.webiny.com/docs/headless-cms/integrations/gatsby)       |                                                     | [starter](/starters/webiny/gatsby-starter-webiny/)          |
 
 ## Integrating with other CMSs
 

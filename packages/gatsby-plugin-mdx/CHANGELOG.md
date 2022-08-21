@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.0.0/packages/gatsby-plugin-mdx) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) [#36395](https://github.com/gatsbyjs/gatsby/issues/36395) ([3253a38](https://github.com/gatsbyjs/gatsby/commit/3253a3860c9c74bce23c8c2fd1df651e549566b9))
+
+#### Chores
+
+- Add note about rehype-slug-custom-id ([bc80c23](https://github.com/gatsbyjs/gatsby/commit/bc80c23081943407dbd84d8baf38d466f26c2290))
+- Update .gitignore ([0705ac7](https://github.com/gatsbyjs/gatsby/commit/0705ac7e5e022e46509beb99eadb617541c5e637))
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
 ## [3.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.20.0/packages/gatsby-plugin-mdx) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
