@@ -13,7 +13,7 @@ By default, the Pull Request comments are already set up for existing and new si
 
 ### Adding webhook notifications
 
-1. First, navigate to Site Settings. In the sidebar menu under "General", select **"Outgoing Notifications"**. Then click **"Add Notification"** and choose the "Webhooks" option.
+1. First, navigate to "Site Settings". In the sidebar menu under "General", select **"Outgoing Notifications"**. Then click **"Add Notification"** and choose the "Webhooks" option.
 
 ![Steps to add a webhook notification](../../images/webhook-notification.png)
 

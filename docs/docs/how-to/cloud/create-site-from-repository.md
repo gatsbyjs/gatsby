@@ -61,7 +61,7 @@ Use the build URL to preview the deployed site. This URL is not indexed and is o
 
 #### Public default domain
 
-Use your Gatsby Hosting provided "default domain" to access the public deployment of your site. Gatsby Hosting is turned on by default and the "default domain" is listed under Site Settings > Hosting.
+Use your Gatsby Hosting provided "default domain" to access the public deployment of your site. Gatsby Hosting is turned on by default and the "default domain" is listed under "Site Settings > Hosting".
 
 ![Gatsby Cloud default hosting domain](../../images/default-domain.png)
 

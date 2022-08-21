@@ -11,7 +11,7 @@ For every site, Gatsby Cloud provides two webhooks:
 
 A Build Webhook which triggers a Production Build,
 and a Preview Webhook which triggers a CMS Preview build.
-These webhooks can be found by going to Site Settings then selecting **"General > Webhook"** in the sidebar menu.
+These webhooks can be found by going to "Site Settings" then selecting **"General > Webhook"** in the sidebar menu.
 
 ![webhook settings on the gatsby cloud dashboard](../../images/cloud-webhooks-settings.png)
 

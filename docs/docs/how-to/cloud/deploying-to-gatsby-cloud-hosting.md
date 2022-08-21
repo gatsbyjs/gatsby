@@ -31,7 +31,7 @@ Before your first Production Build after turning on Gatsby Hosting completes, yo
 
 ### Changing your default domain
 
-You can update your default domain by changing the Site Prefix of your Gatsby site in the "General" tab of your Site Settings.
+You can update your default domain by changing the Site Prefix of your Gatsby site in the "General" tab of your "Site Settings".
 
 ### Other resources
 
