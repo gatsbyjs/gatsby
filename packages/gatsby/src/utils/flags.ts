@@ -234,6 +234,28 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => false,
     requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
   },
+  {
+    name: `PARTIAL_HYDRATION`,
+    env: `GATSBY_PARTIAL_HYDRATION`,
+    command: `build`,
+    telemetryId: `PartialHydration`,
+    description: `TBD`,
+    umbrellaIssue: `TBD`,
+    experimental: true,
+    noCI: true,
+    testFitness: (): fitnessEnum => {
+      if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+        return `LOCKED_IN`
+      }
+
+      const isReact18 =
+        semver.major(require(`react-dom/package.json`).version) >= 18 ||
+        String(semver.major(require(`react-dom/package.json`).version)) === `0`
+
+      return isReact18
+    },
+    requires: `As of gatsby@4.TDB.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
+  },
 ]
 
 export default activeFlags
