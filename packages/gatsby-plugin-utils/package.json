@@ -47,7 +47,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@gatsbyjs/potrace": "^2.2.0",
+    "@gatsbyjs/potrace": "^2.3.0",
     "fastq": "^1.13.0",
     "fs-extra": "^10.1.0",
     "gatsby-core-utils": "^3.22.0-next.0",
