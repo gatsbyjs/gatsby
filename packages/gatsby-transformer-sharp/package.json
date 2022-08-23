@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@gatsbyjs/potrace": "^2.2.0",
+    "@gatsbyjs/potrace": "^2.3.0",
     "bluebird": "^3.7.2",
     "common-tags": "^1.8.2",
     "fs-extra": "^10.1.0",
