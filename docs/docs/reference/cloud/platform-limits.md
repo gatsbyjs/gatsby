@@ -1,18 +1,18 @@
 ---
 title: "Platform Limits"
-description: "Learn about the several soft and hard limits that are applied to each plan tier"
+description: "Learn about the several soft and hard limits that are applied to each Gatsby Cloud plan tier"
 ---
 
-Gatsby Cloud has several soft and hard limits to prevent abuse on our platform. These limits apply separately to the use of Builds and Hosting. Gatsby may take action to reduce or limit your usage, and whenever possible, we’ll let you know before we take any action. Below is a guide to the general limits we expect most users to fall below for each plan.
+Gatsby Cloud has several soft and hard limits to prevent abuse on the platform. These limits apply separately to the use of Builds and Hosting. Gatsby may take action to reduce or limit your usage, and whenever possible, you'll be notified before any action is taken. Below is a guide to the general limits it is expected most users will fall below for each plan.
 
 ## Build limits
 
 |           | Free  | Professional | Agency       | Enterprise |
 | --------- | ----- | ------------ | ------------ | ---------- |
 | Memory    | 1GB   | 8GB          | 8GB          | 8+ GB      |
-| Bandwidth | 100GB | Up to 1TB    | Up to 1.5 TB | Custom     |
+| Bandwidth | 100GB | Up to 1TB    | Up to 1.5TB | Custom     |
 
-Running into memory errors? See [Resolving Out-of-Memory Issues](docs/how-to/performance/resolving-out-of-memory-issues/).
+Running into memory errors? See [Resolving Out-of-Memory Issues](/docs/how-to/performance/resolving-out-of-memory-issues/).
 
 ## Hosting limits
 
@@ -37,7 +37,7 @@ Serverless Functions on Gatsby Cloud are included in all plans with increasing m
 
 On the free tier, If none of the sites in the organization get any SSR/DSG requests for seven(7) days, the service will be scaled to 0. The next time a request comes in, it will scale back up. This first request will be slower than a normal request. After that, the service will stay scaled up for a minimum of 7 days again (every request resets the 7-day counter).
 
-For professional plans, the duration is 14 days and Enterprise never scales down.
+For Professional plans, the duration is 14 days and Enterprise never scales down.
 
 ## Resource timeouts
 
@@ -58,6 +58,6 @@ The timeout periods for each pricing tier are listed below:
 
 When Gatsby Cloud terminates your resource after the timeout period, the next build will require restarting your resources. Typically in cloud infrastructure, this would mean a cold build, but each Gatsby Cloud build saves the Gatsby Cache to cloud storage. Upon restarting your resource, we restore the previously saved gatsby cache to attempt a “warm” build. However, builds created after the timeout period may be slower depending on the state of the Gatsby Cache.
 
-The Gatsby Cache works for both production builds and PR and CMS Previews. However, when CMS Previews timeout, the URL for that preview will return an idle screen similar to the screenshot below. A Gatsby Cloud user can visit the link on that page to restart the preview for your content editors.
+The Gatsby Cache works for Production Builds, as well as Pull Request and CMS Preview builds. However, when CMS Previews timeout, the URL for that preview will return an idle screen similar to the screenshot below. A Gatsby Cloud user can visit the link on that page to restart the preview for your content editors.
 
-![Idle Preview Server](../../images/idle-preview.png)
+![Idle Preview Server Screen](../../images/idle-preview.png)
