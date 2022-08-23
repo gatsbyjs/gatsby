@@ -41,7 +41,7 @@ On the “Firebase Integration” screen choose a Firebase project for deploymen
 
 Firebase allows you to configure customized hosting behavior such as redirects, headers, cache settings, and which files to deploy. You can define these behaviors in a `firebase.json` file. See [Deploying to Firebase](/docs/how-to/previews-deploys-hosting/deploying-to-firebase/) for the Gatsby recommended caching settings.
 
-In order for Gatsby Cloud to use these settings for your Firebase hosting, you’ll need to make sure that your `firebase.json` file ends up in your `public/` directory when your build is complete.
+In order for Gatsby Cloud to use these settings for your Firebase hosting, you’ll need to make sure that your `firebase.json` file ends up in your `/public` directory when your build is complete.
 
 One way you can accomplish this is by adding the following code to your `gatsby-node.js` file:
 

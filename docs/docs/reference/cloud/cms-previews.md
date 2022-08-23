@@ -9,14 +9,14 @@ If your site uses a content management system (CMS), Gatsby Cloud provides a too
 
 A "CMS Preview" is a development build of your site that enables you to make changes in your CMS and see those changes take effect in real-time.
 
-Using CMS Previews requires connecting your site to one of the supported CMSs. Check out the [Connecting to a Content Management System](https://support.gatsbyjs.com/hc/en-us/sections/360011112314-Connecting-to-a-Content-Management-System) tutorials for more information on how to configure your site for CMS Previews.
+Using CMS Previews requires connecting your site to [one of the supported CMSs](/docs/reference/cloud/hosting-and-data-source-integrations). Check out the [Connecting to a Content Management System](https://support.gatsbyjs.com/hc/en-us/sections/360011112314-Connecting-to-a-Content-Management-System) tutorials for more information on how to configure your site for CMS Previews.
 
 ## How CMS Previews are triggered
 
 A CMS Preview build may be triggered when any of the following events occur:
 
 - A change in the connected CMS (such as an autosave while typing, save, or publish action).
-- A Git commit to the production branch configured in "Site Settings"
+- A Git commit to the production branch configured in "Site Settings."
 - Manually clicking the "Trigger Build" or "Restart Preview" button in the Gatsby Cloud user interface.
 - A `POST` request to the Preview Webhook.
 
@@ -46,7 +46,7 @@ Incremental Previews are those noted with the "CLOUD" badge:
 
 This preview builder is only used where incremental previews are not possible. The build process is similar to `gatsby develop` in local development. It is subject to resource timeouts and the preview will not be available until the next build completes after a timeout occurs.
 
-## Preview Extensions
+## Preview extensions
 
 Some CMSs support a preview extension that enables you to view your CMS Preview build without having to leave your CMS. Preview extensions are available for:
 

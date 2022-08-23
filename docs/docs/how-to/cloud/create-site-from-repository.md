@@ -1,5 +1,5 @@
 ---
-title: "Create a Site from a Repository"
+title: "Create a Site From a Repository"
 description: "How to create a Gatsby Cloud site from a repository"
 ---
 

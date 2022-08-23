@@ -13,7 +13,7 @@ Functions are a Gatsby core feature and are not specific to Gatsby Cloud. To lea
 
 ### Routing in Gatsby Cloud
 
-Functions that are included in a Gatsby project and deployed on Gatsby cloud are available at any build URL. This includes any preview URLs (`gstb.io` domain) or hosting URLs (on `gatsbyjs.io` or your custom domain).
+Functions that are included in a Gatsby project and deployed on Gatsby cloud are available at any build URL. This includes any preview URLs (`gstb.io` domain) or hosting URLs (`gatsbyjs.io` or your custom domain).
 
 ```javascript:title=src/api/hello-world.js
 const sample = (req, res) => {

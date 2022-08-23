@@ -1,5 +1,5 @@
 ---
-title: "Creating a Deploy to Gatsby Cloud Button"
+title: "Create a Deploy to Gatsby Cloud Button"
 description: "Learn how to add a deploy button to your Github repository"
 ---
 
