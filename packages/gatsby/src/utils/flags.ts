@@ -246,11 +246,14 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
     experimental: true,
     testFitness: (): fitnessEnum => {
-      const isReact18 =
-        semver.major(require(`react-dom/package.json`).version) >= 18 ||
-        String(semver.major(require(`react-dom/package.json`).version)) === `0`
+      const v18Constraint = {
+        react: `>=18.0.0`,
+      }
+      const v0Constraint = {
+        react: `0.0.0`,
+      }
 
-      return isReact18
+      return satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint)
     },
     requires: `Requires React v18 or above.`,
   })
