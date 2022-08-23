@@ -242,7 +242,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     env: `GATSBY_PARTIAL_HYDRATION`,
     command: `build`,
     telemetryId: `PartialHydration`,
-    description: `TBD`,
+    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
     umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
     experimental: true,
     testFitness: (): fitnessEnum => {
