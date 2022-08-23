@@ -40,8 +40,3 @@ Raw logs provide the full, unstructured build process output. They are useful fo
 ### Verbose logs
 
 You can get verbose logging by [setting an environment variable](/docs/reference/cloud/managing-environment-variables): `VERBOSE=1`
-
-
-
-
-

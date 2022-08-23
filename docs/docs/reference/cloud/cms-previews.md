@@ -63,14 +63,3 @@ Check out the [Preview Extensions](https://support.gatsbyjs.com/hc/en-us/section
 You can disable Preview by visiting "Site Settings > Preview" and unchecking **"Enable CMS Preview builds"**.
 
 If your preview fails to build for 10 consecutive builds, Gatsby Cloud will automatically disable the Preview.
-
-
-
-
-
-
-
-
-
-
-

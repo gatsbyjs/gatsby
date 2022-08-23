@@ -37,14 +37,3 @@ A "build" is a version of your site that results from compiling your site's sour
 - CMS Previews
 
 See the [Production Builds and Pull Request Builds](/docs/reference/cloud/production-builds-and-pull-request-builds) and [CMS Previews](/docs/reference/cloud/cms-previews) articles for more information.
-
-
-
-
-
-
-
-
-
-
-

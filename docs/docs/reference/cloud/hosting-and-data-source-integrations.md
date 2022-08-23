@@ -41,8 +41,3 @@ The following CMS providers are also officially supported but require manual con
 Depending on the configuration, whenever you make updates in your CMS, you can automatically trigger Production Builds and CMS Previews for your site.
 
 For details on how to set up a hosting or data source integration, see our [How-To Guides](/docs/how-to/cloud/).
-
-
-
-
-

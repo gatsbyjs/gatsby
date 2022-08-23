@@ -33,14 +33,8 @@ Clicking **"Connect"** will start the setup process for the data source integrat
 
 ![Contentful Quick Connect authorization screen](../../images/contentful-quick-connect.png)
 
-Once authorized, Quick Connect will automatically configure webhooks, environment variables, and the preview extension (where applicable) for your CMS. 
+Once authorized, Quick Connect will automatically configure webhooks, environment variables, and the preview extension (where applicable) for your CMS.
 
 ![Connected Contentful integration](../../images/contentful-connected-integration.png)
 
 Quick Connect assumes some default environment variable names for things like access tokens and project IDs, so you may need to modify them to match the variable names in your project. Again, see the guide for [connecting to your specific CMS](https://support.gatsbyjs.com/hc/en-us/sections/360011112314) for more information. Also, see the [Managing Environment Variables](/docs/reference/cloud/managing-environment-variables/) guide.
-
-
-
-
-
-

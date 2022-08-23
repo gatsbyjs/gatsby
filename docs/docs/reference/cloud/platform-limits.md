@@ -7,9 +7,9 @@ Gatsby Cloud has several soft and hard limits to prevent abuse on the platform. 
 
 ## Build limits
 
-|           | Free  | Professional | Agency       | Enterprise |
-| --------- | ----- | ------------ | ------------ | ---------- |
-| Memory    | 1GB   | 8GB          | 8GB          | 8+ GB      |
+|           | Free  | Professional | Agency      | Enterprise |
+| --------- | ----- | ------------ | ----------- | ---------- |
+| Memory    | 1GB   | 8GB          | 8GB         | 8+ GB      |
 | Bandwidth | 100GB | Up to 1TB    | Up to 1.5TB | Custom     |
 
 Running into memory errors? See [Resolving Out-of-Memory Issues](/docs/how-to/performance/resolving-out-of-memory-issues/).
