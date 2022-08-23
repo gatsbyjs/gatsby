@@ -132,6 +132,18 @@ const transformWebpackError = (
   }
 }
 
+// With the introduction of Head API, the modulePath can have a resourceQuery so this function can be used to remove it
+const removeResourceQuery = (
+  moduleName: string | undefined
+): string | undefined => {
+  const moduleNameWithoutQuery = moduleName?.replace(
+    /(\?|&)export=(default|head)$/,
+    ``
+  )
+
+  return moduleNameWithoutQuery
+}
+
 export const structureWebpackErrors = (
   stage: StageEnum,
   webpackError: WebpackError | Array<WebpackError>
@@ -150,9 +162,13 @@ export const reportWebpackWarnings = (
   let warningMessages: Array<string> = []
   if (typeof warnings[0] === `string`) {
     warningMessages = warnings as unknown as Array<string>
-  } else if (warnings[0]?.message && warnings[0]?.moduleName) {
+  } else if (
+    warnings[0]?.message &&
+    removeResourceQuery(warnings[0]?.moduleName)
+  ) {
     warningMessages = warnings.map(
-      warning => `${warning.moduleName}\n\n${warning.message}`
+      warning =>
+        `${removeResourceQuery(warning.moduleName)}\n\n${warning.message}`
     )
   } else if (warnings[0]?.message) {
     warningMessages = warnings.map(warning => warning.message)
