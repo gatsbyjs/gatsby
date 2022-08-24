@@ -3,7 +3,8 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { generateHtmlPath } from "gatsby-core-utils"
+import { generateHtmlPath } from "gatsby-core-utils/page-html"
+import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { truncate } from "lodash"
 
 import {
@@ -260,4 +261,101 @@ export const renderHTMLDev = async ({
     },
     { concurrency: 2 }
   )
+}
+
+export async function renderPartialHydrationProd({
+  paths,
+  envVars,
+  sessionId,
+}: {
+  paths: Array<string>
+  envVars: Array<[string, string | undefined]>
+  sessionId: number
+}): Promise<void> {
+  const publicDir = join(process.cwd(), `public`)
+
+  const unsafeBuiltinsUsageByPagePath = {}
+
+  // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
+  // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
+  if (sessionId !== lastSessionId) {
+    clearCaches()
+
+    // This is being executed in child process, so we need to set some vars
+    // for modules that aren't bundled by webpack.
+    envVars.forEach(([key, value]) => (process.env[key] = value))
+
+    webpackStats = await readWebpackStats(publicDir)
+
+    lastSessionId = sessionId
+
+    if (global.unsafeBuiltinUsage && global.unsafeBuiltinUsage.length > 0) {
+      unsafeBuiltinsUsageByPagePath[`__import_time__`] =
+        global.unsafeBuiltinUsage
+    }
+  }
+  const { createElement } = await import(`react`)
+  const { renderToPipeableStream } = await import(
+    `react-server-dom-webpack/writer.node.server`
+  )
+
+  for (const pagePath of paths) {
+    const pageData = await readPageData(publicDir, pagePath)
+    const { staticQueryContext } = await getStaticQueryContext(
+      pageData.staticQueryHashes
+    )
+
+    const pageRenderer = path.join(
+      process.cwd(),
+      `.cache`,
+      `partial-hydration`,
+      `render-page`
+    )
+
+    const { getPageChunk, StaticQueryServerContext } = require(pageRenderer)
+    const chunk = await getPageChunk({
+      componentChunkName: pageData.componentChunkName,
+    })
+    const outputPath = generatePageDataPath(
+      path.join(process.cwd(), `public`),
+      pagePath
+    ).replace(`.json`, `-rsc.json`)
+
+    const { pipe } = renderToPipeableStream(
+      createElement(
+        StaticQueryServerContext.Provider,
+        { value: staticQueryContext },
+        [
+          createElement(chunk.default, {
+            data: pageData.result.data,
+            pageContext: pageData.result.pageContext,
+            location: {
+              pathname: pageData.path,
+            },
+          }),
+        ]
+      ),
+      JSON.parse(
+        fs.readFileSync(
+          path.join(
+            process.cwd(),
+            `.cache`,
+            `partial-hydration`,
+            `manifest.json`
+          ),
+          `utf8`
+        )
+      )
+    )
+
+    await new Promise<void>(resolve => {
+      const stream = fs.createWriteStream(outputPath)
+
+      stream.on(`close`, () => {
+        resolve()
+      })
+
+      pipe(stream)
+    })
+  }
 }

@@ -75,14 +75,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           {({ location }) => (
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
-                const staticQueryResults = getStaticQueryResults()
-                return (
-                  <StaticQueryContext.Provider value={staticQueryResults}>
+                if (pageResources.partialHydration) {
+                  return (
                     <DataContext.Provider value={{ pageResources, location }}>
                       {children}
                     </DataContext.Provider>
-                  </StaticQueryContext.Provider>
-                )
+                  )
+                } else {
+                  const staticQueryResults = getStaticQueryResults()
+                  return (
+                    <StaticQueryContext.Provider value={staticQueryResults}>
+                      <DataContext.Provider value={{ pageResources, location }}>
+                        {children}
+                      </DataContext.Provider>
+                    </StaticQueryContext.Provider>
+                  )
+                }
               }}
             </EnsureResources>
           )}
@@ -296,5 +304,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       doc.addEventListener(`DOMContentLoaded`, handler, false)
       window.addEventListener(`load`, handler, false)
     }
+
+    return
   })
 })
