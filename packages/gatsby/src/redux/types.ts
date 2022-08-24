@@ -344,6 +344,7 @@ export interface IGatsbyState {
   }
   pageDataStats: Map<SystemPath, number>
   visitedPages: Map<string, Set<string>>
+  tick: Map<string, GatsbyNodes>
   html: {
     trackedHtmlFiles: Map<Identifier, IHtmlFileState>
     browserCompilationHash: string
@@ -443,6 +444,8 @@ export type ActionsUnion =
   | ISetDomainRequestHeaders
   | IProcessGatsbyImageSourceUrlAction
   | IClearGatsbyImageSourceUrlAction
+  | ISetChangedNodes
+  | ISetChangedPages
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -1018,4 +1021,14 @@ export interface IClearJobV2Context {
   payload: {
     requestId: string
   }
+}
+
+export interface ISetChangedNodes {
+  type: `SET_CHANGED_NODES`
+  payload: GatsbyNodes
+}
+
+export interface ISetChangedPages {
+  type: `SET_CHANGED_PAGES`
+  payload: GatsbyNodes
 }

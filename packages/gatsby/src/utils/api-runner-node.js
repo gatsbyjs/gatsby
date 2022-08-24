@@ -335,7 +335,7 @@ const runAPI = async (plugin, api, args, activity) => {
       { ...args, parentSpan: pluginSpan, activity }
     )
 
-    const { config, program } = store.getState()
+    const { config, program, tick } = store.getState()
 
     const pathPrefix = (program.prefixPaths && config.pathPrefix) || ``
 
@@ -431,6 +431,7 @@ const runAPI = async (plugin, api, args, activity) => {
         loadNodeContent,
         store,
         emitter,
+        tick,
         getCache,
         getNodes: shouldDetectNodeMutations
           ? nodeMutationsWrappers.getNodes

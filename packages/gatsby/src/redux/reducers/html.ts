@@ -73,17 +73,17 @@ export function htmlReducer(
     }
 
     case `DELETE_PAGE`: {
-      const { path } = action.payload
-      const htmlFile = state.trackedHtmlFiles.get(path)
+      // const { path } = action.payload
+      // const htmlFile = state.trackedHtmlFiles.get(path)
 
-      if (!htmlFile) {
-        // invariant
-        throw new Error(
-          `[html reducer] how can I delete page that wasn't created (?)`
-        )
-      }
+      // if (!htmlFile) {
+      //   // invariant
+      //   throw new Error(
+      //     `[html reducer] how can I delete page that wasn't created (?)`
+      //   )
+      // }
 
-      htmlFile.isDeleted = true
+      // htmlFile.isDeleted = true
       // TBD if dirtiness need to change
       return state
     }

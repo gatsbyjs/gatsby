@@ -23,6 +23,7 @@ import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
 import { CODES, ERROR_MAP, prefixId } from "./error-utils"
+import { createPagesFromChangedNodes } from "./create-pages-from-changed-nodes"
 
 let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
 
@@ -45,6 +46,13 @@ interface IOptions extends PluginOptions {
 }
 
 const knownCollections = new Map()
+
+export function createPages(
+  { actions, reporter, tick }: CreatePagesArgs,
+  pluginOptions: PluginOptions
+): void {
+  createPagesFromChangedNodes({ actions, reporter, tick }, pluginOptions)
+}
 
 // Path creator.
 // Auto-create pages.
@@ -113,6 +121,7 @@ Please pick a path to an existing directory.`,
         graphql,
         reporter,
         trailingSlash,
+        pagesPath,
         ignore,
         slugifyOptions
       )
@@ -133,6 +142,7 @@ Please pick a path to an existing directory.`,
               graphql,
               reporter,
               trailingSlash,
+              pagesPath,
               ignore,
               slugifyOptions
             )
