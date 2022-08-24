@@ -14,7 +14,6 @@ import { parse, GraphQLString } from "gatsby/graphql"
 import {
   createPath,
   watchDirectory,
-  IPathIgnoreOptions,
   applyTrailingSlashOption,
 } from "gatsby-page-utils"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
@@ -23,6 +22,9 @@ import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
 import { CODES, ERROR_MAP, prefixId } from "./error-utils"
+import { createPagesFromChangedNodes } from "./create-pages-from-changed-nodes"
+import { IOptions } from "./types"
+import { getPluginInstance } from "./tracked-nodes-state"
 
 let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
 
@@ -37,14 +39,14 @@ try {
   console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
 }
 
-interface IOptions extends PluginOptions {
-  path: string
-  pathCheck?: boolean
-  ignore?: IPathIgnoreOptions | string | Array<string> | null
-  slugify?: ISlugifyOptions
-}
-
 const knownCollections = new Map()
+
+export function createPages(
+  { actions, reporter }: CreatePagesArgs,
+  pluginOptions: IOptions
+): void {
+  createPagesFromChangedNodes({ actions, reporter }, pluginOptions)
+}
 
 // Path creator.
 // Auto-create pages.
@@ -113,6 +115,7 @@ Please pick a path to an existing directory.`,
         graphql,
         reporter,
         trailingSlash,
+        pagesPath,
         ignore,
         slugifyOptions
       )
@@ -133,6 +136,7 @@ Please pick a path to an existing directory.`,
               graphql,
               reporter,
               trailingSlash,
+              pagesPath,
               ignore,
               slugifyOptions
             )
@@ -249,7 +253,7 @@ export function setFieldsOnGraphQLNodeType(
 }
 
 async function initializePlugin(
-  { reporter }: ParentSpanPluginArgs,
+  { reporter, emitter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
   if (reporter.setErrorMap) {
@@ -291,6 +295,43 @@ async function initializePlugin(
       },
     })
   }
+
+  const pluginInstance = getPluginInstance({ path: pagesPath })
+
+  emitter.on(`DELETE_NODE`, action => {
+    if (action.payload?.id) {
+      if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+        pluginInstance.changedNodesFromLastPageCreation.deleted.set(
+          action.payload.id,
+          { node: action.payload }
+        )
+      }
+    }
+  })
+
+  emitter.on(`CREATE_NODE`, action => {
+    if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+      // If this node was deleted before being recreated, remove it from the deleted node list
+      pluginInstance.changedNodesFromLastPageCreation.deleted.delete(
+        action.payload.id
+      )
+
+      if (action.oldNode?.id) {
+        pluginInstance.changedNodesFromLastPageCreation.updated.set(
+          action.payload.id,
+          {
+            oldNode: action.oldNode,
+            node: action.payload,
+          }
+        )
+      } else {
+        pluginInstance.changedNodesFromLastPageCreation.created.set(
+          action.payload.id,
+          { node: action.payload }
+        )
+      }
+    }
+  })
 }
 
 if (coreSupportsOnPluginInit === `stable`) {

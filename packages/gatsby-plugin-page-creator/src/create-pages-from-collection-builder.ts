@@ -12,27 +12,37 @@ import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
 import { CODES, prefixId } from "./error-utils"
+import { getPluginInstance } from "./tracked-nodes-state"
+import { extractModel } from "./path-utils"
+
+interface ICreatePagesFromCollectionBuilderArgs {
+  filePath: string
+  absolutePath: string
+  pagesPath: string
+  actions: Actions
+  graphql: CreatePagesArgs["graphql"]
+  reporter: Reporter
+  trailingSlash: TrailingSlash
+  slugifyOptions?: ISlugifyOptions
+}
 
 export async function createPagesFromCollectionBuilder(
-  filePath: string,
-  absolutePath: string,
-  actions: Actions,
-  graphql: CreatePagesArgs["graphql"],
-  reporter: Reporter,
-  trailingSlash: TrailingSlash,
-  slugifyOptions?: ISlugifyOptions
+  args: ICreatePagesFromCollectionBuilderArgs
 ): Promise<void> {
+  const {
+    filePath,
+    absolutePath,
+    pagesPath,
+    actions,
+    graphql,
+    reporter,
+    trailingSlash,
+    slugifyOptions,
+  } = args || {}
+
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
-      createPagesFromCollectionBuilder(
-        filePath,
-        absolutePath,
-        actions,
-        graphql,
-        reporter,
-        trailingSlash,
-        slugifyOptions
-      )
+      createPagesFromCollectionBuilder(args)
     )
     return
   }
@@ -43,15 +53,7 @@ export async function createPagesFromCollectionBuilder(
   // 1.a  If the query string is not findable, we can't move on. So we stop and watch
   if (queryString === null) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
-      createPagesFromCollectionBuilder(
-        filePath,
-        absolutePath,
-        actions,
-        graphql,
-        reporter,
-        trailingSlash,
-        slugifyOptions
-      )
+      createPagesFromCollectionBuilder(args)
     )
     return
   }
@@ -79,16 +81,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       [],
       actions,
       reporter,
-      () =>
-        createPagesFromCollectionBuilder(
-          filePath,
-          absolutePath,
-          actions,
-          graphql,
-          reporter,
-          trailingSlash,
-          slugifyOptions
-        )
+      () => createPagesFromCollectionBuilder(args)
     )
 
     return
@@ -109,6 +102,23 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   }
 
   let derivePathErrors = 0
+
+  // Start listening for changes to this type
+  console.log({ pagesPath })
+
+  const pluginInstance = getPluginInstance({ path: pagesPath })
+  const nodeType = extractModel(absolutePath)
+
+  let listOfTemplateFilePaths = pluginInstance.trackedTypes.get(nodeType)
+  if (!listOfTemplateFilePaths) {
+    listOfTemplateFilePaths = new Set()
+    pluginInstance.trackedTypes.set(nodeType, listOfTemplateFilePaths)
+  }
+  listOfTemplateFilePaths.add(absolutePath)
+
+  console.log(
+    `creating ${nodes.length} pages for ${extractModel(absolutePath)}`
+  )
 
   const knownPagePaths = new Set<string>()
 
@@ -176,15 +186,6 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     paths,
     actions,
     reporter,
-    () =>
-      createPagesFromCollectionBuilder(
-        filePath,
-        absolutePath,
-        actions,
-        graphql,
-        reporter,
-        trailingSlash,
-        slugifyOptions
-      )
+    () => createPagesFromCollectionBuilder(args)
   )
 }
