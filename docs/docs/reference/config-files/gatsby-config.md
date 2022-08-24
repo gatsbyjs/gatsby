@@ -204,7 +204,7 @@ module.exports = {
 
 ### typesOutputPath
 
-You can specifiy the path of the generated TypeScript types file relative to the site root. Default: `src/gatsby-types.d.ts`.
+You can specify the path of the generated TypeScript types file relative to the site root. Default: `src/gatsby-types.d.ts`.
 
 ### generateOnBuild
 
