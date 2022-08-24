@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@gatsbyjs/potrace": "^2.2.0",
+    "@gatsbyjs/potrace": "^2.3.0",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.10",
     "gatsby-core-utils": "^3.22.0-next.0",
