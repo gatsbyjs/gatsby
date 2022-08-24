@@ -41,7 +41,7 @@ export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
       root: {
         outputFormat: `commonjs`,
         includeNodeModules: false,
-        sourceMap: process.env.NODE_ENV === 'development',
+        sourceMap: process.env.NODE_ENV === `development`,
         engines: {
           node: `>= 14.15.0`,
         },
