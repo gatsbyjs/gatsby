@@ -143,6 +143,7 @@ module.exports = async function build(
 
   let closeJavascriptBundleCompilation: (() => Promise<void>) | undefined
   let closeHTMLBundleCompilation: (() => Promise<void>) | undefined
+  let closeHydrationBundleCompilation: (() => Promise<void>) | undefined
   let webpackAssets: Array<webpack.StatsAsset> | null = null
   let webpackCompilationHash: string | null = null
   let webpackSSRCompilationHash: string | null = null
@@ -231,6 +232,28 @@ module.exports = async function build(
     buildSSRBundleActivityProgress.end()
   }
 
+  const buildPartialHydrationBundleActivityProgress = report.activityTimer(
+    `Building Partial Hydration renderer`,
+    { parentSpan: buildSpan }
+  )
+  buildPartialHydrationBundleActivityProgress.start()
+  try {
+    const { buildPartialHydrationRenderer } = await import(`./build-html`)
+    const { close } = await buildPartialHydrationRenderer(
+      program,
+      Stage.BuildHTML,
+      buildPartialHydrationBundleActivityProgress.span
+    )
+
+    closeHydrationBundleCompilation = close
+
+    await close()
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+  } finally {
+    buildPartialHydrationBundleActivityProgress.end()
+  }
+
   // exec outer config function for each template
   const pageConfigActivity = report.activityTimer(`Execute page configs`, {
     parentSpan: buildSpan,
@@ -269,6 +292,7 @@ module.exports = async function build(
     await Promise.all([
       closeJavascriptBundleCompilation?.(),
       closeHTMLBundleCompilation?.(),
+      closeHydrationBundleCompilation?.(),
     ])
   } finally {
     cacheActivity.end()

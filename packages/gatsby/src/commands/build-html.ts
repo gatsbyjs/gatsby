@@ -219,6 +219,26 @@ const doBuildRenderer = async (
   }
 }
 
+const doBuildPartialHydrationRenderer = async (
+  directory: string,
+  webpackConfig: webpack.Configuration,
+  stage: Stage
+): Promise<IBuildRendererResult> => {
+  const { stats, close } = await runWebpack(webpackConfig, stage, directory)
+  if (stats?.hasErrors()) {
+    reporter.panicOnBuild(
+      structureWebpackErrors(stage, stats.compilation.errors)
+    )
+  }
+
+  // render-page.js is hard coded in webpack.config
+  return {
+    rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
+    stats,
+    close,
+  }
+}
+
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
@@ -229,6 +249,48 @@ export const buildRenderer = async (
   })
 
   return doBuildRenderer(program.directory, config, stage)
+}
+
+export const buildPartialHydrationRenderer = async (
+  program: IProgram,
+  stage: Stage,
+  parentSpan?: IActivity
+): Promise<IBuildRendererResult> => {
+  const config = await webpackConfig(program, program.directory, stage, null, {
+    parentSpan,
+  })
+
+  config.module.rules[0].use = [
+    {
+      loader: require.resolve(
+        `../utils/webpack/loaders/partial-hydration-reference-loader`
+      ),
+    },
+  ]
+  config.module.rules[1].use = [
+    {
+      loader: require.resolve(
+        `../utils/webpack/loaders/partial-hydration-reference-loader`
+      ),
+    },
+  ]
+  config.module.rules[2].use = [
+    config.module.rules[2].use,
+    {
+      loader: require.resolve(
+        `../utils/webpack/loaders/partial-hydration-reference-loader`
+      ),
+    },
+  ]
+  config.output.path = path.join(
+    program.directory,
+    `.cache`,
+    `partial-hydration`
+  )
+
+  // console.log(config.module.rules)
+
+  return doBuildPartialHydrationRenderer(program.directory, config, stage)
 }
 
 // TODO remove after v4 release and update cloud internals

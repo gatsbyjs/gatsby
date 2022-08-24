@@ -26,6 +26,7 @@ import { shouldGenerateEngines } from "./engines-helpers"
 import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
+import { ServerComponentsPlugin } from "./webpack/plugins/partial-hydration"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -117,23 +118,6 @@ module.exports = async (
         "process.env": `({})`,
       }
     )
-  }
-
-  function getHmrPath() {
-    // ref: https://github.com/gatsbyjs/gatsby/issues/8348
-    let hmrBasePath = `/`
-    const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
-
-    if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
-      const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.slice(-1) === `/`) {
-        hmrBasePath = pubPath
-      } else {
-        hmrBasePath = withTrailingSlash(pubPath)
-      }
-    }
-
-    return hmrBasePath + hmrSuffix
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
@@ -288,6 +272,10 @@ module.exports = async (
           // components) to all their async chunks.
           plugins.extractStats(),
           new StaticQueryMapper(store),
+          new ServerComponentsPlugin(
+            `partial-hydration-manifest.json`,
+            directoryPath(`.cache/production-app`)
+          ),
         ])
         break
       }
