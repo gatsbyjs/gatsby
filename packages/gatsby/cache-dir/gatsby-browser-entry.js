@@ -5,6 +5,7 @@ import loader from "./loader"
 const prefetchPathname = loader.enqueue
 
 const StaticQueryContext = React.createContext({})
+const StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const finalData = data
@@ -46,7 +47,14 @@ const useStaticQuery = query => {
         `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
     )
   }
-  const context = React.useContext(StaticQueryContext)
+  let context
+
+  // Can we get a better check here?
+  if (Object.keys(StaticQueryServerContext._currentValue).length) {
+    context = React.useContext(StaticQueryServerContext)
+  } else {
+    context = React.useContext(StaticQueryContext)
+  }
 
   // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
   // to wrap the query in a grqphql, then casting it to a Number results in `NaN` allowing us to
@@ -103,6 +111,7 @@ export {
   StaticQuery,
   useStaticQuery,
   prefetchPathname,
+  StaticQueryServerContext,
 }
 
 export * from "gatsby-script"

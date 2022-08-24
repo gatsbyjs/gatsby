@@ -26,6 +26,7 @@ import { shouldGenerateEngines } from "./engines-helpers"
 import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
+import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -54,6 +55,10 @@ module.exports = async (
   const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 
   const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
+  const isPartialHydrationEnabled =
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -117,23 +122,6 @@ module.exports = async (
         "process.env": `({})`,
       }
     )
-  }
-
-  function getHmrPath() {
-    // ref: https://github.com/gatsbyjs/gatsby/issues/8348
-    let hmrBasePath = `/`
-    const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
-
-    if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
-      const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.slice(-1) === `/`) {
-        hmrBasePath = pubPath
-      } else {
-        hmrBasePath = withTrailingSlash(pubPath)
-      }
-    }
-
-    return hmrBasePath + hmrSuffix
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
@@ -233,6 +221,7 @@ module.exports = async (
         HAS_REACT_18: JSON.stringify(
           major(require(`react-dom/package.json`).version) >= 18
         ),
+        "global.hasPartialHydration": isPartialHydrationEnabled,
       }),
 
       plugins.virtualModules(),
@@ -279,16 +268,24 @@ module.exports = async (
         break
       }
       case `build-javascript`: {
-        configPlugins = configPlugins.concat([
-          plugins.extractText({
-            filename: `[name].[contenthash].css`,
-            chunkFilename: `[name].[contenthash].css`,
-          }),
-          // Write out stats object mapping named dynamic imports (aka page
-          // components) to all their async chunks.
-          plugins.extractStats(),
-          new StaticQueryMapper(store),
-        ])
+        configPlugins = configPlugins
+          .concat([
+            plugins.extractText({
+              filename: `[name].[contenthash].css`,
+              chunkFilename: `[name].[contenthash].css`,
+            }),
+            // Write out stats object mapping named dynamic imports (aka page
+            // components) to all their async chunks.
+            plugins.extractStats(),
+            new StaticQueryMapper(store),
+            isPartialHydrationEnabled
+              ? new PartialHydrationPlugin(
+                  `../.cache/partial-hydration/manifest.json`,
+                  path.join(directory, `.cache`, `public-page-renderer-prod.js`)
+                )
+              : null,
+          ])
+          .filter(Boolean)
         break
       }
       case `develop-html`:
@@ -551,7 +548,6 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
-    const [major, minor] = process.version.replace(`v`, ``).split(`.`)
     config.target = `node14.15`
   } else {
     config.target = [`web`, `es5`]
@@ -703,6 +699,8 @@ module.exports = async (
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // TODO fix our partial hydration manifest
+      mangleExports: !isPartialHydrationEnabled,
       splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
