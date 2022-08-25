@@ -77,7 +77,6 @@ const optimize = svg => {
     multipass: true,
     floatPrecision: 0,
     plugins: [
-      // "preset-default",
       {
         name: `preset-default`,
         params: {
