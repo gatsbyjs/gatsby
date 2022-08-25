@@ -73,7 +73,7 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 
 const optimize = svg => {
   const { optimize } = require(`svgo`)
-  const svgo = optimize(svg, {
+  const { data } = optimize(svg, {
     multipass: true,
     floatPrecision: 0,
     plugins: [
@@ -98,7 +98,7 @@ const optimize = svg => {
       },
     ],
   })
-  return svgo.data
+  return data
 }
 
 exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
