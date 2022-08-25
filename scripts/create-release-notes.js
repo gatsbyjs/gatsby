@@ -122,7 +122,7 @@ async function run() {
     repo,
     title: commitMessage,
     head: releaseNotesBranchName,
-    base: `master`,
+    draft: true,
     body: body.join(`\n\n`),
   })
 
