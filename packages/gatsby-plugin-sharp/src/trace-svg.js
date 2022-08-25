@@ -81,7 +81,7 @@ const optimize = svg => {
         name: `preset-default`,
         params: {
           overrides: {
-            // or disable plugins
+            // disable removeViewBox plugin
             removeViewBox: false,
           },
         },
