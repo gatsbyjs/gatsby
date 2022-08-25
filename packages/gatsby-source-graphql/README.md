@@ -13,10 +13,10 @@ Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas
 
 ## Known Limitations
 
-- **Lack of support** for [Incremental Builds](https://support.gatsbyjs.com/hc/en-us/articles/360053099253-Gatsby-Builds-Full-Incremental-and-Cloud)
+- ⚠️ **Lack of support** for [Incremental Builds](https://support.gatsbyjs.com/hc/en-us/articles/360053099253-Gatsby-Builds-Full-Incremental-and-Cloud)
   - This can cause significant build speed issues, particularly for larger, content-heavy sites
-- **Lack of support** for [CMS Preview](https://www.gatsbyjs.com/products/cloud/previews/) and real-time previews for content / API updates
-- **Lack of full support** for GraphQL data layer, including image optimization / image CDN, and directive support
+- ⚠️ **Lack of support** for [CMS Preview](https://www.gatsbyjs.com/products/cloud/previews/) and real-time previews for content / API updates
+- ⚠️ **Lack of full support** for GraphQL data layer, including image optimization / image CDN, and directive support
 
 ## Install
 
