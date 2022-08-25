@@ -250,18 +250,13 @@ const activeFlags: Array<IFlag> = [
         react: `^0.0.0`,
       }
 
-      console.log({
-        cflag: _CFLAGS_.GATSBY_MAJOR === `5`,
-        semver: satisfiesSemvers(v0Constraint),
-      })
-
       return (
         _CFLAGS_.GATSBY_MAJOR === `5` &&
         (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
       )
     },
     requires:
-      _CFLAGS_.GATSBY_MAJOR === `5`
+      Number(_CFLAGS_.GATSBY_MAJOR) < 5
         ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
         : `Partial hydration requires React 18+ to work.`,
   },
