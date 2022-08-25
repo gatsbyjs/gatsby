@@ -185,7 +185,7 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
     description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
     testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      if (_CFLAGS_.GATSBY_MAJOR === `5`) {
         return `LOCKED_IN`
       }
 
@@ -204,7 +204,7 @@ const activeFlags: Array<IFlag> = [
     description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],
     testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      if (_CFLAGS_.GATSBY_MAJOR === `5`) {
         return `LOCKED_IN`
       }
 
@@ -234,10 +234,7 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => false,
     requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
   },
-]
-
-if (_CFLAGS_.GATSBY_MAJOR === `5`) {
-  activeFlags.push({
+  {
     name: `PARTIAL_HYDRATION`,
     env: `GATSBY_PARTIAL_HYDRATION`,
     command: `build`,
@@ -250,13 +247,24 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
         react: `>=18.0.0`,
       }
       const v0Constraint = {
-        react: `0.0.0`,
+        react: `^0.0.0`,
       }
 
-      return satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint)
+      console.log({
+        cflag: _CFLAGS_.GATSBY_MAJOR === `5`,
+        semver: satisfiesSemvers(v0Constraint),
+      })
+
+      return (
+        _CFLAGS_.GATSBY_MAJOR === `5` &&
+        (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
+      )
     },
-    requires: `Requires React v18 or above.`,
-  })
-}
+    requires:
+      _CFLAGS_.GATSBY_MAJOR === `5`
+        ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
+        : `Partial hydration requires React 18+ to work.`,
+  },
+]
 
 export default activeFlags
