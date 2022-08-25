@@ -78,9 +78,6 @@ const optimize = svg => {
     floatPrecision: 0,
     plugins: [
       {
-        name: `removeViewBox`,
-      },
-      {
         name: `addAttributesToSVGElement`,
         params: {
           attributes: [
