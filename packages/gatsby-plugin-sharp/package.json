@@ -21,7 +21,7 @@
     "probe-image-size": "^7.2.3",
     "semver": "^7.3.7",
     "sharp": "^0.30.7",
-    "svgo": "1.3.2"
+    "svgo": "2.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
