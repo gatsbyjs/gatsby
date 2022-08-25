@@ -2,7 +2,7 @@
 
 ## ⚠️ Warning
 
-We do not recommend using this plugin if your content source has an existing source plugin (like [gatsby-source-wordpress](https://www.gatsbyjs.com/plugins/gatsby-source-wordpress/) for WordPress, [gatsby-source-contentful for Contentful](https://www.gatsbyjs.com/plugins/gatsby-source-contentful/), etc.) This plugin has [known limitations](#known-limitations), specifically in that it does not support Incremental Builds, Image CDN and image optimization. Please only use it for simple proof-of-concepts and if there is not an [existing source plugin](https://www.gatsbyjs.com/plugins?=gatsby-source) for your data source.
+We do not recommend using this plugin if your content source has an existing source plugin (like [gatsby-source-wordpress](https://www.gatsbyjs.com/plugins/gatsby-source-wordpress/) for WordPress, [gatsby-source-contentful for Contentful](https://www.gatsbyjs.com/plugins/gatsby-source-contentful/), etc.) This plugin has [known limitations](#known-limitations), specifically in that it does not support Incremental Builds, CMS Preview, image optimizations, and lack of full support for the GraphQL data layer. Please only use it for simple proof-of-concepts and if there is not an [existing source plugin](https://www.gatsbyjs.com/plugins?=gatsby-source) for your data source.
 
 ## Description
 
