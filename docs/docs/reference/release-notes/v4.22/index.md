@@ -20,14 +20,17 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
 ---
 
-## Hightlight Name
+## Highlight Name
 
 TODO
 
-## Notable bugfixes & improvements
+## Notable bugfixes, improvements, & changes
 
 - `gatsby`:
   - TODO
+- `gatsby-source-graphql`: we have "soft deprecated" this package in favor of other, CMS-specific source plugins
+  - Note: You can continue to use this plugin for small sites or proof-of-concepts, but for larger sites backed by one or multiple CMSs we recommend using the official source plugin
+  - [Read more on the README about the decision](https://gatsbyjs.com/plugins/gatsby-source-graphql) as well as the [pull request](https://github.com/gatsbyjs/gatsby/pull/36469)
 
 ## Contributors
 
