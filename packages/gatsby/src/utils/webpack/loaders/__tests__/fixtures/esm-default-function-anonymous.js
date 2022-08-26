@@ -1,5 +1,3 @@
 "client export"
 
-// TODO: Handle, otherwise remove and document if we decide not to support
-
-// export default function() {}
+export default function () {}

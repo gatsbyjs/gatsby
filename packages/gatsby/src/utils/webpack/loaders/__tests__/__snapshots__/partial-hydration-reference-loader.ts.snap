@@ -80,15 +80,45 @@ export const j = {
   }"
 `;
 
-exports[`covers cases shown in fixtures/esm-default-class-anonymous.js 1`] = `""`;
+exports[`covers cases shown in fixtures/esm-default-class-anonymous.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-default-class-anonymous.js',
+    name: ''
+  }"
+`;
 
-exports[`covers cases shown in fixtures/esm-default-class-named.js 1`] = `""`;
+exports[`covers cases shown in fixtures/esm-default-class-named.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-default-class-named.js',
+    name: 'ClassName'
+  }"
+`;
 
-exports[`covers cases shown in fixtures/esm-default-expression.js 1`] = `""`;
+exports[`covers cases shown in fixtures/esm-default-expression.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-default-expression.js',
+    name: 'a'
+  }"
+`;
 
-exports[`covers cases shown in fixtures/esm-default-function-anonymous.js 1`] = `""`;
+exports[`covers cases shown in fixtures/esm-default-function-anonymous.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-default-function-anonymous.js',
+    name: ''
+  }"
+`;
 
-exports[`covers cases shown in fixtures/esm-default-function-named.js 1`] = `""`;
+exports[`covers cases shown in fixtures/esm-default-function-named.js 1`] = `
+"export default {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-default-function-named.js',
+    name: 'functionName'
+  }"
+`;
 
 exports[`covers cases shown in fixtures/esm-list.js 1`] = `
 "export const a = {
@@ -111,7 +141,7 @@ export const e = {
     filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-list.js',
     name: 'e'
   }
-export const c = {
+export default {
     $$typeof: Symbol.for('react.module.reference'),
     filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-list.js',
     name: 'c'
