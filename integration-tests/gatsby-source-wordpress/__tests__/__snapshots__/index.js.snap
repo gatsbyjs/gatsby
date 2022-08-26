@@ -553,6 +553,21 @@ Object {
             "nodes": Array [],
           },
         },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "inc page with full static file url",
+          "uri": "/inc-page-with-full-static-file-url/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
       ],
     },
     "testPage": Object {
@@ -853,6 +868,9 @@ Object {
           "name": "admin",
           "pages": Object {
             "nodes": Array [
+              Object {
+                "title": "inc page with full static file url",
+              },
               Object {
                 "title": "Full url link replacer test",
               },
