@@ -11,9 +11,8 @@ const fixtures = fs.readdirSync(fixturesPath)
 for (const fixture of fixtures) {
   const resourcePath = path.resolve(__dirname, `./fixtures/${fixture}`)
   const source = fs.readFileSync(resourcePath).toString()
-  const fixtureName = fixture.split(`.`)[0]?.replace(/-/g, ` `)
 
-  it(`${fixtureName} scenario is handled`, async () => {
+  it(`covers cases shown in fixtures/${fixture}`, async () => {
     const mutatedSource = await partialHydrationReferenceLoader.call(
       { resourcePath, rootContext },
       source
