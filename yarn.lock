@@ -19553,6 +19553,13 @@ prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
 
+prepend-directive@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/prepend-directive/-/prepend-directive-1.0.3.tgz#c4efc08b65f9245c66d35d223be16e1945b0e36c"
+  integrity sha512-2z115QLE7yxRp172Vv9hM2fWhtI5UtaQFDj+JnyzQxIZ7Wj/7ohrtriEIqXqgLOHsXUf08rjLd+kFUVCUJskPg==
+  dependencies:
+    fs-extra "^10.1.0"
+
 prepend-http@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
