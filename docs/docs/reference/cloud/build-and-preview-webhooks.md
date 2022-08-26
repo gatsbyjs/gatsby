@@ -1,6 +1,6 @@
 ---
 title: "Build and Preview Webhooks"
-description: "This guide outlines the functionality of and differences between Gatsby's Build and Preview webhooks"
+description: "Learn about Gatsby's Build and Preview webhooks and their differences"
 ---
 
 In this guide, you'll learn the differences between Build and Preview webhooks, and how each interacts with your Gatsby Cloud site.
