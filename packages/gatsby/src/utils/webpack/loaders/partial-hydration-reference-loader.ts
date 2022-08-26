@@ -31,10 +31,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
   walk(parse(content, { ecmaVersion: 2020, sourceType: `module` }), {
     // @ts-ignore Types are mostly right, except for a few cases. Keep for documentation.
     ExportNamedDeclaration(node: ExportNamedDeclaration) {
-      if (!node.declaration) {
-        return
-      }
-
+      // Cover cases shown in `fixtures/esm-declaration.js`
       switch (node.declaration?.type) {
         case `VariableDeclaration`:
           for (const { id } of node.declaration.declarations || []) {
@@ -72,10 +69,31 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
           }
           break
       }
+
+      // Cover cases shown in `fixtures/esm-list.js`
+      if (node.specifiers.length) {
+        for (const specifier of node.specifiers) {
+          if (
+            specifier.type === `ExportSpecifier` &&
+            specifier.exported.type === `Identifier` &&
+            specifier.exported.name
+          ) {
+            // TODO: Confirm how `export { foo as default }` should be handled
+            if (specifier.exported.name === `default`) {
+              references.push(
+                createNewReference(specifier.local.name, moduleId)
+              )
+            } else {
+              references.push(
+                createNewReference(specifier.exported.name, moduleId)
+              )
+            }
+          }
+        }
+      }
     },
   })
 
-  // TODO: Handle ESM export list
   // TODO: Handle ESM export default
   // TODO: Handle ESM export module aggregation
   // TODO: Handle CJS export list
