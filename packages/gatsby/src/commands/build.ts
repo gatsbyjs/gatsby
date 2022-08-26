@@ -87,6 +87,8 @@ module.exports = async function build(
     )
   }
 
+  report.verbose(`Running build in "${process.env.NODE_ENV}" environment`)
+
   await updateInternalSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,

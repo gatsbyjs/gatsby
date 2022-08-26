@@ -236,4 +236,27 @@ const activeFlags: Array<IFlag> = [
   },
 ]
 
+if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+  activeFlags.push({
+    name: `PARTIAL_HYDRATION`,
+    env: `GATSBY_PARTIAL_HYDRATION`,
+    command: `build`,
+    telemetryId: `PartialHydration`,
+    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
+    umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
+    experimental: true,
+    testFitness: (): fitnessEnum => {
+      const v18Constraint = {
+        react: `>=18.0.0`,
+      }
+      const v0Constraint = {
+        react: `0.0.0`,
+      }
+
+      return satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint)
+    },
+    requires: `Requires React v18 or above.`,
+  })
+}
+
 export default activeFlags
