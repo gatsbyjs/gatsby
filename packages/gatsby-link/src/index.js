@@ -1,5 +1,3 @@
-"client export"
-
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@gatsbyjs/reach-router"
