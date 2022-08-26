@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`covers cases shown in fixtures/esm-aggregation.js 1`] = `""`;
+
 exports[`covers cases shown in fixtures/esm-declaration.js 1`] = `
 "export const a = {
     $$typeof: Symbol.for('react.module.reference'),
@@ -62,6 +64,16 @@ export const j = {
     name: 'j'
   }"
 `;
+
+exports[`covers cases shown in fixtures/esm-default-class-anonymous.js 1`] = `""`;
+
+exports[`covers cases shown in fixtures/esm-default-class-named.js 1`] = `""`;
+
+exports[`covers cases shown in fixtures/esm-default-expression.js 1`] = `""`;
+
+exports[`covers cases shown in fixtures/esm-default-function-anonymous.js 1`] = `""`;
+
+exports[`covers cases shown in fixtures/esm-default-function-named.js 1`] = `""`;
 
 exports[`covers cases shown in fixtures/esm-list.js 1`] = `
 "export const a = {
