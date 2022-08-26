@@ -739,12 +739,12 @@ const replaceFileLinks = async ({
   }
 
   const hrefMatches = [
-    // match url pathnames
+    // match url pathnames in html fields, for ex /wp-content/uploads/2019/01/image.jpg
     ...(execall(
       /(\\"|\\'|\()([^'"()]*)(\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\))/gm,
       nodeString
     ) || []),
-    // match full urls
+    // match full urls in json fields, for ex https://example.com/wp-content/uploads/2019/01/image.jpg
     ...(execall(
       new RegExp(
         `(\\"|\\'|\\()([^'"()]*)(${wpUrl}\/wp-content\/uploads\/[^'">()]+)(\\"|\\'|>|\\))`,
