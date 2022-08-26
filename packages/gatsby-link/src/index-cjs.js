@@ -1,3 +1,5 @@
+"client export"
+
 import * as Link from "./index.js"
 
 module.exports = Link.default

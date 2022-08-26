@@ -1,3 +1,5 @@
+"client export"
+
 import "./global"
 export {
   GatsbyImage,
