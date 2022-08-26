@@ -4,7 +4,8 @@ import { LoaderDefinitionFunction } from "webpack"
 import url from "url"
 import { parse } from "acorn"
 import { simple as walk } from "acorn-walk"
-import type { ExportNamedDeclaration } from "estree"
+import type { Node } from "acorn"
+import type { ExportNamedDeclaration, AssignmentExpression } from "estree"
 
 function createNewReference(name: string, moduleId: string): string {
   return `export const ${name} = {
@@ -29,10 +30,12 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
     .replace(`file:////`, `file://`)
 
   walk(parse(content, { ecmaVersion: 2020, sourceType: `module` }), {
-    // @ts-ignore Types are mostly right, except for a few cases. Keep for documentation.
-    ExportNamedDeclaration(node: ExportNamedDeclaration) {
-      // Cover cases shown in `fixtures/esm-declaration.js`
-      switch (node.declaration?.type) {
+    ExportNamedDeclaration(plainAcornNode: Node) {
+      // @ts-ignore - Acorn types are bare bones, cast to specific type
+      const node = plainAcornNode as unknown as ExportNamedDeclaration
+
+      // Handle cases shown in `fixtures/esm-declaration.js`
+      switch (node?.declaration?.type) {
         case `VariableDeclaration`:
           for (const { id } of node.declaration.declarations || []) {
             if (id.type === `Identifier` && id.name) {
@@ -70,7 +73,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
           break
       }
 
-      // Cover cases shown in `fixtures/esm-list.js`
+      // Handle cases shown in `fixtures/esm-list.js`
       if (node.specifiers.length) {
         for (const specifier of node.specifiers) {
           if (
@@ -78,7 +81,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             specifier.exported.type === `Identifier` &&
             specifier.exported.name
           ) {
-            // TODO: Confirm how `export { foo as default }` should be handled
+            // TODO: Confirm how `export { foo as default }` should be handled, depends on how reference import works
             if (specifier.exported.name === `default`) {
               references.push(
                 createNewReference(specifier.local.name, moduleId)
@@ -92,12 +95,24 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         }
       }
     },
-  })
+    // TODO: Explore how to only walk top level tokens
+    AssignmentExpression(plainAcornNode) {
+      // @ts-ignore - Acorn types are bare bones, cast to specific type
+      const node = plainAcornNode as unknown as AssignmentExpression
+      const { left } = node
 
-  // TODO: Handle ESM export default
-  // TODO: Handle ESM export module aggregation
-  // TODO: Handle CJS export list
-  // TODO: Handle CJS export default
+      // Handle cases shown in `fixtures/cjs-exports.js`
+      if (
+        left?.type === `MemberExpression` &&
+        left?.object?.type === `Identifier` &&
+        left.object?.name === `exports` &&
+        left?.property?.type === `Identifier` &&
+        left.property?.name
+      ) {
+        references.push(createNewReference(left.property.name, moduleId))
+      }
+    },
+  })
 
   return references.join(`\n`)
 }
