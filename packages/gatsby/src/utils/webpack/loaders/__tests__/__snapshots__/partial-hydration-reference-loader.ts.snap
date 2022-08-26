@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`esm declaration scenario is handled 1`] = `
+exports[`covers cases shown in fixtures/esm-declaration.js 1`] = `
 "export const a = {
     $$typeof: Symbol.for('react.module.reference'),
     filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-declaration.js',
@@ -63,4 +63,32 @@ export const j = {
   }"
 `;
 
-exports[`no client export scenario is handled 1`] = `""`;
+exports[`covers cases shown in fixtures/esm-list.js 1`] = `
+"export const a = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-list.js',
+    name: 'a'
+  }
+export const b = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-list.js',
+    name: 'b'
+  }
+export const d = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-list.js',
+    name: 'd'
+  }
+export const e = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-list.js',
+    name: 'e'
+  }
+export const c = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/esm-list.js',
+    name: 'c'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/no-client-export.js 1`] = `""`;
