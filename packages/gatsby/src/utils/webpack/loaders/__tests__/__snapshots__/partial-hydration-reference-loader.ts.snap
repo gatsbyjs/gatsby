@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`covers cases shown in fixtures/cjs-exports.js 1`] = `
+"export const a = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/cjs-exports.js',
+    name: 'a'
+  }
+export const c = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: 'file:/<PROJECT_ROOT>/packages/gatsby/src/utils/webpack/loaders/__tests__/fixtures/cjs-exports.js',
+    name: 'c'
+  }"
+`;
+
+exports[`covers cases shown in fixtures/cjs-module-exports.js 1`] = `""`;
+
 exports[`covers cases shown in fixtures/esm-aggregation.js 1`] = `""`;
 
 exports[`covers cases shown in fixtures/esm-declaration.js 1`] = `
