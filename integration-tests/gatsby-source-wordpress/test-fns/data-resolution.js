@@ -36,7 +36,7 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(6)
+    expect(data[`allWpPage`].totalCount).toBe(7)
     expect(data[`allWpPost`].totalCount).toBe(5)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
@@ -88,8 +88,7 @@ describe(`data resolution`, () => {
 
     expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(
       // we add a media item node before running our warm cache build.
-      // so 32 before 33 after
-      isWarmCache ? 33 : 32
+      isWarmCache ? 34 : 33
     )
   })
 
