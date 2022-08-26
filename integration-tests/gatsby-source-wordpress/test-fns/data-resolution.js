@@ -36,7 +36,10 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(7)
+    expect(data[`allWpPage`].totalCount).toBe(
+      // a page is created before the warm cache test run starts
+      isWarmCache ? 8 : 7
+    )
     expect(data[`allWpPost`].totalCount).toBe(5)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
@@ -87,8 +90,8 @@ describe(`data resolution`, () => {
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
 
     expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(
-      // we add a media item node before running our warm cache build.
-      isWarmCache ? 34 : 33
+      // A media item and page node are created before running our warm cache build.
+      isWarmCache ? 35 : 33
     )
   })
 
