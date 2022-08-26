@@ -5,10 +5,22 @@ import url from "url"
 import { parse } from "acorn"
 import { simple as walk } from "acorn-walk"
 import type { Node } from "acorn"
-import type { ExportNamedDeclaration, AssignmentExpression } from "estree"
+import type {
+  ExportNamedDeclaration,
+  ExportDefaultDeclaration,
+  AssignmentExpression,
+} from "estree"
 
-function createNewReference(name: string, moduleId: string): string {
+function createNamedReference(name: string, moduleId: string): string {
   return `export const ${name} = {
+    $$typeof: Symbol.for('react.module.reference'),
+    filepath: '${moduleId}',
+    name: '${name}'
+  }`
+}
+
+function createDefaultReference(name: string, moduleId: string): string {
+  return `export default {
     $$typeof: Symbol.for('react.module.reference'),
     filepath: '${moduleId}',
     name: '${name}'
@@ -39,14 +51,14 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         case `VariableDeclaration`:
           for (const { id } of node.declaration.declarations || []) {
             if (id.type === `Identifier` && id.name) {
-              references.push(createNewReference(id.name, moduleId))
+              references.push(createNamedReference(id.name, moduleId))
             }
 
             if (id.type === `ObjectPattern`) {
               // @ts-ignore Wrong type
               for (const { value } of id.properties) {
                 if (value.type === `Identifier` && value.name) {
-                  references.push(createNewReference(value.name, moduleId))
+                  references.push(createNamedReference(value.name, moduleId))
                 }
               }
             }
@@ -54,7 +66,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             if (id.type === `ArrayPattern`) {
               for (const element of id.elements || []) {
                 if (element?.type === `Identifier` && element.name) {
-                  references.push(createNewReference(element.name, moduleId))
+                  references.push(createNamedReference(element.name, moduleId))
                 }
               }
             }
@@ -67,7 +79,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             node.declaration.id.name
           ) {
             references.push(
-              createNewReference(node.declaration.id.name, moduleId)
+              createNamedReference(node.declaration.id.name, moduleId)
             )
           }
           break
@@ -81,18 +93,43 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             specifier.exported.type === `Identifier` &&
             specifier.exported.name
           ) {
-            // TODO: Confirm how `export { foo as default }` should be handled, depends on how reference import works
             if (specifier.exported.name === `default`) {
-              references.push(
-                createNewReference(specifier.local.name, moduleId)
-              )
+              references.push(createDefaultReference(`default`, moduleId))
             } else {
               references.push(
-                createNewReference(specifier.exported.name, moduleId)
+                createNamedReference(specifier.exported.name, moduleId)
               )
             }
           }
         }
+      }
+    },
+    ExportDefaultDeclaration(plainAcornNode: Node) {
+      // @ts-ignore - Acorn types are bare bones, cast to specific type
+      const node = plainAcornNode as unknown as ExportDefaultDeclaration
+
+      switch (node.declaration.type) {
+        // Handle cases shown in `fixtures/esm-default-expression.js`
+        case `Identifier`:
+          if (node.declaration.name) {
+            references.push(createDefaultReference(`default`, moduleId))
+          }
+          break
+        case `FunctionDeclaration`:
+        case `ClassDeclaration`:
+          // Handle cases shown in `fixtures/esm-default-function-named.js` and `fixtures/esm-default-class-named.js`
+          if (
+            node.declaration.id?.type === `Identifier` &&
+            node.declaration.id.name
+          ) {
+            references.push(
+              createDefaultReference(node.declaration.id.name, moduleId)
+            )
+            // Handle cases shown in `fixtures/esm-default-function-anonymous.js` and `fixtures/esm-default-class-anonymous.js`
+          } else {
+            references.push(createDefaultReference(`default`, moduleId))
+          }
+          break
       }
     },
     // TODO: Explore how to only walk top level tokens
@@ -109,7 +146,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         left?.property?.type === `Identifier` &&
         left.property?.name
       ) {
-        references.push(createNewReference(left.property.name, moduleId))
+        references.push(createNamedReference(left.property.name, moduleId))
       }
     },
   })
