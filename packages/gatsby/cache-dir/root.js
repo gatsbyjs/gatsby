@@ -1,5 +1,5 @@
-import React from "react"
-import { Router, Location, BaseContext } from "@gatsbyjs/reach-router"
+import React, { useContext } from "react"
+import { Router, Location, BaseContext, navigate } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
 import { shouldUpdateScroll, RouteUpdates } from "./navigation"
@@ -17,16 +17,20 @@ import FastRefreshOverlay from "./fast-refresh-overlay"
 // Resetting `basepath`/`baseuri` keeps current behaviour
 // to not introduce breaking change.
 // Remove this in v3
-const RouteHandler = props => (
-  <BaseContext.Provider
-    value={{
-      baseuri: `/`,
-      basepath: `/`,
-    }}
-  >
-    <PageQueryStore {...props} />
-  </BaseContext.Provider>
-)
+const RouteHandler = props => {
+  const baseContextValues = useContext(BaseContext)
+  return (
+    <BaseContext.Provider
+      value={{
+        ...baseContextValues,
+        baseuri: `/`,
+        basepath: `/`,
+      }}
+    >
+      <PageQueryStore {...props} />
+    </BaseContext.Provider>
+  )
+}
 
 class LocationHandler extends React.Component {
   render() {

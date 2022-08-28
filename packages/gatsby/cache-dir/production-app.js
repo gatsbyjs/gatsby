@@ -1,5 +1,5 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import React from "react"
+import React, { useContext } from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import { StaticQueryContext } from "gatsby"
@@ -54,16 +54,20 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // Resetting `basepath`/`baseuri` keeps current behaviour
   // to not introduce breaking change.
   // Remove this in v3
-  const RouteHandler = props => (
-    <BaseContext.Provider
-      value={{
-        baseuri: `/`,
-        basepath: `/`,
-      }}
-    >
-      <PageRenderer {...props} />
-    </BaseContext.Provider>
-  )
+  const RouteHandler = props => {
+    const baseContextValues = useContext(BaseContext)
+    return (
+      <BaseContext.Provider
+        value={{
+          ...baseContextValues,
+          baseuri: `/`,
+          basepath: `/`,
+        }}
+      >
+        <PageRenderer {...props} />
+      </BaseContext.Provider>
+    )
+  }
 
   const DataContext = React.createContext({})
 
