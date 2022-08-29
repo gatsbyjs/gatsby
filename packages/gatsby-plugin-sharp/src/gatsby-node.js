@@ -11,15 +11,6 @@ const { slash } = require(`gatsby-core-utils/path`)
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
-let coreSupportsOnPluginInit
-try {
-  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-
-  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(`onPluginInit`)
-} catch (e) {
-  coreSupportsOnPluginInit = false
-}
-
 function removeCachedValue(cache, key) {
   if (cache?.del) {
     // if cache expose ".del" method directly on public interface
@@ -124,12 +115,10 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
   }
 }
 
-if (coreSupportsOnPluginInit) {
-  // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
-  exports.onPluginInit = async ({ actions }, pluginOptions) => {
-    setActions(actions)
-    setPluginOptions(pluginOptions)
-  }
+// to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
+exports.onPluginInit = async ({ actions }, pluginOptions) => {
+  setActions(actions)
+  setPluginOptions(pluginOptions)
 }
 
 exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
