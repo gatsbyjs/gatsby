@@ -117,18 +117,6 @@ export const prepareOptions = (
 
   const requiredPresets: Array<PluginItem> = []
 
-  // Stage specific plugins to add
-  if (
-    _CFLAGS_.GATSBY_MAJOR !== `4` &&
-    (stage === `build-html` || stage === `develop-html`)
-  ) {
-    requiredPlugins.push(
-      babel.createConfigItem([resolve(`babel-plugin-dynamic-import-node`)], {
-        type: `plugin`,
-      })
-    )
-  }
-
   if (stage === `develop`) {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`react-refresh/babel`)], {
