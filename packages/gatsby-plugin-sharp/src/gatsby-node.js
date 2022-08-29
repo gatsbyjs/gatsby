@@ -14,13 +14,12 @@ const path = require(`path`)
 let coreSupportsOnPluginInit
 try {
   const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(`onPluginInit`)
-  } else {
-    coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
-      `unstable_onPluginInit`
-    )
-  }
+
+  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(`onPluginInit`)
+
+  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+    `unstable_onPluginInit`
+  )
 } catch (e) {
   coreSupportsOnPluginInit = false
 }
@@ -131,16 +130,9 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
 
 if (coreSupportsOnPluginInit) {
   // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    exports.onPluginInit = async ({ actions }, pluginOptions) => {
-      setActions(actions)
-      setPluginOptions(pluginOptions)
-    }
-  } else {
-    exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
-      setActions(actions)
-      setPluginOptions(pluginOptions)
-    }
+  exports.onPluginInit = async ({ actions }, pluginOptions) => {
+    setActions(actions)
+    setPluginOptions(pluginOptions)
   }
 }
 

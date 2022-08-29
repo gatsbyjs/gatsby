@@ -162,15 +162,7 @@ export function calcDirtyHtmlFiles(state: IGatsbyState): {
       // and because of that `isDeleted` might not be set ...
       markActionForPage(path, `delete`)
     } else {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        if (getPageMode(page, state) === `SSG`) {
-          if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
-            markActionForPage(path, `regenerate`)
-          } else {
-            markActionForPage(path, `reuse`)
-          }
-        }
-      } else {
+      if (getPageMode(page, state) === `SSG`) {
         if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
           markActionForPage(path, `regenerate`)
         } else {
