@@ -1,6 +1,6 @@
 ---
 title: "Set a Node.js Version for Your Site"
-description: "How to set a Node version for your Gatsby Cloud site."
+description: "Learn how to set a Node version for your Gatsby Cloud site."
 ---
 
 ## Introduction
