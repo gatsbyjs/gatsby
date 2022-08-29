@@ -307,7 +307,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     // TODO: Handle case of engine not being generated
   }
 
-  // end
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
 
