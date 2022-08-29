@@ -16,10 +16,6 @@ try {
   const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
 
   coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(`onPluginInit`)
-
-  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
-    `unstable_onPluginInit`
-  )
 } catch (e) {
   coreSupportsOnPluginInit = false
 }
