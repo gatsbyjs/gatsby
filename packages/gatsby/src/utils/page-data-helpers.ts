@@ -29,7 +29,6 @@ function traverseSlicesUsedByTemplates(
   }
 
   const slicesUsedByComponent = slicesUsedByTemplates.get(componentPath)
-  slicesUsedByTemplates.set
   if (!slicesUsedByComponent) {
     return null
   }

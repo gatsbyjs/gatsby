@@ -74,7 +74,6 @@ export function collectSlices(
                 filename,
               })
             }
-          } else {
           }
         } else if (attribute.type === `JSXSpreadAttribute`) {
           // this needs special handling - not sure if worth doing so
