@@ -1,6 +1,6 @@
 ---
 title: "Apex and Subdomains"
-description: "How to configure your apex and subdomains in Gatsby Cloud"
+description: "Learn how to configure your apex and subdomains in Gatsby Cloud"
 ---
 
 ## Introduction
