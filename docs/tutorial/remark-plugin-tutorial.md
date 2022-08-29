@@ -114,10 +114,11 @@ You are going to create a plugin that colors all top-level headings in the markd
 First create a local plugin by adding a `plugins` folder in your site and generating a `package.json` file for it. As well, create an `index.js` file. In this file, we export a function that will be invoked by `gatsby-transformer-remark`:
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
-module.exports = ({ markdownAST }, pluginOptions) => {
+module.exports = (tree, pluginOptions) => {
   // Manipulate AST
+  const { markdownAST } = tree
 
-  return markdownAST
+  return tree
 }
 ```
 
@@ -194,16 +195,20 @@ A node module to help with this is [unist-util-visit](https://github.com/syntax-
 As an example from `unist-util-visit`'s README file, it allows for an interface to visit particular nodes based on a particular type:
 
 ```js
-var remark = require("remark")
-var visit = require("unist-util-visit")
+async function main() {
+  var remark = await import("remark")
+  var visit = await import("unist-util-visit")
 
-var tree = remark().parse("Some _emphasis_, **importance**, and `code`.")
+  var tree = remark().parse("Some _emphasis_, **importance**, and `code`.")
 
-visit(tree, "text", visitor)
+  visit(tree, "text", visitor)
 
-function visitor(node) {
-  console.log(node)
+  function visitor(node) {
+    console.log(node)
+  }
 }
+
+main();
 ```
 
 Here, it finds all text nodes and will `console.log` the nodes. The second argument can be replaced with any type described in Unist's [Markdown AST (mdast) specification](https://github.com/syntax-tree/mdast#nodes) including types such as `paragraph`, `blockquote`, `link`, `image` or in our usecase, `heading`.
@@ -211,23 +216,23 @@ Here, it finds all text nodes and will `console.log` the nodes. The second argum
 To be able to use `unist-util-visit`, install it into your plugin:
 
 ```shell
-npm install unist-util-visit@^2
+npm install unist-util-visit
 ```
-
-**Please note**: You're installing v2 of `unist-util-visit` as newer major versions are ESM and Gatsby doesn't fully support that yet.
 
 With this technique in mind, you can similarly traverse the AST from your plugin and add additional functionality, like so:
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")
 
-module.exports = ({ markdownAST }, pluginOptions) => {
+module.exports = (tree, pluginOptions) => {
+  const { markdownAST } = tree
+
   // highlight-next-line
   visit(markdownAST, "heading", node => {
     // Do stuff with heading nodes
   })
 
-  return markdownAST
+  return tree
 }
 ```
 
@@ -263,10 +268,12 @@ You have context about the text as well as what depth the heading is (for instan
 With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
-const visit = require("unist-util-visit")
-const toString = require("mdast-util-to-string")
+module.exports = async (tree, pluginOptions) => {
+  const visit = await import("unist-util-visit")
+  const toString = await import("mdast-util-to-string")
 
-module.exports = ({ markdownAST }, pluginOptions) => {
+  const { markdownAST } = tree;
+
   visit(markdownAST, "heading", node => {
     let { depth } = node
 
@@ -287,7 +294,7 @@ module.exports = ({ markdownAST }, pluginOptions) => {
     node.value = html
   })
 
-  return markdownAST
+  return tree
 }
 ```
 
@@ -298,11 +305,14 @@ A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util
 Gatsby supports the usage of asynchronous behavior in plugins, and `gatsby-transformer-remark` uses [unified](https://github.com/unifiedjs/unified) under the hood. The following example shows how the `gatsby-remark-purple-headers` transformer can be converted to asynchronous by adding the `async` keyword to the function declaration.
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
-const visit = require("unist-util-visit")
-const toString = require("mdast-util-to-string")
 
 // highlight-next-line
-module.exports = async ({ markdownAST }, pluginOptions) => {
+module.exports = async (tree, pluginOptions) => {
+  const visit = await import("unist-util-visit")
+  const toString = await import("mdast-util-to-string")
+
+  const { markdownAST } = tree;
+
   visit(markdownAST, "heading", node => {
     let { depth } = node
 
@@ -323,7 +333,7 @@ module.exports = async ({ markdownAST }, pluginOptions) => {
     node.value = html
   })
 
-  return markdownAST
+  return tree
 }
 ```
 
