@@ -121,6 +121,8 @@ export const saveState = (): void => {
     staticQueriesByTemplate: state.staticQueriesByTemplate,
     queries: state.queries,
     html: state.html,
+    slices: state.slices,
+    slicesByTemplate: state.slicesByTemplate,
   })
 }
 

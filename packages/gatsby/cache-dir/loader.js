@@ -16,6 +16,8 @@ export const PageResourceStatus = {
   Success: `success`,
 }
 
+const preferDefault = m => (m && m.default) || m
+
 const stripSurroundingSlashes = s => {
   s = s[0] === `/` ? s.slice(1) : s
   s = s.endsWith(`/`) ? s.slice(0, -1) : s
@@ -69,6 +71,7 @@ const toPageResources = (pageData, component = null, head) => {
     matchPath: pageData.matchPath,
     staticQueryHashes: pageData.staticQueryHashes,
     getServerDataError: pageData.getServerDataError,
+    slicesMap: pageData.slicesMap ?? {},
   }
 
   return {
@@ -96,10 +99,13 @@ export class BaseLoader {
     //   },
     //   staticQueryResults
     // }
-    this.pageDb = new Map()
+    window.pageDb = this.pageDb = new Map()
     this.inFlightDb = new Map()
     this.staticQueryDb = {}
-    this.pageDataDb = new Map()
+    window.pageDataDb = this.pageDataDb = new Map()
+    window.slicesDataDb = this.slicesDataDb = new Map()
+    window.sliceInflightDb = this.sliceInflightDb = new Map()
+    window.slicesDb = this.slicesDb = new Map()
     this.isPrefetchQueueRunning = false
     this.prefetchQueued = []
     this.prefetchTriggered = new Set()
@@ -219,6 +225,22 @@ export class BaseLoader {
     })
   }
 
+  loadSliceDataJson(sliceName) {
+    if (this.slicesDataDb.has(sliceName)) {
+      const jsonPayload = this.slicesDataDb.get(sliceName)
+      return Promise.resolve({ sliceName, jsonPayload })
+    }
+
+    // TODO: setup correct (no)caching headers
+    const url = `/slice-data/${sliceName}.json?v=${Date.now()}`
+    return doFetch(url, `GET`).then(res => {
+      const jsonPayload = JSON.parse(res.responseText)
+
+      this.slicesDataDb.set(sliceName, jsonPayload)
+      return { sliceName, jsonPayload }
+    })
+  }
+
   findMatchPath(rawPath) {
     return findMatchPath(rawPath)
   }
@@ -248,6 +270,8 @@ export class BaseLoader {
       this.loadAppData(),
       this.loadPageDataJson(pagePath),
     ]).then(allData => {
+      const windowSlices = window.pageSlices || new Map()
+
       const result = allData[1]
       if (result.status === PageResourceStatus.Error) {
         return {
@@ -256,104 +280,177 @@ export class BaseLoader {
       }
 
       let pageData = result.payload
-      const { componentChunkName, staticQueryHashes = [] } = pageData
+      const {
+        componentChunkName,
+        staticQueryHashes: pageStaticQueryHashes = [],
+        slicesMap = {},
+      } = pageData
+
+      //     "slicesMap": {
+      //   "header": "header-fr",
+      //   "header-fr": "header-fr",
+      //   "about-author": "about-author",
+      //   "footer": "footer"
+      // }
 
       const finalResult = {}
 
-      // In develop we have separate chunks for template and Head components
-      // to enable HMR (fast refresh requires single exports).
-      // In production we have shared chunk with both exports. Double loadComponent here
-      // will be deduped by webpack runtime resulting in single request and single module
-      // being loaded for both `component` and `head`.
-      const componentChunkPromise = Promise.all([
-        this.loadComponent(componentChunkName),
-        this.loadComponent(componentChunkName, `head`),
-      ]).then(([component, head]) => {
-        finalResult.createdAt = new Date()
-        let pageResources
-        if (!component || component instanceof Error) {
-          finalResult.status = PageResourceStatus.Error
-          finalResult.error = component
-        } else {
-          finalResult.status = PageResourceStatus.Success
-          if (result.notFound === true) {
-            finalResult.notFound = true
-          }
-          pageData = Object.assign(pageData, {
-            webpackCompilationHash: allData[0]
-              ? allData[0].webpackCompilationHash
-              : ``,
-          })
-          pageResources = toPageResources(pageData, component, head)
+      const dedupedSliceNames = Array.from(new Set(Object.values(slicesMap)))
+
+      const loadSlice = slice => {
+        if (this.slicesDb.has(slice.name)) {
+          return this.slicesDb.get(slice.name)
+        } else if (this.sliceInflightDb.has(slice.name)) {
+          return this.sliceInflightDb.get(slice.name)
         }
-        // undefined if final result is an error
-        return pageResources
-      })
 
-      const staticQueryBatchPromise = Promise.all(
-        staticQueryHashes.map(staticQueryHash => {
-          // Check for cache in case this static query result has already been loaded
-          if (this.staticQueryDb[staticQueryHash]) {
-            const jsonPayload = this.staticQueryDb[staticQueryHash]
-            return { staticQueryHash, jsonPayload }
+        const inFlight = this.loadComponent(slice.componentChunkName).then(
+          component => {
+            return {
+              component: preferDefault(component),
+              sliceContext: slice.result.sliceContext,
+              data: slice.result.data,
+            }
+          }
+        )
+
+        this.sliceInflightDb.set(slice.name, inFlight)
+        inFlight.then(results => {
+          this.slicesDb.set(slice.name, results)
+          this.sliceInflightDb.delete(slice.name)
+        })
+
+        return inFlight
+      }
+
+      return Promise.all(
+        dedupedSliceNames.map(sliceName => this.loadSliceDataJson(sliceName))
+      ).then(slicesData => {
+        // slicesData = [{ jsonPayload, sliceName: "headers-fr" }]
+
+        const slices = []
+        const dedupedStaticQueryHashes = [...pageStaticQueryHashes]
+        for (const { jsonPayload, sliceName } of Object.values(slicesData)) {
+          slices.push({ name: sliceName, ...jsonPayload })
+          for (const staticQueryHash of jsonPayload.staticQueryHashes) {
+            if (!dedupedStaticQueryHashes.includes(staticQueryHash)) {
+              dedupedStaticQueryHashes.push(staticQueryHash)
+            }
+          }
+        }
+
+        // In develop we have separate chunks for template and Head components
+        // to enable HMR (fast refresh requires single exports).
+        // In production we have shared chunk with both exports. Double loadComponent here
+        // will be deduped by webpack runtime resulting in single request and single module
+        // being loaded for both `component` and `head`.
+        // get list of components to get
+        const componentChunkPromises = Promise.all([
+          this.loadComponent(componentChunkName),
+          this.loadComponent(componentChunkName, `head`),
+          Promise.all(slices.map(loadSlice)),
+        ]).then(components => {
+          const [rootComponent, headComponent, sliceComponents] = components
+          finalResult.createdAt = new Date()
+          for (const sliceComponent of sliceComponents) {
+            if (!sliceComponent || sliceComponent instanceof Error) {
+              finalResult.status = PageResourceStatus.Error
+              finalResult.error = sliceComponent
+            }
           }
 
-          return this.memoizedGet(
-            `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
-          )
-            .then(req => {
-              const jsonPayload = JSON.parse(req.responseText)
+          if (!rootComponent || rootComponent instanceof Error) {
+            finalResult.status = PageResourceStatus.Error
+            finalResult.error = rootComponent
+          }
+
+          let pageResources
+          if (finalResult.status !== PageResourceStatus.Error) {
+            finalResult.status = PageResourceStatus.Success
+            if (result.notFound === true) {
+              finalResult.notFound = true
+            }
+            pageData = Object.assign(pageData, {
+              webpackCompilationHash: allData[0]
+                ? allData[0].webpackCompilationHash
+                : ``,
+            })
+            pageResources = toPageResources(
+              pageData,
+              rootComponent,
+              headComponent
+            )
+          }
+          // undefined if final result is an error
+          return pageResources
+        })
+
+        // get list of static queries to get
+        const staticQueryBatchPromise = Promise.all(
+          dedupedStaticQueryHashes.map(staticQueryHash => {
+            // Check for cache in case this static query result has already been loaded
+            if (this.staticQueryDb[staticQueryHash]) {
+              const jsonPayload = this.staticQueryDb[staticQueryHash]
               return { staticQueryHash, jsonPayload }
-            })
-            .catch(() => {
-              throw new Error(
-                `We couldn't load "${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json"`
-              )
-            })
-        })
-      ).then(staticQueryResults => {
-        const staticQueryResultsMap = {}
+            }
 
-        staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
-          staticQueryResultsMap[staticQueryHash] = jsonPayload
-          this.staticQueryDb[staticQueryHash] = jsonPayload
-        })
-
-        return staticQueryResultsMap
-      })
-
-      return (
-        Promise.all([componentChunkPromise, staticQueryBatchPromise])
-          .then(([pageResources, staticQueryResults]) => {
-            let payload
-            if (pageResources) {
-              payload = { ...pageResources, staticQueryResults }
-              finalResult.payload = payload
-              emitter.emit(`onPostLoadPageResources`, {
-                page: payload,
-                pageResources: payload,
+            return this.memoizedGet(
+              `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
+            )
+              .then(req => {
+                const jsonPayload = JSON.parse(req.responseText)
+                return { staticQueryHash, jsonPayload }
               })
-            }
+              .catch(() => {
+                throw new Error(
+                  `We couldn't load "${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json"`
+                )
+              })
+          })
+        ).then(staticQueryResults => {
+          const staticQueryResultsMap = {}
 
-            this.pageDb.set(pagePath, finalResult)
+          staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
+            staticQueryResultsMap[staticQueryHash] = jsonPayload
+            this.staticQueryDb[staticQueryHash] = jsonPayload
+          })
 
-            if (finalResult.error) {
-              return {
-                error: finalResult.error,
-                status: finalResult.status,
+          return staticQueryResultsMap
+        })
+
+        return (
+          Promise.all([componentChunkPromises, staticQueryBatchPromise])
+            .then(([pageResources, staticQueryResults]) => {
+              let payload
+              if (pageResources) {
+                payload = { ...pageResources, staticQueryResults }
+                finalResult.payload = payload
+                emitter.emit(`onPostLoadPageResources`, {
+                  page: payload,
+                  pageResources: payload,
+                })
               }
-            }
 
-            return payload
-          })
-          // when static-query fail to load we throw a better error
-          .catch(err => {
-            return {
-              error: err,
-              status: PageResourceStatus.Error,
-            }
-          })
-      )
+              this.pageDb.set(pagePath, finalResult)
+
+              if (finalResult.error) {
+                return {
+                  error: finalResult.error,
+                  status: finalResult.status,
+                }
+              }
+
+              return payload
+            })
+            // when static-query fail to load we throw a better error
+            .catch(err => {
+              return {
+                error: err,
+                status: PageResourceStatus.Error,
+              }
+            })
+        )
+      })
     })
 
     inFlightPromise
@@ -662,6 +759,14 @@ export default publicLoader
 export function getStaticQueryResults() {
   if (instance) {
     return instance.staticQueryDb
+  } else {
+    return {}
+  }
+}
+
+export function getSliceResults() {
+  if (instance) {
+    return instance.slicesDb
   } else {
     return {}
   }

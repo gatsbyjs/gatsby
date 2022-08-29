@@ -527,10 +527,10 @@ export async function initialize({
       await fs.ensureDir(`${cacheDirectory}/json`)
     }
 
-    // Ensure .cache/fragments exists and is empty. We want fragments to be
-    // added on every run in response to data as fragments can only be added if
+    // Ensure .cache/slices exists and is empty. We want slices to be
+    // added on every run in response to data as slices can only be added if
     // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${cacheDirectory}/fragments`)
+    await fs.emptyDir(`${cacheDirectory}/slices`)
   } catch (err) {
     reporter.panic(`Unable to copy site files to .cache`, err)
   }

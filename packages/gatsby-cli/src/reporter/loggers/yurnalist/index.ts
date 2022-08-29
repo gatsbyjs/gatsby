@@ -34,7 +34,8 @@ function generatePageTreeToConsole(
 ): void {
   const root = state.root
   const componentWithPages = new Map<string, IComponentWithPageModes>()
-  for (const { componentPath, pages } of state.components.values()) {
+  const slices = new Set<string>()
+  for (const { componentPath, pages, isSlice } of state.components.values()) {
     const layoutComponent = getPathToLayoutComponent(componentPath)
     const relativePath = path.posix.relative(root, layoutComponent)
     const pagesByMode = componentWithPages.get(relativePath) || {
@@ -43,13 +44,18 @@ function generatePageTreeToConsole(
       SSR: new Set<string>(),
       FN: new Set<string>(),
     }
-    pages.forEach(pagePath => {
-      const gatsbyPage = state.pages.get(pagePath)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      pagesByMode[gatsbyPage!.mode].add(pagePath)
-    })
 
-    componentWithPages.set(relativePath, pagesByMode)
+    if (isSlice) {
+      slices.add(path.posix.relative(root, componentPath))
+    } else {
+      pages.forEach(pagePath => {
+        const gatsbyPage = state.pages.get(pagePath)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        pagesByMode[gatsbyPage!.mode].add(pagePath)
+      })
+
+      componentWithPages.set(relativePath, pagesByMode)
+    }
   }
 
   for (const {
@@ -97,6 +103,13 @@ function generatePageTreeToConsole(
 
     i++
   }
+
+  pageTreeConsole.push(``)
+  pageTreeConsole.push(`\n${chalk.underline(`Slices`)}\n`)
+
+  Array.from(slices).forEach(slice => {
+    pageTreeConsole.push(`· ${slice}`)
+  })
 
   pageTreeConsole.push(``)
   pageTreeConsole.push(

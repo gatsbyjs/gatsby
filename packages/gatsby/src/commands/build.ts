@@ -36,6 +36,7 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  runSliceQueries,
   writeOutRequires,
 } from "../services"
 import {
@@ -63,6 +64,7 @@ import {
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
+import { getSSRChunkHashes } from "../utils/webpack/get-ssr-chunk-hashes"
 import { writeTypeScriptTypes } from "../utils/graphql-typegen/ts-codegen"
 
 module.exports = async function build(
@@ -148,6 +150,7 @@ module.exports = async function build(
   let webpackAssets: Array<webpack.StatsAsset> | null = null
   let webpackCompilationHash: string | null = null
   let webpackSSRCompilationHash: string | null = null
+  let templateCompilationHashes: Record<string, string> = {}
 
   const engineBundlingPromises: Array<Promise<any>> = []
   const buildActivityTimer = report.activityTimer(
@@ -224,7 +227,12 @@ module.exports = async function build(
     )
 
     closeHTMLBundleCompilation = close
-    webpackSSRCompilationHash = stats.hash as string
+    const { renderPageHash, templateHashes } = getSSRChunkHashes({
+      stats,
+      components: store.getState().components,
+    })
+    webpackSSRCompilationHash = renderPageHash
+    templateCompilationHashes = templateHashes
 
     await close()
   } catch (err) {
@@ -294,6 +302,7 @@ module.exports = async function build(
   const waitMaterializePageMode = materializePageMode()
 
   let waitForWorkerPoolRestart = Promise.resolve()
+
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
@@ -321,6 +330,13 @@ module.exports = async function build(
       store,
     })
   }
+
+  await runSliceQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
 
   // create scope so we don't leak state object
   {
@@ -366,14 +382,48 @@ module.exports = async function build(
       )
       rewriteActivityTimer.start()
 
-      await appDataUtil.write(publicDir, webpackCompilationHash as string)
+      const sliceChunkNames: Record<string, string> = {}
+      for (const sliceName of Object.keys(state.slices)) {
+        sliceChunkNames[sliceName] = state.slices[sliceName].componentChunkName
+      }
+
+      await appDataUtil.write(
+        publicDir,
+        webpackCompilationHash as string,
+        sliceChunkNames
+      )
 
       rewriteActivityTimer.end()
     }
 
+    Object.entries(templateCompilationHashes).forEach(
+      ([templatePath, templateHash]) => {
+        const component = store.getState().components.get(templatePath)
+        if (component) {
+          const action = {
+            type: `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`,
+            payload: {
+              templatePath,
+              templateHash,
+              pages: component.pages,
+              isSlice: component.isSlice,
+            },
+          }
+          store.dispatch(action)
+        } else {
+          console.error({
+            templatePath,
+            templateHash,
+            availableTemplates: [...store.getState().components.keys()],
+          })
+          throw new Error(`something changed in webpack but I don't know what`)
+        }
+      }
+    )
+
     if (state.html.ssrCompilationHash !== webpackSSRCompilationHash) {
       store.dispatch({
-        type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
+        type: `SET_SSR_GLOBAL_SHARED_WEBPACK_COMPILATION_HASH`,
         payload: webpackSSRCompilationHash,
       })
     }
@@ -381,6 +431,26 @@ module.exports = async function build(
 
   await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
+
+  // TODO sc-53634: tell cloud engine is ready AFTER we copy slice-data
+  // copy slice-data directory to cache for SSR
+  {
+    const state = store.getState()
+    const sliceDataPath = path.join(
+      state.program.directory,
+      `public`,
+      `slice-data`
+    )
+    if (fs.existsSync(sliceDataPath)) {
+      const destination = path.join(
+        state.program.directory,
+        `.cache`,
+        `page-ssr`,
+        `slice-data`
+      )
+      fs.copySync(sliceDataPath, destination)
+    }
+  }
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers

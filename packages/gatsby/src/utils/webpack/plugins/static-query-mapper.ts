@@ -2,7 +2,7 @@ import path from "path"
 import { Store } from "redux"
 import { Compiler, Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
-import { isEqual } from "lodash"
+import { isEqual, cloneDeep } from "lodash"
 import { generateComponentChunkName } from "../../js-chunk-names"
 import { enqueueFlush } from "../../page-data"
 import type {
@@ -10,6 +10,10 @@ import type {
   IGatsbyPageComponent,
   IGatsbyStaticQueryComponents,
 } from "../../../redux/types"
+import {
+  ICollectedSlice,
+  mergePreviouslyCollectedSlices,
+} from "../../babel/find-slices"
 
 type ChunkGroup = Compilation["chunkGroups"][0]
 type EntryPoint = Compilation["asyncEntrypoints"][0]
@@ -79,14 +83,23 @@ function getRealPath(
 function getWebpackModulesByResourcePaths(
   modules: Set<Module>,
   staticQueries: IGatsbyState["staticQueryComponents"],
-  components: IGatsbyState["components"]
+  components: IGatsbyState["components"],
+  componentsUsingSlices: IGatsbyState["componentsUsingSlices"]
 ): {
   webpackModulesByStaticQueryId: Map<string, Set<Module>>
   webpackModulesByComponentId: Map<string, Set<Module>>
+  webpackModulesUsingSlices: Set<{
+    module: Module
+    slices: Record<string, ICollectedSlice>
+  }>
 } {
   const realPathCache = new Map<string, string>()
   const webpackModulesByStaticQueryId = new Map<string, Set<Module>>()
   const webpackModulesByComponentId = new Map<string, Set<Module>>()
+  const webpackModulesUsingSlices = new Set<{
+    module: Module
+    slices: Record<string, ICollectedSlice>
+  }>()
 
   modules.forEach(webpackModule => {
     for (const [id, staticQuery] of staticQueries) {
@@ -131,9 +144,25 @@ function getWebpackModulesByResourcePaths(
 
       webpackModulesByComponentId.set(id, set)
     }
+
+    for (const [filePath, slices] of componentsUsingSlices) {
+      const componentComponentPath = getRealPath(realPathCache, filePath)
+      if (!doesModuleMatchResourcePath(componentComponentPath, webpackModule)) {
+        continue
+      }
+
+      webpackModulesUsingSlices.add({
+        module: webpackModule,
+        slices: slices,
+      })
+    }
   })
 
-  return { webpackModulesByStaticQueryId, webpackModulesByComponentId }
+  return {
+    webpackModulesByStaticQueryId,
+    webpackModulesByComponentId,
+    webpackModulesUsingSlices,
+  }
 }
 
 /**
@@ -172,7 +201,8 @@ export class StaticQueryMapper {
   }
 
   apply(compiler: Compiler): void {
-    const { components, staticQueryComponents } = this.store.getState()
+    const { components, staticQueryComponents, componentsUsingSlices } =
+      this.store.getState()
 
     compiler.hooks.done.tap(this.name, stats => {
       const compilation = stats.compilation
@@ -183,18 +213,26 @@ export class StaticQueryMapper {
       }
 
       const staticQueriesByChunkGroup = new Map<ChunkGroup, Array<string>>()
+      const pageSliceUsageByChunkGroup = new Map<
+        ChunkGroup,
+        Record<string, ICollectedSlice>
+      >()
       const chunkGroupsWithPageComponents = new Set<ChunkGroup>()
       const chunkGroupsByComponentPath = new Map<
         IGatsbyPageComponent["componentPath"],
         ChunkGroup
       >()
 
-      const { webpackModulesByStaticQueryId, webpackModulesByComponentId } =
-        getWebpackModulesByResourcePaths(
-          compilation.modules,
-          staticQueryComponents,
-          components
-        )
+      const {
+        webpackModulesByStaticQueryId,
+        webpackModulesByComponentId,
+        webpackModulesUsingSlices,
+      } = getWebpackModulesByResourcePaths(
+        compilation.modules,
+        staticQueryComponents,
+        components,
+        componentsUsingSlices
+      )
 
       const appEntryPoint = (
         compilation.entrypoints.has(`app`)
@@ -246,6 +284,39 @@ export class StaticQueryMapper {
         })
       }
 
+      // group Slice usage by chunkGroup for ease of use
+      for (const {
+        slices,
+        module: webpackModule,
+      } of webpackModulesUsingSlices) {
+        let chunkGroupsDerivedFromEntrypoints: Array<ChunkGroup> = []
+        for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
+          webpackModule
+        )) {
+          for (const chunkGroup of chunk.groupsIterable) {
+            if (chunkGroup === appEntryPoint) {
+              chunkGroupsDerivedFromEntrypoints.push(chunkGroup)
+            } else {
+              chunkGroupsDerivedFromEntrypoints =
+                chunkGroupsDerivedFromEntrypoints.concat(
+                  getChunkGroupsDerivedFromEntrypoint(chunkGroup, appEntryPoint)
+                )
+            }
+          }
+        }
+
+        // loop over all component chunkGroups or global ones
+        chunkGroupsDerivedFromEntrypoints.forEach(chunkGroup => {
+          pageSliceUsageByChunkGroup.set(
+            chunkGroup,
+            mergePreviouslyCollectedSlices(
+              slices,
+              pageSliceUsageByChunkGroup.get(chunkGroup)
+            )
+          )
+        })
+      }
+
       // group chunkGroups by componentPaths for ease of use
       for (const [
         componentPath,
@@ -276,41 +347,102 @@ export class StaticQueryMapper {
         }
       }
 
+      let globalSliceUsage: Record<string, ICollectedSlice> = {}
+      for (const [chunkGroup, slices] of pageSliceUsageByChunkGroup) {
+        if (!chunkGroupsWithPageComponents.has(chunkGroup)) {
+          globalSliceUsage = mergePreviouslyCollectedSlices(
+            slices,
+            globalSliceUsage
+          )
+        }
+      }
+
       components.forEach(component => {
         const allStaticQueries = new Set(globalStaticQueries)
+        // we only add global slices to pages, not other slices
+        let allSlices: Record<string, ICollectedSlice> = component.isSlice
+          ? {}
+          : cloneDeep(globalSliceUsage)
+
         if (chunkGroupsByComponentPath.has(component.componentPath)) {
           const chunkGroup = chunkGroupsByComponentPath.get(
             component.componentPath
           )
-          if (chunkGroup && staticQueriesByChunkGroup.has(chunkGroup)) {
-            ;(
-              staticQueriesByChunkGroup.get(chunkGroup) as Array<string>
-            ).forEach(staticQuery => {
-              allStaticQueries.add(staticQuery)
-            })
+          if (chunkGroup) {
+            const staticQueriesForChunkGroup =
+              staticQueriesByChunkGroup.get(chunkGroup)
+
+            if (staticQueriesForChunkGroup) {
+              staticQueriesForChunkGroup.forEach(staticQuery => {
+                allStaticQueries.add(staticQuery)
+              })
+            }
+
+            const slicesForChunkGroup =
+              pageSliceUsageByChunkGroup.get(chunkGroup)
+
+            if (slicesForChunkGroup) {
+              allSlices = mergePreviouslyCollectedSlices(
+                slicesForChunkGroup,
+                allSlices
+              )
+            }
           }
         }
 
         // modules, chunks, chunkgroups can all have not-deterministic orders so
         // just sort array of static queries we produced to ensure final result is deterministic
         const staticQueryHashes = Array.from(allStaticQueries).sort()
+        const slices = Object.keys(allSlices)
+          .sort()
+          .reduce((obj, key) => {
+            obj[key] = allSlices[key]
+            return obj
+          }, {})
 
-        if (
-          !isEqual(
-            this.store
-              .getState()
-              .staticQueriesByTemplate.get(component.componentPath),
-            staticQueryHashes
-          )
-        ) {
+        const didStaticQueriesChange = !isEqual(
+          this.store
+            .getState()
+            .staticQueriesByTemplate.get(component.componentPath),
+          staticQueryHashes
+        )
+
+        const didSlicesChange = !isEqual(
+          this.store.getState().slicesByTemplate.get(component.componentPath),
+          slices
+        )
+
+        if (didStaticQueriesChange || didSlicesChange) {
+          if (component.isSlice) {
+            this.store.dispatch({
+              type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`,
+              payload: {
+                componentPath: component.componentPath,
+                sliceNames: component.pages,
+              },
+            })
+          } else {
+            this.store.dispatch({
+              type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+              payload: {
+                componentPath: component.componentPath,
+                pages: component.pages,
+              },
+            })
+          }
+        }
+
+        if (didSlicesChange) {
           this.store.dispatch({
-            type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+            type: `SET_SLICES_BY_TEMPLATE`,
             payload: {
               componentPath: component.componentPath,
-              pages: component.pages,
+              slices,
             },
           })
+        }
 
+        if (didStaticQueriesChange) {
           this.store.dispatch({
             type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
             payload: {

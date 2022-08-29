@@ -16,6 +16,7 @@ const {
   ExportIsNotAsyncError,
   isWithinConfigExport,
 } = require(`babel-plugin-remove-graphql-queries`)
+import { collectSlices } from "../utils/babel/find-slices"
 
 const report = require(`gatsby-cli/lib/reporter`)
 
@@ -480,7 +481,7 @@ export default class FileParser {
   async parseFile(
     file: string,
     addError
-  ): Promise<?Array<GraphQLDocumentInFile>> {
+  ): Promise<{ astDefinitions: ?Array<GraphQLDocumentInFile> }> {
     let text
     const cleanFilepath = getPathToLayoutComponent(file)
     try {
@@ -509,7 +510,8 @@ export default class FileParser {
       !text.includes(`graphql`) &&
       !text.includes(`gatsby-plugin-image`) &&
       !text.includes(`getServerData`) &&
-      !text.includes(`config`)
+      !text.includes(`config`) &&
+      !text.includes(`Slice`)
     ) {
       return null
     }
@@ -521,12 +523,14 @@ export default class FileParser {
       .digest(`hex`)
 
     try {
-      if (!cache[hash]) {
+      let results = cache[hash]
+      if (!results) {
         const ast = await parseToAst(file, text, {
           parentSpan: this.parentSpan,
           addError,
         })
-        cache[hash] = {
+
+        results = cache[hash] = {
           astDefinitions: await findGraphQLTags(file, ast, {
             parentSpan: this.parentSpan,
             addError,
@@ -534,9 +538,11 @@ export default class FileParser {
           serverData: findApiExport(ast, `getServerData`),
           config: findApiExport(ast, `config`),
           Head: findApiExport(ast, `Head`),
+          pageSlices: collectSlices(ast, file),
         }
       }
-      const { astDefinitions, serverData, config, Head } = cache[hash]
+      const { astDefinitions, serverData, config, Head, pageSlices } =
+        cache[hash]
 
       // Note: we should dispatch this action even when getServerData is not found
       // (maybe it was set before, so now we need to reset renderMode from SSR to the default one)
@@ -561,7 +567,7 @@ export default class FileParser {
         )
       }
 
-      return astDefinitions
+      return { astDefinitions, pageSlices }
     } catch (err) {
       // default error
       let structuredError = {
@@ -661,13 +667,27 @@ export default class FileParser {
     addError
   ): Promise<Array<GraphQLDocumentInFile>> {
     const documents = []
+    const pageSliceUsage = new Map()
 
     return Promise.all(
       files.map(file =>
-        this.parseFile(file, addError).then(docs => {
-          documents.push(...(docs || []))
+        this.parseFile(file, addError).then(results => {
+          if (results) {
+            const { astDefinitions, pageSlices } = results
+            documents.push(...(astDefinitions || []))
+            if (pageSlices) {
+              pageSliceUsage.set(file, pageSlices)
+            }
+          }
         })
       )
-    ).then(() => documents)
+    ).then(() => {
+      store.dispatch({
+        type: `SET_COMPONENTS_USING_PAGE_SLICES`,
+        payload: pageSliceUsage,
+      })
+
+      return documents
+    })
   }
 }

@@ -216,19 +216,27 @@ export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
 
   // mark html as dirty
   const dirtyPages = new Set<string>()
+  const dirtySlices = new Set<string>()
   for (const dirtyTemplate of dirtyTemplates) {
     const component = state.components.get(dirtyTemplate)
     if (component) {
       for (const page of component.pages) {
-        dirtyPages.add(page)
+        if (component.isSlice) {
+          dirtySlices.add(page)
+        } else {
+          dirtyPages.add(page)
+        }
       }
     }
   }
+
+  console.log({ dirtyPages, dirtyStaticQueryResults, dirtySlices })
 
   store.dispatch({
     type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`,
     payload: {
       pages: dirtyPages,
+      slices: dirtySlices,
       staticQueryHashes: dirtyStaticQueryResults,
     },
   })

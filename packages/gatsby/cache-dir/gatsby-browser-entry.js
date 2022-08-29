@@ -1,10 +1,14 @@
 import React from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
+import { Slice } from "./slice"
 
 const prefetchPathname = loader.enqueue
 
 const StaticQueryContext = React.createContext({})
+const SlicesContext = React.createContext({})
+const SlicesMapContext = React.createContext({})
+const SlicesPropsContext = React.createContext({})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const finalData = data
@@ -12,10 +16,10 @@ function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
     : staticQueryData[query] && staticQueryData[query].data
 
   return (
-    <React.Fragment>
+    <React.Slice>
       {finalData && render(finalData)}
       {!finalData && <div>Loading (StaticQuery)</div>}
-    </React.Fragment>
+    </React.Slice>
   )
 }
 
@@ -87,8 +91,11 @@ function graphql() {
   )
 }
 
+// TODO mark some as internal with a prefix/path
+
 export { default as PageRenderer } from "./public-page-renderer"
 export { useScrollRestoration } from "gatsby-react-router-scroll"
+
 export {
   default as Link,
   withPrefix,
@@ -103,6 +110,11 @@ export {
   StaticQuery,
   useStaticQuery,
   prefetchPathname,
+  Slice,
+  // only for internal use
+  SlicesContext,
+  SlicesMapContext,
+  SlicesPropsContext,
 }
 
 export * from "gatsby-script"

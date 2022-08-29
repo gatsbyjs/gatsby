@@ -1,4 +1,6 @@
-import { camelCase } from "lodash"
+import camelCase from "lodash/camelCase"
+import isEqual from "lodash/isEqual"
+
 import { GraphQLSchema, GraphQLOutputType } from "graphql"
 import { ActionCreator } from "redux"
 import { ThunkAction } from "redux-thunk"
@@ -19,7 +21,11 @@ import {
   IPrintTypeDefinitions,
   ICreateResolverContext,
   IGatsbyPluginContext,
+  ICreateSliceAction,
 } from "../types"
+import { generateComponentChunkName } from "../../utils/js-chunk-names"
+import { store } from "../index"
+import normalizePath from "normalize-path"
 
 type RestrictionActionNames =
   | "createFieldExtension"
@@ -27,6 +33,7 @@ type RestrictionActionNames =
   | "createResolverContext"
   | "addThirdPartySchema"
   | "printTypeDefinitions"
+  | "createSlice"
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
@@ -420,6 +427,42 @@ export const actions = {
         })
       }
     },
+
+  createSlice: (
+    payload: {
+      name: string
+      component: string
+      context: Record<string, unknown>
+    },
+    plugin: IGatsbyPlugin,
+    traceId?: string
+  ): ICreateSliceAction => {
+    const componentPath = normalizePath(payload.component)
+
+    const oldSlice = store.getState().slices.get(payload.name)
+    const contextModified =
+      !!oldSlice && !isEqual(oldSlice.context, payload.context)
+    const componentModified =
+      !!oldSlice && !isEqual(oldSlice.componentPath, componentPath)
+
+    return {
+      type: `CREATE_SLICE`,
+      plugin,
+      payload: {
+        componentChunkName: generateComponentChunkName(
+          payload.component,
+          `slice`
+        ),
+        componentPath,
+        name: payload.name,
+        context: payload.context,
+        updatedAt: Date.now(),
+      },
+      traceId,
+      componentModified,
+      contextModified,
+    }
+  },
 }
 
 const withDeprecationWarning =
@@ -539,5 +582,8 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
   },
   printTypeDefinitions: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
+  },
+  createSlice: {
+    [ALLOWED_IN]: [`createPages`],
   },
 })

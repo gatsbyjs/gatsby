@@ -17,6 +17,7 @@ type Reporter = typeof reporter
 export interface IGroupedQueryIds {
   pageQueryIds: Array<IGatsbyPage>
   staticQueryIds: Array<string>
+  sliceQueryIds: Array<string>
 }
 
 export interface IMutationAction {

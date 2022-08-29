@@ -20,6 +20,7 @@ export async function createPages({
   changedPages: Array<string>
 }> {
   assertStore(store)
+
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })
@@ -130,6 +131,18 @@ export async function createPages({
   )
 
   tim.end()
+
+  store.getState().slices.forEach(slice => {
+    if (slice.updatedAt < timestamp) {
+      store.dispatch({
+        type: `DELETE_SLICE`,
+        payload: {
+          name: slice.name,
+          componentPath: slice.componentPath,
+        },
+      })
+    }
+  })
 
   store.dispatch(actions.apiFinished({ apiName: `createPages` }))
 

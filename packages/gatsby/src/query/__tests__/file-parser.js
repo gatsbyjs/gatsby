@@ -311,14 +311,20 @@ export const config = async () => {
   })
 
   it(`generates spec-compliant query names out of path`, async () => {
-    const ast = await parser.parseFile(`${specialChars}.js`, jest.fn())
+    const { astDefinitions: ast } = await parser.parseFile(
+      `${specialChars}.js`,
+      jest.fn()
+    )
     const nameNode = ast[0].doc.definitions[0].name
     expect(nameNode).toEqual({
       kind: `Name`,
       value: `staticZhADollarpercentandJs1125018085`,
     })
 
-    const ast2 = await parser.parseFile(`static-${specialChars}.js`, jest.fn())
+    const { astDefinitions: ast2 } = await parser.parseFile(
+      `static-${specialChars}.js`,
+      jest.fn()
+    )
     const nameNode2 = ast2[0].doc.definitions[0].name
     expect(nameNode2).toEqual({
       kind: `Name`,

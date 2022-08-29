@@ -73,7 +73,11 @@ export async function runQueriesInWorkersQueue(
 
     for (const segment of staticQuerySegments) {
       pool.single
-        .runQueries({ pageQueryIds: [], staticQueryIds: segment })
+        .runQueries({
+          pageQueryIds: [],
+          staticQueryIds: segment,
+          sliceQueryIds: [],
+        })
         .then(replayWorkerActions)
         .then(() => {
           activity.tick(segment.length)
@@ -83,7 +87,11 @@ export async function runQueriesInWorkersQueue(
 
     for (const segment of pageQuerySegments) {
       pool.single
-        .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
+        .runQueries({
+          pageQueryIds: segment,
+          staticQueryIds: [],
+          sliceQueryIds: [],
+        })
         .then(replayWorkerActions)
         .then(() => {
           activity.tick(segment.length)

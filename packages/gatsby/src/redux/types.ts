@@ -13,6 +13,7 @@ import { ThunkAction } from "redux-thunk"
 import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 import { Span } from "opentracing"
+import { ICollectedSlices } from "../utils/babel/find-slices"
 
 type SystemPath = string
 type Identifier = string
@@ -59,6 +60,15 @@ export interface IGatsbyPage {
    * @internal
    */
   mode: PageMode
+  slices: Record<string, string>
+}
+
+export interface IGatsbySlice {
+  componentPath: string
+  componentChunkName: string
+  context: Record<string, unknown>
+  name: string
+  updatedAt: number
 }
 
 export interface IGatsbyFunction {
@@ -157,6 +167,7 @@ export interface IGatsbyPageComponent {
   isInBootstrap: boolean
   serverData: boolean
   config: boolean
+  isSlice: boolean
 }
 
 export interface IDefinitionMeta {
@@ -301,6 +312,7 @@ export interface IGatsbyState {
   staticQueriesByTemplate: Map<SystemPath, Array<Identifier>>
   pendingPageDataWrites: {
     pagePaths: Set<string>
+    sliceNames: Set<string>
   }
   // @deprecated
   jobs: {
@@ -350,7 +362,33 @@ export interface IGatsbyState {
     ssrCompilationHash: string
     trackedStaticQueryResults: Map<string, IStaticQueryResultState>
     unsafeBuiltinWasUsedInSSR: boolean
+    templateCompilationHashes: Record<string, string>
+    slicesProps: {
+      bySliceId: Map<
+        string,
+        {
+          pages: Set<string>
+          props: Record<string, unknown>
+          sliceName: string
+          hasChildren: boolean
+          dirty: number
+        }
+      >
+      byPagePath: Map<string, Set<string>>
+      bySliceName: Map<
+        string,
+        {
+          sliceDataHash: string
+          dirty: number
+          props: Set<string>
+        }
+      >
+    }
+    pagesThatNeedToStitchSlices: Set<string>
   }
+  slices: Map<string, IGatsbySlice>
+  componentsUsingSlices: Map<string, ICollectedSlices>
+  slicesByTemplate: Map<SystemPath, ICollectedSlices>
 }
 
 export type GatsbyStateKeys = keyof IGatsbyState
@@ -368,6 +406,8 @@ export interface ICachedReduxState {
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
   html: IGatsbyState["html"]
+  slices: IGatsbyState["slices"]
+  slicesByTemplate: IGatsbyState["slicesByTemplate"]
 }
 
 export type ActionsUnion =
@@ -402,7 +442,7 @@ export type ActionsUnion =
   | ISetGraphQLDefinitionsAction
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
-  | ISetSSRWebpackCompilationHashAction
+  | ISetSSRGlobalSharedWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | ITouchNodeAction
   | IUpdatePluginsHashAction
@@ -410,6 +450,7 @@ export type ActionsUnion =
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
   | IAddPageDataStatsAction
+  | IAddSliceDataStatsAction
   | IRemoveTemplateComponentAction
   | ISetBabelPluginAction
   | ISetBabelPresetAction
@@ -420,7 +461,10 @@ export type ActionsUnion =
   | ISetStaticQueriesByTemplateAction
   | IAddPendingPageDataWriteAction
   | IAddPendingTemplateDataWriteAction
+  | IAddPendingSliceDataWriteAction
+  | IAddPendingSliceTemplateDataWriteAction
   | IClearPendingPageDataWriteAction
+  | IClearPendingSliceDataWriteAction
   | ICreateResolverContext
   | IClearSchemaCustomizationAction
   | ISetSchemaComposerAction
@@ -441,6 +485,16 @@ export type ActionsUnion =
   | ISetJobV2Context
   | IClearJobV2Context
   | ISetDomainRequestHeaders
+  | ICreateSliceAction
+  | IDeleteSliceAction
+  | ISetSSRTemplateWebpackCompilationHashAction
+  | ISetComponentsUsingSlicesAction
+  | ISetSlicesByTemplateAction
+  | ISetSlicesProps
+  | ISlicesPropsRemoveStale
+  | ISlicesPropsRendered
+  | ISlicesStitched
+  | ISlicesScriptsRegenerated
   | IProcessGatsbyImageSourceUrlAction
   | IClearGatsbyImageSourceUrlAction
 
@@ -634,7 +688,7 @@ export interface IPageQueryRunAction {
   payload: {
     path: string
     componentPath: string
-    isPage: boolean
+    queryType: "page" | "static" | "slice"
     resultHash: string
     queryHash: string
   }
@@ -720,6 +774,69 @@ export interface ICreatePageAction {
   plugin?: IGatsbyPlugin
   contextModified?: boolean
   componentModified?: boolean
+  slicesModified?: boolean
+}
+
+export interface ICreateSliceAction {
+  type: `CREATE_SLICE`
+  payload: IGatsbySlice
+  plugin?: IGatsbyPlugin
+  traceId: string | undefined
+  componentModified?: boolean
+  contextModified?: boolean
+}
+
+export interface IDeleteSliceAction {
+  type: `DELETE_SLICE`
+  payload: {
+    name: string
+    componentPath: string
+  }
+}
+
+export interface ISetComponentsUsingSlicesAction {
+  type: `SET_COMPONENTS_USING_PAGE_SLICES`
+  payload: Map<string, ICollectedSlices>
+}
+
+export interface ISetSlicesByTemplateAction {
+  type: `SET_SLICES_BY_TEMPLATE`
+  payload: {
+    componentPath: string
+    slices: ICollectedSlices
+  }
+}
+
+export interface ISetSlicesProps {
+  type: `SET_SLICES_PROPS`
+  payload: Record<
+    string,
+    Record<
+      string,
+      {
+        props: Record<string, unknown>
+        sliceName: string
+        hasChildren: boolean
+      }
+    >
+  >
+}
+
+export interface ISlicesPropsRemoveStale {
+  type: `SLICES_PROPS_REMOVE_STALE`
+}
+
+export interface ISlicesPropsRendered {
+  type: `SLICES_PROPS_RENDERED`
+  payload: Array<{ sliceId: string }>
+}
+
+export interface ISlicesStitched {
+  type: `SLICES_STITCHED`
+}
+
+export interface ISlicesScriptsRegenerated {
+  type: `SLICES_SCRIPTS_REGENERATED`
 }
 
 export interface ICreateRedirectAction {
@@ -762,10 +879,32 @@ export interface IAddPendingTemplateDataWriteAction {
   }
 }
 
+export interface IAddPendingSliceDataWriteAction {
+  type: `ADD_PENDING_SLICE_DATA_WRITE`
+  payload: {
+    name: string
+  }
+}
+
+export interface IAddPendingSliceTemplateDataWriteAction {
+  type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`
+  payload: {
+    componentPath: SystemPath
+    sliceNames: Array<string>
+  }
+}
+
 export interface IClearPendingPageDataWriteAction {
   type: `CLEAR_PENDING_PAGE_DATA_WRITE`
   payload: {
     page: string
+  }
+}
+
+export interface IClearPendingSliceDataWriteAction {
+  type: `CLEAR_PENDING_SLICE_DATA_WRITE`
+  payload: {
+    name: string
   }
 }
 
@@ -784,9 +923,19 @@ export interface ISetWebpackCompilationHashAction {
   payload: IGatsbyState["webpackCompilationHash"]
 }
 
-export interface ISetSSRWebpackCompilationHashAction {
-  type: `SET_SSR_WEBPACK_COMPILATION_HASH`
+export interface ISetSSRGlobalSharedWebpackCompilationHashAction {
+  type: `SET_SSR_GLOBAL_SHARED_WEBPACK_COMPILATION_HASH`
   payload: string
+}
+
+export interface ISetSSRTemplateWebpackCompilationHashAction {
+  type: `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`
+  payload: {
+    templateHash: string
+    templatePath: string
+    isSlice: boolean
+    pages: Array<string>
+  }
 }
 
 export interface IUpdatePluginsHashAction {
@@ -882,6 +1031,16 @@ export interface IAddPageDataStatsAction {
   }
 }
 
+export interface IAddSliceDataStatsAction {
+  type: `ADD_SLICE_DATA_STATS`
+  payload: {
+    sliceName: string
+    filePath: SystemPath
+    size: number
+    sliceDataHash: string
+  }
+}
+
 export interface ITouchNodeAction {
   type: `TOUCH_NODE`
   payload: Identifier
@@ -933,6 +1092,7 @@ interface IMarkHtmlDirty {
   type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`
   payload: {
     pages: Set<string>
+    slices: Set<string>
     staticQueryHashes: Set<string>
   }
 }

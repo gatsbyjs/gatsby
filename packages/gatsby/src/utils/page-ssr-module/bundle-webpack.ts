@@ -11,6 +11,7 @@ import {
 } from "../client-assets-for-template"
 import { writeStaticQueryContext } from "../static-query-utils"
 import { IGatsbyState } from "../../redux/types"
+import { store } from "../../redux"
 
 type Reporter = typeof reporter
 
@@ -56,6 +57,23 @@ export async function createPageSSRBundle({
   reporter: Reporter
   isVerbose?: boolean
 }): Promise<webpack.Compilation | undefined> {
+  // TODO sc-53539: revisit this transformation
+  const state = store.getState()
+  const slicesStateObject = {}
+  for (const [key, value] of state.slices) {
+    slicesStateObject[key] = value
+  }
+
+  const slicesByTemplateStateObject = {}
+  for (const [template, records] of state.slicesByTemplate) {
+    const recordsObject = {}
+    for (const path of Object.keys(records)) {
+      recordsObject[path] = records[path]
+    }
+
+    slicesByTemplateStateObject[template] = recordsObject
+  }
+
   const webpackStats = await readWebpackStats(path.join(rootDir, `public`))
 
   const toInline: Record<string, ITemplateDetails> = {}
@@ -153,6 +171,8 @@ export async function createPageSSRBundle({
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
         WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
+        GATSBY_SLICES: JSON.stringify(slicesStateObject),
+        GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),

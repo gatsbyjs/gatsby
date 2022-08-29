@@ -2,7 +2,7 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { StaticQueryContext } from "gatsby"
+import { StaticQueryContext, SlicesMapContext, SlicesContext } from "gatsby"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -17,9 +17,11 @@ import {
   publicLoader,
   PageResourceStatus,
   getStaticQueryResults,
+  getSliceResults,
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
+import { SlicesResultsContext } from "./slice"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
@@ -67,6 +69,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const DataContext = React.createContext({})
 
+  const slicesContext = {
+    renderEnvironment: `browser`,
+  }
+
   class GatsbyRoot extends React.Component {
     render() {
       const { children } = this.props
@@ -76,11 +82,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
                 const staticQueryResults = getStaticQueryResults()
+                const sliceResults = getSliceResults()
                 return (
                   <StaticQueryContext.Provider value={staticQueryResults}>
-                    <DataContext.Provider value={{ pageResources, location }}>
-                      {children}
-                    </DataContext.Provider>
+                    <SlicesContext.Provider value={slicesContext}>
+                      <SlicesResultsContext.Provider value={sliceResults}>
+                        <SlicesMapContext.Provider
+                          value={pageResources.page.slicesMap}
+                        >
+                          <DataContext.Provider
+                            value={{ pageResources, location }}
+                          >
+                            {children}
+                          </DataContext.Provider>
+                        </SlicesMapContext.Provider>
+                      </SlicesResultsContext.Provider>
+                    </SlicesContext.Provider>
                   </StaticQueryContext.Provider>
                 )
               }}

@@ -1,11 +1,16 @@
 import fs from "fs-extra"
 import path from "path"
 import { Compiler } from "webpack"
+import { store } from "../redux"
+import { ensureFileContent } from "./ensure-file-content"
 
 export class GatsbyWebpackStatsExtractor {
   private plugin: { name: string }
-  constructor() {
+  private publicPath: string
+
+  constructor(publicPath: string) {
     this.plugin = { name: `GatsbyWebpackStatsExtractor` }
+    this.publicPath = publicPath
   }
   apply(compiler: Compiler): void {
     let previousChunkMapJson: string | undefined
@@ -63,6 +68,48 @@ export class GatsbyWebpackStatsExtractor {
           path.join(`public`, `chunk-map.json`),
           newChunkMapJson
         )
+
+        // Add chunk mapping metadata to scripts slice
+        const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(
+          newChunkMapJson
+        )};`
+
+        const chunkSliceContents = `
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            ${scriptChunkMapping}
+          </script>
+        `
+
+        await fs.ensureDir(path.join(`public`, `_gatsby`, `slices`))
+
+        const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
+
+        // Add assets to scripts slice
+        const assetSliceContents: Array<string> = []
+        for (const asset of new Set([
+          ...assets[`polyfill`],
+          ...assets[`app`],
+        ])) {
+          if (asset.endsWith(`.js`)) {
+            assetSliceContents.push(
+              `<script src="${this.publicPath}/${asset}" async></script>`
+            )
+          }
+        }
+
+        const scriptsSliceHtmlChanged = await ensureFileContent(
+          path.join(`public`, `_gatsby`, `slices`, `_gatsby-scripts-1.html`),
+          chunkSliceContents + hashSliceContents + assetSliceContents.join(``)
+        )
+
+        if (scriptsSliceHtmlChanged) {
+          store.dispatch({
+            type: `SLICES_SCRIPTS_REGENERATED`,
+          })
+        }
+
         previousChunkMapJson = newChunkMapJson
       }
 

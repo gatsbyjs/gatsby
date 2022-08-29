@@ -40,9 +40,12 @@ export async function calculateDirtyQueries({
       }
     }
 
-    // static queries are also not on demand
+    // static and fragment queries are also not on demand
     queriesToRun = queryIds.filter(
-      queryId => queryId.startsWith(`sq--`) || pagePathFilter.has(queryId)
+      queryId =>
+        queryId.startsWith(`sq--`) ||
+        queryId.startsWith(`fr--`) ||
+        pagePathFilter.has(queryId)
     )
   }
 

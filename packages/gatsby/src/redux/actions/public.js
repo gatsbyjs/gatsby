@@ -97,6 +97,7 @@ type PageInput = {
   context?: Object,
   ownerNodeId?: string,
   defer?: boolean,
+  slices: Record<string, string>,
 }
 
 type PageMode = "SSG" | "DSG" | "SSR"
@@ -111,6 +112,7 @@ type Page = {
   updatedAt: number,
   ownerNodeId?: string,
   mode: PageMode,
+  slices: Record<string, string>,
 }
 
 type ActionOptions = {
@@ -412,6 +414,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+    slices: page?.slices || {},
 
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
@@ -441,6 +444,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
   const componentModified =
     !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
+  const slicesModified =
+    !!oldPage && !_.isEqual(oldPage.slices, internalPage.slices)
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -512,6 +517,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       type: `CREATE_PAGE`,
       contextModified,
       componentModified,
+      slicesModified,
       plugin,
       payload: sanitizedPayload,
     },

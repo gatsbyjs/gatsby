@@ -7,6 +7,7 @@ import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
+import type { IGatsbySlice, IGatsbyState } from "../redux/types"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
@@ -21,6 +22,8 @@ export { reverseFixedPagePath }
 import { processNodeManifests } from "../utils/node-manifest"
 import { IExecutionResult } from "../query/types"
 import { getPageMode } from "./page-mode"
+import { ICollectedSlices } from "./babel/find-slices"
+import { ensureFileContent } from "./ensure-file-content"
 
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
@@ -32,7 +35,6 @@ export async function readPageData(
 ): Promise<IPageDataWithQueryResult> {
   const filePath = generatePageDataPath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
-
   return JSON.parse(rawPageData)
 }
 
@@ -116,13 +118,22 @@ export async function readPageQueryResult(
 
 export async function writePageData(
   publicDir: string,
-  pageData: IPageData
+  pageData: IPageData & {
+    componentPath: string
+  },
+  slicesUsedByTemplates: Map<string, ICollectedSlices>,
+  slices: IGatsbyState["slices"]
 ): Promise<string> {
   const result = await readPageQueryResult(publicDir, pageData.path)
 
   const outputFilePath = generatePageDataPath(publicDir, pageData.path)
 
-  const body = constructPageDataString(pageData, result)
+  const body = constructPageDataString(
+    pageData,
+    result,
+    slicesUsedByTemplates,
+    slices
+  )
 
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(body) / 1000
@@ -137,8 +148,53 @@ export async function writePageData(
     },
   })
 
-  await fs.outputFile(outputFilePath, body)
+  await ensureFileContent(outputFilePath, body)
   return body
+}
+
+export async function writeSliceData(
+  publicDir: string,
+  { componentChunkName, context, name }: IGatsbySlice,
+  staticQueryHashes: Array<string>
+): Promise<string> {
+  const result = JSON.parse(
+    (await readPageQueryResult(publicDir, `fr--${name}`)).toString()
+  )
+
+  const outputFilePath = path.join(publicDir, `slice-data`, `${name}.json`)
+
+  const body = JSON.stringify({
+    componentChunkName,
+    result: {
+      data: result.data,
+      sliceContext: context,
+    },
+    staticQueryHashes,
+  })
+
+  const sliceDataSize = Buffer.byteLength(body) / 1000
+
+  store.dispatch({
+    type: `ADD_SLICE_DATA_STATS`,
+    payload: {
+      sliceName: name,
+      filePath: outputFilePath,
+      size: sliceDataSize,
+      sliceDataHash: createContentDigest(body),
+    },
+  })
+
+  await ensureFileContent(outputFilePath, body)
+  return body
+}
+
+export async function readSliceData(
+  publicDir: string,
+  sliceName: string
+): Promise<IPageDataWithQueryResult> {
+  const filePath = path.join(publicDir, `slice-data`, `${sliceName}.json`)
+  const rawPageData = await fs.readFile(filePath, `utf-8`)
+  return JSON.parse(rawPageData)
 }
 
 let isFlushPending = false
@@ -147,6 +203,16 @@ let isFlushing = false
 export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
+
+type IDataTask =
+  | {
+      type: "page"
+      pagePath: string
+    }
+  | {
+      type: "slice"
+      sliceName: string
+    }
 
 export async function flush(parentSpan?: Span): Promise<void> {
   if (isFlushing) {
@@ -162,10 +228,12 @@ export async function flush(parentSpan?: Span): Promise<void> {
     program,
     staticQueriesByTemplate,
     queries,
+    slices,
+    slicesByTemplate,
   } = store.getState()
   const isBuild = program?._?.[0] !== `develop`
 
-  const { pagePaths } = pendingPageDataWrites
+  const { pagePaths, sliceNames } = pendingPageDataWrites
   let writePageDataActivity
 
   let nodeManifestPagePathMap
@@ -175,85 +243,132 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
     // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
     nodeManifestPagePathMap = await processNodeManifests()
+  }
 
+  if (pagePaths.size > 0 || sliceNames.size > 0) {
     writePageDataActivity = reporter.createProgress(
-      `Writing page-data.json files to public directory`,
-      pagePaths.size,
+      `Writing page-data.json and slice-data.json files to public directory`,
+      pagePaths.size + sliceNames.size,
       0,
       { id: `write-page-data-public-directory`, parentSpan }
     )
     writePageDataActivity.start()
   }
 
-  const flushQueue = fastq(async (pagePath, cb) => {
-    const page = pages.get(pagePath)
+  const flushQueue = fastq<void, IDataTask, boolean>(async (task, cb) => {
+    if (task.type === `page`) {
+      const { pagePath } = task
+      const page = pages.get(pagePath)
 
-    // It's a gloomy day in Bombay, let me tell you a short story...
-    // Once upon a time, writing page-data.json files were atomic
-    // After this change (#24808), they are not and this means that
-    // between adding a pending write for a page and actually flushing
-    // them, a page might not exist anymore щ（ﾟДﾟщ）
-    // This is why we need this check
-    if (page) {
-      if (page.path && nodeManifestPagePathMap) {
-        page.manifestId = nodeManifestPagePathMap.get(page.path)
-      }
+      let shouldClearPendingWrite = true
 
-      if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-        // check if already did run query for this page
-        // with query-on-demand we might have pending page-data write due to
-        // changes in static queries assigned to page template, but we might not
-        // have query result for it
-        const query = queries.trackedQueries.get(page.path)
-        if (!query) {
-          // this should not happen ever
-          throw new Error(
-            `We have a page, but we don't have registered query for it (???)`
-          )
+      // It's a gloomy day in Bombay, let me tell you a short story...
+      // Once upon a time, writing page-data.json files were atomic
+      // After this change (#24808), they are not and this means that
+      // between adding a pending write for a page and actually flushing
+      // them, a page might not exist anymore щ（ﾟДﾟщ）
+      // This is why we need this check
+      if (page) {
+        if (page.path && nodeManifestPagePathMap) {
+          page.manifestId = nodeManifestPagePathMap.get(page.path)
         }
 
-        if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
-          // query results are not written yet
-          setImmediate(() => cb(null, true))
-          return
-        }
-      }
-
-      // In develop we rely on QUERY_ON_DEMAND so we just go through
-      // In build we only build these page-json for SSG pages
-      if (
-        _CFLAGS_.GATSBY_MAJOR !== `4` ||
-        !isBuild ||
-        (isBuild && getPageMode(page) === `SSG`)
-      ) {
-        const staticQueryHashes =
-          staticQueriesByTemplate.get(page.componentPath) || []
-
-        const result = await writePageData(
-          path.join(program.directory, `public`),
-          {
-            ...page,
-            staticQueryHashes,
+        if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+          // check if already did run query for this page
+          // with query-on-demand we might have pending page-data write due to
+          // changes in static queries assigned to page template, but we might not
+          // have query result for it
+          const query = queries.trackedQueries.get(page.path)
+          if (!query) {
+            // this should not happen ever
+            throw new Error(
+              `We have a page, but we don't have registered query for it (???)`
+            )
           }
+
+          if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
+            // query results are not written yet
+            setImmediate(() => cb(null, true))
+            return
+          }
+        }
+
+        // In develop we rely on QUERY_ON_DEMAND so we just go through
+        // In build we only build these page-json for SSG pages
+        if (
+          _CFLAGS_.GATSBY_MAJOR !== `4` ||
+          !isBuild ||
+          (isBuild && getPageMode(page) === `SSG`)
+        ) {
+          const staticQueryHashes =
+            staticQueriesByTemplate.get(page.componentPath) || []
+
+          try {
+            const result = await writePageData(
+              path.join(program.directory, `public`),
+              {
+                ...page,
+                staticQueryHashes,
+              },
+              slicesByTemplate,
+              slices
+            )
+
+            if (!isBuild) {
+              websocketManager.emitPageData({
+                id: pagePath,
+                result: JSON.parse(result) as IPageDataWithQueryResult,
+              })
+            }
+          } catch (e) {
+            shouldClearPendingWrite = false
+            reporter.panicOnBuild(
+              `Failed to write page-data for ""${page.path}`,
+              e
+            )
+          }
+          writePageDataActivity.tick()
+        }
+      }
+
+      if (shouldClearPendingWrite) {
+        store.dispatch({
+          type: `CLEAR_PENDING_PAGE_DATA_WRITE`,
+          payload: {
+            page: pagePath,
+          },
+        })
+      }
+    } else if (task.type === `slice`) {
+      const { sliceName } = task
+      const slice = slices.get(sliceName)
+      if (slice) {
+        const staticQueryHashes =
+          staticQueriesByTemplate.get(slice.componentPath) || []
+
+        const result = await writeSliceData(
+          path.join(program.directory, `public`),
+          slice,
+          staticQueryHashes
         )
 
         writePageDataActivity.tick()
 
         if (!isBuild) {
-          websocketManager.emitPageData({
-            id: pagePath,
+          websocketManager.emitSliceData({
+            id: sliceName,
             result: JSON.parse(result) as IPageDataWithQueryResult,
           })
         }
       }
-    }
 
-    store.dispatch({
-      type: `CLEAR_PENDING_PAGE_DATA_WRITE`,
-      payload: {
-        page: pagePath,
-      },
-    })
+      store.dispatch({
+        type: `CLEAR_PENDING_SLICE_DATA_WRITE`,
+        payload: {
+          name: sliceName,
+        },
+      })
+    }
 
     // `setImmediate` below is a workaround against stack overflow
     // occurring when there are many non-SSG pages
@@ -262,7 +377,10 @@ export async function flush(parentSpan?: Span): Promise<void> {
   }, 25)
 
   for (const pagePath of pagePaths) {
-    flushQueue.push(pagePath, () => {})
+    flushQueue.push({ type: `page`, pagePath }, () => {})
+  }
+  for (const sliceName of sliceNames) {
+    flushQueue.push({ type: `slice`, sliceName }, () => {})
   }
 
   if (!flushQueue.idle()) {

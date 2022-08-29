@@ -5,6 +5,7 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk, truncate } from "lodash"
 import { build, watch } from "../utils/webpack/bundle"
 import * as path from "path"
+import fastq from "fastq"
 
 import { emitter, store } from "../redux"
 import webpack from "webpack"
@@ -20,6 +21,9 @@ import { PackageJson } from "../.."
 import { IPageDataWithQueryResult } from "../utils/page-data"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { stitchSliceForAPage } from "../utils/slices/stitching"
+import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
+
 type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -243,6 +247,18 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
   previewErrors: Record<string, any>
+
+  slicesPropsPerPage: Record<
+    string,
+    Record<
+      string,
+      {
+        props: Record<string, unknown>
+        sliceName: string
+        hasChildren: boolean
+      }
+    >
+  >
 }
 
 const renderHTMLQueue = async (
@@ -332,6 +348,11 @@ const renderHTMLQueue = async (
         store.dispatch({
           type: `HTML_GENERATED`,
           payload: pageSegment,
+        })
+
+        store.dispatch({
+          type: `SET_SLICES_PROPS`,
+          payload: htmlRenderMeta.slicesPropsPerPage,
         })
 
         for (const [_pagePath, arrayOfUsages] of Object.entries(
@@ -546,6 +567,17 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     reporter.info(`There are no new or changed html files to build.`)
   }
 
+  await buildSlices({
+    program,
+    workerPool,
+    parentSpan,
+  })
+
+  await stitchSlicesIntoPagesHTML({
+    publicDir: path.join(program.directory, `public`),
+    parentSpan,
+  })
+
   if (_CFLAGS_.GATSBY_MAJOR !== `4` && !program.keepPageRenderer) {
     try {
       await deleteRenderer(pageRenderer)
@@ -566,4 +598,142 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   }
 
   return { toRegenerate, toDelete }
+}
+
+// for debugging a reason to rebuild
+const FLAG_DIRTY_CLEARED_CACHE = 0b0000001
+const FLAG_DIRTY_NEW_ENTRY = 0b0000010
+const FLAG_DIRTY_DATA_CHANGED = 0b0000100
+const FLAG_DIRTY_STATIC_QUERY_FIRST_RUN = 0b0001000
+const FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED = 0b0010000
+const FLAG_DIRTY_SSR_COMPILATION_HASH = 0b1000000
+
+export async function buildSlices({
+  program,
+  workerPool,
+  parentSpan,
+}: {
+  workerPool: GatsbyWorkerPool
+  parentSpan?: Span
+  program: IBuildArgs
+}): Promise<void> {
+  const state = store.getState()
+
+  // for now we always render everything, everytime
+  const slicesProps: Array<ISlicePropsEntry> = []
+  for (const [
+    sliceId,
+    { props, sliceName, hasChildren, pages, dirty },
+  ] of state.html.slicesProps.bySliceId.entries()) {
+    if (dirty && pages.size > 0) {
+      slicesProps.push({
+        sliceId,
+        props,
+        sliceName,
+        hasChildren,
+        reason: Object.entries({
+          FLAG_DIRTY_CLEARED_CACHE: !!(dirty & FLAG_DIRTY_CLEARED_CACHE),
+          FLAG_DIRTY_NEW_ENTRY: !!(dirty & FLAG_DIRTY_NEW_ENTRY),
+          FLAG_DIRTY_DATA_CHANGED: !!(dirty & FLAG_DIRTY_DATA_CHANGED),
+          FLAG_DIRTY_STATIC_QUERY_FIRST_RUN: !!(
+            dirty & FLAG_DIRTY_STATIC_QUERY_FIRST_RUN
+          ),
+          FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED: !!(
+            dirty & FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED
+          ),
+          FLAG_DIRTY_SSR_COMPILATION_HASH: !!(
+            dirty & FLAG_DIRTY_SSR_COMPILATION_HASH
+          ),
+        }).reduce((acc, [key, value]) => {
+          if (value) {
+            acc.push(key)
+          }
+          return acc
+        }, [] as Array<string>),
+      })
+    }
+  }
+
+  console.log(require(`util`).inspect({ slicesProps }, { depth: Infinity }))
+
+  if (slicesProps.length > 0) {
+    const buildHTMLActivityProgress = reporter.activityTimer(
+      `Building slices HTML (${slicesProps.length})`,
+      {
+        parentSpan,
+      }
+    )
+    buildHTMLActivityProgress.start()
+
+    const htmlComponentRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+    try {
+      // const slicesProps = Array.from(Object.entries(state.slicesProps))
+      const slices = Array.from(state.slices.entries())
+      reporter.verbose(
+        `Building slices:\n${slices.map(([name]) => ` - "${name}"`).join(`\n`)}`
+      )
+
+      await workerPool.single.renderSlices({
+        publicDir: path.join(program.directory, `public`),
+        htmlComponentRendererPath,
+        slices,
+        slicesProps,
+      })
+    } catch (e) {
+      buildHTMLActivityProgress.panic(e)
+    } finally {
+      buildHTMLActivityProgress.end()
+    }
+
+    // for now separate action for cleaning dirty flag and removing stale entries
+    store.dispatch({
+      type: `SLICES_PROPS_RENDERED`,
+      payload: slicesProps,
+    })
+  } else {
+    reporter.info(`There are no new or changed slice html files to build.`)
+  }
+
+  store.dispatch({
+    type: `SLICES_PROPS_REMOVE_STALE`,
+  })
+}
+
+export async function stitchSlicesIntoPagesHTML({
+  publicDir,
+  parentSpan,
+}: {
+  publicDir: string
+  parentSpan?: Span
+}): Promise<void> {
+  const stichSlicesActivity = reporter.activityTimer(`stiching slices`, {
+    parentSpan,
+  })
+  stichSlicesActivity.start()
+  try {
+    const {
+      html: { pagesThatNeedToStitchSlices },
+    } = store.getState()
+
+    console.log({ pagesThatNeedToStitchSlices })
+
+    const stichQueue = fastq<void, string, void>(async (pagePath, cb) => {
+      await stitchSliceForAPage({ pagePath, publicDir })
+      cb(null)
+    }, 25)
+
+    for (const pagePath of pagesThatNeedToStitchSlices) {
+      stichQueue.push(pagePath)
+    }
+
+    if (!stichQueue.idle()) {
+      await new Promise(resolve => {
+        stichQueue.drain = resolve as () => unknown
+      })
+    }
+
+    store.dispatch({ type: `SLICES_STITCHED` })
+  } finally {
+    stichSlicesActivity.end()
+  }
 }

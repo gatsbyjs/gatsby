@@ -13,6 +13,7 @@ import {
 interface IPageTreeProps {
   components: Map<string, IComponentWithPageModes>
   root: string
+  slices: Set<string>
 }
 
 const Description: React.FC<BoxProps> = function Description(props) {
@@ -84,6 +85,7 @@ const ComponentTree: React.FC<{
 const PageTree: React.FC<IPageTreeProps> = function PageTree({
   components,
   root,
+  slices,
 }) {
   const componentList: Array<ReactElement> = []
   let i = 0
@@ -107,6 +109,16 @@ const PageTree: React.FC<IPageTreeProps> = function PageTree({
         <Text underline>Pages</Text>
       </Box>
       {componentList}
+      <Box paddingTop={1} paddingBottom={1}>
+        <Text underline>Slices</Text>
+      </Box>
+      {Array.from(slices).map(slice => (
+        <Box key={slice}>
+          <Text>
+            <Text bold>·</Text> {path.posix.relative(root, slice)}
+          </Text>
+        </Box>
+      ))}
       <Description marginTop={1} marginBottom={1} />
     </Box>
   )
@@ -116,8 +128,13 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
   const state = useContext(StoreStateContext)
 
   const componentWithPages = new Map<string, IComponentWithPageModes>()
+  const slices = new Set<string>()
 
-  for (const { componentPath, pages } of state.pageTree!.components.values()) {
+  for (const {
+    componentPath,
+    pages,
+    isSlice,
+  } of state.pageTree!.components.values()) {
     const layoutComponent = getPathToLayoutComponent(componentPath)
     const pagesByMode = componentWithPages.get(layoutComponent) || {
       SSG: new Set<string>(),
@@ -125,12 +142,17 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
       SSR: new Set<string>(),
       FN: new Set<string>(),
     }
-    pages.forEach(pagePath => {
-      const gatsbyPage = state.pageTree!.pages.get(pagePath)
 
-      pagesByMode[gatsbyPage!.mode].add(pagePath)
-    })
-    componentWithPages.set(layoutComponent, pagesByMode)
+    if (isSlice) {
+      slices.add(componentPath)
+    } else {
+      pages.forEach(pagePath => {
+        const gatsbyPage = state.pageTree!.pages.get(pagePath)
+
+        pagesByMode[gatsbyPage!.mode].add(pagePath)
+      })
+      componentWithPages.set(layoutComponent, pagesByMode)
+    }
   }
 
   for (const {
@@ -146,7 +168,11 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
   }
 
   return (
-    <PageTree components={componentWithPages} root={state.pageTree!.root} />
+    <PageTree
+      components={componentWithPages}
+      slices={slices}
+      root={state.pageTree!.root}
+    />
   )
 }
 

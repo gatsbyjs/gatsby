@@ -33,7 +33,7 @@ export interface IQueryJob {
   query: string
   componentPath: string
   context: PageContext
-  isPage: boolean
+  queryType: "page" | "static" | "slice"
   pluginCreatorId?: string
 }
 
@@ -63,7 +63,7 @@ function panicQueryJobError(
   let queryContext = {}
   const plugin = queryJob.pluginCreatorId || `none`
 
-  if (queryJob.isPage) {
+  if (queryJob.queryType === `page`) {
     urlPath = queryJob.context.path
     queryContext = queryJob.context.context
   }
@@ -132,7 +132,7 @@ export async function queryRunner(
     actions.queryStart({
       path: queryJob.id,
       componentPath: queryJob.componentPath,
-      isPage: queryJob.isPage,
+      isPage: queryJob.queryType === `page`,
     })
   )
 
@@ -151,7 +151,7 @@ export async function queryRunner(
   }
 
   // Add the page context onto the results.
-  if (queryJob && queryJob.isPage) {
+  if (queryJob && queryJob.queryType === `page`) {
     result[`pageContext`] = Object.assign({}, queryJob.context)
   }
 
@@ -173,6 +173,8 @@ export async function queryRunner(
       delete result.pageContext.matchPath
       delete result.pageContext.mode
     }
+
+    delete result.pageContext.slices
   }
 
   const resultJSON = JSON.stringify(result)
@@ -184,22 +186,31 @@ export async function queryRunner(
   const resultHashCache = getResultHashCache()
   if (
     resultHash !== (await resultHashCache.get(queryJob.id)) ||
-    (queryJob.isPage &&
+    (queryJob.queryType === `page` &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
     await resultHashCache.set(queryJob.id, resultHash)
 
-    if (queryJob.isPage) {
+    if (queryJob.queryType === `page` || queryJob.queryType === `slice`) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
       await savePageQueryResult(program.directory, queryJob.id, resultJSON)
-      store.dispatch({
-        type: `ADD_PENDING_PAGE_DATA_WRITE`,
-        payload: {
-          path: queryJob.id,
-        },
-      })
-    } else {
+      if (queryJob.queryType === `page`) {
+        store.dispatch({
+          type: `ADD_PENDING_PAGE_DATA_WRITE`,
+          payload: {
+            path: queryJob.id,
+          },
+        })
+      } else if (queryJob.queryType === `slice`) {
+        store.dispatch({
+          type: `ADD_PENDING_SLICE_DATA_WRITE`,
+          payload: {
+            name: queryJob.id.substring(4),
+          },
+        })
+      }
+    } else if (queryJob.queryType === `static`) {
       const resultPath = path.join(
         program.directory,
         `public`,
@@ -217,7 +228,7 @@ export async function queryRunner(
     actions.pageQueryRun({
       path: queryJob.id,
       componentPath: queryJob.componentPath,
-      isPage: queryJob.isPage,
+      queryType: queryJob.queryType,
       resultHash,
       queryHash: queryJob.hash,
     })

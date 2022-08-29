@@ -58,9 +58,16 @@ export { calcDirtyQueryIds as calcInitialDirtyQueryIds }
  * Groups queryIds by whether they are static or page queries.
  */
 export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
-  const grouped = _.groupBy(queryIds, p =>
-    p.slice(0, 4) === `sq--` ? `static` : `page`
-  )
+  const grouped = _.groupBy(queryIds, p => {
+    const prefix = p.slice(0, 4)
+    if (prefix === `sq--`) {
+      return `static`
+    } else if (prefix === `fr--`) {
+      return `slice`
+    } else {
+      return `page`
+    }
+  })
 
   const { pages } = store.getState()
 
@@ -70,6 +77,7 @@ export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
       grouped?.page
         ?.map(path => pages.get(path) as IGatsbyPage)
         ?.filter(Boolean) || [],
+    sliceQueryIds: grouped?.slice || [],
   }
 }
 
@@ -184,10 +192,44 @@ function createStaticQueryJob(
   return {
     id: queryId,
     query,
-    isPage: false,
+    queryType: `static`,
     hash,
     componentPath,
     context: { path: id },
+  }
+}
+
+function createSliceQueryJob(
+  state: IGatsbyState,
+  queryId: string
+): IQueryJob | undefined {
+  const sliceName = queryId.substring(4)
+
+  const sliceDef = state.slices.get(sliceName)
+  if (!sliceDef) {
+    console.log(`cant find slice "${sliceName}"`)
+    return undefined
+  }
+
+  const component = state.components.get(sliceDef.componentPath)
+
+  if (!component) {
+    console.log(`cant find component "${sliceDef.componentPath}"`)
+    return undefined
+  }
+
+  const { componentPath, context } = sliceDef
+  const { query } = component
+
+  return {
+    id: queryId,
+    query,
+    queryType: `slice`,
+    componentPath,
+    context: {
+      path: queryId,
+      ...context,
+    },
   }
 }
 
@@ -219,6 +261,27 @@ export async function processStaticQueries(
       process.env.NODE_ENV === `production`
         ? undefined
         : onDevelopStaticQueryDone,
+    state,
+    activity,
+    graphqlRunner,
+    graphqlTracing,
+  })
+
+  // at this point, we're done grabbing page dependencies, so we need to
+  // flush out the batcher in case there are any left
+  createPageDependencyBatcher.flush()
+
+  return processedQueries
+}
+
+export async function processSliceQueries(
+  queryIds: IGroupedQueryIds["sliceQueryIds"],
+  { state, activity, graphqlRunner, graphqlTracing }
+): Promise<void> {
+  const processedQueries = await processQueries<string>({
+    queryIds,
+    createJobFn: createSliceQueryJob,
+    onQueryDone: undefined, // maybe this will later need same HMR stuff as static query
     state,
     activity,
     graphqlRunner,
@@ -269,7 +332,7 @@ function createPageQueryJob(
   return {
     id: path,
     query,
-    isPage: true,
+    queryType: `page`,
     componentPath,
     context: {
       ...page,
