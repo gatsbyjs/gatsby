@@ -546,14 +546,6 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     reporter.info(`There are no new or changed html files to build.`)
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR !== `4` && !program.keepPageRenderer) {
-    try {
-      await deleteRenderer(pageRenderer)
-    } catch (err) {
-      // pass through
-    }
-  }
-
   if (toDelete.length > 0) {
     const publicDir = path.join(program.directory, `public`)
     const deletePageDataActivityTimer = reporter.activityTimer(

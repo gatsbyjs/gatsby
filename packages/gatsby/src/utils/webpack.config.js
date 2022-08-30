@@ -725,13 +725,11 @@ module.exports = async (
   if (stage === `build-html` || stage === `develop-html`) {
     // externalize react, react-dom when develop-html or build-html(when not generating engines)
     const shouldMarkPackagesAsExternal =
-      stage === `develop-html` ||
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `develop-html` || !shouldGenerateEngines()
 
     // tracking = build-html (when not generating engines)
     const shouldTrackBuiltins =
-      stage === `build-html` &&
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `build-html` && !shouldGenerateEngines()
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets
