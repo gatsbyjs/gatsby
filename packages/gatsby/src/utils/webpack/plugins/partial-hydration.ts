@@ -74,7 +74,7 @@ export class PartialHydrationPlugin {
   ): Promise<ClientReferenceDependency | null> {
     const CHUNK_SIZE = 1 * 1024 // 1kb
     const buffer = Buffer.alloc(CHUNK_SIZE)
-    const resource = request.createData.resource
+    const [resource] = request.createData.resource.split(`?`)
 
     return new Promise((resolve, reject) => {
       fs.open(resource, `r`, (err, fd) => {
@@ -189,6 +189,8 @@ export class PartialHydrationPlugin {
         })
       })
     })
+
+    console.log({ json })
 
     return json
   }
