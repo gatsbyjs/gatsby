@@ -102,6 +102,16 @@ To read more, head over to [RFC: Change to sort and aggregation fields API](http
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [alexlouden](https://github.com/alexlouden): fix(gatsby-plugin-react-helmet): Typo in `onPreInit` warning [PR #36419](https://github.com/gatsbyjs/gatsby/pull/36419)
+- [axe312ger](https://github.com/axe312ger): chore(docs): MDX v2 [PR #35893](https://github.com/gatsbyjs/gatsby/pull/35893)
+- [mashehu](https://github.com/mashehu): chore(docs): fix incorrect closing tag in tutorial [PR #36459](https://github.com/gatsbyjs/gatsby/pull/36459)
+- [endymion1818](https://github.com/endymion1818): feat(docs): add webiny to headless cms list [PR #36388](https://github.com/gatsbyjs/gatsby/pull/36388)
+- [that1matt](https://github.com/that1matt): fix(gatsby-source-graphql): add dataLoaderOptions validation to gatsby-source-graphql [PR #36112](https://github.com/gatsbyjs/gatsby/pull/36112)
+- [taiga39](https://github.com/taiga39): chore(docs): Fix some typos [PR #36431](https://github.com/gatsbyjs/gatsby/pull/36431)
+- [TalAter](https://github.com/TalAter): chore(docs): Update plugin count in part 3 of the tutorial [PR #36455](https://github.com/gatsbyjs/gatsby/pull/36455)
+- [Kornil](https://github.com/Kornil)
+  - chore(gatsby): convert babel-loaders to typescript [PR #36318](https://github.com/gatsbyjs/gatsby/pull/36318)
+  - chore(gatsby): convert sanitize-node to typescript [PR #36327](https://github.com/gatsbyjs/gatsby/pull/36327)
+- [ChefYeum](https://github.com/ChefYeum): chore(docs): Fix page link to page 6 of remark tutorial [PR #36437](https://github.com/gatsbyjs/gatsby/pull/36437)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.22.0-next.0...gatsby@4.22.0
