@@ -88,7 +88,6 @@ const adjustPackageJson = ({
  * This is not verdaccio restriction.
  */
 const createTemporaryNPMRC = ({ pathToPackage, root }) => {
-  console.log({ pathToPackage, root })
 
   const NPMRCPathInPackage = path.join(pathToPackage, `.npmrc`)
   fs.outputFileSync(NPMRCPathInPackage, NPMRCContent)
