@@ -246,7 +246,10 @@ const preferDefault = m => (m && m.default) || m
   // Create file with async requires of components/json files.
   let asyncRequires = ``
 
-  if (process.env.gatsby_executing_command === `develop`) {
+  if (
+    process.env.gatsby_executing_command === `develop` ||
+    process.env.GATSBY_PARTIAL_HYDRATION
+  ) {
     asyncRequires = `exports.components = {\n${components
       .map((c: IGatsbyPageComponent): string => {
         // we need a relative import path to keep contenthash the same if directory changes
