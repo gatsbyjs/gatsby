@@ -798,7 +798,9 @@ const createComponentUrls = componentChunkName =>
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths, pageData) {
     const loadComponent = (chunkName, exportType = `components`) => {
-      if (!process.env.GATSBY_PARTIAL_HYDRATION) exportType = `components`
+      if (!global.hasPartialHydration) {
+        exportType = `components`
+      }
 
       if (!asyncRequires[exportType][chunkName]) {
         throw new Error(
