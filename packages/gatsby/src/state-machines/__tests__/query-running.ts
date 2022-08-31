@@ -18,6 +18,7 @@ const services = {
         queryIds: {
           pageQueryIds: [],
           staticQueryIds: [],
+          sliceQueryIds: [],
         },
       }
     }
@@ -137,6 +138,7 @@ describe(`query-running state machine`, () => {
           queryIds: {
             pageQueryIds: [],
             staticQueryIds: [],
+            sliceQueryIds: [],
           },
         }
       }
