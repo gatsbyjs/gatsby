@@ -69,7 +69,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        slices: {},
+        slices: new Map(),
       })
 
       expect(spy).toBeCalledWith(
@@ -117,7 +117,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        slices: {},
+        slices: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
@@ -151,7 +151,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        slices: {},
+        slices: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
@@ -176,7 +176,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        slices: {},
+        slices: new Map(),
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/`).path)
@@ -231,7 +231,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        slices: {},
+        slices: new Map(),
       })
 
       expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
@@ -258,7 +258,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        slices: {},
+        slices: new Map(),
       })
 
       const matchPathsForInvertedInput = matchPaths
@@ -266,7 +266,7 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        slices: {},
+        slices: new Map(),
       })
 
       expect(matchPathsForInvertedInput).toEqual(matchPaths)
@@ -278,7 +278,7 @@ describe(`requires-writer`, () => {
         await requiresWriter.writeAll({
           pages,
           program,
-          slices: {},
+          slices: new Map(),
         })
 
         const allMatchingPages = matchPaths
@@ -361,7 +361,7 @@ describe(`requires-writer`, () => {
 
       const pages = [...pagesInput.values()]
       const pagesReversed = [...pagesInput.values()].reverse()
-      const slices = {}
+      const slices = new Map()
 
       expect(requiresWriter.getComponents(pages, slices)).toEqual(
         requiresWriter.getComponents(pagesReversed, slices)
