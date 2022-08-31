@@ -1,6 +1,6 @@
 ---
 title: "Monorepos"
-description: "Learn how to use monorepos in Gatsby Cloud"
+description: "Monorepos support in Gatsby Cloud"
 ---
 
 ## Introduction
@@ -10,15 +10,13 @@ This document will walk you through the tools that are supported and how to trou
 
 ## Monorepo Support
 
-| Tool.                            | Level of Support | Notes                                                       | 
-| ---------------------            | ------           | -----                                                       | 
-| Yarn Workspaces (v1)             | Full support     |                                                             | 
-| Yarn Workspaces (v2/v3 with PnP) | Full support     |                                                             |
-| Lerna                            | Full support     |                                                             | 
-| NPM Workspaces (v7 and onwards)  | Full support     |                                                             | 
-| NX                               | No Support       | Support is in progress                                      | 
-| Turborepo                        | No Support       | We do not have plans to support Turborepo at this time.     |
-
-
+| Tool.                            | Level of Support | Notes                                                   |
+| -------------------------------- | ---------------- | ------------------------------------------------------- |
+| Yarn Workspaces (v1)             | Full support     |                                                         |
+| Yarn Workspaces (v2/v3 with PnP) | Full support     |                                                         |
+| Lerna                            | Full support     |                                                         |
+| NPM Workspaces (v7 and onwards)  | Full support     |                                                         |
+| NX                               | No Support       | Support is in progress                                  |
+| Turborepo                        | No Support       | We do not have plans to support Turborepo at this time. |
 
 ## Troubleshooting
