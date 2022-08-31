@@ -4,7 +4,7 @@ import path from "path"
 // @ts-ignore - Doesn't understand CJS default exports?
 import partialHydrationReferenceLoader from "../partial-hydration-reference-loader"
 
-const rootContext = `/` // TODO: Figure out what this should be
+const rootContext = __dirname
 const fixturesPath = path.resolve(__dirname, `./fixtures`)
 const fixtures = fs.readdirSync(fixturesPath)
 

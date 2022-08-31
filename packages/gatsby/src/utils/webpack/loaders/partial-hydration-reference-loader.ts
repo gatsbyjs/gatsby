@@ -1,10 +1,9 @@
 /* eslint-disable @babel/no-invalid-this */
-
-import { LoaderDefinitionFunction } from "webpack"
 import url from "url"
-import { parse } from "acorn"
+import { parse } from "acorn-loose"
 import { simple as walk } from "acorn-walk"
-import type { Node } from "acorn"
+import type { LoaderDefinitionFunction } from "webpack"
+import type { Node } from "acorn-loose"
 import type {
   ExportNamedDeclaration,
   ExportDefaultDeclaration,
@@ -117,18 +116,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
           break
         case `FunctionDeclaration`:
         case `ClassDeclaration`:
-          // Handle cases shown in `fixtures/esm-default-function-named.js` and `fixtures/esm-default-class-named.js`
-          if (
-            node.declaration.id?.type === `Identifier` &&
-            node.declaration.id.name
-          ) {
-            references.push(
-              createDefaultReference(node.declaration.id.name, moduleId)
-            )
-            // Handle cases shown in `fixtures/esm-default-function-anonymous.js` and `fixtures/esm-default-class-anonymous.js`
-          } else {
-            references.push(createDefaultReference(`default`, moduleId))
-          }
+          references.push(createDefaultReference(`default`, moduleId))
           break
       }
     },
