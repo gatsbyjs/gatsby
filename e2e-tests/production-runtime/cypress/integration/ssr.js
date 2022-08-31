@@ -175,7 +175,7 @@ describe(`500 status`, () => {
 })
 
 describe(`"node:" protocol`, () => {
-  it.only(`engines work when bundled code contains node:path import`, () => {
+  it(`engines work when bundled code contains node:path import`, () => {
     cy.visit(`/ssr/using-node-protocol/`).waitForRouteChange()
 
     // validating that this page was rendered with SSR mode
