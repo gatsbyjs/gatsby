@@ -5,7 +5,7 @@ index 4ed2e22114..df803ef8b4 100644
 @@ -350,7 +350,7 @@ export interface GatsbyNode<
      callback: PluginCallback<void>
    ): void | Promise<void>
- 
+
 -  /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "unstable_onPluginInit" instead. */
 +  /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "onPluginInit" instead. */
    onPreBootstrap?(
@@ -27,7 +27,7 @@ index 4ed2e22114..df803ef8b4 100644
      options: PluginOptions,
      callback: PluginCallback<void>
    ): void | Promise<void>
- 
+
 -  /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "unstable_onPluginInit" instead. */
 +  /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "onPluginInit" instead. */
    onPreInit?(
@@ -45,7 +45,7 @@ index c0b7735a76..593059e8ce 100644
 +          "onPluginInit": Object {
              "version": "3.9.0",
            },
-           "unstable_shouldOnCreateNode": Object {
+           "shouldOnCreateNode": Object {
 diff --git a/packages/gatsby/src/utils/api-node-docs.ts b/packages/gatsby/src/utils/api-node-docs.ts
 index 793386f614..06b2259350 100644
 --- a/packages/gatsby/src/utils/api-node-docs.ts
@@ -64,6 +64,6 @@ index 793386f614..06b2259350 100644
 -// eslint-disable-next-line @typescript-eslint/naming-convention
 -export const unstable_onPluginInit = true
 +export const onPluginInit = true
- 
+
  /**
   * Called once Gatsby has initialized itself and is ready to bootstrap your site.

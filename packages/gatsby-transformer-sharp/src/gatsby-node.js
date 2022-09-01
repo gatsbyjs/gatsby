@@ -1,7 +1,4 @@
-const {
-  onCreateNode,
-  unstable_shouldOnCreateNode,
-} = require(`./on-node-create`)
+const { onCreateNode, shouldOnCreateNode } = require(`./on-node-create`)
 const { ERROR_MAP } = require(`./error-utils`)
 
 exports.onPreInit = ({ reporter }) => {
@@ -10,6 +7,6 @@ exports.onPreInit = ({ reporter }) => {
   }
 }
 exports.onCreateNode = onCreateNode
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.createSchemaCustomization = require(`./customize-schema`)
 exports.createResolvers = require(`./create-resolvers`)

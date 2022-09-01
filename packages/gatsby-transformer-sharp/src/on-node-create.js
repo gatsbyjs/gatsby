@@ -1,17 +1,17 @@
 const { supportedExtensions } = require(`./supported-extensions`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   return node.internal.type === `File` && !!supportedExtensions[node.extension]
 }
 
-module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+module.exports.shouldOnCreateNode = shouldOnCreateNode
 
 module.exports.onCreateNode = async function onCreateNode({
   node,
   actions,
   createNodeId,
 }) {
-  if (!unstable_shouldOnCreateNode({ node })) {
+  if (!shouldOnCreateNode({ node })) {
     return
   }
 

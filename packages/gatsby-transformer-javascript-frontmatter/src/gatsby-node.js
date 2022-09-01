@@ -4,7 +4,7 @@ const traverse = require(`@babel/traverse`).default
 
 const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   // This only processes JavaScript and TypeScript files.
   return fileExtsToProcess.includes(node.extension)
 }
@@ -15,7 +15,7 @@ async function onCreateNode({
   loadNodeContent,
   createContentDigest,
 }) {
-  if (!unstable_shouldOnCreateNode({ node })) {
+  if (!shouldOnCreateNode({ node })) {
     return
   }
 
@@ -142,5 +142,5 @@ async function onCreateNode({
   }
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

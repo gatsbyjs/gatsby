@@ -8,7 +8,7 @@ const convertToJson = (data, options) =>
     .fromString(data)
     .then(jsonData => jsonData, new Error(`CSV to JSON conversion failed!`))
 
-function unstable_shouldOnCreateNode({ node }, pluginOptions = {}) {
+function shouldOnCreateNode({ node }, pluginOptions = {}) {
   const { extension } = node
   const { extensions } = pluginOptions
 
@@ -19,7 +19,7 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
-  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
+  if (!shouldOnCreateNode({ node }, pluginOptions)) {
     return
   }
 
@@ -84,5 +84,5 @@ async function onCreateNode(
   return
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

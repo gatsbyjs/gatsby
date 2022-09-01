@@ -2,7 +2,7 @@ const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const path = require(`path`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `text/yaml`
 }
 
@@ -10,7 +10,7 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
-  if (!unstable_shouldOnCreateNode({ node })) {
+  if (!shouldOnCreateNode({ node })) {
     return
   }
 
@@ -68,5 +68,5 @@ async function onCreateNode(
   }
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

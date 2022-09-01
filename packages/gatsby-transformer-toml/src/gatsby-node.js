@@ -1,7 +1,7 @@
 const toml = require(`toml`)
 const _ = require(`lodash`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   // Filter out non-toml content
   // Currently TOML files are considered null in 'mime-db'
   // Hence the extension test instead of mediaType test
@@ -15,7 +15,7 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  if (!unstable_shouldOnCreateNode({ node })) {
+  if (!shouldOnCreateNode({ node })) {
     return
   }
 
@@ -51,5 +51,5 @@ async function onCreateNode({
   return
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

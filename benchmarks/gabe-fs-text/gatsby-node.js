@@ -40,7 +40,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.unstable_shouldOnCreateNode = ({ node }) =>
+exports.shouldOnCreateNode = ({ node }) =>
   node.internal.type === "File"
 
 exports.onCreateNode = ({ node, actions, createNodeId }) => {

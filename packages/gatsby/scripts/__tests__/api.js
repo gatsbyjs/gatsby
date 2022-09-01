@@ -65,7 +65,7 @@ it("generates the expected api output", done => {
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},
           "sourceNodes": Object {},
-          "unstable_shouldOnCreateNode": Object {
+          "shouldOnCreateNode": Object {
             "version": "2.24.80",
           },
         },

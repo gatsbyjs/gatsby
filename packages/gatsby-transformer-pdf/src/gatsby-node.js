@@ -2,7 +2,7 @@
 const Promise = require(`bluebird`)
 const PDFParser = require(`pdf2json`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   // Filter out non-pdf content
   return node.extension === `pdf`
 }
@@ -27,7 +27,7 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  if (!unstable_shouldOnCreateNode({ node })) {
+  if (!shouldOnCreateNode({ node })) {
     return
   }
 
@@ -51,5 +51,5 @@ async function onCreateNode({
   createParentChildLink({ parent: node, child: pdfNode })
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

@@ -406,9 +406,9 @@ export interface GatsbyNode<
    *
    * @gatsbyVersion 2.24.80
    * @example
-   * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+   * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
    */
-  unstable_shouldOnCreateNode?(
+  shouldOnCreateNode?(
     args: { node: TNode },
     options: PluginOptions
   ): boolean

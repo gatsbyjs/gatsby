@@ -623,8 +623,8 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
         // TODO: rethink createNode API to handle this better
         if (
           api === `onCreateNode` &&
-          gatsbyNode?.unstable_shouldOnCreateNode && // Don't bail if this api is not exported
-          !gatsbyNode.unstable_shouldOnCreateNode(
+          gatsbyNode?.shouldOnCreateNode && // Don't bail if this api is not exported
+          !gatsbyNode.shouldOnCreateNode(
             { node: args.node },
             plugin.pluginOptions
           )

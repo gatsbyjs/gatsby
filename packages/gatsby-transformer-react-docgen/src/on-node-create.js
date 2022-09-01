@@ -88,7 +88,7 @@ function createPropNodes(
   return node
 }
 
-export function unstable_shouldOnCreateNode({ node }) {
+export function shouldOnCreateNode({ node }) {
   return canParse(node)
 }
 

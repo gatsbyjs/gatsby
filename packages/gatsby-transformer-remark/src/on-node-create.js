@@ -1,7 +1,7 @@
 const grayMatter = require(`gray-matter`)
 const _ = require(`lodash`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   return (
     node.internal.mediaType === `text/markdown` ||
     node.internal.mediaType === `text/x-markdown`
@@ -20,7 +20,7 @@ module.exports.onCreateNode = async function onCreateNode(
   pluginOptions
 ) {
   // We only care about markdown content.
-  if (!unstable_shouldOnCreateNode({ node })) {
+  if (!shouldOnCreateNode({ node })) {
     return {}
   }
 
@@ -81,4 +81,4 @@ module.exports.onCreateNode = async function onCreateNode(
   }
 }
 
-module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+module.exports.shouldOnCreateNode = shouldOnCreateNode

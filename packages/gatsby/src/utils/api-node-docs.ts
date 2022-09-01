@@ -159,10 +159,10 @@ export const onCreateNode = true
  *
  * @gatsbyVersion 2.24.80
  * @example
- * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+ * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const unstable_shouldOnCreateNode = true
+export const shouldOnCreateNode = true
 
 /**
  * Called when a new page is created. This extension API is useful

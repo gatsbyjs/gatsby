@@ -28,7 +28,7 @@ const extensions = [
   `numbers`,
 ]
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   return extensions.includes((node.extension || ``).toLowerCase())
 }
 
@@ -36,7 +36,7 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   options = {}
 ) {
-  if (!unstable_shouldOnCreateNode({ node })) {
+  if (!shouldOnCreateNode({ node })) {
     return
   }
 
@@ -108,5 +108,5 @@ async function onCreateNode(
   return
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode
