@@ -49,7 +49,7 @@
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.18.2",
-    "@types/estree": "^0.0.50",
+    "@types/estree": "^0.0.52",
     "@types/mdast": "^3.0.10",
     "@types/unist": "^2.0.6",
     "babel-preset-gatsby-package": "^2.23.0-next.0",
@@ -57,7 +57,7 @@
     "del-cli": "^5.0.0",
     "opentracing": "^0.14.7",
     "typescript": "^4.7.4",
-    "webpack": "^5.72.1"
+    "webpack": "^5.74.0"
   },
   "jest": {
     "testEnvironment": "node"
