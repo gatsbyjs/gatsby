@@ -55,10 +55,10 @@ export function htmlReducer(
           htmlFile.dirty |= FLAG_DIRTY_CLEARED_CACHE
         })
         // slice html don't need to be deleted, they are just cleared
-        state.slicesProps.bySliceId.clear()
-        state.slicesProps.byPagePath.clear()
-        state.slicesProps.bySliceName.clear()
-        state.pagesThatNeedToStitchSlices.clear()
+        state.slicesProps?.bySliceId.clear()
+        state.slicesProps?.byPagePath.clear()
+        state.slicesProps?.bySliceName.clear()
+        state.pagesThatNeedToStitchSlices?.clear()
         return state
       }
     }
