@@ -30,7 +30,7 @@ Sites are Gatsby projects. They can be connected to a Content Management System 
 
 ## Builds and previews
 
-A "build" is a version of your site that results from compiling your site's source code. A "preview" is a specific kind of build used during development to show what your site looks like before building it for production. On Gatsby Cloud, we have specific names for builds and previews:
+A "build" is a version of your site that results from compiling your site's source code. A "preview" is a specific kind of build used during development to show what your site looks like before building it for production. On Gatsby Cloud, there are specific names for builds and previews:
 
 - Production Builds
 - Pull Request Builds
