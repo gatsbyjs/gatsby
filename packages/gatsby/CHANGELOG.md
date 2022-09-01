@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.22.0/packages/gatsby) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Features
+
+- add partial hydration flag [#36436](https://github.com/gatsbyjs/gatsby/issues/36436) ([41de1f0](https://github.com/gatsbyjs/gatsby/commit/41de1f0a8d767174f16367c14dbe8ed2820f8b2c))
+- Add option to emit TS types during build [#36405](https://github.com/gatsbyjs/gatsby/issues/36405) ([3760a0e](https://github.com/gatsbyjs/gatsby/commit/3760a0e78d6cfeb22d414e1c6eac045acd1f129a))
+
+#### Bug Fixes
+
+- remove resource query from warnings [#36439](https://github.com/gatsbyjs/gatsby/issues/36439) ([1bf2358](https://github.com/gatsbyjs/gatsby/commit/1bf2358703c5ae00e5c5466235d93c3288e5f6e2))
+- Prevent errors if `Head` has root text node [#36402](https://github.com/gatsbyjs/gatsby/issues/36402) ([a05201e](https://github.com/gatsbyjs/gatsby/commit/a05201e840e94a1d49976166c0dcc9e5a0b44038))
+- close parcel cache db before clearing cache and retrying close [#36377](https://github.com/gatsbyjs/gatsby/issues/36377) ([9d737b6](https://github.com/gatsbyjs/gatsby/commit/9d737b62180d3081619a167336366128762c12a6))
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) ([65739fc](https://github.com/gatsbyjs/gatsby/commit/65739fcc1af12d0f878820a589de7dde5964b93d))
+
+#### Chores
+
+- Add env log for build and remove incorrect log for functions [#36462](https://github.com/gatsbyjs/gatsby/issues/36462) [#36466](https://github.com/gatsbyjs/gatsby/issues/36466) ([4dcdeb1](https://github.com/gatsbyjs/gatsby/commit/4dcdeb1b7f2b7b9708e0103447ff102e35220718))
+- drop eslint-plugin-graphql [#36364](https://github.com/gatsbyjs/gatsby/issues/36364) ([b361081](https://github.com/gatsbyjs/gatsby/commit/b361081db968aaa2ead1f9fe4d701d2ec7761ebd))
+- add prefixPaths field on IProgram type [#36400](https://github.com/gatsbyjs/gatsby/issues/36400) ([03157e8](https://github.com/gatsbyjs/gatsby/commit/03157e8d6b5a188e39c74c56fa0ba9d40c96c427))
+- pin xstate [#36398](https://github.com/gatsbyjs/gatsby/issues/36398) ([6e4a0de](https://github.com/gatsbyjs/gatsby/commit/6e4a0de10b395d0addf11c77b89a846f94a1b432))
+- convert sanitize-node to typescript [#36327](https://github.com/gatsbyjs/gatsby/issues/36327) ([d59e7b6](https://github.com/gatsbyjs/gatsby/commit/d59e7b61b2c63827fba02c5d9ea96c614cc83344))
+- upgrade @pmmmwh/react-refresh-webpack-plugin [#36360](https://github.com/gatsbyjs/gatsby/issues/36360) ([28cfade](https://github.com/gatsbyjs/gatsby/commit/28cfadeb453ece090ab5919be92599f2b847f5d8))
+- convert babel-loaders to typescript [#36318](https://github.com/gatsbyjs/gatsby/issues/36318) ([fe1d2e1](https://github.com/gatsbyjs/gatsby/commit/fe1d2e1b54e70f558ae008bbac9b6c5b31f52d5f))
+
 ### [4.21.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.21.1/packages/gatsby) (2022-08-18)
 
 #### Chores

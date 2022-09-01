@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.22.0/packages/gatsby-plugin-sharp) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Chores
+
+- bump min potrace version [#36443](https://github.com/gatsbyjs/gatsby/issues/36443) ([0d896ae](https://github.com/gatsbyjs/gatsby/commit/0d896aefa5db6a1929d9982fdcb5a7780ecc0794))
+- Remove unused deps [#36368](https://github.com/gatsbyjs/gatsby/issues/36368) ([8bad1a7](https://github.com/gatsbyjs/gatsby/commit/8bad1a7a612c121fd4c8965c76cf7a0d87fbc3fa))
+
 ## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.21.0/packages/gatsby-plugin-sharp) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
