@@ -1,6 +1,6 @@
 ---
 title: "Build Logs"
-description: "A guide for viewing and understanding build logs on Gatsby Cloud"
+description: "Learn how to view and understand build logs on Gatsby Cloud"
 ---
 
 Gatsby Cloud provides a few helpful views of build logs to understand more about what is happening during the build process.
