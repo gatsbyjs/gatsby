@@ -87,12 +87,16 @@ const adjustPackageJson = ({
  * This is `npm publish` (as in linked comment) and `yarn publish` requirement.
  * This is not verdaccio restriction.
  */
-const createTemporaryNPMRC = ({ pathToPackage }) => {
-  const NPMRCPath = path.join(pathToPackage, `.npmrc`)
-  fs.outputFileSync(NPMRCPath, NPMRCContent)
+const createTemporaryNPMRC = ({ pathToPackage, root }) => {
+  const NPMRCPathInPackage = path.join(pathToPackage, `.npmrc`)
+  fs.outputFileSync(NPMRCPathInPackage, NPMRCContent)
+
+  const NPMRCPathInRoot = path.join(root, `.npmrc`)
+  fs.outputFileSync(NPMRCPathInRoot, NPMRCContent)
 
   return registerCleanupTask(() => {
-    fs.removeSync(NPMRCPath)
+    fs.removeSync(NPMRCPathInPackage)
+    fs.removeSync(NPMRCPathInRoot)
   })
 }
 
@@ -102,6 +106,7 @@ const publishPackage = async ({
   versionPostFix,
   ignorePackageJSONChanges,
   packageNameToPath,
+  root,
 }) => {
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
@@ -119,7 +124,7 @@ const publishPackage = async ({
 
   const pathToPackage = path.dirname(monoRepoPackageJsonPath)
 
-  const uncreateTemporaryNPMRC = createTemporaryNPMRC({ pathToPackage })
+  const uncreateTemporaryNPMRC = createTemporaryNPMRC({ pathToPackage, root })
 
   // npm publish
   const publishCmd = [
