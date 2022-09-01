@@ -56,7 +56,7 @@ The timeout periods for each pricing tier are listed below:
 - `gatsby-source-wordpress < 5.2.3`
 - `gatsby-source-datocms < 2.6.15`
 
-When Gatsby Cloud terminates your resource after the timeout period, the next build will require restarting your resources. Typically in cloud infrastructure, this would mean a cold build, but each Gatsby Cloud build saves the Gatsby Cache to cloud storage. Upon restarting your resource, we restore the previously saved gatsby cache to attempt a “warm” build. However, builds created after the timeout period may be slower depending on the state of the Gatsby Cache.
+When Gatsby Cloud terminates your resource after the timeout period, the next build will require restarting your resources. Typically in cloud infrastructure, this would mean a cold build, but each Gatsby Cloud build saves the Gatsby Cache to cloud storage. Upon restarting your resource, Gatsby Cloud will restore the previously saved Gatsby cache to attempt a “warm” build. However, builds created after the timeout period may be slower depending on the state of the Gatsby Cache.
 
 The Gatsby Cache works for Production Builds, as well as Pull Request and CMS Preview builds. However, when CMS Previews timeout, the URL for that preview will return an idle screen similar to the screenshot below. A Gatsby Cloud user can visit the link on that page to restart the preview for your content editors.
 
