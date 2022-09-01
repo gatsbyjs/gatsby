@@ -371,13 +371,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     const expectedActionShapes = {
       QUERY_START: [`componentPath`, `isPage`, `path`],
-      PAGE_QUERY_RUN: [
-        `componentPath`,
-        `queryType`,
-        `queryHash`,
-        `path`,
-        `resultHash`,
-      ],
+      PAGE_QUERY_RUN: [`componentPath`, `queryType`, `path`, `resultHash`],
       ADD_PENDING_PAGE_DATA_WRITE: [`path`],
     }
     expect(result).toBeArrayOfSize(8)
