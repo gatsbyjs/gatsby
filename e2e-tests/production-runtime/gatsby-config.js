@@ -2,23 +2,6 @@ const {
   data: headFunctionExportData,
 } = require(`./shared-data/head-function-export.js`)
 
-try {
-  require(`node:path`)
-} catch (e) {
-  console.warn(
-    `Used node version doesn't support "node:" imports protocol, adding polyfill`
-  )
-
-  const mod = require("module")
-  const originalModuleLoad = mod._load
-  mod._load = (request, parent, isMain) => {
-    if (request.startsWith(`node:`)) {
-      request = request.replace(`node:`, ``)
-    }
-    return originalModuleLoad(request, parent, isMain)
-  }
-}
-
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
