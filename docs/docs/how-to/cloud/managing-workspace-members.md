@@ -1,6 +1,6 @@
 ---
 title: "Managing Workspace Members"
-description: "Manage the Members and roles in your Gatsby Cloud Workspace"
+description: "Learn how to manage the members and roles in your Gatsby Cloud Workspace"
 ---
 
 There are four possible roles a user can have on Gatsby Cloud:
