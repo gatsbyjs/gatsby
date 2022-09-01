@@ -1,6 +1,6 @@
 ---
 title: "CMS Previews"
-description: "Enable your content editors to preview their CMS content changes from Gatsby Cloud"
+description: "Learn how to enable your content editors to preview their CMS content changes from Gatsby Cloud"
 ---
 
 If your site uses a content management system (CMS), Gatsby Cloud provides a tool to quickly preview content changes and collaborate with content editors. When you add a site to Gatsby Cloud, you will find CMS Previews under the "CMS Preview" tab of the Site Overview.
