@@ -1,6 +1,6 @@
 ---
 title: "Deploying to Gatsby Cloud Hosting"
-description: "This tutorial will show you how to deploy your site to Gatsby Cloud hosting."
+description: "Learn how to deploy your site to Gatsby Cloud hosting."
 ---
 
 In this guide, you'll learn how to deploy your site to Gatsby Cloud Hosting.

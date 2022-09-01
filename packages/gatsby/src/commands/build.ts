@@ -87,6 +87,8 @@ module.exports = async function build(
     )
   }
 
+  report.verbose(`Running build in "${process.env.NODE_ENV}" environment`)
+
   await updateInternalSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,
@@ -178,7 +180,7 @@ module.exports = async function build(
     buildActivityTimer.end()
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+  if (shouldGenerateEngines()) {
     const state = store.getState()
     const buildActivityTimer = report.activityTimer(
       `Building Rendering Engines`,
@@ -244,7 +246,7 @@ module.exports = async function build(
     pageConfigActivity.end()
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+  if (shouldGenerateEngines()) {
     const validateEnginesActivity = report.activityTimer(
       `Validating Rendering Engines`,
       {
@@ -282,11 +284,10 @@ module.exports = async function build(
   const { queryIds } = await calculateDirtyQueries({ store })
 
   // Only run queries with mode SSG
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-      query => getPageMode(query) === `SSG`
-    )
-  }
+
+  queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+    query => getPageMode(query) === `SSG`
+  )
 
   // Start saving page.mode in the main process (while queries run in workers in parallel)
   const waitMaterializePageMode = materializePageMode()
@@ -403,7 +404,7 @@ module.exports = async function build(
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+  if (shouldGenerateEngines()) {
     // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
     program.keepPageRenderer = true
   }

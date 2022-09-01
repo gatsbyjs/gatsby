@@ -418,14 +418,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     pluginCreatorId: plugin.id ?? ``,
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    if (page.defer) {
-      internalPage.defer = true
-    }
-    // Note: mode is updated in the end of the build after we get access to all page components,
-    // see materializePageMode in utils/page-mode.ts
-    internalPage.mode = getPageMode(internalPage)
+  if (page.defer) {
+    internalPage.defer = true
   }
+  // Note: mode is updated in the end of the build after we get access to all page components,
+  // see materializePageMode in utils/page-mode.ts
+  internalPage.mode = getPageMode(internalPage)
 
   if (page.ownerNodeId) {
     internalPage.ownerNodeId = page.ownerNodeId

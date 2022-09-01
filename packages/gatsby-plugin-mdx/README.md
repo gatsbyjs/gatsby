@@ -33,7 +33,7 @@ npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
 ## Usage
 
 After installing `gatsby-plugin-mdx` you can add it to your plugins list in your
-`gatsby-config.js`. You'll also want to configure `gatsby-source-filesytem` to point at your `src/pages` directory (even if you don't want to create MDX pages from `src/pages`).
+`gatsby-config.js`. You'll also want to configure `gatsby-source-filesystem` to point at your `src/pages` directory (even if you don't want to create MDX pages from `src/pages`).
 
 ```js:title=gatsby-config.js
 module.exports = {
