@@ -1,6 +1,6 @@
 ---
 title: "Hosting and Data Source Integrations"
-description: "Review the various hosting and CMS platforms available for integration on Gatsby Cloud"
+description: "Learn about the various hosting and CMS platforms available for integration on Gatsby Cloud"
 ---
 
 Gatsby Cloud provides integrations for many popular hosting and content management platforms that help make development with Gatsby even more efficient.
