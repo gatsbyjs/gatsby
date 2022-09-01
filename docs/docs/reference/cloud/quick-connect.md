@@ -1,6 +1,6 @@
 ---
 title: "Quick Connect"
-description: "Automatically configure your CMS integration on Gatsby Cloud using Quick Connect"
+description: "Learn how to automatically configure your CMS integration on Gatsby Cloud using Quick Connect"
 ---
 
 Quick Connect is a Gatsby Cloud feature that handles automatically configuring your content management system (CMS) integration. Quick Connect shows up in three places:
