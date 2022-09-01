@@ -10,6 +10,7 @@ const generatePagesState = pages => {
     state.set(page.path, {
       component: ``,
       componentChunkName: ``,
+      componentPath: `/some-path`,
       mode: `SSG`,
       ...page,
     })
@@ -55,12 +56,14 @@ describe(`requires-writer`, () => {
         {
           component: `component1`,
           componentChunkName: `chunkName1`,
+          componentPath: `/component1`,
           matchPath: `matchPath1`,
           path: `/path1`,
         },
         {
           component: `component2`,
           componentChunkName: `chunkName2`,
+          componentPath: `/component2`,
           path: `/path2`,
         },
       ])
@@ -96,21 +99,26 @@ describe(`requires-writer`, () => {
       const pages = generatePagesState([
         {
           path: `/`,
+          componentPath: `/root--component`,
         },
         {
           path: `/app/`,
           matchPath: `/app/*`,
+          componentPath: `/app--component`,
         },
         {
           path: `/app/projects/`,
           matchPath: `/app/projects/*`,
+          componentPath: `/projects--component`,
         },
         {
           path: `/app/clients/`,
           matchPath: `/app/clients/*`,
+          componentPath: `/client--component`,
         },
         {
           path: `/app/login/`,
+          componentPath: `/login--component`,
         },
       ])
 
@@ -131,20 +139,25 @@ describe(`requires-writer`, () => {
       const pages = generatePagesState([
         {
           path: `/`,
+          componentPath: `/root--component`,
         },
         {
           path: `/app/`,
           matchPath: `/app/*`,
+          componentPath: `/app--component`,
         },
         {
           path: `/app/clients/`,
           matchPath: `/app/clients/*`,
+          componentPath: `/clients--component`,
         },
         {
           path: `/app/clients/static`,
+          componentPath: `/static--component`,
         },
         {
           path: `/app/login/`,
+          componentPath: `/login--component`,
         },
       ])
 
@@ -163,13 +176,16 @@ describe(`requires-writer`, () => {
         {
           path: `/another-custom-404`,
           matchPath: `/*`,
+          componentPath: `/404-2--component`,
         },
         {
           path: `/`,
+          componentPath: `/root--component`,
         },
         {
           path: `/custom-404`,
           matchPath: `/*`,
+          componentPath: `/404--component`,
         },
       ])
 
@@ -186,42 +202,53 @@ describe(`requires-writer`, () => {
     const pagesInput = [
       {
         path: `/`,
+        componentPath: `/root--component`,
       },
       {
         path: `/custom-404`,
         matchPath: `/*`,
+        componentPath: `/404--component`,
       },
       {
         path: `/mp4`,
         matchPath: `/mp1/mp2/mp3/mp4/*`,
+        componentPath: `/mp4--component`,
       },
       {
         path: `/some-page`,
+        componentPath: `/some--component`,
       },
       {
         path: `/mp1/mp2`,
+        componentPath: `/mp2--component`,
       },
       {
         path: `/mp1/with-params`,
         matchPath: `/mp1/:param`,
+        componentPath: `/params--component`,
       },
       {
         path: `/ap1/ap2`,
+        componentPath: `/ap2--component`,
       },
       {
         path: `/mp1/mp2/hello`,
+        componentPath: `/hello--component`,
       },
       {
         path: `/mp1`,
         matchPath: `/mp1/*`,
+        componentPath: `/mp1--component`,
       },
       {
         path: `/mp2`,
         matchPath: `/mp1/mp2/*`,
+        componentPath: `/mp2-star--component`,
       },
       {
         path: `/mp3`,
         matchPath: `/mp1/mp2/mp3/*`,
+        componentPath: `/mp3--component`,
       },
     ]
 
@@ -349,12 +376,14 @@ describe(`requires-writer`, () => {
         {
           component: `component1`,
           componentChunkName: `chunkName1`,
+          componentPath: `/component1`,
           matchPath: `matchPath1`,
           path: `/path1`,
         },
         {
           component: `component2`,
           componentChunkName: `chunkName2`,
+          componentPath: `/component2`,
           path: `/path2`,
         },
       ])
