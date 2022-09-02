@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.7.0/packages/gatsby-script) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Reach router import [#36385](https://github.com/gatsbyjs/gatsby/issues/36385) ([4c752d1](https://github.com/gatsbyjs/gatsby/commit/4c752d1e094de9f9968b48655d9c909c990dcec5))
+
 ## [1.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.6.0/packages/gatsby-script) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
