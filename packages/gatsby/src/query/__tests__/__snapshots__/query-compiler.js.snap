@@ -20,6 +20,7 @@ Map {
           id
         }",
     "path": "mockFile",
+    "templatePath": "mockFile",
     "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -51,6 +52,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -85,6 +87,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -115,6 +118,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
@@ -142,6 +146,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
@@ -153,37 +158,7 @@ Object {
 }
 `;
 
-exports[`actual compiling errors on double root 1`] = `
-Array [
-  Object {
-    "context": Object {
-      "afterCodeFrame": "  1 | query anotherQueryAndMockFileQuery {
-  2 |   allPostsJson {
-  3 |     #...
-  4 |   }
-  5 |   allPostsJson {
-  6 |     #...
-  7 |   }
-  8 | }",
-      "beforeCodeFrame": "   1 | query mockFileQuery {
-   2 |   allPostsJson {
-   3 |     #...
-   4 |   }
-   5 | }
-   6 |
-   7 | query AnotherQuery {
-   8 |   allPostsJson {
-   9 |     #...
-  10 |   }
-  11 | }",
-      "name": "AnotherQuery",
-      "otherName": "mockFileQuery",
-    },
-    "filePath": "mockFile",
-    "id": "85910",
-  },
-]
-`;
+exports[`actual compiling errors on double root 1`] = `Array []`;
 
 exports[`actual compiling errors on double root 2`] = `
 Map {
@@ -192,7 +167,7 @@ Map {
     "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": false,
-    "name": "mockFileQuery",
+    "name": "AnotherQuery",
     "originalText": "query mockFileQuery {
              allPostsJson {
                nodes {
@@ -209,7 +184,8 @@ Map {
             }
           }",
     "path": "mockFile",
-    "text": "query mockFileQuery {
+    "templatePath": "mockFile",
+    "text": "query AnotherQuery {
   allPostsJson {
     nodes {
       id
@@ -236,6 +212,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
   ...AnotherPostsJsonFragment
@@ -279,6 +256,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
