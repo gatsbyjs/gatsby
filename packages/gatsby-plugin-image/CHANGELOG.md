@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.22.0/packages/gatsby-plugin-image) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Make onLoad callback work on first load [#36375](https://github.com/gatsbyjs/gatsby/issues/36375) ([3dfc1ec](https://github.com/gatsbyjs/gatsby/commit/3dfc1ec1c03a962bfdcf3db6ec200883d612d3ad))
+
 ## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.21.0/packages/gatsby-plugin-image) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
