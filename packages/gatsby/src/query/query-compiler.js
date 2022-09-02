@@ -33,6 +33,7 @@ const { store } = require(`../redux`)
 import { actions } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
+import { getPathToLayoutComponent } from "gatsby-core-utils"
 const { default: FileParser } = require(`./file-parser`)
 const {
   graphqlError,
@@ -236,7 +237,11 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
       const name = def.name.value
       let printedAst = null
       if (def.kind === Kind.OPERATION_DEFINITION) {
-        operations.push(def)
+        operations.push({
+          def,
+          filePath,
+          templatePath: getPathToLayoutComponent(filePath),
+        })
       } else if (def.kind === Kind.FRAGMENT_DEFINITION) {
         // Check if we already registered a fragment with this name
         printedAst = print(def)
@@ -277,6 +282,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
         isConfigQuery,
         isFragment: def.kind === Kind.FRAGMENT_DEFINITION,
         hash: hash,
+        templatePath: getPathToLayoutComponent(filePath),
       })
     })
   }
@@ -303,9 +309,9 @@ const processDefinitions = ({
     .map(([name, _]) => name)
 
   for (const operation of operations) {
-    const name = operation.name.value
+    const name = operation.def.name.value
     const originalDefinition = definitionsByName.get(name)
-    const filePath = definitionsByName.get(name).filePath
+    const { filePath, templatePath } = operation
 
     // Check for duplicate page/static queries in the same component.
     // (config query is not a duplicate of page/static query in the component)
@@ -313,20 +319,22 @@ const processDefinitions = ({
     if (processedQueries.has(filePath) && !originalDefinition.isConfigQuery) {
       const otherQuery = processedQueries.get(filePath)
 
-      addError(
-        multipleRootQueriesError(
-          filePath,
-          originalDefinition.def,
-          otherQuery && definitionsByName.get(otherQuery.name).def
+      if (templatePath !== otherQuery.templatePath) {
+        addError(
+          multipleRootQueriesError(
+            filePath,
+            originalDefinition.def,
+            otherQuery && definitionsByName.get(otherQuery.name).def
+          )
         )
-      )
 
-      store.dispatch(
-        actions.queryExtractionGraphQLError({
-          componentPath: filePath,
-        })
-      )
-      continue
+        store.dispatch(
+          actions.queryExtractionGraphQLError({
+            componentPath: filePath,
+          })
+        )
+        continue
+      }
     }
 
     const { usedFragments, missingFragments } =
@@ -359,7 +367,7 @@ const processDefinitions = ({
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
         .map(name => definitionsByName.get(name).def)
-        .concat([operation]),
+        .concat([operation.def]),
     }
 
     const errors = validate(schema, document)
@@ -405,6 +413,7 @@ const processDefinitions = ({
       isStaticQuery: originalDefinition.isStaticQuery,
       isConfigQuery: originalDefinition.isConfigQuery,
       // ensure hash should be a string and not a number
+      templatePath,
       hash: String(originalDefinition.hash),
     }
 
