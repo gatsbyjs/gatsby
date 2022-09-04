@@ -18,6 +18,10 @@ interface IResolveData {
   }
 }
 
+interface IDirective {
+  directive?: string
+}
+
 /**
  * @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L27-L35
  */
@@ -39,6 +43,7 @@ export class PartialHydrationPlugin {
   _manifestPath: string
   _rootFilePath: string
   _references: Array<ClientReferenceDependency> = []
+  _clientModules = new Set<webpack.NormalModule>()
 
   constructor(manifestPath: string, rootFilePath: string) {
     this._manifestPath = manifestPath
@@ -190,8 +195,6 @@ export class PartialHydrationPlugin {
       })
     })
 
-    console.log({ json })
-
     return json
   }
 
@@ -211,8 +214,18 @@ export class PartialHydrationPlugin {
         )
 
         const handler = (parser: javascript.JavascriptParser): void => {
-          parser.hooks.program.tap(this.name, () => {
+          parser.hooks.program.tap(this.name, ast => {
+            const hasClientExportDirective = ast.body.find(
+              statement =>
+                statement.type === `ExpressionStatement` &&
+                (statement as IDirective).directive === `client export`
+            )
+
             const module = parser.state.module
+
+            if (hasClientExportDirective) {
+              this._clientModules.add(module)
+            }
 
             if (module.resource === this._rootFilePath) {
               this._generateClientReferenceChunk(

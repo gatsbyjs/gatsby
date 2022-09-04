@@ -5,7 +5,10 @@ import loader from "./loader"
 const prefetchPathname = loader.enqueue
 
 const StaticQueryContext = React.createContext({})
-const StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
+let StaticQueryServerContext = null
+if (React.createServerContext) {
+  StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
+}
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const finalData = data
@@ -50,7 +53,10 @@ const useStaticQuery = query => {
   let context
 
   // Can we get a better check here?
-  if (Object.keys(StaticQueryServerContext._currentValue).length) {
+  if (
+    StaticQueryServerContext &&
+    Object.keys(StaticQueryServerContext._currentValue).length
+  ) {
     context = React.useContext(StaticQueryServerContext)
   } else {
     context = React.useContext(StaticQueryContext)
