@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
+    helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+code {
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console,
+    monospace;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}

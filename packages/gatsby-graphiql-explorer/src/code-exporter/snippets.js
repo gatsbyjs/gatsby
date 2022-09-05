@@ -1,10 +1,9 @@
-export function removeQueryName(query) {
-  return query.replace(
+export const removeQueryName = query =>
+  query.replace(
     /^[^{(]+([{(])/,
     (_match, openingCurlyBracketsOrParenthesis) =>
       `query ${openingCurlyBracketsOrParenthesis}`
   )
-}
 
 const getQuery = (arg, spaceCount) => {
   const { operationDataList } = arg
@@ -17,7 +16,7 @@ const getQuery = (arg, spaceCount) => {
 }
 
 const pageQuery = {
-  name: `Page query`,
+  name: `Page Query`,
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
   options: [],
@@ -35,8 +34,8 @@ export default Page
 `,
 }
 
-const staticHook = {
-  name: `StaticQuery hook`,
+const useStaticQuery = {
+  name: `useStaticQuery`,
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
   options: [],
@@ -49,28 +48,6 @@ ${getQuery(arg, 4)}
   \`)
   return <pre>{JSON.stringify(data, null, 4)}</pre>
 }
-
-export default ComponentName
-
-`,
-}
-
-const staticQuery = {
-  name: `StaticQuery`,
-  language: `JavaScript`,
-  codeMirrorMode: `jsx`,
-  options: [],
-  generate: arg => `import React from "react"
-import { StaticQuery, graphql } from "gatsby"
-
-const ComponentName = () => (
-  <StaticQuery
-    query={graphql\`
-${getQuery(arg, 6)}
-    \`}
-    render={data => <pre>{JSON.stringify(data, null, 4)}</pre>}
-  ></StaticQuery>
-)
 
 export default ComponentName
 
@@ -108,4 +85,6 @@ ${getQuery(arg, 4)}
 `,
 }
 
-export default [pageQuery, staticHook, staticQuery, createPages]
+const snippets = [pageQuery, useStaticQuery, createPages]
+
+export default snippets
