@@ -1,3 +1,5 @@
+const path = require("path")
+
 module.exports = {
   siteMetadata: {
     siteTitle: `Gatsby MDX Benchmark`,
@@ -12,9 +14,7 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-mdx`,
-      options: {
-        lessBabel: true,
-      },
     },
-  ],
+    !process.env.CI && `gatsby-plugin-webpack-bundle-analyser-v2`,
+  ].filter(Boolean),
 }

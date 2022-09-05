@@ -2186,6 +2186,11 @@ export interface PluginOptionsSchemaJoi {
   // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
   /**
+   * Array of plugin definitions which get resolved automatically
+   */
+  subPlugins(...values: any[]): Schema
+
+  /**
    * Whitelists a value
    */
   allow(...values: any[]): Schema

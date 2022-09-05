@@ -17,6 +17,7 @@ import {
   IComponentWithPageModes,
 } from "../../../util/generate-page-tree"
 import { IRenderPageArgs } from "../../types"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 
 interface IYurnalistActivities {
   [activityId: string]: {
@@ -34,7 +35,9 @@ function generatePageTreeToConsole(
   const root = state.root
   const componentWithPages = new Map<string, IComponentWithPageModes>()
   for (const { componentPath, pages } of state.components.values()) {
-    const pagesByMode = {
+    const layoutComponent = getPathToLayoutComponent(componentPath)
+    const relativePath = path.posix.relative(root, layoutComponent)
+    const pagesByMode = componentWithPages.get(relativePath) || {
       SSG: new Set<string>(),
       DSG: new Set<string>(),
       SSR: new Set<string>(),
@@ -46,10 +49,7 @@ function generatePageTreeToConsole(
       pagesByMode[gatsbyPage!.mode].add(pagePath)
     })
 
-    componentWithPages.set(
-      path.posix.relative(root, componentPath),
-      pagesByMode
-    )
+    componentWithPages.set(relativePath, pagesByMode)
   }
 
   for (const {

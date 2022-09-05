@@ -34,7 +34,7 @@ describe(`Head function export SSR'ed HTML output`, () => {
     expect(noscript.text).toEqual(data.static.noscript)
     expect(style.text).toContain(data.static.style)
     expect(link.attributes.href).toEqual(data.static.link)
-    expect(jsonLD.text).toEqual(data.static.jsonLD)
+    expect(jsonLD.innerHTML).toEqual(data.static.jsonLD)
   })
 
   it(`should work with data from a page query`, () => {

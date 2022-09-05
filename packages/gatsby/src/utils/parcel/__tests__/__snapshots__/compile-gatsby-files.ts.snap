@@ -2,6 +2,7 @@
 
 exports[`gatsby file compilation constructBundler should construct Parcel relative to passed directory 1`] = `
 Object {
+  "cache": undefined,
   "cacheDir": "<PROJECT_ROOT>/packages/gatsby/src/utils/parcel/__tests__/fixtures/js/.cache/.parcel-cache",
   "defaultConfig": "<PROJECT_ROOT>/packages/gatsby-parcel-config/lib/index.json",
   "entries": Array [

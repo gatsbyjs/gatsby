@@ -32,9 +32,9 @@ By the end of this part of the Tutorial, you will be able to:
 
 **Prefer a video?**
 
-If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 5.
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 5. **Please note:** At the time of recording an older version of `gatsby-plugin-mdx` was used and thus the video contents and text contents are different. Please always follow the written instructions. We'll do our best to record a new version in the future, thanks for understanding!
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/k9n9HnRG3Ys?start=554" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -72,7 +72,7 @@ Once you get used to what all the different symbols mean, Markdown can be easier
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks. 
+**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks.
 
 </Announcement>
 
@@ -98,7 +98,7 @@ You'll learn more about how to access the frontmatter for your posts later on.
 
 Add some Markdown content to each of the `.mdx` files you created in your `/blog` directory in Part 4. 
 
-Include frontmatter with fields for the title of each post and the date it was published. (Give each post a different date, to make it easier to add sorting later on.) After the frontmatter, write some post content using some Markdown syntax.
+Include frontmatter with fields for the title of each post, the date it was published, and a [slug](https://developer.mozilla.org/en-US/docs/Glossary/Slug). The slug will be used to construct the final URL of each post. Give each post a different date, to make it easier to add sorting later on. After the frontmatter, write some post content using some Markdown syntax.
 
 Here are some example posts that you can use for inspiration:
 
@@ -106,6 +106,7 @@ Here are some example posts that you can use for inspiration:
 ---
 title: "My First Post"
 date: "2021-07-23"
+slug: "my-first-post"
 ---
 
 This is my first blog post! Isn't it *great*?
@@ -121,6 +122,7 @@ Some of my **favorite** things are:
 ---
 title: "Another Post"
 date: "2021-07-24"
+slug: "another-post"
 ---
 
 Here's another post! It's even better than the first one!
@@ -130,6 +132,7 @@ Here's another post! It's even better than the first one!
 ---
 title: "Yet Another Post"
 date: "2021-07-25"
+slug: "yet-another-post"
 ---
 
 Wow look at all this content. How do they do it?
@@ -146,25 +149,22 @@ Now that you have some MDX content inside your blog posts, it's time set up the 
 
 </Announcement>
 
-The `gatsby-plugin-mdx` plugin provides some new tools for you to use in your site:
-
-* The `allMdx` and `mdx` fields (for your GraphQL queries)
-* An `MDXRenderer` component (for processing and displaying MDX content)
+The `gatsby-plugin-mdx` plugin provides the `allMdx` and `mdx` fields for your GraphQL queries.
 
 To render your posts on the Blog page, you'll complete a few different steps:
 
 1. Install and configure the `gatsby-plugin-mdx` transformer plugin and its dependencies.
 2. Update the Blog page query to use the `allMdx` field from `gatsby-plugin-mdx` instead of `allFile`.
-3. Use the `MDXRenderer` component from `gatsby-plugin-mdx` to render your post's MDX contents in the JSX for your Blog page.
+3. Render your post's excerpt in your Blog page.
 
 
 ### Task: Install and configure the MDX transformer plugin (and dependencies)
 
-The `gatsby-plugin-mdx` package requires a few additional dependencies to run: `@mdx-js/mdx` (which implements MDX) and `@mdx-js/react` (which maps the MDX implementation to React components).
+The `gatsby-plugin-mdx` package requires a one additional dependencies to run: `@mdx-js/react` which maps the MDX implementation to React components.
 
-1. In your terminal, run the command below to install `gatsby-plugin-mdx` and its dependencies. (This adds all three packages to the `dependencies` object in your `package.json` file and to your `node_modules` directory.)
+1. In your terminal, run the command below to install `gatsby-plugin-mdx` and its dependencies. (This adds all two packages to the `dependencies` object in your `package.json` file and to your `node_modules` directory.)
     ```shell
-    npm install gatsby-plugin-mdx @mdx-js/mdx@v1 @mdx-js/react@v1
+    npm install gatsby-plugin-mdx @mdx-js/react
     ```
 
 2. Add `gatsby-plugin-mdx` to the `plugins` array in your `gatsby-config.js` file, so that Gatsby knows to use the plugin when building your site.
@@ -190,7 +190,7 @@ The `gatsby-plugin-mdx` package requires a few additional dependencies to run: `
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Tip:** There are a variety of [remark](https://remark.js.org/) plugins that you can use to add extra features to your Markdown. You can configure them using the [`gatsbyRemarkPlugins`](/plugins/gatsby-plugin-mdx/#gatsby-remark-plugins) option when you configure `gatsby-plugin-mdx` in your `gatsby-config.js` file.
+**Tip:** There are a variety of [remark](https://remark.js.org/) plugins that you can use to add extra features to your Markdown. You can configure them using the [`gatsbyRemarkPlugins`](/plugins/gatsby-plugin-mdx/#gatsby-remark--plugins) option when you configure `gatsby-plugin-mdx` in your `gatsby-config.js` file.
 
 Here are some popular remark plugins:
 
@@ -364,7 +364,7 @@ query MyQuery {
     }
     ```
 
-6. The last thing you need to add to your query is the contents of each post! To do that, add the `body` field to your query.
+6. The last thing you need to add to your query is a preview of each posts content! To do that, add the `excerpt` field to your query.
     ```graphql
     query MyQuery {
       allMdx(sort: {fields: frontmatter___date, order: DESC}) {
@@ -374,15 +374,15 @@ query MyQuery {
             title
           }
           id
-          body
+          excerpt
         }
       }
     }
     ```
 
-7. When you run your query, the `body` field for each node should look something like the data shown below. That's a lot of information! The `body` field actually contains the *compiled MDX content* for your file. It might not be readable for humans, but it's the format that the `MDXRenderer` component understands. (You'll get to `MDXRenderer` in a moment.)
+7. When you run your query, the `excerpt` field for each node should look something like the data shown below.
     ```json
-    "body": "var _excluded = [\"components\"];\n\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }\n\nfunction _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }\n\n/* @jsxRuntime classic */\n\n/* @jsx mdx */\nvar _frontmatter = {\n  \"title\": \"Yet Another Post\",\n  \"date\": \"2021-07-25\"\n};\nvar layoutProps = {\n  _frontmatter: _frontmatter\n};\nvar MDXLayout = \"wrapper\";\nreturn function MDXContent(_ref) {\n  var components = _ref.components,\n      props = _objectWithoutProperties(_ref, _excluded);\n\n  return mdx(MDXLayout, _extends({}, layoutProps, props, {\n    components: components,\n    mdxType: \"MDXLayout\"\n  }), mdx(\"p\", null, \"Wow look at all this content. How do they do it?\"));\n}\n;\nMDXContent.isMDXComponent = true;"
+    "excerpt": "Wow look at all this content. How do they do it?"
     ```
 
 Now that you have your GraphQL query all set up, it's time to tackle the last piece of the puzzle: rendering your posts in the Blog page.
@@ -410,7 +410,7 @@ query MyQuery {
 </Announcement>
 
 
-### Task: Use the `MDXRenderer` component to render your post's contents in your Blog page
+### Task: Render your post's excerpt in your Blog page
 
 Now that your GraphQL query is all set up, it's time to replace the page query in your Blog page component.
 
@@ -419,6 +419,7 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
     import * as React from 'react'
     import { graphql } from 'gatsby'
     import Layout from '../components/layout'
+    import Seo from '../../components/seo'
 
     const BlogPage = ({ data }) => {
       return (
@@ -436,12 +437,14 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
               title
             }
             id
-            body
+            excerpt
           }
         }
       }
     `
     // highlight-end
+
+    export const Head = () => <Seo title="My Blog Posts" />
 
     export default BlogPage
     ```
@@ -478,11 +481,13 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
               date(formatString: "MMMM DD, YYYY")
             }
             id
-            body
+            excerpt
           }
         }
       }
     `
+
+    export const Head = () => <Seo title="My Blog Posts" />
 
     export default BlogPage
     ```
@@ -491,51 +496,13 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
 
 ![A screenshot of the Blog page in a web browser. Underneath the page heading, there are three posts listed: "Yet Another Post" (posted July 25, 2021), "Another Post" (posted July 24, 2021), and "My First Post" (posted July 23, 2021).](./blog-page-with-frontmatter.png)
 
-4. The final step in this part of the Tutorial is to render the actual contents of your MDX blog posts. To do that, you'll need to use a component from `gatsby-plugin-mdx` called `MDXRenderer`. Start by importing the component into your Blog page:
+4. The final step in this part of the Tutorial is to render the excerpt of your MDX blog posts. In the JSX for your Blog page render the value of the `excerpt` field:
 
 ```js:title=src/pages/blog.js
 import * as React from 'react'
 import { graphql } from 'gatsby'
-import { MDXRenderer } from 'gatsby-plugin-mdx' // highlight-line
 import Layout from '../components/layout'
-
-// ...
-```
-
-<Collapsible
-  summary={<h4>The <code>MDXRenderer</code> component</h4>}
->
-
-`MDXRenderer` is a component included in the `gatsby-plugin-mdx` plugin that you can use to render the contents of a `.mdx` file.
-
-The `MDXRenderer` uses the `children` prop, similar to the `Layout` component you created in [Part 2](/docs/tutorial/part-2/). It expects to receive compiled MDX between its opening and closing tags. You can pass in the `body` field from an MDX node. 
-
-<Announcement style={{marginBottom: "1.5rem"}}>
-
-**Quick Refresher:** Need a reminder of how the `children` prop works? Refer back to the ["Create a reusable layout component" section in Part 2](/docs/tutorial/part-2/#create-a-reusable-layout-component).
-
-</Announcement>
-
-Here's a quick example of how to import and use the `MDXRenderer` component:
-
-```js
-import { MDXRenderer } from 'gatsby-plugin-mdx'
-
-// Use this in the JSX for your component
-<MDXRenderer>
-  { node.body }
-</MDXRenderer>
-```
-
-</Collapsible>
-
-5. In the JSX for your Blog page, use the `MDXRenderer` component to wrap the contents of the `body` field for each node:
-
-```js:title=src/pages/blog.js
-import * as React from 'react'
-import { graphql } from 'gatsby'
-import { MDXRenderer } from 'gatsby-plugin-mdx'
-import Layout from '../components/layout'
+import Seo from '../../components/seo'
 
 const BlogPage = ({ data }) => {
   return (
@@ -546,9 +513,7 @@ const BlogPage = ({ data }) => {
             <h2>{node.frontmatter.title}</h2>
             <p>Posted: {node.frontmatter.date}</p>
             {/* highlight-start */}
-            <MDXRenderer>
-              {node.body}
-            </MDXRenderer>
+            <p>{node.excerpt}</p>
             {/* highlight-end */}
           </article>
         ))
@@ -566,23 +531,25 @@ export const query = graphql`
           date(formatString: "MMMM DD, YYYY")
         }
         id
-        body
+        excerpt
       }
     }
   }
 `
 
+export const Head = () => <Seo title="My Blog Posts" />
+
 export default BlogPage
 ```
 
-6. When you refresh your Blog page in the web browser, you should see your post contents rendered!
-    ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the contents of the blog post are also being rendered.](./blog-page-with-full-posts.png)
+5. When you refresh your Blog page in the web browser, you should see your post excerpt rendered!
+    ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the excerpt of the blog post are also being rendered.](./blog-page-with-full-posts.png)
 
 Nice work! Your site now has a blog page with actual content.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 
@@ -630,7 +597,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-Right now, all your blog posts and their contents are being rendered in one long page. It would be better if each post lived on its own page, and then the Blog page could link out to all the different posts.
+Right now, all your blog posts and their excerpts are being rendered in one long page. It would be better if each post lived on its own page, and then the Blog page could link out to all the different posts.
 
 In Part 6, you'll learn how to use Gatsby's filesystem route API to dynamically create new pages for each of your blog posts.
 

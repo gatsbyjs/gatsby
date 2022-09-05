@@ -22,7 +22,7 @@ By the end of this part of the Tutorial, you will be able to:
 
 If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 7.
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NQj3H2Z9vn0?start=229" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -90,6 +90,7 @@ For more detailed information, refer to the doc on [Preoptimizing Your Images](/
 ---
 title: "My First Post"
 date: "2021-07-23"
+slug: "my-first-post"
 // highlight-start
 hero_image: "./christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg"
 hero_image_alt: "A gray pitbull relaxing on the sidewalk with its tongue hanging out"
@@ -105,6 +106,7 @@ hero_image_credit_link: "https://unsplash.com/photos/ocZ-_Y7-Ptg"
 ---
 title: "Another Post"
 date: "2021-07-24"
+slug: "another-post"
 // highlight-start
 hero_image: "./anthony-duran-eLUBGqKGdE4-unsplash.jpg"
 hero_image_alt: "A grey and white pitbull wading happily in a pool"
@@ -120,6 +122,7 @@ hero_image_credit_link: "https://unsplash.com/photos/eLUBGqKGdE4"
 ---
 title: "Yet Another Post"
 date: "2021-07-25"
+slug: "yet-another-post"
 // highlight-start
 hero_image: "./jane-almon-7rriIaBH6JY-unsplash.jpg"
 hero_image_alt: "A white pitbull wearing big googly-eye glasses"
@@ -185,7 +188,6 @@ query ($id: String) {
       title
       date(formatString: "MMMM D, YYYY")
     }
-    body
   }
 }
 ```
@@ -198,7 +200,6 @@ query ($id: String) {
         "title": "My First Post",
         "date": "July 23, 2021",
       },
-      "body": "..."
     }
   },
   "extensions": {}
@@ -225,7 +226,6 @@ query ($id: String) {
       hero_image_credit_text
       // highlight-end
     }
-    body
   }
 }
 ```
@@ -241,7 +241,6 @@ query ($id: String) {
         "hero_image_credit_link": "https://unsplash.com/photos/ocZ-_Y7-Ptg",
         "hero_image_credit_text": "Christopher Ayme"
       },
-      "body": "..."
     }
   },
   "extensions": {}
@@ -267,7 +266,6 @@ query ($id: String) {
       }
       // highlight-end
     }
-    body
   }
 }
 ```
@@ -318,8 +316,7 @@ Gatsby can tell that the `hero_image` field from your MDX frontmatter matches a 
           ]
         }
         // highlight-end
-      },
-      "body": "..."
+      }
     }
   },
   "extensions": {}
@@ -343,10 +340,10 @@ For more information, see the [`gatsby-plugin-image` Reference Guide](/docs/refe
 Once you have your GraphQL query set up, you can add it to your blog post page template.
 
 1. Replace your existing page query with the query you built in GraphiQL that includes the hero image frontmatter fields.
-    ```js:title=src/pages/blog/{mdx.slug}.js
+    ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     // imports
 
-    const BlogPost = ({ data }) => {
+    const BlogPost = ({ data, children }) => {
       return (
         // ...
       )
@@ -356,7 +353,6 @@ Once you have your GraphQL query set up, you can add it to your blog post page t
     export const query = graphql`
       query($id: String) {
         mdx(id: {eq: $id}) {
-          body
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
@@ -374,27 +370,29 @@ Once you have your GraphQL query set up, you can add it to your blog post page t
     `
     // highlight-end
 
+    export const Head = ({ data }) => <Seo title={data.mdx.frontmatter.title} />
+
     export default BlogPost
     ```
 
 2. Import the `GatsbyImage` component and the `getImage` helper function from the `gatsby-plugin-image` package.
 
-```js:title=src/pages/blog/{mdx.slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter_slug}.js
 import * as React from 'react'
 import { graphql } from 'gatsby'
-import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image' // highlight-line
 import Layout from '../../components/layout'
+import Seo from '../../components/seo'
 
 // ...
 ```
 
 2. Use the `getImage` helper function to get back the `gatsbyImageData` object from the `hero_image` field.
 
-```js:title=src/pages/blog/{mdx.slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
 // imports
 
-const BlogPost = ({ data }) => {
+const BlogPost = ({ data, children }) => {
   const image = getImage(data.mdx.frontmatter.hero_image) // highlight-line
 
   return (
@@ -416,7 +414,7 @@ Without the `getImage` helper function, you'd have to type out `data.mdx.frontma
 3. Use the `GatsbyImage` component from `gatsby-plugin-image` to render the hero image data. You should pass `GatsbyImage` two props:
     * `image`: the `gatsbyImageData` object for your `hero_image` field
     * `alt`: the alternative text for your image, from the `hero_image_alt` field
-    ```js:title=src/pages/blog/{mdx.slug}.js
+    ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     return (
       <Layout pageTitle={data.mdx.frontmatter.title}>
         <p>Posted: {data.mdx.frontmatter.date}</p>
@@ -426,9 +424,7 @@ Without the `getImage` helper function, you'd have to type out `data.mdx.frontma
           alt={data.mdx.frontmatter.hero_image_alt}
         />
         {/* highlight-end */}
-        <MDXRenderer>
-          {data.mdx.body}
-        </MDXRenderer>
+        {children}
       </Layout>
     )
     ```
@@ -454,10 +450,10 @@ Remember, Gatsby's `Link` component only gives performance benefits for internal
 
 
 
-```js:title=src/pages/blog/{mdx.slug}.js
+```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
 // imports
 
-const BlogPost = ({ data }) => {
+const BlogPost = ({ data, children }) => {
   const image = getImage(data.mdx.frontmatter.hero_image)
 
   return (
@@ -475,9 +471,7 @@ const BlogPost = ({ data }) => {
         </a>
       </p>
       {/* highlight-end */}
-      <MDXRenderer>
-        {data.mdx.body}
-      </MDXRenderer>
+      {children}
     </Layout>
   )
   }
@@ -485,6 +479,8 @@ const BlogPost = ({ data }) => {
 export const query = graphql`
   ...
 `
+
+export const Head = ({ data }) => <Seo title={data.mdx.frontmatter.title} />
 
 export default BlogPost
 ```
@@ -501,7 +497,7 @@ Try removing the `{" "}` and see what happens. The paragraph text should end up 
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 

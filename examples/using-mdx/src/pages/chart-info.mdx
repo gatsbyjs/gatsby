@@ -1,0 +1,154 @@
+---
+title: Chart Info
+slug: /chart-info
+---
+
+export const Head = () => <title>Chart Info</title>
+
+import { ResponsiveLine } from "@nivo/line"
+
+## Nivo Charts examples in MDX
+
+This file is written in MDX and has a live React component you can interact with; try hovering over the data to get more granular information.
+
+You can also access data from the frontmatter.
+
+Title: {props.pageContext.frontmatter.title}
+
+### Data represented in a Line Chart
+
+<div style={{ height: "40vh" }} id="line-chart">
+  <ResponsiveLine
+    data={lineData}
+    margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+    xScale={{ type: "point" }}
+    yScale={{
+      type: "linear",
+      min: "auto",
+      max: "auto",
+      stacked: true,
+      reverse: false,
+    }}
+    yFormat=" >-.2f"
+    axisTop={null}
+    axisRight={null}
+    axisBottom={{
+      orient: "bottom",
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 0,
+      legend: "Year",
+      legendOffset: 36,
+      legendPosition: "middle",
+    }}
+    axisLeft={{
+      orient: "left",
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 0,
+      legend: "Spend in MM",
+      legendOffset: -40,
+      legendPosition: "middle",
+    }}
+    pointSize={10}
+    pointColor={{ theme: "background" }}
+    pointBorderWidth={2}
+    pointLabelYOffset={-12}
+    useMesh={true}
+    legends={[
+      {
+        anchor: "bottom-right",
+        direction: "column",
+        justify: false,
+        translateX: 100,
+        translateY: 0,
+        itemsSpacing: 0,
+        itemDirection: "left-to-right",
+        itemWidth: 80,
+        itemHeight: 20,
+        itemOpacity: 0.75,
+        symbolSize: 12,
+        symbolShape: "circle",
+        symbolBorderColor: "rgba(0, 0, 0, .5)",
+        effects: [
+          {
+            on: "hover",
+            style: {
+              itemBackground: "rgba(0, 0, 0, .03)",
+              itemOpacity: 1,
+            },
+          },
+        ],
+      },
+    ]}
+  />
+</div>
+
+export const lineData = [
+  {
+    id: "InApp",
+    data: [
+      {
+        x: "2014",
+        y: 29,
+      },
+      {
+        x: "2015",
+        y: 30,
+      },
+      {
+        x: "2016",
+        y: 38,
+      },
+      {
+        x: "2017",
+        y: 36,
+      },
+      {
+        x: "2018",
+        y: 35,
+      },
+      {
+        x: "2019",
+        y: 32,
+      },
+      {
+        x: "2020",
+        y: 9,
+      },
+    ],
+  },
+  {
+    id: "Advertising",
+    data: [
+      {
+        x: "2014",
+        y: 17,
+      },
+      {
+        x: "2015",
+        y: 9,
+      },
+      {
+        x: "2016",
+        y: 10,
+      },
+      {
+        x: "2017",
+        y: 14,
+      },
+      {
+        x: "2018",
+        y: 12,
+      },
+      {
+        x: "2019",
+        y: 3,
+      },
+      {
+        x: "2020",
+        y: 4,
+      },
+    ],
+  },
+]

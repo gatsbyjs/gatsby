@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.22.0/packages/gatsby-cli) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- preserve verbosity in spawned child processes [#36399](https://github.com/gatsbyjs/gatsby/issues/36399) ([977a211](https://github.com/gatsbyjs/gatsby/commit/977a21130ba074eb6d98d260c68028be339bf96d))
+
+#### Chores
+
+- Remove unused deps [#36368](https://github.com/gatsbyjs/gatsby/issues/36368) ([8bad1a7](https://github.com/gatsbyjs/gatsby/commit/8bad1a7a612c121fd4c8965c76cf7a0d87fbc3fa))
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.21.0/packages/gatsby-cli) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Panic on gatsby-node.jsx/gatsby-node.tsx [#36308](https://github.com/gatsbyjs/gatsby/issues/36308) ([0ee492c](https://github.com/gatsbyjs/gatsby/commit/0ee492c8bf11917dc08b16acebe92bb752bdc3b7))
+- Add DEV_SSR note to 95312 error [#36295](https://github.com/gatsbyjs/gatsby/issues/36295) ([db531f8](https://github.com/gatsbyjs/gatsby/commit/db531f86f9e89d1da72d44399ad5fb72092be454))
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.20.0/packages/gatsby-cli) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- Add DEV_SSR note to 95312 error [#36295](https://github.com/gatsbyjs/gatsby/issues/36295) [#36300](https://github.com/gatsbyjs/gatsby/issues/36300) ([718d693](https://github.com/gatsbyjs/gatsby/commit/718d69319ea37acb078b0bfe9a94ebe56394264d))
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
 ## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.19.0/packages/gatsby-cli) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
