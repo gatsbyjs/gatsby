@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.22.0/packages/gatsby-remark-images) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Chores
+
+- bump min potrace version [#36443](https://github.com/gatsbyjs/gatsby/issues/36443) ([0d896ae](https://github.com/gatsbyjs/gatsby/commit/0d896aefa5db6a1929d9982fdcb5a7780ecc0794))
+
 ## [6.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.21.0/packages/gatsby-remark-images) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)

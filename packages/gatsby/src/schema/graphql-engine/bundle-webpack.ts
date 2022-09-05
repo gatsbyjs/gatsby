@@ -86,8 +86,10 @@ export async function createGraphqlEngineBundle(
       mod.builtinModules.reduce((acc, builtinModule) => {
         if (builtinModule === `fs`) {
           acc[builtinModule] = `global _actualFsWrapper`
+          acc[`node:${builtinModule}`] = `global _actualFsWrapper`
         } else {
           acc[builtinModule] = `commonjs ${builtinModule}`
+          acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`
         }
 
         return acc

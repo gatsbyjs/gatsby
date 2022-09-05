@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.16.0/packages/gatsby-plugin-utils) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) ([65739fc](https://github.com/gatsbyjs/gatsby/commit/65739fcc1af12d0f878820a589de7dde5964b93d))
+
+#### Chores
+
+- bump min potrace version [#36443](https://github.com/gatsbyjs/gatsby/issues/36443) ([0d896ae](https://github.com/gatsbyjs/gatsby/commit/0d896aefa5db6a1929d9982fdcb5a7780ecc0794))
+
 ## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.15.0/packages/gatsby-plugin-utils) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
