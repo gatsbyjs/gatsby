@@ -241,6 +241,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
           def,
           filePath,
           templatePath: getPathToLayoutComponent(filePath),
+          hash,
         })
       } else if (def.kind === Kind.FRAGMENT_DEFINITION) {
         // Check if we already registered a fragment with this name
@@ -313,30 +314,6 @@ const processDefinitions = ({
     const originalDefinition = definitionsByName.get(name)
     const { filePath, templatePath } = operation
 
-    // Check for duplicate page/static queries in the same component.
-    // (config query is not a duplicate of page/static query in the component)
-    // TODO: make sure there is at most one query type per component (e.g. one config + one page)
-    if (processedQueries.has(filePath) && !originalDefinition.isConfigQuery) {
-      const otherQuery = processedQueries.get(filePath)
-
-      if (templatePath !== otherQuery.templatePath) {
-        addError(
-          multipleRootQueriesError(
-            filePath,
-            originalDefinition.def,
-            otherQuery && definitionsByName.get(otherQuery.name).def
-          )
-        )
-
-        store.dispatch(
-          actions.queryExtractionGraphQLError({
-            componentPath: filePath,
-          })
-        )
-        continue
-      }
-    }
-
     const { usedFragments, missingFragments } =
       determineUsedFragmentsForDefinition(
         originalDefinition,
@@ -371,6 +348,7 @@ const processDefinitions = ({
     }
 
     const errors = validate(schema, document)
+
     if (errors && errors.length) {
       for (const error of errors) {
         const { formattedMessage, message } = graphqlError(
@@ -404,9 +382,37 @@ const processDefinitions = ({
       continue
     }
 
+    const printedDocument = print(document)
+    // Check for duplicate page/static queries in the same component.
+    // (config query is not a duplicate of page/static query in the component)
+    // TODO: make sure there is at most one query type per component (e.g. one config + one page)
+    if (processedQueries.has(filePath) && !originalDefinition.isConfigQuery) {
+      const otherQuery = processedQueries.get(filePath)
+
+      if (
+        templatePath !== otherQuery.templatePath ||
+        printedDocument !== otherQuery.text
+      ) {
+        addError(
+          multipleRootQueriesError(
+            filePath,
+            originalDefinition.def,
+            otherQuery && definitionsByName.get(otherQuery.name).def
+          )
+        )
+
+        store.dispatch(
+          actions.queryExtractionGraphQLError({
+            componentPath: filePath,
+          })
+        )
+        continue
+      }
+    }
+
     const query = {
       name,
-      text: print(document),
+      text: printedDocument,
       originalText: originalDefinition.text,
       path: filePath,
       isHook: originalDefinition.isHook,
