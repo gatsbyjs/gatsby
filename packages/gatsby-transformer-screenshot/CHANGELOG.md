@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.22.0/packages/gatsby-transformer-screenshot) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.21.0/packages/gatsby-transformer-screenshot) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update dependency aws-sdk to ^2.1185.0 [#36280](https://github.com/gatsbyjs/gatsby/issues/36280) ([ece58dc](https://github.com/gatsbyjs/gatsby/commit/ece58dcc5cba4af4bf75131722c64082160b9832))
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.20.0/packages/gatsby-transformer-screenshot) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.19.0/packages/gatsby-transformer-screenshot) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Chores
+
+- update dependency aws-sdk to ^2.1166.0 [#36037](https://github.com/gatsbyjs/gatsby/issues/36037) ([f298e44](https://github.com/gatsbyjs/gatsby/commit/f298e44b3169dfa3e3c69845d3b705e637038fb0))
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.18.0/packages/gatsby-transformer-screenshot) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Chores
+
+- update dependency aws-sdk to ^2.1146.0 [#34982](https://github.com/gatsbyjs/gatsby/issues/34982) ([00f3db6](https://github.com/gatsbyjs/gatsby/commit/00f3db6b45d6876219284bdeece97d8d2a05e60d))
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.17.0/packages/gatsby-transformer-screenshot) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.16.0/packages/gatsby-transformer-screenshot) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

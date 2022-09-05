@@ -116,6 +116,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   //    the watcher will use this data to delete the pages if the query changes significantly.
   const paths: Array<string> = []
   nodes.forEach((node: Record<string, Record<string, unknown>>) => {
+    const contentFilePath = node.internal?.contentFilePath
     // URL path for the component and node
     const { derivedPath, errors } = derivePath(
       filePath,
@@ -141,10 +142,14 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
     const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
+    const componentPath = contentFilePath
+      ? `${absolutePath}?__contentFilePath=${contentFilePath}`
+      : absolutePath
+
     actions.createPage({
       path: modifiedPath,
       matchPath,
-      component: absolutePath,
+      component: componentPath,
       context: {
         ...nodeParams,
         __params: params,

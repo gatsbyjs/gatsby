@@ -11,12 +11,10 @@
     "gatsby-plugin-less": "next",
     "gatsby-plugin-manifest": "next",
     "gatsby-plugin-offline": "next",
-    "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sass": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-stylus": "next",
     "gatsby-remark-images": "next",
-    "gatsby-seo": "^0.1.0",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-json": "next",
     "gatsby-transformer-remark": "next",
@@ -25,7 +23,6 @@
     "prop-types": "^15.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0",
     "sass": "^1.32.8"
   },
   "keywords": [

@@ -25,7 +25,7 @@ import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
 import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
-const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
+import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -249,7 +249,6 @@ module.exports = async (
             new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
-            plugins.eslintGraphqlSchemaReload(),
             new StaticQueryMapper(store),
           ])
           .filter(Boolean)
@@ -266,12 +265,10 @@ module.exports = async (
         }
 
         const isCustomEslint = hasLocalEslint(program.directory)
-        // get schema to pass to eslint config and program for directory
-        const { schema } = store.getState()
 
         // if no local eslint config, then add gatsby config
         if (!isCustomEslint) {
-          configPlugins.push(plugins.eslint(schema))
+          configPlugins.push(plugins.eslint())
         }
 
         // Enforce fast-refresh rules even with local eslint config
@@ -349,23 +346,23 @@ module.exports = async (
         resolve: {
           byDependency: {
             esm: {
-              fullySpecified: false
-            }
-          }
-        }
+              fullySpecified: false,
+            },
+          },
+        },
       },
       {
         test: /\.js$/i,
         descriptionData: {
-          type: `module`
+          type: `module`,
         },
         resolve: {
           byDependency: {
             esm: {
-              fullySpecified: false
-            }
-          }
-        }
+              fullySpecified: false,
+            },
+          },
+        },
       },
       rules.js({
         modulesThatUseGatsby,
@@ -383,10 +380,15 @@ module.exports = async (
       {
         test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
-        use: [{
-          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
-        }],
-      }
+        use: [
+          {
+            loader: require.resolve(
+              `./reach-router-add-basecontext-export-loader`
+            ),
+          },
+        ],
+      },
+
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
@@ -723,13 +725,11 @@ module.exports = async (
   if (stage === `build-html` || stage === `develop-html`) {
     // externalize react, react-dom when develop-html or build-html(when not generating engines)
     const shouldMarkPackagesAsExternal =
-      stage === `develop-html` ||
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `develop-html` || !shouldGenerateEngines()
 
     // tracking = build-html (when not generating engines)
     const shouldTrackBuiltins =
-      stage === `build-html` &&
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `build-html` && !shouldGenerateEngines()
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets

@@ -1,5 +1,5 @@
 import * as React from "react"
-import StackTrace from "stack-trace"
+import ErrorStackParser from "error-stack-parser"
 import { Overlay, Header, HeaderOpenClose, Body } from "./overlay"
 import { useStackFrame } from "./hooks"
 import { CodeFrame } from "./code-frame"
@@ -7,14 +7,17 @@ import { getCodeFrameInformation, openInEditor } from "../utils"
 import { Accordion, AccordionItem } from "./accordion"
 
 function WrappedAccordionItem({ error, open }) {
-  const stacktrace = StackTrace.parse(error)
+  const stacktrace = ErrorStackParser.parse(error)
   const codeFrameInformation = getCodeFrameInformation(stacktrace)
-  const filePath = codeFrameInformation?.moduleId
+
+  const modulePath = codeFrameInformation?.moduleId
   const lineNumber = codeFrameInformation?.lineNumber
   const columnNumber = codeFrameInformation?.columnNumber
   const name = codeFrameInformation?.functionName
+  // With the introduction of Metadata management the modulePath can have a resourceQuery that needs to be removed first
+  const filePath = modulePath.replace(/(\?|&)export=(default|head)$/, ``)
 
-  const res = useStackFrame({ moduleId: filePath, lineNumber, columnNumber })
+  const res = useStackFrame({ moduleId: modulePath, lineNumber, columnNumber })
   const line = res.sourcePosition?.line
 
   const Title = () => {

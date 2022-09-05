@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.22.0/packages/create-gatsby) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Chores
+
+- Remove unused deps [#36368](https://github.com/gatsbyjs/gatsby/issues/36368) ([8bad1a7](https://github.com/gatsbyjs/gatsby/commit/8bad1a7a612c121fd4c8965c76cf7a0d87fbc3fa))
+
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.21.0/packages/create-gatsby) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.20.0/packages/create-gatsby) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- Remove gatsby-plugin-react-helmet [#36222](https://github.com/gatsbyjs/gatsby/issues/36222) ([1eef8e0](https://github.com/gatsbyjs/gatsby/commit/1eef8e080518a66788f4b4c88e2c46cbd184c040))
+
+## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.19.0/packages/create-gatsby) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Publish some packages as ESM & CJS [#36012](https://github.com/gatsbyjs/gatsby/issues/36012) ([5bd3063](https://github.com/gatsbyjs/gatsby/commit/5bd3063a1e72c6f98447bfac2bf767cca781330b))
+
+### [2.18.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.18.1/packages/create-gatsby) (2022-07-12)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.18.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.18.0/packages/create-gatsby) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package create-gatsby
+
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.17.0/packages/create-gatsby) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package create-gatsby
+
 ## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.16.0/packages/create-gatsby) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

@@ -17,7 +17,7 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen"
+export type AvailableFeatures = "image-cdn" | "graphql-typegen" | "content-file-path"
 
 export {
   default as Link,
@@ -151,6 +151,35 @@ export type PageProps<
 }
 
 /**
+ * A props object passed into the Head function for [Gatsby Head API](https://gatsby.dev/gatsby-head).
+ */
+export type HeadProps<DataType = object, PageContextType = object> = {
+  location: {
+    /**
+     * Returns the Location object's URL's path.
+     */
+    pathname: string;
+  }
+  /** The URL parameters when the page has a `matchPath` */
+  params: Record<string, string>
+  /**
+   * Data passed into the page via an exported GraphQL query.
+   */
+  data: DataType
+  /**
+   * A context object which is passed in during the creation of the page.
+   */
+  pageContext: PageContextType
+}
+
+/**
+ * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
+ */
+ export type HeadFC<DataType = object, PageContextType = object> = (
+  props: HeadProps<DataType, PageContextType>
+) => JSX.Element
+
+/**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
 export type GetServerDataProps = {
@@ -229,6 +258,7 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 export interface GraphQLTypegenOptions {
   typesOutputPath?: string
+  generateOnBuild?: boolean
 }
 
 /**
@@ -473,7 +503,7 @@ export interface GatsbyNode<
     args: PreprocessSourceArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
-  ): void | Promise<void>
+  ): void | string | Promise<void | string>
 
   /**
    * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
@@ -930,6 +960,7 @@ export interface PreInitArgs extends ParentSpanPluginArgs {
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
+  webhookBody: any
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
@@ -1190,7 +1221,7 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#deletePage */
+  /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createNode */
@@ -1604,6 +1635,7 @@ export interface NodeInput {
     content?: string
     contentDigest: string
     description?: string
+    contentFilePath?: string
   }
   [key: string]: unknown
 }

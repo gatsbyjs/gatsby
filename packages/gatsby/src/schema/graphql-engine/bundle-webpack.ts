@@ -8,6 +8,9 @@ import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
+import { schemaCustomizationAPIs } from "./print-plugins"
+import type { GatsbyNodeAPI } from "../../redux/types"
+import * as nodeApis from "../../utils/api-node-docs"
 
 type Reporter = typeof reporter
 
@@ -20,6 +23,16 @@ const cacheLocation = path.join(
   `webpack`,
   `query-engine`
 )
+
+function getApisToRemoveForQueryEngine(): Array<GatsbyNodeAPI> {
+  const apisToKeep = new Set(schemaCustomizationAPIs)
+  apisToKeep.add(`onPluginInit`)
+
+  const apisToRemove = (Object.keys(nodeApis) as Array<GatsbyNodeAPI>).filter(
+    api => !apisToKeep.has(api)
+  )
+  return apisToRemove
+}
 
 export async function createGraphqlEngineBundle(
   rootDir: string,
@@ -73,8 +86,10 @@ export async function createGraphqlEngineBundle(
       mod.builtinModules.reduce((acc, builtinModule) => {
         if (builtinModule === `fs`) {
           acc[builtinModule] = `global _actualFsWrapper`
+          acc[`node:${builtinModule}`] = `global _actualFsWrapper`
         } else {
           acc[builtinModule] = `commonjs ${builtinModule}`
+          acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`
         }
 
         return acc
@@ -104,7 +119,13 @@ export async function createGraphqlEngineBundle(
               use: [
                 assetRelocatorUseEntry,
                 {
-                  loader: require.resolve(`./webpack-remove-apis-loader`),
+                  loader: require.resolve(
+                    `../../utils/webpack/loaders/webpack-remove-exports-loader`
+                  ),
+                  options: {
+                    remove: getApisToRemoveForQueryEngine(),
+                    jsx: false,
+                  },
                 },
               ],
             },
@@ -161,10 +182,12 @@ export async function createGraphqlEngineBundle(
       },
     },
     plugins: [
+      new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
       new webpack.DefinePlugin({
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
         "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
+        "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),

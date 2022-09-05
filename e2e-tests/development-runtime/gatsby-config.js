@@ -1,3 +1,7 @@
+const {
+  data: headFunctionExportData,
+} = require(`./shared-data/head-function-export.js`)
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
@@ -8,13 +12,14 @@ module.exports = {
     social: {
       twitter: `kylemathews`,
     },
+    // Separate to avoid needing to change other tests that rely on site metadata
+    headFunctionExport: headFunctionExportData.queried,
   },
   graphqlTypegen: true,
   flags: {
     DEV_SSR: false,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -63,5 +68,8 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
   ],
-  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
+  partytownProxiedURLs: [
+    `https://unpkg.com/three@0.139.1/build/three.js`,
+    `http://localhost:8000/used-by-off-main-thread-2.js`,
+  ],
 }

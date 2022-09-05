@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.22.0/packages/gatsby-transformer-sharp) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Chores
+
+- bump min potrace version [#36443](https://github.com/gatsbyjs/gatsby/issues/36443) ([0d896ae](https://github.com/gatsbyjs/gatsby/commit/0d896aefa5db6a1929d9982fdcb5a7780ecc0794))
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.21.0/packages/gatsby-transformer-sharp) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.20.0/packages/gatsby-transformer-sharp) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.19.0/packages/gatsby-transformer-sharp) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Chores
+
+- Update READMEs for better instructions ([0890a5c](https://github.com/gatsbyjs/gatsby/commit/0890a5cf2c881b49193113a1e1bd5fe13a2c328f))
+
+### [4.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.18.1/packages/gatsby-transformer-sharp) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.18.0/packages/gatsby-transformer-sharp) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.17.0/packages/gatsby-transformer-sharp) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 ## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.16.0/packages/gatsby-transformer-sharp) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

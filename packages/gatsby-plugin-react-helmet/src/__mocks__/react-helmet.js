@@ -1,7 +1,7 @@
 const helmet = {
   htmlAttributes: { toComponent: () => `html-attributes-component` },
   bodyAttributes: { toComponent: () => `body-attributes-component` },
-  title: { toComponent: () => `title-component` },
+  title: { toComponent: () => [{ props: { children: `children` } }] },
   link: { toComponent: () => `link-component` },
   meta: { toComponent: () => `meta-component` },
   noscript: { toComponent: () => `noscript-component` },

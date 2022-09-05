@@ -8,10 +8,14 @@ const { platform } = require(`os`)
 const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const { slash, createContentDigest } = require(`gatsby-core-utils`)
+const { slash } = require(`gatsby-core-utils/path`)
+const {
+  createContentDigest,
+} = require(`gatsby-core-utils/create-content-digest`)
+const { splitComponentPath } = require(`gatsby-core-utils/parse-component-path`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode, getDataStore } = require(`../../datastore`)
-const sanitizeNode = require(`../../utils/sanitize-node`)
+import sanitizeNode from "../../utils/sanitize-node"
 const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
@@ -155,7 +159,7 @@ const reservedFields = [
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
  * @param {Object} page a page object
- * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.path Any valid URL. Must start with a forward slash. Unicode characters should be passed directly and not encoded (eg. `á` not `%C3%A1`).
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
  * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page. Note that the ownerNodeId must be for a node which is queried on this page via a GraphQL query.
@@ -306,9 +310,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
+      const splitPath = splitComponentPath(page.component)
 
       // normalize component path
-      page.component = slash(page.component)
+      page.component = slash(splitPath[0])
       // check if path uses correct casing - incorrect casing will
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
@@ -360,6 +365,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = trueComponentPath
       }
 
+      if (splitPath.length > 1) {
+        page.component = `${page.component}?__contentFilePath=${splitPath[1]}`
+      }
+
       pageComponentCache.set(originalPageComponent, page.component)
     }
   }
@@ -409,14 +418,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     pluginCreatorId: plugin.id ?? ``,
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    if (page.defer) {
-      internalPage.defer = true
-    }
-    // Note: mode is updated in the end of the build after we get access to all page components,
-    // see materializePageMode in utils/page-mode.ts
-    internalPage.mode = getPageMode(internalPage)
+  if (page.defer) {
+    internalPage.defer = true
   }
+  // Note: mode is updated in the end of the build after we get access to all page components,
+  // see materializePageMode in utils/page-mode.ts
+  internalPage.mode = getPageMode(internalPage)
 
   if (page.ownerNodeId) {
     internalPage.ownerNodeId = page.ownerNodeId
@@ -494,6 +501,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  // Sanitize page object so we don't attempt to serialize user-provided objects that are not serializable later
+  const sanitizedPayload = sanitizeNode(internalPage)
+
   const actions = [
     {
       ...actionOptions,
@@ -501,7 +511,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       contextModified,
       componentModified,
       plugin,
-      payload: internalPage,
+      payload: sanitizedPayload,
     },
   ]
 

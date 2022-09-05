@@ -1,15 +1,15 @@
 import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../../gatsby-node"
-import { doMergeDefaults } from "../plugin-options"
+import { doMergeDefaults, PluginOptionsDefaults } from "../plugin-options"
 
-const defaults = {
+const defaults: PluginOptionsDefaults = {
   formats: [`auto`, `webp`],
   placeholder: `dominantColor`,
   quality: 50,
   breakpoints: [100, 200],
   backgroundColor: `rebeccapurple`,
   tracedSVGOptions: {},
-  blurredOptions: { quality: 20 },
+  blurredOptions: { width: 20 },
   jpgOptions: { quality: 20 },
   pngOptions: { quality: 20 },
   webpOptions: { quality: 20 },
@@ -74,7 +74,7 @@ describe(`plugin defaults`, () => {
         },
         "backgroundColor": "rebeccapurple",
         "blurredOptions": Object {
-          "quality": 20,
+          "width": 20,
         },
         "breakpoints": Array [
           100,

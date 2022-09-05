@@ -1,11 +1,22 @@
 # gatsby-source-graphql
 
+## ⚠️ Warning
+
+We do not recommend using this plugin if your content source has an existing source plugin (like [gatsby-source-wordpress](https://www.gatsbyjs.com/plugins/gatsby-source-wordpress/) for WordPress, [gatsby-source-contentful for Contentful](https://www.gatsbyjs.com/plugins/gatsby-source-contentful/), etc.) This plugin has [known limitations](#known-limitations), specifically in that it does not support Incremental Builds, CMS Preview, image optimizations, and lack of full support for the GraphQL data layer. Please only use it for simple proof-of-concepts and if there is not an [existing source plugin](https://www.gatsbyjs.com/plugins?=gatsby-source) for your data source.
+
+## Description
+
 Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas are stitched together by declaring an arbitrary type name that wraps the remote schema Query type (`typeName` below), and putting the remote schema under a field of the Gatsby GraphQL query (`fieldName` below).
 
 - [Example website](https://using-gatsby-source-graphql.netlify.app/)
 - [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
 
-This source plugin does **not** support [incremental builds, cloud builds](https://support.gatsbyjs.com/hc/en-us/articles/360053099253-Gatsby-Builds-Full-Incremental-and-Cloud), and preview (on Gatsby Cloud). Please be aware that build times will be signficantly slower than regular source plugins as the size of your site goes past a hundred or so pages.
+## Known Limitations
+
+- ⚠️ **Lack of support** for [Incremental Builds](https://support.gatsbyjs.com/hc/en-us/articles/360053099253-Gatsby-Builds-Full-Incremental-and-Cloud)
+  - This can cause significant build speed issues, particularly for larger, content-heavy sites
+- ⚠️ **Lack of support** for [CMS Preview](https://www.gatsbyjs.com/products/cloud/previews/) and real-time previews for content / API updates
+- ⚠️ **Lack of full support** for GraphQL data layer, including image optimization / image CDN, and directive support
 
 ## Install
 

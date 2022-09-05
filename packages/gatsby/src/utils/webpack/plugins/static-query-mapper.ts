@@ -15,6 +15,28 @@ type ChunkGroup = Compilation["chunkGroups"][0]
 type EntryPoint = Compilation["asyncEntrypoints"][0]
 
 /**
+ * Remove the export query param from a path that can
+ * a) contain only the ?export= query param
+ * b) but also contain ?__contentFilePath&export=
+ */
+export const removeExportQueryParam = (
+  path: string | undefined
+): string | undefined => {
+  if (!path?.includes(`?`)) {
+    return path
+  }
+  const [filePath, queryParams] = path?.split(`?`)
+  const params = new URLSearchParams(queryParams)
+  params.delete(`export`)
+
+  const paramsString = params.toString()
+
+  return `${filePath}${
+    paramsString ? `?${decodeURIComponent(paramsString)}` : ``
+  }`
+}
+
+/**
  * Checks if a module matches a resourcePath
  */
 function doesModuleMatchResourcePath(
@@ -22,12 +44,17 @@ function doesModuleMatchResourcePath(
   webpackModule: Module | NormalModule | ConcatenatedModule
 ): boolean {
   if (!(webpackModule instanceof ConcatenatedModule)) {
-    return (webpackModule as NormalModule).resource === resourcePath
+    return (
+      removeExportQueryParam((webpackModule as NormalModule).resource) ===
+      resourcePath
+    )
   }
 
   // ConcatenatedModule is a collection of modules so we have to go deeper to actually get it
   return webpackModule.modules.some(
-    innerModule => (innerModule as NormalModule).resource === resourcePath
+    innerModule =>
+      removeExportQueryParam((innerModule as NormalModule).resource) ===
+      resourcePath
   )
 }
 
@@ -54,12 +81,12 @@ function getWebpackModulesByResourcePaths(
   staticQueries: IGatsbyState["staticQueryComponents"],
   components: IGatsbyState["components"]
 ): {
-  webpackModulesByStaticQueryId: Map<string, Module>
-  webpackModulesByComponentId: Map<string, Module>
+  webpackModulesByStaticQueryId: Map<string, Set<Module>>
+  webpackModulesByComponentId: Map<string, Set<Module>>
 } {
   const realPathCache = new Map<string, string>()
-  const webpackModulesByStaticQueryId = new Map<string, Module>()
-  const webpackModulesByComponentId = new Map<string, Module>()
+  const webpackModulesByStaticQueryId = new Map<string, Set<Module>>()
+  const webpackModulesByComponentId = new Map<string, Set<Module>>()
 
   modules.forEach(webpackModule => {
     for (const [id, staticQuery] of staticQueries) {
@@ -74,7 +101,15 @@ function getWebpackModulesByResourcePaths(
         continue
       }
 
-      webpackModulesByStaticQueryId.set(id, webpackModule)
+      let set = webpackModulesByStaticQueryId.get(id)
+
+      if (!set) {
+        set = new Set()
+      }
+
+      set.add(webpackModule)
+
+      webpackModulesByStaticQueryId.set(id, set)
     }
 
     for (const [id, component] of components) {
@@ -86,7 +121,15 @@ function getWebpackModulesByResourcePaths(
         continue
       }
 
-      webpackModulesByComponentId.set(id, webpackModule)
+      let set = webpackModulesByComponentId.get(id)
+
+      if (!set) {
+        set = new Set()
+      }
+
+      set.add(webpackModule)
+
+      webpackModulesByComponentId.set(id, set)
     }
   })
 
@@ -162,20 +205,26 @@ export class StaticQueryMapper {
       // group hashes by chunkGroup for ease of use
       for (const [
         staticQueryId,
-        webpackModule,
+        webpackModules,
       ] of webpackModulesByStaticQueryId) {
         let chunkGroupsDerivedFromEntrypoints: Array<ChunkGroup> = []
-        for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
-          webpackModule
-        )) {
-          for (const chunkGroup of chunk.groupsIterable) {
-            if (chunkGroup === appEntryPoint) {
-              chunkGroupsDerivedFromEntrypoints.push(chunkGroup)
-            } else {
-              chunkGroupsDerivedFromEntrypoints =
-                chunkGroupsDerivedFromEntrypoints.concat(
-                  getChunkGroupsDerivedFromEntrypoint(chunkGroup, appEntryPoint)
-                )
+
+        for (const webpackModule of webpackModules) {
+          for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
+            webpackModule
+          )) {
+            for (const chunkGroup of chunk.groupsIterable) {
+              if (chunkGroup === appEntryPoint) {
+                chunkGroupsDerivedFromEntrypoints.push(chunkGroup)
+              } else {
+                chunkGroupsDerivedFromEntrypoints =
+                  chunkGroupsDerivedFromEntrypoints.concat(
+                    getChunkGroupsDerivedFromEntrypoint(
+                      chunkGroup,
+                      appEntryPoint
+                    )
+                  )
+              }
             }
           }
         }
@@ -200,16 +249,20 @@ export class StaticQueryMapper {
       // group chunkGroups by componentPaths for ease of use
       for (const [
         componentPath,
-        webpackModule,
+        webpackModules,
       ] of webpackModulesByComponentId) {
-        for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
-          webpackModule
-        )) {
-          for (const chunkGroup of chunk.groupsIterable) {
-            // When it's a direct import from app entrypoint (async-requires) we know we have the correct chunkGroup
-            if (chunkGroup.name === generateComponentChunkName(componentPath)) {
-              chunkGroupsWithPageComponents.add(chunkGroup)
-              chunkGroupsByComponentPath.set(componentPath, chunkGroup)
+        for (const webpackModule of webpackModules) {
+          for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
+            webpackModule
+          )) {
+            for (const chunkGroup of chunk.groupsIterable) {
+              // When it's a direct import from app entrypoint (async-requires) we know we have the correct chunkGroup
+              if (
+                chunkGroup.name === generateComponentChunkName(componentPath)
+              ) {
+                chunkGroupsWithPageComponents.add(chunkGroup)
+                chunkGroupsByComponentPath.set(componentPath, chunkGroup)
+              }
             }
           }
         }

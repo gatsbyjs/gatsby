@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.16.0/packages/gatsby-plugin-utils) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) ([65739fc](https://github.com/gatsbyjs/gatsby/commit/65739fcc1af12d0f878820a589de7dde5964b93d))
+
+#### Chores
+
+- bump min potrace version [#36443](https://github.com/gatsbyjs/gatsby/issues/36443) ([0d896ae](https://github.com/gatsbyjs/gatsby/commit/0d896aefa5db6a1929d9982fdcb5a7780ecc0794))
+
+## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.15.0/packages/gatsby-plugin-utils) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) [#36395](https://github.com/gatsbyjs/gatsby/issues/36395) ([3253a38](https://github.com/gatsbyjs/gatsby/commit/3253a3860c9c74bce23c8c2fd1df651e549566b9))
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.14.0/packages/gatsby-plugin-utils) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Bug Fixes
+
+- add missing dependencies [#36230](https://github.com/gatsbyjs/gatsby/issues/36230) ([5443479](https://github.com/gatsbyjs/gatsby/commit/5443479c98a05f60ba12efad3fe2f986c80ed296))
+- fix encoding issue for image-cdn fix [#36179](https://github.com/gatsbyjs/gatsby/issues/36179) ([b6d9784](https://github.com/gatsbyjs/gatsby/commit/b6d9784b746cb344c5583cb2a0fbccee14502286))
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.13.0/packages/gatsby-plugin-utils) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Chores
+
+- update dependency msw to ^0.42.3 for gatsby-plugin-utils [#36028](https://github.com/gatsbyjs/gatsby/issues/36028) ([2263c8c](https://github.com/gatsbyjs/gatsby/commit/2263c8c9b96fdfab38d65b5eea0abc30c364a490))
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.12.1/packages/gatsby-plugin-utils) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.12.0/packages/gatsby-plugin-utils) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Chores
+
+- update dependency msw to ^0.42.0 for gatsby-plugin-utils [#35807](https://github.com/gatsbyjs/gatsby/issues/35807) ([ecff91d](https://github.com/gatsbyjs/gatsby/commit/ecff91db66a11c199edaac3b3d667740311f312a))
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.11.0/packages/gatsby-plugin-utils) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Features
+
+- add image cdn source urls to redux [#35427](https://github.com/gatsbyjs/gatsby/issues/35427) ([7a5b5c1](https://github.com/gatsbyjs/gatsby/commit/7a5b5c124cea2c448f110c487e81194344dedb7d))
+- add `contentDigest` to image cdn args [#35816](https://github.com/gatsbyjs/gatsby/issues/35816) ([8257bca](https://github.com/gatsbyjs/gatsby/commit/8257bca2a1d352fef7d4a261926e7d455154bf2e))
+
 ## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.10.0/packages/gatsby-plugin-utils) (2022-06-07)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)

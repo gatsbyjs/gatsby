@@ -38,6 +38,8 @@ const ROOT_POINTS = 1
 const isRootSegment = (segment: string): boolean => segment === ``
 const isDynamic = (segment: string): boolean => paramRe.test(segment)
 const isSplat = (segment: string): boolean => segment === `*`
+const hasContentFilePath = (componentPath: string): boolean =>
+  componentPath.includes(`?__contentFilePath=`)
 
 const segmentize = (uri: string): Array<string> =>
   uri
@@ -109,14 +111,8 @@ const getMatchPaths = (
   const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      if (page.matchPath && getPageMode(page) === `SSG`) {
-        matchPathPages.push(createMatchPathEntry(page, index))
-      }
-    } else {
-      if (page.matchPath) {
-        matchPathPages.push(createMatchPathEntry(page, index))
-      }
+    if (page.matchPath && getPageMode(page) === `SSG`) {
+      matchPathPages.push(createMatchPathEntry(page, index))
     }
   })
 
@@ -248,20 +244,61 @@ const preferDefault = m => (m && m.default) || m
 }\n\n`
 
   // Create file with async requires of components/json files.
-  const asyncRequires = `exports.components = {\n${components
-    .map((c: IGatsbyPageComponent): string => {
-      // we need a relative import path to keep contenthash the same if directory changes
-      const relativeComponentPath = path.relative(
-        getAbsolutePathForVirtualModule(`$virtual`),
-        c.component
-      )
+  let asyncRequires = ``
 
-      return `  "${c.componentChunkName}": () => import("${slash(
-        `./${relativeComponentPath}`
-      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
-    })
-    .join(`,\n`)}
+  if (process.env.gatsby_executing_command === `develop`) {
+    asyncRequires = `exports.components = {\n${components
+      .map((c: IGatsbyPageComponent): string => {
+        // we need a relative import path to keep contenthash the same if directory changes
+        const relativeComponentPath = path.relative(
+          getAbsolutePathForVirtualModule(`$virtual`),
+          c.component
+        )
+
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
+        return `  "${c.componentChunkName}": () => import("${slash(
+          `./${relativeComponentPath}`
+        )}${rqPrefix}export=default" /* webpackChunkName: "${
+          c.componentChunkName
+        }" */)`
+      })
+      .join(`,\n`)}
+}\n\n
+
+exports.head = {\n${components
+      .map((c: IGatsbyPageComponent): string => {
+        // we need a relative import path to keep contenthash the same if directory changes
+        const relativeComponentPath = path.relative(
+          getAbsolutePathForVirtualModule(`$virtual`),
+          c.component
+        )
+
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
+        return `  "${c.componentChunkName}": () => import("${slash(
+          `./${relativeComponentPath}`
+        )}${rqPrefix}export=head" /* webpackChunkName: "${
+          c.componentChunkName
+        }head" */)`
+      })
+      .join(`,\n`)}
 }\n\n`
+  } else {
+    asyncRequires = `exports.components = {\n${components
+      .map((c: IGatsbyPageComponent): string => {
+        // we need a relative import path to keep contenthash the same if directory changes
+        const relativeComponentPath = path.relative(
+          getAbsolutePathForVirtualModule(`$virtual`),
+          c.component
+        )
+        return `  "${c.componentChunkName}": () => import("${slash(
+          `./${relativeComponentPath}`
+        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+      })
+      .join(`,\n`)}
+}\n\n`
+  }
 
   const writeAndMove = (
     virtualFilePath: string,

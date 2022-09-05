@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.7.0/packages/gatsby-script) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Reach router import [#36385](https://github.com/gatsbyjs/gatsby/issues/36385) ([4c752d1](https://github.com/gatsbyjs/gatsby/commit/4c752d1e094de9f9968b48655d9c909c990dcec5))
+
+## [1.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.6.0/packages/gatsby-script) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Features
+
+- Do not use context for script collection [#36246](https://github.com/gatsbyjs/gatsby/issues/36246) ([49cf094](https://github.com/gatsbyjs/gatsby/commit/49cf094380bcf69d9239f8abbbd4db9c1968dcf8))
+
+#### Bug Fixes
+
+- Reach router import [#36385](https://github.com/gatsbyjs/gatsby/issues/36385) [#36394](https://github.com/gatsbyjs/gatsby/issues/36394) ([1880491](https://github.com/gatsbyjs/gatsby/commit/18804916a2c7c7660557320db3dfaa8bf1ed718e))
+
+#### Chores
+
+- update dependency del-cli to v5 for gatsby-script [#36289](https://github.com/gatsbyjs/gatsby/issues/36289) ([2ff3b09](https://github.com/gatsbyjs/gatsby/commit/2ff3b09239702f3b9b027ce2acad6082aafe18da))
+
+## [1.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.5.0/packages/gatsby-script) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.4.0/packages/gatsby-script) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Publish some packages as ESM & CJS [#36012](https://github.com/gatsbyjs/gatsby/issues/36012) ([5bd3063](https://github.com/gatsbyjs/gatsby/commit/5bd3063a1e72c6f98447bfac2bf767cca781330b))
+
+## [1.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.3.0/packages/gatsby-script) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Chores
+
+- Add gatsby-parcel-config & update gatsby-script [#35978](https://github.com/gatsbyjs/gatsby/issues/35978) ([5feeea6](https://github.com/gatsbyjs/gatsby/commit/5feeea6866a9a4882672dcb2b5878c6826e229fc))
+
 ## [1.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.2.0/packages/gatsby-script) (2022-06-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)

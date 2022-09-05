@@ -1,5 +1,5 @@
 import type { TrailingSlash } from "gatsby-page-utils"
-import { IProgram } from "../commands/types"
+import { IProgram, Stage } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import {
   DocumentNode,
@@ -80,6 +80,7 @@ export interface IGatsbyFunction {
 
 export interface IGraphQLTypegenOptions {
   typesOutputPath: string
+  generateOnBuild: boolean
 }
 
 export interface IGatsbyConfig {
@@ -190,24 +191,18 @@ export interface IGatsbyCompleteJobV2 {
 
 export interface IPlugin {
   name: string
-  options: Record<string, any>
+  options: Record<string, unknown>
 }
 
 export interface IBabelStage {
   plugins: Array<IPlugin>
   presets: Array<IPlugin>
-  options: {
+  options?: {
     cacheDirectory: boolean
     sourceType: string
     sourceMaps?: string
   }
 }
-
-type BabelStageKeys =
-  | "develop"
-  | "develop-html"
-  | "build-html"
-  | "build-javascript"
 
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
@@ -322,7 +317,7 @@ export interface IGatsbyState {
   redirects: Array<IRedirect>
   babelrc: {
     stages: {
-      [key in BabelStageKeys]: IBabelStage
+      [key in Stage]: IBabelStage
     }
   }
   schemaCustomization: {
@@ -455,6 +450,7 @@ export interface ISetComponentFeatures {
     componentPath: string
     serverData: boolean
     config: boolean
+    Head: boolean
   }
 }
 
@@ -468,7 +464,7 @@ export interface IApiFinishedAction {
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -477,7 +473,7 @@ interface ISetBabelPluginAction {
 interface ISetBabelPresetAction {
   type: `SET_BABEL_PRESET`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -486,7 +482,7 @@ interface ISetBabelPresetAction {
 interface ISetBabelOptionsAction {
   type: `SET_BABEL_OPTIONS`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }

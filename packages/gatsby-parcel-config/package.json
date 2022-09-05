@@ -1,7 +1,7 @@
 {
   "name": "gatsby-parcel-config",
   "main": "lib/index.json",
-  "version": "0.10.0-next.1",
+  "version": "0.14.0-next.0",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parcel-config#readme",
   "description": "A minimal Parcel config for use in Gatsby",
   "repository": {
@@ -14,7 +14,7 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.4.0-next.1",
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.8.0-next.0",
     "@parcel/bundler-default": "2.6.2",
     "@parcel/compressor-raw": "2.6.2",
     "@parcel/namer-default": "2.6.2",
@@ -32,25 +32,8 @@
     "@parcel/transformer-raw": "2.6.2",
     "@parcel/transformer-react-refresh-wrap": "2.6.2"
   },
-  "parcelDependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.0.0-next.0",
-    "@parcel/optimizer-data-url": "2.6.0",
-    "@parcel/packager-raw-url": "2.6.0",
-    "@parcel/packager-ts": "2.6.0",
-    "@parcel/packager-xml": "2.6.0",
-    "@parcel/transformer-graphql": "2.6.0",
-    "@parcel/transformer-inline-string": "2.6.0",
-    "@parcel/transformer-jsonld": "2.6.0",
-    "@parcel/transformer-mdx": "2.6.0",
-    "@parcel/transformer-toml": "2.6.0",
-    "@parcel/transformer-typescript-types": "2.6.0",
-    "@parcel/transformer-webmanifest": "2.6.0",
-    "@parcel/transformer-worklet": "2.6.0",
-    "@parcel/transformer-xml": "2.6.0",
-    "@parcel/transformer-yaml": "2.6.0"
-  },
   "peerDependencies": {
-    "@parcel/core": "2.6.0"
+    "@parcel/core": "^2.0.0"
   },
   "scripts": {
     "version": "node ../../scripts/pin-version.js"
