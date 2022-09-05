@@ -27,7 +27,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "cross-env GATSBY_PREFIXED_FROM_COMMAND_LINE=YES FROM_COMMAND_LINE=YES CYPRESS_SUPPORT=y gatsby build",
+    "build": "cross-env GATSBY_PREFIXED_FROM_COMMAND_LINE=YES FROM_COMMAND_LINE=YES CYPRESS_SUPPORT=y NODE_OPTIONS='--require ./polyfill-node-protocol-imports.js' gatsby build",
     "build:offline": "cross-env GATSBY_PREFIXED_FROM_COMMAND_LINE=YES FROM_COMMAND_LINE=YES TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y gatsby build",
     "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
     "format": "prettier --write '**/*.js' --ignore-path .gitignore",
