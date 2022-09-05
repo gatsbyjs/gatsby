@@ -671,6 +671,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Author implements Node {
       id: ID!
       name: String!
+      email: String!
+      posts: [Post!]! @link(from: "email", by: "authors.elemMatch.email")
     }
   `)
 }
