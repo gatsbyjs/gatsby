@@ -16,7 +16,7 @@ export class GatsbyWebpackStatsExtractor {
     let previousChunkMapJson: string | undefined
     let previousWebpackStatsJson: string | undefined
     compiler.hooks.done.tapAsync(this.plugin.name, async (stats, done) => {
-      const assets = {}
+      const assets: { [key: string]: Array<string> } = {}
       const assetsMap = {}
       const childAssets = {}
       for (const chunkGroup of stats.compilation.chunkGroups) {
@@ -86,12 +86,19 @@ export class GatsbyWebpackStatsExtractor {
 
         const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
 
+        const scriptAssets: Array<string> = []
+
+        if (`polyfill` in assets && assets.polyfill) {
+          scriptAssets.push(...assets.polyfill)
+        }
+
+        if (`app` in assets && assets.app) {
+          scriptAssets.push(...assets.app)
+        }
+
         // Add assets to scripts slice
         const assetSliceContents: Array<string> = []
-        for (const asset of new Set([
-          ...assets[`polyfill`],
-          ...assets[`app`],
-        ])) {
+        for (const asset of new Set(scriptAssets)) {
           if (asset.endsWith(`.js`)) {
             assetSliceContents.push(
               `<script src="${this.publicPath}/${asset}" async></script>`
