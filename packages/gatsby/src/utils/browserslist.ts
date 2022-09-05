@@ -21,7 +21,7 @@ export const getBrowsersList = (directory: string): Array<string> => {
   const fallbackV1 = [`>1%`, `last 2 versions`, `IE >= 9`]
   let fallbackOthers = [`>0.25%`, `not dead`]
 
-  if (installedGatsbyVersion(directory) === 5) {
+  if ( _CFLAGS_.MAJOR === '5') {
     fallbackOthers = fallbackOthers.map(
       fallback => fallback + ` and supports es6-module`
     )
