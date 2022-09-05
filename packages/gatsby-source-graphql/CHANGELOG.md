@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.22.0/packages/gatsby-source-graphql) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- add dataLoaderOptions validation to gatsby-source-graphql [#36112](https://github.com/gatsbyjs/gatsby/issues/36112) ([b8c2072](https://github.com/gatsbyjs/gatsby/commit/b8c207218a390e277682606cf4aa5aa2a5856272))
+
 ## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.21.0/packages/gatsby-source-graphql) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
