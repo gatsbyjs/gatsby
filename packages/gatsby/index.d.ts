@@ -1221,7 +1221,7 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#deletePage */
+  /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createNode */
