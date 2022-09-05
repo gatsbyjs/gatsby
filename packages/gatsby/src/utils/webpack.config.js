@@ -673,24 +673,7 @@ module.exports = async (
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
-          // Don't split up the page chunks as they won't be loaded by gatsby anyways
-          test: isPartialHydrationEnabled
-            ? function (module, { chunkGraph }) {
-                if (isCssModule(module)) {
-                  return false
-                }
-
-                let numberOfPageChunks = 0
-                const chunks = chunkGraph.getModuleChunksIterable(module)
-                for (const chunk of chunks) {
-                  if (chunk.name?.startsWith(`component---`)) {
-                    numberOfPageChunks++
-                  }
-                }
-
-                return chunks.size - numberOfPageChunks > 2
-              }
-            : undefined,
+          test: module => isCssModule(module),
           name(module, chunks) {
             const hash = crypto
               .createHash(`sha1`)
