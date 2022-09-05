@@ -19888,10 +19888,10 @@ react-devtools-core@^4.19.1:
     shell-quote "^1.6.1"
     ws "^7"
 
-react-docgen@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/react-docgen/-/react-docgen-5.4.2.tgz#697ec899e8dd493bb7ba0d50ec0aa5e49f41d3fa"
-  integrity sha512-4Z5XYpHsn2bbUfaflxoS30VhUvQLBe4GCwwM5v1e1FUOeDdaoJi6wUGSmYp6OdXYEISEAOEIaSPBk4iezNCKBw==
+react-docgen@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-docgen/-/react-docgen-5.4.3.tgz#7d297f73b977d0c7611402e5fc2a168acf332b26"
+  integrity sha512-xlLJyOlnfr8lLEEeaDZ+X2J/KJoe6Nr9AzxnkdQWush5hz2ZSu66w6iLMOScMmxoSHWpWMn+k3v5ZiyCfcWsOA==
   dependencies:
     "@babel/core" "^7.7.5"
     "@babel/generator" "^7.12.11"
