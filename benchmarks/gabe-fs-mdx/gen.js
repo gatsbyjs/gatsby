@@ -19,7 +19,6 @@ date: ${faker.date.recent(1000).toISOString().slice(0, 10)}
 import { Link } from "gatsby"
 
 export const author = "Fred Flintstone"
-export default props => <main {...props} />
 
 <Link to="/">Go Home</Link>
 

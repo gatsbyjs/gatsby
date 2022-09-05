@@ -19,9 +19,5 @@ export async function loadConfigAndPlugins(
   await loadPlugins(config, siteDirectory)
 
   // Cache is already initialized
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    await apiRunnerNode(`onPluginInit`)
-  } else {
-    await apiRunnerNode(`unstable_onPluginInit`)
-  }
+  await apiRunnerNode(`onPluginInit`)
 }

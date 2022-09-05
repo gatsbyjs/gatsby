@@ -184,14 +184,7 @@ const activeFlags: Array<IFlag> = [
     experimental: true,
     umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
     description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
-    testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return `LOCKED_IN`
-      }
-
-      const [major, minor] = process.versions.node.split(`.`)
-      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
-    },
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
     requires: `Requires Node v14.10 or above.`,
   },
   {
@@ -203,14 +196,7 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
     description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],
-    testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return `LOCKED_IN`
-      }
-
-      const [major, minor] = process.versions.node.split(`.`)
-      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
-    },
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
     requires: `Requires Node v14.10 or above.`,
   },
   {
@@ -233,6 +219,32 @@ const activeFlags: Array<IFlag> = [
     noCI: true,
     testFitness: (): fitnessEnum => false,
     requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
+  },
+  {
+    name: `PARTIAL_HYDRATION`,
+    env: `GATSBY_PARTIAL_HYDRATION`,
+    command: `build`,
+    telemetryId: `PartialHydration`,
+    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
+    umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
+    experimental: true,
+    testFitness: (): fitnessEnum => {
+      const v18Constraint = {
+        react: `>=18.0.0`,
+      }
+      const v0Constraint = {
+        react: `^0.0.0`,
+      }
+
+      return (
+        _CFLAGS_.GATSBY_MAJOR === `5` &&
+        (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
+      )
+    },
+    requires:
+      Number(_CFLAGS_.GATSBY_MAJOR) < 5
+        ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
+        : `Partial hydration requires React 18+ to work.`,
   },
 ]
 

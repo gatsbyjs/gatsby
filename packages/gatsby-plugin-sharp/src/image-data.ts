@@ -62,7 +62,7 @@ export async function getImageMetadata(
   }
 
   try {
-    const pipeline = sharp({ failOnError: !!getPluginOptions().failOnError })
+    const pipeline = sharp({ failOn: getPluginOptions().failOn })
 
     fs.createReadStream(file.absolutePath).pipe(pipeline)
 

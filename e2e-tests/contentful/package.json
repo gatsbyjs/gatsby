@@ -6,7 +6,6 @@
   "dependencies": {
     "@contentful/rich-text-types": "^14.1.2",
     "gatsby": "next",
-    "gatsby-image": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-source-contentful": "next",
@@ -34,6 +33,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "clean": "gatsby clean",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
