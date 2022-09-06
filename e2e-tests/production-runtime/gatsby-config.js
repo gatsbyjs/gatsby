@@ -26,6 +26,7 @@ module.exports = {
     },
     `gatsby-plugin-local-worker`,
     `gatsby-ssr-tsx`,
+    `gatsby-plugin-node-protocol-test`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sass`,
