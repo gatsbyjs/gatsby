@@ -5,12 +5,13 @@ description: "Monorepos support in Gatsby Cloud"
 
 ## Introduction
 
-Gatsby Cloud has support for monorepos projects, but since there is a plethora of dependency management tools out there some issues can occure.
-This document will walk you through the tools that are supported and how to troubleshoot some edge cases
+Gatsby Cloud has support for projects organized as [monorepos](https://monorepo.tools/), but since there are different competing tools to build a monorepo it's important to know what Gatsby Cloud supports today.
 
-## Monorepo Support
+This document will explain which tools are supported and how you can troubleshoot issues.
 
-The following tables shows the level of support for each tool
+## Supported tools
+
+The following table shows the level of support for each tool.
 
 **Legend**
 
@@ -28,7 +29,7 @@ The following tables shows the level of support for each tool
 | Yarn Workspaces (v2/v3 with PnP) | ◐                |                                                         |
 | Lerna                            | ●                |                                                         |
 | NPM Workspaces (v7 and onwards)  | ●                |                                                         |
-| NX                               | ○                | Work is in progress                                     |
+| NX                               | ○                | Work in progress                                     |
 | Turborepo                        | ○                | We do not have plans to support Turborepo at this time. |
 
 ## Troubleshooting
