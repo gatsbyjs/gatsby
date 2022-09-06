@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.22.0/packages/gatsby-plugin-react-helmet) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Typo in `onPreInit` warning [#36419](https://github.com/gatsbyjs/gatsby/issues/36419) ([b7b3577](https://github.com/gatsbyjs/gatsby/commit/b7b3577c1f59fa261fb392d63cf9e2dd484a2e7e))
+
+## [5.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.21.0/packages/gatsby-plugin-react-helmet) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- stop appending empty title tags [#36303](https://github.com/gatsbyjs/gatsby/issues/36303) ([e7f0ce3](https://github.com/gatsbyjs/gatsby/commit/e7f0ce36935b6919f00760ce4fb7655530e999f2))
+
+## [5.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.20.0/packages/gatsby-plugin-react-helmet) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- Add deprecation notice [#36166](https://github.com/gatsbyjs/gatsby/issues/36166) ([c6627e3](https://github.com/gatsbyjs/gatsby/commit/c6627e3353d0299bb6bc743512eb8dbe77d52dbc))
+
 ## [5.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.19.0/packages/gatsby-plugin-react-helmet) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

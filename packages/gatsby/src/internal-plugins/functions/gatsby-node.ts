@@ -389,7 +389,6 @@ export async function onPreBootstrap({
     program: { directory: siteDirectoryPath },
   } = store.getState()
 
-  reporter.verbose(`Attaching functions to development server`)
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
     `.cache`,

@@ -418,6 +418,21 @@ Object {
             "nodes": Array [],
           },
         },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Full url link replacer test",
+          "uri": "/full-url-link-replacer-test/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
       ],
     },
     "testPage": Object {
@@ -519,6 +534,36 @@ Object {
           },
           "title": "Inline HTML svg image test",
           "uri": "/inline-html-svg-image-test/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Full url link replacer test",
+          "uri": "/full-url-link-replacer-test/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "inc page with full static file url",
+          "uri": "/inc-page-with-full-static-file-url/",
           "wpChildren": Object {
             "nodes": Array [],
           },
@@ -761,6 +806,9 @@ Object {
           "pages": Object {
             "nodes": Array [
               Object {
+                "title": "Full url link replacer test",
+              },
+              Object {
                 "title": "Inline HTML svg image test",
               },
               Object {
@@ -820,6 +868,12 @@ Object {
           "name": "admin",
           "pages": Object {
             "nodes": Array [
+              Object {
+                "title": "inc page with full static file url",
+              },
+              Object {
+                "title": "Full url link replacer test",
+              },
               Object {
                 "title": "Inline HTML svg image test",
               },

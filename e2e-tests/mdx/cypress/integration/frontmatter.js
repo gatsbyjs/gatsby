@@ -39,7 +39,7 @@ describe(`webpack loader`, () => {
     })
 
     it(`should parse`, () => {
-      cy.get(selector).invoke(`text`).should(`eq`, titles.parsed)
+      cy.get(selector).invoke(`text`).should(`eq`, `disabled`)
     })
 
     it(`should not leak into the page`, () => {

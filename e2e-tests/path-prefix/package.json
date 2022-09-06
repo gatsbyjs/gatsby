@@ -10,14 +10,13 @@
     "gatsby-plugin-image": "next",
     "gatsby-plugin-manifest": "next",
     "gatsby-plugin-offline": "next",
-    "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-sitemap": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-sharp": "next",
+    "http-proxy": "^1.18.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-helmet": "^5.2.0"
+    "react-dom": "^17.0.2"
   },
   "keywords": [
     "gatsby"
@@ -25,11 +24,11 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "del-cli -f assets && make-dir assets/blog",
-    "build": "gatsby build --prefix-paths",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build --prefix-paths",
     "postbuild": "cpy --cwd=./public --parents '**/*' '../assets/blog'",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
+    "test": "npm run build && npm run start-server-and-test",
     "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
     "serve": "npm-run-all --parallel serve:*",
     "serve:site": "gatsby serve --prefix-paths",
@@ -46,11 +45,15 @@
     "make-dir-cli": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "2.0.4",
-    "serve-handler": "^6.0.0",
-    "start-server-and-test": "^1.7.1"
+    "start-server-and-test": "^1.7.1",
+    "wait-on": "^6.0.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
+  "resolutions": {
+    "responselike": "^2.0.0"
   }
 }
