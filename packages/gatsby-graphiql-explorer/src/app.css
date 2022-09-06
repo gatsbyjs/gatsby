@@ -18,3 +18,25 @@ code {
   height: 100vh;
   width: 100vw;
 }
+
+.gatsby-logo {
+  color: hsla(var(--color-neutral), 0.6);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  padding: var(--px-12) var(--px-16);
+}
+
+.gatsby-logo .gatsby-logo-link {
+  text-decoration: none;
+  color: hsla(var(--color-neutral), 0.6);
+}
+
+.gatsby-logo-link {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.gatsby-logo-link svg {
+  margin-right: 0.5rem;
+}
