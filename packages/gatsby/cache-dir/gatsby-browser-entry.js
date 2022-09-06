@@ -16,10 +16,10 @@ function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
     : staticQueryData[query] && staticQueryData[query].data
 
   return (
-    <React.Slice>
+    <React.Fragment>
       {finalData && render(finalData)}
       {!finalData && <div>Loading (StaticQuery)</div>}
-    </React.Slice>
+    </React.Fragment>
   )
 }
 
