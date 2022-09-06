@@ -10,7 +10,16 @@ import type { IMdxVFile } from "./types"
 import type { Options, toc } from "mdast-util-toc"
 import type { visit } from "unist-util-visit"
 
-type TocNodeType = BlockContent | DefinitionContent | ListItem
+interface ITocNodeEntry {
+  url?: string
+  title?: string
+}
+
+type TocNodeType =
+  | ITocNodeEntry
+  | {
+      items: Array<TocNodeType>
+    }
 
 interface IRemarkTocOptions {
   maxDepth?: Options["maxDepth"]
@@ -25,33 +34,50 @@ const remarkInferTocMeta: Plugin<[IRemarkTocOptions]> = options => {
   }
 
   const processToC = (
-    node: TocNodeType,
-    current: Partial<TocNodeType>
-  ): Partial<TocNodeType> => {
+    node: BlockContent | DefinitionContent | ListItem | null,
+    current: TocNodeType
+  ): TocNodeType => {
     if (!node) {
       return {}
-    } else if (node.type === `paragraph`) {
-      visit(node, item => {
-        if (item.type === `link`) {
-          current.url = item.url
-        }
-        if (item.type === `text`) {
-          current.title = item.value
-        }
-      })
-      return current
-    } else if (Array.isArray(node.children)) {
-      if (node.type === `list`) {
-        current.items = node.children.map(i => processToC(i, {}))
+    }
+
+    switch (node.type) {
+      case `paragraph`: {
+        const typedCurrent = current as ITocNodeEntry
+
+        visit(node, item => {
+          if (item.type === `link`) {
+            typedCurrent.url = item.url
+          }
+          if (item.type === `text`) {
+            typedCurrent.title = item.value
+          }
+        })
+
         return current
-      } else if (node.type === `listItem`) {
-        const heading = processToC(node.children[0], {})
-        if (node.children.length > 1) {
-          processToC(node.children[1], heading)
+      }
+
+      case `list`: {
+        const typedCurrent = current as { items: Array<TocNodeType> }
+
+        typedCurrent.items = node.children.map(item => processToC(item, {}))
+
+        return typedCurrent
+      }
+
+      case `listItem`: {
+        if (node.children.length) {
+          const heading = processToC(node.children[0], {})
+
+          if (node.children.length > 1) {
+            processToC(node.children[1], heading)
+          }
+
+          return heading
         }
-        return heading
       }
     }
+
     return {}
   }
 
@@ -62,7 +88,7 @@ const remarkInferTocMeta: Plugin<[IRemarkTocOptions]> = options => {
       mdxFile.data.meta = {}
     }
 
-    mdxFile.data.meta.toc = processToC(generatedToC.map as TocNodeType, {})
+    mdxFile.data.meta.toc = processToC(generatedToC.map, {})
   }
 }
 
