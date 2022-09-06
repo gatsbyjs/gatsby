@@ -1,4 +1,4 @@
-import sharp from "sharp"
+import sharp from "gatsby-sharp/dist/sharp"
 
 sharp.simd(true)
 sharp.concurrency(1)
