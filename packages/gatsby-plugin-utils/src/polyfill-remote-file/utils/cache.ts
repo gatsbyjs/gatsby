@@ -2,7 +2,7 @@ import importFrom from "import-from"
 import type { GatsbyCache } from "gatsby"
 
 export function getCache(): GatsbyCache {
-  if (global.polyfill_remote_file_cache) {
+  if (global._polyfillRemoteFielCache) {
     return global.polyfill_remote_file_cache
   }
   // We need to use import-from to remove circular dependency
