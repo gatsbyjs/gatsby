@@ -23,6 +23,7 @@ import { IPageDataWithQueryResult } from "../utils/page-data"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { stitchSliceForAPage } from "../utils/slices/stitching"
 import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
+import { getPageMode } from "../utils/page-mode"
 
 type IActivity = any // TODO
 
@@ -705,6 +706,7 @@ export async function stitchSlicesIntoPagesHTML({
   try {
     const {
       html: { pagesThatNeedToStitchSlices },
+      pages,
     } = store.getState()
 
     console.log({ pagesThatNeedToStitchSlices })
@@ -715,7 +717,14 @@ export async function stitchSlicesIntoPagesHTML({
     }, 25)
 
     for (const pagePath of pagesThatNeedToStitchSlices) {
-      stichQueue.push(pagePath)
+      const page = pages.get(pagePath)
+      if (!page) {
+        continue
+      }
+
+      if (getPageMode(page) === `SSG`) {
+        stichQueue.push(pagePath)
+      }
     }
 
     if (!stichQueue.idle()) {

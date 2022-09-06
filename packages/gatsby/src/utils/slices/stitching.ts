@@ -116,8 +116,6 @@ async function stitchSlices(
   return processedHTML
 }
 
-let didLog = false
-
 export async function stitchSliceForAPage({
   pagePath,
   publicDir,
@@ -125,11 +123,6 @@ export async function stitchSliceForAPage({
   pagePath: string
   publicDir: string
 }): Promise<void> {
-  if (!didLog) {
-    console.log(`oss stitching`)
-    didLog = true
-  }
-
   const htmlFilePath = generateHtmlPath(publicDir, pagePath)
 
   const html = await fs.readFile(htmlFilePath, `utf-8`)
