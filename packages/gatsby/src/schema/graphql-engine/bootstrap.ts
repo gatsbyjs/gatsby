@@ -4,6 +4,6 @@ import "../../utils/engines-fs-provider"
 
 import { getCache as getGatsbyCache } from "../../utils/get-cache"
 
-if (!global.polyfill_remote_file_cache) {
-  global.polyfill_remote_file_cache = getGatsbyCache(`gatsby`)
+if (!global._polyfillRemoteFileCache) {
+  global._polyfillRemoteFileCache = getGatsbyCache(`gatsby`)
 }

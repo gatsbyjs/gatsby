@@ -9,6 +9,6 @@ declare module NodeJS {
       root: string
     }
 
-    polyfill_remote_file_cache?: import("gatsby").GatsbyCache
+    _polyfillRemoteFileCache?: import("gatsby").GatsbyCache
   }
 }

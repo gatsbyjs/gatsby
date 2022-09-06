@@ -2,8 +2,8 @@ import importFrom from "import-from"
 import type { GatsbyCache } from "gatsby"
 
 export function getCache(): GatsbyCache {
-  if (global._polyfillRemoteFielCache) {
-    return global.polyfill_remote_file_cache
+  if (global._polyfillRemoteFileCache) {
+    return global._polyfillRemoteFileCache
   }
   // We need to use import-from to remove circular dependency
   const { getCache: getGatsbyCache } = importFrom(
@@ -12,6 +12,6 @@ export function getCache(): GatsbyCache {
   ) as { getCache: (key: string) => GatsbyCache }
 
   const cache = getGatsbyCache(`gatsby`)
-  global.polyfill_remote_file_cache = cache
+  global._polyfillRemoteFileCache = cache
   return cache
 }
