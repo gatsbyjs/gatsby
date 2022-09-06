@@ -23,10 +23,10 @@ import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
-import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
+import { satisfiesSemvers } from "./flags"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -219,7 +219,12 @@ module.exports = async (
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
         HAS_REACT_18: JSON.stringify(
-          major(require(`react-dom/package.json`).version) >= 18
+          satisfiesSemvers({
+            react: `>=18.0.0`,
+          }) ||
+            satisfiesSemvers({
+              react: `^0.0.0`,
+            })
         ),
         "global.hasPartialHydration": isPartialHydrationEnabled,
       }),
