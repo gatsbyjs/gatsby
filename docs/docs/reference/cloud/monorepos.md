@@ -13,7 +13,7 @@ This document will explain which tools are supported and how you can troubleshoo
 
 The following table shows the level of support for each tool.
 
-**Legend**
+**Legend:**
 
 | Icon | Feature Capability                       |
 | ---- | ---------------------------------------- |
@@ -21,7 +21,7 @@ The following table shows the level of support for each tool.
 | ◐    | Somewhat Supported (support is minimal ) |
 | ○    | Not Supported                            |
 
-**Support**
+**Support:**
 
 | Tool.                            | Level of Support | Notes                                                   |
 | -------------------------------- | ---------------- | ------------------------------------------------------- |
@@ -34,10 +34,10 @@ The following table shows the level of support for each tool.
 
 ## Troubleshooting
 
-**PnP and Yarn compatibility issues**
+### PnP and Yarn compatibility issues
 
-Some tools don't work under Plug'n'Play environments, check the Yarn [Compatibility table](https://yarnpkg.com/features/pnp#compatibility-table), you can enable the built-in node-modules plugin by adding the following into your local .yarnrc.yml file before running a fresh yarn install:
+Some tools don't work under Plug'n'Play environments, check the Yarn [compatibility table](https://yarnpkg.com/features/pnp#compatibility-table). You can enable the built-in `node-modules` plugin by adding the following into your local `.yarnrc.yml` file before running a fresh `yarn install`:
 
-```
+```yml
 nodeLinker: node-modules
 ```
