@@ -6,7 +6,7 @@
  * - it checks if you have publish access
  * - it checks if we have any uncommited files -- if so, we exit
  * - it cleans all non git files to make sure we have clean directory
- * - run patches in patches/v4
+ * - run patches in patches/v5
  * - commits the patches so lerna can publish
  * - run full boostrap
  * - Publish premajor
