@@ -20,5 +20,9 @@
   "devDependencies": {
     "fs-extra": "^10.1.0",
     "jest": "^27.2.1"
+  },
+  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
+  "resolutions": {
+    "responselike": "^2.0.0"
   }
 }
