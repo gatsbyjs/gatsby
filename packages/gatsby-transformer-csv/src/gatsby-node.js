@@ -46,7 +46,7 @@ async function onCreateNode(
   }
 
   // Generate the new node
-  function transformObject(obj, i) {
+  async function transformObject(obj, i) {
     const csvNode = {
       ...obj,
       id:
@@ -63,21 +63,22 @@ async function onCreateNode(
       },
     }
 
-    createNode(csvNode)
+    await createNode(csvNode)
     createParentChildLink({ parent: node, child: csvNode })
   }
 
   if (_.isArray(parsedContent)) {
     if (pluginOptions && nodePerFile) {
       if (pluginOptions && _.isString(nodePerFile)) {
-        transformObject({ [nodePerFile]: parsedContent }, 0)
+        await transformObject({ [nodePerFile]: parsedContent }, 0)
       } else {
-        transformObject({ items: parsedContent }, 0)
+        await transformObject({ items: parsedContent }, 0)
       }
     } else {
-      _.each(parsedContent, (obj, i) => {
-        transformObject(obj, i)
-      })
+      for (let i = 0, l = parsedContent.length; i < l; i++) {
+        const obj = parsedContent[i]
+        await transformObject(obj, i)
+      }
     }
   }
 
