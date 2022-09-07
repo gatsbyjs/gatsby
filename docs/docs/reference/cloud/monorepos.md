@@ -25,11 +25,11 @@ The following table shows the level of support for each tool.
 
 | Tool.                            | Level of Support | Notes                                                   |
 | -------------------------------- | ---------------- | ------------------------------------------------------- |
-| Yarn Workspaces (v1)             | ◐                |                                                         |
+| Yarn Workspaces (v1)             | ●                |                                                         |
 | Yarn Workspaces (v2/v3 with PnP) | ◐                |                                                         |
 | Lerna                            | ●                |                                                         |
 | NPM Workspaces (v7 and onwards)  | ●                |                                                         |
-| NX                               | ○                | Work in progress                                     |
+| NX                               | ○                | Work in progress                                        |
 | Turborepo                        | ○                | We do not have plans to support Turborepo at this time. |
 
 ## Troubleshooting
