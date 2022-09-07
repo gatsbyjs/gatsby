@@ -1,3 +1,6 @@
 dist
 node_modules
 !index.js
+app.js
+app.js.LICENSE.txt
+index.html
