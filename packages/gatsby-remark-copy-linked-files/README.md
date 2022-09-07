@@ -22,20 +22,20 @@ The `my-awesome-pdf.pdf` file will be copied to the root directory (i.e., `publi
 
 ---
 
-## Install plugin
+## Installation
 
-`npm install gatsby-remark-copy-linked-files`
+```shell
+npm install gatsby-remark-copy-linked-files
+```
 
-## Add plugin to Gatsby Config
+## Configuration
 
 **Default settings:**
 
 Add `gatsby-remark-copy-linked-files` plugin as a plugin to [`gatsby-transformer-remark`](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/):
 
-```javascript
+```js:title=gatsby-config.js
 // In your gatsby-config.js
-
-// add plugin by name only
 plugins: [
   {
     resolve: `gatsby-transformer-remark`,
@@ -48,10 +48,8 @@ plugins: [
 
 **Custom settings:**
 
-```js
+```js:title=gatsby-config.js
 // In your gatsby-config.js
-
-// add plugin by name and options
 plugins: [
   {
     resolve: `gatsby-transformer-remark`,
@@ -70,13 +68,11 @@ plugins: [
 ]
 ```
 
----
-
-## Custom set where to copy the files using `destinationDir`
+## Option: `destinationDir`
 
 By default, all files will be copied to the root directory (i.e., `public` folder) in the following format: `contentHash/fileName.ext`.
 
-> For example, `[Download it now](my-awesome-pdf.pdf)` will copy the file `my-awesome-pdf.pdf` to something like `public/2a0039f3a61f4510f41678438e4c863a/my-awesome-pdf.pdf`
+For example, `[Download it now](my-awesome-pdf.pdf)` will copy the file `my-awesome-pdf.pdf` to something like `public/2a0039f3a61f4510f41678438e4c863a/my-awesome-pdf.pdf`
 
 ### Simple usage
 
@@ -101,11 +97,11 @@ plugins: [
 ]
 ```
 
-> So now, `[Download it now](my-awesome-pdf.pdf)` will copy the file `my-awesome-pdf.pdf` to `public/path/to/dir/2a0039f3a61f4510f41678438e4c863a/my-awesome-pdf.pdf`
+So now, `[Download it now](my-awesome-pdf.pdf)` will copy the file `my-awesome-pdf.pdf` to `public/path/to/dir/2a0039f3a61f4510f41678438e4c863a/my-awesome-pdf.pdf`
 
 ### Advanced usage
 
-For more advanced control, set `destinationDir` to a function expression using properties `name` and/or `hash` to specify the path.
+For more advanced control, set `destinationDir` to a function expression using properties `name`, `hash`, and `absolutePath` to specify the path.
 
 **Examples:**
 
@@ -129,8 +125,9 @@ destinationDir: f => `${f.name}/${f.hash}`
 destinationDir: f => `path/to/dir/hello-${f.name}+${f.hash}_world`
 ```
 
-> **Note:** Make sure you use either `name` or `hash` property in your function expression!
-> If you don't include both `name` and `hash` properties in your function expression, `gatsby-remark-copy-linked-files` plugin will resolve the function expression to a string value and use default settings as a fallback mechanism to prevent your local files from getting copied with the same name (causing files to get overwritten).
+**Please note:** Make sure you use either `name` or `hash` property in your function expression!
+
+If you don't include both `name` and `hash` properties in your function expression, `gatsby-remark-copy-linked-files` plugin will resolve the function expression to a string value and use default settings as a fallback mechanism to prevent your local files from getting copied with the same name (causing files to get overwritten).
 
 ```js
 # Note: `my-awesome-pdf.pdf` is saved to `public/hello/2a0039f3a61f4510f41678438e4c863a/my-awesome-pdf.pdf`
@@ -142,7 +139,7 @@ destinationDir: `hello`
 
 ### Caveat: Error thrown if `destinationDir` points outside the root directory (i.e. `public` folder)
 
-> **Note:** An error will be thrown if the destination points outside the root directory (i.e. `public` folder).
+**Please note:** An error will be thrown if the destination points outside the root directory (i.e. `public` folder).
 
 **Correct:**
 
