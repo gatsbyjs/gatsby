@@ -1663,20 +1663,20 @@
     html-entities "^2.3.3"
     strip-ansi "^6.0.0"
 
-"@graphiql/plugin-explorer@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@graphiql/plugin-explorer/-/plugin-explorer-0.1.1.tgz#dff43f3e68ca727de709135a8e2f4536e93f1406"
-  integrity sha512-kAT/qxBdsjpWkKLsdKOMnHq1QalHsBYv8l3fKzolhrKS3VF9Hb7PP7dOlwL/0Sbnvl+NARqrr/6azyGiSd8MlQ==
+"@graphiql/plugin-explorer@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@graphiql/plugin-explorer/-/plugin-explorer-0.1.3.tgz#7e597749b8a9768dc981aaaf31c1c1321be5a701"
+  integrity sha512-N3DDex87u5kV2EvpOFLtnhFg0kO37lBZof1TxiBI2bEv1HM1xCu6wgsRYc7MZeXzLysdGZiL4KqLNsxXh2nm+g==
   dependencies:
-    "@graphiql/react" "^0.12.0"
+    "@graphiql/react" "^0.13.0"
     graphiql-explorer "^0.9.0"
 
-"@graphiql/react@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.12.0.tgz#0cb59084f97cc2a4ed31e5927177687a6e01c001"
-  integrity sha512-4EpJyj4B7qjHXL9vT6if+5k2D17hR6JtxOAtMpmb8edRlbpT7Z41QA37DSVEkHz4nK98njxXUmaWhseShkneFQ==
+"@graphiql/react@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@graphiql/react/-/react-0.13.0.tgz#83050db5bdc29fa5fe3306e0b0613074272931dd"
+  integrity sha512-n7TR0NxNHWQOl62NRC3V6sM57yrrRRJkBWSM9mb7k+CbQPceAAtrGiwyyvppgNCafNqJE5I4B8ZFzfhFGN5IPA==
   dependencies:
-    "@graphiql/toolkit" "^0.7.1"
+    "@graphiql/toolkit" "^0.7.3"
     "@reach/combobox" "^0.17.0"
     "@reach/dialog" "^0.17.0"
     "@reach/listbox" "^0.17.0"
@@ -1690,10 +1690,10 @@
     markdown-it "^12.2.0"
     set-value "^4.1.0"
 
-"@graphiql/toolkit@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.7.1.tgz#7e39a2b1a47bf8116b31859ca538673bd5177ff4"
-  integrity sha512-Pqql/mpIGQOIIKncuNKj1r2KSwdoCSI44EcJ03WUyffWb8NludllniDdumBRo31l8leAKChTUZMGPvhp9EAs7A==
+"@graphiql/toolkit@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@graphiql/toolkit/-/toolkit-0.7.3.tgz#0f8009a26eef01c0bb2168bb2c2421ee8b6d987a"
+  integrity sha512-Scr0fVcwN7Hb+9L315xMuI2NyWynY9ENMy6VEREF6x02XZNSOguG0uK9lzC2/RnIuFy7eA/ejMfgdaX9GGcZKQ==
   dependencies:
     "@n1ru4l/push-pull-async-iterable-iterator" "^3.1.0"
     meros "^1.1.4"
@@ -11919,13 +11919,13 @@ graphiql-explorer@^0.9.0:
   resolved "https://registry.yarnpkg.com/graphiql-explorer/-/graphiql-explorer-0.9.0.tgz#25f6b990bfc3e04e88c0cf419e28d12abe2c4fbe"
   integrity sha512-fZC/wsuatqiQDO2otchxriFO0LaWIo/ovF/CQJ1yOudmY0P7pzDiP+l9CEHUiWbizk3e99x6DQG4XG1VxA+d6A==
 
-graphiql@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.0.4.tgz#4452ad6a6a694c87cb32abbcec6ea24b3c6abef7"
-  integrity sha512-eE8BbWd0ReJ6tr1gewJg8BkLs3YyPphmkPB9/nNSQa7ynpwqewuM1dn1pJ3kAvCt+FgB3wYjzOSbJjtb7NosUg==
+graphiql@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-2.0.6.tgz#1fe992db6dbc71b494994ea9e4df6789e5c57eea"
+  integrity sha512-f7nwDc7wKEFi2Ttqwpbmv9Yk5j/rPgZWgGDXbABSBlopUW5+5agOPyNORtFIv6FrpP2TooAEye/xs8aFYjbR6A==
   dependencies:
-    "@graphiql/react" "^0.12.0"
-    "@graphiql/toolkit" "^0.7.1"
+    "@graphiql/react" "^0.13.0"
+    "@graphiql/toolkit" "^0.7.3"
     entities "^2.0.0"
     graphql-language-service "^5.1.0"
     markdown-it "^12.2.0"
