@@ -14,8 +14,27 @@ import type {
 type ChunkGroup = Compilation["chunkGroups"][0]
 type EntryPoint = Compilation["asyncEntrypoints"][0]
 
-const removeExportQueryParam = (path: string | undefined): string | undefined =>
-  path?.split(`?`)[0]
+/**
+ * Remove the export query param from a path that can
+ * a) contain only the ?export= query param
+ * b) but also contain ?__contentFilePath&export=
+ */
+export const removeExportQueryParam = (
+  path: string | undefined
+): string | undefined => {
+  if (!path?.includes(`?`)) {
+    return path
+  }
+  const [filePath, queryParams] = path?.split(`?`)
+  const params = new URLSearchParams(queryParams)
+  params.delete(`export`)
+
+  const paramsString = params.toString()
+
+  return `${filePath}${
+    paramsString ? `?${decodeURIComponent(paramsString)}` : ``
+  }`
+}
 
 /**
  * Checks if a module matches a resourcePath

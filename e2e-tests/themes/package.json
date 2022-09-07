@@ -4,5 +4,9 @@
     "gatsby-theme-about",
     "production-runtime",
     "development-runtime"
-  ]
+  ],
+  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
+  "resolutions": {
+    "responselike": "^2.0.0"
+  }
 }

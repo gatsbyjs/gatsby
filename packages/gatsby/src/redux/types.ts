@@ -80,6 +80,7 @@ export interface IGatsbyFunction {
 
 export interface IGraphQLTypegenOptions {
   typesOutputPath: string
+  generateOnBuild: boolean
 }
 
 export interface IGatsbyConfig {
@@ -449,6 +450,7 @@ export interface ISetComponentFeatures {
     componentPath: string
     serverData: boolean
     config: boolean
+    Head: boolean
   }
 }
 

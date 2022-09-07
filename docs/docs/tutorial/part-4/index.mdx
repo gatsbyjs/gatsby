@@ -28,6 +28,7 @@ By the end of this part of the Tutorial, you will be able to:
 
 - Use **GraphiQL** to explore the data in the data layer and build your own GraphQL queries.
 - Use the **`useStaticQuery`** hook to pull data into a "building-block" component.
+- Create an reusable `Seo` component for the **Gatsby Head API**.
 - Use the **`gatsby-source-filesystem`** plugin to pull data into your site from your computer's filesystem.
 - Create a **page query** to pull data into a page component.
 
@@ -35,9 +36,9 @@ By the end of this part of the Tutorial, you will be able to:
 
 **Prefer a video?**
 
-If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 4.
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 4. **Please note:** At the time of recording the Gatsby Head API didn't exist yet and thus the video contents and text contents are different. Please always follow the written instructions. We'll do our best to record a new version in the future, thanks for understanding!
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RnaM4Rt05vY?start=244" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -103,13 +104,13 @@ Try creating and running a few queries by doing the following:
 
 In the next section, you'll learn more about how to use specific fields. For now, take a minute or two to explore the different fields. What kinds of data are already available to you in the data layer?
 
-## Queries in building-block components: Pull the site title into the `Layout` component
+## Queries in building-block components
 
 Now that you've seen the general process for how data works in your Gatsby site, it's time to try it out yourself.
 
 The process for using GraphQL queries in your components looks slightly different depending on whether it's a page component or a building-block component.
 
-In this first section, you'll start by pulling data into a building-block component. To do that, you'll update your `Layout` component to pull in the title of your site.
+In this first section, you'll start by pulling data into a building-block components. To do that, you'll update your `Layout` component and create an `Seo` component to display the title of your site.
 
 ### Task: Use GraphiQL to build the query
 
@@ -235,7 +236,7 @@ const Header = () => {
     <header>
       {/* highlight-start */}
       {/* Step 3: Use the data in your component */}
-      <h1>{ data.site.siteMetadata.title }</h1>
+      <h1>{data.site.siteMetadata.title}</h1>
       {/* highlight-end */}
     </header>
   )
@@ -392,7 +393,6 @@ const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}>
       {/* highlight-start */}
-      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       <header>{data.site.siteMetadata.title}</header>
       {/* highlight-end */}
       <nav>
@@ -462,7 +462,6 @@ const Layout = ({ pageTitle, children }) => {
 
   return (
     <div className={container}>
-      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       {/* highlight-next-line */}
       <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
@@ -496,6 +495,106 @@ When your browser reloads, you should see your new styles applied to your site t
 
 Congratulations, you've just used GraphQL to pull data into your site! Try changing the site title in your `gatsby-config.js` file and see your site update in the browser.
 
+### Task: Use `useStaticQuery` to create an `Seo` component
+
+Now that you're using the site title in your `Layout` component it's time to also update the `<title>` tag of each page. In the previous steps you used the Gatsby Head API to define the title, e.g. in the Index page:
+
+```js:title=src/pages/index.js
+export const Head = () => <title>Home Page</title>
+```
+
+At the end of this task the title will say `Home Page | My First Gatsby Site` by using an `Seo` component. Follow the steps below to use `useStaticQuery` in an `Seo` component and use this component across your pages.
+
+1. Create a new file called `src/components/seo.js`. Insert the following code to define your `Seo` component. This component accepts one required parameter called `title`, uses `useStaticQuery` to query the site title and then returns a `<title>` tag with the structure shown above.
+
+```js:title=src/components/seo.js
+import * as React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+
+const Seo = ({ title }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <title>{title} | {data.site.siteMetadata.title}</title>
+  )
+}
+
+export default Seo
+```
+
+2. Update the Index page component to use this newly created `Seo` component. You have to import it and then use it inside the `Head` export. Instead of placing the "Home Page" in between the `<title>` tag you're now passing it to the `Seo` component through the `title` prop.
+
+```js:title=src/pages/index.js
+import * as React from 'react'
+import Layout from '../components/layout'
+import { StaticImage } from 'gatsby-plugin-image'
+import Seo from '../components/seo' // highlight-line
+
+const IndexPage = () => {
+  return (
+    <Layout pageTitle="Home Page">
+      <p>I'm making this by following the Gatsby Tutorial.</p>
+      <StaticImage
+        alt="Clifford, a reddish-brown pitbull, dozing in a bean bag chair"
+        src="../images/clifford.jpg"
+      />
+    </Layout>
+  )
+}
+
+// highlight-next-line
+export const Head = () => <Seo title="Home Page" />
+
+export default IndexPage
+```
+
+3. Save the file and you should see `Home Page | My First Gatsby Site` in your browser tab.
+
+4. Update all the other pages where you used the `Head` export in the same way. Import the `Seo` component with the relative path to the file, replace the `<title>` tag in the `Head` export with the `Seo` component, and finally use the `title` prop on `Seo` to give it a name. The About page for example should use this:
+
+```js:title=src/pages/about.js
+// Rest of the component...
+
+export const Head = () => <Seo title="About Me" />
+```
+
+After going through this tutorial, be sure to check out [Adding an SEO Component](/docs/how-to/adding-common-features/adding-seo-component/) for a more detailed explanation.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Pro Tip:** `useStaticQuery` lends itself really well when creating small, reusable React components. You can even create custom React hooks, for example:
+
+```js
+import * as React from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+
+const useSiteMetadata = ({ title }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return data.site.siteMetadata
+}
+
+export default useSiteMetadata
+```
+
+</Announcement>
+
 ## Queries in page components: Create a blog page with a list of post filenames
 
 So far, your site has a few static landing pages: the Home page and the About page. The next step is to build out the actual blog page!
@@ -514,6 +613,7 @@ Start by setting up the skeleton for your new blog page component.
 ```js:title=src/pages/blog.js
 import * as React from 'react'
 import Layout from '../components/layout'
+import Seo from '../components/seo'
 
 const BlogPage = () => {
   return (
@@ -522,6 +622,8 @@ const BlogPage = () => {
     </Layout>
   )
 }
+
+export const Head = () => <Seo title="My Blog Posts" />
 
 export default BlogPage
 ```
@@ -544,7 +646,6 @@ const Layout = ({ pageTitle, children }) => {
 
   return (
     <div className={container}>
-      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
@@ -731,8 +832,8 @@ import { graphql } from 'gatsby'
 const HomePage = ({ data }) => {
   return (
     <p>
-      { /* Step 3: Use the data in your component*/ }
-      { data.site.siteMetadata.description }
+      {/* Step 3: Use the data in your component*/}
+      {data.site.siteMetadata.description}
     </p>
   )
 }
@@ -761,6 +862,7 @@ Follow the steps below to add a list of post filenames to your blog page.
 import * as React from 'react'
 import { graphql } from 'gatsby' // highlight-line
 import Layout from '../components/layout'
+import Seo from '../../components/seo'
 
 const BlogPage = () => {
   return (
@@ -769,6 +871,8 @@ const BlogPage = () => {
     </Layout>
   )
 }
+
+export const Head = () => <Seo title="My Blog Posts" />
 
 export default BlogPage
 ```
@@ -787,6 +891,7 @@ Alternatively, you can give each of your queries a unique name. Query names can 
 import * as React from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
+import Seo from '../../components/seo'
 
 const BlogPage = () => {
   return (
@@ -808,6 +913,8 @@ export const query = graphql`
 `
 // highlight-end
 
+export const Head = () => <Seo title="My Blog Posts" />
+
 export default BlogPage
 ```
 
@@ -827,6 +934,7 @@ In React, when you use the `.map()` method to render a list of elements, you sho
 import * as React from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
+import Seo from '../../components/seo'
 
 const BlogPage = ({ data }) => { // highlight-line
   return (
@@ -856,8 +964,26 @@ export const query = graphql`
   }
 `
 
+export const Head = () => <Seo title="My Blog Posts" />
+
 export default BlogPage
 ```
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Pro Tip:** The Gatsby Head API and its `Head` export also receives the `data` prop. This isn't directly obvious when using the component unless your IDE gives autocompletion or hints. If you're unsure how to use an API, head over to the [reference guides](/docs/reference) for instructions. There you'll find guides like [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
+
+When accessing `data` in `Head` it is the same data as in your page component:
+
+```js
+export const Head = ({ data }) => (
+  <>
+    <title>{data.site.siteMetadata.title}</title>
+  </>
+)
+```
+
+</Announcement>
 
 4. Now, when you look at your blog page in a web browser, you should see a list with the filenames for each of your posts:
 
@@ -869,7 +995,7 @@ You won't be able to render the contents of your posts just yet, since your site
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 
@@ -907,6 +1033,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 * You can write GraphQL queries to pull data out of the data layer and into your React components.
     * To pull data into a "building block" component, use the `useStaticQuery` hook.
     * To pull data into a page component, use a page query.
+* You can use React components inside the Gatsby Head API.
 
 <Collapsible
   summary={<h2>Key Gatsby Concept: General process for using data in your site</h2>}

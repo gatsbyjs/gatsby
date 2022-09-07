@@ -1,4 +1,3 @@
-import { printSchema, GraphQLSchema } from "graphql"
 import { ESLint } from "eslint"
 import path from "path"
 
@@ -37,7 +36,6 @@ export const eslintRequiredConfig: ESLint.Options = {
 }
 
 export const eslintConfig = (
-  schema: GraphQLSchema,
   usingAutomaticJsxRuntime: boolean
 ): ESLint.Options => {
   return {
@@ -69,7 +67,7 @@ export const eslintConfig = (
         },
         requireConfigFile: false,
       },
-      plugins: [`graphql`],
+      plugins: [],
       rules: {
         // New versions of react use a special jsx runtime that remove the requirement
         // for having react in scope for jsx. Once the jsx runtime is backported to all
@@ -79,14 +77,6 @@ export const eslintConfig = (
         "react/jsx-uses-react": usingAutomaticJsxRuntime ? `off` : `error`,
         "react/react-in-jsx-scope": usingAutomaticJsxRuntime ? `off` : `error`,
         "import/no-webpack-loader-syntax": [0],
-        "graphql/template-strings": [
-          `error`,
-          {
-            env: `relay`,
-            schemaString: printSchema(schema, { commentDescriptions: true }),
-            tagName: `graphql`,
-          },
-        ],
         "react/jsx-pascal-case": [
           `warn`,
           {

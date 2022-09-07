@@ -1,16 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Link, {
-  withPrefix,
-  withAssetPrefix,
-  navigate,
-  push,
-  replace,
-  navigateTo,
-  parsePath,
-} from "gatsby-link"
-import { useScrollRestoration } from "gatsby-react-router-scroll"
-import PageRenderer from "./public-page-renderer"
 import loader from "./loader"
 
 const prefetchPathname = loader.enqueue
@@ -98,17 +87,20 @@ function graphql() {
   )
 }
 
+export { default as PageRenderer } from "./public-page-renderer"
+export { useScrollRestoration } from "gatsby-react-router-scroll"
 export {
-  Link,
-  withAssetPrefix,
+  default as Link,
   withPrefix,
-  graphql,
-  parsePath,
+  withAssetPrefix,
   navigate,
-  useScrollRestoration,
+  parsePath,
+} from "gatsby-link"
+
+export {
+  graphql,
   StaticQueryContext,
   StaticQuery,
-  PageRenderer,
   useStaticQuery,
   prefetchPathname,
 }
