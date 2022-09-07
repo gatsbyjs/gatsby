@@ -4384,10 +4384,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.6.tgz#7b73cce37352936e628c5ba40326193443cfba25"
   integrity sha512-sRVq8d+ApGslmkE9e3i+D3gFGk7aZHAT+G4cIpIEdLJYPsWiSPwcAnJEjddLQQDqV3Ra2jOclX/Sv6YrvGYiWA==
 
-"@types/node@^14.10.2", "@types/node@^14.17.34":
-  version "14.17.34"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.34.tgz#fe4b38b3f07617c0fa31ae923fca9249641038f0"
-  integrity sha512-USUftMYpmuMzeWobskoPfzDi+vkpe0dvcOBRNOscFrGxVp4jomnRxWuVohgqBow2xyIPC0S3gjxV/5079jhmDg==
+"@types/node@^14.10.2", "@types/node@^14.17.34", "@types/node@^14.18.3":
+  version "14.18.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.3.tgz#b3682cfd9d5542b025df13233d073cb4347f63f3"
+  integrity sha512-GtTH2crF4MtOIrrAa+jgTV9JX/PfoUCYr6MiZw7O/dkZu5b6gm5dc1nAL0jwGo4ortSBBtGyeVaxdC8X6V+pLg==
 
 "@types/node@^15.0.1":
   version "15.0.1"
@@ -24023,10 +24023,10 @@ ts-invariant@^0.9.4:
   dependencies:
     tslib "^2.1.0"
 
-tsc-watch@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/tsc-watch/-/tsc-watch-4.5.0.tgz#d6884b932822b2c2ccd37f1c1f3748304566a474"
-  integrity sha512-aXhN4jY+1YEcn/NwCQ/+fHqU43EqOpW+pS+933EPsVEsrKhvyrodPDIjQsk1a1niFrabAK3RIBrRbAslVefEbQ==
+tsc-watch@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/tsc-watch/-/tsc-watch-4.6.0.tgz#a0eba1300cbe3048ab6d3a3e06de47141b613beb"
+  integrity sha512-DRMADjFe44EDWb+YMIOj4b83UrU6le27L3/o0/9FlmA01ikFd5Dl9RD5h1hpeh0mQdIqXvwfHZszCcjhH3bAmQ==
   dependencies:
     cross-spawn "^7.0.3"
     node-cleanup "^2.1.2"
