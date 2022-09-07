@@ -27,8 +27,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "cross-env GATSBY_PREFIXED_FROM_COMMAND_LINE=YES FROM_COMMAND_LINE=YES CYPRESS_SUPPORT=y gatsby build",
-    "build:offline": "cross-env GATSBY_PREFIXED_FROM_COMMAND_LINE=YES FROM_COMMAND_LINE=YES TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y gatsby build",
+    "build": "cross-env GATSBY_PREFIXED_FROM_COMMAND_LINE=YES FROM_COMMAND_LINE=YES CYPRESS_SUPPORT=y NODE_OPTIONS='--require ./polyfill-node-protocol-imports.js' gatsby build",
+    "build:offline": "cross-env GATSBY_PREFIXED_FROM_COMMAND_LINE=YES FROM_COMMAND_LINE=YES TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y NODE_OPTIONS='--require ./polyfill-node-protocol-imports.js' gatsby build",
     "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
     "format": "prettier --write '**/*.js' --ignore-path .gitignore",
     "serve": "gatsby serve",
@@ -65,5 +65,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
+  "resolutions": {
+    "responselike": "^2.0.0"
   }
 }
