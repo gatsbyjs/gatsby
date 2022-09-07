@@ -261,6 +261,11 @@ export interface GraphQLTypegenOptions {
   generateOnBuild?: boolean
 }
 
+type Proxy = {
+  prefix: string
+  url: string
+}
+
 /**
  * Gatsby configuration API.
  *
@@ -290,10 +295,7 @@ export interface GatsbyConfig {
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.com/docs/api-proxy/
    * */
-  proxy?: {
-    prefix: string
-    url: string
-  }
+  proxy?: Proxy | Proxy[]
   /**
    * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
    * @see https://gatsby.dev/gatsby-script
