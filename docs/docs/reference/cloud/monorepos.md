@@ -33,3 +33,11 @@ The following table shows the level of support for each tool.
 | Turborepo                        | ○                | We do not have plans to support Turborepo at this time. |
 
 ## Troubleshooting
+
+**PnP and Yarn compatibility issues**
+
+Some tools don't work under Plug'n'Play environments, check the Yarn [Compatibility table](https://yarnpkg.com/features/pnp#compatibility-table), you can enable the built-in node-modules plugin by adding the following into your local .yarnrc.yml file before running a fresh yarn install:
+
+```
+nodeLinker: node-modules
+```
