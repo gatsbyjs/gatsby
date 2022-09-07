@@ -46,7 +46,7 @@ function PageRenderer(props) {
     }
   ).pop()
 
-  return <Suspense fallback={null}>{wrappedPage}</Suspense>
+  return wrappedPage
 }
 
 PageRenderer.propTypes = {

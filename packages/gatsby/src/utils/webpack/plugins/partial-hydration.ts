@@ -1,5 +1,4 @@
 import * as path from "path"
-import * as fs from "fs-extra"
 import Template from "webpack/lib/Template"
 import ModuleDependency from "webpack/lib/dependencies/ModuleDependency"
 import NullDependency from "webpack/lib/dependencies/NullDependency"
@@ -10,12 +9,6 @@ interface IModuleExport {
   id: string
   chunks: Array<string>
   name: string
-}
-
-interface IResolveData {
-  createData: {
-    resource: string
-  }
 }
 
 interface IDirective {
@@ -51,149 +44,143 @@ export class PartialHydrationPlugin {
   }
 
   _generateClientReferenceChunk(
+    reference: NormalModule,
     module: NormalModule,
     rootContext: string
   ): void {
-    this._references.forEach(reference => {
-      const chunkName = Template.toPath(
-        // @ts-ignore - types are incorrect
-        path.relative(rootContext, reference.userRequest)
-      )
+    const chunkName = Template.toPath(
+      // @ts-ignore - types are incorrect
+      path.relative(rootContext, reference.userRequest)
+    )
 
-      const block = new webpack.AsyncDependenciesBlock(
-        {
-          name: chunkName,
-        },
-        undefined,
-        // @ts-ignore - types are incorrect
-        reference.request
-      )
+    const dep = new ClientReferenceDependency(reference.rawRequest)
+    const block = new webpack.AsyncDependenciesBlock(
+      {
+        name: chunkName,
+      },
+      undefined,
+      // @ts-ignore - types are incorrect
+      reference.request
+    )
 
-      block.addDependency(reference as Dependency)
-      module.addBlock(block)
-    })
-  }
-
-  _collectClientModules(
-    request: IResolveData
-  ): Promise<ClientReferenceDependency | null> {
-    const CHUNK_SIZE = 1 * 1024 // 1kb
-    const buffer = Buffer.alloc(CHUNK_SIZE)
-    const [resource] = request.createData.resource.split(`?`)
-
-    return new Promise((resolve, reject) => {
-      fs.open(resource, `r`, (err, fd) => {
-        if (err) {
-          reject(err)
-          return
-        }
-
-        // we only need to read a small chunk to find "client_export"
-        fs.read(fd, buffer, 0, CHUNK_SIZE, null, function (err) {
-          if (err) {
-            reject(err)
-            return
-          }
-
-          fs.close(fd, function (err) {
-            if (err) {
-              reject(err)
-              return
-            }
-
-            const isClientReference = buffer
-              .toString()
-              .includes(`client export`)
-            if (isClientReference) {
-              resolve(new ClientReferenceDependency(resource))
-            } else {
-              resolve(null)
-            }
-
-            return
-          })
-
-          return
-        })
-
-        return
-      })
-    })
+    block.addDependency(dep as Dependency)
+    module.addBlock(block)
   }
 
   _generateManifest(
-    chunkGroups: webpack.Compilation["chunkGroups"],
+    _chunkGroups: webpack.Compilation["chunkGroups"],
     moduleGraph: webpack.Compilation["moduleGraph"],
     chunkGraph: webpack.Compilation["chunkGraph"],
     rootContext: string
   ): Record<string, Record<string, IModuleExport>> {
     const json: Record<string, Record<string, IModuleExport>> = {}
-
-    chunkGroups.forEach(chunkGroup => {
-      const chunkIds: Array<string> = chunkGroup.chunks.map(c => c.id as string)
-
-      // @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L220-L252
-      const recordModule = (
-        id: string,
-        module: Module | NormalModule
-      ): void => {
-        // TODO: Hook into deps instead of the target module.
-        // That way we know by the type of dep whether to include.
-        // It also resolves conflicts when the same module is in multiple chunks.
-        if (
-          // @ts-ignore - types are incorrect
-          !module.resource ||
-          // @ts-ignore - types are incorrect
-          !this._references.some(ref => ref.request === module.resource)
-        ) {
-          return
-        }
-
-        const normalModule: NormalModule = module as NormalModule
-        const moduleProvidedExports = moduleGraph
-          .getExportsInfo(normalModule)
-          .getProvidedExports()
-
-        const moduleExports: Record<string, IModuleExport> = {}
-        ;[``, `*`]
-          .concat(
-            Array.isArray(moduleProvidedExports) ? moduleProvidedExports : []
-          )
-          .forEach(function (name) {
-            moduleExports[name] = {
-              id: id,
-              chunks: chunkIds,
-              name: name,
-            }
-          })
-
-        const href = url
-          .pathToFileURL(normalModule.resource)
-          .href.replace(rootContext.replace(/\\/g, `/`), ``)
-          .replace(`file:////`, `file://`)
-        if (href !== undefined) {
-          json[href] = moduleExports
-        }
+    // @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L220-L252
+    const recordModule = (
+      id: string,
+      module: Module | NormalModule,
+      exports: Array<{ originalExport: string; resolvedExport: string }>,
+      chunkIds: Array<string>
+    ): void => {
+      if (
+        // @ts-ignore - types are incorrect
+        !module.resource
+      ) {
+        return
       }
 
-      chunkGroup.chunks.forEach(chunk => {
-        const chunkModules = chunkGraph.getChunkModulesIterable(chunk)
+      const normalModule: NormalModule = module as NormalModule
 
-        Array.from(chunkModules).forEach(module => {
-          const moduleId = chunkGraph.getModuleId(module) as string
-          recordModule(moduleId, module)
-
-          // If this is a concatenation, register each child to the parent ID.
-          // @ts-ignore - bad types
-          if (module.modules) {
-            // @ts-ignore - bad types
-            module.modules.forEach(function (concatenatedMod) {
-              recordModule(moduleId, concatenatedMod)
-            })
-          }
-        })
+      const moduleExports: Record<string, IModuleExport> = {}
+      exports.forEach(({ originalExport, resolvedExport }) => {
+        moduleExports[originalExport] = {
+          id: id,
+          chunks: chunkIds,
+          name: resolvedExport,
+        }
       })
-    })
+
+      const href = url
+        .pathToFileURL(normalModule.resource)
+        .href.replace(rootContext.replace(/\\/g, `/`), ``)
+        .replace(`file:////`, `file://`)
+      if (href !== undefined) {
+        json[href] = moduleExports
+      }
+    }
+
+    const toRecord: Map<
+      webpack.Module,
+      Map<
+        webpack.Module,
+        Array<{
+          originalExport: string
+          resolvedExport: string
+        }>
+      >
+    > = new Map()
+    for (const clientModule of this._clientModules) {
+      for (const connection of moduleGraph.getIncomingConnections(
+        clientModule
+      )) {
+        if (connection.dependency) {
+          if (toRecord.has(connection.module)) {
+            continue
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const childMap = new Map()
+          toRecord.set(connection.module, childMap)
+
+          for (const exportInfo of moduleGraph.getExportsInfo(connection.module)
+            .exports) {
+            if (exportInfo.isReexport()) {
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              const targetInfo = exportInfo.getTarget(moduleGraph)!
+              if (!childMap.has(targetInfo.module)) {
+                childMap.set(targetInfo.module, [])
+              }
+
+              childMap.get(targetInfo.module)?.push({
+                originalExport: exportInfo.name,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                resolvedExport: targetInfo.export![0],
+              })
+            } else {
+              if (!childMap.has(connection.module)) {
+                childMap.set(connection.module, [])
+              }
+
+              childMap.get(connection.module)?.push({
+                originalExport: exportInfo.name,
+                resolvedExport: exportInfo.name,
+              })
+            }
+          }
+        }
+      }
+    }
+
+    for (const [originalModule, resolvedMap] of toRecord) {
+      for (const [resolvedModule, exports] of resolvedMap) {
+        const chunkIds: Set<string> = new Set()
+        for (const chunk of chunkGraph.getModuleChunksIterable(
+          resolvedModule
+        )) {
+          for (const group of chunk.groupsIterable) {
+            for (const chunkInGroup of group.chunks) {
+              if (chunkInGroup.id) {
+                chunkIds.add(chunkInGroup.id as string)
+              }
+            }
+          }
+        }
+
+        const moduleId = chunkGraph.getModuleId(resolvedModule) as string
+        recordModule(moduleId, originalModule, exports, Array.from(chunkIds))
+      }
+    }
+
+    toRecord.clear()
 
     return json
   }
@@ -213,6 +200,7 @@ export class PartialHydrationPlugin {
           new NullDependency.Template()
         )
 
+        // const entryModule: webpack.NormalModule | null = null
         const handler = (parser: javascript.JavascriptParser): void => {
           parser.hooks.program.tap(this.name, ast => {
             const hasClientExportDirective = ast.body.find(
@@ -225,16 +213,65 @@ export class PartialHydrationPlugin {
 
             if (hasClientExportDirective) {
               this._clientModules.add(module)
+
+              // if (entryModule) {
+              //   console.log(`parse`, module.resource)
+              //   this._generateClientReferenceChunk(
+              //     module,
+              //     entryModule,
+              //     compilation.options.context as string
+              //   )
+              //   entryModule.invalidateBuild()
+              // }
             }
 
-            if (module.resource === this._rootFilePath) {
-              this._generateClientReferenceChunk(
-                module,
-                compilation.options.context as string
-              )
-            }
+            // if (module.resource.includes(`production-app`) && !entryModule) {
+            //   entryModule = module
+
+            //   for (const clientModule of this._clientModules) {
+            //     this._generateClientReferenceChunk(
+            //       clientModule,
+            //       entryModule,
+            //       compilation.options.context as string
+            //     )
+            //   }
+            // }
           })
         }
+
+        compilation.hooks.optimizeChunkModules.tap(
+          this.name,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          () => {
+            // 1. move clientModules into their own chunk
+            // 2. disconnect module from original chunk
+
+            for (const clientModule of this._clientModules) {
+              const chunkName = Template.toPath(
+                // @ts-ignore - types are incorrect
+                path.relative(
+                  compilation.options.context as string,
+                  clientModule.userRequest
+                )
+              )
+
+              const selectedChunks = Array.from(
+                compilation.chunkGraph.getModuleChunksIterable(clientModule)
+              )
+              const chunk = compilation.addChunk(chunkName)
+              chunk.chunkReason = `PartialHydration client module`
+              compilation.chunkGraph.connectChunkAndModule(chunk, clientModule)
+
+              for (const connectedChunk of selectedChunks) {
+                compilation.chunkGraph.disconnectChunkAndModule(
+                  connectedChunk,
+                  clientModule
+                )
+                connectedChunk.split(chunk)
+              }
+            }
+          }
+        )
 
         normalModuleFactory.hooks.parser
           .for(`javascript/auto`)
@@ -245,23 +282,6 @@ export class PartialHydrationPlugin {
         normalModuleFactory.hooks.parser
           .for(`javascript/dynamic`)
           .tap(this.name, handler)
-
-        normalModuleFactory.hooks.afterResolve.tapAsync(
-          this.name,
-          (request, cb) => {
-            this._collectClientModules(request as unknown as IResolveData)
-              .then(dep => {
-                if (dep) {
-                  this._references.push(dep)
-                }
-
-                cb()
-              })
-              .catch(err => {
-                cb(err)
-              })
-          }
-        )
 
         compilation.hooks.processAssets.tap(
           {

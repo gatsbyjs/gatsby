@@ -456,4 +456,5 @@ export function getPageChunk({ componentChunkName }) {
   return asyncRequires.components[componentChunkName]()
 }
 
-export { StaticQueryContext, StaticQueryServerContext }
+export { renderToPipeableStream } from "react-server-dom-webpack/writer.node.server"
+export { StaticQueryContext, StaticQueryServerContext, React }
