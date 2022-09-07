@@ -276,10 +276,18 @@ export const buildPartialHydrationRenderer = async (
     }
   }
 
+  // TODO add caching
+  config.cache = false
+
   config.output.path = path.join(
     program.directory,
     `.cache`,
     `partial-hydration`
+  )
+
+  // TODO collect javascript aliases to match the partial hydration bundle
+  config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
+    `gatsby-plugin-image/dist/gatsby-image.browser.modern`
   )
 
   return doBuildPartialHydrationRenderer(program.directory, config, stage)

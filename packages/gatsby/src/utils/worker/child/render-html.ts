@@ -294,10 +294,6 @@ export async function renderPartialHydrationProd({
         global.unsafeBuiltinUsage
     }
   }
-  const { createElement } = await import(`react`)
-  const { renderToPipeableStream } = await import(
-    `react-server-dom-webpack/writer.node.server`
-  )
 
   for (const pagePath of paths) {
     const pageData = await readPageData(publicDir, pagePath)
@@ -312,7 +308,12 @@ export async function renderPartialHydrationProd({
       `render-page`
     )
 
-    const { getPageChunk, StaticQueryServerContext } = require(pageRenderer)
+    const {
+      getPageChunk,
+      StaticQueryServerContext,
+      renderToPipeableStream,
+      React,
+    } = require(pageRenderer)
     const chunk = await getPageChunk({
       componentChunkName: pageData.componentChunkName,
     })
@@ -322,11 +323,11 @@ export async function renderPartialHydrationProd({
     ).replace(`.json`, `-rsc.json`)
 
     const { pipe } = renderToPipeableStream(
-      createElement(
+      React.createElement(
         StaticQueryServerContext.Provider,
         { value: staticQueryContext },
         [
-          createElement(chunk.default, {
+          React.createElement(chunk.default, {
             data: pageData.result.data,
             pageContext: pageData.result.pageContext,
             location: {

@@ -87,9 +87,16 @@ function waitForResponse(response) {
       const result = response.readRoot()
       resolve(result)
     } catch (err) {
-      setTimeout(() => {
-        waitForResponse(response).then(resolve)
-      }, 200)
+      if (
+        Object.hasOwnProperty.call(err, `_response`) &&
+        Object.hasOwnProperty.call(err, `_status`)
+      ) {
+        setTimeout(() => {
+          waitForResponse(response).then(resolve)
+        }, 200)
+      } else {
+        throw err
+      }
     }
   })
 }
@@ -115,6 +122,7 @@ export class BaseLoader {
     this.inFlightDb = new Map()
     this.staticQueryDb = {}
     this.pageDataDb = new Map()
+    this.partialHydrationDb = new Map()
     this.isPrefetchQueueRunning = false
     this.prefetchQueued = []
     this.prefetchTriggered = new Set()
@@ -294,15 +302,15 @@ export class BaseLoader {
 
   loadPartialHydrationJson(rawPath) {
     const pagePath = findPath(rawPath)
-    if (this.pageDataDb.has(pagePath)) {
-      const pageData = this.pageDataDb.get(pagePath)
+    if (this.partialHydrationDb.has(pagePath)) {
+      const pageData = this.partialHydrationDb.get(pagePath)
       if (process.env.BUILD_STAGE !== `develop` || !pageData.stale) {
         return Promise.resolve(pageData)
       }
     }
 
     return this.fetchPartialHydrationJson({ pagePath }).then(pageData => {
-      this.pageDataDb.set(pagePath, pageData)
+      this.partialHydrationDb.set(pagePath, pageData)
 
       return pageData
     })
@@ -369,9 +377,10 @@ export class BaseLoader {
           })
 
           const pageResources = toPageResources(pageData, null, head)
-          pageResources.partialHydration = result.payload
 
-          if (result.payload) {
+          if (result.payload && typeof result.payload === `string`) {
+            pageResources.partialHydration = result.payload
+
             const readableStream = new ReadableStream({
               start(controller) {
                 const te = new TextEncoder()
@@ -723,14 +732,36 @@ export class BaseLoader {
 
   doPrefetch(pagePath) {
     const pageDataUrl = createPageDataUrl(pagePath)
-    return prefetchHelper(pageDataUrl, {
-      crossOrigin: `anonymous`,
-      as: `fetch`,
-    }).then(() =>
-      // This was just prefetched, so will return a response from
-      // the cache instead of making another request to the server
-      this.loadPageDataJson(pagePath)
-    )
+
+    if (global.hasPartialHydration) {
+      return Promise.all([
+        prefetchHelper(pageDataUrl, {
+          crossOrigin: `anonymous`,
+          as: `fetch`,
+        }).then(() =>
+          // This was just prefetched, so will return a response from
+          // the cache instead of making another request to the server
+          this.loadPageDataJson(pagePath)
+        ),
+        prefetchHelper(pageDataUrl.replace(`.json`, `-rsc.json`), {
+          crossOrigin: `anonymous`,
+          as: `fetch`,
+        }).then(() =>
+          // This was just prefetched, so will return a response from
+          // the cache instead of making another request to the server
+          this.loadPartialHydrationJson(pagePath)
+        ),
+      ])
+    } else {
+      return prefetchHelper(pageDataUrl, {
+        crossOrigin: `anonymous`,
+        as: `fetch`,
+      }).then(() =>
+        // This was just prefetched, so will return a response from
+        // the cache instead of making another request to the server
+        this.loadPageDataJson(pagePath)
+      )
+    }
   }
 
   hovering(rawPath) {
@@ -831,6 +862,7 @@ export class ProdLoader extends BaseLoader {
       if (result.status !== PageResourceStatus.Success) {
         return Promise.resolve()
       }
+      console.log({ result })
       const pageData = result.payload
       const chunkName = pageData.componentChunkName
       const componentUrls = createComponentUrls(chunkName)

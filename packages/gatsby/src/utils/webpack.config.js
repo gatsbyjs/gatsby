@@ -472,6 +472,7 @@ module.exports = async (
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
+        "react-server-dom-webpack": getPackageRoot(`react-server-dom-webpack`),
         "@pmmmwh/react-refresh-webpack-plugin": getPackageRoot(
           `@pmmmwh/react-refresh-webpack-plugin`
         ),
@@ -550,6 +551,10 @@ module.exports = async (
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(stage),
+    stats: {
+      logging: `verbose`,
+      loggingDebug: /webpack/,
+    },
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
@@ -599,6 +604,8 @@ module.exports = async (
 
   if (stage === `build-html` || stage === `develop-html`) {
     config.optimization = {
+      // TODO fix our partial hydration manifest
+      mangleExports: !isPartialHydrationEnabled,
       splitChunks: {
         cacheGroups: {
           default: false,
@@ -662,19 +669,19 @@ module.exports = async (
           minChunks: Math.max(componentsCount, 2),
           priority: 20,
           // Don't split up the page chunks as they won't be loaded by gatsby anyways
-          test: isPartialHydrationEnabled
-            ? function (module, { chunkGraph }) {
-                for (const chunk of chunkGraph.getModuleChunksIterable(
-                  module
-                )) {
-                  if (chunk.name?.startsWith(`component---`)) {
-                    return false
-                  }
-                }
+          // test: isPartialHydrationEnabled
+          //   ? function (module, { chunkGraph }) {
+          //       for (const chunk of chunkGraph.getModuleChunksIterable(
+          //         module
+          //       )) {
+          //         if (chunk.name?.startsWith(`component---`)) {
+          //           return false
+          //         }
+          //       }
 
-                return true
-              }
-            : undefined,
+          //       return true
+          //     }
+          //   : undefined,
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
