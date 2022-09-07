@@ -773,7 +773,13 @@ const errors = {
     text: (context): string =>
       `Building partial HTML failed${
         context.path ? ` for path "${context.path}"` : ``
-      }`,
+      }` +
+      `\n` +
+      `\nThis can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers` +
+      `\nare used in a component without declaring the "client export" directive at the top of the file.` +
+      `\n` +
+      `\nConsider adding "client export" to the top of your file if your component is interactive,` +
+      `\notherwise refactor your component so it can be statically rendered with React Server Components (RSC).`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },

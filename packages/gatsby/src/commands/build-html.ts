@@ -647,7 +647,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   ) {
     if (toRegenerate.length > 0) {
       const buildHTMLActivityProgress = reporter.createProgress(
-        `Building Partial HTML for pages`,
+        `Building partial HTML for pages`,
         toRegenerate.length,
         0,
         {
