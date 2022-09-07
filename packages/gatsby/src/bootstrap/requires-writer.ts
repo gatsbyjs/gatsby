@@ -38,6 +38,8 @@ const ROOT_POINTS = 1
 const isRootSegment = (segment: string): boolean => segment === ``
 const isDynamic = (segment: string): boolean => paramRe.test(segment)
 const isSplat = (segment: string): boolean => segment === `*`
+const hasContentFilePath = (componentPath: string): boolean =>
+  componentPath.includes(`?__contentFilePath=`)
 
 const segmentize = (uri: string): Array<string> =>
   uri
@@ -109,14 +111,8 @@ const getMatchPaths = (
   const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      if (page.matchPath && getPageMode(page) === `SSG`) {
-        matchPathPages.push(createMatchPathEntry(page, index))
-      }
-    } else {
-      if (page.matchPath) {
-        matchPathPages.push(createMatchPathEntry(page, index))
-      }
+    if (page.matchPath && getPageMode(page) === `SSG`) {
+      matchPathPages.push(createMatchPathEntry(page, index))
     }
   })
 
@@ -250,7 +246,10 @@ const preferDefault = m => (m && m.default) || m
   // Create file with async requires of components/json files.
   let asyncRequires = ``
 
-  if (process.env.gatsby_executing_command === `develop`) {
+  if (
+    process.env.gatsby_executing_command === `develop` ||
+    (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_PARTIAL_HYDRATION)
+  ) {
     asyncRequires = `exports.components = {\n${components
       .map((c: IGatsbyPageComponent): string => {
         // we need a relative import path to keep contenthash the same if directory changes
@@ -259,9 +258,13 @@ const preferDefault = m => (m && m.default) || m
           c.component
         )
 
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`
-        )}?export=default" /* webpackChunkName: "${c.componentChunkName}" */)`
+        )}${rqPrefix}export=default" /* webpackChunkName: "${
+          c.componentChunkName
+        }" */)`
       })
       .join(`,\n`)}
 }\n\n
@@ -274,9 +277,13 @@ exports.head = {\n${components
           c.component
         )
 
+        const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
+
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`
-        )}?export=head" /* webpackChunkName: "${c.componentChunkName}head" */)`
+        )}${rqPrefix}export=head" /* webpackChunkName: "${
+          c.componentChunkName
+        }head" */)`
       })
       .join(`,\n`)}
 }\n\n`

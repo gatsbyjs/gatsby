@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.22.0/packages/gatsby-remark-autolink-headers) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+## [5.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.21.0/packages/gatsby-remark-autolink-headers) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- Add note about rehype-slug-custom-id ([bc80c23](https://github.com/gatsbyjs/gatsby/commit/bc80c23081943407dbd84d8baf38d466f26c2290))
+
+## [5.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.20.0/packages/gatsby-remark-autolink-headers) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
 ## [5.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.19.0/packages/gatsby-remark-autolink-headers) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

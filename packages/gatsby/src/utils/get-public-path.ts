@@ -10,7 +10,7 @@ export const getPublicPath = ({
 }: {
   assetPrefix?: string
   pathPrefix?: string
-  prefixPaths: boolean
+  prefixPaths?: boolean
 }): string => {
   if (prefixPaths && (assetPrefix || pathPrefix)) {
     const normalized = [assetPrefix, pathPrefix]

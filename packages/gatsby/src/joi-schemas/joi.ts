@@ -61,6 +61,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       Joi.object()
         .keys({
           typesOutputPath: Joi.string().default(DEFAULT_TYPES_OUTPUT_PATH),
+          generateOnBuild: Joi.boolean().default(false),
         })
         .unknown(false)
     )
@@ -69,6 +70,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         if (value === true) {
           return {
             typesOutputPath: DEFAULT_TYPES_OUTPUT_PATH,
+            generateOnBuild: false,
           }
         }
 
@@ -134,6 +136,7 @@ export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
         description: Joi.string(),
         ignoreType: Joi.boolean(),
         counter: Joi.number(),
+        contentFilePath: Joi.string(),
       })
       .unknown(false), // Don't allow non-standard fields
   })

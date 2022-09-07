@@ -331,7 +331,7 @@ A real-world example of this would be [`gatsby-remark-responsive-iframe`](https:
 
 ## Loading in changes and seeing effect
 
-At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-7/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
+At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 6 of the Gatsby Tutorial](/docs/tutorial/part-6/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
 
 ![Output](../docs/images/remark-ast-output.png)
 

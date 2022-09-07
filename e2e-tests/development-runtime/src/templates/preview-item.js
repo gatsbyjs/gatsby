@@ -2,12 +2,11 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 function PreviewItem({ data: { item } }) {
   return (
     <Layout>
-      <SEO title={item.title} description={item.message} />
       <h1 data-testid="preview-item-title">{item.title}</h1>
       <h2>{item.updates}</h2>
       <div dangerouslySetInnerHTML={{ __html: item.message }} />
@@ -15,6 +14,10 @@ function PreviewItem({ data: { item } }) {
     </Layout>
   )
 }
+
+export const Head = ({ data: { item } }) => (
+  <Seo title={item.title} description={item.message} />
+)
 
 export default PreviewItem
 

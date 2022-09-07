@@ -17,7 +17,7 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen"
+export type AvailableFeatures = "image-cdn" | "graphql-typegen" | "content-file-path"
 
 export {
   default as Link,
@@ -258,6 +258,12 @@ export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 export interface GraphQLTypegenOptions {
   typesOutputPath?: string
+  generateOnBuild?: boolean
+}
+
+type Proxy = {
+  prefix: string
+  url: string
 }
 
 /**
@@ -289,10 +295,7 @@ export interface GatsbyConfig {
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.com/docs/api-proxy/
    * */
-  proxy?: {
-    prefix: string
-    url: string
-  }
+  proxy?: Proxy | Proxy[]
   /**
    * A list of trusted URLs that will be proxied for use with the gatsby-script off-main-thread strategy.
    * @see https://gatsby.dev/gatsby-script
@@ -502,7 +505,7 @@ export interface GatsbyNode<
     args: PreprocessSourceArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
-  ): void | Promise<void>
+  ): void | string | Promise<void | string>
 
   /**
    * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
@@ -1220,7 +1223,7 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#deletePage */
+  /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.com/docs/actions/#createNode */
@@ -1634,6 +1637,7 @@ export interface NodeInput {
     content?: string
     contentDigest: string
     description?: string
+    contentFilePath?: string
   }
   [key: string]: unknown
 }

@@ -1,5 +1,5 @@
 import path from "path"
-import { isNearMatch, getConfigFile } from "../get-config-file"
+import { getConfigFile } from "../get-config-file"
 import { testRequireError } from "../../utils/test-require-error"
 import reporter from "gatsby-cli/lib/reporter"
 
@@ -41,25 +41,12 @@ const reporterPanicMock = reporter.panic as jest.MockedFunction<
   typeof reporter.panic
 >
 
-describe(`isNearMatch`, () => {
-  it(`should NOT find a near match if file name is undefined`, () => {
-    const nearMatchA = isNearMatch(undefined, `gatsby-config`, 1)
-    expect(nearMatchA).toBeFalse()
-  })
-
-  it(`should calculate near matches based on distance`, () => {
-    const nearMatchA = isNearMatch(`gatsby-config`, `gatsby-conf`, 2)
-    const nearMatchB = isNearMatch(`gatsby-config`, `gatsby-configur`, 2)
-    expect(nearMatchA).toBeTrue()
-    expect(nearMatchB).toBeTrue()
-  })
-})
-
 // Separate config directories so cases can be tested separately
 const dir = path.resolve(__dirname, `../__mocks__/get-config`)
 const compiledDir = `${dir}/compiled-dir`
 const userRequireDir = `${dir}/user-require-dir`
 const tsDir = `${dir}/ts-dir`
+const tsxDir = `${dir}/tsx-dir`
 const nearMatchDir = `${dir}/near-match-dir`
 const srcDir = `${dir}/src-dir`
 
@@ -144,7 +131,24 @@ describe(`getConfigFile`, () => {
       error: expect.toBeObject(),
       context: {
         configName: `gatsby-config`,
+        isTSX: false,
         nearMatch: `gatsby-confi.js`,
+      },
+    })
+  })
+
+  it(`should handle .tsx extension`, async () => {
+    testRequireErrorMock.mockImplementationOnce(() => true)
+
+    await getConfigFile(tsxDir, `gatsby-config`)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10124`,
+      error: expect.toBeObject(),
+      context: {
+        configName: `gatsby-config`,
+        isTSX: true,
+        nearMatch: `gatsby-confi.tsx`,
       },
     })
   })

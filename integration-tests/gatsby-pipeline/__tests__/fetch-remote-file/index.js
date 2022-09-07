@@ -24,27 +24,27 @@ describe(`fetch-remote-file`, () => {
         path.join(
           __dirname,
           "../..",
-          "public/images/50c58a791de3c2303e62084d731799eb/photoA.jpg"
+          "public/images/ce61bf418df0d6677d2701c4aeff1023/photoA.jpg"
         )
       )
-    ).toEqual("a9e57a66a10b2d26a1999a4685d7c9ef")
+    ).toEqual("37287aaa726d254eabcf3e7ede51a93b")
     expect(
       await md5File(
         path.join(
           __dirname,
           "../..",
-          "public/images/4910e745c3c453b8795d6ba65c79d99b/photoB.jpg"
+          "public/images/adeb4bc975f3ce4081c6772a0c96ca7b/photoB.jpg"
         )
       )
-    ).toEqual("c305dc5c5db45cc773231a507af5116d")
+    ).toEqual("cef966aac5cfc7972e91e5c5c96829cb")
     expect(
       await md5File(
         path.join(
           __dirname,
           "../..",
-          "public/images/fb673e75e9534b3cc2d2e24085386d48/photoC.jpg"
+          "public/images/48315d9e12fde935993d8b406f2d6684/photoC.jpg"
         )
       )
-    ).toEqual("4ba953ba27236727d7abe7d5b8916432")
+    ).toEqual("c3d2efe723cd58311db404fd1b1f76a7")
   })
 })

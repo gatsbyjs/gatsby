@@ -57,7 +57,7 @@ export function headHandlerForSSR({
     const seenIds = new Map()
     for (const node of headNodes) {
       const { rawTagName } = node
-      const id = node.attributes.id
+      const id = node.attributes?.id
 
       if (!VALID_NODE_NAMES.includes(rawTagName)) {
         warnForInvalidTags(rawTagName)
