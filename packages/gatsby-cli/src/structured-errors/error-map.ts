@@ -768,6 +768,15 @@ const errors = {
     category: ErrorCategory.USER,
     docsUrl: `https://gatsby.dev/graphql-typegen`,
   },
+  // Partial hydration rendering errors
+  "80000": {
+    text: (context): string =>
+      `Building partial HTML failed${
+        context.path ? ` for path "${context.path}"` : ``
+      }`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
 }
 
 export type ErrorId = string | keyof typeof errors
