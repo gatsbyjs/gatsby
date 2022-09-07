@@ -34,7 +34,7 @@
     "@testing-library/react": "^11.2.7",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
-    "microbundle": "^0.15.0",
+    "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
     "prepend-directive": "^1.0.3"
   },
