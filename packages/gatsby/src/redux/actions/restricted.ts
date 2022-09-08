@@ -26,6 +26,7 @@ import {
 import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import { store } from "../index"
 import normalizePath from "normalize-path"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
 
 type RestrictionActionNames =
   | "createFieldExtension"
@@ -437,6 +438,7 @@ export const actions = {
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateSliceAction => {
+    trackFeatureIsUsed(`SliceAPI`)
     const componentPath = normalizePath(payload.component)
 
     const oldSlice = store.getState().slices.get(payload.name)
