@@ -3,20 +3,26 @@
     "message": "Contentful",
     "dependencies": [
       "gatsby-plugin-image",
-      "gatsby-plugin-sharp"
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ],
     "plugins": [
       "gatsby-plugin-image",
-      "gatsby-plugin-sharp"
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ]
   },
   "gatsby-source-datocms": {
     "message": "DatoCMS",
     "dependencies": [
-      "gatsby-plugin-image"
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ],
     "plugins": [
-      "gatsby-plugin-image"
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ]
   },
   "gatsby-plugin-netlify-cms": {
@@ -28,19 +34,27 @@
   "gatsby-source-sanity": {
     "message": "Sanity",
     "dependencies": [
-      "gatsby-plugin-image"
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ],
     "plugins": [
-      "gatsby-plugin-image"
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ]
   },
   "gatsby-source-shopify": {
     "message": "Shopify",
     "dependencies": [
-      "gatsby-plugin-image"
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ],
     "plugins": [
-      "gatsby-plugin-image"
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
     ]
   },
   "gatsby-source-wordpress": {
