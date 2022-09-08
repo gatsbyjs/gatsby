@@ -1,0 +1,105 @@
+diff --git a/packages/gatsby/cache-dir/gatsby-browser-entry.js b/packages/gatsby/cache-dir/gatsby-browser-entry.js
+index 3cce70589e..ee403f129c 100644
+--- a/packages/gatsby/cache-dir/gatsby-browser-entry.js
++++ b/packages/gatsby/cache-dir/gatsby-browser-entry.js
+@@ -1,41 +1,10 @@
+ import React from "react"
+-import PropTypes from "prop-types"
+ import loader from "./loader"
+ 
+ const prefetchPathname = loader.enqueue
+ 
+ const StaticQueryContext = React.createContext({})
+ 
+-function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
+-  const finalData = data
+-    ? data.data
+-    : staticQueryData[query] && staticQueryData[query].data
+-
+-  return (
+-    <React.Fragment>
+-      {finalData && render(finalData)}
+-      {!finalData && <div>Loading (StaticQuery)</div>}
+-    </React.Fragment>
+-  )
+-}
+-
+-const StaticQuery = props => {
+-  const { data, query, render, children } = props
+-
+-  return (
+-    <StaticQueryContext.Consumer>
+-      {staticQueryData => (
+-        <StaticQueryDataRenderer
+-          data={data}
+-          query={query}
+-          render={render || children}
+-          staticQueryData={staticQueryData}
+-        />
+-      )}
+-    </StaticQueryContext.Consumer>
+-  )
+-}
+-
+ const useStaticQuery = query => {
+   if (
+     typeof React.useContext !== `function` &&
+@@ -71,13 +40,6 @@ useStaticQuery(graphql\`${query}\`);
+   }
+ }
+ 
+-StaticQuery.propTypes = {
+-  data: PropTypes.object,
+-  query: PropTypes.string.isRequired,
+-  render: PropTypes.func,
+-  children: PropTypes.func,
+-}
+-
+ function graphql() {
+   throw new Error(
+     `It appears like Gatsby is misconfigured. Gatsby related \`graphql\` calls ` +
+@@ -97,12 +59,6 @@ export {
+   parsePath,
+ } from "gatsby-link"
+ 
+-export {
+-  graphql,
+-  StaticQueryContext,
+-  StaticQuery,
+-  useStaticQuery,
+-  prefetchPathname,
+-}
++export { graphql, StaticQueryContext, useStaticQuery, prefetchPathname }
+ 
+ export * from "gatsby-script"
+diff --git a/packages/gatsby/index.d.ts b/packages/gatsby/index.d.ts
+index 7b8c9ef06b..2a6dce0de2 100644
+--- a/packages/gatsby/index.d.ts
++++ b/packages/gatsby/index.d.ts
+@@ -227,26 +227,6 @@ export class PageRenderer extends React.Component<PageRendererProps> {}
+ 
+ type RenderCallback<T = any> = (data: T) => React.ReactNode
+ 
+-export interface StaticQueryProps<T = any> {
+-  query: StaticQueryDocument
+-  render?: RenderCallback<T>
+-  children?: RenderCallback<T>
+-}
+-
+-/**
+- * StaticQuery can do most of the things that page query can, including fragments. The main differences are:
+- *
+- * - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
+- * - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
+- * - StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
+- *
+- * @see https://www.gatsbyjs.com/docs/static-query/
+- */
+-
+-export class StaticQuery<T = any> extends React.Component<
+-  StaticQueryProps<T>
+-> {}
+-
+ /**
+  * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+  *
