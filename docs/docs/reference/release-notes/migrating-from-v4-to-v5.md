@@ -1,5 +1,5 @@
 ---
-title: Migrating from v3 to v4
+title: Migrating from v4 to v5
 ---
 
 Looking for the [v3 docs](https://v3.gatsbyjs.com)?
