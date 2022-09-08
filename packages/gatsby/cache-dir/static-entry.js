@@ -367,7 +367,7 @@ export default async function staticPage({
               pipe(writableStream)
             },
             onError(error) {
-              throw error
+              writableStream.destroy(error)
             },
           })
 
