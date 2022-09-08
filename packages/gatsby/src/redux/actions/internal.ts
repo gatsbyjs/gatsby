@@ -120,8 +120,8 @@ export const apiFinished = (
 }
 
 /**
- * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
- * components, it calls this to store the query with its component.
+ * When the query watcher extracts a "static" GraphQL query from useStaticQuery
+ * it calls this to store the query with its component.
  * @private
  */
 export const replaceStaticQuery = (
