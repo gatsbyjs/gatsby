@@ -4,7 +4,7 @@ title: Migrating from v4 to v5
 
 Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
-> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v3-to-v4.md)!  
+> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v4-to-v5.md)!  
 
 ## Introduction
 
