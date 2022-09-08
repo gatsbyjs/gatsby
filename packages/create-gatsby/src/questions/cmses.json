@@ -4,11 +4,18 @@
     "dependencies": [
       "gatsby-plugin-image",
       "gatsby-plugin-sharp"
+    ],
+    "plugins": [
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp"
     ]
   },
   "gatsby-source-datocms": {
     "message": "DatoCMS",
-    "dependences": [
+    "dependencies": [
+      "gatsby-plugin-image"
+    ],
+    "plugins": [
       "gatsby-plugin-image"
     ]
   },
@@ -22,17 +29,28 @@
     "message": "Sanity",
     "dependencies": [
       "gatsby-plugin-image"
+    ],
+    "plugins": [
+      "gatsby-plugin-image"
     ]
   },
   "gatsby-source-shopify": {
     "message": "Shopify",
     "dependencies": [
       "gatsby-plugin-image"
+    ],
+    "plugins": [
+      "gatsby-plugin-image"
     ]
   },
   "gatsby-source-wordpress": {
     "message": "WordPress",
     "dependencies": [
+      "gatsby-plugin-image",
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp"
+    ],
+    "plugins": [
       "gatsby-plugin-image",
       "gatsby-plugin-sharp",
       "gatsby-transformer-sharp"
