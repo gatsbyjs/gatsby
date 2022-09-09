@@ -48,7 +48,7 @@ describe(`url-generator`, () => {
       quality: 80,
     }
 
-    const generateUrlForType = (type: string): string => {
+    const generateEncryptedUrlForType = (type: string): string => {
       const url = {
         file: generateFileUrl({
           url: fileUrlToEncrypt,
@@ -64,7 +64,7 @@ describe(`url-generator`, () => {
       return url
     }
 
-    const getUrlForType = (type: string): string => {
+    const getUnencryptedUrlForType = (type: string): string => {
       if (type === `file`) {
         return fileUrlToEncrypt
       } else if (type === `image`) {
@@ -77,14 +77,14 @@ describe(`url-generator`, () => {
     it.each([`file`, `image`])(
       `should return %s URL's untouched if encryption is not enabled`,
       type => {
-        const unencryptedUrl = generateUrlForType(type)
+        const unencryptedUrl = generateEncryptedUrlForType(type)
 
         const { eu, u } = url.parse(unencryptedUrl, true).query
 
         expect(eu).toBe(undefined)
         expect(u).toBeTruthy()
 
-        expect(u).toBe(getUrlForType(type))
+        expect(u).toBe(getUnencryptedUrlForType(type))
       }
     )
 
@@ -99,10 +99,10 @@ describe(`url-generator`, () => {
         process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
         process.env.IMAGE_CDN_ENCRYPTION_IV = iv
 
-        const urlWithEncryptedEuParam = generateUrlForType(type)
+        const urlWithEncryptedEuParam = generateEncryptedUrlForType(type)
 
         expect(urlWithEncryptedEuParam).not.toContain(
-          encodeURIComponent(getUrlForType(type))
+          encodeURIComponent(getUnencryptedUrlForType(type))
         )
 
         const { eu: encryptedUrlParam, u: urlParam } = url.parse(
@@ -119,7 +119,7 @@ describe(`url-generator`, () => {
           encryptedUrlParam as string
         )
 
-        expect(decryptedUrlFromParam).toEqual(getUrlForType(type))
+        expect(decryptedUrlFromParam).toEqual(getUnencryptedUrlForType(type))
         expect(randomPadding.length).toBeGreaterThan(0)
 
         delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
