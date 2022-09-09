@@ -225,7 +225,7 @@ const activeFlags: Array<IFlag> = [
     env: `GATSBY_PARTIAL_HYDRATION`,
     command: `build`,
     telemetryId: `PartialHydration`,
-    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
+    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive`,
     umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
     experimental: true,
     testFitness: (): fitnessEnum => {
@@ -245,6 +245,17 @@ const activeFlags: Array<IFlag> = [
       Number(_CFLAGS_.GATSBY_MAJOR) < 5
         ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
         : `Partial hydration requires React 18+ to work.`,
+  },
+  {
+    name: `MODERN_MINIFY`,
+    env: `GATSBY_MODERN_MINIFY`,
+    command: `all`,
+    telemetryId: `ModernMinify`,
+    description: `Enable SWC as Terser replacement, Lightning CSS for CSS minification`,
+    umbrellaIssue: `https://gatsby.dev/modern-minify-umbrella-issue`,
+    experimental: true,
+    testFitness: (): fitnessEnum => _CFLAGS_.GATSBY_MAJOR === `5`,
+    requires: `Modern Minify is only available in Gatsby V5. Please upgrade Gatsby.`,
   },
 ]
 

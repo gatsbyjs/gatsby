@@ -4,8 +4,7 @@ import { GraphQLSchema } from "graphql"
 import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
-import TerserPlugin from "terser-webpack-plugin"
-import type { MinifyOptions as TerserOptions } from "terser"
+import TerserPlugin, { TerserOptions } from "terser-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
@@ -656,6 +655,31 @@ export const createWebpackUtils = (
    */
   const plugins = { ...builtinPlugins } as PluginUtils
 
+  let conditionalTerserPluginOptions: TerserOptions
+
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_MODERN_MINIFY) {
+    conditionalTerserPluginOptions = {
+      compress: true,
+      mangle: true,
+    }
+  } else {
+    conditionalTerserPluginOptions = {
+      ie8: false,
+      mangle: {
+        safari10: true,
+      },
+      parse: {
+        ecma: 5,
+      },
+      compress: {
+        ecma: 5,
+      },
+      output: {
+        ecma: 5,
+      },
+    }
+  }
+
   plugins.minifyJs = ({
     terserOptions,
     ...options
@@ -664,20 +688,10 @@ export const createWebpackUtils = (
   } = {}): WebpackPluginInstance =>
     new TerserPlugin({
       exclude: /\.min\.js/,
+      ...(_CFLAGS_.GATSBY_MAJOR === `5` &&
+        process.env.GATSBY_MODERN_MINIFY && { minify: TerserPlugin.swcMinify }),
       terserOptions: {
-        ie8: false,
-        mangle: {
-          safari10: true,
-        },
-        parse: {
-          ecma: 5,
-        },
-        compress: {
-          ecma: 5,
-        },
-        output: {
-          ecma: 5,
-        },
+        ...conditionalTerserPluginOptions,
         ...terserOptions,
       },
       parallel: Math.max(1, cpuCoreCount() - 1),
@@ -742,6 +756,11 @@ export const createWebpackUtils = (
     }
   ): CssMinimizerPlugin =>
     new CssMinimizerPlugin({
+      ...(_CFLAGS_.GATSBY_MAJOR === `5` &&
+        process.env.GATSBY_MODERN_MINIFY && {
+          // TODO(v5): Change when https://github.com/webpack-contrib/css-minimizer-webpack-plugin/issues/191 is done
+          minify: CssMinimizerPlugin.parcelCssMinify,
+        }),
       parallel: Math.max(1, cpuCoreCount() - 1),
       ...options,
     })
