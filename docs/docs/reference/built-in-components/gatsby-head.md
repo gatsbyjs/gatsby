@@ -88,7 +88,30 @@ You'll need to be aware of these things when using Gatsby Head:
 - The `Head` function needs to return valid JSX.
 - Valid tags inside the `Head` function are: `link`, `meta`, `style`, `title`, `base`, `script`, and `noscript`.
 - Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
-- As of now, you can't access context provided via [`WrapRootElement`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/#wrapRootElement) inside the `Head` function
+- As of now, `Head` doesn't wrap with [`WrapRootElement`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/#wrapRootElement) so you can't use context that are provided by [`WrapRootElement`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/#wrapRootElement) in `Head`
+
+```jsx:title=gatsby-ssr.jsx
+const React = require(`react`)
+const SomeContext = React.createContext()
+
+exports.wrapRootElement = ({ element }) => (
+  <SomeContext.Provider value={{ some: `value` }}>
+    {element}
+  </SomeContext.Provider>
+)
+```
+
+```jsx:title=src/page/index.jsx
+const Index = () => <h1>Hello</h1>
+
+export default Index
+
+export const Head = () => {
+  const value = React.useContext(SomeContext) //You can't access context value provided via wrapRootElement
+
+  return <title>{value}</title>
+}
+```
 
 ## Properties
 
