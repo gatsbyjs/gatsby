@@ -22,12 +22,26 @@ import {
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
+type IUnsafeBuiltinUsage = Array<string> | undefined
+
 declare global {
   namespace NodeJS {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Global {
-      unsafeBuiltinUsage: Array<string> | undefined
+      unsafeBuiltinUsage: IUnsafeBuiltinUsage
     }
+  }
+}
+
+// Best effort typing the shape of errors we might throw
+interface IRenderHTMLError extends Error {
+  message: string
+  name: string
+  code?: string
+  stack?: string
+  context?: {
+    path?: string
+    unsafeBuiltinsUsageByPagePath?: Record<string, IUnsafeBuiltinUsage>
   }
 }
 
@@ -176,8 +190,10 @@ export const renderHTMLProd = async ({
         if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
         }
-        // add some context to error so we can display more helpful message
-        e.context = {
+
+        const htmlRenderError: IRenderHTMLError = e
+
+        htmlRenderError.context = {
           path: pagePath,
           unsafeBuiltinsUsageByPagePath,
         }
@@ -190,7 +206,7 @@ export const renderHTMLProd = async ({
           const html = `<h1>Preview build error</h1>
         <p>There was an error when building the preview page for this page ("${pagePath}").</p>
         <h3>Error</h3>
-        <pre><code>${e.stack}</code></pre>
+        <pre><code>${htmlRenderError?.stack}</code></pre>
         <h3>Page component id</h3>
         <p><code>${pageData.componentChunkName}</code></p>
         <h3>Page data</h3>
@@ -198,11 +214,11 @@ export const renderHTMLProd = async ({
 
           await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
           previewErrors[pagePath] = {
-            e,
-            message: e.message,
-            code: e.code,
-            stack: e.stack,
-            name: e.name,
+            e: htmlRenderError,
+            name: htmlRenderError.name,
+            message: htmlRenderError.message,
+            code: htmlRenderError?.code,
+            stack: htmlRenderError?.stack,
           }
         } else {
           throw e
@@ -321,6 +337,8 @@ export async function renderPartialHydrationProd({
       pagePath
     ).replace(`.json`, `-rsc.json`)
 
+    const stream = fs.createWriteStream(outputPath)
+
     const { pipe } = renderToPipeableStream(
       createElement(
         StaticQueryServerContext.Provider,
@@ -345,11 +363,27 @@ export async function renderPartialHydrationProd({
           ),
           `utf8`
         )
-      )
+      ),
+      {
+        // React spits out the error here and does not emit it, we want to emit it
+        // so we can reject with the error and handle it upstream
+        onError: error => {
+          const partialHydrationError: IRenderHTMLError = error
+
+          partialHydrationError.context = {
+            path: pagePath,
+            unsafeBuiltinsUsageByPagePath,
+          }
+
+          stream.emit(`error`, error)
+        },
+      }
     )
 
-    await new Promise<void>(resolve => {
-      const stream = fs.createWriteStream(outputPath)
+    await new Promise<void>((resolve, reject) => {
+      stream.on(`error`, (error: IRenderHTMLError) => {
+        reject(error)
+      })
 
       stream.on(`close`, () => {
         resolve()
