@@ -44,7 +44,10 @@ function encryptImageCdnUrl(
   iv: string,
   urlToEncrypt: string
 ): string {
-  const randomPadding = generateRandomPadding()
+  const randomPadding = crypto
+    .randomBytes(crypto.randomInt(32, 64))
+    .toString(`hex`)
+
   const toEncrypt = `${randomPadding}:${urlToEncrypt}`
   const cipher = crypto.createCipheriv(
     `aes-256-ctr`,
@@ -55,10 +58,6 @@ function encryptImageCdnUrl(
   const finalBuffer = Buffer.concat([encrypted, cipher.final()])
 
   return finalBuffer.toString(`hex`)
-}
-
-function generateRandomPadding(): string {
-  return crypto.randomBytes(crypto.randomInt(32, 64)).toString(`hex`)
 }
 
 function maybeEncryptUrl(urlToEncrypt: string): string {
