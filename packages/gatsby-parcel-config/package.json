@@ -29,6 +29,7 @@
     "@parcel/runtime-service-worker": "2.6.2",
     "@parcel/transformer-js": "2.6.2",
     "@parcel/transformer-json": "2.6.2",
+    "@parcel/transformer-yaml": "2.6.2",
     "@parcel/transformer-raw": "2.6.2",
     "@parcel/transformer-react-refresh-wrap": "2.6.2"
   },
