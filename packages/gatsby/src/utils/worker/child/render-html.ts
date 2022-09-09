@@ -19,6 +19,7 @@ import {
   IResourcesForTemplate,
   getStaticQueryContext,
 } from "../../static-query-utils"
+import { ServerLocation, Router } from "@gatsbyjs/reach-router"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
@@ -344,13 +345,17 @@ export async function renderPartialHydrationProd({
         StaticQueryServerContext.Provider,
         { value: staticQueryContext },
         [
-          createElement(chunk.default, {
-            data: pageData.result.data,
-            pageContext: pageData.result.pageContext,
-            location: {
-              pathname: pageData.path,
-            },
-          }),
+          // TODO: Handle pathPrefix
+          createElement(ServerLocation, { url: pageData.path }, [
+            createElement(Router, { baseuri: `/` }, [
+              // TODO: Check if other props need to be passed
+              createElement(chunk.default, {
+                path: `/*`, // Router children require a path prop
+                data: pageData.result.data,
+                pageContext: pageData.result.pageContext,
+              }),
+            ]),
+          ]),
         ]
       ),
       JSON.parse(
