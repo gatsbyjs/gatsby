@@ -15,7 +15,7 @@ describe(`url-generator`, () => {
       key: string,
       iv: string,
       encryptedUrl: string
-    ): { decryptedUrlFromParam: string; randomPadding: string } {
+    ): { decryptedUrl: string; randomPadding: string } {
       const decipher = crypto.createDecipheriv(
         `aes-256-ctr`,
         Buffer.from(key, `hex`),
@@ -26,7 +26,7 @@ describe(`url-generator`, () => {
 
       const [randomPadding, ...url] = clearText.split(`:`)
 
-      return { decryptedUrlFromParam: url.join(`:`), randomPadding }
+      return { decryptedUrl: url.join(`:`), randomPadding }
     }
 
     const fileUrlToEncrypt = `https://example.com/file.pdf`
@@ -111,13 +111,13 @@ describe(`url-generator`, () => {
         expect(urlParam).toBeFalsy()
         expect(encryptedUrlParam).toBeTruthy()
 
-        const { decryptedUrlFromParam, randomPadding } = decryptImageCdnUrl(
+        const { decryptedUrl, randomPadding } = decryptImageCdnUrl(
           key,
           iv,
           encryptedUrlParam as string
         )
 
-        expect(decryptedUrlFromParam).toEqual(getUnencryptedUrlForType(type))
+        expect(decryptedUrl).toEqual(getUnencryptedUrlForType(type))
         expect(randomPadding.length).toBeGreaterThan(0)
 
         delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
