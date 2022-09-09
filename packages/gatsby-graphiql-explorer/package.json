@@ -19,6 +19,9 @@
     "index.js"
   ],
   "author": "Michal Piechowiak <misiek.piechowiak@gmail.com>",
+  "contributors": [
+    "LekoArts"
+  ],
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },

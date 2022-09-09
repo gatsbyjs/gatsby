@@ -13,3 +13,6 @@ export const LOCAL_STORAGE_NAMES = {
   variables: `graphiql:variables`,
   tabState: `graphiql:tabState`,
 }
+
+export const GRAPHIQL_URL = `/___graphql`
+export const REFRESH_URL = `/__refresh`

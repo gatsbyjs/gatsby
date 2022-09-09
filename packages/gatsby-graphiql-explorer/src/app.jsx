@@ -3,12 +3,18 @@ import "regenerator-runtime/runtime.js"
 import * as React from "react"
 import ReactDOM from "react-dom"
 import { GraphiQL } from "graphiql"
+import { getIntrospectionQuery } from "graphql"
 import { useExplorerPlugin } from "@graphiql/plugin-explorer"
 
 import { Logo } from "./logo.jsx"
 import { fetcher, fetchFragments, locationQuery } from "./utils.js"
 import { RefreshDataSourceButton } from "./toolbar.jsx"
-import { FALLBACK_QUERY, LOCAL_STORAGE_NAMES } from "./constants.js"
+import {
+  FALLBACK_QUERY,
+  GRAPHIQL_URL,
+  LOCAL_STORAGE_NAMES,
+  REFRESH_URL,
+} from "./constants.js"
 
 import "graphiql/graphiql.css"
 import "@graphiql/plugin-explorer/dist/style.css"
@@ -62,6 +68,20 @@ function updateURL() {
   history.replaceState(null, null, locationQuery(parameters))
 }
 
+async function graphQLIntrospection() {
+  const res = await fetch(GRAPHIQL_URL, {
+    method: `POST`,
+    headers: {
+      Accept: `application/json`,
+      "Content-Type": `application/json`,
+    },
+    credentials: `include`,
+    body: JSON.stringify({ query: getIntrospectionQuery() }),
+  })
+
+  return res.json()
+}
+
 const DEFAULT_QUERY =
   parameters.query ||
   (window.localStorage &&
@@ -70,12 +90,47 @@ const DEFAULT_QUERY =
 
 GraphiQL.Logo = Logo
 
-const App = ({ externalFragments }) => {
+const App = ({ initialExternalFragments }) => {
   const [query, setQuery] = React.useState(DEFAULT_QUERY)
+  const [refreshState, setRefreshState] = React.useState({
+    enableRefresh: false,
+    refreshToken: null,
+  })
+  const [externalFragments, setExternalFragments] = React.useState(
+    initialExternalFragments
+  )
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const result = await graphQLIntrospection()
+
+      setRefreshState({
+        enableRefresh: !!+result.extensions.enableRefresh,
+        refreshToken: result.extensions.refreshToken,
+      })
+    }
+
+    fetchData()
+  }, [])
+
   const explorerPlugin = useExplorerPlugin({
     query,
     onEdit: setQuery,
   })
+
+  const refreshExternalDataSource = () => {
+    const options = { method: `POST` }
+    if (refreshState.refreshToken) {
+      options.headers = {
+        Authorization: refreshState.refreshToken,
+      }
+    }
+    fetchFragments().then(updatedExternalFragments => {
+      setExternalFragments(updatedExternalFragments)
+    })
+
+    return fetch(REFRESH_URL, options)
+  }
 
   return (
     <GraphiQL
@@ -92,8 +147,8 @@ const App = ({ externalFragments }) => {
       onEditHeaders={onEditHeaders}
       onTabChange={onTabChange}
       toolbar={{
-        additionalContent: (
-          <RefreshDataSourceButton onClick={() => console.log(`hello world`)} />
+        additionalContent: refreshState.enableRefresh && (
+          <RefreshDataSourceButton onClick={refreshExternalDataSource} />
         ),
       }}
       externalFragments={externalFragments}
@@ -105,9 +160,9 @@ const App = ({ externalFragments }) => {
 // crude way to fetch fragments on boot time
 // it won't hot reload fragments (refresh required)
 // but good enough for initial integration
-fetchFragments().then(externalFragments => {
+fetchFragments().then(initialExternalFragments => {
   ReactDOM.render(
-    <App externalFragments={externalFragments} />,
+    <App initialExternalFragments={initialExternalFragments} />,
     document.getElementById(`root`)
   )
 })
