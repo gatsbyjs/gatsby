@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.22.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.22.1/packages/create-gatsby) (2022-09-08)
+
+#### Bug Fixes
+
+- Missing "plugins" in cmses.json [#36566](https://github.com/gatsbyjs/gatsby/issues/36566) [#36567](https://github.com/gatsbyjs/gatsby/issues/36567) ([725f071](https://github.com/gatsbyjs/gatsby/commit/725f071564208944be4d260e19d3a59b07e716a2))
+
 ## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.22.0/packages/create-gatsby) (2022-08-30)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
