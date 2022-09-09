@@ -759,6 +759,7 @@ export const createWebpackUtils = (
       ...(_CFLAGS_.GATSBY_MAJOR === `5` &&
         process.env.GATSBY_MODERN_MINIFY && {
           // TODO(v5): Change when https://github.com/webpack-contrib/css-minimizer-webpack-plugin/issues/191 is done
+          // Also change dependency in package.json
           minify: CssMinimizerPlugin.parcelCssMinify,
         }),
       parallel: Math.max(1, cpuCoreCount() - 1),
