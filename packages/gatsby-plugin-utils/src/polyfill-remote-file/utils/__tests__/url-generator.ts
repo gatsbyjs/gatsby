@@ -91,10 +91,8 @@ describe(`url-generator`, () => {
     it.each([`file`, `image`])(
       `should return %s URL's encrypted if encryption is enabled`,
       type => {
-        // crypto.randomBytes(32).toString(`hex`)
-        const key = `724501e205320c4b631ce58f2fe6c5ab2a69c3f3c638a7b3c0291406d129fc6f`
-        // crypto.randomBytes(16).toString(`hex`)
-        const iv = `96037434f6aeb5599b4705d6a96e9681`
+        const key = crypto.randomBytes(32).toString(`hex`)
+        const iv = crypto.randomBytes(16).toString(`hex`)
 
         process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
         process.env.IMAGE_CDN_ENCRYPTION_IV = iv
