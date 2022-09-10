@@ -62,3 +62,22 @@ Example:
   ]
 }
 ```
+
+### `removePropTypes`
+
+`boolean`, defaults to `true`. If true, propTypes definitions will be removed from production builds. If false, they will not.
+
+Example:
+
+```json
+{
+  "presets": [
+    [
+      "babel-preset-gatsby",
+      {
+        "removePropType": false,
+      }
+    ]
+  ]
+}
+```

@@ -33,6 +33,8 @@ export default function preset(_, options = {}) {
   let { targets = null, reactImportSource = null } = options
 
   const stage = options.stage || `test`
+  const removePropTypes =
+    options.removePropTypes !== undefined ? options.removePropTypes : true
   const pluginBabelConfig = loadCachedConfig()
   let isBrowser
   // unused because of cloud builds
@@ -139,13 +141,14 @@ export default function preset(_, options = {}) {
         },
       ],
       IS_TEST && resolve(`babel-plugin-dynamic-import-node`),
-      stage === `build-javascript` && [
-        // Remove PropTypes from production build
-        resolve(`babel-plugin-transform-react-remove-prop-types`),
-        {
-          removeImport: true,
-        },
-      ],
+      stage === `build-javascript` &&
+        removePropTypes && [
+          // Remove PropTypes from production build
+          resolve(`babel-plugin-transform-react-remove-prop-types`),
+          {
+            removeImport: true,
+          },
+        ],
     ].filter(Boolean),
   }
 }

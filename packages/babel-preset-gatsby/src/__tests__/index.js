@@ -65,6 +65,23 @@ describe(`babel-preset-gatsby`, () => {
     ])
   })
 
+  it(`Allows to configure removePropTypes`, () => {
+    const re = /babel-plugin-transform-react-remove-prop-types/
+
+    let { presets } = preset(null, {})
+    expect(presets.filter(([name, _]) => re.match(name)).length).toEqual(1)
+
+    presets = preset(null, {
+      removePropTypes: true,
+    }).presets
+    expect(presets.filter(([name, _]) => re.match(name)).length).toEqual(1)
+
+    presets = preset(null, {
+      removePropTypes: false,
+    }).presets
+    expect(presets.filter((([name, _]) => re.match(name)).length)).toEqual(0)
+  })
+
   it(`Fails to configure react importSource if source is classic`, () => {
     expect(() => preset(null, { reactImportSource: `@emotion/react` })).toThrow(
       `@babel/preset-react\` requires reactRuntime \`automatic\` in order to use \`importSource\`.`
