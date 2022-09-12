@@ -35,7 +35,7 @@ export function constructParcel(siteRoot: string, cache?: Cache): Parcel {
       `${siteRoot}/plugins/**/${gatsbyFileRegex}`,
     ],
     defaultConfig: require.resolve(`gatsby-parcel-config`),
-    mode: `production`,
+    // mode: `production`,
     cache,
     targets: {
       root: {
@@ -107,6 +107,7 @@ export async function compileGatsbyFiles(
     const cache = new LMDBCache(getCacheDir(siteRoot)) as unknown as Cache
     const parcel = constructParcel(siteRoot, cache)
     const { bundleGraph } = await parcel.run()
+    parcel.watch()
     let cacheClosePromise = Promise.resolve()
     try {
       // @ts-ignore store is public field on LMDBCache class, but public interface for Cache

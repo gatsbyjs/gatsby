@@ -11,7 +11,7 @@ import glob from "globby"
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
-import * as WorkerPool from "../utils/worker/pool"
+// import * as WorkerPool from "../utils/worker/pool"
 import { startPluginRunner } from "../redux/plugin-runner"
 import { store, emitter } from "../redux"
 import reporter from "gatsby-cli/lib/reporter"
@@ -79,7 +79,7 @@ export async function initialize({
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
-  workerPool: WorkerPool.GatsbyWorkerPool
+  // workerPool: WorkerPool.GatsbyWorkerPool
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -657,7 +657,7 @@ export async function initialize({
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const workerPool = WorkerPool.create()
+  // const workerPool = WorkerPool.create()
 
   if (state.config.graphqlTypegen) {
     telemetry.trackFeatureIsUsed(`GraphQLTypegen`)
@@ -669,6 +669,6 @@ export async function initialize({
 
   return {
     store,
-    workerPool,
+    // workerPool,
   }
 }

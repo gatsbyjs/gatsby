@@ -4,6 +4,7 @@ import { sourceNodesApiRunner } from "./source-nodes-api-runner"
 import { store } from "../redux"
 import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
+import { emitter } from "../redux"
 import { IGatsbyState, IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
 
@@ -106,6 +107,7 @@ export default async ({
   const traceId = isInitialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
+  emitter.emit(`SOURCING_STARTED`, { timestamp: new Date().getTime(), traceId })
   await sourceNodesApiRunner({
     traceId,
     deferNodeMutation,
@@ -130,4 +132,5 @@ export default async ({
   store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
 
   sourcingCount += 1
+  emitter.emit(`SOURCING_ENDED`, { timestamp: new Date().getTime(), traceId })
 }

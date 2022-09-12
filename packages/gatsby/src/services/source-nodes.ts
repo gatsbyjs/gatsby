@@ -21,7 +21,7 @@ export async function sourceNodes({
     parentSpan,
   })
   activity.start()
-  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+  // const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
   await sourceNodesAndRemoveStaleNodes({
     parentSpan: activity.span,
     deferNodeMutation,
@@ -29,32 +29,32 @@ export async function sourceNodes({
     pluginName: webhookSourcePluginName,
   })
 
-  reporter.verbose(`Checking for deleted pages`)
+  // reporter.verbose(`Checking for deleted pages`)
 
-  const tim = reporter.activityTimer(`Checking for changed pages`, {
-    parentSpan,
-  })
-  tim.start()
+  // const tim = reporter.activityTimer(`Checking for changed pages`, {
+  // parentSpan,
+  // })
+  // tim.start()
 
-  const { changedPages, deletedPages } = findChangedPages(
-    currentPages,
-    store.getState().pages
-  )
+  // const { changedPages, deletedPages } = findChangedPages(
+  // currentPages,
+  // store.getState().pages
+  // )
 
-  reporter.verbose(
-    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
-  )
+  // reporter.verbose(
+  // `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
+  // )
 
-  reporter.verbose(
-    `Found ${changedPages.length} changed page${
-      changedPages.length === 1 ? `` : `s`
-    }`
-  )
-  tim.end()
+  // reporter.verbose(
+  // `Found ${changedPages.length} changed page${
+  // changedPages.length === 1 ? `` : `s`
+  // }`
+  // )
+  // tim.end()
 
   activity.end()
-  return {
-    deletedPages,
-    changedPages,
-  }
+  // return {
+  // deletedPages,
+  // changedPages,
+  // }
 }
