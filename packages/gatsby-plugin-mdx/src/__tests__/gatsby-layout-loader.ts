@@ -94,6 +94,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
                 });
               }
             }
+            MDXContent
             export default function GatsbyMDXWrapper(props) {
               return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
@@ -133,6 +134,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
                 });
               }
             }
+            MDXContent
             export default function GatsbyMDXWrapper(props) {
               return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
@@ -169,6 +171,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
                 });
               }
             }
+            MDXContent
             export default function GatsbyMDXWrapper(props) {
               return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
@@ -205,6 +208,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
                 });
               }
             }
+            MDXContent
             export default function GatsbyMDXWrapper(props) {
               return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
