@@ -94,9 +94,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               }
             }
             export default function GatsbyMDXWrapper(props) {
-              return _jsx(MDXContent, Object.assign({}, props, {
-                children: _jsx(GATSBY_COMPILED_MDX, props)
-              }));
+              return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
             function _missingMdxReference(id, component) {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
@@ -134,9 +132,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               }
             }
             export default function GatsbyMDXWrapper(props) {
-              return _jsx(MDXContent, Object.assign({}, props, {
-                children: _jsx(GATSBY_COMPILED_MDX, props)
-              }));
+              return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
             function _missingMdxReference(id, component) {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
@@ -171,9 +167,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               }
             }
             export default function GatsbyMDXWrapper(props) {
-              return _jsx(MDXContent, Object.assign({}, props, {
-                children: _jsx(GATSBY_COMPILED_MDX, props)
-              }));
+              return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
             function _missingMdxReference(id, component) {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");
@@ -208,9 +202,7 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
               }
             }
             export default function GatsbyMDXWrapper(props) {
-              return _jsx(MDXContent, Object.assign({}, props, {
-                children: _jsx(GATSBY_COMPILED_MDX, props)
-              }));
+              return React.createElement(MDXContent, props, React.createElement(GATSBY_COMPILED_MDX, props));
             }
             function _missingMdxReference(id, component) {
               throw new Error(\\"Expected \\" + (component ? \\"component\\" : \\"object\\") + \\" \`\\" + id + \\"\` to be defined: you likely forgot to import, pass, or provide it.\\");

@@ -151,103 +151,52 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
               {
                 type: `ReturnStatement`,
                 argument: {
-                  type: `CallExpression`,
-                  callee: {
-                    type: `Identifier`,
-                    name: `_jsx`,
-                  },
-                  optional: false,
-                  arguments: [
-                    {
-                      type: `Identifier`,
-                      name: pageComponentName,
-                    },
-                    {
-                      type: `CallExpression`,
-                      start: 182,
-                      end: 239,
-                      callee: {
-                        type: `MemberExpression`,
-                        start: 182,
-                        end: 195,
-                        object: {
+                  type: `JSXElement`,
+                  openingElement: {
+                    type: `JSXOpeningElement`,
+                    attributes: [
+                      {
+                        type: `JSXSpreadAttribute`,
+                        argument: {
                           type: `Identifier`,
-                          start: 182,
-                          end: 188,
-                          name: `Object`,
-                        },
-                        property: {
-                          type: `Identifier`,
-                          start: 189,
-                          end: 195,
-                          name: `assign`,
-                        },
-                        computed: false,
-                        optional: false,
-                      },
-                      arguments: [
-                        {
-                          type: `ObjectExpression`,
-                          start: 196,
-                          end: 198,
-                          properties: [],
-                        },
-                        {
-                          type: `Identifier`,
-                          start: 200,
-                          end: 205,
                           name: `props`,
                         },
-                        {
-                          type: `ObjectExpression`,
-                          start: 207,
-                          end: 238,
-                          properties: [
-                            {
-                              type: `Property`,
-                              start: 209,
-                              end: 236,
-                              method: false,
-                              shorthand: false,
-                              computed: false,
-                              key: {
-                                type: `Identifier`,
-                                start: 209,
-                                end: 217,
-                                name: `children`,
-                              },
-                              value: {
-                                type: `CallExpression`,
-                                start: 219,
-                                end: 236,
-                                callee: {
-                                  type: `Identifier`,
-                                  start: 219,
-                                  end: 223,
-                                  name: `_jsx`,
-                                },
-                                arguments: [
-                                  {
-                                    type: `Identifier`,
-                                    start: 224,
-                                    end: 228,
-                                    name: `GATSBY_COMPILED_MDX`,
-                                  },
-                                  {
-                                    type: `Identifier`,
-                                    start: 230,
-                                    end: 235,
-                                    name: `props`,
-                                  },
-                                ],
-                                optional: false,
-                              },
-                              kind: `init`,
+                      },
+                    ],
+                    name: {
+                      type: `JSXIdentifier`,
+                      name: pageComponentName,
+                    },
+                    selfClosing: false,
+                  },
+                  closingElement: {
+                    type: `JSXClosingElement`,
+                    name: {
+                      type: `JSXIdentifier`,
+                      name: pageComponentName,
+                    },
+                  },
+                  children: [
+                    {
+                      type: `JSXElement`,
+                      openingElement: {
+                        type: `JSXOpeningElement`,
+                        attributes: [
+                          {
+                            type: `JSXSpreadAttribute`,
+                            argument: {
+                              type: `Identifier`,
+                              name: `props`,
                             },
-                          ],
+                          },
+                        ],
+                        name: {
+                          type: `JSXIdentifier`,
+                          name: `GATSBY_COMPILED_MDX`,
                         },
-                      ],
-                      optional: false,
+                        selfClosing: true,
+                      },
+                      children: [],
                     },
                   ],
                 },
