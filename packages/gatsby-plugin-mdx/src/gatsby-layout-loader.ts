@@ -99,6 +99,8 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
       },
     })
 
+    let hasClassicReactImport = false
+
     /**
      * Replace default export with wrapper function that injects compiled MDX as children
      * Input:
@@ -108,6 +110,13 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
      **/
     const newBody: Array<any> = []
     AST.body.forEach(child => {
+      if (
+        child.type === `ImportDeclaration` &&
+        child.source.value === `react`
+      ) {
+        hasClassicReactImport = true
+      }
+
       if (child.type !== `ExportDefaultDeclaration`) {
         newBody.push(child)
         return
@@ -206,6 +215,26 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         },
       } as unknown as ExportDefaultDeclaration)
     })
+
+    if (!hasClassicReactImport) {
+      newBody.unshift({
+        type: `ImportDeclaration`,
+        specifiers: [
+          {
+            type: `ImportDefaultSpecifier`,
+            local: {
+              type: `Identifier`,
+              name: `React`,
+            },
+          },
+        ],
+        source: {
+          type: `Literal`,
+          value: `react`,
+        },
+      })
+    }
+
     AST.body = newBody
 
     buildJsx(AST)
