@@ -86,23 +86,25 @@ export class GatsbyWebpackStatsExtractor {
 
         const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
 
-        const scriptAssets: Array<string> = []
+        const assetSliceContents: Array<string> = []
 
         if (`polyfill` in assets && assets.polyfill) {
-          scriptAssets.push(...assets.polyfill)
+          for (const asset of assets.polyfill) {
+            if (asset.endsWith(`.js`)) {
+              assetSliceContents.push(
+                `<script src="${this.publicPath}/${asset}" nomodule></script>`
+              )
+            }
+          }
         }
 
         if (`app` in assets && assets.app) {
-          scriptAssets.push(...assets.app)
-        }
-
-        // Add assets to scripts slice
-        const assetSliceContents: Array<string> = []
-        for (const asset of new Set(scriptAssets)) {
-          if (asset.endsWith(`.js`)) {
-            assetSliceContents.push(
-              `<script src="${this.publicPath}/${asset}" async></script>`
-            )
+          for (const asset of assets.app) {
+            if (asset.endsWith(`.js`)) {
+              assetSliceContents.push(
+                `<script src="${this.publicPath}/${asset}" async></script>`
+              )
+            }
           }
         }
 
