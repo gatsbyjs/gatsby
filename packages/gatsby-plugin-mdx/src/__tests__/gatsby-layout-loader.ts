@@ -71,7 +71,8 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
 
   it(`MDX without layout`, async () => {
     await expect(parseMDX(exampleMDX)).resolves.toMatchInlineSnapshot(`
-            "import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
+            "import React from \\"react\\";
+            import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
             import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
             function MDXContent(props = {}) {
               const {wrapper: MDXLayout} = props.components || ({});
@@ -109,7 +110,8 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
         `import TemplateComponent from "./some-path"\n\n${exampleMDX}\n\nexport default TemplateComponent`
       )
     ).resolves.toMatchInlineSnapshot(`
-            "import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
+            "import React from \\"react\\";
+            import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
             import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
             import TemplateComponent from \\"./some-path\\";
             const MDXLayout = TemplateComponent;
@@ -146,7 +148,8 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
     await expect(
       parseMDX(`${exampleMDX}\n\nexport {default} from "./some-path"`)
     ).resolves.toMatchInlineSnapshot(`
-            "import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
+            "import React from \\"react\\";
+            import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
             import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
             import MDXLayout from \\"./some-path\\";
             function MDXContent(props = {}) {
@@ -182,7 +185,8 @@ describe(`webpack loader: loads and injects Gatsby layout component`, () => {
     await expect(
       parseMDX(`${exampleMDX}\n\nexport {Layout as default} from "./some-path"`)
     ).resolves.toMatchInlineSnapshot(`
-            "import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
+            "import React from \\"react\\";
+            import GATSBY_COMPILED_MDX from \\"/mocked-layout.ts?contentFilePath=/mocked-content.mdx\\";
             import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from \\"react/jsx-runtime\\";
             import {Layout as MDXLayout} from \\"./some-path\\";
             function MDXContent(props = {}) {
