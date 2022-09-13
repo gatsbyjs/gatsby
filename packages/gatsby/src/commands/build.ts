@@ -346,21 +346,6 @@ module.exports = async function build(
     })
   }
 
-  if (process.send && shouldGenerateEngines()) {
-    await waitMaterializePageMode
-    process.send({
-      type: `LOG_ACTION`,
-      action: {
-        type: `ENGINES_READY`,
-        timestamp: new Date().toJSON(),
-      },
-    })
-  }
-
-  // Copy files from the static directory to
-  // an equivalent static directory within public.
-  copyStaticDirs()
-
   // create scope so we don't leak state object
   {
     const state = store.getState()
@@ -431,9 +416,7 @@ module.exports = async function build(
   await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
-  // TODO sc-53634: tell cloud engine is ready AFTER we copy slice-data
-  // copy slice-data directory to cache for SSR
-  {
+  if (process.send && shouldGenerateEngines()) {
     const state = store.getState()
     const sliceDataPath = path.join(
       state.program.directory,
@@ -449,7 +432,20 @@ module.exports = async function build(
       )
       fs.copySync(sliceDataPath, destination)
     }
+
+    await waitMaterializePageMode
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `ENGINES_READY`,
+        timestamp: new Date().toJSON(),
+      },
+    })
   }
+
+  // Copy files from the static directory to
+  // an equivalent static directory within public.
+  copyStaticDirs()
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
