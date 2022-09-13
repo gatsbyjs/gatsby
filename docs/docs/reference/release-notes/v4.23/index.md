@@ -104,6 +104,15 @@ To read more, head over to [RFC: Change to sort and aggregation fields API](http
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [nnmax](https://github.com/nnmax)
+  - chore(docs): update url of `deleteNode` [PR #36502](https://github.com/gatsbyjs/gatsby/pull/36502)
+  - chore(gatsby): perfect `GatsbyConfig.proxy` type [PR #36548](https://github.com/gatsbyjs/gatsby/pull/36548)
+- [CobyPear](https://github.com/CobyPear): chore(gatsby): Update `react-refresh` to `^0.14.0` [PR #36553](https://github.com/gatsbyjs/gatsby/pull/36553)
+- [IObert](https://github.com/IObert): chore(docs): Fix path to components in part 6 [PR #36463](https://github.com/gatsbyjs/gatsby/pull/36463)
+- [subhoghoshX](https://github.com/subhoghoshX): fix(docs): fix creating routes code snippet [PR #36479](https://github.com/gatsbyjs/gatsby/pull/36479)
+- [dreibona](https://github.com/dreibona): chore(docs): Fix `gatsby-source-filesystem` typo [PR #36471](https://github.com/gatsbyjs/gatsby/pull/36471)
+- [MarcusCole518](https://github.com/MarcusCole518)
+  - chore(docs): migrate cloud docs to .com [PR #36389](https://github.com/gatsbyjs/gatsby/pull/36389)
+  - chore(docs): migrate cloud docs to dotcom(1) [PR #36452](https://github.com/gatsbyjs/gatsby/pull/36452)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.23.0-next.0...gatsby@4.23.0
