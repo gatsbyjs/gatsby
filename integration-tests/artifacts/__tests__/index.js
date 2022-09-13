@@ -694,14 +694,32 @@ describe(`Second run (different pages created, data changed)`, () => {
   assertNodeCorrectness(runNumber)
 })
 
-describe(`Third run (js change, all pages are recreated)`, () => {
+describe(`Third run (js template change, just pages of that template are recreated, all pages are stitched)`, () => {
   const runNumber = 3
 
-  const expectedPages = [
-    `/stale-pages/only-not-in-first`,
-    `/page-query-dynamic-3/`,
+  const expectedPagesToRemainFromPreviousBuild = [
+    `/stale-pages/stable/`,
+    `/page-query-stable/`,
+    `/page-query-changing-but-not-invalidating-html/`,
+    `/static-query-result-tracking/stable/`,
+    `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
     `/page-that-will-have-trailing-slash-removed`,
+  ]
+
+  const expectedPagesToBeGenerated = [
+    // this is page that gets template change
+    `/gatsby-browser/`,
+    // those change happen on every build
+    `/page-query-dynamic-3/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont`,
+    `/changing-context/`,
+  ]
+
+  const expectedPages = [
+    // this page should remain from first build
+    ...expectedPagesToRemainFromPreviousBuild,
+    // those pages should have been (re)created
+    ...expectedPagesToBeGenerated,
   ]
 
   const unexpectedPages = [
@@ -755,8 +773,14 @@ describe(`Third run (js change, all pages are recreated)`, () => {
       })
     })
 
-    it(`should recreate all html files`, () => {
+    it(`should recreate only some html files`, () => {
       expect(manifest[runNumber].generated.sort()).toEqual(
+        expectedPagesToBeGenerated.sort()
+      )
+    })
+
+    it(`should stitch fragments back in all html files (browser bundle changed)`, () => {
+      expect(manifest[runNumber].stitched.sort()).toEqual(
         manifest[runNumber].allPages.sort()
       )
     })
@@ -782,8 +806,9 @@ describe(`Third run (js change, all pages are recreated)`, () => {
     })
   })
 
-  // third run - we modify module used by both ssr and browser bundle - both bundles should change
-  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
+  // third run - we modify template used by both ssr and browser bundle - global, shared SSR won't change
+  // as the change is localized in just one of templates
+  assertWebpackBundleChanges({ browser: true, ssr: false, runNumber })
 
   assertHTMLCorrectness(runNumber)
 
