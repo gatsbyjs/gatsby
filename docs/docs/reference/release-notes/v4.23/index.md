@@ -86,7 +86,19 @@ To read more, head over to [RFC: Change to sort and aggregation fields API](http
 ## Notable bugfixes & improvements
 
 - `gatsby`:
-  - TODO
+  - Improve webpack tree shaking of `gatsby-browser-entry` imports, via [#36484](https://github.com/gatsbyjs/gatsby/pull/36484)
+  - Support `node:` protocol in engine bundling, via [#36506](https://github.com/gatsbyjs/gatsby/pull/36506)
+  - Improve error handling during React 18's `renderToPipeableStream`, via [#36555](https://github.com/gatsbyjs/gatsby/pull/36555)
+  - Inject context passed by `createResolverContext` action when materializing fields, via [#36552](https://github.com/gatsbyjs/gatsby/pull/36552)
+- `gatsby-source-wordpress`:
+  - Match full urls when replacing media item links, via [#36447](https://github.com/gatsbyjs/gatsby/pull/36447)
+  - Ensure node data replacements for post updates, via [#36474](https://github.com/gatsbyjs/gatsby/pull/36474)
+- `gatsby-plugin-sharp`:
+  - Upgrade `svgo` dependency to fix vulnerability, via [#36445](https://github.com/gatsbyjs/gatsby/pull/36445)
+- `gatsby-dev-cli`:
+  - Make package work with npm 8.5, via [#36498](https://github.com/gatsbyjs/gatsby/pull/36498)
+- `create-gatsby`:
+  - Ensure plugins are installed correctly, via [#36566](https://github.com/gatsbyjs/gatsby/pull/36566)
 
 ## Contributors
 
