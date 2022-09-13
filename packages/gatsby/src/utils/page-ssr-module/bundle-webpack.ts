@@ -1,4 +1,5 @@
 import * as path from "path"
+import * as fs from "fs-extra"
 import webpack from "webpack"
 import mod from "module"
 import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
@@ -173,6 +174,18 @@ export async function createPageSSRBundle({
         WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
         GATSBY_SLICES: JSON.stringify(slicesStateObject),
         GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
+        GATSBY_SLICES_SCRIPT: JSON.stringify(
+          fs.readFileSync(
+            path.join(
+              rootDir,
+              `public`,
+              `_gatsby`,
+              `slices`,
+              `_gatsby-scripts-1.html`
+            ),
+            `utf-8`
+          )
+        ),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),

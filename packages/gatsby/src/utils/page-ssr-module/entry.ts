@@ -47,6 +47,7 @@ export interface ISSRData {
 declare global {
   const INLINED_TEMPLATE_TO_DETAILS: Record<string, ITemplateDetails>
   const WEBPACK_COMPILATION_HASH: string
+  const GATSBY_SLICES_SCRIPT: string
 }
 
 const tracerReadyPromise = initTracer(
@@ -410,8 +411,9 @@ export async function renderHTML({
         renderHTMLActivity.start()
       }
 
+      const pagePath = getPath(data)
       const results = await htmlComponentRenderer({
-        pagePath: getPath(data),
+        pagePath,
         pageData,
         staticQueryContext,
         webpackCompilationHash: WEBPACK_COMPILATION_HASH,
@@ -420,7 +422,10 @@ export async function renderHTML({
         sliceData,
       })
 
-      return results.html
+      return results.html.replace(
+        `<slice-start id="_gatsby-scripts-1"></slice-start><slice-end id="_gatsby-scripts-1"></slice-end>`,
+        GATSBY_SLICES_SCRIPT
+      )
     } finally {
       if (renderHTMLActivity) {
         renderHTMLActivity.end()
