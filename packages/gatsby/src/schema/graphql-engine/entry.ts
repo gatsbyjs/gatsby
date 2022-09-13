@@ -74,13 +74,7 @@ export class GraphQLEngine {
         )
       }
 
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
-      } else {
-        await apiRunnerNode(`unstable_onPluginInit`, {
-          parentSpan: wrapActivity.span,
-        })
-      }
+      await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
       await apiRunnerNode(`createSchemaCustomization`, {
         parentSpan: wrapActivity.span,
       })

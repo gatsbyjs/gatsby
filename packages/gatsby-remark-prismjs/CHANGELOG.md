@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-prismjs@6.22.0/packages/gatsby-remark-prismjs) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 ## [6.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-prismjs@6.21.0/packages/gatsby-remark-prismjs) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
