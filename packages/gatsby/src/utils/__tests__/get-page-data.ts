@@ -60,6 +60,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    verbose: jest.fn(),
   }
 })
 
