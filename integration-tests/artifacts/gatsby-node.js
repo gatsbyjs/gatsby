@@ -15,7 +15,7 @@ exports.onPreInit = ({ emitter }) => {
     changedBrowserCompilationHash = action.payload
   })
 
-  emitter.on(`SET_SSR_WEBPACK_COMPILATION_HASH`, action => {
+  emitter.on(`SET_SSR_GLOBAL_SHARED_WEBPACK_COMPILATION_HASH`, action => {
     changedSsrCompilationHash = action.payload
   })
 
