@@ -48,7 +48,7 @@ export function getSSRChunkHashes({
   })
 
   for (const chunkGroup of stats.compilation.chunkGroups) {
-    if (chunkGroup.name && chunkGroup.name !== `render-page`) {
+    if (chunkGroup.name) {
       const concenatedChunksByName = getHashes(
         chunkGroup,
         stats.compilation
