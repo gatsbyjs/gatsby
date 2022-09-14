@@ -156,8 +156,7 @@ diff --git a/packages/gatsby-plugin-flow/package.json b/packages/gatsby-plugin-f
 index 63b165e2ec..91e34525bf 100644
 --- a/packages/gatsby-plugin-flow/package.json
 +++ b/packages/gatsby-plugin-flow/package.json
-@@ -35,7 +35,7 @@
-     "gatsby-plugin-utils": "^3.17.0-next.0"
+@@ -36,6 +36,6 @@
    },
    "peerDependencies": {
 -    "gatsby": "^4.0.0-next"
