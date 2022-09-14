@@ -173,6 +173,7 @@ describe(`url-generator`, () => {
         delete process.env.IMAGE_CDN_ENCRYPT_IV
 
         // actual time is about 2 seconds without encryption and 3.5 seconds with encryption for 100k urls
+        expect(endTimeNoEncryption).toBeLessThan(5000)
         expect(endTimeEncryption).toBeLessThan(5000)
 
         function relativePercentDifference(a: number, b: number): number {
