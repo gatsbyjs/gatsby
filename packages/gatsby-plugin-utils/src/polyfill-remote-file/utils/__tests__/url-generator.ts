@@ -169,8 +169,6 @@ describe(`url-generator`, () => {
         generateImageCDNUrls()
         const endTimeEncryption = Date.now() - startTimeEncryption
 
-        console.log({ endTimeNoEncryption, endTimeEncryption })
-
         delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
         delete process.env.IMAGE_CDN_ENCRYPT_IV
 
