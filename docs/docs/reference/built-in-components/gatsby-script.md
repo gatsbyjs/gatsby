@@ -156,7 +156,7 @@ import { Script } from "gatsby"
     window.dataLayer = window.dataLayer || []
     window.gtag = function gtag() { window.dataLayer.push(arguments) }
     gtag('js', new Date())
-    gtag('config', ${process.env.GTAG}, { send_page_view: location ? location.pathname + location.search + location.hash : undefined })
+    gtag('config', ${process.env.GTAG}, { page_path: location ? location.pathname + location.search + location.hash : undefined })
   `}
 </Script>
 ```
