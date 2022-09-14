@@ -125,7 +125,7 @@ describe(`url-generator`, () => {
       }
     )
 
-    it(`performs within 80% of no encryption and doesn't take longer than 5 seconds for 100k urls`, async () => {
+    it(`doesn't take longer than 5 seconds for 100k urls`, async () => {
       const getfakeUrls = (): Array<{ url: string; filename: string }> =>
         Array.from({ length: 100000 }, () => {
           const filename = `${crypto.randomBytes(10).toString(`hex`)}.jpeg`
@@ -174,26 +174,9 @@ describe(`url-generator`, () => {
         delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
         delete process.env.IMAGE_CDN_ENCRYPT_IV
 
-        function relativePercentDifference(a: number, b: number): number {
-          return 100 * Math.abs((a - b) / ((a + b) / 2))
-        }
-
-        const differencePercent = relativePercentDifference(
-          endTimeNoEncryption,
-          endTimeEncryption
-        )
-
-        console.log({
-          endTimeNoEncryption,
-          endTimeEncryption,
-          differencePercent,
-        })
-
         // actual time is about 2 seconds without encryption and 3.5 seconds with encryption for 100k urls
         expect(endTimeNoEncryption).toBeLessThan(5000)
         expect(endTimeEncryption).toBeLessThan(5000)
-
-        expect(differencePercent).toBeLessThan(80)
       }
 
       testTimeDifference()
