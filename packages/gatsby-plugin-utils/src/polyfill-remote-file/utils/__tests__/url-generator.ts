@@ -125,13 +125,7 @@ describe(`url-generator`, () => {
       }
     )
 
-    it(`performs within 5% of no encryption and doesn't take longer than 5 seconds for 100k urls`, async () => {
-      const key = crypto.randomBytes(32).toString(`hex`)
-      const iv = crypto.randomBytes(16).toString(`hex`)
-
-      process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
-      process.env.IMAGE_CDN_ENCRYPTION_IV = iv
-
+    it(`performs within 75% of no encryption and doesn't take longer than 5 seconds for 100k urls`, async () => {
       const getfakeUrls = (): Array<{ url: string; filename: string }> =>
         Array.from({ length: 100000 }, () => {
           const filename = `${crypto.randomBytes(10).toString(`hex`)}.jpeg`
@@ -160,19 +154,27 @@ describe(`url-generator`, () => {
           )
         })
 
+      const key = crypto.randomBytes(32).toString(`hex`)
+      const iv = crypto.randomBytes(16).toString(`hex`)
+
       function testTimeDifference(): void {
         const startTimeNoEncryption = Date.now()
         generateImageCDNUrls()
         const endTimeNoEncryption = Date.now() - startTimeNoEncryption
 
+        process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
+        process.env.IMAGE_CDN_ENCRYPTION_IV = iv
+
         const startTimeEncryption = Date.now()
         generateImageCDNUrls()
         const endTimeEncryption = Date.now() - startTimeEncryption
 
+        console.log({ endTimeNoEncryption, endTimeEncryption })
+
         delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
         delete process.env.IMAGE_CDN_ENCRYPT_IV
 
-        // actual time is about 3 seconds with encryption and 2.9 seconds without encryption
+        // actual time is about 2 seconds without encryption and 3.5 seconds with encryption for 100k urls
         expect(endTimeEncryption).toBeLessThan(5000)
 
         function relativePercentDifference(a: number, b: number): number {
@@ -184,7 +186,7 @@ describe(`url-generator`, () => {
           endTimeEncryption
         )
 
-        expect(differencePercent).toBeLessThan(5)
+        expect(differencePercent).toBeLessThan(75)
       }
 
       testTimeDifference()
