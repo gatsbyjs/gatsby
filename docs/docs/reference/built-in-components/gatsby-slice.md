@@ -49,16 +49,13 @@ exports.createPages = async ({ actions }) => {
 }
 ```
 
-That's it, now your `navigation-bar` Slice is ready to use!
+Now that we have a `navigation-bar` Slice created, let's go use it!
 
 ### Using created Slices
 
 Now we need to convert the `DefaultLayout` component to actually use the new Slice we created.
 
 ```diff
--<a href="/blog">Blog</a>
-+<Link to="/blog">Blog</Link>
-
 -import { NavigationBar, Footer } from "../components"
 +import { Footer } from "../components"
 +import { Slices } from "gatsby"
