@@ -145,7 +145,8 @@ exports.createPages = async ({ actions }) => {
     SUPPORTED_LANGUAGES.forEach(language => {
       createPage({
         path: node.path,
-        component: require.resolve(`./src/templates/blog-post.js`),
+        // a page component that utilizes DefaultLayout
+        component: require.resolve(`./src/templates/page.js`),
         context: {
           pagePath: node.path,
           language,
