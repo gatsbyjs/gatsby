@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.23.0/packages/gatsby-plugin-react-helmet) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
+## [5.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.22.0/packages/gatsby-plugin-react-helmet) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Typo in `onPreInit` warning [#36419](https://github.com/gatsbyjs/gatsby/issues/36419) ([b7b3577](https://github.com/gatsbyjs/gatsby/commit/b7b3577c1f59fa261fb392d63cf9e2dd484a2e7e))
+
 ## [5.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.21.0/packages/gatsby-plugin-react-helmet) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
