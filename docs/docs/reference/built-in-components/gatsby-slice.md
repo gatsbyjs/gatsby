@@ -140,7 +140,7 @@ exports.createPages = async ({ actions }) => {
   // Query for all pages
   const pagesResult = await graphql('...')
 
-  // Create blog pages for each blog post
+  // Create a page for each page node + language
   pagesResult.data.edges.forEach(({ node }) => {
     SUPPORTED_LANGUAGES.forEach(language => {
       createPage({
