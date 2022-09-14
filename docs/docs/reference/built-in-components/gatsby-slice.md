@@ -12,7 +12,7 @@ By using a new `<Slice>` React component in combination with the [`createSlice`]
 
 With the introduction of [Incremental Builds](https://www.gatsbyjs.com/blog/2020-04-22-announcing-incremental-builds/), Gatsby Cloud has been able to reduce build times signficantly by only building the pages that changed. The `<Slice>` component helps reduce those builds times further.
 
-Common components that are shared across the majority of pages on your site might include a navigation bar, footer, or contact form. In today's frameworks, when you re-order the navigation bar items, the entire site needs to be rebuilt. However, if the navigation bar was created as a Gatsby Slice, the new items only need to built once and all pages will pull the new header when it's needed.
+Common components that are shared across the majority of pages on your site might include a navigation bar, footer, or contact form. In today's frameworks, when you re-order the navigation bar items, the entire site needs to be rebuilt. However, if the navigation bar was created as a Gatsby Slice, the new navigation items only need to built once and all pages will pull the new navigation bar when it's needed.
 
 ## How to use Gatsby's `<Slice>`
 
@@ -58,7 +58,7 @@ Now we need to convert the `DefaultLayout` component to actually use the new Sli
 ```diff
 -import { NavigationBar, Footer } from "../components"
 +import { Footer } from "../components"
-+import { Slices } from "gatsby"
++import { Slice } from "gatsby"
 
 export const DefaultLayout = ({ children, navigationBarClassName }: DefaultLayoutProps) => {
   /// ...
