@@ -125,7 +125,7 @@ describe(`url-generator`, () => {
       }
     )
 
-    it(`performs within 75% of no encryption and doesn't take longer than 10 seconds for 100k urls`, async () => {
+    it(`performs within 80% of no encryption and doesn't take longer than 10 seconds for 100k urls`, async () => {
       const getfakeUrls = (): Array<{ url: string; filename: string }> =>
         Array.from({ length: 100000 }, () => {
           const filename = `${crypto.randomBytes(10).toString(`hex`)}.jpeg`
@@ -187,7 +187,7 @@ describe(`url-generator`, () => {
           endTimeEncryption
         )
 
-        expect(differencePercent).toBeLessThan(75)
+        expect(differencePercent).toBeLessThan(80)
 
         console.log({
           endTimeNoEncryption,
