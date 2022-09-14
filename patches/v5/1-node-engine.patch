@@ -1,0 +1,1212 @@
+diff --git a/packages/babel-plugin-remove-graphql-queries/package.json b/packages/babel-plugin-remove-graphql-queries/package.json
+index ff112dd914..73a20a9076 100644
+--- a/packages/babel-plugin-remove-graphql-queries/package.json
++++ b/packages/babel-plugin-remove-graphql-queries/package.json
+@@ -31,6 +31,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/babel-preset-gatsby-package/package.json b/packages/babel-preset-gatsby-package/package.json
+index b4cf90156d..3e7670268c 100644
+--- a/packages/babel-preset-gatsby-package/package.json
++++ b/packages/babel-preset-gatsby-package/package.json
+@@ -36,7 +36,7 @@
+   "license": "MIT",
+   "main": "lib/index.js",
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "files": [
+     "lib/*.js"
+diff --git a/packages/babel-preset-gatsby/package.json b/packages/babel-preset-gatsby/package.json
+index bc76f913aa..496e8b5328 100644
+--- a/packages/babel-preset-gatsby/package.json
++++ b/packages/babel-preset-gatsby/package.json
+@@ -43,6 +43,6 @@
+     "slash": "^3.0.0"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-cli/package.json b/packages/gatsby-cli/package.json
+index f3386563ef..e507250936 100644
+--- a/packages/gatsby-cli/package.json
++++ b/packages/gatsby-cli/package.json
+@@ -103,6 +103,6 @@
+     "postinstall": "node scripts/postinstall.js"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-codemods/package.json b/packages/gatsby-codemods/package.json
+index 32d3491b8a..c0bdf967d1 100644
+--- a/packages/gatsby-codemods/package.json
++++ b/packages/gatsby-codemods/package.json
+@@ -40,7 +40,7 @@
+     "cross-env": "^7.0.3"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "bin": "./bin/gatsby-codemods.js"
+ }
+diff --git a/packages/gatsby-core-utils/package.json b/packages/gatsby-core-utils/package.json
+index d3afb2899b..bbc368277b 100644
+--- a/packages/gatsby-core-utils/package.json
++++ b/packages/gatsby-core-utils/package.json
+@@ -90,6 +90,6 @@
+     "typescript": "^4.7.4"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-cypress/package.json b/packages/gatsby-cypress/package.json
+index 7190ae2240..62966f7bfc 100644
+--- a/packages/gatsby-cypress/package.json
++++ b/packages/gatsby-cypress/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-design-tokens/package.json b/packages/gatsby-design-tokens/package.json
+index 2dc79793ad..0c9af10a65 100644
+--- a/packages/gatsby-design-tokens/package.json
++++ b/packages/gatsby-design-tokens/package.json
+@@ -36,6 +36,6 @@
+     "preval.macro": "^5.0.0"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-dev-cli/package.json b/packages/gatsby-dev-cli/package.json
+index 2c4b736bbf..fffd46a60c 100644
+--- a/packages/gatsby-dev-cli/package.json
++++ b/packages/gatsby-dev-cli/package.json
+@@ -48,6 +48,6 @@
+     "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-graphiql-explorer/package.json b/packages/gatsby-graphiql-explorer/package.json
+index e7345429a1..52c376d487 100644
+--- a/packages/gatsby-graphiql-explorer/package.json
++++ b/packages/gatsby-graphiql-explorer/package.json
+@@ -56,6 +56,6 @@
+     "whatwg-fetch": "^3.6.2"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-link/package.json b/packages/gatsby-link/package.json
+index ca365632fc..125d4d4a51 100644
+--- a/packages/gatsby-link/package.json
++++ b/packages/gatsby-link/package.json
+@@ -54,6 +54,6 @@
+     "directory": "packages/gatsby-link"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-page-utils/package.json b/packages/gatsby-page-utils/package.json
+index 219aa1d179..257467bae6 100644
+--- a/packages/gatsby-page-utils/package.json
++++ b/packages/gatsby-page-utils/package.json
+@@ -48,6 +48,6 @@
+     "dist/"
+   ],
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-parcel-namer-relative-to-cwd/package.json b/packages/gatsby-parcel-namer-relative-to-cwd/package.json
+index 208ef07194..3eea943299 100644
+--- a/packages/gatsby-parcel-namer-relative-to-cwd/package.json
++++ b/packages/gatsby-parcel-namer-relative-to-cwd/package.json
+@@ -11,7 +11,7 @@
+     "directory": "packages/gatsby-parcel-namer-relative-to-cwd"
+   },
+   "engines": {
+-    "node": ">=14.15.0",
++    "node": ">=18.0.0",
+     "parcel": "2.x"
+   },
+   "license": "MIT",
+diff --git a/packages/gatsby-plugin-benchmark-reporting/package.json b/packages/gatsby-plugin-benchmark-reporting/package.json
+index 4023402907..a51be81e49 100644
+--- a/packages/gatsby-plugin-benchmark-reporting/package.json
++++ b/packages/gatsby-plugin-benchmark-reporting/package.json
+@@ -33,6 +33,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-canonical-urls/package.json b/packages/gatsby-plugin-canonical-urls/package.json
+index d91ae53819..adb11fe57f 100644
+--- a/packages/gatsby-plugin-canonical-urls/package.json
++++ b/packages/gatsby-plugin-canonical-urls/package.json
+@@ -36,6 +36,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-catch-links/package.json b/packages/gatsby-plugin-catch-links/package.json
+index fcbb6034a8..92075e4eab 100644
+--- a/packages/gatsby-plugin-catch-links/package.json
++++ b/packages/gatsby-plugin-catch-links/package.json
+@@ -37,6 +37,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-coffeescript/package.json b/packages/gatsby-plugin-coffeescript/package.json
+index 930f9a751f..1ae306e0dc 100644
+--- a/packages/gatsby-plugin-coffeescript/package.json
++++ b/packages/gatsby-plugin-coffeescript/package.json
+@@ -43,6 +43,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-cxs/package.json b/packages/gatsby-plugin-cxs/package.json
+index e87427224e..8fcbb0ca0c 100644
+--- a/packages/gatsby-plugin-cxs/package.json
++++ b/packages/gatsby-plugin-cxs/package.json
+@@ -42,6 +42,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-emotion/package.json b/packages/gatsby-plugin-emotion/package.json
+index a940f93bc7..2619f90cea 100644
+--- a/packages/gatsby-plugin-emotion/package.json
++++ b/packages/gatsby-plugin-emotion/package.json
+@@ -41,6 +41,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-facebook-analytics/package.json b/packages/gatsby-plugin-facebook-analytics/package.json
+index 90b166e66f..12fe31fcb8 100644
+--- a/packages/gatsby-plugin-facebook-analytics/package.json
++++ b/packages/gatsby-plugin-facebook-analytics/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-feed/package.json b/packages/gatsby-plugin-feed/package.json
+index de5e071b2c..c3abde9adb 100644
+--- a/packages/gatsby-plugin-feed/package.json
++++ b/packages/gatsby-plugin-feed/package.json
+@@ -47,6 +47,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-flow/package.json b/packages/gatsby-plugin-flow/package.json
+index 63b165e2ec..606b819598 100644
+--- a/packages/gatsby-plugin-flow/package.json
++++ b/packages/gatsby-plugin-flow/package.json
+@@ -39,5 +39,5 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-fullstory/package.json b/packages/gatsby-plugin-fullstory/package.json
+index 7bc1f5703e..5ecda0bf6b 100644
+--- a/packages/gatsby-plugin-fullstory/package.json
++++ b/packages/gatsby-plugin-fullstory/package.json
+@@ -39,5 +39,5 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-gatsby-cloud/package.json b/packages/gatsby-plugin-gatsby-cloud/package.json
+index fa4cf4d02c..19ddfede58 100644
+--- a/packages/gatsby-plugin-gatsby-cloud/package.json
++++ b/packages/gatsby-plugin-gatsby-cloud/package.json
+@@ -50,6 +50,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-google-analytics/package.json b/packages/gatsby-plugin-google-analytics/package.json
+index 2493b5b115..98d734c257 100644
+--- a/packages/gatsby-plugin-google-analytics/package.json
++++ b/packages/gatsby-plugin-google-analytics/package.json
+@@ -42,7 +42,7 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "types": "./index.d.ts"
+ }
+diff --git a/packages/gatsby-plugin-google-gtag/package.json b/packages/gatsby-plugin-google-gtag/package.json
+index 562bbf68c8..bd93454098 100644
+--- a/packages/gatsby-plugin-google-gtag/package.json
++++ b/packages/gatsby-plugin-google-gtag/package.json
+@@ -41,6 +41,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-google-tagmanager/package.json b/packages/gatsby-plugin-google-tagmanager/package.json
+index 48aa110a4c..9964099eb2 100644
+--- a/packages/gatsby-plugin-google-tagmanager/package.json
++++ b/packages/gatsby-plugin-google-tagmanager/package.json
+@@ -42,6 +42,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-jss/package.json b/packages/gatsby-plugin-jss/package.json
+index 68b01c7944..82d4bc767e 100644
+--- a/packages/gatsby-plugin-jss/package.json
++++ b/packages/gatsby-plugin-jss/package.json
+@@ -40,6 +40,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-layout/package.json b/packages/gatsby-plugin-layout/package.json
+index 975cd65925..a97affb80f 100644
+--- a/packages/gatsby-plugin-layout/package.json
++++ b/packages/gatsby-plugin-layout/package.json
+@@ -37,5 +37,5 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-less/package.json b/packages/gatsby-plugin-less/package.json
+index 1428254da5..4f2f40fd61 100644
+--- a/packages/gatsby-plugin-less/package.json
++++ b/packages/gatsby-plugin-less/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__,theme-test.js\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-lodash/package.json b/packages/gatsby-plugin-lodash/package.json
+index 5d68e9ea8e..3f0575e1ef 100644
+--- a/packages/gatsby-plugin-lodash/package.json
++++ b/packages/gatsby-plugin-lodash/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-manifest/package.json b/packages/gatsby-plugin-manifest/package.json
+index 51643753c7..9387da67f7 100644
+--- a/packages/gatsby-plugin-manifest/package.json
++++ b/packages/gatsby-plugin-manifest/package.json
+@@ -45,6 +45,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-netlify-cms/package.json b/packages/gatsby-plugin-netlify-cms/package.json
+index efcdff25f4..8cd4904c49 100644
+--- a/packages/gatsby-plugin-netlify-cms/package.json
++++ b/packages/gatsby-plugin-netlify-cms/package.json
+@@ -53,6 +53,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-no-sourcemaps/package.json b/packages/gatsby-plugin-no-sourcemaps/package.json
+index b144ab1b14..95fd8f7d07 100644
+--- a/packages/gatsby-plugin-no-sourcemaps/package.json
++++ b/packages/gatsby-plugin-no-sourcemaps/package.json
+@@ -28,5 +28,5 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-nprogress/package.json b/packages/gatsby-plugin-nprogress/package.json
+index 3034c4bb68..e3009f9f6d 100644
+--- a/packages/gatsby-plugin-nprogress/package.json
++++ b/packages/gatsby-plugin-nprogress/package.json
+@@ -37,6 +37,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-offline/package.json b/packages/gatsby-plugin-offline/package.json
+index cbb6c9b3f9..bdcfc54260 100644
+--- a/packages/gatsby-plugin-offline/package.json
++++ b/packages/gatsby-plugin-offline/package.json
+@@ -52,6 +52,6 @@
+     "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-page-creator/package.json b/packages/gatsby-plugin-page-creator/package.json
+index 947cb376e2..795218011d 100644
+--- a/packages/gatsby-plugin-page-creator/package.json
++++ b/packages/gatsby-plugin-page-creator/package.json
+@@ -48,5 +48,5 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-postcss/package.json b/packages/gatsby-plugin-postcss/package.json
+index f3e4120c85..cd24cfa2b5 100644
+--- a/packages/gatsby-plugin-postcss/package.json
++++ b/packages/gatsby-plugin-postcss/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-preact/package.json b/packages/gatsby-plugin-preact/package.json
+index 89d3ead4d6..dfb7589009 100644
+--- a/packages/gatsby-plugin-preact/package.json
++++ b/packages/gatsby-plugin-preact/package.json
+@@ -44,6 +44,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-react-css-modules/package.json b/packages/gatsby-plugin-react-css-modules/package.json
+index 45d5224af5..8eebd50e05 100644
+--- a/packages/gatsby-plugin-react-css-modules/package.json
++++ b/packages/gatsby-plugin-react-css-modules/package.json
+@@ -45,6 +45,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-react-helmet/package.json b/packages/gatsby-plugin-react-helmet/package.json
+index d138cc1a4f..38e81ebed0 100644
+--- a/packages/gatsby-plugin-react-helmet/package.json
++++ b/packages/gatsby-plugin-react-helmet/package.json
+@@ -49,6 +49,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\",**/__mocks__"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-sass/package.json b/packages/gatsby-plugin-sass/package.json
+index 8696da737e..9199a00a10 100644
+--- a/packages/gatsby-plugin-sass/package.json
++++ b/packages/gatsby-plugin-sass/package.json
+@@ -43,6 +43,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-sharp/package.json b/packages/gatsby-plugin-sharp/package.json
+index 4f186f4ed6..2f2c311479 100644
+--- a/packages/gatsby-plugin-sharp/package.json
++++ b/packages/gatsby-plugin-sharp/package.json
+@@ -54,6 +54,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-sitemap/package.json b/packages/gatsby-plugin-sitemap/package.json
+index d329eb8adf..69ca955a74 100644
+--- a/packages/gatsby-plugin-sitemap/package.json
++++ b/packages/gatsby-plugin-sitemap/package.json
+@@ -47,6 +47,6 @@
+     "test:watch": "jest --watch"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-styled-components/package.json b/packages/gatsby-plugin-styled-components/package.json
+index 933b322dd3..45d014c028 100644
+--- a/packages/gatsby-plugin-styled-components/package.json
++++ b/packages/gatsby-plugin-styled-components/package.json
+@@ -41,6 +41,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-styled-jsx/package.json b/packages/gatsby-plugin-styled-jsx/package.json
+index 021d875985..4454c6be23 100644
+--- a/packages/gatsby-plugin-styled-jsx/package.json
++++ b/packages/gatsby-plugin-styled-jsx/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-styletron/package.json b/packages/gatsby-plugin-styletron/package.json
+index 733fa06e3a..fae12abf54 100644
+--- a/packages/gatsby-plugin-styletron/package.json
++++ b/packages/gatsby-plugin-styletron/package.json
+@@ -41,6 +41,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-stylus/package.json b/packages/gatsby-plugin-stylus/package.json
+index 8258aadb58..7387b4b9b1 100644
+--- a/packages/gatsby-plugin-stylus/package.json
++++ b/packages/gatsby-plugin-stylus/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-subfont/package.json b/packages/gatsby-plugin-subfont/package.json
+index 94c8eced07..0bc6b11558 100644
+--- a/packages/gatsby-plugin-subfont/package.json
++++ b/packages/gatsby-plugin-subfont/package.json
+@@ -38,5 +38,5 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-twitter/package.json b/packages/gatsby-plugin-twitter/package.json
+index 13d742dcf6..eb3cfaf1d9 100644
+--- a/packages/gatsby-plugin-twitter/package.json
++++ b/packages/gatsby-plugin-twitter/package.json
+@@ -37,6 +37,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-typescript/package.json b/packages/gatsby-plugin-typescript/package.json
+index 15250caceb..97ec38d2c0 100644
+--- a/packages/gatsby-plugin-typescript/package.json
++++ b/packages/gatsby-plugin-typescript/package.json
+@@ -46,6 +46,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-typography/package.json b/packages/gatsby-plugin-typography/package.json
+index 88853ca307..165d64d635 100644
+--- a/packages/gatsby-plugin-typography/package.json
++++ b/packages/gatsby-plugin-typography/package.json
+@@ -46,6 +46,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-plugin-utils/package.json b/packages/gatsby-plugin-utils/package.json
+index 73c4c7ef44..bdc34cc37b 100644
+--- a/packages/gatsby-plugin-utils/package.json
++++ b/packages/gatsby-plugin-utils/package.json
+@@ -76,6 +76,6 @@
+     "dist/"
+   ],
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-react-router-scroll/package.json b/packages/gatsby-react-router-scroll/package.json
+index 1425cc911b..13367f167a 100644
+--- a/packages/gatsby-react-router-scroll/package.json
++++ b/packages/gatsby-react-router-scroll/package.json
+@@ -40,6 +40,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.tsx\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-autolink-headers/package.json b/packages/gatsby-remark-autolink-headers/package.json
+index d5a941deb9..8ecf6d4f56 100644
+--- a/packages/gatsby-remark-autolink-headers/package.json
++++ b/packages/gatsby-remark-autolink-headers/package.json
+@@ -44,6 +44,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-code-repls/package.json b/packages/gatsby-remark-code-repls/package.json
+index f75aa3f423..b018e0f7aa 100644
+--- a/packages/gatsby-remark-code-repls/package.json
++++ b/packages/gatsby-remark-code-repls/package.json
+@@ -46,6 +46,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-copy-linked-files/package.json b/packages/gatsby-remark-copy-linked-files/package.json
+index bbc078ff15..2897866f26 100644
+--- a/packages/gatsby-remark-copy-linked-files/package.json
++++ b/packages/gatsby-remark-copy-linked-files/package.json
+@@ -47,6 +47,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-custom-blocks/package.json b/packages/gatsby-remark-custom-blocks/package.json
+index 30b55a822f..500d1c9b13 100644
+--- a/packages/gatsby-remark-custom-blocks/package.json
++++ b/packages/gatsby-remark-custom-blocks/package.json
+@@ -46,6 +46,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-embed-snippet/package.json b/packages/gatsby-remark-embed-snippet/package.json
+index 151d5fc214..f5ca7b582d 100644
+--- a/packages/gatsby-remark-embed-snippet/package.json
++++ b/packages/gatsby-remark-embed-snippet/package.json
+@@ -42,6 +42,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-graphviz/package.json b/packages/gatsby-remark-graphviz/package.json
+index b09e3ce770..653c24f865 100644
+--- a/packages/gatsby-remark-graphviz/package.json
++++ b/packages/gatsby-remark-graphviz/package.json
+@@ -50,6 +50,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-images-contentful/package.json b/packages/gatsby-remark-images-contentful/package.json
+index da6df66370..8a65688ce4 100644
+--- a/packages/gatsby-remark-images-contentful/package.json
++++ b/packages/gatsby-remark-images-contentful/package.json
+@@ -44,5 +44,5 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-images/package.json b/packages/gatsby-remark-images/package.json
+index 4a3d1fafec..a4a678ad10 100644
+--- a/packages/gatsby-remark-images/package.json
++++ b/packages/gatsby-remark-images/package.json
+@@ -54,6 +54,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-katex/package.json b/packages/gatsby-remark-katex/package.json
+index ed6cacaf4c..d38ca68be7 100644
+--- a/packages/gatsby-remark-katex/package.json
++++ b/packages/gatsby-remark-katex/package.json
+@@ -46,6 +46,6 @@
+     "test": "jest src/__tests__/index.js"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-prismjs/package.json b/packages/gatsby-remark-prismjs/package.json
+index 43503c9f0f..8ed42be4eb 100644
+--- a/packages/gatsby-remark-prismjs/package.json
++++ b/packages/gatsby-remark-prismjs/package.json
+@@ -44,6 +44,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-responsive-iframe/package.json b/packages/gatsby-remark-responsive-iframe/package.json
+index c10b2baa28..48ddc72aad 100644
+--- a/packages/gatsby-remark-responsive-iframe/package.json
++++ b/packages/gatsby-remark-responsive-iframe/package.json
+@@ -44,6 +44,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-remark-smartypants/package.json b/packages/gatsby-remark-smartypants/package.json
+index a52929e74f..1fa6e1315f 100644
+--- a/packages/gatsby-remark-smartypants/package.json
++++ b/packages/gatsby-remark-smartypants/package.json
+@@ -40,6 +40,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-script/package.json b/packages/gatsby-script/package.json
+index 9aa1df6e62..b14e51f4a8 100644
+--- a/packages/gatsby-script/package.json
++++ b/packages/gatsby-script/package.json
+@@ -36,6 +36,6 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-script#readme",
+   "keywords": [
+diff --git a/packages/gatsby-sharp/package.json b/packages/gatsby-sharp/package.json
+index 0f1fa60423..158069f8cd 100644
+--- a/packages/gatsby-sharp/package.json
++++ b/packages/gatsby-sharp/package.json
+@@ -26,7 +26,7 @@
+     "typescript": "^4.7.4"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "repository": {
+     "type": "git",
+diff --git a/packages/gatsby-source-contentful/package.json b/packages/gatsby-source-contentful/package.json
+index ff30ae319d..292ebdc13e 100644
+--- a/packages/gatsby-source-contentful/package.json
++++ b/packages/gatsby-source-contentful/package.json
+@@ -57,7 +57,7 @@
+     "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "types": "index.d.ts"
+ }
+diff --git a/packages/gatsby-source-drupal/package.json b/packages/gatsby-source-drupal/package.json
+index 91450d7691..b4c947d134 100644
+--- a/packages/gatsby-source-drupal/package.json
++++ b/packages/gatsby-source-drupal/package.json
+@@ -30,7 +30,7 @@
+     "cross-env": "^7.0.3"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
+   "keywords": [
+diff --git a/packages/gatsby-source-faker/package.json b/packages/gatsby-source-faker/package.json
+index d4928685f0..ebe285b57b 100644
+--- a/packages/gatsby-source-faker/package.json
++++ b/packages/gatsby-source-faker/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-filesystem/package.json b/packages/gatsby-source-filesystem/package.json
+index 62dbe4af6c..5d56b4158b 100644
+--- a/packages/gatsby-source-filesystem/package.json
++++ b/packages/gatsby-source-filesystem/package.json
+@@ -45,6 +45,6 @@
+   },
+   "types": "index.d.ts",
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-graphql/package.json b/packages/gatsby-source-graphql/package.json
+index 0e9bbaceba..85ecd72a67 100644
+--- a/packages/gatsby-source-graphql/package.json
++++ b/packages/gatsby-source-graphql/package.json
+@@ -43,6 +43,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-hacker-news/package.json b/packages/gatsby-source-hacker-news/package.json
+index c18651f63f..715bdb5c64 100644
+--- a/packages/gatsby-source-hacker-news/package.json
++++ b/packages/gatsby-source-hacker-news/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-lever/package.json b/packages/gatsby-source-lever/package.json
+index 3f5b389fcf..ecf195cd4c 100644
+--- a/packages/gatsby-source-lever/package.json
++++ b/packages/gatsby-source-lever/package.json
+@@ -44,6 +44,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-medium/package.json b/packages/gatsby-source-medium/package.json
+index 18956043bf..7a2ac6c199 100644
+--- a/packages/gatsby-source-medium/package.json
++++ b/packages/gatsby-source-medium/package.json
+@@ -37,6 +37,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-mongodb/package.json b/packages/gatsby-source-mongodb/package.json
+index 0bc1943ea8..b64bf97cbd 100644
+--- a/packages/gatsby-source-mongodb/package.json
++++ b/packages/gatsby-source-mongodb/package.json
+@@ -43,6 +43,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-npm-package-search/package.json b/packages/gatsby-source-npm-package-search/package.json
+index b0cae98614..00794b227f 100644
+--- a/packages/gatsby-source-npm-package-search/package.json
++++ b/packages/gatsby-source-npm-package-search/package.json
+@@ -35,6 +35,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-wikipedia/package.json b/packages/gatsby-source-wikipedia/package.json
+index 496225c67a..7b360e1b0e 100644
+--- a/packages/gatsby-source-wikipedia/package.json
++++ b/packages/gatsby-source-wikipedia/package.json
+@@ -41,6 +41,6 @@
+     "cross-env": "^7.0.3"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-source-wordpress/package.json b/packages/gatsby-source-wordpress/package.json
+index cf27484734..c575a0a7a7 100644
+--- a/packages/gatsby-source-wordpress/package.json
++++ b/packages/gatsby-source-wordpress/package.json
+@@ -90,6 +90,6 @@
+     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-telemetry/package.json b/packages/gatsby-telemetry/package.json
+index 39bdc6f701..92f4d0d065 100644
+--- a/packages/gatsby-telemetry/package.json
++++ b/packages/gatsby-telemetry/package.json
+@@ -54,6 +54,6 @@
+     "boolean-negation": false
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-asciidoc/package.json b/packages/gatsby-transformer-asciidoc/package.json
+index dbdbd7a898..07ae844e43 100644
+--- a/packages/gatsby-transformer-asciidoc/package.json
++++ b/packages/gatsby-transformer-asciidoc/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-csv/package.json b/packages/gatsby-transformer-csv/package.json
+index 8e330eec8d..44eca59e1f 100644
+--- a/packages/gatsby-transformer-csv/package.json
++++ b/packages/gatsby-transformer-csv/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-documentationjs/package.json b/packages/gatsby-transformer-documentationjs/package.json
+index 9f4c86966e..e18371dae7 100644
+--- a/packages/gatsby-transformer-documentationjs/package.json
++++ b/packages/gatsby-transformer-documentationjs/package.json
+@@ -40,6 +40,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-excel/package.json b/packages/gatsby-transformer-excel/package.json
+index 22cf672523..5880efb6ab 100644
+--- a/packages/gatsby-transformer-excel/package.json
++++ b/packages/gatsby-transformer-excel/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-hjson/package.json b/packages/gatsby-transformer-hjson/package.json
+index 26a97c7639..36dc8a6ddb 100644
+--- a/packages/gatsby-transformer-hjson/package.json
++++ b/packages/gatsby-transformer-hjson/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-javascript-frontmatter/package.json b/packages/gatsby-transformer-javascript-frontmatter/package.json
+index 61d88e775a..8a07e61b48 100644
+--- a/packages/gatsby-transformer-javascript-frontmatter/package.json
++++ b/packages/gatsby-transformer-javascript-frontmatter/package.json
+@@ -37,6 +37,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-javascript-static-exports/package.json b/packages/gatsby-transformer-javascript-static-exports/package.json
+index 4b873f3f31..daf610610d 100644
+--- a/packages/gatsby-transformer-javascript-static-exports/package.json
++++ b/packages/gatsby-transformer-javascript-static-exports/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-json/package.json b/packages/gatsby-transformer-json/package.json
+index 76377fde95..af15f1899f 100644
+--- a/packages/gatsby-transformer-json/package.json
++++ b/packages/gatsby-transformer-json/package.json
+@@ -37,6 +37,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-pdf/package.json b/packages/gatsby-transformer-pdf/package.json
+index 6d395d4175..ac0cce3a2b 100644
+--- a/packages/gatsby-transformer-pdf/package.json
++++ b/packages/gatsby-transformer-pdf/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-react-docgen/package.json b/packages/gatsby-transformer-react-docgen/package.json
+index d757c83b52..b3b8dbf208 100644
+--- a/packages/gatsby-transformer-react-docgen/package.json
++++ b/packages/gatsby-transformer-react-docgen/package.json
+@@ -44,6 +44,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-remark/package.json b/packages/gatsby-transformer-remark/package.json
+index 9d69e9fdb0..b10df4f510 100644
+--- a/packages/gatsby-transformer-remark/package.json
++++ b/packages/gatsby-transformer-remark/package.json
+@@ -59,6 +59,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-screenshot/lambda/package.json b/packages/gatsby-transformer-screenshot/lambda/package.json
+index 1ea9a004fe..68e00f3cbc 100644
+--- a/packages/gatsby-transformer-screenshot/lambda/package.json
++++ b/packages/gatsby-transformer-screenshot/lambda/package.json
+@@ -9,6 +9,6 @@
+   },
+   "keywords": [],
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-screenshot/package.json b/packages/gatsby-transformer-screenshot/package.json
+index 869a284af0..24df5ed213 100644
+--- a/packages/gatsby-transformer-screenshot/package.json
++++ b/packages/gatsby-transformer-screenshot/package.json
+@@ -41,6 +41,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --ignore lambda"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-sharp/package.json b/packages/gatsby-transformer-sharp/package.json
+index 42175ff9dd..e0c9c9b27a 100644
+--- a/packages/gatsby-transformer-sharp/package.json
++++ b/packages/gatsby-transformer-sharp/package.json
+@@ -47,6 +47,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-sqip/package.json b/packages/gatsby-transformer-sqip/package.json
+index 78af262248..3a596ad4b6 100644
+--- a/packages/gatsby-transformer-sqip/package.json
++++ b/packages/gatsby-transformer-sqip/package.json
+@@ -48,6 +48,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-toml/package.json b/packages/gatsby-transformer-toml/package.json
+index 8bedcab4c1..2d65c40941 100644
+--- a/packages/gatsby-transformer-toml/package.json
++++ b/packages/gatsby-transformer-toml/package.json
+@@ -38,6 +38,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-xml/package.json b/packages/gatsby-transformer-xml/package.json
+index e0929645b2..4359a47a62 100644
+--- a/packages/gatsby-transformer-xml/package.json
++++ b/packages/gatsby-transformer-xml/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-transformer-yaml/package.json b/packages/gatsby-transformer-yaml/package.json
+index c26a78c872..29afb153ae 100644
+--- a/packages/gatsby-transformer-yaml/package.json
++++ b/packages/gatsby-transformer-yaml/package.json
+@@ -39,6 +39,6 @@
+     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby-worker/package.json b/packages/gatsby-worker/package.json
+index 563f1492a6..c36d6fee6c 100644
+--- a/packages/gatsby-worker/package.json
++++ b/packages/gatsby-worker/package.json
+@@ -37,6 +37,6 @@
+     "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   }
+ }
+diff --git a/packages/gatsby/package.json b/packages/gatsby/package.json
+index f957fd1a8e..fd212fa233 100644
+--- a/packages/gatsby/package.json
++++ b/packages/gatsby/package.json
+@@ -208,6 +208,6 @@
+   },
+   "engines": {
+-    "node": ">=14.15.0"
++    "node": ">=18.0.0"
+   },
+   "files": [
+     "apis.json",
