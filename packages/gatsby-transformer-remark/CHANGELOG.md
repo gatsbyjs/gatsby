@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.23.0/packages/gatsby-transformer-remark) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Chores
+
+- Cleanup v4 compile flag conditions [#36486](https://github.com/gatsbyjs/gatsby/issues/36486) ([9dcc773](https://github.com/gatsbyjs/gatsby/commit/9dcc77340675a3b9a2f57c82e4b4e19c57072cfb))
+
 ## [5.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.22.0/packages/gatsby-transformer-remark) (2022-08-30)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)

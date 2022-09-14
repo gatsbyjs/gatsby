@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.8.0/packages/gatsby-script) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Features
+
+- Client export directive [#36470](https://github.com/gatsbyjs/gatsby/issues/36470) ([320efb7](https://github.com/gatsbyjs/gatsby/commit/320efb77079f7adf4c89b885a7f34e4cc3951906))
+
+#### Chores
+
+- update dependency microbundle to ^0.15.1 for gatsby-script [#36513](https://github.com/gatsbyjs/gatsby/issues/36513) ([80f6616](https://github.com/gatsbyjs/gatsby/commit/80f661600754db1af886ce485578d6533942c099))
+
 ## [1.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@1.7.0/packages/gatsby-script) (2022-08-30)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)

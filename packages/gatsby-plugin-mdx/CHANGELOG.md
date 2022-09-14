@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.2.0/packages/gatsby-plugin-mdx) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- ci pipeline [#36544](https://github.com/gatsbyjs/gatsby/issues/36544) ([1125e58](https://github.com/gatsbyjs/gatsby/commit/1125e58731249257123d692522bed1a1ddc32383))
+
+#### Chores
+
+- Fix `gatsby-source-filesystem` typo Fix [#36471](https://github.com/gatsbyjs/gatsby/issues/36471) ([e8d7446](https://github.com/gatsbyjs/gatsby/commit/e8d744617d07c39c053ac437b2b024a26e1c3394))
+
 ### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.1.1/packages/gatsby-plugin-mdx) (2022-09-08)
 
 #### Bug Fixes

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.23.0/packages/gatsby-transformer-react-docgen) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- update dependency react-docgen to ^5.4.3 for gatsby-transformer-react-docgen [#36277](https://github.com/gatsbyjs/gatsby/issues/36277) ([7fe8e51](https://github.com/gatsbyjs/gatsby/commit/7fe8e511b0dcd1707eefca2c63b0f27174d7252c))
+
 ## [7.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.22.0/packages/gatsby-transformer-react-docgen) (2022-08-30)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
