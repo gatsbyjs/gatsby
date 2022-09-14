@@ -15,30 +15,6 @@ export enum ImageCDNUrlKeys {
   CONTENT_DIGEST = `cd`,
 }
 
-export const getImageCDNEncryptionInfo = (): {
-  key: string
-  iv: string
-  shouldEncrypt: boolean
-} => {
-  const key = process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
-  const iv = process.env.IMAGE_CDN_ENCRYPTION_IV
-  const shouldEncrypt = !!(iv && key)
-
-  if (!shouldEncrypt) {
-    return {
-      key: ``,
-      iv: ``,
-      shouldEncrypt,
-    }
-  }
-
-  return {
-    key,
-    iv,
-    shouldEncrypt,
-  }
-}
-
 function encryptImageCdnUrl(
   secretKey: string,
   iv: string,
@@ -60,26 +36,21 @@ function encryptImageCdnUrl(
   return finalBuffer.toString(`hex`)
 }
 
-function maybeEncryptUrl(urlToEncrypt: string): string {
-  const { key, iv, shouldEncrypt } = getImageCDNEncryptionInfo()
-
-  if (!shouldEncrypt) {
-    return urlToEncrypt
-  }
-
-  return encryptImageCdnUrl(key, iv, urlToEncrypt)
-}
-
-function getUrlParamName():
-  | ImageCDNUrlKeys.URL
-  | ImageCDNUrlKeys.ENCRYPTED_URL {
-  const { shouldEncrypt } = getImageCDNEncryptionInfo()
+function appendUrlParamToSearchParams(
+  searchParams: URLSearchParams,
+  url: string
+): void {
+  const key = process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY || ``
+  const iv = process.env.IMAGE_CDN_ENCRYPTION_IV || ``
+  const shouldEncrypt = !!(iv && key)
 
   const paramName = shouldEncrypt
     ? ImageCDNUrlKeys.ENCRYPTED_URL
     : ImageCDNUrlKeys.URL
 
-  return paramName
+  const finalUrl = shouldEncrypt ? encryptImageCdnUrl(key, iv, url) : url
+
+  searchParams.append(paramName, finalUrl)
 }
 
 export function generateFileUrl({
@@ -98,7 +69,7 @@ export function generateFileUrl({
     })}/${filenameWithoutExt}${fileExt}`
   )
 
-  parsedURL.searchParams.append(getUrlParamName(), maybeEncryptUrl(url))
+  appendUrlParamToSearchParams(parsedURL.searchParams, url)
 
   return `${parsedURL.pathname}${parsedURL.search}`
 }
@@ -121,7 +92,7 @@ export function generateImageUrl(
     )}/${filenameWithoutExt}.${imageArgs.format}`
   )
 
-  parsedURL.searchParams.append(getUrlParamName(), maybeEncryptUrl(source.url))
+  appendUrlParamToSearchParams(parsedURL.searchParams, source.url)
   parsedURL.searchParams.append(ImageCDNUrlKeys.ARGS, queryStr)
   parsedURL.searchParams.append(
     ImageCDNUrlKeys.CONTENT_DIGEST,
