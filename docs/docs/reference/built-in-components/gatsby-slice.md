@@ -156,6 +156,7 @@ exports.createPages = async ({ actions }) => {
         slices: {
           // Any time `<Slice alias="navigation-bar">` is seen on this page,
           // use the `navigation-bar-${language}` id
+          // highlight-next-line
           'navigation-bar': `navigation-bar-${language}`
         }
       })
