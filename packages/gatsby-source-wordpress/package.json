@@ -2,7 +2,7 @@
   "name": "gatsby-source-wordpress",
   "description": "Source data from WordPress in an efficient and scalable way.",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
-  "version": "6.24.0-next.0",
+  "version": "6.24.0-next.1",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -56,7 +56,7 @@
     "babel-preset-gatsby": "^2.24.0-next.0",
     "babel-preset-gatsby-package": "^2.24.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^2.24.0-next.0",
+    "gatsby-plugin-image": "^2.24.0-next.1",
     "identity-obj-proxy": "^3.0.0",
     "react-test-renderer": "^16.14.0",
     "rimraf": "^3.0.2",
