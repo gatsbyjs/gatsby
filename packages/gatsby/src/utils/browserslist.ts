@@ -18,10 +18,17 @@ const installedGatsbyVersion = (directory: string): number | undefined => {
 }
 
 export const getBrowsersList = (directory: string): Array<string> => {
+  const fallbackV1 = [`>1%`, `last 2 versions`, `IE >= 9`]
+  let fallbackOthers = [`>0.25%`, `not dead`]
+
+  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+    fallbackOthers = fallbackOthers.map(
+      fallback => fallback + ` and supports es6-module`
+    )
+  }
+
   const fallback =
-    installedGatsbyVersion(directory) === 1
-      ? [`>1%`, `last 2 versions`, `IE >= 9`]
-      : [`>0.25%`, `not dead`]
+    installedGatsbyVersion(directory) === 1 ? fallbackV1 : fallbackOthers
 
   const config = browserslist.findConfig(directory)
 

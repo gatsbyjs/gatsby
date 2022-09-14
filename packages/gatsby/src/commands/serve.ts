@@ -369,7 +369,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   try {
-    port = await detectPortInUseAndPrompt(port)
+    port = await detectPortInUseAndPrompt(port, program.host)
     startListening()
   } catch (e) {
     if (e.message === `USER_REJECTED`) {

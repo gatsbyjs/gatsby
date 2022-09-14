@@ -28,7 +28,14 @@ describe(`browserslist`, () => {
 
     const list = getBrowsersList(BASE)
 
-    expect(list).toEqual([`>0.25%`, `not dead`])
+    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+      expect(list).toEqual([
+        `>0.25% and supports es6-module`,
+        `not dead and supports es6-module`,
+      ])
+    } else {
+      expect(list).toEqual([`>0.25%`, `not dead`])
+    }
   })
 
   it(`hasES6ModuleSupport returns true if all browsers support es6 modules`, () => {

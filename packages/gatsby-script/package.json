@@ -1,7 +1,7 @@
 {
   "name": "gatsby-script",
   "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
-  "version": "1.8.0-next.1",
+  "version": "1.9.0-next.0",
   "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -25,7 +25,7 @@
     "@testing-library/react": "^11.2.7",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
-    "microbundle": "^0.15.0",
+    "microbundle": "^0.15.1",
     "prepend-directive": "^1.0.3",
     "typescript": "^4.7.4"
   },
