@@ -1,6 +1,5 @@
 import crypto from "crypto"
 import url from "url"
-import { faker } from "@faker-js/faker"
 
 import {
   generateFileUrl,
@@ -135,9 +134,13 @@ describe(`url-generator`, () => {
 
       const getfakeUrls = (): Array<{ url: string; filename: string }> =>
         Array.from({ length: 100000 }, () => {
-          const filename = `${faker.animal.horse()}.jpeg`
+          const filename = `${crypto.randomBytes(10).toString(`hex`)}.jpeg`
           return {
-            url: `${faker.internet.url()}/image/url/path/${faker.date.future()}/${filename}`,
+            url: `https://site-${crypto
+              .randomBytes(3)
+              .toString(`hex`)}.com/image/url/path/${crypto
+              .randomBytes(10)
+              .toString(`hex`)}/${filename}`,
             filename,
           }
         })
