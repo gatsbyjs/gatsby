@@ -85,7 +85,7 @@ exports.createPages = async ({ actions }) => {
   actions.createSlice({
     id: `navigation-bar`,
     context: {
-      theBestPokemon: `Treecko`,
+      jokeOfTheDay: `What's blue and not heavy? Light blue.`,
     }
     component: require.resolve(`./src/components/navigation-bar.js`),
   })
@@ -105,7 +105,7 @@ export const NavigationBar = ({ className, sliceContext }: NavigationBarProps) =
     <div className={className}>
       <Link to="/">Home</Link>
       // highlight-next-line
-      <Link to="/best-pokemon">{sliceContext.bestPokemon}</Link>
+      <Link to="/jokes">{sliceContext.jokeOfTheDay}</Link>
     </div>
   )
 }
