@@ -1,5 +1,6 @@
 import crypto from "crypto"
 import url from "url"
+import { faker } from "@faker-js/faker"
 
 import {
   generateFileUrl,
@@ -124,6 +125,68 @@ describe(`url-generator`, () => {
         delete process.env.IMAGE_CDN_ENCRYPTION_IV
       }
     )
+
+    it(`performs within 3% of no encryption and doesn't take longer than 5 seconds for 1M urls`, async () => {
+      const key = crypto.randomBytes(32).toString(`hex`)
+      const iv = crypto.randomBytes(16).toString(`hex`)
+
+      process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
+      process.env.IMAGE_CDN_ENCRYPTION_IV = iv
+
+      const oneMillionFakeURLs = Array.from({ length: 100000 }, () => {
+        const filename = `${faker.animal.horse()}.jpeg`
+        return {
+          url: `${faker.internet.url()}/image/url/path/${faker.date.future()}/${filename}`,
+          filename,
+        }
+      })
+
+      const generateImageCDNUrls = (): Array<void> =>
+        oneMillionFakeURLs.map(({ url, filename }) => {
+          generateImageUrl(
+            {
+              url,
+              mimeType: `image/jpeg`,
+              filename,
+              internal: {
+                contentDigest: `digest`,
+              },
+            },
+            resizeArgs
+          )
+        })
+
+      function testTimeDifference(): void {
+        const startTimeNoEncryption = Date.now()
+        generateImageCDNUrls()
+        const endTimeNoEncryption = Date.now() - startTimeNoEncryption
+
+        const startTimeEncryption = Date.now()
+        generateImageCDNUrls()
+        const endTimeEncryption = Date.now() - startTimeEncryption
+
+        delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
+        delete process.env.IMAGE_CDN_ENCRYPT_IV
+
+        // actual time is about 3 seconds with encryption and 2.9 seconds without encryption
+        expect(endTimeEncryption).toBeLessThan(5000)
+
+        function relativePercentDifference(a: number, b: number): number {
+          return 100 * Math.abs((a - b) / ((a + b) / 2))
+        }
+
+        const differencePercent = relativePercentDifference(
+          endTimeNoEncryption,
+          endTimeEncryption
+        )
+
+        expect(differencePercent).toBeLessThan(3)
+      }
+
+      testTimeDifference()
+      testTimeDifference()
+      testTimeDifference()
+    })
   })
 
   describe(`generateFileUrl`, () => {
