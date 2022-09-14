@@ -420,6 +420,62 @@ export const actions = {
         })
       }
     },
+
+  /**
+   * Create a new Slice. See the guide on using the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
+   *
+   * @availableIn [createPages]
+   *
+   * @param {object} $0
+   * @param {Object} slice a slice object
+   * @param {string} slice.id The unique ID for this slice
+   * @param {string} slice.component The absolute path to the component for this slice
+   * @param {Object} slice.context Context data for this slice. Passed as props
+   * to the component `this.props.sliceContext` as well as to the graphql query
+   * as graphql arguments.
+   * @example
+   * exports.createPages = ({ actions }) => {
+   *   actions.createSlice({
+   *     id: `navigation-bar`,
+   *     component: require.resolve(`./src/components/navigation-bar.js`),
+   *   })
+   * }
+   */
+  createSlice: (
+    payload: {
+      name: string
+      component: string
+      context: Record<string, unknown>
+    },
+    plugin: IGatsbyPlugin,
+    traceId?: string
+  ): ICreateSliceAction => {
+    const componentPath = normalizePath(payload.component)
+
+    const oldSlice = store.getState().slices.get(payload.name)
+    const contextModified =
+      !!oldSlice && !isEqual(oldSlice.context, payload.context)
+    const componentModified =
+      !!oldSlice && !isEqual(oldSlice.componentPath, componentPath)
+
+    return {
+      type: `CREATE_SLICE`,
+      plugin,
+      payload: {
+        componentChunkName: generateComponentChunkName(
+          payload.component,
+          `slice`
+        ),
+        componentPath,
+        name: payload.name,
+        context: payload.context,
+        updatedAt: Date.now(),
+      },
+      traceId,
+      componentModified,
+      contextModified,
+    }
+  },
 }
 
 const withDeprecationWarning =
