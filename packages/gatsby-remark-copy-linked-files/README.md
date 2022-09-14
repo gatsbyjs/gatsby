@@ -98,7 +98,7 @@ So now, `[Download it now](my-awesome-pdf.pdf)` will copy the file `my-awesome-p
 
 ### Advanced usage
 
-For more advanced control, set `destinationDir` to a function expression using properties `name`, `hash`, and `absolutePath` to specify the path.
+For more control, set `destinationDir` to a function expression using properties `name`, `hash`, and `absolutePath` to specify the path.
 
 - `name`: The name of the file without the file extension
 - `hash`: The `internal.contentDigest` on the `File` node (guarantees a unique identifier)
@@ -125,9 +125,8 @@ destinationDir: f => `${f.name}/${f.hash}`
 # save `my-awesome-pdf.pdf` to `public/path/to/dir/hello-my-awesome-pdf+2a0039f3a61f4510f41678438e4c863a_world.pdf`
 destinationDir: f => `path/to/dir/hello-${f.name}+${f.hash}_world`
 
-# Given the file `my-awesome-pdf.pdf` at `src/pages/custom-folder`
-# save `my-awesome-pdf.pdf` to `public/custom-folder/my-awesome-pdf.pdf`
-# Note: You have to import `path`
+# save `src/pages/custom-folder/my-awesome-pdf.pdf` to `public/custom-folder/my-awesome-pdf.pdf`
+# Note: Import `path` to use this example https://nodejs.org/api/path.html
 destinationDir: f => `${path.dirname(path.relative(path.join(__dirname, `src`, `pages`), f.absolutePath))}/${f.name}`
 ```
 
