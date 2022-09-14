@@ -126,14 +126,14 @@ describe(`url-generator`, () => {
       }
     )
 
-    it(`performs within 3% of no encryption and doesn't take longer than 5 seconds for 1M urls`, async () => {
+    it(`performs within 5% of no encryption and doesn't take longer than 5 seconds for 100k urls`, async () => {
       const key = crypto.randomBytes(32).toString(`hex`)
       const iv = crypto.randomBytes(16).toString(`hex`)
 
       process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
       process.env.IMAGE_CDN_ENCRYPTION_IV = iv
 
-      const oneMillionFakeURLs = Array.from({ length: 100000 }, () => {
+      const fakeUrls = Array.from({ length: 100000 }, () => {
         const filename = `${faker.animal.horse()}.jpeg`
         return {
           url: `${faker.internet.url()}/image/url/path/${faker.date.future()}/${filename}`,
@@ -142,7 +142,7 @@ describe(`url-generator`, () => {
       })
 
       const generateImageCDNUrls = (): Array<void> =>
-        oneMillionFakeURLs.map(({ url, filename }) => {
+        fakeUrls.map(({ url, filename }) => {
           generateImageUrl(
             {
               url,
@@ -180,7 +180,7 @@ describe(`url-generator`, () => {
           endTimeEncryption
         )
 
-        expect(differencePercent).toBeLessThan(3)
+        expect(differencePercent).toBeLessThan(5)
       }
 
       testTimeDifference()
