@@ -133,16 +133,17 @@ describe(`url-generator`, () => {
       process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
       process.env.IMAGE_CDN_ENCRYPTION_IV = iv
 
-      const fakeUrls = Array.from({ length: 100000 }, () => {
-        const filename = `${faker.animal.horse()}.jpeg`
-        return {
-          url: `${faker.internet.url()}/image/url/path/${faker.date.future()}/${filename}`,
-          filename,
-        }
-      })
+      const getfakeUrls = (): Array<{ url: string; filename: string }> =>
+        Array.from({ length: 100000 }, () => {
+          const filename = `${faker.animal.horse()}.jpeg`
+          return {
+            url: `${faker.internet.url()}/image/url/path/${faker.date.future()}/${filename}`,
+            filename,
+          }
+        })
 
       const generateImageCDNUrls = (): Array<void> =>
-        fakeUrls.map(({ url, filename }) => {
+        getfakeUrls().map(({ url, filename }) => {
           generateImageUrl(
             {
               url,
