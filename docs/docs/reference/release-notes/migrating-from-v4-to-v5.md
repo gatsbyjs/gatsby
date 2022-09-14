@@ -78,7 +78,7 @@ This section explains breaking changes that were made for Gatsby 4. Some of thos
 
 ### Minimal Node.js version 18.x.x
 
-We are dropping support for Node 14 as a new underlying dependency is requiring `>=18.x.x`. See the main changes in [Node 18 release notes](https://nodejs.org/en/blog/release/v18.0.0/).
+We are dropping support for Node 14 and 16 as a new underlying dependency is requiring `>=18.x.x`. See the main changes in [Node 18 release notes](https://nodejs.org/en/blog/release/v18.0.0/).
 
 Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
