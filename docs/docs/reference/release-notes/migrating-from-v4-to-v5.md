@@ -76,9 +76,9 @@ This is because the plugin needs to update its `peerDependencies` to include the
 
 This section explains breaking changes that were made for Gatsby 4. Some of those changes had a deprecation message in v3. In order to successfully update, you'll need to resolve these changes.
 
-### Minimal Node.js version 16.x.x
+### Minimal Node.js version 18.x.x
 
-We are dropping support for Node 14 as a new underlying dependency (`something-something`) is requiring `>=16.x.x`. See the main changes in [Node 16 release notes](https://nodejs.org/en/blog/release/v16.0.0/).
+We are dropping support for Node 14 as a new underlying dependency is requiring `>=18.x.x`. See the main changes in [Node 18 release notes](https://nodejs.org/en/blog/release/v18.0.0/).
 
 Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
