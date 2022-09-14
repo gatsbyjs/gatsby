@@ -125,7 +125,7 @@ describe(`url-generator`, () => {
       }
     )
 
-    it(`performs within 75% of no encryption and doesn't take longer than 5 seconds for 100k urls`, async () => {
+    it(`performs within 75% of no encryption and doesn't take longer than 10 seconds for 100k urls`, async () => {
       const getfakeUrls = (): Array<{ url: string; filename: string }> =>
         Array.from({ length: 100000 }, () => {
           const filename = `${crypto.randomBytes(10).toString(`hex`)}.jpeg`
@@ -139,8 +139,8 @@ describe(`url-generator`, () => {
           }
         })
 
-      const generateImageCDNUrls = (): Array<void> =>
-        getfakeUrls().map(({ url, filename }) => {
+      const generateImageCDNUrls = (fakeUrls): Array<void> =>
+        fakeUrls.map(({ url, filename }) => {
           generateImageUrl(
             {
               url,
@@ -158,23 +158,25 @@ describe(`url-generator`, () => {
       const iv = crypto.randomBytes(16).toString(`hex`)
 
       function testTimeDifference(): void {
+        const fakeUrls1 = getfakeUrls()
         const startTimeNoEncryption = Date.now()
-        generateImageCDNUrls()
+        generateImageCDNUrls(fakeUrls1)
         const endTimeNoEncryption = Date.now() - startTimeNoEncryption
 
         process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
         process.env.IMAGE_CDN_ENCRYPTION_IV = iv
 
+        const fakeUrls2 = getfakeUrls()
         const startTimeEncryption = Date.now()
-        generateImageCDNUrls()
+        generateImageCDNUrls(fakeUrls2)
         const endTimeEncryption = Date.now() - startTimeEncryption
 
         delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
         delete process.env.IMAGE_CDN_ENCRYPT_IV
 
         // actual time is about 2 seconds without encryption and 3.5 seconds with encryption for 100k urls
-        expect(endTimeNoEncryption).toBeLessThan(5000)
-        expect(endTimeEncryption).toBeLessThan(5000)
+        expect(endTimeNoEncryption).toBeLessThan(10000)
+        expect(endTimeEncryption).toBeLessThan(10000)
 
         function relativePercentDifference(a: number, b: number): number {
           return 100 * Math.abs((a - b) / ((a + b) / 2))
@@ -186,6 +188,12 @@ describe(`url-generator`, () => {
         )
 
         expect(differencePercent).toBeLessThan(75)
+
+        console.log({
+          endTimeNoEncryption,
+          endTimeEncryption,
+          differencePercent,
+        })
       }
 
       testTimeDifference()
