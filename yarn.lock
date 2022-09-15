@@ -1645,10 +1645,10 @@
   dependencies:
     jimp-compact "^0.16.1-2"
 
-"@gatsbyjs/reach-router@1.3.10-no-navigate.4":
-  version "1.3.10-no-navigate.4"
-  resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-1.3.10-no-navigate.4.tgz#a3a9554dcba8e003beab4bae96127350e046b95f"
-  integrity sha512-7BG7wrsc4W7ImIe8eXlfbbRluVYgWouPbHaP3ssvWi0erDLWZhnBtIqt0KsawPPvwp5T0zUr9uBZDLDIHU+LxQ==
+"@gatsbyjs/reach-router@1.3.10-no-navigate.5":
+  version "1.3.10-no-navigate.5"
+  resolved "https://registry.yarnpkg.com/@gatsbyjs/reach-router/-/reach-router-1.3.10-no-navigate.5.tgz#d378b599b7881efd162e3580288e904e03be7d8b"
+  integrity sha512-02WAdKvW5rYM8nPQFRHIdzj9/fLBZmZ5+nyaAVMEIsLYsjfC7hlpN5gHeADBEgHMolUKFzSMxt70ghzyl9XmQA==
   dependencies:
     invariant "^2.2.4"
     prop-types "^15.8.1"
