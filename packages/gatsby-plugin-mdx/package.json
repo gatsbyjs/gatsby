@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "4.3.0-next.1",
+  "version": "4.3.0-next.2",
   "description": "MDX integration for Gatsby",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,8 +23,8 @@
     "@mdx-js/react": "^2.0.0",
     "gatsby": "^4.0.0-next",
     "gatsby-source-filesystem": "^4.0.0-next",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0"
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.1.1",
