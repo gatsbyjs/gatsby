@@ -924,7 +924,7 @@ export interface ISetWebpackCompilationHashAction {
 }
 
 export interface ISetSSRGlobalSharedWebpackCompilationHashAction {
-  type: `SET_SSR_GLOBAL_SHARED_WEBPACK_COMPILATION_HASH`
+  type: `SET_SSR_WEBPACK_COMPILATION_HASH`
   payload: string
 }
 

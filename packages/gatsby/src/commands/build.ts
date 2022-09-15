@@ -398,7 +398,7 @@ module.exports = async function build(
 
     if (state.html.ssrCompilationHash !== webpackSSRCompilationHash) {
       store.dispatch({
-        type: `SET_SSR_GLOBAL_SHARED_WEBPACK_COMPILATION_HASH`,
+        type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
         payload: webpackSSRCompilationHash,
       })
     }

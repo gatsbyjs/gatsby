@@ -209,7 +209,7 @@ export function htmlReducer(
       return state
     }
 
-    case `SET_SSR_GLOBAL_SHARED_WEBPACK_COMPILATION_HASH`: {
+    case `SET_SSR_WEBPACK_COMPILATION_HASH`: {
       if (state.ssrCompilationHash !== action.payload) {
         state.ssrCompilationHash = action.payload
         // we will mark every html file as dirty, so we can safely reset
