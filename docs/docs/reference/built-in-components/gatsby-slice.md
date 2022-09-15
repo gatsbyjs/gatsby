@@ -25,7 +25,7 @@ export const DefaultLayout = ({ children, navigationBarClassName }: DefaultLayou
   /// ...
 
   return (
-    <div className={styles.defaultLayout} />
+    <div>
       <NavigationBar className={navigationBarClassName} />
       {content}
       <Footer />
