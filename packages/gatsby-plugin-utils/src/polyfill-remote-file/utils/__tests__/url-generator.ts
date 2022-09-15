@@ -124,65 +124,6 @@ describe(`url-generator`, () => {
         delete process.env.IMAGE_CDN_ENCRYPTION_IV
       }
     )
-
-    it(`doesn't take longer than 5 seconds for 100k urls`, async () => {
-      const getfakeUrls = (): Array<{ url: string; filename: string }> =>
-        Array.from({ length: 100000 }, () => {
-          const filename = `${crypto.randomBytes(10).toString(`hex`)}.jpeg`
-          return {
-            url: `https://site-${crypto
-              .randomBytes(3)
-              .toString(`hex`)}.com/image/url/path/${crypto
-              .randomBytes(10)
-              .toString(`hex`)}/${filename}`,
-            filename,
-          }
-        })
-
-      const generateImageCDNUrls = (fakeUrls): Array<void> =>
-        fakeUrls.map(({ url, filename }) => {
-          generateImageUrl(
-            {
-              url,
-              mimeType: `image/jpeg`,
-              filename,
-              internal: {
-                contentDigest: `digest`,
-              },
-            },
-            resizeArgs
-          )
-        })
-
-      const key = crypto.randomBytes(32).toString(`hex`)
-      const iv = crypto.randomBytes(16).toString(`hex`)
-
-      function testTimeDifference(): void {
-        const fakeUrls1 = getfakeUrls()
-        const startTimeNoEncryption = Date.now()
-        generateImageCDNUrls(fakeUrls1)
-        const endTimeNoEncryption = Date.now() - startTimeNoEncryption
-
-        process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
-        process.env.IMAGE_CDN_ENCRYPTION_IV = iv
-
-        const fakeUrls2 = getfakeUrls()
-        const startTimeEncryption = Date.now()
-        generateImageCDNUrls(fakeUrls2)
-        const endTimeEncryption = Date.now() - startTimeEncryption
-
-        delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
-        delete process.env.IMAGE_CDN_ENCRYPT_IV
-
-        // actual time is about 2 seconds without encryption and 3.5 seconds with encryption for 100k urls
-        expect(endTimeNoEncryption).toBeLessThan(5000)
-        expect(endTimeEncryption).toBeLessThan(5000)
-      }
-
-      testTimeDifference()
-      testTimeDifference()
-      testTimeDifference()
-    })
   })
 
   describe(`generateFileUrl`, () => {
