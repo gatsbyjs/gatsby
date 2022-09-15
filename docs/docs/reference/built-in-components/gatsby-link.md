@@ -50,11 +50,11 @@ The `to`, `replace`, `ref`, `innerRef`, `getProps` and `state` properties origin
 
 In addition, Gatsby adds the following properties:
 
-| Argument          | Type    | Required | Description                                                                                                                    |
-| ----------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `activeStyle`     | Object  | No       | A style object that will be applied when the current item is active.                                                           |
-| `activeClassName` | String  | No       | A class name that will be applied the current item is active.                                                                  |
-| `partiallyActive` | Boolean | No       | Whether partial URLs are considered active (e.g. `/blog/hello-world` matches `<Link to="/blog">` if `partiallyActive` is true. |
+| Argument          | Type    | Required | Description                                                                                                                     |
+| ----------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `activeStyle`     | Object  | No       | A style object that will be applied when the current item is active.                                                            |
+| `activeClassName` | String  | No       | A class name that will be applied the current item is active.                                                                   |
+| `partiallyActive` | Boolean | No       | Whether partial URLs are considered active (e.g. `/blog#hello-world` matches `<Link to="/blog">` if `partiallyActive` is true). |
 
 Here's an example of how to use these additional properties:
 
@@ -64,7 +64,7 @@ import { Link } from "gatsby"
 
 const IndexPage = () => (
   <Link
-    to="/about/"
+    to="/about"
     {/* highlight-start */}
     {/* You must define the `active` class in your CSS */}
     activeClassName="active"
@@ -73,17 +73,17 @@ const IndexPage = () => (
     About
   </Link>
   <Link
-    to="/company/"
+    to="/company"
     {/* highlight-next-line */}
     activeStyle={{ color: "blue" }}
   >
     Company
   </Link>
   <Link
-    to="/blog/"
+    to="/blog"
     activeStyle={{ color: "green" }}
     {/* highlight-next-line */}
-    partiallyActive={true} // `/blog/hello-world` matches now
+    partiallyActive={true} // `/blog#hello-world` matches now
   >
     Blog
   </Link>
@@ -117,7 +117,7 @@ const Form = () => (
 
 Gatsby re-exports the `navigate` helper function from [Reach Router](https://reach.tech/router/) for convenience.
 
-Gatsby does not add extra surface area to this API, so you should refer to [Reach Router's `navigate` API reference documentation](https://reach.tech/router/api/Link) as the source of truth.
+Gatsby does not add extra surface area to this API, so you should refer to [Reach Router's `navigate` API reference documentation](https://reach.tech/router/api/navigate) as the source of truth.
 
 ### Navigate to the previous page
 
