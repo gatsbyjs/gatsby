@@ -74,7 +74,7 @@ export const DefaultLayout = ({ children, navigationBarClassName }: DefaultLayou
 }
 ```
 
-That's it! After a successful `yarn gatsby build`, you should see a list of `Slices` that were built for your site.
+That's it! After a successful `gatsby build`, you should see a list of `Slices` that were built for your site.
 
 ### Using Context
 
