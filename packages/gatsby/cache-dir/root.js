@@ -1,5 +1,5 @@
 import React from "react"
-import { Router, Location } from "@gatsbyjs/reach-router"
+import { Router, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
 import { shouldUpdateScroll, RouteUpdates } from "./navigation"
@@ -8,6 +8,25 @@ import loader from "./loader"
 import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 import FastRefreshOverlay from "./fast-refresh-overlay"
+
+// In gatsby v2 if Router is used in page using matchPaths
+// paths need to contain full path.
+// For example:
+//   - page have `/app/*` matchPath
+//   - inside template user needs to use `/app/xyz` as path
+// Resetting `basepath`/`baseuri` keeps current behaviour
+// to not introduce breaking change.
+// Remove this in v3
+const RouteHandler = props => (
+  <BaseContext.Provider
+    value={{
+      baseuri: `/`,
+      basepath: `/`,
+    }}
+  >
+    <PageQueryStore {...props} />
+  </BaseContext.Provider>
+)
 
 class LocationHandler extends React.Component {
   render() {
@@ -27,7 +46,7 @@ class LocationHandler extends React.Component {
                   location={location}
                   id="gatsby-focus-wrapper"
                 >
-                  <PageQueryStore
+                  <RouteHandler
                     path={encodeURI(
                       (
                         locationAndPageResources.pageResources.page.matchPath ||
@@ -61,7 +80,7 @@ class LocationHandler extends React.Component {
           location={location}
           id="gatsby-focus-wrapper"
         >
-          <PageQueryStore
+          <RouteHandler
             path={location.pathname}
             location={location}
             pageResources={dev404PageResources}
