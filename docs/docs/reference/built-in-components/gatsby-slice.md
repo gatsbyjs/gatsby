@@ -14,7 +14,7 @@ With the introduction of [Incremental Builds](https://www.gatsbyjs.com/blog/2020
 
 Common components that are shared across the majority of pages on your site might include a navigation bar, footer, or contact form. In today's frameworks, when you re-order the navigation bar items, the entire site needs to be rebuilt. However, if the navigation bar was created as a Gatsby Slice, the new navigation items only need to be built once and all pages will pull the new navigation bar when it's needed.
 
-## How to use Gatsby's `<Slice>`
+## Using Gatsby Slice in your site
 
 For this example, let's use the same scenario as described above - a large site that has a shared navigation bar.
 
