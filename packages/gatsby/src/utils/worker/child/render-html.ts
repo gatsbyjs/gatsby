@@ -348,14 +348,10 @@ export async function renderPartialHydrationProd({
         [
           // TODO: Handle pathPrefix
           React.createElement(ServerLocation, { url: pageData.path }, [
-            React.createElement(Router, { baseuri: `/` }, [
-              // TODO: Check if other props need to be passed
-              React.createElement(chunk.default, {
-                path: `/*`, // Router children require a path prop
-                data: pageData.result.data,
-                pageContext: pageData.result.pageContext,
-              }),
-            ]),
+            React.createElement(chunk.default, {
+              data: pageData.result.data,
+              pageContext: pageData.result.pageContext,
+            }),
           ]),
         ]
       ),
