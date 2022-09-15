@@ -458,7 +458,7 @@ export const actions = {
         componentPath,
         // note: we use "name" internally instead of id
         name: payload.id,
-        context: payload.context,
+        context: payload.context || {},
         updatedAt: Date.now(),
       },
       traceId,
