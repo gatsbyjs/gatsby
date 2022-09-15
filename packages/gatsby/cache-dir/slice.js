@@ -4,25 +4,34 @@ import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
 
 function Slice(props) {
+  // we use sliceName internally, so remap alias to sliceName
+  const internalProps = {
+    ...props,
+    sliceName: props.alias,
+  }
+  delete internalProps.alias
+
   const slicesContext = useContext(SlicesContext)
 
+  // validate props
   const propErrors = validateSliceProps(props)
   if (Object.keys(propErrors).length) {
     throw new SlicePropsError(
       slicesContext.renderEnvironment === `browser`,
-      props.sliceName,
+      props.alias,
       propErrors
     )
   }
 
+  // render component
   if (slicesContext.renderEnvironment === `server`) {
-    return <ServerSlice {...props} />
+    return <ServerSlice {...internalProps} />
   } else if (slicesContext.renderEnvironment === `browser`) {
     // in the browser, we'll just render the component as is
-    return <InlineSlice {...props} />
+    return <InlineSlice {...internalProps} />
   } else if (slicesContext.renderEnvironment === `engines`) {
     // if we're in SSR, we'll just render the component as is
-    return <InlineSlice {...props} />
+    return <InlineSlice {...internalProps} />
   } else {
     throw new Error(
       `Slice context "${slicesContext.renderEnvironment}" is not supported.`

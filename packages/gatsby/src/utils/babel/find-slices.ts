@@ -8,7 +8,7 @@ export interface ICollectedSlice {
 
 export type ICollectedSlices = Record<string, ICollectedSlice>
 
-const SLICE_NAME_PROP = `sliceName`
+const SLICE_NAME_PROP = `alias`
 
 function mergePreviouslyCollectedSlice(
   newInfo: ICollectedSlice,
