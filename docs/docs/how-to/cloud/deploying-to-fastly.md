@@ -3,7 +3,7 @@ title: "Deploying to Fastly on Gatsby Cloud"
 description: "Learn how to deploy your Gatsby Cloud site to Fastly"
 ---
 
-Gatsby Cloud is a performant platform for building your Gatsby site. Even better, it integrates with Content Delivery Networks (CDNs) like [Fastly](https://www.fastly.com/), so you can build and deploy your site seamlessly.
+Gatsby Cloud is a performant cloud infrastructure for building your Gatsby site. Even better, it integrates with Content Delivery Networks (CDNs) like [Fastly](https://www.fastly.com/), so you can build and deploy your site seamlessly.
 
 ## Prerequisites
 

@@ -25,7 +25,7 @@ Depending on the Git provider you choose, a corresponding badge will be displaye
 
 ## Git provider authentication status
 
-Under "Workspace Settings > Git provider authentication status" you can view the status of the connections to each Git provider you've integrated with. 
+Under "Workspace Settings > Git provider authentication status" you can view the status of the connections to each Git provider you've integrated with.
 
 If any of these integrations has a failed connection, the **workspace owner** can refresh the connection from this tab.
 
