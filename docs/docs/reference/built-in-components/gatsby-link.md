@@ -14,8 +14,6 @@ Intelligent preloading like this eliminates the latency users experience when cl
 
 ## How to use Gatsby Link
 
-### Replace `a` tags with the `Link` tag for local links
-
 In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag. The two elements work much the same except `href` is now `to`.
 
 ```diff
