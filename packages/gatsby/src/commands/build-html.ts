@@ -651,8 +651,6 @@ export async function buildSlices({
     }
   }
 
-  console.log(require(`util`).inspect({ slicesProps }, { depth: Infinity }))
-
   if (slicesProps.length > 0) {
     const buildHTMLActivityProgress = reporter.activityTimer(
       `Building slices HTML (${slicesProps.length})`,
@@ -712,8 +710,6 @@ export async function stitchSlicesIntoPagesHTML({
       html: { pagesThatNeedToStitchSlices },
       pages,
     } = store.getState()
-
-    console.log({ pagesThatNeedToStitchSlices })
 
     const stichQueue = fastq<void, string, void>(async (pagePath, cb) => {
       await stitchSliceForAPage({ pagePath, publicDir })

@@ -222,8 +222,6 @@ export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
     }
   }
 
-  console.log({ dirtyPages, dirtyStaticQueryResults, dirtySlices })
-
   store.dispatch({
     type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`,
     payload: {

@@ -207,14 +207,12 @@ function createSliceQueryJob(
 
   const sliceDef = state.slices.get(sliceName)
   if (!sliceDef) {
-    console.log(`cant find slice "${sliceName}"`)
     return undefined
   }
 
   const component = state.components.get(sliceDef.componentPath)
 
   if (!component) {
-    console.log(`cant find component "${sliceDef.componentPath}"`)
     return undefined
   }
 
