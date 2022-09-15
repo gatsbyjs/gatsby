@@ -7,10 +7,10 @@ Gatsby Cloud is a performant cloud infrastructure for building your Gatsby site.
 
 ## Prerequisites
 
-This guide assumes you already:
+This guide assumes you already have:
 
-- Have a Fastly account
-- Have a Gatsby Cloud site created
+- A Fastly account
+- A site created on Gatsby Cloud
 
 You can use either of the following site creation options if you don't have one already:
 
@@ -59,5 +59,4 @@ HTTPS Configuration is considered separate from your Service configuration and t
 And that’s it! Your site is now set up to build and deploy. Gatsby Cloud will handle everything for you. Note that you can only have one hosting integration. If you choose to configure another provider, that will override your existing Fastly integration. A few things to note:
 
 - Fastly limits users to 10 services. If your Gatsby Cloud integration sends you over that limit it will not appear in Fastly.
-
 - At this time the configuration is reset each time your site is built. Additional custom configurations inside Fastly will be overridden.
