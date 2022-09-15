@@ -4,29 +4,33 @@ import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
 
 function Slice(props) {
-  const slicesContext = useContext(SlicesContext)
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    const slicesContext = useContext(SlicesContext)
 
-  const propErrors = validateSliceProps(props)
-  if (Object.keys(propErrors).length) {
-    throw new SlicePropsError(
-      slicesContext.renderEnvironment === `browser`,
-      props.sliceName,
-      propErrors
-    )
-  }
+    const propErrors = validateSliceProps(props)
+    if (Object.keys(propErrors).length) {
+      throw new SlicePropsError(
+        slicesContext.renderEnvironment === `browser`,
+        props.sliceName,
+        propErrors
+      )
+    }
 
-  if (slicesContext.renderEnvironment === `server`) {
-    return <ServerSlice {...props} />
-  } else if (slicesContext.renderEnvironment === `browser`) {
-    // in the browser, we'll just render the component as is
-    return <InlineSlice {...props} />
-  } else if (slicesContext.renderEnvironment === `engines`) {
-    // if we're in SSR, we'll just render the component as is
-    return <InlineSlice {...props} />
+    if (slicesContext.renderEnvironment === `server`) {
+      return <ServerSlice {...props} />
+    } else if (slicesContext.renderEnvironment === `browser`) {
+      // in the browser, we'll just render the component as is
+      return <InlineSlice {...props} />
+    } else if (slicesContext.renderEnvironment === `engines`) {
+      // if we're in SSR, we'll just render the component as is
+      return <InlineSlice {...props} />
+    } else {
+      throw new Error(
+        `Slice context "${slicesContext.renderEnvironment}" is not supported.`
+      )
+    }
   } else {
-    throw new Error(
-      `Slice context "${slicesContext.renderEnvironment}" is not supported.`
-    )
+    throw new Error(`Slices are only available in Gatsby v5`)
   }
 }
 

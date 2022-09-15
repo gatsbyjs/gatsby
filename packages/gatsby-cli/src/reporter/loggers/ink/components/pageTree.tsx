@@ -109,16 +109,20 @@ const PageTree: React.FC<IPageTreeProps> = function PageTree({
         <Text underline>Pages</Text>
       </Box>
       {componentList}
-      <Box paddingTop={1} paddingBottom={1}>
-        <Text underline>Slices</Text>
-      </Box>
-      {Array.from(slices).map(slice => (
-        <Box key={slice}>
-          <Text>
-            <Text bold>·</Text> {path.posix.relative(root, slice)}
-          </Text>
-        </Box>
-      ))}
+      {slices.size > 0 && (
+        <>
+          <Box paddingTop={1} paddingBottom={1}>
+            <Text underline>Slices</Text>
+          </Box>
+          {Array.from(slices).map(slice => (
+            <Box key={slice}>
+              <Text>
+                <Text bold>·</Text> {path.posix.relative(root, slice)}
+              </Text>
+            </Box>
+          ))}
+        </>
+      )}
       <Description marginTop={1} marginBottom={1} />
     </Box>
   )

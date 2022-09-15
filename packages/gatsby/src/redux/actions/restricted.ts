@@ -438,31 +438,35 @@ export const actions = {
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateSliceAction => {
-    trackFeatureIsUsed(`SliceAPI`)
-    const componentPath = normalizePath(payload.component)
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      trackFeatureIsUsed(`SliceAPI`)
+      const componentPath = normalizePath(payload.component)
 
-    const oldSlice = store.getState().slices.get(payload.name)
-    const contextModified =
-      !!oldSlice && !isEqual(oldSlice.context, payload.context)
-    const componentModified =
-      !!oldSlice && !isEqual(oldSlice.componentPath, componentPath)
+      const oldSlice = store.getState().slices.get(payload.name)
+      const contextModified =
+        !!oldSlice && !isEqual(oldSlice.context, payload.context)
+      const componentModified =
+        !!oldSlice && !isEqual(oldSlice.componentPath, componentPath)
 
-    return {
-      type: `CREATE_SLICE`,
-      plugin,
-      payload: {
-        componentChunkName: generateComponentChunkName(
-          payload.component,
-          `slice`
-        ),
-        componentPath,
-        name: payload.name,
-        context: payload.context,
-        updatedAt: Date.now(),
-      },
-      traceId,
-      componentModified,
-      contextModified,
+      return {
+        type: `CREATE_SLICE`,
+        plugin,
+        payload: {
+          componentChunkName: generateComponentChunkName(
+            payload.component,
+            `slice`
+          ),
+          componentPath,
+          name: payload.name,
+          context: payload.context,
+          updatedAt: Date.now(),
+        },
+        traceId,
+        componentModified,
+        contextModified,
+      }
+    } else {
+      throw new Error(`createSlice is only available in Gatsby v5`)
     }
   },
 }

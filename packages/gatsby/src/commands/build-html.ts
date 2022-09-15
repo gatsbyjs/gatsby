@@ -351,10 +351,12 @@ const renderHTMLQueue = async (
           payload: pageSegment,
         })
 
-        store.dispatch({
-          type: `SET_SLICES_PROPS`,
-          payload: htmlRenderMeta.slicesPropsPerPage,
-        })
+        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+          store.dispatch({
+            type: `SET_SLICES_PROPS`,
+            payload: htmlRenderMeta.slicesPropsPerPage,
+          })
+        }
 
         for (const [_pagePath, arrayOfUsages] of Object.entries(
           htmlRenderMeta.unsafeBuiltinsUsageByPagePath
@@ -568,16 +570,18 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     reporter.info(`There are no new or changed html files to build.`)
   }
 
-  await buildSlices({
-    program,
-    workerPool,
-    parentSpan,
-  })
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    await buildSlices({
+      program,
+      workerPool,
+      parentSpan,
+    })
 
-  await stitchSlicesIntoPagesHTML({
-    publicDir: path.join(program.directory, `public`),
-    parentSpan,
-  })
+    await stitchSlicesIntoPagesHTML({
+      publicDir: path.join(program.directory, `public`),
+      parentSpan,
+    })
+  }
 
   if (toDelete.length > 0) {
     const publicDir = path.join(program.directory, `public`)

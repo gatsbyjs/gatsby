@@ -227,12 +227,16 @@ module.exports = async function build(
     )
 
     closeHTMLBundleCompilation = close
-    const { renderPageHash, templateHashes } = getSSRChunkHashes({
-      stats,
-      components: store.getState().components,
-    })
-    webpackSSRCompilationHash = renderPageHash
-    templateCompilationHashes = templateHashes
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      const { renderPageHash, templateHashes } = getSSRChunkHashes({
+        stats,
+        components: store.getState().components,
+      })
+      webpackSSRCompilationHash = renderPageHash
+      templateCompilationHashes = templateHashes
+    } else {
+      webpackSSRCompilationHash = stats.hash as string
+    }
 
     await close()
   } catch (err) {
@@ -330,12 +334,14 @@ module.exports = async function build(
     })
   }
 
-  await runSliceQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    await runSliceQueries({
+      queryIds,
+      graphqlRunner,
+      parentSpan: buildSpan,
+      store,
+    })
+  }
 
   // create scope so we don't leak state object
   {
@@ -344,6 +350,23 @@ module.exports = async function build(
       staticQueriesByTemplate: state.staticQueriesByTemplate,
       components: state.components,
     })
+  }
+
+  if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
+    if (process.send && shouldGenerateEngines()) {
+      await waitMaterializePageMode
+      process.send({
+        type: `LOG_ACTION`,
+        action: {
+          type: `ENGINES_READY`,
+          timestamp: new Date().toJSON(),
+        },
+      })
+    }
+
+    // Copy files from the static directory to
+    // an equivalent static directory within public.
+    copyStaticDirs()
   }
 
   // create scope so we don't leak state object
@@ -371,30 +394,34 @@ module.exports = async function build(
       rewriteActivityTimer.end()
     }
 
-    Object.entries(templateCompilationHashes).forEach(
-      ([templatePath, templateHash]) => {
-        const component = store.getState().components.get(templatePath)
-        if (component) {
-          const action = {
-            type: `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`,
-            payload: {
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      Object.entries(templateCompilationHashes).forEach(
+        ([templatePath, templateHash]) => {
+          const component = store.getState().components.get(templatePath)
+          if (component) {
+            const action = {
+              type: `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`,
+              payload: {
+                templatePath,
+                templateHash,
+                pages: component.pages,
+                isSlice: component.isSlice,
+              },
+            }
+            store.dispatch(action)
+          } else {
+            console.error({
               templatePath,
               templateHash,
-              pages: component.pages,
-              isSlice: component.isSlice,
-            },
+              availableTemplates: [...store.getState().components.keys()],
+            })
+            throw new Error(
+              `something changed in webpack but I don't know what`
+            )
           }
-          store.dispatch(action)
-        } else {
-          console.error({
-            templatePath,
-            templateHash,
-            availableTemplates: [...store.getState().components.keys()],
-          })
-          throw new Error(`something changed in webpack but I don't know what`)
         }
-      }
-    )
+      )
+    }
 
     if (state.html.ssrCompilationHash !== webpackSSRCompilationHash) {
       store.dispatch({
@@ -407,36 +434,41 @@ module.exports = async function build(
   await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
-  if (process.send && shouldGenerateEngines()) {
-    const state = store.getState()
-    const sliceDataPath = path.join(
-      state.program.directory,
-      `public`,
-      `slice-data`
-    )
-    if (fs.existsSync(sliceDataPath)) {
-      const destination = path.join(
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (shouldGenerateEngines()) {
+      console.log(`we are about to copy stuff`)
+      const state = store.getState()
+      const sliceDataPath = path.join(
         state.program.directory,
-        `.cache`,
-        `page-ssr`,
+        `public`,
         `slice-data`
       )
-      fs.copySync(sliceDataPath, destination)
+      if (fs.existsSync(sliceDataPath)) {
+        const destination = path.join(
+          state.program.directory,
+          `.cache`,
+          `page-ssr`,
+          `slice-data`
+        )
+        fs.copySync(sliceDataPath, destination)
+      }
+
+      if (process.send) {
+        await waitMaterializePageMode
+        process.send({
+          type: `LOG_ACTION`,
+          action: {
+            type: `ENGINES_READY`,
+            timestamp: new Date().toJSON(),
+          },
+        })
+      }
     }
 
-    await waitMaterializePageMode
-    process.send({
-      type: `LOG_ACTION`,
-      action: {
-        type: `ENGINES_READY`,
-        timestamp: new Date().toJSON(),
-      },
-    })
+    // Copy files from the static directory to
+    // an equivalent static directory within public.
+    copyStaticDirs()
   }
-
-  // Copy files from the static directory to
-  // an equivalent static directory within public.
-  copyStaticDirs()
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
