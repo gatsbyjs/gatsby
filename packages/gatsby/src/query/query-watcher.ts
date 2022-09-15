@@ -98,7 +98,7 @@ const handleQuery = (
     const isNewQuery = !oldQuery
 
     // Compare query text because text is compiled query with any attached
-    // slices and we want to rerun queries if slices are edited.
+    // fragments and we want to rerun queries if fragments are edited.
     // Compare hash because hash is used for identyfing query and
     // passing data to component in development. Hash can change if user will
     // format query text, but it doesn't mean that compiled text will change.
@@ -290,8 +290,8 @@ export const updateStateAndRunQueries = async (
         instead of exporting a page query.
 
         If you're more experienced with GraphQL, you can also export GraphQL
-        slices from components and compose the slices in the Page component
-        query and pass data down into the child component — https://graphql.org/learn/queries/#slices
+        fragments from components and compose the fragments in the Page component
+        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
 
       `)
   }
