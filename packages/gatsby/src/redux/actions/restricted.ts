@@ -431,7 +431,7 @@ export const actions = {
 
   createSlice: (
     payload: {
-      name: string
+      id: string
       component: string
       context: Record<string, unknown>
     },
@@ -441,7 +441,7 @@ export const actions = {
     trackFeatureIsUsed(`SliceAPI`)
     const componentPath = normalizePath(payload.component)
 
-    const oldSlice = store.getState().slices.get(payload.name)
+    const oldSlice = store.getState().slices.get(payload.id)
     const contextModified =
       !!oldSlice && !isEqual(oldSlice.context, payload.context)
     const componentModified =
@@ -456,7 +456,7 @@ export const actions = {
           `slice`
         ),
         componentPath,
-        name: payload.name,
+        name: payload.id,
         context: payload.context,
         updatedAt: Date.now(),
       },
