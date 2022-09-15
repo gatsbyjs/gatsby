@@ -18,12 +18,10 @@ Common components that are shared across the majority of pages on your site migh
 
 For this example, let's use the same scenario as described above - a large site that has a shared navigation bar.
 
-```typescript:title=src/layouts/default-layout.tsx
+```javascript:title=src/layouts/default-layout.jsx
 import { NavigationBar, Footer } from "../components"
 
-export const DefaultLayout = ({ children, navigationBarClassName }: DefaultLayoutProps) => {
-  /// ...
-
+export const DefaultLayout = ({ children, navigationBarClassName }) => {
   return (
     <div>
       <NavigationBar className={navigationBarClassName} />
@@ -38,14 +36,12 @@ export const DefaultLayout = ({ children, navigationBarClassName }: DefaultLayou
 
 Creating a Gatsby Slice is simple using the [`createSlice`](/docs/reference/config-files/actions/#createNodeField) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API in your `gatsby-node`.
 
-```typescript:title=gatsby-node.ts
+```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
   actions.createSlice({
     id: `navigation-bar`,
     component: require.resolve(`./src/components/navigation-bar.js`),
   })
-
-  // ...
 }
 ```
 
@@ -60,9 +56,7 @@ Now we need to convert the `DefaultLayout` component to actually use the new Sli
 +import { Footer } from "../components"
 +import { Slice } from "gatsby"
 
-export const DefaultLayout = ({ children, navigationBarClassName }: DefaultLayoutProps) => {
-  /// ...
-
+export const DefaultLayout = ({ children, navigationBarClassName }) => {
   return (
     <div className={styles.defaultLayout} />
 -     <NavigationBar className={navigationBarClassName} />
@@ -80,7 +74,7 @@ That's it! After a successful `gatsby build`, you should see a list of `Slices` 
 
 Similar to the context that can be passed to pages in [`createPages`](/docs/reference/config-files/gatsby-node/#createPages), [`createSlice`](/docs/reference/config-files/actions/#createNodeField) can also pass context to individual slices.
 
-```typescript:title=gatsby-node.ts
+```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
   actions.createSlice({
     id: `navigation-bar`,
@@ -89,18 +83,14 @@ exports.createPages = async ({ actions }) => {
     }
     component: require.resolve(`./src/components/navigation-bar.js`),
   })
-
-  // ...
 }
 ```
 
 The data passed to `context` here will be handed down to the `NavigationBar` component with the key `sliceContext`.
 
-```typescript:title=src/components/navigation-bar.tsx
+```javascript:title=src/components/navigation-bar.jsx
 // highlight-next-line
-export const NavigationBar = ({ className, sliceContext }: NavigationBarProps) => {
-  // ...
-
+export const NavigationBar = ({ className, sliceContext }) => {
   return (
     <div className={className}>
       <Link to="/">Home</Link>
@@ -123,7 +113,7 @@ One common use case for this is localization. It's common to iterate over langua
 
 In this example, we create a slice of `<NavigationBar>` for each supported language. When we create each page, we'll tell the page which `navigation-bar` to use based on the language of the page we're creating.
 
-```typescript:title=gatsby-node.ts
+```javascript:title=gatsby-node.js
 const SUPPORTED_LANGUAGES = ['en', 'de', 'es']
 
 exports.createPages = async ({ actions }) => {
