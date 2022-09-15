@@ -10,7 +10,7 @@ const FLAG_DIRTY_NEW_ENTRY = 0b0000010
 const FLAG_DIRTY_DATA_CHANGED = 0b0000100
 const FLAG_DIRTY_STATIC_QUERY_FIRST_RUN = 0b0001000
 const FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED = 0b0010000
-// const FLAG_DIRTY_BROWSER_COMPILATION_HASH = 0b0100000
+const FLAG_DIRTY_BROWSER_COMPILATION_HASH = 0b0100000
 const FLAG_DIRTY_SSR_COMPILATION_HASH = 0b1000000
 
 type PagePath = string
@@ -160,6 +160,18 @@ export function htmlReducer(
       return state
     }
 
+    case `SET_WEBPACK_COMPILATION_HASH`: {
+      if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
+        if (state.browserCompilationHash !== action.payload) {
+          state.browserCompilationHash = action.payload
+          state.trackedHtmlFiles.forEach(htmlFile => {
+            htmlFile.dirty |= FLAG_DIRTY_BROWSER_COMPILATION_HASH
+          })
+        }
+      }
+      return state
+    }
+
     case `ADD_SLICE_DATA_STATS`: {
       const sliceProps = state.slicesProps.bySliceName.get(
         action.payload.sliceName
@@ -209,7 +221,7 @@ export function htmlReducer(
       return state
     }
 
-    case `SET_SSR_GLOBAL_SHARED_WEBPACK_COMPILATION_HASH`: {
+    case `SET_SSR_WEBPACK_COMPILATION_HASH`: {
       if (state.ssrCompilationHash !== action.payload) {
         state.ssrCompilationHash = action.payload
         // we will mark every html file as dirty, so we can safely reset
@@ -259,11 +271,13 @@ export function htmlReducer(
         }
       }
 
-      // mark slices as dirty
-      for (const sliceName of action.payload.slices) {
-        const sliceProps = state.slicesProps.bySliceName.get(sliceName)
-        if (sliceProps) {
-          sliceProps.dirty |= FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED
+      if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+        // mark slices as dirty
+        for (const sliceName of action.payload.slices) {
+          const sliceProps = state.slicesProps.bySliceName.get(sliceName)
+          if (sliceProps) {
+            sliceProps.dirty |= FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED
+          }
         }
       }
 
@@ -276,17 +290,19 @@ export function htmlReducer(
         }
       }
 
-      // loop through slice names and mark their slice props as dirty
-      for (const sliceNameInfo of state.slicesProps.bySliceName.values()) {
-        if (sliceNameInfo.dirty) {
-          for (const sliceId of sliceNameInfo.props) {
-            const slicePropInfo = state.slicesProps.bySliceId.get(sliceId)
+      if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+        // loop through slice names and mark their slice props as dirty
+        for (const sliceNameInfo of state.slicesProps.bySliceName.values()) {
+          if (sliceNameInfo.dirty) {
+            for (const sliceId of sliceNameInfo.props) {
+              const slicePropInfo = state.slicesProps.bySliceId.get(sliceId)
 
-            if (slicePropInfo) {
-              slicePropInfo.dirty |= sliceNameInfo.dirty
+              if (slicePropInfo) {
+                slicePropInfo.dirty |= sliceNameInfo.dirty
+              }
             }
+            sliceNameInfo.dirty = 0
           }
-          sliceNameInfo.dirty = 0
         }
       }
 

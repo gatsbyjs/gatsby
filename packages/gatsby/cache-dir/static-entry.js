@@ -140,6 +140,7 @@ export default async function staticPage({
   reversedScripts,
   inlinePageData = false,
   context = {},
+  webpackCompilationHash,
   sliceData,
 }) {
   const renderContext = Object.assign(DEFAULT_CONTEXT, context)
@@ -285,13 +286,6 @@ export default async function staticPage({
     )
 
     const sliceProps = {}
-    // const sliceResults = getSliceResults()
-
-    const slicesContext = {
-      // if we're in build now, we know we're on the server
-      // otherwise we're in an engine
-      renderEnvironment: renderContext.isDuringBuild ? `server` : `engines`,
-    }
 
     let body = apiRunner(
       `wrapRootElement`,
@@ -302,36 +296,40 @@ export default async function staticPage({
       }
     ).pop()
 
-    // if we're running in an engine, we need to manually wrap body with
-    // the results context to pass the map of slice name to component/data/context
-    if (slicesContext.renderEnvironment === `engines`) {
-      // this is the same name used in the browser
-      // since this immitates behavior
-      const slicesDb = new Map()
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      const slicesContext = {
+        // if we're in build now, we know we're on the server
+        // otherwise we're in an engine
+        renderEnvironment: renderContext.isDuringBuild ? `server` : `engines`,
+      }
+      // if we're running in an engine, we need to manually wrap body with
+      // the results context to pass the map of slice name to component/data/context
+      if (slicesContext.renderEnvironment === `engines`) {
+        // this is the same name used in the browser
+        // since this immitates behavior
+        const slicesDb = new Map()
 
-      for (const sliceName of Object.values(slicesMap)) {
-        const slice = sliceData[sliceName]
-        const { default: SliceComponent } = await getPageChunk(slice)
+        for (const sliceName of Object.values(slicesMap)) {
+          const slice = sliceData[sliceName]
+          const { default: SliceComponent } = await getPageChunk(slice)
 
-        const sliceObject = {
-          component: SliceComponent,
-          sliceContext: slice.result.sliceContext,
-          data: slice.result.data,
+          const sliceObject = {
+            component: SliceComponent,
+            sliceContext: slice.result.sliceContext,
+            data: slice.result.data,
+          }
+
+          slicesDb.set(sliceName, sliceObject)
         }
 
-        slicesDb.set(sliceName, sliceObject)
+        body = (
+          <SlicesResultsContext.Provider value={slicesDb}>
+            {body}
+          </SlicesResultsContext.Provider>
+        )
       }
 
       body = (
-        <SlicesResultsContext.Provider value={slicesDb}>
-          {body}
-        </SlicesResultsContext.Provider>
-      )
-    }
-
-    // TODO sc-53539: lol this nested context should be addressed
-    const bodyComponent = (
-      <StaticQueryContext.Provider value={staticQueryContext}>
         <SlicesContext.Provider value={slicesContext}>
           <SlicesPropsContext.Provider value={sliceProps}>
             <SlicesMapContext.Provider value={slicesMap}>
@@ -339,6 +337,12 @@ export default async function staticPage({
             </SlicesMapContext.Provider>
           </SlicesPropsContext.Provider>
         </SlicesContext.Provider>
+      )
+    }
+
+    const bodyComponent = (
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        {body}
       </StaticQueryContext.Provider>
     )
 
@@ -438,6 +442,10 @@ export default async function staticPage({
 
     // Add page metadata for the current page
     const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";${
+      _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
+        ? ``
+        : `window.___webpackCompilationHash="${webpackCompilationHash}";`
+    }${
       inlinePageData ? `window.pageData=${JSON.stringify(pageData)};` : ``
     }/*]]>*/`
 
@@ -451,11 +459,55 @@ export default async function staticPage({
       />
     )
 
-    postBodyComponents.push(
-      createElement(ServerSliceRenderer, {
-        sliceId: `_gatsby-scripts`,
-      })
-    )
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      postBodyComponents.push(
+        createElement(ServerSliceRenderer, {
+          sliceId: `_gatsby-scripts`,
+        })
+      )
+    } else {
+      const chunkMapping = require(`../public/chunk-map.json`)
+      // restore the old behavior
+      // Add chunk mapping metadata
+      const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+        chunkMapping
+      )};/*]]>*/`
+
+      postBodyComponents.push(
+        <script
+          key={`chunk-mapping`}
+          id={`gatsby-chunk-mapping`}
+          dangerouslySetInnerHTML={{
+            __html: scriptChunkMapping,
+          }}
+        />
+      )
+
+      let bodyScripts = []
+      if (chunkMapping[`polyfill`]) {
+        chunkMapping[`polyfill`].forEach(script => {
+          const scriptPath = `${__PATH_PREFIX__}${script}`
+          bodyScripts.push(
+            <script key={scriptPath} src={scriptPath} noModule={true} />
+          )
+        })
+      }
+
+      // Filter out prefetched bundles as adding them as a script tag
+      // would force high priority fetching.
+      bodyScripts = bodyScripts.concat(
+        scripts
+          .filter(s => s.rel !== `prefetch`)
+          .map(s => {
+            const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(
+              s.name
+            ).slice(1, -1)}`
+            return <script key={scriptPath} src={scriptPath} async />
+          })
+      )
+
+      postBodyComponents.push(...bodyScripts)
+    }
 
     headComponents = reorderHeadComponents(headComponents)
 

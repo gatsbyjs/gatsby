@@ -95,16 +95,18 @@ export function constructPageDataString(
     `"result":${result},` +
     `"staticQueryHashes":${JSON.stringify(staticQueryHashes)}`
 
-  const formattedSlices = traverseSlicesUsedByTemplates(
-    pagePath,
-    componentPath,
-    overrideSlices,
-    slicesUsedByTemplates,
-    slices
-  )
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    const formattedSlices = traverseSlicesUsedByTemplates(
+      pagePath,
+      componentPath,
+      overrideSlices,
+      slicesUsedByTemplates,
+      slices
+    )
 
-  if (formattedSlices) {
-    body += `,"slicesMap":${JSON.stringify(formattedSlices)}`
+    if (formattedSlices) {
+      body += `,"slicesMap":${JSON.stringify(formattedSlices)}`
+    }
   }
 
   if (matchPath) {

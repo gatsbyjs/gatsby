@@ -104,12 +104,14 @@ function generatePageTreeToConsole(
     i++
   }
 
-  pageTreeConsole.push(``)
-  pageTreeConsole.push(`\n${chalk.underline(`Slices`)}\n`)
+  if (slices.size > 0) {
+    pageTreeConsole.push(``)
+    pageTreeConsole.push(`\n${chalk.underline(`Slices`)}\n`)
 
-  Array.from(slices).forEach(slice => {
-    pageTreeConsole.push(`· ${slice}`)
-  })
+    Array.from(slices).forEach(slice => {
+      pageTreeConsole.push(`· ${slice}`)
+    })
+  }
 
   pageTreeConsole.push(``)
   pageTreeConsole.push(

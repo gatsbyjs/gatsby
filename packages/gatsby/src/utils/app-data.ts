@@ -3,14 +3,9 @@ import path from "path"
 
 const APP_DATA_JSON = `app-data.json`
 
-export const write = (
-  publicDir: string,
-  hash: string,
-  fragmentChunkNames: Record<string, string>
-): Promise<void> =>
+export const write = (publicDir: string, hash: string): Promise<void> =>
   fs.outputJson(path.join(publicDir, `page-data`, APP_DATA_JSON), {
     webpackCompilationHash: hash,
-    fragmentChunkNames,
   })
 
 export const exists = (publicDir: string): boolean =>

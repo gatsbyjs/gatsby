@@ -233,6 +233,7 @@ module.exports = async (
         HAS_REACT_18: JSON.stringify(
           major(require(`react-dom/package.json`).version) >= 18
         ),
+        "_CFLAGS_.GATSBY_MAJOR": JSON.stringify(_CFLAGS_.GATSBY_MAJOR),
       }),
 
       plugins.virtualModules(),
