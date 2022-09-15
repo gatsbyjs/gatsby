@@ -59,6 +59,7 @@ export function MyImage() {
   }
 
   // You can't use function props, as they are not static variables
+  // highlight-next-line
   return <Slice alias="my-image" fetchImage={fetchImage} />
 }
 ```
@@ -74,15 +75,16 @@ export function MyImage() {
   }
 
   // `image` ends up being a string when passed to Slice
+  // highlight-next-line
   return <Slice alias="my-image" image={fetchImage()} />
 }
 ```
 
 ## Aliases
 
-An "`alias`" for a Slice is the string value a page will use to identify which Slice to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice) is an alias is a one-to-one mapping for each page created. An `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if `Slice` is given an `alias` prop of `"my-image"`, the Slice with the `id` of `"my-image"` will be used.
+An "`alias`" for a Slice is the string value a page will use to identify which Slice to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice)) is an alias is a one-to-one mapping for each page created. By default, an `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if `Slice` is given an `alias` prop of `"my-image"`, the Slice with the `id` of `"my-image"` will be used.
 
-However, if you need to customize which Slice is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage).
+However, if you need to customize which Slice is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage) through the `slices` key. If you map `"my-image"` to `"my-image--dog"`, any time the `"my-image"` Slice is used, it'll use the Slice with the id of `"my-image--dog"` on that page.
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
@@ -91,6 +93,7 @@ exports.createPages = async ({ actions }) => {
   for (const animal of animals) {
     // create a slice for each animal, i.e. `my-image--dog`
     actions.createSlice({
+      // highlight-next-line
       id: `my-image--${animal}`,
       component: require.resolve(`./src/components/my-image-slice.js`),
       context: {
