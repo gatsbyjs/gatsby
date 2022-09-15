@@ -41,5 +41,9 @@
   },
   "engines": {
     "node": ">=12.13.0"
+  },
+  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
+  "resolutions": {
+    "responselike": "^2.0.0"
   }
 }
