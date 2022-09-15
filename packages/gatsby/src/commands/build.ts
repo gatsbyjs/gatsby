@@ -366,16 +366,7 @@ module.exports = async function build(
       )
       rewriteActivityTimer.start()
 
-      const sliceChunkNames: Record<string, string> = {}
-      for (const sliceName of Object.keys(state.slices)) {
-        sliceChunkNames[sliceName] = state.slices[sliceName].componentChunkName
-      }
-
-      await appDataUtil.write(
-        publicDir,
-        webpackCompilationHash as string,
-        sliceChunkNames
-      )
+      await appDataUtil.write(publicDir, webpackCompilationHash as string)
 
       rewriteActivityTimer.end()
     }
