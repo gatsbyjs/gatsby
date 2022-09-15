@@ -8,7 +8,7 @@ To further the improvements seen by [Incremental Builds](https://www.gatsbyjs.co
 
 By using the `<Slice>` React component in combination with the [`createSlice`](/docs/reference/config-files/actions/#createSlice) API for common UI features, Gatsby will be able to build and deploy individual pieces of your site that had content changes, not just entire pages.
 
-## `<Slice>` enables faster builds in Gatsby Cloud
+## Faster builds in Gatsby Cloud
 
 With the introduction of [Incremental Builds](https://www.gatsbyjs.com/blog/2020-04-22-announcing-incremental-builds/), Gatsby Cloud has been able to reduce build times signficantly by only building the pages that changed. The `<Slice>` component helps reduce those builds times further.
 
