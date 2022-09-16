@@ -3,7 +3,7 @@ title: Commands (Gatsby CLI)
 tableOfContentsDepth: 2
 ---
 
-The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including running a development server and building out your Gatsby application for deployment.
+The Gatsby command line interface (CLI) is the main tool you use to initialize, build and develop Gatsby sites.
 
 ## How to use gatsby-cli
 
