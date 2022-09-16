@@ -8,12 +8,7 @@ const {
 } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const merge = require(`deepmerge`)
-const {
-  StaticQueryContext,
-  SlicesContext,
-  SlicesMapContext,
-  SlicesPropsContext,
-} = require(`gatsby`)
+const { StaticQueryContext } = require(`gatsby`)
 const fs = require(`fs`)
 const { WritableAsPromise } = require(`./server-utils/writable-as-promise`)
 
@@ -23,7 +18,12 @@ const asyncRequires = require(`$virtual/async-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 const { headHandlerForSSR } = require(`./head/head-export-handler-for-ssr`)
-const { SlicesResultsContext } = require(`./slice`)
+const {
+  SlicesResultsContext,
+  SlicesContext,
+  SlicesMapContext,
+  SlicesPropsContext,
+} = require(`./slice`)
 const { ServerSliceRenderer } = require(`./slice/server-slice-renderer`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls

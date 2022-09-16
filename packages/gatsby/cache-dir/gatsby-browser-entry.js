@@ -6,9 +6,6 @@ import { Slice } from "./slice"
 const prefetchPathname = loader.enqueue
 
 const StaticQueryContext = React.createContext({})
-const SlicesContext = React.createContext({})
-const SlicesMapContext = React.createContext({})
-const SlicesPropsContext = React.createContext({})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const finalData = data
@@ -111,10 +108,6 @@ export {
   useStaticQuery,
   prefetchPathname,
   Slice,
-  // only for internal use
-  SlicesContext,
-  SlicesMapContext,
-  SlicesPropsContext,
 }
 
 export * from "gatsby-script"

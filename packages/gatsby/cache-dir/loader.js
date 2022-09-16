@@ -99,13 +99,13 @@ export class BaseLoader {
     //   },
     //   staticQueryResults
     // }
-    window.pageDb = this.pageDb = new Map()
+    this.pageDb = new Map()
     this.inFlightDb = new Map()
     this.staticQueryDb = {}
-    window.pageDataDb = this.pageDataDb = new Map()
-    window.slicesDataDb = this.slicesDataDb = new Map()
-    window.sliceInflightDb = this.sliceInflightDb = new Map()
-    window.slicesDb = this.slicesDb = new Map()
+    this.pageDataDb = new Map()
+    this.slicesDataDb = new Map()
+    this.sliceInflightDb = new Map()
+    this.slicesDb = new Map()
     this.isPrefetchQueueRunning = false
     this.prefetchQueued = []
     this.prefetchTriggered = new Set()
@@ -270,8 +270,6 @@ export class BaseLoader {
       this.loadAppData(),
       this.loadPageDataJson(pagePath),
     ]).then(allData => {
-      const windowSlices = window.pageSlices || new Map()
-
       const result = allData[1]
       if (result.status === PageResourceStatus.Error) {
         return {
