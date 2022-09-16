@@ -102,8 +102,3 @@ body {
   font-family: "Open Sans";
 }
 ```
-
-## Other resources
-
-- Check out the [Using Google Fonts](/docs/recipes/styling-css/#using-google-fonts) Gatsby recipe.
-- Here's a great article on why it's important to [keep your environment variables secret](https://medium.com/codait/environment-variables-or-keeping-your-secrets-secret-in-a-node-js-app-99019dfff716).
