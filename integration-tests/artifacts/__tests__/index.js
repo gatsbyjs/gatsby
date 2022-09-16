@@ -14,6 +14,23 @@ const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 const manifest = {}
 const filesToRevert = {}
 
+let _CFLAGS_ = {
+  GATSBY_MAJOR: `4`,
+}
+if (process.env.COMPILER_OPTIONS) {
+  // COMPILER_OPTIONS syntax is key=value,key2=value2
+  _CFLAGS_ = process.env.COMPILER_OPTIONS.split(`,`).reduce((acc, curr) => {
+    const [key, value] = curr.split(`=`)
+
+    if (key) {
+      acc[key] = value
+    }
+
+    return acc
+  }, _CFLAGS_)
+}
+
+let SLICES_ENABLED = _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
 let exitCode
 
 function runGatsbyWithRunTestSetup(runNumber = 1) {
@@ -695,7 +712,7 @@ describe(`Second run (different pages created, data changed)`, () => {
 })
 
 describe(
-  _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
+  SLICES_ENABLED
     ? `Third run (js template change, just pages of that template are recreated, all pages are stitched)`
     : `Third run (js change, all pages are recreated)`,
 
@@ -778,7 +795,7 @@ describe(
         })
       })
 
-      if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      if (SLICES_ENABLED) {
         it(`should recreate only some html files`, () => {
           expect(manifest[runNumber].generated.sort()).toEqual(
             expectedPagesToBeGenerated.sort()
@@ -819,7 +836,7 @@ describe(
       })
     })
 
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (SLICES_ENABLED) {
       // third run - we modify template used by both ssr and browser bundle - global, shared SSR won't change
       // as the change is localized in just one of templates, which in Gatsby 5 doesn't invalidate all html
       // files anymore
