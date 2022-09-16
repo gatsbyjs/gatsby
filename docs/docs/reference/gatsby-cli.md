@@ -40,7 +40,7 @@ The first argument (e.g. `my-new-blog`) is the name of your site, and the second
 
 ### `develop`
 
-Runs a development server that reflects changes you make to your source code in the browser. Should be run from the root of your project.
+Compiles and serves a development build of your site that reflects your source code changes in the browser in real time. Should be run from the root of your project.
 
 ```shell
 gatsby develop
@@ -48,13 +48,13 @@ gatsby develop
 
 Options include:
 
-|     Option      | Description                                     |
-| :-------------: | ----------------------------------------------- |
+| Option          | Description                                     |
+| --------------- | ----------------------------------------------- |
 | `-H`, `--host`  | Set host. Defaults to `localhost`               |
 | `-p`, `--port`  | Set port. Defaults to `env.PORT` or `8000`      |
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
-|   `--inspect`   | Opens a port for debugging                      |
+| `--inspect`     | Opens a port for debugging                      |
 
 To set up HTTPS, follow the [Local HTTPS guide](/docs/local-https/).
 
@@ -77,55 +77,63 @@ You can use the "On Your Network" URL to access your site within your network.
 
 ### `build`
 
-At the root of a Gatsby site, compile your application and make it ready for deployment:
+Compiles your site for production so it can be deployed. Should be run from the root of your project.
 
-`gatsby build`
+```shell
+gatsby build
+```
 
-#### Options
+Options include:
 
-|            Option            | Description                                                                                                                                  |
-| :--------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                                                          |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                                                      |
-|         `--profile`          | Build site with react profiling. See [Profiling Site Performance with React Profiler](/docs/profiling-site-performance-with-react-profiler/) |
+| Option                       | Description                                                                                                                                  |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--prefix-paths`             | Build site with link paths prefixed (set `pathPrefix` in your config)                                                                        |
+| `--no-uglify`                | Build site without uglifying JS bundles (for debugging)                                                                                      |
+| `--profile`                  | Build site with react profiling. See [Profiling Site Performance with React Profiler](/docs/profiling-site-performance-with-react-profiler/) |
 | `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/)                                    |
-|     `--graphql-tracing`      | Trace (see above) every graphql resolver, may have performance implications.                                                                 |
+| `--graphql-tracing`          | Trace (see above) every graphql resolver, may have performance implications.                                                                 |
 | `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                                             |
 
 In addition to these build options, there are some optional [build environment variables](/docs/how-to/local-development/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
 
 ### `serve`
 
-At the root of a Gatsby site, serve the production build of your site for testing:
+Serves the production build of your site for testing prior to deployment. Should be run from the root of your project.
 
-`gatsby serve`
+```shell
+gatsby serve
+```
 
-#### Options
+Options include:
 
-|      Option      | Description                                                                              |
-| :--------------: | ---------------------------------------------------------------------------------------- |
-|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
-|  `-p`, `--port`  | Set port. Defaults to 9000                                                               |
-|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
-| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
+| Option           | Description                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `-H`, `--host`   | Set host. Defaults to localhost`                                                               |
+| `-p`, `--port`   | Set port. Defaults to `9000`                                                                   |
+| `-o`, `--open`   | Open the site in your default browser for you                                                  |
+| `--prefix-paths` | Serve site with link paths prefixed (if built with `pathPrefix` in your `gatsby-config` file). |
 
 ### `info`
 
-At the root of a Gatsby site, get helpful environment information which will be required when reporting a bug:
+Show helpful environment information which is required in bug reports. Should be run from the root of your project.
 
-`gatsby info`
+```shell
+gatsby info
+```
 
-#### Options
+Options include:
 
-|       Option        | Description                                             |
-| :-----------------: | ------------------------------------------------------- |
-| `-C`, `--clipboard` | Automagically copy environment information to clipboard |
+| Option              | Description                                    |
+| ------------------- | ---------------------------------------------- |
+| `-C`, `--clipboard` | Copy environment information to your clipboard |
 
 ### `clean`
 
-At the root of a Gatsby site, wipe out the cache (`.cache` folder) and public directories:
+Delete the `.cache` and `public` directories. Should be run from the root of your project.
 
-`gatsby clean`
+```shell
+gatsby clean
+```
 
 This is useful as a last resort when your local project seems to have issues or content does not seem to be refreshing. Issues this may fix commonly include:
 
@@ -133,16 +141,6 @@ This is useful as a last resort when your local project seems to have issues or 
 - GraphQL error, e.g. this GraphQL resource should be present but is not
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 - Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
-
-### `plugin`
-
-Run commands pertaining to gatsby plugins.
-
-#### `docs`
-
-`gatsby plugin docs`
-
-Directs you to documentation about using and creating plugins.
 
 ### Repl
 
@@ -154,29 +152,21 @@ Gatsby will prompt you to type in commands and explore. When it shows this: `gat
 
 You can type in a command, such as one of these:
 
-`babelrc`
-
-`components`
-
-`dataPaths`
-
-`getNodes()`
-
-`nodes`
-
-`pages`
-
-`schema`
-
-`siteConfig`
-
-`staticQueries`
+- `babelrc`
+- `components`
+- `dataPaths`
+- `getNodes()`
+- `nodes`
+- `pages`
+- `schema`
+- `siteConfig`
+- `staticQueries`
 
 When combined with the [GraphQL explorer](/docs/how-to/querying-data/running-queries-with-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
 For more information, check out the [Gatsby REPL documentation](/docs/gatsby-repl/).
 
-### Disabling colored output
+## Disabling colored output
 
 In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org/)).
 
