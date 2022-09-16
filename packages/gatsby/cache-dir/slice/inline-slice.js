@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
-import { SlicesMapContext } from "gatsby"
-import { SlicesResultsContext } from "../slice"
+import { SlicesMapContext, SlicesResultsContext } from "../slice"
 
 export const InlineSlice = ({
   sliceName,

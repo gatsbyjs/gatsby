@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
-import { SlicesMapContext, SlicesPropsContext } from "gatsby"
 import { createContentDigest } from "gatsby-core-utils/create-content-digest"
+import { SlicesMapContext, SlicesPropsContext } from "../slice"
 import { ServerSliceRenderer } from "./server-slice-renderer"
 
 // const orig = React.createElement
