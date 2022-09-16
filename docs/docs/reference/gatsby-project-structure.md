@@ -32,7 +32,7 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 - **`/src`** This directory will contain all of the code related to what you will see on the frontend of your site (what you see in the browser), like your site header, or a page template. “src” is a convention for “source code”.
 
   - **`/api`** JavaScript and TypeScript files under `src/api` become functions automatically with paths based on their file name. Check out the [functions guide](/docs/reference/functions/) for more detail.
-  - **`/pages`** Components under `src/pages` become pages automatically with paths based on their file name. Check out the [pages recipes](/docs/recipes/pages-layouts) for more detail.
+  - **`/pages`** Components under `src/pages` become pages automatically with paths based on their file name.
   - **`/templates`** Contains templates for programmatically creating pages. Check out the [templates docs](/docs/conceptual/building-with-components/#page-template-components) for more detail.
   - **`html.js`** For custom configuration of default `.cache/default_html.js`. Check out the [custom HTML docs](/docs/custom-html/) for more detail.
 
