@@ -38,7 +38,7 @@ export function createPagesFromChangedNodes(
       const absolutePaths = pluginInstance.trackedTypes.get(node.internal.type)
       if (absolutePaths) {
         for (const absolutePath of absolutePaths) {
-          const { path, errors } = createPathFromNode({
+          const { path } = createPathFromNode({
             filePath: sysPath.relative(pluginOptions.path, absolutePath),
             node,
             reporter,
@@ -58,7 +58,7 @@ export function createPagesFromChangedNodes(
       const absolutePaths = pluginInstance.trackedTypes.get(node.internal.type)
       if (absolutePaths) {
         for (const absolutePath of absolutePaths) {
-          const { path, errors } = createPathFromNode({
+          const { path } = createPathFromNode({
             filePath: sysPath.relative(pluginOptions.path, absolutePath),
             node,
             reporter,
