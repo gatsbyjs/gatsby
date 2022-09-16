@@ -11,8 +11,7 @@ For instance, while rebuilding your cooking blog, you might want to move all of 
 
 ## Prerequisites
 
-1. In order to use redirects, you must include the `gatsby-plugin-gatsby-cloud` in your project.
-1. If your Gatsby project doesn't already have a `gatsby-node.js` file, add one at that top level of your project (alongside your `gatsby-config.js`).
+- If your Gatsby project doesn't already have a `gatsby-node.js` file, add one at that top level of your project (alongside your `gatsby-config.js`).
 
 ## Directions
 
