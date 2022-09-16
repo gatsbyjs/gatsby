@@ -115,7 +115,7 @@ Options include:
 
 | Option           | Description                                                                                    |
 | ---------------- | ---------------------------------------------------------------------------------------------- |
-| `-H`, `--host`   | Set host. Defaults to localhost`                                                               |
+| `-H`, `--host`   | Set host. Defaults to `localhost`                                                              |
 | `-p`, `--port`   | Set port. Defaults to `9000`                                                                   |
 | `-o`, `--open`   | Open the site in your default browser for you                                                  |
 | `--prefix-paths` | Serve site with link paths prefixed (if built with `pathPrefix` in your `gatsby-config` file). |
