@@ -7,17 +7,12 @@ The Gatsby command line interface (CLI) is the main tool you use to initialize, 
 
 ## How to use gatsby-cli
 
-The Gatsby CLI is available via [npm](https://www.npmjs.com/) and is installed globally by running `npm install -g gatsby-cli`.
+To use the Gatsby CLI you must either:
 
-You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if you want to make the [`gatsby develop`](#develop) command available in your application, open up `package.json` and add a script like so:
+- Install it globally with `npm install -g gatsby-cli`, where you execute commands like `gatsby new`, or
+- Run commands directly with [`npx`](https://nodejs.dev/en/learn/the-npx-nodejs-package-runner/), where you execute commands like `npx gatsby new`
 
-```json:title=package.json
-{
-  "scripts": {
-    "develop": "gatsby develop"
-  }
-}
-```
+Useful Gatsby CLI commands are also pre-defined in [starters](/docs/starters/) as [run scripts](/docs/glossary/run-script/).
 
 ## API commands
 
