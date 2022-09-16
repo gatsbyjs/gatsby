@@ -2,7 +2,8 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { StaticQueryContext, SlicesMapContext, SlicesContext } from "gatsby"
+import { StaticQueryContext } from "gatsby"
+import { SlicesMapContext, SlicesContext } from "./slice"
 import {
   shouldUpdateScroll,
   init as navigationInit,

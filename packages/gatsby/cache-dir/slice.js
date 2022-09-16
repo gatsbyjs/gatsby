@@ -1,5 +1,4 @@
 import React, { useContext } from "react"
-import { SlicesContext } from "gatsby"
 import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
 
@@ -112,5 +111,14 @@ const validateSliceProps = (
 }
 
 const SlicesResultsContext = React.createContext({})
+const SlicesContext = React.createContext({})
+const SlicesMapContext = React.createContext({})
+const SlicesPropsContext = React.createContext({})
 
-export { Slice, SlicesResultsContext }
+export {
+  Slice,
+  SlicesResultsContext,
+  SlicesContext,
+  SlicesMapContext,
+  SlicesPropsContext,
+}

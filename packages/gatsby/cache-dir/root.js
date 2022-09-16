@@ -1,8 +1,8 @@
 import React from "react"
 import { Router, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import { SlicesMapContext, SlicesContext } from "gatsby"
 
+import { SlicesMapContext, SlicesContext } from "./slice"
 import { shouldUpdateScroll, RouteUpdates } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
