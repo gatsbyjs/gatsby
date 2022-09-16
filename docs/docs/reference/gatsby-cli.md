@@ -5,8 +5,6 @@ tableOfContentsDepth: 2
 
 The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including running a development server and building out your Gatsby application for deployment.
 
-_This page provides similar documentation as the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md). The [Gatsby cheat sheet](/docs/cheat-sheet/) has docs for top CLI commands & APIs all ready to print out._
-
 ## How to use gatsby-cli
 
 The Gatsby CLI is available via [npm](https://www.npmjs.com/) and is installed globally by running `npm install -g gatsby-cli`.
