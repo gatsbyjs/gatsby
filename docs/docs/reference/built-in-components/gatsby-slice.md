@@ -14,11 +14,11 @@ With the introduction of [Incremental Builds](https://www.gatsbyjs.com/blog/2020
 
 Common components that are shared across the majority of pages on your site might include a navigation bar, footer, or contact form. In today's frameworks, when you re-order the navigation bar items, the entire site needs to be rebuilt. However, if the navigation bar was created as a Gatsby Slice, the new navigation items only need to be built once and all pages will pull the new navigation bar when it's needed.
 
-## [`createSlice`](/docs/reference/config-files/actions/#createSlice) Action
+## `createSlice` action
 
 The [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API is the first step in creating a new Slice.
 
-```javascript:title=gatsby-node.js
+```js:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
   actions.createSlice({
     id: `navigation-bar`,
@@ -36,7 +36,7 @@ exports.createPages = async ({ actions }) => {
 | `component` (Required) | `string` | The path to the component being used as a Slice.                           |
 | `context`              | `object` | An object passed to the `component` as `sliceContext`.                     |
 
-## `Slice` Component
+## `Slice` component
 
 The Slice component requires an `alias` prop. Any props additional props will be passed to underlying component.
 
@@ -86,7 +86,7 @@ An "`alias`" for a Slice is the string value a page will use to identify which S
 
 However, if you need to customize which Slice is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage) through the `slices` key. If you map `"my-image"` to `"my-image--dog"`, any time the `"my-image"` Slice is used, it'll use the Slice with the id of `"my-image--dog"` on that page.
 
-```javascript:title=gatsby-node.js
+```js:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
   const animals = ['dog', 'cat', 'giraffe']
 
