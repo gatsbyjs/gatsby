@@ -108,6 +108,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -129,6 +130,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -150,6 +152,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -171,6 +174,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -192,6 +196,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -213,6 +218,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -234,6 +240,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -291,6 +298,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -448,6 +456,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -469,6 +478,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -490,6 +500,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -511,6 +522,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -532,6 +544,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -553,6 +566,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -574,6 +588,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -595,6 +610,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -652,6 +668,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -797,6 +814,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -820,6 +838,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -841,6 +860,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -862,6 +882,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -883,6 +904,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -904,6 +926,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -925,6 +948,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -946,6 +970,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -967,6 +992,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
@@ -1024,6 +1050,7 @@ Array [
     "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
+      "createPages",
       "createPagesStatefully",
       "setFieldsOnGraphQLNodeType",
       "onPluginInit",
