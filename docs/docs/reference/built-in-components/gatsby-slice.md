@@ -46,7 +46,56 @@ The Slice component requires an `alias` prop. Any props additional props will be
 
 ### Restrictions on using `Slice`
 
-Slices are built during HTML rendering, so any props passed to the Slice component must be static.
+#### Nested Slices
+
+Gatsby does not support nested Slices. This means if you have a high level `<Layout>` component as a slice, other Slices cannot exist within that `<Layout>` component anywhere in the tree.
+
+#### Props
+
+##### `alias`
+
+The `alias` prop must be statically analyzable, which means it must be an inline string.
+
+```js
+// ⚠️ Doesn't work
+
+export function MyImage() {
+  const alias = "my-image"
+
+  // You can't use computed values for alias
+  // highlight-next-line
+  return <Slice alias={alias} />
+}
+```
+
+```js
+// ⚠️ Doesn't work
+
+export function MyImage() {
+  const type = "image"
+
+  // You can't use computed values for alias
+  // highlight-next-line
+  return <Slice alias={`my-${type}`} />
+}
+```
+
+```js
+// OK
+
+export function MyImage() {
+  // highlight-next-line
+  return <Slice alias="my-image" />
+}
+```
+
+##### `children`
+
+The children prop does not have any restrictions and can be used in typical fashion.
+
+##### Others
+
+Any props passed to the Slice component must be serializable.
 
 This does not work:
 
@@ -58,13 +107,13 @@ export function MyImage() {
     return "/static/images/img.jpg"
   }
 
-  // You can't use function props, as they are not static variables
+  // You can't use function props, as they are not serializable
   // highlight-next-line
   return <Slice alias="my-image" fetchImage={fetchImage} />
 }
 ```
 
-However, a prop that ends with a static value does work:
+However, a prop that ends with (for example) a string does work:
 
 ```js
 // OK
