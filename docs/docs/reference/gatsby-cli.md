@@ -169,8 +169,6 @@ To exit the REPL:
 
 When combined with the [GraphQL explorer](/docs/how-to/querying-data/running-queries-with-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
-For more information, check out the [Gatsby REPL documentation](/docs/gatsby-repl/).
-
 ## Disabling colored output
 
 In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org/)).
