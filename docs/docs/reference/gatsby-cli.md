@@ -9,8 +9,8 @@ The Gatsby command line interface (CLI) is the main tool you use to initialize, 
 
 To use the Gatsby CLI you must either:
 
-- Install it globally with `npm install -g gatsby-cli`, where you execute commands like `gatsby new`, or
-- Run commands directly with [`npx`](https://nodejs.dev/en/learn/the-npx-nodejs-package-runner/), where you execute commands like `npx gatsby new`
+- Install it globally with `npm install -g gatsby-cli`, where you execute commands with the syntax `gatsby new`, or
+- Run commands directly with [`npx`](https://nodejs.dev/en/learn/the-npx-nodejs-package-runner/), where you execute commands with the syntax `npx gatsby new`
 
 Useful Gatsby CLI commands are also pre-defined in [starters](/docs/starters/) as [run scripts](/docs/glossary/run-script/).
 
@@ -20,83 +20,23 @@ All the following documentation is available in the tool by running `gatsby --he
 
 ### `new`
 
-#### Usage
+Runs an interactive shell with a prompt that helps you set up a [CMS](/docs/glossary#cms), styling system and plugins if you wish.
+
+To create a new site with the prompt, execute:
 
 ```shell
 gatsby new
 ```
 
-The CLI will run an interactive shell asking for these options before creating a Gatsby site for you:
+You can also skip the prompt and clone a starter directly from GitHub. For example, to clone a new [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog), execute:
 
 ```shell
-gatsby new
-
-What would you like to name the folder where your site will be created?
-my-gatsby-site
-
-Will you be using a CMS? (single choice)
-  No (or I'll add it later)
-  –
-  WordPress
-  Contentful
-  Sanity
-  DatoCMS
-  Shopify
-
-Would you like to install a styling system? (single choice)
-  No (or I'll add it later)
-  –
-  CSS Modules/PostCSS
-  styled-components
-  Emotion
-  Sass
-  Theme UI
-
-Would you like to install additional features with other plugins? (multiple choice)
-  ◯ Add the Google Analytics tracking script
-  ◯ Add responsive images
-  ◯ Add page meta tags with React Helmet
-  ◯ Add an automatic sitemap
-  ◯ Enable offline functionality
-  ◯ Generate a manifest file
-  ◯ Add Markdown support (without MDX)
-  ◯ Add Markdown and MDX support
+gatsby new my-new-blog https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-#### Creating a site from a starter
+The first argument (e.g. `my-new-blog`) is the name of your site, and the second argument is the GitHub URL of the starter you want to clone.
 
-To create a site from a starter instead, run the command with your site name and starter URL:
-
-```shell
-gatsby new [<site-name> [<starter-url>]]
-```
-
-Note that this will not prompt you to create a custom setup, but only clone the starter from the URL you specified.
-
-##### Arguments
-
-| Argument    | Description                                                                                                                                                                                              |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                 |
-| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/starters/) docs for more information. |
-
-> Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
-
-##### Examples
-
-- Create a Gatsby site named `my-awesome-site` using the default starter:
-
-```shell
-gatsby new my-awesome-site
-```
-
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/):
-
-```shell
-gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
-```
-
-See the [Gatsby starters docs](/docs/starters/) for more details.
+> Note: The site name should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
 ### `develop`
 
