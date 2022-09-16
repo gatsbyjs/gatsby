@@ -142,15 +142,15 @@ This is useful as a last resort when your local project seems to have issues or 
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 - Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
 
-### Repl
+### `repl`
 
-Get a Node.js REPL (interactive shell) with context of your Gatsby environment:
+Open a Node.js REPL (interactive shell) with context of your Gatsby environment. Should be run from the root of your project.
 
-`gatsby repl`
+```shell
+gatsby repl
+```
 
-Gatsby will prompt you to type in commands and explore. When it shows this: `gatsby >`
-
-You can type in a command, such as one of these:
+Gatsby will prompt you to type in commands and explore. When it shows this: `gatsby >`, you can type in one of these commands to see their values in real time:
 
 - `babelrc`
 - `components`
@@ -161,6 +161,11 @@ You can type in a command, such as one of these:
 - `schema`
 - `siteConfig`
 - `staticQueries`
+
+To exit the REPL:
+
+- Press `Ctrl+C` or `Ctrl+D` twice, or
+- Type `.exit` and press `Enter`
 
 When combined with the [GraphQL explorer](/docs/how-to/querying-data/running-queries-with-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
