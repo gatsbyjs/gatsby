@@ -349,7 +349,10 @@ export class StaticQueryMapper {
 
       let globalSliceUsage: Record<string, ICollectedSlice> = {}
       for (const [chunkGroup, slices] of pageSliceUsageByChunkGroup) {
-        if (!chunkGroupsWithPageComponents.has(chunkGroup)) {
+        if (
+          !chunkGroupsWithPageComponents.has(chunkGroup) &&
+          !chunkGroup.name?.endsWith(`head`)
+        ) {
           globalSliceUsage = mergePreviouslyCollectedSlices(
             slices,
             globalSliceUsage
