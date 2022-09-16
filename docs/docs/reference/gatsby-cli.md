@@ -40,32 +40,31 @@ The first argument (e.g. `my-new-blog`) is the name of your site, and the second
 
 ### `develop`
 
-Once you've installed a Gatsby site, go to the root directory of your project and start the development server:
+Runs a development server that reflects changes you make to your source code in the browser. Should be run from the root of your project.
 
-`gatsby develop`
+```shell
+gatsby develop
+```
 
-#### Options
+Options include:
 
 |     Option      | Description                                     |
 | :-------------: | ----------------------------------------------- |
-| `-H`, `--host`  | Set host. Defaults to localhost                 |
-| `-p`, `--port`  | Set port. Defaults to env.PORT or 8000          |
+| `-H`, `--host`  | Set host. Defaults to `localhost`               |
+| `-p`, `--port`  | Set port. Defaults to `env.PORT` or `8000`      |
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 |   `--inspect`   | Opens a port for debugging                      |
 
-Follow the [Local HTTPS guide](/docs/local-https/)
-to find out how you can set up an HTTPS development server using Gatsby.
+To set up HTTPS, follow the [Local HTTPS guide](/docs/local-https/).
 
-#### Preview changes on other devices
-
-You can use the Gatsby develop command with the host option to access your dev environment on other devices on the same network, run:
+To include a URL you can access from other devices on the same network, execute:
 
 ```shell
 gatsby develop -H 0.0.0.0
 ```
 
-Then the terminal will log information as usual, but will additionally include a URL that you can navigate to from a client on the same network to see how the site renders.
+You will see this output:
 
 ```shell
 You can now view gatsbyjs.com in the browser.
@@ -74,7 +73,7 @@ You can now view gatsbyjs.com in the browser.
   On Your Network:  http://192.168.0.212:8000/ // highlight-line
 ```
 
-**Note**: To access Gatsby on your local machine, use either `http://localhost:8000` or the "On Your Network" URL.
+You can use the "On Your Network" URL to access your site within your network.
 
 ### `build`
 
