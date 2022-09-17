@@ -41,11 +41,11 @@ try {
 
 const knownCollections = new Map()
 
-export function createPages(
-  { actions, reporter }: CreatePagesArgs,
-  pluginOptions: IOptions
-): void {
-  createPagesFromChangedNodes({ actions, reporter }, pluginOptions)
+export function createPages(_: CreatePagesArgs, pluginOptions: IOptions): void {
+  const instance = getPluginInstance(pluginOptions)
+  if (instance.syncPages) {
+    instance.syncPages()
+  }
 }
 
 // Path creator.
@@ -59,17 +59,19 @@ export async function createPagesStatefully(
     actions,
     reporter,
     graphql,
+    emitter,
   }: CreatePagesArgs & {
     traceId: "initial-createPages"
   },
-  {
+  pluginOptions: IOptions,
+  doneCb: PluginCallback
+): Promise<void> {
+  const {
     path: pagesPath,
     pathCheck = true,
     ignore,
     slugify: slugifyOptions,
-  }: IOptions,
-  doneCb: PluginCallback
-): Promise<void> {
+  } = pluginOptions
   try {
     const { deletePage } = actions
     const { program, config } = store.getState()
@@ -182,6 +184,63 @@ Please pick a path to an existing directory.`,
       },
     })
   }
+
+  const pluginInstance = getPluginInstance({ path: pagesPath })
+  pluginInstance.syncPages = function syncPages(): void {
+    createPagesFromChangedNodes(
+      { actions, reporter, pluginInstance },
+      pluginOptions
+    )
+  }
+
+  emitter.on(`DELETE_NODE`, action => {
+    if (action.payload?.id) {
+      if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+        pluginInstance.changedNodesSinceLastPageCreation.deleted.set(
+          action.payload.id,
+          { node: action.payload }
+        )
+      }
+    }
+  })
+
+  emitter.on(`CREATE_NODE`, action => {
+    if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+      const deletedNode =
+        pluginInstance.changedNodesSinceLastPageCreation.deleted.get(
+          action.payload.id
+        )
+      // top level nodes will have `oldNode` on node updates
+      // child nodes won't have `oldNode`, but we can get previous child node
+      // from list of deleted nodes
+      const previousNode = action.oldNode ?? deletedNode?.node
+
+      // If this node was deleted before being recreated, remove it from the deleted node list
+      pluginInstance.changedNodesSinceLastPageCreation.deleted.delete(
+        action.payload.id
+      )
+
+      if (previousNode?.id) {
+        if (
+          previousNode.internal.contentDigest !==
+          action.payload.internal.contentDigest
+        ) {
+          pluginInstance.changedNodesSinceLastPageCreation.updated.set(
+            action.payload.id,
+            {
+              oldNode: previousNode,
+              node: action.payload,
+            }
+          )
+        }
+      } else {
+        pluginInstance.changedNodesSinceLastPageCreation.created.set(
+          action.payload.id,
+          { node: action.payload }
+        )
+      }
+    }
+  })
 }
 
 export function setFieldsOnGraphQLNodeType(
@@ -253,7 +312,7 @@ export function setFieldsOnGraphQLNodeType(
 }
 
 async function initializePlugin(
-  { reporter, emitter }: ParentSpanPluginArgs,
+  { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
   if (reporter.setErrorMap) {
@@ -295,43 +354,6 @@ async function initializePlugin(
       },
     })
   }
-
-  const pluginInstance = getPluginInstance({ path: pagesPath })
-
-  emitter.on(`DELETE_NODE`, action => {
-    if (action.payload?.id) {
-      if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
-        pluginInstance.changedNodesFromLastPageCreation.deleted.set(
-          action.payload.id,
-          { node: action.payload }
-        )
-      }
-    }
-  })
-
-  emitter.on(`CREATE_NODE`, action => {
-    if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
-      // If this node was deleted before being recreated, remove it from the deleted node list
-      pluginInstance.changedNodesFromLastPageCreation.deleted.delete(
-        action.payload.id
-      )
-
-      if (action.oldNode?.id) {
-        pluginInstance.changedNodesFromLastPageCreation.updated.set(
-          action.payload.id,
-          {
-            oldNode: action.oldNode,
-            node: action.payload,
-          }
-        )
-      } else {
-        pluginInstance.changedNodesFromLastPageCreation.created.set(
-          action.payload.id,
-          { node: action.payload }
-        )
-      }
-    }
-  })
 }
 
 if (coreSupportsOnPluginInit === `stable`) {
