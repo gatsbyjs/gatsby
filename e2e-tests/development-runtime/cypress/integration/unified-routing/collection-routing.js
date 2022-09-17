@@ -1,8 +1,45 @@
-describe(`collection-routing`, () => {
-  beforeEach(() => {
-    cy.visit(`/collection-routing`).waitForRouteChange()
+function assert404(slug) {
+  cy.visit(`/collection-routing/mutations/${slug}/`, {
+    failOnStatusCode: false,
+  }).waitForRouteChange()
+
+  // page doesn't exist yet
+  cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+
+  cy.visit(`/collection-routing/mutations/child-${slug}/`, {
+    failOnStatusCode: false,
+  }).waitForRouteChange()
+
+  // page doesn't exist yet
+  cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+}
+
+function assertPageExist(slug, content) {
+  cy.visit(`/collection-routing/mutations/${slug}/`).waitForRouteChange()
+  cy.contains(content)
+
+  cy.visit(`/collection-routing/mutations/child-${slug}/`).waitForRouteChange()
+  cy.contains(content)
+}
+
+function refresh(setup) {
+  cy.then(() => {
+    return fetch(
+      `http://localhost:8000/__refresh/gatsby-source-fs-route-mutations`,
+      {
+        method: `POST`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ setup }),
+      }
+    )
   })
 
+  cy.wait(5000)
+}
+
+describe(`collection-routing`, () => {
   it(`can create simplest collection route that also has a number as an identifier`, () => {
     cy.visit(`/collection-routing/1/`).waitForRouteChange()
     cy.findByTestId(`slug`).should(`have.text`, `/preview/1`)
@@ -10,6 +47,7 @@ describe(`collection-routing`, () => {
   })
 
   it(`can navigate to a collection route and see its content rendered`, () => {
+    cy.visit(`/collection-routing`).waitForRouteChange()
     // this test depends on the alphabetical sorting of markdown files
     cy.findByTestId(`collection-routing-blog-0`)
       .should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)
@@ -24,6 +62,7 @@ describe(`collection-routing`, () => {
   })
 
   it(`can navigate to a collection route that uses unions and see its content rendered`, () => {
+    cy.visit(`/collection-routing`).waitForRouteChange()
     // this test depends on the alphabetical sorting of image files
     cy.findByTestId(`collection-routing-image-0`)
       .should(`have.attr`, `data-testimagename`, `citrus-fruits`)
@@ -60,5 +99,50 @@ describe(`collection-routing`, () => {
     cy.should(`have.text`, `dolores`)
     cy.findByTestId(`title`)
     cy.should(`have.text`, `Named SPLAT Nested with Collection Route!`)
+  })
+
+  describe(`data updates`, () => {
+    before(() => {
+      refresh(`reset`)
+    })
+    after(() => {
+      refresh(`reset`)
+    })
+
+    it(`creates a page when new node is created`, () => {
+      assert404(`new-node`)
+      assert404(`updated-node`)
+
+      refresh(`create`)
+
+      assertPageExist(`new-node`, `This is node that was just created`)
+      assert404(`updated-node`)
+    })
+
+    it(`remove previous page and add a new one when slug changes`, () => {
+      assertPageExist(`new-node`, `This is node that was just created`)
+      assert404(`updated-node`)
+
+      refresh(`update`)
+
+      assertPageExist(
+        `updated-node`,
+        `This is node that had slug and content updated`
+      )
+      assert404(`new-node`)
+    })
+
+    it(`remove a page when node is deleted`, () => {
+      assertPageExist(
+        `updated-node`,
+        `This is node that had slug and content updated`
+      )
+      assert404(`new-node`)
+
+      refresh(`delete`)
+
+      assert404(`new-node`)
+      assert404(`updated-node`)
+    })
   })
 })
