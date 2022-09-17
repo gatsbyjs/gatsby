@@ -11,7 +11,6 @@ function createPathFromNode({ filePath, node, reporter, slugifyOptions }): {
   path: string
   errors: number
 } {
-  console.log(`IN createPathFromNode, our new filePath: ${filePath}`)
   const { derivedPath, errors } = derivePath(
     filePath,
     node,
@@ -51,7 +50,6 @@ export function createPagesFromChangedNodes(
             reporter,
             slugifyOptions: pluginOptions.slugifyOptions,
           })
-          console.log(`deleting page`, { path, component: absolutePath })
           actions.deletePage({ path, component: absolutePath })
         }
       }
@@ -79,14 +77,6 @@ export function createPagesFromChangedNodes(
           // nodeParams is fed to the graphql query for the component
           const nodeParams = reverseLookupParams(node as any, absolutePath)
 
-          console.log(`creating page`, {
-            path: path,
-            component: absolutePath,
-            context: {
-              ...nodeParams,
-              __params: params,
-            },
-          })
           actions.createPage({
             path: path,
             component: absolutePath,
@@ -123,10 +113,6 @@ export function createPagesFromChangedNodes(
           })
 
           if (pathForANewNode !== pathForOldNode) {
-            console.log(`deleting page`, {
-              path: pathForOldNode,
-              component: absolutePath,
-            })
             actions.deletePage({
               path: pathForOldNode,
               component: absolutePath,
@@ -139,14 +125,6 @@ export function createPagesFromChangedNodes(
             // nodeParams is fed to the graphql query for the component
             const nodeParams = reverseLookupParams(node as any, absolutePath)
 
-            console.log(`creating page`, {
-              path: pathForANewNode,
-              component: absolutePath,
-              context: {
-                ...nodeParams,
-                __params: params,
-              },
-            })
             actions.createPage({
               path: pathForANewNode,
               component: absolutePath,

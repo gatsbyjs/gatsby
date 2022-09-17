@@ -104,8 +104,6 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   let derivePathErrors = 0
 
   // Start listening for changes to this type
-  console.log({ pagesPath })
-
   const pluginInstance = getPluginInstance({ path: pagesPath })
   const nodeType = extractModel(absolutePath)
 
@@ -115,10 +113,6 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     pluginInstance.trackedTypes.set(nodeType, listOfTemplateFilePaths)
   }
   listOfTemplateFilePaths.add(absolutePath)
-
-  console.log(
-    `creating ${nodes.length} pages for ${extractModel(absolutePath)}`
-  )
 
   const knownPagePaths = new Set<string>()
 
