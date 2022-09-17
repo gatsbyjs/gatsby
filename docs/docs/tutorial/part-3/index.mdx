@@ -3,9 +3,9 @@ title: "Part 3: Add Features with Plugins"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
 import { MdArrowForward } from 'react-icons/md'
+import { LinkButton } from "gatsby-interface"
 
 ## Introduction
 
@@ -19,7 +19,7 @@ By the end of this part of the Tutorial, you will be able to:
 * Add a plugin to your Gatsby site.
 * Configure your plugins in your `gatsby-config.js` file.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Prefer a video?**
 
@@ -64,6 +64,7 @@ In your terminal, run the following command (swapping out `plugin-name` for the 
 ```shell
 npm install plugin-name
 ```
+
 Depending on what plugin you're using, there might be more dependencies that you also need to install. Check the specific plugin's README in the plugin library for more details.
 
 #### 2) Configure the plugin in your `gatsby-config.js` file.
@@ -100,7 +101,7 @@ module.exports = {
 }
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** After you make updates to your `gatsby-config.js` file, you'll need to restart your `gatsby develop` process for your changes to be picked up.
 
@@ -130,7 +131,7 @@ Follow the steps below to use the `StaticImage` component to add an image from a
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 The `StaticImage` component requires a few additional plugins to work. These extra plugins are called **peer dependencies**, and you'll need to install them along with the `gatsby-plugin-image` package:
 
@@ -157,13 +158,14 @@ module.exports = {
 };
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Key Gatsby Concept** 💡
 
 The `gatsby-config.js` file is a special file that Gatsby recognizes automatically. It's where you add plugins and other site configuration.
 
 After you update your `gatsby-config.js` file, your local development server has to restart in order to pick up the new changes. Sometimes it will restart itself automatically, but if you're seeing unexpected behavior, try stopping and restarting it yourself.
+
 </Announcement>
 
 3. Now that your plugins have been installed and configured, you can use the `StaticImage` component in your Gatsby site! You can use the `StaticImage` component similarly to the way you'd use an HTML `<img>` tag.
@@ -203,7 +205,7 @@ export default IndexPage
 
 ![The home page of your site, which now includes a picture of a dog.](./index-page-with-static-image-from-url.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 Nothing at `localhost:8000`? Make sure your local development server is still running!
 
@@ -221,6 +223,7 @@ You can also use the `StaticImage` component to render images from your local fi
 
 1. Download a photo to your computer, and move it into your project folder. To keep things organized, put it in the `src/images` directory.
 2. Update the `src` prop in your home page to be a relative path to your file instead of a URL. (Make sure it matches the name of your image!) Don't forget to update the `alt` prop to describe your image!
+
 ```js:title=src/pages/index.js
 import * as React from 'react'
 import Layout from '../components/layout'
@@ -244,11 +247,12 @@ export const Head = () => <title>Home Page</title>
 
 export default IndexPage
 ```
+
 3. In your web browser, go to `localhost:8000`. Your image should still appear on the home page.
 
 ![The home page of your site, which includes a different picture of a dog.](./index-page-with-static-image-from-filesystem.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
@@ -261,7 +265,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 * What is the benefit to using a plugin in your Gatsby site?
 * How would you add a new plugin to your Gatsby site?
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Ship It!** 🚀
 
@@ -286,7 +290,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 - The general process for using a plugin is to install it, configure it in your `gatsby-config.js` file, and then use it in your site as needed.
 - You can use the [Gatsby Plugin Library](https://www.gatsbyjs.com/plugins) to browse all the available plugins and learn more about how each one works.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

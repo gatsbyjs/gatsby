@@ -3,9 +3,9 @@ title: "Part 0: Set Up Your Development Environment"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
 import { MdArrowForward } from 'react-icons/md'
+import { LinkButton } from "gatsby-interface"
 
 ## Introduction
 
@@ -23,8 +23,10 @@ By the end of this part of the Tutorial, you will:
 
 The Tutorial is intended to be as approachable as possible for people who are new to Gatsby and React. With that said, if you are brand new to web development (welcome!), you might find it helpful to learn some fundamentals first.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
-Don't worry, you don't need to be an expert with these! A high-level understanding of the basics should be enough. You'll pick up a lot through the course of the Tutorial.
+<Announcement>
+  Don't worry, you don't need to be an expert with these! A high-level
+  understanding of the basics should be enough. You'll pick up a lot through the
+  course of the Tutorial.
 </Announcement>
 
 * **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. You use HTML to add structure to your web content, defining things like headings, paragraphs, and more.
@@ -93,7 +95,7 @@ brew -v
 xcode-select --install
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account.
 
@@ -110,7 +112,7 @@ If that fails, download it [directly from Apple's site](https://developer.apple.
 brew install node
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
@@ -132,7 +134,7 @@ Download and install the latest Node.js version from [the official Node.js websi
 
 Install nvm (Node Version Manager) and needed dependencies. nvm is used to manage Node.js and all its associated versions.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 When installing a package, if it asks for confirmation, type `y` and press enter.
 
@@ -144,7 +146,7 @@ Select your distro:
 - [Arch, Manjaro and other pacman based distros](#arch-manjaro-and-other-pacman-based-distros)
 - [Fedora, RedHat, and other dnf based distros](#fedora-redhat-and-other-dnf-based-distros)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 If the Linux distribution you are using is not listed here, please find instructions on the web.
 
@@ -255,7 +257,6 @@ The steps to download and install Git depend on your operating system. Follow th
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
 - [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
-
 ### Gatsby CLI
 
 The Gatsby command line interface (CLI) is a tool that lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites.
@@ -268,7 +269,7 @@ Install the Gatsby CLI globally by running the command below. (Have an older ver
 npm install -g gatsby-cli
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** When you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands. You can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry).
 
@@ -288,9 +289,9 @@ gatsby --help
 
 ![Check Gatsby commands in terminal](05-gatsby-help.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
-**Troubleshooting**
+#### Troubleshooting
 
 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
@@ -315,7 +316,7 @@ In this Tutorial, you will deploy your site using Gatsby Cloud. To use Gatsby Cl
 
 Now that you have all the knowledge and tools you'll need, you're ready for the Tutorial!
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

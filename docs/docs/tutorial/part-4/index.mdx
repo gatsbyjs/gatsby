@@ -2,9 +2,9 @@
 title: "Part 4: Query for Data with GraphQL"
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
 import { MdArrowForward } from 'react-icons/md'
+import { LinkButton } from "gatsby-interface"
 
 ## Introduction
 
@@ -14,7 +14,7 @@ So far, you've been writing text and adding images directly in your React compon
 
 Conveniently, Gatsby has a powerful feature called the **data layer** that you can use to pull data into your site from anywhere. Want to keep your blog posts in WordPress, your store products in Shopify, and your user data in Airtable? No problem! With Gatsby's data layer, you can combine data from multiple sources, which lets you choose the best platform for each type of data.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 Gatsby's data layer is powered by a technology called **GraphQL**. GraphQL is a query language with a special syntax that lets you ask for the data you need inside a component.
 
@@ -32,7 +32,7 @@ By the end of this part of the Tutorial, you will be able to:
 - Use the **`gatsby-source-filesystem`** plugin to pull data into your site from your computer's filesystem.
 - Create a **page query** to pull data into a page component.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Prefer a video?**
 
@@ -52,7 +52,7 @@ First, your data is stored in one or more **sources**. That source might be a fo
 
 How do you get data from its source into the data layer? By adding a type of plugin to your site called a **source plugin**. Each source plugin is designed to communicate with a specific source. When you build your site, each source plugin pulls data from its particular source and adds it to your site's GraphQL data layer.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Tip:** Curious what source plugins are in the [Plugin Library](/plugins/)? You can identify source plugins by their name: they typically start with `gatsby-source-`.
 
@@ -62,9 +62,7 @@ For example, a few popular source plugins are `gatsby-source-filesystem` and `ga
 
 How do you get data back out of the data layer? You can write **GraphQL queries** inside of your components to pull out the data you want to use in your site. When you build your site, Gatsby will find all the GraphQL queries in your components, run them, and put the resulting data in your component.
 
-
 ![A diagram showing how data flows into and out of the GraphQL data layer. Source plugins pull data out of a particular data source and into the data layer for your site. GraphQL queries to pull data out of the data layer and into your React components.](./data-layer.png)
-
 
 ## Use GraphiQL to explore the data layer and write GraphQL queries
 
@@ -137,7 +135,7 @@ Since you don't need to set up a source plugin, you can jump straight into Graph
 2. In the Explorer pane, open the dropdown for the `site` field.
 3. Within the `site` field, open the *second* dropdown for the `siteMetadata` field (the blue one). This corresponds to the `siteMetadata` object in your `gatsby-config.js` file.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Seeing Double?**
 
@@ -152,6 +150,7 @@ Try toggling each of the dropdowns in the Explorer and see how the query in the 
 </Announcement>
 
 4. Within `siteMetadata`, check the box next to the `title` field. The query in your query editor should look like this:
+
 ```graphql
 query MyQuery {
   site {
@@ -161,7 +160,9 @@ query MyQuery {
   }
 }
 ```
+
 5. Click the Execute Query button (the "play" triangle at the top of the page) to run the query. The response in the Result Window should look something like the object below. Notice how the structure of the `data` object in the response matches the structure of the fields in the query.
+
 ```json
 {
   "data": {
@@ -245,7 +246,7 @@ const Header = () => {
 export default Header
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** You can only call `useStaticQuery` once per file. If you need multiple fields, you can add them all into a single query.
 
@@ -265,6 +266,7 @@ const data = useStaticQuery(graphql`
   }
 `)
 ```
+
 </Announcement>
 
 </Collapsible>
@@ -295,7 +297,7 @@ export default Layout
 
 2. Call `useStaticQuery` and pass it the query you created in GraphiQL. Be sure to use the `graphql` tag so Gatsby knows that the string you're passing in is a GraphQL query. Store the return value from `useStaticQuery` in a variable.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
 
@@ -333,7 +335,7 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** If you add a line to print out the value of your `data` variable to the console, you'll see that the response has a slightly different structure from what it looked like in GraphiQL's Result Window. Specifically, your `data` variable will only contain the object that matches the `data` field in the Result Window.
 
@@ -568,7 +570,7 @@ export const Head = () => <Seo title="About Me" />
 
 After going through this tutorial, be sure to check out [Adding an SEO Component](/docs/how-to/adding-common-features/adding-seo-component/) for a more detailed explanation.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Pro Tip:** `useStaticQuery` lends itself really well when creating small, reusable React components. You can even create custom React hooks, for example:
 
@@ -602,7 +604,6 @@ So far, your site has a few static landing pages: the Home page and the About pa
 Eventually, your blog page will link to separate pages for each of your posts. But there's a lot to learn to achieve that, so you'll be working up to that goal over the next few parts of the Tutorial (Parts 4, 5, and 6).
 
 In this part, you'll create a blog page that lists the filenames for your posts.
-
 
 ### Task: Create a new blog page
 
@@ -697,7 +698,7 @@ Now that you have a blog page, it's time to create some blog posts! For your sit
 
 Now that you have some posts saved to your local filesystem, it's time to pull those files into the Gatsby data layer. To do that, you'll use a plugin called `gatsby-source-filesystem`.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** Remember the process for adding a plugin to your site from [Part 3](/docs/tutorial/part-3)? The first step was to **install** the plugin.
 
@@ -734,7 +735,7 @@ module.exports = {
 };
 ```
 
-<Announcement style={{ marginBottom: "1.5rem" }}>
+<Announcement>
 
 **A closer look at the configuration options:**
 
@@ -879,7 +880,7 @@ export default BlogPage
 
 2. Define and export your page query. Copy over the query you built in GraphiQL.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
 
@@ -920,7 +921,7 @@ export default BlogPage
 
 3. Add in the `data` prop to the function definition. Then replace the placeholder `<p>` element with a list of the filenames for your posts. Use the JavaScript array `.map()` method to iterate over the `nodes` array and render the filename for each post.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Syntax Hint:** In JavaScript, arrays have a built-in [`.map()` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), which you can use to iterate over the elements in the array.
 
@@ -969,7 +970,7 @@ export const Head = () => <Seo title="My Blog Posts" />
 export default BlogPage
 ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Pro Tip:** The Gatsby Head API and its `Head` export also receives the `data` prop. This isn't directly obvious when using the component unless your IDE gives autocompletion or hints. If you're unsure how to use an API, head over to the [reference guides](/docs/reference) for instructions. There you'll find guides like [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
 
@@ -993,7 +994,7 @@ Good job! You've finished the first step of your new blog page.
 
 You won't be able to render the contents of your posts just yet, since your site doesn't know how to process MDX. You'll fix that in the next part of the Tutorial!
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
@@ -1008,7 +1009,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 * How do you get data out of the data layer?
 * What are the differences between a page query and `useStaticQuery`? How would you decide which one to use?
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Ship It!** 🚀
 
@@ -1048,7 +1049,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 </Collapsible>
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

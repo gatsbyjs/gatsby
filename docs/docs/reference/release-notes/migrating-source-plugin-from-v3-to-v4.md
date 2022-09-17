@@ -2,8 +2,6 @@
 title: Upgrade Your Source Plugins for Gatsby 4
 ---
 
-import { Announcement } from "gatsby-interface"
-
 Gatsby 4 is here! Following on the heels of Gatsby 3, Gatsby 4 further improves build performance and introduces new parallel processing capabilities. In the guide below, we'll walk you through preparing your source plugin for Gatsby 4. You'll find this guide useful if you are a maintainer for a source plugin (as opposed to a consumer using a source plugin in your Gatsby site).
 
 Introducing support for Gatsby 4 in your source plugin can be accomplished by ensuring your code adopts the 4 following changes. Many plugins already had the majority of their code organized the way it needed to be!
@@ -12,7 +10,7 @@ With Gatsby 4, Core APIs are being split into different processes so they're abl
 
 It's time to get into it! The rest of this guide outlines the breaking changes in Gatsby 4 and some quick ways to resolve them. Find something confusing? Let us know in the [GitHub discussion](https://github.com/gatsbyjs/gatsby/discussions/33199) and we'll respond as fast as possible.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Looking for examples of source plugins that support Gatsby 4?** Check out [`gatsby-source-wordpress`](/plugins/gatsby-source-wordpress/) and [`gatsby-source-shopify`](/plugins/gatsby-source-shopify/).
 

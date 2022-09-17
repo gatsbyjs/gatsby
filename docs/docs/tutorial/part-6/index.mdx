@@ -2,9 +2,9 @@
 title: "Part 6: Create Pages Programmatically"
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
 import { MdArrowForward } from 'react-icons/md'
+import { LinkButton } from "gatsby-interface"
 
 ## Introduction
 
@@ -20,7 +20,7 @@ By the end of this part of the Tutorial, you will be able to:
 - Render the contents of each blog post.
 - Add a query variable to a page query.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Prefer a video?**
 
@@ -111,7 +111,7 @@ You added the information you need to your frontmatter already. If you check the
 
 That looks like a good format for a URL!
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** In this case, the `slug` field is a good choice because it's human readable, which means the URLs for your blog posts will be easier for users to understand. But you can use any field in your routes, even if it contains special characters or whitespace, as Gatsby will ["slugify"](/docs/reference/routing/file-system-route-api/#routing-and-linking) every route when using the File System Route API. For example, `I ♥ Dogs` will be converted to `i-love-dogs`.
 
@@ -143,6 +143,7 @@ When you build your site, Gatsby looks at the page components in your `src/pages
 1. Create a new file in your `src/pages` directory called `{mdx.frontmatter__slug}.js`. This will be the file for your blog post page template.
 
 2. Create a basic page component in your new `{mdx.frontmatter__slug}.js` file. For now, add in the `Layout` component, but hard code the page title and page contents. (You'll make those dynamic later on.)
+
     ```js:title=src/pages/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import Layout from '../components/layout'
@@ -165,7 +166,7 @@ When you build your site, Gatsby looks at the page components in your `src/pages
 
 ![A screenshot of the blog post template page in a web browser. The page title says, "Super Cool Blog Posts," and the post contents have a paragraph element that says, "My blog post contents will go here (eventually)."](./post-page-template-hardcoded.png)
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Pro Tip:** Not sure which pages were created? Check out the 404 page when you run `gatsby develop`. (You can get to it by trying to access the URL for a page that doesn't exist.) The bottom of the page lists the routes for all the pages Gatsby created for your site.
 
@@ -203,6 +204,7 @@ When Gatsby builds the pages for your site, it creates routes based on the folde
 1. Create a new folder in your `src/pages` directory, and call it `blog`.
 
 2. Move the `src/pages/{mdx.frontmatter__slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` component to reflect the new folder structure:
+
     ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import Layout from '../../components/layout' // highlight-line
@@ -213,7 +215,7 @@ When Gatsby builds the pages for your site, it creates routes based on the folde
 3. Once your local development server rebuilds your site, check in a web browser that the paths to your blog posts have updated.
     * For example, you should now have a page at `localhost:8000/blog/my-first-post`, and trying to access `localhost:8000/my-first-post` (without the `blog` path parameter) should send you to the 404 page.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Pro Tip:** Gatsby caches information about your site as it builds it, to make subsequent builds faster. But sometimes, when you make changes to your site, you'll need to empty the cache for your changes to show up.
 
@@ -324,7 +326,7 @@ When you use Gatsby's File System Route API, it automatically adds some props in
 
 Under the hood, Gatsby makes both of these values available to use as query variables in your page queries.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Want to take a closer look?**
 
@@ -359,7 +361,7 @@ The keys in the `pageContext` object get added when you create a page using the 
     }
     ```
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Tip:** If you want to test out your query in GraphiQL, you'll need to add an `id` key to the Query Variables section. You can copy one of the `id` values from running an `allMdx` query in GraphiQL.
 
@@ -409,6 +411,7 @@ The JSON object in the Query Variables section should look something like the on
     ```
 
 3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. It also passes `data` to the Gatsby Head API. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. The actual MDX content, ready to render, will be passed as a `children` prop to the page component.
+
     ```js:title=src/pages/blog/{mdx.frontmatter__slug}.js
     import * as React from 'react'
     import { graphql } from 'gatsby'
@@ -509,12 +512,11 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering an e
 
 Congratulations, you now have a multi-page blog site! Try adding some new `.mdx` files to your top-level `blog` directory. They should get added to your Blog page automatically when your site rebuilds!
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
-
 
 ## Summary
 
@@ -525,7 +527,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 * What is a query variable?
 * When can you use a query variable?
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Ship It!** 🚀
 
@@ -551,7 +553,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 * Query variables let you pass in different data values to the same GraphQL query. They can be combined with field arguments to get back data only about a specific node.
 * Query variables can only be used in page queries.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Share Your Feedback!**
 

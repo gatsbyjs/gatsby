@@ -2,8 +2,6 @@
 title: Using Gatsby For E-commerce
 ---
 
-import { Announcement } from "gatsby-interface"
-
 Businesses selling products online typically need a variety of software to support their experience. At a minimum, their website needs product pages, product catalog navigation, a shopping cart, and checkout.
 
 Most have additional functionality like customer account creation, promotions, discounts, and loyalty, customer reviews, tax calculation, user tracking via analytics, and content personalization.
@@ -42,7 +40,7 @@ E-commerce tends to have a number of specific requirements. When building a Gats
 
 ## Additional resources:
 
-<Announcement style={{ marginBottom: "1.5rem" }}>
+<Announcement>
 
 Check out our [e-commerce demo](https://shopify-demo.gatsbyjs.com/) built with our Shopify Starter, a proof of concept showcasing 10,000 products and 30,000 SKUs (variants).
 Clone our Shopify Starter, host it on Gatsby and connect it to your own Shopify data to develop your own proof of concept in as little as an hour.

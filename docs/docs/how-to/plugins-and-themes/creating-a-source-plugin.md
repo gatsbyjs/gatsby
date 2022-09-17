@@ -3,8 +3,6 @@ title: "Creating a Source Plugin"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement } from "gatsby-interface"
-
 In this tutorial, you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
 
 ## What is a source plugin?
@@ -555,7 +553,7 @@ if (fileNode) {
 
 By using [`createNodeField`](/docs/reference/config-files/actions/#createNodeField) you're extending the existing node and place a new field named `localFile` under the `fields` key.
 
-<Announcement style={{marginBottom: "1.5rem"}}>
+<Announcement>
 
 **Note:** Do not mutate the `node` directly and use `createNodeField` instead. Otherwise the change won't be persisted and you might see inconsistent data. This behavior changed with Gatsby 4, read the [migration guide](/docs/reference/release-notes/migrating-from-v3-to-v4/#dont-mutate-nodes-outside-of-expected-apis) to learn more.
 
