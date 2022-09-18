@@ -1,3 +1,4 @@
+import { globalTracer, Span } from "opentracing"
 import {
   ParentMessageUnion,
   ChildMessageUnion,
@@ -9,6 +10,7 @@ import {
   WORKER_READY,
 } from "./types"
 import { isPromise } from "./utils"
+import { initTracer } from "./tracer"
 
 export interface IGatsbyWorkerMessenger<
   MessagesFromParent = unknown,
@@ -33,6 +35,47 @@ let getMessenger = function <
 if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
   isWorker = true
   const listeners: Array<(msg: any) => void> = []
+  const startedSpans = new Set<Span>()
+
+  type Deserializer = (value: any, root: string) => any
+
+  function SpanPlaceholderForTags(value: any): any {
+    const span = globalTracer().extract(`text_map`, value)
+
+    if (span) {
+      return `Span`
+    }
+  }
+
+  function ExtractSpanAndGenerateWrapper(value: any, root: string): any {
+    const span = globalTracer().extract(`text_map`, value)
+
+    if (span) {
+      const workerExecuteSpan = globalTracer().startSpan(`worker execute`, {
+        childOf: span,
+        tags: {
+          workerId: process.env.GATSBY_WORKER_ID,
+          args: deserializeArgsFromIPC(root, { Span: SpanPlaceholderForTags }),
+        },
+      })
+      startedSpans.add(workerExecuteSpan)
+      return workerExecuteSpan
+    }
+  }
+
+  function deserializeArgsFromIPC(
+    args: string,
+    { Span }: { Span: Deserializer }
+  ): Array<any> {
+    return JSON.parse(args, function (_key, value) {
+      if (typeof value === `object` && value && value.___srlztn === `Span`) {
+        return Span(value, args)
+      }
+
+      return value
+    })
+  }
+
   const ensuredSendToMain = process.send.bind(process) as (
     msg: ChildMessageUnion
   ) => void
@@ -41,6 +84,11 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
     if (error == null) {
       error = new Error(`"null" or "undefined" thrown`)
     }
+
+    for (const startedSpan of startedSpans) {
+      startedSpan.finish()
+    }
+    startedSpans.clear()
 
     const msg: ChildMessageUnion = [
       ERROR,
@@ -54,6 +102,11 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
   }
 
   function onResult(result: unknown): void {
+    for (const startedSpan of startedSpans) {
+      startedSpan.finish()
+    }
+    startedSpans.clear()
+
     const msg: ChildMessageUnion = [RESULT, result]
     ensuredSendToMain(msg)
   }
@@ -82,7 +135,10 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
     if (msg[0] === EXECUTE) {
       let result
       try {
-        result = child[msg[1]].call(child, ...msg[2])
+        const args = deserializeArgsFromIPC(msg[2], {
+          Span: ExtractSpanAndGenerateWrapper,
+        })
+        result = child[msg[1]].call(child, ...args)
       } catch (e) {
         onError(e)
         return
@@ -104,7 +160,9 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
 
   process.on(`message`, messageHandler)
 
-  ensuredSendToMain([WORKER_READY])
+  initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``).then(() => {
+    ensuredSendToMain([WORKER_READY])
+  })
 }
 
 export { isWorker, getMessenger }

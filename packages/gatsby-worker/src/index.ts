@@ -1,4 +1,5 @@
 import { fork, ChildProcess } from "child_process"
+import { Span } from "opentracing"
 
 import { TaskQueue } from "./task-queue"
 import {
@@ -13,12 +14,22 @@ import {
 } from "./types"
 
 interface IWorkerOptions {
-  // number of workers to spawn, defaults to 1
+  /**
+   * number of workers to spawn, defaults to 1
+   */
   numWorkers?: number
-  // environmental variables specific to the worker(s)
+  /**
+   * environmental variables specific to the worker(s)
+   */
   env?: Record<string, string>
-  // whether or not output should be ignored
+  /**
+   * whether or not output should be ignored
+   */
   silent?: boolean
+  /**
+   *
+   */
+  parentSpan?: Span
 }
 
 type WrapReturnOfAFunctionInAPromise<
@@ -172,6 +183,17 @@ export class WorkerPool<
   private startAll(): void {
     const options = this.options
     for (let workerId = 1; workerId <= (options?.numWorkers ?? 1); workerId++) {
+      let startupSpan: Span | undefined
+      if (this.options?.parentSpan) {
+        startupSpan = this.options.parentSpan
+          .tracer()
+          .startSpan(`worker startup`, {
+            childOf: this.options.parentSpan,
+            tags: {
+              workerId,
+            },
+          })
+      }
       const worker = fork(childWrapperPath, {
         cwd: process.cwd(),
         env: {
@@ -255,6 +277,7 @@ export class WorkerPool<
           }
         } else if (msg[0] === WORKER_READY) {
           workerReadyResolve()
+          startupSpan?.finish()
         }
       })
 
@@ -343,7 +366,21 @@ export class WorkerPool<
     const msg: ParentMessageUnion = [
       EXECUTE,
       taskInfo.functionName,
-      taskInfo.args,
+      JSON.stringify(taskInfo.args, function serializeArgsForIPC(_key, value) {
+        // if value represents a Span, it won't be instance of Span class exported by OpenTracing
+        // instead it will be
+
+        if (value?.constructor?.name === `Span`) {
+          const carrier = {
+            ___srlztn: `Span`,
+          }
+          value.tracer().inject(value, `text_map`, carrier)
+          console.log(`carrier`, carrier)
+          return carrier
+        }
+
+        return value
+      }),
     ]
     workerInfo.worker.send(msg)
   }
