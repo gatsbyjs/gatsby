@@ -86,6 +86,24 @@ exports.createPages = async ({ actions }) => {
 
 Gatsby does not support nested Slices. This means if you have a high level `<Layout>` component as a slice, other Slices cannot exist within that `<Layout>` component anywhere in the tree.
 
+### `useLocation`
+
+The `useLocation` hook from `reach-router` cannot be used in Slices. If used, an error will be thrown that reads:
+
+> `useLocation` hook was used but a `LocationContext.Provider` was not found in the parent tree. Make sure this is used in a component that is a child of Router.
+
+To work around this error, call `useLocation` in the parent component and pass it as a prop to the Slice:
+
+```js
+export function MyImage() {
+  const location = useLocation()
+
+  // `image` ends up being a string when passed to Slice
+  // highlight-next-line
+  return <Slice alias="my-image" location={location} />
+}
+```
+
 ### Props
 
 #### `alias`
@@ -128,6 +146,19 @@ export function MyImage() {
 #### `children`
 
 The children prop does not have any restrictions and can be used in typical fashion.
+
+```js
+// OK
+
+export function MyImage() {
+  return (
+    <Slice alias="my-image">
+      // highlight-next-line
+      <p>// highlight-next-line I am a caption, neat! // highlight-next-line</p>
+    </Slice>
+  )
+}
+```
 
 #### Others
 
