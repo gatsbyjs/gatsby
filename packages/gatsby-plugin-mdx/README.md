@@ -666,7 +666,38 @@ However, we'd recommend placing such files into the `src/pages` directory and `g
 1. Instead of querying for the `body` on the MDX node, the page template now receives the transformed MDX as `children` property.
 1. You no longer need to use `<MDXRenderer>` as you can use `{children}` directly.
 
-````
+```diff
+import React from "react"
+import { graphql } from "gatsby"
+- import { MDXRenderer } from "gatsby-plugin-mdx"
+
+- function PostTemplate({ data: { mdx } }) {
++ function PostTemplate({ data: { mdx }, children }) {
+
+  return (
+    <main>
+      <h1>{mdx.frontmatter.title}</h1>
+-     <MDXRenderer>
+-       {mdx.body}
+-     </MDXRenderer>
++     {children}
+    </main>
+  )
+}
+
+ export const pageQuery = graphql`
+  query PostTemplate($id: String!) {
+    mdx(id: { eq: $id }) {
+      frontmatter {
+        title
+      }
+-     body
+    }
+  }
+`
+
+export default PostTemplate
+```
 
 ### Updating MDX content
 
@@ -681,7 +712,7 @@ In our testing, most of the time the issue were curly brackets that needed to be
 ```diff
 - You can upload this to Git{Hub,Lab}
 + You can upload this to `Git{Hub,Lab}`
-````
+```
 
 ### Updating MDX nodes
 
