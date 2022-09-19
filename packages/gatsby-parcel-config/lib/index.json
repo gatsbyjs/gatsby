@@ -6,6 +6,7 @@
     ]
   },
   "namers": ["@gatsbyjs/parcel-namer-relative-to-cwd", "@parcel/namer-default"],
+  "runtimes": ["@parcel/runtime-js"],
   "optimizers": {
     "*.{js,mjs,cjs}": ["@parcel/optimizer-terser"]
   },
