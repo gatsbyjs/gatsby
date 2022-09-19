@@ -98,7 +98,6 @@ To work around this error, call `useLocation` in the parent component and pass i
 export function MyImage() {
   const location = useLocation()
 
-  // `image` ends up being a string when passed to Slice
   // highlight-next-line
   return <Slice alias="my-image" location={location} />
 }
