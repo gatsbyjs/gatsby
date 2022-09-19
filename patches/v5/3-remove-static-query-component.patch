@@ -1,0 +1,12 @@
+diff --git a/packages/gatsby/cache-dir/gatsby-browser-entry.js b/packages/gatsby/cache-dir/gatsby-browser-entry.js
+index 77fb3a5a20..91729247d4 100644
+--- a/packages/gatsby/cache-dir/gatsby-browser-entry.js
++++ b/packages/gatsby/cache-dir/gatsby-browser-entry.js
+@@ -22,6 +22,6 @@ export {
+ } from "gatsby-link"
+ 
+ export { graphql, prefetchPathname }
+-export { StaticQuery, StaticQueryContext, useStaticQuery } from "./static-query"
++export { StaticQueryContext, useStaticQuery } from "./static-query"
+ 
+ export * from "gatsby-script"
