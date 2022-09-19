@@ -775,13 +775,12 @@ const errors = {
         context.path ? ` for path "${context.path}"` : ``
       }
 
-      This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers
-      are used in a component without declaring the "client export" directive at the top of the file.
+      This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers are used in a component without declaring the "client export" directive at the top of the file.
       
-      Consider adding "client export" to the top of your file if your component is interactive,
-      otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
+      Consider adding "client export" to the top of your file if your component is interactive, otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
     `),
     level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
     category: ErrorCategory.USER,
   },
 }
