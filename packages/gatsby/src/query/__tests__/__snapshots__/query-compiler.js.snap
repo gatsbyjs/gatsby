@@ -20,6 +20,7 @@ Map {
           id
         }",
     "path": "mockFile",
+    "templatePath": "mockFile",
     "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -51,6 +52,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -85,6 +87,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -115,6 +118,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
@@ -142,6 +146,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
@@ -209,6 +214,7 @@ Map {
             }
           }",
     "path": "mockFile",
+    "templatePath": "mockFile",
     "text": "query mockFileQuery {
   allPostsJson {
     nodes {
@@ -236,6 +242,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
   ...AnotherPostsJsonFragment
@@ -279,6 +286,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }

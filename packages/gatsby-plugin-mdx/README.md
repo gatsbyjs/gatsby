@@ -665,7 +665,6 @@ However, we'd recommend placing such files into the `src/pages` directory and `g
 
 1. Instead of querying for the `body` on the MDX node, the page template now receives the transformed MDX as `children` property.
 1. You no longer need to use `<MDXRenderer>` as you can use `{children}` directly.
-1. If you have given your query a name (e.g. `query PostTemplate`) you have to remove the name. Gatsby automatically creates a name internally, but if a name is provided you'll see a "Duplicate query" warning.
 
 ```diff
 import React from "react"
@@ -686,9 +685,8 @@ import { graphql } from "gatsby"
   )
 }
 
-export const pageQuery = graphql`
--  query PostTemplate($id: String!) {
-+  query ($id: String!) {
+ export const pageQuery = graphql`
+  query PostTemplate($id: String!) {
     mdx(id: { eq: $id }) {
       frontmatter {
         title
