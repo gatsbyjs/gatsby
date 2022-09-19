@@ -23,14 +23,8 @@
     "@parcel/packager-raw": "2.6.2",
     "@parcel/reporter-dev-server": "2.6.2",
     "@parcel/resolver-default": "2.6.2",
-    "@parcel/runtime-browser-hmr": "2.6.2",
     "@parcel/runtime-js": "2.6.2",
-    "@parcel/runtime-react-refresh": "2.6.2",
-    "@parcel/runtime-service-worker": "2.6.2",
-    "@parcel/transformer-js": "2.6.2",
-    "@parcel/transformer-json": "2.6.2",
-    "@parcel/transformer-raw": "2.6.2",
-    "@parcel/transformer-react-refresh-wrap": "2.6.2"
+    "@parcel/transformer-js": "2.6.2"
   },
   "peerDependencies": {
     "@parcel/core": "^2.0.0"
