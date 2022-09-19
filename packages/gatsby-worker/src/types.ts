@@ -7,7 +7,7 @@ export const WORKER_READY = 0b1000
 
 type CustomMessage = [typeof CUSTOM_MESSAGE, unknown]
 
-type FunctionName = string | number | symbol
+type FunctionName = string
 type FunctionArgs = string
 
 type ExecuteMessage = [typeof EXECUTE, FunctionName, FunctionArgs]

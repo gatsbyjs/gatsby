@@ -37,7 +37,11 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
   const listeners: Array<(msg: any) => void> = []
   const startedSpans = new Set<Span>()
 
-  type Deserializer = (value: any, root: string) => any
+  type Deserializer = (
+    value: any,
+    root: string,
+    tags?: Record<string, string>
+  ) => any
 
   function SpanPlaceholderForTags(value: any): any {
     const span = globalTracer().extract(`text_map`, value)
@@ -47,7 +51,11 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
     }
   }
 
-  function ExtractSpanAndGenerateWrapper(value: any, root: string): any {
+  function ExtractSpanAndGenerateWrapper(
+    value: any,
+    root: string,
+    tags?: Record<string, string>
+  ): any {
     const span = globalTracer().extract(`text_map`, value)
 
     if (span) {
@@ -55,6 +63,7 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
         childOf: span,
         tags: {
           workerId: process.env.GATSBY_WORKER_ID,
+          ...(tags ?? {}),
           args: deserializeArgsFromIPC(root, { Span: SpanPlaceholderForTags }),
         },
       })
@@ -65,11 +74,11 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
 
   function deserializeArgsFromIPC(
     args: string,
-    { Span }: { Span: Deserializer }
+    { Span, tags }: { Span: Deserializer; tags?: Record<string, string> }
   ): Array<any> {
     return JSON.parse(args, function (_key, value) {
       if (typeof value === `object` && value && value.___srlztn === `Span`) {
-        return Span(value, args)
+        return Span(value, args, tags)
       }
 
       return value
@@ -137,6 +146,9 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
       try {
         const args = deserializeArgsFromIPC(msg[2], {
           Span: ExtractSpanAndGenerateWrapper,
+          tags: {
+            workerFunction: msg[1],
+          },
         })
         result = child[msg[1]].call(child, ...args)
       } catch (e) {
