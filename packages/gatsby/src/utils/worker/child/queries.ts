@@ -17,6 +17,11 @@ import {
 } from "../../../redux/types"
 import { DeepPartial } from "redux"
 import { waitUntilPageQueryResultsAreStored } from "../../page-data"
+import { Span } from "opentracing"
+
+interface IRunQueriesInWorkersQueueOpts {
+  parentSpan?: Span
+}
 
 export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
@@ -61,7 +66,8 @@ type ActionsToReplay = Array<
 >
 
 export async function runQueries(
-  queryIds: IGroupedQueryIds
+  queryIds: IGroupedQueryIds,
+  opts: IRunQueriesInWorkersQueueOpts = {}
 ): Promise<ActionsToReplay> {
   const actionsToReplay: ActionsToReplay = []
 
@@ -79,19 +85,22 @@ export async function runQueries(
   })
 
   try {
-    await doRunQueries(queryIds)
+    await doRunQueries(queryIds, opts)
     return actionsToReplay
   } finally {
     unsubscribe()
   }
 }
 
-async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
+async function doRunQueries(
+  queryIds: IGroupedQueryIds,
+  { parentSpan }: IRunQueriesInWorkersQueueOpts
+): Promise<void> {
   const workerStore = store.getState()
 
   // If buildSchema() didn't run yet, execute it
   if (workerStore.schemaCustomization.composer === null) {
-    await buildSchema()
+    await buildSchema({ parentSpan })
   }
 
   const graphqlRunner = getGraphqlRunner()
@@ -100,12 +109,14 @@ async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
     queryIds,
     store,
     graphqlRunner,
+    parentSpan,
   })
 
   await runPageQueries({
     queryIds,
     store,
     graphqlRunner,
+    parentSpan,
   })
 
   await getDataStore().ready()

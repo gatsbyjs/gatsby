@@ -17,6 +17,7 @@ import {
   WorkerError,
 } from "./types"
 import { requireGatsbyPlugin } from "../require-gatsby-plugin"
+import { getBuildSpan } from "../tracer"
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
@@ -272,7 +273,9 @@ export async function enqueueJob(
   // Bump active jobs
   activeJobs++
   if (!activityForJobs) {
-    activityForJobs = reporter.phantomActivity(`Running jobs v2`)
+    activityForJobs = reporter.phantomActivity(`Running jobs v2`, {
+      parentSpan: getBuildSpan(),
+    })
     activityForJobs!.start()
   }
 
@@ -284,7 +287,10 @@ export async function enqueueJob(
     activityForJobsProgress = reporter.createProgress(
       `Running ${jobType} jobs`,
       1,
-      0
+      0,
+      {
+        parentSpan: getBuildSpan(),
+      }
     )
     activityForJobsProgress.start()
     activitiesForJobTypes.set(jobType, activityForJobsProgress)

@@ -14,7 +14,7 @@ import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
-import { initTracer, stopTracer } from "../utils/tracer"
+import { initTracer, setBuildSpan, stopTracer } from "../utils/tracer"
 import * as db from "../redux/save-state"
 import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
@@ -108,6 +108,7 @@ module.exports = async function build(
 
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
+  setBuildSpan(buildActivity.span)
 
   telemetry.trackCli(`BUILD_START`)
   signalExit(exitCode => {

@@ -2,7 +2,7 @@ import { WorkerPool } from "gatsby-worker"
 import reporter from "gatsby-cli/lib/reporter"
 // import { cpuCoreCount } from "gatsby-core-utils"
 import { initTracer, stopTracer } from "./utils/tracer"
-import { Span } from "opentracing"
+// import { Span } from "opentracing"
 
 async function run(): Promise<void> {
   await initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``)
@@ -23,7 +23,7 @@ async function run(): Promise<void> {
     {
       numWorkers: 2,
       parentSpan: createWorkerActivity.span,
-      spanClass: Span,
+      // spanClass: Span,
     }
   )
 
@@ -35,15 +35,15 @@ async function run(): Promise<void> {
   workersActivity.start()
   await Promise.all([
     worker.single
-      .test(["hello", "world"], workersActivity.span)
+      .test([`hello`, `world`], workersActivity.span)
       .then(result => {
         console.log(result)
       }),
-    worker.single.test(["foo", "bar"], workersActivity.span).then(result => {
+    worker.single.test([`foo`, `bar`], workersActivity.span).then(result => {
       console.log(result)
     }),
     worker.single
-      .test(["lorem", "ipsum"], workersActivity.span)
+      .test([`lorem`, `ipsum`], workersActivity.span)
       .then(result => {
         console.log(result)
       }),

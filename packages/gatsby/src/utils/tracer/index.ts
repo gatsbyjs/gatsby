@@ -1,6 +1,6 @@
 import { slash } from "gatsby-core-utils"
 import path from "path"
-import { Tracer, initGlobalTracer } from "opentracing"
+import { Tracer, initGlobalTracer, SpanContext, Span } from "opentracing"
 
 interface ITracerProvider {
   create(): Tracer
@@ -38,4 +38,13 @@ export const stopTracer = async (): Promise<void> => {
   if (tracerProvider?.stop) {
     await tracerProvider.stop()
   }
+}
+
+let buildSpan: Span | SpanContext | undefined
+export function setBuildSpan(span: Span | SpanContext): void {
+  buildSpan = span
+}
+
+export function getBuildSpan(): Span | SpanContext | undefined {
+  return buildSpan
 }

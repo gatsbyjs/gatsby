@@ -7,6 +7,7 @@ import {
   CancelExperimentNoticeCallbackOrUndefined,
 } from "../utils/show-experiment-notice"
 import { isCI } from "gatsby-core-utils"
+import { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress"
 
 const ONE_MINUTE = 1 * 60 * 1000
 
@@ -30,19 +31,25 @@ export async function runPageQueries({
     return
   }
 
-  const activity = reporter.createProgress(
-    `run page queries`,
-    pageQueryIds.length,
-    0,
-    {
-      id: `page-query-running`,
-      parentSpan,
-    }
-  )
-
+  let activity: IProgressReporter
   // TODO: This is hacky, remove with a refactor of PQR itself
   if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity = reporter.createProgress(
+      `run page queries`,
+      pageQueryIds.length,
+      0,
+      {
+        id: `page-query-running`,
+        parentSpan,
+      }
+    )
     activity.start()
+  } else {
+    activity = {
+      span: parentSpan,
+      tick: () => {},
+      done: () => {},
+    } as IProgressReporter
   }
 
   let cancelNotice: CancelExperimentNoticeCallbackOrUndefined
@@ -76,7 +83,5 @@ modules.exports = {
     cancelNotice()
   }
 
-  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    activity.done()
-  }
+  activity.done()
 }

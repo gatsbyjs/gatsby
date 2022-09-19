@@ -6,12 +6,17 @@ import { actions } from "../../../redux/actions"
 import { build } from "../../../schema"
 import apiRunnerNode from "../../api-runner-node"
 import { setState } from "./state"
+import { Span } from "opentracing"
 
 export function setInferenceMetadata(): void {
   setState([`inferenceMetadata`])
 }
 
-export async function buildSchema(): Promise<void> {
+export async function buildSchema({
+  parentSpan,
+}: {
+  parentSpan?: Span
+} = {}): Promise<void> {
   const workerStore = store.getState()
 
   // pathPrefix: '' will at least be defined when config is loaded
@@ -34,8 +39,10 @@ export async function buildSchema(): Promise<void> {
 
   setInferenceMetadata()
 
-  await apiRunnerNode(`createSchemaCustomization`)
+  await apiRunnerNode(`createSchemaCustomization`, {
+    parentSpan,
+  })
 
   // build() runs other lifecycles like "createResolvers" or "setFieldsOnGraphQLNodeType" internally
-  await build({ fullMetadataBuild: false, parentSpan: {} })
+  await build({ fullMetadataBuild: false, parentSpan })
 }

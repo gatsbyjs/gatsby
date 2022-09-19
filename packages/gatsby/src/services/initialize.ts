@@ -167,7 +167,9 @@ export async function initialize({
   const siteDirectory = program.directory
 
   // Compile root gatsby files
-  let activity = reporter.activityTimer(`compile gatsby files`)
+  let activity = reporter.activityTimer(`compile gatsby files`, {
+    parentSpan,
+  })
   activity.start()
   await compileGatsbyFiles(siteDirectory)
   activity.end()

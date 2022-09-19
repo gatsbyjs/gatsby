@@ -9,6 +9,7 @@ import handleFlags from "../../utils/handle-flags"
 import availableFlags from "../../utils/flags"
 import { IProgram } from "../../commands/types"
 import { IGatsbyConfig } from "../../internal"
+import { Span } from "opentracing"
 
 export async function loadConfig({
   siteDirectory,
@@ -17,6 +18,7 @@ export async function loadConfig({
   siteDirectory: string
   processFlags?: boolean
   program?: IProgram
+  parentSpan?: Span
 }): Promise<IGatsbyConfig> {
   // Try opening the site's gatsby-config.js file.
   const { configModule, configFilePath } = await getConfigFile(

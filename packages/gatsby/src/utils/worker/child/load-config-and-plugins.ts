@@ -6,7 +6,7 @@ import apiRunnerNode from "../../api-runner-node"
 export async function loadConfigAndPlugins(
   ...args: Parameters<typeof loadConfig>
 ): Promise<void> {
-  const [{ siteDirectory, program }] = args
+  const [{ siteDirectory, program, parentSpan }] = args
 
   store.dispatch({
     type: `SET_PROGRAM`,
@@ -19,5 +19,5 @@ export async function loadConfigAndPlugins(
   await loadPlugins(config, siteDirectory)
 
   // Cache is already initialized
-  await apiRunnerNode(`onPluginInit`)
+  await apiRunnerNode(`onPluginInit`, { parentSpan })
 }

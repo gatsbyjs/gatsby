@@ -52,7 +52,11 @@ export async function bootstrap(
     const program = context.store.getState().program
     const directory = slash(program.directory)
 
-    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
+    workerPool.all.loadConfigAndPlugins({
+      siteDirectory: directory,
+      program,
+      parentSpan,
+    })
   }
 
   await customizeSchema(context)
@@ -72,7 +76,9 @@ export async function bootstrap(
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     savePartialStateToDisk([`inferenceMetadata`])
 
-    workerPool.all.buildSchema()
+    workerPool.all.buildSchema({
+      parentSpan,
+    })
   }
 
   await extractQueries(context)
