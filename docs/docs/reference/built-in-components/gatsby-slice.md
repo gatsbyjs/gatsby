@@ -44,15 +44,51 @@ The Slice component requires an `alias` prop. Any props additional props will be
 | ------------------ | -------- | ------------------------------------------------------------------------------------------- |
 | `alias` (Required) | `string` | The Slice created in `gatsby-node` to replace this component. See also: [Aliases](#aliases) |
 
-### Restrictions on using `Slice`
+## Aliases
 
-#### Nested Slices
+An "`alias`" for a Slice is the string value a page will use to identify which Slice to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice)) is an alias is a one-to-one mapping for each page created. By default, an `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if `Slice` is given an `alias` prop of `"my-image"`, the Slice with the `id` of `"my-image"` will be used.
+
+However, if you need to customize which Slice is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage) through the `slices` key. If you map `"my-image"` to `"my-image--dog"`, any time the `"my-image"` Slice is used, it'll use the Slice with the id of `"my-image--dog"` on that page.
+
+```js:title=gatsby-node.js
+exports.createPages = async ({ actions }) => {
+  const animals = ['dog', 'cat', 'giraffe']
+
+  for (const animal of animals) {
+    // create a slice for each animal, i.e. `my-image--dog`
+    actions.createSlice({
+      // highlight-next-line
+      id: `my-image--${animal}`,
+      component: require.resolve(`./src/components/my-image-slice.js`),
+      context: {
+        imagePath: `./images/${animal}.jpg`,
+      }
+    })
+
+    actions.createPage({
+      path: `/animals/${animal}`,
+      // a page component that utilizes the MyImage slice
+      component: require.resolve(`./src/templates/page.js`),
+      slices: {
+        // Any time `<Slice alias="my-image">` is seen on this page,
+        // use the `my-image--${animal}` id
+        // highlight-next-line
+        'my-image': `my-image--${animal}`
+      }
+    })
+  }
+}
+```
+
+## Restrictions on using `Slice`
+
+### Nested Slices
 
 Gatsby does not support nested Slices. This means if you have a high level `<Layout>` component as a slice, other Slices cannot exist within that `<Layout>` component anywhere in the tree.
 
-#### Props
+### Props
 
-##### `alias`
+#### `alias`
 
 The `alias` prop must be statically analyzable, which means it must be an inline string.
 
@@ -89,11 +125,11 @@ export function MyImage() {
 }
 ```
 
-##### `children`
+#### `children`
 
 The children prop does not have any restrictions and can be used in typical fashion.
 
-##### Others
+#### Others
 
 Any props passed to the Slice component must be serializable.
 
@@ -126,41 +162,5 @@ export function MyImage() {
   // `image` ends up being a string when passed to Slice
   // highlight-next-line
   return <Slice alias="my-image" image={fetchImage()} />
-}
-```
-
-## Aliases
-
-An "`alias`" for a Slice is the string value a page will use to identify which Slice to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice)) is an alias is a one-to-one mapping for each page created. By default, an `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if `Slice` is given an `alias` prop of `"my-image"`, the Slice with the `id` of `"my-image"` will be used.
-
-However, if you need to customize which Slice is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage) through the `slices` key. If you map `"my-image"` to `"my-image--dog"`, any time the `"my-image"` Slice is used, it'll use the Slice with the id of `"my-image--dog"` on that page.
-
-```js:title=gatsby-node.js
-exports.createPages = async ({ actions }) => {
-  const animals = ['dog', 'cat', 'giraffe']
-
-  for (const animal of animals) {
-    // create a slice for each animal, i.e. `my-image--dog`
-    actions.createSlice({
-      // highlight-next-line
-      id: `my-image--${animal}`,
-      component: require.resolve(`./src/components/my-image-slice.js`),
-      context: {
-        imagePath: `./images/${animal}.jpg`,
-      }
-    })
-
-    actions.createPage({
-      path: `/animals/${animal}`,
-      // a page component that utilizes the MyImage slice
-      component: require.resolve(`./src/templates/page.js`),
-      slices: {
-        // Any time `<Slice alias="my-image">` is seen on this page,
-        // use the `my-image--${animal}` id
-        // highlight-next-line
-        'my-image': `my-image--${animal}`
-      }
-    })
-  }
 }
 ```
