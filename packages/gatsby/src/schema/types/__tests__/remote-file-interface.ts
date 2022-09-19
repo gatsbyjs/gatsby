@@ -3,6 +3,8 @@ import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { build } from "../../index"
 
+jest.setTimeout(10000)
+
 interface ISrcsetImageChunk {
   url: string
   params: string
