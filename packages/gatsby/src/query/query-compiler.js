@@ -418,8 +418,8 @@ const processDefinitions = ({
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
       isConfigQuery: originalDefinition.isConfigQuery,
-      // ensure hash should be a string and not a number
       templatePath,
+      // ensure hash should be a string and not a number
       hash: String(originalDefinition.hash),
     }
 
