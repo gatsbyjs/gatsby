@@ -90,29 +90,6 @@ You'll need to be aware of these things when using Gatsby Head:
 - Data block `<script>` tags such as `<script type="application/ld+json">` can go in the `Head` function, but dynamic scripts are better loaded with the [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/) in your pages or components.
 - As of now, `Head` can't access [React Context](https://reactjs.org/docs/context.html) that you defined in the [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement).
 
-```jsx:title=gatsby-ssr.jsx
-const React = require(`react`)
-const SomeContext = React.createContext()
-
-exports.wrapRootElement = ({ element }) => (
-  <SomeContext.Provider value={{ some: `value` }}>
-    {element}
-  </SomeContext.Provider>
-)
-```
-
-```jsx:title=src/page/index.jsx
-const Index = () => <h1>Hello</h1>
-
-export default Index
-
-export const Head = () => {
-  const value = React.useContext(SomeContext) //You can't access context value provided via wrapRootElement
-
-  return <title>{value}</title>
-}
-```
-
 ## Properties
 
 The `Head` function receives these properties:
