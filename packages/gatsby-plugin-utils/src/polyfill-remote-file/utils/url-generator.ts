@@ -102,8 +102,6 @@ export function generateImageUrl(
   return `${parsedURL.pathname}${parsedURL.search}`
 }
 
-// publish
-
 function generatePublicUrl({
   url,
   mimeType,
