@@ -1,4 +1,5 @@
 import type { Node } from "gatsby"
+import { extractModel } from "./path-utils"
 import { IOptions } from "./types"
 
 export interface IStatePerInstance {
@@ -16,6 +17,10 @@ export interface IStatePerInstance {
    * on node changes
    */
   syncPages?: () => void
+  /**
+   *
+   */
+  templateFileRemoved: (absolutePath: string) => void
 }
 
 const pluginInstances = new Map<string, IStatePerInstance>()
@@ -32,6 +37,22 @@ export function getPluginInstance(
         updated: new Map(),
       },
       trackedTypes: new Map(),
+      templateFileRemoved(absolutePath: string): void {
+        if (!pluginInstance) {
+          throw new Error(`pluginInstance not available`)
+        }
+
+        const nodeType = extractModel(absolutePath)
+        if (nodeType) {
+          const absolutePaths = pluginInstance.trackedTypes.get(nodeType)
+          if (absolutePaths) {
+            absolutePaths.delete(absolutePath)
+            if (absolutePaths.size === 0) {
+              pluginInstance.trackedTypes.delete(nodeType)
+            }
+          }
+        }
+      },
     }
 
     pluginInstances.set(pluginOptions.path, pluginInstance)

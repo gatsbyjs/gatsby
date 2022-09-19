@@ -124,6 +124,7 @@ Please pick a path to an existing directory.`,
     })
 
     const knownFiles = new Set(files)
+    const pluginInstance = getPluginInstance({ path: pagesPath })
 
     watchDirectory(
       pagesPath,
@@ -166,6 +167,8 @@ Please pick a path to an existing directory.`,
             }
           })
           knownFiles.delete(removedPath)
+
+          pluginInstance.templateFileRemoved(componentPath)
         } catch (e) {
           reporter.panic({
             id: prefixId(CODES.FileSystemRemove),
@@ -176,6 +179,62 @@ Please pick a path to an existing directory.`,
         }
       }
     ).then(() => doneCb(null, null))
+
+    pluginInstance.syncPages = function syncPages(): void {
+      createPagesFromChangedNodes(
+        { actions, reporter, pluginInstance },
+        pluginOptions
+      )
+    }
+
+    emitter.on(`DELETE_NODE`, action => {
+      if (action.payload?.id) {
+        if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+          pluginInstance.changedNodesSinceLastPageCreation.deleted.set(
+            action.payload.id,
+            { node: action.payload }
+          )
+        }
+      }
+    })
+
+    emitter.on(`CREATE_NODE`, action => {
+      if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
+        const deletedNode =
+          pluginInstance.changedNodesSinceLastPageCreation.deleted.get(
+            action.payload.id
+          )
+        // top level nodes will have `oldNode` on node updates
+        // child nodes won't have `oldNode`, but we can get previous child node
+        // from list of deleted nodes
+        const previousNode = action.oldNode ?? deletedNode?.node
+
+        // If this node was deleted before being recreated, remove it from the deleted node list
+        pluginInstance.changedNodesSinceLastPageCreation.deleted.delete(
+          action.payload.id
+        )
+
+        if (previousNode?.id) {
+          if (
+            previousNode.internal.contentDigest !==
+            action.payload.internal.contentDigest
+          ) {
+            pluginInstance.changedNodesSinceLastPageCreation.updated.set(
+              action.payload.id,
+              {
+                oldNode: previousNode,
+                node: action.payload,
+              }
+            )
+          }
+        } else {
+          pluginInstance.changedNodesSinceLastPageCreation.created.set(
+            action.payload.id,
+            { node: action.payload }
+          )
+        }
+      }
+    })
   } catch (e) {
     reporter.panicOnBuild({
       id: prefixId(CODES.Generic),
@@ -184,63 +243,6 @@ Please pick a path to an existing directory.`,
       },
     })
   }
-
-  const pluginInstance = getPluginInstance({ path: pagesPath })
-  pluginInstance.syncPages = function syncPages(): void {
-    createPagesFromChangedNodes(
-      { actions, reporter, pluginInstance },
-      pluginOptions
-    )
-  }
-
-  emitter.on(`DELETE_NODE`, action => {
-    if (action.payload?.id) {
-      if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
-        pluginInstance.changedNodesSinceLastPageCreation.deleted.set(
-          action.payload.id,
-          { node: action.payload }
-        )
-      }
-    }
-  })
-
-  emitter.on(`CREATE_NODE`, action => {
-    if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
-      const deletedNode =
-        pluginInstance.changedNodesSinceLastPageCreation.deleted.get(
-          action.payload.id
-        )
-      // top level nodes will have `oldNode` on node updates
-      // child nodes won't have `oldNode`, but we can get previous child node
-      // from list of deleted nodes
-      const previousNode = action.oldNode ?? deletedNode?.node
-
-      // If this node was deleted before being recreated, remove it from the deleted node list
-      pluginInstance.changedNodesSinceLastPageCreation.deleted.delete(
-        action.payload.id
-      )
-
-      if (previousNode?.id) {
-        if (
-          previousNode.internal.contentDigest !==
-          action.payload.internal.contentDigest
-        ) {
-          pluginInstance.changedNodesSinceLastPageCreation.updated.set(
-            action.payload.id,
-            {
-              oldNode: previousNode,
-              node: action.payload,
-            }
-          )
-        }
-      } else {
-        pluginInstance.changedNodesSinceLastPageCreation.created.set(
-          action.payload.id,
-          { node: action.payload }
-        )
-      }
-    }
-  })
 }
 
 export function setFieldsOnGraphQLNodeType(
