@@ -3466,37 +3466,10 @@
     "@parcel/node-resolver-core" "2.6.2"
     "@parcel/plugin" "2.6.2"
 
-"@parcel/runtime-browser-hmr@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/runtime-browser-hmr/-/runtime-browser-hmr-2.6.2.tgz#121fe22b5df6b7a8591a23632146c008448240a5"
-  integrity sha512-M4X0+7dyfdI6smwGUGjGXb8Ns3HX7ZrTemyq4Gc7zp7P/5gWjR8i9eISz46sXmF9bf01a/4dKZpoCC9un1pH1g==
-  dependencies:
-    "@parcel/plugin" "2.6.2"
-    "@parcel/utils" "2.6.2"
-
 "@parcel/runtime-js@2.6.2":
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/@parcel/runtime-js/-/runtime-js-2.6.2.tgz#cc46ec03d4fe2a4832cd7709431afba857bd37e0"
   integrity sha512-0S3JFwgvs6FmEx2dHta9R0Sfu8vCnFAm4i7Y4efGHtAcTrF2CHjyiz4/hG+RQGJ70eoWW463Q+8qt6EKbkaOBQ==
-  dependencies:
-    "@parcel/plugin" "2.6.2"
-    "@parcel/utils" "2.6.2"
-    nullthrows "^1.1.1"
-
-"@parcel/runtime-react-refresh@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/runtime-react-refresh/-/runtime-react-refresh-2.6.2.tgz#4504cea4468fbeabf4a94c99a991251c7cd04c59"
-  integrity sha512-DJTm5D/tUAGZm0o3ndDOPbKwdYrobuvm4jvkPq31LdEUqVvyuzBAMlqQFHc1yJEJDRRWOIQwQP9Y0NQbJmXFfg==
-  dependencies:
-    "@parcel/plugin" "2.6.2"
-    "@parcel/utils" "2.6.2"
-    react-error-overlay "6.0.9"
-    react-refresh "^0.9.0"
-
-"@parcel/runtime-service-worker@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/runtime-service-worker/-/runtime-service-worker-2.6.2.tgz#f1ea3e768f8ae9d2f5ec119db020595933185393"
-  integrity sha512-9jV+RwVEeDUI5+eLy8j1tapTNoHHGOY2+JUprcObQkQ8fux7KltQBJWFhpkUdGtz5LTCNXtj9tdycFtS5lmSzg==
   dependencies:
     "@parcel/plugin" "2.6.2"
     "@parcel/utils" "2.6.2"
@@ -3525,30 +3498,6 @@
     nullthrows "^1.1.1"
     regenerator-runtime "^0.13.7"
     semver "^5.7.1"
-
-"@parcel/transformer-json@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/transformer-json/-/transformer-json-2.6.2.tgz#37a5c3f4571c81e1a5f2d0c77f266b56e3866ad5"
-  integrity sha512-QGcIIvbPF/u10ihYvQhxXqb2QMXWSzcBxJrOSIXIl74TUGrWX05D5LmjDA/rzm/n/kvRnBkFNP60R/smYb8x+Q==
-  dependencies:
-    "@parcel/plugin" "2.6.2"
-    json5 "^2.2.0"
-
-"@parcel/transformer-raw@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/transformer-raw/-/transformer-raw-2.6.2.tgz#a77ffaa26d59fcf79b5094c1319b6f0922fffe7e"
-  integrity sha512-CsofYq5g9Zj/FNmhya2R7Xp3WHlzz34mEdN69bds3azRYHCrl/TS33xXcp/9J+74SEIY1Ufh552o1cM3fnSrDQ==
-  dependencies:
-    "@parcel/plugin" "2.6.2"
-
-"@parcel/transformer-react-refresh-wrap@2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@parcel/transformer-react-refresh-wrap/-/transformer-react-refresh-wrap-2.6.2.tgz#680a3c724d8ada39a637a10f8cb7fdc33aa138eb"
-  integrity sha512-7EE68ebISz+oAHm64ZJbz6uJQT4aOoB8QiK3PvuY6+RsP7aK4/FEHGM1afW49KrZbP4lWjloEkcJm/88DfBiGw==
-  dependencies:
-    "@parcel/plugin" "2.6.2"
-    "@parcel/utils" "2.6.2"
-    react-refresh "^0.9.0"
 
 "@parcel/types@2.6.2":
   version "2.6.2"
@@ -19922,11 +19871,6 @@ react-dom@^16.12.0:
     prop-types "^15.6.2"
     scheduler "^0.18.0"
 
-react-error-overlay@6.0.9:
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
-  integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
-
 react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
@@ -19959,11 +19903,6 @@ react-refresh@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
-
-react-refresh@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.9.0.tgz#71863337adc3e5c2f8a6bfddd12ae3bfe32aafbf"
-  integrity sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ==
 
 react-test-renderer@^16.14.0:
   version "16.14.0"

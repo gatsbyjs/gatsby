@@ -12,7 +12,7 @@ To use the Gatsby CLI you must either:
 - Install it globally with `npm install -g gatsby-cli`, where you execute commands with the syntax `gatsby new`, or
 - Run commands directly with [`npx`](https://nodejs.dev/en/learn/the-npx-nodejs-package-runner/), where you execute commands with the syntax `npx gatsby new`
 
-Useful Gatsby CLI commands are also pre-defined in [starters](/docs/starters/) as [run scripts](/docs/glossary/run-script/).
+Useful Gatsby CLI commands are also pre-defined in [starters](/docs/starters/) as [run scripts](/docs/glossary#run-script).
 
 ## API commands
 

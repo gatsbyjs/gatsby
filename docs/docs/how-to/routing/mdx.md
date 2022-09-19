@@ -319,7 +319,7 @@ For further reading, check out the [createPages](/docs/reference/config-files/ga
 
 ### Make a layout template for your posts
 
-You can create a file called `posts.jsx` in `src/templates` - this component will be rendered as the template for all posts. Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title. **Please note:** The query must **not** have a name. This way Gatsby can create a unique one internally and the `__contentFilePath` in the next step will work correctly.
+You can create a file called `posts.jsx` in `src/templates` - this component will be rendered as the template for all posts. Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title:
 
 ```jsx:title=src/templates/posts.jsx
 import React from "react"
