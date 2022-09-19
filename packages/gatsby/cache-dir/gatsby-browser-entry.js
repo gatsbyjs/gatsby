@@ -22,6 +22,6 @@ export {
 } from "gatsby-link"
 
 export { graphql, prefetchPathname }
-export { StaticQueryContext, StaticQuery, useStaticQuery } from "./static-query"
+export { StaticQuery, StaticQueryContext, useStaticQuery } from "./static-query"
 
 export * from "gatsby-script"
