@@ -8,5 +8,7 @@ declare module NodeJS {
       buildId: string
       root: string
     }
+
+    _polyfillRemoteFileCache?: import("gatsby").GatsbyCache
   }
 }
