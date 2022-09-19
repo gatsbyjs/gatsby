@@ -45,7 +45,6 @@ export async function compileMDX(
 
     return { processedMDX, metadata: clonedMetadata }
   } catch (error) {
-    console.log({ error })
     reporter.panicOnBuild({
       id: ERROR_CODES.MdxCompilation,
       context: {
