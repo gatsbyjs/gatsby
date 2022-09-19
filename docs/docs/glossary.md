@@ -296,6 +296,10 @@ A code library (written with [JavaScript](#javascript)) for building user interf
 
 A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) or [React](#react) code.
 
+### Run Script
+
+An executable command defined in the `scripts` property of your `package.json` file. See [npm](https://docs.npmjs.com/cli/v8/using-npm/scripts) and [yarn](https://classic.yarnpkg.com/lang/en/docs/cli/run/) run script documentation for more information.
+
 ### Runtime
 
 Runtime is when a program is running (or being executable); it can refer to a few things. [Node.js](#nodejs) is a [server-side](#server-side) runtime that executes JavaScript code. [Client-side JavaScript](#client-side), on the other hand, refers to the browser runtime where traditional JavaScript code executes. Gatsby compiles your site at [build time](#build) and [rehydrates with a React runtime](#hydration) to provide a fast, interactive, and dynamic user experience.

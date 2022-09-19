@@ -106,16 +106,6 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
       </tr>
       <tr>
         <td>
-          <p>Quick Reference Guide</p>
-        </td>
-        <td>
-          <p>
-            <a href="https://gatsby.dev/recipes">gatsby.dev/recipes</a>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td>
           <p>Adding Images</p>
         </td>
         <td>

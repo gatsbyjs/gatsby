@@ -179,6 +179,7 @@ export async function createGraphqlEngineBundle(
         // only load one version of lmdb
         lmdb: require.resolve(`lmdb`),
         "ts-node": require.resolve(`./shims/ts-node`),
+        "gatsby-sharp$": require.resolve(`./shims/gatsby-sharp`),
       },
     },
     plugins: [
