@@ -526,6 +526,29 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       })
     })
 
+    it(`copies file to the destination supplied by the destinationDir function (using returned absolutePath)`, async () => {
+      const imgName = `sample-image`
+      const imgRelPath = `images/nested-dir/${imgName}.gif`
+      const imgPath = parentDir + imgRelPath
+
+      const markdownAST = remark.parse(`![some absolute image](${imgRelPath})`)
+      const customDestinationDir = f =>
+        `${path.dirname(f.absolutePath)}/${f.name}`
+      const expectedDestination = `images/nested-dir/sample-image.gif`
+      expect.assertions(3)
+      await plugin(
+        { files: getFiles(imgPath), markdownAST, markdownNode, getNode },
+        { destinationDir: customDestinationDir }
+      ).then(v => {
+        const expectedNewPath = path.posix.join(
+          ...[process.cwd(), `public`, expectedDestination]
+        )
+        expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imgPath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(`/${expectedDestination}`)
+      })
+    })
+
     it(`copies file to the root dir when destinationDir is not supplied`, async () => {
       const markdownAST = remark.parse(
         `![some absolute image](${imageRelativePath})`

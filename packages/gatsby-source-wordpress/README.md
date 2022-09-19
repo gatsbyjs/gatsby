@@ -3,7 +3,7 @@
 </div>
 
 <p align="center">
-  <a href="https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/LICENSE">
+  <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby and gatsby-source-wordpress are released under the MIT license." />
   </a>
   <a href="https://www.npmjs.com/package/gatsby-source-wordpress">

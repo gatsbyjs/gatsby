@@ -50,7 +50,7 @@ Please be advised that this is also a custom feature of webpack.
 
 ### Additional resources
 
-- More on [using an imported font](/docs/recipes/styling-css#adding-a-local-font).
+- More on [using an imported font](/docs/how-to/styling/using-local-fonts/).
 
 ## Querying for a `File` in GraphQL using gatsby-source-filesystem
 

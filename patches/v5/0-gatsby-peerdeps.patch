@@ -1,1169 +1,1243 @@
+diff --git a/e2e-tests/themes/gatsby-theme-about/package.json b/e2e-tests/themes/gatsby-theme-about/package.json
+index 27e04f8589..3ef3228aed 100644
+--- a/e2e-tests/themes/gatsby-theme-about/package.json
++++ b/e2e-tests/themes/gatsby-theme-about/package.json
+@@ -25,7 +25,7 @@
+     "prettier": "2.0.4"
+   },
+   "peerDependencies": {
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
+   }
+ }
 diff --git a/packages/babel-plugin-remove-graphql-queries/package.json b/packages/babel-plugin-remove-graphql-queries/package.json
-index 066c17909b..8bf8a69bba 100644
+index ff112dd914..e514715102 100644
 --- a/packages/babel-plugin-remove-graphql-queries/package.json
 +++ b/packages/babel-plugin-remove-graphql-queries/package.json
-@@ -20,7 +20,7 @@
+@@ -21,7 +21,7 @@
    },
    "peerDependencies": {
      "@babel/core": "^7.0.0",
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "license": "MIT",
    "main": "index.js",
 diff --git a/packages/gatsby-cypress/package.json b/packages/gatsby-cypress/package.json
-index b4347eca51..da60cf2a96 100644
+index 7190ae2240..df1431b15e 100644
 --- a/packages/gatsby-cypress/package.json
 +++ b/packages/gatsby-cypress/package.json
 @@ -31,7 +31,7 @@
    ],
    "peerDependencies": {
      "cypress": "^3.1.0",
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "scripts": {
      "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+diff --git a/packages/gatsby-link/package.json b/packages/gatsby-link/package.json
+index 6b40be8815..3572108b70 100644
+--- a/packages/gatsby-link/package.json
++++ b/packages/gatsby-link/package.json
+@@ -40,8 +40,8 @@
+   },
+   "peerDependencies": {
+     "@gatsbyjs/reach-router": "^1.3.5",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
+   },
+   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
+   "keywords": [
 diff --git a/packages/gatsby-plugin-canonical-urls/package.json b/packages/gatsby-plugin-canonical-urls/package.json
-index 7f442a0634..abd6d9b218 100644
+index d91ae53819..5599292840 100644
 --- a/packages/gatsby-plugin-canonical-urls/package.json
 +++ b/packages/gatsby-plugin-canonical-urls/package.json
 @@ -23,7 +23,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-catch-links/package.json b/packages/gatsby-plugin-catch-links/package.json
-index 8f34cec420..c250c671ba 100644
+index fcbb6034a8..d5b2ceb948 100644
 --- a/packages/gatsby-plugin-catch-links/package.json
 +++ b/packages/gatsby-plugin-catch-links/package.json
 @@ -24,7 +24,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-coffeescript/package.json b/packages/gatsby-plugin-coffeescript/package.json
-index 687fc32b2d..45cca545ce 100644
+index 930f9a751f..0ffd1154af 100644
 --- a/packages/gatsby-plugin-coffeescript/package.json
 +++ b/packages/gatsby-plugin-coffeescript/package.json
 @@ -30,7 +30,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
-   },
-   "repository": {
-     "type": "git",
-diff --git a/packages/gatsby-plugin-create-client-paths/package.json b/packages/gatsby-plugin-create-client-paths/package.json
-index 2d26413cdf..1c8150c5a1 100644
---- a/packages/gatsby-plugin-create-client-paths/package.json
-+++ b/packages/gatsby-plugin-create-client-paths/package.json
-@@ -23,7 +23,7 @@
-   "license": "MIT",
-   "main": "index.js",
-   "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-cxs/package.json b/packages/gatsby-plugin-cxs/package.json
-index 20278d7ad9..cbc5f20df1 100644
+index e87427224e..ca94fb5ed0 100644
 --- a/packages/gatsby-plugin-cxs/package.json
 +++ b/packages/gatsby-plugin-cxs/package.json
-@@ -27,7 +27,7 @@
+@@ -27,9 +27,9 @@
    "main": "index.js",
    "peerDependencies": {
      "cxs": ">=5.0.0",
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-emotion/package.json b/packages/gatsby-plugin-emotion/package.json
-index 46381ae43a..4c76fc08bc 100644
+index a940f93bc7..3a231d6985 100644
 --- a/packages/gatsby-plugin-emotion/package.json
 +++ b/packages/gatsby-plugin-emotion/package.json
 @@ -19,7 +19,7 @@
    "peerDependencies": {
      "@babel/core": "^7.11.6",
      "@emotion/react": "^11.0.0",
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
    "keywords": [
 diff --git a/packages/gatsby-plugin-facebook-analytics/package.json b/packages/gatsby-plugin-facebook-analytics/package.json
-index e331360c54..f460e61567 100644
+index 90b166e66f..6a66c77f49 100644
 --- a/packages/gatsby-plugin-facebook-analytics/package.json
 +++ b/packages/gatsby-plugin-facebook-analytics/package.json
 @@ -25,7 +25,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-feed/package.json b/packages/gatsby-plugin-feed/package.json
-index 76f0e095f2..a5fc85fabd 100644
+index de5e071b2c..11f94a0f7a 100644
 --- a/packages/gatsby-plugin-feed/package.json
 +++ b/packages/gatsby-plugin-feed/package.json
-@@ -32,7 +32,7 @@
+@@ -32,9 +32,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-flow/package.json b/packages/gatsby-plugin-flow/package.json
-index c458d396d0..7ac1a8cb01 100644
+index 63b165e2ec..91e34525bf 100644
 --- a/packages/gatsby-plugin-flow/package.json
 +++ b/packages/gatsby-plugin-flow/package.json
-@@ -35,7 +35,7 @@
-     "gatsby-plugin-utils": "^1.14.0-next.2"
+@@ -36,6 +36,6 @@
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "engines": {
      "node": ">=14.15.0"
 diff --git a/packages/gatsby-plugin-fullstory/package.json b/packages/gatsby-plugin-fullstory/package.json
-index 8f1a963aa6..7555657a5f 100644
+index 7bc1f5703e..3adf1927c6 100644
 --- a/packages/gatsby-plugin-fullstory/package.json
 +++ b/packages/gatsby-plugin-fullstory/package.json
-@@ -33,7 +33,7 @@
+@@ -33,9 +33,9 @@
      "cross-env": "^7.0.3"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "engines": {
+     "node": ">=14.15.0"
 diff --git a/packages/gatsby-plugin-gatsby-cloud/package.json b/packages/gatsby-plugin-gatsby-cloud/package.json
-index 208db2ce13..cc4a5d9d5a 100644
+index fa4cf4d02c..3f3cfa4c62 100644
 --- a/packages/gatsby-plugin-gatsby-cloud/package.json
 +++ b/packages/gatsby-plugin-gatsby-cloud/package.json
-@@ -42,7 +42,7 @@
+@@ -35,7 +35,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "webpack": "*"
    },
    "repository": {
 diff --git a/packages/gatsby-plugin-google-analytics/package.json b/packages/gatsby-plugin-google-analytics/package.json
-index d3be7c08f9..d330eb3e15 100644
+index 2493b5b115..cc50e2487b 100644
 --- a/packages/gatsby-plugin-google-analytics/package.json
 +++ b/packages/gatsby-plugin-google-analytics/package.json
-@@ -27,7 +27,7 @@
+@@ -27,9 +27,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-google-gtag/package.json b/packages/gatsby-plugin-google-gtag/package.json
-index 4a3f7a1623..605f60806a 100644
+index 562bbf68c8..2eb5779f75 100644
 --- a/packages/gatsby-plugin-google-gtag/package.json
 +++ b/packages/gatsby-plugin-google-gtag/package.json
-@@ -26,7 +26,7 @@
+@@ -26,9 +26,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-google-tagmanager/package.json b/packages/gatsby-plugin-google-tagmanager/package.json
-index 601bb57338..fb5f4cf392 100644
+index 48aa110a4c..d859e54bfd 100644
 --- a/packages/gatsby-plugin-google-tagmanager/package.json
 +++ b/packages/gatsby-plugin-google-tagmanager/package.json
-@@ -27,7 +27,7 @@
+@@ -27,9 +27,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
-diff --git a/packages/gatsby-plugin-graphql-config/package.json b/packages/gatsby-plugin-graphql-config/package.json
-index 0962ebdbda..8d1163576a 100644
---- a/packages/gatsby-plugin-graphql-config/package.json
-+++ b/packages/gatsby-plugin-graphql-config/package.json
-@@ -17,7 +17,7 @@
-     "cross-env": "^7.0.3"
-   },
-   "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
-   },
-   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-graphql-config#readme",
-   "keywords": [
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-image/package.json b/packages/gatsby-plugin-image/package.json
-index f672c573a2..9f46f01253 100644
+index 39d741e61b..2554cab444 100644
 --- a/packages/gatsby-plugin-image/package.json
 +++ b/packages/gatsby-plugin-image/package.json
-@@ -65,9 +65,9 @@
+@@ -67,11 +67,11 @@
    },
    "peerDependencies": {
      "@babel/core": "^7.12.3",
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-plugin-sharp": "^3.0.0-next.0",
--    "gatsby-source-filesystem": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-plugin-sharp": "^4.0.0-alpha-9689ff",
-+    "gatsby-source-filesystem": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-plugin-sharp": "^4.0.0-next",
+     "gatsby-source-filesystem": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "dependencies": {
+     "@babel/code-frame": "^7.14.0",
 diff --git a/packages/gatsby-plugin-jss/package.json b/packages/gatsby-plugin-jss/package.json
-index 762fea84ef..f47b068e8c 100644
+index 68b01c7944..c0137b0f23 100644
 --- a/packages/gatsby-plugin-jss/package.json
 +++ b/packages/gatsby-plugin-jss/package.json
-@@ -25,7 +25,7 @@
+@@ -25,9 +25,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-layout/package.json b/packages/gatsby-plugin-layout/package.json
-index e2ca3114a5..7d465f6e1a 100644
+index 975cd65925..101ef967cb 100644
 --- a/packages/gatsby-plugin-layout/package.json
 +++ b/packages/gatsby-plugin-layout/package.json
 @@ -33,7 +33,7 @@
      "cross-env": "^7.0.3"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "engines": {
      "node": ">=14.15.0"
 diff --git a/packages/gatsby-plugin-less/package.json b/packages/gatsby-plugin-less/package.json
-index fdc54ec158..cdda0af73f 100644
+index 1428254da5..ad9039d1e0 100644
 --- a/packages/gatsby-plugin-less/package.json
 +++ b/packages/gatsby-plugin-less/package.json
 @@ -25,7 +25,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-lodash/package.json b/packages/gatsby-plugin-lodash/package.json
-index a2e65acbc9..e9ae1b12b6 100644
+index 5d68e9ea8e..6fc416a77b 100644
 --- a/packages/gatsby-plugin-lodash/package.json
 +++ b/packages/gatsby-plugin-lodash/package.json
 @@ -25,7 +25,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-manifest/package.json b/packages/gatsby-plugin-manifest/package.json
-index 5a5f50a42d..e029d83501 100644
+index 51643753c7..5904508592 100644
 --- a/packages/gatsby-plugin-manifest/package.json
 +++ b/packages/gatsby-plugin-manifest/package.json
 @@ -32,7 +32,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
+diff --git a/packages/gatsby-plugin-mdx/package.json b/packages/gatsby-plugin-mdx/package.json
+index dc9c1b51fe..bd9fb8cb2d 100644
+--- a/packages/gatsby-plugin-mdx/package.json
++++ b/packages/gatsby-plugin-mdx/package.json
+@@ -21,10 +21,10 @@
+   },
+   "peerDependencies": {
+     "@mdx-js/react": "^2.0.0",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-source-filesystem": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
+   },
+   "dependencies": {
+     "@mdx-js/mdx": "^2.1.1",
 diff --git a/packages/gatsby-plugin-netlify-cms/package.json b/packages/gatsby-plugin-netlify-cms/package.json
-index e4196508b4..7baca2a7c3 100644
+index efcdff25f4..f9826fa26f 100644
 --- a/packages/gatsby-plugin-netlify-cms/package.json
 +++ b/packages/gatsby-plugin-netlify-cms/package.json
-@@ -37,7 +37,7 @@
+@@ -36,10 +36,10 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "netlify-cms-app": "^2.9.0",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0",
+     "webpack": "^5.0.0"
+   },
+   "repository": {
 diff --git a/packages/gatsby-plugin-no-sourcemaps/package.json b/packages/gatsby-plugin-no-sourcemaps/package.json
-index 8e48fb3d67..23d9fb9d1c 100644
+index b144ab1b14..7c8b9fe6a9 100644
 --- a/packages/gatsby-plugin-no-sourcemaps/package.json
 +++ b/packages/gatsby-plugin-no-sourcemaps/package.json
 @@ -24,7 +24,7 @@
      "@babel/runtime": "^7.15.4"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "engines": {
      "node": ">=14.15.0"
 diff --git a/packages/gatsby-plugin-nprogress/package.json b/packages/gatsby-plugin-nprogress/package.json
-index 9ebbfa2ff3..02398e3729 100644
+index 3034c4bb68..c63634cf8c 100644
 --- a/packages/gatsby-plugin-nprogress/package.json
 +++ b/packages/gatsby-plugin-nprogress/package.json
 @@ -24,7 +24,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-offline/package.json b/packages/gatsby-plugin-offline/package.json
-index 4e518148d5..07650510cb 100644
+index cbb6c9b3f9..ac85ce3a24 100644
 --- a/packages/gatsby-plugin-offline/package.json
 +++ b/packages/gatsby-plugin-offline/package.json
-@@ -35,7 +35,7 @@
+@@ -35,9 +35,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-page-creator/package.json b/packages/gatsby-plugin-page-creator/package.json
-index 2c1ad3b923..f1f70ffbd6 100644
+index 947cb376e2..4df1fa1362 100644
 --- a/packages/gatsby-plugin-page-creator/package.json
 +++ b/packages/gatsby-plugin-page-creator/package.json
-@@ -42,7 +42,7 @@
+@@ -44,7 +44,7 @@
      "cross-env": "^7.0.3"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "engines": {
      "node": ">=14.15.0"
 diff --git a/packages/gatsby-plugin-postcss/package.json b/packages/gatsby-plugin-postcss/package.json
-index 1935c7cf59..66cf10d870 100644
+index f3e4120c85..485e9416e4 100644
 --- a/packages/gatsby-plugin-postcss/package.json
 +++ b/packages/gatsby-plugin-postcss/package.json
 @@ -25,7 +25,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "postcss": "^8.0.5"
    },
    "repository": {
 diff --git a/packages/gatsby-plugin-preact/package.json b/packages/gatsby-plugin-preact/package.json
-index e4c274361c..1f0db5ea5f 100644
+index 89d3ead4d6..394d566d35 100644
 --- a/packages/gatsby-plugin-preact/package.json
 +++ b/packages/gatsby-plugin-preact/package.json
-@@ -28,7 +28,7 @@
+@@ -29,7 +29,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "preact": "^10.3.4",
      "preact-render-to-string": "^5.1.8"
    },
 diff --git a/packages/gatsby-plugin-preload-fonts/package.json b/packages/gatsby-plugin-preload-fonts/package.json
-index 98944bd999..3385665fd5 100644
+index 61d9651d18..a896dadb49 100644
 --- a/packages/gatsby-plugin-preload-fonts/package.json
 +++ b/packages/gatsby-plugin-preload-fonts/package.json
 @@ -37,7 +37,7 @@
    ],
    "license": "ISC",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-react-css-modules/package.json b/packages/gatsby-plugin-react-css-modules/package.json
-index b09711b8a1..0de6f9d8b0 100644
+index 45d5224af5..585b86c3b4 100644
 --- a/packages/gatsby-plugin-react-css-modules/package.json
 +++ b/packages/gatsby-plugin-react-css-modules/package.json
 @@ -32,7 +32,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-react-helmet/package.json b/packages/gatsby-plugin-react-helmet/package.json
-index b37e77fa04..2b8819b317 100644
+index d138cc1a4f..ba967863e0 100644
 --- a/packages/gatsby-plugin-react-helmet/package.json
 +++ b/packages/gatsby-plugin-react-helmet/package.json
 @@ -35,7 +35,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "react-helmet": "^5.1.3 || ^6.0.0"
    },
    "repository": {
-diff --git a/packages/gatsby-plugin-remove-trailing-slashes/package.json b/packages/gatsby-plugin-remove-trailing-slashes/package.json
-index 07f90a568b..00d8725c31 100644
---- a/packages/gatsby-plugin-remove-trailing-slashes/package.json
-+++ b/packages/gatsby-plugin-remove-trailing-slashes/package.json
-@@ -23,7 +23,7 @@
-   "license": "MIT",
-   "main": "index.js",
-   "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
-   },
-   "repository": {
-     "type": "git",
 diff --git a/packages/gatsby-plugin-sass/package.json b/packages/gatsby-plugin-sass/package.json
-index 0fcd36f6ed..feb7a034b8 100644
+index 203a1c60ec..1e7bf2d0fc 100644
 --- a/packages/gatsby-plugin-sass/package.json
 +++ b/packages/gatsby-plugin-sass/package.json
 @@ -29,7 +29,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "sass": "^1.30.0"
    },
    "repository": {
 diff --git a/packages/gatsby-plugin-schema-snapshot/package.json b/packages/gatsby-plugin-schema-snapshot/package.json
-index 9aeb92e2b6..b1c14a111c 100644
+index 713d28c3bb..a7b25099a0 100644
 --- a/packages/gatsby-plugin-schema-snapshot/package.json
 +++ b/packages/gatsby-plugin-schema-snapshot/package.json
 @@ -20,6 +20,6 @@
      "@babel/runtime": "^7.15.4"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    }
  }
 diff --git a/packages/gatsby-plugin-sharp/package.json b/packages/gatsby-plugin-sharp/package.json
-index 9f1a689db2..39d188ec9d 100644
+index 4f186f4ed6..a5ffbf3e2f 100644
 --- a/packages/gatsby-plugin-sharp/package.json
 +++ b/packages/gatsby-plugin-sharp/package.json
-@@ -44,7 +44,7 @@
+@@ -41,7 +41,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-sitemap/package.json b/packages/gatsby-plugin-sitemap/package.json
-index fcfc604aa2..3d030e1cfd 100644
+index d329eb8adf..ce284d4b5f 100644
 --- a/packages/gatsby-plugin-sitemap/package.json
 +++ b/packages/gatsby-plugin-sitemap/package.json
-@@ -30,7 +30,7 @@
+@@ -30,9 +30,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-plugin-styled-components/package.json b/packages/gatsby-plugin-styled-components/package.json
-index 97cc06ddca..0a0270a66a 100644
+index 933b322dd3..8ef421766e 100644
 --- a/packages/gatsby-plugin-styled-components/package.json
 +++ b/packages/gatsby-plugin-styled-components/package.json
-@@ -25,7 +25,7 @@
+@@ -25,9 +25,9 @@
    "main": "index.js",
    "peerDependencies": {
      "babel-plugin-styled-components": ">1.5.0",
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0",
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0",
      "styled-components": ">=2.0.0"
+   },
+   "repository": {
 diff --git a/packages/gatsby-plugin-styled-jsx/package.json b/packages/gatsby-plugin-styled-jsx/package.json
-index 564f3f26a2..8a0a912bad 100644
+index 021d875985..5f4c3ba1d2 100644
 --- a/packages/gatsby-plugin-styled-jsx/package.json
 +++ b/packages/gatsby-plugin-styled-jsx/package.json
 @@ -24,7 +24,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "styled-jsx": "^3.0.2"
    },
    "repository": {
 diff --git a/packages/gatsby-plugin-styletron/package.json b/packages/gatsby-plugin-styletron/package.json
-index ec613a3312..2c88365edc 100644
+index 733fa06e3a..fc7009044c 100644
 --- a/packages/gatsby-plugin-styletron/package.json
 +++ b/packages/gatsby-plugin-styletron/package.json
-@@ -25,7 +25,7 @@
+@@ -25,8 +25,8 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0",
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
      "styletron-engine-atomic": "^1.4.8",
      "styletron-react": "^5.2.7 || ^6.0.0"
+   },
 diff --git a/packages/gatsby-plugin-stylus/package.json b/packages/gatsby-plugin-stylus/package.json
-index 7468cbce31..13852b2b02 100644
+index 8258aadb58..6d587b1e2a 100644
 --- a/packages/gatsby-plugin-stylus/package.json
 +++ b/packages/gatsby-plugin-stylus/package.json
 @@ -26,7 +26,7 @@
    "license": "MIT",
    "main": "./gatsby-node.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-subfont/package.json b/packages/gatsby-plugin-subfont/package.json
-index 606ad6f5a9..210be5e86d 100644
+index 94c8eced07..20e08bd57e 100644
 --- a/packages/gatsby-plugin-subfont/package.json
 +++ b/packages/gatsby-plugin-subfont/package.json
 @@ -34,7 +34,7 @@
      "cross-env": "^7.0.3"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "engines": {
      "node": ">=14.15.0"
 diff --git a/packages/gatsby-plugin-twitter/package.json b/packages/gatsby-plugin-twitter/package.json
-index 9c8f1463f2..b542e8b272 100644
+index 13d742dcf6..a3773c08e9 100644
 --- a/packages/gatsby-plugin-twitter/package.json
 +++ b/packages/gatsby-plugin-twitter/package.json
 @@ -24,7 +24,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-plugin-typescript/package.json b/packages/gatsby-plugin-typescript/package.json
-index d19a5bd59e..58adf0f9c2 100644
+index 15250caceb..0cab9b0572 100644
 --- a/packages/gatsby-plugin-typescript/package.json
 +++ b/packages/gatsby-plugin-typescript/package.json
 @@ -25,7 +25,7 @@
      "cross-env": "^7.0.3"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",
    "keywords": [
 diff --git a/packages/gatsby-plugin-typography/package.json b/packages/gatsby-plugin-typography/package.json
-index abd3aa40a8..7b2240255d 100644
+index 88853ca307..e75f9d00ef 100644
 --- a/packages/gatsby-plugin-typography/package.json
 +++ b/packages/gatsby-plugin-typography/package.json
-@@ -29,7 +29,7 @@
+@@ -29,9 +29,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0",
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0",
      "react-typography": "^0.16.1 || ^1.0.0-alpha.0",
+     "typography": "^0.16.0 || ^1.0.0-alpha.0"
+   },
 diff --git a/packages/gatsby-plugin-utils/package.json b/packages/gatsby-plugin-utils/package.json
-index 19551fa581..d035a71ec4 100644
+index 73c4c7ef44..7178fc2695 100644
 --- a/packages/gatsby-plugin-utils/package.json
 +++ b/packages/gatsby-plugin-utils/package.json
-@@ -33,7 +33,7 @@
-     "typescript": "^4.3.5"
+@@ -69,7 +69,7 @@
+     "typescript": "^4.7.4"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "graphql": "^15.0.0"
    },
    "files": [
-     "dist/",
+diff --git a/packages/gatsby-react-router-scroll/package.json b/packages/gatsby-react-router-scroll/package.json
+index 1425cc911b..434478a3dd 100644
+--- a/packages/gatsby-react-router-scroll/package.json
++++ b/packages/gatsby-react-router-scroll/package.json
+@@ -26,8 +26,8 @@
+   "main": "index.js",
+   "peerDependencies": {
+     "@gatsbyjs/reach-router": "^1.3.5",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
+   },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-remark-autolink-headers/package.json b/packages/gatsby-remark-autolink-headers/package.json
-index 4d983799a6..e447649799 100644
+index d5a941deb9..6404fcc842 100644
 --- a/packages/gatsby-remark-autolink-headers/package.json
 +++ b/packages/gatsby-remark-autolink-headers/package.json
-@@ -29,7 +29,7 @@
+@@ -29,9 +29,9 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
-     "react": "^16.9.0 || ^17.0.0",
-     "react-dom": "^16.9.0 || ^17.0.0"
+-    "gatsby": "^4.0.0-next",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "gatsby": "^5.0.0-alpha-v5",
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
+   "repository": {
+     "type": "git",
 diff --git a/packages/gatsby-remark-code-repls/package.json b/packages/gatsby-remark-code-repls/package.json
-index 48b7d52fa5..51521117d1 100644
+index f75aa3f423..3cf542d35b 100644
 --- a/packages/gatsby-remark-code-repls/package.json
 +++ b/packages/gatsby-remark-code-repls/package.json
 @@ -33,7 +33,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-remark-copy-linked-files/package.json b/packages/gatsby-remark-copy-linked-files/package.json
-index 4c7c06c92e..0f3ced8fc5 100644
+index bbc078ff15..ecf797e839 100644
 --- a/packages/gatsby-remark-copy-linked-files/package.json
 +++ b/packages/gatsby-remark-copy-linked-files/package.json
 @@ -34,7 +34,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-remark-custom-blocks/package.json b/packages/gatsby-remark-custom-blocks/package.json
-index d4b3b8f712..4a75a56cb9 100644
+index 30b55a822f..36ce7e53a6 100644
 --- a/packages/gatsby-remark-custom-blocks/package.json
 +++ b/packages/gatsby-remark-custom-blocks/package.json
 @@ -32,7 +32,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "private": false,
    "repository": {
 diff --git a/packages/gatsby-remark-embed-snippet/package.json b/packages/gatsby-remark-embed-snippet/package.json
-index 077b9849d3..223d1b2851 100644
+index 151d5fc214..6680583051 100644
 --- a/packages/gatsby-remark-embed-snippet/package.json
 +++ b/packages/gatsby-remark-embed-snippet/package.json
-@@ -26,8 +26,8 @@
+@@ -26,7 +26,7 @@
      "remark"
    ],
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-remark-prismjs": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-remark-prismjs": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-remark-prismjs": "^4.0.0-next"
    },
    "license": "MIT",
-   "main": "index.js",
 diff --git a/packages/gatsby-remark-graphviz/package.json b/packages/gatsby-remark-graphviz/package.json
-index 7b3a3879b9..e5107a2127 100644
+index b09e3ce770..16e639dd9a 100644
 --- a/packages/gatsby-remark-graphviz/package.json
 +++ b/packages/gatsby-remark-graphviz/package.json
 @@ -37,7 +37,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-remark-images-contentful/package.json b/packages/gatsby-remark-images-contentful/package.json
-index 8676089af3..876d3d824f 100644
+index da6df66370..b0e2fa8539 100644
 --- a/packages/gatsby-remark-images-contentful/package.json
 +++ b/packages/gatsby-remark-images-contentful/package.json
 @@ -40,7 +40,7 @@
    "author": "Khaled Garbaya <khaledgarbaya@gmail.com>",
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "engines": {
      "node": ">=14.15.0"
 diff --git a/packages/gatsby-remark-images/package.json b/packages/gatsby-remark-images/package.json
-index ad9a842f3b..dde599f1c0 100644
+index 4a3d1fafec..89ad9456a6 100644
 --- a/packages/gatsby-remark-images/package.json
 +++ b/packages/gatsby-remark-images/package.json
-@@ -40,8 +40,8 @@
+@@ -40,7 +40,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-plugin-sharp": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-plugin-sharp": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-plugin-sharp": "^4.0.0-next"
    },
    "repository": {
-     "type": "git",
 diff --git a/packages/gatsby-remark-katex/package.json b/packages/gatsby-remark-katex/package.json
-index 5d6a248ffe..581a0a32d0 100644
+index ed6cacaf4c..23f2dafe96 100644
 --- a/packages/gatsby-remark-katex/package.json
 +++ b/packages/gatsby-remark-katex/package.json
 @@ -31,7 +31,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "katex": "^0.13.3"
    },
    "repository": {
 diff --git a/packages/gatsby-remark-prismjs/package.json b/packages/gatsby-remark-prismjs/package.json
-index 8ddfd8f578..cdcf929bd7 100644
+index 43503c9f0f..50be1d67ad 100644
 --- a/packages/gatsby-remark-prismjs/package.json
 +++ b/packages/gatsby-remark-prismjs/package.json
 @@ -21,7 +21,7 @@
      "remark": "^13.0.0"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
-+    "gatsby": "^4.0.0-alpha-9689ff",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
      "prismjs": "^1.15.0"
    },
    "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs#readme",
 diff --git a/packages/gatsby-remark-responsive-iframe/package.json b/packages/gatsby-remark-responsive-iframe/package.json
-index 4648709bcc..14051ebfc2 100644
+index c10b2baa28..e14d4e900f 100644
 --- a/packages/gatsby-remark-responsive-iframe/package.json
 +++ b/packages/gatsby-remark-responsive-iframe/package.json
 @@ -31,7 +31,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-remark-smartypants/package.json b/packages/gatsby-remark-smartypants/package.json
-index a3798ae079..fa27c4201b 100644
+index a52929e74f..30080dca82 100644
 --- a/packages/gatsby-remark-smartypants/package.json
 +++ b/packages/gatsby-remark-smartypants/package.json
 @@ -27,7 +27,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
+diff --git a/packages/gatsby-script/package.json b/packages/gatsby-script/package.json
+index e38859eb6b..c2b991bd3a 100644
+--- a/packages/gatsby-script/package.json
++++ b/packages/gatsby-script/package.json
+@@ -31,8 +31,8 @@
+   },
+   "peerDependencies": {
+     "@gatsbyjs/reach-router": "^1.3.5",
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
+   },
+   "engines": {
+     "node": ">=14.15.0"
 diff --git a/packages/gatsby-source-contentful/package.json b/packages/gatsby-source-contentful/package.json
-index 450f9d966f..ad7b9d0a05 100644
+index ff30ae319d..e69c65f33a 100644
 --- a/packages/gatsby-source-contentful/package.json
 +++ b/packages/gatsby-source-contentful/package.json
-@@ -43,10 +43,10 @@
+@@ -41,7 +41,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-plugin-image": "^1.3.0-next.1",
--    "gatsby-plugin-sharp": "^3.0.0-next.0",
--    "sharp": "^0.26.0"
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-plugin-image": "^2.0.0-alpha-9689ff",
-+    "gatsby-plugin-sharp": "^4.0.0-alpha-9689ff",
-+    "sharp": "^0.29.0"
-   },
-   "repository": {
-     "type": "git",
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-plugin-image": "^2.0.0-next",
+     "gatsby-plugin-sharp": "^4.0.0-next",
+     "sharp": "^0.30.1"
 diff --git a/packages/gatsby-source-drupal/package.json b/packages/gatsby-source-drupal/package.json
-index 63265bfcb0..04476c24d7 100644
+index 91450d7691..8470fe29e8 100644
 --- a/packages/gatsby-source-drupal/package.json
 +++ b/packages/gatsby-source-drupal/package.json
-@@ -36,7 +36,7 @@
+@@ -40,7 +40,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-source-faker/package.json b/packages/gatsby-source-faker/package.json
-index eb6e04f9c4..719b88d74f 100644
+index d4928685f0..e1d739ff4f 100644
 --- a/packages/gatsby-source-faker/package.json
 +++ b/packages/gatsby-source-faker/package.json
 @@ -25,7 +25,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-source-filesystem/package.json b/packages/gatsby-source-filesystem/package.json
-index c62d00f06d..86b72e48ad 100644
+index 62dbe4af6c..0a4c096cc7 100644
 --- a/packages/gatsby-source-filesystem/package.json
 +++ b/packages/gatsby-source-filesystem/package.json
-@@ -34,7 +34,7 @@
-   ],
-   "license": "MIT",
-   "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
-   },
-   "repository": {
-     "type": "git",
-diff --git a/packages/gatsby-source-graphql/package.json b/packages/gatsby-source-graphql/package.json
-index 2a221cf0be..e73b563990 100644
---- a/packages/gatsby-source-graphql/package.json
-+++ b/packages/gatsby-source-graphql/package.json
 @@ -31,7 +31,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
+   },
+   "repository": {
+     "type": "git",
+diff --git a/packages/gatsby-source-graphql/package.json b/packages/gatsby-source-graphql/package.json
+index 0e9bbaceba..24db0d17f8 100644
+--- a/packages/gatsby-source-graphql/package.json
++++ b/packages/gatsby-source-graphql/package.json
+@@ -30,7 +30,7 @@
+   ],
+   "license": "MIT",
+   "peerDependencies": {
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-source-hacker-news/package.json b/packages/gatsby-source-hacker-news/package.json
-index 5b01ca9658..30876ee1a2 100644
+index c18651f63f..d81ea4083e 100644
 --- a/packages/gatsby-source-hacker-news/package.json
 +++ b/packages/gatsby-source-hacker-news/package.json
 @@ -25,7 +25,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-source-lever/package.json b/packages/gatsby-source-lever/package.json
-index 7f55e5fceb..2817f818c1 100644
+index 3f5b389fcf..5aab41fb9c 100644
 --- a/packages/gatsby-source-lever/package.json
 +++ b/packages/gatsby-source-lever/package.json
 @@ -31,7 +31,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-source-medium/package.json b/packages/gatsby-source-medium/package.json
-index da6f95dcbe..e621ebf300 100644
+index 18956043bf..014e474cd3 100644
 --- a/packages/gatsby-source-medium/package.json
 +++ b/packages/gatsby-source-medium/package.json
 @@ -24,7 +24,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-source-mongodb/package.json b/packages/gatsby-source-mongodb/package.json
-index f6e4316d66..1ba381c979 100644
+index 0bc1943ea8..66ae4c6854 100644
 --- a/packages/gatsby-source-mongodb/package.json
 +++ b/packages/gatsby-source-mongodb/package.json
 @@ -30,7 +30,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-source-npm-package-search/package.json b/packages/gatsby-source-npm-package-search/package.json
-index f6b7131afd..1d1f69129e 100644
+index b0cae98614..0c94331f9b 100644
 --- a/packages/gatsby-source-npm-package-search/package.json
 +++ b/packages/gatsby-source-npm-package-search/package.json
 @@ -27,7 +27,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "scripts": {
      "build": "babel src --out-dir . --ignore \"**/__tests__\"",
 diff --git a/packages/gatsby-source-wikipedia/package.json b/packages/gatsby-source-wikipedia/package.json
-index 8e549b1d98..a0b16f9b46 100644
+index 496225c67a..12e1368050 100644
 --- a/packages/gatsby-source-wikipedia/package.json
 +++ b/packages/gatsby-source-wikipedia/package.json
 @@ -20,7 +20,7 @@
    },
    "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wikipedia#readme",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
-   },
-   "repository": {
-     "type": "git",
-diff --git a/packages/gatsby-source-wordpress/package.json b/packages/gatsby-source-wordpress/package.json
-index 140213ed7d..2c3be00d91 100644
---- a/packages/gatsby-source-wordpress/package.json
-+++ b/packages/gatsby-source-wordpress/package.json
-@@ -72,9 +72,9 @@
-   ],
-   "license": "MIT",
-   "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-plugin-sharp": "^3.0.0-next.0",
--    "gatsby-transformer-sharp": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-plugin-sharp": "^4.0.0-alpha-9689ff",
-+    "gatsby-transformer-sharp": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-asciidoc/package.json b/packages/gatsby-transformer-asciidoc/package.json
-index 24d628dc59..80ed20b523 100644
+index dbdbd7a898..f7251c1967 100644
 --- a/packages/gatsby-transformer-asciidoc/package.json
 +++ b/packages/gatsby-transformer-asciidoc/package.json
 @@ -25,7 +25,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-csv/package.json b/packages/gatsby-transformer-csv/package.json
-index c4aca040a4..cad9c931f5 100644
+index 8e330eec8d..81139ae3d5 100644
 --- a/packages/gatsby-transformer-csv/package.json
 +++ b/packages/gatsby-transformer-csv/package.json
 @@ -26,7 +26,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-documentationjs/package.json b/packages/gatsby-transformer-documentationjs/package.json
-index fa2e693dfc..be58f9e599 100644
+index 9f4c86966e..0d80b1c9be 100644
 --- a/packages/gatsby-transformer-documentationjs/package.json
 +++ b/packages/gatsby-transformer-documentationjs/package.json
 @@ -27,7 +27,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-excel/package.json b/packages/gatsby-transformer-excel/package.json
-index 58a15e5304..b7867ffe5f 100644
+index 22cf672523..9e4769bb5d 100644
 --- a/packages/gatsby-transformer-excel/package.json
 +++ b/packages/gatsby-transformer-excel/package.json
 @@ -25,7 +25,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-hjson/package.json b/packages/gatsby-transformer-hjson/package.json
-index 944e165f98..8bec0f3a2c 100644
+index 26a97c7639..534fda9492 100644
 --- a/packages/gatsby-transformer-hjson/package.json
 +++ b/packages/gatsby-transformer-hjson/package.json
 @@ -25,7 +25,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-javascript-frontmatter/package.json b/packages/gatsby-transformer-javascript-frontmatter/package.json
-index a68cb372a1..82cb7b0c07 100644
+index 61d88e775a..4e2c3a9fa6 100644
 --- a/packages/gatsby-transformer-javascript-frontmatter/package.json
 +++ b/packages/gatsby-transformer-javascript-frontmatter/package.json
-@@ -23,8 +23,8 @@
+@@ -23,7 +23,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-source-filesystem": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-source-filesystem": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-source-filesystem": "^4.0.0-next"
    },
    "repository": {
-     "type": "git",
 diff --git a/packages/gatsby-transformer-javascript-static-exports/package.json b/packages/gatsby-transformer-javascript-static-exports/package.json
-index 09449955b3..05e637a3cb 100644
+index 4b873f3f31..bb1003eead 100644
 --- a/packages/gatsby-transformer-javascript-static-exports/package.json
 +++ b/packages/gatsby-transformer-javascript-static-exports/package.json
 @@ -26,7 +26,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-json/package.json b/packages/gatsby-transformer-json/package.json
-index 0c3f6f7461..50e814067c 100644
+index 76377fde95..6be80c4fe4 100644
 --- a/packages/gatsby-transformer-json/package.json
 +++ b/packages/gatsby-transformer-json/package.json
 @@ -24,7 +24,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-pdf/package.json b/packages/gatsby-transformer-pdf/package.json
-index 36d43b604e..5195bae7b8 100644
+index 6d395d4175..3687853c54 100644
 --- a/packages/gatsby-transformer-pdf/package.json
 +++ b/packages/gatsby-transformer-pdf/package.json
 @@ -26,7 +26,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-react-docgen/package.json b/packages/gatsby-transformer-react-docgen/package.json
-index e4939fd201..c93ff0788a 100644
+index d757c83b52..8f10430d29 100644
 --- a/packages/gatsby-transformer-react-docgen/package.json
 +++ b/packages/gatsby-transformer-react-docgen/package.json
 @@ -31,7 +31,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-remark/package.json b/packages/gatsby-transformer-remark/package.json
-index 036722d220..eab7e9a5af 100644
+index 9d69e9fdb0..8a7e3aeda1 100644
 --- a/packages/gatsby-transformer-remark/package.json
 +++ b/packages/gatsby-transformer-remark/package.json
 @@ -46,7 +46,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-screenshot/package.json b/packages/gatsby-transformer-screenshot/package.json
-index 4ab5944b10..3c399191ce 100644
+index 869a284af0..0bef73ad35 100644
 --- a/packages/gatsby-transformer-screenshot/package.json
 +++ b/packages/gatsby-transformer-screenshot/package.json
 @@ -26,7 +26,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-sharp/package.json b/packages/gatsby-transformer-sharp/package.json
-index e97434062e..fb56aaa8a6 100644
+index 42175ff9dd..64b8363282 100644
 --- a/packages/gatsby-transformer-sharp/package.json
 +++ b/packages/gatsby-transformer-sharp/package.json
-@@ -32,8 +32,8 @@
+@@ -33,7 +33,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-plugin-sharp": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-plugin-sharp": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-plugin-sharp": "^4.0.0-next"
    },
    "repository": {
-     "type": "git",
 diff --git a/packages/gatsby-transformer-sqip/package.json b/packages/gatsby-transformer-sqip/package.json
-index 9aed5b17e3..a17f11d3fd 100644
+index 78af262248..0d7cf26efe 100644
 --- a/packages/gatsby-transformer-sqip/package.json
 +++ b/packages/gatsby-transformer-sqip/package.json
-@@ -23,9 +23,9 @@
-     "debug": "^4.3.2"
+@@ -24,7 +24,7 @@
+     "debug": "^4.3.4"
    },
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0",
--    "gatsby-source-contentful": "^5.0.0-next.0",
--    "gatsby-transformer-sharp": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-source-contentful": "^6.0.0-alpha-9689ff",
-+    "gatsby-transformer-sharp": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next",
++    "gatsby": "^5.0.0-alpha-v5",
+     "gatsby-source-contentful": "^6.0.0-next",
+     "gatsby-transformer-sharp": "^4.0.0-next"
    },
-   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
-   "keywords": [
 diff --git a/packages/gatsby-transformer-toml/package.json b/packages/gatsby-transformer-toml/package.json
-index cb3f9a3fdc..493ff72662 100644
+index 8bedcab4c1..7988c2bd40 100644
 --- a/packages/gatsby-transformer-toml/package.json
 +++ b/packages/gatsby-transformer-toml/package.json
 @@ -25,7 +25,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-xml/package.json b/packages/gatsby-transformer-xml/package.json
-index c899f0fafa..9ac486f57b 100644
+index e0929645b2..03ded90e9a 100644
 --- a/packages/gatsby-transformer-xml/package.json
 +++ b/packages/gatsby-transformer-xml/package.json
 @@ -26,7 +26,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
    },
    "repository": {
      "type": "git",
 diff --git a/packages/gatsby-transformer-yaml/package.json b/packages/gatsby-transformer-yaml/package.json
-index 590838d0c6..61b1d7bbd0 100644
+index c26a78c872..1184db6c94 100644
 --- a/packages/gatsby-transformer-yaml/package.json
 +++ b/packages/gatsby-transformer-yaml/package.json
 @@ -26,7 +26,7 @@
    ],
    "license": "MIT",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^4.0.0-next"
++    "gatsby": "^5.0.0-alpha-v5"
+   },
+   "repository": {
+     "type": "git",
+diff --git a/packages/gatsby/package.json b/packages/gatsby/package.json
+index 86eda2adde..baad661e40 100644
+--- a/packages/gatsby/package.json
++++ b/packages/gatsby/package.json
+@@ -242,8 +242,8 @@
+   "main": "cache-dir/commonjs/gatsby-browser-entry.js",
+   "module": "cache-dir/gatsby-browser-entry.js",
+   "peerDependencies": {
+-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
++    "react": "^18.0.0 || ^0.0.0",
++    "react-dom": "^18.0.0 || ^0.0.0"
    },
    "repository": {
      "type": "git",
