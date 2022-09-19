@@ -310,9 +310,9 @@ const processDefinitions = ({
     .map(([name, _]) => name)
 
   for (const operation of operations) {
-    const name = operation.def.name.value
+    const { filePath, templatePath, def } = operation
+    const name = def.name.value
     const originalDefinition = definitionsByName.get(name)
-    const { filePath, templatePath } = operation
 
     const { usedFragments, missingFragments } =
       determineUsedFragmentsForDefinition(
