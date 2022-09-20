@@ -24,7 +24,13 @@ import { validatePathQuery } from "./validate-path-query"
 import { CODES, ERROR_MAP, prefixId } from "./error-utils"
 import { createPagesFromChangedNodes } from "./create-pages-from-changed-nodes"
 import { IOptions } from "./types"
-import { getPluginInstance } from "./tracked-nodes-state"
+import {
+  getPluginInstance,
+  ICreateAPageFromNodeArgs,
+} from "./tracked-nodes-state"
+import { getCollectionRouteParams } from "./get-collection-route-params"
+import { reverseLookupParams } from "./extract-query"
+import { getMatchPath } from "gatsby-core-utils/match-path"
 
 let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
 
@@ -126,6 +132,137 @@ Please pick a path to an existing directory.`,
     const knownFiles = new Set(files)
     const pluginInstance = getPluginInstance({ path: pagesPath })
 
+    pluginInstance.syncPages = function syncPages(): void {
+      createPagesFromChangedNodes({ actions, pluginInstance }, pluginOptions)
+    }
+
+    pluginInstance.resolveFields = async function resolveFields(
+      nodeIds: Array<string>,
+      absolutePath: string
+    ): Promise<Array<Record<string, Record<string, unknown>>>> {
+      const queryString = collectionExtractQueryString(
+        absolutePath,
+        reporter,
+        nodeIds
+      )
+      if (!queryString) {
+        return []
+      }
+
+      const { data } = await graphql<{
+        nodes: Record<string, unknown>
+      }>(queryString)
+
+      if (!data) {
+        return []
+      }
+
+      const nodes = Object.values(Object.values(data)[0])[0] as any as Array<
+        Record<string, Record<string, unknown>>
+      >
+      return nodes
+    }
+
+    pluginInstance.getPathFromAResolvedNode =
+      function getPathFromAResolvedNode({
+        node,
+        absolutePath,
+      }: ICreateAPageFromNodeArgs): string {
+        const filePath = systemPath.relative(pluginOptions.path, absolutePath)
+
+        // URL path for the component and node
+        const { derivedPath } = derivePath(
+          filePath,
+          node,
+          reporter,
+          slugifyOptions
+        )
+        // TODO(v5): Remove legacy handling
+        const isLegacy = trailingSlash === `legacy`
+        const hasTrailingSlash = derivedPath.endsWith(`/`)
+        const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
+        const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+        return modifiedPath
+      }
+
+    pluginInstance.createAPageFromNode = function createAPageFromNode({
+      node,
+      absolutePath,
+    }: ICreateAPageFromNodeArgs): undefined | { errors: number; path: string } {
+      const filePath = systemPath.relative(pluginOptions.path, absolutePath)
+
+      const contentFilePath = node.internal?.contentFilePath
+      // URL path for the component and node
+      const { derivedPath, errors } = derivePath(
+        filePath,
+        node,
+        reporter,
+        slugifyOptions
+      )
+      // TODO(v5): Remove legacy handling
+      const isLegacy = trailingSlash === `legacy`
+      const hasTrailingSlash = derivedPath.endsWith(`/`)
+      const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
+      // We've already created a page with this path
+      if (this.knownPagePaths.has(path)) {
+        return undefined
+      }
+      this.knownPagePaths.add(path)
+      // Params is supplied to the FE component on props.params
+      const params = getCollectionRouteParams(createPath(filePath), path)
+      // nodeParams is fed to the graphql query for the component
+      const nodeParams = reverseLookupParams(node, absolutePath)
+      // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
+      const matchPath = getMatchPath(path)
+
+      const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
+
+      const componentPath = contentFilePath
+        ? `${absolutePath}?__contentFilePath=${contentFilePath}`
+        : absolutePath
+
+      actions.createPage({
+        path: modifiedPath,
+        matchPath,
+        component: componentPath,
+        context: {
+          ...nodeParams,
+          __params: params,
+        },
+      })
+
+      const nodeId = node.id as unknown as string
+      if (nodeId) {
+        let templatesToPagePath = this.nodeIdToPagePath.get(nodeId)
+        if (!templatesToPagePath) {
+          templatesToPagePath = new Map<string, string>()
+          this.nodeIdToPagePath.set(nodeId, templatesToPagePath)
+        }
+
+        templatesToPagePath.set(componentPath, modifiedPath)
+      }
+
+      return { errors, path }
+    }
+
+    pluginInstance.deletePagesCreateFromNode =
+      function deletePagesCreateFromNode(id: string): void {
+        const templatesToPagePaths = this.nodeIdToPagePath.get(id)
+        if (templatesToPagePaths) {
+          for (const [
+            componentPath,
+            pagePath,
+          ] of templatesToPagePaths.entries()) {
+            actions.deletePage({
+              path: pagePath,
+              component: componentPath,
+            })
+            this.knownPagePaths.delete(pagePath)
+          }
+          this.nodeIdToPagePath.delete(id)
+        }
+      }
+
     watchDirectory(
       pagesPath,
       pagesGlob,
@@ -180,19 +317,15 @@ Please pick a path to an existing directory.`,
       }
     ).then(() => doneCb(null, null))
 
-    pluginInstance.syncPages = function syncPages(): void {
-      createPagesFromChangedNodes(
-        { actions, reporter, pluginInstance },
-        pluginOptions
-      )
-    }
-
     emitter.on(`DELETE_NODE`, action => {
       if (action.payload?.id) {
         if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
           pluginInstance.changedNodesSinceLastPageCreation.deleted.set(
             action.payload.id,
-            { node: action.payload }
+            {
+              id: action.payload.id,
+              contentDigest: action.payload.internal.contentDigest,
+            }
           )
         }
       }
@@ -200,39 +333,19 @@ Please pick a path to an existing directory.`,
 
     emitter.on(`CREATE_NODE`, action => {
       if (pluginInstance.trackedTypes.has(action.payload?.internal?.type)) {
-        const deletedNode =
-          pluginInstance.changedNodesSinceLastPageCreation.deleted.get(
-            action.payload.id
-          )
-        // top level nodes will have `oldNode` on node updates
-        // child nodes won't have `oldNode`, but we can get previous child node
-        // from list of deleted nodes
-        const previousNode = action.oldNode ?? deletedNode?.node
-
         // If this node was deleted before being recreated, remove it from the deleted node list
         pluginInstance.changedNodesSinceLastPageCreation.deleted.delete(
           action.payload.id
         )
 
-        if (previousNode?.id) {
-          if (
-            previousNode.internal.contentDigest !==
-            action.payload.internal.contentDigest
-          ) {
-            pluginInstance.changedNodesSinceLastPageCreation.updated.set(
-              action.payload.id,
-              {
-                oldNode: previousNode,
-                node: action.payload,
-              }
-            )
+        pluginInstance.changedNodesSinceLastPageCreation.created.set(
+          action.payload.id,
+          {
+            id: action.payload.id,
+            contentDigest: action.payload.internal.contentDigest,
+            type: action.payload.internal.type,
           }
-        } else {
-          pluginInstance.changedNodesSinceLastPageCreation.created.set(
-            action.payload.id,
-            { node: action.payload }
-          )
-        }
+        )
       }
     })
   } catch (e) {

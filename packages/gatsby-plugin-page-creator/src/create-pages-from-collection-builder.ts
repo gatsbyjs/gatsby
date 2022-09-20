@@ -1,13 +1,8 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
-import { createPath } from "gatsby-page-utils"
 import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { TrailingSlash, applyTrailingSlashOption } from "gatsby-page-utils"
-import { reverseLookupParams } from "./extract-query"
-import { getMatchPath } from "gatsby-core-utils"
-import { getCollectionRouteParams } from "./get-collection-route-params"
-import { derivePath } from "./derive-path"
+import { TrailingSlash } from "gatsby-page-utils"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
@@ -29,16 +24,8 @@ interface ICreatePagesFromCollectionBuilderArgs {
 export async function createPagesFromCollectionBuilder(
   args: ICreatePagesFromCollectionBuilderArgs
 ): Promise<void> {
-  const {
-    filePath,
-    absolutePath,
-    pagesPath,
-    actions,
-    graphql,
-    reporter,
-    trailingSlash,
-    slugifyOptions,
-  } = args || {}
+  const { filePath, absolutePath, pagesPath, actions, graphql, reporter } =
+    args || {}
 
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
@@ -105,6 +92,9 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
   // Start listening for changes to this type
   const pluginInstance = getPluginInstance({ path: pagesPath })
+  if (!pluginInstance.createAPageFromNode) {
+    throw new Error(`Expected pluginInstance.createAPageFromNode to be defined`)
+  }
   const nodeType = extractModel(absolutePath)
 
   let listOfTemplateFilePaths = pluginInstance.trackedTypes.get(nodeType)
@@ -114,56 +104,20 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   }
   listOfTemplateFilePaths.add(absolutePath)
 
-  const knownPagePaths = new Set<string>()
-
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
   //    the watcher will use this data to delete the pages if the query changes significantly.
   const paths: Array<string> = []
-  nodes.forEach((node: Record<string, Record<string, unknown>>) => {
-    const contentFilePath = node.internal?.contentFilePath
-    // URL path for the component and node
-    const { derivedPath, errors } = derivePath(
-      filePath,
+  for (const node of nodes) {
+    const createPageResult = pluginInstance.createAPageFromNode({
+      absolutePath,
       node,
-      reporter,
-      slugifyOptions
-    )
-    // TODO(v5): Remove legacy handling
-    const isLegacy = trailingSlash === `legacy`
-    const hasTrailingSlash = derivedPath.endsWith(`/`)
-    const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
-    // We've already created a page with this path
-    if (knownPagePaths.has(path)) {
-      return
-    }
-    knownPagePaths.add(path)
-    // Params is supplied to the FE component on props.params
-    const params = getCollectionRouteParams(createPath(filePath), path)
-    // nodeParams is fed to the graphql query for the component
-    const nodeParams = reverseLookupParams(node, absolutePath)
-    // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
-    const matchPath = getMatchPath(path)
-
-    const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
-
-    const componentPath = contentFilePath
-      ? `${absolutePath}?__contentFilePath=${contentFilePath}`
-      : absolutePath
-
-    actions.createPage({
-      path: modifiedPath,
-      matchPath,
-      component: componentPath,
-      context: {
-        ...nodeParams,
-        __params: params,
-      },
     })
 
-    derivePathErrors += errors
-
-    paths.push(path)
-  })
+    if (createPageResult) {
+      derivePathErrors += createPageResult.errors
+      paths.push(createPageResult.path)
+    }
+  }
 
   if (derivePathErrors > 0) {
     reporter.panicOnBuild({

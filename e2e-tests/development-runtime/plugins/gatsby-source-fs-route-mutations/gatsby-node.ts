@@ -82,3 +82,26 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({
     }
   }
 }
+
+export const createResolvers: GatsbyNode["createResolvers"] = ({
+  createResolvers,
+}) => {
+  createResolvers({
+    FilesystemRoutesMutation: {
+      computed: {
+        type: `String`,
+        resolve(source: { slug?: string }): string {
+          return `computed-${source.slug}`
+        },
+      },
+    },
+    FilesystemRoutesMutationChild: {
+      computed: {
+        type: `String`,
+        resolve(source: { slug?: string }): string {
+          return `computed-${source.slug}`
+        },
+      },
+    },
+  })
+}

@@ -1,25 +1,23 @@
+const prefixes = [``, `child-`, `computed-`, `child-computed-`]
+
 function assert404(slug) {
-  cy.visit(`/collection-routing/mutations/${slug}/`, {
-    failOnStatusCode: false,
-  }).waitForRouteChange()
+  for (const prefix of prefixes) {
+    cy.visit(`/collection-routing/mutations/${prefix}${slug}/`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
 
-  // page doesn't exist yet
-  cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
-
-  cy.visit(`/collection-routing/mutations/child-${slug}/`, {
-    failOnStatusCode: false,
-  }).waitForRouteChange()
-
-  // page doesn't exist yet
-  cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+    // page doesn't exist yet
+    cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+  }
 }
 
 function assertPageExist(slug, content) {
-  cy.visit(`/collection-routing/mutations/${slug}/`).waitForRouteChange()
-  cy.contains(content)
-
-  cy.visit(`/collection-routing/mutations/child-${slug}/`).waitForRouteChange()
-  cy.contains(content)
+  for (const prefix of prefixes) {
+    cy.visit(
+      `/collection-routing/mutations/${prefix}${slug}/`
+    ).waitForRouteChange()
+    cy.contains(content)
+  }
 }
 
 function refresh(setup) {
