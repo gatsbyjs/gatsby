@@ -382,7 +382,7 @@ If you don't want to use the `frontmatter.title`, adjust what you input to `slug
    const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
    const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
 
-   exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema }) => {
+   exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema, store }) => {
      const { createTypes } = actions
 
      const headingsResolver = schema.buildObjectType({
@@ -414,6 +414,7 @@ If you don't want to use the `frontmatter.title`, adjust what you input to `slug
                  pathPrefix,
                  reporter,
                  cache,
+                 store,
                }
              )
 

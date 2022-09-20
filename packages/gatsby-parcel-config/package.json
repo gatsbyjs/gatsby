@@ -1,7 +1,7 @@
 {
   "name": "gatsby-parcel-config",
   "main": "lib/index.json",
-  "version": "0.14.0-next.0",
+  "version": "0.15.0-next.0",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-parcel-config#readme",
   "description": "A minimal Parcel config for use in Gatsby",
   "repository": {
@@ -14,7 +14,7 @@
     "parcel": "2.x"
   },
   "dependencies": {
-    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.8.0-next.0",
+    "@gatsbyjs/parcel-namer-relative-to-cwd": "1.9.0-next.0",
     "@parcel/bundler-default": "2.6.2",
     "@parcel/compressor-raw": "2.6.2",
     "@parcel/namer-default": "2.6.2",

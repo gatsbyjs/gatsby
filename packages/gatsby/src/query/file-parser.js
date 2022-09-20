@@ -164,7 +164,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
         id: `85911`,
         filePath: cleanFilePath,
         context: {
-          cleanFilePath,
+          filePath: cleanFilePath,
         },
       })
 

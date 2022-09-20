@@ -169,7 +169,7 @@ commands:
                 command: "REACT_VERSION=<< parameters.react_version >> TEST_PATH=<< parameters.test_path >> node ./scripts/upgrade-react"
       - run:
           name: Install gatsby-dev@next
-          command: yarn global add gatsby-dev-cli@next
+          command: yarn global add gatsby-dev-cli@next --ignore-engines
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
@@ -280,7 +280,9 @@ jobs:
           test_path: integration-tests/gatsby-pipeline
 
   integration_tests_gatsby_cli:
-    executor: node
+    executor:
+      name: node
+      image: "14.16.0"
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli

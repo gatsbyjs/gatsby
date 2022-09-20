@@ -629,6 +629,7 @@ describe(`NodeModel`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     let resolveSlugMock
+    let resolveCustomContextMock
     let materializationSpy
     beforeEach(async () => {
       const nodes = (() => [
@@ -735,6 +736,13 @@ describe(`NodeModel`, () => {
       resolveBetterTitleMock = jest.fn()
       resolveOtherTitleMock = jest.fn()
       resolveSlugMock = jest.fn()
+      resolveCustomContextMock = jest.fn()
+
+      store.dispatch(
+        actions.createResolverContext({
+          myCustomContext: `foo`,
+        })
+      )
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
@@ -817,6 +825,13 @@ describe(`NodeModel`, () => {
                 resolve: async () => {
                   await new Promise(resolve => setTimeout(resolve, 1000))
                   return true
+                },
+              },
+              usingCustomResolverContext: {
+                type: `String`,
+                resolve: (parent, _args, context) => {
+                  resolveCustomContextMock({ context, parent })
+                  return `${context.myCustomContext}/${parent.title}`
                 },
               },
             },
@@ -1295,6 +1310,37 @@ describe(`NodeModel`, () => {
           },
         ])
       )
+    })
+
+    it(`injects context passed by createResolverContext action when materializing fields`, async () => {
+      nodeModel.replaceFiltersCache()
+      const wat = await nodeModel.findAll(
+        {
+          query: {
+            sort: { fields: [`usingCustomResolverContext`], order: [`ASC`] },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(resolveCustomContextMock).toHaveBeenCalledTimes(2)
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id1`,
+        }),
+      })
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id2`,
+        }),
+      })
     })
   })
 

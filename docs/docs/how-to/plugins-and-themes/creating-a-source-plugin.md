@@ -169,7 +169,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -421,7 +420,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -435,7 +433,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: AUTHOR_NODE_TYPE,
-        content: JSON.stringify(author),
         contentDigest: createContentDigest(author),
       },
     })

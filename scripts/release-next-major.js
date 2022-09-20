@@ -6,7 +6,7 @@
  * - it checks if you have publish access
  * - it checks if we have any uncommited files -- if so, we exit
  * - it cleans all non git files to make sure we have clean directory
- * - run patches in patches/v4
+ * - run patches in patches/v5
  * - commits the patches so lerna can publish
  * - run full boostrap
  * - Publish premajor
@@ -76,11 +76,11 @@ let currentGitHash = null
     )
 
     const bumpType = `major`
-    // const tagName = `alpha-v${nextMajor}`
-    // const preId = `alpha-v${nextMajor}`
+    const tagName = `alpha-v${nextMajor}`
+    const preId = `alpha-v${nextMajor}`
     // TODO swap back to above.
-    const tagName = `alpha-9689ff`
-    const preId = `alpha-9689ff`
+    // const tagName = `alpha-9689ff`
+    // const preId = `alpha-9689ff`
 
     try {
       await Promise.all([
