@@ -102,7 +102,7 @@ export class PartialHydrationPlugin {
       const href = url
         .pathToFileURL(normalModule.resource)
         .href.replace(rootContext.replace(/\\/g, `/`), ``)
-        .replace(`file:////`, `file://`)
+        .replace(/file:\/{3,4}/g, `file://`)
       if (href !== undefined) {
         json[href] = moduleExports
       }

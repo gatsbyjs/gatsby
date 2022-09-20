@@ -154,3 +154,5 @@ export default {
 `;
 
 exports[`covers cases shown in fixtures/no-client-export.js 1`] = `""`;
+
+exports[`covers cases shown in fixtures/no-client-export-no-export.js 1`] = `""`;

@@ -1,7 +1,7 @@
 "client export"
 
 exports.a = {
-	b: 1
+  b: 1
 }
 
 exports.c = {
