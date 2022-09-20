@@ -23,7 +23,7 @@ import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
 import { CODES, ERROR_MAP, prefixId } from "./error-utils"
 import { createPagesFromChangedNodes } from "./create-pages-from-changed-nodes"
-import { IOptions } from "./types"
+import type { IOptions } from "./types"
 import {
   getPluginInstance,
   ICreateAPageFromNodeArgs,
