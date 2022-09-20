@@ -1,5 +1,6 @@
 /* eslint-disable @babel/no-invalid-this */
 import url from "url"
+import path from "path"
 import { parse } from "acorn-loose"
 import { simple as walk } from "acorn-walk"
 import type { LoaderDefinitionFunction } from "webpack"
@@ -37,10 +38,14 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
   const references: Array<string> = []
   let hasClientExportDirective = false
 
-  const moduleId = url
-    .pathToFileURL(this.resourcePath)
-    .href.replace(this.rootContext.replace(/\\/g, `/`), ``)
-    .replace(/file:\/{3,4}/g, `file://`)
+  const nodeModuleRelative = this.resourcePath.replace(
+    path.join(this.rootContext, `node_modules`),
+    ``
+  )
+
+  const [nodeModule] = nodeModuleRelative.split(path.sep).filter(Boolean)
+
+  const moduleId = `file://node_modules/${nodeModule}`
 
   walk(parse(content, { ecmaVersion: 2020, sourceType: `module` }), {
     ExpressionStatement(plainAcornNode: Node) {

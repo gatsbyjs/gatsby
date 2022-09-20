@@ -99,12 +99,10 @@ export class PartialHydrationPlugin {
         }
       })
 
-      const href = url
-        .pathToFileURL(normalModule.resource)
-        .href.replace(rootContext.replace(/\\/g, `/`), ``)
-        .replace(/file:\/{3,4}/g, `file://`)
-      if (href !== undefined) {
-        json[href] = moduleExports
+      const { rawRequest } = normalModule
+
+      if (rawRequest !== undefined) {
+        json[`file://node_modules/${rawRequest}`] = moduleExports
       }
     }
 
@@ -118,6 +116,7 @@ export class PartialHydrationPlugin {
         }>
       >
     > = new Map()
+
     for (const clientModule of this._clientModules) {
       for (const connection of moduleGraph.getIncomingConnections(
         clientModule
