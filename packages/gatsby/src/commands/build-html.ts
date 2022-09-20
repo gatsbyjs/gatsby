@@ -597,7 +597,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   toRegenerate: Array<string>
   toDelete: Array<string>
 }> {
-  const pageRenderer = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
   const { toRegenerate, toDelete, toCleanupFromTrackedState } =
@@ -620,7 +620,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     buildHTMLActivityProgress.start()
     try {
       await doBuildPages(
-        pageRenderer,
+        rendererPath,
         toRegenerate,
         buildHTMLActivityProgress,
         workerPool,
@@ -659,7 +659,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   ) {
     if (toRegenerate.length > 0) {
       const buildHTMLActivityProgress = reporter.createProgress(
-        `Building PartialHTML for pages`,
+        `Building partial HTML for pages`,
         toRegenerate.length,
         0,
         {
@@ -673,6 +673,13 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
           buildHTMLActivityProgress,
           toRegenerate
         )
+      } catch (error) {
+        // Generic error with page path and useful stack trace, accurate code frame can be a future improvement
+        buildHTMLActivityProgress.panic({
+          id: `80000`,
+          context: error.context,
+          error,
+        })
       } finally {
         buildHTMLActivityProgress.end()
       }
@@ -681,7 +688,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 
   if (_CFLAGS_.GATSBY_MAJOR !== `5` && !program.keepPageRenderer) {
     try {
-      await deleteRenderer(pageRenderer)
+      await deleteRenderer(rendererPath)
     } catch (err) {
       // pass through
     }
