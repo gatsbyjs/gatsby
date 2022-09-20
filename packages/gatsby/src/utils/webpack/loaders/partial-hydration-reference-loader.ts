@@ -8,6 +8,7 @@ import type {
   ExportNamedDeclaration,
   ExportDefaultDeclaration,
   AssignmentExpression,
+  Directive,
 } from "estree"
 
 function createNamedReference(name: string, moduleId: string): string {
@@ -34,16 +35,25 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
   }
 
   const references: Array<string> = []
+  let hasClientExportDirective = false
 
   const moduleId = url
     .pathToFileURL(this.resourcePath)
     .href.replace(this.rootContext.replace(/\\/g, `/`), ``)
-    .replace(`file:////`, `file://`)
+    .replace(/file:\/{3,4}/g, `file://`)
 
   walk(parse(content, { ecmaVersion: 2020, sourceType: `module` }), {
+    ExpressionStatement(plainAcornNode: Node) {
+      const node = plainAcornNode as unknown as Directive
+
+      if (node.directive === `client export`) {
+        hasClientExportDirective = true
+      }
+    },
     ExportNamedDeclaration(plainAcornNode: Node) {
-      // @ts-ignore - Acorn types are bare bones, cast to specific type
       const node = plainAcornNode as unknown as ExportNamedDeclaration
+
+      if (!hasClientExportDirective) return
 
       // Handle cases shown in `fixtures/esm-declaration.js`
       switch (node?.declaration?.type) {
@@ -104,8 +114,9 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
       }
     },
     ExportDefaultDeclaration(plainAcornNode: Node) {
-      // @ts-ignore - Acorn types are bare bones, cast to specific type
       const node = plainAcornNode as unknown as ExportDefaultDeclaration
+
+      if (!hasClientExportDirective) return
 
       switch (node.declaration.type) {
         // Handle cases shown in `fixtures/esm-default-expression.js`
@@ -122,9 +133,10 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
     },
     // TODO: Explore how to only walk top level tokens
     AssignmentExpression(plainAcornNode) {
-      // @ts-ignore - Acorn types are bare bones, cast to specific type
       const node = plainAcornNode as unknown as AssignmentExpression
       const { left } = node
+
+      if (!hasClientExportDirective) return
 
       // Handle cases shown in `fixtures/cjs-exports.js`
       if (
