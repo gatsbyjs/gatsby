@@ -551,10 +551,6 @@ module.exports = async (
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(stage),
-    stats: {
-      logging: `verbose`,
-      loggingDebug: /webpack/,
-    },
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
