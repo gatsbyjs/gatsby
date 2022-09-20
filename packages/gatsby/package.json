@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "4.24.0-next.2",
+  "version": "4.24.0-next.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -94,14 +94,14 @@
     "gatsby-core-utils": "^3.24.0-next.0",
     "gatsby-graphiql-explorer": "^2.24.0-next.0",
     "gatsby-legacy-polyfills": "^2.24.0-next.0",
-    "gatsby-link": "^4.24.0-next.1",
+    "gatsby-link": "^4.24.0-next.2",
     "gatsby-page-utils": "^2.24.0-next.0",
     "gatsby-parcel-config": "0.15.0-next.0",
     "gatsby-plugin-page-creator": "^4.24.0-next.0",
     "gatsby-plugin-typescript": "^4.24.0-next.0",
     "gatsby-plugin-utils": "^3.18.0-next.0",
-    "gatsby-react-router-scroll": "^5.24.0-next.0",
-    "gatsby-script": "^1.9.0-next.0",
+    "gatsby-react-router-scroll": "^5.24.0-next.1",
+    "gatsby-script": "^1.9.0-next.1",
     "gatsby-telemetry": "^3.24.0-next.0",
     "gatsby-worker": "^1.24.0-next.0",
     "glob": "^7.2.3",
@@ -246,8 +246,8 @@
   "main": "cache-dir/commonjs/gatsby-browser-entry.js",
   "module": "cache-dir/gatsby-browser-entry.js",
   "peerDependencies": {
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

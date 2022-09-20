@@ -17,13 +17,13 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^4.22.1",
+    "gatsby": "^4.23.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",
-    "@types/react": "^18.0.19",
+    "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "typescript": "^4.8.3"
   }

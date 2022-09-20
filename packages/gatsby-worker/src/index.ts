@@ -138,8 +138,7 @@ export class WorkerPool<
 
     {
       // we don't need to retain these
-      const module: WorkerModuleExports = require(workerPath)
-      // @ts-ignore - test
+      const module = require(workerPath)
       const exportNames = Object.keys(module) as Array<
         keyof WorkerModuleExports
       >

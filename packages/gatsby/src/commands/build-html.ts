@@ -463,19 +463,23 @@ const renderPartialHydrationQueue = async (
   const sessionId = Date.now()
   // const { webpackCompilationHash } = store.getState()
 
-  await Promise.all(
-    segments.map(async pageSegment => {
-      await workerPool.single.renderPartialHydrationProd({
-        envVars,
-        paths: pageSegment,
-        sessionId,
-      })
+  try {
+    await Promise.all(
+      segments.map(async pageSegment => {
+        await workerPool.single.renderPartialHydrationProd({
+          envVars,
+          paths: pageSegment,
+          sessionId,
+        })
 
-      if (activity && activity.tick) {
-        activity.tick(pageSegment.length)
-      }
-    })
-  )
+        if (activity && activity.tick) {
+          activity.tick(pageSegment.length)
+        }
+      })
+    )
+  } catch (e) {
+    console.log({ e })
+  }
 }
 
 class BuildHTMLError extends Error {

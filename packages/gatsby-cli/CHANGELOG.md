@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.23.0/packages/gatsby-cli) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-cli
+
 ### [4.22.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.22.1/packages/gatsby-cli) (2022-09-08)
 
 **Note:** Version bump only for package gatsby-cli
