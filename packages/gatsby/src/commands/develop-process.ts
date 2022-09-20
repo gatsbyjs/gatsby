@@ -152,6 +152,16 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   const app = express()
   const parentSpan = tracer.startSpan(`bootstrap`)
 
+  app.use((req, res, next) => {
+    try {
+      decodeURIComponent(req.path)
+    } catch (e) {
+      return res.status(500).send(`URI malformatted`)
+    }
+
+    return next()
+  })
+
   const machine = developMachine.withContext({
     program,
     parentSpan,
