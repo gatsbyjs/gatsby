@@ -1,6 +1,6 @@
-import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { PluginOptions } from "gatsby"
-import { IPathIgnoreOptions } from "gatsby-page-utils"
+import type { Options as ISlugifyOptions } from "@sindresorhus/slugify"
+import type { PluginOptions } from "gatsby"
+import type { IPathIgnoreOptions } from "gatsby-page-utils"
 
 export interface IOptions extends PluginOptions {
   path: string
