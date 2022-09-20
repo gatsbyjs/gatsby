@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.23.0/packages/gatsby-source-wordpress) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- match more urls wp on delta [#36474](https://github.com/gatsbyjs/gatsby/issues/36474) ([5302b7a](https://github.com/gatsbyjs/gatsby/commit/5302b7a29e12d2b1132d5852ed4ddc0d638443c4))
+- match full urls when replacing media item links to static [#36447](https://github.com/gatsbyjs/gatsby/issues/36447) ([dbbda9e](https://github.com/gatsbyjs/gatsby/commit/dbbda9e9224cff65a8d1fe8ca00a15d6a9eabe09))
+
+#### Chores
+
+- update dependency @types/semver to ^7.3.12 [#36510](https://github.com/gatsbyjs/gatsby/issues/36510) ([0b6e823](https://github.com/gatsbyjs/gatsby/commit/0b6e8237ddf50258c896a44a952ecd388963879c))
+
+### [6.22.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.22.1/packages/gatsby-source-wordpress) (2022-09-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.22.0/packages/gatsby-source-wordpress) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ### [6.21.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.21.1/packages/gatsby-source-wordpress) (2022-08-18)
 
 **Note:** Version bump only for package gatsby-source-wordpress

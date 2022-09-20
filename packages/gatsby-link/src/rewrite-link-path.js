@@ -26,6 +26,20 @@ function absolutify(path, current) {
   return absolutePath
 }
 
+function applyPrefix(path) {
+  const prefixed = withPrefix(path)
+  const option = getGlobalTrailingSlash()
+
+  if (option === `always` || option === `never`) {
+    const { pathname, search, hash } = parsePath(prefixed)
+    const output = applyTrailingSlashOption(pathname, option)
+
+    return `${output}${search}${hash}`
+  }
+
+  return prefixed
+}
+
 export const rewriteLinkPath = (path, relativeTo) => {
   if (typeof path === `number`) {
     return path
@@ -34,16 +48,5 @@ export const rewriteLinkPath = (path, relativeTo) => {
     return path
   }
 
-  const { pathname, search, hash } = parsePath(path)
-  const option = getGlobalTrailingSlash()
-  let adjustedPath = path
-
-  if (option === `always` || option === `never`) {
-    const output = applyTrailingSlashOption(pathname, option)
-    adjustedPath = `${output}${search}${hash}`
-  }
-
-  return isAbsolutePath(adjustedPath)
-    ? withPrefix(adjustedPath)
-    : absolutify(adjustedPath, relativeTo)
+  return isAbsolutePath(path) ? applyPrefix(path) : absolutify(path, relativeTo)
 }

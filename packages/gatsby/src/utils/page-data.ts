@@ -221,11 +221,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
 
       // In develop we rely on QUERY_ON_DEMAND so we just go through
       // In build we only build these page-json for SSG pages
-      if (
-        _CFLAGS_.GATSBY_MAJOR !== `4` ||
-        !isBuild ||
-        (isBuild && getPageMode(page) === `SSG`)
-      ) {
+      if (!isBuild || (isBuild && getPageMode(page) === `SSG`)) {
         const staticQueryHashes =
           staticQueriesByTemplate.get(page.componentPath) || []
 

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-script",
   "description": "An enhanced script component for Gatsby sites with support for various loading strategies",
-  "version": "1.7.0-next.1",
+  "version": "1.9.0-next.1",
   "author": "Ty Hopp <ty.hopp@gatsbyjs.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,22 +15,25 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "microbundle -f cjs,modern --jsx React.createElement",
+    "build": "microbundle -f cjs,modern --jsx React.createElement && tsc --emitDeclarationOnly --declaration --declarationDir dist",
+    "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"client export\"",
     "watch": "microbundle watch -f cjs,modern --jsx React.createElement --no-compress",
     "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
   },
   "devDependencies": {
+    "@gatsbyjs/reach-router": "^1.3.9",
     "@testing-library/react": "^11.2.7",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
-    "microbundle": "^0.15.0",
+    "microbundle": "^0.15.1",
+    "prepend-directive": "^1.0.3",
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
     "@gatsbyjs/reach-router": "^1.3.5",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0"
   },
   "engines": {
     "node": ">=14.15.0"

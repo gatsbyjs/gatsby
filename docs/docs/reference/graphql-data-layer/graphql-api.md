@@ -17,7 +17,7 @@ Data needs to be [sourced](/docs/content-and-data/) — or added to the GraphQL 
 
 **Note**: GraphQL isn't required: you can still [use Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/).
 
-To source data with an existing plugin you have to install all needed packages. Furthermore you have to add the plugin to the plugins array in the `gatsby-config` with any optional configurations. If you want to source data from the filesystem for use with GraphQL, such as Markdown files, images, and more, refer to the [filesystem data sourcing docs](/docs/how-to/sourcing-data/sourcing-from-the-filesystem) and [recipes](/docs/recipes/sourcing-data).
+To source data with an existing plugin you have to install all needed packages. Furthermore you have to add the plugin to the plugins array in the `gatsby-config` with any optional configurations. If you want to source data from the filesystem for use with GraphQL, such as Markdown files, images, and more, refer to the [filesystem data sourcing docs](/docs/how-to/sourcing-data/sourcing-from-the-filesystem).
 
 For instructions on installing plugins from npm, take a look at the instructions in the docs on [using a plugin](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/).
 
@@ -216,7 +216,7 @@ Other built-in configurations can be used in queries
 - [`Alias`](/docs/graphql-reference#alias)
 - [`Group`](/docs/graphql-reference#group)
 
-For examples, refer to the [query recipes](/docs/recipes/querying-data) and [GraphQL query options reference guide](/docs/graphql-reference/).
+For examples, refer to the [GraphQL query options reference guide](/docs/graphql-reference/).
 
 ## Query fragments
 

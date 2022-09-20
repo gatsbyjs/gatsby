@@ -150,14 +150,13 @@ import { Script } from "gatsby"
 <Script
   src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
   strategy="off-main-thread"
-  forward={[`gtag`]}
 />
-<Script id="gtag-config" strategy="off-main-thread">
+<Script id="gtag-config" strategy="off-main-thread" forward={[`gtag`]}>
   {`
     window.dataLayer = window.dataLayer || []
     window.gtag = function gtag() { window.dataLayer.push(arguments) }
     gtag('js', new Date())
-    gtag('config', ${process.env.GTAG}, { send_page_view: false })
+    gtag('config', ${process.env.GTAG}, { page_path: location ? location.pathname + location.search + location.hash : undefined })
   `}
 </Script>
 ```
@@ -171,7 +170,7 @@ Gatsby will collect all `off-main-thread` scripts on a page, and automatically m
   src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
   strategy="off-main-thread"
   // highlight-next-line
-  forward={[`gtag`]}
+  forward={[`dataLayer.push`]}
 />
 ```
 

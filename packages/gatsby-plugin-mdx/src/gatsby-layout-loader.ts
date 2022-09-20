@@ -47,6 +47,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
   this.addDependency(path.resolve(mdxPath))
 
   const acorn = await cachedImport<typeof import("acorn")>(`acorn`)
+  // @ts-ignore - We typecast below
   const { default: jsx } = await cachedImport(`acorn-jsx`)
   const { generate } = await cachedImport<typeof import("astring")>(`astring`)
   const { buildJsx } = await cachedImport<
@@ -98,6 +99,8 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
       },
     })
 
+    let hasClassicReactImport = false
+
     /**
      * Replace default export with wrapper function that injects compiled MDX as children
      * Input:
@@ -107,6 +110,13 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
      **/
     const newBody: Array<any> = []
     AST.body.forEach(child => {
+      if (
+        child.type === `ImportDeclaration` &&
+        child.source.value === `react`
+      ) {
+        hasClassicReactImport = true
+      }
+
       if (child.type !== `ExportDefaultDeclaration`) {
         newBody.push(child)
         return
@@ -137,7 +147,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
             type: `Identifier`,
             name: `GatsbyMDXWrapper`,
           },
-          expression: true,
+          expression: false,
           generator: false,
           async: false,
           params: [
@@ -207,6 +217,26 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         },
       } as unknown as ExportDefaultDeclaration)
     })
+
+    if (!hasClassicReactImport) {
+      newBody.unshift({
+        type: `ImportDeclaration`,
+        specifiers: [
+          {
+            type: `ImportDefaultSpecifier`,
+            local: {
+              type: `Identifier`,
+              name: `React`,
+            },
+          },
+        ],
+        source: {
+          type: `Literal`,
+          value: `react`,
+        },
+      })
+    }
+
     AST.body = newBody
 
     buildJsx(AST)

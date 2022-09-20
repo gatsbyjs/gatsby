@@ -33,7 +33,7 @@ npm install gatsby-plugin-mdx gatsby-source-filesystem @mdx-js/react
 ## Usage
 
 After installing `gatsby-plugin-mdx` you can add it to your plugins list in your
-`gatsby-config.js`. You'll also want to configure `gatsby-source-filesytem` to point at your `src/pages` directory (even if you don't want to create MDX pages from `src/pages`).
+`gatsby-config.js`. You'll also want to configure `gatsby-source-filesystem` to point at your `src/pages` directory (even if you don't want to create MDX pages from `src/pages`).
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -382,7 +382,7 @@ If you don't want to use the `frontmatter.title`, adjust what you input to `slug
    const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
    const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
 
-   exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema }) => {
+   exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema, store }) => {
      const { createTypes } = actions
 
      const headingsResolver = schema.buildObjectType({
@@ -414,6 +414,7 @@ If you don't want to use the `frontmatter.title`, adjust what you input to `slug
                  pathPrefix,
                  reporter,
                  cache,
+                 store,
                }
              )
 
@@ -664,7 +665,6 @@ However, we'd recommend placing such files into the `src/pages` directory and `g
 
 1. Instead of querying for the `body` on the MDX node, the page template now receives the transformed MDX as `children` property.
 1. You no longer need to use `<MDXRenderer>` as you can use `{children}` directly.
-1. If you have given your query a name (e.g. `query PostTemplate`) you have to remove the name. Gatsby automatically creates a name internally, but if a name is provided you'll see a "Duplicate query" warning.
 
 ```diff
 import React from "react"
@@ -685,9 +685,8 @@ import { graphql } from "gatsby"
   )
 }
 
-export const pageQuery = graphql`
--  query PostTemplate($id: String!) {
-+  query ($id: String!) {
+ export const pageQuery = graphql`
+  query PostTemplate($id: String!) {
     mdx(id: { eq: $id }) {
       frontmatter {
         title

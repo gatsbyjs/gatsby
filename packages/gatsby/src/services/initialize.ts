@@ -323,9 +323,9 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  // Check if any plugins have been updated since our last run. If so
-  // we delete the cache is there's likely been changes
-  // since the previous run.
+  // Check if any plugins have been updated since our last run. If so,
+  // we delete the cache as there's likely been changes since
+  // the previous run.
   //
   // We do this by creating a hash of all the version numbers of installed
   // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
@@ -497,15 +497,9 @@ export async function initialize({
   await fs.ensureDir(`${publicDirectory}/static`)
 
   // Init plugins once cache is initialized
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    await apiRunnerNode(`onPluginInit`, {
-      parentSpan: activity.span,
-    })
-  } else {
-    await apiRunnerNode(`unstable_onPluginInit`, {
-      parentSpan: activity.span,
-    })
-  }
+  await apiRunnerNode(`onPluginInit`, {
+    parentSpan: activity.span,
+  })
 
   activity.end()
 

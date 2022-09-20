@@ -186,130 +186,125 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   // Handle SSR & DSG Pages
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    try {
-      const { GraphQLEngine } = require(path.join(
-        program.directory,
-        `.cache`,
-        `query-engine`
-      )) as typeof import("../schema/graphql-engine/entry")
-      const { getData, renderPageData, renderHTML } = require(path.join(
-        program.directory,
-        `.cache`,
-        `page-ssr`
-      )) as typeof import("../utils/page-ssr-module/entry")
-      const graphqlEngine = new GraphQLEngine({
-        dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
-      })
+  try {
+    const { GraphQLEngine } = require(path.join(
+      program.directory,
+      `.cache`,
+      `query-engine`
+    )) as typeof import("../schema/graphql-engine/entry")
+    const { getData, renderPageData, renderHTML } = require(path.join(
+      program.directory,
+      `.cache`,
+      `page-ssr`
+    )) as typeof import("../utils/page-ssr-module/entry")
+    const graphqlEngine = new GraphQLEngine({
+      dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
+    })
 
-      router.get(
-        `/page-data/:pagePath(*)/page-data.json`,
-        async (req, res, next) => {
-          const requestedPagePath = req.params.pagePath
-          if (!requestedPagePath) {
-            return void next()
-          }
-
-          const potentialPagePath = reverseFixedPagePath(requestedPagePath)
-          const page = graphqlEngine.findPageByPath(potentialPagePath)
-
-          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
-            const requestActivity = report.phantomActivity(
-              `request for "${req.path}"`
-            )
-            requestActivity.start()
-            try {
-              const spanContext = requestActivity.span.context()
-              const data = await getData({
-                pathName: req.path,
-                graphqlEngine,
-                req,
-                spanContext,
-              })
-              const results = await renderPageData({ data, spanContext })
-              if (page.mode === `SSR` && data.serverDataHeaders) {
-                for (const [name, value] of Object.entries(
-                  data.serverDataHeaders
-                )) {
-                  res.setHeader(name, value)
-                }
-              }
-
-              if (page.mode === `SSR` && data.serverDataStatus) {
-                return void res.status(data.serverDataStatus).send(results)
-              } else {
-                return void res.send(results)
-              }
-            } catch (e) {
-              report.error(
-                `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
-                e
-              )
-              return res
-                .status(500)
-                .contentType(`text/plain`)
-                .send(`Internal server error.`)
-            } finally {
-              requestActivity.end()
-            }
-          }
-
+    router.get(
+      `/page-data/:pagePath(*)/page-data.json`,
+      async (req, res, next) => {
+        const requestedPagePath = req.params.pagePath
+        if (!requestedPagePath) {
           return void next()
         }
-      )
 
-      router.use(async (req, res, next) => {
-        if (req.accepts(`html`)) {
-          const potentialPagePath = req.path
-          const page = graphqlEngine.findPageByPath(potentialPagePath)
-          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
-            const requestActivity = report.phantomActivity(
-              `request for "${req.path}"`
-            )
-            requestActivity.start()
+        const potentialPagePath = reverseFixedPagePath(requestedPagePath)
+        const page = graphqlEngine.findPageByPath(potentialPagePath)
 
-            try {
-              const spanContext = requestActivity.span.context()
-              const data = await getData({
-                pathName: potentialPagePath,
-                graphqlEngine,
-                req,
-                spanContext,
-              })
-              const results = await renderHTML({ data, spanContext })
-              if (page.mode === `SSR` && data.serverDataHeaders) {
-                for (const [name, value] of Object.entries(
-                  data.serverDataHeaders
-                )) {
-                  res.setHeader(name, value)
-                }
+        if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+          const requestActivity = report.phantomActivity(
+            `request for "${req.path}"`
+          )
+          requestActivity.start()
+          try {
+            const spanContext = requestActivity.span.context()
+            const data = await getData({
+              pathName: req.path,
+              graphqlEngine,
+              req,
+              spanContext,
+            })
+            const results = await renderPageData({ data, spanContext })
+            if (page.mode === `SSR` && data.serverDataHeaders) {
+              for (const [name, value] of Object.entries(
+                data.serverDataHeaders
+              )) {
+                res.setHeader(name, value)
               }
-
-              if (page.mode === `SSR` && data.serverDataStatus) {
-                return void res.status(data.serverDataStatus).send(results)
-              } else {
-                return void res.send(results)
-              }
-            } catch (e) {
-              report.error(
-                `Rendering html for "${potentialPagePath}" failed.`,
-                e
-              )
-              return res.status(500).sendFile(`500.html`, { root }, err => {
-                if (err) {
-                  res.contentType(`text/plain`).send(`Internal server error.`)
-                }
-              })
-            } finally {
-              requestActivity.end()
             }
+
+            if (page.mode === `SSR` && data.serverDataStatus) {
+              return void res.status(data.serverDataStatus).send(results)
+            } else {
+              return void res.send(results)
+            }
+          } catch (e) {
+            report.error(
+              `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
+              e
+            )
+            return res
+              .status(500)
+              .contentType(`text/plain`)
+              .send(`Internal server error.`)
+          } finally {
+            requestActivity.end()
           }
         }
-        return next()
-      })
-    } catch (error) {
-      // TODO: Handle case of engine not being generated
-    }
+
+        return void next()
+      }
+    )
+
+    router.use(async (req, res, next) => {
+      if (req.accepts(`html`)) {
+        const potentialPagePath = req.path
+        const page = graphqlEngine.findPageByPath(potentialPagePath)
+        if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+          const requestActivity = report.phantomActivity(
+            `request for "${req.path}"`
+          )
+          requestActivity.start()
+
+          try {
+            const spanContext = requestActivity.span.context()
+            const data = await getData({
+              pathName: potentialPagePath,
+              graphqlEngine,
+              req,
+              spanContext,
+            })
+            const results = await renderHTML({ data, spanContext })
+            if (page.mode === `SSR` && data.serverDataHeaders) {
+              for (const [name, value] of Object.entries(
+                data.serverDataHeaders
+              )) {
+                res.setHeader(name, value)
+              }
+            }
+
+            if (page.mode === `SSR` && data.serverDataStatus) {
+              return void res.status(data.serverDataStatus).send(results)
+            } else {
+              return void res.send(results)
+            }
+          } catch (e) {
+            report.error(`Rendering html for "${potentialPagePath}" failed.`, e)
+            return res.status(500).sendFile(`500.html`, { root }, err => {
+              if (err) {
+                res.contentType(`text/plain`).send(`Internal server error.`)
+              }
+            })
+          } finally {
+            requestActivity.end()
+          }
+        }
+      }
+      return next()
+    })
+  } catch (error) {
+    // TODO: Handle case of engine not being generated
   }
 
   const matchPaths = await readMatchPaths(program)
@@ -374,7 +369,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   try {
-    port = await detectPortInUseAndPrompt(port)
+    port = await detectPortInUseAndPrompt(port, program.host)
     startListening()
   } catch (e) {
     if (e.message === `USER_REJECTED`) {

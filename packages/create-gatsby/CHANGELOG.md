@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.23.0/packages/create-gatsby) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- Missing "plugins" in cmses.json [#36566](https://github.com/gatsbyjs/gatsby/issues/36566) ([e79623c](https://github.com/gatsbyjs/gatsby/commit/e79623c2708378ea18169a1061144bd9b866e588))
+
+### [2.22.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.22.1/packages/create-gatsby) (2022-09-08)
+
+#### Bug Fixes
+
+- Missing "plugins" in cmses.json [#36566](https://github.com/gatsbyjs/gatsby/issues/36566) [#36567](https://github.com/gatsbyjs/gatsby/issues/36567) ([725f071](https://github.com/gatsbyjs/gatsby/commit/725f071564208944be4d260e19d3a59b07e716a2))
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.22.0/packages/create-gatsby) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Chores
+
+- Remove unused deps [#36368](https://github.com/gatsbyjs/gatsby/issues/36368) ([8bad1a7](https://github.com/gatsbyjs/gatsby/commit/8bad1a7a612c121fd4c8965c76cf7a0d87fbc3fa))
+
 ## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.21.0/packages/create-gatsby) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)

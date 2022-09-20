@@ -76,7 +76,6 @@ export function loadInternalPlugins(
   })
 
   if (
-    _CFLAGS_.GATSBY_MAJOR === `4` &&
     configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
     incompatibleGatsbyCloudPlugin(plugins)
   ) {

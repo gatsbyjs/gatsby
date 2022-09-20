@@ -1,8 +1,9 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "2.22.0-next.2",
+  "version": "2.24.0-next.1",
   "scripts": {
     "build": "npm-run-all --npm-path npm -s clean -p build:*",
+    "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"client export\"",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",
     "build:gatsby-ssr": "microbundle -i src/gatsby-ssr.tsx -f cjs -o ./[name].js --no-pkg-main --jsx React.createElement --jsxFragment React.Fragment --no-compress --external=common-tags,react --no-sourcemap",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --jsxFragment React.Fragment --define SERVER=true",
@@ -59,6 +60,7 @@
     "microbundle": "^0.15.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.2.9",
+    "prepend-directive": "^1.0.3",
     "semver": "^7.3.7",
     "terser": "^5.3.8",
     "typescript": "^4.7.4"
@@ -68,8 +70,8 @@
     "gatsby": "^4.0.0-next",
     "gatsby-plugin-sharp": "^4.0.0-next",
     "gatsby-source-filesystem": "^4.0.0-next",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0"
   },
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
@@ -77,13 +79,13 @@
     "@babel/runtime": "^7.15.4",
     "@babel/traverse": "^7.15.4",
     "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "^4.22.0-next.0",
+    "babel-plugin-remove-graphql-queries": "^4.24.0-next.0",
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.3",
     "common-tags": "^1.8.2",
     "fs-extra": "^10.1.0",
-    "gatsby-core-utils": "^3.22.0-next.0",
-    "gatsby-plugin-utils": "^3.16.0-next.1",
+    "gatsby-core-utils": "^3.24.0-next.0",
+    "gatsby-plugin-utils": "^3.18.0-next.0",
     "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.8.1"
   },
