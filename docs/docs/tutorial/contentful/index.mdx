@@ -14,7 +14,7 @@ title: "Getting started with Gatsby and Contentful"
 
 ## Pre-flight checks
 
-Before you get started, check you the following.
+Before you get started, check the following.
 
 - Have a [Contentful account](https://www.contentful.com/sign-up/)
 - Have at least node v14.0 installed
@@ -27,7 +27,7 @@ Before you get going it's a good idea to create a new repository and at the end 
 
 ### 1. Initialize npm
 
-Run npm ` init -y`` to create a default  `package.json`.
+Run npm ` init -y` to create a default `package.json`.
 
 ```shell
 npm init -y
@@ -69,7 +69,7 @@ You're now ready to install the dependencies.
 
 Run the following in your terminal to install the dependencies.
 
-_In this example I'm using npm, yarn will also work._
+_This example uses npm, yarn will also work._
 
 ```shell
 npm install gatsby react react-dom gatsby-source-contentful gatsby-plugin-image
@@ -126,9 +126,11 @@ Now add the following scripts to develop your Gatsby site locally and build your
 
 In the Contentful UI navigate to Settings > API Keys. Here you will find the Space ID and Content Delivery API access token.
 
-If you don’t already have a Space created, you can [reference the Contentful docs](https://www.contentful.com/help/contentful-101/#step-2-create-a-space).
+If you don't already have a Space created, you can [reference the Contentful docs](https://www.contentful.com/help/contentful-101/#step-2-create-a-space).
 
 ### 6. gatsby-config.js
+
+Create a new file at the root of your project called `gatsby-config.js` and add the plugin config. Add your own Space ID and Content Delivery API access token from the previous step.
 
 ```javascript
 // gatsby-config.js
@@ -169,7 +171,7 @@ You can read more about Contentful's [Field types in the Contentful doc](https:/
 
 ### 9. Add Content to Fields
 
-In the Contentful UI navigate to Content to create a new page Page. Add content for the slug, title and description. When you’re ready, publish your changes.
+In the Contentful UI navigate to Content to create a new page Page. Add content for the slug, title and description. When you're ready, publish your changes.
 
 Add the following content to create an Index or Home page.
 
