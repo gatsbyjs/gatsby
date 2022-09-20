@@ -1,5 +1,5 @@
 import { extractModel } from "./path-utils"
-import { IOptions } from "./types"
+import type { IOptions } from "./types"
 
 export interface ICreateAPageFromNodeArgs {
   node: Record<string, Record<string, unknown>>
