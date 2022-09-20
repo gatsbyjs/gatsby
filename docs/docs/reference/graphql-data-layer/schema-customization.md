@@ -196,6 +196,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       firstName: String!
       email: String!
       joinedAt: Date
+      posts: [Post!]! @link(from: "email", by: "authors.elemMatch.email")
     }
   `
   createTypes(typeDefs)
@@ -1111,6 +1112,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       firstName: String!
       email: String!
       joinedAt: Date
+      posts: [Post!]! @link(from: "email", by: "authors.elemMatch.email")
     }
 
     type ContributorJson implements Node & TeamMember {

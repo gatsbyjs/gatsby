@@ -672,7 +672,6 @@ exports.createSchemaCustomization = ({ actions }) => {
       id: ID!
       name: String!
       email: String!
-      posts: [Post!]! @link(from: "email", by: "authors.elemMatch.email")
     }
   `)
 }
