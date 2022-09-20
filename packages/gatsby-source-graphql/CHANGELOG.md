@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.23.0/packages/gatsby-source-graphql) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Chores
+
+- soft deprecate this plugin [#36469](https://github.com/gatsbyjs/gatsby/issues/36469) ([1b7d686](https://github.com/gatsbyjs/gatsby/commit/1b7d686167cba92f1197771a41227e07af563ba6))
+
 ## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.22.0/packages/gatsby-source-graphql) (2022-08-30)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)

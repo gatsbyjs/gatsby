@@ -7,18 +7,17 @@ description: "Learn how to leverage redirects, rewrites, and reverse proxies in 
 
 Redirects are settings in the network layer that allow you to route traffic from one url path to another with little to no disruption.
 
-For instance, while rebuilding your cooking blog, you might want to move all of your recipes from their old path of blog/recipes to a new path of recipes. To make sure that all the existing links to your recipes still work, you would need a way to redirect your users from blog/recipes/mouthwatering-lasagna to recipes/mouthwatering-lasagna. No one wants to lose access to such a, well, mouthwatering recipe.
+For instance, while rebuilding your cooking blog, you might want to move all of your recipes from their old path of `blog/recipes` to a new path of recipes. To make sure that all the existing links to your recipes still work, you would need a way to redirect your users from `blog/recipes/mouthwatering-lasagna` to `recipes/mouthwatering-lasagna`. No one wants to lose access to such a, well, mouthwatering recipe.
 
 ## Prerequisites
 
-1. In order to use redirects, you must include the gatsby-plugin-gatsby-cloud in your project.
-1. If your Gatsby project doesn't already have a gatsby-node.js file, add one at that top level of your project (alongside your gatsby-config.js).
+- If your Gatsby project doesn't already have a `gatsby-node.js` file, add one at that top level of your project (alongside your `gatsby-config.js`).
 
 ## Directions
 
 1. In `gatsby-node.js`, export the `createPages` method and use the `createRedirects` action to generate any redirects that you want to add. Here's an example showing the lasagna recipe above:
 
-```javascript:title=gatsby-node.js
+```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
   const { createRedirect } = actions
 
@@ -29,12 +28,13 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-2 . Once you've made these changes and deployed the changes through Gatsby Cloud, you should be able to test your changes once the CDN cache has been purged.
+2. Once you've made these changes and deployed the changes through Gatsby Cloud, you should be able to test your changes once the CDN cache has been purged.
 
 ## Advanced use cases
 
-Wildcard Path Redirects
-In our example above, you've explicitly redirected one of your recipe urls, and after adding a few others, you realize that you won't have time to get all the old urls. So you decide that any other url that uses your old path `blog/recipes/*` should just be redirected to the new `/recipes` path. Here's how you'd handle that:
+### Wildcard Path Redirects
+
+In the example above, you've explicitly redirected one of your recipe urls, and after adding a few others, you realize that you won't have time to get all the old urls. So you decide that any other url that uses your old path `blog/recipes/*` should just be redirected to the new `/recipes` path. Here's how you'd handle that:
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
@@ -56,7 +56,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ### Splat redirects
 
-Extending our wildcard example above, you may have a high degree confidence that all of your old recipes that lived at `/blog/recipes` have been migrated to `/recipe`. In that case, you can use a `*` marker in the toPath to indicate that you want the redirect to include everything after the base url. In that case `/blog/recipes/any-awesome-url-path` would become `/recipes/any-awesome-url-path`. Here's how you'd handle that:
+Extending the wildcard example above, you may have a high degree confidence that all of your old recipes that lived at `/blog/recipes` have been migrated to `/recipe`. In that case, you can use a `*` marker in the toPath to indicate that you want the redirect to include everything after the base url. In that case `/blog/recipes/any-awesome-url-path` would become `/recipes/any-awesome-url-path`. Here's how you'd handle that:
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ graphql, actions }) => {
@@ -74,7 +74,6 @@ exports.createPages = async ({ graphql, actions }) => {
 If your site has multi-national pages, Gatsby provides the ability of redirecting based in the country that the request is made. We use a Two-letter country code based on the regional indicator symbol standard to define the country you might want to redirect. If you would like a certain page redirected to its language equivalent you can use the conditions: `{ country: ""}` key in `createRedirect`. `country` can either be a string or an array of strings.
 
 ```js:title=gatsby-node.js
-// gatsby-node.js
 createRedirect({
   fromPath: `/blog`,
   toPath: `/italian/blog`,

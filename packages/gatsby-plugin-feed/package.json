@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-feed",
   "description": "Creates an RSS feed for your Gatsby site.",
-  "version": "4.24.0-next.0",
+  "version": "4.24.0-next.1",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -33,8 +33,8 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^4.0.0-next",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",
