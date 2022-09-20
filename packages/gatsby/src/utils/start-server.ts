@@ -780,13 +780,7 @@ export async function startServer(
           res.send(e).status(500)
         }
       } else {
-        let requestPath
-        try {
-          requestPath = decodeURIComponent(encodeURIComponent(req.path))
-        } catch {
-          return next()
-        }
-        const potentialPagePath = reverseFixedPagePath(requestPath)
+        const potentialPagePath = reverseFixedPagePath(decodeURI(req.path))
         const page = findPageByPath(store.getState(), potentialPagePath, false)
 
         // When we can't find a page we send 404
