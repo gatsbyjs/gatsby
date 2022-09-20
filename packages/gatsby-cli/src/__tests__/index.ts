@@ -52,6 +52,7 @@ const setup = (version?: string): ReturnType<typeof getCLI> => {
 }
 
 describe(`error handling`, () => {
+  // TODO(v5): Update test to handle Node 18
   it(`panics on Node < 14.15.0`, () => {
     ;[`6.0.0`, `8.0.0`, `12.13.0`, `13.0.0`].forEach(version => {
       const { reporter } = setup(version)
