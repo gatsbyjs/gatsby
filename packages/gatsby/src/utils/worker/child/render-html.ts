@@ -284,10 +284,12 @@ export async function renderPartialHydrationProd({
   paths,
   envVars,
   sessionId,
+  pathPrefix,
 }: {
   paths: Array<string>
   envVars: Array<[string, string | undefined]>
   sessionId: number
+  pathPrefix
 }): Promise<void> {
   const publicDir = join(process.cwd(), `public`)
 
@@ -341,12 +343,17 @@ export async function renderPartialHydrationProd({
 
     const stream = fs.createWriteStream(outputPath)
 
+    const prefixedPagePath = pathPrefix
+      ? `${pathPrefix}${pageData.path}`
+      : pageData.path
+    const [pathname, search = ``] = prefixedPagePath.split(`?`)
+
     const { pipe } = renderToPipeableStream(
       React.createElement(
         StaticQueryServerContext.Provider,
         { value: staticQueryContext },
         [
-          // TODO: Handle pathPrefix
+          // Make `useLocation` hook usuable in children
           React.createElement(
             ServerLocation,
             { key: `partial-hydration-server-location`, url: pageData.path },
@@ -355,6 +362,12 @@ export async function renderPartialHydrationProd({
                 key: `partial-hydration-page`,
                 data: pageData.result.data,
                 pageContext: pageData.result.pageContext,
+                // Make location available to page as props, logic extracted from `LocationProvider`
+                location: {
+                  pathname,
+                  search,
+                  hash: ``,
+                },
               }),
             ]
           ),
