@@ -152,13 +152,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  console.log("dot then 0")
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname + window.location.search),
   ]).then(() => {
-    console.log("dot then")
     navigationInit()
 
     function onHydrated() {
