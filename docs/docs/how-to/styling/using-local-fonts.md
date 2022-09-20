@@ -52,7 +52,7 @@ This section depends on the styling option you chose and the fonts you chose. Re
   font-display: swap;
   font-style: normal;
   font-named-instance: 'Regular';
-  src: url(/fonts/Inter-roman.var.woff2?v=3.19) format("woff2");
+  src: url(/fonts/Inter-roman.var.woff2) format("woff2");
 }
 ```
 
