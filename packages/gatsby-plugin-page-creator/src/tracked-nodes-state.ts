@@ -1,5 +1,3 @@
-// import type { Node } from "gatsby"
-
 import { extractModel } from "./path-utils"
 import { IOptions } from "./types"
 
