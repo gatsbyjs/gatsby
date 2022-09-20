@@ -1,6 +1,6 @@
 import type { CreatePagesArgs } from "gatsby"
 import { getPluginInstance, IStatePerInstance } from "./tracked-nodes-state"
-import { IOptions } from "./types"
+import type { IOptions } from "./types"
 
 export async function createPagesFromChangedNodes(
   {
