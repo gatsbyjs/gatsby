@@ -2,7 +2,7 @@
 import { Actions, CreatePagesArgs } from "gatsby"
 import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { TrailingSlash } from "gatsby-page-utils"
+import type { TrailingSlash } from "gatsby-page-utils"
 import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
