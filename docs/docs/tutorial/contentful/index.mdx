@@ -2,6 +2,18 @@
 title: "Getting started with Gatsby and Contentful"
 ---
 
+## Prerequisites
+
+Before you get started, check the following.
+
+- An existing Contentful account. You can [sign up](https://www.contentful.com/sign-up/) for free.
+- At least Node >= 14.15.0 and `git` installed. Need help? Follow the [Set Up Your Development Environment](https://www.gatsbyjs.com/docs/tutorial/part-0/) instructions.
+- An account with the [supported Git providers](/docs/reference/cloud/supported-git-providers/). This tutorial will use GitHub in its instructions.
+
+## Getting Started Video
+
+In this video you'll learn how to create a basic Gatsby site using `gatsby-source-contentful` and deploy the site to Gatsby Cloud.
+
 <iframe
   width="560"
   height="315"
@@ -12,20 +24,11 @@ title: "Getting started with Gatsby and Contentful"
   allowfullscreen
 ></iframe>
 
-## Pre-flight checks
-
-Before you get started, check the following.
-
-- Have a [Contentful account](https://www.contentful.com/sign-up/)
-- Have at least node v14.0 installed
-- Have Git installed
-- Are using one of the supported remote Git providers
-
 ## Create a Repository
 
-Before you get going it's a good idea to create a new repository and at the end of this tutorial you'll deploy your site to Gatsby Cloud by connecting to your chosen Git Provider. You can check the supported Git Providers here: [Gatsby Cloud Supported Git Providers](https://www.gatsbyjs.com/docs/reference/cloud/supported-git-providers/).
+Before you get going it's a good idea to create a new repository and at the end of this tutorial you'll deploy your site to Gatsby Cloud by connecting to your chosen Git Provider. You can check the supported Git Providers here: [Gatsby Cloud Supported Git Providers](/docs/reference/cloud/supported-git-providers/).
 
-### 1. Initialize npm
+## 1. Initialize npm
 
 Run npm ` init -y` to create a default `package.json`.
 
@@ -53,7 +56,7 @@ This will create a `package.json` similar to this code snippet.
 }
 ```
 
-### 2. Create .gitignore
+## 2. Create .gitignore
 
 Create a default, pre-populated `.gitignore` file for node.
 
@@ -65,7 +68,7 @@ This will create the default node `.gitignore` file which ignores the `node_modu
 
 You're now ready to install the dependencies.
 
-### 3. Install Dependencies
+## 3. Install Dependencies
 
 Run the following in your terminal to install the dependencies.
 
@@ -91,7 +94,7 @@ The `package.json` file should now include the installed dependencies.
 }
 ```
 
-### 4. Add Gatsby Scripts
+## 4. Add Gatsby Scripts
 
 Now add the following scripts to develop your Gatsby site locally and build your Gatsby site when it's deployed to Gatsby Cloud.
 
@@ -122,13 +125,13 @@ Now add the following scripts to develop your Gatsby site locally and build your
 - serve: The serve script allows you to preview your build locally.
 - clean: The clean script removes the `public` and `.cache` directories.
 
-### 5. Contentful Space API Keys
+## 5. Contentful Space API Keys
 
 In the Contentful UI navigate to Settings > API Keys. Here you will find the Space ID and Content Delivery API access token.
 
 If you don't already have a Space created, you can [reference the Contentful docs](https://www.contentful.com/help/contentful-101/#step-2-create-a-space).
 
-### 6. gatsby-config.js
+## 6. gatsby-config.js
 
 Create a new file at the root of your project called `gatsby-config.js` and add the plugin config. Add your own Space ID and Content Delivery API access token from the previous step.
 
@@ -149,13 +152,13 @@ module.exports = {
 }
 ```
 
-_For production sites you should add these as environment variables. There's more information in the docs about how to do this: [Environment Variables](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)._
+_For production sites you should add these as environment variables. There's more information in the docs about how to do this: [Environment Variables](/docs/how-to/local-development/environment-variables/)._
 
-### 7. Create Content Type
+## 7. Create Content Type
 
 In the Contentful UI navigate to Content Model and click add type. To start with, create one called Page.
 
-### 8. Add Fields to Content Type
+## 8. Add Fields to Content Type
 
 With a Content type created, you can now add fields.
 
@@ -169,7 +172,7 @@ Fields names are case sensitive. Double check all field names are lowercase.
 
 You can read more about Contentful's [Field types in the Contentful doc](https://www.contentful.com/help/contentful-glossary/#fields).
 
-### 9. Add Content to Fields
+## 9. Add Content to Fields
 
 In the Contentful UI navigate to Content to create a new page Page. Add content for the slug, title and description. When you're ready, publish your changes.
 
@@ -185,7 +188,7 @@ Repeat the same steps to create a Not Found page.
 - title: Add a title of the page.
 - description: Add a short description for the page.
 
-### 10. GraphiQL Explorer
+## 10. GraphiQL Explorer
 
 Run the following in your terminal to start the Gatsby development server.
 
@@ -193,8 +196,7 @@ Run the following in your terminal to start the Gatsby development server.
 npm run develop
 ```
 
-With the development server running navigate to the `/__graphql` in your browser.
-[http://localhost:8000/\_\_graphql](http://localhost:8000/__graphql)
+With the development server running navigate to `http://localhost:8000/__graphql` in your browser.
 
 This is a graphical representation of Gatsby's Data Layer.
 
@@ -211,25 +213,25 @@ The prefix is added because you might be sourcing data from multiple places.
 
 In the next step you'll query just the bits of this data you need to include in your site.
 
-### 11. allContentfulPage
+## 11. allContentfulPage
 
 Explore the available data by expanding or selecting fields.
 
 GraphiQL will automatically construct a query for you based on your selection.
 
-When you're ready click the ▶ button to see the results of the query.
+When you're ready click the play button to see the results of the query.
 
 _The purple items in the GraphiQL Explorer are query arguments. The blue items are query fields. You'll mostly be using query fields (blue)._
 
-### 12. The Kansas City Shuffle
+## 12. The Kansas City Shuffle
 
 The Kansas City Shuffle is a development technique to help you create a page query using a node `id`.
 
-#### All Query
+### All Query
 
 Start by copying one of the `id`'s returned from the “all” query.
 
-#### Single Query
+### Single Query
 
 1. Click on the "QUERY VARIABLES" panel to open it and define a new query variable called id.
 2. Paste the `id` you just copied from the “all” query in the previous step.
@@ -248,23 +250,23 @@ query MyQuery($id: String) {
 }
 ```
 
-### 13. File System Route API
+## 13. File System Route API
 
 Gatsby's File System Route API can be used to create pages from a collection of data.
 
 In this case the collection is called `contentfulPage`, and the `slug` is used to form the final URL.
 
-### 14. Code Exporter
+## 14. Code Exporter
 
 With a page query constructed you can now use the Code Exporter to copy the page query, ready to use in your collection route template.
 
-### 15. Collection Route Template
+## 15. Collection Route Template
 
 1. Create a file called `{contentfulPage.slug}.js` inside `src/pages`, ensuring the segment path starts and ends with curly braces.
 2. Paste the code copied from the Code Exporter into your collection route template.
 3. The `id` you defined in GraphiQL's Query Variables earlier, is passed to all Gatsby pages automatically.
 
-### 16. Pages
+## 16. Pages
 
 Gatsby will now create two pages using the `slug`.
 
@@ -272,27 +274,27 @@ Gatsby will now create two pages using the `slug`.
 
 When you're ready, commit your changes and push them to your remote repository.
 
-### 17. Deploy to Gatsby Cloud
+## 17. Deploy to Gatsby Cloud
 
 To create a free account with Gatsby Cloud, sign up using your Git Provider or connect your Google Account.
 
-### 18. Connect To Git Provider
+## 18. Connect To Git Provider
 
 Connect Gatsby Cloud with your code using your Git Provider, to enable automatic deploys.
 
-### 19. Import Repository
+## 19. Import Repository
 
 Select an account from your Git Provider and search for your repository. When you're ready click Import.
 
-### 20. Basic Configuration
+## 20. Basic Configuration
 
 Give your site a name, and select which branch Gatsby Cloud should build from. When you're ready, click Next.
 
-#### Contentful Connect
+### Contentful Connect
 
 Use quick connect to automatically configure Gatsby Cloud and Contentful. Click Connect and follow the on screen instructions.
 
-#### Environment Variables
+### Environment Variables
 
 A successful connection will automatically add the Contentful environment variables to your configuration.
 
@@ -300,14 +302,14 @@ A successful connection will automatically add the Contentful environment variab
 
 A Gatsby Cloud webhook will be automatically added to your Contentful space.
 
-### 21. Build Site
+## 21. Build Site
 
 When you're ready, click Build Site.
 
-### 22. Default URL
+## 22. Default URL
 
 Each new site built on Gatsby Cloud is given a unique default URL. You can configure your own custom domain in the Site Settings: [Adding a Custom Domain](https://support.gatsbyjs.com/hc/en-us/articles/360063469873-Adding-a-Custom-Domain).
 
-### 23. Finished!
+## 23. Finished!
 
 After a successful build you can visit your new site in the browser.
