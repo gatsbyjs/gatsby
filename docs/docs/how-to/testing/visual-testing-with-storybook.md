@@ -55,8 +55,7 @@ module.exports = {
 
 ## Configuration
 
-Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading. If you wish to streamline the process, jump to the [add-on section](#using-an-addon) below.
-
+Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading.
 ### Manual configuration
 
 Storybook's webpack configuration will require adjustments to allow you to transpile Gatsby's source files and ensure the proper Babel plugins are used.
@@ -83,23 +82,22 @@ The final `.storybook/main.js` should look something like this:
 
 ```js:title=.storybook/main.js
 module.exports = {
-  "stories": [
+  stories: [
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
   ],
-  "addons": [
+  addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    //"storybook-addon-gatsby"
+    "@storybook/addon-essentials"
   ],
-  "framework": "@storybook/react",
+  framework: "@storybook/react",
   // highlight-start
-  "core": {
+  core: {
     "builder": "webpack5"
   },
   webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
-    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
+    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby|gatsby-script)\/)/];
 
     // Remove core-js to prevent issues with Storybook
     config.module.rules[0].exclude= [/core-js/]
