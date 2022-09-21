@@ -1,8 +1,7 @@
+import { createFromReadableStream } from "react-server-dom-webpack"
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
-
-import { createFromReadableStream } from "react-server-dom-webpack"
 
 /**
  * Available resource loading statuses

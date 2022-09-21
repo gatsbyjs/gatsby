@@ -390,7 +390,6 @@ module.exports = async (
           },
         ],
       },
-
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
@@ -447,6 +446,15 @@ module.exports = async (
         ])
 
         break
+    }
+
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    // Removes it from the client payload as it's not used there
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      configRules.push({
+        test: /react-server-dom-webpack/,
+        use: loaders.null(),
+      })
     }
 
     return { rules: configRules }
