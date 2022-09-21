@@ -2,7 +2,7 @@ import * as path from "path"
 import Template from "webpack/lib/Template"
 import ModuleDependency from "webpack/lib/dependencies/ModuleDependency"
 import NullDependency from "webpack/lib/dependencies/NullDependency"
-import url from "url"
+import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 import webpack, { Module, NormalModule, Dependency, javascript } from "webpack"
 
 interface IModuleExport {
@@ -99,10 +99,13 @@ export class PartialHydrationPlugin {
         }
       })
 
-      const { rawRequest } = normalModule
+      const normalizedModuleKey = createNormalizedModuleKey(
+        normalModule.resource,
+        rootContext
+      )
 
-      if (rawRequest !== undefined) {
-        json[`file://node_modules/${rawRequest}`] = moduleExports
+      if (normalizedModuleKey !== undefined) {
+        json[normalizedModuleKey] = moduleExports
       }
     }
 

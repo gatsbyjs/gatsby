@@ -11,19 +11,26 @@ import type {
   AssignmentExpression,
   Directive,
 } from "estree"
+import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 
-function createNamedReference(name: string, moduleId: string): string {
+function createNamedReference(
+  name: string,
+  normalizedModuleKey: string
+): string {
   return `export const ${name} = {
     $$typeof: Symbol.for('react.module.reference'),
-    filepath: '${moduleId}',
+    filepath: '${normalizedModuleKey}',
     name: '${name}'
   }`
 }
 
-function createDefaultReference(name: string, moduleId: string): string {
+function createDefaultReference(
+  name: string,
+  normalizedModuleKey: string
+): string {
   return `export default {
     $$typeof: Symbol.for('react.module.reference'),
-    filepath: '${moduleId}',
+    filepath: '${normalizedModuleKey}',
     name: '${name}'
   }`
 }
@@ -38,14 +45,10 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
   const references: Array<string> = []
   let hasClientExportDirective = false
 
-  const nodeModuleRelative = this.resourcePath.replace(
-    path.join(this.rootContext, `node_modules`),
-    ``
+  const normalizedModuleKey = createNormalizedModuleKey(
+    this.resourcePath,
+    this.rootContext
   )
-
-  const [nodeModule] = nodeModuleRelative.split(path.sep).filter(Boolean)
-
-  const moduleId = `file://node_modules/${nodeModule}`
 
   walk(parse(content, { ecmaVersion: 2020, sourceType: `module` }), {
     ExpressionStatement(plainAcornNode: Node) {
@@ -65,14 +68,18 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         case `VariableDeclaration`:
           for (const { id } of node.declaration.declarations || []) {
             if (id.type === `Identifier` && id.name) {
-              references.push(createNamedReference(id.name, moduleId))
+              references.push(
+                createNamedReference(id.name, normalizedModuleKey)
+              )
             }
 
             if (id.type === `ObjectPattern`) {
               // @ts-ignore Wrong type
               for (const { value } of id.properties) {
                 if (value.type === `Identifier` && value.name) {
-                  references.push(createNamedReference(value.name, moduleId))
+                  references.push(
+                    createNamedReference(value.name, normalizedModuleKey)
+                  )
                 }
               }
             }
@@ -80,7 +87,9 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             if (id.type === `ArrayPattern`) {
               for (const element of id.elements || []) {
                 if (element?.type === `Identifier` && element.name) {
-                  references.push(createNamedReference(element.name, moduleId))
+                  references.push(
+                    createNamedReference(element.name, normalizedModuleKey)
+                  )
                 }
               }
             }
@@ -93,7 +102,10 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             node.declaration.id.name
           ) {
             references.push(
-              createNamedReference(node.declaration.id.name, moduleId)
+              createNamedReference(
+                node.declaration.id.name,
+                normalizedModuleKey
+              )
             )
           }
           break
@@ -108,10 +120,15 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
             specifier.exported.name
           ) {
             if (specifier.exported.name === `default`) {
-              references.push(createDefaultReference(`default`, moduleId))
+              references.push(
+                createDefaultReference(`default`, normalizedModuleKey)
+              )
             } else {
               references.push(
-                createNamedReference(specifier.exported.name, moduleId)
+                createNamedReference(
+                  specifier.exported.name,
+                  normalizedModuleKey
+                )
               )
             }
           }
@@ -127,12 +144,16 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         // Handle cases shown in `fixtures/esm-default-expression.js`
         case `Identifier`:
           if (node.declaration.name) {
-            references.push(createDefaultReference(`default`, moduleId))
+            references.push(
+              createDefaultReference(`default`, normalizedModuleKey)
+            )
           }
           break
         case `FunctionDeclaration`:
         case `ClassDeclaration`:
-          references.push(createDefaultReference(`default`, moduleId))
+          references.push(
+            createDefaultReference(`default`, normalizedModuleKey)
+          )
           break
       }
     },
@@ -151,7 +172,9 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
         left?.property?.type === `Identifier` &&
         left.property?.name
       ) {
-        references.push(createNamedReference(left.property.name, moduleId))
+        references.push(
+          createNamedReference(left.property.name, normalizedModuleKey)
+        )
       }
     },
   })
