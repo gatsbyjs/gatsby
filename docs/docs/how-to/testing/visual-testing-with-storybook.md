@@ -93,7 +93,7 @@ module.exports = {
   framework: "@storybook/react",
   // highlight-start
   core: {
-    "builder": "webpack5"
+    builder: "webpack5",
   },
   webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
