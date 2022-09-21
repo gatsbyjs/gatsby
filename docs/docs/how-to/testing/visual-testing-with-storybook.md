@@ -56,6 +56,7 @@ module.exports = {
 ## Configuration
 
 Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading.
+
 ### Manual configuration
 
 Storybook's webpack configuration will require adjustments to allow you to transpile Gatsby's source files and ensure the proper Babel plugins are used.
