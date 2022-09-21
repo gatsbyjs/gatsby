@@ -135,7 +135,7 @@ function prepareCacheFolder(
   contents: DeepPartial<ICachedReduxState>
 ): void {
   // Temporarily save the nodes and pages and remove them from the main redux store
-  // This prevents an OOM when the page nodes collectively contain to much data
+  // This prevents an OOM when the page nodes collectively contain too much data
   const nodesMap = contents.nodes
   contents.nodes = undefined
 
