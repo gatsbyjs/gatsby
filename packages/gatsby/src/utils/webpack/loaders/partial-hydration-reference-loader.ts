@@ -1,6 +1,4 @@
 /* eslint-disable @babel/no-invalid-this */
-import url from "url"
-import path from "path"
 import { parse } from "acorn-loose"
 import { simple as walk } from "acorn-walk"
 import type { LoaderDefinitionFunction } from "webpack"
