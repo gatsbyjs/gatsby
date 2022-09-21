@@ -6,7 +6,7 @@ export const script = {
 }
 
 export const scripts = {
-  [script.three]: `https://unpkg.com/three@0.139.1/build/three.js`,
+  [script.three]: `https://cdnjs.cloudflare.com/ajax/libs/three.js/0.144.0/three.min.js`,
   [script.marked]: `https://cdn.jsdelivr.net/npm/marked/marked.min.js`,
   [script.jQuery]: `https://code.jquery.com/jquery-3.4.1.min.js`,
   [script.popper]: `https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js`,

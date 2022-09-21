@@ -102,6 +102,8 @@ const esModules = [
   `periscopic`,
   `hast-util-to-estree`,
   `estree-util-attach-comments`,
+  `trim-lines`,
+  `estree-util-to-js`,
 ].join(`|`)
 
 module.exports = {
