@@ -73,6 +73,7 @@ module.exports = async function build(
   // global gatsby object to use without store
   global.__GATSBY = {
     buildId: uuid.v4(),
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     root: program!.directory,
   }
 
@@ -145,6 +146,7 @@ module.exports = async function build(
 
   let closeJavascriptBundleCompilation: (() => Promise<void>) | undefined
   let closeHTMLBundleCompilation: (() => Promise<void>) | undefined
+  let closePartialHydrationBundleCompilation: (() => Promise<void>) | undefined
   let webpackAssets: Array<webpack.StatsAsset> | null = null
   let webpackCompilationHash: string | null = null
   let webpackSSRCompilationHash: string | null = null
@@ -233,6 +235,34 @@ module.exports = async function build(
     buildSSRBundleActivityProgress.end()
   }
 
+  if (
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
+  ) {
+    const buildPartialHydrationBundleActivityProgress = report.activityTimer(
+      `Building Partial Hydration renderer`,
+      { parentSpan: buildSpan }
+    )
+    buildPartialHydrationBundleActivityProgress.start()
+    try {
+      const { buildPartialHydrationRenderer } = await import(`./build-html`)
+      const { close } = await buildPartialHydrationRenderer(
+        program,
+        Stage.BuildHTML,
+        buildPartialHydrationBundleActivityProgress.span
+      )
+
+      closePartialHydrationBundleCompilation = close
+
+      await close()
+    } catch (err) {
+      buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+    } finally {
+      buildPartialHydrationBundleActivityProgress.end()
+    }
+  }
+
   // exec outer config function for each template
   const pageConfigActivity = report.activityTimer(`Execute page configs`, {
     parentSpan: buildSpan,
@@ -271,6 +301,7 @@ module.exports = async function build(
     await Promise.all([
       closeJavascriptBundleCompilation?.(),
       closeHTMLBundleCompilation?.(),
+      closePartialHydrationBundleCompilation?.(),
     ])
   } finally {
     cacheActivity.end()
