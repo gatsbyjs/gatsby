@@ -55,7 +55,7 @@ module.exports = {
 
 ## Configuration
 
-Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading. If you wish to streamline the process, jump to the [add-on section](#using-an-addon) below.
+Additional configuration is required to allow Gatsby's components to be manually tested with Storybook. If you want to learn more about Storybook's configuration, continue reading.
 
 ### Manual configuration
 
@@ -86,19 +86,23 @@ module.exports = {
   // You will want to change this to wherever your Stories will live
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
+  framework: "@storybook/react",
   // highlight-start
   core: {
     builder: "webpack5",
   },
   webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
-    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
+    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby|gatsby-script)\/)/]
 
+    // Remove core-js to prevent issues with Storybook
+    config.module.rules[0].exclude= [/core-js/]
     // Use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
     config.module.rules[0].use[0].options.plugins.push(
       require.resolve("babel-plugin-remove-graphql-queries")
     )
 
+    config.resolve.mainFields=["browser", "module", "main"]
     return config
   },
   // highlight-end
@@ -130,29 +134,6 @@ window.___navigate = pathname => {
 ```
 
 > **Note:** Storybook's `preview.js` file allows you to set up decorators, parameters, and other aspects that affect the story rendering in the Canvas. Read more about it in the [official documentation](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering).
-
-### Using an addon
-
-You can streamline the entire configuration process by adding the `storybook-addon-gatsby` to your Gatsby project. Run the following command:
-
-```shell
-npm i -D storybook-addon-gatsby
-```
-
-Next, register the addon within Storybook's main configuration file (i.e., `.storybook/main.js`).
-
-```js:title=.storybook/main.js
-module.exports = {
-  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    // highlight-start
-    "storybook-addon-gatsby",
-    // highlight-end
-  ],
-}
-```
 
 ## TypeScript Support
 

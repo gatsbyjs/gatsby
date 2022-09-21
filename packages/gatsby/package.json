@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "4.24.0-next.3",
+  "version": "4.24.0-next.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -90,18 +90,18 @@
     "find-cache-dir": "^3.3.2",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^10.1.0",
-    "gatsby-cli": "^4.24.0-next.0",
+    "gatsby-cli": "^4.24.0-next.1",
     "gatsby-core-utils": "^3.24.0-next.0",
     "gatsby-graphiql-explorer": "^2.24.0-next.0",
     "gatsby-legacy-polyfills": "^2.24.0-next.0",
     "gatsby-link": "^4.24.0-next.2",
     "gatsby-page-utils": "^2.24.0-next.0",
-    "gatsby-parcel-config": "0.15.0-next.0",
-    "gatsby-plugin-page-creator": "^4.24.0-next.0",
+    "gatsby-parcel-config": "0.15.0-next.1",
+    "gatsby-plugin-page-creator": "^4.24.0-next.1",
     "gatsby-plugin-typescript": "^4.24.0-next.0",
-    "gatsby-plugin-utils": "^3.18.0-next.0",
+    "gatsby-plugin-utils": "^3.18.0-next.1",
     "gatsby-react-router-scroll": "^5.24.0-next.1",
-    "gatsby-script": "^1.9.0-next.1",
+    "gatsby-script": "^1.9.0-next.2",
     "gatsby-telemetry": "^3.24.0-next.0",
     "gatsby-worker": "^1.24.0-next.0",
     "glob": "^7.2.3",
@@ -208,7 +208,7 @@
     "zipkin-transport-http": "^0.22.0"
   },
   "optionalDependencies": {
-    "gatsby-sharp": "^0.18.0-next.0"
+    "gatsby-sharp": "^0.18.0-next.1"
   },
   "engines": {
     "node": ">=14.15.0"

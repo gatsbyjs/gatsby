@@ -29,7 +29,7 @@ The following table shows the level of support for each tool.
 | Yarn Workspaces (v2/v3 with PnP) | ◐                |                                                         |
 | Lerna                            | ●                |                                                         |
 | NPM Workspaces (v7 and onwards)  | ●                |                                                         |
-| NX                               | ○                | Work in progress                                        |
+| NX                               | ●                | Full support for detecting and installing dependencies  |
 | Turborepo                        | ○                | We do not have plans to support Turborepo at this time. |
 
 ## Troubleshooting
