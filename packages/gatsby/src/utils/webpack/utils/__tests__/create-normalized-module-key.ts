@@ -26,16 +26,15 @@ it(`should normalize relative module imports from node_modules`, () => {
 })
 
 it(`should normalize local module imports`, () => {
-  const localModuleFile = path.join(
+  const rootRelativeLocalModuleFile = path.join(`src`, `components`, `index.js`)
+  const absoluteLocalModuleFile = path.join(
     projectRoot,
-    `src`,
-    `components`,
-    `index.js`
+    rootRelativeLocalModuleFile
   )
 
   const normalizedModuleKey = createNormalizedModuleKey(
-    localModuleFile,
+    absoluteLocalModuleFile,
     projectRoot
   )
-  expect(normalizedModuleKey).toEqual(localModuleFile)
+  expect(normalizedModuleKey).toEqual(`file://${rootRelativeLocalModuleFile}`)
 })
