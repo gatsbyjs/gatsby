@@ -37,6 +37,7 @@ module.exports = {
     `gatsby-source-fake-data`,
     `gatsby-source-pinc-data`,
     `gatsby-source-query-on-demand-data`,
+    `gatsby-source-fs-route-mutations`,
     `gatsby-browser-tsx`,
     `gatsby-node-typegen`,
     `gatsby-transformer-sharp`,
