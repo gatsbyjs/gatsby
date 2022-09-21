@@ -1,7 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-export const StaticQueryContext = React.createContext({})
+const StaticQueryContext = React.createContext({})
+let StaticQueryServerContext = null
+if (React.createServerContext) {
+  StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
+}
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const finalData = data
@@ -16,7 +20,8 @@ function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   )
 }
 
-export const StaticQuery = props => {
+// TODO(v5): Remove completely
+const StaticQuery = props => {
   const { data, query, render, children } = props
 
   return (
@@ -40,17 +45,28 @@ StaticQuery.propTypes = {
   children: PropTypes.func,
 }
 
-export const useStaticQuery = query => {
+const useStaticQuery = query => {
   if (
     typeof React.useContext !== `function` &&
     process.env.NODE_ENV === `development`
   ) {
+    // TODO(v5): Remove since we require React >= 18
     throw new Error(
       `You're likely using a version of React that doesn't support Hooks\n` +
         `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
     )
   }
-  const context = React.useContext(StaticQueryContext)
+  let context
+
+  // Can we get a better check here?
+  if (
+    StaticQueryServerContext &&
+    Object.keys(StaticQueryServerContext._currentValue).length
+  ) {
+    context = React.useContext(StaticQueryServerContext)
+  } else {
+    context = React.useContext(StaticQueryContext)
+  }
 
   // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
   // to wrap the query in a grqphql, then casting it to a Number results in `NaN` allowing us to
@@ -73,4 +89,11 @@ useStaticQuery(graphql\`${query}\`);
         `please open an issue in https://github.com/gatsbyjs/gatsby/issues`
     )
   }
+}
+
+export {
+  StaticQuery,
+  StaticQueryContext,
+  useStaticQuery,
+  StaticQueryServerContext,
 }
