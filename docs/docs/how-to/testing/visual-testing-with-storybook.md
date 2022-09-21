@@ -82,14 +82,9 @@ The final `.storybook/main.js` should look something like this:
 
 ```js:title=.storybook/main.js
 module.exports = {
-  stories: [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials"
-  ],
+  // You will want to change this to wherever your Stories will live
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
   framework: "@storybook/react",
   // highlight-start
   core: {
@@ -97,7 +92,7 @@ module.exports = {
   },
   webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
-    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby|gatsby-script)\/)/];
+    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby|gatsby-script)\/)/]
 
     // Remove core-js to prevent issues with Storybook
     config.module.rules[0].exclude= [/core-js/]
