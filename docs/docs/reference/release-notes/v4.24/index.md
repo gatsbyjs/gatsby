@@ -4,7 +4,7 @@ version: "4.24.0"
 title: "v4.24 Release Notes"
 ---
 
-Welcome to `gatsby@4.24.0` release (September 2022 # TODO)
+Welcome to `gatsby@4.24.0` release (September 2022 #2)
 
 Key highlights of this release:
 
