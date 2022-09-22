@@ -643,7 +643,6 @@ module.exports = async (
         },
         // if a module is bigger than 160kb from node_modules we make a separate chunk for it
         lib: {
-          // Don't split up the page chunks as they won't be loaded by gatsby anyways
           test(module) {
             return (
               !isCssModule(module) &&
@@ -672,24 +671,10 @@ module.exports = async (
           // if a chunk is used on all components we put it in commons (we need at least 2 components)
           minChunks: Math.max(componentsCount, 2),
           priority: 20,
-          // Don't split up the page chunks as they won't be loaded by gatsby anyways
-          // test: isPartialHydrationEnabled
-          //   ? function (module, { chunkGraph }) {
-          //       for (const chunk of chunkGraph.getModuleChunksIterable(
-          //         module
-          //       )) {
-          //         if (chunk.name?.startsWith(`component---`)) {
-          //           return false
-          //         }
-          //       }
-
-          //       return true
-          //     }
-          //   : undefined,
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
-          test: module => isCssModule(module),
+          test: module => !isCssModule(module),
           name(module, chunks) {
             const hash = crypto
               .createHash(`sha1`)
