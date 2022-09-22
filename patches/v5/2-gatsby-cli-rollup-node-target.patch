@@ -1,0 +1,13 @@
+diff --git a/packages/gatsby-cli/rollup.config.js b/packages/gatsby-cli/rollup.config.js
+index d33dcea326..21981b82d1 100644
+--- a/packages/gatsby-cli/rollup.config.js
++++ b/packages/gatsby-cli/rollup.config.js
+@@ -54,7 +54,7 @@ export default {
+           {
+             "modules": false,
+             "shippedProposals": true,
+-            "targets": { "node": "10.13.0" }
++            "targets": { "node": "18.0.0" }
+           }
+         ],
+         "@babel/preset-react"

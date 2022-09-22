@@ -6,54 +6,54 @@ This guide covers how to add local fonts to your Gatsby site.
 
 ## Prerequisites
 
-This guide uses the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and a font file. Some common font file extensions are `.woff2` and `.woff`.
+- A Gatsby project set up. (Need help creating one? Follow the [Quick Start](https://www.gatsbyjs.com/docs/quick-start/))
+- Font file(s), e.g. from [Inter](https://rsms.me/inter/). Common font file extensions are `.woff2` and `.woff`
 
-## Using local fonts in Gatsby
+## Directions
 
-Get started by using local fonts by adding them to your project. Copy the font file into your Gatsby project, for example, `src/fonts/fontname.woff2`.
+### Place the font files into your project
 
-**NOTE:** For performance reasons, it’s recommended to limit the number of custom fonts added.
+When you downloaded your font file(s), e.g. from [Inter](https://rsms.me/inter/) you fill most likely have a bunch of different files available (this can differ a lot between fonts). You'll want to use the "Web" versions or [Variable Fonts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide) versions of your font. They are optimized for the usage on the web.
 
-The Gatsby default starter project adds [browser safe font](https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Fundamentals#Default_fonts) styling in the `layout.css` file.
+Furthermore, in this next step you should only choose the font styles and weights you absolutely must, as it's benefitial for performance to limit the number of fonts.
 
-```css:title=src/components/layout.css
-body {
-  color: hsla(0, 0%, 0%, 0.8);
-  // highlight-next-line
-  font-family: georgia, serif;
-  font-weight: normal;
-  word-wrap: break-word;
-  font-kerning: normal;
+Place your font(s) into a `static/fonts` directory. For the sake of this guide the `Inter/Inter Web/Inter-roman.var.woff2` file is used. It's a web optimized, variable, subset font file of Inter.
+
+The `static` folder (see the [Using the Static Folder](/docs/how-to/images-and-media/static-folder/) guide) contents will be copied over to the `public` folder so you can reference the files in your other files.
+
+### Preload your fonts
+
+For the best performance possible it's recommended to [preload](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) your font files. Add a `gatsby-ssr.js` if not existent yet and add the following:
+
+```js:title=gatsby-ssr.js
+
+export const onRenderBody = ({ setHeadComponents }) => {
+  setHeadComponents([
+    <link
+      rel="preload"
+      href="/fonts/Inter-roman.var.woff2"
+      as="font"
+      type="font/woff2"
+      crossOrigin="anonymous"
+      key="interFont"
+    />,
+  ])
 }
 ```
 
-You will need to create a new CSS rule to use your local font in your project. First, create a `typography.css` file and declare your `@font-face` selector.
+### Use the fonts in your CSS
 
-```css:title=src/css/typography.css
+This section depends on the styling option you chose and the fonts you chose. Refer to the respective documentation for details. In this guide a `global.css` file is added to the root, imported into a `gatsby-browser.js` file and has the following contents:
+
+```css:title=global.css
 @font-face {
-  font-family: "Font Name";
-  src: url("../fonts/fontname.woff2");
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url(/fonts/Inter-roman.var.woff2) format("woff2");
 }
 ```
 
-Next, import the `typography.css` file into `layout.css`. Add the `font-family` value in the appropriate CSS rules to adjust the styling.
-
-```css:title=src/components/layout.css
-// highlight-next-line
-@import "../css/typography.css";
-
-body {
-  color: hsla(0, 0%, 0%, 0.8);
-  // highlight-next-line
-  font-family: "Font Name", georgia, serif;
-  font-weight: normal;
-  word-wrap: break-word;
-  font-kerning: normal;
-}
-```
-
-**NOTE:** If fonts are not updating by following the above, add the `font-family` value in your CSS file as needed.
-
-## Other resources
-
-- Check out the [Adding a Local Font](/docs/recipes/styling-css/#adding-a-local-font) Gatsby recipe.
+The important piece is the `src`. Point the `url` to your `fonts` directory.

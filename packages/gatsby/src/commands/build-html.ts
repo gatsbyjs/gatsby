@@ -224,6 +224,26 @@ const doBuildRenderer = async (
   }
 }
 
+const doBuildPartialHydrationRenderer = async (
+  directory: string,
+  webpackConfig: webpack.Configuration,
+  stage: Stage
+): Promise<IBuildRendererResult> => {
+  const { stats, close } = await runWebpack(webpackConfig, stage, directory)
+  if (stats?.hasErrors()) {
+    reporter.panicOnBuild(
+      structureWebpackErrors(stage, stats.compilation.errors)
+    )
+  }
+
+  // render-page.js is hard coded in webpack.config
+  return {
+    rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
+    stats,
+    close,
+  }
+}
+
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
@@ -234,6 +254,48 @@ export const buildRenderer = async (
   })
 
   return doBuildRenderer(program.directory, config, stage)
+}
+
+export const buildPartialHydrationRenderer = async (
+  program: IProgram,
+  stage: Stage,
+  parentSpan?: IActivity
+): Promise<IBuildRendererResult> => {
+  const config = await webpackConfig(program, program.directory, stage, null, {
+    parentSpan,
+  })
+
+  for (const rule of config.module.rules) {
+    if (`./test.js`.match(rule.test)) {
+      if (!rule.use) {
+        rule.use = []
+      }
+      if (!Array.isArray(rule.use)) {
+        rule.use = [rule.use]
+      }
+      rule.use.push({
+        loader: require.resolve(
+          `../utils/webpack/loaders/partial-hydration-reference-loader`
+        ),
+      })
+    }
+  }
+
+  // TODO add caching
+  config.cache = false
+
+  config.output.path = path.join(
+    program.directory,
+    `.cache`,
+    `partial-hydration`
+  )
+
+  // TODO collect javascript aliases to match the partial hydration bundle
+  config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
+    `gatsby-plugin-image/dist/gatsby-image.browser.modern`
+  )
+
+  return doBuildPartialHydrationRenderer(program.directory, config, stage)
 }
 
 // TODO remove after v4 release and update cloud internals
@@ -408,6 +470,42 @@ const renderHTMLQueue = async (
   }
 }
 
+const renderPartialHydrationQueue = async (
+  workerPool: GatsbyWorkerPool,
+  activity: IActivity,
+  pages: Array<string>
+): Promise<void> => {
+  // We need to only pass env vars that are set programmatically in gatsby-cli
+  // to child process. Other vars will be picked up from environment.
+  const envVars: Array<[string, string | undefined]> = [
+    [`NODE_ENV`, process.env.NODE_ENV],
+    [`gatsby_executing_command`, process.env.gatsby_executing_command],
+    [`gatsby_log_level`, process.env.gatsby_log_level],
+  ]
+
+  const segments = chunk(pages, 50)
+  const sessionId = Date.now()
+  // const { webpackCompilationHash } = store.getState()
+
+  try {
+    await Promise.all(
+      segments.map(async pageSegment => {
+        await workerPool.single.renderPartialHydrationProd({
+          envVars,
+          paths: pageSegment,
+          sessionId,
+        })
+
+        if (activity && activity.tick) {
+          activity.tick(pageSegment.length)
+        }
+      })
+    )
+  } catch (e) {
+    console.log({ e })
+  }
+}
+
 class BuildHTMLError extends Error {
   codeFrame = ``
   context?: {
@@ -499,8 +597,16 @@ export const buildHTML = async ({
   activity: IActivity
   workerPool: GatsbyWorkerPool
 }): Promise<void> => {
-  const { rendererPath } = await buildRenderer(program, stage, activity.span)
+  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
+
+  if (
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
+  ) {
+    await renderPartialHydrationQueue(workerPool, activity, pagePaths)
+  }
 }
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
@@ -515,7 +621,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   toRegenerate: Array<string>
   toDelete: Array<string>
 }> {
-  const pageRenderer = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
   const { toRegenerate, toDelete, toCleanupFromTrackedState } =
@@ -538,7 +644,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     buildHTMLActivityProgress.start()
     try {
       await doBuildPages(
-        pageRenderer,
+        rendererPath,
         toRegenerate,
         buildHTMLActivityProgress,
         workerPool,
@@ -568,6 +674,48 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     buildHTMLActivityProgress.end()
   } else {
     reporter.info(`There are no new or changed html files to build.`)
+  }
+
+  if (
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
+  ) {
+    if (toRegenerate.length > 0) {
+      const buildHTMLActivityProgress = reporter.createProgress(
+        `Building partial HTML for pages`,
+        toRegenerate.length,
+        0,
+        {
+          parentSpan,
+        }
+      )
+      try {
+        buildHTMLActivityProgress.start()
+        await renderPartialHydrationQueue(
+          workerPool,
+          buildHTMLActivityProgress,
+          toRegenerate
+        )
+      } catch (error) {
+        // Generic error with page path and useful stack trace, accurate code frame can be a future improvement
+        buildHTMLActivityProgress.panic({
+          id: `80000`,
+          context: error.context,
+          error,
+        })
+      } finally {
+        buildHTMLActivityProgress.end()
+      }
+    }
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR !== `5` && !program.keepPageRenderer) {
+    try {
+      await deleteRenderer(rendererPath)
+    } catch (err) {
+      // pass through
+    }
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {

@@ -193,7 +193,7 @@ allPages.filter(
 
 | Param         | Type                | Description                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| page          | <code>object</code> |                                                                                     |
+| page          | <code>object</code> | contains the path key `{ path }`                                                    |
 | excludedRoute | <code>string</code> | Element from `excludes` Array in plugin config                                      |
 | tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
 

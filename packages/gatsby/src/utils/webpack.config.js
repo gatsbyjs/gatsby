@@ -23,9 +23,10 @@ import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
-import { major } from "semver"
 import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
+import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
+import { satisfiesSemvers } from "./flags"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -54,6 +55,10 @@ module.exports = async (
   const { assetPrefix, pathPrefix, trailingSlash } = store.getState().config
 
   const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
+  const isPartialHydrationEnabled =
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -117,23 +122,6 @@ module.exports = async (
         "process.env": `({})`,
       }
     )
-  }
-
-  function getHmrPath() {
-    // ref: https://github.com/gatsbyjs/gatsby/issues/8348
-    let hmrBasePath = `/`
-    const hmrSuffix = `__webpack_hmr&reload=true&overlay=false`
-
-    if (process.env.GATSBY_WEBPACK_PUBLICPATH) {
-      const pubPath = process.env.GATSBY_WEBPACK_PUBLICPATH
-      if (pubPath.slice(-1) === `/`) {
-        hmrBasePath = pubPath
-      } else {
-        hmrBasePath = withTrailingSlash(pubPath)
-      }
-    }
-
-    return hmrBasePath + hmrSuffix
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
@@ -233,6 +221,7 @@ module.exports = async (
         HAS_REACT_18: JSON.stringify(
           major(require(`react-dom/package.json`).version) >= 18
         ),
+        "global.hasPartialHydration": isPartialHydrationEnabled,
         "_CFLAGS_.GATSBY_MAJOR": JSON.stringify(_CFLAGS_.GATSBY_MAJOR),
       }),
 
@@ -280,16 +269,24 @@ module.exports = async (
         break
       }
       case `build-javascript`: {
-        configPlugins = configPlugins.concat([
-          plugins.extractText({
-            filename: `[name].[contenthash].css`,
-            chunkFilename: `[name].[contenthash].css`,
-          }),
-          // Write out stats object mapping named dynamic imports (aka page
-          // components) to all their async chunks.
-          plugins.extractStats(),
-          new StaticQueryMapper(store),
-        ])
+        configPlugins = configPlugins
+          .concat([
+            plugins.extractText({
+              filename: `[name].[contenthash].css`,
+              chunkFilename: `[name].[contenthash].css`,
+            }),
+            // Write out stats object mapping named dynamic imports (aka page
+            // components) to all their async chunks.
+            plugins.extractStats(),
+            new StaticQueryMapper(store),
+            isPartialHydrationEnabled
+              ? new PartialHydrationPlugin(
+                  `../.cache/partial-hydration/manifest.json`,
+                  path.join(directory, `.cache`, `public-page-renderer-prod.js`)
+                )
+              : null,
+          ])
+          .filter(Boolean)
         break
       }
       case `develop-html`:
@@ -389,7 +386,6 @@ module.exports = async (
           },
         ],
       },
-
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
@@ -448,6 +444,15 @@ module.exports = async (
         break
     }
 
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    // Removes it from the client payload as it's not used there
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      configRules.push({
+        test: /react-server-dom-webpack/,
+        use: loaders.null(),
+      })
+    }
+
     return { rules: configRules }
   }
 
@@ -471,6 +476,7 @@ module.exports = async (
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
+        "react-server-dom-webpack": getPackageRoot(`react-server-dom-webpack`),
         "@pmmmwh/react-refresh-webpack-plugin": getPackageRoot(
           `@pmmmwh/react-refresh-webpack-plugin`
         ),
@@ -556,7 +562,6 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
-    const [major, minor] = process.version.replace(`v`, ``).split(`.`)
     config.target = `node14.15`
   } else {
     config.target = [`web`, `es5`]
@@ -603,6 +608,8 @@ module.exports = async (
 
   if (stage === `build-html` || stage === `develop-html`) {
     config.optimization = {
+      // TODO fix our partial hydration manifest
+      mangleExports: !isPartialHydrationEnabled,
       splitChunks: {
         cacheGroups: {
           default: false,
@@ -667,9 +674,7 @@ module.exports = async (
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
-          test(module) {
-            return !isCssModule(module)
-          },
+          test: module => !isCssModule(module),
           name(module, chunks) {
             const hash = crypto
               .createHash(`sha1`)
@@ -708,6 +713,8 @@ module.exports = async (
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // TODO fix our partial hydration manifest
+      mangleExports: !isPartialHydrationEnabled,
       splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?

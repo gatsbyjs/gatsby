@@ -990,6 +990,7 @@ type ReactProps<T extends Element> = React.DetailedHTMLProps<
   T
 >
 export interface RenderBodyArgs {
+  loadPageDataSync: (pathname: string) => { result: Record<string, unknown> }
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void

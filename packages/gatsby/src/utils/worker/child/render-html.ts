@@ -3,7 +3,8 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { generateHtmlPath } from "gatsby-core-utils"
+import { generateHtmlPath } from "gatsby-core-utils/page-html"
+import { generatePageDataPath } from "gatsby-core-utils/page-data"
 import { truncate } from "lodash"
 
 import {
@@ -27,12 +28,26 @@ import { ensureFileContent } from "../../ensure-file-content"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
+type IUnsafeBuiltinUsage = Array<string> | undefined
+
 declare global {
   namespace NodeJS {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Global {
-      unsafeBuiltinUsage: Array<string> | undefined
+      unsafeBuiltinUsage: IUnsafeBuiltinUsage
     }
+  }
+}
+
+// Best effort typing the shape of errors we might throw
+interface IRenderHTMLError extends Error {
+  message: string
+  name: string
+  code?: string
+  stack?: string
+  context?: {
+    path?: string
+    unsafeBuiltinsUsageByPagePath?: Record<string, IUnsafeBuiltinUsage>
   }
 }
 
@@ -204,8 +219,10 @@ export const renderHTMLProd = async ({
         if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
         }
-        // add some context to error so we can display more helpful message
-        e.context = {
+
+        const htmlRenderError: IRenderHTMLError = e
+
+        htmlRenderError.context = {
           path: pagePath,
           unsafeBuiltinsUsageByPagePath,
         }
@@ -218,7 +235,7 @@ export const renderHTMLProd = async ({
           const html = `<h1>Preview build error</h1>
         <p>There was an error when building the preview page for this page ("${pagePath}").</p>
         <h3>Error</h3>
-        <pre><code>${e.stack}</code></pre>
+        <pre><code>${htmlRenderError?.stack}</code></pre>
         <h3>Page component id</h3>
         <p><code>${pageData.componentChunkName}</code></p>
         <h3>Page data</h3>
@@ -226,11 +243,11 @@ export const renderHTMLProd = async ({
 
           await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
           previewErrors[pagePath] = {
-            e,
-            message: e.message,
-            code: e.code,
-            stack: e.stack,
-            name: e.name,
+            e: htmlRenderError,
+            name: htmlRenderError.name,
+            message: htmlRenderError.message,
+            code: htmlRenderError?.code,
+            stack: htmlRenderError?.stack,
           }
         } else {
           throw e
@@ -296,6 +313,122 @@ export const renderHTMLDev = async ({
     },
     { concurrency: 2 }
   )
+}
+
+export async function renderPartialHydrationProd({
+  paths,
+  envVars,
+  sessionId,
+}: {
+  paths: Array<string>
+  envVars: Array<[string, string | undefined]>
+  sessionId: number
+}): Promise<void> {
+  const publicDir = join(process.cwd(), `public`)
+
+  const unsafeBuiltinsUsageByPagePath = {}
+
+  // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
+  // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
+  if (sessionId !== lastSessionId) {
+    clearCaches()
+
+    // This is being executed in child process, so we need to set some vars
+    // for modules that aren't bundled by webpack.
+    envVars.forEach(([key, value]) => (process.env[key] = value))
+
+    webpackStats = await readWebpackStats(publicDir)
+
+    lastSessionId = sessionId
+
+    if (global.unsafeBuiltinUsage && global.unsafeBuiltinUsage.length > 0) {
+      unsafeBuiltinsUsageByPagePath[`__import_time__`] =
+        global.unsafeBuiltinUsage
+    }
+  }
+
+  for (const pagePath of paths) {
+    const pageData = await readPageData(publicDir, pagePath)
+    const { staticQueryContext } = await getStaticQueryContext(
+      pageData.staticQueryHashes
+    )
+
+    const pageRenderer = path.join(
+      process.cwd(),
+      `.cache`,
+      `partial-hydration`,
+      `render-page`
+    )
+
+    const {
+      getPageChunk,
+      StaticQueryServerContext,
+      renderToPipeableStream,
+      React,
+    } = require(pageRenderer)
+    const chunk = await getPageChunk({
+      componentChunkName: pageData.componentChunkName,
+    })
+    const outputPath = generatePageDataPath(
+      path.join(process.cwd(), `public`),
+      pagePath
+    ).replace(`.json`, `-rsc.json`)
+
+    const stream = fs.createWriteStream(outputPath)
+
+    const { pipe } = renderToPipeableStream(
+      React.createElement(
+        StaticQueryServerContext.Provider,
+        { value: staticQueryContext },
+        [
+          React.createElement(chunk.default, {
+            data: pageData.result.data,
+            pageContext: pageData.result.pageContext,
+            location: {
+              pathname: pageData.path,
+            },
+          }),
+        ]
+      ),
+      JSON.parse(
+        fs.readFileSync(
+          path.join(
+            process.cwd(),
+            `.cache`,
+            `partial-hydration`,
+            `manifest.json`
+          ),
+          `utf8`
+        )
+      ),
+      {
+        // React spits out the error here and does not emit it, we want to emit it
+        // so we can reject with the error and handle it upstream
+        onError: error => {
+          const partialHydrationError: IRenderHTMLError = error
+
+          partialHydrationError.context = {
+            path: pagePath,
+            unsafeBuiltinsUsageByPagePath,
+          }
+
+          stream.emit(`error`, error)
+        },
+      }
+    )
+
+    await new Promise<void>((resolve, reject) => {
+      stream.on(`error`, (error: IRenderHTMLError) => {
+        reject(error)
+      })
+
+      stream.on(`close`, () => {
+        resolve()
+      })
+
+      pipe(stream)
+    })
+  }
 }
 
 export interface IRenderSliceResult {

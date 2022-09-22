@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "4.24.0-next.1",
+  "version": "4.25.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -37,6 +37,8 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.0",
+    "acorn-loose": "^8.3.0",
+    "acorn-walk": "^8.2.0",
     "address": "1.1.2",
     "anser": "^2.1.0",
     "autoprefixer": "^10.4.0",
@@ -45,8 +47,8 @@
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-lodash": "^3.3.4",
-    "babel-plugin-remove-graphql-queries": "^4.24.0-next.0",
-    "babel-preset-gatsby": "^2.24.0-next.0",
+    "babel-plugin-remove-graphql-queries": "^4.25.0-next.0",
+    "babel-preset-gatsby": "^2.25.0-next.0",
     "better-opn": "^2.1.1",
     "bluebird": "^3.7.2",
     "browserslist": "^4.17.5",
@@ -88,20 +90,20 @@
     "find-cache-dir": "^3.3.2",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^10.1.0",
-    "gatsby-cli": "^4.24.0-next.0",
-    "gatsby-core-utils": "^3.24.0-next.0",
-    "gatsby-graphiql-explorer": "^2.24.0-next.0",
-    "gatsby-legacy-polyfills": "^2.24.0-next.0",
-    "gatsby-link": "^4.24.0-next.1",
-    "gatsby-page-utils": "^2.24.0-next.0",
-    "gatsby-parcel-config": "0.15.0-next.0",
-    "gatsby-plugin-page-creator": "^4.24.0-next.0",
-    "gatsby-plugin-typescript": "^4.24.0-next.0",
-    "gatsby-plugin-utils": "^3.18.0-next.0",
-    "gatsby-react-router-scroll": "^5.24.0-next.0",
-    "gatsby-script": "^1.9.0-next.0",
-    "gatsby-telemetry": "^3.24.0-next.0",
-    "gatsby-worker": "^1.24.0-next.0",
+    "gatsby-cli": "^4.25.0-next.0",
+    "gatsby-core-utils": "^3.25.0-next.0",
+    "gatsby-graphiql-explorer": "^2.25.0-next.0",
+    "gatsby-legacy-polyfills": "^2.25.0-next.0",
+    "gatsby-link": "^4.25.0-next.0",
+    "gatsby-page-utils": "^2.25.0-next.0",
+    "gatsby-parcel-config": "0.16.0-next.0",
+    "gatsby-plugin-page-creator": "^4.25.0-next.0",
+    "gatsby-plugin-typescript": "^4.25.0-next.0",
+    "gatsby-plugin-utils": "^3.19.0-next.0",
+    "gatsby-react-router-scroll": "^5.25.0-next.0",
+    "gatsby-script": "^1.10.0-next.0",
+    "gatsby-telemetry": "^3.25.0-next.0",
+    "gatsby-worker": "^1.25.0-next.0",
     "glob": "^7.2.3",
     "globby": "^11.1.0",
     "got": "^11.8.5",
@@ -144,6 +146,7 @@
     "raw-loader": "^4.0.2",
     "react-dev-utils": "^12.0.1",
     "react-refresh": "^0.14.0",
+    "react-server-dom-webpack": "0.0.0-experimental-c8b778b7f-20220825",
     "redux": "4.1.2",
     "redux-thunk": "^2.4.0",
     "resolve-from": "^5.0.0",
@@ -178,6 +181,7 @@
     "@babel/register": "^7.15.3",
     "@types/babel-core": "^6.25.7",
     "@types/eslint": "^8.2.1",
+    "@types/estree": "^1.0.0",
     "@types/express": "^4.17.13",
     "@types/express-http-proxy": "^1.6.3",
     "@types/micromatch": "^4.0.1",
@@ -190,7 +194,7 @@
     "@types/string-similarity": "^4.0.0",
     "@types/tmp": "^0.2.0",
     "@types/webpack-virtual-modules": "^0.1.1",
-    "babel-preset-gatsby-package": "^2.24.0-next.0",
+    "babel-preset-gatsby-package": "^2.25.0-next.0",
     "copyfiles": "^2.3.0",
     "cross-env": "^7.0.3",
     "documentation": "^13.1.0",
@@ -204,7 +208,7 @@
     "zipkin-transport-http": "^0.22.0"
   },
   "optionalDependencies": {
-    "gatsby-sharp": "^0.18.0-next.0"
+    "gatsby-sharp": "^0.19.0-next.0"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -242,8 +246,8 @@
   "main": "cache-dir/commonjs/gatsby-browser-entry.js",
   "module": "cache-dir/gatsby-browser-entry.js",
   "peerDependencies": {
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0"
   },
   "repository": {
     "type": "git",

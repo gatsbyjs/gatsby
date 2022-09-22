@@ -8,7 +8,7 @@ const {
 } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const merge = require(`deepmerge`)
-const { StaticQueryContext } = require(`gatsby`)
+const { StaticQueryContext, StaticQueryServerContext } = require(`gatsby`)
 const fs = require(`fs`)
 const { WritableAsPromise } = require(`./server-utils/writable-as-promise`)
 
@@ -549,6 +549,9 @@ export default async function staticPage({
 export function getPageChunk({ componentChunkName }) {
   return asyncRequires.components[componentChunkName]()
 }
+
+export { renderToPipeableStream } from "react-server-dom-webpack/writer.node.server"
+export { StaticQueryContext, StaticQueryServerContext, React }
 
 export async function renderSlice({ slice, staticQueryContext, props = {} }) {
   const { default: SliceComponent } = await getPageChunk(slice)
