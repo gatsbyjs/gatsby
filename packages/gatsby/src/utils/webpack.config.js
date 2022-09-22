@@ -219,7 +219,12 @@ module.exports = async (
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
         HAS_REACT_18: JSON.stringify(
-          major(require(`react-dom/package.json`).version) >= 18
+          satisfiesSemvers({
+            react: `>=18.0.0`,
+          }) ||
+            satisfiesSemvers({
+              react: `^0.0.0`,
+            })
         ),
         "global.hasPartialHydration": isPartialHydrationEnabled,
         "_CFLAGS_.GATSBY_MAJOR": JSON.stringify(_CFLAGS_.GATSBY_MAJOR),
