@@ -54,7 +54,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.22.0",
+    "@playwright/test": "1.25.2",
     "cross-env": "^5.2.0",
     "fs-extra": "^7.0.1",
     "gatsby-core-utils": "next",
