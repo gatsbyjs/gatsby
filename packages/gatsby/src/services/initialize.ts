@@ -369,7 +369,10 @@ export async function initialize({
 
   // .cache directory exists in develop at this point
   // so checking for .cache/json or .cache/caches-lmdb as a heuristic (could be any expected file)
-  const cacheIsCorrupt = cacheDirExists && !publicDirExists
+  const cacheIsCorrupt =
+    cacheDirExists &&
+    !publicDirExists &&
+    process.env.DECOUPLED_SOURCING !== `true`
   if (cacheIsCorrupt) {
     reporter.info(reporter.stripIndent`
       We've detected that the Gatsby cache is incomplete (the .cache directory exists
