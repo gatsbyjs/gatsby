@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.23.1/packages/gatsby-source-wordpress) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [6.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.23.0/packages/gatsby-source-wordpress) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

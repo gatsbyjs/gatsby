@@ -70,7 +70,7 @@ module.exports = {
     // 'gatsby-plugin-offline',
   ],
   partytownProxiedURLs: [
-    `https://unpkg.com/three@0.139.1/build/three.js`,
-    `http://localhost:8000/used-by-off-main-thread-2.js`,
+    `http://localhost:8888/three.js`,
+    `http://localhost:8000/used-by-off-main-thread-2.js`, // Meant to be same site
   ],
 }
