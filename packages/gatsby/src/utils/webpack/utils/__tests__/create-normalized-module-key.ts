@@ -11,7 +11,7 @@ it(`should normalize bare module imports from node_modules`, () => {
     projectRoot
   )
 
-  expect(normalizedModuleKey).toEqual(`file://${nodeModule}`)
+  expect(normalizedModuleKey).toMatchSnapshot()
 })
 
 it(`should normalize relative module imports from node_modules`, () => {
@@ -22,7 +22,7 @@ it(`should normalize relative module imports from node_modules`, () => {
     projectRoot
   )
 
-  expect(normalizedModuleKey).toEqual(`file://${nodeModule}`)
+  expect(normalizedModuleKey).toMatchSnapshot()
 })
 
 it(`should normalize local module imports`, () => {
@@ -36,5 +36,5 @@ it(`should normalize local module imports`, () => {
     absoluteLocalModuleFile,
     projectRoot
   )
-  expect(normalizedModuleKey).toEqual(`file://${rootRelativeLocalModuleFile}`)
+  expect(normalizedModuleKey).toMatchSnapshot()
 })
