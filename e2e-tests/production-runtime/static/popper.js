@@ -1,0 +1,3 @@
+;(() => {
+  window.popper = () => `It loaded`
+})()
