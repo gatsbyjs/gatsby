@@ -1,3 +1,3 @@
 ;(() => {
-  window.popper = () => `It loaded`
+  window.Popper = () => `It loaded`
 })()
