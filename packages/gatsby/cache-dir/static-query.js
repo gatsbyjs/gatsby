@@ -4,7 +4,24 @@ import PropTypes from "prop-types"
 const StaticQueryContext = React.createContext({})
 let _StaticQueryServerContext = null
 if (React.createServerContext) {
-  _StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
+  _StaticQueryServerContext = createServerContext(`StaticQuery`, {})
+}
+
+// Ensure serverContext is not created more than once as React will throw when creating it more than once
+// https://github.com/facebook/react/blob/dd2d6522754f52c70d02c51db25eb7cbd5d1c8eb/packages/react/src/ReactServerContext.js#L101
+function createServerContext(name, defaultValue) {
+  if (!global.__GATSBY_SERVER_CONTEXT__) {
+    global.__GATSBY_SERVER_CONTEXT__ = {}
+  }
+
+  if (!global.__GATSBY_SERVER_CONTEXT__[name]) {
+    global.__GATSBY_SERVER_CONTEXT__[name] = React.createServerContext(
+      name,
+      defaultValue
+    )
+  }
+
+  return global.__GATSBY_SERVER_CONTEXT__[name]
 }
 
 function getClientOrServerContext() {
