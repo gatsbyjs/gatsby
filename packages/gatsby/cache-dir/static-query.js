@@ -2,9 +2,20 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const StaticQueryContext = React.createContext({})
-let StaticQueryServerContext = null
+let _StaticQueryServerContext = null
 if (React.createServerContext) {
-  StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
+  _StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
+}
+
+function getClientOrServerContext() {
+  if (
+    _StaticQueryServerContext &&
+    Object.keys(_StaticQueryServerContext._currentValue).length
+  ) {
+    return _StaticQueryServerContext
+  } else {
+    return StaticQueryContext
+  }
 }
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
@@ -56,17 +67,8 @@ const useStaticQuery = query => {
         `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
     )
   }
-  let context
-
-  // Can we get a better check here?
-  if (
-    StaticQueryServerContext &&
-    Object.keys(StaticQueryServerContext._currentValue).length
-  ) {
-    context = React.useContext(StaticQueryServerContext)
-  } else {
-    context = React.useContext(StaticQueryContext)
-  }
+  const contextToUse = getClientOrServerContext()
+  const context = React.useContext(contextToUse)
 
   // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
   // to wrap the query in a grqphql, then casting it to a Number results in `NaN` allowing us to
@@ -90,6 +92,7 @@ useStaticQuery(graphql\`${query}\`);
     )
   }
 }
+const StaticQueryServerContext = _StaticQueryServerContext || StaticQueryContext
 
 export {
   StaticQuery,
