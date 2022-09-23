@@ -561,10 +561,18 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
       <SliceComponent sliceContext={slice.context} {...props} />
     </StaticQueryContext.Provider>
   )
+  const sliceWrappedWithWrapRootElement = apiRunner(
+    `wrapRootElement`,
+    { element: sliceElement },
+    sliceElement,
+    ({ result }) => {
+      return { element: result }
+    }
+  ).pop()
 
   if (HAS_REACT_18) {
     const writableStream = new WritableAsPromise()
-    const { pipe } = renderToPipeableStream(sliceElement, {
+    const { pipe } = renderToPipeableStream(sliceWrappedWithWrapRootElement, {
       onAllReady() {
         pipe(writableStream)
       },
@@ -575,6 +583,6 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
 
     return await writableStream
   } else {
-    return renderToString(sliceElement)
+    return renderToString(sliceWrappedWithWrapRootElement)
   }
 }
