@@ -12,11 +12,8 @@ function graphql() {
   )
 }
 
-// TODO mark some as internal with a prefix/path
-
 export { default as PageRenderer } from "./public-page-renderer"
 export { useScrollRestoration } from "gatsby-react-router-scroll"
-
 export {
   default as Link,
   withPrefix,
