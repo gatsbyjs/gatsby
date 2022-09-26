@@ -7,6 +7,11 @@ if (React.createServerContext) {
   _StaticQueryServerContext = createServerContext(`StaticQuery`, {})
 }
 
+function createServerOrClientContext(name, defaultValue) {
+  if (React.createServerContext) return createServerContext(name, defaultValue)
+  else return React.createContext(defaultValue)
+}
+
 // Ensure serverContext is not created more than once as React will throw when creating it more than once
 // https://github.com/facebook/react/blob/dd2d6522754f52c70d02c51db25eb7cbd5d1c8eb/packages/react/src/ReactServerContext.js#L101
 function createServerContext(name, defaultValue) {
@@ -116,4 +121,5 @@ export {
   StaticQueryContext,
   useStaticQuery,
   StaticQueryServerContext,
+  createServerOrClientContext,
 }
