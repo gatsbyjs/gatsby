@@ -175,16 +175,18 @@ export async function createPageSSRBundle({
         GATSBY_SLICES: JSON.stringify(slicesStateObject),
         GATSBY_SLICES_BY_TEMPLATE: JSON.stringify(slicesByTemplateStateObject),
         GATSBY_SLICES_SCRIPT: JSON.stringify(
-          fs.readFileSync(
-            path.join(
-              rootDir,
-              `public`,
-              `_gatsby`,
-              `slices`,
-              `_gatsby-scripts-1.html`
-            ),
-            `utf-8`
-          )
+          _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
+            ? fs.readFileSync(
+                path.join(
+                  rootDir,
+                  `public`,
+                  `_gatsby`,
+                  `slices`,
+                  `_gatsby-scripts-1.html`
+                ),
+                `utf-8`
+              )
+            : ``
         ),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
