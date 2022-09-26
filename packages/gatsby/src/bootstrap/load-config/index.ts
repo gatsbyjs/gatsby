@@ -53,14 +53,21 @@ export async function loadConfig({
       if (unfitFlagMessage !== ``) {
         reporter.warn(unfitFlagMessage)
       }
+
+      // Print out message.
+      if (message !== ``) {
+        reporter.info(message)
+      }
+
       //  set process.env for each flag
       enabledConfigFlags.forEach(flag => {
         process.env[flag.env] = `true`
       })
 
-      // Print out message.
-      if (message !== ``) {
-        reporter.info(message)
+      if (process.env.GATSBY_SLICES && process.env.GATSBY_PARTIAL_HYDRATION) {
+        delete process.env.GATSBY_SLICES
+
+        reporter.warn(`SLICES is inactive when PARTIAL_HYDRATION is enabled.`)
       }
 
       //  track usage of feature
