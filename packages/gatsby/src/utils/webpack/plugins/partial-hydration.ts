@@ -1,4 +1,5 @@
 import * as path from "path"
+import fs from "fs-extra"
 import Template from "webpack/lib/Template"
 import ModuleDependency from "webpack/lib/dependencies/ModuleDependency"
 import NullDependency from "webpack/lib/dependencies/NullDependency"
@@ -37,6 +38,7 @@ export class PartialHydrationPlugin {
   _rootFilePath: string
   _references: Array<ClientReferenceDependency> = []
   _clientModules = new Set<webpack.NormalModule>()
+  _previousManifest = {}
 
   constructor(manifestPath: string, rootFilePath: string) {
     this._manifestPath = manifestPath
@@ -118,6 +120,7 @@ export class PartialHydrationPlugin {
         }>
       >
     > = new Map()
+
     for (const clientModule of this._clientModules) {
       for (const connection of moduleGraph.getIncomingConnections(
         clientModule
@@ -186,6 +189,24 @@ export class PartialHydrationPlugin {
   }
 
   apply(compiler: webpack.Compiler): void {
+    // Restore manifest from the previous compilation, otherwise it will be wiped since files aren't visited on cached builds
+    compiler.hooks.beforeCompile.tap(this.name, () => {
+      const previousManifestPath = path.join(
+        compiler.context,
+        this._manifestPath.slice(3) // Remove `../`
+      )
+
+      const previousManifest = fs.existsSync(previousManifestPath)
+
+      if (!previousManifest) {
+        return
+      }
+
+      this._previousManifest = JSON.parse(
+        fs.readFileSync(previousManifestPath, `utf-8`)
+      )
+    })
+
     compiler.hooks.thisCompilation.tap(
       this.name,
       (compilation, { normalModuleFactory }) => {
@@ -299,7 +320,11 @@ export class PartialHydrationPlugin {
             compilation.emitAsset(
               this._manifestPath,
               new webpack.sources.RawSource(
-                JSON.stringify(manifest, null, 2),
+                JSON.stringify(
+                  { ...this._previousManifest, ...manifest },
+                  null,
+                  2
+                ),
                 false
               )
             )
