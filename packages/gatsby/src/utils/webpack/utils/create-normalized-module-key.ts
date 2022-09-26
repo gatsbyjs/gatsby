@@ -16,13 +16,13 @@ export function createNormalizedModuleKey(
   resourcePath: string,
   rootContext: string
 ): string {
-  const rootRelativeFilePath = resourcePath.replace(`${rootContext}/`, ``)
+  const rootRelativeFilePath = resourcePath.replace(rootContext, ``)
   const [rootRelativeDir, potentialModuleName] = rootRelativeFilePath
     .split(path.sep)
     .filter(Boolean)
   const normalizedModuleKey =
     rootRelativeDir === `node_modules`
       ? `file://${path.join(rootRelativeDir, potentialModuleName)}`
-      : `file://${rootRelativeFilePath}`
+      : `file://${rootRelativeFilePath.slice(1)}`
   return slash(normalizedModuleKey)
 }
