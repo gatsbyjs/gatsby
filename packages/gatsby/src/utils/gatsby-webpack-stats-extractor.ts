@@ -69,12 +69,13 @@ export class GatsbyWebpackStatsExtractor {
           newChunkMapJson
         )
 
-        // Add chunk mapping metadata to scripts slice
-        const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(
-          newChunkMapJson
-        )};`
+        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+          // Add chunk mapping metadata to scripts slice
+          const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(
+            newChunkMapJson
+          )};`
 
-        const chunkSliceContents = `
+          const chunkSliceContents = `
           <script
             id="gatsby-chunk-mapping"
           >
@@ -82,41 +83,42 @@ export class GatsbyWebpackStatsExtractor {
           </script>
         `
 
-        await fs.ensureDir(path.join(`public`, `_gatsby`, `slices`))
+          await fs.ensureDir(path.join(`public`, `_gatsby`, `slices`))
 
-        const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
+          const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
 
-        const assetSliceContents: Array<string> = []
+          const assetSliceContents: Array<string> = []
 
-        if (`polyfill` in assets && assets.polyfill) {
-          for (const asset of assets.polyfill) {
-            if (asset.endsWith(`.js`)) {
-              assetSliceContents.push(
-                `<script src="${this.publicPath}/${asset}" nomodule></script>`
-              )
+          if (`polyfill` in assets && assets.polyfill) {
+            for (const asset of assets.polyfill) {
+              if (asset.endsWith(`.js`)) {
+                assetSliceContents.push(
+                  `<script src="${this.publicPath}/${asset}" nomodule></script>`
+                )
+              }
             }
           }
-        }
 
-        if (`app` in assets && assets.app) {
-          for (const asset of assets.app) {
-            if (asset.endsWith(`.js`)) {
-              assetSliceContents.push(
-                `<script src="${this.publicPath}/${asset}" async></script>`
-              )
+          if (`app` in assets && assets.app) {
+            for (const asset of assets.app) {
+              if (asset.endsWith(`.js`)) {
+                assetSliceContents.push(
+                  `<script src="${this.publicPath}/${asset}" async></script>`
+                )
+              }
             }
           }
-        }
 
-        const scriptsSliceHtmlChanged = await ensureFileContent(
-          path.join(`public`, `_gatsby`, `slices`, `_gatsby-scripts-1.html`),
-          chunkSliceContents + hashSliceContents + assetSliceContents.join(``)
-        )
+          const scriptsSliceHtmlChanged = await ensureFileContent(
+            path.join(`public`, `_gatsby`, `slices`, `_gatsby-scripts-1.html`),
+            chunkSliceContents + hashSliceContents + assetSliceContents.join(``)
+          )
 
-        if (scriptsSliceHtmlChanged) {
-          store.dispatch({
-            type: `SLICES_SCRIPTS_REGENERATED`,
-          })
+          if (scriptsSliceHtmlChanged) {
+            store.dispatch({
+              type: `SLICES_SCRIPTS_REGENERATED`,
+            })
+          }
         }
 
         previousChunkMapJson = newChunkMapJson
