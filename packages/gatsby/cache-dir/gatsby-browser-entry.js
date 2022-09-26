@@ -1,5 +1,4 @@
 import loader from "./loader"
-import { Slice } from "./slice"
 
 const prefetchPathname = loader.enqueue
 
@@ -22,12 +21,14 @@ export {
   parsePath,
 } from "gatsby-link"
 
-export { graphql, prefetchPathname, Slice }
+export { graphql, prefetchPathname }
 export {
   StaticQuery,
   StaticQueryContext,
   useStaticQuery,
   StaticQueryServerContext,
 } from "./static-query"
+
+export { Slice } from "./slice"
 
 export * from "gatsby-script"
