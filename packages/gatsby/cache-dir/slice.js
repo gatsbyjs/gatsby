@@ -1,8 +1,9 @@
 import React, { useContext } from "react"
 import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
+import { SlicesContext } from "./slice/context"
 
-function Slice(props) {
+export function Slice(props) {
   if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
     // we use sliceName internally, so remap alias to sliceName
     const internalProps = {
@@ -108,17 +109,4 @@ const validateSliceProps = (
   }
 
   return errors
-}
-
-const SlicesResultsContext = React.createContext({})
-const SlicesContext = React.createContext({})
-const SlicesMapContext = React.createContext({})
-const SlicesPropsContext = React.createContext({})
-
-export {
-  Slice,
-  SlicesResultsContext,
-  SlicesContext,
-  SlicesMapContext,
-  SlicesPropsContext,
 }

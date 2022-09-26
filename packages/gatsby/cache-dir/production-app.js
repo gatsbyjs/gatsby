@@ -3,7 +3,11 @@ import React from "react"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import { StaticQueryContext } from "gatsby"
-import { SlicesMapContext, SlicesContext } from "./slice"
+import {
+  SlicesMapContext,
+  SlicesContext,
+  SlicesResultsContext,
+} from "./slice/context"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -22,7 +26,6 @@ import {
 } from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
-import { SlicesResultsContext } from "./slice"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"

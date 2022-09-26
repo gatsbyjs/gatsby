@@ -23,7 +23,7 @@ const {
   SlicesContext,
   SlicesMapContext,
   SlicesPropsContext,
-} = require(`./slice`)
+} = require(`./slice/context`)
 const { ServerSliceRenderer } = require(`./slice/server-slice-renderer`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls

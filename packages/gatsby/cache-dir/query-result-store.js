@@ -7,7 +7,7 @@ import {
 import PageRenderer from "./page-renderer"
 import normalizePagePath from "./normalize-page-path"
 import loader, { getStaticQueryResults, getSliceResults } from "./loader"
-import { SlicesResultsContext } from "./slice"
+import { SlicesResultsContext } from "./slice/context"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(

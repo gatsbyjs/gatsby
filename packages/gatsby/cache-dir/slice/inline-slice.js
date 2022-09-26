@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { SlicesMapContext, SlicesResultsContext } from "../slice"
+import { SlicesMapContext, SlicesResultsContext } from "./context"
 
 export const InlineSlice = ({
   sliceName,
