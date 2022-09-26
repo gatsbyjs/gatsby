@@ -810,11 +810,7 @@ export async function buildSlices({
 
     const htmlComponentRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
     try {
-      // const slicesProps = Array.from(Object.entries(state.slicesProps))
       const slices = Array.from(state.slices.entries())
-      reporter.verbose(
-        `Building slices:\n${slices.map(([name]) => ` - "${name}"`).join(`\n`)}`
-      )
 
       await workerPool.single.renderSlices({
         publicDir: path.join(program.directory, `public`),
