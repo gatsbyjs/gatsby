@@ -1,5 +1,4 @@
 import { outputFile, readFile } from "fs-extra"
-import reporter from "gatsby-cli/lib/reporter"
 
 export async function ensureFileContent(
   file: string,
@@ -13,11 +12,9 @@ export async function ensureFileContent(
   }
 
   if (previousContent !== data) {
-    reporter.verbose(`Updating "${file}"`)
     await outputFile(file, data)
     return true
   }
 
-  reporter.verbose(`Skipping "${file}"`)
   return false
 }
