@@ -327,8 +327,7 @@ export class BaseLoader {
       return Promise.resolve({ sliceName, jsonPayload })
     }
 
-    // TODO: setup correct (no)caching headers
-    const url = `/slice-data/${sliceName}.json?v=${Date.now()}`
+    const url = `/slice-data/${sliceName}.json`
     return doFetch(url, `GET`).then(res => {
       const jsonPayload = JSON.parse(res.responseText)
 
