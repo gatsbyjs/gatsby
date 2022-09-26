@@ -2,7 +2,7 @@ import * as path from "path"
 import Template from "webpack/lib/Template"
 import ModuleDependency from "webpack/lib/dependencies/ModuleDependency"
 import NullDependency from "webpack/lib/dependencies/NullDependency"
-import url from "url"
+import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 import webpack, { Module, NormalModule, Dependency, javascript } from "webpack"
 
 interface IModuleExport {
@@ -99,12 +99,13 @@ export class PartialHydrationPlugin {
         }
       })
 
-      const href = url
-        .pathToFileURL(normalModule.resource)
-        .href.replace(rootContext.replace(/\\/g, `/`), ``)
-        .replace(/file:\/{3,4}/g, `file://`)
-      if (href !== undefined) {
-        json[href] = moduleExports
+      const normalizedModuleKey = createNormalizedModuleKey(
+        normalModule.resource,
+        rootContext
+      )
+
+      if (normalizedModuleKey !== undefined) {
+        json[normalizedModuleKey] = moduleExports
       }
     }
 
@@ -118,6 +119,7 @@ export class PartialHydrationPlugin {
         }>
       >
     > = new Map()
+
     for (const clientModule of this._clientModules) {
       for (const connection of moduleGraph.getIncomingConnections(
         clientModule
