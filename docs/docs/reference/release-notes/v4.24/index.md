@@ -47,6 +47,21 @@ In [PR #36623](https://github.com/gatsbyjs/gatsby/pull/36623) we fixed this beha
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [kxxt](https://github.com/kxxt): fix(gatsby-core-utils): Use `grep -E` instead of `egrep` [PR #36648](https://github.com/gatsbyjs/gatsby/pull/36648)
+- [Osiris8](https://github.com/Osiris8): chore(docs): Fix `Seo` imports in tutorial [PR #36587](https://github.com/gatsbyjs/gatsby/pull/36587)
+- [evanwinter](https://github.com/evanwinter): chore(docs): Update "Layout components" related links [PR #36572](https://github.com/gatsbyjs/gatsby/pull/36572)
+- [chrisj-skinner](https://github.com/chrisj-skinner): chore(docs): Update storybook main.js docs [PR #36627](https://github.com/gatsbyjs/gatsby/pull/36627)
+- [alesma](https://github.com/alesma): chore(gatsby-plugin-sitemap): Add info about `page` object to README [PR #36582](https://github.com/gatsbyjs/gatsby/pull/36582)
+- [benomatis](https://github.com/benomatis): fix(docs): tiny grammatical correction [PR #36630](https://github.com/gatsbyjs/gatsby/pull/36630)
+- [Auspicus](https://github.com/Auspicus): feat(gatsby): Enable source maps when compiling Gatsby files in development [PR #36450](https://github.com/gatsbyjs/gatsby/pull/36450)
+- [kvnang](https://github.com/kvnang): chore(docs): Fix Partytown forward events examples [PR #36613](https://github.com/gatsbyjs/gatsby/pull/36613)
+- [karlhorky](https://github.com/karlhorky): feat(gatsby-remark-copy-linked-files): Add `absolutePath` to dir function [PR #36213](https://github.com/gatsbyjs/gatsby/pull/36213)
+- [openscript](https://github.com/openscript): chore(gatsby): Add `loadPageDataSync` property to `onRenderBody` TS type [PR #36492](https://github.com/gatsbyjs/gatsby/pull/36492)
+- [ebuildy](https://github.com/ebuildy): fix(gatsby-parcel-config): Adjust dependencies [PR #36583](https://github.com/gatsbyjs/gatsby/pull/36583)
+- [AndrPetrov](https://github.com/AndrPetrov): fix(gatsby-link): Correct handling of trailingSlash & pathPrefix [PR #36542](https://github.com/gatsbyjs/gatsby/pull/36542)
+- [treboryx](https://github.com/treboryx): fix(gatsby): Pass hostname to detect-port [PR #36496](https://github.com/gatsbyjs/gatsby/pull/36496)
+- [colbywhite](https://github.com/colbywhite): chore(docs): Swap mobile url for regular url [PR #36618](https://github.com/gatsbyjs/gatsby/pull/36618)
+- [MarcusCole518](https://github.com/MarcusCole518): chore(docs): Add "Payments Managing" & "Deploying to Fastly" [PR #36546](https://github.com/gatsbyjs/gatsby/pull/36546)
+- [SilencerWeb](https://github.com/SilencerWeb): chore(gatsby-source-wordpress): Fix license link [PR #36621](https://github.com/gatsbyjs/gatsby/pull/36621)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.24.0-next.0...gatsby@4.24.0
