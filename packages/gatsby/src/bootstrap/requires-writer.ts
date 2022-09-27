@@ -242,8 +242,6 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     devSSRWillInvalidate()
   }
 
-  // console.log({ components })
-
   // Create file with sync requires of components/json files.
   let syncRequires = `
 // prefer default export if available
