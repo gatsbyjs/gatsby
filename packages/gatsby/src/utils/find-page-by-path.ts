@@ -47,7 +47,11 @@ export function findPageByPath(
 ): IGatsbyPage | undefined {
   const { pages } = state
 
-  path = decodeURIComponent(path)
+  try {
+    path = decodeURIComponent(path)
+  } catch {
+    // no handling, just continue using path as-is
+  }
 
   // first check by exact path
   let page = pages.get(path)
