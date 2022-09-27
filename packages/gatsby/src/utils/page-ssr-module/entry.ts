@@ -324,8 +324,8 @@ const readStaticQueryContext = async (
     templatePath,
     `sq-context.json`
   )
-
   const rawSQContext = await fs.readFile(filePath, `utf-8`)
+
   return JSON.parse(rawSQContext)
 }
 
@@ -388,13 +388,7 @@ export async function renderHTML({
 
     const sliceData = {}
     if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
-      // @ts-ignore something bad is happening with our typing
-      // we have slicesMap on the pageData here, but our types say
-      // it should just be called "slices".
-      // TODO sc-53539: sync this up
       for (const sliceName of Object.values(pageData.slicesMap)) {
-        // TODO error handling
-        // @ts-ignore
         sliceData[sliceName] = await readSliceData(sliceName)
       }
     }

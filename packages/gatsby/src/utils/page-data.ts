@@ -15,6 +15,7 @@ import {
   constructPageDataString,
   reverseFixedPagePath,
   IPageData,
+  IPageDataInput,
 } from "./page-data-helpers"
 import { Span } from "opentracing"
 
@@ -118,9 +119,7 @@ export async function readPageQueryResult(
 
 export async function writePageData(
   publicDir: string,
-  pageData: IPageData & {
-    componentPath: string
-  },
+  pageData: IPageDataInput,
   slicesUsedByTemplates: Map<string, ICollectedSlices>,
   slices: IGatsbyState["slices"]
 ): Promise<string> {
