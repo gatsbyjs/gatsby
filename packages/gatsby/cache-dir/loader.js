@@ -514,13 +514,6 @@ export class BaseLoader {
           slicesMap = {},
         } = pageData
 
-        //     "slicesMap": {
-        //   "header": "header-fr",
-        //   "header-fr": "header-fr",
-        //   "about-author": "about-author",
-        //   "footer": "footer"
-        // }
-
         const finalResult = {}
 
         const dedupedSliceNames = Array.from(new Set(Object.values(slicesMap)))
@@ -554,8 +547,6 @@ export class BaseLoader {
         return Promise.all(
           dedupedSliceNames.map(sliceName => this.loadSliceDataJson(sliceName))
         ).then(slicesData => {
-          // slicesData = [{ jsonPayload, sliceName: "headers-fr" }]
-
           const slices = []
           const dedupedStaticQueryHashes = [...pageStaticQueryHashes]
           for (const { jsonPayload, sliceName } of Object.values(slicesData)) {
