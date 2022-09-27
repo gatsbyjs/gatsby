@@ -1,43 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { createServerContext } from "./context-utils"
 
 const StaticQueryContext = React.createContext({})
 let _StaticQueryServerContext = null
 if (React.createServerContext) {
   _StaticQueryServerContext = createServerContext(`StaticQuery`, {})
-}
-
-function createServerOrClientContext(name, defaultValue) {
-  if (React.createServerContext) return createServerContext(name, defaultValue)
-  else return React.createContext(defaultValue)
-}
-
-// Ensure serverContext is not created more than once as React will throw when creating it more than once
-// https://github.com/facebook/react/blob/dd2d6522754f52c70d02c51db25eb7cbd5d1c8eb/packages/react/src/ReactServerContext.js#L101
-function createServerContext(name, defaultValue) {
-  if (!global.__GATSBY_SERVER_CONTEXT__) {
-    global.__GATSBY_SERVER_CONTEXT__ = {}
-  }
-
-  if (!global.__GATSBY_SERVER_CONTEXT__[name]) {
-    global.__GATSBY_SERVER_CONTEXT__[name] = React.createServerContext(
-      name,
-      defaultValue
-    )
-  }
-
-  return global.__GATSBY_SERVER_CONTEXT__[name]
-}
-
-function getClientOrServerContext() {
-  if (
-    _StaticQueryServerContext &&
-    Object.keys(_StaticQueryServerContext._currentValue).length
-  ) {
-    return _StaticQueryServerContext
-  } else {
-    return StaticQueryContext
-  }
 }
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
@@ -89,7 +57,12 @@ const useStaticQuery = query => {
         `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
     )
   }
-  const contextToUse = getClientOrServerContext()
+  const contextToUse =
+    _StaticQueryServerContext &&
+    Object.keys(_StaticQueryServerContext._currentValue).length
+      ? _StaticQueryServerContext
+      : StaticQueryContext
+
   const context = React.useContext(contextToUse)
 
   // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
@@ -121,5 +94,4 @@ export {
   StaticQueryContext,
   useStaticQuery,
   StaticQueryServerContext,
-  createServerOrClientContext,
 }
