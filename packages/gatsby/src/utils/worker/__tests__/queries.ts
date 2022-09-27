@@ -108,8 +108,6 @@ const dummyStaticQuery = {
 
 const pageQueryIds = [dummyPageFoo, dummyPageBar, ...dummyPages]
 
-// TODO: sc-54869, test slices
-
 const queryIdsSmall: IGroupedQueryIds = {
   pageQueryIds: [dummyPageFoo, dummyPageBar],
   staticQueryIds: [dummyStaticQuery.id],
