@@ -444,8 +444,6 @@ export interface ISlicePropsEntry {
   sliceName: string
   props: Record<string, unknown>
   hasChildren: boolean
-  // this is debugging only, remove when done
-  reason: any
 }
 
 export async function renderSlices({

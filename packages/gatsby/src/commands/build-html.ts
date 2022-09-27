@@ -745,14 +745,6 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   return { toRegenerate, toDelete }
 }
 
-// for debugging a reason to rebuild
-const FLAG_DIRTY_CLEARED_CACHE = 0b0000001
-const FLAG_DIRTY_NEW_ENTRY = 0b0000010
-const FLAG_DIRTY_DATA_CHANGED = 0b0000100
-const FLAG_DIRTY_STATIC_QUERY_FIRST_RUN = 0b0001000
-const FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED = 0b0010000
-const FLAG_DIRTY_SSR_COMPILATION_HASH = 0b1000000
-
 export async function buildSlices({
   program,
   workerPool,
@@ -776,25 +768,6 @@ export async function buildSlices({
         props,
         sliceName,
         hasChildren,
-        reason: Object.entries({
-          FLAG_DIRTY_CLEARED_CACHE: !!(dirty & FLAG_DIRTY_CLEARED_CACHE),
-          FLAG_DIRTY_NEW_ENTRY: !!(dirty & FLAG_DIRTY_NEW_ENTRY),
-          FLAG_DIRTY_DATA_CHANGED: !!(dirty & FLAG_DIRTY_DATA_CHANGED),
-          FLAG_DIRTY_STATIC_QUERY_FIRST_RUN: !!(
-            dirty & FLAG_DIRTY_STATIC_QUERY_FIRST_RUN
-          ),
-          FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED: !!(
-            dirty & FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED
-          ),
-          FLAG_DIRTY_SSR_COMPILATION_HASH: !!(
-            dirty & FLAG_DIRTY_SSR_COMPILATION_HASH
-          ),
-        }).reduce((acc, [key, value]) => {
-          if (value) {
-            acc.push(key)
-          }
-          return acc
-        }, [] as Array<string>),
       })
     }
   }
