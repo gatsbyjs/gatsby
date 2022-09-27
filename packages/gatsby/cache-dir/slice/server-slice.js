@@ -3,15 +3,6 @@ import { createContentDigest } from "gatsby-core-utils/create-content-digest"
 import { SlicesMapContext, SlicesPropsContext } from "./context"
 import { ServerSliceRenderer } from "./server-slice-renderer"
 
-// const orig = React.createElement
-
-// React.createElement = (...args) => {
-//   if (!args[0]) {
-//     console.trace(`where`)
-//   }
-//   return orig(...args)
-// }
-
 const getSliceId = (sliceName, sliceProps) => {
   if (!Object.keys(sliceProps).length) {
     return sliceName
