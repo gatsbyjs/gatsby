@@ -20,7 +20,6 @@ export async function createPages({
   changedPages: Array<string>
 }> {
   assertStore(store)
-
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })

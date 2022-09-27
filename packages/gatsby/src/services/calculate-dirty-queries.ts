@@ -40,7 +40,7 @@ export async function calculateDirtyQueries({
       }
     }
 
-    // static and fragment queries are also not on demand
+    // static and slice queries are also not on demand
     queriesToRun = queryIds.filter(
       queryId =>
         queryId.startsWith(`sq--`) ||
