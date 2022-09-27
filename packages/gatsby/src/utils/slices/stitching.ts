@@ -38,11 +38,15 @@ async function stitchSlices(
     /(<slice-(?<startOrEndElementOpenening>start|end)\s[^>]*id="(?<idElement>[^"]+)"[^>]*><\/slice-(?<startOrEndElementClosing>[^>]+)>|<!-- slice-(?<startOrEndComment>start|end) id="(?<idComment>[^"]+)" -->)/g
   )) {
     if (!match.groups) {
-      throw new Error(`Wat #2, capturing groups not found`)
+      throw new Error(
+        `Invariant: [stitching slices] Capturing groups should be defined`
+      )
     }
 
     if (typeof match.index !== `number`) {
-      throw new Error(`Wat #3, index is not a number`)
+      throw new Error(
+        `Invariant: [stitching slices] There is no location of a match when stitching slices`
+      )
     }
 
     if (
@@ -51,7 +55,7 @@ async function stitchSlices(
         match.groups.startOrEndElementClosing
     ) {
       throw new Error(
-        `WAT #1 not matching types ${match.groups.startOrEndElementOpenening} ${match.groups.startOrEndElementClosing}`
+        `Invariant: [stitching slices] start and end tags should be the same. Got: Start: ${match.groups.startOrEndElementOpenening} End: ${match.groups.startOrEndElementClosing}`
       )
     }
 
@@ -86,12 +90,13 @@ async function stitchSlices(
       previousStart = meta
     } else if (meta.type === `end`) {
       if (!previousStart) {
-        throw new Error(`something is closing without being opened before`)
+        throw new Error(
+          `Invariant: [stitching slices] There was no start tag, but close tag was found`
+        )
       }
       if (previousStart.id !== meta.id) {
-        console.log(
-          `skipping "${meta.id}" because we are in "${previousStart.id}"`
-        )
+        // it's possible to have nested slices - we want to handle just the most outer slice
+        // as stitching it in will recursively handle nested slices as well
         continue
       }
 
@@ -106,8 +111,9 @@ async function stitchSlices(
   }
 
   if (previousStart) {
-    console.log(previousStart)
-    throw new Error(`Wat #3 - something wasn't closed`)
+    throw new Error(
+      `Invariant: [stitching slices] There was start tag, but no close tag was found`
+    )
   }
 
   // get rest of the html
