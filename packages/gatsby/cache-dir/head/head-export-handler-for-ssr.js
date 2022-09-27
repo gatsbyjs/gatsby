@@ -75,9 +75,7 @@ export function headHandlerForSSR({
           )
         } else {
           element = (
-            <node.rawTagName {...attributes}>
-              {node.childNodes[0]?.textContent}
-            </node.rawTagName>
+            <node.rawTagName {...attributes}>{node.innerText}</node.rawTagName>
           )
         }
 
