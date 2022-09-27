@@ -57,19 +57,6 @@ const getPageDataPath = path => {
   return join(`page-data`, fixedPagePath, `page-data.json`)
 }
 
-const getPageDataUrl = pagePath => {
-  const pageDataPath = getPageDataPath(pagePath)
-  return `${__PATH_PREFIX__}/${pageDataPath}`
-}
-
-const getStaticQueryPath = hash => join(`page-data`, `sq`, `d`, `${hash}.json`)
-
-const getStaticQueryUrl = hash =>
-  `${__PATH_PREFIX__}/${getStaticQueryPath(hash)}`
-
-const getAppDataUrl = () =>
-  `${__PATH_PREFIX__}/${join(`page-data`, `app-data.json`)}`
-
 const createElement = React.createElement
 
 export const sanitizeComponents = components => {
