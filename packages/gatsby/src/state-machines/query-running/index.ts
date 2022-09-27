@@ -93,11 +93,11 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         src: `runPageQueries`,
         id: `running-page-queries`,
         onDone: {
-          target: `runningFragmentQueries`,
+          target: `runningSliceQueries`,
         },
       },
     },
-    runningFragmentQueries: {
+    runningSliceQueries: {
       invoke: {
         src: `runSliceQueries`,
         id: `running-slice-queries`,
