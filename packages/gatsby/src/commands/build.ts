@@ -336,7 +336,6 @@ module.exports = async function build(
   const waitMaterializePageMode = materializePageMode()
 
   let waitForWorkerPoolRestart = Promise.resolve()
-
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds, {
       parentSpan: buildSpan,
@@ -394,10 +393,6 @@ module.exports = async function build(
         },
       })
     }
-
-    // Copy files from the static directory to
-    // an equivalent static directory within public.
-    copyStaticDirs()
   }
 
   // create scope so we don't leak state object
@@ -467,7 +462,6 @@ module.exports = async function build(
 
   if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
     if (shouldGenerateEngines()) {
-      console.log(`we are about to copy stuff`)
       const state = store.getState()
       const sliceDataPath = path.join(
         state.program.directory,
@@ -495,11 +489,11 @@ module.exports = async function build(
         })
       }
     }
-
-    // Copy files from the static directory to
-    // an equivalent static directory within public.
-    copyStaticDirs()
   }
+
+  // Copy files from the static directory to
+  // an equivalent static directory within public.
+  copyStaticDirs()
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
