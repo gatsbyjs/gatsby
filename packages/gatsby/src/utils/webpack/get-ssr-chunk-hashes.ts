@@ -10,7 +10,9 @@ function getHashes(
 ): Array<string> {
   for (const chunk of chunkGroup.chunks) {
     if (!chunk.hash) {
-      throw new Error(`wuat?`)
+      throw new Error(
+        `Invariant: [generating template hashes] Chunk doesn't have hash`
+      )
     }
     hashes.push(chunk.hash)
   }
