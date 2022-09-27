@@ -772,7 +772,7 @@ const errors = {
   "80000": {
     text: (context): string =>
       stripIndents(`Building partial HTML failed${
-        context.path ? ` for path "${context.path}"` : ``
+        context?.path ? ` for path "${context.path}"` : ``
       }
 
       This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers are used in a component without declaring the "client export" directive at the top of the file.

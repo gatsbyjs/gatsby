@@ -21,7 +21,10 @@ test.describe(`off-main-thread scripts`, () => {
     const templateLiteral = page.locator(`[id=${id.templateLiteral}]`)
     const dangerouslySet = page.locator(`[id=${id.dangerouslySet}]`)
 
-    await expect(partytownSnippet).toContainText(/THREE/) // Forwards configured
+    // Unsure why this locator appears to behave differently, get text content to compare directly
+    const partytownSnippetText = await partytownSnippet.textContent()
+    expect(partytownSnippetText).toMatch(/THREE/) // Forwards configured
+
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}: success`) // Dangerously set inline scripts loaded
     await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded
@@ -39,7 +42,10 @@ test.describe(`off-main-thread scripts`, () => {
     const templateLiteral = page.locator(`[id=${id.templateLiteral}]`)
     const dangerouslySet = page.locator(`[id=${id.dangerouslySet}]`)
 
-    await expect(partytownSnippet).toContainText(/THREE/) // Forwards configured
+    // Unsure why this locator appears to behave differently, get text content to compare directly
+    const partytownSnippetText = await partytownSnippet.textContent()
+    expect(partytownSnippetText).toMatch(/THREE/) // Forwards configured
+
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}: success`) // Dangerously set inline scripts loaded
     await expect(scriptWithSrc).toHaveAttribute(`type`, `text/partytown-x`) // Scripts with sources loaded, use `type` attr Partytown mutates on success as proxy
@@ -57,7 +63,10 @@ test.describe(`off-main-thread scripts`, () => {
     const dangerouslySet = page.locator(`[id=${id.dangerouslySet}-2]`)
     const scriptWithSrc = page.locator(`[id=${id.scriptWithSrc}]`)
 
-    await expect(partytownSnippet).toContainText(/some-other-forward/) // Forwards configured
+    // Unsure why this locator appears to behave differently, get text content to compare directly
+    const partytownSnippetText = await partytownSnippet.textContent()
+    expect(partytownSnippetText).toMatch(/some-other-forward/) // Forwards configured
+
     await expect(templateLiteral).toHaveText(`${id.templateLiteral}-2: success`) // Template literal inline scripts loaded
     await expect(dangerouslySet).toHaveText(`${id.dangerouslySet}-2: success`) // Dangerously set inline scripts loaded
     await expect(scriptWithSrc).toHaveText(`${id.scriptWithSrc}: success`) // Scripts with sources loaded
