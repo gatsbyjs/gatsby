@@ -525,14 +525,13 @@ export default class FileParser {
       .digest(`hex`)
 
     try {
-      let results = cache[hash]
-      if (!results) {
+      if (!cache[hash]) {
         const ast = await parseToAst(file, text, {
           parentSpan: this.parentSpan,
           addError,
         })
 
-        results = cache[hash] = {
+        cache[hash] = {
           astDefinitions: await findGraphQLTags(file, ast, {
             parentSpan: this.parentSpan,
             addError,
