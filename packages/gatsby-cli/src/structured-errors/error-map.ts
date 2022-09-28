@@ -783,6 +783,21 @@ const errors = {
     docsUrl: `https://gatsby.dev/partial-hydration-error`,
     category: ErrorCategory.USER,
   },
+  "80001": {
+    text: (): string =>
+      stripIndents(
+        `
+        Failed to restore previous client module manifest.
+        
+        This can happen if the manifest is corrupted or is not compatible with the current version of Gatsby.
+
+        Please run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.
+        `
+      ),
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    category: ErrorCategory.USER,
+  },
 }
 
 export type ErrorId = string | keyof typeof errors
