@@ -252,7 +252,6 @@ export function processGraphQLQuery(query: string | graphql.DocumentNode): {
           if (node.value.kind !== graphql.Kind.OBJECT) {
             return
           }
-          // console.log(require(`util`).inspect({ node }, { depth: Infinity }))
 
           // old style sort: `allX(sort: { fields: <something>, order?: </something> })
           const props: Record<string, Array<string> | undefined> = {}
