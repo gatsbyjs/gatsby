@@ -1,9 +1,11 @@
 import * as path from "path"
+import fs from "fs-extra"
 import Template from "webpack/lib/Template"
 import ModuleDependency from "webpack/lib/dependencies/ModuleDependency"
 import NullDependency from "webpack/lib/dependencies/NullDependency"
 import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 import webpack, { Module, NormalModule, Dependency, javascript } from "webpack"
+import type Reporter from "gatsby-cli/lib/reporter"
 
 interface IModuleExport {
   id: string
@@ -33,14 +35,17 @@ class ClientReferenceDependency extends ModuleDependency {
  */
 export class PartialHydrationPlugin {
   name = `PartialHydrationPlugin`
-  _manifestPath: string
-  _rootFilePath: string
+
+  _manifestPath: string // Absolute path to where the manifest file should be written
+  _reporter: typeof Reporter
+
   _references: Array<ClientReferenceDependency> = []
   _clientModules = new Set<webpack.NormalModule>()
+  _previousManifest = {}
 
-  constructor(manifestPath: string, rootFilePath: string) {
+  constructor(manifestPath: string, reporter: typeof Reporter) {
     this._manifestPath = manifestPath
-    this._rootFilePath = rootFilePath
+    this._reporter = reporter
   }
 
   _generateClientReferenceChunk(
@@ -188,6 +193,27 @@ export class PartialHydrationPlugin {
   }
 
   apply(compiler: webpack.Compiler): void {
+    // Restore manifest from the previous compilation, otherwise it will be wiped since files aren't visited on cached builds
+    compiler.hooks.beforeCompile.tap(this.name, () => {
+      try {
+        const previousManifest = fs.existsSync(this._manifestPath)
+
+        if (!previousManifest) {
+          return
+        }
+
+        this._previousManifest = JSON.parse(
+          fs.readFileSync(this._manifestPath, `utf-8`)
+        )
+      } catch (error) {
+        this._reporter.panic({
+          id: `80001`,
+          context: {},
+          error,
+        })
+      }
+    })
+
     compiler.hooks.thisCompilation.tap(
       this.name,
       (compilation, { normalModuleFactory }) => {
@@ -298,10 +324,23 @@ export class PartialHydrationPlugin {
               compilation.options.context as string
             )
 
+            /**
+             * `emitAsset` is unclear about what the path should be relative to and absolute paths don't work. This works so we'll go with that.
+             * @see {@link https://webpack.js.org/api/compilation-object/#emitasset}
+             */
+            const emitManifestPath = `..${this._manifestPath.replace(
+              compiler.context,
+              ``
+            )}`
+
             compilation.emitAsset(
-              this._manifestPath,
+              emitManifestPath,
               new webpack.sources.RawSource(
-                JSON.stringify(manifest, null, 2),
+                JSON.stringify(
+                  { ...this._previousManifest, ...manifest },
+                  null,
+                  2
+                ),
                 false
               )
             )

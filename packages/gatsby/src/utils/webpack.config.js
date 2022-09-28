@@ -10,7 +10,7 @@ const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
-const report = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
@@ -74,7 +74,7 @@ module.exports = async (
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
     } catch (err) {
       if (err.code !== `ENOENT`) {
-        report.error(
+        reporter.error(
           `There was a problem processing the .env file (${envFile})`,
           err
         )
@@ -232,7 +232,7 @@ module.exports = async (
       plugins.virtualModules(),
       new BabelConfigItemsCacheInvalidatorPlugin(),
       process.env.GATSBY_WEBPACK_LOGGING?.split(`,`)?.includes(stage) &&
-        new WebpackLoggingPlugin(program.directory, report, program.verbose),
+        new WebpackLoggingPlugin(program.directory, reporter, program.verbose),
     ].filter(Boolean)
 
     switch (stage) {
@@ -285,8 +285,13 @@ module.exports = async (
             new StaticQueryMapper(store),
             isPartialHydrationEnabled
               ? new PartialHydrationPlugin(
-                  `../.cache/partial-hydration/manifest.json`,
-                  path.join(directory, `.cache`, `public-page-renderer-prod.js`)
+                  path.join(
+                    directory,
+                    `.cache`,
+                    `partial-hydration`,
+                    `manifest.json`
+                  ),
+                  reporter
                 )
               : null,
           ])
