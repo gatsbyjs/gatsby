@@ -285,8 +285,12 @@ module.exports = async (
             new StaticQueryMapper(store),
             isPartialHydrationEnabled
               ? new PartialHydrationPlugin(
-                  `../.cache/partial-hydration/manifest.json`,
-                  path.join(directory, `.cache`, `public-page-renderer-prod.js`)
+                  path.join(
+                    directory,
+                    `.cache`,
+                    `partial-hydration`,
+                    `manifest.json`
+                  )
                 )
               : null,
           ])

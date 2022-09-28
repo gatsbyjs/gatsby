@@ -34,15 +34,13 @@ class ClientReferenceDependency extends ModuleDependency {
  */
 export class PartialHydrationPlugin {
   name = `PartialHydrationPlugin`
-  _manifestPath: string
-  _rootFilePath: string
+  _manifestPath: string // Absolute path to where the manifest file should be written
   _references: Array<ClientReferenceDependency> = []
   _clientModules = new Set<webpack.NormalModule>()
   _previousManifest = {}
 
-  constructor(manifestPath: string, rootFilePath: string) {
+  constructor(manifestPath: string) {
     this._manifestPath = manifestPath
-    this._rootFilePath = rootFilePath
   }
 
   _generateClientReferenceChunk(
@@ -191,19 +189,14 @@ export class PartialHydrationPlugin {
   apply(compiler: webpack.Compiler): void {
     // Restore manifest from the previous compilation, otherwise it will be wiped since files aren't visited on cached builds
     compiler.hooks.beforeCompile.tap(this.name, () => {
-      const previousManifestPath = path.join(
-        compiler.context,
-        this._manifestPath.slice(3) // Remove `../`
-      )
-
-      const previousManifest = fs.existsSync(previousManifestPath)
+      const previousManifest = fs.existsSync(this._manifestPath)
 
       if (!previousManifest) {
         return
       }
 
       this._previousManifest = JSON.parse(
-        fs.readFileSync(previousManifestPath, `utf-8`)
+        fs.readFileSync(this._manifestPath, `utf-8`)
       )
     })
 
@@ -317,8 +310,17 @@ export class PartialHydrationPlugin {
               compilation.options.context as string
             )
 
+            /**
+             * `emitAsset` is unclear about what the path should be relative to and absolute paths don't work. This works so we'll go with that.
+             * @see {@link https://webpack.js.org/api/compilation-object/#emitasset}
+             */
+            const emitManifestPath = `..${this._manifestPath.replace(
+              compiler.context,
+              ``
+            )}`
+
             compilation.emitAsset(
-              this._manifestPath,
+              emitManifestPath,
               new webpack.sources.RawSource(
                 JSON.stringify(
                   { ...this._previousManifest, ...manifest },
