@@ -75,8 +75,10 @@ export function headHandlerForSSR({
           )
         } else {
           element =
-            node.text.length > 0 ? (
-              <node.rawTagName {...attributes}>{node.text}</node.rawTagName>
+            node.textContent.length > 0 ? (
+              <node.rawTagName {...attributes}>
+                {node.textContent}
+              </node.rawTagName>
             ) : (
               <node.rawTagName {...attributes} />
             )
