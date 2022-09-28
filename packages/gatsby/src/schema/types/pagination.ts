@@ -88,7 +88,7 @@ function getFieldSelectorTC({
   schemaComposer: SchemaComposer<any>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): AnyTypeComposer<any> {
-  if (process.env.GATSBY_GRAPHQL_NESTED_SORT_AND_AGGREGATE) {
+  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     return convertToNestedInputType({
       schemaComposer,
       typeComposer,

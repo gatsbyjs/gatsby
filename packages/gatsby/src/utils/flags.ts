@@ -246,16 +246,6 @@ const activeFlags: Array<IFlag> = [
         ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
         : `Partial hydration requires React 18+ to work.`,
   },
-  {
-    name: `GRAPHQL_NESTED_SORT_AND_AGGREGATE`,
-    env: `GATSBY_GRAPHQL_NESTED_SORT_AND_AGGREGATE`,
-    command: `all`,
-    telemetryId: `GraphQLNestedSortAndAggregate`,
-    description: `Change enums used to define sorting and aggregation to nested input objects. This lowers memory usage and improve schema building performance.`,
-    umbrellaIssue: `https://gatsby.dev/graphql-nested-sort-and-aggregate`,
-    experimental: true,
-    testFitness: (): fitnessEnum => true,
-  },
 ]
 
 export default activeFlags

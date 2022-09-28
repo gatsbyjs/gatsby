@@ -123,7 +123,7 @@ function maybeConvertSortInputObjectToSortPath<TArgs>(
     return args
   }
 
-  if (process.env.GATSBY_GRAPHQL_NESTED_SORT_AND_AGGREGATE) {
+  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     let sorts = args.sort
     if (!isArray(sorts)) {
       sorts = [sorts]

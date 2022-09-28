@@ -1265,12 +1265,13 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       type: paginationTC,
       args: {
         filter: filterInputTC,
-        sort: process.env.GATSBY_GRAPHQL_NESTED_SORT_AND_AGGREGATE
-          ? getSortInputNestedObjects({ schemaComposer, typeComposer })
-          : getSortInput({
-              schemaComposer,
-              typeComposer,
-            }),
+        sort:
+          _CFLAGS_.GATSBY_MAJOR === `5`
+            ? getSortInputNestedObjects({ schemaComposer, typeComposer })
+            : getSortInput({
+                schemaComposer,
+                typeComposer,
+              }),
 
         skip: `Int`,
         limit: `Int`,

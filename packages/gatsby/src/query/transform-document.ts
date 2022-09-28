@@ -4,7 +4,7 @@ export function transformUsingGraphQLCodemods(ast: DocumentNode): {
   ast: DocumentNode
   hasChanged: boolean
 } {
-  if (process.env.GATSBY_GRAPHQL_NESTED_SORT_AND_AGGREGATE) {
+  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     try {
       const {
         processGraphQLQuery,
