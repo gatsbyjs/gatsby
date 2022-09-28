@@ -132,7 +132,7 @@ function getFieldSelectorTC({
       typeComposer,
       inputTypeComposer,
     })
-    return fieldsEnumTC
+    return fieldsEnumTC.getTypeNonNull()
   }
 }
 
