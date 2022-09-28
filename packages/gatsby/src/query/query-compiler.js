@@ -215,7 +215,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
       const { ast: transformedDocument, hasChanged } =
         transformUsingGraphQLCodemods(doc)
       if (hasChanged) {
-        let newErrors = validate(
+        const newErrors = validate(
           schema,
           transformedDocument,
           preValidationRules
