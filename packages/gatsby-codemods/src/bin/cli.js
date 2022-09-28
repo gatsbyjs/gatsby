@@ -16,7 +16,7 @@ export const jscodeshiftExecutable = require.resolve(`.bin/jscodeshift`)
 export function runTransform(transform, targetDir) {
   const transformerPath = path.join(transformerDirectory, `${transform}.js`)
 
-  let args = [jscodeshiftExecutable]
+  let args = []
 
   args.push(`--ignore-pattern=**/node_modules/**`)
   args.push(`--ignore-pattern=**/.cache/**`)
