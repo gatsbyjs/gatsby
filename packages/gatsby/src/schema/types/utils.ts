@@ -218,7 +218,9 @@ export const convertToNestedInputType = ({
   const preCreatedInputComposer = schemaComposer.getOrCreateITC(
     `${typeName}${postfix}`
   )
-  const inputTypeComposer = typeComposer.getInputTypeComposer()
+  const inputTypeComposer = typeComposer.getInputTypeComposer({
+    fallbackType: null,
+  })
 
   if (
     inputTypeComposer?.hasField(`id`) &&
