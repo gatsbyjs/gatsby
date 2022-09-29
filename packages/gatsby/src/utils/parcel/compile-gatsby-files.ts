@@ -3,7 +3,14 @@ import { LMDBCache, Cache } from "@parcel/cache"
 import path from "path"
 import type { Diagnostic } from "@parcel/diagnostic"
 import reporter from "gatsby-cli/lib/reporter"
-import { ensureDir, emptyDir, existsSync, remove, readdir } from "fs-extra"
+import {
+  ensureDir,
+  emptyDir,
+  existsSync,
+  remove,
+  readdir,
+  lstat,
+} from "fs-extra"
 import telemetry from "gatsby-telemetry"
 import { isNearMatch } from "../is-near-match"
 
