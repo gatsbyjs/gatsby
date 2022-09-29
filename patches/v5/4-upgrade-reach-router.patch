@@ -157,22 +157,3 @@ index 82eab8fef4..730549be4c 100644
  
  export interface IServerData {
    headers?: Record<string, string>
-diff --git a/patches/v5/4-upgrade-reach-router.patch b/patches/v5/4-upgrade-reach-router.patch
-deleted file mode 100644
-index d6b293bb05..0000000000
---- a/patches/v5/4-upgrade-reach-router.patch
-+++ /dev/null
-@@ -1,13 +0,0 @@
--diff --git a/packages/gatsby/package.json b/packages/gatsby/package.json
--index 9df7618da5..39eccc3d1a 100644
----- a/packages/gatsby/package.json
--+++ b/packages/gatsby/package.json
--@@ -19,7 +19,7 @@
--     "@babel/traverse": "^7.15.4",
--     "@babel/types": "^7.15.4",
--     "@builder.io/partytown": "^0.5.2",
---    "@gatsbyjs/reach-router": "^1.3.9",
--+    "@gatsbyjs/reach-router": "^2.0.0-v2.0",
--     "@gatsbyjs/webpack-hot-middleware": "^2.25.2",
--     "@graphql-codegen/add": "^3.1.1",
--     "@graphql-codegen/core": "^2.5.1",
