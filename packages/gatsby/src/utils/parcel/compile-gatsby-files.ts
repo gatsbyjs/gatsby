@@ -9,7 +9,6 @@ import {
   existsSync,
   remove,
   readdir,
-  lstat,
 } from "fs-extra"
 import telemetry from "gatsby-telemetry"
 import { isNearMatch } from "../is-near-match"
