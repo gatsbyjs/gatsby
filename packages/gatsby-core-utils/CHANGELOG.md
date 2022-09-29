@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.24.0/packages/gatsby-core-utils) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Bug Fixes
+
+- Use `grep -E` instead of `egrep` [#36648](https://github.com/gatsbyjs/gatsby/issues/36648) ([e8ed8a1](https://github.com/gatsbyjs/gatsby/commit/e8ed8a15c9d3fe973e1ccfb1d2881d3bff669250))
+
 ## [3.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.23.0/packages/gatsby-core-utils) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
