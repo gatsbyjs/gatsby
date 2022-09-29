@@ -30,7 +30,6 @@ import { IGatsbyNode } from "../redux/types"
 import { IQueryResult } from "../datastore/types"
 import { GatsbyIterable } from "../datastore/common/iterable"
 import { getResolvedFields, fieldPathNeedToResolve } from "./utils"
-import { isArray } from "lodash"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
@@ -125,7 +124,7 @@ function maybeConvertSortInputObjectToSortPath<TArgs>(
 
   if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     let sorts = args.sort
-    if (!isArray(sorts)) {
+    if (!Array.isArray(sorts)) {
       sorts = [sorts]
     }
 
