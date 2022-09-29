@@ -618,7 +618,6 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      - bootstrap_v5
       - lint
       - typecheck:
           requires:
@@ -646,12 +645,6 @@ workflows:
             - lint
             - typecheck
             - bootstrap
-      - unit_tests_node18_v5:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap_v5
       - integration_tests_gatsby_source_wordpress:
           <<: *e2e-test-workflow
       - integration_tests_node_manifest:
@@ -708,3 +701,11 @@ workflows:
             branches:
               only:
                 - master
+
+  build-test_v5:
+    jobs:
+      - bootstrap_v5
+      - unit_tests_node18_v5:
+          <<: *ignore_docs
+          requires:
+            - bootstrap_v5
