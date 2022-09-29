@@ -1,4 +1,4 @@
-import { pick } from "@gatsbyjs/reach-router"
+import { pick } from "@gatsbyjs/reach-router/lib/utils"
 import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
 import { maybeGetBrowserRedirect } from "./redirect-utils.js"
