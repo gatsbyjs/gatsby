@@ -381,6 +381,21 @@ module.exports = async (
       rules.miscAssets(),
     ]
 
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      configRules.push({
+        test: require.resolve(`@gatsbyjs/reach-router/es/index`),
+        type: `javascript/auto`,
+        use: [
+          {
+            loader: require.resolve(
+              `./reach-router-add-basecontext-export-loader`
+            ),
+          },
+        ],
+      })
+    }
+
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
     if (stage === `build-javascript` && !hasES6ModuleSupport(directory)) {
@@ -485,9 +500,17 @@ module.exports = async (
       ],
     }
 
-    resolve.alias[`@reach/router`] = path.join(
-      getPackageRoot(`@gatsbyjs/reach-router`)
-    )
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      const target =
+        stage === `build-html` || stage === `develop-html` ? `node` : `web`
+      if (target === `web`) {
+        resolve.alias[`@reach/router`] = path.join(
+          getPackageRoot(`@gatsbyjs/reach-router`),
+          `es`
+        )
+      }
+    }
 
     if (stage === `build-javascript` && program.profile) {
       resolve.alias[`react-dom$`] = `react-dom/profiling`
