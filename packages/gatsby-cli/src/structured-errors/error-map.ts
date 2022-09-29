@@ -358,9 +358,9 @@ const errors = {
   },
   "10124": {
     text: (context): string =>
-      `It looks like you were trying to add the config file? Please rename "${
-        context.nearMatch
-      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
+      ` the config file? Please rename "${context.nearMatch}" to "${
+        context.configName
+      }.${context.isTSX ? `ts` : `js`}"`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
