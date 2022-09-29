@@ -10,6 +10,7 @@ import {
   GraphQLError,
   ExecutionResult,
   NoDeprecatedCustomRule,
+  print,
 } from "graphql"
 import { debounce } from "lodash"
 import reporter from "gatsby-cli/lib/reporter"
@@ -110,6 +111,7 @@ export class GraphQLRunner {
 
   validate(
     schema: GraphQLSchema,
+    originalQueryText: string,
     document: DocumentNode,
     originalDocument: DocumentNode = document
   ): {
@@ -133,7 +135,22 @@ export class GraphQLRunner {
       const { ast: transformedDocument, hasChanged } =
         tranformDocument(document)
       if (hasChanged) {
-        return this.validate(schema, transformedDocument, originalDocument)
+        const { errors, warnings, document } = this.validate(
+          schema,
+          originalQueryText,
+          transformedDocument,
+          originalDocument
+        )
+
+        if (!errors.length) {
+          reporter.warn(
+            `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nCurrent query:\n\n${reporter.stripIndent(
+              originalQueryText
+            )}\n\nConverted query:\n\n${print(transformedDocument)}`
+          )
+        }
+
+        return { errors, warnings, document }
       }
     }
 
@@ -185,20 +202,22 @@ export class GraphQLRunner {
       this.clearCache()
     }
 
+    let queryText = query
+    if (typeof queryText !== `string`) {
+      queryText = queryText.body
+    }
+
     if (this.stats) {
       this.stats.totalQueries++
-      let statsQuery = query
-      if (typeof statsQuery !== `string`) {
-        statsQuery = statsQuery.body
-      }
 
       this.stats.uniqueQueries.add(
-        crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)
+        crypto.createHash(`sha1`).update(queryText).digest(`hex`)
       )
     }
 
     const { errors, warnings, document } = this.validate(
       schema,
+      queryText,
       this.parse(query)
     )
 

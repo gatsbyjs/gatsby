@@ -212,6 +212,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
 
     let errors = validate(schema, doc, preValidationRules)
     if (errors && errors.length) {
+      const originalQueryText = print(originalDoc)
       const { ast: transformedDocument, hasChanged } = tranformDocument(doc)
       if (hasChanged) {
         const newErrors = validate(
@@ -220,6 +221,11 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
           preValidationRules
         )
         if (newErrors.length === 0) {
+          report.warn(
+            `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nFile: ${filePath}\n\nCurrent query:\n\n${originalQueryText}\n\nConverted query:\n\n${print(
+              transformedDocument
+            )}`
+          )
           doc = transformedDocument
           errors = newErrors
         }
