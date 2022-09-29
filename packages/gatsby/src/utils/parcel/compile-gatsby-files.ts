@@ -61,11 +61,21 @@ export async function compileGatsbyFiles(
   retry: number = 0
 ): Promise<void> {
   try {
+    const configName = `gatsby-node`
+
     // Check for gatsby-node.jsx and gatsby-node.tsx (or other misnamed variations)
-    const files = await readdir(siteRoot)
+    const filesAndDirectories = await readdir(siteRoot, { withFileTypes: true })
+    const files = filesAndDirectories
+      .filter(dirent => !dirent.isDirectory())
+      .map(dirent => dirent.name)
+
+    // Check if they have a gatsby-node directory for lifecycle function code.
+    const hasGatsbyNodeDir =
+      filesAndDirectories.filter(
+        dirent => dirent.isDirectory() && dirent.name === configName
+      ).length > 0
 
     let nearMatch = ``
-    const configName = `gatsby-node`
 
     for (const file of files) {
       if (nearMatch) {
@@ -73,12 +83,14 @@ export async function compileGatsbyFiles(
       }
 
       const { name } = path.parse(file)
+
       // Of course, allow valid gatsby-node files
       if (file === `gatsby-node.js` || file === `gatsby-node.ts`) {
         break
       }
 
-      if (isNearMatch(name, configName, 3)) {
+      // Check for likely misnamed files, but allow a 'gatsby-node' directory.
+      if (isNearMatch(name, configName, 3) && !hasGatsbyNodeDir) {
         nearMatch = file
       }
     }
