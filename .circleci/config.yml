@@ -8,10 +8,14 @@ executors:
       image:
         type: string
         default: "14.15.0"
+      gatsby_major:
+        type: string
+        default: "4"
     docker:
       - image: cimg/node:<< parameters.image >>
     environment:
       GATSBY_CPU_COUNT: 2
+      COMPILER_OPTIONS: GATSBY_MAJOR=<< parameters.gatsby_major >>
 
 aliases:
   e2e-executor-env: &e2e-executor-env
@@ -197,6 +201,28 @@ jobs:
             - "packages/"
             - "node_modules/"
 
+  bootstrap_v5:
+    executor:
+      name: node
+      gatsby_major: "5"
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+      # python 2 is not built in and node-gyp needs it to build lmdb
+      - run: sudo apt-get update && sudo apt-get install python -y
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *check_lockfile
+      - <<: *validate_renovate
+      - <<: *persist_cache
+      - run: yarn bootstrap -- concurrency=2
+      # Persist the workspace again with all packages already built
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "packages/"
+            - "node_modules/"
+
   lint:
     executor: node
     steps:
@@ -238,6 +264,13 @@ jobs:
     executor:
       name: node
       image: "18.2.0"
+    <<: *test_template
+
+  unit_tests_node18_v5:
+    executor:
+      name: node
+      image: "18.2.0"
+      gatsby_major: "5"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -585,6 +618,7 @@ workflows:
   build-test:
     jobs:
       - bootstrap
+      - bootstrap_v5
       - lint
       - typecheck:
           requires:
@@ -612,6 +646,12 @@ workflows:
             - lint
             - typecheck
             - bootstrap
+      - unit_tests_node18_v5:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap_v5
       - integration_tests_gatsby_source_wordpress:
           <<: *e2e-test-workflow
       - integration_tests_node_manifest:
