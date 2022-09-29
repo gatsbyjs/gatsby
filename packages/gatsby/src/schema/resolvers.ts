@@ -51,8 +51,6 @@ function pathObjectToPathString(input: INestedPathStructureNode): {
   let leaf: any = undefined
   while (currentValue) {
     if (isPlainObject(currentValue)) {
-      // const keys = Object.keys(currentValue)
-
       const entries = Object.entries(currentValue)
       if (entries.length !== 1) {
         throw new Error(`Invalid field arg`)
