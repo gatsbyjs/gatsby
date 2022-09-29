@@ -136,7 +136,7 @@ function processGraphQLQuery(query: string | graphql.DocumentNode): {
   }
 }
 
-export function transformUsingGraphQLCodemods(ast: graphql.DocumentNode): {
+export function tranformDocument(ast: graphql.DocumentNode): {
   ast: graphql.DocumentNode
   hasChanged: boolean
 } {

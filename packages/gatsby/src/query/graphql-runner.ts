@@ -22,7 +22,7 @@ import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
 import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
 import GraphQLSpanTracer from "./graphql-span-tracer"
-import { transformUsingGraphQLCodemods } from "./transform-document"
+import { tranformDocument } from "./transform-document"
 
 // Preserve these caches across graphql instances.
 const _rootNodeMap = new WeakMap()
@@ -131,7 +131,7 @@ export class GraphQLRunner {
       this.validDocuments.set(originalDocument, document)
     } else {
       const { ast: transformedDocument, hasChanged } =
-        transformUsingGraphQLCodemods(document)
+        tranformDocument(document)
       if (hasChanged) {
         return this.validate(schema, transformedDocument, originalDocument)
       }
