@@ -1,5 +1,5 @@
 import * as React from "react"
-import { NavigateFn, LinkProps } from "@gatsbyjs/reach-router"
+import { NavigateFn, LinkProps } from "@reach/router" // These come from `@types/reach__router`
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyLinkProps<TState> extends LinkProps<TState> {

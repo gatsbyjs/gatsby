@@ -1,11 +1,7 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import {
-  WindowLocation,
-  NavigateFn,
-  NavigateOptions,
-} from "@gatsbyjs/reach-router"
+import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router" // These come from `@types/reach__router`
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { Span } from "opentracing"
 export { Reporter }
@@ -21,7 +17,10 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen" | "content-file-path"
+export type AvailableFeatures =
+  | "image-cdn"
+  | "graphql-typegen"
+  | "content-file-path"
 
 export {
   default as Link,
