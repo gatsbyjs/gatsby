@@ -23,6 +23,7 @@ import {
   IResourcesForTemplate,
   getStaticQueryContext,
 } from "../../static-query-utils"
+import { ServerLocation } from "@gatsbyjs/reach-router"
 import { IGatsbySlice } from "../../../internal"
 import { ensureFileContent } from "../../ensure-file-content"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
@@ -319,10 +320,12 @@ export async function renderPartialHydrationProd({
   paths,
   envVars,
   sessionId,
+  pathPrefix,
 }: {
   paths: Array<string>
   envVars: Array<[string, string | undefined]>
   sessionId: number
+  pathPrefix
 }): Promise<void> {
   const publicDir = join(process.cwd(), `public`)
 
@@ -376,18 +379,34 @@ export async function renderPartialHydrationProd({
 
     const stream = fs.createWriteStream(outputPath)
 
+    const prefixedPagePath = pathPrefix
+      ? `${pathPrefix}${pageData.path}`
+      : pageData.path
+    const [pathname, search = ``] = prefixedPagePath.split(`?`)
+
     const { pipe } = renderToPipeableStream(
       React.createElement(
         StaticQueryServerContext.Provider,
         { value: staticQueryContext },
         [
-          React.createElement(chunk.default, {
-            data: pageData.result.data,
-            pageContext: pageData.result.pageContext,
-            location: {
-              pathname: pageData.path,
-            },
-          }),
+          // Make `useLocation` hook usuable in children
+          React.createElement(
+            ServerLocation,
+            { key: `partial-hydration-server-location`, url: pageData.path },
+            [
+              React.createElement(chunk.default, {
+                key: `partial-hydration-page`,
+                data: pageData.result.data,
+                pageContext: pageData.result.pageContext,
+                // Make location available to page as props, logic extracted from `LocationProvider`
+                location: {
+                  pathname,
+                  search,
+                  hash: ``,
+                },
+              }),
+            ]
+          ),
         ]
       ),
       JSON.parse(

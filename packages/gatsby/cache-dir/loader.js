@@ -946,7 +946,6 @@ export class ProdLoader extends BaseLoader {
       if (result.status !== PageResourceStatus.Success) {
         return Promise.resolve()
       }
-      console.log({ result })
       const pageData = result.payload
       const chunkName = pageData.componentChunkName
       const componentUrls = createComponentUrls(chunkName)

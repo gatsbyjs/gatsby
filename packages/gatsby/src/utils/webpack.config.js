@@ -10,7 +10,7 @@ const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
-const report = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
@@ -74,7 +74,7 @@ module.exports = async (
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
     } catch (err) {
       if (err.code !== `ENOENT`) {
-        report.error(
+        reporter.error(
           `There was a problem processing the .env file (${envFile})`,
           err
         )
@@ -233,7 +233,7 @@ module.exports = async (
       plugins.virtualModules(),
       new BabelConfigItemsCacheInvalidatorPlugin(),
       process.env.GATSBY_WEBPACK_LOGGING?.split(`,`)?.includes(stage) &&
-        new WebpackLoggingPlugin(program.directory, report, program.verbose),
+        new WebpackLoggingPlugin(program.directory, reporter, program.verbose),
     ].filter(Boolean)
 
     switch (stage) {
@@ -286,8 +286,13 @@ module.exports = async (
             new StaticQueryMapper(store),
             isPartialHydrationEnabled
               ? new PartialHydrationPlugin(
-                  `../.cache/partial-hydration/manifest.json`,
-                  path.join(directory, `.cache`, `public-page-renderer-prod.js`)
+                  path.join(
+                    directory,
+                    `.cache`,
+                    `partial-hydration`,
+                    `manifest.json`
+                  ),
+                  reporter
                 )
               : null,
           ])
@@ -375,12 +380,11 @@ module.exports = async (
       rules.images(),
       rules.media(),
       rules.miscAssets(),
+    ]
 
-      // This is a hack that exports one of @reach/router internals (BaseContext)
-      // to export list. We need it to reset basepath and baseuri context after
-      // Gatsby main router changes it, to keep v2 behaviour.
-      // We will need to most likely remove this for v3.
-      {
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      configRules.push({
         test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
         use: [
@@ -390,8 +394,8 @@ module.exports = async (
             ),
           },
         ],
-      },
-    ]
+      })
+    }
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
@@ -500,14 +504,16 @@ module.exports = async (
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      resolve.alias[`@reach/router`] = path.join(
-        getPackageRoot(`@gatsbyjs/reach-router`),
-        `es`
-      )
-
-      resolve.alias[`gatsby-core-utils/create-content-digest`] = directoryPath(
-        `.cache/create-content-digest-browser-shim`
-      )
+      // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+      if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+        resolve.alias[`@reach/router`] = path.join(
+          getPackageRoot(`@gatsbyjs/reach-router`),
+          `es`
+        )
+      } else {
+        resolve.alias[`gatsby-core-utils/create-content-digest`] =
+          directoryPath(`.cache/create-content-digest-browser-shim`)
+      }
     }
 
     if (stage === `build-javascript` && program.profile) {

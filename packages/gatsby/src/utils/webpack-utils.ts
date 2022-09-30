@@ -271,7 +271,7 @@ export const createWebpackUtils = (
         modulesOptions = {
           auto: undefined,
           namedExport: true,
-          localIdentName: `[name]--[local]--[hash:base64:5]`,
+          localIdentName: `[name]--[local]--[hash:hex:5]`,
           exportLocalsConvention: `dashesOnly`,
           exportOnlyLocals: isSSR,
         }
