@@ -182,3 +182,7 @@ export function MyImage() {
   return <Slice alias="my-image" image={fetchImage()} />
 }
 ```
+
+## Additional Resources
+
+- [Using Slices](/docs/how-to/performance/using-slices)
