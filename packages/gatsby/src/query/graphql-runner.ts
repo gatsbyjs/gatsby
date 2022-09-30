@@ -10,6 +10,7 @@ import {
   GraphQLError,
   ExecutionResult,
   NoDeprecatedCustomRule,
+  print,
 } from "graphql"
 import { debounce } from "lodash"
 import reporter from "gatsby-cli/lib/reporter"
@@ -22,6 +23,7 @@ import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
 import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
 import GraphQLSpanTracer from "./graphql-span-tracer"
+import { tranformDocument } from "./transform-document"
 
 // Preserve these caches across graphql instances.
 const _rootNodeMap = new WeakMap()
@@ -50,7 +52,7 @@ export class GraphQLRunner {
 
   schema: GraphQLSchema
 
-  validDocuments: WeakSet<DocumentNode>
+  validDocuments: WeakMap<DocumentNode, DocumentNode>
   scheduleClearCache: () => void
 
   stats: IGraphQLRunnerStats | null
@@ -71,7 +73,7 @@ export class GraphQLRunner {
     })
     this.schema = schema
     this.parseCache = new Map()
-    this.validDocuments = new WeakSet()
+    this.validDocuments = new WeakMap()
     this.scheduleClearCache = debounce(this.clearCache.bind(this), 5000)
 
     this.graphqlTracing = graphqlTracing || false
@@ -97,7 +99,7 @@ export class GraphQLRunner {
 
   clearCache(): void {
     this.parseCache.clear()
-    this.validDocuments = new WeakSet()
+    this.validDocuments = new WeakMap()
   }
 
   parse(query: Query): DocumentNode {
@@ -109,21 +111,50 @@ export class GraphQLRunner {
 
   validate(
     schema: GraphQLSchema,
-    document: DocumentNode
+    originalQueryText: string,
+    document: DocumentNode,
+    originalDocument: DocumentNode = document
   ): {
     errors: ReadonlyArray<GraphQLError>
     warnings: ReadonlyArray<GraphQLError>
+    document: DocumentNode
   } {
     let errors: ReadonlyArray<GraphQLError> = []
     let warnings: ReadonlyArray<GraphQLError> = []
-    if (!this.validDocuments.has(document)) {
-      errors = validate(schema, document)
-      warnings = validate(schema, document, [NoDeprecatedCustomRule])
-      if (!errors.length) {
-        this.validDocuments.add(document)
+    const validatedDocument = this.validDocuments.get(document)
+    if (validatedDocument) {
+      return { errors: [], warnings: [], document: validatedDocument }
+    }
+
+    errors = validate(schema, document)
+    warnings = validate(schema, document, [NoDeprecatedCustomRule])
+
+    if (!errors.length) {
+      this.validDocuments.set(originalDocument, document)
+    } else {
+      const { ast: transformedDocument, hasChanged } =
+        tranformDocument(document)
+      if (hasChanged) {
+        const { errors, warnings, document } = this.validate(
+          schema,
+          originalQueryText,
+          transformedDocument,
+          originalDocument
+        )
+
+        if (!errors.length) {
+          reporter.warn(
+            `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nCurrent query:\n\n${reporter.stripIndent(
+              originalQueryText
+            )}\n\nConverted query:\n\n${print(transformedDocument)}`
+          )
+        }
+
+        return { errors, warnings, document }
       }
     }
-    return { errors, warnings }
+
+    return { errors, warnings, document }
   }
 
   getStats(): IGraphQLRunnerStatResults | null {
@@ -171,20 +202,24 @@ export class GraphQLRunner {
       this.clearCache()
     }
 
+    let queryText = query
+    if (typeof queryText !== `string`) {
+      queryText = queryText.body
+    }
+
     if (this.stats) {
       this.stats.totalQueries++
-      let statsQuery = query
-      if (typeof statsQuery !== `string`) {
-        statsQuery = statsQuery.body
-      }
 
       this.stats.uniqueQueries.add(
-        crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)
+        crypto.createHash(`sha1`).update(queryText).digest(`hex`)
       )
     }
 
-    const document = this.parse(query)
-    const { errors, warnings } = this.validate(schema, document)
+    const { errors, warnings, document } = this.validate(
+      schema,
+      queryText,
+      this.parse(query)
+    )
 
     // Queries are usually executed in batch. But after the batch is finished
     // cache just wastes memory without much benefits.
