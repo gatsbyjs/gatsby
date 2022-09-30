@@ -45,11 +45,11 @@ exports.createPages = async ({ actions }) => {
 }
 ```
 
-Now that we have a `navigation-bar` Slice created, let's go use it!
+Now that you have a `navigation-bar` Slice created, let's go use it!
 
 ### Using created Slices
 
-Now we need to convert the `DefaultLayout` component to actually use the new Slice we created.
+Now you need to convert the `DefaultLayout` component to actually use the new Slice you created.
 
 ```diff
 -import { NavigationBar, Footer } from "../components"
@@ -105,13 +105,13 @@ export const NavigationBar = ({ className, sliceContext }) => {
 
 There will be times where a single Slice will either need to be handed different context or swapped entirely depending on which page it's being rendered on.
 
-This is where we can utilize the `alias` prop that is given to the `<Slice>` component. When we converted the `<NavigationBar>` component to a slice, we created the slice with an `id` of `navigation-bar`, but passed that value to the `alias` prop of `<Slice>`. Why is there a difference in key names?
+This is where you can utilize the `alias` prop that is given to the `<Slice>` component. When you converted the `<NavigationBar>` component to a slice, you created the slice with an `id` of `navigation-bar`, but passed that value to the `alias` prop of `<Slice>`. Why is there a difference in key names?
 
-An `alias` is not a 1-to-1 mapping of string-to-slice. When we create a page using [`createPages`](/docs/reference/config-files/gatsby-node/#createPages), we can actually pass a key-value map of alias-to-id to tell Gatsby which Slice to use throughout the page.
+An `alias` is not a 1-to-1 mapping of string-to-slice. When you create a page using [`createPages`](/docs/reference/config-files/gatsby-node/#createPages), you can pass a key-value map of alias-to-id to tell Gatsby which Slice to use throughout the page.
 
-One common use case for this is localization. It's common to iterate over languages to create a page for each one. We can actually create a slice for each language by passing `context`. The `id` that a Slice is created with will be passed to [`createPage`](/docs/reference/config-files/actions/#createPage) to tell each page which slice to use.
+One common use case for this is localization. It's common to iterate over languages to create a page for each one. You can create a slice for each language by passing `context`. The `id` that a Slice is created with will be passed to [`createPage`](/docs/reference/config-files/actions/#createPage) to tell each page which slice to use.
 
-In this example, we create a slice of `<NavigationBar>` for each supported language. When we create each page, we'll tell the page which `navigation-bar` to use based on the language of the page we're creating.
+In this example, you create a slice of `<NavigationBar>` for each supported language. When you create each page, we'll tell the page which `navigation-bar` to use based on the language of the page we're creating.
 
 ```javascript:title=gatsby-node.js
 const SUPPORTED_LANGUAGES = ['en', 'de', 'es']
