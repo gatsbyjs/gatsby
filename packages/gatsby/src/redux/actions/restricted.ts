@@ -422,7 +422,7 @@ export const actions = {
     },
 
   /**
-   * Create a new Slice. See the guide on using the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
+   * Create a new Slice. See the technical docs for the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice).
    *
    * @availableIn [createPages]
    *
