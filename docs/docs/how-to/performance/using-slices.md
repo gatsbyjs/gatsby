@@ -4,7 +4,7 @@ title: Using Slices
 
 > Support for the Gatsby Slice API was added in `gatsby@5.0.0`. Check the status of the Gatsby 5 release in our [Github Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
 
-To further the improvements seen by [Incremental Builds](https://www.gatsbyjs.com/blog/2020-04-22-announcing-incremental-builds/), Gatsby includes a built-in `<Slice>` component that allows you to split pages into individual parts.
+To further the improvements seen by [Incremental Builds](https://www.gatsbyjs.com/blog/2020-04-22-announcing-incremental-builds/), Gatsby includes the [Slice API](/docs/reference/built-in-components/gatsby-slice) that allows you to split pages into individual parts.
 
 By using the `<Slice>` React component in combination with the [`createSlice`](/docs/reference/config-files/actions/#createSlice) API for common UI features, Gatsby will be able to build and deploy individual pieces of your site that had content changes, not just entire pages.
 
