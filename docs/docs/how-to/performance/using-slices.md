@@ -34,7 +34,7 @@ export const DefaultLayout = ({ children, navigationBarClassName }) => {
 
 ### Creating the Slice in `gatsby-node`
 
-Creating a Gatsby Slice is simple using the [`createSlice`](/docs/reference/config-files/actions/#createNodeField) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API in your `gatsby-node`.
+Creating a Gatsby Slice is done by using the [`createSlice`](/docs/reference/config-files/actions/#createNodeField) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API in your `gatsby-node`.
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
