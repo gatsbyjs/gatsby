@@ -124,8 +124,16 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({
 }
 
 export const createPages: GatsbyNode["createPages"] = ({
-  actions: { createPage, createRedirect },
+  actions: { createPage, createRedirect, createSlice },
 }) => {
+  createSlice({
+    id: `footer`,
+    component: path.resolve(`./src/components/footer.js`),
+    context: {
+      framework: "Gatsby",
+    },
+  })
+
   createPage({
     path: `/안녕`,
     component: path.resolve(`src/pages/page-2.js`),

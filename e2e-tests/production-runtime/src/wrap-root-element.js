@@ -1,6 +1,7 @@
 import * as React from "react"
 import { StaticQuery, graphql, Script } from "gatsby"
 import { scripts } from "../gatsby-script-scripts"
+import { ContextForSlicesProvider } from "./context-for-slices"
 
 export default ({ element }) => {
   return (
@@ -19,7 +20,7 @@ export default ({ element }) => {
           siteMetadata: { title },
         },
       }) => (
-        <>
+        <ContextForSlicesProvider>
           {element}
           <Script src={scripts.jQuery} strategy="post-hydrate" />
           <Script src={scripts.popper} strategy="idle" />
@@ -27,7 +28,7 @@ export default ({ element }) => {
             StaticQuery in wrapRootElement test (should show site title):
             <span data-testid="wrap-root-element-result">{title}</span>
           </div>
-        </>
+        </ContextForSlicesProvider>
       )}
     />
   )
