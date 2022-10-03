@@ -379,12 +379,11 @@ module.exports = async (
       rules.images(),
       rules.media(),
       rules.miscAssets(),
+    ]
 
-      // This is a hack that exports one of @reach/router internals (BaseContext)
-      // to export list. We need it to reset basepath and baseuri context after
-      // Gatsby main router changes it, to keep v2 behaviour.
-      // We will need to most likely remove this for v3.
-      {
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      configRules.push({
         test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
         use: [
@@ -394,8 +393,8 @@ module.exports = async (
             ),
           },
         ],
-      },
-    ]
+      })
+    }
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
@@ -501,13 +500,16 @@ module.exports = async (
       ],
     }
 
-    const target =
-      stage === `build-html` || stage === `develop-html` ? `node` : `web`
-    if (target === `web`) {
-      resolve.alias[`@reach/router`] = path.join(
-        getPackageRoot(`@gatsbyjs/reach-router`),
-        `es`
-      )
+    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      const target =
+        stage === `build-html` || stage === `develop-html` ? `node` : `web`
+      if (target === `web`) {
+        resolve.alias[`@reach/router`] = path.join(
+          getPackageRoot(`@gatsbyjs/reach-router`),
+          `es`
+        )
+      }
     }
 
     if (stage === `build-javascript` && program.profile) {

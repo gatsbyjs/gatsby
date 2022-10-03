@@ -34,6 +34,7 @@ import { actions } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
 import { getPathToLayoutComponent } from "gatsby-core-utils"
+import { tranformDocument } from "./transform-document"
 const { default: FileParser } = require(`./file-parser`)
 const {
   graphqlError,
@@ -202,12 +203,34 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
     text,
     templateLoc,
     hash,
-    doc,
+    doc: originalDoc,
     isHook,
     isStaticQuery,
     isConfigQuery,
   } of parsedQueries) {
-    const errors = validate(schema, doc, preValidationRules)
+    let doc = originalDoc
+
+    let errors = validate(schema, doc, preValidationRules)
+    if (errors && errors.length) {
+      const originalQueryText = print(originalDoc)
+      const { ast: transformedDocument, hasChanged } = tranformDocument(doc)
+      if (hasChanged) {
+        const newErrors = validate(
+          schema,
+          transformedDocument,
+          preValidationRules
+        )
+        if (newErrors.length === 0) {
+          report.warn(
+            `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nFile: ${filePath}\n\nCurrent query:\n\n${originalQueryText}\n\nConverted query:\n\n${print(
+              transformedDocument
+            )}`
+          )
+          doc = transformedDocument
+          errors = newErrors
+        }
+      }
+    }
 
     if (errors && errors.length) {
       addError(
