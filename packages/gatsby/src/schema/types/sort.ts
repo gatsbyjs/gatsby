@@ -193,7 +193,7 @@ export const getSortInputNestedObjects = ({
   const itc = convertToNestedInputType({
     schemaComposer,
     typeComposer,
-    postfix: `SortInputProp2`,
+    postfix: `SortInput`,
     onEnter: ({ fieldName, typeComposer }): IVisitContext => {
       const sortable =
         typeComposer instanceof UnionTypeComposer ||
