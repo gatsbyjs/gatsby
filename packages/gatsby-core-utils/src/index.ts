@@ -22,5 +22,3 @@ export { readConfigFile, getConfigPath } from "./utils"
 export { lock } from "./lock"
 
 export type { IFetchRemoteFileOptions } from "./fetch-remote-file"
-
-export const TEST_TEST = _CFLAGS_.GATSBY_MAJOR
