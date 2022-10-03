@@ -5,6 +5,7 @@ import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
+import { pathToFileURL } from "url"
 
 export async function getConfigFile(
   siteDirectory: string,
@@ -95,6 +96,14 @@ export async function getConfigFile(
             configName,
           },
         })
+      }
+
+      // load .mjs
+      if (nearMatch.endsWith(`.mjs`)) {
+        configFilePath = path.join(siteDirectory, nearMatch)
+        const importedModule = await import(pathToFileURL(configFilePath).href)
+        configModule = importedModule.default
+        nearMatch = ``
       }
 
       // gatsby-config is misnamed

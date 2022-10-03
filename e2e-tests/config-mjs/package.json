@@ -1,0 +1,20 @@
+{
+  "name": "config-mjs-tests",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "gatsby develop",
+    "build": "gatsby build"
+  },
+  "dependencies": {
+    "@mdx-js/react": "^2.1.3",
+    "gatsby": "4.24.0-next.2-dev-1664798049079",
+    "gatsby-cli": "4.24.0-next.0-dev-1664798049079",
+    "gatsby-core-utils": "next",
+    "gatsby-plugin-mdx": "^4.3.0",
+    "gatsby-source-filesystem": "^4.24.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "remark-gfm": "^3.0.1"
+  }
+}
