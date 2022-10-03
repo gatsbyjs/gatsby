@@ -1,8 +1,9 @@
-const { graphql } = require(`graphql`)
+const { graphql, parse, print } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
+const { tranformDocument } = require(`../../query/transform-document`)
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
@@ -46,8 +47,14 @@ describe(`Query schema`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = (query, variables) =>
-    graphql(
+  const runQuery = (query, variables) => {
+    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+      const inputAst = typeof query === `string` ? parse(query) : query
+      const { ast } = tranformDocument(inputAst)
+      query = print(ast)
+    }
+
+    return graphql(
       schema,
       query,
       undefined,
@@ -57,6 +64,7 @@ describe(`Query schema`, () => {
       }),
       variables
     )
+  }
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation(async (api, ...args) => {
