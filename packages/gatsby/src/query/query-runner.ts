@@ -150,9 +150,13 @@ export async function queryRunner(
     panicQueryJobError(queryJob, result.errors)
   }
 
-  // Add the page context onto the results.
-  if (queryJob && queryJob.queryType === `page`) {
-    result[`pageContext`] = Object.assign({}, queryJob.context)
+  // Add the page/slice context onto the results.
+  if (queryJob) {
+    if (queryJob.queryType === `page`) {
+      result[`pageContext`] = Object.assign({}, queryJob.context)
+    } else if (queryJob.queryType === `slice`) {
+      result[`sliceContext`] = Object.assign({}, queryJob.context)
+    }
   }
 
   // Delete internal data from pageContext

@@ -153,7 +153,7 @@ export async function writePageData(
 
 export async function writeSliceData(
   publicDir: string,
-  { componentChunkName, context, name }: IGatsbySlice,
+  { componentChunkName, name }: IGatsbySlice,
   staticQueryHashes: Array<string>
 ): Promise<string> {
   const result = JSON.parse(
@@ -164,10 +164,7 @@ export async function writeSliceData(
 
   const body = JSON.stringify({
     componentChunkName,
-    result: {
-      data: result.data,
-      sliceContext: context,
-    },
+    result,
     staticQueryHashes,
   })
 
