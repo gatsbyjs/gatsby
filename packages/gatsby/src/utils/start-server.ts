@@ -561,9 +561,9 @@ export async function startServer(
                 res.writeHead(response.statusCode || 200, response.headers)
               )
               .on(`error`, (err, _, response) => {
-                if (response = err.response) {
+                if (err.response) {
                   res.writeHead(response.statusCode || 400, response.headers)
-                  res.end(response.rawBody)
+                  res.end(err.response.rawBody)
                 } else {
                   const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
