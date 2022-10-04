@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.1/packages/gatsby) (2022-09-30)
+
+#### Bug Fixes
+
+- Fix truncation of childNode during static HTML generation Fix [#36704](https://github.com/gatsbyjs/gatsby/issues/36704) Fix [#36717](https://github.com/gatsbyjs/gatsby/issues/36717) ([f43c6bb](https://github.com/gatsbyjs/gatsby/commit/f43c6bb5bb6355098cd3701a6d5f059dcdcd383b))
+- remove unused console.log [#36713](https://github.com/gatsbyjs/gatsby/issues/36713) [#36716](https://github.com/gatsbyjs/gatsby/issues/36716) ([6eefacf](https://github.com/gatsbyjs/gatsby/commit/6eefacf013df088acd655f38e1e78462260fbadc))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.0/packages/gatsby) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
