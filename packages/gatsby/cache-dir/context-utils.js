@@ -26,4 +26,4 @@ function createServerOrClientContext(name, defaultValue) {
   return React.createContext(defaultValue)
 }
 
-export { createServerContext, createServerOrClientContext }
+export { createServerOrClientContext }
