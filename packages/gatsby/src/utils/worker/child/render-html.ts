@@ -329,7 +329,7 @@ export async function renderPartialHydrationProd({
 
     const {
       getPageChunk,
-      StaticQueryServerContext,
+      StaticQueryContext,
       renderToPipeableStream,
       React,
     } = require(pageRenderer)
@@ -350,7 +350,7 @@ export async function renderPartialHydrationProd({
 
     const { pipe } = renderToPipeableStream(
       React.createElement(
-        StaticQueryServerContext.Provider,
+        StaticQueryContext.Provider,
         { value: staticQueryContext },
         [
           // Make `useLocation` hook usuable in children

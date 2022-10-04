@@ -26,7 +26,6 @@ export {
   StaticQuery,
   StaticQueryContext,
   useStaticQuery,
-  StaticQueryServerContext,
+  createServerOrClientContext,
 } from "./static-query"
-
 export * from "gatsby-script"
