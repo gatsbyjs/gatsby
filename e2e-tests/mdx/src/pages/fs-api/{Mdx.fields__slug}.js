@@ -14,7 +14,7 @@ export default function FSAPIComponent(props) {
 }
 
 export const query = graphql`
-  query($id: String) {
+  query SomeQueryName($id: String) {
     mdx(id: { eq: $id }) {
       internal {
         contentFilePath

@@ -1,34 +1,21 @@
 import {
-  getNamedType,
-  getNullableType,
-  GraphQLInputObjectType,
   GraphQLEnumType,
-  GraphQLList,
   isSpecifiedScalarType,
   GraphQLScalarType,
 } from "graphql"
-import { addDerivedType } from "./derived-types"
 import {
   InputTypeComposer,
   GraphQLJSON,
   SchemaComposer,
   ObjectTypeComposer,
-  EnumTypeComposer,
   InterfaceTypeComposer,
   UnionTypeComposer,
   ScalarTypeComposer,
 } from "graphql-compose"
 import { GraphQLDate } from "./date"
+import { convertToNestedInputType, IVisitContext } from "./utils"
 
 type Context = any
-
-type AnyComposeType<TContext> =
-  | ObjectTypeComposer<any, TContext>
-  | InputTypeComposer<TContext>
-  | EnumTypeComposer<TContext>
-  | InterfaceTypeComposer<any, TContext>
-  | UnionTypeComposer<any, TContext>
-  | ScalarTypeComposer<TContext>
 
 export const SEARCHABLE_ENUM = {
   SEARCHABLE: `SEARCHABLE`,
@@ -49,34 +36,6 @@ const getQueryOperatorListInput = ({
       elemMatch: inputTypeComposer,
     })
   })
-}
-
-const removeEmptyFields = (
-  { inputTypeComposer }: { inputTypeComposer: InputTypeComposer },
-  cache = new Set()
-): InputTypeComposer => {
-  const convert = (itc: InputTypeComposer): InputTypeComposer => {
-    if (cache.has(itc)) {
-      return itc
-    }
-    cache.add(itc)
-    const fields = itc.getFields()
-    const nonEmptyFields = {}
-    Object.keys(fields).forEach(fieldName => {
-      const fieldITC = fields[fieldName].type
-      if (fieldITC instanceof InputTypeComposer) {
-        const convertedITC = convert(fieldITC)
-        if (convertedITC.getFieldNames().length) {
-          nonEmptyFields[fieldName] = convertedITC
-        }
-      } else {
-        nonEmptyFields[fieldName] = fieldITC
-      }
-    })
-    itc.setFields(nonEmptyFields)
-    return itc
-  }
-  return convert(inputTypeComposer)
 }
 
 const EQ = `eq`
@@ -145,128 +104,38 @@ const getQueryOperatorInput = ({
   )
 }
 
-const convert = ({
-  schemaComposer,
-  typeComposer,
-  inputTypeComposer,
-  filterInputComposer,
-  deprecationReason,
-}: {
-  schemaComposer: SchemaComposer<Context>
-  typeComposer: AnyComposeType<Context>
-  inputTypeComposer: InputTypeComposer<Context>
-  filterInputComposer?: InputTypeComposer<Context>
-  deprecationReason?: any
-}): InputTypeComposer<Context> => {
-  const inputTypeName = inputTypeComposer
-    .getTypeName()
-    .replace(/Input$/, `FilterInput`)
-
-  addDerivedType({ typeComposer, derivedTypeName: inputTypeName })
-
-  let convertedITC
-  if (filterInputComposer) {
-    convertedITC = filterInputComposer
-  } else if (schemaComposer.has(inputTypeName)) {
-    return schemaComposer.getITC(inputTypeName)
-  } else {
-    convertedITC = new InputTypeComposer(
-      new GraphQLInputObjectType({
-        name: inputTypeName,
-        fields: {},
-      }),
-      schemaComposer
-    )
-  }
-
-  schemaComposer.add(convertedITC)
-
-  const fieldNames = inputTypeComposer.getFieldNames()
-  const convertedFields = {}
-  fieldNames.forEach(fieldName => {
-    const fieldConfig = inputTypeComposer.getFieldConfig(fieldName)
-    const type = getNamedType(fieldConfig.type)
-    const searchable =
-      typeComposer instanceof UnionTypeComposer ||
-      typeComposer instanceof ScalarTypeComposer
-        ? undefined
-        : typeComposer.getFieldExtension(fieldName, `searchable`)
-
-    if (searchable === SEARCHABLE_ENUM.NOT_SEARCHABLE) {
-      return
-    } else if (searchable === SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE) {
-      deprecationReason = `Filtering on fields that need arguments to resolve is deprecated.`
-    }
-
-    if (type instanceof GraphQLInputObjectType) {
-      // Input type composers has names `FooInput`, get the type associated
-      // with it
-      const typeComposer = schemaComposer.getAnyTC(
-        type.name.replace(/Input$/, ``)
-      )
-      const itc = new InputTypeComposer(type, schemaComposer)
-
-      const operatorsInputTC = convert({
-        schemaComposer,
-        typeComposer,
-        inputTypeComposer: itc,
-        deprecationReason,
-      })
-
-      // TODO: array of arrays?
-      const isListType =
-        getNullableType(fieldConfig.type) instanceof GraphQLList
-
-      // elemMatch operator
-      convertedFields[fieldName] = isListType
-        ? getQueryOperatorListInput({
-            schemaComposer,
-            inputTypeComposer: operatorsInputTC,
-          })
-        : operatorsInputTC
-    } else {
-      // GraphQLScalarType || GraphQLEnumType
-      const operatorFields = getQueryOperatorInput({ schemaComposer, type })
-      if (operatorFields) {
-        convertedFields[fieldName] = operatorFields
-      }
-    }
-
-    if (convertedFields[fieldName]) {
-      convertedFields[fieldName].deprecationReason = deprecationReason
-    }
-  })
-
-  convertedITC.addFields(convertedFields)
-  return convertedITC
-}
-
 export const getFilterInput = ({
   schemaComposer,
   typeComposer,
 }: {
   schemaComposer: SchemaComposer<Context>
   typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>
-}): InputTypeComposer => {
-  const typeName = typeComposer.getTypeName()
-  const filterInputComposer = schemaComposer.getOrCreateITC(
-    `${typeName}FilterInput`
-  )
-  const inputTypeComposer = typeComposer.getInputTypeComposer()
-
-  if (
-    inputTypeComposer?.hasField(`id`) &&
-    getNamedType(inputTypeComposer.getFieldType(`id`)).name === `ID`
-  ) {
-    inputTypeComposer.extendField(`id`, { type: `String` })
-  }
-
-  const filterInputTC = convert({
+}): InputTypeComposer =>
+  convertToNestedInputType({
     schemaComposer,
     typeComposer,
-    inputTypeComposer,
-    filterInputComposer,
-  })
+    postfix: `FilterInput`,
+    onEnter: ({ fieldName, typeComposer }): IVisitContext => {
+      const searchable =
+        typeComposer instanceof UnionTypeComposer ||
+        typeComposer instanceof ScalarTypeComposer
+          ? undefined
+          : typeComposer.getFieldExtension(fieldName, `searchable`)
 
-  return removeEmptyFields({ inputTypeComposer: filterInputTC })
-}
+      if (searchable === SEARCHABLE_ENUM.NOT_SEARCHABLE) {
+        // stop traversing
+        return null
+      } else if (searchable === SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE) {
+        // mark this and all nested fields as deprecated
+        return {
+          deprecationReason: `Filtering on fields that need arguments to resolve is deprecated.`,
+        }
+      }
+
+      // continue
+      return undefined
+    },
+    leafInputComposer: getQueryOperatorInput,
+    // elemMatch operator
+    listInputComposer: getQueryOperatorListInput,
+  })

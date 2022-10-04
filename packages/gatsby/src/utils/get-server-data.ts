@@ -1,6 +1,5 @@
 import type { Request } from "express"
 import type { IGatsbyPage } from "../redux/types"
-
 import { match } from "@gatsbyjs/reach-router/lib/utils"
 
 export interface IServerData {

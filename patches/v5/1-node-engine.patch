@@ -257,8 +257,7 @@ diff --git a/packages/gatsby-plugin-flow/package.json b/packages/gatsby-plugin-f
 index 63b165e2ec..606b819598 100644
 --- a/packages/gatsby-plugin-flow/package.json
 +++ b/packages/gatsby-plugin-flow/package.json
-@@ -38,6 +38,6 @@
-     "gatsby": "^4.0.0-next"
+@@ -39,5 +39,5 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -269,8 +268,7 @@ diff --git a/packages/gatsby-plugin-fullstory/package.json b/packages/gatsby-plu
 index 7bc1f5703e..5ecda0bf6b 100644
 --- a/packages/gatsby-plugin-fullstory/package.json
 +++ b/packages/gatsby-plugin-fullstory/package.json
-@@ -38,6 +38,6 @@
-     "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+@@ -39,5 +39,5 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -342,8 +340,7 @@ diff --git a/packages/gatsby-plugin-layout/package.json b/packages/gatsby-plugin
 index 975cd65925..a97affb80f 100644
 --- a/packages/gatsby-plugin-layout/package.json
 +++ b/packages/gatsby-plugin-layout/package.json
-@@ -36,6 +36,6 @@
-     "gatsby": "^4.0.0-next"
+@@ -37,5 +37,5 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -402,8 +399,7 @@ diff --git a/packages/gatsby-plugin-no-sourcemaps/package.json b/packages/gatsby
 index b144ab1b14..95fd8f7d07 100644
 --- a/packages/gatsby-plugin-no-sourcemaps/package.json
 +++ b/packages/gatsby-plugin-no-sourcemaps/package.json
-@@ -27,6 +27,6 @@
-     "gatsby": "^4.0.0-next"
+@@ -28,5 +28,5 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -438,8 +434,7 @@ diff --git a/packages/gatsby-plugin-page-creator/package.json b/packages/gatsby-
 index 947cb376e2..795218011d 100644
 --- a/packages/gatsby-plugin-page-creator/package.json
 +++ b/packages/gatsby-plugin-page-creator/package.json
-@@ -47,6 +47,6 @@
-     "gatsby": "^4.0.0-next"
+@@ -48,5 +48,5 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -582,8 +577,7 @@ diff --git a/packages/gatsby-plugin-subfont/package.json b/packages/gatsby-plugi
 index 94c8eced07..0bc6b11558 100644
 --- a/packages/gatsby-plugin-subfont/package.json
 +++ b/packages/gatsby-plugin-subfont/package.json
-@@ -37,6 +37,6 @@
-     "gatsby": "^4.0.0-next"
+@@ -38,5 +38,5 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -726,8 +720,7 @@ diff --git a/packages/gatsby-remark-images-contentful/package.json b/packages/ga
 index da6df66370..8a65688ce4 100644
 --- a/packages/gatsby-remark-images-contentful/package.json
 +++ b/packages/gatsby-remark-images-contentful/package.json
-@@ -43,6 +43,6 @@
-     "gatsby": "^4.0.0-next"
+@@ -44,5 +44,5 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -798,8 +791,7 @@ diff --git a/packages/gatsby-script/package.json b/packages/gatsby-script/packag
 index 9aa1df6e62..b14e51f4a8 100644
 --- a/packages/gatsby-script/package.json
 +++ b/packages/gatsby-script/package.json
-@@ -35,7 +35,7 @@
-     "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+@@ -36,6 +36,6 @@
    },
    "engines": {
 -    "node": ">=14.15.0"
@@ -1210,8 +1202,7 @@ diff --git a/packages/gatsby/package.json b/packages/gatsby/package.json
 index f957fd1a8e..fd212fa233 100644
 --- a/packages/gatsby/package.json
 +++ b/packages/gatsby/package.json
-@@ -207,7 +207,7 @@
-     "gatsby-sharp": "^0.17.0-next.0"
+@@ -208,6 +208,6 @@
    },
    "engines": {
 -    "node": ">=14.15.0"

@@ -169,7 +169,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const developProcessPath = slash(require.resolve(`./develop-process`))
 
   try {
-    program.port = await detectPortInUseAndPrompt(program.port)
+    program.port = await detectPortInUseAndPrompt(program.port, program.host)
   } catch (e) {
     if (e.message === `USER_REJECTED`) {
       process.exit(0)
