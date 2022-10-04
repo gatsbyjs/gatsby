@@ -510,10 +510,11 @@ module.exports = async (
           getPackageRoot(`@gatsbyjs/reach-router`),
           `es`
         )
-      } else {
-        resolve.alias[`gatsby-core-utils/create-content-digest`] =
-          directoryPath(`.cache/create-content-digest-browser-shim`)
       }
+
+      resolve.alias[`gatsby-core-utils/create-content-digest`] = directoryPath(
+        `.cache/create-content-digest-browser-shim`
+      )
     }
 
     if (stage === `build-javascript` && program.profile) {
