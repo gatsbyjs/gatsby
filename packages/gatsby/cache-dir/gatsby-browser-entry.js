@@ -23,7 +23,6 @@ export {
 
 export { graphql, prefetchPathname }
 export {
-  StaticQuery,
   StaticQueryContext,
   useStaticQuery,
   StaticQueryServerContext,

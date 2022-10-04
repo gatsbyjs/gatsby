@@ -39,9 +39,9 @@
     "prepend-directive": "^1.0.3"
   },
   "peerDependencies": {
-    "@gatsbyjs/reach-router": "^1.3.5",
-    "react": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0 || ^0.0.0"
+    "@gatsbyjs/reach-router": "^2.0.0-v2.0",
+    "react": "^18.0.0 || ^0.0.0",
+    "react-dom": "^18.0.0 || ^0.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-link#readme",
   "keywords": [
@@ -54,6 +54,6 @@
     "directory": "packages/gatsby-link"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }

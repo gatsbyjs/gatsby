@@ -25,7 +25,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^4.0.0-next"
+    "gatsby": "^5.0.0-alpha-v5"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__,theme-test.js\""
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   }
 }
