@@ -173,12 +173,8 @@ export class PartialHydrationPlugin {
         for (const chunk of chunkGraph.getModuleChunksIterable(
           resolvedModule
         )) {
-          for (const group of chunk.groupsIterable) {
-            for (const chunkInGroup of group.chunks) {
-              if (chunkInGroup.id) {
-                chunkIds.add(chunkInGroup.id as string)
-              }
-            }
+          if (chunk.id) {
+            chunkIds.add(chunk.id as string)
           }
         }
 
