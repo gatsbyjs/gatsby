@@ -2,13 +2,15 @@ const preset = require(`../index.js`)
 
 jest.mock(`../resolver`, () => jest.fn(moduleName => moduleName))
 
+const itWhenV4 = _CFLAGS_.GATSBY_MAJOR !== `5` ? it : it.skip
+const itWhenV5 = _CFLAGS_.GATSBY_MAJOR === `5` ? it : it.skip
 
 describe(`babel-preset-gatsby-package`, () => {
-  let babelEnv;
+  let babelEnv
 
   beforeEach(() => {
     babelEnv = process.env.BABEL_ENV
-    delete process.env.BABEL_ENV;
+    delete process.env.BABEL_ENV
   })
 
   afterEach(() => {
@@ -16,9 +18,54 @@ describe(`babel-preset-gatsby-package`, () => {
   })
 
   describe(`in node mode`, () => {
-    it(`specifies the proper plugins`, () => {
+    itWhenV4(`specifies the proper plugins (v4)`, () => {
       const { plugins } = preset()
-      expect(plugins).toMatchSnapshot()
+      expect(plugins).toMatchInlineSnapshot(`
+        Array [
+          "@babel/plugin-proposal-nullish-coalescing-operator",
+          "@babel/plugin-proposal-optional-chaining",
+          "@babel/plugin-transform-runtime",
+          "@babel/plugin-syntax-dynamic-import",
+          "babel-plugin-dynamic-import-node",
+          Array [
+            "./babel-transform-compiler-flags",
+            Object {
+              "availableFlags": Array [
+                "GATSBY_MAJOR",
+              ],
+              "flags": Object {
+                "GATSBY_MAJOR": "4",
+              },
+            },
+          ],
+          "babel-plugin-lodash",
+        ]
+      `)
+    })
+
+    itWhenV5(`specifies the proper plugins (v5)`, () => {
+      const { plugins } = preset()
+      expect(plugins).toMatchInlineSnapshot(`
+        Array [
+          "@babel/plugin-proposal-nullish-coalescing-operator",
+          "@babel/plugin-proposal-optional-chaining",
+          "@babel/plugin-transform-runtime",
+          "@babel/plugin-syntax-dynamic-import",
+          "babel-plugin-dynamic-import-node",
+          Array [
+            "./babel-transform-compiler-flags",
+            Object {
+              "availableFlags": Array [
+                "GATSBY_MAJOR",
+              ],
+              "flags": Object {
+                "GATSBY_MAJOR": "5",
+              },
+            },
+          ],
+          "babel-plugin-lodash",
+        ]
+      `)
     })
 
     it(`specifies proper presets`, () => {
@@ -37,21 +84,113 @@ describe(`babel-preset-gatsby-package`, () => {
         nodeVersion,
       })
 
-      const [, opts] = presets.find(preset => [].concat(preset).includes(`@babel/preset-env`))
+      const [, opts] = presets.find(preset =>
+        [].concat(preset).includes(`@babel/preset-env`)
+      )
 
       expect(opts.targets.node).toBe(nodeVersion)
     })
 
-    it(`can enable compilerFlags`, () => {
+    itWhenV4(`can enable compilerFlags (v4)`, () => {
       const { plugins } = preset(null, { availableCompilerFlags: [`MAJOR`] })
-      expect(plugins).toMatchSnapshot()
+      expect(plugins).toMatchInlineSnapshot(`
+        Array [
+          "@babel/plugin-proposal-nullish-coalescing-operator",
+          "@babel/plugin-proposal-optional-chaining",
+          "@babel/plugin-transform-runtime",
+          "@babel/plugin-syntax-dynamic-import",
+          "babel-plugin-dynamic-import-node",
+          Array [
+            "./babel-transform-compiler-flags",
+            Object {
+              "availableFlags": Array [
+                "MAJOR",
+              ],
+              "flags": Object {
+                "GATSBY_MAJOR": "4",
+              },
+            },
+          ],
+          "babel-plugin-lodash",
+        ]
+      `)
+    })
+
+    itWhenV5(`can enable compilerFlags (v5)`, () => {
+      const { plugins } = preset(null, { availableCompilerFlags: [`MAJOR`] })
+      expect(plugins).toMatchInlineSnapshot(`
+        Array [
+          "@babel/plugin-proposal-nullish-coalescing-operator",
+          "@babel/plugin-proposal-optional-chaining",
+          "@babel/plugin-transform-runtime",
+          "@babel/plugin-syntax-dynamic-import",
+          "babel-plugin-dynamic-import-node",
+          Array [
+            "./babel-transform-compiler-flags",
+            Object {
+              "availableFlags": Array [
+                "MAJOR",
+              ],
+              "flags": Object {
+                "GATSBY_MAJOR": "5",
+              },
+            },
+          ],
+          "babel-plugin-lodash",
+        ]
+      `)
     })
   })
 
   describe(`in browser mode`, () => {
-    it(`specifies the proper plugins`, () => {
+    itWhenV4(`specifies the proper plugins (v4)`, () => {
       const { plugins } = preset(null, { browser: true })
-      expect(plugins).toMatchSnapshot()
+      expect(plugins).toMatchInlineSnapshot(`
+        Array [
+          "@babel/plugin-proposal-nullish-coalescing-operator",
+          "@babel/plugin-proposal-optional-chaining",
+          "@babel/plugin-transform-runtime",
+          "@babel/plugin-syntax-dynamic-import",
+          "babel-plugin-dynamic-import-node",
+          Array [
+            "./babel-transform-compiler-flags",
+            Object {
+              "availableFlags": Array [
+                "GATSBY_MAJOR",
+              ],
+              "flags": Object {
+                "GATSBY_MAJOR": "4",
+              },
+            },
+          ],
+          "babel-plugin-lodash",
+        ]
+      `)
+    })
+
+    itWhenV5(`specifies the proper plugins (v5)`, () => {
+      const { plugins } = preset(null, { browser: true })
+      expect(plugins).toMatchInlineSnapshot(`
+        Array [
+          "@babel/plugin-proposal-nullish-coalescing-operator",
+          "@babel/plugin-proposal-optional-chaining",
+          "@babel/plugin-transform-runtime",
+          "@babel/plugin-syntax-dynamic-import",
+          "babel-plugin-dynamic-import-node",
+          Array [
+            "./babel-transform-compiler-flags",
+            Object {
+              "availableFlags": Array [
+                "GATSBY_MAJOR",
+              ],
+              "flags": Object {
+                "GATSBY_MAJOR": "5",
+              },
+            },
+          ],
+          "babel-plugin-lodash",
+        ]
+      `)
     })
 
     it(`specifies proper presets`, () => {
