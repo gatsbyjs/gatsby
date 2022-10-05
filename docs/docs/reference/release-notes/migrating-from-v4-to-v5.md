@@ -4,22 +4,27 @@ title: Migrating from v4 to v5
 
 Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
-> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v4-to-v5.md)!  
+> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v4-to-v5.md)!
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. 
+This is a reference for upgrading your site from Gatsby 4 to Gatsby 5.
 
 ## Table of Contents
 
-- [ ] TBA
+- [Handling Deprecations](#handling-deprecations)
+- [Updating Your Dependencies](#updating-your-dependencies)
+- [Handling Breaking Changes](#handling-breaking-changes)
+- [Future Breaking Changes](#future-breaking-changes)
+- [For Plugin Maintainers](#for-plugin-maintainers)
+- [Known Issues](#known-issues)
 
 ## Handling Deprecations
 
 Before upgrading to v5 we highly recommend upgrading `gatsby` (and all plugins) to the latest v4 version.
 Some changes required for Gatsby 5 could be applied incrementally to the latest v4 which should contribute to smoother upgrade experience.
 
-> Use `npm outdated` or `yarn upgrade-interactive` for automatic upgrade to the latest v3 release.  
+> Use `npm outdated` or `yarn upgrade-interactive` for automatic upgrade to the latest v4 release.
 
 After upgrading, run `gatsby build` and look for deprecation messages in the build log.
 Follow instructions to fix those deprecations.
@@ -82,10 +87,21 @@ We are dropping support for Node 14 and 16 as a new underlying dependency is req
 
 Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
-### Breaking change 1
-…
-### Breaking change 1
+### Minimal required React version is 18
 
+The minimal required React version is now 18. This is a requirement for the new Partial Hydration feature.
+
+### Removal of `<StaticQuery />` component (use useStaticQuery)
+
+The `<StaticQuery />` component has been removed. Please use `useStaticQuery` instead. For more information, see the [useStaticQuery documentation](docs/how-to/querying-data/use-static-query/#composing-custom-usestaticquery-hooks).
+
+### Non-ESM browsers are not polyfilled by default
+
+Default support for non-esm browsers has been removed.
+
+### GraphQL schema: changes to sort and aggregation fields
+
+for `sort` argument and aggregation's `field` argument, we use nested input objects instead of enums for more performant and lower resource usage .
 
 ### Gatsby related packages
 
@@ -96,15 +112,9 @@ Breaking Changes in plugins that we own and maintain.
 - [ ] Change default to generate file at root, not inside `/sitemap` folder
 - [ ] Optional: Give option to not create index file + sitemaps but only single sitemap.xml file
 
-#### `package-2`
-
-
 ## Future Breaking Changes
 
 This section explains deprecations that were made for Gatsby 5. These old behaviors will be removed in v6, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
-
-### `something` is deprecated
-
 
 ## For Plugin Maintainers
 
