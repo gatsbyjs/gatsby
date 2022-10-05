@@ -2,7 +2,7 @@
 title: Gatsby Slice API
 ---
 
-> Support for the Gatsby Slice API was added in `gatsby@5.0.0`. Check the status of the Gatsby 5 release in our [Github Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
+> Support for the Gatsby Slice API was added in `gatsby@5.0.0`.
 
 Gatsby includes a `<Slice>` method and a `createSlice` action in `gatsby-node` to help speed up common updates across your site. By pulling out common components into separate HTML files, common components can be built separately and "stitched" together with existing pages.
 
