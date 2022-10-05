@@ -1,6 +1,7 @@
 import fs from "fs-extra"
 import path from "path"
 import { Compiler } from "webpack"
+import { PARTIAL_HYDRATION_CHUNK_REASON } from "./webpack/plugins/partial-hydration"
 
 export class GatsbyWebpackStatsExtractor {
   private plugin: { name: string }
@@ -18,7 +19,9 @@ export class GatsbyWebpackStatsExtractor {
         if (chunkGroup.name) {
           const files: Array<string> = []
           for (const chunk of chunkGroup.chunks) {
-            files.push(...chunk.files)
+            if (chunk.chunkReason !== PARTIAL_HYDRATION_CHUNK_REASON) {
+              files.push(...chunk.files)
+            }
           }
           assets[chunkGroup.name] = files.filter(f => f.slice(-4) !== `.map`)
           assetsMap[chunkGroup.name] = files
