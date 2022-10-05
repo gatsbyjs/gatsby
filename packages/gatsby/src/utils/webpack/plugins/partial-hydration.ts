@@ -240,6 +240,9 @@ export class PartialHydrationPlugin {
             if (hasClientExportDirective) {
               this._clientModules.add(module)
 
+              module.buildInfo.isClientModule = true
+              module.buildInfo.moduleConcatenationBailout = `because it's client`
+
               // if (entryModule) {
               //   console.log(`parse`, module.resource)
               //   this._generateClientReferenceChunk(
@@ -265,77 +268,77 @@ export class PartialHydrationPlugin {
           })
         }
 
-        compilation.hooks.optimizeChunks.tap(
-          this.name,
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          () => {
-            // 1. move clientModules into their own chunk
-            // 2. disconnect module from original chunk
+        // compilation.hooks.optimizeChunks.tap(
+        //   this.name,
+        //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        //   () => {
+        //     // 1. move clientModules into their own chunk
+        //     // 2. disconnect module from original chunk
 
-            for (const clientModule of this._clientModules) {
-              const chunkName = Template.toPath(
-                // @ts-ignore - types are incorrect
-                path.relative(
-                  compilation.options.context as string,
-                  clientModule.userRequest
-                )
-              )
+        //     for (const clientModule of this._clientModules) {
+        //       const chunkName = Template.toPath(
+        //         // @ts-ignore - types are incorrect
+        //         path.relative(
+        //           compilation.options.context as string,
+        //           clientModule.userRequest
+        //         )
+        //       )
 
-              const chunk = compilation.addChunk(chunkName)
-              chunk.chunkReason = PARTIAL_HYDRATION_CHUNK_REASON
+        //       const chunk = compilation.addChunk(chunkName)
+        //       chunk.chunkReason = PARTIAL_HYDRATION_CHUNK_REASON
 
-              const handledModules = new Set()
+        //       const handledModules = new Set()
 
-              function moveModuleToChunk(
-                clientModule: webpack.Module,
-                chunk: webpack.Chunk
-              ): void {
-                if (handledModules.has(clientModule)) {
-                  return
-                }
+        //       function moveModuleToChunk(
+        //         clientModule: webpack.Module,
+        //         chunk: webpack.Chunk
+        //       ): void {
+        //         if (handledModules.has(clientModule)) {
+        //           return
+        //         }
 
-                handledModules.add(clientModule)
+        //         handledModules.add(clientModule)
 
-                const selectedChunks = Array.from(
-                  compilation.chunkGraph.getModuleChunksIterable(clientModule)
-                )
+        //         const selectedChunks = Array.from(
+        //           compilation.chunkGraph.getModuleChunksIterable(clientModule)
+        //         )
 
-                for (const connectedChunk of selectedChunks) {
-                  if (connectedChunk.name === `app`) {
-                    return
-                  }
-                }
+        //         for (const connectedChunk of selectedChunks) {
+        //           if (connectedChunk.name === `app`) {
+        //             return
+        //           }
+        //         }
 
-                compilation.chunkGraph.connectChunkAndModule(
-                  chunk,
-                  clientModule
-                )
+        //         compilation.chunkGraph.connectChunkAndModule(
+        //           chunk,
+        //           clientModule
+        //         )
 
-                for (const connectedChunk of selectedChunks) {
-                  compilation.chunkGraph.disconnectChunkAndModule(
-                    connectedChunk,
-                    clientModule
-                  )
-                  connectedChunk.split(chunk)
-                }
+        //         for (const connectedChunk of selectedChunks) {
+        //           compilation.chunkGraph.disconnectChunkAndModule(
+        //             connectedChunk,
+        //             clientModule
+        //           )
+        //           connectedChunk.split(chunk)
+        //         }
 
-                const uniqueDependencyModules = new Set(
-                  clientModule.dependencies.map(r =>
-                    compilation.moduleGraph.getModule(r)
-                  )
-                )
+        //         const uniqueDependencyModules = new Set(
+        //           clientModule.dependencies.map(r =>
+        //             compilation.moduleGraph.getModule(r)
+        //           )
+        //         )
 
-                for (const dependencyModule of uniqueDependencyModules) {
-                  if (dependencyModule) {
-                    moveModuleToChunk(dependencyModule, chunk)
-                  }
-                }
-              }
+        //         for (const dependencyModule of uniqueDependencyModules) {
+        //           if (dependencyModule) {
+        //             moveModuleToChunk(dependencyModule, chunk)
+        //           }
+        //         }
+        //       }
 
-              moveModuleToChunk(clientModule, chunk)
-            }
-          }
-        )
+        //       moveModuleToChunk(clientModule, chunk)
+        //     }
+        //   }
+        // )
 
         normalModuleFactory.hooks.parser
           .for(`javascript/auto`)
@@ -353,6 +356,7 @@ export class PartialHydrationPlugin {
             stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
           },
           () => {
+            console.log(` prcoess assets`)
             const manifest = this._generateManifest(
               compilation.chunkGroups,
               compilation.moduleGraph,

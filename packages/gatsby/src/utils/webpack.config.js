@@ -27,6 +27,7 @@ import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
 import { satisfiesSemvers } from "./flags"
+import Template from "webpack/lib/Template"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -635,6 +636,47 @@ module.exports = async (
       cacheGroups: {
         default: false,
         defaultVendors: false,
+        partialHydration: {
+          test(module) {
+            const shouldSplit = module.buildInfo.isClientModule
+            if (shouldSplit) {
+              console.log(`splitchunk stuff`, {
+                userRequest: module.userRequest,
+              })
+            }
+
+            return shouldSplit
+          },
+          name(module) {
+            // const hash = crypto.createHash(`sha1`)
+            // if (!module.libIdent) {
+            //   throw new Error(
+            //     `Encountered unknown module type: ${module.type}. Please open an issue.`
+            //   )
+            // }
+
+            // hash.update(module.libIdent({ context: program.directory }))
+
+            const chunkName = Template.toPath(
+              // @ts-ignore - types are incorrect
+              path.relative(program.directory, module.userRequest)
+            )
+
+            console.log(`naming`, {
+              userRequest: module.userRequest,
+              chunkName,
+            })
+            return chunkName
+
+            // return hash.digest(`hex`).substring(0, 8)
+          },
+          priority: -50,
+          minChunks: 1,
+          minSize: 0,
+          enforceSizeThreshold: 0,
+          enforce: true,
+          reuseExistingChunk: false,
+        },
         framework: {
           chunks: `all`,
           name: `framework`,
@@ -674,6 +716,16 @@ module.exports = async (
           reuseExistingChunk: true,
         },
         commons: {
+          test(module) {
+            const shouldSplit = module.buildInfo.isClientModule
+            if (shouldSplit) {
+              console.log(`splitchunk stuff`, {
+                userRequest: module.userRequest,
+              })
+            }
+
+            return !shouldSplit
+          },
           name: `commons`,
           // if a chunk is used on all components we put it in commons (we need at least 2 components)
           minChunks: Math.max(componentsCount, 2),
