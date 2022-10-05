@@ -103,6 +103,56 @@ Default support for non-esm browsers has been removed.
 
 for `sort` argument and aggregation's `field` argument, we use nested input objects instead of enums for more performant and lower resource usage .
 
+**Basic example**
+
+**Sort:**
+
+**_Before:_**
+
+```graphql
+{
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    nodes {
+      ...fields
+    }
+  }
+}
+```
+
+**_After:_**
+
+```jsx
+{
+  allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    nodes {
+      ...fields
+    }
+  }
+}
+```
+
+**Sort:**
+
+**_Before:_**
+
+```graphql
+{
+  allMarkdownRemark {
+    distinct(field: frontmatter___category)
+  }
+}
+```
+
+**_After:_**
+
+```graphql
+{
+  allMarkdownRemark {
+    distinct(field: { frontmatter: { category: SELECT } })
+  }
+}
+```
+
 ### Gatsby related packages
 
 Breaking Changes in plugins that we own and maintain.
