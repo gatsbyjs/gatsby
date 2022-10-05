@@ -24,7 +24,7 @@ This means that the browser can "pick up" where the server left off with the con
 
 ## Partial hydration
 
-If you don't need the aforementioned app-like features and only need a bit of JavaScript on your page here and there, then you should use Gatsby's [partial hydration](/docs/conceptual/partial-hydration) feature. It enables you to only mark specific parts of your site as interactive, while the rest of your site stays static by default. There will be no React hydration for these static portions. Follow the [partial hydration how-to guide](/docs/how-to/performance/partial-hydration) to learn more.
+If you don't need the aforementioned app-like features and only need a bit of JavaScript on your page here and there, then you should use Gatsby's [partial hydration](/docs/conceptual/partial-hydration) feature. It enables you to only mark specific parts of your site as interactive while the rest of your site stays static by default. There will be no React hydration for these static portions. Follow the [partial hydration how-to guide](/docs/how-to/performance/partial-hydration) to learn more.
 
 ## Additional resources
 

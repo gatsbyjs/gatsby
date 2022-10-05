@@ -262,7 +262,7 @@ This also often refers to [components](#component) that live in `/src/pages/` an
 
 ### Partial Hydration
 
-Partial hydration is powered by [React server components](#react-server-components) and gives you the ability to mark specific parts of your site as interactive, while the rest of your site is static by default. Interactivity can come from things like click events, effects, and state changes. With Partial hydration the JavaScript only for these portions is downloaded.
+Partial hydration is powered by [React server components](#react-server-components) and gives you the ability to mark specific parts of your site as interactive while the rest of your site is static by default. Interactivity can come from things like click events, effects, and state changes. With Partial hydration the JavaScript only for these portions is downloaded.
 
 ### Plugin
 
