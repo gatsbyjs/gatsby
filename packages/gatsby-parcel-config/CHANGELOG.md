@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.15.0/packages/gatsby-parcel-config) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Bug Fixes
+
+- Adjust dependencies [#36583](https://github.com/gatsbyjs/gatsby/issues/36583) ([9e3f160](https://github.com/gatsbyjs/gatsby/commit/9e3f160cd0356114bc4f1b0dce62b415b5a52b64))
+
 ## [0.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-parcel-config@0.14.0/packages/gatsby-parcel-config) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

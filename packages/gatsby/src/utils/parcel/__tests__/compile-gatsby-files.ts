@@ -68,7 +68,7 @@ describe(`gatsby file compilation`, () => {
     it(`should construct Parcel relative to passed directory`, () => {
       const { options } = constructParcel(dir.js) as IMockedParcel
 
-      expect(options).toMatchSnapshot({
+      expect(options).toMatchObject({
         entries: [
           `${dir.js}/${gatsbyFileRegex}`,
           `${dir.js}/plugins/**/${gatsbyFileRegex}`,
@@ -76,6 +76,9 @@ describe(`gatsby file compilation`, () => {
         targets: {
           root: {
             distDir: `${dir.js}/${COMPILED_CACHE_DIR}`,
+            engines: {
+              node: _CFLAGS_.GATSBY_MAJOR !== `5` ? `>= 14.15.0` : `>= 18.0.0`,
+            },
           },
         },
         cacheDir: `${dir.js}/${PARCEL_CACHE_DIR}`,

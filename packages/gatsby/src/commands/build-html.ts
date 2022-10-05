@@ -18,6 +18,7 @@ import { IProgram, Stage } from "./types"
 import { ROUTES_DIRECTORY } from "../constants"
 import { PackageJson } from "../.."
 import { IPageDataWithQueryResult } from "../utils/page-data"
+import { getPublicPath } from "../utils/get-public-path"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 type IActivity = any // TODO
@@ -285,10 +286,16 @@ export const buildPartialHydrationRenderer = async (
     `partial-hydration`
   )
 
-  // TODO collect javascript aliases to match the partial hydration bundle
-  config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
-    `gatsby-plugin-image/dist/gatsby-image.browser.modern`
-  )
+  // require.resolve might fail the build if the package is not installed
+  // Instead of failing it'll be ignored
+  try {
+    // TODO collect javascript aliases to match the partial hydration bundle
+    config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
+      `gatsby-plugin-image/dist/gatsby-image.browser.modern`
+    )
+  } catch (e) {
+    // do nothing
+  }
 
   return doBuildPartialHydrationRenderer(program.directory, config, stage)
 }
@@ -449,7 +456,8 @@ const renderHTMLQueue = async (
 const renderPartialHydrationQueue = async (
   workerPool: GatsbyWorkerPool,
   activity: IActivity,
-  pages: Array<string>
+  pages: Array<string>,
+  program: IProgram
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -461,7 +469,9 @@ const renderPartialHydrationQueue = async (
 
   const segments = chunk(pages, 50)
   const sessionId = Date.now()
-  // const { webpackCompilationHash } = store.getState()
+
+  const { config } = store.getState()
+  const { assetPrefix, pathPrefix } = config
 
   // Let the error bubble up
   await Promise.all(
@@ -470,6 +480,7 @@ const renderPartialHydrationQueue = async (
         envVars,
         paths: pageSegment,
         sessionId,
+        pathPrefix: getPublicPath({ assetPrefix, pathPrefix, ...program }),
       })
 
       if (activity && activity.tick) {
@@ -578,7 +589,7 @@ export const buildHTML = async ({
       process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
     _CFLAGS_.GATSBY_MAJOR === `5`
   ) {
-    await renderPartialHydrationQueue(workerPool, activity, pagePaths)
+    await renderPartialHydrationQueue(workerPool, activity, pagePaths, program)
   }
 }
 
@@ -668,7 +679,8 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         await renderPartialHydrationQueue(
           workerPool,
           buildHTMLActivityProgress,
-          toRegenerate
+          toRegenerate,
+          program
         )
       } catch (error) {
         // Generic error with page path and useful stack trace, accurate code frame can be a future improvement
