@@ -265,7 +265,7 @@ export class PartialHydrationPlugin {
           })
         }
 
-        compilation.hooks.optimizeChunkModules.tap(
+        compilation.hooks.optimizeChunks.tap(
           this.name,
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           () => {
