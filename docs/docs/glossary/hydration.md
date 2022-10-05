@@ -3,11 +3,11 @@ title: Hydration
 disableTableOfContents: true
 ---
 
-Learn what _hydration_ means, and how Gatsby makes use of React's hydration features to build blazing fast websites and applications.
+Learn what hydration means, and how Gatsby makes use of React's hydration features to build blazing fast websites and applications.
 
 ## What is hydration?
 
-_Hydration_ is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. It's a feature of [React](/docs/glossary/react/), one of the underlying tools that make the Gatsby framework. Gatsby uses hydration to transform the static HTML created at [build time](/docs/glossary/build/) into a React application.
+Hydration is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. It's a feature of [React](/docs/glossary/react/), one of the underlying tools that make the Gatsby framework. Gatsby uses hydration to transform the static HTML created at [build time](/docs/glossary/build/) into a React application.
 
 A typical React application relies on client-side rendering. Instead of parsing HTML to create the [DOM](/docs/glossary#dom), client-side rendering uses JavaScript to create it. A minimal HTML document serves as the application container, and only contains links to the JavaScript and CSS necessary to render the application.
 
@@ -17,17 +17,12 @@ A typical React application relies on client-side rendering. Instead of parsing 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,user-scalable=yes" />
-    <title>ExampleApp</title>
-    <style>
-      body {
-        background: "images/loader.svg" center no-repeat;
-      }
-    </style>
+    <title>Gatsby App</title>
   </head>
   <body>
     <!-- This empty element becomes the application's container -->
-    <main id="root"></main>
-    <script type="text/javascript" src="./js/main.0932cd15.js"></script>
+    <main id="___gatsby"></main>
+    <script type="text/javascript" src="./js/name.hash.js"></script>
   </body>
 </html>
 ```
@@ -38,9 +33,9 @@ That's the drawback to client-side rendering: none of your site's content is vis
 
 [Server-side rendering](/docs/glossary/server-side-rendering/) makes HTML available to the client _before_ JavaScript loads. Your site visitors can see and read your content even if it is not fully interactive. Server rendering eliminates the blank page problem. Rendered HTML also makes it easier for search engines and social media crawlers to consume your site. Server-side rendering also has a drawback: every URL request requires another round trip to the server.
 
-Hydration lets us take a hybrid approach.
+Hydration lets you take a hybrid approach.
 
-> **Note:** You'll sometimes see developers use _re-hydration_ used instead of _hydration_. They're interchangeable.
+> **Note:** You'll sometimes see developers use re-hydration instead of hydration. They're interchangeable.
 
 Gatsby's build process uses [Node.js](/docs/glossary/node/) and [`ReactDOMServer`](https://reactjs.org/docs/react-dom-server.html) to create two different versions of your site. Each URL is available as both a static HTML page, and as a JavaScript component.
 
@@ -50,4 +45,4 @@ When a visitor requests their first URL from your site, the response contains st
 
 - [Understanding React Hydration](/docs/conceptual/react-hydration/) from the Gatsby docs
 - [ReactDOM.hydrate()](https://reactjs.org/docs/react-dom.html#hydrate) from the React API Reference
-- [Rendering on the Web](https://developers.google.com/web/updates/2019/02/rendering-on-the-web) from Google
+- [Rendering on the Web](https://web.dev/rendering-on-the-web/) from Google
