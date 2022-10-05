@@ -8,7 +8,7 @@ index c2bfd3e2b7..9e0f1205bf 100644
  export { graphql, prefetchPathname }
 -export { StaticQuery, StaticQueryContext, useStaticQuery } from "./static-query"
 +export { StaticQueryContext, useStaticQuery } from "./static-query"
- export * from "gatsby-script"
+ export { Slice } from "./slice"
 diff --git a/packages/gatsby/cache-dir/static-query.js b/packages/gatsby/cache-dir/static-query.js
 index e31cebb08a..cef8ab70ed 100644
 --- a/packages/gatsby/cache-dir/static-query.js
