@@ -1,3 +1,3 @@
 export default createPages() {
-    console.log('createPages!');
+  console.log('createPages!')
 }
