@@ -1,4 +1,4 @@
-import { match as reachMatch } from "@gatsbyjs/reach-router"
+import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import cookie from "cookie"
 import { urlencoded, text, json, raw } from "express"
 import type { RequestHandler, Request, Response, NextFunction } from "express"
