@@ -557,19 +557,15 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
     }
   ).pop()
 
-  if (HAS_REACT_18) {
-    const writableStream = new WritableAsPromise()
-    const { pipe } = renderToPipeableStream(sliceWrappedWithWrapRootElement, {
-      onAllReady() {
-        pipe(writableStream)
-      },
-      onError(e) {
-        throw e
-      },
-    })
+  const writableStream = new WritableAsPromise()
+  const { pipe } = renderToPipeableStream(sliceWrappedWithWrapRootElement, {
+    onAllReady() {
+      pipe(writableStream)
+    },
+    onError(error) {
+      writableStream.destroy(error)
+    },
+  })
 
-    return await writableStream
-  } else {
-    return renderToString(sliceWrappedWithWrapRootElement)
-  }
+  return await writableStream
 }
