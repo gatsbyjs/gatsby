@@ -433,9 +433,10 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11323": {
     text: (context): string =>
@@ -445,9 +446,10 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11324": {
     text: (context): string =>
@@ -574,9 +576,11 @@ const errors = {
         context.sliceObject,
         null,
         4
-      )}\n\nSee the documentation for the "createSlice" action — https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11334": {
     text: (context): string =>
@@ -586,9 +590,11 @@ const errors = {
         context.sliceObject,
         null,
         4
-      )}\n\nSee the documentation for the "createSlice" action — https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
 
   // node object didn't pass validation
