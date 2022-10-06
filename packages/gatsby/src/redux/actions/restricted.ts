@@ -1,6 +1,4 @@
-import camelCase from "lodash/camelCase"
-import isEqual from "lodash/isEqual"
-
+import { camelCase } from "lodash"
 import { GraphQLSchema, GraphQLOutputType } from "graphql"
 import { ActionCreator } from "redux"
 import { ThunkAction } from "redux-thunk"
@@ -21,12 +19,7 @@ import {
   IPrintTypeDefinitions,
   ICreateResolverContext,
   IGatsbyPluginContext,
-  ICreateSliceAction,
 } from "../types"
-import { generateComponentChunkName } from "../../utils/js-chunk-names"
-import { store } from "../index"
-import normalizePath from "normalize-path"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
 
 type RestrictionActionNames =
   | "createFieldExtension"
@@ -34,7 +27,6 @@ type RestrictionActionNames =
   | "createResolverContext"
   | "addThirdPartySchema"
   | "printTypeDefinitions"
-  | "createSlice"
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
@@ -428,74 +420,6 @@ export const actions = {
         })
       }
     },
-
-  createSlice: (
-    payload: {
-      id: string
-      component: string
-      context: Record<string, unknown>
-    },
-    plugin: IGatsbyPlugin,
-    traceId?: string
-  ): ICreateSliceAction => {
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
-      let name = `The plugin "${plugin.name}"`
-      if (plugin.name === `default-site-plugin`) {
-        name = `Your site's "gatsby-node.js"`
-      }
-
-      if (!payload.id) {
-        const message = `${name} must set the page path when creating a slice`
-        report.panic({
-          id: `11334`,
-          context: {
-            pluginName: name,
-            sliceObject: payload,
-            message,
-          },
-        })
-      }
-      if (!payload.component) {
-        report.panic({
-          id: `11333`,
-          context: {
-            pluginName: name,
-            sliceObject: payload,
-          },
-        })
-      }
-
-      trackFeatureIsUsed(`SliceAPI`)
-      const componentPath = normalizePath(payload.component)
-
-      const oldSlice = store.getState().slices.get(payload.id)
-      const contextModified =
-        !!oldSlice && !isEqual(oldSlice.context, payload.context)
-      const componentModified =
-        !!oldSlice && !isEqual(oldSlice.componentPath, componentPath)
-
-      return {
-        type: `CREATE_SLICE`,
-        plugin,
-        payload: {
-          componentChunkName: generateComponentChunkName(
-            payload.component,
-            `slice`
-          ),
-          componentPath,
-          // note: we use "name" internally instead of id
-          name: payload.id,
-          context: payload.context || {},
-          updatedAt: Date.now(),
-        },
-        traceId,
-        componentModified,
-        contextModified,
-      }
-    } else {
-      throw new Error(`createSlice is only available in Gatsby v5`)
-    }
-  },
 }
 
 const withDeprecationWarning =
@@ -615,8 +539,5 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
   },
   printTypeDefinitions: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
-  },
-  createSlice: {
-    [ALLOWED_IN]: [`createPages`],
   },
 })
