@@ -182,6 +182,30 @@ export type HeadFC<DataType = object, PageContextType = object> = (
   props: HeadProps<DataType, PageContextType>
 ) => JSX.Element
 
+type SerializableProps =
+  | ISerializableObject
+  | Array<SerializableProps>
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+
+interface ISerializableObject {
+  [key: string]: SerializableProps
+}
+
+export interface SliceProps {
+  alias: string
+  allowEmpty?: boolean
+  [key: string]: SerializableProps
+}
+
+/**
+ * TODO
+ */
+export const Slice = (props: SliceProps) => JSX.Element
+
 /**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
  */
@@ -229,26 +253,6 @@ export interface PageRendererProps {
 export class PageRenderer extends React.Component<PageRendererProps> {}
 
 type RenderCallback<T = any> = (data: T) => React.ReactNode
-
-export interface StaticQueryProps<T = any> {
-  query: StaticQueryDocument
-  render?: RenderCallback<T>
-  children?: RenderCallback<T>
-}
-
-/**
- * StaticQuery can do most of the things that page query can, including fragments. The main differences are:
- *
- * - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
- * - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
- * - StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
- *
- * @see https://www.gatsbyjs.com/docs/static-query/
- */
-
-export class StaticQuery<T = any> extends React.Component<
-  StaticQueryProps<T>
-> {}
 
 /**
  * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
@@ -1227,6 +1231,14 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createSlice */
+  createSlice<TContext = Record<string, unknown>>(
+    this: void,
+    args: SliceInput<TContext>,
+    plugin?: ActionPlugin,
+    option?: ActionOptions
+  ): void
+
   /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
@@ -1662,6 +1674,12 @@ export interface Page<TContext = Record<string, unknown>> {
   context?: TContext
   ownerNodeId?: string
   defer?: boolean
+}
+
+export interface SliceInput<TContext = Record<string, unknown>> {
+  id: string
+  component: string
+  context?: TContext
 }
 
 export interface IPluginRefObject {

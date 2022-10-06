@@ -79,4 +79,4 @@ useStaticQuery(graphql\`${query}\`);
   }
 }
 
-export { StaticQuery, StaticQueryContext, useStaticQuery }
+export { StaticQueryContext, useStaticQuery }
