@@ -1,9 +1,9 @@
 ---
 title: "Unified Hosting"
-description: "Learn about Unified Hosting and it's benefits in Gatsby Cloud"
+description: "Learn about Unified Hosting and the benefits of it in Gatsby Cloud"
 ---
 
-Unified Hosting (as signalled by a `gatsbyjs.io` domain) is enabled by default on production builds.
+Unified Hosting (as signalled by a `gatsbyjs.io` domain) is enabled by default on production builds. However, if you'd like to take advantage of Unified Hosting on Pull Request and Preview builds, you must enable the build feature in Gatsby Cloud.
 
 ## Benefits
 
@@ -21,4 +21,4 @@ Unified Hosting for all builds (including Pull Requests and Previews) is current
 
 ![Unified Hosting toggle in Gatsby Cloud](../../images/unified-hosting.png)
 
-Enable the "Unified Hosting" checkbox in Gatsby Cloud to take advantage of these benefits!
+Enable the "Unified Hosting" checkbox in Gatsby Cloud to take advantage of these benefits.
