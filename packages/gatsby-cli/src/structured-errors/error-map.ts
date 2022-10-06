@@ -565,6 +565,32 @@ const errors = {
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
   },
+  // slices
+  "11333": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.sliceObject,
+        null,
+        4
+      )}\n\nSee the documentation for the "createSlice" action — https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "11334": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the slice id when creating a slice.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.sliceObject,
+        null,
+        4
+      )}\n\nSee the documentation for the "createSlice" action — https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+
   // node object didn't pass validation
   "11467": {
     text: (context): string =>

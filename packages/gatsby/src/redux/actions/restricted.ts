@@ -439,6 +439,32 @@ export const actions = {
     traceId?: string
   ): ICreateSliceAction => {
     if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      let name = `The plugin "${plugin.name}"`
+      if (plugin.name === `default-site-plugin`) {
+        name = `Your site's "gatsby-node.js"`
+      }
+
+      if (!payload.id) {
+        const message = `${name} must set the page path when creating a slice`
+        report.panic({
+          id: `11334`,
+          context: {
+            pluginName: name,
+            sliceObject: payload,
+            message,
+          },
+        })
+      }
+      if (!payload.component) {
+        report.panic({
+          id: `11333`,
+          context: {
+            pluginName: name,
+            sliceObject: payload,
+          },
+        })
+      }
+
       trackFeatureIsUsed(`SliceAPI`)
       const componentPath = normalizePath(payload.component)
 
