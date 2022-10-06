@@ -19,3 +19,34 @@ index e31cebb08a..cef8ab70ed 100644
  
 -export { StaticQuery, StaticQueryContext, useStaticQuery }
 +export { StaticQueryContext, useStaticQuery }
+diff --git a/packages/gatsby/index.d.ts b/packages/gatsby/index.d.ts
+index 57c92929c1..db2b6a78c1 100644
+--- a/packages/gatsby/index.d.ts
++++ b/packages/gatsby/index.d.ts
+@@ -230,26 +230,6 @@ export class PageRenderer extends React.Component<PageRendererProps> {}
+ 
+ type RenderCallback<T = any> = (data: T) => React.ReactNode
+ 
+-export interface StaticQueryProps<T = any> {
+-  query: StaticQueryDocument
+-  render?: RenderCallback<T>
+-  children?: RenderCallback<T>
+-}
+-
+-/**
+- * StaticQuery can do most of the things that page query can, including fragments. The main differences are:
+- *
+- * - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
+- * - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
+- * - StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
+- *
+- * @see https://www.gatsbyjs.com/docs/static-query/
+- */
+-
+-export class StaticQuery<T = any> extends React.Component<
+-  StaticQueryProps<T>
+-> {}
+-
+ /**
+  * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
+  *
