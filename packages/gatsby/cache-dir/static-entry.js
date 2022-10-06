@@ -283,7 +283,7 @@ export default async function staticPage({
       }
     ).pop()
 
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (process.env.GATSBY_SLICES) {
       const slicesContext = {
         // if we're in build now, we know we're on the server
         // otherwise we're in an engine
@@ -429,7 +429,7 @@ export default async function staticPage({
 
     // Add page metadata for the current page
     const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";${
-      _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
+      process.env.GATSBY_SLICES
         ? ``
         : `window.___webpackCompilationHash="${webpackCompilationHash}";`
     }${
@@ -446,7 +446,7 @@ export default async function staticPage({
       />
     )
 
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (process.env.GATSBY_SLICES) {
       postBodyComponents.push(
         createElement(ServerSliceRenderer, {
           sliceId: `_gatsby-scripts`,

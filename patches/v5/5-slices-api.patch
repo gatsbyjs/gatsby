@@ -1,5 +1,15 @@
+diff --git a/packages/gatsby/cache-dir/gatsby-browser-entry.js b/packages/gatsby/cache-dir/gatsby-browser-entry.js
+index 9e0f1205bf..f0a7dcb841 100644
+--- a/packages/gatsby/cache-dir/gatsby-browser-entry.js
++++ b/packages/gatsby/cache-dir/gatsby-browser-entry.js
+@@ -23,4 +23,5 @@ export {
+ 
+ export { graphql, prefetchPathname }
+ export { StaticQueryContext, useStaticQuery } from "./static-query"
++export { Slice } from "./slice"
+ export * from "gatsby-script"
 diff --git a/packages/gatsby/index.d.ts b/packages/gatsby/index.d.ts
-index 57c92929c1..10763ffa32 100644
+index db2b6a78c1..f0e7745e01 100644
 --- a/packages/gatsby/index.d.ts
 +++ b/packages/gatsby/index.d.ts
 @@ -182,6 +182,30 @@ export type HeadFC<DataType = object, PageContextType = object> = (
@@ -33,7 +43,7 @@ index 57c92929c1..10763ffa32 100644
  /**
   * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
   */
-@@ -1227,6 +1251,14 @@ export interface Actions {
+@@ -1207,6 +1231,14 @@ export interface Actions {
      option?: ActionOptions
    ): void
  
@@ -48,19 +58,20 @@ index 57c92929c1..10763ffa32 100644
    /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
    deleteNode(node: NodeInput, plugin?: ActionPlugin): void
  
-@@ -1664,6 +1696,12 @@ export interface Page<TContext = Record<string, unknown>> {
+@@ -1642,6 +1674,13 @@ export interface Page<TContext = Record<string, unknown>> {
+   context?: TContext
+   ownerNodeId?: string
    defer?: boolean
- }
- 
++  slices?: Record<string, string>
++}
++
 +export interface SliceInput<TContext = Record<string, unknown>> {
 +  id: string
 +  component: string
 +  context?: TContext
-+}
-+
+ }
+ 
  export interface IPluginRefObject {
-   resolve: string
-   options?: IPluginRefOptions
 diff --git a/packages/gatsby/src/redux/actions/restricted.ts b/packages/gatsby/src/redux/actions/restricted.ts
 index cb105dfa6d..0ee5d3eda7 100644
 --- a/packages/gatsby/src/redux/actions/restricted.ts

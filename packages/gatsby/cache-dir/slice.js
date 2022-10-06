@@ -4,7 +4,7 @@ import { InlineSlice } from "./slice/inline-slice"
 import { SlicesContext } from "./slice/context"
 
 export function Slice(props) {
-  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+  if (process.env.GATSBY_SLICES) {
     // we use sliceName internally, so remap alias to sliceName
     const internalProps = {
       ...props,
@@ -38,7 +38,9 @@ export function Slice(props) {
       )
     }
   } else {
-    throw new Error(`Slices are only available in Gatsby v5`)
+    throw new Error(
+      `Slices are disabled, likely due to PARTIAL_HYDRATION flag being set.`
+    )
   }
 }
 

@@ -227,7 +227,6 @@ module.exports = async (
             })
         ),
         "global.hasPartialHydration": isPartialHydrationEnabled,
-        "_CFLAGS_.GATSBY_MAJOR": JSON.stringify(_CFLAGS_.GATSBY_MAJOR),
       }),
 
       plugins.virtualModules(),
