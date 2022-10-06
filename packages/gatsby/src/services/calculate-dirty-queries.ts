@@ -44,7 +44,7 @@ export async function calculateDirtyQueries({
     queriesToRun = queryIds.filter(
       queryId =>
         queryId.startsWith(`sq--`) ||
-        queryId.startsWith(`fr--`) ||
+        queryId.startsWith(`slice--`) ||
         pagePathFilter.has(queryId)
     )
   }

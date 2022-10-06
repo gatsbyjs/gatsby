@@ -82,7 +82,7 @@ export function queriesReducer(
     }
     case `CREATE_SLICE`: {
       const { name, componentPath } = action.payload
-      const path = `fr--${name}`
+      const path = `slice--${name}`
       let query = state.trackedQueries.get(path)
       if (!query || action.contextModified) {
         query = registerQuery(state, path)
@@ -108,7 +108,7 @@ export function queriesReducer(
     }
     case `DELETE_SLICE`: {
       const { name } = action.payload
-      const path = `fr--${name}`
+      const path = `slice--${name}`
       state.deletedQueries.add(path)
       return state
     }

@@ -59,10 +59,9 @@ export { calcDirtyQueryIds as calcInitialDirtyQueryIds }
  */
 export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
   const grouped = _.groupBy(queryIds, p => {
-    const prefix = p.slice(0, 4)
-    if (prefix === `sq--`) {
+    if (p.startsWith(`sq--`)) {
       return `static`
-    } else if (prefix === `fr--`) {
+    } else if (p.startsWith(`slice--`)) {
       return `slice`
     } else {
       return `page`
@@ -203,7 +202,7 @@ function createSliceQueryJob(
   state: IGatsbyState,
   queryId: string
 ): IQueryJob | undefined {
-  const sliceName = queryId.substring(4)
+  const sliceName = queryId.substring(7) // remove "slice--" prefix
 
   const sliceDef = state.slices.get(sliceName)
   if (!sliceDef) {

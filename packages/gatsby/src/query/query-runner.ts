@@ -205,7 +205,7 @@ export async function queryRunner(
         store.dispatch({
           type: `ADD_PENDING_SLICE_DATA_WRITE`,
           payload: {
-            name: queryJob.id.substring(4),
+            name: queryJob.id.substring(7), // remove "slice--" prefix
           },
         })
       }

@@ -157,7 +157,7 @@ export async function writeSliceData(
   staticQueryHashes: Array<string>
 ): Promise<string> {
   const result = JSON.parse(
-    (await readPageQueryResult(publicDir, `fr--${name}`)).toString()
+    (await readPageQueryResult(publicDir, `slice--${name}`)).toString()
   )
 
   const outputFilePath = path.join(publicDir, `slice-data`, `${name}.json`)
