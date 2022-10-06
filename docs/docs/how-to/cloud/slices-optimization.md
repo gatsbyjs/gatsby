@@ -13,4 +13,4 @@ By using Slices, Gatsby Cloud can optimize your builds even further by enabling 
 
 By knowing which pieces of your site to build and host, we can increase build times on Slice changes by up to 90%.
 
-These optimizations for Slices requires [Fast Hosting](/docs/docs/how-to/cloud/fast-hosting).
+These optimizations for Slices requires [Unified Hosting](/docs/docs/how-to/cloud/unified-hosting).
