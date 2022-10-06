@@ -58,7 +58,6 @@ export async function createPageSSRBundle({
   reporter: Reporter
   isVerbose?: boolean
 }): Promise<webpack.Compilation | undefined> {
-  // TODO sc-53539: revisit this transformation
   const state = store.getState()
   const slicesStateObject = {}
   for (const [key, value] of state.slices) {
