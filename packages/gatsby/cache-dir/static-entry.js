@@ -563,8 +563,8 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
       onAllReady() {
         pipe(writableStream)
       },
-      onError(e) {
-        throw e
+      onError(error) {
+        writableStream.destroy(error)
       },
     })
 

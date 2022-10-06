@@ -23,7 +23,10 @@ import { getPublicPath } from "../utils/get-public-path"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { stitchSliceForAPage } from "../utils/slices/stitching"
-import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
+import {
+  ISlicePropsEntry,
+  isRenderSliceHTMLError,
+} from "../utils/worker/child/render-html"
 import { getPageMode } from "../utils/page-mode"
 
 type IActivity = any // TODO
@@ -663,6 +666,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       const context = {
         errorPath: err.context && err.context.path,
         ref: ``,
+        type: `page`,
       }
 
       const match = err.message.match(
@@ -800,8 +804,36 @@ export async function buildSlices({
         slices,
         slicesProps,
       })
-    } catch (e) {
-      buildHTMLActivityProgress.panic(e)
+    } catch (err) {
+      console.log(`what do we have here`, JSON.stringify(err, null, 2))
+      const prettyError = createErrorFromString(
+        err.stack,
+        `${htmlComponentRendererPath}.map`
+      )
+      if (isRenderSliceHTMLError(err)) {
+        let id = `95313` // TODO: verify error IDs exist
+        const context = {
+          errorPath: err.context && err.context.id,
+          ref: ``,
+          type: `slice`,
+        }
+
+        const match = err.message.match(
+          /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+        )
+        if (match && match[1]) {
+          id = `95312`
+          context.ref = match[1]
+        }
+
+        buildHTMLActivityProgress.panic({
+          id,
+          context,
+          error: prettyError,
+        })
+      } else {
+        buildHTMLActivityProgress.panic(err)
+      }
     } finally {
       buildHTMLActivityProgress.end()
     }

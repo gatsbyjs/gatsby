@@ -52,6 +52,22 @@ interface IRenderHTMLError extends Error {
   }
 }
 
+interface IRenderSliceHTMLError extends Error {
+  message: string
+  name: string
+  code?: string
+  stack?: string
+  context?: {
+    id?: string
+    sliceData: unknown
+    sliceProps: unknown
+  }
+}
+
+export function isRenderSliceHTMLError(e: any): e is IRenderSliceHTMLError {
+  return e?.context?.id && (e?.context?.sliceData || e?.context?.sliceProps)
+}
+
 /**
  * Used to track if renderHTMLProd / renderHTMLDev are called within same "session" (from same renderHTMLQueue call).
  * As long as sessionId remains the same we can rely on memoized/cached resources for templates, css file content for inlining and static query results.
@@ -495,25 +511,35 @@ export async function renderSlices({
     const MAGIC_CHILDREN_STRING = `__DO_NOT_USE_OR_ELSE__`
     const sliceData = await readSliceData(publicDir, slice.name)
 
-    const html = await htmlComponentRenderer.renderSlice({
-      slice,
-      staticQueryContext,
-      props: {
-        data: sliceData?.result?.data,
-        ...(hasChildren ? { children: MAGIC_CHILDREN_STRING } : {}),
-        ...props,
-      },
-    })
-    const split = html.split(MAGIC_CHILDREN_STRING)
+    try {
+      const html = await htmlComponentRenderer.renderSlice({
+        slice,
+        staticQueryContext,
+        props: {
+          data: sliceData?.result?.data,
+          ...(hasChildren ? { children: MAGIC_CHILDREN_STRING } : {}),
+          ...props,
+        },
+      })
+      const split = html.split(MAGIC_CHILDREN_STRING)
 
-    // TODO always generate both for now
-    let index = 1
-    for (const htmlChunk of split) {
-      await ensureFileContent(
-        path.join(publicDir, `_gatsby`, `slices`, `${sliceId}-${index}.html`),
-        htmlChunk
-      )
-      index++
+      // TODO always generate both for now
+      let index = 1
+      for (const htmlChunk of split) {
+        await ensureFileContent(
+          path.join(publicDir, `_gatsby`, `slices`, `${sliceId}-${index}.html`),
+          htmlChunk
+        )
+        index++
+      }
+    } catch (e) {
+      const htmlRenderError: IRenderSliceHTMLError = e
+      htmlRenderError.context = {
+        id: sliceName,
+        sliceData,
+        sliceProps: props,
+      }
+      throw htmlRenderError
     }
   }
 }

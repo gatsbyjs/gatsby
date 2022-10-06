@@ -42,7 +42,11 @@ const errors = {
   "95313": {
     text: (context): string =>
       `Building static HTML failed${
-        context.errorPath ? ` for path "${context.errorPath}"` : ``
+        context.errorPath
+          ? ` for ${context.type === `slice` ? `slice` : `path`} "${
+              context.errorPath
+            }"`
+          : ``
       }`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
