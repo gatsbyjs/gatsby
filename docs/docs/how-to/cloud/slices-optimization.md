@@ -7,7 +7,7 @@ description: "Learn how to optimize your Slices on Gatsby Cloud"
 
 ## Cloud Optimizations
 
-By using Slices, Gatsby Cloud can optimize your builds even further by enabling the checkbox in your Build Features settings.
+When using Slices, Gatsby Cloud can optimize your builds even further. You can take advantage of these optimzations by enabling the checkbox in your Build Features settings.
 
 ![Slices API toggle in Gatsby Cloud](../../images/slices-api-optimization.png)
 
