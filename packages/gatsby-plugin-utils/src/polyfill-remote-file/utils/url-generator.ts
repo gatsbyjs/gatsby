@@ -54,15 +54,16 @@ function appendUrlParamToSearchParams(
   searchParams.append(paramName, finalUrl)
 }
 
-export function generateFileUrl({
-  url,
-  filename,
-  store,
-}: {
-  url: string
-  filename: string
+export function generateFileUrl(
+  {
+    url,
+    filename,
+  }: {
+    url: string
+    filename: string
+  },
   store?: Store
-}): string {
+): string {
   const fileExt = extname(filename)
   const filenameWithoutExt = basename(filename, fileExt)
 
