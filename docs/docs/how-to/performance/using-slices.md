@@ -152,3 +152,8 @@ exports.createPages = async ({ actions }) => {
   })
 }
 ```
+
+## Additional Resources
+
+- [Gatsby Slice API Reference](/docs/reference/built-in-components/gatsby-slice/)
+- [Enable Slices API Optimizations](/docs/how-to/cloud/slices-optimization/)
