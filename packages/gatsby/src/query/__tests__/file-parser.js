@@ -315,7 +315,10 @@ export const config = async () => {
   })
 
   it(`generates spec-compliant query names out of path`, async () => {
-    const ast = await parser.parseFile(`${specialChars}.js`, jest.fn())
+    const { astDefinitions: ast } = await parser.parseFile(
+      `${specialChars}.js`,
+      jest.fn()
+    )
     const nameNode = ast[0].doc.definitions[0].name
     expect(nameNode).toEqual({
       kind: `Name`,
@@ -324,7 +327,7 @@ export const config = async () => {
 
     if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
       // this is testing StaticQuery which is being removed in v5
-      const ast2 = await parser.parseFile(
+      const { astDefinitions: ast2 } = await parser.parseFile(
         `static-${specialChars}.js`,
         jest.fn()
       )

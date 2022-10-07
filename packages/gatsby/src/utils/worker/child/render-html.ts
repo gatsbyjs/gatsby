@@ -12,7 +12,11 @@ import {
   getScriptsAndStylesForTemplate,
   clearCache as clearAssetsMappingCache,
 } from "../../client-assets-for-template"
-import { IPageDataWithQueryResult, readPageData } from "../../page-data"
+import {
+  IPageDataWithQueryResult,
+  readPageData,
+  readSliceData,
+} from "../../page-data"
 import type { IRenderHtmlResult } from "../../../commands/build-html"
 import {
   clearStaticQueryCaches,
@@ -20,6 +24,8 @@ import {
   getStaticQueryContext,
 } from "../../static-query-utils"
 import { ServerLocation } from "@gatsbyjs/reach-router"
+import { IGatsbySlice } from "../../../internal"
+import { ensureFileContent } from "../../ensure-file-content"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
@@ -60,6 +66,23 @@ const inFlightResourcesForTemplate = new Map<
   string,
   Promise<IResourcesForTemplate>
 >()
+
+const readStaticQueryContext = async (
+  templatePath: string
+): Promise<Record<string, { data: unknown }>> => {
+  const filePath = path.join(
+    // TODO: Better way to get this?
+    process.cwd(),
+    `.cache`,
+    `page-ssr`,
+    `sq-context`,
+    templatePath,
+    `sq-context.json`
+  )
+  const rawSQContext = await fs.readFile(filePath, `utf-8`)
+
+  return JSON.parse(rawSQContext)
+}
 
 function clearCaches(): void {
   clearStaticQueryCaches()
@@ -145,6 +168,7 @@ export const renderHTMLProd = async ({
 
   const unsafeBuiltinsUsageByPagePath = {}
   const previewErrors = {}
+  const allSlicesProps = {}
 
   // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
   // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
@@ -174,13 +198,18 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const { html, unsafeBuiltinsUsage } =
+        const { html, unsafeBuiltinsUsage, sliceData } =
           await htmlComponentRenderer.default({
             pagePath,
             pageData,
             webpackCompilationHash,
+            context: {
+              isDuringBuild: true,
+            },
             ...resourcesForTemplate,
           })
+
+        allSlicesProps[pagePath] = sliceData
 
         if (unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
@@ -229,7 +258,11 @@ export const renderHTMLProd = async ({
     { concurrency: 2 }
   )
 
-  return { unsafeBuiltinsUsageByPagePath, previewErrors }
+  return {
+    unsafeBuiltinsUsageByPagePath,
+    previewErrors,
+    slicesPropsPerPage: allSlicesProps,
+  }
 }
 
 // TODO: remove when DEV_SSR is done
@@ -266,6 +299,9 @@ export const renderHTMLDev = async ({
       try {
         const htmlString = await htmlComponentRenderer.default({
           pagePath,
+          context: {
+            isDuringBuild: true,
+          },
         })
         return fs.outputFile(generateHtmlPath(outputDir, pagePath), htmlString)
       } catch (e) {
@@ -411,5 +447,73 @@ export async function renderPartialHydrationProd({
 
       pipe(stream)
     })
+  }
+}
+
+export interface IRenderSliceResult {
+  chunks: 2 | 1
+}
+
+export interface IRenderSlicesResults {
+  [sliceName: string]: IRenderSliceResult
+}
+
+export interface ISlicePropsEntry {
+  sliceId: string
+  sliceName: string
+  props: Record<string, unknown>
+  hasChildren: boolean
+}
+
+export async function renderSlices({
+  slices,
+  htmlComponentRendererPath,
+  publicDir,
+  slicesProps,
+}: {
+  publicDir: string
+  slices: Array<[string, IGatsbySlice]>
+  slicesProps: Array<ISlicePropsEntry>
+  htmlComponentRendererPath: string
+}): Promise<void> {
+  const htmlComponentRenderer = require(htmlComponentRendererPath)
+
+  for (const { sliceId, props, sliceName, hasChildren } of slicesProps) {
+    const sliceEntry = slices.find(f => f[0] === sliceName)
+    if (!sliceEntry) {
+      throw new Error(
+        `Slice name "${sliceName}" not found when rendering slices`
+      )
+    }
+
+    const [_fileName, slice] = sliceEntry
+
+    const staticQueryContext = await readStaticQueryContext(
+      slice.componentChunkName
+    )
+
+    const MAGIC_CHILDREN_STRING = `__DO_NOT_USE_OR_ELSE__`
+    const sliceData = await readSliceData(publicDir, slice.name)
+
+    const html = await htmlComponentRenderer.renderSlice({
+      slice,
+      staticQueryContext,
+      props: {
+        data: sliceData?.result?.data,
+        ...(hasChildren ? { children: MAGIC_CHILDREN_STRING } : {}),
+        ...props,
+      },
+    })
+    const split = html.split(MAGIC_CHILDREN_STRING)
+
+    // TODO always generate both for now
+    let index = 1
+    for (const htmlChunk of split) {
+      await ensureFileContent(
+        path.join(publicDir, `_gatsby`, `slices`, `${sliceId}-${index}.html`),
+        htmlChunk
+      )
+      index++
+    }
   }
 }
