@@ -1,6 +1,6 @@
 ---
 title: "Enable Slices API Optimizations"
-description: "Learn how to optimize your Slices on Gatsby Cloud."
+description: "Learn how to optimize your Slices on Gatsby Cloud"
 ---
 
 [Incremental Builds](/blog/2020-04-22-announcing-incremental-builds/) helps build your site faster. The [Slice API](/docs/reference/built-in-components/gatsby-slice) pushes your build speeds even further for common UI components. Learn how to use the Slice API in our [How-to doc](docs/docs/how-to/performance/using-slices).
