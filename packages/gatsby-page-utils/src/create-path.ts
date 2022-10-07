@@ -14,5 +14,7 @@ export function createPath(
   const parsedName = name === `index` ? `` : name
   const postfix = withTrailingSlash ? `/` : ``
 
-  return posix.join(`/`, dir, usePathBase ? parsedBase : parsedName, postfix)
+  return posix
+    .join(`/`, dir, usePathBase ? parsedBase : parsedName, postfix)
+    .replace(/\\/g, `/`)
 }
