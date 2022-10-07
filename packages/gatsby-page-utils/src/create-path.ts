@@ -1,4 +1,5 @@
 import { parse, posix } from "path"
+import { slash } from "gatsby-core-utils/path"
 
 export function createPath(
   filePath: string,
@@ -14,7 +15,8 @@ export function createPath(
   const parsedName = name === `index` ? `` : name
   const postfix = withTrailingSlash ? `/` : ``
 
-  return posix
-    .join(`/`, dir, usePathBase ? parsedBase : parsedName, postfix)
-    .replace(/\\/g, `/`)
+  // Convert slashes since the Regex operates on forward slashes
+  return slash(
+    posix.join(`/`, dir, usePathBase ? parsedBase : parsedName, postfix)
+  )
 }
