@@ -437,11 +437,11 @@ export const actions = {
    * exports.createPages = ({ actions }) => {
    *   actions.createSlice({
    *     id: `navigation-bar`,
-   *     component: require.resolve(`./src/components/navigation-bar.js`),
+   *     component: path.resolve(`./src/components/navigation-bar.js`),
    *   })
    * }
    */
-  createSlice: () => {},
+  createSlice: (): void => {},
 }
 
 const withDeprecationWarning =
