@@ -80,7 +80,7 @@ exports.createPages = async ({ actions }) => {
     id: `navigation-bar`,
     context: {
       jokeOfTheDay: `What's blue and not heavy? Light blue.`,
-    }
+    },
     component: require.resolve(`./src/components/navigation-bar.js`),
   })
 }
