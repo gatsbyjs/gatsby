@@ -17,8 +17,14 @@ const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
 const asyncRequires = require(`$virtual/async-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
-const chunkMapping = require(`../public/chunk-map.json`)
 const { headHandlerForSSR } = require(`./head/head-export-handler-for-ssr`)
+const {
+  SlicesResultsContext,
+  SlicesContext,
+  SlicesMapContext,
+  SlicesPropsContext,
+} = require(`./slice/context`)
+const { ServerSliceRenderer } = require(`./slice/server-slice-renderer`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
@@ -105,6 +111,12 @@ export const reorderHeadComponents = headComponents => {
   return sorted
 }
 
+const DEFAULT_CONTEXT = {
+  // whether or not we're building the site now
+  // usage in determining original build or engines
+  isDuringBuild: false,
+}
+
 export default async function staticPage({
   pagePath,
   pageData,
@@ -114,8 +126,12 @@ export default async function staticPage({
   reversedStyles,
   reversedScripts,
   inlinePageData = false,
+  context = {},
   webpackCompilationHash,
+  sliceData,
 }) {
+  const renderContext = Object.assign(DEFAULT_CONTEXT, context)
+
   // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
   global.unsafeBuiltinUsage = []
 
@@ -210,7 +226,7 @@ export default async function staticPage({
       postBodyComponents = sanitizeComponents(components)
     }
 
-    const { componentChunkName } = pageData
+    const { componentChunkName, slicesMap } = pageData
     const pageComponent = await asyncRequires.components[componentChunkName]()
 
     headHandlerForSSR({
@@ -256,16 +272,64 @@ export default async function staticPage({
       </ServerLocation>
     )
 
+    const sliceProps = {}
+
+    let body = apiRunner(
+      `wrapRootElement`,
+      { element: routerElement, pathname: pagePath },
+      routerElement,
+      ({ result }) => {
+        return { element: result, pathname: pagePath }
+      }
+    ).pop()
+
+    if (process.env.GATSBY_SLICES) {
+      const slicesContext = {
+        // if we're in build now, we know we're on the server
+        // otherwise we're in an engine
+        renderEnvironment: renderContext.isDuringBuild ? `server` : `engines`,
+      }
+      // if we're running in an engine, we need to manually wrap body with
+      // the results context to pass the map of slice name to component/data/context
+      if (slicesContext.renderEnvironment === `engines`) {
+        // this is the same name used in the browser
+        // since this immitates behavior
+        const slicesDb = new Map()
+
+        for (const sliceName of Object.values(slicesMap)) {
+          const slice = sliceData[sliceName]
+          const { default: SliceComponent } = await getPageChunk(slice)
+
+          const sliceObject = {
+            component: SliceComponent,
+            sliceContext: slice.result.sliceContext,
+            data: slice.result.data,
+          }
+
+          slicesDb.set(sliceName, sliceObject)
+        }
+
+        body = (
+          <SlicesResultsContext.Provider value={slicesDb}>
+            {body}
+          </SlicesResultsContext.Provider>
+        )
+      }
+
+      body = (
+        <SlicesContext.Provider value={slicesContext}>
+          <SlicesPropsContext.Provider value={sliceProps}>
+            <SlicesMapContext.Provider value={slicesMap}>
+              {body}
+            </SlicesMapContext.Provider>
+          </SlicesPropsContext.Provider>
+        </SlicesContext.Provider>
+      )
+    }
+
     const bodyComponent = (
       <StaticQueryContext.Provider value={staticQueryContext}>
-        {apiRunner(
-          `wrapRootElement`,
-          { element: routerElement, pathname: pagePath },
-          routerElement,
-          ({ result }) => {
-            return { element: result, pathname: pagePath }
-          }
-        ).pop()}
+        {body}
       </StaticQueryContext.Provider>
     )
 
@@ -364,7 +428,11 @@ export default async function staticPage({
     })
 
     // Add page metadata for the current page
-    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";window.___webpackCompilationHash="${webpackCompilationHash}";${
+    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";${
+      process.env.GATSBY_SLICES
+        ? ``
+        : `window.___webpackCompilationHash="${webpackCompilationHash}";`
+    }${
       inlinePageData ? `window.pageData=${JSON.stringify(pageData)};` : ``
     }/*]]>*/`
 
@@ -378,46 +446,55 @@ export default async function staticPage({
       />
     )
 
-    // Add chunk mapping metadata
-    const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
-      chunkMapping
-    )};/*]]>*/`
-
-    postBodyComponents.push(
-      <script
-        key={`chunk-mapping`}
-        id={`gatsby-chunk-mapping`}
-        dangerouslySetInnerHTML={{
-          __html: scriptChunkMapping,
-        }}
-      />
-    )
-
-    let bodyScripts = []
-    if (chunkMapping[`polyfill`]) {
-      chunkMapping[`polyfill`].forEach(script => {
-        const scriptPath = `${__PATH_PREFIX__}${script}`
-        bodyScripts.push(
-          <script key={scriptPath} src={scriptPath} noModule={true} />
-        )
-      })
-    }
-
-    // Filter out prefetched bundles as adding them as a script tag
-    // would force high priority fetching.
-    bodyScripts = bodyScripts.concat(
-      scripts
-        .filter(s => s.rel !== `prefetch`)
-        .map(s => {
-          const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-            1,
-            -1
-          )}`
-          return <script key={scriptPath} src={scriptPath} async />
+    if (process.env.GATSBY_SLICES) {
+      postBodyComponents.push(
+        createElement(ServerSliceRenderer, {
+          sliceId: `_gatsby-scripts`,
         })
-    )
+      )
+    } else {
+      const chunkMapping = require(`../public/chunk-map.json`)
+      // restore the old behavior
+      // Add chunk mapping metadata
+      const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+        chunkMapping
+      )};/*]]>*/`
 
-    postBodyComponents.push(...bodyScripts)
+      postBodyComponents.push(
+        <script
+          key={`chunk-mapping`}
+          id={`gatsby-chunk-mapping`}
+          dangerouslySetInnerHTML={{
+            __html: scriptChunkMapping,
+          }}
+        />
+      )
+
+      let bodyScripts = []
+      if (chunkMapping[`polyfill`]) {
+        chunkMapping[`polyfill`].forEach(script => {
+          const scriptPath = `${__PATH_PREFIX__}${script}`
+          bodyScripts.push(
+            <script key={scriptPath} src={scriptPath} noModule={true} />
+          )
+        })
+      }
+
+      // Filter out prefetched bundles as adding them as a script tag
+      // would force high priority fetching.
+      bodyScripts = bodyScripts.concat(
+        scripts
+          .filter(s => s.rel !== `prefetch`)
+          .map(s => {
+            const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(
+              s.name
+            ).slice(1, -1)}`
+            return <script key={scriptPath} src={scriptPath} async />
+          })
+      )
+
+      postBodyComponents.push(...bodyScripts)
+    }
 
     headComponents = reorderHeadComponents(headComponents)
 
@@ -445,7 +522,11 @@ export default async function staticPage({
       />
     )}`
 
-    return { html, unsafeBuiltinsUsage: global.unsafeBuiltinUsage }
+    return {
+      html,
+      unsafeBuiltinsUsage: global.unsafeBuiltinUsage,
+      sliceData: sliceProps,
+    }
   } catch (e) {
     e.unsafeBuiltinsUsage = global.unsafeBuiltinUsage
     throw e
@@ -458,3 +539,33 @@ export function getPageChunk({ componentChunkName }) {
 
 export { renderToPipeableStream } from "react-server-dom-webpack/writer.node.server"
 export { StaticQueryContext, React }
+
+export async function renderSlice({ slice, staticQueryContext, props = {} }) {
+  const { default: SliceComponent } = await getPageChunk(slice)
+
+  const sliceElement = (
+    <StaticQueryContext.Provider value={staticQueryContext}>
+      <SliceComponent sliceContext={slice.context} {...props} />
+    </StaticQueryContext.Provider>
+  )
+  const sliceWrappedWithWrapRootElement = apiRunner(
+    `wrapRootElement`,
+    { element: sliceElement },
+    sliceElement,
+    ({ result }) => {
+      return { element: result }
+    }
+  ).pop()
+
+  const writableStream = new WritableAsPromise()
+  const { pipe } = renderToPipeableStream(sliceWrappedWithWrapRootElement, {
+    onAllReady() {
+      pipe(writableStream)
+    },
+    onError(error) {
+      writableStream.destroy(error)
+    },
+  })
+
+  return await writableStream
+}

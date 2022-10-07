@@ -110,7 +110,7 @@ index 2c2ea7a3ea..d3457e0bff 100644
 +import { match } from "@gatsbyjs/reach-router"
  import { joinPath } from "gatsby-core-utils"
  import { store, emitter } from "../redux/"
- import { IGatsbyState, IGatsbyPage } from "../redux/types"
+ import { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types"
 diff --git a/packages/gatsby/src/commands/serve.ts b/packages/gatsby/src/commands/serve.ts
 index 03d8a87321..b457cde7e7 100644
 --- a/packages/gatsby/src/commands/serve.ts
