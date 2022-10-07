@@ -157,10 +157,6 @@ for `sort` argument and aggregation's `field` argument, we use nested input obje
 
 Breaking Changes in plugins that we own and maintain.
 
-#### `gatsby-plugin-sitemap`
-
-- [ ] Change default to generate file at root, not inside `/sitemap` folder
-- [ ] Optional: Give option to not create index file + sitemaps but only single sitemap.xml file
 
 ## Future Breaking Changes
 
