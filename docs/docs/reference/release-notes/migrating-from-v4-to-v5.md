@@ -8,7 +8,7 @@ Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby 4 to Gatsby 5.
+This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration. Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 release notes](/docs/reference/release-notes/v5.0/).
 
 ## Table of Contents
 
@@ -79,11 +79,11 @@ This is because the plugin needs to update its `peerDependencies` to include the
 
 ## Handling Breaking Changes
 
-This section explains breaking changes that were made for Gatsby 4. Some of those changes had a deprecation message in v3. In order to successfully update, you'll need to resolve these changes.
+This section explains breaking changes that were made for Gatsby 5. Some of those changes had a deprecation message in v4. In order to successfully update, you'll need to resolve these changes.
 
-### Minimal Node.js version 18.x.x
+### Minimal Node.js version 18.0.0
 
-We are dropping support for Node 14 and 16 as a new underlying dependency is requiring `>=18.x.x`. See the main changes in [Node 18 release notes](https://nodejs.org/en/blog/release/v18.0.0/).
+We are dropping support for Node 14 and 16 as a new underlying dependency is requiring `>=18.0.0`. See the main changes in [Node 18 release notes](https://nodejs.org/en/blog/release/v18.0.0/).
 
 Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
@@ -91,23 +91,17 @@ Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-rele
 
 The minimal required React version is now 18. This is a requirement for the new Partial Hydration feature.
 
-### Removal of `<StaticQuery />` component (use useStaticQuery)
-
-The `<StaticQuery />` component has been removed. Please use `useStaticQuery` instead. For more information, see the [useStaticQuery documentation](docs/how-to/querying-data/use-static-query/#composing-custom-usestaticquery-hooks).
-
 ### Non-ESM browsers are not polyfilled by default
 
 Default support for non-esm browsers has been removed.
 
-### GraphQL schema: changes to sort and aggregation fields
+### GraphQL schema: Changes to sort and aggregation fields
 
-for `sort` argument and aggregation's `field` argument, we use nested input objects instead of enums for more performant and lower resource usage .
-
-**Basic example**
+As per the [RFC: Change to sort and aggregation fields API](https://github.com/gatsbyjs/gatsby/discussions/36242) the `sort` argument and aggregation's `field` argument were changed from enums to nested input objects. This change enabled lower resource usage and faster "building schema" step. Below you can find two examples (before/after):
 
 **Sort:**
 
-**_Before:_**
+Before:
 
 ```graphql
 {
@@ -119,7 +113,7 @@ for `sort` argument and aggregation's `field` argument, we use nested input obje
 }
 ```
 
-**_After:_**
+After:
 
 ```jsx
 {
@@ -131,9 +125,9 @@ for `sort` argument and aggregation's `field` argument, we use nested input obje
 }
 ```
 
-**Sort:**
+**Aggregation:**
 
-**_Before:_**
+Before:
 
 ```graphql
 {
@@ -143,7 +137,7 @@ for `sort` argument and aggregation's `field` argument, we use nested input obje
 }
 ```
 
-**_After:_**
+After:
 
 ```graphql
 {
@@ -157,10 +151,13 @@ for `sort` argument and aggregation's `field` argument, we use nested input obje
 
 Breaking Changes in plugins that we own and maintain.
 
-
 ## Future Breaking Changes
 
 This section explains deprecations that were made for Gatsby 5. These old behaviors will be removed in v6, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
+
+### `<StaticQuery />` is deprecated
+
+The `<StaticQuery />` component has been deprecated. Please use `useStaticQuery` instead. For more information, see the [useStaticQuery documentation](docs/how-to/querying-data/use-static-query/#composing-custom-usestaticquery-hooks). The component will be removed in v6.
 
 ## For Plugin Maintainers
 
@@ -184,7 +181,7 @@ If your plugin supports both versions:
 ```diff:title=package.json
 {
   "peerDependencies": {
--   "gatsby": "^2.32.0",
+-   "gatsby": "^4.0.0",
 +   "gatsby": "^4.0.0 || ^5.0.0",
   }
 }
@@ -195,15 +192,13 @@ If you defined the `engines` key you'll also need to update the minimum version:
 ```json:title=package.json
 {
   "engines": {
-    "node": ">=18.x.x"
+    "node": ">=18.0.0"
   }
 }
 ```
-
-You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/).
 
 ## Known Issues
 
 This section is a work in progress and will be expanded when necessary. It's a list of known issues you might run into while upgrading Gatsby to v5 and how to solve them.
 
-If you encounter any problem, please let us know in this [GitHub discussion](https://github.com/gatsbyjs/gatsby/discussions/32860).
+If you encounter any problem, please let us know in this [GitHub discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
