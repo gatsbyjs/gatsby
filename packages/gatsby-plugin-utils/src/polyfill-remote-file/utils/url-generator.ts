@@ -110,9 +110,6 @@ export function generateImageUrl(
   return `${parsedURL.pathname}${parsedURL.search}`
 }
 
-let pathPrefix = ``
-let checkedPathPrefix = false
-
 function generatePublicUrl(
   {
     url,
@@ -123,10 +120,7 @@ function generatePublicUrl(
   },
   store?: Store
 ): string {
-  if (!checkedPathPrefix) {
-    checkedPathPrefix = true
-    pathPrefix = store?.getState()?.program?.pathPrefix || ``
-  }
+  const pathPrefix = store?.getState()?.program?.pathPrefix || ``
 
   const remoteUrl = createContentDigest(url)
 
