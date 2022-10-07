@@ -4,7 +4,7 @@ title: Gatsby Slice API
 
 > Support for the Gatsby Slice API was added in `gatsby@5.0.0`.
 
-Gatsby includes a `<Slice>` method and a `createSlice` action in `gatsby-node` to help speed up common updates across your site. By pulling out common components into separate HTML files, common components can be built separately and "stitched" together with existing pages.
+Gatsby includes a `<Slice>` React component and a `createSlice` action in `gatsby-node` to help speed up common updates across your site. By pulling out common components into separate HTML files, common components can be built separately and "stitched" together with existing pages.
 
 ## `createSlice` action
 
@@ -28,9 +28,17 @@ exports.createPages = async ({ actions }) => {
 | `component` (Required) | `string` | The path to the component being used as a Slice.                           |
 | `context`              | `object` | An object passed to the `component` as `sliceContext`.                     |
 
-## `Slice` component
+## `<Slice>` component
 
-The Slice component requires an `alias` prop. Any props additional props will be passed to underlying component.
+The `<Slice>` component requires an `alias` prop. Any additional props will be passed to the underlying component.
+
+```jsx
+<Slice alias="unique-name" />
+```
+
+```jsx
+<Slice alias="unique-name" additionalProp="hello world" />
+```
 
 | Prop               | Type     | Description                                                                                 |
 | ------------------ | -------- | ------------------------------------------------------------------------------------------- |
@@ -38,7 +46,7 @@ The Slice component requires an `alias` prop. Any props additional props will be
 
 ## Aliases
 
-An "`alias`" for a Slice is the string value a page will use to identify which Slice to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice)) is an alias is a one-to-one mapping for each page created. By default, an `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if `Slice` is given an `alias` prop of `"my-image"`, the Slice with the `id` of `"my-image"` will be used.
+An "`alias`" for a Slice is the string value a page will use to identify which Slice to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice)) is an alias is a one-to-one mapping for each page created. By default, an `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if `<Slice>` is given an `alias` prop of `"my-image"`, the Slice with the `id` of `"my-image"` will be used.
 
 However, if you need to customize which Slice is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage) through the `slices` key. If you map `"my-image"` to `"my-image--dog"`, any time the `"my-image"` Slice is used, it'll use the Slice with the id of `"my-image--dog"` on that page.
 
@@ -80,7 +88,7 @@ Gatsby does not support nested Slices. This means if you have a high level `<Lay
 
 ### Contexts
 
-Slices do not inherit contexts from their parent components. If a context is needed, it's provider can either be added to [`wrapRootElement`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/#wrapRootElement) or it's value can be passed directly to the Slice (as long is it follows restrictions for [other props](#others))
+Slices do not inherit contexts from their parent components. If a context is needed, it's provider can either be added to [`wrapRootElement`](/docs/reference/config-files/gatsby-browser/#wrapRootElement) or it's value can be passed directly to the Slice (as long is it follows restrictions for [other props](#others))
 
 ```js
 export function MyImage() {
@@ -141,7 +149,7 @@ export function MyImage() {
   return (
     <Slice alias="my-image">
       // highlight-next-line
-      <p>// highlight-next-line I am a caption, neat! // highlight-next-line</p>
+      <p>I am a caption, neat!</p>
     </Slice>
   )
 }
@@ -185,4 +193,5 @@ export function MyImage() {
 
 ## Additional Resources
 
-- [Using Slices](/docs/how-to/performance/using-slices)
+- [Slices How-To Guide](/docs/how-to/performance/using-slices)
+- [Enable Slices API Optimizations](/docs/how-to/cloud/slices-optimization/)
