@@ -120,7 +120,11 @@ function generatePublicUrl(
   },
   store?: Store
 ): string {
-  const pathPrefix = store?.getState()?.program?.pathPrefix || ``
+  const state = store?.getState()
+
+  const pathPrefix = state?.program?.prefixPaths
+    ? state?.config?.pathPrefix
+    : ``
 
   const remoteUrl = createContentDigest(url)
 

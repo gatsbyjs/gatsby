@@ -22,9 +22,15 @@ describe(`url-generator`, () => {
     }
 
     const store = {
-      getState: (): { program: { pathPrefix: string } } => {
+      getState: (): {
+        program: { prefixPaths: boolean }
+        config: { pathPrefix: string }
+      } => {
         return {
           program: {
+            prefixPaths: true,
+          },
+          config: {
             pathPrefix: `/prefix-test`,
           },
         }
