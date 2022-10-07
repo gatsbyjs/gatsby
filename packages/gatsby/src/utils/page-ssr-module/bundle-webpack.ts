@@ -189,6 +189,10 @@ export async function createPageSSRBundle({
         ),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "process.env.GATSBY_SLICES": JSON.stringify(
+          !!process.env.GATSBY_SLICES
+        ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
         ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)
