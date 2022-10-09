@@ -15,7 +15,8 @@
 const path = require(`path`)
 const { spawn, execSync } = require(`child_process`)
 const yargs = require(`yargs`)
-const glob = require(`glob`)
+
+const { applyPatches } = require(`./apply-patches-utils`)
 
 const gatsbyPKG = require(`../packages/gatsby/package.json`)
 const nextMajor = String(Number(gatsbyPKG.version.match(/[^.]+/)[0]) + 1)
@@ -58,9 +59,6 @@ function promiseSpawn(command, args, options) {
   })
 }
 
-const patchFiles = glob.sync(`patches/v${nextMajor}/*.patch`, {
-  cwd: path.join(__dirname, `..`),
-})
 let commitCreated = false
 let currentGitHash = null
 
@@ -117,21 +115,7 @@ let currentGitHash = null
     )
 
     console.log(` `)
-    console.log(`=== APPLYING GIT PATCHES ===`)
-
-    patchFiles.forEach(file => {
-      console.log(`Applying patch ${file}`)
-      try {
-        execSync(`git apply ${file}`, {
-          cwd: path.join(__dirname, `..`),
-          stdio: `pipe`,
-        })
-      } catch (err) {
-        console.log(err.stderr.toString())
-        // eslint-disable-next-line
-        throw ``
-      }
-    })
+    applyPatches(nextMajor)
 
     console.log(`=== COMMITING PATCH FILES ===`)
     currentGitHash = execSync(`git rev-parse HEAD`)

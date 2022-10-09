@@ -215,6 +215,7 @@ jobs:
       - <<: *check_lockfile
       - <<: *validate_renovate
       - <<: *persist_cache
+      - run: node scripts/apply-patches
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
@@ -329,6 +330,15 @@ jobs:
 
   integration_tests_artifacts:
     executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/artifacts
+
+  integration_tests_artifacts_v5:
+    executor:
+      name: node
+      image: "18.2.0"
+      gatsby_major: "5"
     steps:
       - e2e-test:
           test_path: integration-tests/artifacts
@@ -706,6 +716,10 @@ workflows:
     jobs:
       - bootstrap_v5
       - unit_tests_node18_v5:
+          <<: *ignore_docs
+          requires:
+            - bootstrap_v5
+      - integration_tests_artifacts_v5:
           <<: *ignore_docs
           requires:
             - bootstrap_v5
