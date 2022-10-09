@@ -117,6 +117,15 @@ aliases:
       - unit_tests_node16
       - unit_tests_node18
 
+  e2e-test-workflow_v5: &e2e-test-workflow_v5
+    filters:
+      branches:
+        ignore:
+          - master
+          - /docs.+/
+    requires:
+      - unit_tests_node18_v5
+
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
     steps:
@@ -456,6 +465,21 @@ jobs:
           test_path: e2e-tests/development-runtime
           react_version: "^18.2.0"
 
+  e2e_tests_development_runtime_v5:
+    executor:
+      name: node
+      image: "18.2.0"
+      gatsby_major: "5"
+    environment:
+      <<: *e2e-executor-env
+      CYPRESS_PROJECT_ID: txxix3
+      CYPRESS_RECORD_KEY: 35b23430-362b-4471-919e-594635244906
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+          react_version: "^18.2.0"
+          slices: true
+
   e2e_tests_production_runtime:
     <<: *e2e_tests_production_runtime_alias
 
@@ -466,6 +490,18 @@ jobs:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=ec36ff6b-3db9-48a9-8f7b-2faf301ab800 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=2a4f4f31-0dfb-4a56-80e0-9ed42a1131a4 yarn test:offline
           react_version: "^18.2.0"
+
+  e2e_tests_production_runtime_v5:
+    executor:
+      name: node
+      image: "18.2.0"
+      gatsby_major: "5"
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: CYPRESS_PROJECT_ID=g4aehf CYPRESS_RECORD_KEY=5ab42d00-cd19-4c8d-9225-d17a3b8ec407 yarn test && CYPRESS_PROJECT_ID=n8brob CYPRESS_RECORD_KEY=47d532c9-e476-4701-8a42-92f6df823efe yarn test:offline
+          react_version: "^18.2.0"
+          slices: true
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -730,6 +766,8 @@ workflows:
           requires:
             - bootstrap_v5
       - integration_tests_artifacts_v5:
-          <<: *ignore_docs
-          requires:
-            - bootstrap_v5
+          <<: *e2e-test-workflow_v5
+      - e2e_tests_development_runtime_v5:
+          <<: *e2e-test-workflow_v5
+      - e2e_tests_production_runtime_v5:
+          <<: *e2e-test-workflow_v5
