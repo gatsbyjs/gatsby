@@ -204,6 +204,7 @@ jobs:
   bootstrap_v5:
     executor:
       name: node
+      image: "18.2.0"
       gatsby_major: "5"
     steps:
       - checkout
