@@ -1,6 +1,6 @@
 {
   "name": "gatsby-page-utils",
-  "version": "2.24.0",
+  "version": "2.24.1",
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
