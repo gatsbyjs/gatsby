@@ -5,7 +5,7 @@ index 9e0f1205bf..f0a7dcb841 100644
 @@ -23,4 +23,5 @@ export {
  
  export { graphql, prefetchPathname }
- export { StaticQueryContext, useStaticQuery } from "./static-query"
+ export { StaticQuery, StaticQueryContext, useStaticQuery } from "./static-query"
 +export { Slice } from "./slice"
  export * from "gatsby-script"
 diff --git a/packages/gatsby/index.d.ts b/packages/gatsby/index.d.ts
