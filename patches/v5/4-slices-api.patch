@@ -1,5 +1,5 @@
 diff --git a/packages/gatsby/cache-dir/gatsby-browser-entry.js b/packages/gatsby/cache-dir/gatsby-browser-entry.js
-index 9e0f1205bf..f0a7dcb841 100644
+index c2bfd3e2b7..65218f2784 100644
 --- a/packages/gatsby/cache-dir/gatsby-browser-entry.js
 +++ b/packages/gatsby/cache-dir/gatsby-browser-entry.js
 @@ -23,4 +23,5 @@ export {
@@ -9,10 +9,10 @@ index 9e0f1205bf..f0a7dcb841 100644
 +export { Slice } from "./slice"
  export * from "gatsby-script"
 diff --git a/packages/gatsby/index.d.ts b/packages/gatsby/index.d.ts
-index db2b6a78c1..f0e7745e01 100644
+index 57c92929c1..c3dea75e6b 100644
 --- a/packages/gatsby/index.d.ts
 +++ b/packages/gatsby/index.d.ts
-@@ -182,6 +182,30 @@ export type HeadFC<DataType = object, PageContextType = object> = (
+@@ -182,6 +182,47 @@ export type HeadFC<DataType = object, PageContextType = object> = (
    props: HeadProps<DataType, PageContextType>
  ) => JSX.Element
  
@@ -29,21 +29,38 @@ index db2b6a78c1..f0e7745e01 100644
 +  [key: string]: SerializableProps
 +}
 +
-+export interface SliceProps {
++/**
++ * A props object for [slice placholder](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
++ */
++export interface SlicePlaceholderProps {
 +  alias: string
 +  allowEmpty?: boolean
++  children?: React.ReactNode
 +  [key: string]: SerializableProps
 +}
 +
 +/**
-+ * TODO
++ * Component used as a slice placholder, to mark a place in the page where a [slice](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
 + */
-+export const Slice = (props: SliceProps) => JSX.Element
++export declare function Slice(props: SlicePlaceholderProps): JSX.Element
++
++/**
++ * A props object for [slice component](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
++ */
++export type SliceComponentProps<
++  DataType = object,
++  SliceContextType = object,
++  AdditionalSerializableProps extends ISerializableObject = object
++> = {
++  data: DataType
++  sliceContext: SliceContextType
++  children?: React.ReactNode
++} & AdditionalSerializableProps
 +
  /**
   * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
   */
-@@ -1207,6 +1231,14 @@ export interface Actions {
+@@ -1227,6 +1268,14 @@ export interface Actions {
      option?: ActionOptions
    ): void
  
@@ -58,7 +75,7 @@ index db2b6a78c1..f0e7745e01 100644
    /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
    deleteNode(node: NodeInput, plugin?: ActionPlugin): void
  
-@@ -1642,6 +1674,13 @@ export interface Page<TContext = Record<string, unknown>> {
+@@ -1662,6 +1711,13 @@ export interface Page<TContext = Record<string, unknown>> {
    context?: TContext
    ownerNodeId?: string
    defer?: boolean
