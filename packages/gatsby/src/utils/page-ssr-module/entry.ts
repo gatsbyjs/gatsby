@@ -8,7 +8,7 @@ import type { IExecutionResult } from "../../query/types"
 import type { IGatsbyPage, IGatsbySlice, IGatsbyState } from "../../redux/types"
 import { IGraphQLTelemetryRecord } from "../../schema/type-definitions"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
-import type { IPageDataWithQueryResult } from "../page-data"
+import type { IPageDataWithQueryResult, ISliceData } from "../page-data"
 import type { Request } from "express"
 import type { Span, SpanContext } from "opentracing"
 
@@ -329,9 +329,7 @@ const readStaticQueryContext = async (
   return JSON.parse(rawSQContext)
 }
 
-const readSliceData = async (
-  sliceName: string
-): Promise<Record<string, { data: unknown }>> => {
+const readSliceData = async (sliceName: string): Promise<ISliceData> => {
   const filePath = path.join(__dirname, `slice-data`, `${sliceName}.json`)
 
   const rawSliceData = await fs.readFile(filePath, `utf-8`)
@@ -365,6 +363,29 @@ export async function renderHTML({
       })
     }
 
+    const sliceData: Record<string, ISliceData> = {}
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      let readSliceDataActivity: MaybePhantomActivity
+      try {
+        if (wrapperActivity) {
+          readSliceDataActivity = reporter.phantomActivity(
+            `Preparing slice-data`,
+            {
+              parentSpan: wrapperActivity.span,
+            }
+          )
+          readSliceDataActivity.start()
+        }
+        for (const sliceName of Object.values(pageData.slicesMap)) {
+          sliceData[sliceName] = await readSliceData(sliceName)
+        }
+      } finally {
+        if (readSliceDataActivity) {
+          readSliceDataActivity.end()
+        }
+      }
+    }
+
     let readStaticQueryContextActivity: MaybePhantomActivity
     let staticQueryContext: Record<string, { data: unknown }>
     try {
@@ -377,19 +398,27 @@ export async function renderHTML({
         )
         readStaticQueryContextActivity.start()
       }
-      staticQueryContext = await readStaticQueryContext(
-        data.page.componentChunkName
+
+      const uniqueUsedComponentChunkNames = [data.page.componentChunkName]
+      for (const singleSliceData of Object.values(sliceData)) {
+        if (
+          singleSliceData.componentChunkName &&
+          !uniqueUsedComponentChunkNames.includes(
+            singleSliceData.componentChunkName
+          )
+        ) {
+          uniqueUsedComponentChunkNames.push(singleSliceData.componentChunkName)
+        }
+      }
+
+      const contextsToMerge = await Promise.all(
+        uniqueUsedComponentChunkNames.map(readStaticQueryContext)
       )
+
+      staticQueryContext = Object.assign({}, ...contextsToMerge)
     } finally {
       if (readStaticQueryContextActivity) {
         readStaticQueryContextActivity.end()
-      }
-    }
-
-    const sliceData = {}
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
-      for (const sliceName of Object.values(pageData.slicesMap)) {
-        sliceData[sliceName] = await readSliceData(sliceName)
       }
     }
 
