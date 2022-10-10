@@ -22,11 +22,21 @@ aliases:
     GATSBY_CPU_COUNT: 2
     VERBOSE: 1
 
+  e2e-executor-env_v5: &e2e-executor-env_v5
+    <<: *e2e-executor-env
+    COMPILER_OPTIONS: GATSBY_MAJOR=5
+
   e2e-executor: &e2e-executor
     docker:
       - image: cypress/browsers:node14.15.0-chrome96-ff94
     environment:
       <<: *e2e-executor-env
+
+  e2e-executor_v5: &e2e-executor_v5
+    docker:
+      - image: cypress/browsers:node18.6.0-chrome105-ff104
+    environment:
+      <<: *e2e-executor-env_v5
 
   restore_cache: &restore_cache
     restore_cache:
@@ -466,12 +476,9 @@ jobs:
           react_version: "^18.2.0"
 
   e2e_tests_development_runtime_v5:
-    executor:
-      name: node
-      image: "18.2.0"
-      gatsby_major: "5"
+    <<: *e2e-executor_v5
     environment:
-      <<: *e2e-executor-env
+      <<: *e2e-executor-env_v5
       CYPRESS_PROJECT_ID: txxix3
       CYPRESS_RECORD_KEY: 35b23430-362b-4471-919e-594635244906
     steps:
@@ -492,10 +499,7 @@ jobs:
           react_version: "^18.2.0"
 
   e2e_tests_production_runtime_v5:
-    executor:
-      name: node
-      image: "18.2.0"
-      gatsby_major: "5"
+    <<: *e2e-executor_v5
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
