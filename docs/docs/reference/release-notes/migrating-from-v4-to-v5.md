@@ -8,7 +8,7 @@ Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration. Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 release notes](/docs/reference/release-notes/v5.0/).
+This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration. Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
 
 ## Table of Contents
 
