@@ -25,8 +25,6 @@ function transform(query, filename) {
   return code
 }
 
-const itWhenV4 = _CFLAGS_.GATSBY_MAJOR !== `5` ? it : it.skip
-
 describe(`babel-plugin-remove-graphql-queries`, () => {
   it.todo(
     `Works correctly with the kitchen sink`
@@ -223,7 +221,7 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   `)
   })
 
-  itWhenV4(`Transforms queries in <StaticQuery>`, () => {
+  it(`Transforms queries in <StaticQuery>`, () => {
     matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
@@ -237,10 +235,8 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   `)
   })
 
-  itWhenV4(
-    `Transforms queries defined in own variable in <StaticQuery>`,
-    () => {
-      matchesSnapshot(`
+  it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
@@ -253,10 +249,9 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
     />
   )
   `)
-    }
-  )
+  })
 
-  itWhenV4(`transforms exported variable queries in <StaticQuery>`, () => {
+  it(`transforms exported variable queries in <StaticQuery>`, () => {
     matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
@@ -435,7 +430,7 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
     )
   })
 
-  itWhenV4(`Handles closing StaticQuery tag`, () => {
+  it(`Handles closing StaticQuery tag`, () => {
     matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
@@ -450,7 +445,7 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   `)
   })
 
-  itWhenV4(`Doesn't add data import for non static queries`, () => {
+  it(`Doesn't add data import for non static queries`, () => {
     matchesSnapshot(`
   import * as React from 'react'
   import { StaticQuery, graphql } from "gatsby"

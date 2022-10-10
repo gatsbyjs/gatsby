@@ -14,8 +14,6 @@ const FileParser = require(`../file-parser`).default
 
 const specialChars = `ж-ä-!@#$%^&*()_-=+:;'"?,~\``
 
-const itWhenV4 = _CFLAGS_.GATSBY_MAJOR !== `5` ? it : it.skip
-
 describe(`File parser`, () => {
   const MOCK_FILE_INFO = {
     "no-query.js": `import React from "react"`,
@@ -285,7 +283,7 @@ export const config = async () => {
   })
 
   // this will need snapshot update once v5 becomes default, this should not be removed
-  itWhenV4(`extracts query AST correctly from files`, async () => {
+  it(`extracts query AST correctly from files`, async () => {
     const errors = []
     const addError = errors.push.bind(errors)
     const results = await parser.parseFiles(
@@ -325,17 +323,15 @@ export const config = async () => {
       value: `staticZhADollarpercentandJs1125018085`,
     })
 
-    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
-      // this is testing StaticQuery which is being removed in v5
-      const { astDefinitions: ast2 } = await parser.parseFile(
-        `static-${specialChars}.js`,
-        jest.fn()
-      )
-      const nameNode2 = ast2[0].doc.definitions[0].name
-      expect(nameNode2).toEqual({
-        kind: `Name`,
-        value: `staticStaticZhADollarpercentandJs1125018085`,
-      })
-    }
+    // this is testing StaticQuery which is being removed in v5
+    const { astDefinitions: ast2 } = await parser.parseFile(
+      `static-${specialChars}.js`,
+      jest.fn()
+    )
+    const nameNode2 = ast2[0].doc.definitions[0].name
+    expect(nameNode2).toEqual({
+      kind: `Name`,
+      value: `staticStaticZhADollarpercentandJs1125018085`,
+    })
   })
 })
