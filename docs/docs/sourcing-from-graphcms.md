@@ -186,7 +186,7 @@ export default IndexPage
 
 #### Static query hook
 
-Static queries also run at build time, but can be used in all components via the `useStaticQuery` hook or `<StaticQuery />` component. However they do **not** accept GraphQL variables.
+Static queries also run at build time, but can be used in all components via the `useStaticQuery` component. However they do **not** accept GraphQL variables.
 
 ```jsx
 import React from "react"

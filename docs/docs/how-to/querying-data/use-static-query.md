@@ -82,7 +82,13 @@ export default function Home() {
 }
 ```
 
-## Known Limitations
+## Differences between page queries & static queries
+
+Static queries differ from Gatsby page queries in a number of ways. For pages, Gatsby is capable of handling queries with variables because of its awareness of page context. However, page queries can only be made in **top-level page components**.
+
+In contrast, static queries do not take variables. This is because static queries are used inside specific components, and can appear lower in the component tree. Data fetched with a static query won't be dynamic (i.e. **they can't use variables**, hence the name "static" query), but they can be called at any level in the component tree.
+
+Static queries thus have these limitations:
 
 - `useStaticQuery` does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
-- Because of how queries currently work in Gatsby, we support only a single instance of `useStaticQuery` in a file
+- Because of how queries currently work in Gatsby, Gatsby supports only a single instance of `useStaticQuery` in a file
