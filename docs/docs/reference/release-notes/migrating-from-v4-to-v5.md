@@ -83,17 +83,17 @@ This section explains breaking changes that were made for Gatsby 5. Some of thos
 
 ### Minimal Node.js version 18.0.0
 
-We are dropping support for Node 14 and 16 as a new underlying dependency is requiring `>=18.0.0`. See the main changes in [Node 18 release notes](https://nodejs.org/en/blog/release/v18.0.0/).
+We are dropping support for Node 14 and 16 as our currently supported Node 14 version will reach EOL during the Gatsby 5 lifecycle. Since the timing of the "Active LTS" status of Node 18 is nearly the same as Gatsby 5 we're jumping directly to Node 18. See the main changes in [Node 18 release notes](https://nodejs.org/en/blog/release/v18.0.0/).
 
 Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
 ### Minimal required React version is 18
 
-The minimal required React version is now 18. This is a requirement for the new Partial Hydration feature.
+We are dropping official support for React 16 and 17. The new minimal required version is React 18. This is a requirement for the new Partial Hydration feature.
 
 ### Non-ESM browsers are not polyfilled by default
 
-Default support for non-esm browsers has been removed.
+Gatsby's `browserlist` configuration changed to now include `supports es6-module` by default. This means that Non-ESM browsers (like Internet Explorer) are not polyfilled anymore. If you still need to support those browser you'll need to [adjust your browserlist configuration](/docs/how-to/custom-configuration/browser-support/).
 
 ### GraphQL schema: Changes to sort and aggregation fields
 
@@ -157,11 +157,58 @@ This section explains deprecations that were made for Gatsby 5. These old behavi
 
 ### `<StaticQuery />` is deprecated
 
-The `<StaticQuery />` component has been deprecated. Please use `useStaticQuery` instead. For more information, see the [useStaticQuery documentation](docs/how-to/querying-data/use-static-query/#composing-custom-usestaticquery-hooks). The component will be removed in v6.
+The `<StaticQuery />` component has been deprecated. Please use `useStaticQuery` instead. For more information, see the [`useStaticQuery` guide](/docs/how-to/querying-data/use-static-query/#composing-custom-usestaticquery-hooks). `<StaticQuery />` will be removed in Gatsby 6.
+
+**Migration:**
+
+Before:
+
+```jsx
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+
+export default function Title() {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+            }
+          }
+        }
+      `}
+      render={data => <h1>{data.site.siteMetadata.title}</h1>}
+    />
+  )
+}
+```
+
+After:
+
+```jsx
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+
+export default function Title() {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return <h1>{data.site.siteMetadata.title}</h1>
+}
+```
 
 ## For Plugin Maintainers
 
-In most cases, you won't have to do anything to be v5 compatible. The underlying changes mostly affect source plugins. But one thing you can do to be certain your plugin won't throw any warnings or errors is to set the proper peer dependencies.
+In most cases, you won't have to do anything to be v5 compatible. But one thing you can do to be certain your plugin won't throw any warnings or errors is to set the proper peer dependencies.
 
 Please also note that some of the items inside "Handling Breaking Changes" may also apply to your plugin.
 
