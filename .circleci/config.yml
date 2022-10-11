@@ -115,23 +115,6 @@ aliases:
       - typecheck
       - unit_tests_node18
 
-  e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
-    <<: *e2e-executor
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
-
-  e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
-    <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/development-runtime
-
 commands:
   e2e-test:
     parameters:
@@ -379,9 +362,6 @@ jobs:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
 
-  e2e_tests_development_runtime:
-    <<: *e2e_tests_development_runtime_alias
-
   e2e_tests_development_runtime_with_react_18:
     <<: *e2e-executor
     environment:
@@ -392,9 +372,6 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/development-runtime
           react_version: "^18.2.0"
-
-  e2e_tests_production_runtime:
-    <<: *e2e_tests_production_runtime_alias
 
   e2e_tests_production_runtime_with_react_18:
     <<: *e2e-executor
@@ -626,10 +603,6 @@ workflows:
       - e2e_tests_mdx:
           <<: *e2e-test-workflow
       - e2e_tests_trailing-slash:
-          <<: *e2e-test-workflow
-      - e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
-      - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
