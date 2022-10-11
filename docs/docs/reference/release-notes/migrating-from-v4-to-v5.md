@@ -10,7 +10,7 @@ Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
 This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration. Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
 
-## Table of Contents
+## Table of contents
 
 - [Handling Deprecations](#handling-deprecations)
 - [Updating Your Dependencies](#updating-your-dependencies)
@@ -19,7 +19,7 @@ This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5
 - [For Plugin Maintainers](#for-plugin-maintainers)
 - [Known Issues](#known-issues)
 
-## Handling Deprecations
+## Handling deprecations
 
 Before upgrading to v5 we highly recommend upgrading `gatsby` (and all plugins) to the latest v4 version.
 Some changes required for Gatsby 5 could be applied incrementally to the latest v4 which should contribute to smoother upgrade experience.
@@ -29,7 +29,7 @@ Some changes required for Gatsby 5 could be applied incrementally to the latest 
 After upgrading, run `gatsby build` and look for deprecation messages in the build log.
 Follow instructions to fix those deprecations.
 
-## Updating Your Dependencies
+## Updating your dependencies
 
 Next, you need to update your dependencies to v5.
 
@@ -57,6 +57,25 @@ Please note: If you use npm 7 you'll want to use the `--legacy-peer-deps` option
 npm install gatsby@latest --legacy-peer-deps
 ```
 
+### Update React version
+
+You need to update your `package.json` to use the `latest` version of `react` and `react-dom`.
+
+```json:title=package.json
+{
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
+```
+
+Or run
+
+```shell
+npm install react@latest react-dom@latest
+```
+
 ### Update Gatsby related packages
 
 Update your `package.json` to use the `latest` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
@@ -77,7 +96,7 @@ npm ERR! ERESOLVE unable to resolve dependency tree
 
 This is because the plugin needs to update its `peerDependencies` to include the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
 
-## Handling Breaking Changes
+## Handling breaking changes
 
 This section explains breaking changes that were made for Gatsby 5. Some of those changes had a deprecation message in v4. In order to successfully update, you'll need to resolve these changes.
 
@@ -159,11 +178,15 @@ After:
 }
 ```
 
+### `trailingSlash` is set to `always`
+
+In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-files/gatsby-config/#trailingslash) was set to `legacy`. With Gatsby 5 the `legacy` option was removed and the new default is `always`. This means that every URL will have a trailing slash. You can [configure this option](/docs/reference/config-files/gatsby-config/#trailingslash) in your `gatsby-config` file.
+
 ### Gatsby related packages
 
 Breaking Changes in plugins that we own and maintain.
 
-## Future Breaking Changes
+## Future breaking changes
 
 This section explains deprecations that were made for Gatsby 5. These old behaviors will be removed in v6, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
 
@@ -218,7 +241,7 @@ export default function Title() {
 }
 ```
 
-## For Plugin Maintainers
+## For plugin maintainers
 
 In most cases, you won't have to do anything to be v5 compatible. But one thing you can do to be certain your plugin won't throw any warnings or errors is to set the proper peer dependencies.
 
@@ -256,7 +279,7 @@ If you defined the `engines` key you'll also need to update the minimum version:
 }
 ```
 
-## Known Issues
+## Known issues
 
 This section is a work in progress and will be expanded when necessary. It's a list of known issues you might run into while upgrading Gatsby to v5 and how to solve them.
 
