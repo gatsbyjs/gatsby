@@ -801,7 +801,27 @@ export async function buildSlices({
         slicesProps,
       })
     } catch (e) {
-      buildHTMLActivityProgress.panic(e)
+      if (e?.id) {
+        buildHTMLActivityProgress.panic({
+          id: e?.id,
+          context: e?.context,
+          error: e,
+        })
+      }
+
+      const prettyError = createErrorFromString(
+        e.stack,
+        `${htmlComponentRendererPath}.map`
+      )
+      const errorMessage = `${prettyError.stack}${
+        prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
+      }`
+      buildHTMLActivityProgress.panic({
+        id: `11335`,
+        context: {
+          errorMessage,
+        },
+      })
     } finally {
       buildHTMLActivityProgress.end()
     }

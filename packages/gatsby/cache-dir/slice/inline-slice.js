@@ -22,6 +22,12 @@ export const InlineSlice = ({
     }
   }
 
+  if (typeof slice.component !== `function`) {
+    throw new Error(
+      `The slice component "${sliceName}" was not found. If your component is a named export, please use "export default" instead.`
+    )
+  }
+
   return (
     <slice.component
       sliceContext={slice.sliceContext}

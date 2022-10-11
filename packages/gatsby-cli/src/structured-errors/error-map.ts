@@ -596,7 +596,20 @@ const errors = {
     // TODO: change domain to gatsbyjs.com when it's released
     docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
-
+  "11335": {
+    text: (context): string =>
+      `Slice component failed to render.\n\n${context.errorMessage}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: Add docs url
+  },
+  "11336": {
+    text: (context): string =>
+      `The slice component "${context.sliceName}" was not found. If your component is a named export, please use "export default" instead.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: Add docs url
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>

@@ -541,7 +541,17 @@ export { renderToPipeableStream } from "react-server-dom-webpack/writer.node.ser
 export { StaticQueryContext, React }
 
 export async function renderSlice({ slice, staticQueryContext, props = {} }) {
-  const { default: SliceComponent } = await getPageChunk(slice)
+  const chunk = await getPageChunk(slice)
+  const { default: SliceComponent } = chunk
+
+  if (!SliceComponent) {
+    const error = new Error(`SliceRenderError`)
+    error.id = `11336`
+    error.context = {
+      sliceName: slice.name,
+    }
+    throw error
+  }
 
   const sliceElement = (
     <StaticQueryContext.Provider value={staticQueryContext}>
