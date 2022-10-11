@@ -156,4 +156,5 @@ exports.createPages = async ({ actions }) => {
 ## Additional Resources
 
 - [Gatsby Slice API Reference](/docs/reference/built-in-components/gatsby-slice/)
+- [Using Gatsby Slice API with TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-slice-api)
 - [Enable Slices API Optimizations](/docs/how-to/cloud/slices-optimization/)

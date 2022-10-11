@@ -194,4 +194,5 @@ export function MyImage() {
 ## Additional Resources
 
 - [Slices How-To Guide](/docs/how-to/performance/using-slices)
+- [Using Gatsby Slice API with TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-slice-api)
 - [Enable Slices API Optimizations](/docs/how-to/cloud/slices-optimization/)
