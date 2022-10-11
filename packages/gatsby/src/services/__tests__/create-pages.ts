@@ -142,8 +142,8 @@ describe(`createPages service cleans up not recreated pages`, () => {
 
       expect(store.getState().pages.size).toEqual(2)
       expect(Array.from(store.getState().pages.keys())).toEqual([
-        `/stateless/junk`,
-        `/stateful/junk`,
+        `/stateless/junk/`,
+        `/stateful/junk/`,
       ])
       expect(
         store.getState().pages.get(`/stateless/junk`)
@@ -167,10 +167,10 @@ describe(`createPages service cleans up not recreated pages`, () => {
     expect(store.getState().pages.size).toEqual(4)
     expect(Array.from(store.getState().pages.keys())).toEqual(
       expect.arrayContaining([
-        `/stateless/stable`,
-        `/stateless/dynamic/1`,
-        `/stateful/stable`,
-        `/stateful/dynamic/1`,
+        `/stateless/stable/`,
+        `/stateless/dynamic/1/`,
+        `/stateful/stable/`,
+        `/stateful/dynamic/1/`,
       ])
     )
 
