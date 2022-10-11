@@ -255,7 +255,7 @@ jobs:
   integration_tests_gatsby_cli:
     executor:
       name: node
-      image: "14.16.0"
+      image: "18.0.0"
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
