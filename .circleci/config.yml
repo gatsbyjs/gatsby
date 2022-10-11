@@ -10,7 +10,7 @@ executors:
         default: "14.15.0"
       gatsby_major:
         type: string
-        default: "4"
+        default: "5"
     docker:
       - image: cimg/node:<< parameters.image >>
     environment:
@@ -24,7 +24,7 @@ aliases:
 
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node14.15.0-chrome96-ff94
+      - image: cypress/browsers:node18.6.0-chrome105-ff104
     environment:
       <<: *e2e-executor-env
 
@@ -113,8 +113,6 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node14
-      - unit_tests_node16
       - unit_tests_node18
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
@@ -201,28 +199,6 @@ jobs:
             - "packages/"
             - "node_modules/"
 
-  bootstrap_v5:
-    executor:
-      name: node
-      gatsby_major: "5"
-    steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
-      # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: sudo apt-get update && sudo apt-get install python -y
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *check_lockfile
-      - <<: *validate_renovate
-      - <<: *persist_cache
-      - run: yarn bootstrap -- concurrency=2
-      # Persist the workspace again with all packages already built
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - "packages/"
-            - "node_modules/"
-
   lint:
     executor: node
     steps:
@@ -248,29 +224,10 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node14:
-    executor:
-      name: node
-      image: "14.15.0"
-    <<: *test_template
-
-  unit_tests_node16:
-    executor:
-      name: node
-      image: "16.15.0"
-    <<: *test_template
-
   unit_tests_node18:
     executor:
       name: node
       image: "18.2.0"
-    <<: *test_template
-
-  unit_tests_node18_v5:
-    executor:
-      name: node
-      image: "18.2.0"
-      gatsby_major: "5"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -281,9 +238,9 @@ jobs:
           command: |
             echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install v14
-      - run: nvm alias default v14
-      - run: nvm use v14
+      - run: nvm install v18
+      - run: nvm alias default v18
+      - run: nvm use v18
       - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
@@ -701,11 +658,3 @@ workflows:
             branches:
               only:
                 - master
-
-  build-test_v5:
-    jobs:
-      - bootstrap_v5
-      - unit_tests_node18_v5:
-          <<: *ignore_docs
-          requires:
-            - bootstrap_v5
