@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e # bail on errors
 
 SRC_PATH=$1
