@@ -30,6 +30,12 @@ export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
 }
 
+export interface ISliceData {
+  componentChunkName: string
+  result: IExecutionResult
+  staticQueryHashes: Array<string>
+}
+
 export async function readPageData(
   publicDir: string,
   pagePath: string
@@ -162,11 +168,13 @@ export async function writeSliceData(
 
   const outputFilePath = path.join(publicDir, `slice-data`, `${name}.json`)
 
-  const body = JSON.stringify({
+  const sliceData: ISliceData = {
     componentChunkName,
     result,
     staticQueryHashes,
-  })
+  }
+
+  const body = JSON.stringify(sliceData)
 
   const sliceDataSize = Buffer.byteLength(body) / 1000
 
