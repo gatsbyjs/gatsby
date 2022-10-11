@@ -30,7 +30,7 @@
     "cross-env": "^7.0.3"
   },
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
   "keywords": [
@@ -40,7 +40,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^4.0.0-next"
+    "gatsby": "^5.0.0-alpha-v5"
   },
   "repository": {
     "type": "git",
