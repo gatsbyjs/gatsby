@@ -30,7 +30,7 @@ describe(`Redirects`, () => {
       },
     },
     () => {
-    const expectedLinks = [`/Longue-PAGE`, `/pagina-larga`]
+    const expectedLinks = [`/Longue-PAGE/`, `/pagina-larga/`]
 
     // we should not hit those routes
     cy.intercept("GET", "/page-data/Longue-PAGE/page-data.json").as(

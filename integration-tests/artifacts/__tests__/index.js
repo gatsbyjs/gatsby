@@ -622,7 +622,7 @@ describe(`Second run (different pages created, data changed)`, () => {
   const runNumber = 2
 
   const expectedPagesToBeGenerated = [
-    `/stale-pages/only-not-in-first`,
+    `/stale-pages/only-not-in-first/`,
     `/page-query-changing-data-but-not-id/`,
     `/page-query-dynamic-2/`,
     `/static-query-result-tracking/should-invalidate/`,
