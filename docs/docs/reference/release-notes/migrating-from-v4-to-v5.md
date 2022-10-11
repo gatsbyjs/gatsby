@@ -97,7 +97,19 @@ Gatsby's `browserlist` configuration changed to now include `supports es6-module
 
 ### GraphQL schema: Changes to sort and aggregation fields
 
-As per the [RFC: Change to sort and aggregation fields API](https://github.com/gatsbyjs/gatsby/discussions/36242) the `sort` argument and aggregation's `field` argument were changed from enums to nested input objects. This change enabled lower resource usage and faster "building schema" step. Below you can find two examples (before/after):
+As per the [RFC: Change to sort and aggregation fields API](https://github.com/gatsbyjs/gatsby/discussions/36242) the `sort` argument and aggregation's `field` argument were changed from enums to nested input objects. This change enabled lower resource usage and faster "building schema" step.
+
+We provide a codemod (via [gatsby-codemods](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-codemods)) for you to easily convert your queries to the new syntax. Go to your project and run the following in your terminal:
+
+```shell
+npx gatsby-codemods sort-and-aggr-graphql .
+```
+
+This will apply the codemod to all your files. If you only want to run it on some files/directories, adjust the last parameter (`npx gatsby-codemods sort-and-aggr-graphql <filepath>`).
+
+The old syntax will continue to work as Gatsby automatically applies the mentioned codemod and transforms your code, however we strongly encourage you to permanently migrate your queries to the new syntax. This way you won't see deprecation messages in your terminal and have a faster "building schema" step.
+
+Below you can find two examples of an before and after:
 
 **Sort:**
 
