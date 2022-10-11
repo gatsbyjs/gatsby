@@ -132,6 +132,9 @@ commands:
       react_version:
         type: string
         default: ""
+      slices:
+        type: boolean
+        default: true # allow disabling it later when setting up partial hydration tests
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
@@ -142,6 +145,11 @@ commands:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+
+      - when:
+          condition: << parameters.slices >>
+          steps:
+            - run: echo 'export GATSBY_SLICES="true"' >> "$BASH_ENV"
 
       - <<: *attach_to_bootstrap
       - when:
