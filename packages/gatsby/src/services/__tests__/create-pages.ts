@@ -146,11 +146,11 @@ describe(`createPages service cleans up not recreated pages`, () => {
         `/stateful/junk/`,
       ])
       expect(
-        store.getState().pages.get(`/stateless/junk`)
+        store.getState().pages.get(`/stateless/junk/`)
           .isCreatedByStatefulCreatePages
       ).toEqual(false)
       expect(
-        store.getState().pages.get(`/stateful/junk`)
+        store.getState().pages.get(`/stateful/junk/`)
           .isCreatedByStatefulCreatePages
       ).toEqual(true)
     } else {
@@ -181,7 +181,7 @@ describe(`createPages service cleans up not recreated pages`, () => {
           expect.objectContaining({
             type: `DELETE_PAGE`,
             payload: expect.objectContaining({
-              path: `/stateless/junk`,
+              path: `/stateless/junk/`,
             }),
           }),
         ])
@@ -191,7 +191,7 @@ describe(`createPages service cleans up not recreated pages`, () => {
           expect.objectContaining({
             type: `DELETE_PAGE`,
             payload: expect.objectContaining({
-              path: `/stateful/junk`,
+              path: `/stateful/junk/`,
             }),
           }),
         ])
@@ -207,10 +207,10 @@ describe(`createPages service cleans up not recreated pages`, () => {
 
     expect(Array.from(store.getState().pages.keys())).toEqual(
       expect.arrayContaining([
-        `/stateless/stable`,
-        `/stateless/dynamic/2`,
-        `/stateful/stable`,
-        `/stateful/dynamic/1`,
+        `/stateless/stable/`,
+        `/stateless/dynamic/2/`,
+        `/stateful/stable/`,
+        `/stateful/dynamic/1/`,
       ])
     )
 
@@ -220,7 +220,7 @@ describe(`createPages service cleans up not recreated pages`, () => {
         expect.objectContaining({
           type: `DELETE_PAGE`,
           payload: expect.objectContaining({
-            path: `/stateless/dynamic/1`,
+            path: `/stateless/dynamic/1/`,
           }),
         }),
       ])
