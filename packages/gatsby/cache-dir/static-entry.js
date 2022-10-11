@@ -548,6 +548,7 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
     // setting this renderEnvironemnt to throw meaningful error on `<Slice />` usage
     // `slices` renderEnvironment should be removed once we support nested `<Slice />` placeholders
     renderEnvironment: `slices`,
+    sliceRoot: slice,
   }
 
   const sliceElement = (
