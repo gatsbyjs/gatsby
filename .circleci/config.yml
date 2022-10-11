@@ -584,18 +584,6 @@ workflows:
           requires:
             - lint
             - bootstrap
-      - unit_tests_node14:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - unit_tests_node16:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
       - unit_tests_node18:
           <<: *ignore_docs
           requires:
