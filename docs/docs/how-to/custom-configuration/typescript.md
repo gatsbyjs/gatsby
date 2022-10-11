@@ -297,7 +297,7 @@ You can use `SliceComponentProps` to type your Slice template from the [Gatsby S
 
 ```tsx
 import * as React from "react"
-import { SliceComponentProps } from "gatsby"
+import { SliceComponentProps, graphql } from "gatsby"
 
 type DataType = {
   site: {
