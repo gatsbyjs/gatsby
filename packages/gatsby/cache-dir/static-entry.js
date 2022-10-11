@@ -553,10 +553,20 @@ export { StaticQueryContext, React }
 export async function renderSlice({ slice, staticQueryContext, props = {} }) {
   const { default: SliceComponent } = await getPageChunk(slice)
 
+  const slicesContext = {
+    // we are not yet supporting using <Slice /> placeholders within slice components
+    // setting this renderEnvironemnt to throw meaningful error on `<Slice />` usage
+    // `slices` renderEnvironment should be removed once we support nested `<Slice />` placeholders
+    renderEnvironment: `slices`,
+    sliceRoot: slice,
+  }
+
   const sliceElement = (
-    <StaticQueryContext.Provider value={staticQueryContext}>
-      <SliceComponent sliceContext={slice.context} {...props} />
-    </StaticQueryContext.Provider>
+    <SlicesContext.Provider value={slicesContext}>
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        <SliceComponent sliceContext={slice.context} {...props} />
+      </StaticQueryContext.Provider>
+    </SlicesContext.Provider>
   )
   const sliceWrappedWithWrapRootElement = apiRunner(
     `wrapRootElement`,
