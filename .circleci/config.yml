@@ -7,7 +7,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "14.15.0"
+        default: "18.0.0"
       gatsby_major:
         type: string
         default: "5"
@@ -506,11 +506,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 14.15.0 and yarn
+          name: Install node 18.0.0 and yarn
           command: |
-            nvm install 14.15.0
-            nvm alias default 14.15.0
-            nvm use 14.15.0
+            nvm install 18.0.0
+            nvm alias default 18.0.0
+            nvm use 18.0.0
             choco install yarn
       - run:
           name: Rebuild packages for windows
