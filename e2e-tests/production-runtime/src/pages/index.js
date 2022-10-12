@@ -4,6 +4,7 @@ import { Link } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import InstrumentPage from "../utils/instrument-page"
+import Seo from "../components/seo"
 
 const IndexPage = ({ pageContext }) => (
   <Layout>
@@ -119,7 +120,12 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
     </ul>
+    <Link to="/gatsby-script-off-main-thread/" data-testid="off-main-thread">
+      Go to off-main-thread scripts page
+    </Link>
   </Layout>
 )
+
+export const Head = () => <Seo />
 
 export default InstrumentPage(IndexPage)

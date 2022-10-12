@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.24.1/packages/gatsby-page-utils) (2022-10-10)
+
+#### Bug Fixes
+
+- path creation on windows filesystem [#36766](https://github.com/gatsbyjs/gatsby/issues/36766) [#36783](https://github.com/gatsbyjs/gatsby/issues/36783) ([29fef67](https://github.com/gatsbyjs/gatsby/commit/29fef679567e0759e0854804e9082504362b3d71))
+
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.24.0/packages/gatsby-page-utils) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.23.0/packages/gatsby-page-utils) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.22.0/packages/gatsby-page-utils) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.21.0/packages/gatsby-page-utils) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.20.0/packages/gatsby-page-utils) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
 ## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.19.0/packages/gatsby-page-utils) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

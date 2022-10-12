@@ -282,6 +282,7 @@ export const config = async () => {
     )
   })
 
+  // this will need snapshot update once v5 becomes default, this should not be removed
   it(`extracts query AST correctly from files`, async () => {
     const errors = []
     const addError = errors.push.bind(errors)
@@ -303,22 +304,30 @@ export const config = async () => {
       ])
     )
 
-    // The second param is a "hint", see: https://jestjs.io/docs/en/expect#tomatchsnapshotpropertymatchers-hint
-    expect(results).toMatchSnapshot({}, `results`)
-    expect(reporter.warn.mock.calls).toMatchSnapshot({}, `warn`)
-    expect(reporter.panicOnBuild.mock.calls).toMatchSnapshot({}, `panicOnBuild`)
+    expect({
+      results,
+      warnCalls: reporter.warn.mock.calls,
+      panicOnBuildCalls: reporter.panicOnBuild.mock.calls,
+    }).toMatchSnapshot()
     expect(errors.length).toEqual(1)
   })
 
   it(`generates spec-compliant query names out of path`, async () => {
-    const ast = await parser.parseFile(`${specialChars}.js`, jest.fn())
+    const { astDefinitions: ast } = await parser.parseFile(
+      `${specialChars}.js`,
+      jest.fn()
+    )
     const nameNode = ast[0].doc.definitions[0].name
     expect(nameNode).toEqual({
       kind: `Name`,
       value: `staticZhADollarpercentandJs1125018085`,
     })
 
-    const ast2 = await parser.parseFile(`static-${specialChars}.js`, jest.fn())
+    // this is testing StaticQuery which is being removed in v5
+    const { astDefinitions: ast2 } = await parser.parseFile(
+      `static-${specialChars}.js`,
+      jest.fn()
+    )
     const nameNode2 = ast2[0].doc.definitions[0].name
     expect(nameNode2).toEqual({
       kind: `Name`,

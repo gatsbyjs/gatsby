@@ -361,7 +361,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   // so we need to resolve this promise
   // otherwise it will never resolve below.
   if (!mediaItemUrlsPages.length) {
-    return Promise.resolve([])
+    return Promise.resolve(previouslyCachedMediaItemNodes)
   }
 
   const allPromises = []
@@ -451,7 +451,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   await mediaFileFetchQueue.onIdle()
 
   const allResults = await Promise.all(allPromises)
-  return allResults.flat()
+  return [...previouslyCachedMediaItemNodes, ...allResults.flat()]
 }
 
 export const fetchMediaItemsById = async ({

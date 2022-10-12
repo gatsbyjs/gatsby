@@ -38,6 +38,10 @@ export function Head() {
       <script data-testid="jsonLD" type="application/ld+json">
         {jsonLD}
       </script>
+      <script type="text/javascript">
+        {`window.__SOME_GLOBAL_TO_CHECK_CALL_COUNT__ = (window.__SOME_GLOBAL_TO_CHECK_CALL_COUNT__ || 0 ) + 1`}
+      </script>
+      Adding-this-text-here-should-not-break-things
     </>
   )
 }

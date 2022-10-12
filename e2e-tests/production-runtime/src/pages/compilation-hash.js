@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import InstrumentPage from "../utils/instrument-page"
+import Seo from "../components/seo"
 
 const CompilationHashPage = () => (
   <Layout>
@@ -15,5 +16,7 @@ const CompilationHashPage = () => (
     </p>
   </Layout>
 )
+
+export const Head = () => <Seo />
 
 export default InstrumentPage(CompilationHashPage)

@@ -1,0 +1,3 @@
+;(() => {
+  window.jQuery = () => `It loaded`
+})()

@@ -20,7 +20,6 @@ module.exports = {
     DEV_SSR: false,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -38,6 +37,7 @@ module.exports = {
     `gatsby-source-fake-data`,
     `gatsby-source-pinc-data`,
     `gatsby-source-query-on-demand-data`,
+    `gatsby-source-fs-route-mutations`,
     `gatsby-browser-tsx`,
     `gatsby-node-typegen`,
     `gatsby-transformer-sharp`,
@@ -69,5 +69,8 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
   ],
-  partytownProxiedURLs: [`https://unpkg.com/three@0.139.1/build/three.js`],
+  partytownProxiedURLs: [
+    `http://localhost:8888/three.js`,
+    `http://localhost:8000/used-by-off-main-thread-2.js`, // Meant to be same site
+  ],
 }

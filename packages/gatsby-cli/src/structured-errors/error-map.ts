@@ -34,7 +34,7 @@ const errors = {
   },
   "95312": {
     text: (context): string =>
-      `"${context.ref}" is not available during server side rendering.`,
+      `"${context.ref}" is not available during Server-Side Rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,
@@ -358,7 +358,9 @@ const errors = {
   },
   "10124": {
     text: (context): string =>
-      `It looks like you were trying to add the config file? Please rename "${context.nearMatch}" to "${context.configName}.js"`,
+      `It looks like you were trying to add the config file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -384,6 +386,15 @@ const errors = {
   "10127": {
     text: (context): string =>
       `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js". Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "10128": {
+    text: (context): string =>
+      `It looks like you were trying to add the gatsby-node file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -422,9 +433,10 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11323": {
     text: (context): string =>
@@ -434,9 +446,10 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11324": {
     text: (context): string =>
@@ -554,6 +567,36 @@ const errors = {
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
   },
+  // slices
+  "11333": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.sliceObject,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11334": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the slice id when creating a slice.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.sliceObject,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+
   // node object didn't pass validation
   "11467": {
     text: (context): string =>
@@ -756,6 +799,36 @@ const errors = {
     type: Type.GRAPHQL,
     category: ErrorCategory.USER,
     docsUrl: `https://gatsby.dev/graphql-typegen`,
+  },
+  // Partial hydration rendering errors
+  "80000": {
+    text: (context): string =>
+      stripIndents(`Building partial HTML failed${
+        context?.path ? ` for path "${context.path}"` : ``
+      }
+
+      This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers are used in a component without declaring the "client export" directive at the top of the file.
+      
+      Consider adding "client export" to the top of your file if your component is interactive, otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
+    `),
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    category: ErrorCategory.USER,
+  },
+  "80001": {
+    text: (): string =>
+      stripIndents(
+        `
+        Failed to restore previous client module manifest.
+        
+        This can happen if the manifest is corrupted or is not compatible with the current version of Gatsby.
+
+        Please run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.
+        `
+      ),
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    category: ErrorCategory.USER,
   },
 }
 

@@ -32,6 +32,9 @@ const getCLI = (): IGetCLI => {
   }
 }
 
+const itWhenV4 = _CFLAGS_.GATSBY_MAJOR !== `5` ? it : it.skip
+const itWhenV5 = _CFLAGS_.GATSBY_MAJOR === `5` ? it : it.skip
+
 let __process__
 beforeAll(() => {
   __process__ = global.process
@@ -52,13 +55,24 @@ const setup = (version?: string): ReturnType<typeof getCLI> => {
 }
 
 describe(`error handling`, () => {
-  it(`panics on Node < 14.15.0`, () => {
+  itWhenV4(`panics on Node < 14.15.0 (v4)`, () => {
     ;[`6.0.0`, `8.0.0`, `12.13.0`, `13.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).toHaveBeenCalledTimes(1)
       reporter.panic.mockClear()
     })
+  })
+
+  itWhenV5(`panics on Node < 18.0.0 (v5)`, () => {
+    ;[`6.0.0`, `8.0.0`, `12.13.0`, `13.0.0`, `14.15.0`, `17.0.0`].forEach(
+      version => {
+        const { reporter } = setup(version)
+
+        expect(reporter.panic).toHaveBeenCalledTimes(1)
+        reporter.panic.mockClear()
+      }
+    )
   })
 
   it(`shows error with link to more info`, () => {
@@ -70,7 +84,7 @@ describe(`error handling`, () => {
   })
 
   it(`allows prerelease versions`, () => {
-    const { reporter } = setup(`v15.0.0-pre`)
+    const { reporter } = setup(`v19.0.0-pre`)
 
     expect(reporter.panic).not.toHaveBeenCalled()
   })
@@ -95,8 +109,16 @@ describe(`error handling`, () => {
 // })
 
 describe(`normal behavior`, () => {
-  it(`does not panic on Node >= 14.15.0`, () => {
+  itWhenV4(`does not panic on Node >= 14.15.0 (v4)`, () => {
     ;[`14.15.0`, `15.0.0`, `16.3.0`].forEach(version => {
+      const { reporter } = setup(version)
+
+      expect(reporter.panic).not.toHaveBeenCalled()
+    })
+  })
+
+  itWhenV5(`does not panic on Node >= 18.0.0 (v5)`, () => {
+    ;[`18.0.0`, `19.0.0`, `20.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).not.toHaveBeenCalled()

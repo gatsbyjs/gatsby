@@ -29,12 +29,13 @@ describe(`Head function export SSR'ed HTML output`, () => {
     const { base, title, meta, noscript, style, link, jsonLD } = getNodes(dom)
 
     expect(base.attributes.href).toEqual(data.static.base)
-    expect(title.text).toEqual(data.static.title)
+    //Intentionally duplicate the title to test that we don't strip out multiple text nodes
+    expect(title.text).toEqual(`${data.static.title} ${data.static.title}`)
     expect(meta.attributes.content).toEqual(data.static.meta)
     expect(noscript.text).toEqual(data.static.noscript)
     expect(style.text).toContain(data.static.style)
     expect(link.attributes.href).toEqual(data.static.link)
-    expect(jsonLD.text).toEqual(data.static.jsonLD)
+    expect(jsonLD.innerHTML).toEqual(data.static.jsonLD)
   })
 
   it(`should work with data from a page query`, () => {

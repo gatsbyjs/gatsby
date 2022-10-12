@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.24.0/packages/gatsby-remark-copy-linked-files) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Features
+
+- Add `absolutePath` to dir function [#36213](https://github.com/gatsbyjs/gatsby/issues/36213) ([f141c59](https://github.com/gatsbyjs/gatsby/commit/f141c5992b1243e625640934ce2ba0243ec6fe4d))
+
+## [5.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.23.0/packages/gatsby-remark-copy-linked-files) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [5.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.22.0/packages/gatsby-remark-copy-linked-files) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [5.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.21.0/packages/gatsby-remark-copy-linked-files) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+## [5.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.20.0/packages/gatsby-remark-copy-linked-files) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
 ## [5.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.19.0/packages/gatsby-remark-copy-linked-files) (2022-07-19)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)

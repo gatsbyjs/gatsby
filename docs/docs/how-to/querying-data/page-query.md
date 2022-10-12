@@ -153,7 +153,7 @@ Consider the following query:
 
 ```js:title=src/templates/blog-post.js
 export const query = graphql`
-  query MdxBlogPost {
+  query {
     mdx(title: { eq: "Using a Theme" }) {
       id
       title
@@ -168,7 +168,7 @@ In addition to hardcoding an argument directly into the page query, you can pass
 
 ```js:title=src/templates/blog-post.js
 export const query = graphql`
-  query MdxBlogPost($title: String) { // highlight-line
+  query ($title: String) { // highlight-line
     mdx(title: {eq: $title}) { // highlight-line
       id
       title

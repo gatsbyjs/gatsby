@@ -21,16 +21,30 @@ function onCreateWebpackConfig({ actions, loaders }) {
     return
   }
 
+  let doesUsedGatsbyVersionSupportResourceQuery
+  try {
+    const { version } = require(`gatsby/package.json`)
+    const [major, minor] = version.split(`.`).map(Number)
+    doesUsedGatsbyVersionSupportResourceQuery =
+      (major === 4 && minor >= 19) || major > 4
+  } catch {
+    doesUsedGatsbyVersionSupportResourceQuery = true
+  }
+
   actions.setWebpackConfig({
     module: {
       rules: [
         {
           test: /\.tsx?$/,
           use: ({ resourceQuery, issuer }) => [
-            loaders.js({
-              isPageTemplate: /async-requires/.test(issuer),
-              resourceQuery,
-            }),
+            loaders.js(
+              doesUsedGatsbyVersionSupportResourceQuery
+                ? {
+                    isPageTemplate: /async-requires/.test(issuer),
+                    resourceQuery,
+                  }
+                : undefined
+            ),
           ],
         },
       ],

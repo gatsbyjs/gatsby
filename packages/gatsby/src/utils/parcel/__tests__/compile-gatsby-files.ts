@@ -9,11 +9,14 @@ import {
 import { siteMetadata } from "./fixtures/utils/site-metadata"
 import { moreDataConfig } from "./fixtures/utils/more-data-config"
 import { readFile, remove, pathExists } from "fs-extra"
+import reporter from "gatsby-cli/lib/reporter"
 
 const dir = {
   js: `${__dirname}/fixtures/js`,
   ts: `${__dirname}/fixtures/ts`,
   tsOnlyInLocal: `${__dirname}/fixtures/ts-only-in-local-plugin`,
+  misnamedJS: `${__dirname}/fixtures/misnamed-js`,
+  misnamedTS: `${__dirname}/fixtures/misnamed-ts`,
 }
 
 jest.setTimeout(15000)
@@ -36,6 +39,16 @@ jest.mock(`@parcel/core`, () => {
   }
 })
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    panic: jest.fn(),
+  }
+})
+
+const reporterPanicMock = reporter.panic as jest.MockedFunction<
+  typeof reporter.panic
+>
+
 interface IMockedParcel extends Parcel {
   options: unknown
 }
@@ -54,7 +67,7 @@ describe(`gatsby file compilation`, () => {
     it(`should construct Parcel relative to passed directory`, () => {
       const { options } = constructParcel(dir.js) as IMockedParcel
 
-      expect(options).toMatchSnapshot({
+      expect(options).toMatchObject({
         entries: [
           `${dir.js}/${gatsbyFileRegex}`,
           `${dir.js}/plugins/**/${gatsbyFileRegex}`,
@@ -62,6 +75,9 @@ describe(`gatsby file compilation`, () => {
         targets: {
           root: {
             distDir: `${dir.js}/${COMPILED_CACHE_DIR}`,
+            engines: {
+              node: _CFLAGS_.GATSBY_MAJOR !== `5` ? `>= 14.15.0` : `>= 18.0.0`,
+            },
           },
         },
         cacheDir: `${dir.js}/${PARCEL_CACHE_DIR}`,
@@ -77,11 +93,16 @@ describe(`gatsby file compilation`, () => {
         await compileGatsbyFiles(dir.js)
       })
 
+      beforeEach(() => {
+        reporterPanicMock.mockClear()
+      })
+
       it(`should not compile gatsby-config.js`, async () => {
         const isCompiled = await pathExists(
           `${dir.js}/.cache/compiled/gatsby-config.js`
         )
         expect(isCompiled).toEqual(false)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
 
       it(`should not compile gatsby-node.js`, async () => {
@@ -89,6 +110,7 @@ describe(`gatsby file compilation`, () => {
           `${dir.js}/.cache/compiled/gatsby-node.js`
         )
         expect(isCompiled).toEqual(false)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
     })
 
@@ -97,6 +119,10 @@ describe(`gatsby file compilation`, () => {
         process.chdir(dir.ts)
         await remove(`${dir.ts}/.cache`)
         await compileGatsbyFiles(dir.ts)
+      })
+
+      beforeEach(() => {
+        reporterPanicMock.mockClear()
       })
 
       it(`should compile gatsby-config.ts`, async () => {
@@ -108,6 +134,7 @@ describe(`gatsby file compilation`, () => {
         expect(compiledGatsbyConfig).toContain(siteMetadata.title)
         expect(compiledGatsbyConfig).toContain(siteMetadata.siteUrl)
         expect(compiledGatsbyConfig).toContain(moreDataConfig.options.name)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
 
       it(`should compile gatsby-node.ts`, async () => {
@@ -117,6 +144,7 @@ describe(`gatsby file compilation`, () => {
         )
 
         expect(compiledGatsbyNode).toContain(`I am working!`)
+        expect(reporterPanicMock).not.toHaveBeenCalled()
       })
     })
 
@@ -144,6 +172,40 @@ describe(`gatsby file compilation`, () => {
 
         expect(compiledGatsbyNode).toContain(`gatsby-node is working`)
       })
+    })
+  })
+})
+
+describe(`misnamed gatsby-node files`, () => {
+  beforeEach(() => {
+    reporterPanicMock.mockClear()
+  })
+  it(`should panic on gatsby-node.jsx`, async () => {
+    process.chdir(dir.misnamedJS)
+    await remove(`${dir.misnamedJS}/.cache`)
+    await compileGatsbyFiles(dir.misnamedJS)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10128`,
+      context: {
+        configName: `gatsby-node`,
+        isTSX: false,
+        nearMatch: `gatsby-node.jsx`,
+      },
+    })
+  })
+  it(`should panic on gatsby-node.tsx`, async () => {
+    process.chdir(dir.misnamedTS)
+    await remove(`${dir.misnamedTS}/.cache`)
+    await compileGatsbyFiles(dir.misnamedTS)
+
+    expect(reporterPanicMock).toBeCalledWith({
+      id: `10128`,
+      context: {
+        configName: `gatsby-node`,
+        isTSX: true,
+        nearMatch: `gatsby-node.tsx`,
+      },
     })
   })
 })

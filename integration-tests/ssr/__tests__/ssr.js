@@ -31,7 +31,7 @@ describe(`SSR`, () => {
     }).then(res => res.text())
 
     expect(html).toMatchSnapshot()
-  })
+  }, 30000)
 
   test(`dev & build outputs match`, async () => {
     const childProcess = await execa(`yarn`, [`test-output`])

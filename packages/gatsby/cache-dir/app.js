@@ -1,3 +1,6 @@
+// needed for fast refresh
+import "@gatsbyjs/webpack-hot-middleware/client"
+
 /* global HAS_REACT_18 */
 import React from "react"
 import ReactDOM from "react-dom"

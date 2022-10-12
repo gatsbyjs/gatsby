@@ -34,7 +34,7 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({
     </p>
     <p>
       To learn more, head over to our{" "}
-      <a href="https://www.gatsbyjs.com/docs/typescript/">
+      <a href="https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/">
         documentation about TypeScript
       </a>
       .

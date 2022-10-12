@@ -1,10 +1,12 @@
 import memoize from "memoizee"
 import { kebabCase as _kebabCase } from "lodash"
+import { murmurhash as _murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
 import path from "path"
 import { store } from "../redux"
 
 const kebabCase = memoize(_kebabCase)
 const pathRelative = memoize(path.relative)
+const murmurhash = memoize(_murmurhash)
 
 // unified routes adds support for files with [] and {},
 // the problem with our generateComponentChunkName is that when you
@@ -37,18 +39,36 @@ function replaceUnifiedRoutesKeys(
 }
 
 const chunkNameCache = new Map()
-export function generateComponentChunkName(componentPath: string): string {
+export function generateComponentChunkName(
+  componentPath: string,
+  kind: "component" | "slice" = `component`
+): string {
   if (chunkNameCache.has(componentPath)) {
     return chunkNameCache.get(componentPath)
   } else {
     const { program } = store.getState()
     const directory = program?.directory || `/`
-    const name = pathRelative(directory, componentPath)
+    let name = pathRelative(directory, componentPath)
+    name = replaceUnifiedRoutesKeys(kebabCase(name), name)
 
-    const chunkName = `component---${replaceUnifiedRoutesKeys(
-      kebabCase(name),
-      name
-    )}`
+    /**
+     * File names should not exceed 255 characters
+     * minus 12 for `component---`
+     * minus 7 for `.js.map`
+     * minus 20 for `-[hash].js`
+     */
+    const maxLength = 215
+    const shouldTruncate = name.length > maxLength
+
+    /**
+     * To prevent long file name errors, we truncate the name to a maximum of 60 characters.
+     */
+    if (shouldTruncate) {
+      const hash = murmurhash(name)
+      name = `${hash}-${name.substring(name.length - 60)}`
+    }
+
+    const chunkName = `${kind}---${name}`
 
     chunkNameCache.set(componentPath, chunkName)
 

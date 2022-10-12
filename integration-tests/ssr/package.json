@@ -45,5 +45,9 @@
     "test": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true npm-run-all -s build capture-prod-dsg-and-ssr start-dev-server",
     "test-output": "node test-output.js",
     "test:jest": "jest --runInBand"
+  },
+  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
+  "resolutions": {
+    "responselike": "^2.0.0"
   }
 }
