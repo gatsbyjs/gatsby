@@ -471,6 +471,11 @@ async function findGraphQLTags(
   return uniqueQueries
 }
 
+type CollectedSlice = {
+  name: string,
+  allowEmpty: boolean,
+}
+
 const cache = {}
 
 export default class FileParser {
@@ -481,7 +486,10 @@ export default class FileParser {
   async parseFile(
     file: string,
     addError
-  ): Promise<{ astDefinitions: ?Array<GraphQLDocumentInFile> }> {
+  ): Promise<{
+    astDefinitions: ?Array<GraphQLDocumentInFile>,
+    pageSlices: { [key: string]: CollectedSlice } | null,
+  }> {
     let text
     const cleanFilepath = getPathToLayoutComponent(file)
     try {
@@ -505,7 +513,7 @@ export default class FileParser {
     }
 
     // We do a quick check so we can exit early if this is a file we're not interested in.
-    // We only process files that either include graphql, or static images
+    // We only process files that include the APIs below
     if (
       !text.includes(`graphql`) &&
       !text.includes(`gatsby-plugin-image`) &&
