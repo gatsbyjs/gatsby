@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e # bail on errors
 
+echo "DEBUG: NODE_VERSION='$(node --version)' NVM_DIR='$NVM_DIR' FORCE_NVM_VERSION='$FORCE_NVM_VERSION'"
+
 SRC_PATH=$1
 CUSTOM_COMMAND="${2:-yarn test}"
 eval GATSBY_PATH=${CIRCLE_WORKING_DIRECTORY:-../..}
