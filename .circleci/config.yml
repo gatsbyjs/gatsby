@@ -235,7 +235,7 @@ jobs:
       - run: npm i -g yarn@1.22.11
       - run:
           command: |
-            echo 'export FORCE_NVM_VERSION="18' >> $BASH_ENV
+            echo 'export FORCE_NVM_VERSION="18"' >> $BASH_ENV
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
