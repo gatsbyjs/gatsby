@@ -1,7 +1,8 @@
 import path from "path"
 import fs from "fs-extra"
 import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
-import { IGatsbyPage } from "../redux/types"
+import { IPageInput as ICreatePageInput } from "../redux/actions/public"
+import { ICreateSliceInput } from "../redux/actions/restricted"
 
 const validationCache = new Set<string>()
 
@@ -10,22 +11,32 @@ interface IErrorMeta {
   context: Record<string, unknown>
 }
 
+interface IErrorIdMap {
+  noPath: string
+  notAbsolute: string
+  doesNotExist: string
+  empty: string
+  noDefaultExport: string
+}
+
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isProductionEnv = process.env.NODE_ENV === `production`
 
-export function validatePageComponent(
-  page: IGatsbyPage,
-  directory: string,
+export function validateComponent(args: {
+  input: ICreatePageInput | ICreateSliceInput
+  directory: string
   pluginName: string
-): { message?: string; error?: IErrorMeta; panicOnBuild?: boolean } {
-  const { component } = page
+  errorIdMap: IErrorIdMap
+}): { message?: string; error?: IErrorMeta; panicOnBuild?: boolean } {
+  const { input, directory, pluginName, errorIdMap } = args || {}
+  const { component: componentPath } = input
 
   // No component path passed
-  if (!component) {
-    throw new Error(`11322`)
+  if (!componentPath) {
+    throw new Error(errorIdMap.noPath)
   }
 
-  const cleanComponentPath = getPathToLayoutComponent(component)
+  const cleanComponentPath = getPathToLayoutComponent(componentPath)
 
   // Component path already validated in previous pass
   if (validationCache.has(cleanComponentPath)) {
@@ -36,11 +47,11 @@ export function validatePageComponent(
   if (!path.isAbsolute(cleanComponentPath)) {
     return {
       error: {
-        id: `11326`,
+        id: errorIdMap.notAbsolute,
         context: {
           pluginName,
-          pageObject: page,
-          component: cleanComponentPath,
+          component: input,
+          componentPath: cleanComponentPath,
         },
       },
       message: `${pluginName} must set the absolute path to the page component when create creating a page`,
@@ -52,11 +63,11 @@ export function validatePageComponent(
     if (!fs.existsSync(cleanComponentPath)) {
       return {
         error: {
-          id: `11325`,
+          id: errorIdMap.doesNotExist,
           context: {
             pluginName,
-            pageObject: page,
-            component: cleanComponentPath,
+            component: input,
+            componentPath: cleanComponentPath,
           },
         },
       }
@@ -72,7 +83,7 @@ export function validatePageComponent(
 
       return {
         error: {
-          id: `11327`,
+          id: errorIdMap.empty,
           context: {
             relativePath,
           },
@@ -96,7 +107,7 @@ export function validatePageComponent(
       if (!includesDefaultExport) {
         return {
           error: {
-            id: `11328`,
+            id: errorIdMap.noDefaultExport,
             context: {
               fileName: cleanComponentPath,
             },
