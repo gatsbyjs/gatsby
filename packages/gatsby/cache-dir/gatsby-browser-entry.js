@@ -23,4 +23,5 @@ export {
 
 export { graphql, prefetchPathname }
 export { StaticQuery, StaticQueryContext, useStaticQuery } from "./static-query"
+export { Slice } from "./slice"
 export * from "gatsby-script"
