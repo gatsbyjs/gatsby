@@ -27,6 +27,7 @@ import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import { store } from "../index"
 import normalizePath from "normalize-path"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { validateComponent } from "../../utils/validate-component"
 
 type RestrictionActionNames =
   | "createFieldExtension"
@@ -39,6 +40,12 @@ type RestrictionActionNames =
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
   | ActionCreator<ThunkAction<any, IGatsbyState, any, ActionsUnion>>
+
+export interface ICreateSliceInput {
+  id: string
+  component: string
+  context: Record<string, unknown>
+}
 
 export const actions = {
   /**
@@ -430,11 +437,7 @@ export const actions = {
     },
 
   createSlice: (
-    payload: {
-      id: string
-      component: string
-      context: Record<string, unknown>
-    },
+    payload: ICreateSliceInput,
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateSliceAction => {
@@ -455,20 +458,36 @@ export const actions = {
           },
         })
       }
-      if (!payload.component) {
-        report.panic({
-          id: `11333`,
-          context: {
-            pluginName: name,
-            sliceObject: payload,
-          },
-        })
+
+      const { program, slices } = store.getState()
+      const { directory } = program
+
+      const { error, panicOnBuild } = validateComponent({
+        input: payload,
+        directory,
+        pluginName: name,
+        errorIdMap: {
+          noPath: `11333`,
+          notAbsolute: `11335`,
+          doesNotExist: `11336`,
+          empty: `11337`,
+          noDefaultExport: `11338`,
+        },
+      })
+
+      if (error && process.env.NODE_ENV !== `test`) {
+        if (panicOnBuild) {
+          report.panicOnBuild(error)
+        } else {
+          report.panic(error)
+        }
       }
 
       trackFeatureIsUsed(`SliceAPI`)
+
       const componentPath = normalizePath(payload.component)
 
-      const oldSlice = store.getState().slices.get(payload.id)
+      const oldSlice = slices.get(payload.id)
       const contextModified =
         !!oldSlice && !isEqual(oldSlice.context, payload.context)
       const componentModified =

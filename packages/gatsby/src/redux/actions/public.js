@@ -17,7 +17,7 @@ const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode, getDataStore } = require(`../../datastore`)
 import sanitizeNode from "../../utils/sanitize-node"
 const { store } = require(`../index`)
-const { validatePageComponent } = require(`../../utils/validate-page-component`)
+const { validateComponent } = require(`../../utils/validate-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
@@ -91,13 +91,13 @@ type JobV2 = {
   args: Object,
 }
 
-type PageInput = {
-  path: string,
-  component: string,
-  context?: Object,
-  ownerNodeId?: string,
-  defer?: boolean,
-  slices: Record<string, string>,
+export interface IPageInput {
+  path: string;
+  component: string;
+  context?: Object;
+  ownerNodeId?: string;
+  defer?: boolean;
+  slices: Record<string, string>;
 }
 
 type PageMode = "SSG" | "DSG" | "SSR"
@@ -138,7 +138,7 @@ type PageDataRemove = {
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: PageInput) => {
+actions.deletePage = (page: IPageInput) => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -183,7 +183,7 @@ const reservedFields = [
  * })
  */
 actions.createPage = (
-  page: PageInput,
+  page: IPageInput,
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
@@ -283,13 +283,22 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
-  const { trailingSlash } = store.getState().config
-  const rootPath = store.getState().program.directory
-  const { error, message, panicOnBuild } = validatePageComponent(
-    page,
-    rootPath,
-    name
-  )
+  const { config, program } = store.getState()
+  const { trailingSlash } = config
+  const { directory } = program
+
+  const { error, message, panicOnBuild } = validateComponent({
+    input: page,
+    directory,
+    pluginName: name,
+    errorIdMap: {
+      noPath: `11322`,
+      notAbsolute: `11326`,
+      doesNotExist: `11325`,
+      empty: `11327`,
+      noDefaultExport: `11328`,
+    },
+  })
 
   if (error) {
     if (isNotTestEnv) {
@@ -326,7 +335,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(rootPath, page.component)
+        const commonDir = getCommonDir(directory, page.component)
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
