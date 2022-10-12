@@ -40,7 +40,7 @@ You need to update your `package.json` to use the `latest` version of Gatsby.
 ```json:title=package.json
 {
   "dependencies": {
-    "gatsby": "^5.0.0"
+    "gatsby": "next"
   }
 }
 ```
@@ -48,13 +48,13 @@ You need to update your `package.json` to use the `latest` version of Gatsby.
 Or run
 
 ```shell
-npm install gatsby@latest
+npm install gatsby@next
 ```
 
 Please note: If you use npm 7 you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
 
 ```shell
-npm install gatsby@latest --legacy-peer-deps
+npm install gatsby@next --legacy-peer-deps
 ```
 
 ### Update React version
@@ -78,7 +78,7 @@ npm install react@latest react-dom@latest
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the `latest` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
+Update your `package.json` to use the `next` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
 
 #### Updating community plugins
 
