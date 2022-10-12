@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e # bail on errors
 
+source $BASH_ENV
+
 SRC_PATH=$1
 CUSTOM_COMMAND="${2:-yarn test}"
 eval GATSBY_PATH=${CIRCLE_WORKING_DIRECTORY:-../..}
