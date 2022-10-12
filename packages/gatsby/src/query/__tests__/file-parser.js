@@ -14,7 +14,7 @@ const FileParser = require(`../file-parser`).default
 
 const specialChars = `ж-ä-!@#$%^&*()_-=+:;'"?,~\``
 
-const SLICES_MOCK_INFO = {
+const SLICES_FILE_INFO = {
   "slice-simple.js": `import { Slice } from 'gatsby'
 export default () => {
   return <Slice alias="foo" />;
@@ -52,7 +52,7 @@ export default () => {
 `,
 }
 
-const MOCK_FILE_INFO = {
+const QUERY_FILE_INFO = {
   "no-query.js": `import React from "react"`,
   "other-graphql-tag.js": `import { graphql } from 'relay'
   export const query = graphql\`
@@ -309,8 +309,9 @@ export const config = async () => {
 const query = graphql\`{ __typename }\`
 }
 `,
-  ...SLICES_MOCK_INFO,
 }
+
+const MOCK_FILE_INFO = { ...SLICES_FILE_INFO, ...QUERY_FILE_INFO }
 
 describe(`File parser`, () => {
   const parser = new FileParser()
@@ -321,11 +322,15 @@ describe(`File parser`, () => {
     )
   })
 
+  beforeEach(() => {
+    reporter.warn.mockClear()
+  })
+
   it(`extracts query AST correctly from files`, async () => {
     const errors = []
     const addError = errors.push.bind(errors)
     const results = await parser.parseFiles(
-      Object.keys(MOCK_FILE_INFO),
+      Object.keys(QUERY_FILE_INFO),
       addError
     )
 
@@ -373,9 +378,9 @@ describe(`File parser`, () => {
     })
   })
 
-  const SLICES_KEYS = Object.keys(SLICES_MOCK_INFO)
+  const SLICES_KEYS = Object.keys(SLICES_FILE_INFO)
 
-  it.only.each(SLICES_KEYS)(
+  it.each(SLICES_KEYS)(
     `extracts slices and their props correctly (%s)`,
     async sliceFileName => {
       const { pageSlices } = await parser.parseFile(
