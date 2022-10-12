@@ -3,13 +3,11 @@ set -e # bail on errors
 
 node --version
 
-echo $BASH_ENV
-
-source $BASH_ENV
+if [[ -v $FORCE_NVM_VERSION ]]; then
+  nvm use $FORCE_NVM_VERSION
+fi
 
 node --version
-echo $NVM_DIR
-echo $FORCE_NVM_VERSION
 
 SRC_PATH=$1
 CUSTOM_COMMAND="${2:-yarn test}"
