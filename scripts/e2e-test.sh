@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e # bail on errors
 
+node --version
+
 echo $BASH_ENV
 
 source $BASH_ENV
@@ -39,5 +41,5 @@ else
   echo "Gatsby bin doesn't exist. Skipping chmod."
 fi
 
-sh -c "$CUSTOM_COMMAND"
+bash -c "$CUSTOM_COMMAND"
 echo "e2e test run succeeded"
