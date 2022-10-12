@@ -115,8 +115,7 @@ describe(`ignore (direct visits)`, () => {
 
     cy.visit(`/page-2`)
       .waitForRouteChange()
-      // TODO(v5): Should behave like "always"
-      .assertRoute(IS_BUILD ? `/page-2/` : `/page-2`)
+      .assertRoute(`/page-2`)
   })
 
   it(`create-page with`, () => {
@@ -200,7 +199,7 @@ describe(`ignore (direct visits)`, () => {
 
     cy.visit(`/page-2/?query_param=hello#anchor`)
       .waitForRouteChange()
-      .assertRoute(`/page-2/?query_param=hello#anchor`)
+      .assertRoute(`/page-2?query_param=hello#anchor`)
   })
   it(`query-param-hash without`, () => {
     assertPageVisits([
@@ -215,10 +214,6 @@ describe(`ignore (direct visits)`, () => {
 
     cy.visit(`/page-2?query_param=hello#anchor`)
       .waitForRouteChange()
-      .assertRoute(
-        IS_BUILD
-          ? `/page-2/?query_param=hello#anchor`
-          : `/page-2?query_param=hello#anchor`
-      )
+      .assertRoute(`/page-2?query_param=hello#anchor`)
   })
 })
