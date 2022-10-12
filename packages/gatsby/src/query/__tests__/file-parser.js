@@ -57,12 +57,12 @@ const QUERY_FILE_INFO = {
   "other-graphql-tag.js": `import { graphql } from 'relay'
   export const query = graphql\`
 query PageQueryName {
-foo
+  foo
 }
 \``,
   "global-query.js": `export const query = graphql\`
 query pageQueryName {
-foo
+  foo
 }
 \``,
   "global-static-query-hooks.js": `import { useStaticQuery } from 'gatsby'
@@ -73,13 +73,13 @@ return <div>{data.doo}</div>;
   "page-query.js": `import { graphql } from 'gatsby'
   export const query = graphql\`
 query PageQueryName {
-foo
+  foo
 }
 \``,
   "page-query-indirect.js": `import { graphql } from 'gatsby'
   const query = graphql\`
 query PageQueryIndirect {
-foo
+  foo
 }
 \`
 export { query }
@@ -87,7 +87,7 @@ export { query }
   "page-query-indirect-2.js": `import { graphql } from 'gatsby'
   const query = graphql\`
 query PageQueryIndirect2 {
-foo
+  foo
 }
 \`
 const query2 = query;
@@ -96,7 +96,7 @@ export { query2 }
   "page-query-no-name.js": `import { graphql } from 'gatsby'
 export const query = graphql\`
 query {
-foo
+  foo
 }
 \``,
   "static-query.js": `import { graphql } from 'gatsby'
@@ -292,7 +292,7 @@ return <div>{data.doo}</div>;
   "page-with-config.js": `import { graphql } from 'gatsby'
 export const query = graphql\`
 query PageQuery {
-foo
+  foo
 }
 \`
 export async function config() {
@@ -302,7 +302,7 @@ const query = graphql\`query ConfigQuery { __typename }\`
   "page-with-config-no-name.js": `import { graphql } from 'gatsby'
 export const query = graphql\`
 query PageQuery {
-foo
+  foo
 }
 \`
 export const config = async () => {

@@ -22,7 +22,7 @@ global-static-query-hooks.js",
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
-              "end": 28,
+              "end": 30,
               "start": 1,
             },
             "name": Object {
@@ -37,7 +37,7 @@ global-static-query-hooks.js",
             "selectionSet": Object {
               "kind": "SelectionSet",
               "loc": Object {
-                "end": 28,
+                "end": 30,
                 "start": 21,
               },
               "selections": Array [
@@ -47,14 +47,14 @@ global-static-query-hooks.js",
                   "directives": Array [],
                   "kind": "Field",
                   "loc": Object {
-                    "end": 26,
-                    "start": 23,
+                    "end": 28,
+                    "start": 25,
                   },
                   "name": Object {
                     "kind": "Name",
                     "loc": Object {
-                      "end": 26,
-                      "start": 23,
+                      "end": 28,
+                      "start": 25,
                     },
                     "value": "foo",
                   },
@@ -67,7 +67,7 @@ global-static-query-hooks.js",
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 29,
+          "end": 31,
           "start": 0,
         },
       },
@@ -79,7 +79,7 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 0,
-          "index": 93,
+          "index": 95,
           "line": 6,
         },
         "filename": undefined,
@@ -99,7 +99,7 @@ global-static-query-hooks.js",
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
-              "end": 32,
+              "end": 34,
               "start": 1,
             },
             "name": Object {
@@ -114,7 +114,7 @@ global-static-query-hooks.js",
             "selectionSet": Object {
               "kind": "SelectionSet",
               "loc": Object {
-                "end": 32,
+                "end": 34,
                 "start": 25,
               },
               "selections": Array [
@@ -124,14 +124,14 @@ global-static-query-hooks.js",
                   "directives": Array [],
                   "kind": "Field",
                   "loc": Object {
-                    "end": 30,
-                    "start": 27,
+                    "end": 32,
+                    "start": 29,
                   },
                   "name": Object {
                     "kind": "Name",
                     "loc": Object {
-                      "end": 30,
-                      "start": 27,
+                      "end": 32,
+                      "start": 29,
                     },
                     "value": "foo",
                   },
@@ -144,7 +144,7 @@ global-static-query-hooks.js",
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 33,
+          "end": 35,
           "start": 0,
         },
       },
@@ -156,7 +156,7 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 0,
-          "index": 90,
+          "index": 92,
           "line": 6,
         },
         "filename": undefined,
@@ -176,7 +176,7 @@ global-static-query-hooks.js",
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
-              "end": 33,
+              "end": 35,
               "start": 1,
             },
             "name": Object {
@@ -191,7 +191,7 @@ global-static-query-hooks.js",
             "selectionSet": Object {
               "kind": "SelectionSet",
               "loc": Object {
-                "end": 33,
+                "end": 35,
                 "start": 26,
               },
               "selections": Array [
@@ -201,14 +201,14 @@ global-static-query-hooks.js",
                   "directives": Array [],
                   "kind": "Field",
                   "loc": Object {
-                    "end": 31,
-                    "start": 28,
+                    "end": 33,
+                    "start": 30,
                   },
                   "name": Object {
                     "kind": "Name",
                     "loc": Object {
-                      "end": 31,
-                      "start": 28,
+                      "end": 33,
+                      "start": 30,
                     },
                     "value": "foo",
                   },
@@ -221,7 +221,7 @@ global-static-query-hooks.js",
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 34,
+          "end": 36,
           "start": 0,
         },
       },
@@ -233,7 +233,7 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 0,
-          "index": 91,
+          "index": 93,
           "line": 6,
         },
         "filename": undefined,
@@ -253,7 +253,7 @@ global-static-query-hooks.js",
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
-              "end": 14,
+              "end": 16,
               "start": 1,
             },
             "name": Object {
@@ -264,7 +264,7 @@ global-static-query-hooks.js",
             "selectionSet": Object {
               "kind": "SelectionSet",
               "loc": Object {
-                "end": 14,
+                "end": 16,
                 "start": 7,
               },
               "selections": Array [
@@ -274,14 +274,14 @@ global-static-query-hooks.js",
                   "directives": Array [],
                   "kind": "Field",
                   "loc": Object {
-                    "end": 12,
-                    "start": 9,
+                    "end": 14,
+                    "start": 11,
                   },
                   "name": Object {
                     "kind": "Name",
                     "loc": Object {
-                      "end": 12,
-                      "start": 9,
+                      "end": 14,
+                      "start": 11,
                     },
                     "value": "foo",
                   },
@@ -294,7 +294,7 @@ global-static-query-hooks.js",
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 15,
+          "end": 17,
           "start": 0,
         },
       },
@@ -306,7 +306,7 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 0,
-          "index": 77,
+          "index": 79,
           "line": 6,
         },
         "filename": undefined,
@@ -2216,7 +2216,7 @@ global-static-query-hooks.js",
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
-              "end": 24,
+              "end": 26,
               "start": 1,
             },
             "name": Object {
@@ -2231,7 +2231,7 @@ global-static-query-hooks.js",
             "selectionSet": Object {
               "kind": "SelectionSet",
               "loc": Object {
-                "end": 24,
+                "end": 26,
                 "start": 17,
               },
               "selections": Array [
@@ -2241,14 +2241,14 @@ global-static-query-hooks.js",
                   "directives": Array [],
                   "kind": "Field",
                   "loc": Object {
-                    "end": 22,
-                    "start": 19,
+                    "end": 24,
+                    "start": 21,
                   },
                   "name": Object {
                     "kind": "Name",
                     "loc": Object {
-                      "end": 22,
-                      "start": 19,
+                      "end": 24,
+                      "start": 21,
                     },
                     "value": "foo",
                   },
@@ -2261,7 +2261,7 @@ global-static-query-hooks.js",
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 25,
+          "end": 27,
           "start": 0,
         },
       },
@@ -2273,7 +2273,7 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 0,
-          "index": 87,
+          "index": 89,
           "line": 6,
         },
         "filename": undefined,
@@ -2350,14 +2350,14 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 54,
-          "index": 176,
+          "index": 178,
           "line": 8,
         },
         "filename": undefined,
         "identifierName": undefined,
         "start": Position {
           "column": 22,
-          "index": 144,
+          "index": 146,
           "line": 8,
         },
       },
@@ -2370,7 +2370,7 @@ global-static-query-hooks.js",
             "directives": Array [],
             "kind": "OperationDefinition",
             "loc": Object {
-              "end": 24,
+              "end": 26,
               "start": 1,
             },
             "name": Object {
@@ -2385,7 +2385,7 @@ global-static-query-hooks.js",
             "selectionSet": Object {
               "kind": "SelectionSet",
               "loc": Object {
-                "end": 24,
+                "end": 26,
                 "start": 17,
               },
               "selections": Array [
@@ -2395,14 +2395,14 @@ global-static-query-hooks.js",
                   "directives": Array [],
                   "kind": "Field",
                   "loc": Object {
-                    "end": 22,
-                    "start": 19,
+                    "end": 24,
+                    "start": 21,
                   },
                   "name": Object {
                     "kind": "Name",
                     "loc": Object {
-                      "end": 22,
-                      "start": 19,
+                      "end": 24,
+                      "start": 21,
                     },
                     "value": "foo",
                   },
@@ -2415,7 +2415,7 @@ global-static-query-hooks.js",
         ],
         "kind": "Document",
         "loc": Object {
-          "end": 25,
+          "end": 27,
           "start": 0,
         },
       },
@@ -2427,7 +2427,7 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 0,
-          "index": 87,
+          "index": 89,
           "line": 6,
         },
         "filename": undefined,
@@ -2500,14 +2500,14 @@ global-static-query-hooks.js",
       "templateLoc": SourceLocation {
         "end": Position {
           "column": 36,
-          "index": 161,
+          "index": 163,
           "line": 8,
         },
         "filename": undefined,
         "identifierName": undefined,
         "start": Position {
           "column": 22,
-          "index": 147,
+          "index": 149,
           "line": 8,
         },
       },
