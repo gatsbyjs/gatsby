@@ -19,15 +19,20 @@ export function validatePageComponent(
   pluginName: string
 ): { message?: string; error?: IErrorMeta; panicOnBuild?: boolean } {
   const { component } = page
+
+  // No component path passed
   if (!component) {
     throw new Error(`11322`)
   }
 
   const cleanComponentPath = getPathToLayoutComponent(component)
 
+  // Component path already validated in previous pass
   if (validationCache.has(cleanComponentPath)) {
     return {}
   }
+
+  // Component path must be absolute
   if (!path.isAbsolute(cleanComponentPath)) {
     return {
       error: {
@@ -42,6 +47,7 @@ export function validatePageComponent(
     }
   }
 
+  // Component path must exist
   if (isNotTestEnv) {
     if (!fs.existsSync(cleanComponentPath)) {
       return {
@@ -57,13 +63,10 @@ export function validatePageComponent(
     }
   }
 
-  // Validate that the page component imports React and exports something
-  // (hopefully a component).
-  //
-
   if (!cleanComponentPath.includes(`/.cache/`) && isProductionEnv) {
     const fileContent = fs.readFileSync(cleanComponentPath, `utf-8`)
 
+    // Component must not be empty
     if (fileContent === ``) {
       const relativePath = path.relative(directory, cleanComponentPath)
 
@@ -78,7 +81,7 @@ export function validatePageComponent(
       }
     }
 
-    // this check only applies to js and ts, not mdx
+    // Component must have a default export
     if (
       [`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(cleanComponentPath))
     ) {
