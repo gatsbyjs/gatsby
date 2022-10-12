@@ -40,7 +40,7 @@ You need to update your `package.json` to use the `latest` version of Gatsby.
 ```json:title=package.json
 {
   "dependencies": {
-    "gatsby": "next"
+    "gatsby": "^5.0.0-next.0"
   }
 }
 ```
