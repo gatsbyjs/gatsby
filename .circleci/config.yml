@@ -229,9 +229,9 @@ jobs:
           command: |
             echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install v18
-      - run: nvm alias default v18
-      - run: nvm use v18
+      - run: nvm install 18
+      - run: nvm alias default 18
+      - run: nvm use 18
       - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
@@ -533,6 +533,7 @@ jobs:
             NODE_OPTIONS: --max-old-space-size=2048
             GATSBY_EXPERIMENTAL_LMDB_STORE: 1
             GENERATE_JEST_REPORT: "true"
+            COMPILER_OPTIONS: GATSBY_MAJOR=5
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
