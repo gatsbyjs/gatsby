@@ -438,7 +438,7 @@ export const actions = {
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateSliceAction => {
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
       let name = `The plugin "${plugin.name}"`
       if (plugin.name === `default-site-plugin`) {
         name = `Your site's "gatsby-node.js"`

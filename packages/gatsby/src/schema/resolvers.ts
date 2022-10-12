@@ -120,7 +120,7 @@ function maybeConvertSortInputObjectToSortPath<TArgs>(
     return args
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     let sorts = args.sort
     if (!Array.isArray(sorts)) {
       sorts = [sorts]

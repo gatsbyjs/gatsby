@@ -88,7 +88,7 @@ function getFieldSelectorTC({
   schemaComposer: SchemaComposer<any>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): AnyTypeComposer<any> {
-  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     return convertToNestedInputType({
       schemaComposer,
       typeComposer,

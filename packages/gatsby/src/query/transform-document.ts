@@ -140,7 +140,7 @@ export function tranformDocument(ast: graphql.DocumentNode): {
   ast: graphql.DocumentNode
   hasChanged: boolean
 } {
-  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     try {
       return processGraphQLQuery(ast)
     } catch (e) {

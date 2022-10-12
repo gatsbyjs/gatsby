@@ -1266,7 +1266,7 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       args: {
         filter: filterInputTC,
         sort:
-          _CFLAGS_.GATSBY_MAJOR === `5`
+          _CFLAGS_.GATSBY_MAJOR === `4`
             ? getSortInputNestedObjects({ schemaComposer, typeComposer })
             : getSortInput({
                 schemaComposer,

@@ -58,7 +58,7 @@ module.exports = async (
   const isPartialHydrationEnabled =
     (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
       process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
-    _CFLAGS_.GATSBY_MAJOR === `5`
+    _CFLAGS_.GATSBY_MAJOR === `4`
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -382,7 +382,7 @@ module.exports = async (
     ]
 
     // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
-    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+    if (_CFLAGS_.GATSBY_MAJOR !== `4`) {
       configRules.push({
         test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
@@ -454,7 +454,7 @@ module.exports = async (
 
     // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
     // Removes it from the client payload as it's not used there
-    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+    if (_CFLAGS_.GATSBY_MAJOR !== `4`) {
       configRules.push({
         test: /react-server-dom-webpack/,
         use: loaders.null(),
@@ -504,7 +504,7 @@ module.exports = async (
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
       // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
-      if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
+      if (_CFLAGS_.GATSBY_MAJOR !== `4`) {
         resolve.alias[`@reach/router`] = path.join(
           getPackageRoot(`@gatsbyjs/reach-router`),
           `es`

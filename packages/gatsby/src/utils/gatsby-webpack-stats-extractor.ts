@@ -72,7 +72,7 @@ export class GatsbyWebpackStatsExtractor {
           newChunkMapJson
         )
 
-        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+        if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
           // Add chunk mapping metadata to scripts slice
           const scriptChunkMapping = `window.___chunkMapping=${JSON.stringify(
             newChunkMapJson

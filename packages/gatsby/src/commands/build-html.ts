@@ -420,7 +420,7 @@ const renderHTMLQueue = async (
           payload: pageSegment,
         })
 
-        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+        if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
           store.dispatch({
             type: `SET_SLICES_PROPS`,
             payload: htmlRenderMeta.slicesPropsPerPage,
@@ -611,7 +611,7 @@ export const buildHTML = async ({
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
       process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
-    _CFLAGS_.GATSBY_MAJOR === `5`
+    _CFLAGS_.GATSBY_MAJOR === `4`
   ) {
     await renderPartialHydrationQueue(workerPool, activity, pagePaths, program)
   }
@@ -687,7 +687,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
       process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
-    _CFLAGS_.GATSBY_MAJOR === `5`
+    _CFLAGS_.GATSBY_MAJOR === `4`
   ) {
     if (toRegenerate.length > 0) {
       const buildHTMLActivityProgress = reporter.createProgress(
@@ -719,7 +719,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR !== `5` && !program.keepPageRenderer) {
+  if (_CFLAGS_.GATSBY_MAJOR !== `4` && !program.keepPageRenderer) {
     try {
       await deleteRenderer(rendererPath)
     } catch (err) {
@@ -727,7 +727,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
     await buildSlices({
       program,
       workerPool,

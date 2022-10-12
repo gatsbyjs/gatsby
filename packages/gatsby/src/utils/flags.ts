@@ -237,7 +237,7 @@ const activeFlags: Array<IFlag> = [
       }
 
       return (
-        _CFLAGS_.GATSBY_MAJOR === `5` &&
+        _CFLAGS_.GATSBY_MAJOR === `4` &&
         (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
       )
     },
@@ -255,7 +255,7 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: ``,
     experimental: true,
     testFitness: (): fitnessEnum =>
-      _CFLAGS_.GATSBY_MAJOR === `5` ? `OPT_IN` : false,
+      _CFLAGS_.GATSBY_MAJOR === `4` ? `OPT_IN` : false,
     requires: `Slices is only available in Gatsby V5. Please upgrade Gatsby.`,
   },
 ]

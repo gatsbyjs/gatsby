@@ -229,7 +229,7 @@ module.exports = async function build(
     )
 
     closeHTMLBundleCompilation = close
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
       const { renderPageHash, templateHashes } = getSSRChunkHashes({
         stats,
         components: store.getState().components,
@@ -250,7 +250,7 @@ module.exports = async function build(
   if (
     (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
       process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
-    _CFLAGS_.GATSBY_MAJOR === `5`
+    _CFLAGS_.GATSBY_MAJOR === `4`
   ) {
     const buildPartialHydrationBundleActivityProgress = report.activityTimer(
       `Building Partial Hydration renderer`,
@@ -364,7 +364,7 @@ module.exports = async function build(
     })
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
     await runSliceQueries({
       queryIds,
       graphqlRunner,
@@ -382,7 +382,7 @@ module.exports = async function build(
     })
   }
 
-  if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
+  if (!(_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES)) {
     if (process.send && shouldGenerateEngines()) {
       await waitMaterializePageMode
       process.send({
@@ -420,7 +420,7 @@ module.exports = async function build(
       rewriteActivityTimer.end()
     }
 
-    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
       Object.entries(templateCompilationHashes).forEach(
         ([templatePath, templateHash]) => {
           const component = store.getState().components.get(templatePath)
@@ -460,7 +460,7 @@ module.exports = async function build(
   await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
-  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && process.env.GATSBY_SLICES) {
     if (shouldGenerateEngines()) {
       const state = store.getState()
       const sliceDataPath = path.join(
