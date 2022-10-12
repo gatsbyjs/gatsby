@@ -25,6 +25,31 @@ export default () => {
   return <Slice alias="foo" allowEmpty />;
 }
 `,
+  "slice-const-in-scope.js": `import { Slice } from 'gatsby'
+export default () => {
+  const aliasVar = "foo"
+  return <Slice alias={aliasVar} />;
+}
+`,
+  "slice-computed.js": `import { Slice } from 'gatsby'
+export default () => {
+  const aliasVar = "foo"
+  return <Slice alias={\`\${aliasVar}-bar\`} />;
+}
+`,
+  "slice-spread-in-scope.js": `import { Slice } from 'gatsby'
+export default () => {
+  const slicesProps = { alias: "foo" }
+  return <Slice {...slicesProps} />;
+}
+`,
+  "slice-function.js": `import { Slice } from 'gatsby'
+const foo = () => "foo"
+
+export default () => {
+  return <Slice alias={foo} />;
+}
+`,
 }
 
 const MOCK_FILE_INFO = {
@@ -350,14 +375,17 @@ describe(`File parser`, () => {
 
   const SLICES_KEYS = Object.keys(SLICES_MOCK_INFO)
 
-  it.each(SLICES_KEYS)(
+  it.only.each(SLICES_KEYS)(
     `extracts slices and their props correctly (%s)`,
     async sliceFileName => {
       const { pageSlices } = await parser.parseFile(
         `${sliceFileName}`,
         jest.fn()
       )
-      expect(pageSlices).toMatchSnapshot()
+      expect({
+        pageSlices,
+        warnCalls: reporter.warn.mock.calls,
+      }).toMatchSnapshot()
     }
   )
 })

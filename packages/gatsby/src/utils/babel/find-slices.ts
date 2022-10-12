@@ -1,5 +1,7 @@
 import traverse from "@babel/traverse"
 import type { Node } from "@babel/core"
+import { getAttributeValues } from "babel-jsx-utils"
+import reporter from "gatsby-cli/lib/reporter"
 
 export interface ICollectedSlice {
   name: string
@@ -8,7 +10,7 @@ export interface ICollectedSlice {
 
 export type ICollectedSlices = Record<string, ICollectedSlice>
 
-const SLICE_NAME_PROP = `alias`
+const SLICES_PROPS = new Set([`alias`, `allowEmpty`])
 
 function mergePreviouslyCollectedSlice(
   newInfo: ICollectedSlice,
@@ -51,36 +53,25 @@ export function collectSlices(
         return
       }
 
-      let name: string | undefined
-      let allowEmpty = false
-      // TODO: probably want to use something higher level (like babel-jsx-utils)
-      // to "calc" attribute values instead of trying to handle AST ourselves
-      for (const attribute of nodePath.node.attributes) {
-        if (attribute.type === `JSXAttribute`) {
-          if (attribute.name.name === SLICE_NAME_PROP) {
-            if (attribute.value?.type === `StringLiteral`) {
-              name = attribute.value.value
-            } else {
-              console.warn(`Not literal value for "${attribute.name.name}"`, {
-                filename,
-                value: attribute.value,
-              })
-            }
-          } else if (attribute.name.name === `allowEmpty`) {
-            if (attribute.value === null) {
-              allowEmpty = true
-            } else {
-              console.warn(`allowEmpty can't get any value`, {
-                filename,
-              })
-            }
-          }
-        } else if (attribute.type === `JSXSpreadAttribute`) {
-          // this needs special handling - not sure if worth doing so
-          // will leave it for when we use `getAttributeValues` from babel-jsx-utils
-          // as we do for `<StaticImage>` instead of digging into AST ourselves
-          // to potentially support spread props that can be analyzed?
-        }
+      const unresolvedProps: Array<string> = []
+
+      const props = getAttributeValues(
+        nodePath,
+        prop => {
+          unresolvedProps.push(prop)
+        },
+        SLICES_PROPS
+      ) as { alias: string; allowEmpty?: boolean }
+
+      const { alias: name, allowEmpty = false } = props
+
+      if (unresolvedProps.length) {
+        const error = `[Gatsby Slice API] Could not find values in "${filename}" for the following props at build time: ${unresolvedProps.join(
+          `, `
+        )}`
+
+        reporter.warn(error)
+        return
       }
 
       if (name) {

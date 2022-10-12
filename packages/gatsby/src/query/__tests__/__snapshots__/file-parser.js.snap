@@ -2555,20 +2555,73 @@ Also note that we are currently unable to use queries defined in files other tha
 }
 `;
 
+exports[`File parser extracts slices and their props correctly (slice-computed.js) 1`] = `
+Object {
+  "pageSlices": Object {
+    "foo-bar": Object {
+      "allowEmpty": false,
+      "name": "foo-bar",
+    },
+  },
+  "warnCalls": Array [],
+}
+`;
+
+exports[`File parser extracts slices and their props correctly (slice-const-in-scope.js) 1`] = `
+Object {
+  "pageSlices": Object {
+    "foo": Object {
+      "allowEmpty": false,
+      "name": "foo",
+    },
+  },
+  "warnCalls": Array [],
+}
+`;
+
+exports[`File parser extracts slices and their props correctly (slice-function.js) 1`] = `
+Object {
+  "pageSlices": null,
+  "warnCalls": Array [
+    Array [
+      "[Gatsby Slice API] Could not find values in \\"slice-function.js\\" for the following props at build time: alias",
+    ],
+  ],
+}
+`;
+
 exports[`File parser extracts slices and their props correctly (slice-simple.js) 1`] = `
 Object {
-  "foo": Object {
-    "allowEmpty": false,
-    "name": "foo",
+  "pageSlices": Object {
+    "foo": Object {
+      "allowEmpty": false,
+      "name": "foo",
+    },
   },
+  "warnCalls": Array [],
 }
 `;
 
 exports[`File parser extracts slices and their props correctly (slice-simple-with-allow-empty.js) 1`] = `
 Object {
-  "foo": Object {
-    "allowEmpty": true,
-    "name": "foo",
+  "pageSlices": Object {
+    "foo": Object {
+      "allowEmpty": true,
+      "name": "foo",
+    },
   },
+  "warnCalls": Array [],
+}
+`;
+
+exports[`File parser extracts slices and their props correctly (slice-spread-in-scope.js) 1`] = `
+Object {
+  "pageSlices": Object {
+    "foo": Object {
+      "allowEmpty": false,
+      "name": "foo",
+    },
+  },
+  "warnCalls": Array [],
 }
 `;
