@@ -1449,14 +1449,14 @@ describe(`query caching between builds`, () => {
           clearCache: true,
         })
         // sanity check, to make sure test setup is correct
-        expect(pages).toEqual([`/bar/`, `/bar-list/`, `/foo/`, `/foo-list/`])
+        expect(pages).toEqual([`/bar-list/`, `/bar/`, `/foo-list/`, `/foo/`])
 
         // on initial we want query to run
         expect(pathsOfPagesWithQueriesThatRan).toEqual([
-          `/bar/`,
           `/bar-list/`,
-          `/foo/`,
+          `/bar/`,
           `/foo-list/`,
+          `/foo/`,
         ])
       }, 999999)
 
@@ -1468,7 +1468,7 @@ describe(`query caching between builds`, () => {
 
         // Since there was no single "foo" node before - we will also re-run the "/foo"
         // (as maybe the new node matches this query now)
-        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/foo/`, `/foo-list/`])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/foo-list/`, `/foo/`])
       }, 999999)
 
       it(`re-runs queries when a foo node is deleted`, async () => {
@@ -1477,7 +1477,7 @@ describe(`query caching between builds`, () => {
           restart: withRestarts,
         })
 
-        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/foo/`, `/foo-list/`])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/foo-list/`, `/foo/`])
       }, 999999)
 
       it(`re-runs queries when a bar-2 node is added`, async () => {
@@ -1509,7 +1509,7 @@ describe(`query caching between builds`, () => {
           restart: withRestarts,
         })
 
-        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/bar/`, `/bar-list/`])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/bar-list/`, `/bar/`])
       }, 999999)
     }
 

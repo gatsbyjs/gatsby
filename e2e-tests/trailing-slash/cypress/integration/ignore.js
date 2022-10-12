@@ -199,7 +199,7 @@ describe(`ignore (direct visits)`, () => {
 
     cy.visit(`/page-2/?query_param=hello#anchor`)
       .waitForRouteChange()
-      .assertRoute(`/page-2?query_param=hello#anchor`)
+      .assertRoute(`/page-2/?query_param=hello#anchor`)
   })
   it(`query-param-hash without`, () => {
     assertPageVisits([
