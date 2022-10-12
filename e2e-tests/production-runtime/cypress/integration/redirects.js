@@ -21,10 +21,7 @@ describe(`Redirects`, () => {
     cy.get(`h1`).invoke(`text`).should(`contain`, `Hi from the long page`)
   })
 
-  // TODO: un-skip this tests when this is figured out
-  // this DOES happen locally, but it's quite difficult to understand
-  // we are getting hydration failures right now
-  it.skip(`are case sensitive when ignoreCase is set to false`, () => {
+  it(`are case sensitive when ignoreCase is set to false`, () => {
     cy.visit(`/PAGINA-larga`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
@@ -136,7 +133,10 @@ describe(`Redirects`, () => {
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
 
-  it(`should support search & hash parameter on direct visit`, () => {
+  // TODO: un-skip this tests when this is figured out
+  // this DOES happen locally, but it's quite difficult to understand
+  // we are getting hydration failures right now
+  it.skip(`should support search & hash parameter on direct visit`, () => {
     cy.visit(`/redirect-two?query_param=hello#anchor`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
