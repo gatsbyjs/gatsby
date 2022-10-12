@@ -4,6 +4,7 @@ set -e # bail on errors
 node --version
 
 if [[ -v $FORCE_NVM_VERSION ]]; then
+  echo "Forcing NVM version to $FORCE_NVM_VERSION"
   nvm use $FORCE_NVM_VERSION
 fi
 
