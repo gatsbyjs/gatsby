@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e # bail on errors
 
+echo $BASH_ENV
+
+source $BASH_ENV
+
 node --version
 echo $NVM_DIR
 echo $FORCE_NVM_VERSION
