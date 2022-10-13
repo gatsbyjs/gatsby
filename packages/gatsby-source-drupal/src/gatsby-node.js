@@ -155,6 +155,7 @@ exports.sourceNodes = async (
   globalReporter = reporter
   const {
     baseUrl,
+    proxyUrl = baseUrl,
     apiBase = `jsonapi`,
     basicAuth = {},
     filters,
@@ -534,7 +535,12 @@ ${JSON.stringify(webhookBody, null, 4)}`
             }
           }
 
-          let d
+        // If proxyUrl is defined, use it instead of baseUrl to get the content.
+        if (proxyUrl !== baseUrl) {
+          url = url.replace(baseUrl, proxyUrl)
+        }
+
+        let d
           try {
             d = await requestQueue.push([
               url,
@@ -833,6 +839,8 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     baseUrl: Joi.string()
       .required()
       .description(`The URL to root of your Drupal instance`),
+    proxyUrl: Joi.string()
+      .description(`The CDN URL equivalent to your baseUrl`),
     apiBase: Joi.string().description(
       `The path to the root of the JSONAPI — defaults to "jsonapi"`
     ),
