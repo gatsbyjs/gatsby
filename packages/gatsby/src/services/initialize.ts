@@ -49,10 +49,9 @@ if (
 ) {
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
   process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
-  process.env.PRESERVE_WEBPACK_CACHE = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled: Development SSR, preserving file download cache and preserving webpack cache.
+Two fast dev experiments are enabled: SSR in develop and preserving file download cache.
 
 Please give feedback on their respective umbrella issues!
 
@@ -440,6 +439,8 @@ export async function initialize({
         `.cache/data/**`,
         `!.cache/data/gatsby-core-utils/**`,
         `!.cache/compiled`,
+        // Add webpack
+        `!.cache/webpack`,
       ]
 
       if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
@@ -448,11 +449,6 @@ export async function initialize({
         deleteGlobs.push(`!.cache/caches`)
         deleteGlobs.push(`.cache/caches/*`)
         deleteGlobs.push(`!.cache/caches/gatsby-source-filesystem`)
-      }
-
-      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-        // Add webpack
-        deleteGlobs.push(`!.cache/webpack`)
       }
 
       const files = await glob(deleteGlobs, {

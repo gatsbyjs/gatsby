@@ -83,12 +83,8 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastDev`,
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time.`,
-    includedFlags: [
-      `DEV_SSR`,
-      `PRESERVE_FILE_DOWNLOAD_CACHE`,
-      `DEV_WEBPACK_CACHE`,
-    ],
+    description: `Enable all experiments aimed at improving develop server start time & develop DX.`,
+    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -135,16 +131,6 @@ const activeFlags: Array<IFlag> = [
       }
     },
     requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
-  },
-  {
-    name: `PRESERVE_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
-    command: `all`,
-    telemetryId: `PreserveWebpackCache`,
-    experimental: false,
-    description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `DEV_WEBPACK_CACHE`,
