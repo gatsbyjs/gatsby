@@ -537,9 +537,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
           // If proxyUrl is defined, use it instead of baseUrl to get the content.
           if (proxyUrl !== baseUrl) {
-            console.log('url A: ' + url)
             url = url.replace(baseUrl, proxyUrl)
-            console.log('url B: ' + url)
           }
 
           let d
