@@ -133,16 +133,6 @@ const activeFlags: Array<IFlag> = [
     requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
   },
   {
-    name: `DEV_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
-    command: `develop`,
-    telemetryId: `DevWebackCache`,
-    experimental: false,
-    description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
     env: `GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE`,
     command: `all`,
