@@ -12,19 +12,19 @@ npm install gatsby-plugin-sitemap
 
 ## How to Use
 
-```javascript
-// In your gatsby-config.js
-siteMetadata: {
-  // If you didn't use the resolveSiteUrl option this needs to be set
-  siteUrl: `https://www.example.com`,
-},
-plugins: [`gatsby-plugin-sitemap`]
+```javascript:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    // If you didn't use the resolveSiteUrl option this needs to be set
+    siteUrl: `https://www.example.com`,
+  },
+  plugins: [`gatsby-plugin-sitemap`]
+}
 ```
 
-Above is the minimal configuration required to have it work. By default, the
-generated sitemap will include all of your site's pages, except the ones you exclude.
+Above is the minimal configuration required to have it work. By default, the generated sitemap will include all of your site's pages, except the ones you exclude. It will generate a `sitemap-index.xml` file at the root of your site and for every 45000 URLs a new `sitemap-X.xml` file. The `sitemap-index.xml` file will point at the generated `.xml` files.
 
-You then can point your service (e.g. Google Search Console) at `https://www.example.com/sitemap/sitemap-index.xml`.
+You then can point your service (e.g. Google Search Console) at `https://www.example.com/sitemap-index.xml`.
 
 ## Recommended usage
 
@@ -49,7 +49,7 @@ You probably do not want to use the defaults in this plugin. Here's an example o
 See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong. But wait, there's more, in their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
 
 > - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them.
-> - Google reads the `<lastmod>` value, but if you misrepresent this value, we will stop reading it.
+> - Google reads the `<lastmod>` value, but if you misrepresent this value, Google will stop reading it.
 
 You really want to customize this plugin config to include an accurate `lastmod` date. Checkout the [example](#example) for an example of how to do this.
 
@@ -59,7 +59,7 @@ The [`default config`](https://github.com/gatsbyjs/gatsby/blob/master/packages/g
 
 The options are as follows:
 
-- `output` (string = `/sitemap`) Folder path where sitemaps are stored.
+- `output` (string = `/`) Folder path where sitemaps are stored.
 - `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
 - `entryLimit` (number = 45000) Number of entries per sitemap file. A sitemap index (as `sitemap-index.xml`) will always be created and multiple sitemaps are created for every `entryLimit` increment (e.g under 45000 entries only `sitemap-0.xml` will be created).
 - `excludes` (string[] = []) An array of paths to exclude from the sitemap. You can use glob matching using [minimatch](https://github.com/isaacs/minimatch). While `excludes` is usually an array of strings it is possible to enter other data types into this array for custom filtering, but doing so will require customization of the [`filterPages`](#filterPages) function.
