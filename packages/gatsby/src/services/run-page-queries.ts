@@ -40,11 +40,6 @@ export async function runPageQueries({
     }
   )
 
-  // TODO: This is hacky, remove with a refactor of PQR itself
-  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    activity.start()
-  }
-
   let cancelNotice: CancelExperimentNoticeCallbackOrUndefined
   if (
     process.env.gatsby_executing_command === `develop` &&
@@ -74,9 +69,5 @@ modules.exports = {
 
   if (cancelNotice) {
     cancelNotice()
-  }
-
-  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    activity.done()
   }
 }

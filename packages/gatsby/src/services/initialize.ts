@@ -296,10 +296,7 @@ export async function initialize({
 
   // When the main process and workers communicate they save parts of their redux state to .cache/worker
   // We should clean this directory to remove stale files that a worker might accidentally reuse then
-  if (
-    workerCacheDirExists &&
-    process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
-  ) {
+  if (workerCacheDirExists) {
     activity = reporter.activityTimer(
       `delete worker cache from previous builds`,
       {

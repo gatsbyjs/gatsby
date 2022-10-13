@@ -129,18 +129,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `PARALLEL_QUERY_RUNNING`,
-    env: `GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING`,
-    command: `build`,
-    telemetryId: `PQR`,
-    experimental: true,
-    umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
-    description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
-    includedFlags: [`LMDB_STORE`],
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-    requires: `Requires Node v14.10 or above.`,
-  },
-  {
     name: `DETECT_NODE_MUTATIONS`,
     env: `GATSBY_DETECT_NODE_MUTATIONS`,
     command: `all`,
