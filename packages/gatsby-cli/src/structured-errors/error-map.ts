@@ -430,7 +430,7 @@ const errors = {
       `${
         context.pluginName
       } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
       )}`,
@@ -461,42 +461,46 @@ const errors = {
       `${
         context.pluginName
       } created a page with a component that doesn't exist.\n\nThe path to the missing component is "${
-        context.component
+        context.componentPath
       }"\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11326": {
     text: (context): string =>
       `${
         context.pluginName
-      } must set the absolute path to the page component when create creating a page.\n\nThe (relative) path you used for the component is "${
-        context.component
+      } must set the absolute path to the page component when creating a page.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
-        context.component
+        context.componentPath
       }")\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11327": {
     text: (context): string =>
-      `You have an empty file in the "src/pages" directory at "${context.relativePath}". Please remove it or make it a valid component`,
+      `An empty file "${context.componentPath}" was found during page creation. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11328": {
     text: (context): string =>
-      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${context.fileName}`,
+      `${context.pluginName} created a page without a valid default export.\n\nThe path to the page is "${context.componentPath}". If your page is a named export, please use "export default" instead.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   // invalid or deprecated APIs
   "11329": {
@@ -573,7 +577,7 @@ const errors = {
       `${
         context.pluginName
       } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
-        context.sliceObject,
+        context.input,
         null,
         4
       )}`,
@@ -596,7 +600,56 @@ const errors = {
     // TODO: change domain to gatsbyjs.com when it's released
     docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
-
+  "11335": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the absolute path to the slice component when creating a slice.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
+      }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
+        context.componentPath
+      }")\n\nThe object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11336": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice with a component that doesn't exist.\n\nThe path to the missing component is "${
+        context.componentPath
+      }"\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11337": {
+    text: (context): string =>
+      `An empty file "${context.componentPath}" was found during slice creation. Please remove it or make it a valid component.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11338": {
+    text: (context): string =>
+      `${context.pluginName} created a slice component without a valid default export.\n\nThe path to the component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
   // node object didn't pass validation
   "11467": {
     text: (context): string =>
