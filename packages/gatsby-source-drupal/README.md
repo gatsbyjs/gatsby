@@ -252,8 +252,8 @@ module.exports = {
 
 ## CDN
 
-You can add optional CDN or API gateway URL `proxyUrl` param. The URL can be a proxy of the Drupal `baseUrl`
-or another URL where the Drupal json paths can be retrieved.
+You can add optional CDN or API gateway URL `proxyUrl` param. The URL can be a simple proxy of the Drupal
+`baseUrl`, or another URL (even containing a path) where the Drupal JSON API resources can be retrieved.
 
 ```javascript
 // In your gatsby-config.js
@@ -263,7 +263,7 @@ module.exports = {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
-        baseUrl: `https://xyz.cloudfront.net/`,
+        proxyUrl: `https://xyz.cloudfront.net/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
       },
     },
