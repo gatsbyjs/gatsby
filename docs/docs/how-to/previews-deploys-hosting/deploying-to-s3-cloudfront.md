@@ -128,7 +128,6 @@ If you need the full address elsewhere in your config, you can access it via `si
 ## References:
 
 - [Gatsby on AWS, the right way](https://blog.joshwalsh.me/aws-gatsby/)
-- [Using CloudFront with gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/with-cloudfront.md)
 - [Publishing Your Next Gatsby Site to AWS With AWS Amplify](/blog/2018-08-24-gatsby-aws-hosting/)
 - [Escalade Sports: From $5000 to $5/month in Hosting With Gatsby](/blog/2018-06-14-escalade-sports-from-5000-to-5-in-hosting/)
 - [Deploy your Gatsby.js Site to AWS S3](https://github.com/bennewton999/blog2018/blob/master/content/posts/11-24-2017/index.md)

@@ -43,15 +43,15 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const items = [
     {
       name: "photoA.jpg",
-      url: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80",
+      url: "https://storage.googleapis.com/public-test-files/photoA.jpg",
     },
     {
       name: "photoB.jpg",
-      url: "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80",
+      url: "https://storage.googleapis.com/public-test-files/photoB.jpg",
     },
     {
       name: "photoC.jpg",
-      url: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80",
+      url: "https://storage.googleapis.com/public-test-files/photoC.jpg",
     },
   ]
 

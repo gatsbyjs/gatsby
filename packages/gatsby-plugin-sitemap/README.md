@@ -62,7 +62,7 @@ The options are as follows:
 - `output` (string = `/sitemap`) Folder path where sitemaps are stored.
 - `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
 - `entryLimit` (number = 45000) Number of entries per sitemap file. A sitemap index (as `sitemap-index.xml`) will always be created and multiple sitemaps are created for every `entryLimit` increment (e.g under 45000 entries only `sitemap-0.xml` will be created).
-- `excludes` (string[] = []) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the [`filterPages`](#filterPages) function.
+- `excludes` (string[] = []) An array of paths to exclude from the sitemap. You can use glob matching using [minimatch](https://github.com/isaacs/minimatch). While `excludes` is usually an array of strings it is possible to enter other data types into this array for custom filtering, but doing so will require customization of the [`filterPages`](#filterPages) function.
 - `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom [`resolveSiteUrl`](#resolveSiteUrl) function. If you override the query, you may need to pass in a custom [`resolvePagePath`](#resolvePagePath), [`resolvePages`](#resolvePages) to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will definitely need to customize the [`resolvePages`](#resolvePages) function.
 - [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL. Sync or async functions allowed.
 - [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
@@ -193,7 +193,7 @@ allPages.filter(
 
 | Param         | Type                | Description                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| page          | <code>object</code> |                                                                                     |
+| page          | <code>object</code> | contains the path key `{ path }`                                                    |
 | excludedRoute | <code>string</code> | Element from `excludes` Array in plugin config                                      |
 | tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
 

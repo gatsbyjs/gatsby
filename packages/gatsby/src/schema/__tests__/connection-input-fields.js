@@ -176,13 +176,13 @@ describe(`connection input fields`, () => {
         {
           allTest {
             totalCount
-            names: distinct(field: name)
-            array: distinct(field: anArray)
-            blue: distinct(field: frontmatter___blue)
-            dates: distinct(field: dateArray)
+            names: distinct(field: { name: SELECT })
+            array: distinct(field: { anArray: SELECT })
+            blue: distinct(field: { frontmatter: { blue: SELECT }})
+            dates: distinct(field: { dateArray: SELECT })
             # Only one node has this field
-            circle: distinct(field: frontmatter___circle)
-            nestedField: distinct(field: anotherKey___withANested___nestedKey)
+            circle: distinct(field: { frontmatter: { circle: SELECT }})
+            nestedField: distinct(field: { anotherKey:{ withANested:{ nestedKey: SELECT }}})
           }
         }
       `
@@ -214,12 +214,12 @@ describe(`connection input fields`, () => {
       makeNodes(),
       ` {
         allTest {
-          blue: group(field: frontmatter___blue) {
+          blue: group(field: { frontmatter: { blue: SELECT }}) {
             field
             fieldValue
             totalCount
           }
-          anArray: group(field: anArray) {
+          anArray: group(field: { anArray: SELECT }) {
             field
             fieldValue
             totalCount
@@ -245,7 +245,7 @@ describe(`connection input fields`, () => {
       makeNodes(),
       ` {
         allTest {
-          nestedKey: group(field: anotherKey___withANested___nestedKey) {
+          nestedKey: group(field: { anotherKey: { withANested: { nestedKey: SELECT }}}) {
             field
             fieldValue
             totalCount

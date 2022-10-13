@@ -24,7 +24,8 @@ import(`update-notifier`).then(updateNotifier =>
   updateNotifier.default({ pkg }).notify({ isGlobal: true })
 )
 
-const MIN_NODE_VERSION = `14.15.0`
+// @ts-ignore - TODO: Remove _CFLAGS_ again
+const MIN_NODE_VERSION = _CFLAGS_.GATSBY_MAJOR === `5` ? `18.0.0` : `14.15.0`
 // const NEXT_MIN_NODE_VERSION = `10.13.0`
 
 const { version } = process

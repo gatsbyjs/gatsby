@@ -4,6 +4,9 @@ const slugify = require(`@sindresorhus/slugify`)
 const { compileMDXWithCustomOptions } = require(`gatsby-plugin-mdx`)
 const { remarkHeadingsPlugin } = require(`./remark-headings-plugin`)
 
+/**
+ * @type {import('gatsby').GatsbyNode['onCreateNode']}
+ */
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `Mdx`) {
@@ -21,7 +24,10 @@ exports.onCreateNode = ({ node, actions }) => {
   }
 }
 
-exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema }) => {
+/**
+ * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
+ */
+exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix, reporter, cache, actions, schema, store }) => {
   const { createTypes } = actions
 
   const headingsResolver = schema.buildObjectType({
@@ -53,6 +59,7 @@ exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix
               pathPrefix,
               reporter,
               cache,
+              store,
             }
           )
 
@@ -81,6 +88,9 @@ exports.createSchemaCustomization = async ({ getNode, getNodesByType, pathPrefix
   ])
 }
 
+/**
+ * @type {import('gatsby').GatsbyNode['createPages']}
+ */
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 

@@ -44,7 +44,7 @@ export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
  */
 const configItemsMemoCache = new Map()
 
-interface ICustomOptions extends Record<string, unknown> {
+export interface ICustomOptions extends Record<string, unknown> {
   stage: Stage
   resourceQuery: string
 }
@@ -83,11 +83,7 @@ export const prepareOptions = (
     ),
   ]
 
-  if (
-    _CFLAGS_.GATSBY_MAJOR === `4` &&
-    (stage === `develop` || stage === `build-javascript`) &&
-    isPageTemplate
-  ) {
+  if ((stage === `develop` || stage === `build-javascript`) && isPageTemplate) {
     const apis = [`getServerData`, `config`]
 
     if (
@@ -120,18 +116,6 @@ export const prepareOptions = (
   }
 
   const requiredPresets: Array<PluginItem> = []
-
-  // Stage specific plugins to add
-  if (
-    _CFLAGS_.GATSBY_MAJOR !== `4` &&
-    (stage === `build-html` || stage === `develop-html`)
-  ) {
-    requiredPlugins.push(
-      babel.createConfigItem([resolve(`babel-plugin-dynamic-import-node`)], {
-        type: `plugin`,
-      })
-    )
-  }
 
   if (stage === `develop`) {
     requiredPlugins.push(

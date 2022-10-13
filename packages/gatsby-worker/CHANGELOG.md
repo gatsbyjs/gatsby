@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.24.0/packages/gatsby-worker) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Features
+
+- add partial hydration [#36485](https://github.com/gatsbyjs/gatsby/issues/36485) ([c073bbe](https://github.com/gatsbyjs/gatsby/commit/c073bbea40379adc62bd891da9f65ff2756b120b))
+
+## [1.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.23.0/packages/gatsby-worker) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-worker
+
+## [1.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.22.0/packages/gatsby-worker) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-worker
+
+## [1.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.21.0/packages/gatsby-worker) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-worker
+
 ## [1.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@1.20.0/packages/gatsby-worker) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)

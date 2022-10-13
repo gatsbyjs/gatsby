@@ -39,7 +39,10 @@ function replaceUnifiedRoutesKeys(
 }
 
 const chunkNameCache = new Map()
-export function generateComponentChunkName(componentPath: string): string {
+export function generateComponentChunkName(
+  componentPath: string,
+  kind: "component" | "slice" = `component`
+): string {
   if (chunkNameCache.has(componentPath)) {
     return chunkNameCache.get(componentPath)
   } else {
@@ -52,8 +55,9 @@ export function generateComponentChunkName(componentPath: string): string {
      * File names should not exceed 255 characters
      * minus 12 for `component---`
      * minus 7 for `.js.map`
+     * minus 20 for `-[hash].js`
      */
-    const maxLength = 236
+    const maxLength = 215
     const shouldTruncate = name.length > maxLength
 
     /**
@@ -64,7 +68,7 @@ export function generateComponentChunkName(componentPath: string): string {
       name = `${hash}-${name.substring(name.length - 60)}`
     }
 
-    const chunkName = `component---${name}`
+    const chunkName = `${kind}---${name}`
 
     chunkNameCache.set(componentPath, chunkName)
 

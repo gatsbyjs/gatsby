@@ -7,7 +7,8 @@ import { CODES, prefixId } from "./error-utils"
 // This Function opens up the actual collection file and extracts the queryString used in the
 export function collectionExtractQueryString(
   absolutePath: string,
-  reporter: Reporter
+  reporter: Reporter,
+  nodeIds?: Array<string>
 ): string | null {
   let queryString: string | null = null
 
@@ -38,7 +39,7 @@ export function collectionExtractQueryString(
 
   // 3  This is important, we get the model or query, but we have to create a real graphql
   //    query from it. This generateQueryFromString call does all of that magic
-  queryString = generateQueryFromString(modelType, absolutePath)
+  queryString = generateQueryFromString(modelType, absolutePath, nodeIds)
 
   return queryString
 }

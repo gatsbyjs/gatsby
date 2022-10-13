@@ -477,6 +477,9 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
+      const {
+        schemaCustomization: { context: customContext },
+      } = store.getState()
       const resolvedNodes = new Map()
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         this.trackInlineObjectsInRootNode(node)
@@ -487,7 +490,8 @@ class LocalNodeModel {
           node,
           type,
           queryFields,
-          actualFieldsToResolve
+          actualFieldsToResolve,
+          customContext
         )
 
         resolvedNodes.set(node.id, resolvedFields)
@@ -770,7 +774,8 @@ async function resolveRecursive(
   node,
   type,
   queryFields,
-  fieldsToResolve
+  fieldsToResolve,
+  customContext
 ) {
   const gqlFields = getFields(schema, type, node)
   const resolvedFields = {}
@@ -786,7 +791,8 @@ async function resolveRecursive(
       schema,
       node,
       gqlField,
-      fieldName
+      fieldName,
+      customContext
     )
     if (gqlField && innerValue != null) {
       if (
@@ -800,7 +806,8 @@ async function resolveRecursive(
           innerValue,
           gqlFieldType,
           queryField,
-          _.isObject(fieldToResolve) ? fieldToResolve : queryField
+          _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+          customContext
         )
       } else if (
         isCompositeType(gqlFieldType) &&
@@ -818,7 +825,8 @@ async function resolveRecursive(
                   item,
                   gqlFieldType,
                   queryField,
-                  _.isObject(fieldToResolve) ? fieldToResolve : queryField
+                  _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+                  customContext
                 )
           )
         )
@@ -839,7 +847,8 @@ async function resolveRecursive(
         schema,
         node,
         gqlFields[fieldName],
-        fieldName
+        fieldName,
+        customContext
       )
     }
   }
@@ -853,7 +862,8 @@ function resolveField(
   schema,
   node,
   gqlField,
-  fieldName
+  fieldName,
+  customContext
 ) {
   if (!gqlField?.resolve) {
     return node[fieldName]
@@ -875,6 +885,7 @@ function resolveField(
       schema,
       schemaComposer,
       nodeModel,
+      customContext,
     }),
     {
       fieldName,

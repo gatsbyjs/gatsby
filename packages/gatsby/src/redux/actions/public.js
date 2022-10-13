@@ -15,9 +15,9 @@ const {
 const { splitComponentPath } = require(`gatsby-core-utils/parse-component-path`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode, getDataStore } = require(`../../datastore`)
-const sanitizeNode = require(`../../utils/sanitize-node`)
+import sanitizeNode from "../../utils/sanitize-node"
 const { store } = require(`../index`)
-const { validatePageComponent } = require(`../../utils/validate-page-component`)
+const { validateComponent } = require(`../../utils/validate-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
@@ -91,12 +91,13 @@ type JobV2 = {
   args: Object,
 }
 
-type PageInput = {
-  path: string,
-  component: string,
-  context?: Object,
-  ownerNodeId?: string,
-  defer?: boolean,
+export interface IPageInput {
+  path: string;
+  component: string;
+  context?: Object;
+  ownerNodeId?: string;
+  defer?: boolean;
+  slices: Record<string, string>;
 }
 
 type PageMode = "SSG" | "DSG" | "SSR"
@@ -111,6 +112,7 @@ type Page = {
   updatedAt: number,
   ownerNodeId?: string,
   mode: PageMode,
+  slices: Record<string, string>,
 }
 
 type ActionOptions = {
@@ -136,7 +138,7 @@ type PageDataRemove = {
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: PageInput) => {
+actions.deletePage = (page: IPageInput) => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -181,7 +183,7 @@ const reservedFields = [
  * })
  */
 actions.createPage = (
-  page: PageInput,
+  page: IPageInput,
   plugin?: Plugin,
   actionOptions?: ActionOptions
 ) => {
@@ -266,8 +268,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       report.panic({
         id: `11322`,
         context: {
+          input: page,
           pluginName: name,
-          pageObject: page,
         },
       })
     } else {
@@ -281,13 +283,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
-  const { trailingSlash } = store.getState().config
-  const rootPath = store.getState().program.directory
-  const { error, message, panicOnBuild } = validatePageComponent(
-    page,
-    rootPath,
-    name
-  )
+  const { config, program } = store.getState()
+  const { trailingSlash } = config
+  const { directory } = program
+
+  const { error, panicOnBuild } = validateComponent({
+    input: page,
+    pluginName: name,
+    errorIdMap: {
+      noPath: `11322`,
+      notAbsolute: `11326`,
+      doesNotExist: `11325`,
+      empty: `11327`,
+      noDefaultExport: `11328`,
+    },
+  })
 
   if (error) {
     if (isNotTestEnv) {
@@ -297,7 +307,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panic(error)
       }
     }
-    return message
+    return `${name} must set the absolute path to the page component when creating a page`
   }
 
   // check if we've processed this component path
@@ -324,7 +334,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(rootPath, page.component)
+        const commonDir = getCommonDir(directory, page.component)
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
@@ -412,20 +422,19 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+    slices: page?.slices || {},
 
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
     pluginCreatorId: plugin.id ?? ``,
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    if (page.defer) {
-      internalPage.defer = true
-    }
-    // Note: mode is updated in the end of the build after we get access to all page components,
-    // see materializePageMode in utils/page-mode.ts
-    internalPage.mode = getPageMode(internalPage)
+  if (page.defer) {
+    internalPage.defer = true
   }
+  // Note: mode is updated in the end of the build after we get access to all page components,
+  // see materializePageMode in utils/page-mode.ts
+  internalPage.mode = getPageMode(internalPage)
 
   if (page.ownerNodeId) {
     internalPage.ownerNodeId = page.ownerNodeId
@@ -441,6 +450,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
   const componentModified =
     !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
+  const slicesModified =
+    !!oldPage && !_.isEqual(oldPage.slices, internalPage.slices)
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -512,6 +523,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       type: `CREATE_PAGE`,
       contextModified,
       componentModified,
+      slicesModified,
       plugin,
       payload: sanitizedPayload,
     },
