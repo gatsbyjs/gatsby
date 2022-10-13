@@ -326,11 +326,13 @@ The code snippets below show an example of how to pass a prop into a component w
 
     ```javascript:title=src/components/greeting.js
     // Defining the <Greeting> component
-    export const Greeting = (props) => { // highlight-line
+    const Greeting = (props) => { // highlight-line
       return (
         <p>Hi {props.name}!</p> // highlight-line
       )
     }
+  
+    export default Greeting
     ```
 
 <Announcement style={{marginBottom: "1.5rem"}}>
