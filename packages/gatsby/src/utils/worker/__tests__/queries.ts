@@ -265,12 +265,8 @@ describe(`worker (queries)`, () => {
 
     await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
-    const stateFromWorker = await worker.single.getState()
 
-    const pageQueryResult = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/foo`
-    )
+    const pageQueryResult = await readPageQueryResult(`/foo`)
 
     expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
@@ -285,12 +281,8 @@ describe(`worker (queries)`, () => {
     await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueriesDependencies())
-    const stateFromWorker = await worker.single.getState()
 
-    const pageQueryResult = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/bar`
-    )
+    const pageQueryResult = await readPageQueryResult(`/bar`)
 
     expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
@@ -307,13 +299,9 @@ describe(`worker (queries)`, () => {
 
     // @ts-ignore - worker is defined
     await runQueriesInWorkersQueue(worker, queryIdsBig, { chunkSize: 10 })
-    const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a
-    const pageQueryResultA = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/a`
-    )
+    const pageQueryResultA = await readPageQueryResult(`/a`)
 
     expect(JSON.parse(pageQueryResultA).data).toStrictEqual({
       nodeTypeOne: {
@@ -321,10 +309,7 @@ describe(`worker (queries)`, () => {
       },
     })
 
-    const pageQueryResultZ = await readPageQueryResult(
-      `${stateFromWorker.program.directory}/public`,
-      `/z`
-    )
+    const pageQueryResultZ = await readPageQueryResult(`/z`)
 
     expect(JSON.parse(pageQueryResultZ).data).toStrictEqual({
       nodeTypeOne: {

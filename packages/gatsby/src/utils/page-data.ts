@@ -80,7 +80,6 @@ export function waitUntilPageQueryResultsAreStored(): Promise<void> {
 }
 
 export async function savePageQueryResult(
-  programDir: string,
   pagePath: string,
   stringifiedResult: string
 ): Promise<void> {
@@ -90,10 +89,7 @@ export async function savePageQueryResult(
   ) as Promise<void>
 }
 
-export async function readPageQueryResult(
-  publicDir: string,
-  pagePath: string
-): Promise<string | Buffer> {
+export async function readPageQueryResult(pagePath: string): Promise<string> {
   const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
   if (typeof stringifiedResult === `string`) {
     return stringifiedResult
@@ -107,7 +103,7 @@ export async function writePageData(
   slicesUsedByTemplates: Map<string, ICollectedSlices>,
   slices: IGatsbyState["slices"]
 ): Promise<string> {
-  const result = await readPageQueryResult(publicDir, pageData.path)
+  const result = await readPageQueryResult(pageData.path)
 
   const outputFilePath = generatePageDataPath(publicDir, pageData.path)
 
@@ -141,7 +137,7 @@ export async function writeSliceData(
   staticQueryHashes: Array<string>
 ): Promise<string> {
   const result = JSON.parse(
-    (await readPageQueryResult(publicDir, `slice--${name}`)).toString()
+    (await readPageQueryResult(`slice--${name}`)).toString()
   )
 
   const outputFilePath = path.join(publicDir, `slice-data`, `${name}.json`)

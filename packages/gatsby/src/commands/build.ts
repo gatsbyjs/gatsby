@@ -34,8 +34,6 @@ import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { Stage } from "./types"
 import {
   calculateDirtyQueries,
-  runStaticQueries,
-  runPageQueries,
   runSliceQueries,
   writeOutRequires,
 } from "../services"

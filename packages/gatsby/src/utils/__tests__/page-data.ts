@@ -16,22 +16,11 @@ describe(`savePageQueryResults / readPageQueryResults`, () => {
       data: { foo: `bar` },
     }
 
-    const programDir = process.cwd()
-    const publicDir = path.join(programDir, `public`)
-    const pageQueryResultsPath = path.join(
-      programDir,
-      `.cache`,
-      `json`,
-      `${pagePath.replace(/\//g, `_`)}.json`
-    )
-
-    await savePageQueryResult(programDir, pagePath, JSON.stringify(inputResult))
+    await savePageQueryResult(pagePath, JSON.stringify(inputResult))
 
     await waitUntilPageQueryResultsAreStored()
 
-    const result = await readPageQueryResult(publicDir, pagePath)
+    const result = await readPageQueryResult(pagePath)
     expect(JSON.parse(result)).toEqual(inputResult)
-    // we expect partial page data file only in non-lmdb mode
-    expect(fs.existsSync(pageQueryResultsPath)).toEqual(false)
   })
 })

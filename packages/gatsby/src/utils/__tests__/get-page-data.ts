@@ -408,7 +408,7 @@ function finishQuery(
     queryHash: `queryHash`,
   }
 
-  savePageQueryResult(__dirname, page.path!, JSON.stringify(jsonObject))
+  savePageQueryResult(page.path!, JSON.stringify(jsonObject))
 
   store.dispatch(
     pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)
