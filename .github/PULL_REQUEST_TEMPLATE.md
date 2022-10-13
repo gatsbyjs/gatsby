@@ -7,9 +7,9 @@
 
 ## Description
 
--What kind of changes are being added/changed by this PR?  
+- What kind of changes are being added/changed by this PR?  
   
--Are there any existing features that might be affected due to this PR?  
+- Are there any existing features that might be affected due to this PR?  
   
 
 <!-- Write a brief description of the changes introduced by this PR -->
