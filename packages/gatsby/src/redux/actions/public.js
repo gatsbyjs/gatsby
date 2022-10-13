@@ -307,7 +307,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panic(error)
       }
     }
-    return `createPage must set the absolute path to the page component when create creating a page`
+    return `${name} must set the absolute path to the page component when creating a page`
   }
 
   // check if we've processed this component path

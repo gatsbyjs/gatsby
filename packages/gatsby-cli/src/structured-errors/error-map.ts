@@ -475,7 +475,7 @@ const errors = {
     text: (context): string =>
       `${
         context.pluginName
-      } must set the absolute path to the page component when create creating a page.\n\nThe (relative) path you used for the component is "${
+      } must set the absolute path to the page component when creating a page.\n\nThe (relative) path you used for the component is "${
         context.componentPath
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
         context.componentPath
@@ -490,7 +490,7 @@ const errors = {
   },
   "11327": {
     text: (context): string =>
-      `You have an empty file in the "src/pages" directory at "${context.componentPath}". Please remove it or make it a valid component.`,
+      `An empty file "${context.componentPath}" was found during page creation. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
@@ -604,7 +604,7 @@ const errors = {
     text: (context): string =>
       `${
         context.pluginName
-      } must set the absolute path to the slice component when create creating a slice.\n\nThe (relative) path you used for the component is "${
+      } must set the absolute path to the slice component when creating a slice.\n\nThe (relative) path you used for the component is "${
         context.componentPath
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
         context.componentPath
@@ -636,7 +636,7 @@ const errors = {
   },
   "11337": {
     text: (context): string =>
-      `${context.pluginName} must not be passed an empty file "${context.componentPath}" when creating a slice. Please remove it or make it a valid component.`,
+      `An empty file "${context.componentPath}" was found during slice creation. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
     // TODO: change domain to gatsbyjs.com when it's released
