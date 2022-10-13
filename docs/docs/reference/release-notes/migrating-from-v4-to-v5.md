@@ -35,7 +35,7 @@ Next, you need to update your dependencies to v5.
 
 ### Update Gatsby version
 
-You need to update your `package.json` to use the `latest` version of Gatsby.
+You need to update your `package.json` to use the `next` version of Gatsby.
 
 ```json:title=package.json
 {
@@ -121,7 +121,7 @@ As per the [RFC: Change to sort and aggregation fields API](https://github.com/g
 We provide a codemod (via [gatsby-codemods](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-codemods)) for you to easily convert your queries to the new syntax. Go to your project and run the following in your terminal:
 
 ```shell
-npx gatsby-codemods sort-and-aggr-graphql .
+npx gatsby-codemods@next sort-and-aggr-graphql .
 ```
 
 This will apply the codemod to all your files. If you only want to run it on some files/directories, adjust the last parameter (`npx gatsby-codemods sort-and-aggr-graphql <filepath>`).
