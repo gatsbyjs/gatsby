@@ -252,7 +252,7 @@ module.exports = {
 
 ## CDN
 
-You can add optional CDN or API gateway URL `proxyUrl` param. The URL can be a simple proxy of the Drupal
+You can add an optional CDN or API gateway URL `proxyUrl` param. The URL can be a simple proxy of the Drupal
 `baseUrl`, or another URL (even containing a path) where the Drupal JSON API resources can be retrieved.
 
 ```javascript
