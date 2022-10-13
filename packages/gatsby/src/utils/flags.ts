@@ -98,17 +98,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `QUERY_ON_DEMAND`,
-    env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
-    umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
     env: `GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE`,
     command: `all`,

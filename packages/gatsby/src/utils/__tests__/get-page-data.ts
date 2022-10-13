@@ -323,7 +323,7 @@ describe(`get-page-data-util`, () => {
   describe(`Query on demand`, () => {
     let programToRestore
     beforeAll(() => {
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
+      process.env.GATSBY_QUERY_ON_DEMAND = `true`
       programToRestore = store.getState().program
       store.dispatch({
         type: `SET_PROGRAM`,
@@ -334,7 +334,7 @@ describe(`get-page-data-util`, () => {
       })
     })
     afterAll(() => {
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      delete process.env.GATSBY_QUERY_ON_DEMAND
       store.dispatch({
         type: `SET_PROGRAM`,
         payload: programToRestore,

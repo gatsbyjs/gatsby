@@ -332,7 +332,7 @@ export async function startServer(
 
           let pageData: IPageDataWithQueryResult
           // TODO move to query-engine
-          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+          if (process.env.GATSBY_QUERY_ON_DEMAND) {
             const start = Date.now()
 
             pageData = await getPageDataExperimental(page.path)
@@ -726,7 +726,7 @@ export async function startServer(
   }
 
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     routeLoadingIndicatorRequests(app)

@@ -255,7 +255,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
           page.manifestId = nodeManifestPagePathMap.get(page.path)
         }
 
-        if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+        if (!isBuild && process.env.GATSBY_QUERY_ON_DEMAND) {
           // check if already did run query for this page
           // with query-on-demand we might have pending page-data write due to
           // changes in static queries assigned to page template, but we might not

@@ -189,14 +189,10 @@ export async function initialize({
   const flattenedPlugins = await loadPlugins(config, siteDirectory)
   activity.end()
 
-  // TODO: figure out proper way of disabling loading indicator
-  // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
-  // will work, but we don't want to force users into using env vars
-  if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-    !process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR
-  ) {
-    // if query on demand is enabled and GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
+  // GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
+  // to disable query on demand loading indicator
+  if (!process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR) {
+    // if GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
@@ -211,17 +207,15 @@ export async function initialize({
     )
   }
 
-  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-    if (process.env.gatsby_executing_command !== `develop`) {
-      // we don't want to ever have this flag enabled for anything than develop
-      // in case someone have this env var globally set
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-    } else if (isCI() && !process.env.CYPRESS_SUPPORT) {
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      reporter.verbose(
-        `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
-      )
-    }
+  // Throughout the codebase GATSBY_QUERY_ON_DEMAND is used to conditionally enable the QoD behavior, depending on if "gatsby develop" is running or not. In CI QoD is disabled by default, too.
+  // You can use GATSBY_ENABLE_QOD_IN_CI to force enable it in CI.
+  process.env.GATSBY_QUERY_ON_DEMAND = `true`
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // we don't want to ever have this flag enabled for anything than develop
+    // in case someone have this env var globally set
+    delete process.env.GATSBY_QUERY_ON_DEMAND
+  } else if (isCI() && !process.env.GATSBY_ENABLE_QOD_IN_CI) {
+    delete process.env.GATSBY_QUERY_ON_DEMAND
   }
 
   // run stale jobs
