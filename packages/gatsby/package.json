@@ -108,8 +108,8 @@
     "glob": "^7.2.3",
     "globby": "^11.1.0",
     "got": "^11.8.5",
-    "graphql": "^15.7.2",
-    "graphql-compose": "^9.0.7",
+    "graphql": "^16.6.0",
+    "graphql-compose": "^9.0.9",
     "graphql-playground-middleware-express": "^1.7.22",
     "hasha": "^5.2.2",
     "invariant": "^2.2.4",
@@ -255,7 +255,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^15.8.0"
+    "graphql": "^16.6.0"
   },
   "scripts": {
     "build": "npm run build:types && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
