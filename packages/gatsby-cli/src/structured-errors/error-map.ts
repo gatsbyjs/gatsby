@@ -466,9 +466,10 @@ const errors = {
         context.component,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11326": {
     text: (context): string =>
@@ -482,21 +483,24 @@ const errors = {
         context.component,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11327": {
     text: (context): string =>
       `You have an empty file in the "src/pages" directory at "${context.relativePath}". Please remove it or make it a valid component`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11328": {
     text: (context): string =>
-      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${context.fileName}`,
+      `${context.pluginName} created a page without a valid default export.\n\nThe path to the page is "${context.componentPath}". If your page is a named export, please use "export default" instead.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   // invalid or deprecated APIs
   "11329": {
@@ -608,9 +612,11 @@ const errors = {
         context.component,
         null,
         4
-      )}\n\nSee the documentation for the "createSlice" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11336": {
     text: (context): string =>
@@ -622,21 +628,27 @@ const errors = {
         context.component,
         null,
         4
-      )}\n\nSee the documentation for the "createSlice" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11337": {
     text: (context): string =>
       `${context.pluginName} must not be passed an empty file "${context.relativePath}" when creating a slice. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   "11338": {
     text: (context): string =>
-      `${context.pluginName} created a slice component without a valid default export.\n\nThe path to component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
+      `${context.pluginName} created a slice component without a valid default export.\n\nThe path to the component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   // node object didn't pass validation
   "11467": {
