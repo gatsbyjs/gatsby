@@ -109,30 +109,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
-    name: `LAZY_IMAGES`,
-    env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
-    umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => {
-      const semverConstraints = {
-        // Because of this, this flag will never show up
-        "gatsby-plugin-sharp": `>=2.10.0`,
-      }
-      if (satisfiesSemvers(semverConstraints)) {
-        return `LOCKED_IN`
-      } else {
-        // gatsby-plugin-sharp is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
-    },
-    requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
-  },
-  {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
     env: `GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE`,
     command: `all`,
