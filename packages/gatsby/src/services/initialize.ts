@@ -19,7 +19,6 @@ import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
-import { detectLmdbStore } from "../datastore"
 import { loadConfig } from "../bootstrap/load-config"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import type { InternalJob } from "../utils/jobs/types"
@@ -201,7 +200,6 @@ export async function initialize({
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
-  const lmdbStoreIsUsed = detectLmdbStore()
 
   if (process.env.GATSBY_DETECT_NODE_MUTATIONS) {
     enableNodeMutationsDetection()
@@ -260,15 +258,12 @@ export async function initialize({
   const workerCacheDirectory = `${program.directory}/.cache/worker`
   const lmdbCacheDirectory = `${program.directory}/.cache/${lmdbCacheDirectoryName}`
 
-  const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
   const publicDirExists = fs.existsSync(publicDirectory)
   const workerCacheDirExists = fs.existsSync(workerCacheDirectory)
   const lmdbCacheDirExists = fs.existsSync(lmdbCacheDirectory)
 
   // check the cache file that is used by the current configuration
-  const cacheDirExists = lmdbStoreIsUsed
-    ? lmdbCacheDirExists
-    : cacheJsonDirExists
+  const cacheDirExists = lmdbCacheDirExists
 
   // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
   // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
@@ -511,11 +506,7 @@ export async function initialize({
       overwrite: true,
     })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
-    if (lmdbStoreIsUsed) {
-      await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
-    } else {
-      await fs.ensureDir(`${cacheDirectory}/json`)
-    }
+    await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if

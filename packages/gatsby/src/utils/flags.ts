@@ -129,17 +129,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `LMDB_STORE`,
-    env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
-    command: `all`,
-    telemetryId: `LmdbStore`,
-    experimental: true,
-    umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
-    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-    requires: `Requires Node v14.10 or above.`,
-  },
-  {
     name: `PARALLEL_QUERY_RUNNING`,
     env: `GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING`,
     command: `build`,

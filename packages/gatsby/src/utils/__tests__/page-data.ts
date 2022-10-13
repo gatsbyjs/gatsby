@@ -5,7 +5,6 @@ import {
   readPageQueryResult,
   waitUntilPageQueryResultsAreStored,
 } from "../page-data"
-import { isLmdbStore } from "../../datastore"
 
 describe(`savePageQueryResults / readPageQueryResults`, () => {
   it(`can save and read data`, async () => {
@@ -33,6 +32,6 @@ describe(`savePageQueryResults / readPageQueryResults`, () => {
     const result = await readPageQueryResult(publicDir, pagePath)
     expect(JSON.parse(result)).toEqual(inputResult)
     // we expect partial page data file only in non-lmdb mode
-    expect(fs.existsSync(pageQueryResultsPath)).toEqual(!isLmdbStore())
+    expect(fs.existsSync(pageQueryResultsPath)).toEqual(false)
   })
 })

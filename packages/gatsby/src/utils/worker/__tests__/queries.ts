@@ -12,11 +12,7 @@ import {
 } from "../../../redux"
 import { loadConfig } from "../../../bootstrap/load-config"
 import { loadPlugins } from "../../../bootstrap/load-plugins"
-import {
-  createTestWorker,
-  describeWhenLMDB,
-  GatsbyTestWorkerPool,
-} from "./test-helpers"
+import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
 import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
@@ -120,7 +116,7 @@ const queryIdsBig: IGroupedQueryIds = {
   sliceQueryIds: [],
 }
 
-describeWhenLMDB(`worker (queries)`, () => {
+describe(`worker (queries)`, () => {
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     const fileDir = path.join(process.cwd(), `.cache/worker`)
