@@ -24,78 +24,75 @@ const isProductionEnv = process.env.NODE_ENV === `production`
 
 export function validateComponent(args: {
   input: ICreatePageInput | ICreateSliceInput
-  directory: string
   pluginName: string
   errorIdMap: IErrorIdMap
-}): { message?: string; error?: IErrorMeta; panicOnBuild?: boolean } {
-  const { input, directory, pluginName, errorIdMap } = args || {}
-  const { component: componentPath } = input
+}): { error?: IErrorMeta; panicOnBuild?: boolean } {
+  const { input, pluginName, errorIdMap } = args || {}
 
   // No component path passed
-  if (!componentPath) {
-    throw new Error(errorIdMap.noPath)
+  if (!input?.component) {
+    return {
+      error: {
+        id: errorIdMap.noPath,
+        context: {
+          pluginName,
+          input,
+        },
+      },
+    }
   }
 
-  const cleanComponentPath = getPathToLayoutComponent(componentPath)
+  const componentPath = getPathToLayoutComponent(input?.component)
+
+  const errorContext = {
+    input,
+    pluginName,
+    componentPath,
+  }
 
   // Component path already validated in previous pass
-  if (validationCache.has(cleanComponentPath)) {
+  if (validationCache.has(componentPath)) {
     return {}
   }
 
   // Component path must be absolute
-  if (!path.isAbsolute(cleanComponentPath)) {
+  if (!path.isAbsolute(componentPath)) {
     return {
       error: {
         id: errorIdMap.notAbsolute,
-        context: {
-          pluginName,
-          component: input,
-          componentPath: cleanComponentPath,
-        },
+        context: errorContext,
       },
-      message: `${pluginName} must set the absolute path to the page component when create creating a page`,
     }
   }
 
   // Component path must exist
   if (isNotTestEnv) {
-    if (!fs.existsSync(cleanComponentPath)) {
+    if (!fs.existsSync(componentPath)) {
       return {
         error: {
           id: errorIdMap.doesNotExist,
-          context: {
-            pluginName,
-            component: input,
-            componentPath: cleanComponentPath,
-          },
+          context: errorContext,
         },
       }
     }
   }
 
-  if (!cleanComponentPath.includes(`/.cache/`) && isProductionEnv) {
-    const fileContent = fs.readFileSync(cleanComponentPath, `utf-8`)
+  if (!componentPath.includes(`/.cache/`) && isProductionEnv) {
+    const fileContent = fs.readFileSync(componentPath, `utf-8`)
 
     // Component must not be empty
     if (fileContent === ``) {
-      const relativePath = path.relative(directory, cleanComponentPath)
-
       return {
         error: {
           id: errorIdMap.empty,
-          context: {
-            relativePath,
-          },
+          context: errorContext,
         },
         panicOnBuild: true,
       }
     }
 
     // Component must have a default export
-    if (
-      [`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(cleanComponentPath))
-    ) {
+    if ([`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(componentPath))) {
       const includesDefaultExport =
         fileContent.includes(`export default`) ||
         fileContent.includes(`module.exports`) ||
@@ -108,9 +105,7 @@ export function validateComponent(args: {
         return {
           error: {
             id: errorIdMap.noDefaultExport,
-            context: {
-              fileName: cleanComponentPath,
-            },
+            context: errorContext,
           },
           panicOnBuild: true,
         }
@@ -118,7 +113,7 @@ export function validateComponent(args: {
     }
   }
 
-  validationCache.add(cleanComponentPath)
+  validationCache.add(componentPath)
   return {}
 }
 

@@ -268,8 +268,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       report.panic({
         id: `11322`,
         context: {
+          input: page,
           pluginName: name,
-          pageObject: page,
         },
       })
     } else {
@@ -287,9 +287,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const { trailingSlash } = config
   const { directory } = program
 
-  const { error, message, panicOnBuild } = validateComponent({
+  const { error, panicOnBuild } = validateComponent({
     input: page,
-    directory,
     pluginName: name,
     errorIdMap: {
       noPath: `11322`,
@@ -308,7 +307,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panic(error)
       }
     }
-    return message
+    return `createPage must set the absolute path to the page component when create creating a page`
   }
 
   // check if we've processed this component path

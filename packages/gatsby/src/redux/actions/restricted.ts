@@ -459,12 +459,10 @@ export const actions = {
         })
       }
 
-      const { program, slices } = store.getState()
-      const { directory } = program
+      const { slices } = store.getState()
 
       const { error, panicOnBuild } = validateComponent({
         input: payload,
-        directory,
         pluginName: name,
         errorIdMap: {
           noPath: `11333`,

@@ -430,7 +430,7 @@ const errors = {
       `${
         context.pluginName
       } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
       )}`,
@@ -463,7 +463,7 @@ const errors = {
       } created a page with a component that doesn't exist.\n\nThe path to the missing component is "${
         context.componentPath
       }"\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.component,
+        context.input,
         null,
         4
       )}`,
@@ -480,7 +480,7 @@ const errors = {
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
         context.componentPath
       }")\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.component,
+        context.input,
         null,
         4
       )}`,
@@ -490,7 +490,7 @@ const errors = {
   },
   "11327": {
     text: (context): string =>
-      `You have an empty file in the "src/pages" directory at "${context.relativePath}". Please remove it or make it a valid component`,
+      `You have an empty file in the "src/pages" directory at "${context.componentPath}". Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
@@ -577,7 +577,7 @@ const errors = {
       `${
         context.pluginName
       } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
-        context.sliceObject,
+        context.input,
         null,
         4
       )}`,
@@ -609,7 +609,7 @@ const errors = {
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
         context.componentPath
       }")\n\nThe object passed to createSlice:\n${JSON.stringify(
-        context.component,
+        context.input,
         null,
         4
       )}`,
@@ -625,7 +625,7 @@ const errors = {
       } created a slice with a component that doesn't exist.\n\nThe path to the missing component is "${
         context.componentPath
       }"\n\nThe slice object passed to createSlice:\n${JSON.stringify(
-        context.component,
+        context.input,
         null,
         4
       )}`,
@@ -636,7 +636,7 @@ const errors = {
   },
   "11337": {
     text: (context): string =>
-      `${context.pluginName} must not be passed an empty file "${context.relativePath}" when creating a slice. Please remove it or make it a valid component.`,
+      `${context.pluginName} must not be passed an empty file "${context.componentPath}" when creating a slice. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
     // TODO: change domain to gatsbyjs.com when it's released

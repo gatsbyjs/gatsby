@@ -28,36 +28,76 @@ afterEach(() => {
 
 describe(`validateComponent`, () => {
   it(`should throw if no component path is passed`, () => {
-    expect(() => {
-      validateComponent({
-        input: {} as IMockInput,
-        directory: `/a`,
-        pluginName,
-        errorIdMap,
-      })
-    }).toThrowError(errorIdMap.noPath)
+    const thrown = validateComponent({
+      input: {} as IMockInput,
+      directory: `/a`,
+      pluginName,
+      errorIdMap,
+    })
+
+    expect(thrown).toMatchInlineSnapshot(`
+      Object {
+        "error": Object {
+          "context": Object {
+            "input": Object {},
+            "pluginName": "${pluginName}",
+          },
+          "id": "${errorIdMap.noPath}",
+        },
+      }
+    `)
   })
 
   it(`should throw if component path is not absolute`, () => {
+    const componentPath = `a.js`
+
     const thrown = validateComponent({
-      input: { component: `a.js` } as IMockInput,
+      input: { component: componentPath } as IMockInput,
       directory: `/a`,
       pluginName,
       errorIdMap,
     })
 
-    expect(thrown?.error?.id).toEqual(errorIdMap.notAbsolute)
+    expect(thrown).toMatchInlineSnapshot(`
+      Object {
+        "error": Object {
+          "context": Object {
+            "componentPath": "${componentPath}",
+            "input": Object {
+              "component": "${componentPath}",
+            },
+            "pluginName": "${pluginName}",
+          },
+          "id": "${errorIdMap.notAbsolute}",
+        },
+      }
+    `)
   })
 
   it(`should throw if component path does not exist`, () => {
+    const componentPath = `/a/b.js`
+
     const thrown = validateComponent({
-      input: { component: `/a/b.js` } as IMockInput,
+      input: { component: componentPath } as IMockInput,
       directory: `/a`,
       pluginName,
       errorIdMap,
     })
 
-    expect(thrown?.error?.id).toEqual(errorIdMap.doesNotExist)
+    expect(thrown).toMatchInlineSnapshot(`
+      Object {
+        "error": Object {
+          "context": Object {
+            "componentPath": "${componentPath}",
+            "input": Object {
+              "component": "${componentPath}",
+            },
+            "pluginName": "${pluginName}",
+          },
+          "id": "${errorIdMap.doesNotExist}",
+        },
+      }
+    `)
   })
 
   it(`should throw if component is empty`, () => {
@@ -73,7 +113,23 @@ describe(`validateComponent`, () => {
       errorIdMap,
     })
 
-    expect(thrown?.error?.id).toEqual(errorIdMap.empty)
+    const jestEmptyComponentPath = `<PROJECT_ROOT>/packages/gatsby/src/utils/__tests__/fixtures/empty.js`
+
+    expect(thrown).toMatchInlineSnapshot(`
+      Object {
+        "error": Object {
+          "context": Object {
+            "componentPath": "${jestEmptyComponentPath}",
+            "input": Object {
+              "component": "${jestEmptyComponentPath}",
+            },
+            "pluginName": "${pluginName}",
+          },
+          "id": "${errorIdMap.empty}",
+        },
+        "panicOnBuild": true,
+      }
+    `)
   })
 
   it(`should throw if component does not have a default export`, () => {
@@ -92,7 +148,23 @@ describe(`validateComponent`, () => {
       errorIdMap,
     })
 
-    expect(thrown?.error?.id).toEqual(errorIdMap.noDefaultExport)
+    const jestNoDefaultComponentPath = `<PROJECT_ROOT>/packages/gatsby/src/utils/__tests__/fixtures/no-default-export.js`
+
+    expect(thrown).toMatchInlineSnapshot(`
+      Object {
+        "error": Object {
+          "context": Object {
+            "componentPath": "${jestNoDefaultComponentPath}",
+            "input": Object {
+              "component": "${jestNoDefaultComponentPath}",
+            },
+            "pluginName": "${pluginName}",
+          },
+          "id": "${errorIdMap.noDefaultExport}",
+        },
+        "panicOnBuild": true,
+      }
+    `)
   })
 
   it(`should pass if component is valid`, () => {
