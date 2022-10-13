@@ -1,5 +1,5 @@
+import { b64e } from "~/utils/string-encoding"
 const fs = require(`fs-extra`)
-import btoa from "btoa"
 const { remoteFileDownloaderBarPromise } = require(`./progress-bar-promise`)
 const got = require(`got`)
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -263,7 +263,7 @@ async function processRemoteNode({
   // extensible. We should define a proper API that we validate.
   const httpOpts = {}
   if (auth?.htaccess_pass && auth?.htaccess_user) {
-    headers[`Authorization`] = `Basic ${btoa(
+    headers[`Authorization`] = `Basic ${b64e(
       `${auth.htaccess_user}:${auth.htaccess_pass}`
     )}`
   }

@@ -99,13 +99,12 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
 
   const typeConflictReporter = new TypeConflictReporter()
 
-  const enginePrintConfig =
-    _CFLAGS_.GATSBY_MAJOR === `4` && shouldPrintEngineSnapshot()
-      ? {
-          path: `${directory}/.cache/schema.gql`,
-          rewrite: true,
-        }
-      : undefined
+  const enginePrintConfig = shouldPrintEngineSnapshot()
+    ? {
+        path: `${directory}/.cache/schema.gql`,
+        rewrite: true,
+      }
+    : undefined
 
   const fieldExtensions = getAllFieldExtensions()
   const schemaComposer = createSchemaComposer({ fieldExtensions })

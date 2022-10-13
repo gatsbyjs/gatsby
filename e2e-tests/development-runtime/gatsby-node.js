@@ -1,5 +1,6 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const headFunctionExportSharedData = require("./shared-data/head-function-export")
 const {
   addRemoteFilePolyfillInterface,
   polyfillImageServiceDevRoutes,
@@ -17,9 +18,18 @@ exports.createSchemaCustomization = ({ actions, schema, store }) => {
       {
         store,
         schema,
+        actions,
       }
     )
   )
+
+  actions.createTypes(`#graphql
+    type HeadFunctionExportFsRouteApi implements Node {
+      id: ID!
+      slug: String!
+      content: String!
+    }
+  `)
 }
 
 /** @type {import('gatsby').sourceNodes} */
@@ -27,8 +37,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const items = [
     {
       name: "photoA.jpg",
-      url:
-        "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
+      url: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
       placeholderUrl:
         "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=%width%&h=%height%",
       mimeType: "image/jpg",
@@ -38,8 +47,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     },
     {
       name: "photoB.jpg",
-      url:
-        "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=2000&q=10",
+      url: "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=2000&q=10",
       mimeType: "image/jpg",
       filename: "photo-1552053831.jpg",
       width: 1247,
@@ -47,8 +55,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     },
     {
       name: "photoC.jpg",
-      url:
-        "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
+      url: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80",
       placeholderUrl:
         "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=%width%&h=%height%",
       mimeType: "image/jpg",
@@ -67,6 +74,18 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
         contentDigest: createContentDigest(item.url),
       },
     })
+  })
+
+  actions.createNode({
+    id: createNodeId(`head-function-export-fs-route-api`),
+    slug: `/fs-route-api`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `HeadFunctionExportFsRouteApi`,
+      content: `Some words`,
+      contentDigest: createContentDigest(`Some words`),
+    },
   })
 }
 
@@ -166,6 +185,14 @@ exports.createPages = async function createPages({
   createPage({
     path: `/client-only-paths/static`,
     component: path.resolve(`src/templates/static-page.js`),
+  })
+
+  createPage({
+    path: `/head-function-export/correct-props`,
+    component: path.resolve(
+      `src/templates/head-function-export/correct-props.js`
+    ),
+    context: headFunctionExportSharedData.data.context,
   })
 
   createRedirect({
@@ -275,6 +302,6 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 
 /** @type{import('gatsby').onCreateDevServer} */
-exports.onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+exports.onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }

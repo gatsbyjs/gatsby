@@ -46,7 +46,6 @@ exports.onCreateNode = async ({
 				createNode, // helper function in gatsby-node to generate the node
 				createNodeId, // helper function in gatsby-node to generate the node id
 				cache, // Gatsby's cache
-				store, // Gatsby's redux store
 			})
 			// if the file was created, attach the new node to the parent node
 			if (fileNode) {

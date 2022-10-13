@@ -1,8 +1,6 @@
 import _ from "lodash"
 import semver from "semver"
 
-import sampleSiteForExperiment from "./sample-site-for-experiment"
-
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
@@ -87,7 +85,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      // `DEV_SSR`, - not working with serverdata atm
+      `DEV_SSR`,
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `DEV_WEBPACK_CACHE`,
     ],
@@ -99,20 +97,9 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `DevSsr`,
     experimental: false,
-    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
+    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (): fitnessEnum => {
-      // TODO Re-enable after gatsybcamp
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return false
-      }
-
-      if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `QUERY_ON_DEMAND`,
@@ -197,14 +184,7 @@ const activeFlags: Array<IFlag> = [
     experimental: true,
     umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
     description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
-    testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return `LOCKED_IN`
-      }
-
-      const [major, minor] = process.versions.node.split(`.`)
-      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
-    },
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
     requires: `Requires Node v14.10 or above.`,
   },
   {
@@ -216,14 +196,7 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
     description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],
-    testFitness: (): fitnessEnum => {
-      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        return `LOCKED_IN`
-      }
-
-      const [major, minor] = process.versions.node.split(`.`)
-      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
-    },
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
     requires: `Requires Node v14.10 or above.`,
   },
   {
@@ -246,6 +219,44 @@ const activeFlags: Array<IFlag> = [
     noCI: true,
     testFitness: (): fitnessEnum => false,
     requires: `As of gatsby@4.15.0 this feature is available as a config option inside gatsby-config. Learn more at https://gatsby.dev/graphql-typegen`,
+  },
+  {
+    name: `PARTIAL_HYDRATION`,
+    env: `GATSBY_PARTIAL_HYDRATION`,
+    command: `build`,
+    telemetryId: `PartialHydration`,
+    description: `Enable partial hydration to reduce Total Blocking Time and Time To Interactive `,
+    umbrellaIssue: `https://gatsby.dev/partial-hydration-umbrella-issue`,
+    experimental: true,
+    testFitness: (): fitnessEnum => {
+      const v18Constraint = {
+        react: `>=18.0.0`,
+      }
+      const v0Constraint = {
+        react: `^0.0.0`,
+      }
+
+      return (
+        _CFLAGS_.GATSBY_MAJOR === `5` &&
+        (satisfiesSemvers(v18Constraint) || satisfiesSemvers(v0Constraint))
+      )
+    },
+    requires:
+      Number(_CFLAGS_.GATSBY_MAJOR) < 5
+        ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
+        : `Partial hydration requires React 18+ to work.`,
+  },
+  {
+    name: `SLICES`,
+    env: `GATSBY_SLICES`,
+    command: `all`,
+    telemetryId: `SliceAPI`,
+    description: `Temporary flag for development purposes (until interop with partial hydration is implemented)`,
+    umbrellaIssue: ``,
+    experimental: true,
+    testFitness: (): fitnessEnum =>
+      _CFLAGS_.GATSBY_MAJOR === `5` ? `OPT_IN` : false,
+    requires: `Slices is only available in Gatsby V5. Please upgrade Gatsby.`,
   },
 ]
 

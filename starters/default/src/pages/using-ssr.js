@@ -7,7 +7,6 @@ import Seo from "../components/seo"
 const UsingSSR = ({ serverData }) => {
   return (
     <Layout>
-      <Seo title="Using SSR" />
       <h1>
         This page is <b>rendered server-side</b>
       </h1>
@@ -32,6 +31,8 @@ const UsingSSR = ({ serverData }) => {
     </Layout>
   )
 }
+
+export const Head = () => <Seo title="Using SSR" />
 
 export default UsingSSR
 

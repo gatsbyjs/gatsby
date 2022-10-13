@@ -34,7 +34,7 @@ const errors = {
   },
   "95312": {
     text: (context): string =>
-      `"${context.ref}" is not available during server side rendering.`,
+      `"${context.ref}" is not available during Server-Side Rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,
@@ -63,6 +63,17 @@ const errors = {
       `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
     type: Type.WEBPACK,
     level: Level.ERROR,
+  },
+  "98011": {
+    text: (context): string =>
+      `Rendering Engines attempted to use unsupported "${
+        context.package
+      }" package${
+        context.importedBy ? ` (imported by "${context.importedBy}")` : ``
+      }${context.advisory ? `\n\n${context.advisory}` : ``}`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
   },
   "98123": {
     text: (context): string =>
@@ -347,7 +358,9 @@ const errors = {
   },
   "10124": {
     text: (context): string =>
-      `It looks like you were trying to add the config file? Please rename "${context.nearMatch}" to "${context.configName}.js"`,
+      `It looks like you were trying to add the config file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -366,6 +379,22 @@ const errors = {
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
       `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
       `\nare not supported in the root gatsby-config.`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "10127": {
+    text: (context): string =>
+      `Your "${context.configName}.ts" file failed to compile to "${context.configName}.js". Please run "gatsby clean" and try again.\n\nIf the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help."`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "10128": {
+    text: (context): string =>
+      `It looks like you were trying to add the gatsby-node file? Please rename "${
+        context.nearMatch
+      }" to "${context.configName}.${context.isTSX ? `ts` : `js`}"`,
     type: Type.CONFIG,
     level: Level.ERROR,
     category: ErrorCategory.USER,
@@ -401,12 +430,13 @@ const errors = {
       `${
         context.pluginName
       } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11323": {
     text: (context): string =>
@@ -416,9 +446,10 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11324": {
     text: (context): string =>
@@ -430,42 +461,46 @@ const errors = {
       `${
         context.pluginName
       } created a page with a component that doesn't exist.\n\nThe path to the missing component is "${
-        context.component
+        context.componentPath
       }"\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11326": {
     text: (context): string =>
       `${
         context.pluginName
-      } must set the absolute path to the page component when create creating a page.\n\nThe (relative) path you used for the component is "${
-        context.component
+      } must set the absolute path to the page component when creating a page.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
-        context.component
+        context.componentPath
       }")\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11327": {
     text: (context): string =>
-      `You have an empty file in the "src/pages" directory at "${context.relativePath}". Please remove it or make it a valid component`,
+      `An empty file "${context.componentPath}" was found during page creation. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11328": {
     text: (context): string =>
-      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${context.fileName}`,
+      `${context.pluginName} created a page without a valid default export.\n\nThe path to the page is "${context.componentPath}". If your page is a named export, please use "export default" instead.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   // invalid or deprecated APIs
   "11329": {
@@ -535,6 +570,85 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
+  },
+  // slices
+  "11333": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11334": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the slice id when creating a slice.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.sliceObject,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11335": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the absolute path to the slice component when creating a slice.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
+      }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
+        context.componentPath
+      }")\n\nThe object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11336": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice with a component that doesn't exist.\n\nThe path to the missing component is "${
+        context.componentPath
+      }"\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11337": {
+    text: (context): string =>
+      `An empty file "${context.componentPath}" was found during slice creation. Please remove it or make it a valid component.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11338": {
+    text: (context): string =>
+      `${context.pluginName} created a slice component without a valid default export.\n\nThe path to the component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   // node object didn't pass validation
   "11467": {
@@ -708,10 +822,25 @@ const errors = {
   },
   "11903": {
     text: (context): string =>
-      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.`,
+      `There was an unhandled error during compilation for ${context.siteRoot}. Please run the command with the --verbose flag again.\n${context.sourceMessage}`,
     level: Level.ERROR,
     type: Type.COMPILATION,
     category: ErrorCategory.USER,
+  },
+  "11904": {
+    text: (context): string =>
+      `Expected compiled files not found after compilation for ${
+        context.siteRoot
+      } after ${context.retries} retries.\nFile expected to be valid: ${
+        context.compiledFileLocation
+      }${
+        context.sourceFileLocation
+          ? `\nCompiled from: ${context.sourceFileLocation}`
+          : ``
+      }\n\nPlease run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.`,
+    level: Level.ERROR,
+    type: Type.COMPILATION,
+    category: ErrorCategory.SYSTEM,
   },
   "12100": {
     text: (
@@ -721,6 +850,37 @@ const errors = {
     ${context.sourceMessage}`,
     level: Level.ERROR,
     type: Type.GRAPHQL,
+    category: ErrorCategory.USER,
+    docsUrl: `https://gatsby.dev/graphql-typegen`,
+  },
+  // Partial hydration rendering errors
+  "80000": {
+    text: (context): string =>
+      stripIndents(`Building partial HTML failed${
+        context?.path ? ` for path "${context.path}"` : ``
+      }
+
+      This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers are used in a component without declaring the "client export" directive at the top of the file.
+      
+      Consider adding "client export" to the top of your file if your component is interactive, otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
+    `),
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    category: ErrorCategory.USER,
+  },
+  "80001": {
+    text: (): string =>
+      stripIndents(
+        `
+        Failed to restore previous client module manifest.
+        
+        This can happen if the manifest is corrupted or is not compatible with the current version of Gatsby.
+
+        Please run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.
+        `
+      ),
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
     category: ErrorCategory.USER,
   },
 }

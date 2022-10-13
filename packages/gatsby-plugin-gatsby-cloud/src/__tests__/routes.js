@@ -3,8 +3,66 @@ import * as path from "path"
 import * as os from "os"
 const { onPostBuild } = require(`../gatsby-node`)
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    captureEvent: jest.fn(),
+  }
+})
+
 describe(`Routes IPC`, () => {
   let tmpDir
+
+  const pages = new Map()
+
+  pages.set(`/`, { mode: `DSG`, path: `/` })
+  pages.set(`/path/1/`, { mode: `DSG`, path: `/path/1` })
+  pages.set(`/path/2/`, { mode: `SSR`, path: `/path/2` })
+  pages.set(`/path/3/`, { mode: `SSG`, path: `/path/3` })
+  pages.set(`/path/4/`, {
+    mode: `SSR`,
+    path: `/path/[id].js`,
+    matchPath: `/path/:id`,
+  })
+  pages.set(`/path/5/`, {
+    mode: `SSR`,
+    path: `/path/[...].js`,
+    matchPath: `/path/*`,
+  })
+
+  const getMockedState = () => {
+    return {
+      pages,
+      program: {
+        directory: tmpDir,
+      },
+      redirects: [],
+      components: new Map([
+        [
+          1,
+          {
+            componentChunkName: `component---node-modules-gatsby-plugin-offline-app-shell-js`,
+          },
+        ],
+        [
+          2,
+          {
+            componentChunkName: `component---src-templates-blog-post-js`,
+          },
+        ],
+        [
+          3,
+          {
+            componentChunkName: `component---src-templates-post-js`,
+          },
+        ],
+      ]),
+      config: {
+        assetPath: ``,
+        pathPrefix: ``,
+      },
+    }
+  }
+
   beforeAll(async () => {
     tmpDir = await fs.mkdtemp(
       path.join(os.tmpdir(), `gatsby-plugin-gatsby-cloud-item-dir`)
@@ -18,58 +76,11 @@ describe(`Routes IPC`, () => {
   it(`Emits pages with mode`, () => {
     process.send = jest.fn()
 
-    const pages = new Map()
-
-    pages.set(`/`, { mode: `DSG`, path: `/` })
-    pages.set(`/path/1/`, { mode: `DSG`, path: `/path/1` })
-    pages.set(`/path/2/`, { mode: `SSR`, path: `/path/2` })
-    pages.set(`/path/3/`, { mode: `SSG`, path: `/path/3` })
-    pages.set(`/path/4/`, {
-      mode: `SSR`,
-      path: `/path/[id].js`,
-      matchPath: `/path/:id`,
-    })
-    pages.set(`/path/5/`, {
-      mode: `SSR`,
-      path: `/path/[...].js`,
-      matchPath: `/path/*`,
-    })
-
     onPostBuild(
       {
         store: {
           getState() {
-            return {
-              pages,
-              program: {
-                directory: tmpDir,
-              },
-              redirects: [],
-              components: new Map([
-                [
-                  1,
-                  {
-                    componentChunkName: `component---node-modules-gatsby-plugin-offline-app-shell-js`,
-                  },
-                ],
-                [
-                  2,
-                  {
-                    componentChunkName: `component---src-templates-blog-post-js`,
-                  },
-                ],
-                [
-                  3,
-                  {
-                    componentChunkName: `component---src-templates-post-js`,
-                  },
-                ],
-              ]),
-              config: {
-                assetPath: ``,
-                pathPrefix: ``,
-              },
-            }
+            return getMockedState()
           },
         },
       },
@@ -159,5 +170,36 @@ describe(`Routes IPC`, () => {
         expect.any(Function)
       )
     }
+  })
+
+  it(`Emits totalPageCount`, async () => {
+    const originalSend = process.send
+    process.send = jest.fn()
+
+    await onPostBuild(
+      {
+        store: {
+          getState() {
+            return getMockedState()
+          },
+        },
+      },
+      {}
+    )
+
+    expect(process.send).toHaveBeenCalledWith(
+      {
+        type: `LOG_ACTION`,
+        action: {
+          type: `CREATE_TOTAL_RENDERED_PAGE_COUNT`,
+          payload: {
+            totalRenderedPageCount: 6,
+          },
+        },
+      },
+      expect.anything()
+    )
+
+    process.send = originalSend
   })
 })

@@ -187,7 +187,7 @@ Configure the plugins in your `gatsby-config` file. As with the previous example
 
 The below example uses the `gatsby-plugin-mdx` plugin.
 
-`gatsby-remark-images` needs to be both a sub-plugin of `gatsby-plugin-mdx`, included in the `options` field, and a string entry in the plugins array. `gatsby-plugin-sharp` can be included on its own.
+`gatsby-remark-images` needs to be a sub-plugin of `gatsby-plugin-mdx`, included in the `options` field. `gatsby-plugin-sharp` can be included on its own.
 
 `gatsby-source-filesystem` needs to be pointed at wherever you have your images on disk.
 
@@ -197,7 +197,6 @@ The below example uses the `gatsby-plugin-mdx` plugin.
 module.exports = {
   plugins: [
     `gatsby-plugin-sharp`,
-    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {

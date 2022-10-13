@@ -3,6 +3,7 @@ const path = require(`path`)
 const v8 = require(`v8`)
 const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
+const { murmurhash } = require(`babel-plugin-remove-graphql-queries/murmur`)
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
@@ -87,6 +88,7 @@ jest.mock(`glob`, () => {
     }),
   }
 })
+jest.mock(`babel-plugin-remove-graphql-queries/murmur`)
 
 function getFakeNodes() {
   // Set nodes to something or the cache will fail because it asserts this
@@ -150,6 +152,7 @@ describe(`redux db`, () => {
     mockWrittenContent.set(pageTemplatePath, `foo`)
     reporterWarn.mockClear()
     reporterInfo.mockClear()
+    murmurhash.mockReturnValue(`1234567890`)
   })
 
   it(`should have cache status telemetry event`, async () => {

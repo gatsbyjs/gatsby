@@ -2,7 +2,12 @@
 
 exports[`Dev loader loadPage should be successful when component can be loaded 1`] = `
 Object {
-  "component": [Function],
+  "component": Object {
+    "default": [Function],
+  },
+  "head": Object {
+    "default": [Function],
+  },
   "json": Object {
     "pageContext": "something something",
   },
@@ -11,6 +16,7 @@ Object {
     "getServerDataError": undefined,
     "matchPath": undefined,
     "path": "/mypage/",
+    "slicesMap": Object {},
     "staticQueryHashes": Array [],
     "webpackCompilationHash": "123",
   },

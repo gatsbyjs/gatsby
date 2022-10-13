@@ -1,3 +1,5 @@
+import { Helmet } from "react-helmet"
+
 jest.mock(`react-helmet`)
 
 import { onRenderBody } from "../gatsby-ssr"
@@ -16,9 +18,12 @@ describe(`gatsby-plugin-react-helmet`, () => {
 
       onRenderBody(actions)
 
+      const titleComponent = Helmet.renderStatic().title.toComponent()
+
       expect(actions.setHeadComponents).toHaveBeenCalledTimes(1)
+
       expect(actions.setHeadComponents).toHaveBeenCalledWith([
-        `title-component`,
+        titleComponent,
         `link-component`,
         `meta-component`,
         `noscript-component`,

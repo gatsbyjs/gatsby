@@ -4,10 +4,10 @@ describe(`Global style from gatsby-browser.js`, () => {
   beforeEach(() => {
     cy.intercept("/dog-thumbnail.jpg").as("thumbnail")
     cy.intercept("/static/merriweather-latin**.woff2").as("font")
-    cy.intercept("localhost:9000/dog-thumbnail-flip.jpg").as(
+    cy.intercept("/dog-thumbnail-flip.jpg").as(
       "absolute-url-without-protocol"
     )
-    cy.intercept("localhost:9000/dog-thumbnail-dither.jpg").as(
+    cy.intercept("/dog-thumbnail-dither.jpg").as(
       "absolute-url-with-protocol"
     )
     cy.visit(`/global-style/`).waitForRouteChange()

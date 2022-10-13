@@ -265,11 +265,9 @@ export const createLocalFileNode = async ({
 
   const createFileNodeRequirements = {
     parentNodeId: mediaItemNode.id,
-    store: gatsbyStore,
     cache,
     createNode,
     createNodeId,
-    reporter,
   }
 
   let remoteFileNode
@@ -322,6 +320,7 @@ export const createLocalFileNode = async ({
           url: mediaItemUrl,
           auth,
           ...createFileNodeRequirements,
+          reporter,
           pluginOptions,
         })
 

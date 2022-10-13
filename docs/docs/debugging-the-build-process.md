@@ -95,6 +95,10 @@ We won't go in depth here about how to debug in VS Code - for that you can check
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/.bin/gatsby",
       "args": ["develop"],
+      "env": {
+        "PARCEL_WORKERS": "0",
+        "GATSBY_CPU_COUNT": "1",
+      },
       "runtimeArgs": ["--nolazy"],
       "console": "integratedTerminal"
     },
@@ -104,6 +108,10 @@ We won't go in depth here about how to debug in VS Code - for that you can check
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/.bin/gatsby",
       "args": ["build"],
+      "env": {
+        "PARCEL_WORKERS": "0",
+        "GATSBY_CPU_COUNT": "1",
+      },
       "runtimeArgs": ["--nolazy"],
       "console": "integratedTerminal"
     }
@@ -126,6 +134,10 @@ We won't go in depth here about how to debug in VS Code - for that you can check
         "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby"
       },
       "args": ["develop"],
+      "env": {
+        "PARCEL_WORKERS": "0",
+        "GATSBY_CPU_COUNT": "1",
+      },
       "runtimeArgs": ["--nolazy"],
       "console": "integratedTerminal"
     },
@@ -138,6 +150,10 @@ We won't go in depth here about how to debug in VS Code - for that you can check
         "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby"
       },
       "args": ["build"],
+      "env": {
+        "PARCEL_WORKERS": "0",
+        "GATSBY_CPU_COUNT": "1",
+      },
       "runtimeArgs": ["--nolazy"],
       "console": "integratedTerminal"
     }

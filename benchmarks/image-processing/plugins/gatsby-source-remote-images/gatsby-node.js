@@ -16,7 +16,6 @@ exports.sourceNodes = ({ actions, createNodeId, store, cache }) =>
         fileNode = await createRemoteFileNode({
           url: url,
           parentNodeId: nodeId,
-          store,
           cache,
           createNode: actions.createNode,
           createNodeId,

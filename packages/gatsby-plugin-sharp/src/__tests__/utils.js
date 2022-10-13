@@ -1,5 +1,4 @@
 jest.mock(`gatsby/reporter`)
-jest.mock(`progress`)
 const { calculateImageSizes } = require(`../utils`)
 const reporter = require(`gatsby/reporter`)
 const sharp = require(`sharp`)

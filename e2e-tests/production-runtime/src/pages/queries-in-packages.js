@@ -1,13 +1,13 @@
 import * as React from "react"
-import SEO from "gatsby-seo"
 
 import Layout from "../components/layout"
+import Seo from "../components/seo"
 
-export default () => (
-  <Layout>
-    <SEO
-      title="Testing queries in packages"
-      keywords={[`gatsby`, `application`, `react`, `queries in component`]}
-    />
-  </Layout>
+export default () => <Layout></Layout>
+
+export const Head = () => (
+  <Seo
+    title="Testing queries in packages"
+    keywords={[`gatsby`, `application`, `react`, `queries in component`]}
+  />
 )

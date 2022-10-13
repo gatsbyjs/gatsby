@@ -4,14 +4,14 @@ function preset(context, options = {}) {
   const {
     browser = false,
     debug = false,
-    nodeVersion = `14.15.0`,
+    nodeVersion = `18.0.0`,
     esm = false,
     availableCompilerFlags = [`GATSBY_MAJOR`],
   } = options
   const {
     NODE_ENV,
     BABEL_ENV,
-    COMPILER_OPTIONS = `GATSBY_MAJOR=4`,
+    COMPILER_OPTIONS = `GATSBY_MAJOR=5`,
   } = process.env
 
   const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
@@ -85,6 +85,7 @@ function preset(context, options = {}) {
           availableFlags: availableCompilerFlags,
         },
       ],
+      r(`babel-plugin-lodash`),
     ].filter(Boolean),
     overrides: [
       {

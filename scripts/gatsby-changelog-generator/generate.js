@@ -9,20 +9,57 @@ const { renderHeader, renderVersion } = require(`./render`)
 
 const monorepoRoot = () => process.cwd()
 
+function getDirnameFromPackageName(packageName) {
+  return packageNameToDirname.get(packageName)
+}
+
 const changelogRelativePath = packageName =>
-  path.join(`packages`, packageName, `CHANGELOG.md`)
+  path.join(`packages`, getDirnameFromPackageName(packageName), `CHANGELOG.md`)
 
 const changelogPath = packageName =>
   path.join(monorepoRoot(), changelogRelativePath(packageName))
 
-// tags are lerna-style: package@version
-const tagToVersion = tag => tag.split(`@`)[1]
+// Tags are lerna-style: package@version
+// But scoped packages start with `@gatsbyjs/` so in these cases the second part is the version
+const tagToVersion = tag => {
+  const split = tag.split(`@`)
+  if (tag.startsWith(`@gatsbyjs/`)) {
+    return split[2]
+  }
+  return split[1]
+}
 
+// Scoped packages have a different folder name than the package name
+// This is a map of package name <-> folder name
+const packageNameToDirname = new Map()
+
+// Return list of package names (tries name in package.json first and falls back to directory name)
+// Also fills the packageNameToDirname map
 function getAllPackageNames() {
   return fs
     .readdirSync(path.join(monorepoRoot(), `packages`), { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name)
+    .map(dirent => {
+      try {
+        const localPkg = JSON.parse(
+          fs.readFileSync(
+            path.join(monorepoRoot(), `packages`, dirent.name, `package.json`)
+          )
+        )
+
+        if (localPkg && localPkg.name) {
+          packageNameToDirname.set(localPkg.name, dirent.name)
+        }
+
+        return localPkg.name
+      } catch (error) {
+        // fallback to generic one
+      }
+
+      packageNameToDirname.set(dirent.name, dirent.name)
+
+      return dirent.name
+    })
 }
 
 async function getAllVersions(pkg) {
@@ -254,6 +291,7 @@ async function updateChangelog(packageName) {
   const contents = String(fs.readFileSync(path))
   const match = contents.match(/([0-9]+\.[0-9]+\.[0-9]+)/)
   const latestVersion = match ? match[1] : undefined
+
   if (!valid(latestVersion)) {
     throw new Error(
       `Could not resolve the latest version of ${packageName} in ${path}`
@@ -340,3 +378,4 @@ exports.getAllPackageNames = getAllPackageNames
 exports.regenerateChangelog = regenerateChangelog
 exports.updateChangelog = updateChangelog
 exports.onNewVersion = onNewVersion
+exports.changelogRelativePath = changelogRelativePath

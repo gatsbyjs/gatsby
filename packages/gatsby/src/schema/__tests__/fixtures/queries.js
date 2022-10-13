@@ -3,7 +3,7 @@ const path = require(`path`)
 
 const dir = os.platform() === "win32" ? "C:/Users/test/site" : "/home/test/site"
 
-const nodes = [
+const getTestNodes = () => [
   {
     id: `file1`,
     parent: null,
@@ -163,4 +163,4 @@ const nodes = [
   },
 ]
 
-module.exports = nodes
+module.exports = getTestNodes

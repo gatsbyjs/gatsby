@@ -1,3 +1,6 @@
+import crypto from "crypto"
+import url from "url"
+
 import {
   generateFileUrl,
   generateImageUrl,
@@ -7,6 +10,122 @@ import {
 type ImageArgs = Parameters<typeof generateImageUrl>[1]
 
 describe(`url-generator`, () => {
+  describe(`URL encryption`, () => {
+    function decryptImageCdnUrl(
+      key: string,
+      iv: string,
+      encryptedUrl: string
+    ): { decryptedUrl: string; randomPadding: string } {
+      const decipher = crypto.createDecipheriv(
+        `aes-256-ctr`,
+        Buffer.from(key, `hex`),
+        Buffer.from(iv, `hex`)
+      )
+      const decrypted = decipher.update(Buffer.from(encryptedUrl, `hex`))
+      const clearText = Buffer.concat([decrypted, decipher.final()]).toString()
+
+      const [randomPadding, ...url] = clearText.split(`:`)
+
+      return { decryptedUrl: url.join(`:`), randomPadding }
+    }
+
+    const fileUrlToEncrypt = `https://example.com/file.pdf`
+    const imageUrlToEncrypt = `https://example.com/image.png`
+
+    const imageNode = {
+      url: imageUrlToEncrypt,
+      mimeType: `image/png`,
+      filename: `image.png`,
+      internal: {
+        contentDigest: `digest`,
+      },
+    }
+
+    const resizeArgs = {
+      width: 100,
+      height: 100,
+      format: `webp`,
+      quality: 80,
+    }
+
+    const generateEncryptedUrlForType = (type: string): string => {
+      const url = {
+        file: generateFileUrl({
+          url: fileUrlToEncrypt,
+          filename: `file.pdf`,
+        }),
+        image: generateImageUrl(imageNode, resizeArgs),
+      }[type]
+
+      if (!url) {
+        throw new Error(`Unknown type: ${type}`)
+      }
+
+      return url
+    }
+
+    const getUnencryptedUrlForType = (type: string): string => {
+      if (type === `file`) {
+        return fileUrlToEncrypt
+      } else if (type === `image`) {
+        return imageUrlToEncrypt
+      } else {
+        throw new Error(`Unknown type: ${type}`)
+      }
+    }
+
+    it.each([`file`, `image`])(
+      `should return %s URL's untouched if encryption is not enabled`,
+      type => {
+        const unencryptedUrl = generateEncryptedUrlForType(type)
+
+        const { eu, u } = url.parse(unencryptedUrl, true).query
+
+        expect(eu).toBe(undefined)
+        expect(u).toBeTruthy()
+
+        expect(u).toBe(getUnencryptedUrlForType(type))
+      }
+    )
+
+    it.each([`file`, `image`])(
+      `should return %s URL's encrypted if encryption is enabled`,
+      type => {
+        const key = crypto.randomBytes(32).toString(`hex`)
+        const iv = crypto.randomBytes(16).toString(`hex`)
+
+        process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY = key
+        process.env.IMAGE_CDN_ENCRYPTION_IV = iv
+
+        const urlWithEncryptedEuParam = generateEncryptedUrlForType(type)
+
+        expect(urlWithEncryptedEuParam).not.toContain(
+          encodeURIComponent(getUnencryptedUrlForType(type))
+        )
+
+        const { eu: encryptedUrlParam, u: urlParam } = url.parse(
+          urlWithEncryptedEuParam,
+          true
+        ).query
+
+        expect(urlParam).toBeFalsy()
+        expect(encryptedUrlParam).toBeTruthy()
+
+        const { decryptedUrl, randomPadding } = decryptImageCdnUrl(
+          key,
+          iv,
+          encryptedUrlParam as string
+        )
+
+        expect(decryptedUrl).toEqual(getUnencryptedUrlForType(type))
+        expect(randomPadding.length).toBeGreaterThan(0)
+
+        delete process.env.IMAGE_CDN_ENCRYPTION_SECRET_KEY
+        delete process.env.IMAGE_CDN_ENCRYPTION_IV
+      }
+    )
+  })
+
   describe(`generateFileUrl`, () => {
     it(`should return a file based url`, () => {
       const source = {
@@ -58,6 +177,9 @@ describe(`url-generator`, () => {
       url: `https://example.com/image.jpg`,
       filename: `image.jpg`,
       mimeType: `image/jpeg`,
+      internal: {
+        contentDigest: `1234`,
+      },
     }
 
     it(`should return an image based url`, () => {
@@ -70,7 +192,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/18867d45576d8283d6fabb82406789c8/a5d4237c29c15bd781f3586364b7e168/image.webp?u=https%3A%2F%2Fexample.com%2Fimage.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/18867d45576d8283d6fabb82406789c8/a5d4237c29c15bd781f3586364b7e168/image.webp?u=https%3A%2F%2Fexample.com%2Fimage.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 
@@ -79,6 +201,9 @@ describe(`url-generator`, () => {
         url: `https://example.com/image-éà.jpg`,
         filename: `image-éà.jpg`,
         mimeType: `image/jpeg`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(
@@ -90,7 +215,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/efe0766d673b5a1cb5070c77e019c3de/a5d4237c29c15bd781f3586364b7e168/image-%C3%A9%C3%A0.webp?u=https%3A%2F%2Fexample.com%2Fimage-%C3%A9%C3%A0.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/efe0766d673b5a1cb5070c77e019c3de/a5d4237c29c15bd781f3586364b7e168/image-%C3%A9%C3%A0.webp?u=https%3A%2F%2Fexample.com%2Fimage-%C3%A9%C3%A0.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 
@@ -99,6 +224,9 @@ describe(`url-generator`, () => {
         url: `https://example.com/image test.jpg`,
         filename: `image test.jpg`,
         mimeType: `image/jpeg`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(
@@ -110,7 +238,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/4b2d785bb2f2b7d04e00cb15daeb1687/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage+test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/4b2d785bb2f2b7d04e00cb15daeb1687/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage+test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 
@@ -119,6 +247,9 @@ describe(`url-generator`, () => {
         url: `https://example.com/image%20test.jpg`,
         filename: `image test.jpg`,
         mimeType: `image/jpeg`,
+        internal: {
+          contentDigest: `1234`,
+        },
       }
 
       expect(
@@ -130,7 +261,7 @@ describe(`url-generator`, () => {
           quality: 80,
         })
       ).toMatchInlineSnapshot(
-        `"/_gatsby/image/e204b74f97d4407c992c4c3a7c5c66c4/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage%2520test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80"`
+        `"/_gatsby/image/e204b74f97d4407c992c4c3a7c5c66c4/a5d4237c29c15bd781f3586364b7e168/image%20test.webp?u=https%3A%2F%2Fexample.com%2Fimage%2520test.jpg&a=w%3D100%26h%3D100%26fit%3Dcrop%26crop%3Dtop%26fm%3Dwebp%26q%3D80&cd=1234"`
       )
     })
 

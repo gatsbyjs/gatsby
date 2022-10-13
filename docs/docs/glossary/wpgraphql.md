@@ -34,31 +34,30 @@ Then you can configure Gatsby to work with your new endpoint.
 
 ### Using WPGraphQL with Gatsby
 
+We recommend using the official [gatsby-source-wordpress](/plugins/gatsby-source-wordpress/) plugin, which sources data from the WPGraphQL plugin.
+
 You'll need to do two more things before you can use your WordPress-backed GraphQL server with Gatsby:
 
-1. install the [gatsby-source-graphql](/docs/third-party-graphql/) plugin; and
-2. update `gatsby-config.js`.
+1. Install the [gatsby-source-wordpress](/plugins/gatsby-source-wordpress/) plugin; and
+2. Update `gatsby-config.js`.
 
-Use [npm](/docs/glossary#npm) to install [gatsby-source-graphql](/docs/third-party-graphql/).
+Use [npm](/docs/glossary#npm) to install [gatsby-source-wordpress](/plugins/gatsby-source-wordpress/).
 
 ```shell
-npm install gatsby-source-graphql
+npm install gatsby-source-wordpress
 ```
 
-Then update `gatsby-config.js`. Add the plugin to your Gatsby instance. Specify the URL of the GraphQL endpoint and set other [configuration options](/plugins/gatsby-source-graphql/).
+Then update `gatsby-config.js`. Specify the URL of the WPGraphQL endpoint and set other [configuration options](/plugins/gatsby-source-wordpress/).
 
 ```javascript
 module.exports = {
   plugins: [
     {
-      resolve: "gatsby-source-graphql",
+      resolve: "gatsby-source-wordpress",
       options: {
-        // Remote schema query type. This is an arbitrary name.
-        typeName: "WPGraphQL",
-        // Field name under which it will be available. Used in your Gatsby query. This is also an arbitrary name.
-        fieldName: "wpcontent",
-        // GraphQL endpoint, relative to your WordPress home URL.
-        url: "https://example.com/blog/graphql",
+        url:
+          process.env.WPGRAPHQL_URL ||
+          `https://path-to-your-wordpress-instance.com/graphql`,
       },
     },
   ],

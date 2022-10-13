@@ -2,6 +2,19 @@ import chalk from "chalk"
 import fetchGraphQL, { moduleHelpers } from "../dist/utils/fetch-graphql"
 import store from "../dist/store"
 
+jest.mock(`async-retry`, () => {
+  return {
+    __esModule: true,
+    default: jest.fn((tryFunction) => {
+      const bail = (e) => {
+        throw e
+      }
+
+      return tryFunction(bail)
+    })
+  }
+})
+
 describe(`fetchGraphQL helper`, () => {
   let mock
   const panicMessages = []
@@ -17,12 +30,12 @@ describe(`fetchGraphQL helper`, () => {
             }
 
             if (query === `wpgraphql-deactivated`) {
-              return {
+              return Promise.resolve({
                 request: {},
                 headers: {
                   [`content-type`]: `text/html`,
                 },
-              }
+              })
             }
 
             return null
@@ -55,33 +68,32 @@ describe(`fetchGraphQL helper`, () => {
     })
 
     expect(
-      panicMessages[0].includes(
-        `Your WordPress server is either overloaded or encountered a PHP error.`
-      )
-    ).toBeTruthy()
+      panicMessages[0]
+    ).toInclude(`Your WordPress server is either overloaded or encountered a PHP error.`)
   })
 
   test(`handles 502, 503, and 504 errors`, async () => {
-    await fetchGraphQL({
-      query: 502,
-      url: `fake url`,
-    })
-    await fetchGraphQL({
-      query: 503,
-      url: `fake url`,
-    })
-    await fetchGraphQL({
-      query: 504,
-      url: `fake url`,
-    })
-
     const errorMessage = `Your WordPress server at ${chalk.bold(
       `fake url`
     )} appears to be overloaded.`
 
-    expect(panicMessages[1].includes(errorMessage)).toBeTruthy()
-    expect(panicMessages[2].includes(errorMessage)).toBeTruthy()
-    expect(panicMessages[3].includes(errorMessage)).toBeTruthy()
+    await fetchGraphQL({
+      query: 502,
+      url: `fake url`,
+    })
+    expect(panicMessages[1]).toInclude(errorMessage)
+
+    await fetchGraphQL({
+      query: 503,
+      url: `fake url`,
+    })
+    expect(panicMessages[2]).toInclude(errorMessage)
+
+    await fetchGraphQL({
+      query: 504,
+      url: `fake url`,
+    })
+    expect(panicMessages[3]).toInclude(errorMessage)
   })
 
   test(`errors when WPGraphQL is not active`, async () => {
@@ -91,8 +103,8 @@ describe(`fetchGraphQL helper`, () => {
     })
 
     expect(
-      panicMessages[4].includes(`Unable to connect to WPGraphQL.`)
-    ).toBeTruthy()
+      panicMessages[4]
+    ).toInclude(`Unable to connect to WPGraphQL.`)
   })
 
   afterAll(() => {

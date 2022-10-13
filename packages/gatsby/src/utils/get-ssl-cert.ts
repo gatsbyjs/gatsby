@@ -66,8 +66,8 @@ export async function getSslCert({
       ? absoluteOrDirectory(directory, caFile)
       : certPath
     return {
-      key: fs.readFileSync(keyPath),
-      cert: fs.readFileSync(certPath),
+      key: fs.readFileSync(keyPath, `utf-8`),
+      cert: fs.readFileSync(certPath, `utf-8`),
     }
   }
 
@@ -98,8 +98,8 @@ export async function getSslCert({
       process.env.NODE_EXTRA_CA_CERTS = caPath
     }
     return {
-      key,
-      cert,
+      key: key.toString(),
+      cert: cert.toString(),
     }
   } catch (err) {
     report.panic({

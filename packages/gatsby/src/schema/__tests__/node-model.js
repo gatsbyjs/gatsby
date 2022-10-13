@@ -629,6 +629,8 @@ describe(`NodeModel`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     let resolveSlugMock
+    let resolveCustomContextMock
+    let materializationSpy
     beforeEach(async () => {
       const nodes = (() => [
         {
@@ -734,6 +736,13 @@ describe(`NodeModel`, () => {
       resolveBetterTitleMock = jest.fn()
       resolveOtherTitleMock = jest.fn()
       resolveSlugMock = jest.fn()
+      resolveCustomContextMock = jest.fn()
+
+      store.dispatch(
+        actions.createResolverContext({
+          myCustomContext: `foo`,
+        })
+      )
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
@@ -800,6 +809,29 @@ describe(`NodeModel`, () => {
                 resolve: source => {
                   resolveSlugMock()
                   return source.id
+                },
+              },
+
+              // for concurrent materialization test
+              intentionallySlowResolver1: {
+                type: `Boolean!`,
+                resolve: async () => {
+                  await new Promise(resolve => setTimeout(resolve, 1000))
+                  return true
+                },
+              },
+              intentionallySlowResolver2: {
+                type: `Boolean!`,
+                resolve: async () => {
+                  await new Promise(resolve => setTimeout(resolve, 1000))
+                  return true
+                },
+              },
+              usingCustomResolverContext: {
+                type: `String`,
+                resolve: (parent, _args, context) => {
+                  resolveCustomContextMock({ context, parent })
+                  return `${context.myCustomContext}/${parent.title}`
                 },
               },
             },
@@ -877,6 +909,7 @@ describe(`NodeModel`, () => {
         schemaComposer,
         createPageDependency,
       })
+      materializationSpy = jest.spyOn(nodeModel, `_doResolvePrepareNodesQueue`)
     })
 
     it(`should not resolve prepared nodes more than once`, async () => {
@@ -1211,6 +1244,103 @@ describe(`NodeModel`, () => {
       )
       expect(result).toBeTruthy()
       expect(result.id).toEqual(`id3`)
+    })
+
+    it(`correctly merges resolved fields when multiple concurrent materializations happen for same node`, async () => {
+      nodeModel.replaceFiltersCache()
+
+      const query1Promise = nodeModel.findAll(
+        {
+          query: {
+            filter: { intentionallySlowResolver1: { eq: true } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      // we batch and merge materialization runs scheduled in same event loop turn
+      // so just triggering adding small time delay so that we run 2 concurrent ones instead
+
+      await new Promise(resolve => process.nextTick(resolve))
+
+      const query2Promise = nodeModel.findAll(
+        {
+          query: {
+            filter: { intentionallySlowResolver2: { eq: true } },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      await Promise.all([query1Promise, query2Promise])
+
+      // make sure materialization wasn't batched (test setup is correct)
+      expect(materializationSpy).toBeCalledTimes(2)
+
+      const resolvedFieldsForTestNodes = store
+        .getState()
+        .resolvedNodesCache.get(`Test`)
+
+      // resolvedFieldsForTestNodes should contain both intentionallySlowResolver1 and intentionallySlowResolver2
+      // so something like this:
+      // Map {
+      //   "id1" => Object {
+      //     "intentionallySlowResolver1": true,
+      //     "intentionallySlowResolver2": true,
+      //   },
+      //   "id2" => Object {
+      //     "intentionallySlowResolver1": true,
+      //     "intentionallySlowResolver2": true,
+      //   },
+      // }
+
+      // we should have resolved fields for all nodes
+      expect(Array.from(resolvedFieldsForTestNodes.keys())).toEqual(
+        nodeModel.getAllNodes({ type: `Test` }).map(node => node.id)
+      )
+
+      // we should have all fields merged on all nodes
+      expect(Array.from(resolvedFieldsForTestNodes.values())).toEqual(
+        expect.arrayContaining([
+          {
+            intentionallySlowResolver1: true,
+            intentionallySlowResolver2: true,
+          },
+        ])
+      )
+    })
+
+    it(`injects context passed by createResolverContext action when materializing fields`, async () => {
+      nodeModel.replaceFiltersCache()
+      const wat = await nodeModel.findAll(
+        {
+          query: {
+            sort: { fields: [`usingCustomResolverContext`], order: [`ASC`] },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(resolveCustomContextMock).toHaveBeenCalledTimes(2)
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id1`,
+        }),
+      })
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id2`,
+        }),
+      })
     })
   })
 

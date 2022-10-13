@@ -263,16 +263,17 @@ function getGraphQLTag(
   const normalizedText: string = graphql.stripIgnoredCharacters(text)
 
   const hash: number = murmurhash(normalizedText, 0)
+  const location = quasis[0].loc as SourceLocation | null
 
   try {
     const ast = graphql.parse(text)
 
     if (ast.definitions.length === 0) {
-      throw new EmptyGraphQLTagError(quasis[0].loc)
+      throw new EmptyGraphQLTagError(location)
     }
     return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
-    throw new GraphQLSyntaxError(text, err, quasis[0].loc)
+    throw new GraphQLSyntaxError(text, err, location)
   }
 }
 

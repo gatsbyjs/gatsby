@@ -15,6 +15,7 @@ To build out the basic page structure for your blog site, you'll need to know ab
 By the end of this part of the Tutorial, you will be able to:
 
 * Create **page components** to add new pages to your site.
+* Add a title to your site using the **Gatsby Head API**
 * Import and use a **pre-built component** from another package.
 * Create your own **reusable "building block" component**.
 * Use component **props** to change the way a component renders.
@@ -24,9 +25,9 @@ By the end of this part of the Tutorial, you will be able to:
 
 **Prefer a video?**
 
-If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 2.
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 2. **Please note:** At the time of recording the Gatsby Head API didn't exist yet and thus the video contents and text contents are different. Please always follow the written instructions. We'll do our best to record a new version in the future, thanks for understanding!
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/wXRrlEitw94?start=279" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -183,12 +184,14 @@ import * as React from 'react'
 const IndexPage = () => {
   return (
     <main>
-      <title>Home Page</title>
       <h1>Welcome to my Gatsby site!</h1>
       <p>I'm making this by following the Gatsby Tutorial.</p>
     </main>
   )
 }
+
+// You'll learn about this in the next task, just copy it for now
+export const Head = () => <title>Home Page</title>
 
 // Step 3: Export your component
 export default IndexPage
@@ -222,7 +225,6 @@ import * as React from 'react'
 const AboutPage = () => {
   return (
     <main>
-      <title>About Me</title>
       <h1>About Me</h1>
       <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
     </main>
@@ -233,9 +235,52 @@ const AboutPage = () => {
 export default AboutPage
 ```
 
-2. In a web browser, visit `localhost:8000/about`. When your development server finishes rebuilding your site, the About page should look something like this:
+2. Add a page title to your page. Gatsby lets you define a `<title>` and other [document metadata](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) with the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/). You have to export a component called `Head` from your page template to apply the metadata.
+Adding such metadata helps search engines like Google to better understand your site. For this tutorial you'll only be adding titles to pages but you can also later add other metadata.
 
-![A screenshot of "localhost:8000/about" in a web browser. It has a heading that says, "About Me", and a paragraph that says, "Hi there! I'm the proud creator of this site, which I built with Gatsby."](./about-page.png)
+```js:title=src/pages/about.js
+import * as React from 'react'
+
+const AboutPage = () => {
+  return (
+    <main>
+      <h1>About Me</h1>
+      <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
+    </main>
+  )
+}
+
+// highlight-next-line
+export const Head = () => <title>About Me</title>
+
+export default AboutPage
+```
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Key Gatsby Concept** 💡
+
+You can use the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/) by exporting a named function called `Head` in your pages and page templates (e.g. the ones used by `createPage` or the File System Route API).
+
+Be sure to capitalize `Head` and please note that exporting this named function inside a component like `Layout` won't add the metadata to the `<head>`. The above works because you're exporting `Head` in a page inside `src/pages`.
+
+You can add any valid `<head>` tags inside the function and they'll be added to the page, for example:
+
+```js
+export const Head = () => (
+  <>
+    <title>About Me</title>
+    <meta name="description" content="Your description" />
+  </>
+)
+```
+
+After going through this tutorial, be sure to check out [Adding an SEO Component](/docs/how-to/adding-common-features/adding-seo-component/).
+
+</Announcement>
+
+3. In a web browser, visit `localhost:8000/about`. When your development server finishes rebuilding your site, the About page should look something like this:
+
+![A screenshot of "localhost:8000/about" in a web browser. It has a heading and page title that says, "About Me", and a paragraph that says, "Hi there! I'm the proud creator of this site, which I built with Gatsby."](./about-page.png)
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -343,7 +388,6 @@ import { Link } from 'gatsby'
 const IndexPage = () => {
   return (
     <main>
-      <title>Home Page</title>
       <h1>Welcome to my Gatsby site!</h1>
       {/* highlight-next-line */}
       <Link to="/about">About</Link>
@@ -351,6 +395,8 @@ const IndexPage = () => {
     </main>
   )
 }
+
+export const Head = () => <title>Home Page</title>
 
 export default IndexPage
 ```
@@ -365,7 +411,6 @@ import { Link } from 'gatsby' // highlight-line
 const AboutPage = () => {
   return (
     <main>
-      <title>About Me</title>
       <h1>About Me</h1>
       {/* highlight-next-line */}
       <Link to="/">Back to Home</Link>
@@ -373,6 +418,8 @@ const AboutPage = () => {
     </main>
   )
 }
+
+export const Head = () => <title>About Me</title>
 
 export default AboutPage
 ```
@@ -469,7 +516,7 @@ In the browser, the actual DOM elements will look something like this:
 
 Follow the steps below to create a `Layout` component and add it to your Home and About pages.
 
-1. Create a new file called `src/components/layout.js`. Insert the following code to define your `Layout` component. This component will render a dynamic page title and heading (from the `pageTitle` prop), a list of navigation links, and the contents passed in with the `children` prop. To improve accessibility, there's also a `<main>` element wrapping the page-specific elements (the `<h1>` heading and the contents from `children`).
+1. Create a new file called `src/components/layout.js`. Insert the following code to define your `Layout` component. This component will render a dynamic heading (from the `pageTitle` prop), a list of navigation links, and the contents passed in with the `children` prop. To improve accessibility, there's also a `<main>` element wrapping the page-specific elements (the `<h1>` heading and the contents from `children`).
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
@@ -478,7 +525,6 @@ import { Link } from 'gatsby'
 const Layout = ({ pageTitle, children }) => {
   return (
     <div>
-      <title>{pageTitle}</title>
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
@@ -546,6 +592,8 @@ const IndexPage = () => {
   )
 }
 
+export const Head = () => <title>Home Page</title>
+
 export default IndexPage
 ```
 
@@ -564,6 +612,8 @@ const AboutPage = () => {
     // highlight-end
   )
 }
+
+export const Head = () => <title>About Me</title>
 
 export default AboutPage
 ```
@@ -643,7 +693,6 @@ import { container } from './layout.module.css' // highlight-line
 const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}> // highlight-line
-      <title>{pageTitle}</title>
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
@@ -721,7 +770,6 @@ import {
 const Layout = ({ pageTitle, children }) => {
   return (
     <div className={container}>
-      <title>{pageTitle}</title>
       <nav>
         <ul className={navLinks}> // highlight-line
           <li className={navLinkItem}> // highlight-line
@@ -761,7 +809,7 @@ Luckily, when you use CSS Modules with Gatsby, you can have both! Your kebab-cas
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 
@@ -773,6 +821,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 
 * What's the difference between a page component and a building-block component?
 * How do you add a new page to your Gatsby site?
+* How do you add a title to a page?
 * What are the three steps for writing a new React component?
 * What are props and when might you use them?
 * What is the `children` prop and why is it useful?
@@ -799,6 +848,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 * React is a library that helps you break down your UI into smaller pieces called components. A component is a function that returns a React element. React elements can be written in JSX.
 * **Page components** contain all the UI elements for a specific page of your site. Gatsby automatically creates pages for components that are the default exports of files in the `src/pages` directory. The name of the file will be used as the route for the page.
+* You can use the **Gatsby Head API** by exporting a named function `Head` to define metadata for the page.
 * **Building-block components** are smaller reusable parts of your UI. They can be imported into page components or other building block components.
 * You can import **pre-built** components (like `Link`) from other packages, or you can write your own **custom** components from scratch (like `Layout`).
 * You can use **props** to change how a component renders. You can define your own props when you build a component. React also has some built-in props, like `children` and `className`.

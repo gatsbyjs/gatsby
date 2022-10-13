@@ -3,6 +3,12 @@ const paramPath = `/ssr/param-path/`
 const wildcardPath = `/ssr/wildcard-path/`
 const pathRaking = `/ssr/path-ranking/`
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423')) {
+    return false
+  }
+})
+
 describe(`Static path ('${staticPath}')`, () => {
   it(`Direct visit no query params`, () => {
     cy.visit(staticPath).waitForRouteChange()
@@ -165,5 +171,17 @@ describe(`500 status`, () => {
       .should(`equal`, errorPath)
       .getTestElement(`500`)
       .should(`exist`)
+  })
+})
+
+describe(`"node:" protocol`, () => {
+  it(`engines work when bundled code contains node:path import`, () => {
+    cy.visit(`/ssr/using-node-protocol/`).waitForRouteChange()
+
+    // validating that this page was rendered with SSR mode
+    cy.getTestElement(`is-ssr`).contains(`true`)
+
+    // content of field is generated using `node:path` import
+    cy.getTestElement(`field-result`).contains(`"foo/bar"`)
   })
 })

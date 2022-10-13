@@ -17,10 +17,18 @@ function onCreateBabelConfig({ actions }, options) {
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {
-  const jsLoader = loaders.js()
-
-  if (!jsLoader) {
+  if (typeof loaders?.js !== `function`) {
     return
+  }
+
+  let doesUsedGatsbyVersionSupportResourceQuery
+  try {
+    const { version } = require(`gatsby/package.json`)
+    const [major, minor] = version.split(`.`).map(Number)
+    doesUsedGatsbyVersionSupportResourceQuery =
+      (major === 4 && minor >= 19) || major > 4
+  } catch {
+    doesUsedGatsbyVersionSupportResourceQuery = true
   }
 
   actions.setWebpackConfig({
@@ -28,7 +36,16 @@ function onCreateWebpackConfig({ actions, loaders }) {
       rules: [
         {
           test: /\.tsx?$/,
-          use: jsLoader,
+          use: ({ resourceQuery, issuer }) => [
+            loaders.js(
+              doesUsedGatsbyVersionSupportResourceQuery
+                ? {
+                    isPageTemplate: /async-requires/.test(issuer),
+                    resourceQuery,
+                  }
+                : undefined
+            ),
+          ],
         },
       ],
     },

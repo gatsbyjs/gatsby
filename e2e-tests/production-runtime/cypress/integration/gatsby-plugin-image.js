@@ -16,7 +16,14 @@ function observeDOM(obj, options, callback) {
   }
 }
 
-describe(`gatsby-plugin-image`, () => {
+describe(
+  `gatsby-plugin-image`,
+  {
+    retries: {
+      runMode: 4,
+    },
+  },
+  () => {
   it(`doesn't recycle image nodes when not necessary`, () => {
     const mutationStub = cy.stub()
     let cleanup

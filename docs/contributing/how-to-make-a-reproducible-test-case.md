@@ -21,10 +21,12 @@ A reproducible test case is a great way to share a specific environment that cau
 - Add the code needed to recreate the error you've seen.
 - Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/).
 
-## Places to develop a reproducible test case
+## Online Development Environments
 
-- Locally with a starter: You can start with a starter locally and then build it on your own machine. Gatsby's official [`gatsby-starter-minimal`](https://github.com/gatsbyjs/gatsby-starter-minimal) is a good foundation for a reproducible test case.
-- Host on CodeSandbox: You can develop a Gatsby site straight from your browser with CodeSandbox using their [Gatsby template](https://codesandbox.io/s/github/gatsbyjs/gatsby-starter-default). CodeSandbox also hosts your site automatically, which can be useful to demonstrate the behavior of your site.
+Instead of cloning `gatsby-starter-minimal` to your local computer and working on it there, you can also use Online IDEs that set up the environment for you. Available options:
+
+- [CodeSandbox](https://githubbox.com/gatsbyjs/gatsby-starter-minimal)
+- [StackBlitz](https://githubblitz.com/gatsbyjs/gatsby-starter-minimal)
 
 ## Benefits of reproducible test cases
 

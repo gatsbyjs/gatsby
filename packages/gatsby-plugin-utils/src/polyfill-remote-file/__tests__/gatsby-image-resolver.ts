@@ -1,4 +1,5 @@
 import path from "path"
+import url from "url"
 import { ensureDir, remove } from "fs-extra"
 import importFrom from "import-from"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
@@ -6,7 +7,7 @@ import { gatsbyImageResolver } from "../index"
 import * as dispatchers from "../jobs/dispatchers"
 import { PlaceholderType } from "../placeholder-handler"
 import { generateImageUrl } from "../utils/url-generator"
-import type { Actions } from "gatsby"
+import type { Actions, Store } from "gatsby"
 
 jest.spyOn(dispatchers, `shouldDispatch`).mockImplementation(() => false)
 jest.mock(`import-from`)
@@ -36,6 +37,14 @@ function parseSrcSet(
   })
 }
 
+const store = {
+  getState: (): { requestHeaders: Map<string, Record<string, string>> } => {
+    return {
+      requestHeaders: new Map(),
+    }
+  },
+} as unknown as Store
+
 describe(`gatsbyImageData`, () => {
   const cacheDir = path.join(__dirname, `.cache`)
 
@@ -59,7 +68,10 @@ describe(`gatsbyImageData`, () => {
     fetchRemoteFile.mockClear()
   })
 
-  const actions = {} as Actions
+  const actions = {
+    addGatsbyImageSourceUrl: jest.fn(),
+  } as Actions
+
   const portraitSource = {
     id: `1`,
     url: `https://images.unsplash.com/photo-1588795945-b9c8d9f9b9c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80`,
@@ -86,7 +98,8 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
-      actions
+      actions,
+      store
     )
 
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
@@ -99,6 +112,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -120,7 +134,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         cropFocus: [`entropy`],
       },
-      actions
+      actions,
+      store
     )
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
     expect(parsedSrcSet[0].src).toEqual(
@@ -129,6 +144,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -159,7 +175,8 @@ describe(`gatsbyImageData`, () => {
         },
         // @ts-ignore - don't care
         {},
-        actions
+        actions,
+        store
       )
     ).toBe(null)
     expect(dispatchers.shouldDispatch).not.toHaveBeenCalled()
@@ -173,7 +190,8 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
-      actions
+      actions,
+      store
     )
 
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
@@ -184,6 +202,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -200,6 +219,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -247,7 +267,8 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: `none`,
       },
-      actions
+      actions,
+      store
     )
 
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
@@ -258,6 +279,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 75,
@@ -274,6 +296,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 150,
@@ -290,6 +313,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -306,6 +330,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -357,7 +382,8 @@ describe(`gatsbyImageData`, () => {
         width: 2000,
         placeholder: `none`,
       },
-      actions
+      actions,
+      store
     )
 
     const parsedSrcSet = parseSrcSet(result.images.sources[0].srcSet)
@@ -368,6 +394,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 750,
@@ -384,6 +411,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1080,
@@ -400,6 +428,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1366,
@@ -416,6 +445,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 1920,
@@ -464,7 +494,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
-      actions
+      actions,
+      store
     )
     const constrainedResult = await gatsbyImageResolver(
       portraitSource,
@@ -474,7 +505,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
-      actions
+      actions,
+      store
     )
     const fullWidthResult = await gatsbyImageResolver(
       {
@@ -488,7 +520,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
-      actions
+      actions,
+      store
     )
 
     const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
@@ -499,6 +532,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -514,6 +548,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -534,6 +569,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 300,
@@ -549,6 +585,7 @@ describe(`gatsbyImageData`, () => {
           url: portraitSource.url,
           filename: portraitSource.filename,
           mimeType: portraitSource.mimeType,
+          internal: { contentDigest: `1` },
         },
         {
           width: 600,
@@ -576,7 +613,8 @@ describe(`gatsbyImageData`, () => {
         layout: `constrained`,
         placeholder: `none`,
       },
-      actions
+      actions,
+      store
     )
 
     expect(result.images.fallback.src).not.toContain(` `)
@@ -597,7 +635,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
-      actions
+      actions,
+      store
     )
     const constrainedResult = await gatsbyImageResolver(
       biggerPortraitSource,
@@ -607,7 +646,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
-      actions
+      actions,
+      store
     )
     const fullWidthResult = await gatsbyImageResolver(
       biggerPortraitSource,
@@ -617,7 +657,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         breakpoints: [350, 700],
       },
-      actions
+      actions,
+      store
     )
 
     const parsedFixedSrcSet = parseSrcSet(fixedResult.images.sources[0].srcSet)
@@ -647,7 +688,8 @@ describe(`gatsbyImageData`, () => {
         layout: `fixed`,
         width: 300,
       },
-      actions
+      actions,
+      store
     )
 
     expect(fetchRemoteFile).toHaveBeenCalledTimes(1)
@@ -665,7 +707,8 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: PlaceholderType.BLURRED,
       },
-      actions
+      actions,
+      store
     )
 
     expect(fetchRemoteFile).toHaveBeenCalledTimes(1)
@@ -692,7 +735,8 @@ describe(`gatsbyImageData`, () => {
         width: 300,
         placeholder: PlaceholderType.TRACED_SVG,
       },
-      actions
+      actions,
+      store
     )
 
     expect(fetchRemoteFile).toHaveBeenCalledTimes(1)
@@ -717,7 +761,8 @@ describe(`gatsbyImageData`, () => {
         placeholder: `none`,
         outputPixelDensities: [1, 2],
       },
-      actions
+      actions,
+      store
     )
 
     expect(constrainedResult?.images.sources[0].type).toBe(`image/avif`)
@@ -725,5 +770,68 @@ describe(`gatsbyImageData`, () => {
     expect(constrainedResult?.images.fallback.src).toContain(`dog-portrait.jpg`)
 
     expect(constrainedResult?.images.sources.length).toBe(2)
+  })
+
+  it(`should fetch placeholder file with headers from the setRequestHeaders action`, async () => {
+    const authToken = `Bearer 12345`
+
+    fetchRemoteFile.mockImplementationOnce(input => {
+      if (!input.httpHeaders || input.httpHeaders.Authorization !== authToken) {
+        throw Error(`No headers found for url ${input.url}`)
+      } else {
+        return path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+      }
+    })
+
+    const baseDomain = url.parse(portraitSource.url)?.hostname
+
+    const store = {
+      getState: (): { requestHeaders: Map<string, Record<string, string>> } => {
+        return {
+          requestHeaders: new Map([[baseDomain, { Authorization: authToken }]]),
+        }
+      },
+    } as unknown as Store
+
+    const fixedResult = await gatsbyImageResolver(
+      portraitSource,
+      {
+        layout: `fixed`,
+        width: 300,
+        placeholder: PlaceholderType.BLURRED,
+      },
+      actions,
+      store
+    )
+
+    expect(fetchRemoteFile).toHaveBeenCalledTimes(1)
+    expect(fetchRemoteFile).toHaveBeenCalledWith(
+      expect.objectContaining({
+        url: portraitSource.url,
+      })
+    )
+    expect(fixedResult?.placeholder).toBeTruthy()
+  })
+
+  it(`should call add image source urls to the redux store`, async () => {
+    fetchRemoteFile.mockResolvedValueOnce(
+      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+    )
+    const actions = {
+      addGatsbyImageSourceUrl: jest.fn(),
+    } as unknown as Actions
+
+    await gatsbyImageResolver(
+      portraitSource,
+      {
+        layout: `fixed`,
+        width: 300,
+      },
+      actions
+    )
+
+    expect(actions.addGatsbyImageSourceUrl).toHaveBeenCalledWith(
+      portraitSource.url
+    )
   })
 })

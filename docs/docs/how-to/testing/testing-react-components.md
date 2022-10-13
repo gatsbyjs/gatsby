@@ -18,6 +18,12 @@ Install the library as one of your project's `devDependencies`. Optionally you m
 npm install --save-dev @testing-library/react @testing-library/jest-dom
 ```
 
+If you are using Jest 28, you also need to install `jest-environment-jsdom`:
+
+```shell
+npm install --save-dev jest-environment-jsdom
+```
+
 Create the file `setup-test-env.js` at the root of your project. Insert this code into it:
 
 ```js:title=setup-test-env.js

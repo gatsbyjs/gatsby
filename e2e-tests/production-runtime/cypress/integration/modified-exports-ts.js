@@ -10,6 +10,12 @@ const config = `config exported from a non-page template module`
 const getServerData = `getServerData exported from a non-page template module`
 const helloWorld = `hello world`
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || ('Minified React error #425')) {
+    return false
+  }
+})
+
 describe(`modifed exports`, () => {
   beforeEach(() => {
     cy.visit(`/modified-exports-ts`).waitForRouteChange()

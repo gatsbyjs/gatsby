@@ -193,7 +193,7 @@ interface RemoteFile {
     fit: RemoteFileFit = COVER
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
-  ): GatsbyImageData!
+  ): GatsbyImageData
 }
 
 type File implements Node @dontInfer {
@@ -582,7 +582,7 @@ interface RemoteFile {
     fit: RemoteFileFit = COVER
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
-  ): GatsbyImageData!
+  ): GatsbyImageData
 }
 
 type File implements Node @dontInfer {
@@ -981,7 +981,7 @@ interface RemoteFile {
     fit: RemoteFileFit = COVER
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
-  ): GatsbyImageData!
+  ): GatsbyImageData
 }
 
 type File implements Node @dontInfer {
