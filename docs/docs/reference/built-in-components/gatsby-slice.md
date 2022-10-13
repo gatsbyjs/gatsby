@@ -108,23 +108,38 @@ The `alias` prop must be statically analyzable, which means it must be an inline
 ```js
 // ⚠️ Doesn't work
 
-export function MyImage() {
-  const alias = "my-image"
-
-  // You can't use computed values for alias
-  // highlight-next-line
-  return <Slice alias={alias} />
+export function MyComponent({ sliceName }) {
+  // You can't use a prop passed into the parent component
+  return <Slice alias={sliceName} />
 }
 ```
 
 ```js
 // ⚠️ Doesn't work
 
-export function MyImage() {
+export function MyComponent() {
+  // Props can't come from function calls
+  const aliasName = getAliasFromSomewhere()
+  return <Slice alias={aliasName} />
+}
+```
+
+```js
+// OK
+
+export function MyComponent() {
+  const alias = "my-image"
+
+  return <Slice alias={alias} />
+}
+```
+
+```js
+// OK
+
+export function MyComponent() {
   const type = "image"
 
-  // You can't use computed values for alias
-  // highlight-next-line
   return <Slice alias={`my-${type}`} />
 }
 ```
@@ -132,8 +147,7 @@ export function MyImage() {
 ```js
 // OK
 
-export function MyImage() {
-  // highlight-next-line
+export function MyComponent() {
   return <Slice alias="my-image" />
 }
 ```
