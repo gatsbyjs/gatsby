@@ -535,12 +535,14 @@ ${JSON.stringify(webhookBody, null, 4)}`
             }
           }
 
-        // If proxyUrl is defined, use it instead of baseUrl to get the content.
-        if (proxyUrl !== baseUrl) {
-          url = url.replace(baseUrl, proxyUrl)
-        }
+          // If proxyUrl is defined, use it instead of baseUrl to get the content.
+          if (proxyUrl !== baseUrl) {
+            console.log('url A: ' + url)
+            url = url.replace(baseUrl, proxyUrl)
+            console.log('url B: ' + url)
+          }
 
-        let d
+          let d
           try {
             d = await requestQueue.push([
               url,
@@ -841,7 +843,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .description(`The URL to root of your Drupal instance`),
     proxyUrl: Joi.string()
       .description(`The CDN URL equivalent to your baseUrl`),
-    apiBase: Joi.string().description(
+   apiBase: Joi.string().description(
       `The path to the root of the JSONAPI — defaults to "jsonapi"`
     ),
     basicAuth: Joi.object({
