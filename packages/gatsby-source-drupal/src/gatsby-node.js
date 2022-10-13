@@ -843,7 +843,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .description(`The URL to root of your Drupal instance`),
     proxyUrl: Joi.string()
       .description(`The CDN URL equivalent to your baseUrl`),
-   apiBase: Joi.string().description(
+    apiBase: Joi.string().description(
       `The path to the root of the JSONAPI — defaults to "jsonapi"`
     ),
     basicAuth: Joi.object({
