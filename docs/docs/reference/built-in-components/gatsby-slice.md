@@ -6,6 +6,8 @@ title: Gatsby Slice API
 
 Gatsby includes a `<Slice>` React component and a `createSlice` action in `gatsby-node` to help speed up common updates across your site. By pulling out common components into separate HTML files, common components can be built separately and "stitched" together with existing pages.
 
+The `<Slice>` React component is also referred to as "Slice placeholder". The React component you pass to `createSlice` via its `component` key is also referred to as "Slice template".
+
 ## `createSlice` action
 
 The [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API is the first step in creating a new Slice.
@@ -25,12 +27,12 @@ exports.createPages = async ({ actions }) => {
 | Argument               | Type     | Description                                                                |
 | ---------------------- | -------- | -------------------------------------------------------------------------- |
 | `id` (Required)        | `string` | A unique identifier for this specific Slice. See also: [Aliases](#aliases) |
-| `component` (Required) | `string` | The path to the component being used as a Slice.                           |
+| `component` (Required) | `string` | The path to the component being used as a Slice template.                  |
 | `context`              | `object` | An object passed to the `component` as `sliceContext`.                     |
 
-## `<Slice>` component
+## `<Slice>` placeholder
 
-The `<Slice>` component requires an `alias` prop. Any additional props will be passed to the underlying component.
+The `<Slice>` placeholder requires an `alias` prop. Any additional props will be passed to the underlying component.
 
 ```jsx
 <Slice alias="unique-name" />
@@ -40,15 +42,15 @@ The `<Slice>` component requires an `alias` prop. Any additional props will be p
 <Slice alias="unique-name" additionalProp="hello world" />
 ```
 
-| Prop               | Type     | Description                                                                                 |
-| ------------------ | -------- | ------------------------------------------------------------------------------------------- |
-| `alias` (Required) | `string` | The Slice created in `gatsby-node` to replace this component. See also: [Aliases](#aliases) |
+| Prop               | Type     | Description                                                                                            |
+| ------------------ | -------- | ------------------------------------------------------------------------------------------------------ |
+| `alias` (Required) | `string` | The Slice template created in `gatsby-node` to replace this placeholder. See also: [Aliases](#aliases) |
 
 ## Aliases
 
-An "`alias`" for a Slice is the string value a page will use to identify which Slice to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice)) is an alias is a one-to-one mapping for each page created. By default, an `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if `<Slice>` is given an `alias` prop of `"my-image"`, the Slice with the `id` of `"my-image"` will be used.
+An "`alias`" for a Slice is the string value a page will use to identify which Slice template to render. The reason `alias` is used (as opposed to `id` from [`createSlice`](/docs/reference/config-files/actions/#createSlice)) is an alias is a one-to-one mapping for each page created. By default, an `alias` is always created for each `id` given in [`createSlice`](/docs/reference/config-files/actions/#createSlice). Therefore, if the Slice placeholder is given an `alias` prop of `"my-image"`, the Slice template with the `id` of `"my-image"` will be used.
 
-However, if you need to customize which Slice is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage) through the `slices` key. If you map `"my-image"` to `"my-image--dog"`, any time the `"my-image"` Slice is used, it'll use the Slice with the id of `"my-image--dog"` on that page.
+However, if you need to customize which Slice template is utilized based on the page, you can pass an `alias`-to-`id` map in [`createPage`](/docs/reference/config-files/actions/#createPage) through the `slices` key. If you map `"my-image"` to `"my-image--dog"`, any time the `"my-image"` Slice placeholder is used, it'll use the Slice template with the id of `"my-image--dog"` on that page.
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
@@ -80,15 +82,15 @@ exports.createPages = async ({ actions }) => {
 }
 ```
 
-## Restrictions on using `Slice`
+## Restrictions on using `<Slice>` placeholder
 
 ### Nested Slices
 
-Gatsby does not support nested Slices. This means if you have a high level `<Layout>` component as a slice, other Slices cannot exist within that `<Layout>` component anywhere in the tree.
+Gatsby does not support nested Slice placeholders. This means if you have a high level `<Layout>` component as a slice template, other Slice placeholders cannot exist within that `<Layout>` component anywhere in the tree.
 
 ### Contexts
 
-Slices do not inherit contexts from their parent components. If a context is needed, it's provider can either be added to [`wrapRootElement`](/docs/reference/config-files/gatsby-browser/#wrapRootElement) or it's value can be passed directly to the Slice (as long is it follows restrictions for [other props](#others))
+Slice placeholders do not inherit contexts from their parent components. If a context is needed, its provider can either be added to [`wrapRootElement`](/docs/reference/config-files/gatsby-browser/#wrapRootElement) or its value can be passed directly to the Slice template (as long is it follows restrictions for [other props](#others))
 
 ```js
 export function MyImage() {
@@ -171,7 +173,7 @@ export function MyImage() {
 
 #### Others
 
-Any props passed to the Slice component must be serializable.
+Any props passed to the Slice placeholder must be serializable.
 
 This does not work:
 
@@ -199,7 +201,7 @@ export function MyImage() {
     return "/static/images/img.jpg"
   }
 
-  // `image` ends up being a string when passed to Slice
+  // `image` ends up being a string when passed to <Slice />
   // highlight-next-line
   return <Slice alias="my-image" image={fetchImage()} />
 }
