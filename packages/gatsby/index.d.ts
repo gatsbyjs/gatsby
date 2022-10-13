@@ -90,32 +90,16 @@ export type PageProps<
   LocationState = WindowLocation["state"],
   ServerDataType = object
 > = {
-  /** The path for this current page */
-  path: string
-  /** The URI for the current page */
-  uri: string
-  /** An extended version of window.document which comes from @react/router */
-  location: WindowLocation<LocationState>
-  /** A way to handle programmatically controlling navigation */
-  navigate: NavigateFn
-  /** You can't get passed children as this is the root user-land component */
-  children: undefined
-  /** The URL parameters when the page has a `matchPath` */
-  params: Record<string, string>
-  /** Holds information about the build process for this component */
-  pageResources: {
-    component: React.Component
-    json: {
-      data: DataType
-      pageContext: PageContextType
-    }
-    page: {
-      componentChunkName: string
-      path: string
-      webpackCompilationHash: string
-      matchPath?: string
-    }
+  /**
+   * Standardized location data in server and browser context. For browser location data, use the `useLocation` hook from `@gatsbyjs/reach-router`.
+   */
+  location: {
+    pathname: string
   }
+  /**
+   * The URL parameters when the page has a `matchPath`
+   */
+  params: Record<string, string>
   /**
    * Data passed into the page via an exported GraphQL query. To set up this type
    * you need to use [generics](https://www.typescriptlang.org/play/#example/generic-functions),

@@ -25,6 +25,7 @@ const {
   SlicesPropsContext,
 } = require(`./slice/context`)
 const { ServerSliceRenderer } = require(`./slice/server-slice-renderer`)
+const { filterPageProps } = require(`./filter-page-props`)
 
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
@@ -239,14 +240,14 @@ export default async function staticPage({
 
     class RouteHandler extends React.Component {
       render() {
-        const props = {
+        const props = filterPageProps({
           ...this.props,
           ...pageData.result,
           params: {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
-        }
+        })
 
         const pageElement = createElement(pageComponent.default, props)
 

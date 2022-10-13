@@ -1,36 +1,39 @@
-import React, { Suspense, createElement } from "react"
+import * as React from "react"
 import PropTypes from "prop-types"
 import { apiRunner } from "./api-runner-browser"
 import { grabMatchParams } from "./find-path"
 import { headHandlerForBrowser } from "./head/head-export-handler-for-browser"
+import { filterPageProps } from "./filter-page-props"
 
 // Renders page
 function PageRenderer(props) {
-  const pageComponentProps = {
+  const { path, location, pageResources } = props
+
+  const pageComponentProps = filterPageProps({
     ...props,
     params: {
-      ...grabMatchParams(props.location.pathname),
-      ...props.pageResources.json.pageContext.__params,
+      ...grabMatchParams(location.pathname),
+      ...pageResources.json.pageContext.__params,
     },
-  }
+  })
 
   const preferDefault = m => (m && m.default) || m
 
   let pageElement
-  if (props.pageResources.partialHydration) {
-    pageElement = props.pageResources.partialHydration
+  if (pageResources.partialHydration) {
+    pageElement = pageResources.partialHydration
   } else {
-    pageElement = createElement(preferDefault(props.pageResources.component), {
+    pageElement = React.createElement(preferDefault(pageResources.component), {
       ...pageComponentProps,
-      key: props.path || props.pageResources.page.path,
+      key: path || pageResources.page.path,
     })
   }
 
-  const pageComponent = props.pageResources.head
+  const pageComponent = pageResources.head
 
   headHandlerForBrowser({
     pageComponent,
-    staticQueryResults: props.pageResources.staticQueryResults,
+    staticQueryResults: pageResources.staticQueryResults,
     pageComponentProps,
   })
 
