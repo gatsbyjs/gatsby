@@ -92,12 +92,13 @@ aliases:
             yarn why lmdb-store
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
+            JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: "true"
             GATSBY_EXPERIMENTAL_LMDB_STORE: 1
             GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
       - store_test_results:
@@ -526,7 +527,7 @@ jobs:
             yarn
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
@@ -535,6 +536,7 @@ jobs:
             COMPILER_OPTIONS: GATSBY_MAJOR=5
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
+            JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: "true"
       - store_test_results:
           path: ./test-results/jest-node/
 
