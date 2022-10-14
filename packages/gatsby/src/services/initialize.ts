@@ -208,14 +208,17 @@ export async function initialize({
   }
 
   // Throughout the codebase GATSBY_QUERY_ON_DEMAND is used to conditionally enable the QoD behavior, depending on if "gatsby develop" is running or not. In CI QoD is disabled by default, too.
-  // You can use GATSBY_ENABLE_QOD_IN_CI to force enable it in CI.
+  // You can use GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI to force enable it in CI.
   process.env.GATSBY_QUERY_ON_DEMAND = `true`
   if (process.env.gatsby_executing_command !== `develop`) {
     // we don't want to ever have this flag enabled for anything than develop
     // in case someone have this env var globally set
     delete process.env.GATSBY_QUERY_ON_DEMAND
-  } else if (isCI() && !process.env.GATSBY_ENABLE_QOD_IN_CI) {
+  } else if (isCI() && !process.env.GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI) {
     delete process.env.GATSBY_QUERY_ON_DEMAND
+    reporter.verbose(
+      `Query on Demand is disabled in CI by default. You can enable it by setting GATSBY_ENABLE_QUERY_ON_DEMAND_IN_CI env var.`
+    )
   }
 
   // run stale jobs
