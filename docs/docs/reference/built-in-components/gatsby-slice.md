@@ -142,23 +142,19 @@ export function MyComponent() {
 ```
 
 ```js
-// ⚠️ Doesn't work
+// OK
 
 export function MyComponent() {
-  // Aliases can't be set by variables
   const alias = "my-image"
-
   return <Slice alias={alias} />
 }
 ```
 
 ```js
-// ⚠️ Doesn't work
+// OK
 
 export function MyComponent() {
-  // Aliases can't be a computed string
   const type = "image"
-
   return <Slice alias={`my-${type}`} />
 }
 ```
