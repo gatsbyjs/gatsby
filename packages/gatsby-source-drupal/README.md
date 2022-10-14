@@ -265,7 +265,7 @@ module.exports = {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
-        proxyUrl: `https://xyz.cloudfront.net/`,
+        proxyUrl: `https://xyz.cloudfront.net/`, // optional, defaults to the value of baseUrl
         apiBase: `api`, // optional, defaults to `jsonapi`
       },
     },
