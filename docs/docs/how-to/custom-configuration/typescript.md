@@ -327,17 +327,19 @@ module.exports = gatsbyConfig
 exports.createPages = () => {}
 ```
 
-## CSS Modules
+## Styling
+
+### vanilla-extract
+
+[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use vanilla-extract, select it as your preferred styling solution when initializing your project with `npm init gatsby`. You can also manually setup your project through [gatsby-plugin-vanilla-extract](/plugins/gatsby-plugin-vanilla-extract/) or use the [vanilla-extract example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract).
+
+### CSS Modules
 
 To import CSS Modules add this typing definition to your source folder:
 
 ```typescript:title=src/module.css.d.ts
 declare module "*.module.css";
 ```
-
-## Styling
-
-[vanilla-extract](https://vanilla-extract.style/) helps you write type‑safe, locally scoped classes, variables and themes. It's a great solution when it comes to styling in your TypeScript project. To use vanilla-extract, select it as your preferred styling solution when initializing your project with `npm init gatsby`. You can also manually setup your project through [gatsby-plugin-vanilla-extract](/plugins/gatsby-plugin-vanilla-extract/) or use the [vanilla-extract example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-vanilla-extract).
 
 ## Migrating to TypeScript
 
