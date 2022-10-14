@@ -70,7 +70,7 @@ export const DefaultLayout = ({ children, navigationBarClassName }) => {
 }
 ```
 
-That's it! After a successful `gatsby build`, you should see a list of `Slices` that were built for your site.
+After a successful `gatsby build`, you should see a list of `Slices` that were built for your site. We've created a Slice!
 
 ### Using `sliceContext`
 
@@ -92,7 +92,7 @@ The data passed to `context` here will be handed down to the `NavigationBar` Sli
 
 ```javascript:title=src/components/navigation-bar.jsx
 // highlight-next-line
-export const NavigationBar = ({ className, sliceContext }) => {
+const NavigationBar = ({ className, sliceContext }) => {
   return (
     <div className={className}>
       <Link to="/">Home</Link>
@@ -101,6 +101,57 @@ export const NavigationBar = ({ className, sliceContext }) => {
     </div>
   )
 }
+
+export default NavigationBar
+```
+
+### Querying Data
+
+Data can be queried the same way you can run queries within pages. These are called "slice queries" (as opposed to [page queries](/docs/how-to/querying-data/page-query)).
+
+In this example, let's say you want to pull all navigation items from your CMS.
+
+```js:title=src/components/my-slice.js
+const NavigationBar = ({ data }) => {
+  return (
+    <div>
+      {data.allNavigationItems.nodes.forEach(navigationItem = (
+        // highlight-next-line
+        <Link to={navigationItem.path}>{navigationItem.text}</Link>
+      ))}
+    </div>
+  )
+}
+
+export default NavigationBar
+
+export const query = graphql`
+  query {
+    allNavigationItems {
+      nodes {
+        path
+        text
+      }
+    }
+  }
+`
+```
+
+When Gatsby builds, this query will be ran and passed to `NavigationBar` within the `data` prop, just like [page queries](/docs/how-to/querying-data/page-query).
+
+Slice queries can also accept parameters from the `context` passed to `createSlice`.
+
+```js:title=src/components/my-slice.js
+export const query = graphql`
+  // highlight-next-line
+  query ($title: String) {
+    // highlight-next-line
+    myField(title: {eq: $title}) {
+      id
+      title
+    }
+  }
+`
 ```
 
 ### Using Aliases
