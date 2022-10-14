@@ -125,7 +125,7 @@ Object {
   "category": "USER",
   "code": "95312",
   "context": Object {
-    "ref": "navigator",
+    "undefinedGlobal": "navigator",
   },
   "docsUrl": "https://gatsby.dev/debug-html",
   "level": "ERROR",
