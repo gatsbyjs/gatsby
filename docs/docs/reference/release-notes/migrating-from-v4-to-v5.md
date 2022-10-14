@@ -241,6 +241,27 @@ export default function Title() {
 }
 ```
 
+### Page props will be unified in browser and server environments
+
+React 18 introduced [stricter hydration errors](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#other-breaking-changes), thrown when your server-rendered JSX and client-rendered JSX does not match.
+
+Given that these errors can be difficult to debug, we intend to unify as much as possible the props that are passed to your page components during server rendering in Node and client rendering in the browser.
+
+Page props in v6 will consist of:
+
+```js
+const { location, params, data, pageContext, serverData } = props
+```
+
+Effective changes in v6 will include:
+
+- Remove `pageResources` prop currently only available in browser context (it's an internal data structure)
+- Remove `*` prop currently only available in server context (in favor of `location` prop)
+- Remove `path` prop that currently differs in server and browser context (in favor of `location` prop)
+- Remove `uri` prop in favor of `location` prop
+
+The `location` prop will remain different in the browser and server context due to the router offering more properties in the browser context from `window.location`.
+
 ## For plugin maintainers
 
 In most cases, you won't have to do anything to be v5 compatible. But one thing you can do to be certain your plugin won't throw any warnings or errors is to set the proper peer dependencies.
