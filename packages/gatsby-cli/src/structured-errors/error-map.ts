@@ -34,7 +34,7 @@ const errors = {
   },
   "95312": {
     text: (context): string =>
-      `"${context.ref}" is not available during Server-Side Rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
+      `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,
@@ -645,6 +645,33 @@ const errors = {
   "11338": {
     text: (context): string =>
       `${context.pluginName} created a slice component without a valid default export.\n\nThe path to the component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11339": {
+    text: (context): string =>
+      [
+        `Building static HTML failed for slice "${context.sliceName}".`,
+        `Slice metadata: ${JSON.stringify(context?.sliceData || {}, null, 2)}`,
+        `Slice props: ${JSON.stringify(context?.sliceProps || {}, null, 2)}`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11340": {
+    text: (context): string =>
+      [
+        `Building static HTML failed for slice "${context.sliceName}".`,
+        `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
     level: Level.ERROR,
     category: ErrorCategory.USER,
     // TODO: change domain to gatsbyjs.com when it's released
