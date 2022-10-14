@@ -186,6 +186,10 @@ In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-
 
 Breaking Changes in plugins that we own and maintain.
 
+#### gatsby-plugin-sitemap
+
+The default setting for the `output` option changed from `/sitemap` to `/`. This means that `sitemap-index.xml` will now be created at the root of the site.
+
 ## Future breaking changes
 
 This section explains deprecations that were made for Gatsby 5. These old behaviors will be removed in v6, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
