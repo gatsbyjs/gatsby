@@ -265,7 +265,6 @@ Array [
       "pluginOptionsSchema",
       "resolvableExtensions",
       "onCreateBabelConfig",
-      "onCreateWebpackConfig",
     ],
     "pluginOptions": Object {
       "allExtensions": false,
