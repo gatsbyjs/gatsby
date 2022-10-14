@@ -12,6 +12,7 @@ import { getBrowsersList } from "./browserslist"
 import ESLintPlugin from "eslint-webpack-plugin"
 import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
+import { getPublicPath } from "./get-public-path"
 import {
   GatsbyWebpackVirtualModules,
   VIRTUAL_MODULES_BASE_PATH,
@@ -181,6 +182,9 @@ export const createWebpackUtils = (
 
   const isSSR = stage.includes(`html`)
   const { config } = store.getState()
+  const { assetPrefix, pathPrefix } = config
+
+  const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
   const makeExternalOnly =
     (original: RuleFactory) =>
@@ -800,7 +804,7 @@ export const createWebpackUtils = (
     plugins.ignore({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ })
 
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
-    new GatsbyWebpackStatsExtractor()
+    new GatsbyWebpackStatsExtractor(publicPath)
 
   // TODO: remove this in v5
   plugins.eslintGraphqlSchemaReload = (): null => null

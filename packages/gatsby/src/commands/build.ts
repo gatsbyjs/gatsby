@@ -36,6 +36,7 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  runSliceQueries,
   writeOutRequires,
 } from "../services"
 import {
@@ -63,6 +64,7 @@ import {
 import { validateEngines } from "../utils/validate-engines"
 import { constructConfigObject } from "../utils/gatsby-cloud-config"
 import { waitUntilWorkerJobsAreComplete } from "../utils/jobs/worker-messaging"
+import { getSSRChunkHashes } from "../utils/webpack/get-ssr-chunk-hashes"
 import { writeTypeScriptTypes } from "../utils/graphql-typegen/ts-codegen"
 
 module.exports = async function build(
@@ -150,6 +152,7 @@ module.exports = async function build(
   let webpackAssets: Array<webpack.StatsAsset> | null = null
   let webpackCompilationHash: string | null = null
   let webpackSSRCompilationHash: string | null = null
+  let templateCompilationHashes: Record<string, string> = {}
 
   const engineBundlingPromises: Array<Promise<any>> = []
   const buildActivityTimer = report.activityTimer(
@@ -226,7 +229,16 @@ module.exports = async function build(
     )
 
     closeHTMLBundleCompilation = close
-    webpackSSRCompilationHash = stats.hash as string
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      const { renderPageHash, templateHashes } = getSSRChunkHashes({
+        stats,
+        components: store.getState().components,
+      })
+      webpackSSRCompilationHash = renderPageHash
+      templateCompilationHashes = templateHashes
+    } else {
+      webpackSSRCompilationHash = stats.hash as string
+    }
 
     await close()
   } catch (err) {
@@ -352,6 +364,15 @@ module.exports = async function build(
     })
   }
 
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    await runSliceQueries({
+      queryIds,
+      graphqlRunner,
+      parentSpan: buildSpan,
+      store,
+    })
+  }
+
   // create scope so we don't leak state object
   {
     const state = store.getState()
@@ -361,20 +382,18 @@ module.exports = async function build(
     })
   }
 
-  if (process.send && shouldGenerateEngines()) {
-    await waitMaterializePageMode
-    process.send({
-      type: `LOG_ACTION`,
-      action: {
-        type: `ENGINES_READY`,
-        timestamp: new Date().toJSON(),
-      },
-    })
+  if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
+    if (process.send && shouldGenerateEngines()) {
+      await waitMaterializePageMode
+      process.send({
+        type: `LOG_ACTION`,
+        action: {
+          type: `ENGINES_READY`,
+          timestamp: new Date().toJSON(),
+        },
+      })
+    }
   }
-
-  // Copy files from the static directory to
-  // an equivalent static directory within public.
-  copyStaticDirs()
 
   // create scope so we don't leak state object
   {
@@ -401,6 +420,35 @@ module.exports = async function build(
       rewriteActivityTimer.end()
     }
 
+    if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+      Object.entries(templateCompilationHashes).forEach(
+        ([templatePath, templateHash]) => {
+          const component = store.getState().components.get(templatePath)
+          if (component) {
+            const action = {
+              type: `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`,
+              payload: {
+                templatePath,
+                templateHash,
+                pages: component.pages,
+                isSlice: component.isSlice,
+              },
+            }
+            store.dispatch(action)
+          } else {
+            console.error({
+              templatePath,
+              templateHash,
+              availableTemplates: [...store.getState().components.keys()],
+            })
+            throw new Error(
+              `something changed in webpack but I don't know what`
+            )
+          }
+        }
+      )
+    }
+
     if (state.html.ssrCompilationHash !== webpackSSRCompilationHash) {
       store.dispatch({
         type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
@@ -411,6 +459,41 @@ module.exports = async function build(
 
   await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
+
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    if (shouldGenerateEngines()) {
+      const state = store.getState()
+      const sliceDataPath = path.join(
+        state.program.directory,
+        `public`,
+        `slice-data`
+      )
+      if (fs.existsSync(sliceDataPath)) {
+        const destination = path.join(
+          state.program.directory,
+          `.cache`,
+          `page-ssr`,
+          `slice-data`
+        )
+        fs.copySync(sliceDataPath, destination)
+      }
+
+      if (process.send) {
+        await waitMaterializePageMode
+        process.send({
+          type: `LOG_ACTION`,
+          action: {
+            type: `ENGINES_READY`,
+            timestamp: new Date().toJSON(),
+          },
+        })
+      }
+    }
+  }
+
+  // Copy files from the static directory to
+  // an equivalent static directory within public.
+  copyStaticDirs()
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers

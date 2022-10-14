@@ -64,6 +64,7 @@ const pageDataMock = {
   componentChunkName: `page-component---src-pages-test-js`,
   path: `/about/`,
   staticQueryHashes: [],
+  slicesMap: new Map(),
 }
 
 const webpackCompilationHash = `1234567890abcdef1234`
@@ -371,6 +372,7 @@ describe(`static-entry sanity checks`, () => {
     styles: [],
     reversedStyles: [],
     reversedScripts: [],
+    sliceData: {},
   }
 
   beforeEach(() => {
