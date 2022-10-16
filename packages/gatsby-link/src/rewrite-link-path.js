@@ -20,7 +20,10 @@ function absolutify(path, current) {
   const absolutePath = resolve(path, current)
 
   if (option === `always` || option === `never`) {
-    return applyTrailingSlashOption(absolutePath, option)
+    const { pathname, search, hash } = parsePath(absolutePath)
+    const output = applyTrailingSlashOption(pathname, option)
+
+    return `${output}${search}${hash}`
   }
 
   return absolutePath
