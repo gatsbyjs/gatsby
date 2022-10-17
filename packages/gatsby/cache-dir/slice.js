@@ -32,6 +32,22 @@ export function Slice(props) {
     } else if (slicesContext.renderEnvironment === `engines`) {
       // if we're in SSR, we'll just render the component as is
       return <InlineSlice {...internalProps} />
+    } else if (slicesContext.renderEnvironment === `slices`) {
+      // we are not yet supporting nested slices
+
+      let additionalContextMessage = ``
+
+      // just in case generating additional contextual information fails, we still want the base message to show
+      // and not show another cryptic error message
+      try {
+        additionalContextMessage = `\n\nSlice component "${slicesContext.sliceRoot.name}" (${slicesContext.sliceRoot.componentPath}) tried to render <Slice alias="${props.alias}"/>`
+      } catch {
+        // don't need to handle it, we will just skip the additional context message if we fail to generate it
+      }
+
+      throw new Error(
+        `Nested slices are not supported.${additionalContextMessage}\n\nSee https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice#nested-slices`
+      )
     } else {
       throw new Error(
         `Slice context "${slicesContext.renderEnvironment}" is not supported.`
