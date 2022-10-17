@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.24.0/packages/gatsby-remark-autolink-headers) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+
+### [5.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.23.1/packages/gatsby-remark-autolink-headers) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
 ## [5.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-autolink-headers@5.23.0/packages/gatsby-remark-autolink-headers) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

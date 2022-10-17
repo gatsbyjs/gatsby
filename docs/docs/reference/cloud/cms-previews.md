@@ -29,6 +29,7 @@ There are two CMS Preview build approaches; these are the "legacy" preview exper
 This is the default preview builder. It is a production build of your site using preview data as specified by your environment variables. The main benefits are:
 
 - Fast updates after initial build.
+- Parallelized Image Processing.
 - All successful preview builds are always available.
 - Support for the [preview status indicator](/docs/reference/release-notes/v3.6/#preview-status-indicator) on Gatsby v3 and later.
 

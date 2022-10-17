@@ -179,6 +179,7 @@ export async function createGraphqlEngineBundle(
         // only load one version of lmdb
         lmdb: require.resolve(`lmdb`),
         "ts-node": require.resolve(`./shims/ts-node`),
+        "gatsby-sharp$": require.resolve(`./shims/gatsby-sharp`),
       },
     },
     plugins: [
@@ -190,6 +191,9 @@ export async function createGraphqlEngineBundle(
         "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        "process.env.GATSBY_SLICES": JSON.stringify(
+          !!process.env.GATSBY_SLICES
+        ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),

@@ -521,7 +521,7 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   }
   `)
     expect(run).toThrowErrorMatchingInlineSnapshot(
-      `"unknown: BabelPluginRemoveGraphQLQueries: the \\"config\\" export must be async when using it with graphql"`
+      `"unknown file: BabelPluginRemoveGraphQLQueries: the \\"config\\" export must be async when using it with graphql"`
     )
   })
 })

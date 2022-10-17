@@ -74,11 +74,14 @@ export function headHandlerForSSR({
             />
           )
         } else {
-          element = (
-            <node.rawTagName {...attributes}>
-              {node.childNodes[0]?.textContent}
-            </node.rawTagName>
-          )
+          element =
+            node.textContent.length > 0 ? (
+              <node.rawTagName {...attributes}>
+                {node.textContent}
+              </node.rawTagName>
+            ) : (
+              <node.rawTagName {...attributes} />
+            )
         }
 
         if (id) {

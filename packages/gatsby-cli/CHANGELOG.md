@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.24.0/packages/gatsby-cli) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Features
+
+- add partial hydration [#36485](https://github.com/gatsbyjs/gatsby/issues/36485) ([c073bbe](https://github.com/gatsbyjs/gatsby/commit/c073bbea40379adc62bd891da9f65ff2756b120b))
+
+#### Chores
+
+- More Node 18 bumps [#36640](https://github.com/gatsbyjs/gatsby/issues/36640) ([5b3b565](https://github.com/gatsbyjs/gatsby/commit/5b3b565229d89a7e440898ba4b8652ee852091c7))
+- Fix run script glossary link Fix [#36636](https://github.com/gatsbyjs/gatsby/issues/36636) ([c500314](https://github.com/gatsbyjs/gatsby/commit/c500314cabc40e0ac4975f7a4d1a27b7bfb124df))
+- Improve Gatsby CLI reference doc [#36619](https://github.com/gatsbyjs/gatsby/issues/36619) ([71e81fc](https://github.com/gatsbyjs/gatsby/commit/71e81fca1c5dd2408fa5932149218993ef65d40d))
+
+### [4.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.23.1/packages/gatsby-cli) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.23.0/packages/gatsby-cli) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

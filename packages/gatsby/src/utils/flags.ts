@@ -246,6 +246,18 @@ const activeFlags: Array<IFlag> = [
         ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
         : `Partial hydration requires React 18+ to work.`,
   },
+  {
+    name: `SLICES`,
+    env: `GATSBY_SLICES`,
+    command: `all`,
+    telemetryId: `SliceAPI`,
+    description: `Temporary flag for development purposes (until interop with partial hydration is implemented)`,
+    umbrellaIssue: ``,
+    experimental: true,
+    testFitness: (): fitnessEnum =>
+      _CFLAGS_.GATSBY_MAJOR === `5` ? `OPT_IN` : false,
+    requires: `Slices is only available in Gatsby V5. Please upgrade Gatsby.`,
+  },
 ]
 
 export default activeFlags

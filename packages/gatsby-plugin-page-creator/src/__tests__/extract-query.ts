@@ -223,6 +223,18 @@ describe(`extract query`, () => {
       )
     })
   })
+
+  it(`supports limiting collection query to specified node ids if provided`, () => {
+    expect(
+      generateQueryFromString(
+        `Thing`,
+        compatiblePath(`/foo/bar/{Thing.id}/{Thing.fields__name}.js`),
+        [`id-1`, `id-2`]
+      )
+    ).toMatchInlineSnapshot(
+      `"{allThing(filter: { id: { in: [\\"id-1\\",\\"id-2\\"] } }){nodes{id,fields{name},internal{contentFilePath}}}}"`
+    )
+  })
 })
 
 describe(`reverseLookupParams`, () => {

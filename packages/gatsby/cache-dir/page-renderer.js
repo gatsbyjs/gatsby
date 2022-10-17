@@ -1,4 +1,4 @@
-import { createElement } from "react"
+import React, { Suspense, createElement } from "react"
 import PropTypes from "prop-types"
 import { apiRunner } from "./api-runner-browser"
 import { grabMatchParams } from "./find-path"
@@ -16,13 +16,15 @@ function PageRenderer(props) {
 
   const preferDefault = m => (m && m.default) || m
 
-  const pageElement = createElement(
-    preferDefault(props.pageResources.component),
-    {
+  let pageElement
+  if (props.pageResources.partialHydration) {
+    pageElement = props.pageResources.partialHydration
+  } else {
+    pageElement = createElement(preferDefault(props.pageResources.component), {
       ...pageComponentProps,
       key: props.path || props.pageResources.page.path,
-    }
-  )
+    })
+  }
 
   const pageComponent = props.pageResources.head
 
@@ -34,7 +36,10 @@ function PageRenderer(props) {
 
   const wrappedPage = apiRunner(
     `wrapPageElement`,
-    { element: pageElement, props: pageComponentProps },
+    {
+      element: pageElement,
+      props: pageComponentProps,
+    },
     pageElement,
     ({ result }) => {
       return { element: result, props: pageComponentProps }

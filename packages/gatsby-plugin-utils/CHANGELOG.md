@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.18.0/packages/gatsby-plugin-utils) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Features
+
+- Encrypt image cdn image/file urls when env vars are present [#36585](https://github.com/gatsbyjs/gatsby/issues/36585) ([a341115](https://github.com/gatsbyjs/gatsby/commit/a34111578982b11aaf511ca0ca43c86c5822b468))
+
+#### Bug Fixes
+
+- fix bundling image cdn tools fix [#36534](https://github.com/gatsbyjs/gatsby/issues/36534) ([0ef331d](https://github.com/gatsbyjs/gatsby/commit/0ef331d30eab0731457b6607c9320e2818eb1677))
+
+### [3.17.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.17.1/packages/gatsby-plugin-utils) (2022-09-22)
+
+#### Features
+
+- Encrypt image cdn image/file urls when env vars are present [#36585](https://github.com/gatsbyjs/gatsby/issues/36585) [#36658](https://github.com/gatsbyjs/gatsby/issues/36658) ([7caf79f](https://github.com/gatsbyjs/gatsby/commit/7caf79fecfc7984f4643ba5effdf3fa071eebcdf))
+
 ## [3.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@3.17.0/packages/gatsby-plugin-utils) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

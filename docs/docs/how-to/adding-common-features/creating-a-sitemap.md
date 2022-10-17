@@ -16,7 +16,10 @@ Think of it as a map for your website. It shows what all of the pages are on you
 To generate an XML sitemap, you will use the [`gatsby-plugin-sitemap`](/plugins/gatsby-plugin-sitemap/) package.
 
 Install the package by running the following command:
-`npm install gatsby-plugin-sitemap`
+
+```shell
+npm install gatsby-plugin-sitemap
+```
 
 ### How to configure
 
@@ -33,12 +36,8 @@ module.exports = {
 
 **Note:** The siteUrl property must be defined and not left empty.
 
-Next run a build (`npm run build`) since the sitemap generation will only happen for production builds. This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap path is /sitemap.xml and will include all of your site’s pages, but the plugin exposes options to configure this default functionality.
+Next run a build (`npm run build`) since the sitemap generation will only happen for production builds. This is all that's required to get a working sitemap with Gatsby! By default, the generated sitemap path is `/sitemap-index.xml` and will hold an index of sitemap chunks, but the plugin exposes options to configure this default functionality.
 
 ### Additional modifications
 
 Additional modification steps are available in the [`gatsby-plugin-sitemap` documentation](/plugins/gatsby-plugin-sitemap)
-
-## More information
-
-- Also check out a post on [gatsby-plugin-advanced-sitemap](/blog/2019-05-07-advanced-sitemap-plugin-for-seo/) from the Gatsby blog

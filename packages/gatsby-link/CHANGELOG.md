@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.24.1/packages/gatsby-link) (2022-10-10)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.24.0/packages/gatsby-link) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Bug Fixes
+
+- Correct handling of trailingSlash & pathPrefix fix [#36542](https://github.com/gatsbyjs/gatsby/issues/36542) ([85b1319](https://github.com/gatsbyjs/gatsby/commit/85b1319bf7494f679b7d27707ba9e8bb819a9058))
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+
 ## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.23.0/packages/gatsby-link) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

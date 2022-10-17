@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
+import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router" // These come from `@types/reach__router`
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { Span } from "opentracing"
 export { Reporter }
@@ -17,7 +17,10 @@ import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
 
-export type AvailableFeatures = "image-cdn" | "graphql-typegen" | "content-file-path"
+export type AvailableFeatures =
+  | "image-cdn"
+  | "graphql-typegen"
+  | "content-file-path"
 
 export {
   default as Link,
@@ -158,7 +161,7 @@ export type HeadProps<DataType = object, PageContextType = object> = {
     /**
      * Returns the Location object's URL's path.
      */
-    pathname: string;
+    pathname: string
   }
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
@@ -175,9 +178,50 @@ export type HeadProps<DataType = object, PageContextType = object> = {
 /**
  * A shorthand type for combining the props and return type for the [Gatsby Head API](https://gatsby.dev/gatsby-head).
  */
- export type HeadFC<DataType = object, PageContextType = object> = (
+export type HeadFC<DataType = object, PageContextType = object> = (
   props: HeadProps<DataType, PageContextType>
 ) => JSX.Element
+
+type SerializableProps =
+  | ISerializableObject
+  | Array<SerializableProps>
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+
+interface ISerializableObject {
+  [key: string]: SerializableProps
+}
+
+/**
+ * A props object for [slice placholder](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ */
+export interface SlicePlaceholderProps {
+  alias: string
+  allowEmpty?: boolean
+  children?: React.ReactNode
+  [key: string]: SerializableProps
+}
+
+/**
+ * Component used as a slice placholder, to mark a place in the page where a [slice](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/) should be inserted.
+ */
+export declare function Slice(props: SlicePlaceholderProps): JSX.Element
+
+/**
+ * A props object for [slice component](https://v5.gatsbyjs.com/docs/reference/built-in-components/gatsby-slice/)
+ */
+export type SliceComponentProps<
+  DataType = object,
+  SliceContextType = object,
+  AdditionalSerializableProps extends ISerializableObject = object
+> = {
+  data: DataType
+  sliceContext: SliceContextType
+  children?: React.ReactNode
+} & AdditionalSerializableProps
 
 /**
  * Props object passed into the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) function.
@@ -1224,6 +1268,14 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createSlice */
+  createSlice<TContext = Record<string, unknown>>(
+    this: void,
+    args: SliceInput<TContext>,
+    plugin?: ActionPlugin,
+    option?: ActionOptions
+  ): void
+
   /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
@@ -1659,6 +1711,13 @@ export interface Page<TContext = Record<string, unknown>> {
   context?: TContext
   ownerNodeId?: string
   defer?: boolean
+  slices?: Record<string, string>
+}
+
+export interface SliceInput<TContext = Record<string, unknown>> {
+  id: string
+  component: string
+  context?: TContext
 }
 
 export interface IPluginRefObject {
