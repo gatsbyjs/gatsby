@@ -6,7 +6,7 @@
   "dependencies": {
     "babel-plugin-search-and-replace": "^1.1.0",
     "cypress": "^9.7.0",
-    "gatsby": "^4.23.0-alpha-preview-slices.78",
+    "gatsby": "^4.25.0-alpha-preview-slices.d20221011t181843.56",
     "gatsby-cypress": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-less": "next",
