@@ -3,6 +3,7 @@ import * as fs from "fs-extra"
 import { createContentDigest } from "gatsby-core-utils"
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 import type { GatsbyNode } from "gatsby"
+// import slicesData from "./shared-data/slices"
 
 export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = () => {
   fs.copyFileSync(
@@ -126,13 +127,42 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = ({
 export const createPages: GatsbyNode["createPages"] = ({
   actions: { createPage, createRedirect, createSlice },
 }) => {
+
+  //-------------------------Slices API----------------------------
   createSlice({
     id: `footer`,
     component: path.resolve(`./src/components/footer.js`),
     context: {
-      framework: "Gatsby",
+      framework: slicesData.framework
     },
   })
+
+  slicesData.allRecipeAuthors.forEach(({ id, name }) => {
+    createSlice({
+      id: `author-${id}`,
+      component: path.resolve(`./src/components/recipe-author.js`),
+      context: {
+        name,
+        id,
+      },
+    })
+  })
+
+  slicesData.allRecipes.forEach(({ authorId, id, name, description }) => {
+    createPage({
+      path: `/recipe/${id}`,
+      component: path.resolve(`./src/templates/recipe.js`),
+      context: {
+        description: description,
+        name,
+      },
+      slices: {
+        author: `author-${authorId}`,
+      },
+    })
+  })
+
+  //---------------------------------------------------------------
 
   createPage({
     path: `/안녕`,
