@@ -1,9 +1,12 @@
 const _ = require(`lodash`)
 const path = require(`path`)
+const v8 = require(`v8`)
 const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const { murmurhash } = require(`babel-plugin-remove-graphql-queries/murmur`)
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
+const v8Serialize = jest.spyOn(v8, `serialize`)
+const v8Deserialize = jest.spyOn(v8, `deserialize`)
 const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
@@ -215,6 +218,149 @@ describe(`redux db`, () => {
 
       expect(writeToCache).not.toBeCalled()
     })
+  })
+
+  describe(`Sharding`, () => {
+    afterAll(() => {
+      v8Serialize.mockRestore()
+      v8Deserialize.mockRestore()
+    })
+
+    // we set limit to 1.5 * 1024 * 1024 * 1024 per shard
+    // simulating size for page will allow us to see if we create expected amount of shards
+    // and that we stitch them back together correctly
+    const pageShardsScenarios = [
+      {
+        numberOfPages: 50 * 1000,
+        simulatedPageObjectSize: 10 * 1024,
+        expectedNumberOfPageShards: 1,
+        expectedPageContextSizeWarning: false,
+      },
+      {
+        numberOfPages: 50,
+        simulatedPageObjectSize: 10 * 1024 * 1024,
+        expectedNumberOfPageShards: 1,
+        expectedPageContextSizeWarning: true,
+      },
+      {
+        numberOfPages: 5,
+        simulatedPageObjectSize: 0.9 * 1024 * 1024 * 1024,
+        expectedNumberOfPageShards: 5,
+        expectedPageContextSizeWarning: true,
+      },
+    ]
+
+    const scenarios = []
+    for (const pageShardsParams of pageShardsScenarios) {
+      scenarios.push([
+        pageShardsParams.numberOfPages,
+        pageShardsParams.simulatedPageObjectSize,
+        pageShardsParams.expectedNumberOfPageShards,
+        pageShardsParams.expectedPageContextSizeWarning
+          ? `with page context size warning`
+          : `without page context size warning`,
+        pageShardsParams.expectedPageContextSizeWarning,
+      ])
+    }
+
+    it.each(scenarios)(
+      `Scenario Pages %i x %i bytes = %i shards (%s)`,
+      async (
+        numberOfPages,
+        simulatedPageObjectSize,
+        expectedNumberOfPageShards,
+        _expectedPageContextSizeWarningLabelForTestName,
+        expectedPageContextSizeWarning
+      ) => {
+        // just some baseline checking to make sure test setup is correct - check both in-memory state and persisted state
+        // and make sure it's empty
+        const initialStateInMemory = store.getState()
+        expect(initialStateInMemory.pages).toEqual(new Map())
+
+        // we expect to have no persisted state yet - this returns empty object
+        // and let redux to use initial states for all redux slices
+        const initialPersistedState = readState()
+        expect(initialPersistedState.pages).toBeUndefined()
+        expect(initialPersistedState).toEqual({})
+
+        createPages(
+          new Array(numberOfPages).fill(undefined).map((_, index) => {
+            return {
+              path: `/page-${index}/`,
+              component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
+              context: {
+                objectType: `page`,
+                possiblyHugeField: `let's pretend this field is huge (we will simulate that by mocking some things used to asses size of object)`,
+              },
+            }
+          })
+        )
+
+        const currentStateInMemory = store.getState()
+        expect(currentStateInMemory.pages.size).toEqual(numberOfPages)
+
+        // this is just to make sure that any implementation changes in readState
+        // won't affect this test - so we clone current state of things and will
+        // use that for assertions
+        const clonedCurrentPages = new Map(currentStateInMemory.pages)
+
+        // we expect to have no persisted state yet and that current in-memory state doesn't affect it
+        const persistedStateBeforeSaving = readState()
+        expect(persistedStateBeforeSaving.pages).toBeUndefined()
+        expect(persistedStateBeforeSaving).toEqual({})
+
+        // simulate that pages have sizes set in scenario parameters
+        // it changes implementation to JSON.stringify because calling v8.serialize
+        // again cause max stack size errors :shrug: - this also requires adjusting
+        // deserialize implementation
+        v8Serialize.mockImplementation(obj => {
+          if (obj?.[1]?.context?.objectType === `page`) {
+            return {
+              toString: () => JSON.stringify(obj),
+              length: simulatedPageObjectSize,
+            }
+          } else {
+            return JSON.stringify(obj)
+          }
+        })
+        v8Deserialize.mockImplementation(obj => JSON.parse(obj.toString()))
+
+        await saveState()
+
+        if (expectedPageContextSizeWarning) {
+          expect(reporterWarn).toBeCalledWith(
+            `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
+          )
+        } else {
+          expect(reporterWarn).not.toBeCalled()
+        }
+
+        const shardsWritten = {
+          rest: 0,
+          page: 0,
+        }
+
+        for (const fileWritten of mockWrittenContent.keys()) {
+          const basename = path.basename(fileWritten)
+          if (basename.startsWith(`redux.rest`)) {
+            shardsWritten.rest++
+          } else if (basename.startsWith(`redux.page`)) {
+            shardsWritten.page++
+          }
+        }
+
+        expect(writeToCache).toBeCalled()
+
+        expect(shardsWritten.rest).toEqual(1)
+        expect(shardsWritten.page).toEqual(expectedNumberOfPageShards)
+
+        // and finally - let's make sure that reading shards stitches it back together
+        // correctly
+        const persistedStateAfterSaving = readState()
+
+        expect(persistedStateAfterSaving.pages).toEqual(clonedCurrentPages)
+      }
+    )
   })
 
   it(`doesn't discard persisted cache if no pages`, () => {
