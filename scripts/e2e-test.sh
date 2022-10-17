@@ -1,12 +1,18 @@
 #!/bin/bash
 set -e # bail on errors
 
+echo "NODE VERSION PRE"
+
 node --version
+
+echo "FORCE_NVM_VERSION: '$FORCE_NVM_VERSION'"
 
 if [[ -v $FORCE_NVM_VERSION ]]; then
   echo "Forcing NVM version to $FORCE_NVM_VERSION"
   nvm use $FORCE_NVM_VERSION
 fi
+
+echo "NODE VERSION POST"
 
 node --version
 
