@@ -174,7 +174,6 @@ describe(`Load plugins`, () => {
               `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
-              `onCreateWebpackConfig`,
             ],
             pluginOptions: {
               allExtensions: false,
