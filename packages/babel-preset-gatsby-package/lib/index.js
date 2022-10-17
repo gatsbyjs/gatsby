@@ -88,7 +88,7 @@ function preset(context, options = {}) {
       ],
       r(`babel-plugin-lodash`),
       Array.isArray(keepDynamicImports) && keepDynamicImports.length > 0 && [
-        r(`./babel-trasnform-mark-to-keep-dynamic-import`),
+        r(`./babel-transform-mark-to-keep-dynamic-import`),
         {
           keepDynamicImports,
         },
