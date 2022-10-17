@@ -1,8 +1,4 @@
-const {
-  resolvableExtensions,
-  onCreateBabelConfig,
-  onCreateWebpackConfig,
-} = require(`../gatsby-node`)
+const { resolvableExtensions, onCreateBabelConfig } = require(`../gatsby-node`)
 const path = require(`path`)
 
 const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
@@ -44,31 +40,6 @@ describe(`gatsby-plugin-typescript`, () => {
           path.join(`@babel`, `plugin-proposal-numeric-separator`)
         ),
       })
-    })
-  })
-
-  describe(`onCreateWebpackConfig`, () => {
-    it(`sets the correct webpack config`, () => {
-      const actions = { setWebpackConfig: jest.fn() }
-      const loaders = { js: jest.fn(() => {}) }
-      onCreateWebpackConfig({ actions, loaders })
-      expect(actions.setWebpackConfig).toHaveBeenCalledWith({
-        module: {
-          rules: [
-            {
-              test: /\.tsx?$/,
-              use: expect.toBeFunction(),
-            },
-          ],
-        },
-      })
-    })
-
-    it(`does not set the webpack config if there isn't a js loader`, () => {
-      const actions = { setWebpackConfig: jest.fn() }
-      const loaders = { js: undefined }
-      onCreateWebpackConfig({ actions, loaders })
-      expect(actions.setWebpackConfig).not.toHaveBeenCalled()
     })
   })
 
