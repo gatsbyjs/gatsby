@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.4/packages/gatsby) (2022-10-10)
+
+**Note:** Version bump only for package gatsby
+
+### [4.24.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.3/packages/gatsby) (2022-10-07)
+
+#### Bug Fixes
+
+- Don't throw when a path with special character is visited [#36414](https://github.com/gatsbyjs/gatsby/issues/36414) [#36757](https://github.com/gatsbyjs/gatsby/issues/36757) ([87140c9](https://github.com/gatsbyjs/gatsby/commit/87140c96adffd88c89a0ec6a24086590093fd9a9))
+- Use hex hash for CSS modules [#36701](https://github.com/gatsbyjs/gatsby/issues/36701) [#36756](https://github.com/gatsbyjs/gatsby/issues/36756) ([b264d17](https://github.com/gatsbyjs/gatsby/commit/b264d17fc0d0f50217c25a473e32865366b9237f))
+
+### [4.24.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.2/packages/gatsby) (2022-10-06)
+
+**Note:** Version bump only for package gatsby
+
+### [4.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.1/packages/gatsby) (2022-09-30)
+
+#### Bug Fixes
+
+- Fix truncation of childNode during static HTML generation Fix [#36704](https://github.com/gatsbyjs/gatsby/issues/36704) Fix [#36717](https://github.com/gatsbyjs/gatsby/issues/36717) ([f43c6bb](https://github.com/gatsbyjs/gatsby/commit/f43c6bb5bb6355098cd3701a6d5f059dcdcd383b))
+- remove unused console.log [#36713](https://github.com/gatsbyjs/gatsby/issues/36713) [#36716](https://github.com/gatsbyjs/gatsby/issues/36716) ([6eefacf](https://github.com/gatsbyjs/gatsby/commit/6eefacf013df088acd655f38e1e78462260fbadc))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.0/packages/gatsby) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

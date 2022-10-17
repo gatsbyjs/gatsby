@@ -93,10 +93,10 @@ describe(`find-path`, () => {
 
     it(`should only process a request once`, () => {
       jest.resetModules()
-      jest.mock(`@gatsbyjs/reach-router/lib/utils`)
+      jest.mock(`@gatsbyjs/reach-router`)
       const findPath = require(`../find-path`).findPath
       const setMatchPaths = require(`../find-path`).setMatchPaths
-      const pick = require(`@gatsbyjs/reach-router/lib/utils`).pick
+      const pick = require(`@gatsbyjs/reach-router`).pick
 
       setMatchPaths([
         {

@@ -500,16 +500,20 @@ module.exports = async (
       ],
     }
 
-    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
-    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
-      const target =
-        stage === `build-html` || stage === `develop-html` ? `node` : `web`
-      if (target === `web`) {
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+    if (target === `web`) {
+      // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+      if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
         resolve.alias[`@reach/router`] = path.join(
           getPackageRoot(`@gatsbyjs/reach-router`),
           `es`
         )
       }
+
+      resolve.alias[`gatsby-core-utils/create-content-digest`] = directoryPath(
+        `.cache/create-content-digest-browser-shim`
+      )
     }
 
     if (stage === `build-javascript` && program.profile) {
