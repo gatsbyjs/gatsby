@@ -1,4 +1,5 @@
-import "regenerator-runtime/runtime.js"
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from "regenerator-runtime"
 
 import * as React from "react"
 import ReactDOM from "react-dom"
@@ -6,6 +7,8 @@ import { GraphiQL } from "graphiql"
 import { getIntrospectionQuery } from "graphql"
 import { useExplorerPlugin } from "@graphiql/plugin-explorer"
 
+import { useExporterPlugin } from "./code-exporter/plugin.jsx"
+import { snippets } from "./code-exporter/snippets.js"
 import { Logo } from "./logo.jsx"
 import { fetcher, fetchFragments, locationQuery } from "./utils.js"
 import { RefreshDataSourceButton } from "./toolbar.jsx"
@@ -118,6 +121,11 @@ const App = ({ initialExternalFragments }) => {
     onEdit: setQuery,
   })
 
+  const exporterPlugin = useExporterPlugin({
+    query,
+    snippets,
+  })
+
   const refreshExternalDataSource = () => {
     const options = { method: `POST` }
     if (refreshState.refreshToken) {
@@ -152,7 +160,7 @@ const App = ({ initialExternalFragments }) => {
         ),
       }}
       externalFragments={externalFragments}
-      plugins={[explorerPlugin]}
+      plugins={[explorerPlugin, exporterPlugin]}
     />
   )
 }

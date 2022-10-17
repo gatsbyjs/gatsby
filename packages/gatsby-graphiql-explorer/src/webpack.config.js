@@ -30,7 +30,10 @@ module.exports = {
                   bugfixes: true,
                   modules: `commonjs`,
                   useBuiltIns: `entry`,
-                  targets: [`>0.25%`, `not dead`],
+                  targets: [
+                    `>0.25% and supports es6-module`,
+                    `not dead and supports es6-module`,
+                  ],
                 },
               ],
               [

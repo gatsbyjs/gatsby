@@ -1,4 +1,4 @@
-export const removeQueryName = query =>
+const removeQueryName = query =>
   query.replace(
     /^[^{(]+([{(])/,
     (_match, openingCurlyBracketsOrParenthesis) =>
@@ -85,6 +85,4 @@ ${getQuery(arg, 4)}
 `,
 }
 
-const snippets = [pageQuery, useStaticQuery, createPages]
-
-export default snippets
+export const snippets = [pageQuery, useStaticQuery, createPages]
