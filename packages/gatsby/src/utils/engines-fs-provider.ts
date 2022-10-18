@@ -20,9 +20,14 @@ declare const __non_webpack_require__: typeof require
 
 if (global._fsWrapper) {
   global._actualFsWrapper = global._fsWrapper
+  global._actualFsExtraWrapper = {
+    ...__non_webpack_require__(`fs-extra`),
+    ...global._fsWrapper,
+  }
 } else {
   // fs alternative not provided - falling back to regular fs
   global._actualFsWrapper = __non_webpack_require__(`fs`)
+  global._actualFsExtraWrapper = __non_webpack_require__(`fs-extra`)
 }
 
 // hydrate webpack module cache (consume global, so it's not lazy)

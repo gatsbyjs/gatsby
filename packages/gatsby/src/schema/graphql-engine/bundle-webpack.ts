@@ -83,17 +83,22 @@ export async function createGraphqlEngineBundle(
       `cbor-x`, // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it
       `babel-runtime/helpers/asyncToGenerator`, // undeclared dep of yurnalist (but used in code path we don't use)
       `electron`, // :shrug: `got` seems to have electron specific code path
-      mod.builtinModules.reduce((acc, builtinModule) => {
-        if (builtinModule === `fs`) {
-          acc[builtinModule] = `global _actualFsWrapper`
-          acc[`node:${builtinModule}`] = `global _actualFsWrapper`
-        } else {
-          acc[builtinModule] = `commonjs ${builtinModule}`
-          acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`
-        }
+      mod.builtinModules.reduce(
+        (acc, builtinModule) => {
+          if (builtinModule === `fs`) {
+            acc[builtinModule] = `global _actualFsWrapper`
+            acc[`node:${builtinModule}`] = `global _actualFsWrapper`
+          } else {
+            acc[builtinModule] = `commonjs ${builtinModule}`
+            acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`
+          }
 
-        return acc
-      }, {}),
+          return acc
+        },
+        {
+          "fs-extra": `global _actualFsExtraWrapper`,
+        }
+      ),
     ],
     module: {
       rules: [
