@@ -1,4 +1,3 @@
 {
-  "presets": [["babel-preset-gatsby-package", { "esm": true }]],
-  "plugins": ["@babel/plugin-transform-modules-commonjs"]
+  "presets": [["babel-preset-gatsby-package", { "keepDynamicImports": ["./src/index.ts"]}]]
 }
