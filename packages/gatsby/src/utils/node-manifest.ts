@@ -1,5 +1,5 @@
 import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
-import { getNode } from "./../datastore"
+import { getDataStore, getNode } from "./../datastore"
 import { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
@@ -71,8 +71,9 @@ async function findPageOwnedByNode({
   foundPageBy: FoundPageBy
 }> {
   const state = store.getState()
-  const { pages, nodes, staticQueryComponents } = state
+  const { pages, staticQueryComponents } = state
   const { byNode, byConnection, trackedComponents } = state.queries
+  const datastore = getDataStore()
 
   const nodeType = fullNode?.internal?.type
 
@@ -140,7 +141,7 @@ async function findPageOwnedByNode({
       if (foundOwnerNodeId) {
         foundPageBy = `ownerNodeId`
       } else if (foundPageIdInContext && fullPage) {
-        const pageCreatedByPluginName = nodes.get(
+        const pageCreatedByPluginName = datastore.getNode(
           fullPage.pluginCreatorId
         )?.name
 
