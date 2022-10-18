@@ -25,7 +25,7 @@ const handlerP =
   (fn: (args: yargs.Arguments) => void) =>
   (args: yargs.Arguments): void => {
     Promise.resolve(fn(args)).then(
-      () => process.exit(0),
+      () => console.log(`hit`),
       err => report.panic(err)
     )
   }

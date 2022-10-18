@@ -5,7 +5,6 @@ import semver from "semver"
 import util from "util"
 import { createCli } from "./create-cli"
 import report from "./reporter"
-import pkg from "../package.json"
 import { ensureWindowsDriveLetterIsUppercase } from "./util/ensure-windows-drive-letter-is-uppercase"
 
 const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
@@ -18,11 +17,6 @@ if (useJsonLogger) {
 if (os.platform() === `win32`) {
   ensureWindowsDriveLetterIsUppercase()
 }
-
-// Check if update is available
-import(`update-notifier`).then(updateNotifier =>
-  updateNotifier.default({ pkg }).notify({ isGlobal: true })
-)
 
 // @ts-ignore - TODO: Remove _CFLAGS_ again
 const MIN_NODE_VERSION = _CFLAGS_.GATSBY_MAJOR === `5` ? `18.0.0` : `14.15.0`
