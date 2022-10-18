@@ -75,7 +75,7 @@ Follow the steps below to open the GraphiQL interface:
 1. Start up your local development server by running `gatsby develop`.
 1. In a web browser, go to `http://localhost:8000/___graphql`. (That's three underscores in the URL.)
 
-![A screenshot of the GraphiQL interface in a web browser. It has three main sections: the Explorer, the Query Editor, and the Result Window.](./graphiql.png)
+![A screenshot of the GraphiQL interface in a web browser. It has three main sections: the left sidebar, the query editor, and the result window.](./graphiql.png)
 
 <Collapsible
   summary={<h3>A closer look at the GraphiQL interface</h3>}
@@ -83,14 +83,20 @@ Follow the steps below to open the GraphiQL interface:
 
 There are three main sections of the GraphiQL interface:
 
-* **Explorer:** This is the section on the left, which shows you all the different kinds of data you can request in a GraphQL query.
-    * You can toggle the dropdowns to expand the different fields and see what kinds of data are available in the data layer.
-    * The blue items correspond to the different data fields you can query for.
-    * The purple items accept additional arguments that you can use to filter down the data returned in the response.
-* **Query Editor:** This is the middle section, which you can use to write out a query to test.
-    * You can add fields to your query by checking the boxes for different fields in the Explorer pane. Or, if you'd prefer, you can type the fields directly into the Query Editor. (Pro Tip: You can press `Ctrl + Space` on your keyboard to bring up an autocompletion box that shows what fields are available to you.)
-    * To execute the query in the Query Editor, click the "Execute Query" button (it looks like a "play" triangle button) at the top of the page.
-* **Result Window:** This is the section on the right, which shows you the result of running the query in the Query Editor.
+- **Sidebar:** The left sidebar has icons at the top and bottom. Currently the top section has buttons for: Documentation explorer, history, query explorer, and query extractor. The bottom icons are for refetching the schema, seeing the keyboard shorcuts, and changing settings. Hover over each button and click them to see different panels and modals opened.
+- **Query Editor:** This is the middle section, which you can use to write out a query to test.
+    - You can add fields to your query by checking the boxes for different fields in the Explorer pane. Or, if you'd prefer, you can type the fields directly into the Query Editor. (Pro Tip: You can press `Ctrl + Space` on your keyboard to bring up an autocompletion box that shows what fields are available to you.)
+    - To execute the query in the Query Editor, click the "Execute Query" button (it looks like a "play" triangle button) in the middle of the page.
+- **Result Window:** This is the section on the right, which shows you the result of running the query in the Query Editor.
+
+The _Query Explorer_ will be most important to you as it shows you all the different kinds of data you can request in a GraphQL query:
+- You can toggle the dropdowns to expand the different fields and see what kinds of data are available in the data layer.
+- The blue items correspond to the different data fields you can query for.
+- The turquoise items accept additional arguments that you can use to filter down the data returned in the response.
+
+Here's how the opened pane of the GraphiQL Explorer looks like:
+
+![A screenshot showing the opened state of the GraphiQL Explorer](./graphiql-explorer.png)
 
 </Collapsible>
 
@@ -98,9 +104,11 @@ GraphiQL is a helpful tool for testing out your GraphQL queries before you add t
 
 Try creating and running a few queries by doing the following:
 
+1. Open the GraphiQL Explorer pane by clicking on the button labeled with "Show GraphiQL Explorer" (looks like a folder with a plus icon)
+
 1. Check a few of the blue fields in the Explorer pane. Note how checking the box for a field adds it to the query in the Query Editor.
 
-1. Click the button at the top of the page (that looks like a "play" button) to execute the query. Look at the data returned in the Result window.
+1. Click the button in the middle of the page (that looks like a "play" button) to execute the query. Look at the data returned in the Result window.
 
 In the next section, you'll learn more about how to use specific fields. For now, take a minute or two to explore the different fields. What kinds of data are already available to you in the data layer?
 
@@ -143,7 +151,7 @@ Since you don't need to set up a source plugin, you can jump straight into Graph
 
 You might have noticed that there are two different dropdowns for `siteMetadata` (and for every field under the `site` dropdown).
 
-The first one (the purple one with a colon, `siteMetadata:`) is actually an **argument** attached to the `site` field. You can use the purple dropdowns to filter which pieces of data from the data layer get returned in the response. (You'll see an example of this later on.)
+The first one (the turquoise one with a colon, `siteMetadata:`) is actually an **argument** attached to the `site` field. You can use the turquoise dropdowns to filter which pieces of data from the data layer get returned in the response. (You'll see an example of this later on.)
 
 The second one (the blue one without a colon, `siteMetadata`) is what you'll use more frequently. This one adds the actual `siteMetadata` field to your query, which tells GraphQL to include that field in your response data.
 
@@ -161,7 +169,7 @@ query MyQuery {
   }
 }
 ```
-5. Click the Execute Query button (the "play" triangle at the top of the page) to run the query. The response in the Result Window should look something like the object below. Notice how the structure of the `data` object in the response matches the structure of the fields in the query.
+5. Click the Execute Query button (the "play" triangle in the middle of the page) to run the query. The response in the Result Window should look something like the object below. Notice how the structure of the `data` object in the response matches the structure of the fields in the query.
 ```json
 {
   "data": {
