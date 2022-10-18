@@ -5,7 +5,7 @@
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
     "babel-plugin-search-and-replace": "^1.1.0",
-    "gatsby": "next",
+    "gatsby": "5.0.0-next.2-dev-1666079790531",
     "gatsby-image": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-less": "next",
@@ -21,8 +21,8 @@
     "gatsby-transformer-sharp": "next",
     "node-fetch": "^2.6.1",
     "prop-types": "^15.6.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sass": "^1.32.8"
   },
   "keywords": [
