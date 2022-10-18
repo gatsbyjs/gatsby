@@ -58,7 +58,7 @@ test(`it constructs an error from the supplied errorMap`, () => {
 
 test(`it does not overwrite internal error map`, () => {
   const error = constructError(
-    { details: { id: `95312`, context: { ref: `Error!` } } },
+    { details: { id: `95312`, context: { undefinedGlobal: `window` } } },
     {
       "95312": {
         text: (context): string => `Error text is ${context.someProp} `,

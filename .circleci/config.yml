@@ -259,9 +259,7 @@ jobs:
           test_path: integration-tests/gatsby-pipeline
 
   integration_tests_gatsby_cli:
-    executor:
-      name: node
-      image: "18.0.0"
+    executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli

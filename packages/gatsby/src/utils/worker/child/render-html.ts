@@ -40,7 +40,6 @@ declare global {
   }
 }
 
-// Best effort typing the shape of errors we might throw
 interface IRenderHTMLError extends Error {
   message: string
   name: string
@@ -465,6 +464,18 @@ export interface ISlicePropsEntry {
   hasChildren: boolean
 }
 
+interface IRenderSliceHTMLError extends Error {
+  message: string
+  name: string
+  code?: string
+  stack?: string
+  context?: {
+    sliceName?: string
+    sliceData: unknown
+    sliceProps: unknown
+  }
+}
+
 export async function renderSlices({
   slices,
   htmlComponentRendererPath,
@@ -495,25 +506,35 @@ export async function renderSlices({
     const MAGIC_CHILDREN_STRING = `__DO_NOT_USE_OR_ELSE__`
     const sliceData = await readSliceData(publicDir, slice.name)
 
-    const html = await htmlComponentRenderer.renderSlice({
-      slice,
-      staticQueryContext,
-      props: {
-        data: sliceData?.result?.data,
-        ...(hasChildren ? { children: MAGIC_CHILDREN_STRING } : {}),
-        ...props,
-      },
-    })
-    const split = html.split(MAGIC_CHILDREN_STRING)
+    try {
+      const html = await htmlComponentRenderer.renderSlice({
+        slice,
+        staticQueryContext,
+        props: {
+          data: sliceData?.result?.data,
+          ...(hasChildren ? { children: MAGIC_CHILDREN_STRING } : {}),
+          ...props,
+        },
+      })
+      const split = html.split(MAGIC_CHILDREN_STRING)
 
-    // TODO always generate both for now
-    let index = 1
-    for (const htmlChunk of split) {
-      await ensureFileContent(
-        path.join(publicDir, `_gatsby`, `slices`, `${sliceId}-${index}.html`),
-        htmlChunk
-      )
-      index++
+      // TODO always generate both for now
+      let index = 1
+      for (const htmlChunk of split) {
+        await ensureFileContent(
+          path.join(publicDir, `_gatsby`, `slices`, `${sliceId}-${index}.html`),
+          htmlChunk
+        )
+        index++
+      }
+    } catch (err) {
+      const renderSliceError: IRenderSliceHTMLError = err
+      renderSliceError.context = {
+        sliceName,
+        sliceData,
+        sliceProps: props,
+      }
+      throw renderSliceError
     }
   }
 }
