@@ -193,7 +193,7 @@ export async function queryRunner(
     if (queryJob.queryType === `page` || queryJob.queryType === `slice`) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      await savePageQueryResult(program.directory, queryJob.id, resultJSON)
+      await savePageQueryResult(queryJob.id, resultJSON)
       if (queryJob.queryType === `page`) {
         store.dispatch({
           type: `ADD_PENDING_PAGE_DATA_WRITE`,

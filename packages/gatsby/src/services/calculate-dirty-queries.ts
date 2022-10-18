@@ -18,7 +18,7 @@ export async function calculateDirtyQueries({
 
   if (
     process.env.gatsby_executing_command === `develop` &&
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    process.env.GATSBY_QUERY_ON_DEMAND
   ) {
     // 404 are special cases in our runtime that ideally use
     // generic things to work, but for now they have special handling
