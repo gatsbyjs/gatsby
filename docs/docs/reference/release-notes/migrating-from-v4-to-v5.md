@@ -124,7 +124,7 @@ We provide a codemod (via [gatsby-codemods](https://github.com/gatsbyjs/gatsby/t
 npx gatsby-codemods@next sort-and-aggr-graphql .
 ```
 
-This will apply the codemod to all your files. If you only want to run it on some files/directories, adjust the last parameter (`npx gatsby-codemods sort-and-aggr-graphql <filepath>`).
+This will apply the codemod to all your files. If you only want to run it on some files/directories, adjust the last parameter (`npx gatsby-codemods@next sort-and-aggr-graphql <filepath>`).
 
 The old syntax will continue to work as Gatsby automatically applies the mentioned codemod and transforms your code, however we strongly encourage you to permanently migrate your queries to the new syntax. This way you won't see deprecation messages in your terminal and have a faster "building schema" step.
 

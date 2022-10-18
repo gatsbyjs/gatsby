@@ -82,6 +82,21 @@ exports.createPages = async ({ actions }) => {
 }
 ```
 
+## Queries
+
+Slices can use "slice queries", just as pages can use [page queries](/docs/how-to/querying-data/page-query). By exporting a `graphql` query, you can query Gatsby's data layer within the slice. Variables can be accessed from the `context` passed in [`createSlice](#createslice-action).
+
+```js:title=src/components/my-slice.js
+export const query = graphql`
+  query ($title: String) { // highlight-line
+    myField(title: {eq: $title}) { // highlight-line
+      id
+      title
+    }
+  }
+`
+```
+
 ## Restrictions on using `<Slice>` placeholder
 
 ### Nested Slices
@@ -111,7 +126,7 @@ The `alias` prop must be statically analyzable, which means it must be an inline
 // ⚠️ Doesn't work
 
 export function MyComponent({ sliceName }) {
-  // You can't use a prop passed into the parent component
+  // You can't use an alias passed from the parent component
   return <Slice alias={sliceName} />
 }
 ```
@@ -120,7 +135,7 @@ export function MyComponent({ sliceName }) {
 // ⚠️ Doesn't work
 
 export function MyComponent() {
-  // Props can't come from function calls
+  // Aliases can't come from function calls
   const aliasName = getAliasFromSomewhere()
   return <Slice alias={aliasName} />
 }
@@ -131,7 +146,6 @@ export function MyComponent() {
 
 export function MyComponent() {
   const alias = "my-image"
-
   return <Slice alias={alias} />
 }
 ```
@@ -141,7 +155,6 @@ export function MyComponent() {
 
 export function MyComponent() {
   const type = "image"
-
   return <Slice alias={`my-${type}`} />
 }
 ```
