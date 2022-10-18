@@ -19,10 +19,10 @@ When the development server is running for one of your Gatsby sites, open Graphi
 The UI is divided into three pieces:
 
 - The left sidebar has buttons to open plugin panes and change settings
-- The middle is where you write your queries
+- The left side is where you write your queries
 - The right side is where the results of your queries will be displayed
 
-The left sidebar has a top and bottom section. The top are buttons for the documentation explorer, history, query explorer, and query exporter. The bottom sidebar buttons allow you to refetch the schema, see the keyboard shortcuts, and change settings.
+The left sidebar has a top and bottom section. The top has buttons for the documentation explorer, history, query explorer, and query exporter. The bottom sidebar buttons allow you to refetch the schema, see the keyboard shortcuts, and change settings.
 
 In the middle section, below the welcome comment, begin typing:
 
@@ -54,7 +54,15 @@ Make sure to check out the GraphiQL docs in the upper left-hand corner of the ID
 
 In the video below watch a person use GraphiQL to build out a query, both with autocompletation in the query editor and with the GraphQL explorer plugin in the sidebar. The GraphQL exporter plugin is also used to automatically create a static query.
 
-TODO: Add video
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube-nocookie.com/embed/kIauoqkdDXQ"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 ## Enable Refresh Content Button
 
