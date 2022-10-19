@@ -114,15 +114,15 @@ describe(`Query fields of type File`, () => {
   let schemaComposer
 
   const runQuery = query =>
-    graphql(
+    graphql({
       schema,
-      query,
-      undefined,
-      withResolverContext({
+      source: query,
+      rootValue: undefined,
+      contextValue: withResolverContext({
         schema,
         schemaComposer,
-      })
-    )
+      }),
+    })
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })

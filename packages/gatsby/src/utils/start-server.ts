@@ -6,12 +6,7 @@ import express from "express"
 import compression from "compression"
 import { graphqlHTTP, OptionsData } from "express-graphql"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import {
-  formatError,
-  FragmentDefinitionNode,
-  GraphQLFormattedError,
-  Kind,
-} from "graphql"
+import { FragmentDefinitionNode, GraphQLFormattedError, Kind } from "graphql"
 import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -213,11 +208,9 @@ export async function startServer(
           context: {},
           customContext: schemaCustomization.context,
         }),
-        customFormatErrorFn(
-          err
-        ): GraphQLFormattedError<{ stack: Array<string> }> {
+        customFormatErrorFn(err): GraphQLFormattedError {
           return {
-            ...formatError(err),
+            ...err.toJSON(),
             extensions: {
               stack: err.stack ? err.stack.split(`\n`) : [],
             },
