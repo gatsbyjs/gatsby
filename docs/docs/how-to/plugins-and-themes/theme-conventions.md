@@ -53,8 +53,8 @@ export default function MyPostsList(props) {
 export const query = graphql`
   query {
     allMdx(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      filter: { frontmatter: { draft: { ne: true } } }
+      sort: { frontmatter: { date: DESC }}
+      filter: { frontmatter: { draft: { ne: true }}}
     ) {
       edges {
         node {

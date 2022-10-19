@@ -486,7 +486,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering an e
 
     export const query = graphql`
       query {
-        allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+        allMdx(sort: { frontmatter: { date: DESC }}) {
           nodes {
             frontmatter {
               date(formatString: "MMMM D, YYYY")
