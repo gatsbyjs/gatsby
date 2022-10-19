@@ -38,9 +38,9 @@ When a `Header` change is issued, this what a build looks like:
 
 ![Diagram of building a header without Gatsby Slice](../../images/using-slices-common-build.png)
 
-### Creating the Slice component in `gatsby-node`
+### Using the Slice component in `gatsby-node`
 
-Creating a Slice component is done by using the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API in your `gatsby-node`.
+You can create a Slice by using the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API in your `gatsby-node`. Pass the previously created Slice component via the `component` key and give the Slice component a unique `id`.
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
