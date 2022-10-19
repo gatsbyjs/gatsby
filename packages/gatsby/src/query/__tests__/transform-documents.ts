@@ -10,7 +10,10 @@ function genSource(query: string): string {
 
 function run(source: string): string {
   const query = genSource(source)
-  const { ast, hasChanged } = tranformDocument(graphql.parse(query))
+  const { ast, hasChanged, error } = tranformDocument(graphql.parse(query))
+  if (error) {
+    throw error
+  }
   return hasChanged ? graphql.print(ast) : query
 }
 
@@ -205,6 +208,11 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
 
         it(`new API (transform is idempotent)`, () => {
           const input = `allMarkdownRemark(sort: { frontmatter: { date: DESC }})`
+          expect(run(input)).toEqual(genSource(input))
+        })
+
+        it(`new API (transform is idempotent with "fields" edge case)`, () => {
+          const input = `allMarkdownRemark(sort: { fields: { slug: ASC }})`
           expect(run(input)).toEqual(genSource(input))
         })
       })
