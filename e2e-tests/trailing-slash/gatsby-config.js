@@ -1,4 +1,4 @@
-const trailingSlash = process.env.TRAILING_SLASH || `always`
+const trailingSlash = process.env.TRAILING_SLASH || `ignore`
 console.info(`TrailingSlash: ${trailingSlash}`)
 
 module.exports = {
