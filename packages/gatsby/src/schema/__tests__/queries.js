@@ -62,7 +62,7 @@ describe(`Query schema`, () => {
         schema,
         schemaComposer,
       }),
-      variables,
+      variableValues: variables,
     })
   }
 

@@ -11,5 +11,4 @@ export const query = graphql`{
       gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
     }
   }
-}
-`
+}`
