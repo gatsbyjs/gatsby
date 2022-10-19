@@ -8,17 +8,17 @@ To further the improvements seen by [Incremental Builds](/blog/2020-04-22-announ
 
 By using the `<Slice>` React component in combination with the [`createSlice`](/docs/reference/config-files/actions/#createSlice) API for common UI features, Gatsby will be able to build and deploy individual pieces of your site that had content changes, not just entire pages.
 
-The `<Slice>` React component is also referred to as "Slice placeholder". The React component you pass to `createSlice` via its `component` key is also referred to as "Slice template".
+The `<Slice>` React component is also referred to as "Slice placeholder". The React component you pass to `createSlice` via its `component` key is also referred to as "Slice component".
 
 ## Faster builds in Gatsby Cloud
 
 With the introduction of Incremental Builds, Gatsby Cloud has been able to reduce build times signficantly by only building the pages that changed. The Gatsby Slice API helps reduce those builds times further.
 
-Common components that are shared across the majority of pages on your site might include a header, footer, or contact form. In today's frameworks, when you re-order the header content, the entire site needs to be rebuilt. However, if the header was created as a Slice template, the new header content only need to be built once and all pages will pull the new header when it's needed.
+Common components that are shared across the majority of pages on your site might include a header, footer, or contact form. In today's frameworks, when you re-order the header content, the entire site needs to be rebuilt. However, if the header was created as a Slice component, the new header content only need to be built once and all pages will pull the new header when it's needed.
 
 ## Using Slices in your site
 
-For this example, let's use the same scenario as described above - a large site that has a shared header. You'll use this component as your Slice template.
+For this example, let's use the same scenario as described above - a large site that has a shared header. You'll use this component as your Slice component.
 
 ```javascript:title=src/layouts/default-layout.jsx
 import { Header, Footer } from "../components"
@@ -38,9 +38,9 @@ When a `Header` change is issued, this what a build looks like:
 
 ![Diagram of building a header without Gatsby Slice](../../images/using-slices-common-build.png)
 
-### Creating the Slice template in `gatsby-node`
+### Creating the Slice component in `gatsby-node`
 
-Creating a Slice template is done by using the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API in your `gatsby-node`.
+Creating a Slice component is done by using the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API in your `gatsby-node`.
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
@@ -51,11 +51,11 @@ exports.createPages = async ({ actions }) => {
 }
 ```
 
-Now that you have a `header` Slice template created, let's go use it!
+Now that you have a `header` Slice component created, let's go use it!
 
 ### Using the Slice placeholder
 
-Now you need to convert the `DefaultLayout` component to actually use the new Slice template you created. By importing the `<Slice />` component from `gatsby` and placing the Slice placeholder inside your component, you can use the previously created `header` Slice.
+Now you need to convert the `DefaultLayout` component to actually use the new Slice component you created. By importing the `<Slice />` React component from `gatsby` and placing the Slice placeholder inside `<DefaultLayout />`, you can use the previously created `Header` Slice component.
 
 ```diff
 +import { Slice } from "gatsby"
@@ -82,7 +82,7 @@ Now, when a `Header` change is issued, this what a build looks like:
 
 ### Using `sliceContext`
 
-Similar to the context that can be passed to pages in [`createPages`](/docs/reference/config-files/gatsby-node/#createPages), [`createSlice`](/docs/reference/config-files/actions/#createSlice) can also pass context to individual slice templates.
+Similar to the context that can be passed to pages in [`createPages`](/docs/reference/config-files/gatsby-node/#createPages), [`createSlice`](/docs/reference/config-files/actions/#createSlice) can also pass context to individual slice components.
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
@@ -96,7 +96,7 @@ exports.createPages = async ({ actions }) => {
 }
 ```
 
-The data passed to `context` here will be handed down to the `Header` Slice with the key `sliceContext`.
+The data passed to `context` here will be handed down to the `Header` Slice component with the key `sliceContext`.
 
 ```javascript:title=src/components/header.jsx
 // highlight-next-line
@@ -166,13 +166,13 @@ export const query = graphql`
 
 There will be times where a single Slice will either need to be handed different context or swapped entirely depending on which page it's being rendered on.
 
-This is where you can utilize the `alias` prop that is given to the `<Slice>` placeholder. When you converted the `<Header>` component to a Slice template, you created the Slice template with an `id` of `header`, but passed that value to the `alias` prop of the `<Slice>` placeholder. Why is there a difference in key names?
+This is where you can utilize the `alias` prop that is given to the `<Slice>` placeholder. When you converted the `<Header>` component to a Slice component, you created the Slice component with an `id` of `header`, but passed that value to the `alias` prop of the `<Slice>` placeholder. Why is there a difference in key names?
 
-An `alias` is not a 1-to-1 mapping of string-to-slice. When you create a page using [`createPages`](/docs/reference/config-files/gatsby-node/#createPages), you can pass a key-value map of alias-to-id to tell Gatsby which Slice template to use throughout the page.
+An `alias` is not a 1-to-1 mapping of string-to-slice. When you create a page using [`createPages`](/docs/reference/config-files/gatsby-node/#createPages), you can pass a key-value map of alias-to-id to tell Gatsby which Slice component to use throughout the page.
 
-One common use case for this is localization. It's common to iterate over languages to create a page for each one. You can create a Slice for each language by passing `context`. The `id` that a Slice template is created with will be passed to [`createPage`](/docs/reference/config-files/actions/#createPage) to tell each page which Slice template to use.
+One common use case for this is localization. It's common to iterate over languages to create a page for each one. You can create a Slice for each language by passing `context`. The `id` that a Slice component is created with will be passed to [`createPage`](/docs/reference/config-files/actions/#createPage) to tell each page which Slice component to use.
 
-In this example, you create a Slice template of `<Header>` for each supported language. When you create each page, Gatsby will tell the page which `header` to use based on the language of the page Gatsby is creating.
+In this example, you create a Slice component of `<Header>` for each supported language. When you create each page, Gatsby will tell the page which `header` to use based on the language of the page Gatsby is creating.
 
 ```javascript:title=gatsby-node.js
 const SUPPORTED_LANGUAGES = ['en', 'jp', 'de']
