@@ -101,8 +101,8 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
-    envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
-      !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    envObject.GATSBY_QUERY_ON_DEMAND = JSON.stringify(
+      !!process.env.GATSBY_QUERY_ON_DEMAND
     )
 
     if (stage === `develop`) {
@@ -863,8 +863,8 @@ module.exports = async (
   if (
     stage === `build-javascript` ||
     stage === `build-html` ||
-    (process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
-      (stage === `develop` || stage === `develop-html`))
+    stage === `develop` ||
+    stage === `develop-html`
   ) {
     const cacheLocation = path.join(
       program.directory,

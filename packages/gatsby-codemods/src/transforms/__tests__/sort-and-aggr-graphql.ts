@@ -237,6 +237,11 @@ describe(transformName, () => {
         const input = `allMarkdownRemark(sort: { frontmatter: { date: DESC }})`
         expect(run(input)).toEqual(genSource(input))
       })
+
+      it(`new API (transform is idempotent with "fields" edge case)`, () => {
+        const input = `allMarkdownRemark(sort: { fields: { slug: ASC }})`
+        expect(run(input)).toEqual(genSource(input))
+      })
     })
   })
 

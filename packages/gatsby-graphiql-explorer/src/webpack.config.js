@@ -3,11 +3,12 @@ const HtmlWebpackPlugin = require(`html-webpack-plugin`)
 const webpack = require(`webpack`)
 
 const mode = `production`
+
 module.exports = {
-  entry: path.join(__dirname, `app.js`),
+  entry: path.join(__dirname, `app.jsx`),
   mode,
   output: {
-    path: path.join(__dirname, `..`, `..`),
+    path: path.join(__dirname, `..`, `dist`),
     filename: `./app.js`,
     publicPath: `/___graphql`,
   },
@@ -15,7 +16,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: `babel-loader`,
@@ -29,7 +30,10 @@ module.exports = {
                   bugfixes: true,
                   modules: `commonjs`,
                   useBuiltIns: `entry`,
-                  targets: [`>0.25%`, `not dead`],
+                  targets: [
+                    `>0.25% and supports es6-module`,
+                    `not dead and supports es6-module`,
+                  ],
                 },
               ],
               [
@@ -60,14 +64,20 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, `index.ejs`),
+      template: path.resolve(__dirname, `index.html.ejs`),
       filename: `index.html`,
       inject: false,
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(mode),
     }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1,
+    }),
   ],
+  optimization: {
+    splitChunks: false,
+  },
   stats: {
     warnings: false,
   },

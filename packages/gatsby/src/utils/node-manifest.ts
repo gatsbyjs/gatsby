@@ -71,7 +71,7 @@ async function findPageOwnedByNode({
   foundPageBy: FoundPageBy
 }> {
   const state = store.getState()
-  const { pages, nodes, staticQueryComponents } = state
+  const { pages, staticQueryComponents } = state
   const { byNode, byConnection, trackedComponents } = state.queries
 
   const nodeType = fullNode?.internal?.type
@@ -140,9 +140,7 @@ async function findPageOwnedByNode({
       if (foundOwnerNodeId) {
         foundPageBy = `ownerNodeId`
       } else if (foundPageIdInContext && fullPage) {
-        const pageCreatedByPluginName = nodes.get(
-          fullPage.pluginCreatorId
-        )?.name
+        const pageCreatedByPluginName = getNode(fullPage.pluginCreatorId)?.name
 
         const pageCreatedByFilesystemPlugin =
           pageCreatedByPluginName === `gatsby-plugin-page-creator`
