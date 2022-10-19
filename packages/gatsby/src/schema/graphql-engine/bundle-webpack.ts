@@ -86,8 +86,10 @@ export async function createGraphqlEngineBundle(
       mod.builtinModules.reduce((acc, builtinModule) => {
         if (builtinModule === `fs`) {
           acc[builtinModule] = `global _actualFsWrapper`
+          acc[`node:${builtinModule}`] = `global _actualFsWrapper`
         } else {
           acc[builtinModule] = `commonjs ${builtinModule}`
+          acc[`node:${builtinModule}`] = `commonjs ${builtinModule}`
         }
 
         return acc
@@ -177,17 +179,20 @@ export async function createGraphqlEngineBundle(
         // only load one version of lmdb
         lmdb: require.resolve(`lmdb`),
         "ts-node": require.resolve(`./shims/ts-node`),
+        "gatsby-sharp$": require.resolve(`./shims/gatsby-sharp`),
       },
     },
     plugins: [
       new webpack.EnvironmentPlugin([`GATSBY_CLOUD_IMAGE_CDN`]),
       new webpack.DefinePlugin({
         // "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
-        "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         "process.env.NODE_ENV": JSON.stringify(`production`),
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
+        "process.env.GATSBY_SLICES": JSON.stringify(
+          !!process.env.GATSBY_SLICES
+        ),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),

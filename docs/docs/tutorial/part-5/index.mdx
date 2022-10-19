@@ -419,7 +419,7 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
     import * as React from 'react'
     import { graphql } from 'gatsby'
     import Layout from '../components/layout'
-    import Seo from '../../components/seo'
+    import Seo from '../components/seo'
 
     const BlogPage = ({ data }) => {
       return (
@@ -502,7 +502,7 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
 import * as React from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
-import Seo from '../../components/seo'
+import Seo from '../components/seo'
 
 const BlogPage = ({ data }) => {
   return (
@@ -543,7 +543,13 @@ export default BlogPage
 ```
 
 5. When you refresh your Blog page in the web browser, you should see your post excerpt rendered!
-    ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the excerpt of the blog post are also being rendered.](./blog-page-with-full-posts.png)
+    ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the excerpt of the blog post are also being rendered.](./blog-page-with-excerpt-posts.png)
+    
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** The excerpt which is returned by the query doesn't contain HTML tags so the unordered list for "My First Post" isn't rendered correctly. But don't worry, you are going to implement a better solution later.
+
+</Announcement>
 
 Nice work! Your site now has a blog page with actual content.
 

@@ -32,7 +32,7 @@ describe(`gatsby build`, () => {
     logs.should.contain(
       `success Building production JavaScript and CSS bundles`
     )
-    logs.should.contain(`success run page queries`)
+    logs.should.contain(`run queries in workers`)
     logs.should.contain(`success Building static HTML for pages`)
     logs.should.contain(`success onPostBuild`)
     logs.should.contain(`info Done building`)

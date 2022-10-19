@@ -4,10 +4,10 @@ import fs from "fs-extra"
 import crypto from "crypto"
 import { slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
-import { match } from "@gatsbyjs/reach-router/lib/utils"
+import { match } from "@gatsbyjs/reach-router"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
-import { IGatsbyState, IGatsbyPage } from "../redux/types"
+import { IGatsbyState, IGatsbyPage, IGatsbySlice } from "../redux/types"
 import {
   writeModule,
   getAbsolutePathForVirtualModule,
@@ -16,7 +16,7 @@ import { getPageMode } from "../utils/page-mode"
 import { devSSRWillInvalidate } from "../commands/build-html"
 
 interface IGatsbyPageComponent {
-  component: string
+  componentPath: string
   componentChunkName: string
 }
 
@@ -64,14 +64,28 @@ export const resetLastHash = (): void => {
   lastHash = null
 }
 
-const pickComponentFields = (page: IGatsbyPage): IGatsbyPageComponent =>
-  _.pick(page, [`component`, `componentChunkName`])
+type IBareComponentData = Pick<
+  IGatsbyPageComponent,
+  `componentPath` | `componentChunkName`
+>
+const pickComponentFields = (
+  page: IGatsbyPage | IGatsbySlice
+): IBareComponentData => {
+  return {
+    componentPath: page.componentPath,
+    componentChunkName: page.componentChunkName,
+  }
+}
 
 export const getComponents = (
-  pages: Array<IGatsbyPage>
+  pages: Array<IGatsbyPage>,
+  slices: IGatsbyState["slices"]
 ): Array<IGatsbyPageComponent> =>
   _.orderBy(
-    _.uniqBy(_.map(pages, pickComponentFields), c => c.componentChunkName),
+    _.uniqBy(
+      _.map([...pages, ...slices.values()], pickComponentFields),
+      c => c.componentChunkName
+    ),
     c => c.componentChunkName
   )
 
@@ -181,10 +195,10 @@ const createHash = (
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
-  const { program } = state
+  const { program, slices } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
-  const components = getComponents(pages)
+  const components = getComponents(pages, slices)
   let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = []
 
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
@@ -217,7 +231,7 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
     const lazySyncRequires = `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
       .map(
         (c: IGatsbyPageComponent): string =>
-          `  "${c.componentChunkName}": require("${joinPath(c.component)}")`
+          `  "${c.componentChunkName}": require("${joinPath(c.componentPath)}")`
       )
       .join(`,\n`)}
   }\n\n`
@@ -237,7 +251,7 @@ const preferDefault = m => (m && m.default) || m
     .map(
       (c: IGatsbyPageComponent): string =>
         `  "${c.componentChunkName}": preferDefault(require("${joinPath(
-          c.component
+          c.componentPath
         )}"))`
     )
     .join(`,\n`)}
@@ -246,13 +260,16 @@ const preferDefault = m => (m && m.default) || m
   // Create file with async requires of components/json files.
   let asyncRequires = ``
 
-  if (process.env.gatsby_executing_command === `develop`) {
+  if (
+    process.env.gatsby_executing_command === `develop` ||
+    (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_PARTIAL_HYDRATION)
+  ) {
     asyncRequires = `exports.components = {\n${components
       .map((c: IGatsbyPageComponent): string => {
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
           getAbsolutePathForVirtualModule(`$virtual`),
-          c.component
+          c.componentPath
         )
 
         const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
@@ -271,7 +288,7 @@ exports.head = {\n${components
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
           getAbsolutePathForVirtualModule(`$virtual`),
-          c.component
+          c.componentPath
         )
 
         const rqPrefix = hasContentFilePath(relativeComponentPath) ? `&` : `?`
@@ -290,7 +307,7 @@ exports.head = {\n${components
         // we need a relative import path to keep contenthash the same if directory changes
         const relativeComponentPath = path.relative(
           getAbsolutePathForVirtualModule(`$virtual`),
-          c.component
+          c.componentPath
         )
         return `  "${c.componentChunkName}": () => import("${slash(
           `./${relativeComponentPath}`

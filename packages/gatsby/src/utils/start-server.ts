@@ -5,7 +5,6 @@ import webpack from "webpack"
 import express from "express"
 import compression from "compression"
 import { graphqlHTTP, OptionsData } from "express-graphql"
-import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
 import {
   formatError,
@@ -176,29 +175,18 @@ export async function startServer(
    */
   const graphqlEndpoint = `/_+graphi?ql`
 
-  // TODO(v5): Remove GraphQL Playground (GraphiQL will be more future-proof)
-  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
-    app.get(
-      graphqlEndpoint,
-      graphqlPlayground({
-        endpoint: `/___graphql`,
-      }),
-      () => {}
-    )
-  } else {
-    graphiqlExplorer(app, {
-      graphqlEndpoint,
-      getFragments: function getFragments(): Array<FragmentDefinitionNode> {
-        const fragments: Array<FragmentDefinitionNode> = []
-        for (const def of store.getState().definitions.values()) {
-          if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
-            fragments.push(def.def)
-          }
+  graphiqlExplorer(app, {
+    graphqlEndpoint,
+    getFragments: function getFragments(): Array<FragmentDefinitionNode> {
+      const fragments: Array<FragmentDefinitionNode> = []
+      for (const def of store.getState().definitions.values()) {
+        if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
+          fragments.push(def.def)
         }
-        return fragments
-      },
-    })
-  }
+      }
+      return fragments
+    },
+  })
 
   app.use(
     graphqlEndpoint,
@@ -332,7 +320,7 @@ export async function startServer(
 
           let pageData: IPageDataWithQueryResult
           // TODO move to query-engine
-          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+          if (process.env.GATSBY_QUERY_ON_DEMAND) {
             const start = Date.now()
 
             pageData = await getPageDataExperimental(page.path)
@@ -726,7 +714,7 @@ export async function startServer(
   }
 
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     routeLoadingIndicatorRequests(app)

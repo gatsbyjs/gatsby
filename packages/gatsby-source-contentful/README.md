@@ -582,7 +582,7 @@ const options = {
         // asset is not an image
         return null
       }
-      return <GatsbyImage image={image} />
+      return <GatsbyImage image={gatsbyImageData} />
     },
   },
 }

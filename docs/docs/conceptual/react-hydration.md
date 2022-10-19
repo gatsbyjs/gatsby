@@ -26,7 +26,7 @@ This means that the browser can "pick up" where the server left off with the con
 
 ## Transfer rendering to the React reconciler
 
-After ReactDOM hydrates the content, the [React reconciler](https://reactjs.org/docs/reconciliation.html) can take over and [diff](https://en.m.wikipedia.org/wiki/Diff) the tree of elements. It then becomes responsible for making updates in the UI based on changing state or props.
+After ReactDOM hydrates the content, the [React reconciler](https://reactjs.org/docs/reconciliation.html) can take over and [diff](https://en.wikipedia.org/wiki/Diff) the tree of elements. It then becomes responsible for making updates in the UI based on changing state or props.
 
 ## Additional resources
 

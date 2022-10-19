@@ -2,10 +2,12 @@ import { rewriteLinkPath } from "../rewrite-link-path"
 
 beforeEach(() => {
   global.__TRAILING_SLASH__ = ``
+  global.__PATH_PREFIX__ = undefined
 })
 
-const getRewriteLinkPath = (option = `legacy`) => {
+const getRewriteLinkPath = (option = `legacy`, pathPrefix = undefined) => {
   global.__TRAILING_SLASH__ = option
+  global.__PATH_PREFIX__ = pathPrefix
   return rewriteLinkPath
 }
 
@@ -20,6 +22,7 @@ describe(`rewriteLinkPath`, () => {
     expect(getRewriteLinkPath()(`/path?query_param=hello#anchor`, `/`)).toBe(
       `/path?query_param=hello#anchor`
     )
+    expect(getRewriteLinkPath(`legacy`, `/prefix`)(`/`, `/`)).toBe(`/prefix/`)
   })
   it(`handles always option`, () => {
     expect(getRewriteLinkPath(`always`)(`/path`, `/`)).toBe(`/path/`)
@@ -31,6 +34,7 @@ describe(`rewriteLinkPath`, () => {
     expect(
       getRewriteLinkPath(`always`)(`/path?query_param=hello#anchor`, `/`)
     ).toBe(`/path/?query_param=hello#anchor`)
+    expect(getRewriteLinkPath(`always`, `/prefix`)(`/`, `/`)).toBe(`/prefix/`)
   })
   it(`handles never option`, () => {
     expect(getRewriteLinkPath(`never`)(`/path`, `/`)).toBe(`/path`)
@@ -42,6 +46,7 @@ describe(`rewriteLinkPath`, () => {
     expect(
       getRewriteLinkPath(`never`)(`/path/?query_param=hello#anchor`, `/`)
     ).toBe(`/path?query_param=hello#anchor`)
+    expect(getRewriteLinkPath(`never`, `/prefix`)(`/`, `/`)).toBe(`/prefix`)
   })
   it(`handles ignore option`, () => {
     expect(getRewriteLinkPath(`ignore`)(`/path`, `/`)).toBe(`/path`)
@@ -53,5 +58,6 @@ describe(`rewriteLinkPath`, () => {
     expect(
       getRewriteLinkPath(`ignore`)(`/path?query_param=hello#anchor`, `/`)
     ).toBe(`/path?query_param=hello#anchor`)
+    expect(getRewriteLinkPath(`ignore`, `/prefix`)(`/`, `/`)).toBe(`/prefix/`)
   })
 })

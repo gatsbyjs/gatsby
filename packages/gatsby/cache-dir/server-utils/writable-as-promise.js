@@ -16,15 +16,21 @@ export class WritableAsPromise extends Writable {
     })
   }
 
-  _write(chunk, enc, cb) {
+  _write(chunk, _, next) {
     this._output += chunk.toString()
+    next()
+  }
 
-    cb()
+  _destroy(error, next) {
+    if (error instanceof Error) {
+      this._deferred.reject(error)
+    } else {
+      next()
+    }
   }
 
   end() {
     this._deferred.resolve(this._output)
-
     this.destroy()
   }
 

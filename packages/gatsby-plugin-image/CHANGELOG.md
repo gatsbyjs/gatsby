@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.24.0/packages/gatsby-plugin-image) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+
+### [2.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.23.1/packages/gatsby-plugin-image) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.23.0/packages/gatsby-plugin-image) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Features
+
+- Client export directive [#36470](https://github.com/gatsbyjs/gatsby/issues/36470) ([320efb7](https://github.com/gatsbyjs/gatsby/commit/320efb77079f7adf4c89b885a7f34e4cc3951906))
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.22.0/packages/gatsby-plugin-image) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Make onLoad callback work on first load [#36375](https://github.com/gatsbyjs/gatsby/issues/36375) ([3dfc1ec](https://github.com/gatsbyjs/gatsby/commit/3dfc1ec1c03a962bfdcf3db6ec200883d612d3ad))
+
 ## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.21.0/packages/gatsby-plugin-image) (2022-08-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
