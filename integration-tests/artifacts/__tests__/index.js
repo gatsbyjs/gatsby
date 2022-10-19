@@ -521,7 +521,7 @@ describe(`First run (baseline)`, () => {
     `stale-pages/stable`,
     `stale-pages/only-in-first`,
     `page-that-will-have-trailing-slash-removed`,
-    `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont`,
+    `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
   ]
   const unexpectedPages = [`stale-pages/only-not-in-first`]
 
@@ -733,7 +733,7 @@ describe(
       `/gatsby-browser/`,
       // those change happen on every build
       `/page-query-dynamic-3/`,
-      `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont`,
+      `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
       `/changing-context/`,
     ]
 
