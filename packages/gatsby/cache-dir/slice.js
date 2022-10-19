@@ -20,7 +20,8 @@ export function Slice(props) {
       throw new SlicePropsError(
         slicesContext.renderEnvironment === `browser`,
         internalProps.sliceName,
-        propErrors
+        propErrors,
+        props.__renderedBylocation
       )
     }
 
@@ -61,9 +62,12 @@ export function Slice(props) {
 }
 
 class SlicePropsError extends Error {
-  constructor(inBrowser, sliceName, propErrors) {
+  constructor(inBrowser, sliceName, propErrors, renderedByLocation) {
     const errors = Object.entries(propErrors)
-      .map(([key, value]) => `${key}: "${value}"`)
+      .map(
+        ([key, value]) =>
+          `not serializable "${value}" type passed to "${key}" prop`
+      )
       .join(`, `)
 
     const name = `SlicePropsError`
@@ -81,12 +85,7 @@ class SlicePropsError extends Error {
       stackLines[0] = stackLines[0].trim()
       stack = `\n` + stackLines.join(`\n`)
 
-      // look for any hints for the component name in the stack trace
-      const componentRe = /^at\s+([a-zA-Z0-9]+)/
-      const componentMatch = stackLines[0].match(componentRe)
-      const componentHint = componentMatch ? `in ${componentMatch[1]} ` : ``
-
-      message = `Slice "${sliceName}" was passed props ${componentHint}that are not serializable (${errors}).`
+      message = `Slice "${sliceName}" was passed props that are not serializable (${errors}).`
     } else {
       // we can't really grab any extra info outside of the browser, so just print what we can
       message = `${name}: Slice "${sliceName}" was passed props that are not serializable (${errors}). Use \`gatsby develop\` to see more information.`
@@ -96,7 +95,15 @@ class SlicePropsError extends Error {
 
     super(message)
     this.name = name
-    this.stack = stack
+    if (stack) {
+      this.stack = stack
+    } else {
+      Error.captureStackTrace(this, SlicePropsError)
+    }
+
+    if (renderedByLocation) {
+      this.forcedLocation = { ...renderedByLocation, functionName: `Slice` }
+    }
   }
 }
 
