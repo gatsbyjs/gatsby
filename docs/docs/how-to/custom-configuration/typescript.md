@@ -293,7 +293,7 @@ export const Head: HeadFC<DataProps> = props => {
 
 > Support added in `gatsby@5.0.0`
 
-You can use `SliceComponentProps` to type your Slice template from the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/). `SliceComponentProps` can receive three [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType`, `SliceContextType`, and `AdditionalSerializableProps`). This way you can type the `data` and `pageContext` prop that gets passed to your Slice template.
+You can use `SliceComponentProps` to type your Slice component from the [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/). `SliceComponentProps` can receive three [generics](https://www.typescriptlang.org/docs/handbook/2/generics.html) (`DataType`, `SliceContextType`, and `AdditionalSerializableProps`). This way you can type the `data` and `pageContext` prop that gets passed to your Slice component.
 
 ```tsx
 import * as React from "react"
