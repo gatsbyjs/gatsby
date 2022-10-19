@@ -54,16 +54,16 @@ describe(`Query schema`, () => {
       query = print(ast)
     }
 
-    return graphql(
+    return graphql({
       schema,
-      query,
-      undefined,
-      withResolverContext({
+      source: query,
+      rootValue: undefined,
+      contextValue: withResolverContext({
         schema,
         schemaComposer,
       }),
-      variables
-    )
+      variables,
+    })
   }
 
   beforeAll(async () => {
