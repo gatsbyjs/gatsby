@@ -67,7 +67,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
-        output: `/my-cool-sitemap.xml`,
+        output: `/sitemap`,
       },
     },
     // highlight-end

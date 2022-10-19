@@ -3,7 +3,12 @@ import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
-import { updateInternalSiteMetadata, isTruthy, uuid } from "gatsby-core-utils"
+import {
+  updateInternalSiteMetadata,
+  isTruthy,
+  uuid,
+  cpuCoreCount,
+} from "gatsby-core-utils"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
@@ -336,19 +341,8 @@ module.exports = async function build(
   const waitMaterializePageMode = materializePageMode()
 
   let waitForWorkerPoolRestart = Promise.resolve()
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    await runQueriesInWorkersQueue(workerPool, queryIds, {
-      parentSpan: buildSpan,
-    })
-    // Jobs still might be running even though query running finished
-    await Promise.all([
-      waitUntilAllJobsComplete(),
-      waitUntilWorkerJobsAreComplete(),
-    ])
-    // Restart worker pool before merging state to lower memory pressure while merging state
-    waitForWorkerPoolRestart = workerPool.restart()
-    await mergeWorkerState(workerPool, buildSpan)
-  } else {
+  // If one wants to debug query running you can set the CPU count to 1
+  if (cpuCoreCount() === 1) {
     await runStaticQueries({
       queryIds,
       parentSpan: buildSpan,
@@ -362,6 +356,18 @@ module.exports = async function build(
       parentSpan: buildSpan,
       store,
     })
+  } else {
+    await runQueriesInWorkersQueue(workerPool, queryIds, {
+      parentSpan: buildSpan,
+    })
+    // Jobs still might be running even though query running finished
+    await Promise.all([
+      waitUntilAllJobsComplete(),
+      waitUntilWorkerJobsAreComplete(),
+    ])
+    // Restart worker pool before merging state to lower memory pressure while merging state
+    waitForWorkerPoolRestart = workerPool.restart()
+    await mergeWorkerState(workerPool, buildSpan)
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
