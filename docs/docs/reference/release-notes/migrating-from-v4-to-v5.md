@@ -126,7 +126,7 @@ npx gatsby-codemods@next sort-and-aggr-graphql .
 
 This will apply the codemod to all your files. If you only want to run it on some files/directories, adjust the last parameter (`npx gatsby-codemods@next sort-and-aggr-graphql <filepath>`).
 
-The old syntax will continue to work as Gatsby automatically applies the mentioned codemod and transforms your code, however we strongly encourage you to permanently migrate your queries to the new syntax. This way you won't see deprecation messages in your terminal and have a faster "building schema" step.
+The old syntax will continue to work as Gatsby automatically applies the mentioned codemod and transforms your code, however we strongly encourage you to permanently migrate your queries to the new syntax. This way you won't see deprecation messages in your terminal and can be sure that the queries work in [GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/) (because the old ones won't).
 
 Below you can find two examples of an before and after:
 
@@ -181,6 +181,24 @@ After:
 ### `trailingSlash` is set to `always`
 
 In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-files/gatsby-config/#trailingslash) was set to `legacy`. With Gatsby 5 the `legacy` option was removed and the new default is `always`. This means that every URL will have a trailing slash. You can [configure this option](/docs/reference/config-files/gatsby-config/#trailingslash) in your `gatsby-config` file.
+
+### Removal of GraphQL Playground
+
+Maybe you didn't know, but Gatsby supported [GraphQL Playground](https://github.com/graphql/graphql-playground) as an alternative to [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql) for some time now. With Gatsby 5 we've updated GraphiQL to v2 which has feature parity with GraphQL Playground. Thus we removed the `GATSBY_GRAPHQL_IDE` environment variable and GraphQL Playground. Visit the [GraphiQL guide](/docs/how-to/querying-data/running-queries-with-graphiql/) to learn more about GraphiQL v2.
+
+### Removal of obsolete flags and environment variables
+
+Throughout the lifecycles of Gatsby 3 & 4 we introduced a couple of feature flags to incrementally ship features to Gatsby. In Gatsby 5 we removed all feature flags and environment variables that are enabled by default. You should remove these flags from your `gatsby-config` as they don't have an effect anymore (you can't enable or disable them):
+
+- `QUERY_ON_DEMAND`
+- `LAZY_IMAGES`
+- `PRESERVE_WEBPACK_CACHE`
+- `DEV_WEBPACK_CACHE`
+- `LMDB_STORE`
+- `PARALLEL_QUERY_RUNNING`
+- `GRAPHQL_TYPEGEN` (can be enabled through [gatsby-config](/docs/reference/config-files/gatsby-config/#graphqltypegen))
+
+Each of these feature flags had a corresponding environment variable (in the format of `process.env.GATSBY_EXPERIMENTAL_%FLAG-NAME%`). These environment variables were also removed and don't have any effect anymore.
 
 ### Gatsby related packages
 
