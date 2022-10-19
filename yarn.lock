@@ -12021,13 +12021,6 @@ graphiql@^2.0.6:
     graphql-language-service "^5.1.0"
     markdown-it "^12.2.0"
 
-graphql-compose@^9.0.7:
-  version "9.0.7"
-  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-9.0.7.tgz#f9a2161d89691506466258ef54f279cbdd7ffeec"
-  integrity sha512-1EreO/vtdF/vaXYtPGW/RIlJbAAe8bWJ0mlvIa3s4YytsydbqiIFv80QUNlD9Bdl9iezLze70a6quC+3BAMzjw==
-  dependencies:
-    graphql-type-json "0.3.2"
-
 graphql-compose@^9.0.9:
   version "9.0.9"
   resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-9.0.9.tgz#ca919ce61cf5ec0545e5ce123bda2051c7c78a1e"
