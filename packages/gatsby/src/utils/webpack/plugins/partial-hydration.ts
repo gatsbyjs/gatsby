@@ -1,9 +1,11 @@
 import * as path from "path"
+import fs from "fs-extra"
 import Template from "webpack/lib/Template"
 import ModuleDependency from "webpack/lib/dependencies/ModuleDependency"
 import NullDependency from "webpack/lib/dependencies/NullDependency"
-import url from "url"
+import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 import webpack, { Module, NormalModule, Dependency, javascript } from "webpack"
+import type Reporter from "gatsby-cli/lib/reporter"
 
 interface IModuleExport {
   id: string
@@ -28,19 +30,24 @@ class ClientReferenceDependency extends ModuleDependency {
   }
 }
 
+export const PARTIAL_HYDRATION_CHUNK_REASON = `PartialHydration client module`
+
 /**
  * inspiration and code mostly comes from https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js
  */
 export class PartialHydrationPlugin {
   name = `PartialHydrationPlugin`
-  _manifestPath: string
-  _rootFilePath: string
+
+  _manifestPath: string // Absolute path to where the manifest file should be written
+  _reporter: typeof Reporter
+
   _references: Array<ClientReferenceDependency> = []
   _clientModules = new Set<webpack.NormalModule>()
+  _previousManifest = {}
 
-  constructor(manifestPath: string, rootFilePath: string) {
+  constructor(manifestPath: string, reporter: typeof Reporter) {
     this._manifestPath = manifestPath
-    this._rootFilePath = rootFilePath
+    this._reporter = reporter
   }
 
   _generateClientReferenceChunk(
@@ -99,12 +106,13 @@ export class PartialHydrationPlugin {
         }
       })
 
-      const href = url
-        .pathToFileURL(normalModule.resource)
-        .href.replace(rootContext.replace(/\\/g, `/`), ``)
-        .replace(/file:\/{3,4}/g, `file://`)
-      if (href !== undefined) {
-        json[href] = moduleExports
+      const normalizedModuleKey = createNormalizedModuleKey(
+        normalModule.resource,
+        rootContext
+      )
+
+      if (normalizedModuleKey !== undefined) {
+        json[normalizedModuleKey] = moduleExports
       }
     }
 
@@ -118,6 +126,7 @@ export class PartialHydrationPlugin {
         }>
       >
     > = new Map()
+
     for (const clientModule of this._clientModules) {
       for (const connection of moduleGraph.getIncomingConnections(
         clientModule
@@ -166,12 +175,8 @@ export class PartialHydrationPlugin {
         for (const chunk of chunkGraph.getModuleChunksIterable(
           resolvedModule
         )) {
-          for (const group of chunk.groupsIterable) {
-            for (const chunkInGroup of group.chunks) {
-              if (chunkInGroup.id) {
-                chunkIds.add(chunkInGroup.id as string)
-              }
-            }
+          if (chunk.id) {
+            chunkIds.add(chunk.id as string)
           }
         }
 
@@ -186,6 +191,27 @@ export class PartialHydrationPlugin {
   }
 
   apply(compiler: webpack.Compiler): void {
+    // Restore manifest from the previous compilation, otherwise it will be wiped since files aren't visited on cached builds
+    compiler.hooks.beforeCompile.tap(this.name, () => {
+      try {
+        const previousManifest = fs.existsSync(this._manifestPath)
+
+        if (!previousManifest) {
+          return
+        }
+
+        this._previousManifest = JSON.parse(
+          fs.readFileSync(this._manifestPath, `utf-8`)
+        )
+      } catch (error) {
+        this._reporter.panic({
+          id: `80001`,
+          context: {},
+          error,
+        })
+      }
+    })
+
     compiler.hooks.thisCompilation.tap(
       this.name,
       (compilation, { normalModuleFactory }) => {
@@ -239,7 +265,7 @@ export class PartialHydrationPlugin {
           })
         }
 
-        compilation.hooks.optimizeChunkModules.tap(
+        compilation.hooks.optimizeChunks.tap(
           this.name,
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           () => {
@@ -255,20 +281,58 @@ export class PartialHydrationPlugin {
                 )
               )
 
-              const selectedChunks = Array.from(
-                compilation.chunkGraph.getModuleChunksIterable(clientModule)
-              )
               const chunk = compilation.addChunk(chunkName)
-              chunk.chunkReason = `PartialHydration client module`
-              compilation.chunkGraph.connectChunkAndModule(chunk, clientModule)
+              chunk.chunkReason = PARTIAL_HYDRATION_CHUNK_REASON
 
-              for (const connectedChunk of selectedChunks) {
-                compilation.chunkGraph.disconnectChunkAndModule(
-                  connectedChunk,
+              const handledModules = new Set()
+
+              function moveModuleToChunk(
+                clientModule: webpack.Module,
+                chunk: webpack.Chunk
+              ): void {
+                if (handledModules.has(clientModule)) {
+                  return
+                }
+
+                handledModules.add(clientModule)
+
+                const selectedChunks = Array.from(
+                  compilation.chunkGraph.getModuleChunksIterable(clientModule)
+                )
+
+                for (const connectedChunk of selectedChunks) {
+                  if (connectedChunk.name === `app`) {
+                    return
+                  }
+                }
+
+                compilation.chunkGraph.connectChunkAndModule(
+                  chunk,
                   clientModule
                 )
-                connectedChunk.split(chunk)
+
+                for (const connectedChunk of selectedChunks) {
+                  compilation.chunkGraph.disconnectChunkAndModule(
+                    connectedChunk,
+                    clientModule
+                  )
+                  connectedChunk.split(chunk)
+                }
+
+                const uniqueDependencyModules = new Set(
+                  clientModule.dependencies.map(r =>
+                    compilation.moduleGraph.getModule(r)
+                  )
+                )
+
+                for (const dependencyModule of uniqueDependencyModules) {
+                  if (dependencyModule) {
+                    moveModuleToChunk(dependencyModule, chunk)
+                  }
+                }
               }
+
+              moveModuleToChunk(clientModule, chunk)
             }
           }
         )
@@ -296,10 +360,23 @@ export class PartialHydrationPlugin {
               compilation.options.context as string
             )
 
+            /**
+             * `emitAsset` is unclear about what the path should be relative to and absolute paths don't work. This works so we'll go with that.
+             * @see {@link https://webpack.js.org/api/compilation-object/#emitasset}
+             */
+            const emitManifestPath = `..${this._manifestPath.replace(
+              compiler.context,
+              ``
+            )}`
+
             compilation.emitAsset(
-              this._manifestPath,
+              emitManifestPath,
               new webpack.sources.RawSource(
-                JSON.stringify(manifest, null, 2),
+                JSON.stringify(
+                  { ...this._previousManifest, ...manifest },
+                  null,
+                  2
+                ),
                 false
               )
             )

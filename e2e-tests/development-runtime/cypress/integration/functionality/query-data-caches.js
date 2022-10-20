@@ -73,7 +73,7 @@ function getExpectedCanonicalPath(config) {
   return `/query-data-caches/${config.slug}/${
     config.page === `client-only`
       ? `:client-only`
-      : `page-${config.page}${config.trailingSlash === false ? `` : `/`}`
+      : `page-${config.page}/`
   }`
 }
 

@@ -2,23 +2,18 @@ const _ = require(`lodash`)
 const babylon = require(`@babel/parser`)
 const traverse = require(`@babel/traverse`).default
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   // This only processes JavaScript files.
   return node.internal.mediaType === `application/javascript`
 }
 
 async function onCreateNode({
   node,
-  getNode,
   actions,
   loadNodeContent,
   createNodeId,
   createContentDigest,
 }) {
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const code = await loadNodeContent(node)
@@ -155,5 +150,5 @@ async function onCreateNode({
   }
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

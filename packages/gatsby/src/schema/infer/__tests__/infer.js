@@ -271,22 +271,26 @@ describe(`GraphQL type inference`, () => {
       typeDefs
     )
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
-    return graphql(
+    return graphql({
       schema,
-      `query {
-        allTest {
-          edges {
-            node {
-              ${fragment}
-            }
-          }
+      source: `query {
+    allTest {
+      edges {
+        node {
+          ${fragment}
         }
-        ${extraquery}
       }
-      `,
-      undefined,
-      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
-    )
+    }
+    ${extraquery}
+  }
+  `,
+      rootValue: undefined,
+      contextValue: withResolverContext({
+        schema,
+        schemaComposer,
+        context: { path: `/` },
+      }),
+    })
   }
 
   const getInferredFields = async (nodes, buildSchemaArgs) => {
@@ -643,27 +647,31 @@ describe(`GraphQL type inference`, () => {
     ]
     const { schema, schemaComposer } = await buildTestSchema(nodes)
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
-    const result = await graphql(
+    const result = await graphql({
       schema,
-      `
-        query {
-          allWordpressPage {
-            edges {
-              node {
-                __typename
-                id
-                acfFields {
-                  fooz
-                  __typename
-                }
-              }
+      source: `
+    query {
+      allWordpressPage {
+        edges {
+          node {
+            __typename
+            id
+            acfFields {
+              fooz
+              __typename
             }
           }
         }
-      `,
-      undefined,
-      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
-    )
+      }
+    }
+  `,
+      rootValue: undefined,
+      contextValue: withResolverContext({
+        schema,
+        schemaComposer,
+        context: { path: `/` },
+      }),
+    })
 
     expect(result).toMatchSnapshot()
   })

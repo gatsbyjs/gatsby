@@ -34,7 +34,7 @@ const errors = {
   },
   "95312": {
     text: (context): string =>
-      `"${context.ref}" is not available during Server-Side Rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
+      `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
     category: ErrorCategory.USER,
@@ -430,12 +430,13 @@ const errors = {
       `${
         context.pluginName
       } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11323": {
     text: (context): string =>
@@ -445,9 +446,10 @@ const errors = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11324": {
     text: (context): string =>
@@ -459,42 +461,46 @@ const errors = {
       `${
         context.pluginName
       } created a page with a component that doesn't exist.\n\nThe path to the missing component is "${
-        context.component
+        context.componentPath
       }"\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11326": {
     text: (context): string =>
       `${
         context.pluginName
-      } must set the absolute path to the page component when create creating a page.\n\nThe (relative) path you used for the component is "${
-        context.component
+      } must set the absolute path to the page component when creating a page.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
       }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
-        context.component
+        context.componentPath
       }")\n\nThe page object passed to createPage:\n${JSON.stringify(
-        context.pageObject,
+        context.input,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
+      )}`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11327": {
     text: (context): string =>
-      `You have an empty file in the "src/pages" directory at "${context.relativePath}". Please remove it or make it a valid component`,
+      `An empty file "${context.componentPath}" was found during page creation. Please remove it or make it a valid component.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   "11328": {
     text: (context): string =>
-      `A page component must export a React component for it to be valid. Please make sure this file exports a React component:\n\n${context.fileName}`,
+      `${context.pluginName} created a page without a valid default export.\n\nThe path to the page is "${context.componentPath}". If your page is a named export, please use "export default" instead.`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+    docsUrl: `https://www.gatsbyjs.com/docs/reference/config-files/actions#createPage`,
   },
   // invalid or deprecated APIs
   "11329": {
@@ -564,6 +570,112 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
     docsUrl: `https://www.gatsbyjs.com/docs/reference/functions/`,
+  },
+  // slices
+  "11333": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice and didn't pass the path to the component.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11334": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the slice id when creating a slice.\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.sliceObject,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11335": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } must set the absolute path to the slice component when creating a slice.\n\nThe (relative) path you used for the component is "${
+        context.componentPath
+      }"\n\nYou can convert a relative path to an absolute path by requiring the path module and calling path.resolve() e.g.\n\nconst path = require("path")\npath.resolve("${
+        context.componentPath
+      }")\n\nThe object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11336": {
+    text: (context): string =>
+      `${
+        context.pluginName
+      } created a slice with a component that doesn't exist.\n\nThe path to the missing component is "${
+        context.componentPath
+      }"\n\nThe slice object passed to createSlice:\n${JSON.stringify(
+        context.input,
+        null,
+        4
+      )}`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11337": {
+    text: (context): string =>
+      `An empty file "${context.componentPath}" was found during slice creation. Please remove it or make it a valid component.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11338": {
+    text: (context): string =>
+      `${context.pluginName} created a slice component without a valid default export.\n\nThe path to the component is "${context.componentPath}". If your component is a named export, please use "export default" instead.`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11339": {
+    text: (context): string =>
+      [
+        `Building static HTML failed for slice "${context.sliceName}".`,
+        `Slice metadata: ${JSON.stringify(context?.sliceData || {}, null, 2)}`,
+        `Slice props: ${JSON.stringify(context?.sliceProps || {}, null, 2)}`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
+  },
+  "11340": {
+    text: (context): string =>
+      [
+        `Building static HTML failed for slice "${context.sliceName}".`,
+        `"${context.undefinedGlobal}" is not available during server-side rendering. Enable "DEV_SSR" to debug this during "gatsby develop".`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+    // TODO: change domain to gatsbyjs.com when it's released
+    docsUrl: `https://v5.gatsbyjs.com/docs/reference/config-files/actions#createSlice`,
   },
   // node object didn't pass validation
   "11467": {
@@ -779,6 +891,21 @@ const errors = {
       
       Consider adding "client export" to the top of your file if your component is interactive, otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
     `),
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/partial-hydration-error`,
+    category: ErrorCategory.USER,
+  },
+  "80001": {
+    text: (): string =>
+      stripIndents(
+        `
+        Failed to restore previous client module manifest.
+        
+        This can happen if the manifest is corrupted or is not compatible with the current version of Gatsby.
+
+        Please run "gatsby clean" and try again. If the issue persists, please open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help.
+        `
+      ),
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/partial-hydration-error`,
     category: ErrorCategory.USER,

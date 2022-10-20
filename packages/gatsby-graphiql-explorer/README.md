@@ -1,17 +1,12 @@
 # gatsby-graphiql-explorer
 
-A package to extend the default [GraphiQL][graphiql] IDE with useful features for Gatsby users.
+A package to extend the default [GraphiQL](https://github.com/graphql/graphiql) IDE with useful features for Gatsby users.
 
-_Note:_ accessible at `http://localhost:8000/___graphql` after running `gatsby develop`
-
-![Gatsby GraphiQL Explorer](./assets/gatsby-graphiql-explorer.png)
+When using `gatsby develop` it's accessible at `http://localhost:8000/___graphql`.
 
 ## Features
 
-- Offline support - for when you need to work on your excellent Gatsby app on a plane, train, or elsewhere off the grid
-- [GraphiQL Explorer][graphiql-explorer] - an interactive explorer plugin to visually create and interact with the GraphQL schema
-- Support for implied fragments - whether provided by you, core or plugins. Autocompletion, validation & operation execution are all covered!
-- _All_ the expected features you know and love from [GraphiQL][graphiql]
-
-[graphiql]: https://github.com/graphql/graphiql
-[graphiql-explorer]: https://github.com/OneGraph/graphiql-explorer
+- [GraphiQL Explorer](https://github.com/graphql/graphiql/tree/main/packages/graphiql-plugin-explorer) - an interactive explorer plugin to visually create and interact with the GraphQL schema
+- [GraphiQL Exporter](https://github.com/OneGraph/graphiql-code-exporter) - generates ready-to-run code for your queries
+- Button for [Refreshing Content](https://www.gatsbyjs.com/docs/refreshing-content/)
+- Support for implied fragments - whether provided by you, core or plugins. Autocompletion, validation & operation execution are all covered

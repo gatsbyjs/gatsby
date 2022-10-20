@@ -131,6 +131,18 @@ export async function createPages({
 
   tim.end()
 
+  store.getState().slices.forEach(slice => {
+    if (slice.updatedAt < timestamp) {
+      store.dispatch({
+        type: `DELETE_SLICE`,
+        payload: {
+          name: slice.name,
+          componentPath: slice.componentPath,
+        },
+      })
+    }
+  })
+
   store.dispatch(actions.apiFinished({ apiName: `createPages` }))
 
   return {
