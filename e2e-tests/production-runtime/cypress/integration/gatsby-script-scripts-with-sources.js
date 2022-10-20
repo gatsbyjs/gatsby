@@ -8,6 +8,12 @@ const page = {
   navigation: `/gatsby-script-navigation/`,
 }
 
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) {
+    return false
+  }
+})
+
 describe(`scripts with sources`, () => {
   describe(`using the post-hydrate strategy`, () => {
     it(`should load successfully`, () => {

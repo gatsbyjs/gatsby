@@ -1,10 +1,10 @@
 /* global cy */
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || ('Minified React error #425')) {
-      return false
+Cypress.on('uncaught:exception', (err) => {
+    if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) {
+        return false
     }
-  })
+})
 
 describe(`Pages`, () => {
     it(`can be created with MDX`, () => {

@@ -9,6 +9,12 @@
 // "cypress/integration/1-production.js,cypress/integration/compilation-hash.js" \
 // -b chrome
 
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) {
+    return false
+  }
+})
+
 describe(`Production build tests`, () => {
   it(`should render properly`, () => {
     cy.visit(`/`).waitForRouteChange()
