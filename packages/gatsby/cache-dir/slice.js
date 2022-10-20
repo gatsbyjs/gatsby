@@ -88,7 +88,7 @@ class SlicePropsError extends Error {
       message = `Slice "${sliceName}" was passed props that are not serializable (${errors}).`
     } else {
       // we can't really grab any extra info outside of the browser, so just print what we can
-      message = `${name}: Slice "${sliceName}" was passed props that are not serializable (${errors}). Use \`gatsby develop\` to see more information.`
+      message = `${name}: Slice "${sliceName}" was passed props that are not serializable (${errors}).`
       const stackLines = new Error().stack.trim().split(`\n`).slice(2)
       stack = `${message}\n${stackLines.join(`\n`)}`
     }
