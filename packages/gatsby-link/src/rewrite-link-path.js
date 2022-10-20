@@ -10,6 +10,13 @@ const isAbsolutePath = path => path?.startsWith(`/`)
 const getGlobalTrailingSlash = () =>
   typeof __TRAILING_SLASH__ !== `undefined` ? __TRAILING_SLASH__ : undefined
 
+function applyTrailingSlashOptionOnPathnameOnly(path, option) {
+  const { pathname, search, hash } = parsePath(path)
+  const output = applyTrailingSlashOption(pathname, option)
+
+  return `${output}${search}${hash}`
+}
+
 function absolutify(path, current) {
   // If it's already absolute, return as-is
   if (isAbsolutePath(path)) {
@@ -20,7 +27,7 @@ function absolutify(path, current) {
   const absolutePath = resolve(path, current)
 
   if (option === `always` || option === `never`) {
-    return applyTrailingSlashOption(absolutePath, option)
+    return applyTrailingSlashOptionOnPathnameOnly(absolutePath, option)
   }
 
   return absolutePath
@@ -31,10 +38,7 @@ function applyPrefix(path) {
   const option = getGlobalTrailingSlash()
 
   if (option === `always` || option === `never`) {
-    const { pathname, search, hash } = parsePath(prefixed)
-    const output = applyTrailingSlashOption(pathname, option)
-
-    return `${output}${search}${hash}`
+    return applyTrailingSlashOptionOnPathnameOnly(prefixed, option)
   }
 
   return prefixed

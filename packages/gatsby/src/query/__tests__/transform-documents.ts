@@ -26,8 +26,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {excerpt: ASC})
-            }
-            "
+            }"
           `)
         })
 
@@ -39,8 +38,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {nested: {date: ASC}}})
-            }
-            "
+            }"
           `)
         })
 
@@ -55,8 +53,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: ASC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -71,8 +68,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -81,8 +77,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: ASC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -96,8 +91,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
               allMarkdownRemark(
                 sort: [{frontmatter: {priority: ASC}}, {frontmatter: {date: ASC}}]
               )
-            }
-            "
+            }"
           `)
         })
 
@@ -112,8 +106,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -129,8 +122,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -145,8 +137,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
           ).toMatchInlineSnapshot(`
             "{
               allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-            }
-            "
+            }"
           `)
         })
 
@@ -163,8 +154,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
               allMarkdownRemark(
                 sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: ASC}}]
               )
-            }
-            "
+            }"
           `)
         })
 
@@ -181,8 +171,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
               allMarkdownRemark(
                 sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: DESC}}]
               )
-            }
-            "
+            }"
           `)
         })
       })
@@ -225,8 +214,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               distinct(field: {frontmatter: {category: SELECT}})
-            }
-            "
+            }"
           `)
         })
 
@@ -235,8 +223,7 @@ if (_CFLAGS_.GATSBY_MAJOR === `5`) {
             .toMatchInlineSnapshot(`
             "{
               distinct(field: {frontmatter: {nested_category: SELECT}})
-            }
-            "
+            }"
           `)
         })
       })

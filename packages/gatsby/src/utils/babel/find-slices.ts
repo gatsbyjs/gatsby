@@ -66,7 +66,15 @@ export function collectSlices(
       const { alias: name, allowEmpty = false } = props
 
       if (unresolvedProps.length) {
-        const error = `[Gatsby Slice API] Could not find values in "${filename}" for the following props at build time: ${unresolvedProps.join(
+        let locationInFile = ``
+        if (nodePath.node.loc?.start?.line) {
+          locationInFile = `:${nodePath.node.loc.start.line}`
+          if (nodePath.node.loc?.start?.column) {
+            locationInFile += `:${nodePath.node.loc.start.column + 1}`
+          }
+        }
+
+        const error = `[Gatsby Slice API] Could not find values in "${filename}${locationInFile}" for the following props at build time: ${unresolvedProps.join(
           `, `
         )}`
 

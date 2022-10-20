@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const HJSON = require(`hjson`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   // We only care about HJSON content.
   // NOTE the mime package does not recognize HJSON yet
   // See RFC https://hjson.org/rfc.html#rfc.section.1.3
@@ -19,10 +19,6 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   function transformObject(obj, id, type) {
@@ -63,5 +59,5 @@ async function onCreateNode({
   }
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

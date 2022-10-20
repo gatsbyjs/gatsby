@@ -82,7 +82,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     const manifestFileContents = await getManifestContents(1)
 
     expect(manifestFileContents.node.id).toBe(`1`)
-    expect(manifestFileContents.page.path).toBe(`/one`)
+    expect(manifestFileContents.page.path).toBe(`/one/`)
     expect(manifestFileContents.foundPageBy).toBe(`ownerNodeId`)
   })
 
@@ -90,7 +90,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     const manifestFileContents = await getManifestContents(2)
 
     expect(manifestFileContents.node.id).toBe(`2`)
-    expect(manifestFileContents.page.path).toBe(`/two`)
+    expect(manifestFileContents.page.path).toBe(`/two/`)
     expect(manifestFileContents.foundPageBy).toBe(`context.id`)
   })
 
@@ -98,7 +98,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     const manifestFileContents = await getManifestContents(5)
 
     expect(manifestFileContents.node.id).toBe(`5`)
-    expect(manifestFileContents.page.path).toBe(`/slug-test-path`)
+    expect(manifestFileContents.page.path).toBe(`/slug-test-path/`)
     expect(manifestFileContents.foundPageBy).toBe(`context.slug`)
   })
 
@@ -110,7 +110,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
       expect(manifestFileContents.node.id).toBe(`3`)
       expect(
-        [`/three`, `/three-alternative`].includes(
+        [`/three/`, `/three-alternative/`].includes(
           manifestFileContents.page.path
         )
       ).toBe(true)
