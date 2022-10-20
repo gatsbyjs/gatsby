@@ -67,7 +67,7 @@ it("generates the expected api output", done => {
           "setFieldsOnGraphQLNodeType": Object {},
           "sourceNodes": Object {},
           "shouldOnCreateNode": Object {
-            "version": "2.24.80",
+            "version": "5.0.0",
           },
         },
         "ssr": Object {
