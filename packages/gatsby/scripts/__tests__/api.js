@@ -65,10 +65,10 @@ it("generates the expected api output", done => {
           "preprocessSource": Object {},
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},
-          "sourceNodes": Object {},
           "shouldOnCreateNode": Object {
             "version": "5.0.0",
           },
+          "sourceNodes": Object {},
         },
         "ssr": Object {
           "onPreRenderHTML": Object {},
