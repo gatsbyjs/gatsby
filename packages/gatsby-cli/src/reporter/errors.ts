@@ -3,7 +3,7 @@ import stackTrace from "stack-trace"
 import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
 import { isNodeInternalModulePath } from "gatsby-core-utils"
 import { IStructuredStackFrame } from "../structured-errors/types"
-import { readFileSync } from "fs"
+import { readFileSync } from "fs-extra"
 import { codeFrameColumns } from "@babel/code-frame"
 
 const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
