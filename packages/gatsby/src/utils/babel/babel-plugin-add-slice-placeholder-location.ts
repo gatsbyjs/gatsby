@@ -4,7 +4,7 @@ import { ObjectProperty } from "@babel/types"
 import { store } from "../../redux"
 
 /**
- * This is a plugin that finds <Slice> placeholder components and injects the __renderedBylocation prop
+ * This is a plugin that finds <Slice> placeholder components and injects the __renderedByLocation prop
  * with filename and location in the file where the placeholder was found. This is later used to provide
  * more useful error messages when the user props are invalid showing codeframe where user tries to render it
  * instead of codeframe of the Slice component itself (internals of gatsby) that is not useful for the user.
@@ -27,7 +27,7 @@ export default function addSlicePlaceholderLocation(
         }
 
         if (this.file.opts.filename) {
-          const __renderedBylocationProperties: Array<ObjectProperty> = [
+          const __renderedByLocationProperties: Array<ObjectProperty> = [
             t.objectProperty(
               t.identifier(`fileName`),
               t.stringLiteral(
@@ -40,7 +40,7 @@ export default function addSlicePlaceholderLocation(
           ]
 
           if (nodePath.node.loc?.start.line) {
-            __renderedBylocationProperties.push(
+            __renderedByLocationProperties.push(
               t.objectProperty(
                 t.identifier(`lineNumber`),
                 t.numericLiteral(nodePath.node.loc.start.line)
@@ -48,7 +48,7 @@ export default function addSlicePlaceholderLocation(
             )
 
             if (nodePath.node.loc?.start.column) {
-              __renderedBylocationProperties.push(
+              __renderedByLocationProperties.push(
                 t.objectProperty(
                   t.identifier(`columnNumber`),
                   t.numericLiteral(nodePath.node.loc.start.column + 1)
@@ -57,7 +57,7 @@ export default function addSlicePlaceholderLocation(
             }
 
             if (nodePath.node.loc?.end.line) {
-              __renderedBylocationProperties.push(
+              __renderedByLocationProperties.push(
                 t.objectProperty(
                   t.identifier(`endLineNumber`),
                   t.numericLiteral(nodePath.node.loc.end.line)
@@ -65,7 +65,7 @@ export default function addSlicePlaceholderLocation(
               )
 
               if (nodePath.node.loc?.end.column) {
-                __renderedBylocationProperties.push(
+                __renderedByLocationProperties.push(
                   t.objectProperty(
                     t.identifier(`endColumnNumber`),
                     t.numericLiteral(nodePath.node.loc.end.column + 1)
@@ -76,9 +76,9 @@ export default function addSlicePlaceholderLocation(
           }
 
           const newProp = t.jsxAttribute(
-            t.jsxIdentifier(`__renderedBylocation`),
+            t.jsxIdentifier(`__renderedByLocation`),
             t.jsxExpressionContainer(
-              t.objectExpression(__renderedBylocationProperties)
+              t.objectExpression(__renderedByLocationProperties)
             )
           )
 

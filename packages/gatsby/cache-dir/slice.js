@@ -21,7 +21,7 @@ export function Slice(props) {
         slicesContext.renderEnvironment === `browser`,
         internalProps.sliceName,
         propErrors,
-        props.__renderedBylocation
+        props.__renderedByLocation
       )
     }
 
