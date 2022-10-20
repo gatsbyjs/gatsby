@@ -4,5 +4,4 @@ const result = graphql(`{
       gatsbyImageData(layout: FULL_WIDTH)
     }
   }
-}
-`)
+}`)

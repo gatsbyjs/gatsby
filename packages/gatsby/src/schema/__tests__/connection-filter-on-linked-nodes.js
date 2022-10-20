@@ -47,17 +47,17 @@ async function queryResult(nodes, query) {
   const { schema, schemaCustomization } = store.getState()
 
   const context = { path: `foo` }
-  return graphql(
+  return graphql({
     schema,
-    query,
-    undefined,
-    withResolverContext({
+    source: query,
+    rootValue: undefined,
+    contextValue: withResolverContext({
       schema,
       schemaComposer: schemaCustomization.composer,
       context,
       customContext: schemaCustomization.context,
-    })
-  )
+    }),
+  })
 }
 
 describe(`filtering on linked nodes`, () => {

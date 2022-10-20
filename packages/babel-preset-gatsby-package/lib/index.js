@@ -7,6 +7,7 @@ function preset(context, options = {}) {
     nodeVersion = `18.0.0`,
     esm = false,
     availableCompilerFlags = [`GATSBY_MAJOR`],
+    keepDynamicImports = null
   } = options
   const {
     NODE_ENV,
@@ -86,6 +87,12 @@ function preset(context, options = {}) {
         },
       ],
       r(`babel-plugin-lodash`),
+      Array.isArray(keepDynamicImports) && keepDynamicImports.length > 0 && [
+        r(`./babel-transform-mark-to-keep-dynamic-import`),
+        {
+          keepDynamicImports,
+        },
+      ]
     ].filter(Boolean),
     overrides: [
       {

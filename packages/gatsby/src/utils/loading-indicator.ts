@@ -14,7 +14,7 @@ let indicatorEnabled: "auto" | true | false | undefined = undefined
 export function writeVirtualLoadingIndicatorModule(): void {
   if (indicatorEnabled === undefined) {
     indicatorEnabled =
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND &&
       process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
         ? `auto`
         : false

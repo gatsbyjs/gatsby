@@ -3,7 +3,7 @@ const path = require("path")
 module.exports = {
   sourceType: "module",
   plugins: [
-    [path.resolve(__dirname, "../../babel-transform-compiler-flags.js"),
+    [path.resolve(__dirname, "../../../babel-transform-compiler-flags.js"),
       {
         availableFlags: ['MAJOR'],
         flags: {

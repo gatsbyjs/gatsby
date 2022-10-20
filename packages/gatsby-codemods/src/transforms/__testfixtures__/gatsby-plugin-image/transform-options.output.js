@@ -10,5 +10,4 @@ export const query = graphql`{
       )
     }
   }
-}
-`
+}`
