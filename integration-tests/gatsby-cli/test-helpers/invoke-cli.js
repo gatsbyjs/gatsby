@@ -36,7 +36,6 @@ export const GatsbyCLI = {
             ? `development`
             : `production`
         try {
-          console.log(`starting`, args)
           const results = sync(
             process.execPath,
             [gatsbyBinLocation].concat(args),
@@ -45,13 +44,11 @@ export const GatsbyCLI = {
               env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
             }
           )
-          console.log(`finished`, args, results)
           return [
             results.exitCode,
             createLogsMatcher(strip(results.stdout.toString())),
           ]
         } catch (err) {
-          console.log(`error`, err)
           return [
             err.exitCode,
             createLogsMatcher(strip(err.stdout?.toString() || ``)),
