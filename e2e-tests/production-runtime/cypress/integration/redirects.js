@@ -14,7 +14,7 @@ describe(`Redirects`, () => {
   // this DOES happen locally, but it's quite difficult to understand
   // we are getting hydration failures right now
   it.skip(`are case insensitive when ignoreCase is set to true`, () => {
-    cy.visit(`/Longue-PAGE`, {
+    cy.visit(`/Longue-PAGE/`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
@@ -22,7 +22,7 @@ describe(`Redirects`, () => {
   })
 
   it(`are case sensitive when ignoreCase is set to false`, () => {
-    cy.visit(`/PAGINA-larga`, {
+    cy.visit(`/PAGINA-larga/`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
@@ -37,7 +37,7 @@ describe(`Redirects`, () => {
       },
     },
     () => {
-      const expectedLinks = [`/Longue-PAGE`, `/pagina-larga`]
+      const expectedLinks = [`/Longue-PAGE/`, `/pagina-larga/`]
 
       // we should not hit those routes
       cy.intercept("GET", "/page-data/Longue-PAGE/page-data.json").as(
@@ -86,7 +86,7 @@ describe(`Redirects`, () => {
     }).waitForRouteChange()
 
     cy.getTestElement(`redirect-two-anchor`).click().waitForRouteChange()
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, ``)
   })
@@ -95,11 +95,11 @@ describe(`Redirects`, () => {
   // this DOES happen locally, but it's quite difficult to understand
   // we are getting hydration failures right now
   it.skip(`should support hash parameter on direct visit`, () => {
-    cy.visit(`/redirect-two#anchor`, {
+    cy.visit(`/redirect-two/#anchor`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, ``)
   })
@@ -110,17 +110,17 @@ describe(`Redirects`, () => {
     }).waitForRouteChange()
 
     cy.getTestElement(`redirect-two-search`).click().waitForRouteChange()
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
     cy.location(`hash`).should(`equal`, ``)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
 
   it(`should support search parameter on direct visit`, () => {
-    cy.visit(`/redirect-two?query_param=hello`, {
+    cy.visit(`/redirect-two/?query_param=hello`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
     cy.location(`hash`).should(`equal`, ``)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
@@ -131,17 +131,17 @@ describe(`Redirects`, () => {
     }).waitForRouteChange()
 
     cy.getTestElement(`redirect-two-search-anchor`).click().waitForRouteChange()
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
 
   it(`should support search & hash parameter on direct visit`, () => {
-    cy.visit(`/redirect-two?query_param=hello#anchor`, {
+    cy.visit(`/redirect-two/?query_param=hello#anchor`, {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })

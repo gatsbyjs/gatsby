@@ -324,8 +324,8 @@ export interface GatsbyConfig {
   flags?: Record<string, boolean>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
-  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `legacy` is used which is the behavior until v5. With Gatsby v5 "always" will be the default. */
-  trailingSlash?: "always" | "never" | "ignore" | "legacy"
+  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `always` is used. */
+  trailingSlash?: "always" | "never" | "ignore"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
   /** More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense. If set to true, the default GraphQLTypegenOptions are used. See https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/ for all options. */
