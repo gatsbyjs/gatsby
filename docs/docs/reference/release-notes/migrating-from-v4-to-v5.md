@@ -182,6 +182,12 @@ After:
 
 In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-files/gatsby-config/#trailingslash) was set to `legacy`. With Gatsby 5 the `legacy` option was removed and the new default is `always`. This means that every URL will have a trailing slash. You can [configure this option](/docs/reference/config-files/gatsby-config/#trailingslash) in your `gatsby-config` file.
 
+```javascript:title=gatsby-config.js
+module.exports = {
+  trailingSlash: `always`,
+}
+```
+
 ### Removal of GraphQL Playground
 
 Maybe you didn't know, but Gatsby supported [GraphQL Playground](https://github.com/graphql/graphql-playground) as an alternative to [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql) for some time now. With Gatsby 5 we've updated GraphiQL to v2 which has feature parity with GraphQL Playground. Thus we removed the `GATSBY_GRAPHQL_IDE` environment variable and GraphQL Playground. Visit the [GraphiQL guide](/docs/how-to/querying-data/running-queries-with-graphiql/) to learn more about GraphiQL v2.
