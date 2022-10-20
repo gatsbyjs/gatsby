@@ -31,8 +31,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
   },
 }
 `;
@@ -63,8 +62,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -98,8 +96,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -125,8 +122,7 @@ Object {
       id
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -153,8 +149,7 @@ Object {
       id
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -221,8 +216,7 @@ Map {
       id
     }
   }
-}
-",
+}",
   },
 }
 `;
@@ -258,8 +252,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -297,7 +290,6 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;

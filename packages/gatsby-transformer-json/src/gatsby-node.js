@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   // We only care about JSON content.
   return node.internal.mediaType === `application/json`
 }
@@ -10,10 +10,6 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return
-  }
-
   function getType({ node, object, isArray }) {
     if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
       return pluginOptions.typeName({ node, object, isArray })
@@ -78,5 +74,5 @@ async function onCreateNode(
   }
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

@@ -41,10 +41,4 @@ describe(`applyTrailingSlashOption`, () => {
       )
     })
   })
-  describe(`legacy`, () => {
-    it(`should do nothing`, () => {
-      expect(applyTrailingSlashOption(withSlash)).toEqual(withSlash)
-      expect(applyTrailingSlashOption(withoutSlash)).toEqual(withoutSlash)
-    })
-  })
 })
