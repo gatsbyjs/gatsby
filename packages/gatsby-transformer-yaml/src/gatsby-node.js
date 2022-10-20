@@ -10,10 +10,6 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   function getType({ node, object, isArray }) {
     if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
       return pluginOptions.typeName({ node, object, isArray })

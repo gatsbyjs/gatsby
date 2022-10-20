@@ -9,16 +9,11 @@ function shouldOnCreateNode({ node }) {
 
 async function onCreateNode({
   node,
-  getNode,
   actions,
   loadNodeContent,
   createNodeId,
   createContentDigest,
 }) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const code = await loadNodeContent(node)

@@ -19,11 +19,6 @@ module.exports.onCreateNode = async function onCreateNode(
   },
   pluginOptions
 ) {
-  // We only care about markdown content.
-  if (!shouldOnCreateNode({ node })) {
-    return {}
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const content = await loadNodeContent(node)

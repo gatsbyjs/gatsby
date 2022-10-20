@@ -15,10 +15,6 @@ async function onCreateNode({
   loadNodeContent,
   createContentDigest,
 }) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const code = await loadNodeContent(node)

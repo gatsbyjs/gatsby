@@ -13,10 +13,6 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const rawXml = await loadNodeContent(node)

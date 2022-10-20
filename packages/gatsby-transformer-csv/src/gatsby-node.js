@@ -19,10 +19,6 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
-  if (!shouldOnCreateNode({ node }, pluginOptions)) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   // Destructure out our custom options

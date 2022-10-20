@@ -23,14 +23,9 @@ const convertToJson = path =>
 async function onCreateNode({
   node,
   actions,
-  loadNodeContent,
   createNodeId,
   createContentDigest,
 }) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const parsedContent = await convertToJson(node.absolutePath)

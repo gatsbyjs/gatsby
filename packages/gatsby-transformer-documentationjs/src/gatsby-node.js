@@ -202,10 +202,6 @@ exports.shouldOnCreateNode = shouldOnCreateNode
  * @param {Object} super this is a super param
  */
 exports.onCreateNode = async ({ node, actions, ...helpers }) => {
-  if (!shouldOnCreateNode({ node })) {
-    return null
-  }
-
   const { createNodeId, createContentDigest } = helpers
   const { createNode, createParentChildLink } = actions
 

@@ -15,10 +15,6 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   // Load TOML contents

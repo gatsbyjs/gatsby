@@ -36,10 +36,6 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   options = {}
 ) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   // accept *all* options to pass to the sheet_to_json function

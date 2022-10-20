@@ -93,14 +93,15 @@ function shouldOnCreateNode({ node }, pluginOptions) {
 
 exports.shouldOnCreateNode = shouldOnCreateNode
 
-exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
-) => {
-  if (!shouldOnCreateNode({ node }, pluginOptions)) {
-    return
-  }
-
+exports.onCreateNode = async ({
+  node,
+  actions,
+  store,
+  cache,
+  createNodeId,
+  createContentDigest,
+  getCache,
+}) => {
   const { createNode, createParentChildLink } = actions
 
   try {

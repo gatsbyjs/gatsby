@@ -11,10 +11,6 @@ module.exports.onCreateNode = async function onCreateNode({
   actions,
   createNodeId,
 }) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const imageNode = {

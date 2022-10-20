@@ -23,10 +23,6 @@ async function onCreateNode(
   },
   pluginOptions
 ) {
-  if (!shouldOnCreateNode({ node }, pluginOptions)) {
-    return
-  }
-
   // register custom converter if given
   if (pluginOptions.converterFactory) {
     asciidoc.ConverterFactory.register(

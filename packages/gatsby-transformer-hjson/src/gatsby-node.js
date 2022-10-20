@@ -19,10 +19,6 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  if (!shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   function transformObject(obj, id, type) {
