@@ -225,11 +225,10 @@ jobs:
     steps:
       - run:
           command: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install v18
-      - run: nvm alias default v18
-      - run: nvm use v18
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            echo nvm install v18 >> $BASH_ENV
+            echo nvm alias default v18 >> $BASH_ENV
       - run: |
           node -v
       - run: npm i -g yarn@1.22.11
