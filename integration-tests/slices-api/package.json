@@ -23,9 +23,9 @@
     "npm-run-all": "4.1.5"
   },
   "dependencies": {
-    "gatsby": "next",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "gatsby": "^4.25.0-alpha-preview-slices.d20221011t181843.56",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
   "resolutions": {

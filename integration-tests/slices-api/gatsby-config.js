@@ -1,11 +1,6 @@
-const {
-  data: headFunctionExportData,
-} = require(`./shared-data/head-function-export.js`)
-
 module.exports = {
   siteMetadata: {
-    title: "head-function-export",
-    headFunctionExport: headFunctionExportData.queried,
+    title: "Slice API Integration Test Site",
   },
   plugins: [],
 }

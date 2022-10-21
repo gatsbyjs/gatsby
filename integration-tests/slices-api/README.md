@@ -5,7 +5,7 @@ These are tests triggered via the `test:integration` script. They do not run in 
 ## Adding a new integration test
 
 - Create a folder `integration-tests/name-of-the-test`
-- Copy structure from an existing test, e.g. [`integration-tests/head-function-export`](./head-function-export)
+- Copy structure from an existing test, e.g. [`integration-tests/slice-api`](./head-function-export)
 - Write your tests in `integration-tests/name-of-the-test/__tests__`
 
 ## Running the tests
