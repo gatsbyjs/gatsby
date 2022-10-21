@@ -18,7 +18,7 @@ At a high-level, a source plugin:
 - Ensures the data in the Gatsby DB is synced with the latest updates from its source
 - Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) (Gatsby's name for an object) with accurate media types, human-readable types, and accurate
   [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest)
-- Create relationships between nodes
+- Creates relationships between nodes
 
 A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/reference/config-files/gatsby-node/) file where you implement Gatsby's Node APIs. Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/how-to/plugins-and-themes/creating-a-generic-plugin).
 
