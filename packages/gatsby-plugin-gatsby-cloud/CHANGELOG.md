@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.24.1/packages/gatsby-plugin-gatsby-cloud) (2022-10-19)
+
+#### Bug Fixes
+
+- Re-add constant LINK_REGEX [#36839](https://github.com/gatsbyjs/gatsby/issues/36839) [#36847](https://github.com/gatsbyjs/gatsby/issues/36847) ([d211a97](https://github.com/gatsbyjs/gatsby/commit/d211a972d3d761e3cc4f725458fcd2216b61e4c7))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.24.0/packages/gatsby-plugin-gatsby-cloud) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)

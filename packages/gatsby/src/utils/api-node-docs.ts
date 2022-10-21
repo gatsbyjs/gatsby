@@ -157,12 +157,12 @@ export const onCreateNode = true
  * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
  * Note: this API does not receive the regular `api` that other callbacks get as first arg.
  *
- * @gatsbyVersion 2.24.80
+ * @gatsbyVersion 5.0.0
  * @example
- * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+ * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const unstable_shouldOnCreateNode = true
+export const shouldOnCreateNode = true
 
 /**
  * Called when a new page is created. This extension API is useful

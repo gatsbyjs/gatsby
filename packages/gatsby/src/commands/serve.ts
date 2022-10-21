@@ -23,15 +23,12 @@ import {
 import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
 import { configureTrailingSlash } from "../utils/express-middlewares"
-import { getDataStore, detectLmdbStore } from "../datastore"
+import { getDataStore } from "../datastore"
 import { functionMiddlewares } from "../internal-plugins/functions/middleware"
 import {
   thirdPartyProxyPath,
   partytownProxy,
 } from "../internal-plugins/partytown/proxy"
-
-process.env.GATSBY_EXPERIMENTAL_LMDB_STORE = `1`
-detectLmdbStore()
 
 interface IMatchPath {
   path: string

@@ -25,6 +25,7 @@ import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { stitchSliceForAPage } from "../utils/slices/stitching"
 import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
 import { getPageMode } from "../utils/page-mode"
+import { extractUndefinedGlobal } from "../utils/extract-undefined-global"
 
 type IActivity = any // TODO
 
@@ -555,10 +556,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const prettyError = createErrorFromString(
-      error.stack,
-      `${rendererPath}.map`
-    )
+    const prettyError = createErrorFromString(error, `${rendererPath}.map`)
 
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
@@ -662,15 +660,14 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       let id = `95313` // TODO: verify error IDs exist
       const context = {
         errorPath: err.context && err.context.path,
-        ref: ``,
+        undefinedGlobal: ``,
       }
 
-      const match = err.message.match(
-        /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
-      )
-      if (match && match[1]) {
+      const undefinedGlobal = extractUndefinedGlobal(err)
+
+      if (undefinedGlobal) {
         id = `95312`
-        context.ref = match[1]
+        context.undefinedGlobal = undefinedGlobal
       }
 
       buildHTMLActivityProgress.panic({
@@ -800,8 +797,26 @@ export async function buildSlices({
         slices,
         slicesProps,
       })
-    } catch (e) {
-      buildHTMLActivityProgress.panic(e)
+    } catch (err) {
+      const prettyError = createErrorFromString(
+        err.stack,
+        `${htmlComponentRendererPath}.map`
+      )
+
+      const undefinedGlobal = extractUndefinedGlobal(err)
+
+      let id = `11339`
+
+      if (undefinedGlobal) {
+        id = `11340`
+        err.context.undefinedGlobal = undefinedGlobal
+      }
+
+      buildHTMLActivityProgress.panic({
+        id,
+        context: err.context,
+        error: prettyError,
+      })
     } finally {
       buildHTMLActivityProgress.end()
     }
