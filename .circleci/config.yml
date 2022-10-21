@@ -111,7 +111,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      # - unit_tests_node18
+      - unit_tests_node18
 
 commands:
   e2e-test:
