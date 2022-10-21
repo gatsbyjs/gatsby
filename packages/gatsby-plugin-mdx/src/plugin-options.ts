@@ -2,6 +2,7 @@ import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { GatsbyCache, NodePluginArgs, PluginOptions, Store } from "gatsby"
 import deepmerge from "deepmerge"
 import type { IPluginInfo } from "gatsby-plugin-utils/types"
+import { cachedImport } from "./cache-helpers"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
 import rehypeMdxMetadataExtractor from "./rehype-metadata-extractor"
 import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
@@ -50,6 +51,10 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
   helpers
 ) => {
   const options = defaultOptions(pluginOptions)
+
+  const { default: remarkUnwrapImages } = await cachedImport<
+    typeof import("remark-unwrap-images")
+  >(`remark-unwrap-images`)
 
   // Set jsxRuntime & jsxImportSource based on Gatsby project config
   const { config } = helpers.store.getState()
@@ -107,6 +112,7 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
   }
 
   options.mdxOptions.remarkPlugins.push(remarkMdxHtmlPlugin)
+  options.mdxOptions.remarkPlugins.push(remarkUnwrapImages)
 
   if (!options.mdxOptions.rehypePlugins) {
     options.mdxOptions.rehypePlugins = []
