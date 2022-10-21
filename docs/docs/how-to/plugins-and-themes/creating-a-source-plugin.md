@@ -24,7 +24,7 @@ A source plugin is a regular npm package. It has a `package.json` file, with opt
 
 ## Why create a source plugin?
 
-Source plugins makes data from any source available to your Gatsby sites. Your Gatsby site can use several source plugins to combine data in interesting ways.
+Source plugins make data from any source available to your Gatsby sites. Your Gatsby site can use several source plugins, like commerce data from Shopify, or content from one or more content management systems (like Contentful, WordPress, etc.), all in a unified graph.
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
