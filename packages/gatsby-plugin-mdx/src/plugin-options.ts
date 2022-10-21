@@ -66,6 +66,10 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
     options.mdxOptions.remarkPlugins = []
   }
 
+  // The unwrapping has to happen before any other remark plugins are run (especially gatsby-remark-images)
+  // Otherwise remark-unwrap-images would operate on the already transformed images
+  options.mdxOptions.remarkPlugins.push(remarkUnwrapImages)
+
   // Inject Gatsby path prefix if needed
   if (helpers.pathPrefix) {
     options.mdxOptions.remarkPlugins.push([
@@ -112,7 +116,6 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
   }
 
   options.mdxOptions.remarkPlugins.push(remarkMdxHtmlPlugin)
-  options.mdxOptions.remarkPlugins.push(remarkUnwrapImages)
 
   if (!options.mdxOptions.rehypePlugins) {
     options.mdxOptions.rehypePlugins = []
