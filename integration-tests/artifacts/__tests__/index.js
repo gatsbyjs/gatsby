@@ -14,23 +14,6 @@ const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 const manifest = {}
 const filesToRevert = {}
 
-let _CFLAGS_ = {
-  GATSBY_MAJOR: `4`,
-}
-if (process.env.COMPILER_OPTIONS) {
-  // COMPILER_OPTIONS syntax is key=value,key2=value2
-  _CFLAGS_ = process.env.COMPILER_OPTIONS.split(`,`).reduce((acc, curr) => {
-    const [key, value] = curr.split(`=`)
-
-    if (key) {
-      acc[key] = value
-    }
-
-    return acc
-  }, _CFLAGS_)
-}
-
-let SLICES_ENABLED = _CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES
 let exitCode
 
 function runGatsbyWithRunTestSetup(runNumber = 1) {
