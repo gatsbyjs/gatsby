@@ -346,6 +346,42 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
   })
+
+  describe(`/slices/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html stitched correct and up to date slice`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `Gatsby Slice Test (before edit)`
+          : `Gatsby Slice Test (after edit)`
+      )
+    })
+  })
+
+  describe(`/slices/blog-1/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `blog-1`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html stitched correct and up to date slice`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `Gatsby Slice Test (before edit)`
+          : `Gatsby Slice Test (after edit)`
+      )
+    })
+  })
 }
 
 function assertNodeCorrectness(runNumber) {

@@ -183,7 +183,10 @@ exports.sourceNodes = ({
 
   createNodeHelper(`SliceLayoutMetadata`, {
     id: `slice-metadata`,
-    title: runNumber <= 2 ? `Gatsby Slice Test` : `Gatsby Slice Test (changed)`,
+    title:
+      runNumber < 2
+        ? `Gatsby Slice Test (before edit)`
+        : `Gatsby Slice Test (after edit)`,
   })
 
   for (const prevNode of previouslyCreatedNodes.values()) {
