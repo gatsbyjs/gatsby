@@ -5,14 +5,8 @@ import webpack from "webpack"
 import express from "express"
 import compression from "compression"
 import { graphqlHTTP, OptionsData } from "express-graphql"
-import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import {
-  formatError,
-  FragmentDefinitionNode,
-  GraphQLFormattedError,
-  Kind,
-} from "graphql"
+import { FragmentDefinitionNode, GraphQLFormattedError, Kind } from "graphql"
 import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -176,29 +170,18 @@ export async function startServer(
    */
   const graphqlEndpoint = `/_+graphi?ql`
 
-  // TODO(v5): Remove GraphQL Playground (GraphiQL will be more future-proof)
-  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
-    app.get(
-      graphqlEndpoint,
-      graphqlPlayground({
-        endpoint: `/___graphql`,
-      }),
-      () => {}
-    )
-  } else {
-    graphiqlExplorer(app, {
-      graphqlEndpoint,
-      getFragments: function getFragments(): Array<FragmentDefinitionNode> {
-        const fragments: Array<FragmentDefinitionNode> = []
-        for (const def of store.getState().definitions.values()) {
-          if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
-            fragments.push(def.def)
-          }
+  graphiqlExplorer(app, {
+    graphqlEndpoint,
+    getFragments: function getFragments(): Array<FragmentDefinitionNode> {
+      const fragments: Array<FragmentDefinitionNode> = []
+      for (const def of store.getState().definitions.values()) {
+        if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
+          fragments.push(def.def)
         }
-        return fragments
-      },
-    })
-  }
+      }
+      return fragments
+    },
+  })
 
   app.use(
     graphqlEndpoint,
@@ -225,11 +208,9 @@ export async function startServer(
           context: {},
           customContext: schemaCustomization.context,
         }),
-        customFormatErrorFn(
-          err
-        ): GraphQLFormattedError<{ stack: Array<string> }> {
+        customFormatErrorFn(err): GraphQLFormattedError {
           return {
-            ...formatError(err),
+            ...err.toJSON(),
             extensions: {
               stack: err.stack ? err.stack.split(`\n`) : [],
             },
@@ -332,7 +313,7 @@ export async function startServer(
 
           let pageData: IPageDataWithQueryResult
           // TODO move to query-engine
-          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+          if (process.env.GATSBY_QUERY_ON_DEMAND) {
             const start = Date.now()
 
             pageData = await getPageDataExperimental(page.path)
@@ -408,72 +389,128 @@ export async function startServer(
   )
 
   app.get(`/__original-stack-frame`, (req, res) => {
-    const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
       sourcePosition: null,
       sourceContent: null,
     }
 
-    if (!compilation) {
-      res.json(emptyResponse)
-      return
-    }
+    let sourceContent: string | null
+    let sourceLine: number | undefined
+    let sourceColumn: number | undefined
+    let sourceEndLine: number | undefined
+    let sourceEndColumn: number | undefined
+    let sourcePosition: { line?: number; column?: number } | null
 
-    const moduleId = req.query?.moduleId
-    const lineNumber = parseInt((req.query?.lineNumber as string) ?? 1, 10)
-    const columnNumber = parseInt((req.query?.columnNumber as string) ?? 1, 10)
-
-    let fileModule
-    for (const module of compilation.modules) {
-      const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
-      if (moduleIdentifier === moduleId) {
-        fileModule = module
-        break
+    if (req.query?.skipSourceMap) {
+      if (!req.query?.moduleId) {
+        res.json(emptyResponse)
+        return
       }
-    }
 
-    if (!fileModule) {
-      res.json(emptyResponse)
-      return
-    }
+      const absolutePath = path.resolve(
+        store.getState().program.directory,
+        req.query.moduleId as string
+      )
+      try {
+        sourceContent = fs.readFileSync(absolutePath, `utf-8`)
+      } catch (e) {
+        res.json(emptyResponse)
+        return
+      }
 
-    // We need the internal webpack file that is used in the bundle, not the module source.
-    // It doesn't have the correct sourceMap.
-    const webpackSource = compilation?.codeGenerationResults
-      ?.get(fileModule)
-      ?.sources.get(`javascript`)
+      if (req.query?.lineNumber) {
+        try {
+          sourceLine = parseInt(req.query.lineNumber as string, 10)
 
-    const sourceMap = webpackSource?.map()
+          if (req.query?.endLineNumber) {
+            sourceEndLine = parseInt(req.query.endLineNumber as string, 10)
+          }
+          if (req.query?.columnNumber) {
+            sourceColumn = parseInt(req.query.columnNumber as string, 10)
+          }
+          if (req.query?.endColumnNumber) {
+            sourceEndColumn = parseInt(req.query.endColumnNumber as string, 10)
+          }
+        } catch {
+          // failed to get line/column, we should still try to show the code frame
+        }
+      }
+      sourcePosition = {
+        line: sourceLine,
+        column: sourceColumn,
+      }
+    } else {
+      const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
+      if (!compilation) {
+        res.json(emptyResponse)
+        return
+      }
 
-    if (!sourceMap) {
-      res.json(emptyResponse)
-      return
-    }
+      const moduleId = req.query?.moduleId
+      const lineNumber = parseInt((req.query?.lineNumber as string) ?? 1, 10)
+      const columnNumber = parseInt(
+        (req.query?.columnNumber as string) ?? 1,
+        10
+      )
 
-    const position = {
-      line: lineNumber,
-      column: columnNumber,
-    }
-    const result = findOriginalSourcePositionAndContent(sourceMap, position)
+      let fileModule
+      for (const module of compilation.modules) {
+        const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
+        if (moduleIdentifier === moduleId) {
+          fileModule = module
+          break
+        }
+      }
 
-    const sourcePosition = result?.sourcePosition
-    const sourceLine = sourcePosition?.line
-    const sourceColumn = sourcePosition?.column
-    const sourceContent = result?.sourceContent
+      if (!fileModule) {
+        res.json(emptyResponse)
+        return
+      }
 
-    if (!sourceContent || !sourceLine) {
-      res.json(emptyResponse)
-      return
+      // We need the internal webpack file that is used in the bundle, not the module source.
+      // It doesn't have the correct sourceMap.
+      const webpackSource = compilation?.codeGenerationResults
+        ?.get(fileModule)
+        ?.sources.get(`javascript`)
+
+      const sourceMap = webpackSource?.map()
+
+      if (!sourceMap) {
+        res.json(emptyResponse)
+        return
+      }
+
+      const position = {
+        line: lineNumber,
+        column: columnNumber,
+      }
+      const result = findOriginalSourcePositionAndContent(sourceMap, position)
+
+      sourcePosition = result?.sourcePosition
+      sourceLine = sourcePosition?.line
+      sourceColumn = sourcePosition?.column
+      sourceContent = result?.sourceContent
+
+      if (!sourceContent || !sourceLine) {
+        res.json(emptyResponse)
+        return
+      }
     }
 
     const codeFrame = codeFrameColumns(
       sourceContent,
       {
         start: {
-          line: sourceLine,
+          line: sourceLine ?? 0,
           column: sourceColumn ?? 0,
         },
+        end: sourceEndLine
+          ? {
+              line: sourceEndLine,
+              column: sourceEndColumn,
+            }
+          : undefined,
       },
       {
         highlightCode: true,
@@ -726,7 +763,7 @@ export async function startServer(
   }
 
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     routeLoadingIndicatorRequests(app)

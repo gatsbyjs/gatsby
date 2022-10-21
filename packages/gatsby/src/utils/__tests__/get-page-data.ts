@@ -60,6 +60,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    verbose: jest.fn(),
   }
 })
 
@@ -322,7 +323,7 @@ describe(`get-page-data-util`, () => {
   describe(`Query on demand`, () => {
     let programToRestore
     beforeAll(() => {
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
+      process.env.GATSBY_QUERY_ON_DEMAND = `true`
       programToRestore = store.getState().program
       store.dispatch({
         type: `SET_PROGRAM`,
@@ -333,7 +334,7 @@ describe(`get-page-data-util`, () => {
       })
     })
     afterAll(() => {
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      delete process.env.GATSBY_QUERY_ON_DEMAND
       store.dispatch({
         type: `SET_PROGRAM`,
         payload: programToRestore,
@@ -407,7 +408,7 @@ function finishQuery(
     queryHash: `queryHash`,
   }
 
-  savePageQueryResult(__dirname, page.path!, JSON.stringify(jsonObject))
+  savePageQueryResult(page.path!, JSON.stringify(jsonObject))
 
   store.dispatch(
     pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)

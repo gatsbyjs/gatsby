@@ -1,11 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { createServerOrClientContext } from "./context-utils"
 
-const StaticQueryContext = React.createContext({})
-let StaticQueryServerContext = null
-if (React.createServerContext) {
-  StaticQueryServerContext = React.createServerContext(`StaticQuery`, {})
-}
+const StaticQueryContext = createServerOrClientContext(`StaticQuery`, {})
 
 function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   const finalData = data
@@ -20,9 +17,18 @@ function StaticQueryDataRenderer({ staticQueryData, data, query, render }) {
   )
 }
 
-// TODO(v5): Remove completely
+let warnedAboutStaticQuery = false
+
+// TODO(v6): Remove completely
 const StaticQuery = props => {
   const { data, query, render, children } = props
+
+  if (process.env.NODE_ENV === `development` && !warnedAboutStaticQuery) {
+    console.warn(
+      `The <StaticQuery /> component is deprecated and will be removed in Gatsby v6. Use useStaticQuery instead. Refer to the migration guide for more information: https://gatsby.dev/migrating-4-to-5/#staticquery--is-deprecated`
+    )
+    warnedAboutStaticQuery = true
+  }
 
   return (
     <StaticQueryContext.Consumer>
@@ -56,17 +62,8 @@ const useStaticQuery = query => {
         `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
     )
   }
-  let context
 
-  // Can we get a better check here?
-  if (
-    StaticQueryServerContext &&
-    Object.keys(StaticQueryServerContext._currentValue).length
-  ) {
-    context = React.useContext(StaticQueryServerContext)
-  } else {
-    context = React.useContext(StaticQueryContext)
-  }
+  const context = React.useContext(StaticQueryContext)
 
   // query is a stringified number like `3303882` when wrapped with graphql, If a user forgets
   // to wrap the query in a grqphql, then casting it to a Number results in `NaN` allowing us to
@@ -91,9 +88,4 @@ useStaticQuery(graphql\`${query}\`);
   }
 }
 
-export {
-  StaticQuery,
-  StaticQueryContext,
-  useStaticQuery,
-  StaticQueryServerContext,
-}
+export { StaticQuery, StaticQueryContext, useStaticQuery }

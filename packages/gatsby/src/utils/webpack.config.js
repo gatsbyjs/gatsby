@@ -101,8 +101,8 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
-    envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
-      !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    envObject.GATSBY_QUERY_ON_DEMAND = JSON.stringify(
+      !!process.env.GATSBY_QUERY_ON_DEMAND
     )
 
     if (stage === `develop`) {
@@ -218,14 +218,6 @@ module.exports = async (
         __TRAILING_SLASH__: JSON.stringify(trailingSlash),
         // TODO Improve asset passing to pages
         BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
-        HAS_REACT_18: JSON.stringify(
-          satisfiesSemvers({
-            react: `>=18.0.0`,
-          }) ||
-            satisfiesSemvers({
-              react: `^0.0.0`,
-            })
-        ),
         "global.hasPartialHydration": isPartialHydrationEnabled,
       }),
 
@@ -500,16 +492,20 @@ module.exports = async (
       ],
     }
 
-    // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
-    if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
-      const target =
-        stage === `build-html` || stage === `develop-html` ? `node` : `web`
-      if (target === `web`) {
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+    if (target === `web`) {
+      // TODO(v5): Remove since this is only useful during Gatsby 4 publishes
+      if (_CFLAGS_.GATSBY_MAJOR !== `5`) {
         resolve.alias[`@reach/router`] = path.join(
           getPackageRoot(`@gatsbyjs/reach-router`),
           `es`
         )
       }
+
+      resolve.alias[`gatsby-core-utils/create-content-digest`] = directoryPath(
+        `.cache/create-content-digest-browser-shim`
+      )
     }
 
     if (stage === `build-javascript` && program.profile) {
@@ -859,8 +855,8 @@ module.exports = async (
   if (
     stage === `build-javascript` ||
     stage === `build-html` ||
-    (process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
-      (stage === `develop` || stage === `develop-html`))
+    stage === `develop` ||
+    stage === `develop-html`
   ) {
     const cacheLocation = path.join(
       program.directory,
