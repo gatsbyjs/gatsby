@@ -2584,7 +2584,7 @@ Object {
   "pageSlices": null,
   "warnCalls": Array [
     Array [
-      "[Gatsby Slice API] Could not find values in \\"slice-function.js\\" for the following props at build time: alias",
+      "[Gatsby Slice API] Could not find values in \\"slice-function.js:5:10\\" for the following props at build time: alias",
     ],
   ],
 }

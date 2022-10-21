@@ -296,8 +296,7 @@ describe(`actual compiling`, () => {
               id
             }
           }
-        }
-        ",
+        }",
         }
       `)
     })
@@ -480,8 +479,7 @@ describe(`actual compiling`, () => {
             ...Bar
           }
         }
-      }
-      ",
+      }",
       }
     `)
     expect(result.get(`mockFile2`)).toMatchInlineSnapshot(`
@@ -516,8 +514,7 @@ describe(`actual compiling`, () => {
             ...Bar
           }
         }
-      }
-      ",
+      }",
       }
     `)
   })
@@ -1136,8 +1133,7 @@ describe(`actual compiling`, () => {
             id
           }
         }
-      }
-      ",
+      }",
         },
       }
     `)

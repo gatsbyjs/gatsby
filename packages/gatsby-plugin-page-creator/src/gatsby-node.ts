@@ -81,7 +81,7 @@ export async function createPagesStatefully(
   try {
     const { deletePage } = actions
     const { program, config } = store.getState()
-    const { trailingSlash = `legacy` } = config
+    const { trailingSlash = `always` } = config
 
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
@@ -177,10 +177,9 @@ Please pick a path to an existing directory.`,
           reporter,
           slugifyOptions
         )
-        // TODO(v5): Remove legacy handling
-        const isLegacy = trailingSlash === `legacy`
+
         const hasTrailingSlash = derivedPath.endsWith(`/`)
-        const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
+        const path = createPath(derivedPath, hasTrailingSlash, true)
         const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
         return modifiedPath
       }
@@ -199,10 +198,9 @@ Please pick a path to an existing directory.`,
         reporter,
         slugifyOptions
       )
-      // TODO(v5): Remove legacy handling
-      const isLegacy = trailingSlash === `legacy`
+
       const hasTrailingSlash = derivedPath.endsWith(`/`)
-      const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
+      const path = createPath(derivedPath, hasTrailingSlash, true)
       // We've already created a page with this path
       if (this.knownPagePaths.has(path)) {
         return undefined
@@ -364,7 +362,7 @@ export function setFieldsOnGraphQLNodeType(
 ): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
-    const { trailingSlash = `legacy` } = store.getState().config
+    const { trailingSlash = `always` } = store.getState().config
     const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
@@ -398,14 +396,9 @@ export function setFieldsOnGraphQLNodeType(
               reporter,
               slugifyOptions
             )
-            // TODO(v5): Remove legacy handling
-            const isLegacy = trailingSlash === `legacy`
+
             const hasTrailingSlash = derivedPath.endsWith(`/`)
-            const path = createPath(
-              derivedPath,
-              isLegacy || hasTrailingSlash,
-              true
-            )
+            const path = createPath(derivedPath, hasTrailingSlash, true)
             const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
             return modifiedPath
