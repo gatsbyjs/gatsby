@@ -1,3 +1,9 @@
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 describe(`Prefetching`, () => {
   if (Cypress.env(`CONNECTION_TYPE`) === `bot`) {
     it(`should not prefetch if Googlebot`, () => {

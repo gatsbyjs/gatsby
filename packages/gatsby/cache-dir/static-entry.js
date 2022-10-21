@@ -1,4 +1,3 @@
-/* global HAS_REACT_18 */
 const React = require(`react`)
 const path = require(`path`)
 const {
@@ -350,22 +349,17 @@ export default async function staticPage({
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        // react 18 enabled
-        if (HAS_REACT_18) {
-          const writableStream = new WritableAsPromise()
-          const { pipe } = renderToPipeableStream(bodyComponent, {
-            onAllReady() {
-              pipe(writableStream)
-            },
-            onError(error) {
-              writableStream.destroy(error)
-            },
-          })
+        const writableStream = new WritableAsPromise()
+        const { pipe } = renderToPipeableStream(bodyComponent, {
+          onAllReady() {
+            pipe(writableStream)
+          },
+          onError(error) {
+            writableStream.destroy(error)
+          },
+        })
 
-          bodyHtml = await writableStream
-        } else {
-          bodyHtml = renderToString(bodyComponent)
-        }
+        bodyHtml = await writableStream
       } catch (e) {
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e
