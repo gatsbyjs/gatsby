@@ -672,6 +672,8 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/page-query-template-change/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
     `/changing-context/`,
+    "/slices/blog-2/",
+    "/slices/"
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [
