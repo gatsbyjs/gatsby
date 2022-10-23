@@ -3,8 +3,7 @@ import { slash } from "gatsby-core-utils/path"
 
 export function createPath(
   filePath: string,
-  // TODO(v5): Set this default to false
-  withTrailingSlash: boolean = true,
+  withTrailingSlash: boolean = false,
   usePathBase: boolean = false
 ): string {
   const { dir, name, base } = parse(filePath)

@@ -1,8 +1,7 @@
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-
-const sysPath = require(`path`)
-const fs = require(`fs-extra`)
-const { slash } = require(`gatsby-core-utils`)
+import * as sysPath from "path"
+import * as fs from "fs-extra"
+import { slash } from "gatsby-core-utils/path"
 
 const getPosition = function (stackObject: Array<string>): {
   filename: string
@@ -96,21 +95,40 @@ export const parseError = function ({
   htmlComponentRendererPath: string
 }): IParsedError {
   // convert stack trace to use source file locations and not compiled ones
-  err = createErrorFromString(err.stack, `${htmlComponentRendererPath}.map`)
+  err = createErrorFromString(err, `${htmlComponentRendererPath}.map`)
 
   const stack = err.stack ? err.stack : ``
   const stackObject = stack.split(`\n`)
   const position = getPosition(stackObject)
 
-  // Remove the `/lib/` added by webpack
-  const filename = sysPath.join(
-    directory,
-    // Don't need to use path.sep as webpack always uses a single forward slash
-    // as a path separator.
-    ...position.filename
-      .split(sysPath.sep)
-      .slice(position.filename.startsWith(`/`) ? 2 : 1)
-  )
+  let relativeFileName = position.filename
+  while (relativeFileName.startsWith(`/`)) {
+    relativeFileName = relativeFileName.substring(1)
+  }
+
+  let filename = sysPath.join(directory, relativeFileName)
+
+  // webpack tends to inject project name as first segment in stack traces
+  // so the filename / relativeFileName might not be correct - so we are checking
+  // if it points to existing file and try to remove project name if it's first segment
+  if (!fs.existsSync(filename)) {
+    try {
+      const projectName = fs.readJsonSync(
+        sysPath.join(directory, `package.json`),
+        `utf8`
+      ).name
+
+      if (relativeFileName.startsWith(projectName + sysPath.sep)) {
+        relativeFileName = relativeFileName.substring(
+          (projectName + sysPath.sep).length
+        )
+      }
+
+      filename = sysPath.join(directory, relativeFileName)
+    } catch (e) {
+      // nothing more we can do here
+    }
+  }
 
   let sourceContent
   try {

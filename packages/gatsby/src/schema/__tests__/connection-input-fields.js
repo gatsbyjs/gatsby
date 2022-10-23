@@ -158,13 +158,18 @@ async function queryResult(nodes, query) {
   store.dispatch({ type: `SET_SCHEMA_COMPOSER`, payload: schemaComposer })
 
   const context = { path: `foo` }
-  return graphql(schema, query, undefined, {
-    ...context,
-    nodeModel: new LocalNodeModel({
-      schemaComposer,
-      schema,
-      createPageDependency: jest.fn(),
-    }),
+  return graphql({
+    schema,
+    source: query,
+    rootValue: undefined,
+    contextValue: {
+      ...context,
+      nodeModel: new LocalNodeModel({
+        schemaComposer,
+        schema,
+        createPageDependency: jest.fn(),
+      }),
+    },
   })
 }
 

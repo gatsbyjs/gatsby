@@ -128,7 +128,7 @@ export class WebsocketManager {
       })
     })
 
-    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.GATSBY_QUERY_ON_DEMAND) {
       // page-data marked stale due to dirty query tracking
       const boundEmitStalePageDataPathsFromDirtyQueryTracking =
         this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)

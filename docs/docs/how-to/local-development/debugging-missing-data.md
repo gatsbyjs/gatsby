@@ -4,7 +4,7 @@ title: Debugging Missing or Stale Data Fields on Nodes
 
 ## Overview of `LMDB` datastore behavior changes
 
-In Gatsby 3 we introduced a new data store called `LMDB` (enabled with `LMDB_STORE` and/or `PARALLEL_QUERY_RUNNING` flags). In Gatsby 4 it became the default data store. It allows Gatsby to execute data layer related processing outside of the main build process and enables Gatsby to run queries in multiple processes as well as support additional rendering strategies ([DSG](/docs/reference/rendering-options/deferred-static-generation/) and [SSR](/docs/reference/rendering-options/server-side-rendering/)).
+In Gatsby 3 we introduced a new data store called `LMDB`. In Gatsby 4 it became the default data store. It allows Gatsby to execute data layer related processing outside of the main build process and enables Gatsby to run queries in multiple processes as well as support additional rendering strategies ([DSG](/docs/reference/rendering-options/deferred-static-generation/) and [SSR](/docs/reference/rendering-options/server-side-rendering/)).
 
 In a lot of cases that change is completely invisible to users, but there are cases where things behave differently.
 

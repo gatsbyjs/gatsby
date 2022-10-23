@@ -235,22 +235,22 @@ exports.createPages = async function createPages({
   })
 
   createRedirect({
-    fromPath: `/redirect-without-page`,
+    fromPath: `/redirect-without-page/`,
     toPath: `/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
 
   createRedirect({
-    fromPath: `/redirect`,
+    fromPath: `/redirect/`,
     toPath: `/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
 
   createRedirect({
-    fromPath: `/redirect-two`,
-    toPath: `/redirect-search-hash`,
+    fromPath: `/redirect-two/`,
+    toPath: `/redirect-search-hash/`,
     isPermanent: true,
     redirectInBrowser: true,
   })

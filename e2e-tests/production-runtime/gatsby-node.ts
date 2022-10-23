@@ -280,24 +280,24 @@ export const createPages: GatsbyNode["createPages"] = ({
   }
 
   createRedirect({
-    fromPath: "/pagina-larga",
-    toPath: "/long-page",
+    fromPath: "/pagina-larga/",
+    toPath: "/long-page/",
     isPermanent: true,
     redirectInBrowser: true,
     ignoreCase: false,
   })
 
   createRedirect({
-    fromPath: "/Longue-Page",
-    toPath: "/long-page",
+    fromPath: "/Longue-Page/",
+    toPath: "/long-page/",
     isPermanent: true,
     redirectInBrowser: true,
     ignoreCase: true,
   })
 
   createRedirect({
-    fromPath: `/redirect-two`,
-    toPath: `/redirect-search-hash`,
+    fromPath: `/redirect-two/`,
+    toPath: `/redirect-search-hash/`,
     isPermanent: true,
     redirectInBrowser: true,
   })
