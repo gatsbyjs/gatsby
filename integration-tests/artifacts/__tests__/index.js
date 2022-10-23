@@ -339,12 +339,16 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
 
-    it(`html stitched correctly and slice is up to date slice`, () => {
+    it(`html stitched correctly and slice is up to date`, () => {
       expect(htmlContent).toContain(
         runNumber < 2
           ? `Gatsby Slice Test (before edit)`
           : `Gatsby Slice Test (after edit)`
       )
+    })
+
+    it(`has correct html when prop is passed to slice component`, () => {
+      expect(htmlContent).toContain(`a-large-header`)
     })
   })
 
@@ -673,7 +677,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
     `/changing-context/`,
     "/slices/blog-2/",
-    "/slices/"
+    "/slices/",
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [

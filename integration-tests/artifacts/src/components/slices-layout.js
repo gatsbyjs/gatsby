@@ -15,7 +15,7 @@ export default function SlicesLayout({ children, size = `medium` }) {
   if (size === `large`) {
     header = (
       <h1 className="main-heading" style={{ fontSize: `2em` }}>
-        <Link to="/slices/">{title}</Link>
+        <Link to="/slices/">{title}</Link> <small>a-large-header</small>
       </h1>
     )
   } else {
