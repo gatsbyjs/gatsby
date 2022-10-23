@@ -150,7 +150,7 @@ exports.sourceNodes = ({
 
   createNodeHelper(`SliceBlogPost`, {
     id: "blog-2",
-    authorId: `joshj`,
+    authorId: runNumber < 2 ? `joshj` : `kylem`,
     title: "Why do we use it?",
     content:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
@@ -170,14 +170,17 @@ exports.sourceNodes = ({
   createNodeHelper(`SliceBlogPostAuthor`, {
     name: `Kyle Mathews`,
     id: `kylem`,
-    summary: `who lives and works in San Francisco building useful things.`,
+    summary:
+      runNumber < 2
+        ? `who lives and works in San Francisco building useful things(before edit)`
+        : `who lives and works in San Francisco building useful things(after edit)`,
     twitter: `kylemathews`,
   })
 
   createNodeHelper(`SliceBlogPostAuthor`, {
     name: `Josh Johnson`,
     id: `joshj`,
-    summary: `who lives and works in Michigan building neat things.`,
+    summary: `who lives and works in Michigan building neat things`,
     twitter: `0xJ05H`,
   })
 

@@ -339,7 +339,7 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
 
-    it(`html stitched correct and up to date slice`, () => {
+    it(`html stitched correctly and slice is up to date slice`, () => {
       expect(htmlContent).toContain(
         runNumber < 2
           ? `Gatsby Slice Test (before edit)`
@@ -357,11 +357,35 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
 
-    it(`html stitched correct and up to date slice`, () => {
+    it(`html stitched correctly and slice is up to date`, () => {
       expect(htmlContent).toContain(
         runNumber < 2
           ? `Gatsby Slice Test (before edit)`
           : `Gatsby Slice Test (after edit)`
+      )
+    })
+
+    it("node change results in correct HTML for slice", () => {
+      expect(htmlContent).toContain(
+        runNumber < 2
+          ? `who lives and works in San Francisco building useful things(before edit)`
+          : `who lives and works in San Francisco building useful things(after edit)`
+      )
+    })
+  })
+
+  describe(`/slices/blog-2/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `slices`, `blog-2`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`uses correct slice when a slice is changed in createPage mappping`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 2 ? `Josh Johnson` : `Kyle Mathews`
       )
     })
   })
