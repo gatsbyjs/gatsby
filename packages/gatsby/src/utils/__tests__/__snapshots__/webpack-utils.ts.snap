@@ -37,6 +37,7 @@ Object {
   "isPageTemplate": false,
   "reactImportSource": undefined,
   "reactRuntime": undefined,
+  "resourceQuery": undefined,
   "rootDir": "<TEMP_DIR>/test",
   "stage": "develop",
 }

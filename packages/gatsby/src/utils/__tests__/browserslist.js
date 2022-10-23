@@ -11,6 +11,8 @@ const { findConfig: mockedFindConfig } = require(`browserslist/node`)
 
 const BASE = path.resolve(`.`)
 
+const itWhenV4 = _CFLAGS_.GATSBY_MAJOR !== `5` ? it : it.skip
+
 describe(`browserslist`, () => {
   it(`prefers returned browserslist results`, () => {
     const defaults = [`IE 11`]
@@ -28,7 +30,14 @@ describe(`browserslist`, () => {
 
     const list = getBrowsersList(BASE)
 
-    expect(list).toEqual([`>0.25%`, `not dead`])
+    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+      expect(list).toEqual([
+        `>0.25% and supports es6-module`,
+        `not dead and supports es6-module`,
+      ])
+    } else {
+      expect(list).toEqual([`>0.25%`, `not dead`])
+    }
   })
 
   it(`hasES6ModuleSupport returns true if all browsers support es6 modules`, () => {
@@ -40,13 +49,16 @@ describe(`browserslist`, () => {
     expect(hasES6ModuleSupport(BASE)).toBe(true)
   })
 
-  it(`hasES6ModuleSupport returns false if any browser does not support es6 modules`, () => {
-    const defaults = [`IE 11`]
-    mockedFindConfig.mockReturnValueOnce({
-      defaults,
-    })
-    getBrowsersList(BASE)
+  itWhenV4(
+    `hasES6ModuleSupport returns false if any browser does not support es6 modules`,
+    () => {
+      const defaults = [`IE 11`]
+      mockedFindConfig.mockReturnValueOnce({
+        defaults,
+      })
+      getBrowsersList(BASE)
 
-    expect(hasES6ModuleSupport(BASE)).toBe(false)
-  })
+      expect(hasES6ModuleSupport(BASE)).toBe(false)
+    }
+  )
 })

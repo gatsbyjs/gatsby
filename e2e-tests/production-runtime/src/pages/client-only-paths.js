@@ -4,6 +4,7 @@ import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import InstrumentPage from "../utils/instrument-page"
+import Seo from "../components/seo"
 
 const routes = [`/`, `/not-found`, `/page/profile`, `/nested`, `/nested/foo`]
 
@@ -45,5 +46,7 @@ const ClientOnlyPathPage = () => (
     </ul>
   </Layout>
 )
+
+export const Head = () => <Seo />
 
 export default InstrumentPage(ClientOnlyPathPage)

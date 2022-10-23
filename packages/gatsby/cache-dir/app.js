@@ -1,7 +1,8 @@
-/* global HAS_REACT_18 */
+// needed for fast refresh
+import "@gatsbyjs/webpack-hot-middleware/client"
+
 import React from "react"
 import ReactDOM from "react-dom"
-import io from "socket.io-client"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -40,35 +41,18 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
-let reactFirstRenderOrHydrate
-if (HAS_REACT_18) {
-  const reactDomClient = require(`react-dom/client`)
-  reactFirstRenderOrHydrate = (Component, el) => {
-    // we will use hydrate if mount element has any content inside
-    const useHydrate = el && el.children.length
+const reactDomClient = require(`react-dom/client`)
+const reactFirstRenderOrHydrate = (Component, el) => {
+  // we will use hydrate if mount element has any content inside
+  const useHydrate = el && el.children.length
 
-    if (useHydrate) {
-      const root = reactDomClient.hydrateRoot(el, Component)
-      return () => root.unmount()
-    } else {
-      const root = reactDomClient.createRoot(el)
-      root.render(Component)
-      return () => root.unmount()
-    }
-  }
-} else {
-  const reactDomClient = require(`react-dom`)
-  reactFirstRenderOrHydrate = (Component, el) => {
-    // we will use hydrate if mount element has any content inside
-    const useHydrate = el && el.children.length
-
-    if (useHydrate) {
-      reactDomClient.hydrate(Component, el)
-      return () => ReactDOM.unmountComponentAtNode(el)
-    } else {
-      reactDomClient.render(Component, el)
-      return () => ReactDOM.unmountComponentAtNode(el)
-    }
+  if (useHydrate) {
+    const root = reactDomClient.hydrateRoot(el, Component)
+    return () => root.unmount()
+  } else {
+    const root = reactDomClient.createRoot(el)
+    root.render(Component)
+    return () => root.unmount()
   }
 }
 
@@ -92,53 +76,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       window.location.reload()
     })
   }
-
-  fetch(`/___services`)
-    .then(res => res.json())
-    .then(services => {
-      if (services.developstatusserver) {
-        let isRestarting = false
-        const parentSocket = io(
-          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver.port}`
-        )
-
-        parentSocket.on(`structured-log`, msg => {
-          if (
-            !isRestarting &&
-            msg.type === `LOG_ACTION` &&
-            msg.action.type === `DEVELOP` &&
-            msg.action.payload === `RESTART_REQUIRED` &&
-            window.confirm(
-              `The develop process needs to be restarted for the changes to ${msg.action.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
-            )
-          ) {
-            isRestarting = true
-            parentSocket.emit(`develop:restart`, () => {
-              window.location.reload()
-            })
-          }
-
-          if (
-            isRestarting &&
-            msg.type === `LOG_ACTION` &&
-            msg.action.type === `SET_STATUS` &&
-            msg.action.payload === `SUCCESS`
-          ) {
-            isRestarting = false
-            window.location.reload()
-          }
-        })
-
-        // Prevents certain browsers spamming XHR 'ERR_CONNECTION_REFUSED'
-        // errors within the console, such as when exiting the develop process.
-        parentSocket.on(`disconnect`, () => {
-          console.warn(
-            `[socket.io] Disconnected. Unable to perform health-check.`
-          )
-          parentSocket.close()
-        })
-      }
-    })
 
   /**
    * Service Workers are persistent by nature. They stick around,
@@ -168,7 +105,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   let dismissLoadingIndicator
   if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
   ) {
     let indicatorMountElement

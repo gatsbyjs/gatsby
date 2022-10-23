@@ -3,7 +3,7 @@ import { constructConfigObject } from "../gatsby-cloud-config"
 describe(`constructConfigObject`, () => {
   it(`should return defaults with empty config`, () => {
     expect(constructConfigObject({})).toEqual({
-      trailingSlash: `legacy`,
+      trailingSlash: `always`,
       pathPrefix: ``,
     })
   })

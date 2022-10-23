@@ -19,8 +19,6 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
 
   return (
     <Layout>
-      <SEO title={post.title} description={post.excerpt} />
-
       <article
         className="blog-post"
         itemScope
@@ -82,6 +80,10 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
     </Layout>
   )
 }
+
+export const Head = ({ data: { post } }) => (
+  <SEO title={post.title} description={post.excerpt} />
+)
 
 export default BlogPostTemplate
 

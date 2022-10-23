@@ -7,8 +7,6 @@ import normalizePagePath from "./normalize-page-path"
 // TODO move away from lodash
 import isEqual from "lodash/isEqual"
 
-const preferDefault = m => (m && m.default) || m
-
 function mergePageEntry(cachedPage, newPageData) {
   return {
     ...cachedPage,
@@ -31,16 +29,15 @@ function mergePageEntry(cachedPage, newPageData) {
 
 class DevLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = chunkName => {
-      if (!this.asyncRequires.components[chunkName]) {
+    const loadComponent = (chunkName, exportType = `components`) => {
+      if (!this.asyncRequires[exportType][chunkName]) {
         throw new Error(
           `We couldn't find the correct component chunk with the name "${chunkName}"`
         )
       }
 
       return (
-        this.asyncRequires.components[chunkName]()
-          .then(preferDefault)
+        this.asyncRequires[exportType][chunkName]()
           // loader will handle the case when component is error
           .catch(err => err)
       )
@@ -58,6 +55,8 @@ class DevLoader extends BaseLoader {
           this.handleStaticQueryResultHotUpdate(msg)
         } else if (msg.type === `pageQueryResult`) {
           this.handlePageQueryResultHotUpdate(msg)
+        } else if (msg.type === `sliceQueryResult`) {
+          this.handleSliceQueryResultHotUpdate(msg)
         } else if (msg.type === `stalePageData`) {
           this.handleStalePageDataMessage(msg)
         } else if (msg.type === `staleServerData`) {
@@ -105,7 +104,7 @@ class DevLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.GATSBY_QUERY_ON_DEMAND) {
       return Promise.resolve()
     }
     return super.doPrefetch(pagePath).then(result => result.payload)
@@ -119,6 +118,37 @@ class DevLoader extends BaseLoader {
     if (!isEqual(newResult, cachedResult)) {
       this.staticQueryDb[cacheKey] = newResult
       ___emitter.emit(`staticQueryResult`, newResult)
+    }
+  }
+
+  handleSliceQueryResultHotUpdate(msg) {
+    const newResult = msg.payload.result
+
+    const cacheKey = msg.payload.id
+
+    // raw json db
+    {
+      const cachedResult = this.slicesDataDb.get(cacheKey)
+      if (!isEqual(newResult, cachedResult)) {
+        this.slicesDataDb.set(cacheKey, newResult)
+      }
+    }
+
+    // processed data
+    {
+      const cachedResult = this.slicesDb.get(cacheKey)
+      if (
+        !isEqual(newResult?.result?.data, cachedResult?.data) ||
+        !isEqual(newResult?.result?.sliceContext, cachedResult?.sliceContext)
+      ) {
+        const mergedResult = {
+          ...cachedResult,
+          data: newResult?.result?.data,
+          sliceContext: newResult?.result?.sliceContext,
+        }
+        this.slicesDb.set(cacheKey, mergedResult)
+        ___emitter.emit(`sliceQueryResult`, mergedResult)
+      }
     }
   }
 

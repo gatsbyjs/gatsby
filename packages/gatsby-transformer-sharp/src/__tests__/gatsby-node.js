@@ -1,4 +1,4 @@
-const { onCreateNode } = require(`../gatsby-node`)
+const { onCreateNode, shouldOnCreateNode } = require(`../gatsby-node`)
 
 describe(`Process image nodes correctly`, () => {
   it(`correctly creates an ImageSharp node from a file image node`, async () => {
@@ -17,16 +17,20 @@ describe(`Process image nodes correctly`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
-    await onCreateNode({
-      node,
-      actions,
-      createNodeId,
-    }).then(() => {
-      expect(createNode.mock.calls).toMatchSnapshot()
-      expect(createParentChildLink.mock.calls).toMatchSnapshot()
-      expect(createNode).toHaveBeenCalledTimes(1)
-      expect(createParentChildLink).toHaveBeenCalledTimes(1)
-    })
+    const shouldCreateNode = shouldOnCreateNode({ node })
+
+    if (shouldCreateNode) {
+      await onCreateNode({
+        node,
+        actions,
+        createNodeId,
+      })
+    }
+
+    expect(createNode.mock.calls).toMatchSnapshot()
+    expect(createParentChildLink.mock.calls).toMatchSnapshot()
+    expect(createNode).toHaveBeenCalledTimes(1)
+    expect(createParentChildLink).toHaveBeenCalledTimes(1)
   })
   it(`doesn't create an ImageSharp node for a .gif file`, async () => {
     const node = {
@@ -44,14 +48,18 @@ describe(`Process image nodes correctly`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
-    await onCreateNode({
-      node,
-      actions,
-      createNodeId,
-    }).then(() => {
-      expect(createNode).toHaveBeenCalledTimes(0)
-      expect(createParentChildLink).toHaveBeenCalledTimes(0)
-    })
+    const shouldCreateNode = shouldOnCreateNode({ node })
+
+    if (shouldCreateNode) {
+      await onCreateNode({
+        node,
+        actions,
+        createNodeId,
+      })
+    }
+
+    expect(createNode).toHaveBeenCalledTimes(0)
+    expect(createParentChildLink).toHaveBeenCalledTimes(0)
   })
 
   it(`doesn't create an ImageSharp node if parent is not a File`, async () => {
@@ -70,13 +78,17 @@ describe(`Process image nodes correctly`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
-    await onCreateNode({
-      node,
-      actions,
-      createNodeId,
-    }).then(() => {
-      expect(createNode).toHaveBeenCalledTimes(0)
-      expect(createParentChildLink).toHaveBeenCalledTimes(0)
-    })
+    const shouldCreateNode = shouldOnCreateNode({ node })
+
+    if (shouldCreateNode) {
+      await onCreateNode({
+        node,
+        actions,
+        createNodeId,
+      })
+    }
+
+    expect(createNode).toHaveBeenCalledTimes(0)
+    expect(createParentChildLink).toHaveBeenCalledTimes(0)
   })
 })

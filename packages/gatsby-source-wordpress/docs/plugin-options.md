@@ -42,6 +42,7 @@
 - [searchAndReplace](#searchandreplace)
   - [searchAndReplace[].search](#searchandreplacesearch)
   - [searchAndReplace[].replace](#searchandreplacereplace)
+- [catchLinks](#catchlinks)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
   - [html.gatsbyImageOptions](#htmlgatsbyimageoptions)
@@ -865,6 +866,24 @@ The replacement string for each regex match.
         replace: "https://some-new-url.com",
       },
     ],
+  },
+}
+
+```
+
+## catchLinks
+
+Turns on/off an automatically included copy of gatsby-plugin-catch-links which is used to catch anchor tags in html fields to perform client-side routing instead of full page refreshes.
+
+**Field type**: `Boolean`
+
+**Default value**: `true`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    catchLinks: false,
   },
 }
 

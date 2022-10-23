@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should normalize bare module imports from node_modules 1`] = `"file://node_modules/package-name"`;
+
+exports[`should normalize local module imports 1`] = `"file://src/components/index.js"`;
+
+exports[`should normalize relative module imports from node_modules 1`] = `"file://node_modules/package-name"`;

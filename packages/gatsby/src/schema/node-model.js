@@ -477,6 +477,9 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
+      const {
+        schemaCustomization: { context: customContext },
+      } = store.getState()
       const resolvedNodes = new Map()
       for (const node of getDataStore().iterateNodesByType(typeName)) {
         this.trackInlineObjectsInRootNode(node)
@@ -487,7 +490,8 @@ class LocalNodeModel {
           node,
           type,
           queryFields,
-          actualFieldsToResolve
+          actualFieldsToResolve,
+          customContext
         )
 
         resolvedNodes.set(node.id, resolvedFields)
@@ -770,7 +774,8 @@ async function resolveRecursive(
   node,
   type,
   queryFields,
-  fieldsToResolve
+  fieldsToResolve,
+  customContext
 ) {
   const gqlFields = getFields(schema, type, node)
   const resolvedFields = {}
@@ -786,7 +791,8 @@ async function resolveRecursive(
       schema,
       node,
       gqlField,
-      fieldName
+      fieldName,
+      customContext
     )
     if (gqlField && innerValue != null) {
       if (
@@ -800,7 +806,8 @@ async function resolveRecursive(
           innerValue,
           gqlFieldType,
           queryField,
-          _.isObject(fieldToResolve) ? fieldToResolve : queryField
+          _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+          customContext
         )
       } else if (
         isCompositeType(gqlFieldType) &&
@@ -818,7 +825,8 @@ async function resolveRecursive(
                   item,
                   gqlFieldType,
                   queryField,
-                  _.isObject(fieldToResolve) ? fieldToResolve : queryField
+                  _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+                  customContext
                 )
           )
         )
@@ -839,26 +847,34 @@ async function resolveRecursive(
         schema,
         node,
         gqlFields[fieldName],
-        fieldName
+        fieldName,
+        customContext
       )
     }
   }
 
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
-
+let withResolverContext
 function resolveField(
   nodeModel,
   schemaComposer,
   schema,
   node,
   gqlField,
-  fieldName
+  fieldName,
+  customContext
 ) {
   if (!gqlField?.resolve) {
     return node[fieldName]
   }
-  const withResolverContext = require(`./context`)
+
+  // We require this inline as there's a circular dependency from context back to this file.
+  // https://github.com/gatsbyjs/gatsby/blob/9d33b107d167e3e9e2aa282924a0c409f6afd5a0/packages/gatsby/src/schema/context.ts#L5
+  if (!withResolverContext) {
+    withResolverContext = require(`./context`)
+  }
+
   return gqlField.resolve(
     node,
     gqlField.args.reduce((acc, arg) => {
@@ -869,6 +885,7 @@ function resolveField(
       schema,
       schemaComposer,
       nodeModel,
+      customContext,
     }),
     {
       fieldName,

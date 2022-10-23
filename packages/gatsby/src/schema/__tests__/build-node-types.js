@@ -89,13 +89,18 @@ describe(`build-node-types`, () => {
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
     const context = { path: `foo` }
-    const { data, errors } = await graphql(schema, query, undefined, {
-      ...context,
-      nodeModel: new LocalNodeModel({
-        schemaComposer,
-        schema,
-        createPageDependency,
-      }),
+    const { data, errors } = await graphql({
+      schema,
+      source: query,
+      rootValue: undefined,
+      contextValue: {
+        ...context,
+        nodeModel: new LocalNodeModel({
+          schemaComposer,
+          schema,
+          createPageDependency,
+        }),
+      },
     })
     expect(errors).not.toBeDefined()
     return data

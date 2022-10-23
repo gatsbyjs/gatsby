@@ -25,7 +25,7 @@ By the end of this part of the Tutorial, you will be able to:
 
 If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 3.
 
-You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/C8YxdGGjvOg?start=228" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -35,7 +35,7 @@ You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on th
 
 In Gatsby terms, a **plugin** is a separate npm package that you install to add extra features to your site.
 
-There are a variety of plugins that each have different use cases. Some plugins provide pre-built components, others add analytics, others let you pull data into your site. Some plugins are built by Gatsby employees, while other plugins are built and maintained by community members. So far, there are more than 2,600 plugins to choose from. You can look through all the available plugins using the [Gatsby Plugin Library](/plugins).
+There are a variety of plugins that each have different use cases. Some plugins provide pre-built components, others add analytics, others let you pull data into your site. Some plugins are built by Gatsby employees, while other plugins are built and maintained by community members. So far, there are more than 3,000 plugins to choose from. You can look through all the available plugins using the [Gatsby Plugin Library](/plugins).
 
 You can think of a plugin as an accessory for your site. You don't _need_ to use plugins - you could build out the same functionality from scratch yourself - but they save you time. They're like those fancy single-purpose cooking gadgets that peel apples or crush garlic. You could accomplish the same task using a regular knife, but it's often faster to use a tool that's built to do that one specific job really well.
 
@@ -194,6 +194,8 @@ const IndexPage = () => {
   )
 }
 
+export const Head = () => <title>Home Page</title>
+
 export default IndexPage
 ```
 
@@ -238,6 +240,8 @@ const IndexPage = () => {
   )
 }
 
+export const Head = () => <title>Home Page</title>
+
 export default IndexPage
 ```
 3. In your web browser, go to `localhost:8000`. Your image should still appear on the home page.
@@ -246,7 +250,7 @@ export default IndexPage
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+**Want to see how it all fits together?** Check out the finished state of the [GitHub repo for the example site](https://github.com/gatsbyjs/tutorial-example).
 
 </Announcement>
 

@@ -6,10 +6,10 @@ export const script = {
 }
 
 export const scripts = {
-  [script.three]: `https://unpkg.com/three@0.139.1/build/three.js`,
-  [script.marked]: `https://cdn.jsdelivr.net/npm/marked/marked.min.js`,
-  [script.jQuery]: `https://code.jquery.com/jquery-3.4.1.min.js`,
-  [script.popper]: `https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js`,
+  [script.three]: `http://localhost:8888/three.js`,
+  [script.marked]: `http://localhost:8888/marked.js`,
+  [script.jQuery]: `http://localhost:8888/j-query.js`,
+  [script.popper]: `http://localhost:8888/popper.js`,
 }
 
 export const scriptStrategyIndex = {

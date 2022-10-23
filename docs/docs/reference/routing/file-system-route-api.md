@@ -149,7 +149,7 @@ If you need to want to create pages for only some nodes in a collection (e.g. fi
 
 ### Routing and linking
 
-Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
+Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters. You can configure `slugify` by adjusting [`gatsby-plugin-page-creator`](/plugins/gatsby-plugin-page-creator/#options) for your `src/pages` path.
 
 When you want to link to a collection route page, it may not always be clear how to construct the URL from scratch.
 

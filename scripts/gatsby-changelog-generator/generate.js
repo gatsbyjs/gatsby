@@ -378,3 +378,4 @@ exports.getAllPackageNames = getAllPackageNames
 exports.regenerateChangelog = regenerateChangelog
 exports.updateChangelog = updateChangelog
 exports.onNewVersion = onNewVersion
+exports.changelogRelativePath = changelogRelativePath

@@ -1,8 +1,4 @@
-import {
-  createTestWorker,
-  GatsbyTestWorkerPool,
-  itWhenLMDB,
-} from "./test-helpers"
+import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { getDataStore } from "../../../datastore"
@@ -35,7 +31,7 @@ afterEach(async () => {
   }
 })
 
-itWhenLMDB(`worker can access node created in main process`, async () => {
+it(`worker can access node created in main process`, async () => {
   worker = createTestWorker()
 
   const testNodeId = `shared-node`

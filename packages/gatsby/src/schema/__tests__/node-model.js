@@ -3,7 +3,6 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
-const { isLmdbStore } = require(`../../datastore`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -629,6 +628,7 @@ describe(`NodeModel`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     let resolveSlugMock
+    let resolveCustomContextMock
     let materializationSpy
     beforeEach(async () => {
       const nodes = (() => [
@@ -735,6 +735,13 @@ describe(`NodeModel`, () => {
       resolveBetterTitleMock = jest.fn()
       resolveOtherTitleMock = jest.fn()
       resolveSlugMock = jest.fn()
+      resolveCustomContextMock = jest.fn()
+
+      store.dispatch(
+        actions.createResolverContext({
+          myCustomContext: `foo`,
+        })
+      )
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
@@ -817,6 +824,13 @@ describe(`NodeModel`, () => {
                 resolve: async () => {
                   await new Promise(resolve => setTimeout(resolve, 1000))
                   return true
+                },
+              },
+              usingCustomResolverContext: {
+                type: `String`,
+                resolve: (parent, _args, context) => {
+                  resolveCustomContextMock({ context, parent })
+                  return `${context.myCustomContext}/${parent.title}`
                 },
               },
             },
@@ -1296,6 +1310,37 @@ describe(`NodeModel`, () => {
         ])
       )
     })
+
+    it(`injects context passed by createResolverContext action when materializing fields`, async () => {
+      nodeModel.replaceFiltersCache()
+      const wat = await nodeModel.findAll(
+        {
+          query: {
+            sort: { fields: [`usingCustomResolverContext`], order: [`ASC`] },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(resolveCustomContextMock).toHaveBeenCalledTimes(2)
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id1`,
+        }),
+      })
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id2`,
+        }),
+      })
+    })
   })
 
   describe(`node tracking`, () => {
@@ -1461,110 +1506,6 @@ describe(`NodeModel`, () => {
         expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
           result[0]
         )
-      })
-    })
-  })
-
-  describe(`circular references`, () => {
-    if (isLmdbStore()) {
-      // Circular references are disallowed in the strict mode, this tests are expected to fail
-      return
-    }
-    describe(`directly on a node`, () => {
-      beforeEach(async () => {
-        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
-        const circular = { i_am: `recursion!` }
-        circular.circled = circular
-        const indirectCircular = {
-          down1: {
-            down2: {},
-          },
-        }
-        indirectCircular.down1.down2.deepCircular = indirectCircular
-
-        const node = {
-          id: `circleId`,
-          parent: null,
-          children: [],
-          inlineObject: {
-            field: `fieldOfFirstNode`,
-          },
-          inlineArray: [1, 2, 3],
-          circular,
-          indirect: {
-            indirectCircular,
-          },
-          internal: {
-            type: `Test`,
-            contentDigest: `digest1`,
-          },
-        }
-        actions.createNode(node, { name: `test` })(store.dispatch)
-
-        await build({})
-        const {
-          schemaCustomization: { composer: schemaComposer },
-        } = store.getState()
-        schema = store.getState().schema
-
-        nodeModel = new LocalNodeModel({
-          schema,
-          schemaComposer,
-          createPageDependency,
-        })
-      })
-
-      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
-        const copiedInlineObject = { ...node.inlineObject }
-        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
-
-        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
-      })
-    })
-    describe(`not directly on a node`, () => {
-      beforeEach(async () => {
-        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
-        const circular = { i_am: `recursion!` }
-        circular.circled = { bar: { circular } }
-
-        const node = {
-          id: `circleId`,
-          parent: null,
-          children: [],
-          inlineObject: {
-            field: `fieldOfFirstNode`,
-          },
-          inlineArray: [1, 2, 3],
-          foo: { circular },
-          internal: {
-            type: `Test`,
-            contentDigest: `digest1`,
-          },
-        }
-        actions.createNode(node, { name: `test` })(store.dispatch)
-
-        await build({})
-        const {
-          schemaCustomization: { composer: schemaComposer },
-        } = store.getState()
-        schema = store.getState().schema
-
-        nodeModel = new LocalNodeModel({
-          schema,
-          schemaComposer,
-          createPageDependency,
-        })
-      })
-
-      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
-        const copiedInlineObject = { ...node.inlineObject }
-        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
-
-        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
       })
     })
   })

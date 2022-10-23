@@ -52,6 +52,18 @@ describe(`no-anonymous-exports-page-templates`, () => {
       test({
         code: `import { graphql } from "gatsby"\nconst Template = () => {}\nconst query = graphql\`test\`\nexport { query }\nexport default Template`,
       }),
+      test({
+        code: `import { graphql } from "gatsby"\nimport Template from './Template'\nconst query = graphql\`test\`\nexport { query }\nexport default Template`,
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { default } from './Template'\nexport const query = graphql\`test\``,
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nconst query = graphql\`test\`\nexport { query }\nexport { default } from './Template'`,
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { Template as default } from './Template'\nexport const query = graphql\`test\``,
+      }),
       // getServerData
       test({
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport function getServerData() { return { props: { foo: "bar" }}}`,
@@ -77,6 +89,15 @@ describe(`no-anonymous-exports-page-templates`, () => {
       }),
       test({
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexports.config = () => { return ({ params }) => { defer: true }}`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport class Head extends React.Component { render() { return null } }`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport const Head = () => { return null }`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport { Head } from "./somewhere"`,
       }),
     ],
     invalid: [
@@ -110,6 +131,26 @@ describe(`no-anonymous-exports-page-templates`, () => {
       }),
       test({
         code: `import { graphql } from "gatsby"\nconst Template = () => {}\nexport const hello = 10, query = graphql\`test\`\nexport default Template`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { default } from './Template'\nexport const hello = 10, query = graphql\`test\``,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nconst query = graphql\`test\`\nexport { query }\nexport { default } from './Template'\nexport function Test() {}`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { Template as default } from './Template'\nexport const query = graphql\`test\`\nexport function Test() {}`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport class NotHead extends React.Component { render() { return null } }`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport { NotHead } from "./somewhere"`,
         errors: [{ messageId: `limitedExportsPageTemplates` }],
       }),
     ],

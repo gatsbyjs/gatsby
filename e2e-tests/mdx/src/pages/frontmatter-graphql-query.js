@@ -9,7 +9,7 @@ export default function PageRunningGraphqlResolversOnJSFrontmatterTestInputs({
 
 export const query = graphql`
   {
-    allMdx(filter: { slug: { glob: "frontmatter-engine/*" } }) {
+    allMdx(filter: { fields: { slug: { glob: "frontmatter-engine/*" } } }) {
       nodes {
         frontmatter {
           title
@@ -17,13 +17,6 @@ export const query = graphql`
         body
         excerpt
         tableOfContents
-        timeToRead
-        wordCount {
-          paragraphs
-          sentences
-          words
-        }
-        mdxAST
       }
     }
   }

@@ -33,6 +33,8 @@ it("generates the expected api output", done => {
         "features": Array [
           "image-cdn",
           "graphql-typegen",
+          "content-file-path",
+          "slices",
         ],
         "node": Object {
           "createPages": Object {},
@@ -63,10 +65,10 @@ it("generates the expected api output", done => {
           "preprocessSource": Object {},
           "resolvableExtensions": Object {},
           "setFieldsOnGraphQLNodeType": Object {},
-          "sourceNodes": Object {},
-          "unstable_shouldOnCreateNode": Object {
-            "version": "2.24.80",
+          "shouldOnCreateNode": Object {
+            "version": "5.0.0",
           },
+          "sourceNodes": Object {},
         },
         "ssr": Object {
           "onPreRenderHTML": Object {},
