@@ -482,7 +482,6 @@ class LocalNodeModel {
     }
     let matchingRoot = null
 
-
     if (ids) {
       for (const id of ids) {
         let tracked = getNodeById(id)
