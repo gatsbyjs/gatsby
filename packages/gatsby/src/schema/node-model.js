@@ -482,7 +482,6 @@ class LocalNodeModel {
     }
     let matchingRoot = null
 
-    console.log({ ids, obj })
 
     if (ids) {
       for (const id of ids) {
