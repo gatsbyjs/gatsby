@@ -8,7 +8,9 @@ Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration. Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
+This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration (Experimental). Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
+
+For most users we expect a **smooth upgrade path** as only a couple of changes will be required: [Updating to Node 18](#minimal-nodejs-version-1800), [switching to React 18](#minimal-required-react-version-is-18), and [changing GraphQL queries](#graphql-schema-changes-to-sort-and-aggregation-fields) using a codemod.
 
 ## Table of contents
 
@@ -108,7 +110,7 @@ Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-rele
 
 ### Minimal required React version is 18
 
-We are dropping official support for React 16 and 17. The new minimal required version is React 18. This is a requirement for the new Partial Hydration feature.
+We are dropping official support for React 16 and 17. The new minimal required version is React 18. This is a requirement for the experimental Partial Hydration feature.
 
 ### Non-ESM browsers are not polyfilled by default
 
@@ -180,13 +182,19 @@ After:
 
 ### `trailingSlash` is set to `always`
 
-In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-files/gatsby-config/#trailingslash) was set to `legacy`. With Gatsby 5 the `legacy` option was removed and the new default is `always`. This means that every URL will have a trailing slash. You can [configure this option](/docs/reference/config-files/gatsby-config/#trailingslash) in your `gatsby-config` file.
+In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-files/gatsby-config/#trailingslash) was set to `legacy`. With Gatsby 5 the `legacy` option was removed and the new default is `always`. This means that every URL will have a trailing slash. You can [configure this option](/docs/reference/config-files/gatsby-config/#trailingslash) in your `gatsby-config` file. We recommend that you explicitly define your desired `trailingSlash` behavior.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
   trailingSlash: `always`,
 }
 ```
+
+### `shouldOnCreateNode` is stable
+
+The previously unstable API `unstable_shouldOnCreateNode` was renamed to [`shouldOnCreateNode`](/docs/reference/config-files/gatsby-node/#shouldOnCreateNode). It's considered a stable API now. The functionality is identical, so only a rename will be required.
+
+If you've used a similar check inside `onCreateNode` as an early return we recommend completely switching to the `shouldOnCreateNode` API.
 
 ### Removal of GraphQL Playground
 
@@ -206,6 +214,16 @@ Throughout the lifecycles of Gatsby 3 & 4 we introduced a couple of feature flag
 
 Each of these feature flags had a corresponding environment variable (in the format of `process.env.GATSBY_EXPERIMENTAL_%FLAG-NAME%`). These environment variables were also removed and don't have any effect anymore.
 
+### Update to `graphql` 16
+
+The internal `graphql` dependency was updated from v15 to v16. In most cases this change will be invisible to you and no action is required. However, if you reached into `gatsby/graphql` or are relying on TypeScript types for `graphql` v15, you might need to look into the [graphql v16 release notes](https://github.com/graphql/graphql-js/releases/tag/v16.0.0).
+
+### Removal of `nodeModel.runQuery` and `nodeModel.getAllNodes`
+
+The previously deprecated `nodeModel` methods [`runQuery`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelrunquery-is-deprecated) and [`getAllNodes`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelgetallnodes-is-deprecated) were removed. You'll need to use `nodeModel.findOne` and `nodeModel.findAll` instead.
+
+The Gatsby 3 to 4 migration guide has instructions on how to update [`runQuery`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelrunquery-is-deprecated) and [`getAllNodes`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelgetallnodes-is-deprecated).
+
 ### Gatsby related packages
 
 Breaking Changes in plugins that we own and maintain.
@@ -213,6 +231,12 @@ Breaking Changes in plugins that we own and maintain.
 #### gatsby-plugin-sitemap
 
 The default setting for the `output` option changed from `/sitemap` to `/`. This means that `sitemap-index.xml` will now be created at the root of the site.
+
+#### gatsby-plugin-mdx
+
+`gatsby-plugin-mdx` now includes [`remark-unwrap-images`](https://github.com/remarkjs/remark-unwrap-images) by default. When using `gatsby-plugin-mdx` and `gatsby-remark-images` together, the images were placed inside `<p>` tags which is invalid HTML (as the images are a combination of `<div>`, `<span>`, and `<picture>`). We considered this a breaking change as your CSS might depend on this hierarchy.
+
+You can uninstall `remark-unwrap-images` from your project if you used it inside the `mdxOptions.remarkPlugins` array.
 
 ## Future breaking changes
 
