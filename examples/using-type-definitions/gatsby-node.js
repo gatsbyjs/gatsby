@@ -66,11 +66,9 @@ exports.createResolvers = ({ createResolvers }) => {
       // Create a new root query field.
       allAuthorFullNames: {
         type: [`String!`],
-        resolve(source, args, context, info) {
-          const authors = context.nodeModel.getAllNodes({
-            type: `AuthorJson`,
-          })
-          return authors.map(author => `${author.name}, ${author.firstName}`)
+        async resolve(source, args, context, info) {
+          const { entries } = await context.nodeModel.findAll({ type: `AuthorJson` })
+          return Array.from(entries, author => `${author.name}, ${author.firstName}`)
         },
       },
       // Field resolvers can use all of Gatsby's querying capabilities
@@ -91,39 +89,36 @@ exports.createResolvers = ({ createResolvers }) => {
       // when no type definitions are provided wth `createTypes`.
       posts: {
         type: [`BlogJson`],
-        resolve(source, args, context, info) {
+        async resolve(source, args, context, info) {
           // We use an author's `email` as foreign key in `BlogJson.authors`
           const fieldValue = source.email
 
-          const posts = context.nodeModel.getAllNodes({
-            type: `BlogJson`,
-          })
-          return posts.filter(post =>
+          const { entries } = await context.nodeModel.findAll({ type: `BlogJson` })
+          const posts = entries.filter(post =>
             (post.authors || []).some(author => author === fieldValue)
           )
+          return Array.from(posts)
         },
       },
     },
     BlogJson: {
       // Add a resolver to a field defined with `createTypes`.
       authors: {
-        resolve(source, args, context, info) {
+        async resolve(source, args, context, info) {
           const emails = source[info.fieldName]
           if (emails == null) return null
 
-          const authors = context.nodeModel.getAllNodes({
-            type: `AuthorJson`,
-          })
-          return authors.filter(author => emails.includes(author.email))
+          const { entries } = await context.nodeModel.findAll({ type: `AuthorJson` })
+          const authors = entries.filter(author => emails.includes(author.email))
+          return Array.from(authors)
         },
       },
       comments: {
         type: `[CommentJson!]!`,
-        resolve(source, args, context, info) {
-          const result = context.nodeModel.getAllNodes({
-            type: `CommentJson`,
-          })
-          return result.filter(({ blog }) => blog === source.id)
+        async resolve(source, args, context, info) {
+          const { entries } = await context.nodeModel.findAll({ type: `CommentJson` })
+          const result = entries.filter(({ blog }) => blog === source.id)
+          return Array.from(result)
         },
       },
     },

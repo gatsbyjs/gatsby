@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "3.0.0-next.2",
+  "version": "3.0.0-next.3",
   "scripts": {
     "build": "npm-run-all --npm-path npm -s clean -p build:*",
     "postbuild": "prepend-directive --files=dist/gatsby-image.browser.js,dist/gatsby-image.browser.modern.js --directive=\"client export\"",
@@ -49,8 +49,8 @@
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^14.10.2",
     "@types/prop-types": "^15.7.3",
-    "@types/react": "^17.0.40",
-    "@types/react-dom": "^17.0.13",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "ast-pretty-print": "^2.0.1",
     "babel-plugin-macros": "^2.8.0",
     "cross-env": "^7.0.3",
