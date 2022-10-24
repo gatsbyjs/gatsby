@@ -16,6 +16,42 @@ function onCreateBabelConfig({ actions }, options) {
   })
 }
 
+function onCreateWebpackConfig({ actions, loaders }) {
+  if (typeof loaders?.js !== `function`) {
+    return
+  }
+
+  let doesUsedGatsbyVersionSupportResourceQuery
+  try {
+    const { version } = require(`gatsby/package.json`)
+    const [major, minor] = version.split(`.`).map(Number)
+    doesUsedGatsbyVersionSupportResourceQuery =
+      (major === 4 && minor >= 19) || major > 4
+  } catch {
+    doesUsedGatsbyVersionSupportResourceQuery = true
+  }
+
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: ({ resourceQuery, issuer }) => [
+            loaders.js(
+              doesUsedGatsbyVersionSupportResourceQuery
+                ? {
+                    isPageTemplate: /async-requires/.test(issuer),
+                    resourceQuery,
+                  }
+                : undefined
+            ),
+          ],
+        },
+      ],
+    },
+  })
+}
+
 exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     isTSX: Joi.boolean().description(`Enables jsx parsing.`).default(false),
@@ -49,3 +85,4 @@ exports.pluginOptionsSchema = ({ Joi }) =>
 
 exports.resolvableExtensions = resolvableExtensions
 exports.onCreateBabelConfig = onCreateBabelConfig
+exports.onCreateWebpackConfig = onCreateWebpackConfig
