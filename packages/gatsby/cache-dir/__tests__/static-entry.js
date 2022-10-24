@@ -195,7 +195,6 @@ describe(`develop-static-entry`, () => {
     global.__BASE_PATH__ = ``
     global.__ASSET_PREFIX__ = ``
     global.BROWSER_ESM_ONLY = false
-    global.HAS_REACT_18 = false
   })
 
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, async () => {
