@@ -104,7 +104,10 @@ async function startQueryJob(
 
   // Print out warning when query takes too long
   const timeoutId = setTimeout(() => {
-    if (isPending) {
+    if (
+      isPending &&
+      process.env.GATSBY_DONT_REPORT_LONG_RUNNING_QUERY !== `true`
+    ) {
       reportLongRunningQueryJob(queryJob)
     }
   }, 15000)
