@@ -108,7 +108,7 @@ describe(`Query schema`, () => {
           args[0].createResolvers({
             Frontmatter: {
               authors: {
-                resolve(source, args, context, info) {
+                async resolve(source, args, context, info) {
                   // NOTE: When using the first field resolver argument (here called
                   // `source`, also called `parent` or `root`), it is important to
                   // take care of the fact that the resolver can be called more than once
@@ -123,9 +123,13 @@ describe(`Query schema`, () => {
                   ) {
                     return source.authors
                   }
-                  return context.nodeModel
-                    .getAllNodes({ type: `Author` })
-                    .filter(author => source.authors.includes(author.email))
+                  const { entries } = await context.nodeModel.findAll({
+                    type: `Author`,
+                  })
+                  const authors = entries.filter(author =>
+                    source.authors.includes(author.email)
+                  )
+                  return Array.from(authors)
                 },
               },
             },
@@ -154,10 +158,12 @@ describe(`Query schema`, () => {
             Query: {
               allAuthorNames: {
                 type: `[String!]!`,
-                resolve(source, args, context, info) {
-                  return context.nodeModel
-                    .getAllNodes({ type: `Author` })
-                    .map(author => author.name)
+                async resolve(source, args, context, info) {
+                  const { entries } = await context.nodeModel.findAll({
+                    type: `Author`,
+                  })
+
+                  return Array.from(entries, author => author.name)
                 },
               },
             },
