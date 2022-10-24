@@ -234,7 +234,7 @@ The default setting for the `output` option changed from `/sitemap` to `/`. This
 
 #### gatsby-plugin-mdx
 
-`gatsby-plugin-mdx` now includes [`remark-unwrap-images`](https://github.com/remarkjs/remark-unwrap-images) by default. When using `gatsby-plugin-mdx` and `gatsby-remark-images` together, the images were placed inside `<p>` tags which is invalid HTML (as the images are a combination of `<div>`, `<span>`, and `<picture>`). We considered this a breaking change as your CSS might depend on this hierarchy.
+`gatsby-plugin-mdx` now includes [`remark-unwrap-images`](https://github.com/remarkjs/remark-unwrap-images) by default. When using `gatsby-plugin-mdx` and `gatsby-remark-images` together, the images were placed inside `<p>` tags which is invalid HTML (as the images are a combination of `<div>`, `<span>`, and `<picture>`). We see this as a breaking change as your CSS might depend on this hierarchy.
 
 You can uninstall `remark-unwrap-images` from your project if you used it inside the `mdxOptions.remarkPlugins` array.
 
