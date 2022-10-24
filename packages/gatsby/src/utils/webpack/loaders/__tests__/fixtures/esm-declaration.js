@@ -1,4 +1,4 @@
-"client export"
+"use client"
 
 export let a, b
 export var c, d
