@@ -11,7 +11,7 @@ In this tutorial, you'll create your own source plugin that will gather data fro
 
 ## What is a source plugin?
 
-Source plugins fetch data from remote or local services and write the data into the embedded Gatsby DB.
+Source plugins fetch data from remote or local services and write the data into the embedded Gatsby Database (powered by [LMDB](https://github.com/kriszyp/lmdb-js)).
 
 At a high-level, a source plugin:
 
