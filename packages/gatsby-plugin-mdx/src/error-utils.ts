@@ -9,20 +9,24 @@ export const ERROR_CODES = {
 export const ERROR_MAP = {
   [ERROR_CODES.MdxCompilation]: {
     text: (context: { absolutePath: string; errorMeta: any }): string =>
-      `Failed to compile the file "${context.absolutePath}". Original error message: \n\n${context.errorMeta.message}`,
+      `Failed to compile the file "${context.absolutePath}". Original error message:\n\n${context.errorMeta.message}`,
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
   },
   [ERROR_CODES.NonExistentFileNode]: {
-    text: (context: { resourcePath: string }): string =>
-      `Unable to locate the GraphQL File node for ${context.resourcePath}`,
+    text: (context: { resourcePath: string; mdxPath?: string }): string =>
+      `Unable to locate the GraphQL File node for ${context.resourcePath}${
+        context.mdxPath ? `\nFile: ${context.mdxPath}` : ``
+      }`,
     level: `ERROR`,
     type: `PLUGIN`,
   },
   [ERROR_CODES.InvalidAcornAST]: {
-    text: (context: { resourcePath: string }): string =>
-      `Invalid AST. Parsed source code did not return valid output. File:\n${context.resourcePath}`,
+    text: (context: { resourcePath: string; mdxPath?: string }): string =>
+      `Invalid AST. Parsed source code did not return valid output.\n\nTemplate:\n${
+        context.resourcePath
+      }${context.mdxPath ? `\nFile: ${context.mdxPath}` : ``}`,
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
