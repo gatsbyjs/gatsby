@@ -33,7 +33,7 @@ Follow instructions to fix those deprecations.
 
 ## Updating your dependencies
 
-Next, you need to update your dependencies to v5.
+Next, you need to update your dependencies. We recommend [upgrading to Node 18](#minimal-nodejs-version-1800) prior to updating your dependencies to ensure that the correct package contents are installed.
 
 ### Update Gatsby version
 
