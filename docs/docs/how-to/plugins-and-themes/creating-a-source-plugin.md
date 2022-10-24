@@ -5,7 +5,7 @@ tableOfContentsDepth: 2
 
 import { Announcement } from "gatsby-interface"
 
-Source plugins are reusable integrations with content and data backends. There are already [100s of ready-to-use source plugins for popular content APIs](https://www.gatsbyjs.com/plugins/?=gatsby-source) like Contentful, Drupal, and WordPress. This tutorial teaches you how to build your own integration.
+Source plugins are reusable integrations with content and data backends. There are already [100s of ready-to-use source plugins for popular content APIs](/plugins/?=gatsby-source) like Contentful, Drupal, and WordPress. This tutorial teaches you how to build your own integration.
 
 In this tutorial, you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
 
