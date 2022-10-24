@@ -15,14 +15,18 @@ export const ERROR_MAP = {
     category: `USER`,
   },
   [ERROR_CODES.NonExistentFileNode]: {
-    text: (context: { resourcePath: string }): string =>
-      `Unable to locate the GraphQL File node for ${context.resourcePath}`,
+    text: (context: { resourcePath: string; mdxPath?: string }): string =>
+      `Unable to locate the GraphQL File node for ${context.resourcePath}${
+        context.mdxPath ? `\nFile: ${context.mdxPath}` : ``
+      }`,
     level: `ERROR`,
     type: `PLUGIN`,
   },
   [ERROR_CODES.InvalidAcornAST]: {
-    text: (context: { resourcePath: string }): string =>
-      `Invalid AST. Parsed source code did not return valid output.\n\nTemplate:\n${context.resourcePath}${context.mdxPath ? `\nFile: ${context.mdxPath}` : ``}`,
+    text: (context: { resourcePath: string; mdxPath?: string }): string =>
+      `Invalid AST. Parsed source code did not return valid output.\n\nTemplate:\n${
+        context.resourcePath
+      }${context.mdxPath ? `\nFile: ${context.mdxPath}` : ``}`,
     level: `ERROR`,
     type: `PLUGIN`,
     category: `USER`,
