@@ -20237,10 +20237,10 @@ react-remove-scroll@^2.4.3:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
-react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825:
-  version "0.0.0-experimental-c8b778b7f-20220825"
-  resolved "https://registry.yarnpkg.com/react-server-dom-webpack/-/react-server-dom-webpack-0.0.0-experimental-c8b778b7f-20220825.tgz#b147886ed7cff5b31d9452d6ffe6987bfd876ceb"
-  integrity sha512-JyCjbp6ZvkH/T0EuVPdceYlC8u5WqWDSJr2KxDvc81H2eJ+7zYUN++IcEycnR2F+HmER8QVgxfotnIx352zi+w==
+react-server-dom-webpack@0.0.0-experimental-e7c5af45c-20221023:
+  version "0.0.0-experimental-e7c5af45c-20221023"
+  resolved "https://registry.yarnpkg.com/react-server-dom-webpack/-/react-server-dom-webpack-0.0.0-experimental-e7c5af45c-20221023.tgz#218d35d49aee74c87b40cbc7f418e4f9596c6c7b"
+  integrity sha512-BgFmzMTXAEdWJlQ9aem1xKAISUbmPCaeJXEDXDMDUkd2gM24KRGQDVhM40ZMWJ5i6PFtj9OtIrgrvB7PL+EMuw==
   dependencies:
     acorn "^6.2.1"
     loose-envify "^1.1.0"
