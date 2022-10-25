@@ -20,7 +20,7 @@ const modules = [
   },
   {
     input: `src/index.ts`,
-    output: `dist/index.modern.js`,
+    output: `dist/index.modern.mjs`,
     format: `es`,
     watch
   }
