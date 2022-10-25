@@ -1340,8 +1340,12 @@ describe(`query caching between builds`, () => {
                 },
                 barList: {
                   type: [`Bar`],
-                  resolve: (value, args, context) =>
-                    context.nodeModel.getAllNodes({ type: `Bar` }),
+                  resolve: async (value, args, context) => {
+                    const { entries } = await context.nodeModel.findAll({
+                      type: `Bar`,
+                    })
+                    return entries
+                  },
                 },
               },
               interfaces: [`Node`],
