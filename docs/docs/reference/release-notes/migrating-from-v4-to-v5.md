@@ -182,7 +182,7 @@ After:
 
 ### `trailingSlash` is set to `always`
 
-In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-files/gatsby-config/#trailingslash) was set to `legacy`. With Gatsby 5 the `legacy` option was removed and the new default is `always`. This means that every URL will have a trailing slash. You can [configure this option](/docs/reference/config-files/gatsby-config/#trailingslash) in your `gatsby-config` file. We recommend that you explicitly define your desired `trailingSlash` behavior.
+In Gatsby 4 the default for the [`trailingSlash` option](/docs/reference/config-files/gatsby-config/#trailingslash) was set to `legacy`. With Gatsby 5 the `legacy` option was removed and the new default is `always`. This means that every URL will have a trailing slash. You can [configure this option](/docs/reference/config-files/gatsby-config/#trailingslash) in your `gatsby-config` file. We recommend that you explicitly define your desired `trailingSlash` behavior. This change will also impact your redirects so make sure that everything is consistent.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -190,15 +190,14 @@ module.exports = {
 }
 ```
 
-### `shouldOnCreateNode` is stable
+### Removal of `useNavigate` hook
 
-The previously unstable API `unstable_shouldOnCreateNode` was renamed to [`shouldOnCreateNode`](/docs/reference/config-files/gatsby-node/#shouldOnCreateNode). It's considered a stable API now. The functionality is identical, so only a rename will be required.
+We updated our [`@gatsbyjs/reach-router` fork](https://github.com/gatsbyjs/reach-router) to be compatible with React 18 and React Server Components. While doing that we removed the `useNavitate` hook. Please use `navigate` instead:
 
-If you've used a similar check inside `onCreateNode` as an early return we recommend completely switching to the `shouldOnCreateNode` API.
-
-### Removal of GraphQL Playground
-
-Maybe you didn't know, but Gatsby supported [GraphQL Playground](https://github.com/graphql/graphql-playground) as an alternative to [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql) for some time now. With Gatsby 5 we've updated GraphiQL to v2 which has feature parity with GraphQL Playground. Thus we removed the `GATSBY_GRAPHQL_IDE` environment variable and GraphQL Playground. Visit the [GraphiQL guide](/docs/how-to/querying-data/running-queries-with-graphiql/) to learn more about GraphiQL v2.
+```diff
+- import { useNavigate } from "@gatsbyjs/reach-router"
++ import { navigate } from "gatsby"
+```
 
 ### Removal of obsolete flags and environment variables
 
@@ -214,15 +213,25 @@ Throughout the lifecycles of Gatsby 3 & 4 we introduced a couple of feature flag
 
 Each of these feature flags had a corresponding environment variable (in the format of `process.env.GATSBY_EXPERIMENTAL_%FLAG-NAME%`). These environment variables were also removed and don't have any effect anymore.
 
-### Update to `graphql` 16
+### `shouldOnCreateNode` is stable
 
-The internal `graphql` dependency was updated from v15 to v16. In most cases this change will be invisible to you and no action is required. However, if you reached into `gatsby/graphql` or are relying on TypeScript types for `graphql` v15, you might need to look into the [graphql v16 release notes](https://github.com/graphql/graphql-js/releases/tag/v16.0.0).
+The previously unstable API `unstable_shouldOnCreateNode` was renamed to [`shouldOnCreateNode`](/docs/reference/config-files/gatsby-node/#shouldOnCreateNode). It's considered a stable API now. The functionality is identical, so only a rename will be required.
+
+If you've used a similar check inside `onCreateNode` as an early return we recommend completely switching to the `shouldOnCreateNode` API (and removing the check from `onCreateNode`).
 
 ### Removal of `nodeModel.runQuery` and `nodeModel.getAllNodes`
 
 The previously deprecated `nodeModel` methods [`runQuery`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelrunquery-is-deprecated) and [`getAllNodes`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelgetallnodes-is-deprecated) were removed. You'll need to use `nodeModel.findOne` and `nodeModel.findAll` instead.
 
 The Gatsby 3 to 4 migration guide has instructions on how to update [`runQuery`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelrunquery-is-deprecated) and [`getAllNodes`](/docs/reference/release-notes/migrating-from-v3-to-v4/#nodemodelgetallnodes-is-deprecated).
+
+### Update to `graphql` 16
+
+The internal `graphql` dependency was updated from v15 to v16. In most cases this change will be invisible to you and no action is required. However, if you reached into `gatsby/graphql` or are relying on TypeScript types for `graphql` v15, you might need to look into the [graphql v16 release notes](https://github.com/graphql/graphql-js/releases/tag/v16.0.0).
+
+### Removal of GraphQL Playground
+
+Maybe you didn't know, but Gatsby supported [GraphQL Playground](https://github.com/graphql/graphql-playground) as an alternative to [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql) for some time now. With Gatsby 5 we've updated GraphiQL to v2 which has feature parity with GraphQL Playground. Thus we removed the `GATSBY_GRAPHQL_IDE` environment variable and GraphQL Playground. Visit the [GraphiQL guide](/docs/how-to/querying-data/running-queries-with-graphiql/) to learn more about GraphiQL v2.
 
 ### Gatsby related packages
 
