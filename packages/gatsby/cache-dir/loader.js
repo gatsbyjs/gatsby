@@ -1,4 +1,4 @@
-import { createFromReadableStream } from "react-server-dom-webpack/client"
+import { createFromReadableStream } from "react-server-dom-webpack"
 import prefetchHelper from "./prefetch"
 import emitter from "./emitter"
 import { setMatchPaths, findPath, findMatchPath } from "./find-path"
