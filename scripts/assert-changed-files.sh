@@ -9,10 +9,10 @@ if [ "$IS_CI" = true ]; then
   git config --local user.email "core-team@gatsbyjs.com"
 
   git fetch origin
-  git merge --no-edit origin/master
+  git merge --no-edit origin/release/4.24
 
   if [ $? -ne 0 ]; then
-    echo "Branch has conflicts with master, rolling back test."
+    echo "Branch has conflicts with release/4.24, rolling back test."
     git merge --abort
 
     if [ $? -ne 0]; then
@@ -27,7 +27,7 @@ if [ "$IS_CI" = true ]; then
   git config --local --unset url."https://github.com/".insteadOf
 fi
 
-FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/master | grep -E "$GREP_PATTERN" -c)"
+FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/release/4.24 | grep -E "$GREP_PATTERN" -c)"
 
 if [ "$IS_CI" = true ]; then
   # reset to previous state
