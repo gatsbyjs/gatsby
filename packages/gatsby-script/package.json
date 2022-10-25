@@ -16,7 +16,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "microbundle -f cjs,modern --jsx React.createElement && tsc --emitDeclarationOnly --declaration --declarationDir dist",
-    "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"client export\"",
+    "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"use client\"",
     "watch": "microbundle watch -f cjs,modern --jsx React.createElement --no-compress",
     "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
