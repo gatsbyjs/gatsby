@@ -10,16 +10,16 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-plugin-image": "next",
-    "gatsby-plugin-sharp": "next",
-    "gatsby-source-filesystem": "next",
-    "gatsby-transformer-sharp": "next",
+    "gatsby": "^4",
+    "gatsby-plugin-image": "^2",
+    "gatsby-plugin-sharp": "^4",
+    "gatsby-source-filesystem": "^4",
+    "gatsby-transformer-sharp": "^4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "babel-preset-gatsby-package": "next",
+    "babel-preset-gatsby-package": "^2",
     "babel-jest": "^27.2.1",
     "jest": "^27.2.1",
     "pixelmatch": "^5.2.1"

@@ -7,13 +7,13 @@
     "@sindresorhus/slugify": "^1.0.0",
     "cypress": "^9.7.0",
     "fs-extra": "^8.1.0",
-    "gatsby": "next",
-    "gatsby-plugin-mdx": "next",
-    "gatsby-plugin-sharp": "next",
+    "gatsby": "^4",
+    "gatsby-plugin-mdx": "^4",
+    "gatsby-plugin-sharp": "^4",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.27",
-    "gatsby-remark-autolink-headers": "next",
-    "gatsby-remark-images": "next",
-    "gatsby-source-filesystem": "next",
+    "gatsby-remark-autolink-headers": "^5",
+    "gatsby-remark-images": "^6",
+    "gatsby-source-filesystem": "^4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "theme-ui": "^0.3.1"
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "gatsby-cypress": "next",
+    "gatsby-cypress": "^2",
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
     "start-server-and-test": "^1.7.1"

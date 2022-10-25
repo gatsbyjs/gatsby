@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/e2e-tests/themes/gatsby-theme-about#readme",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-plugin-page-creator": "next"
+    "gatsby": "^4",
+    "gatsby-plugin-page-creator": "^4"
   },
   "devDependencies": {
     "prettier": "2.0.4"
