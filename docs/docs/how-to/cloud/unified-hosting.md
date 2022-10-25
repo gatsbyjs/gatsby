@@ -9,8 +9,9 @@ Unified Hosting (as signalled by a `gatsbyjs.io` domain) is enabled by default o
 
 Unified Hosting on Gatsby Cloud provides several benefits to your site:
 
+- Password protection
 - More accurate Lighthouse reports
-- Unifieder initial page loads (as well as being on a CDN)
+- Faster initial page loads (as well as being on a CDN)
 - Better route caching for browser speed
 - Unlimited redirects
 - Reverse proxy behavior
