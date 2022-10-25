@@ -1,5 +1,5 @@
 const microbundle = require(`microbundle`)
-const prependDirective = require(`prepend-directive`)
+const { prependDirective } = require(`./prepend-directive`)
 
 /**
  * Base config for bundling client modules.
