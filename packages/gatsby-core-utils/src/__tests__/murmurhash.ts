@@ -4,11 +4,11 @@ describe(`murmurhash`, () => {
   it(`returns a hash for a string`, () => {
     expect(murmurhash(`foo`, 0)).toEqual(2414502773)
   })
-  it(`returns same string for same input string and seed`, () => {
+  it(`returns same hash for same input string and seed`, () => {
     const result = murmurhash(`foo`, 0)
     expect(murmurhash(`foo`, 0)).toEqual(result)
   })
-  it(`returns different string for same input string and different seed`, () => {
+  it(`returns different hashes for same input string and different seed`, () => {
     const one = murmurhash(`foo`, 1)
     const two = murmurhash(`foo`, 2)
     expect(two).not.toEqual(one)
