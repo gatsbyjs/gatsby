@@ -1,6 +1,5 @@
 orbs:
   win: circleci/windows@2.4.0
-  slack: circleci/slack@3.4.1
 
 executors:
   node:
@@ -99,6 +98,7 @@ aliases:
             GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
+            JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: "true"
       - store_test_results:
           path: ./test-results/jest-node/
 
@@ -221,15 +221,16 @@ jobs:
 
   integration_tests_gatsby_source_wordpress:
     machine:
-      image: "ubuntu-2004:202107-02"
+      image: "ubuntu-2204:2022.10.1"
     steps:
       - run:
           command: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install 18
-      - run: nvm alias default 18
-      - run: nvm use 18
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            echo nvm install v18 >> $BASH_ENV
+            echo nvm alias default v18 >> $BASH_ENV
+      - run: |
+          node -v
       - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
@@ -521,7 +522,7 @@ jobs:
             yarn
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
@@ -529,6 +530,7 @@ jobs:
             COMPILER_OPTIONS: GATSBY_MAJOR=5
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
+            JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: "true"
       - store_test_results:
           path: ./test-results/jest-node/
 
