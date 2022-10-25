@@ -6,11 +6,11 @@
   "dependencies": {
     "cypress": "^9.7.0",
     "cypress-image-snapshot": "^4.0.1",
-    "gatsby": "next",
-    "gatsby-plugin-image": "next",
-    "gatsby-plugin-sharp": "next",
-    "gatsby-source-filesystem": "next",
-    "gatsby-transformer-sharp": "next",
+    "gatsby": "^4",
+    "gatsby-plugin-image": "^2",
+    "gatsby-plugin-sharp": "^4",
+    "gatsby-source-filesystem": "^4",
+    "gatsby-transformer-sharp": "^4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -33,7 +33,7 @@
   "devDependencies": {
     "cross-env": "^5.2.0",
     "cypress-junit-reporter": "^1.3.1",
-    "gatsby-cypress": "next",
+    "gatsby-cypress": "^2",
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
     "start-server-and-test": "^1.12.2"
