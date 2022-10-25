@@ -1,33 +1,31 @@
 const { bundleClientModule } = require(`../../../scripts/bundle-client-module`)
 
-let key
 let watch = false
 
 for (const arg of process.argv.slice(2)) {
-  const [flagKey, value] = arg.split(`=`)
-  switch (flagKey) {
-    case `--key`:
-      key = value
-      break
+  const [key, value] = arg.split(`=`)
+  switch (key) {
     case `--watch`:
       watch = value
       break
   }
 }
 
-const modules = {
-  cjs: {
-    input: `src/index-cjs.js`,
+const modules = [
+  {
+    input: `src/index.ts`,
     output: `dist/index.js`,
     format: `cjs`,
     watch
   },
-  esm: {
-    input: `src/index.js`,
+  {
+    input: `src/index.ts`,
     output: `dist/index.modern.js`,
     format: `es`,
     watch
   }
-}
+]
 
-bundleClientModule(modules[key])
+for (const module of modules) {
+  bundleClientModule(module)
+}
