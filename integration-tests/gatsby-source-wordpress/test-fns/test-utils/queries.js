@@ -32,7 +32,7 @@ exports.queries = {
         totalCount
       }
       allWpMediaItem(
-        sort: { id: "ASC" }
+        sort: { fields: [id] }
         # this node "cG9zdDoxOTU=" only exists on warm builds. So our snapshot is wrong if we don't filter it out.
         filter: { id: { ne: "cG9zdDoxOTU=" } }
       ) {
@@ -571,7 +571,7 @@ exports.queries = {
       testPage: wpPage(id: { eq: "cG9zdDoy" }) {
         title
       }
-      allWpPage(sort: { date: "ASC" }) {
+      allWpPage(sort: { fields: date }) {
         nodes {
           uri
           title
@@ -603,7 +603,7 @@ exports.queries = {
       testPost: wpPost(id: { eq: "cG9zdDox" }) {
         title
       }
-      allWpPost(sort: { date: "ASC" }) {
+      allWpPost(sort: { fields: date }) {
         nodes {
           title
           featuredImage {
