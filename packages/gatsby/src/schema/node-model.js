@@ -546,28 +546,53 @@ class LocalNodeModel {
    */
   findRootNodeAncestor(obj, predicate = null) {
     let iterations = 0
-    let node = obj
+    let ids = this._rootNodeMap.get(obj)
+    if (!ids) {
+      ids = []
+    }
+    if (obj?.parent) {
+      ids.push(obj.parent)
+    }
+    let matchingRoot = null
 
-    while (iterations++ < 100) {
-      if (predicate && predicate(node)) return node
+    if (ids) {
+      for (const id of ids) {
+        let tracked = getNodeById(id)
 
-      const parent = getNodeById(node.parent)
-      const id = this._rootNodeMap.get(node)
-      const trackedParent = getNodeById(id)
+        if (tracked) {
+          const visited = new Set()
 
-      if (!parent && !trackedParent) {
-        const isMatchingRoot = !predicate || predicate(node)
-        return isMatchingRoot ? node : null
+          while (iterations++ < 100) {
+            if (predicate && predicate(tracked)) {
+              return tracked
+            }
+
+            if (visited.has(tracked)) {
+              reporter.error(
+                `It looks like you have a node that's set its parent as itself:\n\n` +
+                  tracked
+              )
+              break
+            }
+            visited.add(tracked)
+
+            const parent = getNodeById(tracked.parent)
+
+            if (!parent) {
+              break
+            }
+
+            tracked = parent
+          }
+
+          if (tracked && !predicate) {
+            matchingRoot = tracked
+          }
+        }
       }
-
-      node = parent || trackedParent
     }
 
-    reporter.error(
-      `It looks like you have a node that's set its parent as itself:\n\n` +
-        node
-    )
-    return null
+    return matchingRoot
   }
 
   /**
@@ -964,7 +989,13 @@ const addRootNodeToInlineObject = (
 
     // don't need to track node itself
     if (!isNode) {
-      rootNodeMap.set(data, nodeId)
+      let nodeIds = rootNodeMap.get(data)
+      if (!nodeIds) {
+        nodeIds = new Set([nodeId])
+      } else {
+        nodeIds.add(nodeId)
+      }
+      rootNodeMap.set(data, nodeIds)
     }
   }
 }
