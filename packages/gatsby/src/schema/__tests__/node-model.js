@@ -578,6 +578,55 @@ describe(`NodeModel`, () => {
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result).toBe(null)
       })
+
+      describe(`multiple nodes share a reference`, () => {
+        // order of loading nodes here is important, so we check variants of loading post first and person second
+        // as well as other way around
+
+        it(`load person first, then post`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
+
+        it(`load post first, then person`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
+      })
     })
 
     describe(`createPageDependency`, () => {
