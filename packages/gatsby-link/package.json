@@ -15,13 +15,13 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "bundle": "node ../../scripts/bundle-client-packages.js",
+    "bundle": "node scripts/bundle.js",
     "build": "npm-run-all --npm-path npm -s build:cjs build:esm",
-    "build:cjs": "npm run bundle -- --input=src/index-cjs.js --output=dist/index.js --format=cjs",
-    "build:esm": "npm run bundle -- --input=src/index.js --output=dist/index.mjs --format=es",
+    "build:cjs": "node scripts/bundle.js --key=cjs",
+    "build:esm": "node scripts/bundle.js --key=esm",
     "watch": "npm-run-all --npm-path npm -p watch:cjs watch:esm",
-    "watch:cjs": "npm run build:cjs -- --watch=true --compress=false",
-    "watch:esm": "npm run build:esm -- --watch=true --compress=false",
+    "watch:cjs": "npm run build:cjs -- --watch=true",
+    "watch:esm": "npm run build:esm -- --watch=true",
     "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
   },
