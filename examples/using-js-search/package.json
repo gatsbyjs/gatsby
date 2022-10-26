@@ -20,7 +20,7 @@
     "axios": "^0.20.0",
     "gatsby": "next",
     "js-search": "^1.4.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

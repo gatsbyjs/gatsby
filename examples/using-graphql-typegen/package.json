@@ -18,8 +18,8 @@
     "gatsby": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-remark": "next",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "^3.10.3",
