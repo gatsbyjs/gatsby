@@ -1,3 +1,9 @@
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 describe(`gatsby-plugin-image / native lazy loading`, () => {
   beforeEach(() => {
     // /!\ Make sure to run this one using a real build: not in develop

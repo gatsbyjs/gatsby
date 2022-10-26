@@ -988,7 +988,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpACF_GoogleMapFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpACF_GoogleMapFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpACF_GoogleMapSortInput",
   },
   Object {
     "fields": Array [
@@ -1006,7 +1014,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpAcfLinkFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpAcfLinkFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpAcfLinkSortInput",
   },
   Object {
     "fields": Array [
@@ -1025,7 +1041,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpAvatarFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpAvatarFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpAvatarSortInput",
   },
   Object {
     "fields": Array [
@@ -1044,11 +1068,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpBlockFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpBlockFilterInput",
   },
   Object {
     "fields": null,
     "name": "WpBlockFilterListInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpBlockSortInput",
   },
   Object {
     "fields": Array [
@@ -1105,7 +1137,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpCategoryFieldsEnum",
+    "name": "WpCategoryFieldSelector",
   },
   Object {
     "fields": null,
@@ -1143,7 +1175,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCategoryToAncestorsCategoryConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCategoryToAncestorsCategoryConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToAncestorsCategoryConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -1153,7 +1193,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCategoryToCategoryConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCategoryToCategoryConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToCategoryConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -1163,7 +1211,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCategoryToContentNodeConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCategoryToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToContentNodeConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -1173,7 +1229,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCategoryToParentCategoryConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCategoryToParentCategoryConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToParentCategoryConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -1183,7 +1247,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCategoryToPostConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCategoryToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToPostConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -1193,7 +1265,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCategoryToTaxonomyConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCategoryToTaxonomyConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToTaxonomyConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -1258,7 +1338,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpCommentAuthorFieldsEnum",
+    "name": "WpCommentAuthorFieldSelector",
   },
   Object {
     "fields": null,
@@ -1308,7 +1388,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpCommentFieldsEnum",
+    "name": "WpCommentFieldSelector",
   },
   Object {
     "fields": null,
@@ -1346,7 +1426,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCommentToCommentConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCommentToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToCommentConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -1356,7 +1444,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCommentToCommenterConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCommentToCommenterConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToCommenterConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -1366,7 +1462,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCommentToContentNodeConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCommentToContentNodeConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToContentNodeConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -1376,7 +1480,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCommentToParentCommentConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCommentToParentCommentConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToParentCommentConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -1390,7 +1502,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCommenterFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpCommenterFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommenterSortInput",
   },
   Object {
     "fields": Array [
@@ -1457,7 +1577,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpContentNodeFieldsEnum",
+    "name": "WpContentNodeFieldSelector",
   },
   Object {
     "fields": null,
@@ -1495,7 +1615,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpContentNodeToContentTypeConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpContentNodeToContentTypeConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeToContentTypeConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -1505,7 +1633,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpContentNodeToEditLastConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpContentNodeToEditLastConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeToEditLastConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -1522,7 +1658,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpContentTemplateFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpContentTemplateFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTemplateSortInput",
   },
   Object {
     "fields": Array [
@@ -1589,7 +1733,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpContentTypeFieldsEnum",
+    "name": "WpContentTypeFieldSelector",
   },
   Object {
     "fields": null,
@@ -1627,7 +1771,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpContentTypeToContentNodeConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpContentTypeToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeToContentNodeConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -1637,7 +1789,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpContentTypeToTaxonomyConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpContentTypeToTaxonomyConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeToTaxonomyConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -5415,7 +5575,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpDiscussionSettingsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpDiscussionSettingsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpDiscussionSettingsSortInput",
   },
   Object {
     "fields": Array [
@@ -5427,7 +5595,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpFieldsEnum",
+    "name": "WpFieldSelector",
   },
   Object {
     "fields": null,
@@ -5454,7 +5622,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpGeneralSettingsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpGeneralSettingsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpGeneralSettingsSortInput",
   },
   Object {
     "fields": Array [
@@ -5490,7 +5666,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -5500,7 +5684,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -5510,7 +5702,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -5531,7 +5731,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMediaDetailsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMediaDetailsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaDetailsSortInput",
   },
   Object {
     "fields": Array [
@@ -5617,7 +5825,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpMediaItemFieldsEnum",
+    "name": "WpMediaItemFieldSelector",
   },
   Object {
     "fields": null,
@@ -5662,7 +5870,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMediaItemMetaFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMediaItemMetaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemMetaSortInput",
   },
   Object {
     "fields": null,
@@ -5676,7 +5892,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMediaItemToCommentConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMediaItemToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemToCommentConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -5692,11 +5916,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMediaSizeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMediaSizeFilterInput",
   },
   Object {
     "fields": null,
     "name": "WpMediaSizeFilterListInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaSizeSortInput",
   },
   Object {
     "fields": Array [
@@ -5738,7 +5970,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpMenuFieldsEnum",
+    "name": "WpMenuFieldSelector",
   },
   Object {
     "fields": null,
@@ -5810,7 +6042,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpMenuItemFieldsEnum",
+    "name": "WpMenuItemFieldSelector",
   },
   Object {
     "fields": null,
@@ -5846,7 +6078,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMenuItemLinkableFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMenuItemLinkableFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemLinkableSortInput",
   },
   Object {
     "fields": null,
@@ -5860,7 +6100,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMenuItemToMenuConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMenuItemToMenuConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemToMenuConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -5870,7 +6118,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMenuItemToMenuItemConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMenuItemToMenuItemConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemToMenuItemConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -5880,7 +6136,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMenuItemToMenuItemLinkableConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeSortInput",
   },
   Object {
     "fields": null,
@@ -5902,7 +6166,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpMenuToMenuItemConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpMenuToMenuItemConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuToMenuItemConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -5912,7 +6184,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpNodeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpNodeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeSortInput",
   },
   Object {
     "fields": Array [
@@ -5930,7 +6210,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpNodeWithAuthorToUserConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpNodeWithAuthorToUserConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithAuthorToUserConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -5985,7 +6273,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -6104,7 +6400,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpPageFieldsEnum",
+    "name": "WpPageFieldSelector",
   },
   Object {
     "fields": null,
@@ -6142,7 +6438,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPageToCommentConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPageToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPageToCommentConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6183,7 +6487,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPage_AcfpagefieldsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPage_AcfpagefieldsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_AcfpagefieldsSortInput",
   },
   Object {
     "fields": null,
@@ -6215,7 +6527,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPage_Acfpagefields_GroupFieldFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPage_Acfpagefields_GroupFieldFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_Acfpagefields_GroupFieldSortInput",
   },
   Object {
     "fields": Array [
@@ -6226,11 +6546,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPage_Acfpagefields_repeaterFieldFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPage_Acfpagefields_repeaterFieldFilterInput",
   },
   Object {
     "fields": null,
     "name": "WpPage_Acfpagefields_repeaterFieldFilterListInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_Acfpagefields_repeaterFieldSortInput",
   },
   Object {
     "fields": null,
@@ -6329,7 +6657,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpPostFieldsEnum",
+    "name": "WpPostFieldSelector",
   },
   Object {
     "fields": null,
@@ -6389,7 +6717,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpPostFormatFieldsEnum",
+    "name": "WpPostFormatFieldSelector",
   },
   Object {
     "fields": null,
@@ -6427,7 +6755,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostFormatToContentNodeConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostFormatToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatToContentNodeConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6437,7 +6773,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostFormatToPostConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostFormatToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatToPostConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6447,7 +6791,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostFormatToTaxonomyConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostFormatToTaxonomyConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatToTaxonomyConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -6481,7 +6833,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostToCategoryConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostToCategoryConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToCategoryConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6491,7 +6851,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostToCommentConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToCommentConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6501,7 +6869,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostToPostFormatConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostToPostFormatConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToPostFormatConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6511,7 +6887,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostToTagConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostToTagConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToTagConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6521,7 +6905,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostToTermNodeConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostToTermNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToTermNodeConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -6555,7 +6947,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostTypeLabelDetailsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostTypeLabelDetailsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostTypeLabelDetailsSortInput",
   },
   Object {
     "fields": Array [
@@ -6588,7 +6988,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpPostTypeSEOFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostTypeSEOFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostTypeSEOSortInput",
   },
   Object {
     "fields": Array [
@@ -6598,7 +7006,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpReadingSettingsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpReadingSettingsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpReadingSettingsSortInput",
   },
   Object {
     "fields": Array [
@@ -6660,7 +7076,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpReusableBlockFieldsEnum",
+    "name": "WpReusableBlockFieldSelector",
   },
   Object {
     "fields": null,
@@ -6702,7 +7118,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOBreadcrumbsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOBreadcrumbsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOBreadcrumbsSortInput",
   },
   Object {
     "fields": null,
@@ -6726,7 +7150,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOConfigFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOConfigFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOConfigSortInput",
   },
   Object {
     "fields": Array [
@@ -6753,11 +7185,27 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOContentTypeArchiveFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOContentTypeArchiveFilterInput",
   },
   Object {
     "fields": null,
+    "name": "WpSEOContentTypeArchiveSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOContentTypeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOContentTypeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOContentTypeSortInput",
   },
   Object {
     "fields": Array [
@@ -6775,7 +7223,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOContentTypesFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOContentTypesFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOContentTypesSortInput",
   },
   Object {
     "fields": Array [
@@ -6783,6 +7239,10 @@ Array [
       "frontPage",
     ],
     "name": "WpSEOOpenGraph",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOOpenGraphFieldSelector",
   },
   Object {
     "fields": null,
@@ -6798,7 +7258,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOOpenGraphFrontPageFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOOpenGraphFrontPageFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOOpenGraphFrontPageSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOOpenGraphSortInput",
   },
   Object {
     "fields": Array [
@@ -6808,7 +7280,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOPageInfoSchemaFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOPageInfoSchemaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOPageInfoSchemaSortInput",
   },
   Object {
     "fields": Array [
@@ -6819,11 +7299,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOPostTypeBreadcrumbsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOPostTypeBreadcrumbsFilterInput",
   },
   Object {
     "fields": null,
     "name": "WpSEOPostTypeBreadcrumbsFilterListInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOPostTypeBreadcrumbsSortInput",
   },
   Object {
     "fields": Array [
@@ -6835,7 +7323,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOPostTypeSchemaFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOPostTypeSchemaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOPostTypeSchemaSortInput",
   },
   Object {
     "fields": Array [
@@ -6848,11 +7344,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEORedirectFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEORedirectFilterInput",
   },
   Object {
     "fields": null,
     "name": "WpSEORedirectFilterListInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEORedirectSortInput",
   },
   Object {
     "fields": Array [
@@ -6872,7 +7376,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSchemaFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSchemaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSchemaSortInput",
   },
   Object {
     "fields": Array [
@@ -6896,7 +7408,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialFacebookFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialFacebookFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialFacebookSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialFieldSelector",
   },
   Object {
     "fields": null,
@@ -6910,7 +7434,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialInstagramFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialInstagramFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialInstagramSortInput",
   },
   Object {
     "fields": Array [
@@ -6920,7 +7452,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialLinkedInFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialLinkedInFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialLinkedInSortInput",
   },
   Object {
     "fields": Array [
@@ -6930,7 +7470,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialMySpaceFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialMySpaceFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialMySpaceSortInput",
   },
   Object {
     "fields": Array [
@@ -6941,7 +7489,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialPinterestFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialPinterestFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialPinterestSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialSortInput",
   },
   Object {
     "fields": Array [
@@ -6952,7 +7512,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialTwitterFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialTwitterFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialTwitterSortInput",
   },
   Object {
     "fields": Array [
@@ -6962,7 +7530,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialWikipediaFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialWikipediaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialWikipediaSortInput",
   },
   Object {
     "fields": Array [
@@ -6972,7 +7548,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOSocialYoutubeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOSocialYoutubeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialYoutubeSortInput",
   },
   Object {
     "fields": Array [
@@ -6982,7 +7566,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOTaxonomySchemaFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOTaxonomySchemaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOTaxonomySchemaSortInput",
   },
   Object {
     "fields": Array [
@@ -7008,6 +7600,10 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOUserFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOUserFilterInput",
   },
   Object {
@@ -7020,7 +7616,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOUserSchemaFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOUserSchemaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOUserSchemaSortInput",
   },
   Object {
     "fields": Array [
@@ -7038,7 +7642,19 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOUserSocialFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOUserSocialFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOUserSocialSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOUserSortInput",
   },
   Object {
     "fields": Array [
@@ -7051,7 +7667,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSEOWebmasterFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSEOWebmasterFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOWebmasterSortInput",
   },
   Object {
     "fields": Array [
@@ -7074,7 +7698,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpSettingsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpSettingsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSettingsSortInput",
   },
   Object {
     "fields": null,
@@ -7130,7 +7762,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpTagFieldsEnum",
+    "name": "WpTagFieldSelector",
   },
   Object {
     "fields": null,
@@ -7168,7 +7800,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpTagToContentNodeConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpTagToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagToContentNodeConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7178,7 +7818,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpTagToPostConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpTagToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagToPostConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7188,7 +7836,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpTagToTaxonomyConnectionEdgeFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpTagToTaxonomyConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagToTaxonomyConnectionEdgeSortInput",
   },
   Object {
     "fields": Array [
@@ -7243,7 +7899,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpTaxonomyFieldsEnum",
+    "name": "WpTaxonomyFieldSelector",
   },
   Object {
     "fields": null,
@@ -7300,7 +7956,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpTaxonomySEOFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpTaxonomySEOFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomySEOSortInput",
   },
   Object {
     "fields": null,
@@ -7314,7 +7978,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpTaxonomyToContentTypeConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpTaxonomyToContentTypeConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomyToContentTypeConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7362,7 +8034,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpTermNodeFieldsEnum",
+    "name": "WpTermNodeFieldSelector",
   },
   Object {
     "fields": null,
@@ -7457,7 +8129,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpTranslationFilterTestFieldsEnum",
+    "name": "WpTranslationFilterTestFieldSelector",
   },
   Object {
     "fields": null,
@@ -7552,7 +8224,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpTypeLimit0TestFieldsEnum",
+    "name": "WpTypeLimit0TestFieldSelector",
   },
   Object {
     "fields": null,
@@ -7647,7 +8319,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpTypeLimitTestFieldsEnum",
+    "name": "WpTypeLimitTestFieldSelector",
   },
   Object {
     "fields": null,
@@ -7744,7 +8416,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpUserFieldsEnum",
+    "name": "WpUserFieldSelector",
   },
   Object {
     "fields": null,
@@ -7803,7 +8475,7 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpUserRoleFieldsEnum",
+    "name": "WpUserRoleFieldSelector",
   },
   Object {
     "fields": null,
@@ -7845,7 +8517,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpUserToCommentConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpUserToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToCommentConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7855,7 +8535,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpUserToPageConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpUserToPageConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToPageConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7865,7 +8553,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpUserToPostConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpUserToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToPostConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7875,7 +8571,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpUserToTranslationFilterTestConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpUserToTranslationFilterTestConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToTranslationFilterTestConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7885,7 +8589,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpUserToTypeLimit0TestConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpUserToTypeLimit0TestConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToTypeLimit0TestConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7895,7 +8607,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpUserToTypeLimitTestConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpUserToTypeLimitTestConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToTypeLimitTestConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7905,7 +8625,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpUserToUserRoleConnectionFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpUserToUserRoleConnectionFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToUserRoleConnectionSortInput",
   },
   Object {
     "fields": Array [
@@ -7917,7 +8645,15 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpWritingSettingsFieldSelector",
+  },
+  Object {
+    "fields": null,
     "name": "WpWritingSettingsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpWritingSettingsSortInput",
   },
   Object {
     "fields": Array [

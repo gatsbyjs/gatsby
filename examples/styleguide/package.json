@@ -11,8 +11,8 @@
     "gatsby-transformer-remark": "next",
     "glamor": "^2.20.40",
     "html-to-react": "^1.4.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-live": "^2.2.2"
   },
   "keywords": [

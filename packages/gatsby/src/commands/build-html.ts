@@ -556,10 +556,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const prettyError = createErrorFromString(
-      error.stack,
-      `${rendererPath}.map`
-    )
+    const prettyError = createErrorFromString(error, `${rendererPath}.map`)
 
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context

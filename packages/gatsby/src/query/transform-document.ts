@@ -30,9 +30,11 @@ function isOldSortObject(props: unknown): props is IOldSortObject {
 
   let hasFields = false
   // skip if there any unexpected keys
-  for (const key of Object.keys(props)) {
+  for (const [key, value] of Object.entries(props)) {
     if (key === `fields`) {
-      hasFields = true
+      if (value) {
+        hasFields = true
+      }
     } else if (key !== `order`) {
       return false
     }
@@ -139,12 +141,13 @@ function processGraphQLQuery(query: string | graphql.DocumentNode): {
 export function tranformDocument(ast: graphql.DocumentNode): {
   ast: graphql.DocumentNode
   hasChanged: boolean
+  error?: Error
 } {
   if (_CFLAGS_.GATSBY_MAJOR === `5`) {
     try {
       return processGraphQLQuery(ast)
-    } catch (e) {
-      return { ast, hasChanged: false }
+    } catch (error) {
+      return { ast, hasChanged: false, error }
     }
   }
   return { ast, hasChanged: false }

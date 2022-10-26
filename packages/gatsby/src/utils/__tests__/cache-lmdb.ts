@@ -1,14 +1,10 @@
-import * as path from "path"
-import fs from "fs-extra"
-import { describeWhenLMDB } from "../worker/__tests__/test-helpers"
-
 const complexObject = {
   key: `value`,
   another_key: 2,
   nested: { hello: `world`, foo: `bar`, nested: { super: `duper` } },
 }
 
-describeWhenLMDB(`cache-lmdb`, () => {
+describe(`cache-lmdb`, () => {
   let cache
 
   beforeAll(async () => {

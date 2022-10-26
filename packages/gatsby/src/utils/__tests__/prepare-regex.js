@@ -38,15 +38,14 @@ describe(`Prepare regex for filtering`, () => {
       },
     })
     const schema = new GraphQLSchema({ query: QueryType })
-    /* prettier-ignore */
-    const results = await graphql(
+    const results = await graphql({
       schema,
-      `
+      source: `
         {
           regex(regex: "/\\\\w+/")
         }
-      `
-    )
+      `,
+    })
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual({ regex: `/\\w+/` })
 
