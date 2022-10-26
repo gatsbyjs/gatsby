@@ -17,8 +17,8 @@
   "scripts": {
     "build": "npm-run-all --npm-path npm -s build:cjs build:esm",
     "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"use client\"",
-    "build:cjs": "microbundle -f cjs --jsx React.createElement --generateTypes false  -i src/index-cjs.js -o dist/index.js",
-    "build:esm": "microbundle -f modern --jsx React.createElement --generateTypes false -o dist/index.mjs",
+    "build:cjs": "microbundle -f cjs --jsx React.createElement --generateTypes false  -i src/index.js -o dist/index.js",
+    "build:esm": "microbundle -f modern --jsx React.createElement --generateTypes false -i src/index.js -o dist/index.mjs",
     "watch": "npm-run-all --npm-path npm -p watch:cjs watch:esm",
     "watch:cjs": "npm run build:cjs watch --no-compress",
     "watch:esm": "npm run build:esm watch --no-compress",
