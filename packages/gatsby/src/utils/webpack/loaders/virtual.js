@@ -1,3 +1,5 @@
+const Template = require(`webpack/lib/Template`)
+
 module.exports = async function virtual(source, sourceMap): string {
   console.log({ options: this.getOptions() })
   const { modules } = this.getOptions()
@@ -6,9 +8,14 @@ module.exports = async function virtual(source, sourceMap): string {
 
   const code = requests
     // Filter out css files on the server
-    .map(
-      request => `import(/* webpackMode: "eager" */ ${JSON.stringify(request)})`
-    )
+    .map(request => {
+      const chunkName = Template.toPath(request)
+      console.log({ chunkName })
+
+      return `import(/* webpackChunkName: "${chunkName}" */ ${JSON.stringify(
+        request
+      )})`
+    })
     .join(`;\n`)
 
   // const buildInfo = getModuleBuildInfo(this._module)
@@ -23,6 +30,8 @@ module.exports = async function virtual(source, sourceMap): string {
   //   type: RSC_MODULE_TYPES.client,
   //   requests: resolvedRequests,
   // }
+
+  console.log({ code })
 
   return code
 }

@@ -51,6 +51,7 @@ export class PartialHydrationPlugin {
   _references: Array<ClientReferenceDependency> = []
   _clientModules = new Set<webpack.NormalModule>()
   _previousManifest = {}
+  _handledClientSSRLoader = ``
 
   constructor(manifestPath: string, reporter: typeof Reporter) {
     this._manifestPath = manifestPath
@@ -123,6 +124,7 @@ export class PartialHydrationPlugin {
       }
     }
 
+    debugger
     const toRecord: Map<
       webpack.Module,
       Map<
@@ -134,54 +136,67 @@ export class PartialHydrationPlugin {
       >
     > = new Map()
 
+    function stuff(module) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const childMap = new Map()
+      toRecord.set(module, childMap)
+
+      for (const exportInfo of moduleGraph.getExportsInfo(module).exports) {
+        if (exportInfo.isReexport()) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const targetInfo = exportInfo.getTarget(moduleGraph)!
+          if (!childMap.has(targetInfo.module)) {
+            childMap.set(targetInfo.module, [])
+          }
+
+          childMap.get(targetInfo.module)?.push({
+            originalExport: exportInfo.name,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            resolvedExport: targetInfo.export![0],
+          })
+        } else {
+          if (!childMap.has(module)) {
+            childMap.set(module, [])
+          }
+
+          childMap.get(module)?.push({
+            originalExport: exportInfo.name,
+            resolvedExport: exportInfo.name,
+          })
+        }
+      }
+    }
+
     for (const clientModule of this._clientModules) {
-      for (const connection of moduleGraph.getIncomingConnections(
-        clientModule
-      )) {
+      stuff(clientModule)
+
+      const incomingConnections =
+        moduleGraph.getIncomingConnections(clientModule)
+
+      for (const connection of incomingConnections) {
         if (connection.dependency) {
           if (toRecord.has(connection.module)) {
             continue
           }
 
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const childMap = new Map()
-          toRecord.set(connection.module, childMap)
-
-          for (const exportInfo of moduleGraph.getExportsInfo(connection.module)
-            .exports) {
-            if (exportInfo.isReexport()) {
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              const targetInfo = exportInfo.getTarget(moduleGraph)!
-              if (!childMap.has(targetInfo.module)) {
-                childMap.set(targetInfo.module, [])
-              }
-
-              childMap.get(targetInfo.module)?.push({
-                originalExport: exportInfo.name,
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                resolvedExport: targetInfo.export![0],
-              })
-            } else {
-              if (!childMap.has(connection.module)) {
-                childMap.set(connection.module, [])
-              }
-
-              childMap.get(connection.module)?.push({
-                originalExport: exportInfo.name,
-                resolvedExport: exportInfo.name,
-              })
-            }
-          }
+          stuff(connection.module)
         }
       }
     }
 
+    console.log({ toRecord })
+
     for (const [originalModule, resolvedMap] of toRecord) {
       for (const [resolvedModule, exports] of resolvedMap) {
         const chunkIds: Set<string> = new Set()
-        for (const chunk of chunkGraph.getModuleChunksIterable(
-          resolvedModule
-        )) {
+
+        if (originalModule?.request?.includes(`demo`)) {
+          debugger
+        }
+
+        const chunks = chunkGraph.getModuleChunksIterable(resolvedModule)
+
+        for (const chunk of chunks) {
           if (chunk.id) {
             chunkIds.add(chunk.id as string)
           }
@@ -198,9 +213,11 @@ export class PartialHydrationPlugin {
   }
 
   async addClientModuleEntries(
+    // @ts-ignore
     compiler: Compiler,
     compilation: Compilation
   ): Promise<void> {
+    // @ts-ignore
     const loaderOptions = {
       modules: this._clientModules,
     }
@@ -208,18 +225,28 @@ export class PartialHydrationPlugin {
     const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/virtual?modules=${Array.from(
       this._clientModules
     )
-      .map(module => module.rawRequest)
+      .map(module => {
+        console.log({ module })
+        return module.userRequest
+      })
       .join(`,`)}!`
     console.log(clientSSRLoader)
+
+    // if (clientSSRLoader !== this._handledClientSSRLoader) {
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(
       clientSSRLoader,
       {
         name: `app`,
       }
     )
-    await this.addEntry(compilation, ``, clientComponentEntryDep, {
+    const test = await this.addEntry(compilation, ``, clientComponentEntryDep, {
       name: `app`,
     })
+    console.log(`after`, clientSSRLoader)
+    // if (test) {
+    //   this._handledClientSSRLoader = clientSSRLoader
+    // }
+    // }
   }
 
   addEntry(
@@ -231,24 +258,48 @@ export class PartialHydrationPlugin {
     } /* EntryOptions */
   ): Promise<any> /* Promise<module> */ {
     return new Promise((resolve, reject) => {
-      console.log(`???`, { entry })
-      // compilation.entries.get(options.name).includeDependencies.push(entry)
-      compilation.hooks.addEntry.call(entry, options)
-      compilation.addModuleTree(
-        {
-          context,
-          dependency: entry,
-        },
-        (err: Error | undefined, module: any) => {
-          if (err) {
-            compilation.hooks.failedEntry.call(entry, options, err)
-            return reject(err)
-          }
+      // @ts-ignore
+      try {
+        const oldEntry = compilation.entries.get(options.name)
 
-          compilation.hooks.succeedEntry.call(entry, options, module)
-          return resolve(module)
+        console.log(`???`, {
+          entry,
+          options,
+          entries: compilation.entries,
+          cname: compilation.name,
+        })
+
+        if (!oldEntry) {
+          return resolve(null)
         }
-      )
+        const includeDependencies = oldEntry.includeDependencies
+
+        console.log({ includeDependencies })
+        // if (!includeDependencies.has(e))
+        // @ts-ignore
+        oldEntry.includeDependencies.push(entry)
+        compilation.hooks.addEntry.call(entry, options)
+        compilation.addModuleTree(
+          {
+            context,
+            dependency: entry,
+          },
+          // @ts-ignore
+          (err: Error | undefined, module: any) => {
+            console.log(`addModuleTree callback`, { err, module })
+            if (err) {
+              compilation.hooks.failedEntry.call(entry, options, err)
+              return reject(err)
+            }
+
+            compilation.hooks.succeedEntry.call(entry, options, module)
+            return resolve(module)
+          }
+        )
+      } catch (e) {
+        console.log({ e })
+        reject(e)
+      }
     })
   }
 
@@ -274,9 +325,9 @@ export class PartialHydrationPlugin {
       }
     })
 
-    compiler.hooks.finishMake.tapPromise(this.name, compilation => {
+    compiler.hooks.finishMake.tapPromise(this.name, async compilation => {
       console.log(`==== finish make ===`)
-      this.addClientModuleEntries(compiler, compilation)
+      await this.addClientModuleEntries(compiler, compilation)
       return Promise.resolve()
     })
 
@@ -415,41 +466,41 @@ export class PartialHydrationPlugin {
           .for(`javascript/dynamic`)
           .tap(this.name, handler)
 
-        // compilation.hooks.processAssets.tap(
-        //   {
-        //     name: this.name,
-        //     stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
-        //   },
-        //   () => {
-        //     const manifest = this._generateManifest(
-        //       compilation.chunkGroups,
-        //       compilation.moduleGraph,
-        //       compilation.chunkGraph,
-        //       compilation.options.context as string
-        //     )
+        compilation.hooks.processAssets.tap(
+          {
+            name: this.name,
+            stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
+          },
+          () => {
+            const manifest = this._generateManifest(
+              compilation.chunkGroups,
+              compilation.moduleGraph,
+              compilation.chunkGraph,
+              compilation.options.context as string
+            )
 
-        //     /**
-        //      * `emitAsset` is unclear about what the path should be relative to and absolute paths don't work. This works so we'll go with that.
-        //      * @see {@link https://webpack.js.org/api/compilation-object/#emitasset}
-        //      */
-        //     const emitManifestPath = `..${this._manifestPath.replace(
-        //       compiler.context,
-        //       ``
-        //     )}`
+            /**
+             * `emitAsset` is unclear about what the path should be relative to and absolute paths don't work. This works so we'll go with that.
+             * @see {@link https://webpack.js.org/api/compilation-object/#emitasset}
+             */
+            const emitManifestPath = `..${this._manifestPath.replace(
+              compiler.context,
+              ``
+            )}`
 
-        //     compilation.emitAsset(
-        //       emitManifestPath,
-        //       new webpack.sources.RawSource(
-        //         JSON.stringify(
-        //           { ...this._previousManifest, ...manifest },
-        //           null,
-        //           2
-        //         ),
-        //         false
-        //       )
-        //     )
-        //   }
-        // )
+            compilation.emitAsset(
+              emitManifestPath,
+              new webpack.sources.RawSource(
+                JSON.stringify(
+                  { ...this._previousManifest, ...manifest },
+                  null,
+                  2
+                ),
+                false
+              )
+            )
+          }
+        )
       }
     )
   }

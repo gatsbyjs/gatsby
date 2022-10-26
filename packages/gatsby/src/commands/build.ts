@@ -171,6 +171,7 @@ module.exports = async function build(
       program,
       buildActivityTimer.span
     )
+    fs.writeFileSync(`moar-stats.json`, JSON.stringify(stats.toJson()))
     closeJavascriptBundleCompilation = close
 
     if (stats.hasWarnings()) {
