@@ -677,7 +677,15 @@ module.exports = async (
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
-          test: module => !isCssModule(module),
+          test(module, { chunkGraph }) {
+            for (const chunk of chunkGraph.getModuleChunksIterable(module)) {
+              if (chunk.canBeInitial()) {
+                return false
+              }
+            }
+
+            return !isCssModule(module)
+          },
           name(module, chunks) {
             const hash = crypto
               .createHash(`sha1`)
