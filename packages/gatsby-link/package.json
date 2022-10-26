@@ -15,7 +15,8 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "microbundle -f cjs,modern --jsx React.createElement --generateTypes false",
+    "build": "microbundle -i src/index.js -f cjs,modern --jsx React.createElement --generateTypes false",
+    "postbuild": "prepend-directive --files=dist/index.js,dist/index.modern.mjs --directive=\"use client\"",
     "watch": "npm run build watch --no-compress",
     "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
     "clean": "del-cli dist/*"
