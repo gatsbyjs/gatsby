@@ -67,7 +67,8 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     <script
       key="gatsby-image-style-script"
       type="module"
-      dangerouslySetInnerHTML={generateHtml(terserMacro`
+      dangerouslySetInnerHTML={{
+        __html: `
   const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
   if (hasNativeLazyLoadSupport) {
     document.body.addEventListener('load', function gatsbyImageNativeLoader(e) {
@@ -109,7 +110,8 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
         })
     }, true)
   }
-    `)}
+    `,
+      }}
     />,
   ])
 }
