@@ -192,7 +192,7 @@ module.exports = async (
         return hasES6ModuleSupport(directory)
           ? {
               app: directoryPath(`.cache/production-app`),
-              rsc: directoryPath(`.cache/rsc`),
+              // rsc: directoryPath(`.cache/rsc`),
             }
           : {
               polyfill: directoryPath(`.cache/polyfill-entry`),
@@ -632,77 +632,90 @@ module.exports = async (
       cacheGroups: {
         default: false,
         defaultVendors: false,
-        // framework: {
-        //   chunks: `all`,
-        //   name: `framework`,
-        //   // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
-        //   test: new RegExp(
-        //     `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-        //       `|`
-        //     )})[\\\\/]`
-        //   ),
-        //   priority: 40,
-        //   // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
-        //   enforce: true,
-        // },
-        // // if a module is bigger than 160kb from node_modules we make a separate chunk for it
-        // lib: {
-        //   test(module) {
-        //     return (
-        //       !isCssModule(module) &&
-        //       module.size() > 160000 &&
-        //       /node_modules[/\\]/.test(module.identifier())
-        //     )
-        //   },
-        //   name(module) {
-        //     const hash = crypto.createHash(`sha1`)
-        //     if (!module.libIdent) {
-        //       throw new Error(
-        //         `Encountered unknown module type: ${module.type}. Please open an issue.`
-        //       )
-        //     }
+        framework: {
+          chunks: `all`,
+          name: `framework`,
+          // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
+          test: new RegExp(
+            `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
+              `|`
+            )})[\\\\/]`
+          ),
+          priority: 40,
+          // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
+          enforce: true,
+        },
+        // if a module is bigger than 160kb from node_modules we make a separate chunk for it
+        lib: {
+          test(module) {
+            return (
+              !isCssModule(module) &&
+              module.size() > 160000 &&
+              /node_modules[/\\]/.test(module.identifier())
+            )
+          },
+          name(module) {
+            const hash = crypto.createHash(`sha1`)
+            if (!module.libIdent) {
+              throw new Error(
+                `Encountered unknown module type: ${module.type}. Please open an issue.`
+              )
+            }
 
-        //     hash.update(module.libIdent({ context: program.directory }))
+            hash.update(module.libIdent({ context: program.directory }))
 
-        //     return hash.digest(`hex`).substring(0, 8)
-        //   },
-        //   priority: 30,
-        //   minChunks: 1,
-        //   reuseExistingChunk: true,
-        // },
-        // commons: {
-        //   name: `commons`,
-        //   // if a chunk is used on all components we put it in commons (we need at least 2 components)
-        //   minChunks: Math.max(componentsCount, 2),
-        //   priority: 20,
-        // },
-        // // If a chunk is used in at least 2 components we create a separate chunk
-        // shared: {
-        //   test: module => !isCssModule(module),
-        //   name(module, chunks) {
-        //     const hash = crypto
-        //       .createHash(`sha1`)
-        //       .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
-        //       .digest(`hex`)
+            return hash.digest(`hex`).substring(0, 8)
+          },
+          priority: 30,
+          minChunks: 1,
+          reuseExistingChunk: true,
+        },
+        commons: {
+          name: `commons`,
+          // if a chunk is used on all components we put it in commons (we need at least 2 components)
+          minChunks: Math.max(componentsCount, 2),
+          priority: 20,
+        },
+        // If a chunk is used in at least 2 components we create a separate chunk
+        shared: {
+          test(module, ...rest) {
+            // if (!global.logged) {
+            //   console.log({ module, rest, that: this })
+            //   global.logged = true
+            // }
 
-        //     return hash
-        //   },
-        //   priority: 10,
-        //   minChunks: 2,
-        //   reuseExistingChunk: true,
-        // },
+            for (const chunk of module.chunksIterable) {
+              if (chunk.canBeInitial()) {
+                return false
+              }
+            }
 
-        // // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
-        // // TODO make an exception for css-modules
-        // styles: {
-        //   test(module) {
-        //     return isCssModule(module)
-        //   },
+            return !isCssModule(module)
+          },
+          name(module, chunks) {
+            const hash = crypto
+              .createHash(`sha1`)
+              .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
+              .digest(`hex`)
 
-        //   name: `styles`,
-        //   priority: 40,
-        //   enforce: true,
-        // },
+            return hash
+          },
+          priority: 10,
+          minChunks: 2,
+          reuseExistingChunk: true,
+        },
+
+        // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
+        // TODO make an exception for css-modules
+        styles: {
+          test(module) {
+            return isCssModule(module)
+          },
+
+          name: `styles`,
+          priority: 40,
+          enforce: true,
+        },
       },
       // We load our pages async through async-requires, maxInitialRequests doesn't have an effect on chunks derived from page components.
       // By default webpack has set maxAsyncRequests to 6, in some cases this isn't enough an actually makes the bundle size blow up.

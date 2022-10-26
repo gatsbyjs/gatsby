@@ -12,7 +12,10 @@ import webpack, {
   Compilation,
   Compiler,
 } from "webpack"
+import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
 import type Reporter from "gatsby-cli/lib/reporter"
+import { store } from "../../../redux"
+import { getRealPath } from "./static-query-mapper"
 
 interface IModuleExport {
   id: string
@@ -91,6 +94,7 @@ export class PartialHydrationPlugin {
     const chunkGraph = compilation.chunkGraph
 
     const json: Record<string, Record<string, IModuleExport>> = {}
+    const mapOriginalModuleToPotentiallyConcatanetedModule = new Map()
     // @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L220-L252
     const recordModule = (
       id: string,
@@ -111,23 +115,27 @@ export class PartialHydrationPlugin {
 
       if (normalModule.modules) {
         normalModule.modules.forEach(mod => {
+          if (this._clientModules.has(mod)) {
+            const normalizedModuleKey = createNormalizedModuleKey(
+              mod.resource,
+              rootContext
+            )
+
+            if (normalizedModuleKey !== undefined) {
+              json[normalizedModuleKey] = moduleExports
+            }
+          }
+        })
+      } else {
+        if (this._clientModules.has(normalModule)) {
           const normalizedModuleKey = createNormalizedModuleKey(
-            mod.resource,
+            normalModule.resource,
             rootContext
           )
 
           if (normalizedModuleKey !== undefined) {
             json[normalizedModuleKey] = moduleExports
           }
-        })
-      } else {
-        const normalizedModuleKey = createNormalizedModuleKey(
-          normalModule.resource,
-          rootContext
-        )
-
-        if (normalizedModuleKey !== undefined) {
-          json[normalizedModuleKey] = moduleExports
         }
       }
     }
@@ -143,7 +151,7 @@ export class PartialHydrationPlugin {
       >
     > = new Map()
 
-    function stuff(module) {
+    function stuff(module): any {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const childMap = new Map()
       toRecord.set(module, childMap)
@@ -183,12 +191,17 @@ export class PartialHydrationPlugin {
         ) as Iterable<webpack.NormalModule>
         for (const mod of chunkModules) {
           if (mod.buildInfo.rsc) {
+            mapOriginalModuleToPotentiallyConcatanetedModule.set(mod, mod)
             newClientModules.add(mod)
           }
 
           if (mod.modules) {
             for (const subMod of mod.modules) {
               if (subMod.buildInfo.rsc) {
+                mapOriginalModuleToPotentiallyConcatanetedModule.set(
+                  subMod,
+                  mod
+                )
                 newClientModules.add(mod)
               }
             }
@@ -215,7 +228,7 @@ export class PartialHydrationPlugin {
     }
 
     console.log({ toRecord })
-    debugger
+    // debugger
 
     for (const [originalModule, resolvedMap] of toRecord) {
       for (const [resolvedModule, exports] of resolvedMap) {
@@ -252,21 +265,22 @@ export class PartialHydrationPlugin {
     const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/virtual?modules=${Array.from(
       this._clientModules
     )
-      .map(module => {
-        console.log({ module })
-        return module.userRequest
-      })
+      .map(
+        module =>
+          // console.log({ module })
+          module.userRequest
+      )
       .join(`,`)}!`
 
     // if (clientSSRLoader !== this._handledClientSSRLoader) {
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(
       clientSSRLoader,
       {
-        name: `rsc`,
+        name: `app`,
       }
     )
     await this.addEntry(compilation, ``, clientComponentEntryDep, {
-      name: `rsc`,
+      name: `app`,
     })
   }
 
@@ -283,19 +297,20 @@ export class PartialHydrationPlugin {
       try {
         const oldEntry = compilation.entries.get(options.name)
 
-        console.log(`???`, {
-          entry,
-          options,
-          entries: compilation.entries,
-          cname: compilation.name,
-        })
+        // console.log(`???`, {
+        //   entry,
+        //   options,
+        //   entries: compilation.entries,
+        //   cname: compilation.name,
+        // })
 
         if (!oldEntry) {
-          return resolve(null)
+          resolve(null)
+          return
         }
-        const includeDependencies = oldEntry.includeDependencies
+        // const includeDependencies = oldEntry.includeDependencies
 
-        console.log({ includeDependencies })
+        // console.log({ includeDependencies })
         // if (!includeDependencies.has(e))
         // @ts-ignore
         oldEntry.includeDependencies.push(entry)
@@ -307,7 +322,7 @@ export class PartialHydrationPlugin {
           },
           // @ts-ignore
           (err: Error | undefined, module: any) => {
-            console.log(`addModuleTree callback`, { err, module })
+            // console.log(`addModuleTree callback`, { err, module })
             if (err) {
               compilation.hooks.failedEntry.call(entry, options, err)
               return reject(err)
@@ -347,9 +362,11 @@ export class PartialHydrationPlugin {
     })
 
     compiler.hooks.finishMake.tapPromise(this.name, async compilation => {
+      if (compilation.compiler.parentCompilation) {
+        return
+      }
       console.log(`==== finish make ===`)
       await this.addClientModuleEntries(compiler, compilation)
-      return Promise.resolve()
     })
 
     compiler.hooks.thisCompilation.tap(
@@ -405,6 +422,71 @@ export class PartialHydrationPlugin {
             // }
           })
         }
+
+        compilation.hooks.optimizeChunks.tap(this.name, () => {
+          const { components } = store.getState()
+          const realPathCache = new Map<string, string>()
+
+          compilation.modules.forEach(webpackModule => {
+            if (webpackModule.buildInfo.rsc) {
+              return
+            }
+
+            for (const [id, component] of components) {
+              const componentComponentPath = getRealPath(
+                realPathCache,
+                component.componentPath
+              )
+
+              if (!(webpackModule instanceof ConcatenatedModule)) {
+                if (
+                  !(
+                    (webpackModule as NormalModule).resource ===
+                    componentComponentPath + `?export=default`
+                  )
+                ) {
+                  continue
+                }
+              } else {
+                // ConcatenatedModule is a collection of modules so we have to go deeper to actually get it
+                if (
+                  !webpackModule.modules.some(
+                    innerModule =>
+                      (innerModule as NormalModule).resource ===
+                      componentComponentPath + `?export=default`
+                  )
+                ) {
+                  continue
+                }
+              }
+
+              const connections =
+                compilation.moduleGraph.getIncomingConnections(webpackModule)
+              for (const connection of connections) {
+                if (connection.dependency) {
+                  compilation.moduleGraph.removeConnection(
+                    connection.dependency
+                  )
+                }
+              }
+
+              const chunks = webpackModule.chunksIterable
+              for (const chunk of chunks) {
+                console.log(`discconect`, {
+                  name: chunk.name,
+                  canBeInitial: chunk.canBeInitial(),
+                  isOnlyInitial: chunk.isOnlyInitial(),
+                })
+
+                compilation.chunkGraph.disconnectChunk(chunk)
+                compilation.chunks.delete(chunk)
+                chunk.disconnectFromGroups()
+              }
+
+              compilation.modules.delete(webpackModule)
+            }
+          })
+        })
 
         // compilation.hooks.optimizeChunks.tap(
         //   this.name,
