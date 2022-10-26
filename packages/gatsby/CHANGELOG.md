@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.5/packages/gatsby) (2022-10-25)
+
+#### Bug Fixes
+
+- track multiple root nodes and not just one [#36867](https://github.com/gatsbyjs/gatsby/issues/36867) [#36879](https://github.com/gatsbyjs/gatsby/issues/36879) ([c9d97f9](https://github.com/gatsbyjs/gatsby/commit/c9d97f96fe8e40760185b46e699dd702d2141505))
+
 ### [4.24.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.4/packages/gatsby) (2022-10-10)
 
 **Note:** Version bump only for package gatsby
