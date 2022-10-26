@@ -56,7 +56,7 @@ const resolveGatsbyImageData = async (image, options) => {
     pluginName: `gatsby-source-example`,
     sourceMetadata,
     filename,
-    placeholderURL
+    placeholderURL,
     generateImageSource,
     options,
   }

@@ -30,13 +30,11 @@ There are three APIs that can modify Gatsby's GraphQL schema: [`createTypes`](/d
 exports.sourceNodes = ({ actions }) => { // highlight-line
   const { createTypes } = actions;
 
-  createTypes({
-    `
-      type AuthorJson implements Node {
-        joinedAt: Date
-      }
-    `
-  })
+  createTypes(`
+    type AuthorJson implements Node {
+      joinedAt: Date
+    }
+  `)
 }
 ```
 
@@ -48,13 +46,11 @@ exports.sourceNodes = ({ actions }) => { // highlight-line
 exports.createSchemaCustomization = ({ actions }) => { // highlight-line
   const { createTypes } = actions;
 
-  createTypes({
-    `
-      type AuthorJson implements Node {
-        joinedAt: Date
-      }
-    `
-  })
+  createTypes(`
+    type AuthorJson implements Node {
+      joinedAt: Date
+    }
+  `)
 }
 ```
 
@@ -104,13 +100,11 @@ The type is created in `createSchemaCustomization` and then referenced inside `s
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
 
-  createTypes({
-    `
-      type CustomImage implements Node {
-        localImage: File!
-      }
-    `
-  })
+  createTypes(`
+    type CustomImage implements Node {
+      localImage: File @link
+    }
+  `)
 }
 
 exports.sourceNodes = async ({ // highlight-line
@@ -295,6 +289,49 @@ if (coreSupportsOnPluginInit === "stable") {
   exports.unstable_onPluginInit = initializePlugin // highlight-line
 } else {
   exports.onPreInit = initializePlugin // highlight-line
+}
+```
+
+## 5. Bundling External Files
+
+In order for DSG & SSR to work Gatsby creates bundles with all the contents of the site, plugins, and data. When a plugin (or your own `gatsby-node.js`) requires an external file via `fs` module (e.g. `fs.readFile`) the engine won't be able to include the file. As a result you might see an error (when trying to run DSG) like `ENOENT: no such file or directory` in the CLI.
+
+This limitation applies to these lifecycle APIs: `setFieldsOnGraphQLNodeType`, `createSchemaCustomization`, and `createResolvers`.
+
+Instead you should move the contents to a JS/TS file and import the file as this way the bundler will be able to include the contents.
+
+### The Old Way
+
+Previously you might have required a `.gql` file to use it in one of Gatsby's APIs with the `fs` module:
+
+```javascript:title=gatsby-node.js
+const fs = require("fs")
+const path = require("path")
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = fs.readFileSync(
+    // .gql file with the SDL
+    path.resolve(__dirname, "schema.gql"),
+    "utf8"
+  )
+
+  createTypes(typeDefs)
+}
+```
+
+### The New Way
+
+You can either move the definitions to a JS/TS file or inline it in `createTypes` directly.
+
+```javascript:title=gatsby-node.js
+// JS file containing the SDL strings now
+const typeDefs = require("./schema")
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(typeDefs)
 }
 ```
 

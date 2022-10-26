@@ -1,188 +1,211 @@
-import got, { Headers, Options } from "got"
 import fileType from "file-type"
 import path from "path"
 import fs from "fs-extra"
+import Queue from "fastq"
 import { createContentDigest } from "./create-content-digest"
 import {
   getRemoteFileName,
   getRemoteFileExtension,
   createFilePath,
 } from "./filename-utils"
+import { slash } from "./path"
+import { requestRemoteNode } from "./remote-file-utils/fetch-file"
+import { getStorage, getDatabaseDir } from "./utils/get-storage"
+import { createMutex } from "./mutex"
+import type { Options } from "got"
+import type { IFetchRemoteFileOptions } from "./remote-file-utils/fetch-file"
 
-import type { IncomingMessage } from "http"
-import type { GatsbyCache } from "gatsby"
-
-export interface IFetchRemoteFileOptions {
-  url: string
-  cache: GatsbyCache
-  auth?: {
-    htaccess_pass?: string
-    htaccess_user?: string
-  }
-  httpHeaders?: Headers
-  ext?: string
-  name?: string
+interface ITask {
+  args: IFetchRemoteFileOptions
 }
 
-// copied from gatsby-worker
-const IS_WORKER = !!(process.send && process.env.GATSBY_WORKER_MODULE_PATH)
-const WORKER_ID = process.env.GATSBY_WORKER_ID
+const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
+  ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
+  : 50
 
-const cacheIdForWorkers = (url: string): string => `remote-file-workers-${url}`
-const cacheIdForHeaders = (url: string): string => `remote-file-headers-${url}`
-const cacheIdForExtensions = (url: string): string =>
-  `remote-file-extension-${url}`
+const alreadyCopiedFiles = new Set<string>()
 
-const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT
-  ? parseInt(process.env.GATSBY_STALL_RETRY_LIMIT, 10)
-  : 3
-const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT
-  ? parseInt(process.env.GATSBY_STALL_TIMEOUT, 10)
-  : 30000
+export type { IFetchRemoteFileOptions }
 
-const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT
-  ? parseInt(process.env.GATSBY_CONNECTION_TIMEOUT, 10)
-  : 30000
-
-const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
-  ? parseInt(process.env.GATSBY_INCOMPLETE_RETRY_LIMIT, 10)
-  : 3
-
-let fetchCache = new Map()
-let latestBuildId = ``
-
+/**
+ * Downloads a remote file to disk
+ */
 export async function fetchRemoteFile(
   args: IFetchRemoteFileOptions
 ): Promise<string> {
-  const BUILD_ID = global.__GATSBY?.buildId ?? ``
-  if (BUILD_ID !== latestBuildId) {
-    latestBuildId = BUILD_ID
-    fetchCache = new Map()
+  // when cachekey is present we can do more persistance
+  if (args.cacheKey) {
+    const storage = getStorage(getDatabaseDir())
+    const info = storage.remoteFileInfo.get(args.url)
+
+    const fileDirectory = (
+      args.cache ? args.cache.directory : args.directory
+    ) as string
+
+    if (info?.cacheKey === args.cacheKey && fileDirectory) {
+      const cachedPath = path.join(info.directory, info.path)
+      const downloadPath = path.join(fileDirectory, info.path)
+
+      if (await fs.pathExists(cachedPath)) {
+        // If the cached directory is not part of the public directory, we don't need to copy it
+        // as it won't be part of the build.
+        if (isPublicPath(downloadPath) && cachedPath !== downloadPath) {
+          return copyCachedPathToDownloadPath({ cachedPath, downloadPath })
+        }
+
+        return cachedPath
+      }
+    }
   }
 
-  // If we are already fetching the file, return the unresolved promise
-  const inFlight = fetchCache.get(args.url)
-  if (inFlight) {
-    return inFlight
+  return pushTask({ args })
+}
+
+function isPublicPath(downloadPath: string): boolean {
+  return downloadPath.startsWith(
+    path.join(global.__GATSBY?.root ?? process.cwd(), `public`)
+  )
+}
+
+async function copyCachedPathToDownloadPath({
+  cachedPath,
+  downloadPath,
+}: {
+  cachedPath: string
+  downloadPath: string
+}): Promise<string> {
+  // Create a mutex to do our copy - we could do a md5 hash check as well but that's also expensive
+  if (!alreadyCopiedFiles.has(downloadPath)) {
+    const copyFileMutex = createMutex(
+      `gatsby-core-utils:copy-fetch:${downloadPath}`,
+      200
+    )
+    await copyFileMutex.acquire()
+    if (!alreadyCopiedFiles.has(downloadPath)) {
+      await fs.copy(cachedPath, downloadPath, {
+        overwrite: true,
+      })
+    }
+
+    alreadyCopiedFiles.add(downloadPath)
+    await copyFileMutex.release()
   }
 
-  // Create file fetch promise and store it into cache
-  const fetchPromise = fetchFile(args)
-  fetchCache.set(args.url, fetchPromise)
+  return downloadPath
+}
 
-  return fetchPromise.catch(err => {
-    fetchCache.delete(args.url)
+const queue = Queue<null, ITask, string>(
+  /**
+   * fetchWorker
+   * --
+   * Handle fetch requests that are pushed in to the Queue
+   */
+  async function fetchWorker(task, cb): Promise<void> {
+    try {
+      return void cb(null, await fetchFile(task.args))
+    } catch (e) {
+      return void cb(e)
+    }
+  },
+  GATSBY_CONCURRENT_DOWNLOAD
+)
 
-    throw err
+/**
+ * pushTask
+ * --
+ * pushes a task in to the Queue and the processing cache
+ *
+ * Promisfy a task in queue
+ * @param {CreateRemoteFileNodePayload} task
+ * @return {Promise<Buffer | string>}
+ */
+async function pushTask(task: ITask): Promise<string> {
+  return new Promise((resolve, reject) => {
+    queue.push(task, (err, node) => {
+      if (!err) {
+        resolve(node as string)
+      } else {
+        reject(err)
+      }
+    })
   })
 }
 
-function pollUntilComplete(
-  cache: GatsbyCache,
-  url: string,
-  buildId: string,
-  cb: (err?: Error, result?: string) => void
-): void {
-  if (!IS_WORKER) {
-    // We are not in a worker, so we shouldn't use the cache
-    return void cb()
-  }
-
-  cache.get(cacheIdForWorkers(url)).then(entry => {
-    if (!entry || entry.buildId !== buildId) {
-      return void cb()
-    }
-
-    if (entry.status === `complete`) {
-      cb(undefined, entry.result)
-    } else if (entry.status === `failed`) {
-      cb(new Error(entry.result))
-    } else {
-      setTimeout(() => {
-        pollUntilComplete(cache, url, buildId, cb)
-        // Magic number
-      }, 500)
-    }
-
-    return undefined
-  })
-
-  return undefined
-}
-
-// TODO Add proper mutex instead of file cache hacks
 async function fetchFile({
   url,
   cache,
+  directory,
   auth = {},
   httpHeaders = {},
   ext,
   name,
+  cacheKey,
+  excludeDigest,
 }: IFetchRemoteFileOptions): Promise<string> {
   // global introduced in gatsby 4.0.0
   const BUILD_ID = global.__GATSBY?.buildId ?? ``
-  const pluginCacheDir = cache.directory
+  const fileDirectory = (cache ? cache.directory : directory) as string
+  const storage = getStorage(getDatabaseDir())
 
-  // when a cache entry is present we wait until it completes
-  const result = await new Promise<string | undefined>((resolve, reject) => {
-    pollUntilComplete(cache, url, BUILD_ID, (err, result) => {
-      if (err) {
-        return reject(err)
-      }
-
-      return resolve(result)
-    })
-  })
-
-  if (result) {
-    return result
+  if (!cache && !directory) {
+    throw new Error(`You must specify either a cache or a directory`)
   }
 
-  if (IS_WORKER) {
-    await cache.set(cacheIdForWorkers(url), {
-      status: `pending`,
-      result: null,
-      workerId: WORKER_ID,
-      buildId: BUILD_ID,
-    })
-  }
-
-  // See if there's response headers for this url
-  // from a previous request.
-  const cachedHeaders = await cache.get(cacheIdForHeaders(url))
-
-  const headers = { ...httpHeaders }
-  if (cachedHeaders && cachedHeaders.etag) {
-    headers[`If-None-Match`] = cachedHeaders.etag
-  }
-
-  // Add htaccess authentication if passed in. This isn't particularly
-  // extensible. We should define a proper API that we validate.
-  const httpOptions: Options = {}
-  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    httpOptions.username = auth.htaccess_user
-    httpOptions.password = auth.htaccess_pass
-  }
-
-  // Create the temp and permanent file names for the url.
-  let digest = createContentDigest(url)
-
-  // if worker id is present - we also append the worker id until we have a proper mutex
-  if (IS_WORKER) {
-    digest += `-${WORKER_ID}`
-  }
-
-  if (!name) {
-    name = getRemoteFileName(url)
-  }
-  if (!ext) {
-    ext = getRemoteFileExtension(url)
-  }
-
-  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
+  const fetchFileMutex = createMutex(`gatsby-core-utils:fetch:${url}`)
+  await fetchFileMutex.acquire()
 
   // Fetch the file.
   try {
+    const digest = createContentDigest(url)
+    const finalDirectory = excludeDigest
+      ? path.resolve(fileDirectory)
+      : path.join(fileDirectory, digest)
+
+    if (!name) {
+      name = getRemoteFileName(url)
+    }
+
+    if (!ext) {
+      ext = getRemoteFileExtension(url)
+    }
+
+    const cachedEntry = await storage.remoteFileInfo.get(url)
+
+    const inFlightValue = getInFlightObject(url, BUILD_ID)
+    if (inFlightValue) {
+      const downloadPath = createFilePath(finalDirectory, name, ext)
+      if (!isPublicPath(finalDirectory) || downloadPath === inFlightValue) {
+        return inFlightValue
+      }
+
+      return await copyCachedPathToDownloadPath({
+        cachedPath: inFlightValue,
+        downloadPath: createFilePath(finalDirectory, name, ext),
+      })
+    }
+
+    // Add htaccess authentication if passed in. This isn't particularly
+    // extensible. We should define a proper API that we validate.
+    const httpOptions: Options = {}
+    if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
+      httpOptions.username = auth.htaccess_user
+      httpOptions.password = auth.htaccess_pass
+    }
+
+    await fs.ensureDir(finalDirectory)
+
+    const tmpFilename = createFilePath(fileDirectory, `tmp-${digest}`, ext)
+    let filename = createFilePath(finalDirectory, name, ext)
+
+    // See if there's response headers for this url
+    // from a previous request.
+    const headers = { ...httpHeaders }
+
+    if (cachedEntry?.headers?.etag && (await fs.pathExists(filename))) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      headers[`If-None-Match`] = cachedEntry.headers.etag
+    }
+
     const response = await requestRemoteNode(
       url,
       headers,
@@ -192,216 +215,67 @@ async function fetchFile({
 
     if (response.statusCode === 200) {
       // Save the response headers for future requests.
-      await cache.set(cacheIdForHeaders(url), response.headers)
-
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
       if (!ext) {
         // if this is fresh response - try to guess extension and cache result for future
         const filetype = await fileType.fromFile(tmpFilename)
         if (filetype) {
           ext = `.${filetype.ext}`
-          await cache.set(cacheIdForExtensions(url), ext)
+
+          filename += ext
         }
       }
-    } else if (response.statusCode === 304) {
-      if (!ext) {
-        ext = await cache.get(cacheIdForExtensions(url))
-      }
-    }
 
-    // Multiple workers have started the fetch and we need another check to only let one complete
-    const cacheEntry = await cache.get(cacheIdForWorkers(url))
-    if (cacheEntry && cacheEntry.workerId !== WORKER_ID) {
-      return new Promise<string>((resolve, reject) => {
-        pollUntilComplete(cache, url, BUILD_ID, (err, result) => {
-          if (err) {
-            return reject(err)
-          }
-
-          return resolve(result as string)
-        })
-      })
-    }
-
-    // If the status code is 200, move the piped temp file to the real name.
-    const filename = createFilePath(
-      path.join(pluginCacheDir, digest),
-      name,
-      ext as string
-    )
-    if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
-      // Else if 304, remove the empty response.
-    } else {
+
+      const slashedDirectory = slash(finalDirectory)
+      await setInFlightObject(url, BUILD_ID, {
+        cacheKey,
+        extension: ext,
+        headers: response.headers.etag ? { etag: response.headers.etag } : {},
+        directory: slashedDirectory,
+        path: slash(filename).replace(`${slashedDirectory}/`, ``),
+      })
+    } else if (response.statusCode === 304) {
       await fs.remove(tmpFilename)
     }
 
-    if (IS_WORKER) {
-      await cache.set(cacheIdForWorkers(url), {
-        status: `complete`,
-        result: filename,
-        workerId: WORKER_ID,
-        buildId: BUILD_ID,
-      })
-    }
-
     return filename
-  } catch (err) {
-    // enable multiple workers to continue when done
-    if (IS_WORKER) {
-      const cacheEntry = await cache.get(cacheIdForWorkers(url))
-
-      if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
-        await cache.set(cacheIdForWorkers(url), {
-          status: `failed`,
-          result: err.toString
-            ? err.toString()
-            : err.message
-            ? err.message
-            : err,
-          workerId: WORKER_ID,
-          buildId: BUILD_ID,
-        })
-      }
-    }
-
-    throw err
+  } finally {
+    await fetchFileMutex.release()
   }
 }
 
-/**
- * requestRemoteNode
- * --
- * Download the requested file
- *
- * @param  {String}   url
- * @param  {Headers}  headers
- * @param  {String}   tmpFilename
- * @param  {Object}   httpOptions
- * @param  {number}   attempt
- * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
- */
-function requestRemoteNode(
-  url: string | URL,
-  headers: Headers,
-  tmpFilename: string,
-  httpOptions?: Options,
-  attempt: number = 1
-): Promise<IncomingMessage> {
-  return new Promise((resolve, reject) => {
-    let timeout: NodeJS.Timeout
-    const fsWriteStream = fs.createWriteStream(tmpFilename)
-    fsWriteStream.on(`error`, (error: unknown) => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
+const inFlightMap = new Map<string, string>()
+function getInFlightObject(key: string, buildId?: string): string | undefined {
+  if (!buildId) {
+    return inFlightMap.get(key)
+  }
 
-      reject(error)
-    })
+  const remoteFile = getStorage(getDatabaseDir()).remoteFileInfo.get(key)
+  // if buildId match we know it's the same build and it already processed this url this build
+  if (remoteFile && remoteFile.buildId === buildId) {
+    return path.join(remoteFile.directory, remoteFile.path)
+  }
 
-    // Called if we stall for 30s without receiving any data
-    const handleTimeout = async (): Promise<void> => {
-      fsWriteStream.close()
-      fs.removeSync(tmpFilename)
+  return undefined
+}
+async function setInFlightObject(
+  key: string,
+  buildId: string,
+  value: { buildId?: string } & Omit<
+    NonNullable<
+      ReturnType<ReturnType<typeof getStorage>["remoteFileInfo"]["get"]>
+    >,
+    "buildId"
+  >
+): Promise<void> {
+  if (!buildId) {
+    inFlightMap.set(key, path.join(value.directory, value.path))
+  }
 
-      if (attempt < STALL_RETRY_LIMIT) {
-        // Retry by calling ourself recursively
-        resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOptions, attempt + 1)
-        )
-      } else {
-        // TODO move to new Error type
-        // eslint-disable-next-line prefer-promise-reject-errors
-        reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
-      }
-    }
-
-    const resetTimeout = (): void => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
-    }
-    const responseStream = got.stream(url, {
-      headers,
-      timeout: {
-        send: CONNECTION_TIMEOUT, // https://github.com/sindresorhus/got#timeout
-      },
-      ...httpOptions,
-      isStream: true,
-    })
-
-    let haveAllBytesBeenWritten = false
-    // Fixes a bug in latest got where progress.total gets reset when stream ends, even if it wasn't complete.
-    let totalSize: number | null = null
-    responseStream.on(`downloadProgress`, progress => {
-      if (
-        progress.total != null &&
-        (!totalSize || totalSize < progress.total)
-      ) {
-        totalSize = progress.total
-      }
-
-      if (progress.transferred === totalSize || totalSize === null) {
-        haveAllBytesBeenWritten = true
-      }
-    })
-
-    responseStream.pipe(fsWriteStream)
-
-    // If there's a 400/500 response or other error.
-    // it will trigger a finish event on fsWriteStream
-    responseStream.on(`error`, error => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-
-      fsWriteStream.close()
-      fs.removeSync(tmpFilename)
-
-      process.nextTick(() => {
-        reject(error)
-      })
-    })
-
-    responseStream.on(`response`, response => {
-      resetTimeout()
-
-      fsWriteStream.once(`finish`, () => {
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-
-        // We have an incomplete download
-        if (!haveAllBytesBeenWritten) {
-          fs.removeSync(tmpFilename)
-
-          if (attempt < INCOMPLETE_RETRY_LIMIT) {
-            // let's give node time to remove the file
-            process.nextTick(() =>
-              resolve(
-                requestRemoteNode(
-                  url,
-                  headers,
-                  tmpFilename,
-                  httpOptions,
-                  attempt + 1
-                )
-              )
-            )
-
-            return undefined
-          } else {
-            // TODO move to new Error type
-            // eslint-disable-next-line prefer-promise-reject-errors
-            return reject(
-              `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
-            )
-          }
-        }
-
-        return resolve(response)
-      })
-    })
+  await getStorage(getDatabaseDir()).remoteFileInfo.put(key, {
+    ...value,
+    buildId,
   })
 }

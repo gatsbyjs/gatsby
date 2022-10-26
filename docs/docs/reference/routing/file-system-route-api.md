@@ -114,7 +114,7 @@ allMarkdownRemark {
 ### Collection Route Components
 
 Collection route components are passed two dynamic variables. The `id` of each page's node and the
-URL path as `param`. The param is passed to the component as `props.params` and the id as `props.pageContext.id`.
+URL path as `params`. The params is passed to the component as `props.params` and the id as `props.pageContext.id`.
 
 Both are also passed as variables to the component's GraphQL query so you can query fields from the node. Page querying, including the use of variables, is explained in more depth in [querying data in pages with GraphQL](/docs/how-to/querying-data/page-query/).
 
@@ -143,11 +143,13 @@ export const query = graphql`
 `
 ```
 
+For the page `src/pages/{Product.name}/{Product.coupon}.js` you'd have `props.params.name` and `props.params.coupon` available inside `{Product.coupon}.js`.
+
 If you need to want to create pages for only some nodes in a collection (e.g. filtering out any product of type `"Food"`) or customize the variables passed to the query, you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
 
 ### Routing and linking
 
-Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
+Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters. You can configure `slugify` by adjusting [`gatsby-plugin-page-creator`](/plugins/gatsby-plugin-page-creator/#options) for your `src/pages` path.
 
 When you want to link to a collection route page, it may not always be clear how to construct the URL from scratch.
 
@@ -212,12 +214,32 @@ You can use square brackets (`[ ]`) in the file path to mark any dynamic segment
 
 #### Splat routes
 
-Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
+Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. Use three periods in square brackets (`[...]`) in a file path to mark a page as a splat route. You can also name the parameter your page receives by adding a name after the three periods (`[...myNameKey]`).
 
-- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`
-- `src/pages/image/[...].js` will generate a route like `/image/*`
+As an example, suppose that you are rendering images from [S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
-Three periods `...` mark a page as a splat route. Optionally, you can name the splat as well, which has the benefit of naming the key of the property that your component receives.
+- `src/pages/image/[...].js` will generate a route like `/image/*`. `*` is accessible in your page's received properties with the key name `*`.
+- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`. `*awsKey` is accessible in your page's received properties with the key name `awsKey`.
+
+```js:title=src/pages/image/[...].js
+export default function ImagePage({ params }) {
+  const param = params[`*`]
+
+  // When visiting a route like `image/hello/world`,
+  // the value of `param` is `hello/world`.
+}
+```
+
+```js:title=src/pages/image/[...awsKey].js
+export default function ImagePage({ params }) {
+  const param = params[`awsKey`]
+
+  // When visiting a route like `image/hello/world`,
+  // the value of `param` is `hello/world`.
+}
+```
+
+Splat routes may not live in the same directory as regular client only routes.
 
 ### Examples
 
@@ -240,6 +262,44 @@ function AppPage(props) {
   const splat = props.params[‘*’]
 }
 ```
+
+## `config` function
+
+Inside a File System Route template you can export an async function called `config`. You can use this function to:
+
+- Mark the page as deferred or not (see [Deferred Static Generation API reference](/docs/reference/rendering-options/deferred-static-generation/))
+
+Inside your template:
+
+```jsx:title=src/pages/{Product.name}.jsx
+import { graphql } from "gatsby"
+
+// The rest of your page, including imports, page component & page query etc.
+
+export async function config() {
+  const { data } = graphql`
+    {
+      # Your GraphQL query
+    }
+  `
+
+  return ({ params }) => {
+    return {
+      defer: params.name === data.someValue.name,
+    }
+  }
+}
+```
+
+When you export an async `config` function Gatsby will evaluate the returned object and optionally run any GraphQL queries defined inside the outer function. You can't run GraphQL queries inside the inner function.
+
+The `params` parameter is an object that contains the URL path, see [explanation above](#collection-route-components).
+
+The inner function of `config` can return an object with one key:
+
+- `defer`: Boolean of whether the page should be marked as deferred or not
+
+Read the [Deferred Static Generation guide](/docs/how-to/rendering-options/using-deferred-static-generation/) to see a real-world example.
 
 ## Example use cases
 

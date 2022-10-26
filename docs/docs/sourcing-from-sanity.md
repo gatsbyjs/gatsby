@@ -12,8 +12,6 @@ You can use Sanity as a headless CMS that lets your authors work in a user-frien
 
 Begin with setting up a Gatsby project. If you want to start from scratch, the [Quick Start guide](/docs/quick-start) is a good place to begin. Come back to this guide when you're set up.
 
-You can also check out [the company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we have set up. It contains both a configured Sanity Studio and a Gatsby frontend, which you can get up and running within minutes. It can be a useful reference for how to build a website using structured content. Follow the instructions in its README.md to get up and running.
-
 This guide will cover how configure and use the [`gatsby-source-sanity`](https://www.npmjs.com/package/gatsby-source-sanity) plugin.
 
 ## Basic usage

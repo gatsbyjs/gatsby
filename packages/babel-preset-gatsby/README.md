@@ -2,7 +2,7 @@
 
 Gatsby uses the phenomenal project [Babel](https://babeljs.io/) to enable support for writing modern JavaScript — while still supporting older browsers. This package contains the default Babel setup for all Gatsby projects.
 
-For more information on how to customize the Babel configuration of your Gatsby site, check out [our documentation](https://www.gatsbyjs.org/docs/babel/).
+For more information on how to customize the Babel configuration of your Gatsby site, check out [our documentation](https://www.gatsbyjs.com/docs/babel/).
 
 ## Packages
 
@@ -37,4 +37,28 @@ npm install --dev babel-preset-gatsby
 
 `{ [string]: number | string }`, defaults to `{ "browsers": ["last 4 versions", "safari >= 7", "ie >= 9"] }` in production and `{ "browsers": ["last 2 versions", "not ie <= 11", "not android 4.4.3"] }` in development when targeting the browser and `{ "node": 6 }` in production and `{ "node": "current" }` in development when targeting Node.js.
 
-Use this option to configure [custom target browsers](https://www.gatsbyjs.org/docs/babel/).
+Use this option to configure [custom target browsers](https://www.gatsbyjs.com/docs/how-to/custom-configuration/babel/).
+
+### `reactRuntime`
+
+`'classic' | 'automatic'`, defaults to `'classic'`. Allows the use of JSX without having to import React (learn more in the [official blog post](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)). If you only want to set the runtime to `automatic` without a custom JSX transformer, you can use the [`gatsby-config` option](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/#jsxruntime).
+
+### `reactImportSource`
+
+`string`, defaults to `null`. Set which package React should use as underlying JSX transformer. For example you can set it to `@emotion/react` so by default `@emotion/react` is used instead of the react package. In order to use `reactImportSource` you must set `reactRuntime` to automatic.
+
+Example:
+
+```json
+{
+  "presets": [
+    [
+      "babel-preset-gatsby",
+      {
+        "reactRuntime": "automatic",
+        "reactImportSource": "@emotion/react"
+      }
+    ]
+  ]
+}
+```

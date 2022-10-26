@@ -3,6 +3,7 @@ import { GraphQLRunner } from "../graphql-runner"
 import { actions } from "../../redux/actions"
 import { store } from "../../redux"
 import { build } from "../../schema"
+import reporter from "gatsby-cli/lib/reporter"
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -30,10 +31,12 @@ beforeAll(() => {
   store.dispatch({ type: `DELETE_CACHE` })
 })
 
-const reporter = require(`gatsby-cli/lib/reporter`)
 afterEach(() => {
   reporter.error.mockClear()
   reporter.warn.mockClear()
+
+  store.getState().schemaCustomization.composer.clear()
+  store.getState().schemaCustomization.types = []
 })
 
 const FooNodes = {
@@ -79,10 +82,7 @@ describe(`Deprecation warnings`, () => {
     expect(reporter.error).not.toHaveBeenCalled()
   })
 
-  // Skipping due to graphql-compose bug
-  // see https://github.com/graphql-compose/graphql-compose/issues/317
-  // TODO: enable once the above bug is fixed in graphql-compose
-  it.skip(`displays warnings when when using deprecated arguments`, async () => {
+  it(`displays warnings when when using deprecated arguments`, async () => {
     await buildSchema(
       `
       type Foo implements Node {
@@ -112,7 +112,7 @@ describe(`Deprecation warnings`, () => {
     })
     expect(reporter.warn).toHaveBeenCalledTimes(1)
     expect(reporter.warn).toHaveBeenCalledWith(
-      `The field "Foo.foo" argument "arg" is deprecated. Tired.\n` +
+      `Field "Foo.foo" argument "arg" is deprecated. Tired\n` +
         `Queried in /test`
     )
   })

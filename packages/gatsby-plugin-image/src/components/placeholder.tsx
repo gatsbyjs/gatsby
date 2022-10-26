@@ -33,6 +33,7 @@ Placeholder.propTypes = {
     if (!props[propName]) {
       return null
     }
+
     return new Error(
       `Invalid prop \`${propName}\` supplied to \`${componentName}\`. Validation failed.`
     )

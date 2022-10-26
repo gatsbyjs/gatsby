@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS"
+  },
+  "exclude": [
+    "src/__tests__",
+    "src/__mocks__",
+    "dist",
+  ]
+}

@@ -1,6 +1,10 @@
 const execa = require(`execa`)
 const { Octokit } = require(`@octokit/rest`)
-const { getAllPackageNames, updateChangelog } = require(`./generate`)
+const {
+  getAllPackageNames,
+  updateChangelog,
+  changelogRelativePath,
+} = require(`./generate`)
 
 if (!process.env.GITHUB_BOT_AUTH_TOKEN) {
   throw new Error(`GITHUB_BOT_AUTH_TOKEN env var not set`)
@@ -32,45 +36,67 @@ async function run() {
   }
 
   const commitMessage = `chore(changelogs): update changelogs`
-  const updatedChangelogs = updatedPackages.map(
-    pkg => `packages/${pkg}/CHANGELOG.md`
+  const updatedChangelogs = updatedPackages.map(pkg =>
+    changelogRelativePath(pkg)
   )
+  await execa(`npx`, [`prettier`, `--write`, `packages/**/CHANGELOG.md`], {
+    stdio: `inherit`,
+  })
   await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
-  await execa(`git`, [`push`, `-u`, `origin`, branch])
+  try {
+    await execa(`git`, [
+      `remote`,
+      `set-url`,
+      `origin`,
+      `https://gatsbybot:${process.env.GITHUB_BOT_AUTH_TOKEN}@github.com/gatsbyjs/gatsby.git`,
+    ])
+    await execa(`git`, [`push`, `-u`, `origin`, branch])
+  } finally {
+    // Reset the token to not store it on disk
+    await execa(`git`, [
+      `remote`,
+      `set-url`,
+      `origin`,
+      `https://github.com/gatsbyjs/gatsby.git`,
+    ])
+  }
 
   const octokit = new Octokit({
     auth: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
   })
 
-  try {
-    const owner = `gatsbyjs`
-    const repo = `gatsby`
+  const owner = `gatsbyjs`
+  const repo = `gatsby`
 
-    // Note: PR may already exist for this branch.
-    // Then it will throw but we don't care too much
-    const pr = await octokit.pulls.create({
-      owner,
-      repo,
-      title: commitMessage,
-      head: branch,
-      base,
-      body: `Updated changelogs of the following packages:\n\n${updatedPackages
-        .map(p => `- ${p}`)
-        .join(`\n`)}`,
-    })
+  // Note: PR may already exist for this branch.
+  // Then it will throw but we don't care too much
+  const pr = await octokit.pulls.create({
+    owner,
+    repo,
+    title: commitMessage,
+    head: branch,
+    base,
+    body: `Updated changelogs of the following packages:\n\n${updatedPackages
+      .map(p => `- ${p}`)
+      .join(`\n`)}`,
+  })
 
-    console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
+  console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
 
-    await octokit.issues.addLabels({
-      owner,
-      repo,
-      issue_number: pr.data.number,
-      labels: [`type: maintenance`],
-    })
-  } catch (e) {
-    console.error(e)
-  }
+  await octokit.issues.addLabels({
+    owner,
+    repo,
+    issue_number: pr.data.number,
+    labels: [`type: maintenance`],
+  })
 }
 
-run()
+run().catch(error => {
+  const safeError = String(error)
+    .split(process.env.GITHUB_BOT_AUTH_TOKEN)
+    .join(`{process.env.GITHUB_BOT_AUTH_TOKEN}`)
+
+  console.error(safeError)
+  process.exit(1)
+})

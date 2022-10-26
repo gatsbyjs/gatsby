@@ -30,9 +30,12 @@ jest.mock(`sharp`, () => {
     const pipeline = {
       metadata: metadataMock,
     }
+
     return pipeline
   }
 
+  sharp.simd = jest.fn()
+  sharp.concurrency = jest.fn()
   sharp.metadataMock = metadataMock
 
   return sharp

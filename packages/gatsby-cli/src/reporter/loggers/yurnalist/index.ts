@@ -17,6 +17,7 @@ import {
   IComponentWithPageModes,
 } from "../../../util/generate-page-tree"
 import { IRenderPageArgs } from "../../types"
+import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 
 interface IYurnalistActivities {
   [activityId: string]: {
@@ -33,23 +34,28 @@ function generatePageTreeToConsole(
 ): void {
   const root = state.root
   const componentWithPages = new Map<string, IComponentWithPageModes>()
-  for (const { componentPath, pages } of state.components.values()) {
-    const pagesByMode = {
+  const slices = new Set<string>()
+  for (const { componentPath, pages, isSlice } of state.components.values()) {
+    const layoutComponent = getPathToLayoutComponent(componentPath)
+    const relativePath = path.posix.relative(root, layoutComponent)
+    const pagesByMode = componentWithPages.get(relativePath) || {
       SSG: new Set<string>(),
       DSG: new Set<string>(),
       SSR: new Set<string>(),
       FN: new Set<string>(),
     }
-    pages.forEach(pagePath => {
-      const gatsbyPage = state.pages.get(pagePath)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      pagesByMode[gatsbyPage!.mode].add(pagePath)
-    })
 
-    componentWithPages.set(
-      path.posix.relative(root, componentPath),
-      pagesByMode
-    )
+    if (isSlice) {
+      slices.add(path.posix.relative(root, componentPath))
+    } else {
+      pages.forEach(pagePath => {
+        const gatsbyPage = state.pages.get(pagePath)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        pagesByMode[gatsbyPage!.mode].add(pagePath)
+      })
+
+      componentWithPages.set(relativePath, pagesByMode)
+    }
   }
 
   for (const {
@@ -96,6 +102,15 @@ function generatePageTreeToConsole(
     pageTreeConsole.push(componentTree.join(`\n`))
 
     i++
+  }
+
+  if (slices.size > 0) {
+    pageTreeConsole.push(``)
+    pageTreeConsole.push(`\n${chalk.underline(`Slices`)}\n`)
+
+    Array.from(slices).forEach(slice => {
+      pageTreeConsole.push(`· ${slice}`)
+    })
   }
 
   pageTreeConsole.push(``)

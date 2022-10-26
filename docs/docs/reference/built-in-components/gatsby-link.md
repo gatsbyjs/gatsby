@@ -2,9 +2,7 @@
 title: Gatsby Link API
 ---
 
-For internal navigation, Gatsby includes a built-in `<Link>` component for creating links between internal pages as well as a `navigate` function for programmatic navigation.
-
-The component is a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link) that adds useful enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
+For internal navigation, Gatsby includes a built-in `<Link>` component for creating links between internal pages and a `navigate` function for programmatic navigation.
 
 ## `<Link>` drives Gatsby's fast page navigation
 
@@ -15,13 +13,6 @@ This two stage preloading helps ensure the page is ready to be rendered as soon 
 Intelligent preloading like this eliminates the latency users experience when clicking on links in sites built in most other frameworks.
 
 ## How to use Gatsby Link
-
-<EggheadEmbed
-  lessonLink="https://egghead.io/lessons/gatsby-why-and-how-to-use-gatsby-s-link-component"
-  lessonTitle="Why and How to Use Gatsby’s Link Component"
-/>
-
-### Replace `a` tags with the `Link` tag for local links
 
 In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag. The two elements work much the same except `href` is now `to`.
 
@@ -51,166 +42,57 @@ const Page = () => (
 )
 ```
 
-### Add custom styles for the currently active link
+### `Link` API surface area
 
-<EggheadEmbed
-  lessonLink="https://egghead.io/lessons/gatsby-add-custom-styles-for-the-active-link-using-gatsby-s-link-component"
-  lessonTitle="Add Custom Styles for the Active Link Using Gatsby’s Link Component"
-/>
+Gatsby's `Link` component extends the `Link` component from [Reach Router](https://reach.tech/router/) to add useful enhancements specific to Gatsby.
 
-It’s often a good idea to show which page is currently being viewed by visually changing the link matching the current page.
+The `to`, `replace`, `ref`, `innerRef`, `getProps` and `state` properties originate from Reach Router's `Link` component, so you should refer to the [Reach Router `Link` API reference documentation](https://reach.tech/router/api/Link) as the source of truth for those properties.
 
-`Link` provides two options for adding styles to the active link:
+In addition, Gatsby adds the following properties:
 
-- `activeStyle` — a style object that will only be applied when the current item is active
-- `activeClassName` — a class name that will only be added to the `Link` when the current item is active
+| Argument          | Type    | Required | Description                                                                                                                     |
+| ----------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `activeStyle`     | Object  | No       | A style object that will be applied when the current item is active.                                                            |
+| `activeClassName` | String  | No       | A class name that will be applied the current item is active.                                                                   |
+| `partiallyActive` | Boolean | No       | Whether partial URLs are considered active (e.g. `/blog#hello-world` matches `<Link to="/blog">` if `partiallyActive` is true). |
 
-For example, to turn the active link red, either of the following approaches is valid:
-
-```jsx
-import React from "react"
-import { Link } from "gatsby"
-
-const SiteNavigation = () => (
-  <nav>
-    <Link
-      to="/"
-      {/* highlight-start */}
-      {/* This assumes the `active` class is defined in your CSS */}
-      activeClassName="active"
-      {/* highlight-end */}
-    >
-      Home
-    </Link>
-    <Link
-      to="/about/"
-      {/* highlight-next-line */}
-      activeStyle={{ color: "red" }}
-    >
-      About
-    </Link>
-  </nav>
-)
-```
-
-### Use `getProps` for advanced link styling
-
-Gatsby's `<Link>` component comes with a `getProps` prop, which can be useful for advanced styling. It passes you an object with the following properties:
-
-- `isCurrent` — true if the `location.pathname` is exactly the same as the `<Link>` component's `to` prop
-- `isPartiallyCurrent` — true if the `location.pathname` starts with the `<Link>` component's `to` prop
-- `href` — the value of the `to` prop
-- `location` — the page's `location` object
-
-You can read more about it on [`@reach/router`'s documentation](https://reach.tech/router/api/Link).
-
-### Show active styles for partially matched and parent links
-
-By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, you may want to style a `<Link>` as active even if it partially matches the current URL. For example:
-
-- You may want `/blog/hello-world` to match `<Link to="/blog">`
-- Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
-
-In instances like these, just add the `partiallyActive` prop to your `<Link>` component and the style will also be applied even if the `to` prop only is a partial match:
+Here's an example of how to use these additional properties:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-const Header = <>
+const IndexPage = () => (
   <Link
-    to="/articles/"
-    activeStyle={{ color: "red" }}
-    {/* highlight-next-line */}
-    partiallyActive={true}
+    to="/about"
+    {/* highlight-start */}
+    {/* You must define the `active` class in your CSS */}
+    activeClassName="active"
+    {/* highlight-end */}
   >
-    Articles
+    About
   </Link>
-</>;
-```
-
-_**Note:** Available from Gatsby V2.1.31, if you are experiencing issues please check your version and/or update._
-
-### Pass state as props to the linked page
-
-<EggheadEmbed
-  lessonLink="https://egghead.io/lessons/gatsby-include-information-about-state-in-navigation-with-gatsby-s-link-component"
-  lessonTitle="Include Information About State in Navigation With Gatsby’s Link Component"
-/>
-
-Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
-
-```jsx
-const PhotoFeedItem = ({ id }) => (
-  <div>
-    {/* (skip the feed item markup for brevity) */}
-    <Link
-      to={`/photos/${id}`}
-      {/* highlight-next-line */}
-      state={{ fromFeed: true }}
-    >
-      View Photo
-    </Link>
-  </div>
-)
-
-// highlight-start
-const Photo = ({ location, photoId }) => {
-  if (location.state.fromFeed) {
-    // highlight-end
-    return <FromFeedPhoto id={photoId} />
-  } else {
-    return <Photo id={photoId} />
-  }
-}
-```
-
-### Replace history to change “back” button behavior
-
-<EggheadEmbed
-  lessonLink="https://egghead.io/lessons/gatsby-replace-navigation-history-items-with-gatsby-s-link-component"
-  lessonTitle="Replace Navigation History Items with Gatsby’s Link Component"
-/>
-
-There are a few cases where it might make sense to modify the “back” button’s behavior. For example, if you build a page where you choose something, then see an “are you sure?” page to make sure it’s what you really wanted, and finally see a confirmation page, it may be desirable to skip the “are you sure?” page if the “back” button is clicked.
-
-In those cases, use the `replace` prop to replace the current URL in history with the target of the `Link`.
-
-```jsx
-import React from "react"
-import { Link } from "gatsby"
-
-const AreYouSureLink = () => (
   <Link
-    to="/confirmation/"
+    to="/company"
     {/* highlight-next-line */}
-    replace
+    activeStyle={{ color: "blue" }}
   >
-    Yes, I’m sure
+    Company
+  </Link>
+  <Link
+    to="/blog"
+    activeStyle={{ color: "green" }}
+    {/* highlight-next-line */}
+    partiallyActive={true} // `/blog#hello-world` matches now
+  >
+    Blog
   </Link>
 )
 ```
 
 ## How to use the `navigate` helper function
 
-<EggheadEmbed
-  lessonLink="https://egghead.io/lessons/gatsby-navigate-to-a-new-page-programmatically-in-gatsby"
-  lessonTitle="Navigate to a New Page Programmatically in Gatsby"
-/>
-
-Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work.
-
-_**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release._
-
-Instead, Gatsby exports a `navigate` helper function that accepts `to` and `options` arguments.
-
-| Argument          | Required | Description                                                                                     |
-| ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`). Note: it needs to be a pathname, not a full URL.       |
-| `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
-| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
-
-By default, `navigate` operates the same way as a clicked `Link` component.
+Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work. By default, `navigate` operates the same way as a clicked `Link` component.
 
 ```jsx
 import React from "react"
@@ -231,64 +113,15 @@ const Form = () => (
 )
 ```
 
-### Add state to programmatic navigation
+### `navigate` API surface area
 
-To include state information, add an `options` object and include a `state` prop with the desired state.
+Gatsby re-exports the `navigate` helper function from [Reach Router](https://reach.tech/router/) for convenience.
 
-```jsx
-import React from "react"
-import { navigate } from "gatsby"
+Gatsby does not add extra surface area to this API, so you should refer to [Reach Router's `navigate` API reference documentation](https://reach.tech/router/api/navigate) as the source of truth.
 
-const Form = () => (
-  <form
-    onSubmit={event => {
-      event.preventDefault()
+### Navigate to the previous page
 
-      // Implementation of this function is an exercise for the reader.
-      const formValues = getFormValues()
-
-      navigate(
-        "/form-submitted/",
-        // highlight-start
-        {
-          state: { formValues },
-        }
-        // highlight-end
-      )
-    }}
-  >
-    {/* (skip form inputs for brevity) */}
-  </form>
-)
-```
-
-Then from the receiving page you can access the `location` state as demonstrated in [Pass state as props to the linked page](#pass-state-as-props-to-the-linked-page).
-
-### Replace history during programmatic navigation
-
-If the navigation should replace history instead of pushing a new entry into the navigation history, add the `replace` prop with a value of `true` to the `options` argument of `navigate`.
-
-```jsx
-import React from "react"
-import { navigate } from "gatsby"
-
-const Form = () => (
-  <form
-    onSubmit={event => {
-      event.preventDefault()
-
-      // TODO: do something with form values
-      navigate(
-        "/form-submitted/",
-        // highlight-next-line
-        { replace: true }
-      )
-    }}
-  >
-    {/* (skip form inputs for brevity) */}
-  </form>
-)
-```
+You can use `navigate(-1)` to go to a previously visited route. This is [Reach Router's](https://reach.tech/router/api/navigate) way of using `history.back()`. You can use any number as it uses [`history.go()`](https://developer.mozilla.org/en-US/docs/Web/API/History/go) under the hood. The `delta` parameter will be the number you pass in to `navigate()`.
 
 ## Add the path prefix to paths using `withPrefix`
 
@@ -363,7 +196,7 @@ export default Link
 
 ### Relative links
 
-The `<Link />` component follows [the behavior of @reach/router](https://reach.tech/router/nesting) by ignoring trailing slashes and treating each page as if it were a directory when resolving relative links. For example if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`.
+The `<Link />` component follows [the behavior of Reach Router](https://reach.tech/router/nesting) by ignoring trailing slashes and treating each page as if it were a directory when resolving relative links. For example if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`.
 
 ### File Downloads
 
@@ -392,10 +225,10 @@ You can similarly check for file downloads:
 
 ## Recommendations for programmatic, in-app navigation
 
-Neither `<Link>` nor `navigate` can be used for in-route navigation with a hash or query parameter. If you need this behavior, you should either use an anchor tag or import the `@reach/router` package--which Gatsby already depends upon--to make use of its `navigate` function, like so:
+If you need this behavior, you should either use an anchor tag or import the `navigate` helper from `gatsby`, like so:
 
 ```jsx
-import { navigate } from '@reach/router';
+import { navigate } from 'gatsby';
 
 ...
 
@@ -418,6 +251,11 @@ However, if the page has previously loaded, it will not re-request `app-data.jso
 
 ## Additional resources
 
+- [Egghead lesson - "Why and How to Use Gatsby’s Link Component"](https://egghead.io/lessons/gatsby-why-and-how-to-use-gatsby-s-link-component)
+- [Egghead lesson - "Add Custom Styles for the Active Link Using Gatsby’s Link Component"](https://egghead.io/lessons/gatsby-add-custom-styles-for-the-active-link-using-gatsby-s-link-component)
+- [Egghead lesson - "Include Information About State in Navigation With Gatsby’s Link Component"](https://egghead.io/lessons/gatsby-include-information-about-state-in-navigation-with-gatsby-s-link-component)
+- [Egghead lesson - "Replace Navigation History Items with Gatsby’s Link Component"](https://egghead.io/lessons/gatsby-replace-navigation-history-items-with-gatsby-s-link-component)
+- [Egghead lesson - "Navigate to a New Page Programmatically in Gatsby"](https://egghead.io/lessons/gatsby-navigate-to-a-new-page-programmatically-in-gatsby)
 - [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
 - [Routing: Getting Location Data from Props](/docs/location-data-from-props/)
 - [`gatsby-plugin-catch-links`](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior

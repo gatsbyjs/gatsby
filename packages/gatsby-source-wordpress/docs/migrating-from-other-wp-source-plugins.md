@@ -6,7 +6,7 @@ From what we've seen migrating is a fairly painless process as the GraphQL schem
 
 **Note**: If you're using Gatsby Cloud and you have `gatsby-source-wordpress@v3` and `gatsby-source-wordpress` installed in the same site, only the experimental plugin will receive webhook updates when updating content.
 
-[Graphiql](https://www.gatsbyjs.org/docs/running-queries-with-graphiql/) is your best friend when migrating from the last major version of this plugin. Run `gatsby develop` and visit `http://localhost:8000/___graphiql`
+[Graphiql](https://www.gatsbyjs.com/docs/running-queries-with-graphiql/) is your best friend when migrating from the last major version of this plugin. Run `gatsby develop` and visit `http://localhost:8000/___graphiql`
 
 Any node list queries such as `allWordpressPage { nodes { title } }` will need to be updated to match the new WordPress types in the Gatsby schema. The new pattern for type names is `Wp` and then the capitalized type such as `Page`. So to replace the node list query above, you would write `allWpPage { nodes { title } }`.
 
@@ -60,7 +60,7 @@ So your query would change to look like this:
 
 ### `gatsby-source-graphql` and inline fragments
 
-Any inline fragments will need to be updated since type names have changed. Use Gatsby's [Graphiql](https://www.gatsbyjs.org/docs/running-queries-with-graphiql/) at `http://localhost:8000/___graphiql` with `gatsby develop` running to determine how your inline fragment typenames should be modified.
+Any inline fragments will need to be updated since type names have changed. Use Gatsby's [Graphiql](https://www.gatsbyjs.com/docs/running-queries-with-graphiql/) at `http://localhost:8000/___graphiql` with `gatsby develop` running to determine how your inline fragment typenames should be modified.
 
 ### `gatsby-source-graphql` and `gatsby-plugin-image`
 

@@ -37,7 +37,7 @@ module.exports = {
 
 ### Deciding which component to use
 
-The Gatsby Image plugin includes two image components: one for static and one for dynamic images. An effective way to decide which you need to is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
+The Gatsby Image plugin includes two image components: one for static and one for dynamic images. An effective way to decide which you need is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
 
 ### Static images
 

@@ -157,12 +157,12 @@ export const onCreateNode = true
  * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
  * Note: this API does not receive the regular `api` that other callbacks get as first arg.
  *
- * @gatsbyVersion 2.24.80
+ * @gatsbyVersion 5.0.0
  * @example
- * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+ * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const unstable_shouldOnCreateNode = true
+export const shouldOnCreateNode = true
 
 /**
  * Called when a new page is created. This extension API is useful
@@ -371,7 +371,7 @@ export const preprocessSource = true
 export const onCreateBabelConfig = true
 
 /**
- * Let plugins extend/mutate the site's webpack configuration.
+ * Let plugins extend/mutate the site's webpack configuration. This method can be used by any Gatsby site, app, or plugin, not just plugins.
  *
  * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
  *
@@ -403,6 +403,13 @@ export const onCreateWebpackConfig = true
 
 /**
  * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
+ *
+ * @param {object} $0
+ * @param {object} $0.actions
+ * @example
+ * exports.onPreInit = ({ actions }) => {
+ *
+ * }
  */
 export const onPreInit = true
 
@@ -437,6 +444,13 @@ export const onPreBuild = true
 /**
  * The last extension point called after all other parts of the build process
  * are complete.
+ *
+ * @example
+ * exports.onPostBuild = ({ reporter, basePath, pathPrefix }) => {
+ *  reporter.info(
+ *   `Site was built with basePath: ${basePath} & pathPrefix: ${pathPrefix}`
+ *  );
+ * };
  */
 export const onPostBuild = true
 

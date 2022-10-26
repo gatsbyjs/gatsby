@@ -19,7 +19,7 @@ describe(`tags`, () => {
       "have.text",
       "numberInteger"
     )
-    cy.get('[data-cy-id^="tag-"]').should("have.length", 2)
+    cy.get('[data-cy-id^="tag-"]').should("have.length", 5)
   })
   it(`Filtered Entries`, () => {
     cy.get('[data-cy-integers] [data-cy-id="number-integer"]').should(
@@ -37,5 +37,22 @@ describe(`tags`, () => {
     cy.get(
       '[data-cy-decimals] [data-cy-id="number-decimal"] [data-cy-value]'
     ).should("have.text", 4.2)
+  })
+  it(`Assets`, () => {
+    cy.get('[data-cy-assets] [data-cy-id="example-cat"]').should(
+      "have.length",
+      1
+    )
+    cy.get('[data-cy-assets] [data-cy-id="example-cat"] [data-cy-value]')
+      .should("contain", "Animal")
+      .should("contain", "Cat")
+
+    cy.get('[data-cy-assets] [data-cy-id="example-dog"]').should(
+      "have.length",
+      1
+    )
+    cy.get('[data-cy-assets] [data-cy-id="example-dog"] [data-cy-value]')
+      .should("contain", "Animal")
+      .should("contain", "Dog")
   })
 })

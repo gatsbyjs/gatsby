@@ -1,11 +1,12 @@
-import { GraphQLFieldResolver } from "gatsby/graphql"
-import {
+import { stripIndent } from "common-tags"
+import type { GraphQLFieldResolver } from "gatsby/graphql"
+import type {
   EnumTypeComposerAsObjectDefinition,
   ObjectTypeComposerFieldConfigAsObjectDefinition,
   ObjectTypeComposerArgumentConfigMapDefinition,
 } from "graphql-compose"
-import { stripIndent } from "common-tags"
-import { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils"
+import { hasFeature } from "gatsby-plugin-utils"
+import type { ISharpGatsbyImageArgs, IImageSizeArgs } from "./image-utils"
 
 export const ImageFormatType: EnumTypeComposerAsObjectDefinition = {
   name: `GatsbyImageFormat`,
@@ -74,7 +75,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
   IGatsbyImageResolverArgs & TArgs
 > {
   return {
-    type: `JSON!`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
     args: {
       layout: {
         type: ImageLayoutType.name,
@@ -166,7 +167,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
   IGatsbyImageFieldArgs & TArgs
 > {
   return {
-    type: `JSON!`,
+    type: hasFeature(`graphql-typegen`) ? `GatsbyImageData!` : `JSON!`,
     args: {
       layout: {
         type: ImageLayoutType.name,

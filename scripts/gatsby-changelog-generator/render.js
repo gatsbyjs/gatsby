@@ -83,7 +83,7 @@ function commitReference(commit, reference) {
 
 function commitHash(commit) {
   if (!commit.hash) return ``
-  const shortHash = commit.hash.substr(0, 7)
+  const shortHash = commit.hash.slice(0, 7)
   return `([${shortHash}](https://github.com/gatsbyjs/gatsby/commit/${commit.hash}))`
 }
 

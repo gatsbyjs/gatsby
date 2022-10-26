@@ -59,7 +59,7 @@ describe(`testing error overlay and ability to automatically recover from runtim
       .find(
         `[data-gatsby-overlay="accordion"] [data-gatsby-overlay="body__error-message"]`
       )
-      .should(`contain.text`, `Cannot read property 'b' of undefined`)
+      .should(`contain.text`, `Cannot read properties of undefined (reading 'b')`)
     cy.getFastRefreshOverlay().find(`[data-gatsby-overlay="body"] pre`)
   })
 

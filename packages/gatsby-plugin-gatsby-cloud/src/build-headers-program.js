@@ -1,17 +1,12 @@
 import _ from "lodash"
 import { createWriteStream, existsSync } from "fs-extra"
-import { parse, posix } from "path"
-import kebabHash from "kebab-hash"
-import { fixedPagePath } from "gatsby-core-utils"
 import { IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
-  COMMON_BUNDLES,
   SECURITY_HEADERS,
   CACHING_HEADERS,
   LINK_REGEX,
   HEADERS_FILENAME,
-  PAGE_DATA_DIR,
 } from "./constants"
 import { emitHeaders } from "./ipc"
 
@@ -20,114 +15,8 @@ function getHeaderName(header) {
   return matches && matches[1]
 }
 
-function validHeaders(headers, reporter) {
-  if (!headers || !_.isObject(headers)) {
-    return false
-  }
-
-  return _.every(
-    headers,
-    (headersList, path) =>
-      _.isArray(headersList) &&
-      _.every(headersList, header => {
-        if (_.isString(header)) {
-          if (!getHeaderName(header)) {
-            // TODO panic on builds on v3
-            reporter.warn(
-              `[gatsby-plugin-gatsby-cloud] ${path} contains an invalid header (${header}). Please check your plugin configuration`
-            )
-          }
-
-          return true
-        }
-
-        return false
-      })
-  )
-}
-
-function linkTemplate(assetPath, type = `script`) {
-  return `Link: <${assetPath}>; rel=preload; as=${type}${
-    type === `fetch` ? `; crossorigin` : ``
-  }; nopush`
-}
-
-function pathChunkName(path) {
-  const name = path === `/` ? `index` : kebabHash(path)
-  return `path---${name}`
-}
-
-function getPageDataPath(path) {
-  return posix.join(`page-data`, fixedPagePath(path), `page-data.json`)
-}
-
-function getScriptPath(file, manifest) {
-  const chunk = manifest[file]
-
-  if (!chunk) {
-    return []
-  }
-
-  // convert to array if it's not already
-  const chunks = _.isArray(chunk) ? chunk : [chunk]
-
-  return chunks.filter(script => {
-    const parsed = parse(script)
-    // handle only .js, .css content is inlined already
-    // and doesn't need to be pushed
-    return parsed.ext === `.js`
-  })
-}
-
-function linkHeaders(files, pathPrefix) {
-  const linkHeaders = []
-  for (const resourceType in files) {
-    files[resourceType].forEach(file => {
-      linkHeaders.push(linkTemplate(`${pathPrefix}/${file}`, resourceType))
-    })
-  }
-
-  return linkHeaders
-}
-
 function headersPath(pathPrefix, path) {
   return `${pathPrefix}${path}`
-}
-
-function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
-  const linksByPage = {}
-
-  const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
-  const hasAppData = existsSync(appDataPath)
-
-  pages.forEach(page => {
-    const scripts = _.flatMap(COMMON_BUNDLES, file =>
-      getScriptPath(file, manifest)
-    )
-    scripts.push(...getScriptPath(pathChunkName(page.path), manifest))
-    scripts.push(...getScriptPath(page.componentChunkName, manifest))
-
-    const json = []
-    if (hasAppData) {
-      json.push(posix.join(PAGE_DATA_DIR, `app-data.json`))
-    }
-
-    // page-data gets inline for SSR, so we won't be doing page-data request
-    // and we shouldn't add preload link header for it.
-    if (page.mode !== `SSR`) {
-      json.push(getPageDataPath(page.path))
-    }
-
-    const filesByResourceType = {
-      script: scripts.filter(Boolean),
-      fetch: json,
-    }
-
-    const pathKey = headersPath(pathPrefix, page.path)
-    linksByPage[pathKey] = linkHeaders(filesByResourceType, pathPrefix)
-  })
-
-  return linksByPage
 }
 
 function defaultMerge(...headers) {
@@ -185,21 +74,6 @@ function transformLink(manifest, publicFolder, pathPrefix) {
     })
 }
 
-function stringifyHeaders(headers) {
-  return _.reduce(
-    headers,
-    (text, headerList, path) => {
-      const headersString = _.reduce(
-        headerList,
-        (accum, header) => `${accum}  ${header}\n`,
-        ``
-      )
-      return `${text}${path}\n${headersString}`
-    },
-    ``
-  )
-}
-
 // program methods
 
 const mapUserLinkHeaders =
@@ -232,29 +106,18 @@ const mapUserLinkAllPageHeaders =
     return defaultMerge(headers, duplicateHeadersByPage)
   }
 
-const applyLinkHeaders =
-  (pluginData, { mergeLinkHeaders }) =>
-  headers => {
-    if (!mergeLinkHeaders) {
-      return headers
-    }
-
-    const { pages, manifest, pathPrefix, publicFolder } = pluginData
-    const perPageHeaders = preloadHeadersByPage({
-      pages,
-      manifest,
-      pathPrefix,
-      publicFolder,
-    })
-
-    return defaultMerge(headers, perPageHeaders)
-  }
-
 const applySecurityHeaders =
   ({ mergeSecurityHeaders }) =>
   headers => {
     if (!mergeSecurityHeaders) {
       return headers
+    }
+
+    // It is a common use case to want to iframe preview
+    if (process.env.GATSBY_IS_PREVIEW === `true`) {
+      SECURITY_HEADERS[`/*`] = SECURITY_HEADERS[`/*`].filter(
+        headers => headers !== `X-Frame-Options: DENY`
+      )
     }
 
     return headersMerge(headers, SECURITY_HEADERS)
@@ -267,25 +130,19 @@ const applyCachingHeaders =
       return headers
     }
 
-    let chunks = []
-    // Gatsby v3.5 added componentChunkName to store().components
-    // So we prefer to pull chunk names off that as it gets very expensive to loop
-    // over large numbers of pages.
-    const isComponentChunkSet = !!pluginData.components.entries()?.next()
-      ?.value[1]?.componentChunkName
-    if (isComponentChunkSet) {
-      chunks = [...pluginData.components.values()].map(
-        c => c.componentChunkName
-      )
-    } else {
-      chunks = Array.from(pluginData.pages.values()).map(
-        page => page.componentChunkName
-      )
+    const files = new Set()
+    for (const [
+      _assetOrChunkName,
+      fileNameOrArrayOfFileNames,
+    ] of Object.entries(pluginData.manifest)) {
+      if (Array.isArray(fileNameOrArrayOfFileNames)) {
+        for (const filename of fileNameOrArrayOfFileNames) {
+          files.add(filename)
+        }
+      } else if (typeof fileNameOrArrayOfFileNames === `string`) {
+        files.add(fileNameOrArrayOfFileNames)
+      }
     }
-
-    chunks.push(`pages-manifest`, `app`)
-
-    const files = [].concat(...chunks.map(chunk => pluginData.manifest[chunk]))
 
     const cachingHeaders = {}
 
@@ -354,7 +211,6 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
     applySecurityHeaders(pluginOptions),
     applyCachingHeaders(pluginData, pluginOptions),
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
-    applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),
     saveHeaders(pluginData)
   )(pluginOptions.headers)

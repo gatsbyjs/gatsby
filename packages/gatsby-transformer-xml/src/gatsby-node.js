@@ -1,7 +1,7 @@
 const parseXml = require(`xml-parser`)
 const _ = require(`lodash`)
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   // We only care about XML content.
   return [`application/xml`, `text/xml`].includes(node.internal.mediaType)
 }
@@ -13,10 +13,6 @@ async function onCreateNode({
   createNodeId,
   createContentDigest,
 }) {
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   const rawXml = await loadNodeContent(node)
@@ -47,5 +43,5 @@ async function onCreateNode({
   return
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

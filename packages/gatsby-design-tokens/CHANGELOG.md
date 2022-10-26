@@ -3,6 +3,176 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.24.0/packages/gatsby-design-tokens) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.23.0/packages/gatsby-design-tokens) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.22.0/packages/gatsby-design-tokens) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.21.0/packages/gatsby-design-tokens) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.20.0/packages/gatsby-design-tokens) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.19.0/packages/gatsby-design-tokens) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Features
+
+- Publish some packages as ESM & CJS [#36012](https://github.com/gatsbyjs/gatsby/issues/36012) ([5bd3063](https://github.com/gatsbyjs/gatsby/commit/5bd3063a1e72c6f98447bfac2bf767cca781330b))
+
+#### Chores
+
+- Update READMEs for better instructions ([0890a5c](https://github.com/gatsbyjs/gatsby/commit/0890a5cf2c881b49193113a1e1bd5fe13a2c328f))
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.18.0/packages/gatsby-design-tokens) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.17.0/packages/gatsby-design-tokens) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.16.0/packages/gatsby-design-tokens) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.15.0/packages/gatsby-design-tokens) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.14.0/packages/gatsby-design-tokens) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.13.0/packages/gatsby-design-tokens) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+### [4.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.12.1/packages/gatsby-design-tokens) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.12.0/packages/gatsby-design-tokens) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.11.0/packages/gatsby-design-tokens) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.10.0/packages/gatsby-design-tokens) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.9.0/packages/gatsby-design-tokens) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.8.0/packages/gatsby-design-tokens) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.7.0/packages/gatsby-design-tokens) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.6.0/packages/gatsby-design-tokens) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.5.0/packages/gatsby-design-tokens) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.4.0/packages/gatsby-design-tokens) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency microbundle to ^0.14.2 for gatsby-design-tokens [#34115](https://github.com/gatsbyjs/gatsby/issues/34115) ([46a1398](https://github.com/gatsbyjs/gatsby/commit/46a1398ea6197f0da778ea4d83bfde85da801a19))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.3.0/packages/gatsby-design-tokens) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.2.0/packages/gatsby-design-tokens) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- update dependency microbundle to ^0.14.1 for gatsby-design-tokens [#33776](https://github.com/gatsbyjs/gatsby/issues/33776) ([14681b9](https://github.com/gatsbyjs/gatsby/commit/14681b9c3522ac42c8ae6e885aefd3b97e792adc))
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.1.0/packages/gatsby-design-tokens) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.0.0/packages/gatsby-design-tokens) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@3.14.0/packages/gatsby-design-tokens) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

@@ -73,7 +73,11 @@ export async function runQueriesInWorkersQueue(
 
     for (const segment of staticQuerySegments) {
       pool.single
-        .runQueries({ pageQueryIds: [], staticQueryIds: segment })
+        .runQueries({
+          pageQueryIds: [],
+          staticQueryIds: segment,
+          sliceQueryIds: [],
+        })
         .then(replayWorkerActions)
         .then(() => {
           activity.tick(segment.length)
@@ -83,7 +87,11 @@ export async function runQueriesInWorkersQueue(
 
     for (const segment of pageQuerySegments) {
       pool.single
-        .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
+        .runQueries({
+          pageQueryIds: segment,
+          staticQueryIds: [],
+          sliceQueryIds: [],
+        })
         .then(replayWorkerActions)
         .then(() => {
           activity.tick(segment.length)
@@ -110,15 +118,34 @@ export async function mergeWorkerState(
   activity.start()
 
   for (const { workerId } of pool.getWorkerInfo()) {
-    const state = loadPartialStateFromDisk([`queries`], String(workerId))
+    const state = loadPartialStateFromDisk(
+      [`queries`, `telemetry`],
+      String(workerId)
+    )
     const queryStateChunk = state.queries as IGatsbyState["queries"]
+    const queryStateTelemetryChunk =
+      state.telemetry as IGatsbyState["telemetry"]
+
+    const payload: {
+      queryStateChunk?: IGatsbyState["queries"]
+      queryStateTelemetryChunk?: IGatsbyState["telemetry"]
+    } = {}
+
     if (queryStateChunk) {
+      payload.queryStateChunk = queryStateChunk
+    }
+
+    if (queryStateTelemetryChunk) {
+      payload.queryStateTelemetryChunk = queryStateTelemetryChunk
+    }
+
+    if (Object.keys(payload).length) {
       // When there are too little queries, some worker can be inactive and its state is empty
       store.dispatch({
         type: `MERGE_WORKER_QUERY_STATE`,
         payload: {
           workerId,
-          queryStateChunk,
+          ...payload,
         },
       })
       await new Promise(resolve => process.nextTick(resolve))

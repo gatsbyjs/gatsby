@@ -13,6 +13,10 @@ const args = yargs
     default: [],
     type: `array`,
   })
+  .option(`copy`, {
+    default: undefined,
+    type: `string`,
+  })
   .option(`exact`, {
     default: false,
     type: `boolean`,
@@ -50,7 +54,7 @@ const args = yargs
 async function update() {
   const history = await getHistory()
 
-  const { file: fileArg, replacements, restore } = args
+  const { file: fileArg, replacements, restore, copy } = args
   const filePath = path.resolve(fileArg)
   if (restore) {
     const original = history.get(filePath)
@@ -85,6 +89,9 @@ async function update() {
     if (exists) {
       await fs.remove(filePath)
     }
+  } else if(args.copy) {
+    const copyFileContent = await fs.readFile(args.copy)
+    await fs.writeFile(filePath, copyFileContent)
   } else {
     const contents = replacements.reduce((replaced, pair) => {
       const [key, value] = pair.split(`:`)

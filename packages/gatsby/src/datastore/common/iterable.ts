@@ -1,3 +1,9 @@
+declare module "lmdb" {
+  // currently lmdb doesn't have typings for this export
+  export function clearKeptObjects(): void
+}
+
+import { clearKeptObjects } from "lmdb"
 /**
  * Wrapper for any iterable providing chainable interface and convenience methods
  * similar to array.
@@ -10,10 +16,22 @@
 export class GatsbyIterable<T> {
   constructor(private source: Iterable<T> | (() => Iterable<T>)) {}
 
-  [Symbol.iterator](): Iterator<T> {
+  *[Symbol.iterator](): Iterator<T> {
     const source =
       typeof this.source === `function` ? this.source() : this.source
-    return source[Symbol.iterator]()
+
+    let i = 0
+    for (const val of source) {
+      yield val
+
+      // clearKeptObjects just make it possible for WeakRefs used in any way during current
+      // sync execution tick to be garbage collected. It doesn't force GC, just remove
+      // internal strong references in V8.
+      // see https://github.com/kriszyp/weak-lru-cache/issues/4
+      if (++i % 100 === 0) {
+        clearKeptObjects()
+      }
+    }
   }
 
   concat<U>(other: Iterable<U>): GatsbyIterable<T | U> {

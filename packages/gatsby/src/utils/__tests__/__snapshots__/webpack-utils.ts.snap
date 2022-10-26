@@ -11,7 +11,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
-        "cacheIdentifier": "{\\"browerslist\\":[],\\"gatsbyPreset\\":\\"1.0.0\\"}",
+        "cacheIdentifier": "{\\"browsersList\\":[],\\"gatsbyPreset\\":\\"1.0.0\\"}",
         "compact": false,
         "configFile": false,
         "presets": Array [
@@ -29,24 +29,16 @@ Object {
 }
 `;
 
-exports[`webpack utils js returns default values without any options 1`] = `
+exports[`webpack utils js has default options 1`] = `
 Object {
-  "include": [Function],
-  "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
-  "type": "javascript/auto",
-  "use": Array [
-    Object {
-      "loader": StringContaining "babel-loader",
-      "options": Object {
-        "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
-        "compact": false,
-        "configFile": true,
-        "reactImportSource": undefined,
-        "reactRuntime": undefined,
-        "rootDir": "<TEMP_DIR>/test",
-        "stage": "develop",
-      },
-    },
-  ],
+  "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
+  "compact": false,
+  "configFile": true,
+  "isPageTemplate": false,
+  "reactImportSource": undefined,
+  "reactRuntime": undefined,
+  "resourceQuery": undefined,
+  "rootDir": "<TEMP_DIR>/test",
+  "stage": "develop",
 }
 `;

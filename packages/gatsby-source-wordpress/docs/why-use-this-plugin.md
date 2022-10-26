@@ -16,18 +16,18 @@ Some highlights:
 - A componentized architecture for your front-end code with React (better maintainability)
 - A simpler way of asking for data with GraphQL (no need to remember dozens of data retrieval functions)
 - Client-side state management with React opens up the doors to creating an app-like or full on app experience for your users
-- [Gatsby is committed to ensuring we are as accessible as possible out of the box](https://www.gatsbyjs.org/blog/2019-04-18-gatsby-commitment-to-accessibility/)
+- [Gatsby is committed to ensuring we are as accessible as possible out of the box](https://www.gatsbyjs.com/blog/2019-04-18-gatsby-commitment-to-accessibility/)
 
 Additionally, this plugin is a great reason to use Gatsby with WordPress. Many of the complex and difficult aspects of going decoupled with WordPress have been abstracted for you behind the scenes, so you can work on building awesome apps and sites instead of reinventing the wheel to get decoupled WordPress working in your project.
 
-Check out this page on [convincing developers why Gatsby is awesome](https://www.gatsbyjs.org/docs/winning-over-developers/#specific-benefits). It's meant for developers who want to convince their coworkers to use Gatsby, but it actually does a great job of describing directly to you the main reasons why using Gatsby is a great idea :)
+Check out this page on [convincing developers why Gatsby is awesome](https://www.gatsbyjs.com/docs/winning-over-developers/#specific-benefits). It's meant for developers who want to convince their coworkers to use Gatsby, but it actually does a great job of describing directly to you the main reasons why using Gatsby is a great idea :)
 
 ### Related information:
 
 - [ReactJS](https://reactjs.org/)
-- [Gatsy Site Showcase](https://www.gatsbyjs.org/showcase/)
-- [Gatsby Case Study Blog posts](https://www.gatsbyjs.org/blog/tags/case-studies/)
-- [How Tinder is using WordPress with Gatsby](https://www.gatsbyjs.org/blog/2020-04-07-LA-2020-Boss/)
+- [Gatsy Site Showcase](https://www.gatsbyjs.com/showcase/)
+- [Gatsby Case Study Blog posts](https://www.gatsbyjs.com/blog/tags/case-studies/)
+- [How Tinder is using WordPress with Gatsby](https://www.gatsbyjs.com/blog/2020-04-07-la-2020-boss/)
 - [Zac Gordon on what Gatsby is and why to use it](https://www.youtube.com/watch?v=GuvAMcsoreI)
 
 ## Why use this plugin instead of X source plugin?

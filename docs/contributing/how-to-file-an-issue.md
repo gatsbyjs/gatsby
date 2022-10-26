@@ -14,7 +14,7 @@ For bug reports, include in your issue:
 - Follow the issue template prompting you for each entry
 - A [reproduction](/contributing/how-to-make-a-reproducible-test-case/) for debugging and taking action
 
-Please do not use the issue tracker for personal support requests. [Stack Overflow](https://stackoverflow.com/questions/ask?tags=gatsby) (**gatsby** tag) and the [Gatsby Discord](https://gatsby.dev/discord) are better places to get help.
+Please do not use the issue tracker for personal support requests. Browse the ["Get Support" section](/contributing/#get-support) to find a place for your questions.
 
 ## Special Note on Issues
 

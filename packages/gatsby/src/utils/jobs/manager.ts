@@ -248,6 +248,11 @@ export function createInternalJob(
   return internalJob
 }
 
+const activitiesForJobTypes = new Map<
+  string,
+  ReturnType<typeof reporter.createProgress>
+>()
+
 /**
  * Creates a job
  */
@@ -269,6 +274,22 @@ export async function enqueueJob(
   if (!activityForJobs) {
     activityForJobs = reporter.phantomActivity(`Running jobs v2`)
     activityForJobs!.start()
+  }
+
+  const jobType = `${job.plugin.name}.${job.name}`
+
+  let activityForJobsProgress = activitiesForJobTypes.get(jobType)
+
+  if (!activityForJobsProgress) {
+    activityForJobsProgress = reporter.createProgress(
+      `Running ${jobType} jobs`,
+      1,
+      0
+    )
+    activityForJobsProgress.start()
+    activitiesForJobTypes.set(jobType, activityForJobsProgress)
+  } else {
+    activityForJobsProgress.total++
   }
 
   const deferred = pDefer<Record<string, unknown>>()
@@ -296,6 +317,8 @@ export async function enqueueJob(
       // eslint-disable-next-line require-atomic-updates
       activityForJobs = null
     }
+
+    activityForJobsProgress.tick()
   }
 
   return deferred.promise
@@ -320,10 +343,17 @@ export function removeInProgressJob(contentDigest: string): void {
 /**
  * Wait for all processing jobs to have finished
  */
-export function waitUntilAllJobsComplete(): Promise<void> {
-  return hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
+export async function waitUntilAllJobsComplete(): Promise<void> {
+  await (hasActiveJobs ? hasActiveJobs.promise : Promise.resolve())
+  for (const progressActivity of activitiesForJobTypes.values()) {
+    progressActivity.end()
+  }
+  activitiesForJobTypes.clear()
 }
 
+/**
+ * Wait for specific jobs for engines
+ */
 export async function waitJobs(jobDigests: Set<string>): Promise<void> {
   const promises: Array<Promise<any>> = []
   for (const [digest, job] of jobsInProcess) {

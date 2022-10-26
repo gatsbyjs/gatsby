@@ -4,9 +4,9 @@ title: Javascript tooling
 
 Gatsby offers support for the standard Javascript toolchain.
 
-## Typescript
+## TypeScript
 
-Gatsby supports [Typescript](https://www.typescriptlang.org/) automatically, with the [ability to modify the default configuration](/plugins/gatsby-plugin-typescript/) if desired.
+Gatsby supports [TypeScript](https://www.typescriptlang.org/) automatically, with the [ability to modify the default configuration](/plugins/gatsby-plugin-typescript/) if desired. Gatsby also supports [GraphQL Typegen](/docs/how-to/local-development/graphql-typegen).
 
 ## Bundling and transpilation
 

@@ -58,6 +58,8 @@ When you run `npm run deploy` all contents of the `public` folder will be moved 
 
 **Note**: To select `main` or `gh-pages` as your publishing source, you must have the branch present in your repository. If you don't have a `main` or `gh-pages` branch, you can create them and then return to source settings to change your publishing source.
 
+> ⚠️ As your repository will grow and get more commits, so will your `gh-pages` branch. This might slow down operations like clone and increase disk usage. To address this, use the `-f` option from the `gh-pages` command to avoid keeping an history of the GitHub Pages branch.
+
 ### Deploying to a GitHub Pages subdomain at github.io
 
 For a repository named like `username.github.io`, you don't need to specify `pathPrefix` and your website needs to be pushed to the `main` branch.
@@ -69,7 +71,7 @@ For a repository named like `username.github.io`, you don't need to specify `pat
 >      `git checkout -b source main`
 >   2. Change the default branch in your repository settings ("Branches" menu item) from `main` to `source`
 > - **Note**: GitHub Pages lets you use any branch for deployment, see [this docs page](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#choosing-a-publishing-source) on how to do this. This means you do not necessarily have to change your default branch.
-> - Have a separate repository for your source code (so `username.github.io` is used only for deployment and not really for tracking your source code)
+> - Have a separate repository for your source code (so `username.github.io` is used only for deployment and not really for tracking your source code). If you go down this route, you will need to add an extra option for `--repo <repo>` (works for https and git urls) in the gh-pages command below.
 
 ```json:title=package.json
 {

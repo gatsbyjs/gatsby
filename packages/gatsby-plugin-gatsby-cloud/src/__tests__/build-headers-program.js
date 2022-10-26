@@ -173,28 +173,75 @@ describe(`build-headers-program`, () => {
         ],
       ]),
       manifest: {
-        "main.js": `render-page.js`,
-        "main.js.map": `render-page.js.map`,
+        "styles.css": `styles.457773932d52d28da380.css`,
+        "component---src-pages-index-js-26a67c2d54e22240db63.js.LICENSE.txt": `component---src-pages-index-js-26a67c2d54e22240db63.js.LICENSE.txt`,
+        "framework-a41a30b6052f08f79325.js.LICENSE.txt": `framework-a41a30b6052f08f79325.js.LICENSE.txt`,
+        "polyfill.js": `polyfill-4718f0fec20e0d09d7f5.js`,
+        "app.js": `app-202e78811fb4d1d6d998.js`,
+        "webpack-runtime.js": `webpack-runtime-18462e4afe5829a83f1b.js`,
+        "231-b2d35ff9bb1952aa22d1.js": `231-b2d35ff9bb1952aa22d1.js`,
+        "711-90491aa56de138c82516.js": `711-90491aa56de138c82516.js`,
+        "610-d963273663ee496bfa3a.js": `610-d963273663ee496bfa3a.js`,
+        "component---src-pages-404-js.js": `component---src-pages-404-js-d759e3996ab46608f6c5.js`,
+        "component---src-pages-index-js.js": `component---src-pages-index-js-26a67c2d54e22240db63.js`,
+        "component---src-pages-page-2-js.js": `component---src-pages-page-2-js-83a32ea3ed36467d8d97.js`,
+        "component---src-pages-using-ssr-js.js": `component---src-pages-using-ssr-js-e18b033ba44535ce7f46.js`,
+        "component---src-pages-using-typescript-tsx.js": `component---src-pages-using-typescript-tsx-d10dd35a93bae22e7132.js`,
+        "component---src-templates-using-dsg-js.js": `component---src-templates-using-dsg-js-481010e9ba77145ad5d4.js`,
+        "framework.js": `framework-a41a30b6052f08f79325.js`,
+        "commons.js": `commons-c57ec1ecb0a3a896bcbd.js`,
+        "polyfill-4718f0fec20e0d09d7f5.js.map": `polyfill-4718f0fec20e0d09d7f5.js.map`,
+        "app-202e78811fb4d1d6d998.js.map": `app-202e78811fb4d1d6d998.js.map`,
+        "webpack-runtime-18462e4afe5829a83f1b.js.map": `webpack-runtime-18462e4afe5829a83f1b.js.map`,
+        "231-b2d35ff9bb1952aa22d1.js.map": `231-b2d35ff9bb1952aa22d1.js.map`,
+        "711-90491aa56de138c82516.js.map": `711-90491aa56de138c82516.js.map`,
+        "610-d963273663ee496bfa3a.js.map": `610-d963273663ee496bfa3a.js.map`,
+        "component---src-pages-404-js-d759e3996ab46608f6c5.js.map": `component---src-pages-404-js-d759e3996ab46608f6c5.js.map`,
+        "component---src-pages-index-js-26a67c2d54e22240db63.js.map": `component---src-pages-index-js-26a67c2d54e22240db63.js.map`,
+        "component---src-pages-page-2-js-83a32ea3ed36467d8d97.js.map": `component---src-pages-page-2-js-83a32ea3ed36467d8d97.js.map`,
+        "component---src-pages-using-ssr-js-e18b033ba44535ce7f46.js.map": `component---src-pages-using-ssr-js-e18b033ba44535ce7f46.js.map`,
+        "component---src-pages-using-typescript-tsx-d10dd35a93bae22e7132.js.map": `component---src-pages-using-typescript-tsx-d10dd35a93bae22e7132.js.map`,
+        "component---src-templates-using-dsg-js-481010e9ba77145ad5d4.js.map": `component---src-templates-using-dsg-js-481010e9ba77145ad5d4.js.map`,
+        "framework-a41a30b6052f08f79325.js.map": `framework-a41a30b6052f08f79325.js.map`,
+        "commons-c57ec1ecb0a3a896bcbd.js.map": `commons-c57ec1ecb0a3a896bcbd.js.map`,
+        polyfill: [
+          `webpack-runtime-18462e4afe5829a83f1b.js`,
+          `polyfill-4718f0fec20e0d09d7f5.js`,
+        ],
         app: [
-          `webpack-runtime-acaa8994f1f704475e21.js`,
-          `styles.1025963f4f2ec7abbad4.css`,
-          `styles-565f081c8374bbda155f.js`,
-          `app-f33c13590352da20930f.js`,
-        ],
-        "component---node-modules-gatsby-plugin-offline-app-shell-js": [
-          `component---node-modules-gatsby-plugin-offline-app-shell-js-78f9e4dea04737fa062d.js`,
-        ],
-        "component---src-templates-blog-post-js": [
-          `0-0180cd94ef2497ac7db8.js`,
-          `component---src-templates-blog-post-js-517987eae96e75cddbe7.js`,
+          `webpack-runtime-18462e4afe5829a83f1b.js`,
+          `framework-a41a30b6052f08f79325.js`,
+          `app-202e78811fb4d1d6d998.js`,
         ],
         "component---src-pages-404-js": [
-          `0-0180cd94ef2497ac7db8.js`,
-          `component---src-pages-404-js-53e6c51a5a7e73090f50.js`,
+          `styles.457773932d52d28da380.css`,
+          `commons-c57ec1ecb0a3a896bcbd.js`,
+          `component---src-pages-404-js-d759e3996ab46608f6c5.js`,
         ],
         "component---src-pages-index-js": [
-          `0-0180cd94ef2497ac7db8.js`,
-          `component---src-pages-index-js-0bdd01c77ee09ef0224c.js`,
+          `styles.457773932d52d28da380.css`,
+          `commons-c57ec1ecb0a3a896bcbd.js`,
+          `component---src-pages-index-js-26a67c2d54e22240db63.js`,
+        ],
+        "component---src-pages-page-2-js": [
+          `styles.457773932d52d28da380.css`,
+          `commons-c57ec1ecb0a3a896bcbd.js`,
+          `component---src-pages-page-2-js-83a32ea3ed36467d8d97.js`,
+        ],
+        "component---src-pages-using-ssr-js": [
+          `styles.457773932d52d28da380.css`,
+          `commons-c57ec1ecb0a3a896bcbd.js`,
+          `component---src-pages-using-ssr-js-e18b033ba44535ce7f46.js`,
+        ],
+        "component---src-pages-using-typescript-tsx": [
+          `styles.457773932d52d28da380.css`,
+          `commons-c57ec1ecb0a3a896bcbd.js`,
+          `component---src-pages-using-typescript-tsx-d10dd35a93bae22e7132.js`,
+        ],
+        "component---src-templates-using-dsg-js": [
+          `styles.457773932d52d28da380.css`,
+          `commons-c57ec1ecb0a3a896bcbd.js`,
+          `component---src-templates-using-dsg-js-481010e9ba77145ad5d4.js`,
         ],
       },
       pathPrefix: ``,
@@ -218,10 +265,19 @@ describe(`build-headers-program`, () => {
       `utf8`
     )
     expect(output).toMatchSnapshot()
-    expect(output).toMatch(/app-data\.json/)
-    expect(output).toMatch(/page-data\.json/)
-    // we should only check app-data once which leads to 1 time
-    expect(fs.existsSync).toBeCalledTimes(1)
+    expect(output).not.toMatch(/app-data\.json/)
+    expect(output).not.toMatch(/page-data\.json/)
+
+    const parsedOutput = JSON.parse(output)
+    // Making sure split chunk get caching headers
+    // even if manifest doesn't indicate it should
+    // be part of app or page-template group.
+    expect(parsedOutput?.[`/231-b2d35ff9bb1952aa22d1.js`])
+      .toMatchInlineSnapshot(`
+      Array [
+        "Cache-Control: public, max-age=31536000, immutable",
+      ]
+    `)
   })
 
   it(`with manifest['pages-manifest']`, async () => {
@@ -254,7 +310,7 @@ describe(`build-headers-program`, () => {
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/\/pages-manifest-ab11f09e0ca7ecd3b43e\.js/g)
     expect(output).not.toMatch(/\/app-data\.json/g)
-    expect(output).toMatch(/\/page-data\.json/g)
+    expect(output).not.toMatch(/\/page-data\.json/g)
     expect(output).not.toMatch(/\/undefined/g)
   })
 
@@ -321,6 +377,30 @@ describe(`build-headers-program`, () => {
     expect(
       await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
     ).toMatchSnapshot()
+  })
+
+  it(`with security headers in preview mode`, async () => {
+    const OLD_ENV = process.env
+    process.env = {
+      ...OLD_ENV,
+      GATSBY_IS_PREVIEW: `true`,
+    }
+
+    const pluginData = await createPluginData()
+
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+      mergeSecurityHeaders: true,
+    }
+    const buildHeadersProgram = require(`../build-headers-program`).default
+    await buildHeadersProgram(pluginData, pluginOptions)
+
+    expect(
+      await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
+    ).toMatchSnapshot()
+
+    jest.resetModules()
+    process.env = { ...OLD_ENV }
   })
 
   it(`should emit headers via ipc`, async () => {

@@ -1,5 +1,5 @@
 const path = require(`path`)
-const { SourceMapConsumer } = require(`source-map`)
+const { TraceMap } = require(`@jridgewell/trace-mapping`)
 const execa = require(`execa`)
 const fs = require(`fs-extra`)
 
@@ -30,7 +30,7 @@ describe(`polyfills`, () => {
 
   afterAll(() => fs.remove(path.join(packageRoot, tmpDir)))
 
-  it(`has the correct polyfills`, done => {
+  it(`has the correct polyfills`, () => {
     const polyfills = require(`../exclude`).LEGACY_POLYFILLS
     const polyfillMap = path.join(packageRoot, tmpDir, `polyfills.js.map`)
     expect(fs.existsSync(polyfillMap)).toBe(true)
@@ -46,18 +46,14 @@ describe(`polyfills`, () => {
     })
 
     const polyfillMapSource = fs.readFileSync(polyfillMap, `utf8`)
-    SourceMapConsumer.with(polyfillMapSource, null, consumer => {
-      const sources = consumer.sources.map(source =>
-        source.replace(/.*\/node_modules\//, ``)
-      )
+    const tracer = new TraceMap(polyfillMapSource)
+    const sources = tracer.sources.map(source =>
+      source.replace(/.*\/node_modules\//, ``)
+    )
 
-      // check if all polyfills are in the bundle
-      expect(sources).toEqual(
-        expect.arrayContaining(
-          fileMap.map(file => expect.stringContaining(file))
-        )
-      )
-      done()
-    })
+    // check if all polyfills are in the bundle
+    expect(sources).toEqual(
+      expect.arrayContaining(fileMap.map(file => expect.stringContaining(file)))
+    )
   })
 })

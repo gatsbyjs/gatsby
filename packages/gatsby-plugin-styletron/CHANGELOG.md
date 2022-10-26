@@ -3,6 +3,168 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.24.0/packages/gatsby-plugin-styletron) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.23.0/packages/gatsby-plugin-styletron) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.22.0/packages/gatsby-plugin-styletron) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.21.0/packages/gatsby-plugin-styletron) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-plugin-styletron [#36279](https://github.com/gatsbyjs/gatsby/issues/36279) ([587a8f3](https://github.com/gatsbyjs/gatsby/commit/587a8f3ef9aeb410344cb6b84192681a3ec2c83c))
+
+## [7.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.20.0/packages/gatsby-plugin-styletron) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.19.0/packages/gatsby-plugin-styletron) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.18.0/packages/gatsby-plugin-styletron) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.17.0/packages/gatsby-plugin-styletron) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.16.0/packages/gatsby-plugin-styletron) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.15.0/packages/gatsby-plugin-styletron) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.14.0/packages/gatsby-plugin-styletron) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.13.0/packages/gatsby-plugin-styletron) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+### [7.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.12.1/packages/gatsby-plugin-styletron) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.12.0/packages/gatsby-plugin-styletron) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.11.0/packages/gatsby-plugin-styletron) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.10.0/packages/gatsby-plugin-styletron) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.9.0/packages/gatsby-plugin-styletron) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [7.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.8.0/packages/gatsby-plugin-styletron) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.7.0/packages/gatsby-plugin-styletron) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.6.0/packages/gatsby-plugin-styletron) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.5.0/packages/gatsby-plugin-styletron) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.4.0/packages/gatsby-plugin-styletron) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.3.0/packages/gatsby-plugin-styletron) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.2.0/packages/gatsby-plugin-styletron) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- update dependency styletron-react to ^6.0.2 for gatsby-plugin-styletron [#33756](https://github.com/gatsbyjs/gatsby/issues/33756) ([754e9af](https://github.com/gatsbyjs/gatsby/commit/754e9af3c8d728ba1c41010352e432b83deb5018))
+
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.1.0/packages/gatsby-plugin-styletron) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.0.0/packages/gatsby-plugin-styletron) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@6.14.0/packages/gatsby-plugin-styletron) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

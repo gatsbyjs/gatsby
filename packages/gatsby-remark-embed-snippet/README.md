@@ -4,7 +4,7 @@ Embeds the contents of specified files as code snippets.
 
 ## Installation
 
-**Note**: This plugin depends on [gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/) and [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/) plugins
+**Note**: This plugin depends on [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/) and [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/) plugins
 
 ```shell
 npm install gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer-remark prismjs
@@ -14,7 +14,7 @@ npm install gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer
 
 > **Important**: _You must add `gatsby-remark-embed-snippet` before `gatsby-remark-prismjs` in your plugins array!_
 > Otherwise, this plugin will not work because the code snippet files first need to be inlined before they can be transformed into code blocks.
-> For more information, see [gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/).
+> For more information, see [gatsby-remark-prismjs](https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/).
 
 To use `gatsby-remark-embed-snippet` plugin:
 

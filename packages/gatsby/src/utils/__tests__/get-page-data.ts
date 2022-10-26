@@ -60,6 +60,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    verbose: jest.fn(),
   }
 })
 
@@ -138,7 +139,7 @@ describe(`get-page-data-util`, () => {
 
   describe(`timeouts and retries`, () => {
     it(`it times out eventually (default timeout)`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers(`legacy`)
 
       createPage(Pages.foo)
       const resultPromise = getPageData(Pages.foo.path)
@@ -168,7 +169,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`it times out eventually (7 second timeout - 5s + 2s)`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers(`legacy`)
 
       createPage(Pages.foo)
       const resultPromise = getPageData(Pages.foo.path, 7000)
@@ -189,7 +190,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`Can resolve after retry`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers(`legacy`)
 
       expect(clearTimeout).toHaveBeenCalledTimes(0)
 
@@ -224,7 +225,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`Can fallback to stale page-data if it exists (better to potentially unblock user to start doing some work than fail completely)`, async () => {
-      jest.useFakeTimers()
+      jest.useFakeTimers(`legacy`)
 
       writePageDataFileToFs(Pages.foo, pageDataStaleContent)
 
@@ -322,7 +323,7 @@ describe(`get-page-data-util`, () => {
   describe(`Query on demand`, () => {
     let programToRestore
     beforeAll(() => {
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
+      process.env.GATSBY_QUERY_ON_DEMAND = `true`
       programToRestore = store.getState().program
       store.dispatch({
         type: `SET_PROGRAM`,
@@ -333,7 +334,7 @@ describe(`get-page-data-util`, () => {
       })
     })
     afterAll(() => {
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      delete process.env.GATSBY_QUERY_ON_DEMAND
       store.dispatch({
         type: `SET_PROGRAM`,
         payload: programToRestore,
@@ -341,6 +342,7 @@ describe(`get-page-data-util`, () => {
     })
 
     it(`Will resolve with fresh results if query result was marked dirty while resolving request`, async () => {
+      jest.useFakeTimers(`legacy`)
       createPage(Pages.foo)
       startPageQuery(Pages.foo)
       finishQuery(Pages.foo, queryResultStaleContent)
@@ -406,7 +408,7 @@ function finishQuery(
     queryHash: `queryHash`,
   }
 
-  savePageQueryResult(__dirname, page.path!, JSON.stringify(jsonObject))
+  savePageQueryResult(page.path!, JSON.stringify(jsonObject))
 
   store.dispatch(
     pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)

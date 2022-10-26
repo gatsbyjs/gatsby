@@ -3,6 +3,324 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.3.0/packages/gatsby-plugin-mdx) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Features
+
+- add partial hydration [#36485](https://github.com/gatsbyjs/gatsby/issues/36485) ([c073bbe](https://github.com/gatsbyjs/gatsby/commit/c073bbea40379adc62bd891da9f65ff2756b120b))
+
+#### Bug Fixes
+
+- Multiple root query error [#36525](https://github.com/gatsbyjs/gatsby/issues/36525) ([a922943](https://github.com/gatsbyjs/gatsby/commit/a9229439ec2de823148096991d5fab9b2f2bae6e))
+- Add React import when not defined [#36595](https://github.com/gatsbyjs/gatsby/issues/36595) ([34df27a](https://github.com/gatsbyjs/gatsby/commit/34df27a3bd278f49a9b81cdb59146a79e8841669))
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+- Update "headings" instructions [#36593](https://github.com/gatsbyjs/gatsby/issues/36593) ([b1b83c1](https://github.com/gatsbyjs/gatsby/commit/b1b83c18a95a2ef79b6101b28d9295ef20b97d4b))
+
+### [4.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.2.1/packages/gatsby-plugin-mdx) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.2.0/packages/gatsby-plugin-mdx) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- ci pipeline [#36544](https://github.com/gatsbyjs/gatsby/issues/36544) ([1125e58](https://github.com/gatsbyjs/gatsby/commit/1125e58731249257123d692522bed1a1ddc32383))
+
+#### Chores
+
+- Fix `gatsby-source-filesystem` typo Fix [#36471](https://github.com/gatsbyjs/gatsby/issues/36471) ([e8d7446](https://github.com/gatsbyjs/gatsby/commit/e8d744617d07c39c053ac437b2b024a26e1c3394))
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.1.1/packages/gatsby-plugin-mdx) (2022-09-08)
+
+#### Bug Fixes
+
+- ci pipeline [#36544](https://github.com/gatsbyjs/gatsby/issues/36544) [#36568](https://github.com/gatsbyjs/gatsby/issues/36568) ([8e10e1c](https://github.com/gatsbyjs/gatsby/commit/8e10e1c6dbf24f506e1572d9eff9c4a39348e789))
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.1.0/packages/gatsby-plugin-mdx) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+#### Bug Fixes
+
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) ([65739fc](https://github.com/gatsbyjs/gatsby/commit/65739fcc1af12d0f878820a589de7dde5964b93d))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@4.0.0/packages/gatsby-plugin-mdx) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Bug Fixes
+
+- Hashing and pluginOptions [#36387](https://github.com/gatsbyjs/gatsby/issues/36387) [#36395](https://github.com/gatsbyjs/gatsby/issues/36395) ([3253a38](https://github.com/gatsbyjs/gatsby/commit/3253a3860c9c74bce23c8c2fd1df651e549566b9))
+
+#### Chores
+
+- Add note about rehype-slug-custom-id ([bc80c23](https://github.com/gatsbyjs/gatsby/commit/bc80c23081943407dbd84d8baf38d466f26c2290))
+- Update .gitignore ([0705ac7](https://github.com/gatsbyjs/gatsby/commit/0705ac7e5e022e46509beb99eadb617541c5e637))
+
+#### Other Changes
+
+- BREAKING CHANGE(gatsby-plugin-mdx): MDX v2 [#35650](https://github.com/gatsbyjs/gatsby/issues/35650) ([c92db36](https://github.com/gatsbyjs/gatsby/commit/c92db36642268d1ee50c11ea568f836c7e5b4a03))
+
+## [3.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.20.0/packages/gatsby-plugin-mdx) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.19.0/packages/gatsby-plugin-mdx) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.18.1/packages/gatsby-plugin-mdx) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.18.0/packages/gatsby-plugin-mdx) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.17.0/packages/gatsby-plugin-mdx) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+#### Bug Fixes
+
+- Do not leak frontmatter into page [#35859](https://github.com/gatsbyjs/gatsby/issues/35859) ([5c7e2a6](https://github.com/gatsbyjs/gatsby/commit/5c7e2a608324a49150427c3d30b3b13a0b03c792))
+- don't allow JS frontmatter by default [#35830](https://github.com/gatsbyjs/gatsby/issues/35830) ([b3690fb](https://github.com/gatsbyjs/gatsby/commit/b3690fbb70cc4470f6f17595f59d83146a443ffb))
+
+### [3.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.16.1/packages/gatsby-plugin-mdx) (2022-06-10)
+
+#### Bug Fixes
+
+- Do not leak frontmatter into page [#35859](https://github.com/gatsbyjs/gatsby/issues/35859) [#35912](https://github.com/gatsbyjs/gatsby/issues/35912) ([36af10e](https://github.com/gatsbyjs/gatsby/commit/36af10ee78fb6817ec053c12878e579238c82ef6))
+
+## [3.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.16.0/packages/gatsby-plugin-mdx) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Bug Fixes
+
+- don't allow JS frontmatter by default [#35830](https://github.com/gatsbyjs/gatsby/issues/35830) [#35833](https://github.com/gatsbyjs/gatsby/issues/35833) ([b982eb7](https://github.com/gatsbyjs/gatsby/commit/b982eb7440984c7905ddf5958b871c1578f19716))
+
+### [3.15.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.15.2/packages/gatsby-plugin-mdx) (2022-06-02)
+
+#### Bug Fixes
+
+- don't allow JS frontmatter by default [#35830](https://github.com/gatsbyjs/gatsby/issues/35830) [#35832](https://github.com/gatsbyjs/gatsby/issues/35832) ([e916cf8](https://github.com/gatsbyjs/gatsby/commit/e916cf8a0e24b9c870edd3d089611e2adb899d4e))
+
+### [3.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.15.1/packages/gatsby-plugin-mdx) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.15.0/packages/gatsby-plugin-mdx) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.14.0/packages/gatsby-plugin-mdx) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^10.1.0 [#34976](https://github.com/gatsbyjs/gatsby/issues/34976) ([10752ed](https://github.com/gatsbyjs/gatsby/commit/10752ed325ac0ebc2655b994862f66abe072e09f))
+- update dependency core-js to ^3.22.3 [#35541](https://github.com/gatsbyjs/gatsby/issues/35541) ([1a4d0ea](https://github.com/gatsbyjs/gatsby/commit/1a4d0eaaa9a0c8e322db8eb7509d0d62e3e432c5))
+- update dependency core-js to ^3.22.2 [#33381](https://github.com/gatsbyjs/gatsby/issues/33381) ([f4a7ca5](https://github.com/gatsbyjs/gatsby/commit/f4a7ca57b3b5e0a45bb883d13065e7df3ec8a324))
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.13.0/packages/gatsby-plugin-mdx) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.12.1/packages/gatsby-plugin-mdx) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.12.0/packages/gatsby-plugin-mdx) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.11.1/packages/gatsby-plugin-mdx) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.11.0/packages/gatsby-plugin-mdx) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+#### Bug Fixes
+
+- compatibility with react rc 2 [#35108](https://github.com/gatsbyjs/gatsby/issues/35108) ([0c61265](https://github.com/gatsbyjs/gatsby/commit/0c6126574d203c0e6fef173b76859cdcab2f13aa))
+
+#### Chores
+
+- replace all uses of gatsbyjs.org with gatsbyjs.com [#35101](https://github.com/gatsbyjs/gatsby/issues/35101) ([16cff41](https://github.com/gatsbyjs/gatsby/commit/16cff413e154dc4e74fc5be631d52c76273e5cbc))
+
+### [3.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.10.2/packages/gatsby-plugin-mdx) (2022-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.10.1/packages/gatsby-plugin-mdx) (2022-03-18)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.10.0/packages/gatsby-plugin-mdx) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.9.1/packages/gatsby-plugin-mdx) (2022-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.9.0/packages/gatsby-plugin-mdx) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+### [3.8.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.8.2/packages/gatsby-plugin-mdx) (2022-03-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.8.1/packages/gatsby-plugin-mdx) (2022-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.8.0/packages/gatsby-plugin-mdx) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+#### Chores
+
+- Use MDX v1 for install instructions [#34774](https://github.com/gatsbyjs/gatsby/issues/34774) ([f720571](https://github.com/gatsbyjs/gatsby/commit/f7205719d41e767415ea9c15aebf606e62813b7a))
+
+### [3.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.7.1/packages/gatsby-plugin-mdx) (2022-02-15)
+
+#### Chores
+
+- Use MDX v1 for install instructions [#34774](https://github.com/gatsbyjs/gatsby/issues/34774) [#34817](https://github.com/gatsbyjs/gatsby/issues/34817) ([d149291](https://github.com/gatsbyjs/gatsby/commit/d1492917a4ed051de2f039c11e2b0ee36389f5a0))
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.7.0/packages/gatsby-plugin-mdx) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.6.0/packages/gatsby-plugin-mdx) (2022-01-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.5.2/packages/gatsby-plugin-mdx) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.5.1/packages/gatsby-plugin-mdx) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.5.0/packages/gatsby-plugin-mdx) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.4.0/packages/gatsby-plugin-mdx) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.3.0/packages/gatsby-plugin-mdx) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.2.0/packages/gatsby-plugin-mdx) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- allow not defining entry for subplugins [#33900](https://github.com/gatsbyjs/gatsby/issues/33900) ([f87164f](https://github.com/gatsbyjs/gatsby/commit/f87164f6af6285365ec2098d6233313a6b4c0982))
+
+#### Other Changes
+
+- initial [#33802](https://github.com/gatsbyjs/gatsby/issues/33802) ([a298106](https://github.com/gatsbyjs/gatsby/commit/a29810638179b3acfbb8b7e0fe87aa0b11576b94))
+
+### [3.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.4/packages/gatsby-plugin-mdx) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.3/packages/gatsby-plugin-mdx) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.2/packages/gatsby-plugin-mdx) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.1/packages/gatsby-plugin-mdx) (2021-11-09)
+
+#### Bug Fixes
+
+- allow not defining entry for subplugins [#33900](https://github.com/gatsbyjs/gatsby/issues/33900) [#33909](https://github.com/gatsbyjs/gatsby/issues/33909) ([4975ee2](https://github.com/gatsbyjs/gatsby/commit/4975ee26561a520daf8e2082479d21b2062a862e))
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.0/packages/gatsby-plugin-mdx) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- mkdirp needs to be listed as a direct depende… [#33724](https://github.com/gatsbyjs/gatsby/issues/33724) ([b9e598d](https://github.com/gatsbyjs/gatsby/commit/b9e598dfb2aa2381a437c74ab98fe9f954e4aa6e))
+
+#### Chores
+
+- Fix grammar Fix [#33485](https://github.com/gatsbyjs/gatsby/issues/33485) ([9d8413c](https://github.com/gatsbyjs/gatsby/commit/9d8413c1dac7dbaa8446cfd0411344f356cd93b7))
+
+#### Other Changes
+
+- initial [#33802](https://github.com/gatsbyjs/gatsby/issues/33802) [#33818](https://github.com/gatsbyjs/gatsby/issues/33818) ([6d30b1f](https://github.com/gatsbyjs/gatsby/commit/6d30b1f785dec08f6953534b66c5dd37b765c305))
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.0.0/packages/gatsby-plugin-mdx) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- properly pass plugin options to subplugins [#33537](https://github.com/gatsbyjs/gatsby/issues/33537) ([83396a5](https://github.com/gatsbyjs/gatsby/commit/83396a5a91eb2f329d4b5e49ef5544106d0e380f))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
+
 ## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@2.14.0/packages/gatsby-plugin-mdx) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

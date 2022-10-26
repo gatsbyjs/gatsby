@@ -7,6 +7,7 @@ module.exports = runApisInSteps({
     steps.setGatsbyApiToState,
     steps.setErrorMap,
     steps.tempPreventMultipleInstances,
+    steps.setRequestHeaders,
   ],
 
   pluginOptionsSchema: steps.pluginOptionsSchema,
@@ -37,6 +38,7 @@ module.exports = runApisInSteps({
   ],
 
   onCreateDevServer: [
+    steps.imageRoutes,
     steps.setImageNodeIdCache,
     steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,

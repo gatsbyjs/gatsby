@@ -5,9 +5,9 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk, truncate } from "lodash"
 import { build, watch } from "../utils/webpack/bundle"
 import * as path from "path"
+import fastq from "fastq"
 
 import { emitter, store } from "../redux"
-import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
@@ -19,9 +19,14 @@ import { IProgram, Stage } from "./types"
 import { ROUTES_DIRECTORY } from "../constants"
 import { PackageJson } from "../.."
 import { IPageDataWithQueryResult } from "../utils/page-data"
-import { processNodeManifests } from "../utils/node-manifest"
+import { getPublicPath } from "../utils/get-public-path"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { stitchSliceForAPage } from "../utils/slices/stitching"
+import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
+import { getPageMode } from "../utils/page-mode"
+import { extractUndefinedGlobal } from "../utils/extract-undefined-global"
+
 type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -47,20 +52,83 @@ interface IBuildRendererResult {
 }
 
 let devssrWebpackCompiler: webpack.Watching | undefined
-let needToRecompileSSRBundle = true
+let SSRBundleReceivedInvalidEvent = true
+let SSRBundleWillInvalidate = false
+
+export function devSSRWillInvalidate(): void {
+  // we only get one `invalid` callback, so if we already
+  // set this to true, we can't really await next `invalid` event
+  if (!SSRBundleReceivedInvalidEvent) {
+    SSRBundleWillInvalidate = true
+  }
+}
+
+let activeRecompilations = 0
+
 export const getDevSSRWebpack = (): {
-  devssrWebpackWatcher: IWebpackWatchingPauseResume
-  devssrWebpackCompiler: webpack.Compiler
+  recompileAndResumeWatching: (
+    allowTimedFallback: boolean
+  ) => Promise<() => void>
   needToRecompileSSRBundle: boolean
 } => {
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
 
-  return {
-    devssrWebpackWatcher: devssrWebpackCompiler as webpack.Watching,
-    devssrWebpackCompiler: (devssrWebpackCompiler as webpack.Watching).compiler,
-    needToRecompileSSRBundle,
+  const watcher = devssrWebpackCompiler as webpack.Watching
+  const compiler = (devssrWebpackCompiler as webpack.Watching).compiler
+  if (watcher && compiler) {
+    return {
+      recompileAndResumeWatching: async function recompileAndResumeWatching(
+        allowTimedFallback: boolean
+      ): Promise<() => void> {
+        let isResolved = false
+        return await new Promise<() => void>(resolve => {
+          function stopWatching(): void {
+            activeRecompilations--
+            if (activeRecompilations === 0) {
+              watcher.suspend()
+            }
+          }
+          let timeout
+          function finish(): void {
+            emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
+            if (!isResolved) {
+              isResolved = true
+              resolve(stopWatching)
+            }
+            if (timeout) {
+              clearTimeout(timeout)
+            }
+          }
+          emitter.on(`DEV_SSR_COMPILATION_DONE`, finish)
+          // we reset it before we start compilation to be able to catch any invalid events
+          SSRBundleReceivedInvalidEvent = false
+          if (activeRecompilations === 0) {
+            watcher.resume()
+          }
+          activeRecompilations++
+
+          if (allowTimedFallback) {
+            // Timeout after 1.5s.
+            timeout = setTimeout(() => {
+              if (!isResolved) {
+                isResolved = true
+                resolve(stopWatching)
+              }
+            }, 1500)
+          }
+        })
+      },
+      needToRecompileSSRBundle:
+        SSRBundleReceivedInvalidEvent || SSRBundleWillInvalidate,
+    }
+  } else {
+    return {
+      needToRecompileSSRBundle: false,
+      recompileAndResumeWatching: (): Promise<() => void> =>
+        Promise.resolve((): void => {}),
+    }
   }
 }
 
@@ -84,18 +152,22 @@ const runWebpack = (
       // because of this line we can't use our watch helper
       // These things should use emitter
       compiler.hooks.invalid.tap(`ssr file invalidation`, () => {
-        needToRecompileSSRBundle = true
+        SSRBundleReceivedInvalidEvent = true
+        SSRBundleWillInvalidate = false // we were waiting for this event, we are no longer waiting for it
       })
 
+      let isFirstCompile = true
       const watcher = compiler.watch(
         {
           ignored: /node_modules/,
         },
         (err, stats) => {
           // this runs multiple times
-          needToRecompileSSRBundle = false
           emitter.emit(`DEV_SSR_COMPILATION_DONE`)
-          watcher.suspend()
+          if (isFirstCompile) {
+            watcher.suspend()
+            isFirstCompile = false
+          }
 
           if (err) {
             return reject(err)
@@ -154,6 +226,26 @@ const doBuildRenderer = async (
   }
 }
 
+const doBuildPartialHydrationRenderer = async (
+  directory: string,
+  webpackConfig: webpack.Configuration,
+  stage: Stage
+): Promise<IBuildRendererResult> => {
+  const { stats, close } = await runWebpack(webpackConfig, stage, directory)
+  if (stats?.hasErrors()) {
+    reporter.panicOnBuild(
+      structureWebpackErrors(stage, stats.compilation.errors)
+    )
+  }
+
+  // render-page.js is hard coded in webpack.config
+  return {
+    rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
+    stats,
+    close,
+  }
+}
+
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
@@ -164,6 +256,54 @@ export const buildRenderer = async (
   })
 
   return doBuildRenderer(program.directory, config, stage)
+}
+
+export const buildPartialHydrationRenderer = async (
+  program: IProgram,
+  stage: Stage,
+  parentSpan?: IActivity
+): Promise<IBuildRendererResult> => {
+  const config = await webpackConfig(program, program.directory, stage, null, {
+    parentSpan,
+  })
+
+  for (const rule of config.module.rules) {
+    if (`./test.js`.match(rule.test)) {
+      if (!rule.use) {
+        rule.use = []
+      }
+      if (!Array.isArray(rule.use)) {
+        rule.use = [rule.use]
+      }
+      rule.use.push({
+        loader: require.resolve(
+          `../utils/webpack/loaders/partial-hydration-reference-loader`
+        ),
+      })
+    }
+  }
+
+  // TODO add caching
+  config.cache = false
+
+  config.output.path = path.join(
+    program.directory,
+    `.cache`,
+    `partial-hydration`
+  )
+
+  // require.resolve might fail the build if the package is not installed
+  // Instead of failing it'll be ignored
+  try {
+    // TODO collect javascript aliases to match the partial hydration bundle
+    config.resolve.alias[`gatsby-plugin-image`] = require.resolve(
+      `gatsby-plugin-image/dist/gatsby-image.browser.modern`
+    )
+  } catch (e) {
+    // do nothing
+  }
+
+  return doBuildPartialHydrationRenderer(program.directory, config, stage)
 }
 
 // TODO remove after v4 release and update cloud internals
@@ -178,6 +318,18 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
   previewErrors: Record<string, any>
+
+  slicesPropsPerPage: Record<
+    string,
+    Record<
+      string,
+      {
+        props: Record<string, unknown>
+        sliceName: string
+        hasChildren: boolean
+      }
+    >
+  >
 }
 
 const renderHTMLQueue = async (
@@ -199,6 +351,8 @@ const renderHTMLQueue = async (
 
   const sessionId = Date.now()
 
+  const { webpackCompilationHash } = store.getState()
+
   const renderHTML =
     stage === `build-html`
       ? workerPool.single.renderHTMLProd
@@ -213,6 +367,7 @@ const renderHTMLQueue = async (
         htmlComponentRendererPath,
         paths: pageSegment,
         sessionId,
+        webpackCompilationHash,
       })
 
       if (isPreview) {
@@ -227,7 +382,7 @@ const renderHTMLQueue = async (
                   pagePaths: [pagePath],
                 })
                 seenErrors.add(error.stack)
-                const prettyError = await createErrorFromString(
+                const prettyError = createErrorFromString(
                   error.stack,
                   `${htmlComponentRendererPath}.map`
                 )
@@ -266,6 +421,13 @@ const renderHTMLQueue = async (
           payload: pageSegment,
         })
 
+        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+          store.dispatch({
+            type: `SET_SLICES_PROPS`,
+            payload: htmlRenderMeta.slicesPropsPerPage,
+          })
+        }
+
         for (const [_pagePath, arrayOfUsages] of Object.entries(
           htmlRenderMeta.unsafeBuiltinsUsageByPagePath
         )) {
@@ -302,7 +464,7 @@ const renderHTMLQueue = async (
     }
 
     for (const unsafeBuiltinUsedStack of uniqueUnsafeBuiltinUsedStacks) {
-      const prettyError = await createErrorFromString(
+      const prettyError = createErrorFromString(
         unsafeBuiltinUsedStack,
         `${htmlComponentRendererPath}.map`
       )
@@ -314,6 +476,43 @@ const renderHTMLQueue = async (
       reporter.warn(warningMessage)
     }
   }
+}
+
+const renderPartialHydrationQueue = async (
+  workerPool: GatsbyWorkerPool,
+  activity: IActivity,
+  pages: Array<string>,
+  program: IProgram
+): Promise<void> => {
+  // We need to only pass env vars that are set programmatically in gatsby-cli
+  // to child process. Other vars will be picked up from environment.
+  const envVars: Array<[string, string | undefined]> = [
+    [`NODE_ENV`, process.env.NODE_ENV],
+    [`gatsby_executing_command`, process.env.gatsby_executing_command],
+    [`gatsby_log_level`, process.env.gatsby_log_level],
+  ]
+
+  const segments = chunk(pages, 50)
+  const sessionId = Date.now()
+
+  const { config } = store.getState()
+  const { assetPrefix, pathPrefix } = config
+
+  // Let the error bubble up
+  await Promise.all(
+    segments.map(async pageSegment => {
+      await workerPool.single.renderPartialHydrationProd({
+        envVars,
+        paths: pageSegment,
+        sessionId,
+        pathPrefix: getPublicPath({ assetPrefix, pathPrefix, ...program }),
+      })
+
+      if (activity && activity.tick) {
+        activity.tick(pageSegment.length)
+      }
+    })
+  )
 }
 
 class BuildHTMLError extends Error {
@@ -357,10 +556,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const prettyError = await createErrorFromString(
-      error.stack,
-      `${rendererPath}.map`
-    )
+    const prettyError = createErrorFromString(error, `${rendererPath}.map`)
 
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
@@ -407,23 +603,31 @@ export const buildHTML = async ({
   activity: IActivity
   workerPool: GatsbyWorkerPool
 }): Promise<void> => {
-  const { rendererPath } = await buildRenderer(program, stage, activity.span)
+  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
+
+  if (
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
+  ) {
+    await renderPartialHydrationQueue(workerPool, activity, pagePaths, program)
+  }
 }
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
   workerPool,
-  buildSpan,
+  parentSpan,
   program,
 }: {
   workerPool: GatsbyWorkerPool
-  buildSpan?: Span
+  parentSpan?: Span
   program: IBuildArgs
 }): Promise<{
   toRegenerate: Array<string>
   toDelete: Array<string>
 }> {
-  const pageRenderer = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+  const rendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
   const { toRegenerate, toDelete, toCleanupFromTrackedState } =
@@ -440,13 +644,13 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       toRegenerate.length,
       0,
       {
-        parentSpan: buildSpan,
+        parentSpan,
       }
     )
     buildHTMLActivityProgress.start()
     try {
       await doBuildPages(
-        pageRenderer,
+        rendererPath,
         toRegenerate,
         buildHTMLActivityProgress,
         workerPool,
@@ -456,15 +660,14 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       let id = `95313` // TODO: verify error IDs exist
       const context = {
         errorPath: err.context && err.context.path,
-        ref: ``,
+        undefinedGlobal: ``,
       }
 
-      const match = err.message.match(
-        /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
-      )
-      if (match && match[1]) {
+      const undefinedGlobal = extractUndefinedGlobal(err)
+
+      if (undefinedGlobal) {
         id = `95312`
-        context.ref = match[1]
+        context.undefinedGlobal = undefinedGlobal
       }
 
       buildHTMLActivityProgress.panic({
@@ -478,12 +681,60 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     reporter.info(`There are no new or changed html files to build.`)
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR !== `4` && !program.keepPageRenderer) {
+  if (
+    (process.env.GATSBY_PARTIAL_HYDRATION === `true` ||
+      process.env.GATSBY_PARTIAL_HYDRATION === `1`) &&
+    _CFLAGS_.GATSBY_MAJOR === `5`
+  ) {
+    if (toRegenerate.length > 0) {
+      const buildHTMLActivityProgress = reporter.createProgress(
+        `Building partial HTML for pages`,
+        toRegenerate.length,
+        0,
+        {
+          parentSpan,
+        }
+      )
+      try {
+        buildHTMLActivityProgress.start()
+        await renderPartialHydrationQueue(
+          workerPool,
+          buildHTMLActivityProgress,
+          toRegenerate,
+          program
+        )
+      } catch (error) {
+        // Generic error with page path and useful stack trace, accurate code frame can be a future improvement
+        buildHTMLActivityProgress.panic({
+          id: `80000`,
+          context: error.context,
+          error,
+        })
+      } finally {
+        buildHTMLActivityProgress.end()
+      }
+    }
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR !== `5` && !program.keepPageRenderer) {
     try {
-      await deleteRenderer(pageRenderer)
+      await deleteRenderer(rendererPath)
     } catch (err) {
       // pass through
     }
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    await buildSlices({
+      program,
+      workerPool,
+      parentSpan,
+    })
+
+    await stitchSlicesIntoPagesHTML({
+      publicDir: path.join(program.directory, `public`),
+      parentSpan,
+    })
   }
 
   if (toDelete.length > 0) {
@@ -497,8 +748,134 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     deletePageDataActivityTimer.end()
   }
 
-  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates in gatsby build AND inc builds.
-  await processNodeManifests()
-
   return { toRegenerate, toDelete }
+}
+
+export async function buildSlices({
+  program,
+  workerPool,
+  parentSpan,
+}: {
+  workerPool: GatsbyWorkerPool
+  parentSpan?: Span
+  program: IBuildArgs
+}): Promise<void> {
+  const state = store.getState()
+
+  // for now we always render everything, everytime
+  const slicesProps: Array<ISlicePropsEntry> = []
+  for (const [
+    sliceId,
+    { props, sliceName, hasChildren, pages, dirty },
+  ] of state.html.slicesProps.bySliceId.entries()) {
+    if (dirty && pages.size > 0) {
+      slicesProps.push({
+        sliceId,
+        props,
+        sliceName,
+        hasChildren,
+      })
+    }
+  }
+
+  if (slicesProps.length > 0) {
+    const buildHTMLActivityProgress = reporter.activityTimer(
+      `Building slices HTML (${slicesProps.length})`,
+      {
+        parentSpan,
+      }
+    )
+    buildHTMLActivityProgress.start()
+
+    const htmlComponentRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+    try {
+      const slices = Array.from(state.slices.entries())
+
+      await workerPool.single.renderSlices({
+        publicDir: path.join(program.directory, `public`),
+        htmlComponentRendererPath,
+        slices,
+        slicesProps,
+      })
+    } catch (err) {
+      const prettyError = createErrorFromString(
+        err.stack,
+        `${htmlComponentRendererPath}.map`
+      )
+
+      const undefinedGlobal = extractUndefinedGlobal(err)
+
+      let id = `11339`
+
+      if (undefinedGlobal) {
+        id = `11340`
+        err.context.undefinedGlobal = undefinedGlobal
+      }
+
+      buildHTMLActivityProgress.panic({
+        id,
+        context: err.context,
+        error: prettyError,
+      })
+    } finally {
+      buildHTMLActivityProgress.end()
+    }
+
+    // for now separate action for cleaning dirty flag and removing stale entries
+    store.dispatch({
+      type: `SLICES_PROPS_RENDERED`,
+      payload: slicesProps,
+    })
+  } else {
+    reporter.info(`There are no new or changed slice html files to build.`)
+  }
+
+  store.dispatch({
+    type: `SLICES_PROPS_REMOVE_STALE`,
+  })
+}
+
+export async function stitchSlicesIntoPagesHTML({
+  publicDir,
+  parentSpan,
+}: {
+  publicDir: string
+  parentSpan?: Span
+}): Promise<void> {
+  const stichSlicesActivity = reporter.activityTimer(`stiching slices`, {
+    parentSpan,
+  })
+  stichSlicesActivity.start()
+  try {
+    const {
+      html: { pagesThatNeedToStitchSlices },
+      pages,
+    } = store.getState()
+
+    const stichQueue = fastq<void, string, void>(async (pagePath, cb) => {
+      await stitchSliceForAPage({ pagePath, publicDir })
+      cb(null)
+    }, 25)
+
+    for (const pagePath of pagesThatNeedToStitchSlices) {
+      const page = pages.get(pagePath)
+      if (!page) {
+        continue
+      }
+
+      if (getPageMode(page) === `SSG`) {
+        stichQueue.push(pagePath)
+      }
+    }
+
+    if (!stichQueue.idle()) {
+      await new Promise(resolve => {
+        stichQueue.drain = resolve as () => unknown
+      })
+    }
+
+    store.dispatch({ type: `SLICES_STITCHED` })
+  } finally {
+    stichSlicesActivity.end()
+  }
 }

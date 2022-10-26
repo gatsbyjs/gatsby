@@ -65,9 +65,8 @@ export async function getServerData() {
     }
   } catch (error) {
     return {
-      headers: {
-        status: 500,
-      },
+      status: 500,
+      headers: {},
       props: {}
     }
   }
@@ -104,9 +103,8 @@ export async function getServerData() {
     }
   } catch (error) {
     return {
-      headers: {
-        status: 500,
-      },
+      status: 500,
+      headers: {},
       props: {}
     }
   }

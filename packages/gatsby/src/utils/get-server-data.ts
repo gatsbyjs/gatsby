@@ -1,11 +1,11 @@
 import type { Request } from "express"
 import type { IGatsbyPage } from "../redux/types"
-
-import { match } from "@gatsbyjs/reach-router/lib/utils"
+import { match } from "@gatsbyjs/reach-router"
 
 export interface IServerData {
   headers?: Record<string, string>
   props?: Record<string, unknown>
+  status?: number
 }
 
 interface IModuleWithServerData {

@@ -57,8 +57,8 @@ const nodesTest = ({
       -   \\"foo\\": \\"run-1\\",
           \\"id\\": \\"parent_parentChangeForTransformer\\",
           \\"internal\\": Object {
-      -     \\"contentDigest\\": \\"9d6d458358c77dbe8f4247752ebe41f0\\",
-      +     \\"contentDigest\\": \\"3021b9f76357d1cffb3c40fabc9e08fb\\",
+      -     \\"contentDigest\\": \\"dc3d69faa290879f166b8cf2a459e123\\",
+      +     \\"contentDigest\\": \\"5b2b719234b7823a8a7743409714b7a7\\",
             \\"owner\\": \\"source-and-transformers-child-nodes/source-changed/gatsby-source\\",
             \\"type\\": \\"Parent_ParentChangeForTransformer\\",
           },
@@ -75,8 +75,8 @@ const nodesTest = ({
       +   \\"foo\\": undefined,
           \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
           \\"internal\\": Object {
-      -     \\"contentDigest\\": \\"603e50c1fe96279688538ab046d1d70a\\",
-      +     \\"contentDigest\\": \\"f784f9722081b56fee8ca34708299a37\\",
+      -     \\"contentDigest\\": \\"7ec9e8b4f83ebca01990608f961b1a5d\\",
+      +     \\"contentDigest\\": \\"4cecf7ebaf0c19b22eef8835c725c2e0\\",
             \\"owner\\": \\"source-and-transformers-child-nodes/source-changed/gatsby-transformer\\",
             \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
           },
@@ -155,46 +155,49 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoChild\\": Object {
           \\"fields\\": Array [
             Object {
+    -         \\"name\\": \\"children\\",
+    +         \\"name\\": \\"bar\\",
+            },
+            Object {
+    -         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"children\\",
+            },
+            Object {
               \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
-            Object {
-              \\"name\\": \\"children\\",
             },
             Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-    -         \\"name\\": \\"foo\\",
-    +         \\"name\\": \\"bar\\",
+              \\"name\\": \\"parent\\",
             },
           ],
         },
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
+    +       Object {
+    +         \\"name\\": \\"bar\\",
+    +       },
             Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
+              \\"name\\": \\"childChildOfParentParentChangeForTransformer\\",
             },
             Object {
               \\"name\\": \\"children\\",
             },
             Object {
+              \\"name\\": \\"childrenChildOfParentParentChangeForTransformer\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"foo\\",
+            },
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-    -         \\"name\\": \\"foo\\",
-    +         \\"name\\": \\"bar\\",
-            },
-            Object {
-              \\"name\\": \\"childrenChildOfParentParentChangeForTransformer\\",
-            },
-            Object {
-              \\"name\\": \\"childChildOfParentParentChangeForTransformer\\",
+              \\"name\\": \\"parent\\",
             },
           ],
         },

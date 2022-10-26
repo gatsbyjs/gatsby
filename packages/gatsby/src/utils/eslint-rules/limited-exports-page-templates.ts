@@ -18,28 +18,50 @@ import { isPageTemplate } from "../eslint-rules-helpers"
 
 const DEFAULT_GRAPHQL_TAG_NAME = `graphql`
 
-function isGetServerData(node: ExportNamedDeclaration): boolean {
+function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
   // check for
-  // export function getServerData() {}
-  // export async function getServerData() {}
+  // export function name() {}
+  // export async function name() {}
   if (
     node.declaration?.type === `FunctionDeclaration` &&
-    node.declaration.id?.name === `getServerData`
+    node.declaration.id?.name === name
   ) {
     return true
   }
 
   // check for
-  // export const getServerData = () => {}
+  // export const name = () => {}
   if (node.declaration?.type === `VariableDeclaration`) {
     for (const declaration of node.declaration.declarations) {
       if (
         declaration.type === `VariableDeclarator` &&
         declaration.id.type === `Identifier` &&
-        declaration.id.name === `getServerData`
+        declaration.id.name === name
       ) {
         return true
       }
+    }
+  }
+
+  if (name === `Head`) {
+    // Head can be re-exported, Head can be class components - so the checks above are not sufficient,
+    // we need to be more permisive here
+
+    // class component
+    if (
+      node.declaration?.type === `ClassDeclaration` &&
+      node.declaration?.id?.type === `Identifier` &&
+      node.declaration?.id?.name === name
+    ) {
+      return true
+    }
+
+    // re-exports
+    if (
+      node.source &&
+      node.specifiers.some(specifier => specifier.exported.name === name)
+    ) {
+      return true
     }
   }
 
@@ -53,15 +75,14 @@ function hasOneValidNamedDeclaration(
   // Checks for:
   // const query = graphql``
   // export { query }
-  if (
-    node.type === `ExportNamedDeclaration` &&
-    node.declaration === null &&
-    varName
-  ) {
+  if (node.type === `ExportNamedDeclaration` && node.declaration === null) {
     // For export { foobar, query } the declaration will be null and specifiers exists
     // For { foobar, query } it'll return true, for { query } it'll return false
-    const nonQueryExports = node.specifiers.some(
-      e => e.exported.name !== varName
+    // It will ignore any { default } declarations since these are allowed
+    const nonQueryExports = node.specifiers.some(e =>
+      varName
+        ? e.exported.name !== varName && e.exported.name !== `default`
+        : e.exported.name !== `default`
     )
     return !nonQueryExports
   }
@@ -113,7 +134,7 @@ const limitedExports: Rule.RuleModule = {
   meta: {
     type: `problem`,
     messages: {
-      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named export of a page query is allowed.
+      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named exports of a page query, getServerData, Head or config are allowed.
         All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
 
         Please move your other named exports to another file. Also make sure that you only export page queries that use the "graphql" tag from "gatsby".
@@ -225,7 +246,15 @@ const limitedExports: Rule.RuleModule = {
           return undefined
         }
 
-        if (isGetServerData(node)) {
+        if (isApiExport(node, `getServerData`)) {
+          return undefined
+        }
+
+        if (isApiExport(node, `config`)) {
+          return undefined
+        }
+
+        if (isApiExport(node, `Head`)) {
           return undefined
         }
 

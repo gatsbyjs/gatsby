@@ -26,7 +26,7 @@ For example, both of the following will be sourced:
 <img src="https://mysite.com/wp-content/uploads/2021/01/b.jpeg" />
 ```
 
-Note that there's currently a hard requirement for both kinds of url's to include `/wp-content/uploads` in order to be picked up. If your media items are stored in another directory they will not become Gatsby iamges.
+Note that there's currently a hard requirement for both kinds of url's to include `/wp-content/uploads` in order to be picked up. If your media items are stored in another directory they will not become Gatsby images.
 
 ## Preventing Image/File sourcing
 
