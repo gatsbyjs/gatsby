@@ -2,6 +2,7 @@ const path = require(`path`)
 const debug = require(`debug`)(`gatsby:component-shadowing`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
+const { getPathToLayoutComponent } = require(`gatsby-core-utils`)
 
 // A file can be shadowed by a file of the same extension, or a file of a
 // "compatible" file extension; two files extensions are compatible if they both
@@ -195,7 +196,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     )
 
     for (const theme of themesArray) {
-      const possibleComponentPath = path.join(theme, component)
+      const possibleComponentPath = path.join(
+        theme,
+        getPathToLayoutComponent(component)
+      )
       debug(`possibleComponentPath`, possibleComponentPath)
 
       let dir

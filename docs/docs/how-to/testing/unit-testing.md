@@ -50,11 +50,13 @@ module.exports = {
     ], // Workaround for https://github.com/facebook/jest/issues/9771
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script|gatsby-link)/)`],
   globals: {
     __PATH_PREFIX__: ``,
   },
-  testURL: `http://localhost`,
+  testEnvironmentOptions: {
+    url: `http://localhost`,
+  },
   setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
@@ -235,7 +237,7 @@ If you are using TypeScript, you need to install typings packages and make
 two changes to your config.
 
 ```shell
-npm install --save-dev @types/jest @types/react-test-renderer
+npm install --save-dev @types/jest @types/react-test-renderer @babel/preset-typescript
 ```
 
 Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory.

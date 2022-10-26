@@ -3,7 +3,6 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
-const { isLmdbStore } = require(`../../datastore`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -233,81 +232,6 @@ describe(`NodeModel`, () => {
       })
     })
 
-    describe(`getAllNodes`, () => {
-      it(`returns all nodes`, () => {
-        const result = nodeModel.getAllNodes()
-        expect(result.length).toBe(9)
-      })
-
-      it(`returns all nodes of type`, () => {
-        const result = nodeModel.getAllNodes({ type: `Author` })
-        expect(result.length).toBe(2)
-      })
-
-      it(`returns all nodes of union type`, () => {
-        const result = nodeModel.getAllNodes({ type: `AllFiles` })
-        expect(result.length).toBe(3)
-      })
-
-      it(`returns all nodes of interface type`, () => {
-        const result = nodeModel.getAllNodes({ type: `TeamMember` })
-        expect(result.length).toBe(3)
-      })
-
-      it(`creates page dependencies with all connection types`, () => {
-        nodeModel.getAllNodes({}, { path: `/` })
-        allNodeTypes.forEach(typeName => {
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            connection: typeName,
-          })
-        })
-        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
-      })
-
-      it(`creates page dependencies when called with context and connection type`, () => {
-        nodeModel
-          .withContext({ path: `/` })
-          .getAllNodes({ type: `Post` }, { connectionType: `Post` })
-        expect(createPageDependency).toHaveBeenCalledTimes(1)
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          connection: `Post`,
-        })
-      })
-
-      it(`creates page dependencies with all connection types when called with context without connection type`, () => {
-        nodeModel.withContext({ path: `/` }).getAllNodes()
-        allNodeTypes.forEach(typeName => {
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            connection: typeName,
-          })
-        })
-        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
-      })
-
-      it(`allows to opt-out of automatic dependency tracking`, () => {
-        nodeModel.getAllNodes({}, { path: `/`, track: false })
-        expect(createPageDependency).not.toHaveBeenCalled()
-      })
-
-      it(`allows to opt-out of automatic dependency tracking with context`, () => {
-        nodeModel.withContext({ path: `/` }).getAllNodes({}, { track: false })
-        expect(createPageDependency).not.toHaveBeenCalled()
-      })
-
-      it(`returns empty array when no nodes of type found`, () => {
-        const result = nodeModel.getAllNodes({ type: `Astronauts` })
-        expect(result).toEqual([])
-      })
-
-      it(`does not create page dependencies when no matching nodes found`, () => {
-        nodeModel.getAllNodes({ type: `Astronauts` }, { path: `/` })
-        expect(createPageDependency).not.toHaveBeenCalled()
-      })
-    })
-
     describe(`getTypes`, () => {
       it(`returns all node types in the store`, () => {
         const result = nodeModel.getTypes()
@@ -324,7 +248,7 @@ describe(`NodeModel`, () => {
       })
     })
 
-    describe(`runQuery`, () => {
+    describe(`findOne/findAll`, () => {
       it(`returns first result only`, async () => {
         const type = `Post`
         const query = {
@@ -578,6 +502,55 @@ describe(`NodeModel`, () => {
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result).toBe(null)
       })
+
+      describe(`multiple nodes share a reference`, () => {
+        // order of loading nodes here is important, so we check variants of loading post first and person second
+        // as well as other way around
+
+        it(`load person first, then post`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
+
+        it(`load post first, then person`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
+      })
     })
 
     describe(`createPageDependency`, () => {
@@ -629,6 +602,7 @@ describe(`NodeModel`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     let resolveSlugMock
+    let resolveCustomContextMock
     let materializationSpy
     beforeEach(async () => {
       const nodes = (() => [
@@ -735,6 +709,13 @@ describe(`NodeModel`, () => {
       resolveBetterTitleMock = jest.fn()
       resolveOtherTitleMock = jest.fn()
       resolveSlugMock = jest.fn()
+      resolveCustomContextMock = jest.fn()
+
+      store.dispatch(
+        actions.createResolverContext({
+          myCustomContext: `foo`,
+        })
+      )
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
@@ -817,6 +798,13 @@ describe(`NodeModel`, () => {
                 resolve: async () => {
                   await new Promise(resolve => setTimeout(resolve, 1000))
                   return true
+                },
+              },
+              usingCustomResolverContext: {
+                type: `String`,
+                resolve: (parent, _args, context) => {
+                  resolveCustomContextMock({ context, parent })
+                  return `${context.myCustomContext}/${parent.title}`
                 },
               },
             },
@@ -1282,8 +1270,9 @@ describe(`NodeModel`, () => {
       // }
 
       // we should have resolved fields for all nodes
+      const { entries } = await nodeModel.findAll({ type: `Test` })
       expect(Array.from(resolvedFieldsForTestNodes.keys())).toEqual(
-        nodeModel.getAllNodes({ type: `Test` }).map(node => node.id)
+        Array.from(entries, node => node.id)
       )
 
       // we should have all fields merged on all nodes
@@ -1295,6 +1284,37 @@ describe(`NodeModel`, () => {
           },
         ])
       )
+    })
+
+    it(`injects context passed by createResolverContext action when materializing fields`, async () => {
+      nodeModel.replaceFiltersCache()
+      const wat = await nodeModel.findAll(
+        {
+          query: {
+            sort: { fields: [`usingCustomResolverContext`], order: [`ASC`] },
+          },
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(resolveCustomContextMock).toHaveBeenCalledTimes(2)
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id1`,
+        }),
+      })
+      expect(resolveCustomContextMock).toHaveBeenCalledWith({
+        context: expect.objectContaining({
+          myCustomContext: `foo`,
+        }),
+        parent: expect.objectContaining({
+          id: `id2`,
+        }),
+      })
     })
   })
 
@@ -1397,22 +1417,28 @@ describe(`NodeModel`, () => {
     })
 
     describe(`Tracks nodes read from cache by list`, () => {
-      it(`Tracks inline objects`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Tracks inline objects`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const inlineObject = node.inlineObject
         const trackedRootNode = nodeModel.findRootNodeAncestor(inlineObject)
 
         expect(trackedRootNode).toEqual(node)
       })
-      it(`Tracks inline arrays`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Tracks inline arrays`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const inlineObject = node.inlineArray
         const trackedRootNode = nodeModel.findRootNodeAncestor(inlineObject)
 
         expect(trackedRootNode).toEqual(node)
       })
-      it(`Doesn't track copied objects`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Doesn't track copied objects`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const copiedInlineObject = { ...node.inlineObject }
         const trackedRootNode =
           nodeModel.findRootNodeAncestor(copiedInlineObject)
@@ -1461,110 +1487,6 @@ describe(`NodeModel`, () => {
         expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
           result[0]
         )
-      })
-    })
-  })
-
-  describe(`circular references`, () => {
-    if (isLmdbStore()) {
-      // Circular references are disallowed in the strict mode, this tests are expected to fail
-      return
-    }
-    describe(`directly on a node`, () => {
-      beforeEach(async () => {
-        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
-        const circular = { i_am: `recursion!` }
-        circular.circled = circular
-        const indirectCircular = {
-          down1: {
-            down2: {},
-          },
-        }
-        indirectCircular.down1.down2.deepCircular = indirectCircular
-
-        const node = {
-          id: `circleId`,
-          parent: null,
-          children: [],
-          inlineObject: {
-            field: `fieldOfFirstNode`,
-          },
-          inlineArray: [1, 2, 3],
-          circular,
-          indirect: {
-            indirectCircular,
-          },
-          internal: {
-            type: `Test`,
-            contentDigest: `digest1`,
-          },
-        }
-        actions.createNode(node, { name: `test` })(store.dispatch)
-
-        await build({})
-        const {
-          schemaCustomization: { composer: schemaComposer },
-        } = store.getState()
-        schema = store.getState().schema
-
-        nodeModel = new LocalNodeModel({
-          schema,
-          schemaComposer,
-          createPageDependency,
-        })
-      })
-
-      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
-        const copiedInlineObject = { ...node.inlineObject }
-        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
-
-        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
-      })
-    })
-    describe(`not directly on a node`, () => {
-      beforeEach(async () => {
-        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
-        const circular = { i_am: `recursion!` }
-        circular.circled = { bar: { circular } }
-
-        const node = {
-          id: `circleId`,
-          parent: null,
-          children: [],
-          inlineObject: {
-            field: `fieldOfFirstNode`,
-          },
-          inlineArray: [1, 2, 3],
-          foo: { circular },
-          internal: {
-            type: `Test`,
-            contentDigest: `digest1`,
-          },
-        }
-        actions.createNode(node, { name: `test` })(store.dispatch)
-
-        await build({})
-        const {
-          schemaCustomization: { composer: schemaComposer },
-        } = store.getState()
-        schema = store.getState().schema
-
-        nodeModel = new LocalNodeModel({
-          schema,
-          schemaComposer,
-          createPageDependency,
-        })
-      })
-
-      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
-        const copiedInlineObject = { ...node.inlineObject }
-        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
-
-        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
       })
     })
   })

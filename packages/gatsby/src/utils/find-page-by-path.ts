@@ -1,5 +1,5 @@
 import { IGatsbyPage, IGatsbyState } from "../redux/types"
-import { pick } from "@gatsbyjs/reach-router/lib/utils"
+import { pick } from "@gatsbyjs/reach-router"
 
 // Ranks and picks the best page to match. Each segment gets the highest
 // amount of points, then the type of segment gets an additional amount of
@@ -47,7 +47,11 @@ export function findPageByPath(
 ): IGatsbyPage | undefined {
   const { pages } = state
 
-  path = decodeURIComponent(path)
+  try {
+    path = decodeURIComponent(path)
+  } catch {
+    // no handling, just continue using path as-is
+  }
 
   // first check by exact path
   let page = pages.get(path)

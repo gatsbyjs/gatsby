@@ -2,6 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
+import Seo from "../../components/seo"
 
 export default function BlogPost({ data: { product } }) {
   return (
@@ -12,6 +13,8 @@ export default function BlogPost({ data: { product } }) {
     </Layout>
   )
 }
+
+export const Head = () => <Seo />
 
 export const blogPostQuery = graphql`
   query GetBlogPostBySlugCollection($id: String!) {

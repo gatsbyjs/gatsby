@@ -54,22 +54,35 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
       return urling(`http://localhost:${port}`)
     } else if (gatsbyCommandName === `build`) {
       // for gatsby build wait for the process to exit
-      return new Promise(resolve =>
-        gatsbyProcess.on(`exit`, () => {
-          gatsbyProcess.kill()
-          resolve()
-        })
-      )
+      return gatsbyProcess
     }
   })
 
-  afterAll(() => gatsbyProcess.kill())
+  afterAll(() => {
+    return new Promise(resolve => {
+      if (
+        !gatsbyProcess ||
+        gatsbyProcess.killed ||
+        gatsbyProcess.exitCode !== null
+      ) {
+        return resolve()
+      }
+
+      gatsbyProcess.on(`exit`, () => {
+        setImmediate(() => {
+          resolve()
+        })
+      })
+
+      gatsbyProcess.kill()
+    })
+  })
 
   it(`Creates an accurate node manifest when using the ownerNodeId argument in createPage`, async () => {
     const manifestFileContents = await getManifestContents(1)
 
     expect(manifestFileContents.node.id).toBe(`1`)
-    expect(manifestFileContents.page.path).toBe(`/one`)
+    expect(manifestFileContents.page.path).toBe(`/one/`)
     expect(manifestFileContents.foundPageBy).toBe(`ownerNodeId`)
   })
 
@@ -77,7 +90,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     const manifestFileContents = await getManifestContents(2)
 
     expect(manifestFileContents.node.id).toBe(`2`)
-    expect(manifestFileContents.page.path).toBe(`/two`)
+    expect(manifestFileContents.page.path).toBe(`/two/`)
     expect(manifestFileContents.foundPageBy).toBe(`context.id`)
   })
 
@@ -85,7 +98,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     const manifestFileContents = await getManifestContents(5)
 
     expect(manifestFileContents.node.id).toBe(`5`)
-    expect(manifestFileContents.page.path).toBe(`/slug-test-path`)
+    expect(manifestFileContents.page.path).toBe(`/slug-test-path/`)
     expect(manifestFileContents.foundPageBy).toBe(`context.slug`)
   })
 
@@ -97,7 +110,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
       expect(manifestFileContents.node.id).toBe(`3`)
       expect(
-        [`/three`, `/three-alternative`].includes(
+        [`/three/`, `/three-alternative/`].includes(
           manifestFileContents.page.path
         )
       ).toBe(true)
@@ -147,6 +160,38 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
     expect(recentlyUpdatedNodeManifest.node.id).toBe(recentlyUpdatedNodeId)
   })
+
+  it(`Creates a correct node manifest for nodes in connection list queries`, async () => {
+    const manifestFileContents1 = await getManifestContents(
+      `connection-list-query-node`
+    )
+
+    expect(manifestFileContents1.node.id).toBe(`connection-list-query-node`)
+    expect(manifestFileContents1.page.path).toBe(`/connection-list-query-page/`)
+
+    const manifestFileContents2 = await getManifestContents(
+      `connection-list-query-node-2`
+    )
+
+    expect(manifestFileContents2.node.id).toBe(`connection-list-query-node-2`)
+    expect(manifestFileContents2.page.path).toBe(`/connection-list-query-page/`)
+  })
+
+  it(`Creates a correct node manifest for nodes in connection list queries using staticQuery()`, async () => {
+    const manifestFileContents1 = await getManifestContents(
+      `static-query-list-query-node`
+    )
+
+    expect(manifestFileContents1.node.id).toBe(`static-query-list-query-node`)
+    expect(manifestFileContents1.page.path).toBe(`/static-query-list-query/`)
+
+    const manifestFileContents2 = await getManifestContents(
+      `static-query-list-query-node-2`
+    )
+
+    expect(manifestFileContents2.node.id).toBe(`static-query-list-query-node-2`)
+    expect(manifestFileContents2.page.path).toBe(`/static-query-list-query/`)
+  })
 })
 
 describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
@@ -166,16 +211,29 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
       await urling(`http://localhost:${port}`)
     } else if (gatsbyCommandName === `build`) {
       // for gatsby build wait for the process to exit
-      return new Promise(resolve => {
-        gatsbyProcess.on(`exit`, () => {
-          gatsbyProcess.kill()
-          resolve()
-        })
-      })
+      return gatsbyProcess
     }
   })
 
-  afterAll(() => gatsbyProcess.kill())
+  afterAll(() => {
+    return new Promise(resolve => {
+      if (
+        !gatsbyProcess ||
+        gatsbyProcess.killed ||
+        gatsbyProcess.exitCode !== null
+      ) {
+        return resolve()
+      }
+
+      gatsbyProcess.on(`exit`, () => {
+        setImmediate(() => {
+          resolve()
+        })
+      })
+
+      gatsbyProcess.kill()
+    })
+  })
 
   it(`Limits the number of node manifest files written to disk to 500`, async () => {
     const nodeManifestFiles = fs.readdirSync(manifestDir)

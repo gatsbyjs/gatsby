@@ -48,6 +48,10 @@ In short, to get a major feature added to Gatsby, one usually first puts up a Di
 
   <!-- When defining a canary for installation, tell users to use `--save-exact` (npm) or `--exact` (yarn) flag. -->
 
+  ### CodeSandbox
+
+  Provide an up-to-date CodeSandbox with an example project using the canary. Users can use this project to provide minimal reproductions.
+
   ## Basic example
 
   If the proposal involves a new or changed API, include a basic code example.

@@ -7,8 +7,8 @@
     "gatsby": "next",
     "gatsby-plugin-layout": "next",
     "gatsby-plugin-react-helmet": "next",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-helmet": "^5.2.1",
     "react-transition-group": "^2.9.0"
   },

@@ -1,19 +1,10 @@
-import { distance as levenshtein } from "fastest-levenshtein"
 import fs from "fs-extra"
 import { testRequireError } from "../utils/test-require-error"
 import report from "gatsby-cli/lib/reporter"
 import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
-
-export function isNearMatch(
-  fileName: string | undefined,
-  configName: string,
-  distance: number
-): boolean {
-  if (!fileName) return false
-  return levenshtein(fileName, configName) <= distance
-}
+import { isNearMatch } from "../utils/is-near-match"
 
 export async function getConfigFile(
   siteDirectory: string,
@@ -108,12 +99,14 @@ export async function getConfigFile(
 
       // gatsby-config is misnamed
       if (nearMatch) {
+        const isTSX = nearMatch.endsWith(`.tsx`)
         report.panic({
           id: `10124`,
           error: innerError,
           context: {
             configName,
             nearMatch,
+            isTSX,
           },
         })
       }

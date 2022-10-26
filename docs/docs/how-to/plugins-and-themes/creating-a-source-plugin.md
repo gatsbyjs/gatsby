@@ -5,25 +5,26 @@ tableOfContentsDepth: 2
 
 import { Announcement } from "gatsby-interface"
 
+Source plugins are reusable integrations with content and data backends. There are already [100s of ready-to-use source plugins for popular content APIs](/plugins/?=gatsby-source) like Contentful, Drupal, and WordPress. This tutorial teaches you how to build your own integration.
+
 In this tutorial, you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/graphql-data-layer/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
+Source plugins fetch data from remote or local services and write the data into the embedded Gatsby Database (powered by [LMDB](https://github.com/kriszyp/lmdb-js)).
 
 At a high-level, a source plugin:
 
-- Ensures local data is synced with its source and is 100% accurate.
-- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) with accurate media types, human-readable types, and accurate
-  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest).
-- Links nodes & creates relationships between them.
-- Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
+- Ensures the data in the Gatsby DB is synced with the latest updates from its source
+- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) (Gatsby's name for an object) with accurate media types, human-readable types, and accurate
+  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest)
+- Creates relationships between nodes
 
 A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/reference/config-files/gatsby-node/) file where you implement Gatsby's Node APIs. Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/how-to/plugins-and-themes/creating-a-generic-plugin).
 
 ## Why create a source plugin?
 
-Source plugins convert data from any source into a format that Gatsby can process. Your Gatsby site can use several source plugins to combine data in interesting ways.
+Source plugins make data from any source available to your Gatsby sites. Your Gatsby site can use several source plugins, like commerce data from Shopify, or content from one or more content management systems (like Contentful, WordPress, etc.), all in a unified graph.
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
@@ -169,7 +170,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -421,7 +421,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: POST_NODE_TYPE,
-        content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
     })
@@ -435,7 +434,6 @@ exports.sourceNodes = async ({
       children: [],
       internal: {
         type: AUTHOR_NODE_TYPE,
-        content: JSON.stringify(author),
         contentDigest: createContentDigest(author),
       },
     })

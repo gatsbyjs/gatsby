@@ -13,19 +13,12 @@
     "test": "jest --runInBand"
   },
   "dependencies": {
-    "gatsby": "^3.0.0-next.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "gatsby": "next",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "fs-extra": "^9.0.0",
+    "fs-extra": "^10.1.0",
     "jest": "^27.2.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }

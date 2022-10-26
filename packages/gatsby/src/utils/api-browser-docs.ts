@@ -203,19 +203,21 @@ export const onPostPrefetchPathname = true
 export const disableCorePrefetching = true
 
 /**
- * Allow a plugin to replace the `ReactDOM.render`/`ReactDOM.hydrate` function call by a custom renderer.
+ * Allow a plugin to replace the `ReactDOM.createRoot`/`render` function calls with a custom renderer.
  * @param {emptyArg} _
  * @param {pluginOptions} pluginOptions
- * @returns {Function} This method should return a function with same signature as `ReactDOM.render()`
+ * @returns {Function} This method should return a function with same signature as `ReactDOM.createRoot`/`render`
  *
- * _Note:_ it's very important to call the `callback` after rendering, otherwise Gatsby will not be able to call `onInitialClientRender`
+ * _Note:_
+ * Refer to React's documentation on [`ReactDOM.createRoot`/`render`](https://reactjs.org/docs/react-dom-client.html#createroot) for more information.
+ * Note that `ReactDOM.createRoot`/`render` is only available in React 18 or greater, prior versions should use [`ReactDOM.render`](https://reactjs.org/docs/react-dom.html#render).
  * @example
  * exports.replaceHydrateFunction = () => {
- *   return (element, container, callback) => {
- *     console.log("rendering!");
- *     ReactDOM.render(element, container, callback);
- *   };
- * };
+ *   return (element, container) => {
+ *     const root = ReactDOM.createRoot(container)
+ *     root.render(element)
+ *   }
+ * }
  */
 export const replaceHydrateFunction = true
 

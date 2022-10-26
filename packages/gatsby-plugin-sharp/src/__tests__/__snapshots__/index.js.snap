@@ -85,7 +85,7 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -142,7 +142,7 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -185,7 +185,7 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -256,7 +256,7 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -299,7 +299,7 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -382,7 +382,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -464,7 +464,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -546,7 +546,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -628,7 +628,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -688,7 +688,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -752,7 +752,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -816,7 +816,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -880,7 +880,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
-          "failOnError": true,
+          "failOn": "warning",
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -916,7 +916,7 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -987,7 +987,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1082,7 +1082,7 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1125,7 +1125,7 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1189,7 +1189,7 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1260,7 +1260,7 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1318,7 +1318,7 @@ exports[`gatsby-plugin-sharp queueImageResizing file name works with spaces & sp
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1361,7 +1361,7 @@ exports[`gatsby-plugin-sharp queueImageResizing should round height when auto-ca
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
-            "failOnError": true,
+            "failOn": "warning",
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,

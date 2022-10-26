@@ -125,12 +125,12 @@ Object {
   "category": "USER",
   "code": "95312",
   "context": Object {
-    "ref": "navigator",
+    "undefinedGlobal": "navigator",
   },
   "docsUrl": "https://gatsby.dev/debug-html",
   "level": "ERROR",
   "stack": Array [],
-  "text": "\\"navigator\\" is not available during server side rendering.",
+  "text": "\\"navigator\\" is not available during server-side rendering. Enable \\"DEV_SSR\\" to debug this during \\"gatsby develop\\".",
 }
 `;
 

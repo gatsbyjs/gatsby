@@ -88,7 +88,7 @@ const queue = Queue<
     }
     case PlaceholderType.DOMINANT_COLOR: {
       const fileStream = createReadStream(filePath)
-      const pipeline = sharp({ failOnError: false })
+      const pipeline = sharp({ failOn: `none` })
       fileStream.pipe(pipeline)
       const { dominant } = await pipeline.stats()
 

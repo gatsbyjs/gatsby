@@ -2,6 +2,12 @@
 
 Source plugin for pulling data into Gatsby from MongoDB collections.
 
+## Installation
+
+```shell
+npm install gatsby-source-mongodb
+```
+
 ## How to use
 
 ```javascript

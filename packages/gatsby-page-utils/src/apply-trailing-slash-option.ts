@@ -1,9 +1,8 @@
-// TODO(v5): Remove legacy setting and default to "always"
-export type TrailingSlash = "always" | "never" | "ignore" | "legacy"
+export type TrailingSlash = "always" | "never" | "ignore"
 
 export const applyTrailingSlashOption = (
   input: string,
-  option: TrailingSlash = `legacy`
+  option: TrailingSlash = `always`
 ): string => {
   const hasHtmlSuffix = input.endsWith(`.html`)
   const hasXmlSuffix = input.endsWith(`.xml`)

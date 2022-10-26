@@ -138,9 +138,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
+  const hostname = program.host
   try {
-    program.port = await detectPortInUseAndPrompt(port)
+    program.port = await detectPortInUseAndPrompt(port, hostname)
   } catch (e) {
     if (e.message === `USER_REJECTED`) {
       process.exit(0)
@@ -151,6 +151,16 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const app = express()
   const parentSpan = tracer.startSpan(`bootstrap`)
+
+  app.use((req, res, next) => {
+    try {
+      decodeURIComponent(req.path)
+    } catch (e) {
+      return res.status(500).send(`URI malformatted`)
+    }
+
+    return next()
+  })
 
   const machine = developMachine.withContext({
     program,
