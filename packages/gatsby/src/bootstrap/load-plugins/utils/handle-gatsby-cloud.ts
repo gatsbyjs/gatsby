@@ -4,26 +4,39 @@ import { IPluginInfo } from "../types"
 import { processPlugin } from "../process-plugin"
 
 export const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
+export const GATSBY_PLUGIN_PREVIEW_NAME = `@gatsby-cloud-pkg/gatsby-plugin-preview`
 
-export function addGatsbyPluginCloudPluginWhenInstalled(
+function addCloudPluginWhenInstalled(
   plugins: Array<IPluginInfo>,
-  rootDir: string
+  rootDir: string,
+  name: string
 ): void {
-  const cloudPluginLocation = resolveFromSilent(
-    rootDir,
-    GATSBY_CLOUD_PLUGIN_NAME
-  )
+  const cloudPluginLocation = resolveFromSilent(rootDir, name)
 
   if (cloudPluginLocation) {
     const processedGatsbyCloudPlugin = processPlugin(
       {
-        resolve: cloudPluginLocation,
+        resolve: name,
         options: {},
       },
       rootDir
     )
     plugins.push(processedGatsbyCloudPlugin)
   }
+}
+
+export function addGatsbyPluginPreviewWhenInstalled(
+  plugins: Array<IPluginInfo>,
+  rootDir: string
+): void {
+  addCloudPluginWhenInstalled(plugins, rootDir, GATSBY_PLUGIN_PREVIEW_NAME)
+}
+
+export function addGatsbyPluginCloudPluginWhenInstalled(
+  plugins: Array<IPluginInfo>,
+  rootDir: string
+): void {
+  addCloudPluginWhenInstalled(plugins, rootDir, GATSBY_CLOUD_PLUGIN_NAME)
 }
 
 export function incompatibleGatsbyCloudPlugin(

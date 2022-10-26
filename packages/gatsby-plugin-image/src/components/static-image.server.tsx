@@ -41,6 +41,8 @@ export function _getStaticImage(
     webpOptions,
     avifOptions,
     blurredOptions,
+    breakpoints,
+    outputPixelDensities,
     /* eslint-enable @typescript-eslint/no-unused-vars */
     ...props
   }): ReactElement {

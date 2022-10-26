@@ -103,6 +103,7 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   // If we aren't skipping prompts, get a site name first to use as a default folder name
   let npmSafeSiteName
+  let siteName = ``
 
   if (!flags.yes) {
     const { name } = await enquirer.prompt({
@@ -114,9 +115,11 @@ ${center(colors.blueBright.bold.underline(`Welcome to Gatsby!`))}
     } as any)
 
     npmSafeSiteName = makeNpmSafe(name)
+    siteName = name
   } else {
     const valid = validateProjectName(dirName)
 
+    siteName = dirName
     if (!valid) {
       return
     }
@@ -302,7 +305,7 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
     reporter.info(`${maybeUseEmoji(`🔌 `)}Setting-up plugins...`)
     await installPlugins(plugins, pluginConfig, fullPath, [])
   }
-  await setSiteMetadata(fullPath, `title`, dirName)
+  await setSiteMetadata(fullPath, `title`, siteName)
 
   await gitSetup(answers.project)
 

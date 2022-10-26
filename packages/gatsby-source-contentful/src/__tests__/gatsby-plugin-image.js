@@ -1,14 +1,29 @@
+/**
+ * @jest-environment node
+ */
 // @ts-check
 import fs from "fs-extra"
+import { setPluginOptions } from "gatsby-plugin-sharp/plugin-options"
 import _ from "lodash"
-import nock from "nock"
-import path from "path"
-import { generateImageSource, getBase64Image } from "../gatsby-plugin-image"
-import * as coreUtils from "gatsby-core-utils/fetch-remote-file"
+import { resolve } from "path"
+import { setFieldsOnGraphQLNodeType } from "../extend-node-type"
+import { generateImageSource } from "../gatsby-plugin-image"
+import * as gatsbyCoreUtils from "gatsby-core-utils"
+import * as pluginSharp from "gatsby-plugin-sharp"
 
-nock.disableNetConnect()
+const FIXTURES = resolve(__dirname, `..`, `__fixtures__`)
 
-const FIXTURES = path.resolve(__dirname, `..`, `__fixtures__`)
+jest
+  .spyOn(fs, `readFile`)
+  .mockImplementation(() => Promise.resolve(Buffer.from(`mockedFileContent`)))
+jest
+  .spyOn(pluginSharp, `getDominantColor`)
+  .mockImplementation(() => Promise.resolve(`#mocked`))
+jest
+  .spyOn(gatsbyCoreUtils, `fetchRemoteFile`)
+  .mockImplementation(() =>
+    Promise.resolve(`${FIXTURES}/contentful-logo-256.png`)
+  )
 
 const createMockCache = () => {
   const actualCacheMap = new Map()
@@ -22,9 +37,35 @@ const createMockCache = () => {
 
 const cache = createMockCache()
 
-const fetchRemoteFileSpy = jest.spyOn(coreUtils, `fetchRemoteFile`)
+const exampleImage = {
+  defaultLocale: `en-US`,
+  file: {
+    url: `//images.ctfassets.net:443/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
+    fileName: `347966-contentful-logo-wordmark-dark (1)-4cd185-original-1582664935 (1).png`,
+    contentType: `image/png`,
+    details: {
+      size: 123456,
+      image: {
+        width: `1646`,
+        height: `338`,
+      },
+    },
+  },
+  internal: {
+    contentDigest: `unique`,
+  },
+}
 
-describe(`contentful extend node type`, () => {
+describe(`gatsby-plugin-image`, () => {
+  let extendedNodeType
+
+  beforeAll(async () => {
+    extendedNodeType = await setFieldsOnGraphQLNodeType({
+      type: { name: `ContentfulAsset` },
+      cache,
+    })
+  })
+
   describe(`generateImageSource`, () => {
     it(`default`, () => {
       const resp = generateImageSource(`//test.png`, 420, 210, `webp`, null, {})
@@ -82,91 +123,245 @@ describe(`contentful extend node type`, () => {
     })
   })
 
-  describe(`getBase64Image`, () => {
-    afterEach(() => nock.cleanAll())
-
-    const imageProps = {
-      aspectRatio: 4.8698224852071,
-      baseUrl: `//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
-      width: 200,
-      height: 41,
-      image: {
-        contentful_id: `3ljGfnpegOnBTFGhV07iC1`,
-        spaceId: `k8iqpp6u0ior`,
-        createdAt: `2021-03-22T10:10:34.647Z`,
-        updatedAt: `2021-03-22T10:10:34.647Z`,
-        file: { contentType: `image/png` },
-        title: `Contentful Logo PNG`,
-        description: ``,
-        node_locale: `en-US`,
-        internal: {
-          contentDigest: `123`,
-        },
-      },
-      options: {
-        width: 200,
-        quality: 50,
-        toFormat: ``,
-        cropFocus: null,
-        cornerRadius: 0,
-        background: null,
-      },
-    }
-    test(`keeps image format`, async () => {
-      nock(`https://images.ctfassets.net:443`)
-        .get(
-          `/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`
-        )
-        .query({ w: `20`, h: `4`, q: `50` })
-        .reply(
-          200,
-          fs.readFileSync(`${FIXTURES}/contentful-base64.png`, null),
-          [
-            `Content-Type`,
-            `image/png`,
-            `Content-Length`,
-            `355`,
-            `Access-Control-Allow-Origin`,
-            `*`,
-          ]
-        )
-      const result = await getBase64Image(imageProps, cache)
-      expect(fetchRemoteFileSpy.mock.calls[0][0].url).toBe(
-        `https://images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=20&h=4&q=50`
-      )
-      expect(result).toMatch(
-        `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAECAMAAABbXfTdAAAAh1BMVEUAAABEl785ruI7tOc7tOcqMDkqMDkqMDkqMDnby3FEmME7tOc7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn3vl/cVmDtXGjtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDnbVWDqWWftXGjtXGilAiI/AAAALXRSTlMAUt/ZNiQhOC/bFh4dhm6FnaR+qZiKmZqJsdwWHRyIdqclqIA9nIdWslLf2jb4BEMwAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH5QgNCSUh4wxIuwAAADZJREFUCNdjZASCPwxAwPobSLAxMv5gY+FghIC/LFDGW2EWQTDjgwBI+K04iORn1ARSVxhQAAC2HQpRHmHx6QAAAABJRU5ErkJggg==`
-      )
-      expect(nock.pendingMocks).toHaveLength(0)
+  describe(`query arguments`, () => {
+    beforeEach(() => {
+      setPluginOptions({})
     })
-    test(`uses given image format`, async () => {
-      nock(`https://images.ctfassets.net:443`)
-        .get(
-          `/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`
-        )
-        .query({ w: `20`, h: `4`, q: `50`, fm: `jpg` })
-        .reply(
-          200,
-          fs.readFileSync(`${FIXTURES}/contentful-base64.jpg`, null),
-          [
-            `Content-Type`,
-            `image/jpeg`,
-            `Content-Length`,
-            `356`,
-            `Access-Control-Allow-Origin`,
-            `*`,
-          ]
-        )
-      const result = await getBase64Image(
+
+    it(`default`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {},
+        null,
+        null
+      )
+      expect(resp.images.sources[0].srcSet).toContain(`q=50`)
+      expect(resp.images.sources[0].srcSet).toContain(`fm=webp`)
+      expect(resp.images.fallback.srcSet).toContain(`q=50`)
+      expect(resp.images.fallback.srcSet).toContain(`fm=png`)
+      expect(resp.backgroundColor).toEqual(`#080808`)
+      expect(resp).toMatchSnapshot()
+    })
+
+    it(`force format`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
         {
-          ...imageProps,
-          options: { ...imageProps.options, toFormat: `jpg` },
+          formats: [`jpg`, `webp`],
         },
-        cache
+        null,
+        null
       )
-      expect(result).toMatch(
-        `data:image/jpg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAEABMDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAIDBv/EACIQAAAFAwQDAAAAAAAAAAAAAAABAgMRBBIhBRMUMUFRof/EABUBAQEAAAAAAAAAAAAAAAAAAAIB/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQACMf/aAAwDAQACEQMRAD8A1dI1zG3S3HGLFmmWFW3dZP2YuPS0ndNXWQrxu4LMgAmeS2BpCg5o6XFmrm1qeihLsEXwAAKN/9k=`
+      expect(resp.images.sources[0].srcSet).toContain(`q=50`)
+      expect(resp.images.sources[0].srcSet).toContain(`fm=webp`)
+      expect(resp.images.fallback.srcSet).toContain(`q=50`)
+      expect(resp.images.fallback.srcSet).toContain(`fm=jpg`)
+      expect(resp).toMatchSnapshot()
+    })
+
+    it(`custom width`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {
+          width: 420,
+        },
+        null,
+        null
       )
+      expect(resp.images.sources[0].srcSet).toContain(`q=50`)
+      expect(resp.images.sources[0].srcSet).toContain(`fm=webp`)
+      expect(resp.images.sources[0].sizes).toContain(`(min-width: 420px) 420px`)
+      expect(resp.images.fallback.srcSet).toContain(`q=50`)
+      expect(resp.images.fallback.srcSet).toContain(`fm=png`)
+      expect(resp.images.fallback.sizes).toContain(`(min-width: 420px) 420px`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`custom quality`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {
+          quality: 90,
+        },
+        null,
+        null
+      )
+      expect(resp.images.sources[0].srcSet).toContain(`q=90`)
+      expect(resp.images.sources[0].srcSet).toContain(`fm=webp`)
+      expect(resp.images.fallback.srcSet).toContain(`q=90`)
+      expect(resp.images.fallback.srcSet).toContain(`fm=png`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`layout fixed`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {
+          layout: `fixed`,
+        },
+        null,
+        null
+      )
+      expect(resp.images.sources[0].srcSet).not.toContain(`,`)
+      expect(resp.images.sources[0].sizes).not.toContain(`,`)
+      expect(resp.images.fallback.srcSet).not.toContain(`,`)
+      expect(resp.images.fallback.sizes).not.toContain(`,`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`layout full width`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {
+          layout: `fullWidth`,
+        },
+        null,
+        null
+      )
+      expect(resp.images.sources[0].srcSet).toContain(`,`)
+      expect(resp.images.sources[0].sizes).toEqual(`100vw`)
+      expect(resp.images.fallback.srcSet).toContain(`,`)
+      expect(resp.images.fallback.sizes).toEqual(`100vw`)
+      expect(resp).toMatchSnapshot()
+    })
+
+    it(`placeholder blurred`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {
+          placeholder: `blurred`,
+        },
+        null,
+        null
+      )
+      expect(resp.backgroundColor).toEqual(undefined)
+      expect(resp.placeholder.fallback).toMatch(/^data:image\/png;base64,.+/)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`placeholder traced svg`, async () => {
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {
+          placeholder: `tracedSVG`,
+        },
+        null,
+        null
+      )
+      expect(resp.backgroundColor).toEqual(undefined)
+      expect(resp.placeholder.fallback).toMatch(/^data:image\/svg\+xml,.+/)
+      expect(resp.placeholder.fallback).toContain(`fill='%23d3d3d3'`)
+      expect(resp).toMatchSnapshot()
+    })
+  })
+
+  describe(`defaults via gatsby-plugin-sharp`, () => {
+    it(`custom quality`, async () => {
+      setPluginOptions({
+        defaults: {
+          quality: 42,
+        },
+      })
+
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {},
+        null,
+        null
+      )
+      expect(resp.images.sources[0].srcSet).toContain(`q=42`)
+      expect(resp.images.fallback.srcSet).toContain(`q=42`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`custom quality by format`, async () => {
+      setPluginOptions({
+        defaults: {
+          pngOptions: {
+            quality: 60,
+          },
+          webpOptions: {
+            quality: 42,
+          },
+        },
+      })
+
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {},
+        null,
+        null
+      )
+      expect(resp.images.sources[0].srcSet).toContain(`q=42`)
+      expect(resp.images.fallback.srcSet).toContain(`q=60`)
+      expect(resp).toMatchSnapshot()
+    })
+
+    it(`custom placeholder tracedSVG`, async () => {
+      setPluginOptions({
+        defaults: {
+          placeholder: `tracedSVG`,
+          tracedSVGOptions: {
+            color: `#663399`,
+          },
+        },
+      })
+
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {},
+        null,
+        null
+      )
+      expect(resp.placeholder.fallback).toMatch(/^data:image\/svg\+xml,.+/)
+      expect(resp.placeholder.fallback).toContain(`fill='%23639'`)
+      expect(resp).toMatchSnapshot()
+    })
+
+    it(`custom placeholder blurred`, async () => {
+      setPluginOptions({
+        defaults: {
+          placeholder: `blurred`,
+          blurredOptions: {
+            width: 16,
+          },
+        },
+      })
+
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {},
+        null,
+        null
+      )
+      expect(resp.placeholder.fallback).toMatch(/^data:image\/png;base64,.+/)
+      expect(resp).toMatchSnapshot()
+    })
+
+    it(`custom background color`, async () => {
+      setPluginOptions({
+        defaults: {
+          placeholder: `none`,
+          backgroundColor: `#663399`,
+        },
+      })
+
+      const resp = await extendedNodeType.gatsbyImageData.resolve(
+        exampleImage,
+        // @ts-ignore
+        {},
+        null,
+        null
+      )
+      expect(resp.backgroundColor).toEqual(`#663399`)
+      expect(resp).toMatchSnapshot()
     })
   })
 })

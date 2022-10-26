@@ -38,7 +38,7 @@ export const Figure = props => {
 Now you can import this component into your Markdown document.
 
 ```markdown
-import { Figure } from './components/Figure';
+import { Figure } from "./components/Figure"
 
 # Hello world!
 

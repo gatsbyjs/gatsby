@@ -1,5 +1,11 @@
 import { assertPageVisits } from "../support/utils/trailing-slash"
 
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) {
+    return false
+  }
+})
+
 describe(`always`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
@@ -93,6 +99,10 @@ describe(`always`, () => {
     cy.getTestElement(`client-only-splat-with`).click()
     cy.waitForRouteChange().assertRoute(`/client-only-splat/with/with/`)
     cy.getTestElement(`title`).should(`have.text`, `with/with`)
+  })
+  it("relative path with trailing slash", () => {
+    cy.getTestElement(`relative-path-with-trailing-slash`).click()
+    cy.waitForRouteChange().assertRoute(`/page-2/`)
   })
 })
 

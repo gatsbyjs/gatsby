@@ -124,6 +124,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .default(50),
       proxy: Joi.object()
         .keys({
+          protocol: Joi.string(),
           host: Joi.string().required(),
           port: Joi.number().required(),
           auth: Joi.object().keys({
@@ -163,6 +164,6 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     .external(validateContentfulAccess)
 
 /** @type {import('gatsby').GatsbyNode["onCreateDevServer"]} */
-export const onCreateDevServer = ({ app }) => {
-  polyfillImageServiceDevRoutes(app)
+export const onCreateDevServer = ({ app, store }) => {
+  polyfillImageServiceDevRoutes(app, store)
 }

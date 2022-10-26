@@ -1,3 +1,4 @@
+import { URL } from "url"
 import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { build } from "../../index"
@@ -34,10 +35,11 @@ function extractImageChunks(url: string): {
   url: string
   params: string
 } {
-  const chunks = url.split(`/`)
+  const parsedURL = new URL(`https://gatsbyjs.com${url}`)
+
   return {
-    url: Buffer.from(chunks[3], `base64`).toString(),
-    params: Buffer.from(chunks[4], `base64`).toString(),
+    url: parsedURL.searchParams.get(`u`) as string,
+    params: parsedURL.searchParams.get(`a`) as string,
   }
 }
 
@@ -112,7 +114,7 @@ describe(`remote-file`, () => {
       expect(data).toMatchInlineSnapshot(`
         Object {
           "height": 100,
-          "src": "/_gatsby/image/aHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1ODczMDAwMDMzODgtNTkyMDhjYzk2MmNiP2l4bGliPXJiLTEuMi4xJnE9ODAmZm09anBnJmNyb3A9ZW50cm9weSZjcz10aW55c3JnYiZ3PTY0MA==/dz0xMDAmaD0xMDAmZm09anBnJnE9NzU=/pauline-loroy-U3aF7hgUSrk-unsplash.jpg",
+          "src": "/_gatsby/image/089c5250227072e75a690e7c21838ed7/1a3d5207b5ced4f39bbd3bbd1c1fa633/pauline-loroy-U3aF7hgUSrk-unsplash.jpg?u=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1587300003388-59208cc962cb%3Fixlib%3Drb-1.2.1%26q%3D80%26fm%3Djpg%26crop%3Dentropy%26cs%3Dtinysrgb%26w%3D640&a=w%3D100%26h%3D100%26fm%3Djpg%26q%3D75&cd=1",
           "width": 100,
         }
       `)

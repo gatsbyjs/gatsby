@@ -20,6 +20,7 @@ Map {
           id
         }",
     "path": "mockFile",
+    "templatePath": "mockFile",
     "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -30,8 +31,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
   },
 }
 `;
@@ -51,6 +51,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -61,8 +62,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -85,6 +85,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -95,8 +96,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -115,14 +115,14 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
       id
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -142,14 +142,14 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "query mockFileQuery {
   allPostsJson {
     nodes {
       id
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -209,14 +209,14 @@ Map {
             }
           }",
     "path": "mockFile",
+    "templatePath": "mockFile",
     "text": "query mockFileQuery {
   allPostsJson {
     nodes {
       id
     }
   }
-}
-",
+}",
   },
 }
 `;
@@ -236,6 +236,7 @@ Object {
             }
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
   ...AnotherPostsJsonFragment
@@ -251,8 +252,7 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;
 
@@ -279,6 +279,7 @@ Object {
             id
           }",
   "path": "mockFile",
+  "templatePath": "mockFile",
   "text": "fragment PostsJsonFragment on PostsJson {
   id
 }
@@ -289,7 +290,6 @@ query mockFileQuery {
       ...PostsJsonFragment
     }
   }
-}
-",
+}",
 }
 `;

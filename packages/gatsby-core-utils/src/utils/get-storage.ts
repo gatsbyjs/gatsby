@@ -79,5 +79,6 @@ export function getStorage(fullDbPath: string): ICoreUtilsDatabase {
 export async function closeDatabase(): Promise<void> {
   if (rootDb) {
     await rootDb.close()
+    databases = undefined
   }
 }

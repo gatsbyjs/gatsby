@@ -1,7 +1,11 @@
-module.exports = {
-  plugins: [
-    `gatsby-plugin-catch-links`,
-    `gatsby-plugin-image`,
-    `gatsby-plugin-sharp`,
-  ],
+module.exports = ({ catchLinks = true }) => {
+  const plugins = [`gatsby-plugin-image`, `gatsby-plugin-sharp`]
+
+  if (catchLinks) {
+    plugins.push(`gatsby-plugin-catch-links`)
+  }
+
+  return {
+    plugins,
+  }
 }

@@ -33,6 +33,7 @@ describe(`mutex`, () => {
 
   afterAll(async () => {
     await storage.closeDatabase()
+    globalThis.__GATSBY_OPEN_LMDBS.delete(storage.getDatabaseDir())
     await remove(cachePath)
   })
 

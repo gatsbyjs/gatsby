@@ -74,3 +74,8 @@ cypress/fixtures
 cypress/videos
 
 __history__.json
+
+src/gatsby-types.d.ts
+/test-results/
+/playwright-report/
+/playwright/.cache/

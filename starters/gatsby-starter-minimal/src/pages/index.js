@@ -1,6 +1,5 @@
 import * as React from "react"
 
-// styles
 const pageStyles = {
   color: "#232129",
   padding: 96,
@@ -78,7 +77,6 @@ const badgeStyle = {
   lineHeight: 1,
 }
 
-// data
 const links = [
   {
     text: "Tutorial",
@@ -125,25 +123,17 @@ const links = [
   },
 ]
 
-// markup
 const IndexPage = () => {
   return (
     <main style={pageStyles}>
-      <title>Home Page</title>
       <h1 style={headingStyles}>
         Congratulations
         <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! </span>
-        <span role="img" aria-label="Party popper emojis">
-          🎉🎉🎉
-        </span>
+        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
       </h1>
       <p style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
-        update in real-time.{" "}
-        <span role="img" aria-label="Sunglasses smiley emoji">
-          😎
-        </span>
+        update in real-time. 😎
       </p>
       <ul style={listStyles}>
         <li style={docLinkStyle}>
@@ -182,3 +172,5 @@ const IndexPage = () => {
 }
 
 export default IndexPage
+
+export const Head = () => <title>Home Page</title>

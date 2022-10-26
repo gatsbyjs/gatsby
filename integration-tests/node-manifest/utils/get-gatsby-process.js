@@ -1,18 +1,17 @@
-const { spawn } = require(`child_process`)
+const execa = require(`execa`)
 const path = require(`path`)
 
-const gatsbyBin = path.join(`node_modules`, `.bin`, `gatsby`)
+function spawnGatsbyProcess(command = `develop`, env = {}) {
+  return execa(process.execPath, [`./node_modules/gatsby/cli.js`, command], {
+    stdio: [`inherit`, `inherit`, `inherit`],
+    env: {
+      ...process.env,
+      NODE_ENV: command === `develop` ? `development` : `production`,
+      ...env,
+    },
+  })
+}
 
-exports.spawnGatsbyProcess = (command = `develop`, env = {}) =>
-  spawn(
-    gatsbyBin,
-    [command, ...(command === `develop` ? ["-H", "localhost"] : [])],
-    {
-      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-      env: {
-        ...process.env,
-        NODE_ENV: command === `develop` ? `development` : `production`,
-        ...env,
-      },
-    }
-  )
+exports.spawnGatsbyProcess = spawnGatsbyProcess
+
+exports.runGatsbyClean = () => spawnGatsbyProcess("clean")

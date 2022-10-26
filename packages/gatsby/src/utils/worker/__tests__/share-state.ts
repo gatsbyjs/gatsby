@@ -29,9 +29,9 @@ describe(`worker (share-state)`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     if (worker) {
-      worker.end()
+      await Promise.all(worker.end())
       worker = undefined
     }
   })
@@ -102,6 +102,7 @@ describe(`worker (share-state)`, () => {
             "componentPath": "/foo",
             "config": false,
             "isInBootstrap": true,
+            "isSlice": false,
             "pages": Set {
               "/foo/",
             },
@@ -124,6 +125,7 @@ describe(`worker (share-state)`, () => {
             "componentPath": "/foo",
             "config": false,
             "isInBootstrap": true,
+            "isSlice": false,
             "pages": Set {
               "/foo/",
             },
@@ -236,6 +238,7 @@ describe(`worker (share-state)`, () => {
         "componentPath": "/foo",
         "config": false,
         "isInBootstrap": true,
+        "isSlice": false,
         "pages": Object {},
         "query": "I'm a page query",
         "serverData": false,

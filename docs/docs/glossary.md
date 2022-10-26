@@ -80,7 +80,7 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 ### Config
 
-The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
+The configuration file, `gatsby-config.js`/`gatsby-config.ts` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
 
 ### [Content Delivery Network](/docs/glossary/content-delivery-network/)
 
@@ -295,6 +295,10 @@ A code library (written with [JavaScript](#javascript)) for building user interf
 ### Remark
 
 A parser to translate [Markdown](#markdown) to other formats like [HTML](#html) or [React](#react) code.
+
+### Run Script
+
+An executable command defined in the `scripts` property of your `package.json` file. See [npm](https://docs.npmjs.com/cli/v8/using-npm/scripts) and [yarn](https://classic.yarnpkg.com/lang/en/docs/cli/run/) run script documentation for more information.
 
 ### Runtime
 

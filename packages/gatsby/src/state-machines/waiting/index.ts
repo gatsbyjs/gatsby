@@ -1,4 +1,4 @@
-import { MachineConfig, assign, Machine } from "xstate"
+import { MachineConfig, assign, createMachine } from "xstate"
 import { IWaitingContext } from "./types"
 import { waitingActions } from "./actions"
 import { waitingServices } from "./services"
@@ -136,7 +136,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   },
 }
 
-export const waitingMachine = Machine(waitingStates, {
+export const waitingMachine = createMachine(waitingStates, {
   actions: waitingActions,
   services: waitingServices,
 })

@@ -36,6 +36,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -192,7 +193,7 @@ interface RemoteFile {
     fit: RemoteFileFit = COVER
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
-  ): JSON
+  ): GatsbyImageData
 }
 
 type File implements Node @dontInfer {
@@ -424,6 +425,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -580,7 +582,7 @@ interface RemoteFile {
     fit: RemoteFileFit = COVER
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
-  ): JSON
+  ): GatsbyImageData
 }
 
 type File implements Node @dontInfer {
@@ -822,6 +824,7 @@ enum RemoteFileLayout {
 enum RemoteFilePlaceholder {
   DOMINANT_COLOR
   BLURRED
+  TRACED_SVG
   NONE
 }
 
@@ -978,7 +981,7 @@ interface RemoteFile {
     fit: RemoteFileFit = COVER
     cropFocus: [RemoteFileCropFocus]
     quality: Int = 75
-  ): JSON
+  ): GatsbyImageData
 }
 
 type File implements Node @dontInfer {

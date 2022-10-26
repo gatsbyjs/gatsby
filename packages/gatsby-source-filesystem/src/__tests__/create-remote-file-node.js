@@ -1,7 +1,4 @@
-import path from "path"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
-
-const reporter = {}
 
 const createRemoteFileNode = require(`../create-remote-file-node`)
 
@@ -34,11 +31,9 @@ describe(`create-remote-file-node`, () => {
 
   const defaultArgs = {
     url: `https://external.com/dog.jpg`,
-    store: {},
     getCache: () => cache,
     createNode: jest.fn(),
     createNodeId: jest.fn(() => String(uuid++)),
-    reporter,
     ext: `.jpg`,
     name: `dog-thumbnail`,
   }

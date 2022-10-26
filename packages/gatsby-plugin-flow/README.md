@@ -4,15 +4,17 @@ Provides drop-in support for Flow by adding `@babel/preset-flow`.
 
 ## Install
 
-`npm install gatsby-plugin-flow`
+```shell
+npm install gatsby-plugin-flow
+```
 
 ## How to use
 
-1.  Include the plugin in your `gatsby-config.js` file.
-1.  You're good to go.
-
-`gatsby-config.js`
+Add the plugin to your `gatsby-config.js` file:
 
 ```javascript
-plugins: [`gatsby-plugin-flow`]
+// In your gatsby-config.js
+module.exports = {
+  plugins: [`gatsby-plugin-flow`],
+}
 ```

@@ -50,7 +50,7 @@ const nodesTest = ({
           \\"foo\\": \\"run-1\\",
           \\"id\\": \\"parent_childAdditionForFields\\",
           \\"internal\\": Object {
-            \\"contentDigest\\": \\"bdf44fdce30b104b4f290d66c2dc3ca1\\",
+            \\"contentDigest\\": \\"b6d6df9ccdfc5388cde03e3140520cf5\\",
       +     \\"fieldOwners\\": Object {
       +       \\"foo1\\": \\"source-and-transformers-node-fields/transformer-added/gatsby-transformer\\",
       +     },

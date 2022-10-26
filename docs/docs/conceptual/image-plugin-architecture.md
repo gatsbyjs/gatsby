@@ -86,7 +86,7 @@ We pass through `media` props to the `<source>` elements, allowing art direction
 
 ## How `StaticImage` works
 
-The image plugin performs a number of tricks so that the `StaticImage` component appears to work like a regular React component, while being able to process images at build time. It can be helpful to think of `StaticImage` as a
+The image plugin performs a number of tricks so that the `StaticImage` component appears to work like a regular React component, while being able to process images at build time.
 
 ### The problem
 

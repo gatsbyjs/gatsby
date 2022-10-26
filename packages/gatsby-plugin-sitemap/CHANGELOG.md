@@ -3,6 +3,113 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.24.0/packages/gatsby-plugin-sitemap) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+- Add info about `page` object to README [#36582](https://github.com/gatsbyjs/gatsby/issues/36582) ([b005669](https://github.com/gatsbyjs/gatsby/commit/b00566970a0acdec8cdefbd4b8bd2584ab15cf38))
+
+### [5.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.23.1/packages/gatsby-plugin-sitemap) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.23.0/packages/gatsby-plugin-sitemap) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.22.0/packages/gatsby-plugin-sitemap) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.21.0/packages/gatsby-plugin-sitemap) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.20.0/packages/gatsby-plugin-sitemap) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.19.0/packages/gatsby-plugin-sitemap) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+#### Chores
+
+- Update READMEs for better instructions ([0890a5c](https://github.com/gatsbyjs/gatsby/commit/0890a5cf2c881b49193113a1e1bd5fe13a2c328f))
+
+### [5.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.18.1/packages/gatsby-plugin-sitemap) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.18.0/packages/gatsby-plugin-sitemap) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.17.0/packages/gatsby-plugin-sitemap) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.16.0/packages/gatsby-plugin-sitemap) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+### [5.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.15.1/packages/gatsby-plugin-sitemap) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.15.0/packages/gatsby-plugin-sitemap) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Other Changes
+
+- sitemap plugin readme has incorrect array name reference [#35659](https://github.com/gatsbyjs/gatsby/issues/35659) ([6cac9d2](https://github.com/gatsbyjs/gatsby/commit/6cac9d2f76699ab627949d921d06b03bbb499541))
+
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.14.0/packages/gatsby-plugin-sitemap) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.13.0/packages/gatsby-plugin-sitemap) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.12.1/packages/gatsby-plugin-sitemap) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.12.0/packages/gatsby-plugin-sitemap) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+#### Bug Fixes
+
+- update dependency minimatch to ^3.1.2 for gatsby-plugin-sitemap [#35288](https://github.com/gatsbyjs/gatsby/issues/35288) ([b5c980a](https://github.com/gatsbyjs/gatsby/commit/b5c980a739bfc044f7beeeae7ebdcb5712930be3))
+
+### [5.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.11.1/packages/gatsby-plugin-sitemap) (2022-03-31)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.11.0/packages/gatsby-plugin-sitemap) (2022-03-29)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)

@@ -47,7 +47,7 @@ With React 18, you can start using Suspense, React.lazy and get your hands on th
   - Fix eperm issue on windows when clearing cache, via [PR #35154](https://github.com/gatsbyjs/gatsby/pull/35154)
   - Improve functions compilation error, via [PR #35196](https://github.com/gatsbyjs/gatsby/pull/35196)
 - `gatsby-plugin-utils`: Support aspect ratio for Image Service, via [PR #35087](https://github.com/gatsbyjs/gatsby/pull/35087)
-- `gatsby-source-mogodb`: Add optional `typePrefix` option to override dbName, via [PR #33820](https://github.com/gatsbyjs/gatsby/pull/33820)
+- `gatsby-source-mongodb`: Add optional `typePrefix` option to override dbName, via [PR #33820](https://github.com/gatsbyjs/gatsby/pull/33820)
 - `gatsby-cli`: Resolve babel preset ts explicitly, via [PR #35153](https://github.com/gatsbyjs/gatsby/pull/35153)
 - `gatsby-plugin-preact`: Fix preact alias via [PR #35196](https://github.com/gatsbyjs/gatsby/pull/35156)
 

@@ -51,7 +51,85 @@ export default async function corsHandler(req, res) {
 
 ## Custom body parsing
 
-Generally useful for file upload support.
+> Support for overriding default config added in `gatsby@4.14.0`
 
-This is not yet supported. [Add a comment in the discussion if this is an
-important use case for you](https://github.com/gatsbyjs/gatsby/discussions/30735).
+By default, Gatsby is using following configuration defaults to parse request body and make it available as `req.body` field in appropriate format:
+
+```js
+ {
+   bodyParser: {
+     json: {
+       type: "application/json",
+       limit: "100kb"
+     },
+     raw: {
+       type: "application/octet-stream",
+       limit: "100kb"
+     },
+     text: {
+       type: "text/plain",
+       limit: "100kb"
+     },
+     urlencoded: {
+       type: "application/x-www-form-urlencoded",
+       limit: "100kb",
+       extended: true
+     }
+   }
+ }
+```
+
+Those settings work in most cases, but sometimes you might need to adjust them to cover your use case. Gatsby allows exporting an object named `config` from your function handler module. This object allows you to control the `body-parser` middleware used by Gatsby Functions. Gatsby currently supports the `limit`, `type`, and `extended` options for the `bodyParser` configuration, which are documented by [body-parser](https://expressjs.com/en/resources/middleware/body-parser.html). The `limit` property will allow configuration of payload size up to **32mb**.
+
+### Examples
+
+#### Accessing body as a `Buffer`
+
+You can modify what `Content-type` particular `body-parser` middleware can act on. Following configuration will force every request to use `raw` parser and result in function handler receiving `req.body` as a `Buffer`. A setup like this is useful if you are looking to verify signature of webhooks (e.g. https://stripe.com/docs/webhooks/signatures).
+
+```js:title=src/api/some-function.js
+export const config = {
+  bodyParser: {
+    raw: {
+      type: `*/*`,
+    },
+  },
+}
+
+export default function MyAPIFunction(req, res) {
+  // req.body will be a Buffer, no matter what's the `Content-type` header on request
+}
+```
+
+#### Increasing or decreasing the payload limit
+
+By default, the limit is `100kb`. If the request body is larger than that it will result in automatic `413 Request Entity Too Large` response without executing function handler at all.
+
+If your use case require a higher limit, you can bump it up in `config`.
+
+```js:title=src/api/some-function.js
+// limit payload to 10mb
+export const config = {
+  bodyParser: {
+    json: {
+      limit: `10mb`,
+    },
+  },
+}
+```
+
+#### TypeScript (`config` object type)
+
+You can import `GatsbyFunctionConfig` from `gatsby` to type your `config` export:
+
+```ts:title=src/api/some-function.ts
+import { GatsbyFunctionConfig } from "gatsby"
+
+export const config: GatsbyFunctionConfig = {
+  bodyParser: {
+    json: {
+      limit: `10mb`,
+    },
+  },
+}
+```

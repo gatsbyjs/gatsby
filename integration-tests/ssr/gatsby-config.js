@@ -7,4 +7,7 @@ module.exports = {
     moreInfo: `Sid is amazing`,
   },
   plugins: ["gatsby-plugin-postcss"],
+  flags: {
+    DEV_SSR: true,
+  },
 }
