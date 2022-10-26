@@ -344,7 +344,7 @@ The code snippets below show an example of how to pass a prop into a component w
 * When rendering the `Greeting` component, you pass in the `name` prop with a specific value, like `"Megan"`. You could swap in a different value string each time you render the `Greeting` component.
 
     ```javascript:title=src/pages/say-hello.js
-    import { Greeting } from "../components/greeting" // highlight-line
+    import Greeting from "../components/greeting" // highlight-line
   
     // Rendering the <Greeting> component
     const SayHello = () => {
