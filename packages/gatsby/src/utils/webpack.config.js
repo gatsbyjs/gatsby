@@ -672,12 +672,11 @@ module.exports = async (
         // },
         // commons: {
         //   name: `commons`,
-        //   chunks: `initial`,
         //   // if a chunk is used on all components we put it in commons (we need at least 2 components)
         //   minChunks: Math.max(componentsCount, 2),
         //   priority: 20,
         // },
-        // If a chunk is used in at least 2 components we create a separate chunk
+        // // If a chunk is used in at least 2 components we create a separate chunk
         // shared: {
         //   test: module => !isCssModule(module),
         //   name(module, chunks) {

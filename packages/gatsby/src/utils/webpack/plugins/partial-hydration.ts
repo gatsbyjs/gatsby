@@ -13,7 +13,6 @@ import webpack, {
   Compiler,
 } from "webpack"
 import type Reporter from "gatsby-cli/lib/reporter"
-import Entrypoint from "webpack/lib/Entrypoint"
 
 interface IModuleExport {
   id: string
@@ -218,16 +217,6 @@ export class PartialHydrationPlugin {
     console.log({ toRecord })
     debugger
 
-    function isInRSCEntrypoint(chunkGroups) {
-      for (const group of chunkGroups) {
-        if (group instanceof Entrypoint) {
-          return group.name === `rsc`
-        } else {
-          return isInRSCEntrypoint(group.parentsIterable)
-        }
-      }
-    }
-
     for (const [originalModule, resolvedMap] of toRecord) {
       for (const [resolvedModule, exports] of resolvedMap) {
         const chunkIds: Set<string> = new Set()
@@ -235,7 +224,7 @@ export class PartialHydrationPlugin {
         const chunks = chunkGraph.getModuleChunksIterable(resolvedModule)
 
         for (const chunk of chunks) {
-          if (chunk.id && isInRSCEntrypoint(chunk.groupsIterable)) {
+          if (chunk.id) {
             chunkIds.add(chunk.id as string)
           }
         }
