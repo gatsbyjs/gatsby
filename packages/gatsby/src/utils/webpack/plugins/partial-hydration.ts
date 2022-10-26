@@ -83,11 +83,13 @@ export class PartialHydrationPlugin {
   }
 
   _generateManifest(
-    _chunkGroups: webpack.Compilation["chunkGroups"],
-    moduleGraph: webpack.Compilation["moduleGraph"],
-    chunkGraph: webpack.Compilation["chunkGraph"],
+    compilation: Compilation,
     rootContext: string
   ): Record<string, Record<string, IModuleExport>> {
+    const _chunkGroups = compilation.chunkGroups
+    const moduleGraph = compilation.moduleGraph
+    const chunkGraph = compilation.chunkGraph
+
     const json: Record<string, Record<string, IModuleExport>> = {}
     // @see https://github.com/facebook/react/blob/3f70e68cea8d2ed0f53d35420105ae20e22ce428/packages/react-server-dom-webpack/src/ReactFlightWebpackPlugin.js#L220-L252
     const recordModule = (
@@ -96,13 +98,6 @@ export class PartialHydrationPlugin {
       exports: Array<{ originalExport: string; resolvedExport: string }>,
       chunkIds: Array<string>
     ): void => {
-      if (
-        // @ts-ignore - types are incorrect
-        !module.resource
-      ) {
-        return
-      }
-
       const normalModule: NormalModule = module as NormalModule
 
       const moduleExports: Record<string, IModuleExport> = {}
@@ -114,17 +109,29 @@ export class PartialHydrationPlugin {
         }
       })
 
-      const normalizedModuleKey = createNormalizedModuleKey(
-        normalModule.resource,
-        rootContext
-      )
+      if (normalModule.modules) {
+        normalModule.modules.forEach(mod => {
+          const normalizedModuleKey = createNormalizedModuleKey(
+            mod.resource,
+            rootContext
+          )
 
-      if (normalizedModuleKey !== undefined) {
-        json[normalizedModuleKey] = moduleExports
+          if (normalizedModuleKey !== undefined) {
+            json[normalizedModuleKey] = moduleExports
+          }
+        })
+      } else {
+        const normalizedModuleKey = createNormalizedModuleKey(
+          normalModule.resource,
+          rootContext
+        )
+
+        if (normalizedModuleKey !== undefined) {
+          json[normalizedModuleKey] = moduleExports
+        }
       }
     }
 
-    debugger
     const toRecord: Map<
       webpack.Module,
       Map<
@@ -167,7 +174,30 @@ export class PartialHydrationPlugin {
       }
     }
 
-    for (const clientModule of this._clientModules) {
+    const newClientModules = new Set()
+    compilation.chunkGroups.forEach(chunkGroup => {
+      chunkGroup.chunks.forEach((chunk: webpack.Chunk) => {
+        const chunkModules = compilation.chunkGraph.getChunkModulesIterable(
+          chunk
+          // TODO: Update type so that it doesn't have to be cast.
+        ) as Iterable<webpack.NormalModule>
+        for (const mod of chunkModules) {
+          if (mod.buildInfo.rsc) {
+            newClientModules.add(mod)
+          }
+
+          if (mod.modules) {
+            for (const subMod of mod.modules) {
+              if (subMod.buildInfo.rsc) {
+                newClientModules.add(mod)
+              }
+            }
+          }
+        }
+      })
+    })
+
+    for (const clientModule of newClientModules) {
       stuff(clientModule)
 
       const incomingConnections =
@@ -185,14 +215,11 @@ export class PartialHydrationPlugin {
     }
 
     console.log({ toRecord })
+    debugger
 
     for (const [originalModule, resolvedMap] of toRecord) {
       for (const [resolvedModule, exports] of resolvedMap) {
         const chunkIds: Set<string> = new Set()
-
-        if (originalModule?.request?.includes(`demo`)) {
-          debugger
-        }
 
         const chunks = chunkGraph.getModuleChunksIterable(resolvedModule)
 
@@ -230,23 +257,17 @@ export class PartialHydrationPlugin {
         return module.userRequest
       })
       .join(`,`)}!`
-    console.log(clientSSRLoader)
 
     // if (clientSSRLoader !== this._handledClientSSRLoader) {
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(
       clientSSRLoader,
       {
-        name: `app`,
+        name: `rsc`,
       }
     )
-    const test = await this.addEntry(compilation, ``, clientComponentEntryDep, {
-      name: `app`,
+    await this.addEntry(compilation, ``, clientComponentEntryDep, {
+      name: `rsc`,
     })
-    console.log(`after`, clientSSRLoader)
-    // if (test) {
-    //   this._handledClientSSRLoader = clientSSRLoader
-    // }
-    // }
   }
 
   addEntry(
@@ -357,6 +378,7 @@ export class PartialHydrationPlugin {
             const module = parser.state.module
 
             if (hasClientExportDirective) {
+              module.buildInfo.rsc = true
               this._clientModules.add(module)
 
               // if (entryModule) {
@@ -473,9 +495,7 @@ export class PartialHydrationPlugin {
           },
           () => {
             const manifest = this._generateManifest(
-              compilation.chunkGroups,
-              compilation.moduleGraph,
-              compilation.chunkGraph,
+              compilation,
               compilation.options.context as string
             )
 

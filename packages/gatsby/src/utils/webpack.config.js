@@ -192,6 +192,7 @@ module.exports = async (
         return hasES6ModuleSupport(directory)
           ? {
               app: directoryPath(`.cache/production-app`),
+              rsc: directoryPath(`.cache/rsc`),
             }
           : {
               polyfill: directoryPath(`.cache/polyfill-entry`),
@@ -713,7 +714,6 @@ module.exports = async (
     }
 
     config.optimization = {
-      // concatenateModules: false,
       runtimeChunk: {
         name: `webpack-runtime`,
       },
