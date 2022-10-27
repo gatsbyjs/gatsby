@@ -48,6 +48,8 @@ The better the underlying hardware / VM / container you have, the faster your bu
 
 Gatsby Cloud offers image parallelization during image processing and other build optimizations that can speed things up significantly. Try running your site on Gatsby Cloud and comparing the speeds there (both warm and cold builds) to your current CI/CD setup.
 
+These optimizations include Parallel Query Running and [Reactive Site Generation](https://www.gatsbyjs.com/blog/re-introducing-gatsby-a-reactive-site-generator). 
+
 ### 2. Reducing build times from content sourcing and processing
 
 Avoid pulling unnecessary locales or content models into your site.
