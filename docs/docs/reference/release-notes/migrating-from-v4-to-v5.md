@@ -8,7 +8,7 @@ Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration (Experimental). Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
+This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slices API and Partial Hydration. Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609).
 
 For most users we expect a **smooth upgrade path** as only a couple of changes will be required: [Updating to Node 18](#minimal-nodejs-version-1800), [switching to React 18](#minimal-required-react-version-is-18), and [changing GraphQL queries](#graphql-schema-changes-to-sort-and-aggregation-fields) using a codemod.
 
@@ -110,7 +110,7 @@ Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-rele
 
 ### Minimal required React version is 18
 
-We are dropping official support for React 16 and 17. The new minimal required version is React 18. This is a requirement for the experimental Partial Hydration feature.
+We are dropping official support for React 16 and 17. The new minimal required version is React 18. This is a requirement for the Partial Hydration feature.
 
 ### Non-ESM browsers are not polyfilled by default
 
