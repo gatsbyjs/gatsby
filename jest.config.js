@@ -18,7 +18,7 @@ const ignoreDirs = [`<rootDir>/packages/gatsby-dev-cli/verdaccio`].concat(
 )
 
 const coverageDirs = pkgs.map(p => path.join(p, `src/**/*.js`))
-const useCoverage = !!process.env.GENERATE_JEST_REPORT
+const useJestUnit = !!process.env.GENERATE_JEST_REPORT
 
 // list to add ESM to ignore
 const esModules = [
@@ -145,9 +145,9 @@ module.exports = {
   collectCoverageFrom: coverageDirs,
   reporters: process.env.CI
     ? [[`jest-silent-reporter`, { useDots: true, showPaths: true }]].concat(
-        useCoverage ? `jest-junit` : []
+        useJestUnit ? `jest-junit` : []
       )
-    : [`default`].concat(useCoverage ? `jest-junit` : []),
+    : [`default`].concat(useJestUnit ? `jest-junit` : []),
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
   setupFilesAfterEnv: [`jest-extended`],

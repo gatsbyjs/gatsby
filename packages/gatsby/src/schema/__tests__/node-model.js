@@ -232,81 +232,6 @@ describe(`NodeModel`, () => {
       })
     })
 
-    describe(`getAllNodes`, () => {
-      it(`returns all nodes`, () => {
-        const result = nodeModel.getAllNodes()
-        expect(result.length).toBe(9)
-      })
-
-      it(`returns all nodes of type`, () => {
-        const result = nodeModel.getAllNodes({ type: `Author` })
-        expect(result.length).toBe(2)
-      })
-
-      it(`returns all nodes of union type`, () => {
-        const result = nodeModel.getAllNodes({ type: `AllFiles` })
-        expect(result.length).toBe(3)
-      })
-
-      it(`returns all nodes of interface type`, () => {
-        const result = nodeModel.getAllNodes({ type: `TeamMember` })
-        expect(result.length).toBe(3)
-      })
-
-      it(`creates page dependencies with all connection types`, () => {
-        nodeModel.getAllNodes({}, { path: `/` })
-        allNodeTypes.forEach(typeName => {
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            connection: typeName,
-          })
-        })
-        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
-      })
-
-      it(`creates page dependencies when called with context and connection type`, () => {
-        nodeModel
-          .withContext({ path: `/` })
-          .getAllNodes({ type: `Post` }, { connectionType: `Post` })
-        expect(createPageDependency).toHaveBeenCalledTimes(1)
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          connection: `Post`,
-        })
-      })
-
-      it(`creates page dependencies with all connection types when called with context without connection type`, () => {
-        nodeModel.withContext({ path: `/` }).getAllNodes()
-        allNodeTypes.forEach(typeName => {
-          expect(createPageDependency).toHaveBeenCalledWith({
-            path: `/`,
-            connection: typeName,
-          })
-        })
-        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
-      })
-
-      it(`allows to opt-out of automatic dependency tracking`, () => {
-        nodeModel.getAllNodes({}, { path: `/`, track: false })
-        expect(createPageDependency).not.toHaveBeenCalled()
-      })
-
-      it(`allows to opt-out of automatic dependency tracking with context`, () => {
-        nodeModel.withContext({ path: `/` }).getAllNodes({}, { track: false })
-        expect(createPageDependency).not.toHaveBeenCalled()
-      })
-
-      it(`returns empty array when no nodes of type found`, () => {
-        const result = nodeModel.getAllNodes({ type: `Astronauts` })
-        expect(result).toEqual([])
-      })
-
-      it(`does not create page dependencies when no matching nodes found`, () => {
-        nodeModel.getAllNodes({ type: `Astronauts` }, { path: `/` })
-        expect(createPageDependency).not.toHaveBeenCalled()
-      })
-    })
-
     describe(`getTypes`, () => {
       it(`returns all node types in the store`, () => {
         const result = nodeModel.getTypes()
@@ -323,7 +248,7 @@ describe(`NodeModel`, () => {
       })
     })
 
-    describe(`runQuery`, () => {
+    describe(`findOne/findAll`, () => {
       it(`returns first result only`, async () => {
         const type = `Post`
         const query = {
@@ -576,6 +501,55 @@ describe(`NodeModel`, () => {
         const predicate = () => false
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result).toBe(null)
+      })
+
+      describe(`multiple nodes share a reference`, () => {
+        // order of loading nodes here is important, so we check variants of loading post first and person second
+        // as well as other way around
+
+        it(`load person first, then post`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
+
+        it(`load post first, then person`, () => {
+          const sharedReference1 = nodeModel.getNodeById({
+            id: `post1`,
+          })?.sharedReference
+          const sharedReference2 = nodeModel.getNodeById({
+            id: `person1`,
+          })?.sharedReference
+
+          // Same object reference in 2 different nodes. Only `post1` has a `File` parent.
+          expect(sharedReference1 === sharedReference2).toBe(true)
+
+          const predicate = obj => obj.internal && obj.internal.type === `File`
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference1, predicate)?.id
+          ).toBe(`file1`)
+
+          expect(
+            nodeModel.findRootNodeAncestor(sharedReference2, predicate)?.id
+          ).toBe(`file1`)
+        })
       })
     })
 
@@ -1296,8 +1270,9 @@ describe(`NodeModel`, () => {
       // }
 
       // we should have resolved fields for all nodes
+      const { entries } = await nodeModel.findAll({ type: `Test` })
       expect(Array.from(resolvedFieldsForTestNodes.keys())).toEqual(
-        nodeModel.getAllNodes({ type: `Test` }).map(node => node.id)
+        Array.from(entries, node => node.id)
       )
 
       // we should have all fields merged on all nodes
@@ -1442,22 +1417,28 @@ describe(`NodeModel`, () => {
     })
 
     describe(`Tracks nodes read from cache by list`, () => {
-      it(`Tracks inline objects`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Tracks inline objects`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const inlineObject = node.inlineObject
         const trackedRootNode = nodeModel.findRootNodeAncestor(inlineObject)
 
         expect(trackedRootNode).toEqual(node)
       })
-      it(`Tracks inline arrays`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Tracks inline arrays`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const inlineObject = node.inlineArray
         const trackedRootNode = nodeModel.findRootNodeAncestor(inlineObject)
 
         expect(trackedRootNode).toEqual(node)
       })
-      it(`Doesn't track copied objects`, () => {
-        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+      it(`Doesn't track copied objects`, async () => {
+        const { entries } = await nodeModel.findAll({ type: `Test` })
+        const nodes = Array.from(entries)
+        const node = nodes[0]
         const copiedInlineObject = { ...node.inlineObject }
         const trackedRootNode =
           nodeModel.findRootNodeAncestor(copiedInlineObject)

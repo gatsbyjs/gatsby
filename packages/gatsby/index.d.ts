@@ -23,7 +23,7 @@ export type AvailableFeatures =
   | "content-file-path"
 
 export {
-  default as Link,
+  Link,
   GatsbyLinkProps,
   navigate,
   withPrefix,
@@ -454,10 +454,7 @@ export interface GatsbyNode<
    * @example
    * exports.shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
    */
-  shouldOnCreateNode?(
-    args: { node: TNode },
-    options: PluginOptions
-  ): boolean
+  shouldOnCreateNode?(args: { node: TNode }, options: PluginOptions): boolean
 
   /**
    * Called when a new page is created. This extension API is useful
