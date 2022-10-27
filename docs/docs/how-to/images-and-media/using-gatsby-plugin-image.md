@@ -11,7 +11,7 @@ _If you're looking for a guide on using the deprecated `gatsby-image` package, i
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
-Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](/docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
+Want to learn more about image optimization challenges? We have a conceptual guide that goes deeper: [Why Gatsby's Automatic Image Optimizations Matter](/docs/conceptual/using-gatsby-image/) as well as a [short, humorous intro](https://www.youtube.com/watch?v=dJ1EslHwXu0&list=PLCU2qJekvcN1j3q1U9ONvH0M9JHn0oOJm&index=5). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
 
 ## Getting started
 
