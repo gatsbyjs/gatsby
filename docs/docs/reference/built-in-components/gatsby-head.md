@@ -129,3 +129,4 @@ exports.onRenderBody = ({ setHtmlAttributes }) => {
 - [Adding an SEO component](/docs/how-to/adding-common-features/adding-seo-component)
 - [Using Gatsby Head with TypeScript](/docs/how-to/custom-configuration/typescript/#gatsby-head-api)
 - [Gatsby Script Component](/docs/reference/built-in-components/gatsby-script/)
+- [A short, humorous video](https://www.youtube.com/watch?v=5eUCGzUGR7U&list=PLCU2qJekvcN1j3q1U9ONvH0M9JHn0oOJm&index=10)
