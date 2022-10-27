@@ -193,3 +193,4 @@ The first 100 pages will receive `defer: false`, the other 900 pages receive `de
 
 - [API Reference guide](/docs/reference/rendering-options/deferred-static-generation/)
 - [Conceptual Guide](/docs/conceptual/rendering-options/)
+- [A short, humorous intro to DSG](https://www.youtube.com/watch?v=5vVT_4vEa_Y&list=PLCU2qJekvcN1j3q1U9ONvH0M9JHn0oOJm&index=3)
