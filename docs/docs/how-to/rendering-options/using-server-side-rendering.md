@@ -117,3 +117,4 @@ If you haven't already, start `gatsby develop` and visit `http://localhost:8000/
 
 - [API Reference Guide](/docs/reference/rendering-options/server-side-rendering/)
 - [Conceptual Guide](/docs/conceptual/rendering-options/)
+- [Short video explanation](https://www.youtube.com/watch?v=WLIwvUL6Lwg&list=PLCU2qJekvcN1j3q1U9ONvH0M9JHn0oOJm&index=2)
