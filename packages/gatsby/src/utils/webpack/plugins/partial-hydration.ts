@@ -227,7 +227,7 @@ export class PartialHydrationPlugin {
       }
     }
 
-    console.log({ toRecord })
+    // console.log({ toRecord })
     // debugger
 
     for (const [originalModule, resolvedMap] of toRecord) {
@@ -257,19 +257,10 @@ export class PartialHydrationPlugin {
     compiler: Compiler,
     compilation: Compilation
   ): Promise<void> {
-    // @ts-ignore
-    const loaderOptions = {
-      modules: this._clientModules,
-    }
-
     const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/virtual?modules=${Array.from(
       this._clientModules
     )
-      .map(
-        module =>
-          // console.log({ module })
-          module.userRequest
-      )
+      .map(module => module.userRequest)
       .join(`,`)}!`
 
     // if (clientSSRLoader !== this._handledClientSSRLoader) {
@@ -427,12 +418,29 @@ export class PartialHydrationPlugin {
           const { components } = store.getState()
           const realPathCache = new Map<string, string>()
 
+          let appChunk: webpack.Chunk | null = null
+          for (const chunk of compilation.chunks) {
+            if (chunk.name === `app`) {
+              appChunk = chunk
+              break
+            }
+          }
+
+          if (!appChunk) {
+            throw new Error(`"app" chunk not found`)
+          }
+
+          const cssModulesToKeep = new Set<webpack.Module>()
+          const modulesToRemove = new Set<webpack.Module>()
           compilation.modules.forEach(webpackModule => {
             if (webpackModule.buildInfo.rsc) {
               return
+            } else if (webpackModule.type === `css/mini-extract`) {
+              cssModulesToKeep.add(webpackModule)
+              return
             }
 
-            for (const [id, component] of components) {
+            for (const component of components.values()) {
               const componentComponentPath = getRealPath(
                 realPathCache,
                 component.componentPath
@@ -460,32 +468,90 @@ export class PartialHydrationPlugin {
                 }
               }
 
-              const connections =
-                compilation.moduleGraph.getIncomingConnections(webpackModule)
-              for (const connection of connections) {
-                if (connection.dependency) {
-                  compilation.moduleGraph.removeConnection(
-                    connection.dependency
-                  )
+              modulesToRemove.add(webpackModule)
+            }
+          })
+
+          const modulesToInsertIntoApp: Array<{
+            cssModule: webpack.Module
+            groupIndex: number
+            moduleIndex: number
+          }> = []
+
+          for (const cssModule of cssModulesToKeep) {
+            const usedInChunks =
+              compilation.chunkGraph.getModuleChunksIterable(cssModule)
+            let isInAppChunk
+            let moduleToInsert
+            for (const chunk of usedInChunks) {
+              if (chunk === appChunk) {
+                isInAppChunk = true
+              } else {
+                for (const group of appChunk.groupsIterable) {
+                  moduleToInsert = {
+                    cssModule,
+                    groupIndex: group.index,
+                    moduleIndex: group.getModulePostOrderIndex(cssModule),
+                  }
+                  break
                 }
+                compilation.chunkGraph.disconnectChunkAndModule(
+                  chunk,
+                  cssModule
+                )
               }
+            }
+            if (!isInAppChunk) {
+              modulesToInsertIntoApp.push(moduleToInsert)
+            }
+          }
 
-              const chunks = webpackModule.chunksIterable
-              for (const chunk of chunks) {
-                console.log(`discconect`, {
-                  name: chunk.name,
-                  canBeInitial: chunk.canBeInitial(),
-                  isOnlyInitial: chunk.isOnlyInitial(),
-                })
+          for (const { cssModule } of modulesToInsertIntoApp.sort((a, b) => {
+            if (a.groupIndex === b.groupIndex) {
+              return a.moduleIndex - b.moduleIndex
+            }
+            return a.groupIndex - b.groupIndex
+          })) {
+            compilation.chunkGraph.connectChunkAndModule(appChunk, cssModule)
 
+            for (const group of appChunk.groupsIterable) {
+              if (!group.getModulePostOrderIndex(cssModule)) {
+                group.setModulePostOrderIndex(
+                  cssModule,
+                  // @ts-ignore
+                  group._modulePostOrderIndices.size + 1
+                )
+              }
+            }
+          }
+
+          for (const webpackModule of modulesToRemove) {
+            const connections =
+              compilation.moduleGraph.getIncomingConnections(webpackModule)
+            for (const connection of connections) {
+              if (connection.dependency) {
+                compilation.moduleGraph.removeConnection(connection.dependency)
+              }
+            }
+
+            const chunks =
+              compilation.chunkGraph.getModuleChunksIterable(webpackModule)
+            for (const chunk of chunks) {
+              console.log(`disconnect`, {
+                name: chunk.name,
+                canBeInitial: chunk.canBeInitial(),
+                isOnlyInitial: chunk.isOnlyInitial(),
+              })
+
+              if (chunk !== appChunk) {
                 compilation.chunkGraph.disconnectChunk(chunk)
                 compilation.chunks.delete(chunk)
                 chunk.disconnectFromGroups()
               }
-
-              compilation.modules.delete(webpackModule)
             }
-          })
+
+            compilation.modules.delete(webpackModule)
+          }
         })
 
         // compilation.hooks.optimizeChunks.tap(
