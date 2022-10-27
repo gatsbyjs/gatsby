@@ -116,7 +116,7 @@ const PageAndSliceTrees: React.FC<IPageAndSliceTreesProps> = ({
     sliceList.push(
       <TreeGenerator
         isFirst={j === 0}
-        isLast={j === components.size - 1}
+        isLast={j === slices.size - 1}
         key={componentPath}
         file={path.posix.relative(root, componentPath)}
         slices={sliceNames}
