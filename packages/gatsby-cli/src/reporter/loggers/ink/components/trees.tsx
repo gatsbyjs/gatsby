@@ -6,47 +6,47 @@ import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path
 import StoreStateContext from "../context"
 import {
   generatePageTree,
-  IPageTreeLine,
+  generateSliceTree,
+  ITreeLine,
   IComponentWithPageModes,
-} from "../../../../util/generate-page-tree"
+} from "../../../../util/generate-trees"
 
-interface IPageTreeProps {
+interface IPageAndSliceTreesProps {
   components: Map<string, IComponentWithPageModes>
   root: string
-  slices: Set<string>
+  slices: Map<string, Set<string>>
 }
 
-const Description: React.FC<BoxProps> = function Description(props) {
-  return (
-    <Box>
-      <Box
-        {...props}
-        flexDirection="column"
-        borderStyle="round"
-        padding={1}
-        marginLeft={2}
-        marginRight={2}
-      >
-        <Box paddingLeft={2}>
-          <Text>(SSG) Generated at build time</Text>
-        </Box>
-        <Text>
-          D (DSG) Deferred static generation - page generated at runtime
-        </Text>
-        <Text>∞ (SSR) Server-side renders at runtime (uses getServerData)</Text>
-        <Text>λ (Function) Gatsby function</Text>
+const Description: React.FC<BoxProps> = props => (
+  <Box>
+    <Box
+      {...props}
+      flexDirection="column"
+      borderStyle="round"
+      padding={1}
+      marginLeft={2}
+      marginRight={2}
+    >
+      <Box paddingLeft={2}>
+        <Text>(SSG) Generated at build time</Text>
       </Box>
-      <Spacer />
+      <Text>
+        D (DSG) Deferred static generation - page generated at runtime
+      </Text>
+      <Text>∞ (SSR) Server-side renders at runtime (uses getServerData)</Text>
+      <Text>λ (Function) Gatsby function</Text>
     </Box>
-  )
-}
+    <Spacer />
+  </Box>
+)
 
-const ComponentTree: React.FC<{
+const TreeGenerator: React.FC<{
   file: string
   isFirst: boolean
   isLast: boolean
-  pages: IComponentWithPageModes
-}> = function ComponentTree({ file, isFirst, isLast, pages }) {
+  pages?: IComponentWithPageModes
+  slices?: Set<string>
+}> = ({ file, isFirst, isLast, pages, slices }) => {
   let topLevelIcon = `├`
   if (isFirst) {
     topLevelIcon = `┌`
@@ -55,7 +55,13 @@ const ComponentTree: React.FC<{
     topLevelIcon = `└`
   }
 
-  const sortedPages: Array<IPageTreeLine> = generatePageTree(pages)
+  let items: Array<ITreeLine> = []
+
+  if (pages) {
+    items = generatePageTree(pages)
+  } else if (slices) {
+    items = generateSliceTree(slices)
+  }
 
   return (
     <Box flexDirection="column">
@@ -65,15 +71,15 @@ const ComponentTree: React.FC<{
         </Box>
         <Text wrap="truncate-middle">{file}</Text>
       </Box>
-      {sortedPages.map((page, index) => (
-        <Box key={page.text}>
+      {items.map((item, index) => (
+        <Box key={item.text}>
           <Text>{isLast ? ` ` : `│`}</Text>
           <Box paddingLeft={1} paddingRight={1}>
-            <Text>{index === sortedPages.length - 1 ? `└` : `├`}</Text>
+            <Text>{index === items.length - 1 ? `└` : `├`}</Text>
           </Box>
           <Box>
             <Text>
-              {page.symbol} {page.text}
+              {item.symbol} {item.text}
             </Text>
           </Box>
         </Box>
@@ -82,16 +88,19 @@ const ComponentTree: React.FC<{
   )
 }
 
-const PageTree: React.FC<IPageTreeProps> = function PageTree({
+const PageAndSliceTrees: React.FC<IPageAndSliceTreesProps> = ({
   components,
   root,
   slices,
-}) {
+}) => {
   const componentList: Array<ReactElement> = []
+  const sliceList: Array<ReactElement> = []
   let i = 0
+  let j = 0
+
   for (const [componentPath, pages] of components) {
     componentList.push(
-      <ComponentTree
+      <TreeGenerator
         isFirst={i === 0}
         isLast={i === components.size - 1}
         key={componentPath}
@@ -101,6 +110,20 @@ const PageTree: React.FC<IPageTreeProps> = function PageTree({
     )
 
     i++
+  }
+
+  for (const [componentPath, sliceNames] of slices) {
+    sliceList.push(
+      <TreeGenerator
+        isFirst={j === 0}
+        isLast={j === components.size - 1}
+        key={componentPath}
+        file={path.posix.relative(root, componentPath)}
+        slices={sliceNames}
+      />
+    )
+
+    j++
   }
 
   return (
@@ -114,13 +137,7 @@ const PageTree: React.FC<IPageTreeProps> = function PageTree({
           <Box paddingTop={1} paddingBottom={1}>
             <Text underline>Slices</Text>
           </Box>
-          {Array.from(slices).map(slice => (
-            <Box key={slice}>
-              <Text>
-                <Text bold>·</Text> {path.posix.relative(root, slice)}
-              </Text>
-            </Box>
-          ))}
+          {sliceList}
         </>
       )}
       <Description marginTop={1} marginBottom={1} />
@@ -128,11 +145,11 @@ const PageTree: React.FC<IPageTreeProps> = function PageTree({
   )
 }
 
-const ConnectedPageTree: React.FC = function ConnectedPageTree() {
+const Trees: React.FC = () => {
   const state = useContext(StoreStateContext)
 
   const componentWithPages = new Map<string, IComponentWithPageModes>()
-  const slices = new Set<string>()
+  const sliceWithComponents = new Map<string, Set<string>>()
 
   for (const {
     componentPath,
@@ -146,9 +163,14 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
       SSR: new Set<string>(),
       FN: new Set<string>(),
     }
+    const sliceByComponent =
+      sliceWithComponents.get(layoutComponent) || new Set<string>()
 
     if (isSlice) {
-      slices.add(componentPath)
+      pages.forEach(sliceName => {
+        sliceByComponent.add(sliceName)
+      })
+      sliceWithComponents.set(layoutComponent, sliceByComponent)
     } else {
       pages.forEach(pagePath => {
         const gatsbyPage = state.pageTree!.pages.get(pagePath)
@@ -172,12 +194,12 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
   }
 
   return (
-    <PageTree
+    <PageAndSliceTrees
       components={componentWithPages}
-      slices={slices}
+      slices={sliceWithComponents}
       root={state.pageTree!.root}
     />
   )
 }
 
-export default ConnectedPageTree
+export default Trees

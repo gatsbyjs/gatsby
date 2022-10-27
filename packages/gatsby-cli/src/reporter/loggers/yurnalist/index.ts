@@ -15,7 +15,7 @@ import { IUpdateActivity } from "../../redux/types"
 import {
   generatePageTree,
   IComponentWithPageModes,
-} from "../../../util/generate-page-tree"
+} from "../../../util/generate-trees"
 import { IRenderPageArgs } from "../../types"
 import { getPathToLayoutComponent } from "gatsby-core-utils/parse-component-path"
 
