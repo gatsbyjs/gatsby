@@ -61,7 +61,7 @@ To create a collection route:
 3. Create a new page component in your `src/pages` directory using the following naming convention: `{nodeType.field}.js`.
    - Don't forget to include the curly braces (`{}`) in your filenames to indicate the dynamic part of the route!
 
-For example, if you wanted to create a separate page for each `Product` node, and you wanted to use the product's `name` field in the URL, you'd create a new file at `src/pages/{Product.name}.js`. Then Gatsby would create those pages at routes like `/water-bottle` or `/sweatshirt` or `/notebook`.
+For example, if you wanted to create a separate page for each `Product` node, and you wanted to use the product's `name` field in the URL, you'd create a new file at `src/pages/{Product.name}.js`. Then Gatsby would create those pages at routes like `/water-bottle/` or `/sweatshirt/` or `/notebook/`.
 
 </Collapsible>
 
@@ -140,11 +140,11 @@ The diagram below shows the different routes that Gatsby will create when it bui
 When you build your site, Gatsby looks at the page components in your `src/pages` directory and creates new pages for your site.
 
 - `src/pages/index.js` lives at the `/` route.
-- `src/pages/blog.js` lives at the `/blog` route.
+- `src/pages/blog.js` lives at the `/blog/` route.
 - `src/pages/{mdx.frontmatter__slug}.js` gets turned into multiple routes - one for each MDX node in the data layer.
-  - Gatsby uses the MDX node with slug `my-first-post` to build a page that lives at the `/my-first-post` route.
-  - Gatsby uses the MDX node with slug `another-post` to build a page that lives at the `/another-post` route.
-  - Gatsby uses the MDX node with slug `yet-another-post` to build a page that lives at the `/yet-another-post` route.
+  - Gatsby uses the MDX node with slug `my-first-post` to build a page that lives at the `/my-first-post/` route.
+  - Gatsby uses the MDX node with slug `another-post` to build a page that lives at the `/another-post/` route.
+  - Gatsby uses the MDX node with slug `yet-another-post` to build a page that lives at the `/yet-another-post/` route.
 
 </Collapsible>
 
@@ -170,7 +170,7 @@ When you build your site, Gatsby looks at the page components in your `src/pages
    export default BlogPost
    ```
 
-3. In a web browser, go to `localhost:8000/my-first-post` and you should see your hard-coded content. You can update your URL with the slugs for your other posts to check that identical pages were created for them too.
+3. In a web browser, go to `localhost:8000/my-first-post/` and you should see your hard-coded content. You can update your URL with the slugs for your other posts to check that identical pages were created for them too.
 
 ![A screenshot of the blog post template page in a web browser. The page title says, "Super Cool Blog Posts," and the post contents have a paragraph element that says, "My blog post contents will go here (eventually)."](./post-page-template-hardcoded.png)
 
@@ -194,21 +194,6 @@ The following diagram shows an overview of the updates you'll have to make in or
 
 ![A diagram showing a new folder structure for the page components, along with the corresponding routes that get generated. Extended description below.](./file-system-routes-with-blog-subdirectory.png)
 
-<Collapsible
-  summary={<em>Expand for detailed description</em>}
->
-
-When Gatsby builds the pages for your site, it creates routes based on the folder structure of the `src/pages` directory. So if your `src/pages` directory contains subdirectories with page components, the name of the subdirectory will get added as a path parameter for those pages.
-
-- `src/pages/index.js` still lives at the `/` route.
-- `src/pages/blog/index.js` lives at the `/blog` route.
-- `src/pages/blog/{mdx.frontmatter__slug}.js` gets turned into multiple routes - one for each MDX node in the data layer.
-  - Gatsby uses the MDX node with slug `my-first-post` to build a page that lives at the `blog/my-first-post` route.
-  - Gatsby uses the MDX node with slug `another-post` to build a page that lives at the `blog/another-post` route.
-  - Gatsby uses the MDX node with slug `yet-another-post` to build a page that lives at the `blog/yet-another-post` route.
-
-</Collapsible>
-
 1. Create a new folder in your `src/pages` directory, and call it `blog`.
 
 2. Move the `src/pages/{mdx.frontmatter__slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` component to reflect the new folder structure:
@@ -221,7 +206,7 @@ When Gatsby builds the pages for your site, it creates routes based on the folde
    ```
 
 3. Once your local development server rebuilds your site, check in a web browser that the paths to your blog posts have updated.
-   - For example, you should now have a page at `localhost:8000/blog/my-first-post`, and trying to access `localhost:8000/my-first-post` (without the `blog` path parameter) should send you to the 404 page.
+   - For example, you should now have a page at `localhost:8000/blog/my-first-post/`, and trying to access `localhost:8000/my-first-post/` (without the `blog` path parameter) should send you to the 404 page.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -235,7 +220,7 @@ Don't have the Gatsby CLI globally installed? Try running `npx gatsby clean` ins
 
 4. For organization, it would be nice to keep all your blog-related pages together. Move the `src/pages/blog.js` file into your new `src/pages/blog` directory as well.
 
-   - Rename the file from `blog.js` to `index.js`. (Otherwise your blog page will move to `localhost:8000/blog/blog`).
+   - Rename the file from `blog.js` to `index.js`. (Otherwise your blog page will move to `localhost:8000/blog/blog/`).
    - You'll also need to update the import for the `Layout` component to reflect the new folder structure:
 
      ```js:title=src/pages/blog/index.js
@@ -248,7 +233,7 @@ Don't have the Gatsby CLI globally installed? Try running `npx gatsby clean` ins
 
    - You may need to stop and restart your local development server for the changes to be picked up.
 
-5. In a web browser, check that your Blog page still shows up at `localhost:8000/blog`.
+5. In a web browser, check that your Blog page still shows up at `localhost:8000/blog/`.
 
 Nice work! You've now used Gatsby's File System Route API to create pages from nodes in the data layer.
 
@@ -342,7 +327,7 @@ Under the hood, Gatsby makes both of these values available to use as query vari
 **Want to take a closer look?**
 
 1. Add a `console.log` statement to print out the `props` for your `BlogPost` page component in `src/pages/blog/{mdx.frontmatter__slug}.js`.
-2. In a web browser, go to `localhost:8000/blog/my-first-post` and open the developer tools. In the console tab, you should see an object similar to the one below:
+2. In a web browser, go to `localhost:8000/blog/my-first-post/` and open the developer tools. In the console tab, you should see an object similar to the one below:
    ```js
    Object {
      // ...
@@ -459,7 +444,7 @@ The JSON object in the Query Variables section should look something like the on
    export default BlogPost
    ```
 
-4. In your web browser, go to one of your blog post pages (like `localhost:8000/blog/my-first-post`). You should see the contents of your blog post rendered in their own page!
+4. In your web browser, go to one of your blog post pages (like `localhost:8000/blog/my-first-post/`). You should see the contents of your blog post rendered in their own page!
    - Try checking the routes for your other posts, to make sure all your pages are rendering the post contents correctly.
 
 ![A screenshot of the "my-first-post" blog page in a web browser. The post's title, date, and body contents are rendered.](./my-first-post.png)
@@ -522,7 +507,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering an e
    export default BlogPage
    ```
 
-2. In a web browser, go to `localhost:8000/blog`. Your Blog page should now show links to each of your blog post pages.
+2. In a web browser, go to `localhost:8000/blog/`. Your Blog page should now show links to each of your blog post pages.
    ![A screenshot of the Blog page in a web browser. It shows the title and date for each post, and each post title is a link to the page for that post.](./blog-page-with-links.png)
 
 Congratulations, you now have a multi-page blog site! Try adding some new `.mdx` files to your top-level `blog` directory. They should get added to your Blog page automatically when your site rebuilds!
