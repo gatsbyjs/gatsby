@@ -232,7 +232,7 @@ export class PartialHydrationPlugin {
             const hasClientExportDirective = ast.body.find(
               statement =>
                 statement.type === `ExpressionStatement` &&
-                (statement as IDirective).directive === `client export`
+                (statement as IDirective).directive === `use client`
             )
 
             const module = parser.state.module

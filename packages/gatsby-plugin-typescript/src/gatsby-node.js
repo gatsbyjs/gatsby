@@ -16,6 +16,28 @@ function onCreateBabelConfig({ actions }, options) {
   })
 }
 
+function onCreateWebpackConfig({ actions, loaders }) {
+  if (typeof loaders?.js !== `function`) {
+    return
+  }
+
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: ({ resourceQuery, issuer }) => [
+            loaders.js({
+              isPageTemplate: /async-requires/.test(issuer),
+              resourceQuery,
+            }),
+          ],
+        },
+      ],
+    },
+  })
+}
+
 exports.pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     isTSX: Joi.boolean().description(`Enables jsx parsing.`).default(false),
@@ -49,3 +71,4 @@ exports.pluginOptionsSchema = ({ Joi }) =>
 
 exports.resolvableExtensions = resolvableExtensions
 exports.onCreateBabelConfig = onCreateBabelConfig
+exports.onCreateWebpackConfig = onCreateWebpackConfig
