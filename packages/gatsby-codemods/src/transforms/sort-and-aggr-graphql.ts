@@ -200,9 +200,11 @@ function isOldSortObject(props: unknown): props is IOldSortObject {
 
   let hasFields = false
   // skip if there any unexpected keys
-  for (const key of Object.keys(props)) {
+  for (const [key, value] of Object.entries(props)) {
     if (key === `fields`) {
-      hasFields = true
+      if (value) {
+        hasFields = true
+      }
     } else if (key !== `order`) {
       return false
     }

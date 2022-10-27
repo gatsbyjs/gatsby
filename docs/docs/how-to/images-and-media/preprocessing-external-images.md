@@ -110,8 +110,6 @@ query {
 }
 ```
 
-![GraphiQL with above query inserted](../../images/remote-file-node-graphiql-preview.png)
-
 You can then use `gatsby-transformer-sharp` & `gatsby-plugin-image` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the ["Using Gatsby Plugin Image" guide](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 
 ```graphql

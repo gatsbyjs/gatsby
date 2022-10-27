@@ -1,16 +1,15 @@
 orbs:
   win: circleci/windows@2.4.0
-  slack: circleci/slack@3.4.1
 
 executors:
   node:
     parameters:
       image:
         type: string
-        default: "14.15.0"
+        default: "18.0.0"
       gatsby_major:
         type: string
-        default: "4"
+        default: "5"
     docker:
       - image: cimg/node:<< parameters.image >>
     environment:
@@ -24,7 +23,7 @@ aliases:
 
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node14.15.0-chrome96-ff94
+      - image: cypress/browsers:node18.6.0-chrome105-ff104
     environment:
       <<: *e2e-executor-env
 
@@ -99,8 +98,7 @@ aliases:
             GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
-            GATSBY_EXPERIMENTAL_LMDB_STORE: 1
-            GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
+            JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: "true"
       - store_test_results:
           path: ./test-results/jest-node/
 
@@ -113,26 +111,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node14
-      - unit_tests_node16
       - unit_tests_node18
-
-  e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
-    <<: *e2e-executor
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
-
-  e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
-    <<: *e2e-executor
-    environment:
-      <<: *e2e-executor-env
-      CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/development-runtime
 
 commands:
   e2e-test:
@@ -151,6 +130,9 @@ commands:
       react_version:
         type: string
         default: ""
+      slices:
+        type: boolean
+        default: true # allow disabling it later when setting up partial hydration tests
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
@@ -161,6 +143,11 @@ commands:
           condition: << parameters.skip_file_change_test >>
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+
+      - when:
+          condition: << parameters.slices >>
+          steps:
+            - run: echo 'export GATSBY_SLICES="true"' >> "$BASH_ENV"
 
       - <<: *attach_to_bootstrap
       - when:
@@ -183,28 +170,6 @@ version: 2.1
 jobs:
   bootstrap:
     executor: node
-    steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
-      # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: sudo apt-get update && sudo apt-get install python -y
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *check_lockfile
-      - <<: *validate_renovate
-      - <<: *persist_cache
-      - run: yarn bootstrap -- concurrency=2
-      # Persist the workspace again with all packages already built
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - "packages/"
-            - "node_modules/"
-
-  bootstrap_v5:
-    executor:
-      name: node
-      gatsby_major: "5"
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
@@ -248,42 +213,24 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node14:
-    executor:
-      name: node
-      image: "14.15.0"
-    <<: *test_template
-
-  unit_tests_node16:
-    executor:
-      name: node
-      image: "16.15.0"
-    <<: *test_template
-
   unit_tests_node18:
     executor:
       name: node
       image: "18.2.0"
     <<: *test_template
 
-  unit_tests_node18_v5:
-    executor:
-      name: node
-      image: "18.2.0"
-      gatsby_major: "5"
-    <<: *test_template
-
   integration_tests_gatsby_source_wordpress:
     machine:
-      image: "ubuntu-2004:202107-02"
+      image: "ubuntu-2204:2022.10.1"
     steps:
       - run:
           command: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install v14
-      - run: nvm alias default v14
-      - run: nvm use v14
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            echo nvm install v18 >> $BASH_ENV
+            echo nvm alias default v18 >> $BASH_ENV
+      - run: |
+          node -v
       - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
@@ -313,9 +260,7 @@ jobs:
           test_path: integration-tests/gatsby-pipeline
 
   integration_tests_gatsby_cli:
-    executor:
-      name: node
-      image: "14.16.0"
+    executor: node
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
@@ -422,9 +367,6 @@ jobs:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
 
-  e2e_tests_development_runtime:
-    <<: *e2e_tests_development_runtime_alias
-
   e2e_tests_development_runtime_with_react_18:
     <<: *e2e-executor
     environment:
@@ -434,10 +376,6 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
-          react_version: "^18.2.0"
-
-  e2e_tests_production_runtime:
-    <<: *e2e_tests_production_runtime_alias
 
   e2e_tests_production_runtime_with_react_18:
     <<: *e2e-executor
@@ -445,7 +383,6 @@ jobs:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=5k8zbj CYPRESS_RECORD_KEY=ec36ff6b-3db9-48a9-8f7b-2faf301ab800 yarn test && CYPRESS_PROJECT_ID=yvdct2 CYPRESS_RECORD_KEY=2a4f4f31-0dfb-4a56-80e0-9ed42a1131a4 yarn test:offline
-          react_version: "^18.2.0"
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -572,11 +509,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 14.15.0 and yarn
+          name: Install node 18.0.0 and yarn
           command: |
-            nvm install 14.15.0
-            nvm alias default 14.15.0
-            nvm use 14.15.0
+            nvm install 18.0.0
+            nvm alias default 18.0.0
+            nvm use 18.0.0
             choco install yarn
       - run:
           name: Rebuild packages for windows
@@ -585,14 +522,15 @@ jobs:
             yarn
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split)
           no_output_timeout: 15m
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GATSBY_EXPERIMENTAL_LMDB_STORE: 1
             GENERATE_JEST_REPORT: "true"
+            COMPILER_OPTIONS: GATSBY_MAJOR=5
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
+            JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: "true"
       - store_test_results:
           path: ./test-results/jest-node/
 
@@ -626,18 +564,6 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
-            - bootstrap
-      - unit_tests_node14:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - unit_tests_node16:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
             - bootstrap
       - unit_tests_node18:
           <<: *ignore_docs
@@ -682,10 +608,6 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
-      - e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
-      - e2e_tests_production_runtime:
-          <<: *e2e-test-workflow
       - e2e_tests_development_runtime_with_react_18:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime_with_react_18:
@@ -701,11 +623,3 @@ workflows:
             branches:
               only:
                 - master
-
-  build-test_v5:
-    jobs:
-      - bootstrap_v5
-      - unit_tests_node18_v5:
-          <<: *ignore_docs
-          requires:
-            - bootstrap_v5

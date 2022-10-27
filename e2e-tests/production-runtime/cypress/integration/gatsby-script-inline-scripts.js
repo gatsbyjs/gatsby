@@ -17,6 +17,12 @@ const typesOfInlineScripts = [
   },
 ]
 
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 /**
  * Normally we would duplicate the tests so they're flatter and easier to debug,
  * but since the test count grew and the cases are exactly the same we'll iterate.

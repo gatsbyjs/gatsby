@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.5/packages/gatsby) (2022-10-25)
+
+#### Bug Fixes
+
+- track multiple root nodes and not just one [#36867](https://github.com/gatsbyjs/gatsby/issues/36867) [#36879](https://github.com/gatsbyjs/gatsby/issues/36879) ([c9d97f9](https://github.com/gatsbyjs/gatsby/commit/c9d97f96fe8e40760185b46e699dd702d2141505))
+
+### [4.24.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.4/packages/gatsby) (2022-10-10)
+
+**Note:** Version bump only for package gatsby
+
+### [4.24.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.3/packages/gatsby) (2022-10-07)
+
+#### Bug Fixes
+
+- Don't throw when a path with special character is visited [#36414](https://github.com/gatsbyjs/gatsby/issues/36414) [#36757](https://github.com/gatsbyjs/gatsby/issues/36757) ([87140c9](https://github.com/gatsbyjs/gatsby/commit/87140c96adffd88c89a0ec6a24086590093fd9a9))
+- Use hex hash for CSS modules [#36701](https://github.com/gatsbyjs/gatsby/issues/36701) [#36756](https://github.com/gatsbyjs/gatsby/issues/36756) ([b264d17](https://github.com/gatsbyjs/gatsby/commit/b264d17fc0d0f50217c25a473e32865366b9237f))
+
+### [4.24.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.2/packages/gatsby) (2022-10-06)
+
+**Note:** Version bump only for package gatsby
+
 ### [4.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.1/packages/gatsby) (2022-09-30)
 
 #### Bug Fixes

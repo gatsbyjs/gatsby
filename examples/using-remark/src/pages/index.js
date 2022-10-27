@@ -75,10 +75,10 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query {
+  {
     allMarkdownRemark(
       limit: 2000
-      sort: { fields: [frontmatter___date], order: ASC }
+      sort: { frontmatter: { date: ASC } }
       filter: { frontmatter: { draft: { ne: true }, example: { ne: true } } }
     ) {
       edges {

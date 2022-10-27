@@ -5,6 +5,7 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk, truncate } from "lodash"
 import { build, watch } from "../utils/webpack/bundle"
 import * as path from "path"
+import fastq from "fastq"
 
 import { emitter, store } from "../redux"
 import webpack from "webpack"
@@ -21,6 +22,11 @@ import { IPageDataWithQueryResult } from "../utils/page-data"
 import { getPublicPath } from "../utils/get-public-path"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { stitchSliceForAPage } from "../utils/slices/stitching"
+import type { ISlicePropsEntry } from "../utils/worker/child/render-html"
+import { getPageMode } from "../utils/page-mode"
+import { extractUndefinedGlobal } from "../utils/extract-undefined-global"
+
 type IActivity = any // TODO
 
 const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -312,6 +318,18 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
   previewErrors: Record<string, any>
+
+  slicesPropsPerPage: Record<
+    string,
+    Record<
+      string,
+      {
+        props: Record<string, unknown>
+        sliceName: string
+        hasChildren: boolean
+      }
+    >
+  >
 }
 
 const renderHTMLQueue = async (
@@ -402,6 +420,13 @@ const renderHTMLQueue = async (
           type: `HTML_GENERATED`,
           payload: pageSegment,
         })
+
+        if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+          store.dispatch({
+            type: `SET_SLICES_PROPS`,
+            payload: htmlRenderMeta.slicesPropsPerPage,
+          })
+        }
 
         for (const [_pagePath, arrayOfUsages] of Object.entries(
           htmlRenderMeta.unsafeBuiltinsUsageByPagePath
@@ -531,10 +556,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const prettyError = createErrorFromString(
-      error.stack,
-      `${rendererPath}.map`
-    )
+    const prettyError = createErrorFromString(error, `${rendererPath}.map`)
 
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
@@ -638,15 +660,14 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       let id = `95313` // TODO: verify error IDs exist
       const context = {
         errorPath: err.context && err.context.path,
-        ref: ``,
+        undefinedGlobal: ``,
       }
 
-      const match = err.message.match(
-        /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
-      )
-      if (match && match[1]) {
+      const undefinedGlobal = extractUndefinedGlobal(err)
+
+      if (undefinedGlobal) {
         id = `95312`
-        context.ref = match[1]
+        context.undefinedGlobal = undefinedGlobal
       }
 
       buildHTMLActivityProgress.panic({
@@ -703,6 +724,19 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     }
   }
 
+  if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+    await buildSlices({
+      program,
+      workerPool,
+      parentSpan,
+    })
+
+    await stitchSlicesIntoPagesHTML({
+      publicDir: path.join(program.directory, `public`),
+      parentSpan,
+    })
+  }
+
   if (toDelete.length > 0) {
     const publicDir = path.join(program.directory, `public`)
     const deletePageDataActivityTimer = reporter.activityTimer(
@@ -715,4 +749,133 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   }
 
   return { toRegenerate, toDelete }
+}
+
+export async function buildSlices({
+  program,
+  workerPool,
+  parentSpan,
+}: {
+  workerPool: GatsbyWorkerPool
+  parentSpan?: Span
+  program: IBuildArgs
+}): Promise<void> {
+  const state = store.getState()
+
+  // for now we always render everything, everytime
+  const slicesProps: Array<ISlicePropsEntry> = []
+  for (const [
+    sliceId,
+    { props, sliceName, hasChildren, pages, dirty },
+  ] of state.html.slicesProps.bySliceId.entries()) {
+    if (dirty && pages.size > 0) {
+      slicesProps.push({
+        sliceId,
+        props,
+        sliceName,
+        hasChildren,
+      })
+    }
+  }
+
+  if (slicesProps.length > 0) {
+    const buildHTMLActivityProgress = reporter.activityTimer(
+      `Building slices HTML (${slicesProps.length})`,
+      {
+        parentSpan,
+      }
+    )
+    buildHTMLActivityProgress.start()
+
+    const htmlComponentRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+    try {
+      const slices = Array.from(state.slices.entries())
+
+      await workerPool.single.renderSlices({
+        publicDir: path.join(program.directory, `public`),
+        htmlComponentRendererPath,
+        slices,
+        slicesProps,
+      })
+    } catch (err) {
+      const prettyError = createErrorFromString(
+        err.stack,
+        `${htmlComponentRendererPath}.map`
+      )
+
+      const undefinedGlobal = extractUndefinedGlobal(err)
+
+      let id = `11339`
+
+      if (undefinedGlobal) {
+        id = `11340`
+        err.context.undefinedGlobal = undefinedGlobal
+      }
+
+      buildHTMLActivityProgress.panic({
+        id,
+        context: err.context,
+        error: prettyError,
+      })
+    } finally {
+      buildHTMLActivityProgress.end()
+    }
+
+    // for now separate action for cleaning dirty flag and removing stale entries
+    store.dispatch({
+      type: `SLICES_PROPS_RENDERED`,
+      payload: slicesProps,
+    })
+  } else {
+    reporter.info(`There are no new or changed slice html files to build.`)
+  }
+
+  store.dispatch({
+    type: `SLICES_PROPS_REMOVE_STALE`,
+  })
+}
+
+export async function stitchSlicesIntoPagesHTML({
+  publicDir,
+  parentSpan,
+}: {
+  publicDir: string
+  parentSpan?: Span
+}): Promise<void> {
+  const stichSlicesActivity = reporter.activityTimer(`stiching slices`, {
+    parentSpan,
+  })
+  stichSlicesActivity.start()
+  try {
+    const {
+      html: { pagesThatNeedToStitchSlices },
+      pages,
+    } = store.getState()
+
+    const stichQueue = fastq<void, string, void>(async (pagePath, cb) => {
+      await stitchSliceForAPage({ pagePath, publicDir })
+      cb(null)
+    }, 25)
+
+    for (const pagePath of pagesThatNeedToStitchSlices) {
+      const page = pages.get(pagePath)
+      if (!page) {
+        continue
+      }
+
+      if (getPageMode(page) === `SSG`) {
+        stichQueue.push(pagePath)
+      }
+    }
+
+    if (!stichQueue.idle()) {
+      await new Promise(resolve => {
+        stichQueue.drain = resolve as () => unknown
+      })
+    }
+
+    store.dispatch({ type: `SLICES_STITCHED` })
+  } finally {
+    stichSlicesActivity.end()
+  }
 }

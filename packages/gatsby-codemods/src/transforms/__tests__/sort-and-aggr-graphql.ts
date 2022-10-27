@@ -31,26 +31,24 @@ describe(transformName, () => {
       it(`single field (root field), no order`, () => {
         expect(run(`allMarkdownRemark(sort: {fields: excerpt})`))
           .toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {excerpt: ASC})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {excerpt: ASC})
+          }\`"
+        `)
       })
 
       it(`single field (nested field), no order`, () => {
         expect(
           run(`allMarkdownRemark(sort: {fields: frontmatter___nested___date})`)
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {frontmatter: {nested: {date: ASC}}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {frontmatter: {nested: {date: ASC}}})
+          }\`"
+        `)
       })
 
       it(`single field, single order (ASC)`, () => {
@@ -62,13 +60,12 @@ describe(transformName, () => {
           })`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {frontmatter: {date: ASC}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {frontmatter: {date: ASC}})
+          }\`"
+        `)
       })
 
       it(`single field, single order (DESC)`, () => {
@@ -80,25 +77,23 @@ describe(transformName, () => {
           })`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {frontmatter: {date: DESC}})
+          }\`"
+        `)
       })
 
       it(`list with single field, no order`, () => {
         expect(run(`allMarkdownRemark(sort: {fields: [frontmatter___date]})`))
           .toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {frontmatter: {date: ASC}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {frontmatter: {date: ASC}})
+          }\`"
+        `)
       })
 
       it(`list with multiple fields, no order`, () => {
@@ -107,15 +102,14 @@ describe(transformName, () => {
             `allMarkdownRemark(sort: {fields: [frontmatter___priority, frontmatter___date]})`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(
-                      sort: [{frontmatter: {priority: ASC}}, {frontmatter: {date: ASC}}]
-                    )
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(
+              sort: [{frontmatter: {priority: ASC}}, {frontmatter: {date: ASC}}]
+            )
+          }\`"
+        `)
       })
 
       it(`single field, list with single order`, () => {
@@ -127,13 +121,12 @@ describe(transformName, () => {
           })`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {frontmatter: {date: DESC}})
+          }\`"
+        `)
       })
 
       it(`single field, list with multiple orders`, () => {
@@ -146,13 +139,12 @@ describe(transformName, () => {
           })`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {frontmatter: {date: DESC}})
+          }\`"
+        `)
       })
 
       it(`list with single field, list with single order`, () => {
@@ -164,13 +156,12 @@ describe(transformName, () => {
           })`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(sort: {frontmatter: {date: DESC}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(sort: {frontmatter: {date: DESC}})
+          }\`"
+        `)
       })
 
       it(`list with multiple fields, list with single order`, () => {
@@ -182,15 +173,14 @@ describe(transformName, () => {
           })`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(
-                      sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: ASC}}]
-                    )
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(
+              sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: ASC}}]
+            )
+          }\`"
+        `)
       })
 
       it(`list with multiple fields, list with multiple orders`, () => {
@@ -202,15 +192,14 @@ describe(transformName, () => {
           })`
           )
         ).toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    allMarkdownRemark(
-                      sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: DESC}}]
-                    )
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            allMarkdownRemark(
+              sort: [{frontmatter: {isFeatured: DESC}}, {frontmatter: {date: DESC}}]
+            )
+          }\`"
+        `)
       })
     })
 
@@ -237,6 +226,11 @@ describe(transformName, () => {
         const input = `allMarkdownRemark(sort: { frontmatter: { date: DESC }})`
         expect(run(input)).toEqual(genSource(input))
       })
+
+      it(`new API (transform is idempotent with "fields" edge case)`, () => {
+        const input = `allMarkdownRemark(sort: { fields: { slug: ASC }})`
+        expect(run(input)).toEqual(genSource(input))
+      })
     })
   })
 
@@ -245,13 +239,12 @@ describe(transformName, () => {
       it(`root field`, () => {
         expect(run(`distinct(field: frontmatter___category)`))
           .toMatchInlineSnapshot(`
-                  "import { graphql } from \\"gatsby\\"
+          "import { graphql } from \\"gatsby\\"
 
-                  export const q = graphql\`{
-                    distinct(field: {frontmatter: {category: SELECT}})
-                  }
-                  \`"
-              `)
+          export const q = graphql\`{
+            distinct(field: {frontmatter: {category: SELECT}})
+          }\`"
+        `)
       })
 
       it(`nested field`, () => {
@@ -261,8 +254,7 @@ describe(transformName, () => {
 
           export const q = graphql\`{
             distinct(field: {frontmatter: {nested_category: SELECT}})
-          }
-          \`"
+          }\`"
         `)
       })
     })
@@ -309,17 +301,16 @@ describe(transformName, () => {
           path: join(__dirname, `..`, `..`, `example.js`),
         })
       ).toMatchInlineSnapshot(`
-              "exports.createPages = ({ graphql, actions }) => {
-                        const { data } = graphql(\`{
-                allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
-                  nodes {
-                    id
-                  }
-                }
-              }
-              \`)
-                      }"
-          `)
+        "exports.createPages = ({ graphql, actions }) => {
+                  const { data } = graphql(\`{
+          allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
+            nodes {
+              id
+            }
+          }
+        }\`)
+                }"
+      `)
     })
 
     it(`graphql("...")`, () => {
@@ -340,8 +331,7 @@ describe(transformName, () => {
               id
             }
           }
-        }
-        \`)
+        }\`)
                 }"
       `)
     })
@@ -364,8 +354,7 @@ describe(transformName, () => {
               id
             }
           }
-        }
-        \`)
+        }\`)
                 }"
       `)
     })

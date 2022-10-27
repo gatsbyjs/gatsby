@@ -1,7 +1,7 @@
 let execaReturnValue
 
 jest.setMock("execa", {
-  sync: () => execaReturnValue,
+  node: () => execaReturnValue,
 })
 
 import process from "process"

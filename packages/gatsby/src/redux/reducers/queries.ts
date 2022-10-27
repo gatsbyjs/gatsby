@@ -80,6 +80,22 @@ export function queriesReducer(
       state.deletedQueries.delete(path)
       return state
     }
+    case `CREATE_SLICE`: {
+      const { name, componentPath } = action.payload
+      const path = `slice--${name}`
+      let query = state.trackedQueries.get(path)
+      if (!query || action.contextModified) {
+        query = registerQuery(state, path)
+        query.dirty = setFlag(
+          query.dirty,
+          action.contextModified ? FLAG_DIRTY_PAGE_CONTEXT : FLAG_DIRTY_NEW_PAGE
+        )
+        state = trackDirtyQuery(state, path)
+      }
+      registerComponent(state, componentPath).pages.add(path)
+      state.deletedQueries.delete(path)
+      return state
+    }
     case `DELETE_PAGE`: {
       // Don't actually remove the page query from trackedQueries, just mark it as "deleted". Why?
       //   We promote a technique of a consecutive deletePage/createPage calls in onCreatePage hook,
@@ -88,6 +104,12 @@ export function queriesReducer(
       //   This is OK for cold cache but with warm cache we will re-run all of those queries (unnecessarily).
       //   We will reconcile the state after createPages API call and actually delete those queries.
       state.deletedQueries.add(action.payload.path)
+      return state
+    }
+    case `DELETE_SLICE`: {
+      const { name } = action.payload
+      const path = `slice--${name}`
+      state.deletedQueries.add(path)
       return state
     }
     case `API_FINISHED`: {
@@ -343,7 +365,7 @@ function trackDirtyQuery(
   state: IGatsbyState["queries"],
   queryId: QueryId
 ): IGatsbyState["queries"] {
-  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+  if (process.env.GATSBY_QUERY_ON_DEMAND) {
     state.dirtyQueriesListToEmitViaWebsocket.push(queryId)
   }
 
