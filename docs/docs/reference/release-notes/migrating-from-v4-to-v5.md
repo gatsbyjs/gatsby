@@ -192,7 +192,7 @@ module.exports = {
 
 ### Removal of `useNavigate` hook
 
-We updated our [`@gatsbyjs/reach-router` fork](https://github.com/gatsbyjs/reach-router) to be compatible with React 18 and React Server Components. While doing that we removed the `useNavitate` hook. Please use `navigate` instead:
+We updated our [`@gatsbyjs/reach-router` fork](https://github.com/gatsbyjs/reach-router) to be compatible with React 18 and React Server Components. While doing that we removed the `useNavigate` hook. Please use `navigate` instead:
 
 ```diff
 - import { useNavigate } from "@gatsbyjs/reach-router"
