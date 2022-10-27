@@ -405,3 +405,6 @@ function MyPage() {
 
 export default Page
 ```
+## Additional references
+* Here's a [short, humorous video](https://www.youtube.com/watch?v=D__fDqXXOkw&list=PLCU2qJekvcN1j3q1U9ONvH0M9JHn0oOJm&index=9) on the Script Component
+
