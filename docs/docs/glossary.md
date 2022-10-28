@@ -262,7 +262,7 @@ This also often refers to [components](#component) that live in `/src/pages/` an
 
 ### Partial Hydration
 
-Partial hydration is powered by [React server components](#react-server-components) and gives you the ability to mark specific parts of your site as interactive while the rest of your site is static by default. Interactivity can come from things like click events, effects, and state changes. With Partial hydration the JavaScript only for these portions is downloaded.
+Gatsby's Partial Hydration is powered by [React server components](#react-server-components) and gives you the ability to mark specific parts of your site as interactive while the rest of your site is static by default. Interactivity can come from things like click events, effects, and state changes. With Partial Hydration the JavaScript only for these portions is downloaded, making your websites ship less JavaScript to your users.
 
 ### Plugin
 
@@ -298,7 +298,7 @@ A code library (written with [JavaScript](#javascript)) for building user interf
 
 ### React Server Components
 
-React server components allow you to build apps that only run on the server and have zero impact on bundle-size. Gatsby leverages this feature for its [Partial hydration](#partial-hydration). [Watch the talk "Data Fetching with Server Components"](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) or read the [Server components RFC](https://github.com/reactjs/rfcs/pull/188) to learn more.
+Generally speaking React Server Components allow developers to build apps that span the server and client. Server Components can dynamically choose which client components to render, allowing clients to download just the minimal amount of code necessary to render a page. Gatsby leverages this capability for its [Partial Hydration](#partial-hydration) feature. [Watch the talk "Data Fetching with Server Components"](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) or read the [Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to learn more.
 
 ### Remark
 

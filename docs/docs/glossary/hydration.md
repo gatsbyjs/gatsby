@@ -44,5 +44,5 @@ When a visitor requests their first URL from your site, the response contains st
 ### Learn More
 
 - [Understanding React Hydration](/docs/conceptual/react-hydration/) from the Gatsby docs
-- [ReactDOM.hydrate()](https://reactjs.org/docs/react-dom.html#hydrate) from the React API Reference
+- [ReactDOMClient.hydrateRoot()](https://reactjs.org/docs/react-dom-client.html#hydrateroot) from the React API Reference
 - [Rendering on the Web](https://web.dev/rendering-on-the-web/) from Google
