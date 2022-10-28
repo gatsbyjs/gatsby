@@ -320,6 +320,8 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
+  // we should include gatsby version as well
+  pluginVersions.push(require(`../../package.json`).version)
   const optionalFiles = [
     `${program.directory}/gatsby-config.js`,
     `${program.directory}/gatsby-node.js`,
