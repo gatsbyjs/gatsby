@@ -451,7 +451,7 @@ module.exports = ({
     auth,
     httpHeaders,
     ext,
-    name,
+    name: decodeURI(name),
     limit,
   })
 
