@@ -88,8 +88,6 @@ export class GatsbyWebpackStatsExtractor {
 
           await fs.ensureDir(path.join(`public`, `_gatsby`, `slices`))
 
-          const hashSliceContents = `<script>window.___webpackCompilationHash="${stats.hash}";</script>`
-
           const assetSliceContents: Array<string> = []
 
           if (`polyfill` in assets && assets.polyfill) {
@@ -114,7 +112,7 @@ export class GatsbyWebpackStatsExtractor {
 
           const scriptsSliceHtmlChanged = await ensureFileContent(
             path.join(`public`, `_gatsby`, `slices`, `_gatsby-scripts-1.html`),
-            chunkSliceContents + hashSliceContents + assetSliceContents.join(``)
+            chunkSliceContents + assetSliceContents.join(``)
           )
 
           if (scriptsSliceHtmlChanged) {
