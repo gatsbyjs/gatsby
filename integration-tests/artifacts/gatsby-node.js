@@ -10,6 +10,7 @@ let changedSsrCompilationHash
 let regeneratedPages = []
 let deletedPages = []
 let stitchedPages = []
+let renderedSlices = []
 
 exports.onPreInit = ({ emitter, store }) => {
   emitter.on(`SET_WEBPACK_COMPILATION_HASH`, action => {
@@ -28,6 +29,11 @@ exports.onPreInit = ({ emitter, store }) => {
 
   emitter.on(`HTML_REMOVED`, action => {
     deletedPages.push(action.payload)
+  })
+
+  emitter.on(`SLICES_PROPS_RENDERED`, action => {
+    console.log(require(`util`).inspect(action.payload, { depth: Infinity }))
+    renderedSlices.push(...action.payload)
   })
 
   // this is last step before stitching slice html into page html
@@ -339,6 +345,7 @@ exports.onPreBuild = () => {
   regeneratedPages = []
   deletedPages = []
   stitchedPages = []
+  renderedSlices = []
 }
 
 let counter = 1
@@ -373,6 +380,7 @@ exports.onPostBuild = async ({ graphql, getNodes }) => {
       changedBrowserCompilationHash,
       changedSsrCompilationHash,
       generated: regeneratedPages,
+      generatedSlices: renderedSlices,
       removed: deletedPages,
       stitched: stitchedPages,
     }
