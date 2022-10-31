@@ -101,6 +101,15 @@ export class StaticQueryMapper {
             `api-runner-browser-plugins.js`
           )
         )
+        const asyncRequiresPath = slash(
+          path.join(
+            program.directory,
+            `.cache`,
+            `_this_is_virtual_fs_path_`,
+            `$virtual`,
+            `async-requires.js`
+          )
+        )
         for (const entry of compilation.entries.values()) {
           for (const dependency of entry.dependencies) {
             const mod = compilation.moduleGraph.getModule(dependency)
@@ -119,11 +128,17 @@ export class StaticQueryMapper {
           ICollectedSlices
         >()
         const componentModules = new Map<NormalModule, IGatsbyPageComponent>()
+        let asyncRequiresModule: NormalModule | undefined
 
         for (const webpackModule of compilation.modules) {
           if (!(webpackModule instanceof NormalModule)) {
             // the only other type can be CssModule at this stage, which we don't care about
             // this also acts as a type guard, providing fuller typeing for webpackModule
+            continue
+          }
+
+          if (doesModuleMatchResourcePath(asyncRequiresPath, webpackModule)) {
+            asyncRequiresModule = webpackModule
             continue
           }
 
@@ -206,10 +221,14 @@ export class StaticQueryMapper {
           }
           visitedModules.add(module)
 
+          if (module === asyncRequiresModule) {
+            return
+          }
+
           const component = componentModules.get(module)
           if (component) {
             config.onComponent(component)
-            return
+            // don't return here yet, as component might be imported by another one, and we want to traverse up until we reach async-requires
           }
 
           if (entryModules.has(module)) {
