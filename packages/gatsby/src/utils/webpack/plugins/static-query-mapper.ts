@@ -8,6 +8,7 @@ import {
   ICollectedSlices,
   mergePreviouslyCollectedSlices,
 } from "../../babel/find-slices"
+import { slash } from "gatsby-core-utils/path"
 
 /**
  * Remove the export query param from a path that can
@@ -68,8 +69,12 @@ export class StaticQueryMapper {
   }
 
   apply(compiler: Compiler): void {
-    const { components, staticQueryComponents, componentsUsingSlices } =
-      this.store.getState()
+    const {
+      components,
+      staticQueryComponents,
+      componentsUsingSlices,
+      program,
+    } = this.store.getState()
 
     compiler.hooks.done.tap(this.name, stats => {
       // In dev mode we want to write page-data when compilation succeeds
@@ -89,6 +94,13 @@ export class StaticQueryMapper {
         }
 
         const entryModules = new Set()
+        const gatsbyBrowserPlugins = slash(
+          path.join(
+            program.directory,
+            `.cache`,
+            `api-runner-browser-plugins.js`
+          )
+        )
         for (const entry of compilation.entries.values()) {
           for (const dependency of entry.dependencies) {
             const mod = compilation.moduleGraph.getModule(dependency)
@@ -112,6 +124,13 @@ export class StaticQueryMapper {
           if (!(webpackModule instanceof NormalModule)) {
             // the only other type can be CssModule at this stage, which we don't care about
             // this also acts as a type guard, providing fuller typeing for webpackModule
+            continue
+          }
+
+          if (
+            doesModuleMatchResourcePath(gatsbyBrowserPlugins, webpackModule)
+          ) {
+            entryModules.add(webpackModule)
             continue
           }
 
@@ -202,12 +221,11 @@ export class StaticQueryMapper {
             compilation.moduleGraph.getIncomingConnections(module)
           for (const connection of incomingConnections) {
             if (connection.originModule instanceof NormalModule) {
-              if (
+              const shouldTraverse =
                 connection.dependency?.type !==
-                  `harmony side effect evaluation` &&
-                connection.dependency?.type !==
-                  `harmony export imported specifier`
-              ) {
+                `harmony export imported specifier`
+
+              if (shouldTraverse) {
                 traverseModule(connection.originModule, config, visitedModules)
               }
             }
