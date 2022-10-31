@@ -2,19 +2,17 @@
 title: Partial Hydration
 ---
 
-INTRO TEXT
+> This document is a **work in progress**!
+
+Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React Server Components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
 
 ## Overview
 
 TODO
 
-TODO: Image explaining things
-
 ## How Partial Hydration works in Gatsby
 
 TODO
-
-TODO: Link to how-to guide
 
 ## Benefits
 
@@ -22,10 +20,7 @@ TODO
 
 ## Why React Server Components?
 
-TODO
-
-The main reason why I chose Server components over Islands is because it works seamlessly. If you use islands, you can't share context between them (at least not without custom store logic) and you end up with different react trees so changes don't bubble up or bubble down correctly.
-In my mind this is the big difference, with islands I need to shift my application to a new world with React server components I keep doing what I doing with a few restrictions but my application flow stays current
+If you don't know what React Server Components are or need a refresher, we recommend watching [the talk introducing Server Components](https://www.youtube.com/watch?v=TQQPAU21ZUw) or reading the [Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md).
 
 ## Further reading
 
