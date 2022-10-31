@@ -71,7 +71,7 @@ We recommend using server components for everything and to only selectively defi
 
 ### Do I have to add "use client" to every interactive component?
 
-No, you only have to add the directive to components that are imported into server components. Client components imported into other client components don't need the directive. As an example:
+No, you only have to add the “use client” directive to components that are imported into server components. This way you’re setting up a client boundary between server and client components. Therefore client components imported into other client components don’t need the directive. As an example:
 
 - You have an index page at `src/pages/index.jsx` that imports a `<SocialMedia>` component. `<SocialMedia>` itself imports an `<Instagram>` and `<Twitter>` component.
 - By default every component is a server component (as explained above). But `<SocialMedia>`, `<Instagram>`, and `<Twitter>` all use `useEffect()` so you'll need to mark a component as a client component.
