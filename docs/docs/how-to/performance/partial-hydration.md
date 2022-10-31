@@ -26,7 +26,7 @@ We highly recommend reading the [Partial Hydration conceptual guide](/docs/conce
   }
   ```
 
-## Server Components
+## Server components
 
 After enabling Partial Hydration all components are React Server Components **by default**. The generated HTML during `gatsby build` doesn't require any JavaScript on the client leading to improved performance out of the box. Gatsby starts generating server components from the top level pages (e.g. `src/pages` or via `createPage` API).
 
@@ -74,10 +74,10 @@ We recommend using server components for everything and to only selectively defi
 No, you only have to add the directive to components that are imported into server components. Client components imported into other client components don't need the directive. As an example:
 
 - You have an index page at `src/pages/index.jsx` that imports a `<SocialMedia>` component. `<SocialMedia>` itself imports an `<Instagram>` and `<Twitter>` component.
-- By default every component is a server component, but `<SocialMedia>`, `<Instagram>`, and `<Twitter>` all use `useEffect()`.
-- You only need to add the "use client" directive to the `<SocialMedia>` component
+- By default every component is a server component (as explained above). But `<SocialMedia>`, `<Instagram>`, and `<Twitter>` all use `useEffect()` so you'll need to mark a component as a client component.
+- You only need to add the "use client" directive to the `<SocialMedia>` component since this is the only client component imported into a server component.
 
-### How should I optimize my components composition?
+### How should I optimize my components tree?
 
 When organizing your component structure, it's recommended to move your client components to the leaves of your component tree where possible. This way you can minimize the amount of JavaScript that is sent to the client.
 
