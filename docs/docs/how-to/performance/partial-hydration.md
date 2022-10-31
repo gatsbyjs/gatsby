@@ -2,7 +2,7 @@
 title: Using Partial Hydration
 ---
 
-> Support for Gatsby's Partial Hydration was added in `gatsby@5.0.0`.
+> Support for Gatsby's Partial Hydration was added in `gatsby@5.0.0` and is currently in **Beta**.
 
 Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React Server Components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
 
