@@ -121,7 +121,7 @@ export default Layout
 Please note these current limitations:
 
 - The [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/) and Partial Hydration are not compatible with each other. When using Partial Hydration you can't use Gatsby Slices and the other way around.
-- You have to use React's experimental release which we **dont't** recommend using in production
+- You have to use React's experimental release which we **don't** recommend using in production
 - A lot of packages in the React ecosystem are not ready for React Server Components (e.g. CSS-in-JS solutions)
 - Partial Hydration only works during `gatsby build` & `gatsby serve`, and not `gatsby develop`
 
