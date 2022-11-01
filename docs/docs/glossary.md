@@ -298,7 +298,7 @@ A code library (written with [JavaScript](#javascript)) for building user interf
 
 ### React Server Components
 
-Generally speaking React Server Components allow developers to build apps that span the server and client. Server Components can dynamically choose which client components to render, allowing clients to download just the minimal amount of code necessary to render a page. Gatsby leverages this capability for its [Partial Hydration](#partial-hydration) feature. [Watch the talk "Data Fetching with Server Components"](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) or read the [Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to learn more.
+Generally speaking React server components allow developers to build apps that span the server and client. Server Components can dynamically choose which client components to render, allowing clients to download just the minimal amount of code necessary to render a page. Gatsby leverages this capability for its [Partial Hydration](#partial-hydration) feature. [Watch the talk "Data Fetching with Server Components"](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) or read the [Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to learn more.
 
 ### Remark
 

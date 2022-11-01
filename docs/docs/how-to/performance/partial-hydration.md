@@ -4,11 +4,11 @@ title: Using Partial Hydration
 
 > Support for Gatsby's Partial Hydration was added in `gatsby@5.0.0` and is currently in **Beta**.
 
-Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React Server Components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
+Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
 
 This guide will explain how you can use Partial Hydration, when and how to declare client components, and which current limitations exist.
 
-We highly recommend reading the [Partial Hydration conceptual guide](/docs/conceptual/partial-hydration) to learn more about how Gatsby uses React Server Components.
+We highly recommend reading the [Partial Hydration conceptual guide](/docs/conceptual/partial-hydration) to learn more about how Gatsby uses React server components.
 
 ## Prerequisites
 
@@ -171,7 +171,7 @@ Please note these current limitations:
 
 - The [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/) and Partial Hydration are not compatible with each other. When using Partial Hydration you can't use Gatsby Slices and the other way around.
 - You have to use React's experimental release which we **don't** recommend using in production
-- A lot of packages in the React ecosystem are not ready for React Server Components (e.g. CSS-in-JS solutions)
+- A lot of packages in the React ecosystem are not ready for React server components (e.g. CSS-in-JS solutions)
 - Partial Hydration only works during `gatsby build` & `gatsby serve`, and not `gatsby develop`
 
 ## Additional Resources
