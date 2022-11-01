@@ -14,7 +14,7 @@ In recent years the idea of "island architecture" (e.g. [post by Jason Miller](h
 
 To further visualize what was just said, take a look at the diagram below. By having to hydrate the complete page – even if most of it is static (e.g. header or footer) – you're sending JavaScript to the client for parts of the site that don't need any interactivity really. In addition, React also needs to create VDOM nodes and evaluate the code. With Partial Hydration you're only sending JavaScript for the interactive parts and only tell React to hydrate those pieces.
 
-![Two stylized browser windows on the left and right side. The left one has the title "Full Hydration", the right one "Partial Hydration". Both browser windows have a stylized web page (with header, content, footer, etc.) with mostly static content except for an interactive gallery. The left window has its complete window marked blue (as the full page hydrates), the right one only the interactive gallery (because of Partial Hydration).](https://user-images.githubusercontent.com/16143594/199020505-1f509c9b-ae74-4a72-beda-4182e21bcc9f.png)
+![Two stylized browser windows on the left and right side. The left one has the title "Full Hydration", the right one "Partial Hydration". Both browser windows have a stylized web page (with header, content, footer, etc.) with mostly static content except for an interactive gallery. The left window has its complete window marked blue (as the full page hydrates), the right one only the interactive gallery (because of Partial Hydration).](../images/full-partial-hydration.png)
 
 You could see this as a super-powered way of doing code-splitting on your components. You're using a heavy library that is only used during the SSR phase? Then you don't need to ship it to the client!
 
@@ -34,7 +34,7 @@ By default, Gatsby marks all components as server components starting from the t
 
 You can use server components and client components throughout your app together. React will behind the scenes merge them together.
 
-![Tree diagram of server and client components. It showcases that server components can contain client and server components. And client components can contain server and client components.](https://user-images.githubusercontent.com/16143594/199020530-f6d9961a-dd46-4760-a272-503ce9037f99.png)
+![Tree diagram of server and client components. It showcases that server components can contain client and server components. And client components can contain server and client components.](../images/rsc-component-tree.png)
 
 During Gatsby's build process all components are looked at and a manifest is created that maps all client components and their individual chunks. With the help of that manifest the RSC output can then be generated.
 
