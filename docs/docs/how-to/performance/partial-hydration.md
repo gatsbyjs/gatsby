@@ -28,7 +28,7 @@ We highly recommend reading the [Partial Hydration conceptual guide](/docs/conce
 
 ## Server components
 
-After enabling Partial Hydration all components are React Server Components **by default**. The generated HTML during `gatsby build` doesn't require any JavaScript on the client leading to improved performance out of the box. Gatsby starts generating server components from the top level pages (e.g. `src/pages` or via `createPage` API).
+After enabling Partial Hydration all components are server components **by default**. The generated HTML during `gatsby build` doesn't require any JavaScript on the client leading to improved performance out of the box. Gatsby starts generating server components from the top level pages (e.g. `src/pages` or via `createPage` API).
 
 However, if you need interativity in your components you'll need to mark them as client components.
 
@@ -114,6 +114,55 @@ const Layout = ({ children }) => (
 )
 
 export default Layout
+```
+
+### Can I import server components into client components?
+
+No, you can't import a server component into a client component. But you can pass a server component as a `children` prop to a client component. This way React can instantiate both the client and server components.
+
+Add a `children` prop to the client component that should contain the server component.
+
+```jsx:title=client-component.jsx
+"use client"
+
+import * as React from "react"
+
+export const MyClientComponent = ({ children }) => (
+  <div>
+    <p>Re-Hydrated on the client</p>
+    {children}
+  </div>
+)
+```
+
+When using `ClientComponent`, now pass the server component as a `children` prop:
+
+```jsx:title=src/pages/index.jsx
+import * as React from "react"
+import { MyServerComponent } from "../components/my-server-component"
+import { MyClientComponent } from "../components/my-client-component"
+
+const Page = () => (
+  <MyClientComponent>
+    <MyServerComponent />
+  </MyClientComponent>
+)
+
+export default Page
+```
+
+### How can I pass props from server to client components?
+
+For the most part, it's the same as in other parts of your app. However, when sending props from server to client components you need to make sure that the props are serializable. For example, functions or callbacks can't be passed.
+
+```jsx
+// OK
+const Page = () => <ClientComponent color="rebeccapurple" />
+
+// ⚠️ Doesn't work
+const Page = () => (
+  <ClientComponent onClick={() => console.log("Hello World")} />
+)
 ```
 
 ## Limitations
