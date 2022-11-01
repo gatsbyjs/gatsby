@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.6/packages/gatsby) (2022-10-31)
+
+#### Bug Fixes
+
+- Also clear cache on gatsby version change [#36913](https://github.com/gatsbyjs/gatsby/issues/36913) [#36925](https://github.com/gatsbyjs/gatsby/issues/36925) ([be43418](https://github.com/gatsbyjs/gatsby/commit/be434189903d0150ce5fed31b9ea48b71f09cbe1))
+
 ### [4.24.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.5/packages/gatsby) (2022-10-25)
 
 #### Bug Fixes
