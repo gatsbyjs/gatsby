@@ -10,12 +10,12 @@ const ConnectedCLI: React.FC = (): React.ReactElement => {
     state.program?._?.[0] === `develop` &&
     // @ts-ignore - program exists on state but we should refactor this
     state.program?.status === `BOOTSTRAP_FINISHED`
-  const showPageTree = !!state.pageTree
+  const showTrees = !!state.pageTree
 
   return (
     <CLI
       showStatusBar={Boolean(showStatusBar)}
-      showPageTree={Boolean(showPageTree)}
+      showTrees={Boolean(showTrees)}
       logs={state.logs}
       messages={state.messages}
     />

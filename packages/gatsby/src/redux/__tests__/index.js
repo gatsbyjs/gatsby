@@ -3,7 +3,7 @@ const path = require(`path`)
 const v8 = require(`v8`)
 const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const { murmurhash } = require(`babel-plugin-remove-graphql-queries/murmur`)
+const { murmurhash } = require(`gatsby-core-utils/murmurhash`)
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
@@ -87,7 +87,7 @@ jest.mock(`glob`, () => {
     }),
   }
 })
-jest.mock(`babel-plugin-remove-graphql-queries/murmur`)
+jest.mock(`gatsby-core-utils/murmurhash`)
 
 function getFakeNodes() {
   // Set nodes to something or the cache will fail because it asserts this
