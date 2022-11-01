@@ -6,7 +6,7 @@ title: "v5 Release Notes"
 
 Welcome to `gatsby@5.0.0` release (November 2022 #1).
 
-Gatsby 5 introduces the Slices API and Partial Hydration (Experimental). Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser.
+Gatsby 5 introduces the Slices API and Partial Hydration (Beta). Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser.
 We’ve tried to make migration smooth. Please refer to the [migration guide](/docs/reference/release-notes/migrating-from-v4-to-v5/)
 and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you encounter any issues when migrating.
 
