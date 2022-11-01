@@ -8,7 +8,7 @@ Partial Hydration enables you to selectively add interactivity to your otherwise
 
 ## Overview
 
-Hydration (or often referred to as rehydration) is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. TODO
+[Hydration](/docs/conceptual/react-hydration/) (or often referred to as rehydration) is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. Since the initial release of Gatsby apps built with Gatsby were always fully hydrated on the client. This combines
 
 ![Two stylized browser windows on the left and right side. The left one has the title "Full Hydration", the right one "Partial Hydration". Both browser windows have a stylized web page (with header, content, footer, etc.) with mostly static content except for an interactive gallery. The left window has its complete window marked blue (as the full page hydrates), the right one only the interactive gallery (because of Partial Hydration).](https://user-images.githubusercontent.com/16143594/199020505-1f509c9b-ae74-4a72-beda-4182e21bcc9f.png)
 
