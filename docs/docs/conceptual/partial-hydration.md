@@ -24,7 +24,7 @@ The result of shipping less and less JavaScript to the client will directly impa
 
 By using Partial Hydration you can shorten that time or completely remove the uncanny valley.
 
-![Timeline view of a page being rendered in the browser. From left to right: Initial request, server returns HTML, view painted, JS arrives, JS processed, UI is interactive. The illustrations shows that the hydration (when JS arrives) adds additional time to the overall timeline. Resulting in a penalty for "Time to interactive" metric.](https://user-images.githubusercontent.com/16143594/199029175-7381a3cb-3c6d-4ba7-9f9f-3aa1fb70f561.png)
+![Timeline view of a page being rendered in the browser. From left to right: Initial request, server returns HTML, view painted, JS arrives, JS processed, UI is interactive. The illustrations shows that the hydration (when JS arrives) adds additional time to the overall timeline. Resulting in a penalty for "Time to interactive" metric.](../images/hydration-timeline.png)
 
 ## How Partial Hydration works in Gatsby
 
@@ -44,7 +44,7 @@ If you don't know what React server components are or need a refresher, we recom
 
 So why is Gatsby using React server components to achieve Partial Hydration and didn't shift to the island architecture? In a nutshell: To allow you to (mostly) keep writing your apps as you're used to.
 
-In island architecture world you're authoring individual island layers that each have their own context and React tree. This means that you can't _just_ share context or bubble up/down of React events, you have to implement custom logic to connect those islands. You need to think differently when creating your app. With React server components you can keep writing your app like you're used to, for the most part. There are of course constraints you have to follow with them but it's not a complete paradigm shift.
+In island architecture world you're authoring individual island layers that each have their own context and React tree. This means that you can't _just_ share context or bubble up/down of React events, you have to implement custom logic to connect those islands. You need to think differently when creating your app. Islands also don't work for SPAs as they can't render the complete page, leading to more sluggish navigations between pages. With React server components you can keep writing your app like you're used to, for the most part. There are of course constraints you have to follow with them but it's not a complete paradigm shift.
 
 ### Benefits
 
