@@ -123,8 +123,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
   // Proxy gatsby-script using off-main-thread strategy
   const { partytownProxiedURLs = [] } = config || {}
-
-  app.use(thirdPartyProxyPath, partytownProxy(partytownProxiedURLs))
+  const protocol = program.https ? `https:` : `http:`
+  app.use(thirdPartyProxyPath, partytownProxy(partytownProxiedURLs, protocol))
 
   // eslint-disable-next-line new-cap
   const router = express.Router()

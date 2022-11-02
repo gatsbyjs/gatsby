@@ -37,8 +37,10 @@ export async function onCreateDevServer({
   app,
   store,
 }: CreateDevServerArgs): Promise<void> {
+  // TODO: Get protocol somehow
   const { config } = store.getState()
   const { partytownProxiedURLs = [] } = config || {}
 
-  app.use(thirdPartyProxyPath, partytownProxy(partytownProxiedURLs))
+  // TODO: Pass real protocol
+  app.use(thirdPartyProxyPath, partytownProxy(partytownProxiedURLs, `http:`))
 }
