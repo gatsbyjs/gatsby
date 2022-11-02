@@ -1,3 +1,4 @@
+import * as path from "path"
 import fs from "fs-extra"
 import { createNormalizedModuleKey } from "../utils/create-normalized-module-key"
 import webpack, {
@@ -277,7 +278,14 @@ export class PartialHydrationPlugin {
     }
 
     const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/client-components-requires-writer-loader?modules=${clientModules
-      .map(module => module.userRequest)
+      .map(
+        module =>
+          `./` +
+          path.relative(
+            compilation.options.context as string,
+            module.userRequest
+          )
+      )
       .join(`,`)}!`
 
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(
