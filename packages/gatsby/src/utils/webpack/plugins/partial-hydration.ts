@@ -139,9 +139,8 @@ export class PartialHydrationPlugin {
     const newClientModules = new Set<webpack.Module>()
     compilation.chunkGroups.forEach(chunkGroup => {
       chunkGroup.chunks.forEach((chunk: webpack.Chunk) => {
-        const chunkModules = compilation.chunkGraph.getChunkModulesIterable(
-          chunk
-        ) as Iterable<webpack.NormalModule>
+        const chunkModules =
+          compilation.chunkGraph.getChunkModulesIterable(chunk)
         for (const mod of chunkModules) {
           if (mod.buildInfo.rsc) {
             mapOriginalModuleToPotentiallyConcatanetedModule.set(mod, mod)
