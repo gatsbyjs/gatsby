@@ -4,11 +4,11 @@ title: Using Partial Hydration
 
 > Support for Gatsby's Partial Hydration was added in `gatsby@5.0.0` and is currently in **Beta**.
 
-Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React Server Components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
+Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
 
 This guide will explain how you can use Partial Hydration, when and how to declare client components, and which current limitations exist.
 
-We highly recommend reading the [Partial Hydration conceptual guide](/docs/conceptual/partial-hydration) to learn more about how Gatsby uses React Server Components.
+We highly recommend reading the [Partial Hydration conceptual guide](/docs/conceptual/partial-hydration) to learn more about how Gatsby uses React server components.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ We highly recommend reading the [Partial Hydration conceptual guide](/docs/conce
 
 ## Server components
 
-After enabling Partial Hydration all components are React Server Components **by default**. The generated HTML during `gatsby build` doesn't require any JavaScript on the client leading to improved performance out of the box. Gatsby starts generating server components from the top level pages (e.g. `src/pages` or via `createPage` API).
+After enabling Partial Hydration all components are server components **by default**. The generated HTML during `gatsby build` doesn't require any JavaScript on the client leading to improved performance out of the box. Gatsby starts generating server components from the top level pages (e.g. `src/pages` or via `createPage` API).
 
 However, if you need interativity in your components you'll need to mark them as client components.
 
@@ -116,13 +116,62 @@ const Layout = ({ children }) => (
 export default Layout
 ```
 
+### Can I import server components into client components?
+
+No, you can't import a server component into a client component. But you can pass a server component as a `children` prop to a client component. This way React can instantiate both the client and server components.
+
+Add a `children` prop to the client component that should contain the server component.
+
+```jsx:title=client-component.jsx
+"use client"
+
+import * as React from "react"
+
+export const MyClientComponent = ({ children }) => (
+  <div>
+    <p>Re-Hydrated on the client</p>
+    {children}
+  </div>
+)
+```
+
+When using `ClientComponent`, now pass the server component as a `children` prop:
+
+```jsx:title=src/pages/index.jsx
+import * as React from "react"
+import { MyServerComponent } from "../components/my-server-component"
+import { MyClientComponent } from "../components/my-client-component"
+
+const Page = () => (
+  <MyClientComponent>
+    <MyServerComponent />
+  </MyClientComponent>
+)
+
+export default Page
+```
+
+### How can I pass props from server to client components?
+
+For the most part, it's the same as in other parts of your app. However, when sending props from server to client components you need to make sure that the props are serializable. For example, functions or callbacks can't be passed.
+
+```jsx
+// OK
+const Page = () => <ClientComponent color="rebeccapurple" />
+
+// ⚠️ Doesn't work
+const Page = () => (
+  <ClientComponent onClick={() => console.log("Hello World")} />
+)
+```
+
 ## Limitations
 
 Please note these current limitations:
 
 - The [Gatsby Slice API](/docs/reference/built-in-components/gatsby-slice/) and Partial Hydration are not compatible with each other. When using Partial Hydration you can't use Gatsby Slices and the other way around.
 - You have to use React's experimental release which we **don't** recommend using in production
-- A lot of packages in the React ecosystem are not ready for React Server Components (e.g. CSS-in-JS solutions)
+- A lot of packages in the React ecosystem are not ready for React server components (e.g. CSS-in-JS solutions)
 - Partial Hydration only works during `gatsby build` & `gatsby serve`, and not `gatsby develop`
 
 ## Additional Resources
