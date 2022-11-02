@@ -426,6 +426,15 @@ describe(`First run (baseline)`, () => {
       expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
     })
 
+    test(`are written correctly when a re-exported query is imported`, async () => {
+      const queries = [titleQuery, ...globalQueries]
+      const pagePath = `/import-re-export/`
+
+      const { staticQueryHashes } = await readPageData(publicDir, pagePath)
+
+      expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+    })
+
     test(`are written correctly when dynamically imported`, async () => {
       const queries = [titleQuery, ...globalQueries]
       const pagePath = `/dynamic/`
