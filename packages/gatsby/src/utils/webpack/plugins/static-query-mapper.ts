@@ -240,13 +240,7 @@ export class StaticQueryMapper {
             compilation.moduleGraph.getIncomingConnections(module)
           for (const connection of incomingConnections) {
             if (connection.originModule instanceof NormalModule) {
-              const shouldTraverse =
-                connection.dependency?.type !==
-                `harmony export imported specifier`
-
-              if (shouldTraverse) {
-                traverseModule(connection.originModule, config, visitedModules)
-              }
+              traverseModule(connection.originModule, config, visitedModules)
             }
           }
         }
