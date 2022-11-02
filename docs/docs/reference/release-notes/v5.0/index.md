@@ -12,9 +12,9 @@ and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you e
 
 Key highlights of this release:
 
-- [Slices API](#slices-api) - TODO
-- [Partial Hydration (Beta)](#partial-hydration-beta) - TODO
-- [GraphiQL v2](#graphiql-v2) - TODO
+- [Slices API](#slices-api) - Only re-build individual slices of your page
+- [Partial Hydration (Beta)](#partial-hydration-beta) - Improve frontend performance by shipping less JavaScript
+- [GraphiQL v2](#graphiql-v2) - An all new UI with features like dark mode, tabs, and persisted state
 
 Major dependency updates:
 
@@ -42,7 +42,27 @@ TODO
 
 ## Partial Hydration (Beta)
 
-TODO
+Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
+
+Partial Hydration is in **Beta** and not enabled by default. You have to opt-in to try it out. Reason for this is that React server components are still quite new (and the ecosystem as a whole hasn't caught up, e.g. CSS-in-JS libraries) and that currently you are required to use an experimental version of `react`/`react-dom`. Therefore we don't recommend using Partial Hydration in production just yet. Once things have stabilized we'll announce the general availablity release of Partial Hydration and adjust the documentation.
+
+Read the [Partial Hydration How-To Guide](/docs/how-to/performance/partial-hydration/) for detailed instructions. We also recommend reading the [Partial Hydration Conceptual Guide](/docs/conceptual/partial-hydration/) to understand why Gatsby chose React server components and how Partial Hydration works on a high-level.
+
+As a quick start, here's how you can use Partial Hydration in Gatsby 5:
+
+- Install experimental version of `react` and `react-dom`:
+  ```shell
+  npm install --save-exact react@experimental react-dom@experimental
+  ```
+- Enable the feature flag inside `gatsby-config`:
+  ```js:title=gatsby-config.js
+  module.exports = {
+    flags: {
+      PARTIAL_HYDRATION: true
+    }
+  }
+  ```
+- Add the `"use client"` directive to any component that needs to be a client component. You can see an example in the [gatsby-partial-hydration-starter](https://github.com/gatsbyjs/gatsby-partial-hydration-starter/blob/main/src/components/demo.js)
 
 ## GraphiQL v2
 
@@ -52,8 +72,13 @@ GraphiQL is Gatsby's integrated GraphQL development environment (IDE). It’s a 
 - Tabs
 - Persisted State/Tabs using `localStorage`
 - Better documentation explorer through search and markdown support
+- Plugin ecosystem
 
 Want to learn more? Head to the [Introducing GraphiQL docs](/docs/how-to/querying-data/running-queries-with-graphiql/).
+
+The plugin ecosystem also will allow us to more easily add functionality to GraphiQL in the future. In preparation for this release we've created [`@graphiql/plugin-code-exporter`](https://github.com/graphql/graphiql/tree/main/packages/graphiql-plugin-code-exporter) for example.
+
+Many thanks go to [acao](https://github.com/acao) and the [Stellate team](https://stellate.co/) for shipping GraphiQL v2! More props [in this tweet thread](https://twitter.com/GraphiQL/status/1563057905984995328).
 
 ## Node 18
 
