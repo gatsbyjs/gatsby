@@ -38,11 +38,9 @@ TODO
 
 ## Slice API
 
-The Slice API allows you to define highly-shared components in your site, which will then inform Gatsby to build those shared components only once. After the files are built, Gatsby will then stitch the resulting markup and JavaScript to the pages that include that shared component. This means that changes to highly-shared components (such as headers, footers, and common layouts) no longer require a rebuild of all pages that use that shared component. Build durations for such changes are up to 90% faster than before.
+The Slice API allows you to define highly-shared components in your site, which will then inform Gatsby to build those shared components only once. After the files are built, Gatsby will then stitch the resulting markup and JavaScript to the pages that include that shared component. This means that changes to highly-shared components (such as headers, footers, and common layouts) no longer require a rebuild of all pages that use that shared component.
 
-The Slice API introduces two critical pieces, the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API and the `<Slice>` placeholder.
-
-To create a Slice, you must first call `createSlice` within `gatsby-node.js`:
+The Slice API introduces two critical pieces, the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API and the `<Slice>` placeholder. To create a Slice, you must first call `createSlice` within `gatsby-node.js`:
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
@@ -71,6 +69,18 @@ export const DefaultLayout = ({ children, headerClassName }) => {
 ```
 
 Now, when a code update or data update is made for the `<Header>` component, only the HTML for the Slice will be updated, and later stitched into the pre-existing HTML for the pages that use it.
+
+While building the Slice API, we wanted to make sure it was worthwhile for all Gatsby sites. To validate the improvements of the Slice API, we created a 10,000 page Contentful site with a shared header. We then issued both code updates to the git repository as well as data updates to Contentful. Here are the results:
+
+|                                             | Code Update | Data Update |
+| ------------------------------------------- | ----------- | ----------- |
+| No Slices (Self-Hosted)                     | 1253s       | 1276s       |
+| With Slices (Self-Hosted)                   | 1011s       | 958s        |
+| No Slices on Gatsby Cloud                   | 155s        | 22s         |
+| With Slices on Gatsby Cloud                 | 129s        | 15s         |
+| With Slices on Gatsby Cloud + Optimizations | 34s         | 10s         |
+
+Across the board we can see at least a 20% decrease in build time when using Slices. When using the [Slices Optimization](/docs/how-to/cloud/slices-optimization/) on Gatsby Cloud, build time decreases by 78% compared to No Slices on Gatsby Cloud. As the site grows, the benefit of the Gatsby Slice API will only increase.
 
 For more information, read the [Using Slices How-To Guide](/docs/how-to/performance/using-slices/) or the [Slice API Reference Documentation](/docs/reference/built-in-components/gatsby-slice).
 
