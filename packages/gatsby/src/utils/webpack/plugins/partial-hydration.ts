@@ -276,7 +276,7 @@ export class PartialHydrationPlugin {
       throw new Error(`couldn't find async-requires module`)
     }
 
-    const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/virtual?modules=${clientModules
+    const clientSSRLoader = `gatsby/dist/utils/webpack/loaders/client-components-requires-writer-loader?modules=${clientModules
       .map(module => module.userRequest)
       .join(`,`)}!`
 

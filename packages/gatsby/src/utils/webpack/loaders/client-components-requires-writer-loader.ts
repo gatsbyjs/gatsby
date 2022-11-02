@@ -1,6 +1,15 @@
+import { LoaderContext } from "webpack"
+
 const Template = require(`webpack/lib/Template`)
 
-module.exports = async function virtual(source, sourceMap) {
+/**
+ * Loader that creates virtual file with imports to client components
+ */
+module.exports = function virtual(
+  this: LoaderContext<{
+    modules: string
+  }>
+): string {
   const { modules } = this.getOptions()
 
   const requests = modules.split(`,`)
