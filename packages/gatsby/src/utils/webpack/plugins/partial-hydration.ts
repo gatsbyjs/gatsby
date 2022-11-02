@@ -94,7 +94,7 @@ export class PartialHydrationPlugin {
       }
     }
 
-    const toRecord: Map<
+    const ClientModulesToRecord: Map<
       webpack.Module,
       Map<
         webpack.Module,
@@ -105,10 +105,10 @@ export class PartialHydrationPlugin {
       >
     > = new Map()
 
-    function stuff(module): any {
+    function recordModuleExports(module): any {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const childMap = new Map()
-      toRecord.set(module, childMap)
+      ClientModulesToRecord.set(module, childMap)
 
       for (const exportInfo of moduleGraph.getExportsInfo(module).exports) {
         if (exportInfo.isReexport()) {
@@ -141,7 +141,6 @@ export class PartialHydrationPlugin {
       chunkGroup.chunks.forEach((chunk: webpack.Chunk) => {
         const chunkModules = compilation.chunkGraph.getChunkModulesIterable(
           chunk
-          // TODO: Update type so that it doesn't have to be cast.
         ) as Iterable<webpack.NormalModule>
         for (const mod of chunkModules) {
           if (mod.buildInfo.rsc) {
@@ -167,23 +166,23 @@ export class PartialHydrationPlugin {
     })
 
     for (const clientModule of newClientModules) {
-      stuff(clientModule)
+      recordModuleExports(clientModule)
 
       const incomingConnections =
         moduleGraph.getIncomingConnections(clientModule)
 
       for (const connection of incomingConnections) {
         if (connection.dependency) {
-          if (toRecord.has(connection.module)) {
+          if (ClientModulesToRecord.has(connection.module)) {
             continue
           }
 
-          stuff(connection.module)
+          recordModuleExports(connection.module)
         }
       }
     }
 
-    for (const [originalModule, resolvedMap] of toRecord) {
+    for (const [originalModule, resolvedMap] of ClientModulesToRecord) {
       for (const [resolvedModule, exports] of resolvedMap) {
         const chunkIds: Set<string> = new Set()
 
@@ -200,7 +199,7 @@ export class PartialHydrationPlugin {
       }
     }
 
-    toRecord.clear()
+    ClientModulesToRecord.clear()
 
     return json
   }
