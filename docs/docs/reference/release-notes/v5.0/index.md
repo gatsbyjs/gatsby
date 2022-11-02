@@ -36,9 +36,43 @@ Prefer video over text? No problem! Learn more about all the new features of Gat
 
 TODO
 
-## Slices API
+## Slice API
 
-TODO
+The Slice API allows you to define highly-shared components in your site, which will then inform Gatsby to build those shared components only once. After the files are built, Gatsby will then stitch the resulting markup and JavaScript to the pages that include that shared component. This means that changes to highly-shared components (such as headers, footers, and common layouts) no longer require a rebuild of all pages that use that shared component. Build durations for such changes are up to 90% faster than before.
+
+The Slice API introduces two critical pieces, the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API and the `<Slice>` placeholder.
+
+To create a Slice, you must first call `createSlice` within `gatsby-node.js`:
+
+```js:title=gatsby-node.js
+exports.createPages = async ({ actions }) => {
+  actions.createSlice({
+    id: `header`,
+    component: require.resolve(`./src/components/header.js`),
+  })
+}
+```
+
+Then, use the `<Slice>` placeholder where the `<Header>` component was previously:
+
+```js:title=src/components/layout.js
+import { Slice } from "gatsby"
+import { Footer } from "./footer"
+
+export const DefaultLayout = ({ children, headerClassName }) => {
+  return (
+    <div className={styles.defaultLayout} />
+      <Slice alias="header" className={headerClassName} />
+      {content}
+      <Footer />
+    </div>
+  )
+}
+```
+
+Now, when a code update or data update is made for the `<Header>` component, only the HTML for the Slice will be updated, and later stitched into the pre-existing HTML for the pages that use it.
+
+For more information, read the [Using Slices How-To Guide](/docs/how-to/performance/using-slices/) or the [Slice API Reference Documentation](/docs/reference/built-in-components/gatsby-slice).
 
 ## Partial Hydration (Beta)
 
