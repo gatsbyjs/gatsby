@@ -80,7 +80,7 @@ While building the Slice API, we wanted to make sure it was worthwhile for all G
 | With Slices on Gatsby Cloud                 | 129s        | 15s         |
 | With Slices on Gatsby Cloud + Optimizations | 34s         | 10s         |
 
-Across the board we can see at least a 20% decrease in build time when using Slices. When using the [Slices Optimization](/docs/how-to/cloud/slices-optimization/) on Gatsby Cloud, build time decreases by 78% compared to No Slices on Gatsby Cloud. As the site grows, the benefit of the Gatsby Slice API will only increase.
+Across the board we can see at least a 20% decrease in build time when using Slices. When using the [Slices Optimization](/docs/how-to/cloud/slices-optimization/) on Gatsby Cloud, build time decreases by 78% for code updates compared to No Slices on Gatsby Cloud. As the site grows, the benefit of the Gatsby Slice API will only increase.
 
 For more information, read the [Using Slices How-To Guide](/docs/how-to/performance/using-slices/) or the [Slice API Reference Documentation](/docs/reference/built-in-components/gatsby-slice).
 
