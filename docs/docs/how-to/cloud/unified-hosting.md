@@ -20,7 +20,7 @@ Unified Hosting on Gatsby Cloud provides several benefits to your site:
 
 ### What is the reason?
 
-Unified Hosting is the current infrastructure for Production builds. This brings all of the [benefits](#benefits) above. Gatsby is "unifying" all infrastructure to this faster, more modern architecture.
+Unified Hosting is the current infrastructure for Production builds. This brings all of the [benefits](#benefits) above to Pull Request and Preview builds. Gatsby is "unifying" all infrastructure to this faster, more modern architecture.
 
 ### What is the impact?
 
