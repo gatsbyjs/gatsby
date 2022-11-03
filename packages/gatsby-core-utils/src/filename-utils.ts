@@ -52,6 +52,9 @@ export function createFilePath(
   filename: string,
   ext: string
 ): string {
+  directory = decodeURIComponent(directory)
+  filename = decodeURIComponent(filename)
+
   const purgedFileName = filename.replace(filenamePurgeRegex, `-`)
   const shouldAddHash = purgedFileName !== filename
 

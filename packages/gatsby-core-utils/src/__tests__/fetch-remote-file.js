@@ -349,9 +349,23 @@ describe(`fetch-remote-file`, () => {
     expect(gotStream).toBeCalledTimes(1)
   })
 
-  it(`downloads and create a jpg file for file with non-ascii filename`, async () => {
+  it(`downloads and create a jpg file for file with non-ascii url`, async () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/${encodeURIComponent(`개`)}.jpg`,
+      cache,
+    })
+
+    expect(path.basename(filePath)).toBe(`개.jpg`)
+    expect(getFileSize(filePath)).resolves.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
+    expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`downloads and create a jpg file for file with non-ascii filename`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      name: `${encodeURIComponent(`개`)}.jpg`,
       cache,
     })
 
