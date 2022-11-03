@@ -30,9 +30,10 @@ The major change that will occur when Unified Hosting is deployed is a differenc
 
 The new URLs will be the same format, but hosted on a subdomain of `gatsbyjs.io` (as opposed to `gtsb.io`).
 
-| | Old | New |
-| Pull Request | `build-{UUID}.gtsb.io` | `build-{UUID}.gatsbyjs.io` |
-| Preview | `preview-{SITEPREFIX}.gtsb.io` | `preview-{SITEPREFIX}.gatsbyjs.io` |
+|              | Old                            | New                                |
+| ------------ | ------------------------------ | ---------------------------------- |
+| Pull Request | `build-{UUID}.gtsb.io`         | `build-{UUID}.gatsbyjs.io`         |
+| Preview      | `preview-{SITEPREFIX}.gtsb.io` | `preview-{SITEPREFIX}.gatsbyjs.io` |
 
 ### Are URLs deterministic?
 
