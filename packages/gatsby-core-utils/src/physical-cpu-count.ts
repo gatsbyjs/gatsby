@@ -25,7 +25,7 @@ export function getPhysicalCpuCount(): number {
   try {
     if (platform === `linux`) {
       const output = exec(
-        `lscpu -p | egrep -v "^#" | sort -u -t, -k 2,4 | wc -l`
+        `lscpu -p | grep -E -v "^#" | sort -u -t, -k 2,4 | wc -l`
       )
       return Number(output.trim())
     }

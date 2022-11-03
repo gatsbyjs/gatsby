@@ -42,6 +42,6 @@ export function getOrCreateRemoteFileInterface(
     const boundActions = bindActionCreators(actions, store.dispatch)
 
     // @ts-ignore - types are messed up by schema composer maybe new version helps here
-    tc.addFields(getRemoteFileFields(enums, boundActions))
+    tc.addFields(getRemoteFileFields(enums, boundActions, store))
   })
 }

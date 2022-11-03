@@ -27,6 +27,19 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     createSchema: Joi.function(),
     batch: Joi.boolean(),
     transformSchema: Joi.function(),
+    dataLoaderOptions: Joi.object({
+      batch: Joi.boolean(),
+      maxBatchSize: Joi.number(),
+      batchScheduleFn: Joi.function(),
+      cache: Joi.boolean(),
+      cacheKeyFn: Joi.function(),
+      cacheMap: Joi.object({
+        get: Joi.function(),
+        set: Joi.function(),
+        delete: Joi.function(),
+        clear: Joi.function(),
+      }),
+    }),
   }).or(`url`, `createLink`)
 
 exports.createSchemaCustomization = async (

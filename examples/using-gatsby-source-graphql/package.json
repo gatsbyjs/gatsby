@@ -17,8 +17,8 @@
     "gatsby-source-filesystem": "next",
     "gatsby-source-graphql": "next",
     "gatsby-transformer-sharp": "next",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "remark": "^11.0.2",
     "remark-html": "^10.0.0"
   },

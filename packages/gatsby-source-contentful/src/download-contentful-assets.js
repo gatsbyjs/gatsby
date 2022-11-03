@@ -73,11 +73,9 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
       if (!fileNodeID) {
         const fileNode = await createRemoteFileNode({
           url,
-          store,
           cache,
           createNode,
           createNodeId,
-          reporter,
         })
 
         if (fileNode) {

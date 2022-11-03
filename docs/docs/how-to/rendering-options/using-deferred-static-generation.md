@@ -133,7 +133,7 @@ The `gatsby-node.js` file:
 ```js:title=gatsby-node.js
 const blogPostTemplate = require.resolve(`./src/templates/blog-post.js`)
 
-export.createPages = async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   const result = await graphql(`

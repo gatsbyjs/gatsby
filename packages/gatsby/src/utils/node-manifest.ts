@@ -1,6 +1,6 @@
 import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
 import { getNode } from "./../datastore"
-import { IGatsbyPage, INodeManifest } from "./../redux/types"
+import { IGatsbyNode, IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
@@ -32,6 +32,8 @@ type FoundPageBy =
   | `queryTracking`
   | `none`
 
+type PreviouslyWrittenNodeManifests = Map<string, Promise<INodeManifestOut>>
+
 function getNodeManifestFileLimit(): number {
   const defaultLimit = 10000
 
@@ -58,21 +60,52 @@ const NODE_MANIFEST_FILE_LIMIT = getNodeManifestFileLimit()
  */
 async function findPageOwnedByNode({
   nodeId,
+  fullNode,
   slug,
 }: {
   nodeId: string
+  fullNode: IGatsbyNode
   slug?: string
 }): Promise<{
   page: INodeManifestPage
   foundPageBy: FoundPageBy
 }> {
   const state = store.getState()
-  const { pages, nodes } = state
-  const { byNode } = state.queries
+  const { pages, staticQueryComponents } = state
+  const { byNode, byConnection, trackedComponents } = state.queries
 
-  // the default page path is the first page found in
-  // node id to page query tracking
-  let pagePath = byNode?.get(nodeId)?.values()?.next()?.value
+  const nodeType = fullNode?.internal?.type
+
+  const firstPagePathWithNodeAsDataDependency =
+    // the first page found in node id to page query path tracking
+    byNode?.get(nodeId)?.values()?.next()?.value
+
+  const firstPagePathWithNodeInGraphQLListField =
+    // the first page that queries for a list of this node type.
+    // we don't currently store a list of node ids for connection fields to queries
+    // we just store the query id or page path mapped to the connected GraphQL typename.
+    byConnection?.get(nodeType)?.values()?.next()?.value
+
+  let pagePath =
+    firstPagePathWithNodeAsDataDependency ||
+    firstPagePathWithNodeInGraphQLListField
+
+  // for static queries, we can only find the first page using that static query
+  // the reason we would find `sq--` here is because byConnection (above) can return a page path or a static query ID (which starts with `sq--`)
+  if (pagePath?.startsWith(`sq--`)) {
+    const staticQueryComponentPath =
+      staticQueryComponents?.get(pagePath)?.componentPath
+
+    const firstPagePathUsingStaticQueryComponent: string | null =
+      staticQueryComponentPath
+        ? trackedComponents
+            ?.get(staticQueryComponentPath)
+            ?.pages?.values()
+            ?.next()?.value
+        : null
+
+    pagePath = firstPagePathUsingStaticQueryComponent
+  }
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
@@ -107,9 +140,7 @@ async function findPageOwnedByNode({
       if (foundOwnerNodeId) {
         foundPageBy = `ownerNodeId`
       } else if (foundPageIdInContext && fullPage) {
-        const pageCreatedByPluginName = nodes.get(
-          fullPage.pluginCreatorId
-        )?.name
+        const pageCreatedByPluginName = getNode(fullPage.pluginCreatorId)?.name
 
         const pageCreatedByFilesystemPlugin =
           pageCreatedByPluginName === `gatsby-plugin-page-creator`
@@ -222,7 +253,8 @@ export async function processNodeManifest(
   inputManifest: INodeManifest,
   listOfUniqueErrorIds: Set<string>,
   nodeManifestPagePathMap: Map<string, string>,
-  verboseLogs: boolean
+  verboseLogs: boolean,
+  previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -247,6 +279,7 @@ export async function processNodeManifest(
   // map the node to a page that was created
   const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNode({
     nodeId,
+    fullNode,
     // querying by node.slug in GraphQL queries is common enough that we can search for it as a fallback after ownerNodeId, filesystem routes, and context.id
     slug: fullNode?.slug as string,
   })
@@ -310,11 +343,42 @@ export async function processNodeManifest(
   const manifestFileDir = path.dirname(manifestFilePath)
 
   await fs.ensureDir(manifestFileDir)
-  await fs.writeJSON(manifestFilePath, finalManifest)
 
-  if (verboseLogs) {
+  const previouslyWrittenNodeManifest =
+    await previouslyWrittenNodeManifests.get(inputManifest.manifestId)
+
+  // write a manifest if we don't currently have one written for this ID
+  // or if we can replace the written one with a manifest that has found a page
+  // NOTE: We still want to write out a manifest if foundPageBy is "none", this helps with error messaging
+  //       But we prefer to write a manifest that has a foundPageBy that is NOT "none"
+  const shouldWriteManifest =
+    !previouslyWrittenNodeManifest ||
+    (previouslyWrittenNodeManifest?.foundPageBy === `none` &&
+      finalManifest.foundPageBy !== `none`)
+
+  if (shouldWriteManifest) {
+    const writePromise = fs.writeJSON(manifestFilePath, finalManifest)
+
+    // This prevents two manifests from writing to the same file at the same time
+    previouslyWrittenNodeManifests.set(
+      inputManifest.manifestId,
+      new Promise(resolve => {
+        writePromise.then(() => {
+          resolve(finalManifest)
+        })
+      })
+    )
+
+    await writePromise
+  }
+
+  if (shouldWriteManifest && verboseLogs) {
     reporter.info(
       `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`
+    )
+  } else if (verboseLogs) {
+    reporter.info(
+      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase} but it was not written to disk because it was already written to disk previously.`
     )
   }
 
@@ -372,6 +436,8 @@ export async function processNodeManifests(): Promise<Map<
   let totalFailedManifests = 0
   const nodeManifestPagePathMap: Map<string, string> = new Map()
   const listOfUniqueErrorIds: Set<string> = new Set()
+  const previouslyWrittenNodeManifests: PreviouslyWrittenNodeManifests =
+    new Map()
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
@@ -381,7 +447,8 @@ export async function processNodeManifests(): Promise<Map<
       manifest,
       listOfUniqueErrorIds,
       nodeManifestPagePathMap,
-      verboseLogs
+      verboseLogs,
+      previouslyWrittenNodeManifests
     )
 
     if (processedManifest) {

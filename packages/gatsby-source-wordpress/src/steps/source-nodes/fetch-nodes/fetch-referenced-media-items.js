@@ -361,7 +361,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   // so we need to resolve this promise
   // otherwise it will never resolve below.
   if (!mediaItemUrlsPages.length) {
-    return Promise.resolve([])
+    return Promise.resolve(previouslyCachedMediaItemNodes)
   }
 
   const allPromises = []
@@ -451,7 +451,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   await mediaFileFetchQueue.onIdle()
 
   const allResults = await Promise.all(allPromises)
-  return allResults.flat()
+  return [...previouslyCachedMediaItemNodes, ...allResults.flat()]
 }
 
 export const fetchMediaItemsById = async ({
@@ -555,8 +555,13 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
 }) {
   const state = store.getState()
   const queryInfo = state.remoteSchema.nodeQueries.mediaItems
-
   const { helpers, pluginOptions } = state.gatsbyApi
+
+  // don't fetch media items if they are excluded via pluginOptions
+  if (pluginOptions.type?.MediaItem?.exclude) {
+    return []
+  }
+
   const { createContentDigest, actions } = helpers
   const { url } = pluginOptions
   const { typeInfo, settings, selectionSet, builtFragments } = queryInfo

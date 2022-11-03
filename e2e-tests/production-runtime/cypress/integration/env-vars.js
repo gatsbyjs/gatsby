@@ -1,3 +1,9 @@
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if (err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423')) {
+    return false
+  }
+})
+
 describe(`Uses env vars correctly`, () => {
   it(`SSG page gets right env vars`, () => {
     cy.visit(`/env-vars`).waitForRouteChange()

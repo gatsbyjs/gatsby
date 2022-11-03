@@ -16,12 +16,14 @@ const {
   ExportIsNotAsyncError,
   isWithinConfigExport,
 } = require(`babel-plugin-remove-graphql-queries`)
+import { collectSlices } from "../utils/babel/find-slices"
 
 const report = require(`gatsby-cli/lib/reporter`)
 
 import type { DocumentNode } from "graphql"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { codeFrameColumns } from "@babel/code-frame"
+import { getPathToLayoutComponent } from "gatsby-core-utils"
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { actions } = require(`../redux/actions`)
@@ -111,10 +113,13 @@ Also note that we are currently unable to use queries defined in files other tha
 async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   let ast
 
+  // Since gatsby-plugin-mdx v4, we are using the resourceQuery feature of webpack's loaders to inject a content file into a page component.
+  const cleanFilePath = getPathToLayoutComponent(filePath)
+
   // Preprocess and attempt to parse source; return an AST if we can, log an
   // error if we can't.
   const transpiled = await apiRunnerNode(`preprocessSource`, {
-    filename: filePath,
+    filename: cleanFilePath,
     contents: fileStr,
     parentSpan,
   })
@@ -122,7 +127,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = babelParseToAst(item, filePath)
+        const tmp = babelParseToAst(item, cleanFilePath)
         ast = tmp
         break
       } catch (error) {
@@ -132,14 +137,14 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
     if (ast === undefined) {
       addError({
         id: `85912`,
-        filePath,
+        filePath: cleanFilePath,
         context: {
           filePath,
         },
       })
       store.dispatch(
         actions.queryExtractionGraphQLError({
-          componentPath: filePath,
+          componentPath: cleanFilePath,
         })
       )
 
@@ -147,20 +152,20 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
     }
   } else {
     try {
-      ast = babelParseToAst(fileStr, filePath)
+      ast = babelParseToAst(fileStr, cleanFilePath)
     } catch (error) {
       store.dispatch(
         actions.queryExtractionBabelError({
-          componentPath: filePath,
+          componentPath: cleanFilePath,
           error,
         })
       )
 
       addError({
         id: `85911`,
-        filePath,
+        filePath: cleanFilePath,
         context: {
-          filePath,
+          filePath: cleanFilePath,
         },
       })
 
@@ -466,6 +471,11 @@ async function findGraphQLTags(
   return uniqueQueries
 }
 
+type CollectedSlice = {
+  name: string,
+  allowEmpty: boolean,
+}
+
 const cache = {}
 
 export default class FileParser {
@@ -476,10 +486,14 @@ export default class FileParser {
   async parseFile(
     file: string,
     addError
-  ): Promise<?Array<GraphQLDocumentInFile>> {
+  ): Promise<{
+    astDefinitions: ?Array<GraphQLDocumentInFile>,
+    pageSlices: { [key: string]: CollectedSlice } | null,
+  }> {
     let text
+    const cleanFilepath = getPathToLayoutComponent(file)
     try {
-      text = await fs.readFile(file, `utf8`)
+      text = await fs.readFile(cleanFilepath, `utf8`)
     } catch (err) {
       addError({
         id: `85913`,
@@ -499,12 +513,13 @@ export default class FileParser {
     }
 
     // We do a quick check so we can exit early if this is a file we're not interested in.
-    // We only process files that either include graphql, or static images
+    // We only process files that include the APIs below
     if (
       !text.includes(`graphql`) &&
       !text.includes(`gatsby-plugin-image`) &&
       !text.includes(`getServerData`) &&
-      !text.includes(`config`)
+      !text.includes(`config`) &&
+      !text.includes(`Slice`)
     ) {
       return null
     }
@@ -521,6 +536,7 @@ export default class FileParser {
           parentSpan: this.parentSpan,
           addError,
         })
+
         cache[hash] = {
           astDefinitions: await findGraphQLTags(file, ast, {
             parentSpan: this.parentSpan,
@@ -528,9 +544,12 @@ export default class FileParser {
           }),
           serverData: findApiExport(ast, `getServerData`),
           config: findApiExport(ast, `config`),
+          Head: findApiExport(ast, `Head`),
+          pageSlices: collectSlices(ast, file),
         }
       }
-      const { astDefinitions, serverData, config } = cache[hash]
+      const { astDefinitions, serverData, config, Head, pageSlices } =
+        cache[hash]
 
       // Note: we should dispatch this action even when getServerData is not found
       // (maybe it was set before, so now we need to reset renderMode from SSR to the default one)
@@ -540,6 +559,7 @@ export default class FileParser {
           componentPath: file,
           serverData,
           config,
+          Head,
         },
       })
 
@@ -554,7 +574,7 @@ export default class FileParser {
         )
       }
 
-      return astDefinitions
+      return { astDefinitions, pageSlices }
     } catch (err) {
       // default error
       let structuredError = {
@@ -654,13 +674,27 @@ export default class FileParser {
     addError
   ): Promise<Array<GraphQLDocumentInFile>> {
     const documents = []
+    const pageSliceUsage = new Map()
 
     return Promise.all(
       files.map(file =>
-        this.parseFile(file, addError).then(docs => {
-          documents.push(...(docs || []))
+        this.parseFile(file, addError).then(results => {
+          if (results) {
+            const { astDefinitions, pageSlices } = results
+            documents.push(...(astDefinitions || []))
+            if (pageSlices) {
+              pageSliceUsage.set(file, pageSlices)
+            }
+          }
         })
       )
-    ).then(() => documents)
+    ).then(() => {
+      store.dispatch({
+        type: `SET_COMPONENTS_USING_PAGE_SLICES`,
+        payload: pageSliceUsage,
+      })
+
+      return documents
+    })
   }
 }

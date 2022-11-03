@@ -29,7 +29,7 @@ describe(`navigate`, () => {
       cy.getTestElement(`subdir-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `${pathPrefix}/subdirectory/page-1`)
+        .should(`eq`, withTrailingSlash(`${pathPrefix}/subdirectory/page-1`))
     })
 
     it(`can navigate to a sibling page`, () => {
@@ -38,7 +38,7 @@ describe(`navigate`, () => {
         .getTestElement(`page-2-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `${pathPrefix}/subdirectory/page-2`)
+        .should(`eq`, withTrailingSlash(`${pathPrefix}/subdirectory/page-2`))
     })
 
     it(`can navigate to a parent page`, () => {
@@ -47,7 +47,7 @@ describe(`navigate`, () => {
         .getTestElement(`page-parent-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `${pathPrefix}/subdirectory`)
+        .should(`eq`, withTrailingSlash(`${pathPrefix}/subdirectory`))
     })
 
     it(`can navigate to a sibling page programatically`, () => {
@@ -56,7 +56,17 @@ describe(`navigate`, () => {
         .getTestElement(`page-2-button-link`)
         .click()
         .location(`pathname`)
-        .should(`eq`, `${pathPrefix}/subdirectory/page-2`)
+        .should(`eq`, withTrailingSlash(`${pathPrefix}/subdirectory/page-2`))
+    })
+
+    it(`can navigate to SSR page`, () => {
+      cy.getTestElement(`page-ssr-button-link`)
+        .click()
+        .waitForRouteChange()
+        .location(`pathname`)
+        .should(`eq`, withTrailingSlash(`${pathPrefix}/ssr`))
+
+      cy.getTestElement(`server-data`).contains(`foo`)
     })
   })
 

@@ -33,7 +33,7 @@ export interface IQueryJob {
   query: string
   componentPath: string
   context: PageContext
-  isPage: boolean
+  queryType: "page" | "static" | "slice"
   pluginCreatorId?: string
 }
 
@@ -63,7 +63,7 @@ function panicQueryJobError(
   let queryContext = {}
   const plugin = queryJob.pluginCreatorId || `none`
 
-  if (queryJob.isPage) {
+  if (queryJob.queryType === `page`) {
     urlPath = queryJob.context.path
     queryContext = queryJob.context.context
   }
@@ -132,7 +132,7 @@ export async function queryRunner(
     actions.queryStart({
       path: queryJob.id,
       componentPath: queryJob.componentPath,
-      isPage: queryJob.isPage,
+      isPage: queryJob.queryType === `page`,
     })
   )
 
@@ -150,9 +150,13 @@ export async function queryRunner(
     panicQueryJobError(queryJob, result.errors)
   }
 
-  // Add the page context onto the results.
-  if (queryJob && queryJob.isPage) {
-    result[`pageContext`] = Object.assign({}, queryJob.context)
+  // Add the page/slice context onto the results.
+  if (queryJob) {
+    if (queryJob.queryType === `page`) {
+      result[`pageContext`] = Object.assign({}, queryJob.context)
+    } else if (queryJob.queryType === `slice`) {
+      result[`sliceContext`] = Object.assign({}, queryJob.context)
+    }
   }
 
   // Delete internal data from pageContext
@@ -167,12 +171,9 @@ export async function queryRunner(
     delete result.pageContext.componentPath
     delete result.pageContext.context
     delete result.pageContext.isCreatedByStatefulCreatePages
-
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      // we shouldn't add matchPath to pageContext but technically this is a breaking change so moving it ot v4
-      delete result.pageContext.matchPath
-      delete result.pageContext.mode
-    }
+    delete result.pageContext.matchPath
+    delete result.pageContext.mode
+    delete result.pageContext.slices
   }
 
   const resultJSON = JSON.stringify(result)
@@ -184,22 +185,31 @@ export async function queryRunner(
   const resultHashCache = getResultHashCache()
   if (
     resultHash !== (await resultHashCache.get(queryJob.id)) ||
-    (queryJob.isPage &&
+    (queryJob.queryType === `page` &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
     await resultHashCache.set(queryJob.id, resultHash)
 
-    if (queryJob.isPage) {
+    if (queryJob.queryType === `page` || queryJob.queryType === `slice`) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      await savePageQueryResult(program.directory, queryJob.id, resultJSON)
-      store.dispatch({
-        type: `ADD_PENDING_PAGE_DATA_WRITE`,
-        payload: {
-          path: queryJob.id,
-        },
-      })
-    } else {
+      await savePageQueryResult(queryJob.id, resultJSON)
+      if (queryJob.queryType === `page`) {
+        store.dispatch({
+          type: `ADD_PENDING_PAGE_DATA_WRITE`,
+          payload: {
+            path: queryJob.id,
+          },
+        })
+      } else if (queryJob.queryType === `slice`) {
+        store.dispatch({
+          type: `ADD_PENDING_SLICE_DATA_WRITE`,
+          payload: {
+            name: queryJob.id.substring(7), // remove "slice--" prefix
+          },
+        })
+      }
+    } else if (queryJob.queryType === `static`) {
       const resultPath = path.join(
         program.directory,
         `public`,
@@ -217,7 +227,7 @@ export async function queryRunner(
     actions.pageQueryRun({
       path: queryJob.id,
       componentPath: queryJob.componentPath,
-      isPage: queryJob.isPage,
+      queryType: queryJob.queryType,
       resultHash,
       queryHash: queryJob.hash,
     })

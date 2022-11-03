@@ -60,7 +60,7 @@ describe(
 
         cy.visit(`/`).waitForRouteChange()
         let didMock = false
-        cy.intercept("/app-data.json", req => {
+        cy.intercept("/page-data/app-data.json", req => {
           if (!didMock) {
             req.reply({
               webpackCompilationHash: mockHash,
@@ -114,7 +114,7 @@ describe(
         // We will mock `app-data` and `page-data` json responses one time (for initial load)
         let shouldMockAppDataRequests = true
         let shouldMockPageDataRequests = true
-        cy.intercept("/app-data.json", req => {
+        cy.intercept("/page-data/app-data.json", req => {
           if (shouldMockAppDataRequests) {
             req.reply({
               webpackCompilationHash: mockHash,
@@ -167,7 +167,7 @@ describe(
         cy.intercept(/^\/$/).as(`indexFetch`)
 
         // We will mock `app-data` and `page-data` json responses permanently
-        cy.intercept("/app-data.json", req => {
+        cy.intercept("/page-data/app-data.json", req => {
           req.reply({
             webpackCompilationHash: mockHash,
           })

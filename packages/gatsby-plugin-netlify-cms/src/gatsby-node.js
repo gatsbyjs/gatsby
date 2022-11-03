@@ -170,6 +170,7 @@ exports.onCreateWebpackConfig = (
         new FriendlyErrorsPlugin({
           clearConsole: false,
           compilationSuccessInfo: {
+            // TODO(v5): change proxyPort back in port
             messages: [
               `Netlify CMS is running at ${
                 program.https ? `https://` : `http://`

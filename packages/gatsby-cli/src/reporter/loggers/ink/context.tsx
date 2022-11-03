@@ -1,4 +1,9 @@
-import React, { useState, useLayoutEffect, createContext } from "react"
+import React, {
+  useState,
+  useLayoutEffect,
+  createContext,
+  PropsWithChildren,
+} from "react"
 import { getStore, onLogAction } from "../../redux"
 import { IGatsbyCLIState, ActionsUnion, ILog } from "../../redux/types"
 import { IRenderPageArgs } from "../../types"
@@ -15,7 +20,7 @@ const StoreStateContext = createContext<IStoreStateContext>({
   messages: [],
 })
 
-export const StoreStateProvider: React.FC = ({
+export const StoreStateProvider: React.FC<PropsWithChildren> = ({
   children,
 }): React.ReactElement => {
   const [state, setState] = useState<IStoreStateContext>({

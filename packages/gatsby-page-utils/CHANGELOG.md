@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.24.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.24.1/packages/gatsby-page-utils) (2022-10-10)
+
+#### Bug Fixes
+
+- path creation on windows filesystem [#36766](https://github.com/gatsbyjs/gatsby/issues/36766) [#36783](https://github.com/gatsbyjs/gatsby/issues/36783) ([29fef67](https://github.com/gatsbyjs/gatsby/commit/29fef679567e0759e0854804e9082504362b3d71))
+
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.24.0/packages/gatsby-page-utils) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.23.0/packages/gatsby-page-utils) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.22.0/packages/gatsby-page-utils) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.21.0/packages/gatsby-page-utils) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.20.0/packages/gatsby-page-utils) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+#### Chores
+
+- update dependency typescript to ^4.7.4 [#36030](https://github.com/gatsbyjs/gatsby/issues/36030) ([94a3264](https://github.com/gatsbyjs/gatsby/commit/94a32647a8c45de620d2efe99310805910586c8a))
+
+## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.19.0/packages/gatsby-page-utils) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+### [2.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.18.1/packages/gatsby-page-utils) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.18.0/packages/gatsby-page-utils) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+#### Bug Fixes
+
+- update dependency chokidar to ^3.5.3 [#34643](https://github.com/gatsbyjs/gatsby/issues/34643) ([9b308cb](https://github.com/gatsbyjs/gatsby/commit/9b308cb744047beeea3a5b2f500fbf5a8b8ef2d5))
+- use proper babelrc configs for compiling packages [#35948](https://github.com/gatsbyjs/gatsby/issues/35948) ([384e801](https://github.com/gatsbyjs/gatsby/commit/384e8019152ad9bfa221e3e8b6da54675c93f293))
+
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.17.0/packages/gatsby-page-utils) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.16.0/packages/gatsby-page-utils) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+#### Chores
+
+- update dependency typescript to ^4.7.2 [#35808](https://github.com/gatsbyjs/gatsby/issues/35808) ([2c55b79](https://github.com/gatsbyjs/gatsby/commit/2c55b794dd95b40a994f56df5f912219771ccab4))
+
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.15.0/packages/gatsby-page-utils) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+#### Bug Fixes
+
+- Apply `never` trailing slash to xml & pdf [#35681](https://github.com/gatsbyjs/gatsby/issues/35681) ([d383eab](https://github.com/gatsbyjs/gatsby/commit/d383eab271e6c4595fa01f43e34250fa39334987))
+
+#### Chores
+
+- bump glob to 7.2.3 [#35666](https://github.com/gatsbyjs/gatsby/issues/35666) ([3909fa4](https://github.com/gatsbyjs/gatsby/commit/3909fa4265d907df62c6f79129f90f96ae09acd4))
+
 ### [2.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-page-utils@2.14.1/packages/gatsby-page-utils) (2022-05-16)
 
 #### Chores

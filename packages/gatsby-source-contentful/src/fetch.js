@@ -9,68 +9,90 @@ import { CODES } from "./report"
  * Generate a user friendly error message.
  *
  * Contentful's API has its own error message structure, which might change depending of internal server or authentification errors.
- *
- * Additionally the SDK strips the error object, sometimes:
- * https://github.com/contentful/contentful.js/blob/b67b77ac8c919c4ec39203f8cac2043854ab0014/lib/create-contentful-api.js#L89-L99
- *
- * This code tries to work around this.
  */
 const createContentfulErrorMessage = e => {
-  if (typeof e === `string`) {
-    return e
-  }
-  // If we got a response, it is very likely that it is a Contentful API error.
-  if (e.response) {
-    let parsedContentfulErrorData = null
+  // Handle axios error messages
+  if (e.isAxiosError) {
+    const axiosErrorMessage = [e.code, e.status]
+    const axiosErrorDetails = []
 
-    // Parse JSON response data, and add it to the object.
-    if (typeof e.response.data === `string`) {
-      try {
-        parsedContentfulErrorData = JSON.parse(e.response.data)
-      } catch (err) {
-        e.message = e.response.data
+    if (e.response) {
+      axiosErrorMessage.push(e.response.status)
+
+      // Parse Contentful API error data
+      if (e.response?.data) {
+        axiosErrorMessage.push(e.response.data.sys?.id, e.response.data.message)
       }
-      // If response data was parsed already, just add it.
-    } else if (typeof e.response.data === `object`) {
-      parsedContentfulErrorData = e.response.data
+
+      // Get request ID from headers
+      const requestId =
+        e.response.headers &&
+        typeof e.response.headers === `object` &&
+        e.response.headers[`x-contentful-request-id`]
+
+      if (requestId) {
+        axiosErrorDetails.push(`Request ID: ${requestId}`)
+      }
     }
 
-    e = { ...e, ...e.response, ...parsedContentfulErrorData }
+    if (e.attempts) {
+      axiosErrorDetails.push(`Attempts: ${e.attempts}`)
+    }
+
+    if (axiosErrorDetails.length) {
+      axiosErrorMessage.push(
+        `\n\n---\n${axiosErrorDetails.join(`\n\n`)}\n\n---\n`
+      )
+    }
+
+    return axiosErrorMessage.filter(Boolean).join(` `)
   }
 
-  let errorMessage = [
-    // Generic error values
-    e.code && String(e.code),
-    e.status && String(e.status),
-    e.statusText,
-    // Contentful API error response values
-    e.sys?.id,
-  ]
-    .filter(Boolean)
-    .join(` `)
-
-  // Add message if it exists. Usually error default or Contentful's error message
-  if (e.message) {
-    errorMessage += `\n\n${e.message}`
+  // If it is not an axios error, we assume that we got a Contentful SDK error and try to parse it
+  const errorMessage = [e.name]
+  const errorDetails = []
+  try {
+    /**
+     * Parse stringified error data from message
+     * https://github.com/contentful/contentful-sdk-core/blob/4cfcd452ba0752237a26ce6b79d72a50af84d84e/src/error-handler.ts#L71-L75
+     *
+     * @todo properly type this with TS
+     * type {
+     *    status?: number
+     *    statusText?: string
+     *    requestId?: string
+     *    message: string
+     *    !details: Record<string, unknown>
+     *    !request?: Record<string, unknown>
+     *  }
+     */
+    const errorData = JSON.parse(e.message)
+    errorMessage.push(errorData.status && String(errorData.status))
+    errorMessage.push(errorData.statusText)
+    errorMessage.push(errorData.message)
+    if (errorData.requestId) {
+      errorDetails.push(`Request ID: ${errorData.requestId}`)
+    }
+    if (errorData.request) {
+      errorDetails.push(
+        `Request:\n${JSON.stringify(errorData.request, null, 2)}`
+      )
+    }
+    if (errorData.details && Object.keys(errorData.details).length) {
+      errorDetails.push(
+        `Details:\n${JSON.stringify(errorData.details, null, 2)}`
+      )
+    }
+  } catch (err) {
+    // If we can't parse it, we assume its a human readable string
+    errorMessage.push(e.message)
   }
 
-  // Get request ID from headers or Contentful's error data
-  const requestId =
-    (e.headers &&
-      typeof e.headers === `object` &&
-      e.headers[`x-contentful-request-id`]) ||
-    e.requestId
-
-  if (requestId) {
-    errorMessage += `\n\nRequest ID: ${requestId}`
+  if (errorDetails.length) {
+    errorMessage.push(`\n\n---\n${errorDetails.join(`\n\n`)}\n\n---\n`)
   }
 
-  // Tell the user about how many request attempts Contentful SDK made
-  if (e.attempts) {
-    errorMessage += `\n\nThe request was sent with ${e.attempts} attempts`
-  }
-
-  return errorMessage
+  return errorMessage.filter(Boolean).join(` `)
 }
 
 function createContentfulClientOptions({

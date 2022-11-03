@@ -1,17 +1,11 @@
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
 describe(`Prefetching`, () => {
-  if (Cypress.env(`CONNECTION_TYPE`) === `slow`) {
-    it(`should not prefetch if on slow connection`, () => {
-      cy.visit(`/`).waitForRouteChange()
-
-      cy.window().then(async win => {
-        const isPrefetching = await win.___loader.enqueue(`/page-2`)
-        expect(isPrefetching).to.equal(false)
-      })
-
-      cy.get(`link[rel="prefetch"]`).should(`not.exist`)
-      cy.lifecycleCallCount(`onPrefetchPathname`).should(`equal`, 0)
-    })
-  } else if (Cypress.env(`CONNECTION_TYPE`) === `bot`) {
+  if (Cypress.env(`CONNECTION_TYPE`) === `bot`) {
     it(`should not prefetch if Googlebot`, () => {
       cy.visit(`/`).waitForRouteChange()
 

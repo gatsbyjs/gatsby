@@ -12,11 +12,6 @@ const { createFileNode } = require(`./create-file-node`)
  */
 
 /**
- * @typedef {Reporter}
- * @see gatsby/packages/gatsby-cli/lib/reporter.js
- */
-
-/**
  * @typedef {Auth}
  * @type {Object}
  * @property {String} htaccess_pass
@@ -33,7 +28,6 @@ const { createFileNode } = require(`./create-file-node`)
  * @param  {Function} options.createNode
  * @param  {Function} options.getCache
  * @param  {Auth} [options.auth]
- * @param  {Reporter} [options.reporter]
  */
 
 /******************

@@ -64,6 +64,10 @@ export default function (this: any, source: string): string {
       `require(${JSON.stringify(lmdbBinaryLocation)})`
     )
     .replace(
+      `loadNAPI__default["default"](dirName);`,
+      `require(${JSON.stringify(lmdbBinaryLocation)})`
+    )
+    .replace(
       `require$2.resolve('./dict/dict.txt')`,
       `require.resolve('../dict/dict.txt')`
     )

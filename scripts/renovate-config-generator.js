@@ -155,6 +155,14 @@ const globalPackageRules = [
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
+  {
+    groupName: `lmdb`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackagePatterns: [`lmdb`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
 ]
 
 // there is no excludeMatchSourceUrlPrefixes option so we force babel to be disabled

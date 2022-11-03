@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import Layout from "../components/layout"
+import Seo from "../components/seo"
 import * as StaticQuery from "../components/static-query"
 import * as UseStaticQuery from "../components/static-query/use-static-query"
 
@@ -21,5 +22,7 @@ const StaticQueryPage = () => (
     <UseStaticQuery.Destructuring data-testid="use-static-query-destructuring" />
   </Layout>
 )
+
+export const Head = () => <Seo />
 
 export default StaticQueryPage

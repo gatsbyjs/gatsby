@@ -1,4 +1,17 @@
-describe(`remote-file`, () => {
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
+describe(
+  `remote-file`, 
+  {
+    retries: {
+      runMode: 4,
+    },
+  },
+  () => {
   beforeEach(() => {
     cy.visit(`/remote-file/`).waitForRouteChange()
 
@@ -8,6 +21,7 @@ describe(`remote-file`, () => {
     cy.scrollTo("bottom", {
       duration: 500,
     })
+    cy.wait(500)
   })
 
   async function testImages(images, expectations) {

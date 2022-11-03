@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "author": "LekoArts",
   "dependencies": {
-    "cypress": "^9.1.1",
+    "cypress": "^9.7.0",
     "gatsby": "next",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "license": "MIT",
   "scripts": {
@@ -29,12 +29,11 @@
     "test:always": "cross-env OPTION=always npm run build:option && cross-env OPTION=always npm run t:opt:build && npm run clean && cross-env OPTION=always npm run t:opt:develop",
     "test:never": "cross-env OPTION=never npm run build:option && cross-env OPTION=never npm run t:opt:build && npm run clean && cross-env OPTION=never npm run t:opt:develop",
     "test:ignore": "cross-env OPTION=ignore npm run build:option && cross-env OPTION=ignore npm run t:opt:build && npm run clean && cross-env OPTION=ignore npm run t:opt:develop",
-    "test:legacy": "cross-env OPTION=legacy npm run build:option && cross-env OPTION=legacy npm run t:opt:build && npm run clean && cross-env OPTION=legacy npm run t:opt:develop",
-    "test": "npm-run-all -c -s test:always test:never test:ignore test:legacy"
+    "test": "npm-run-all -c -s test:always test:never test:ignore"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "gatsby-cypress": "^2.4.0",
+    "gatsby-cypress": "next",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "start-server-and-test": "^1.14.0"

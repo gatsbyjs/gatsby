@@ -33,6 +33,8 @@ const { store } = require(`../redux`)
 import { actions } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
+import { getPathToLayoutComponent } from "gatsby-core-utils"
+import { tranformDocument } from "./transform-document"
 const { default: FileParser } = require(`./file-parser`)
 const {
   graphqlError,
@@ -201,12 +203,34 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
     text,
     templateLoc,
     hash,
-    doc,
+    doc: originalDoc,
     isHook,
     isStaticQuery,
     isConfigQuery,
   } of parsedQueries) {
-    const errors = validate(schema, doc, preValidationRules)
+    let doc = originalDoc
+
+    let errors = validate(schema, doc, preValidationRules)
+    if (errors && errors.length) {
+      const originalQueryText = print(originalDoc)
+      const { ast: transformedDocument, hasChanged } = tranformDocument(doc)
+      if (hasChanged) {
+        const newErrors = validate(
+          schema,
+          transformedDocument,
+          preValidationRules
+        )
+        if (newErrors.length === 0) {
+          report.warn(
+            `Deprecated syntax of sort and/or aggregation field arguments were found in your query (see https://gatsby.dev/graphql-nested-sort-and-aggregate). Query was automatically converted to a new syntax. You should update query in your code.\n\nFile: ${filePath}\n\nCurrent query:\n\n${originalQueryText}\n\nConverted query:\n\n${print(
+              transformedDocument
+            )}`
+          )
+          doc = transformedDocument
+          errors = newErrors
+        }
+      }
+    }
 
     if (errors && errors.length) {
       addError(
@@ -236,7 +260,12 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
       const name = def.name.value
       let printedAst = null
       if (def.kind === Kind.OPERATION_DEFINITION) {
-        operations.push(def)
+        operations.push({
+          def,
+          filePath,
+          templatePath: getPathToLayoutComponent(filePath),
+          hash,
+        })
       } else if (def.kind === Kind.FRAGMENT_DEFINITION) {
         // Check if we already registered a fragment with this name
         printedAst = print(def)
@@ -277,6 +306,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
         isConfigQuery,
         isFragment: def.kind === Kind.FRAGMENT_DEFINITION,
         hash: hash,
+        templatePath: getPathToLayoutComponent(filePath),
       })
     })
   }
@@ -303,31 +333,9 @@ const processDefinitions = ({
     .map(([name, _]) => name)
 
   for (const operation of operations) {
-    const name = operation.name.value
+    const { filePath, templatePath, def } = operation
+    const name = def.name.value
     const originalDefinition = definitionsByName.get(name)
-    const filePath = definitionsByName.get(name).filePath
-
-    // Check for duplicate page/static queries in the same component.
-    // (config query is not a duplicate of page/static query in the component)
-    // TODO: make sure there is at most one query type per component (e.g. one config + one page)
-    if (processedQueries.has(filePath) && !originalDefinition.isConfigQuery) {
-      const otherQuery = processedQueries.get(filePath)
-
-      addError(
-        multipleRootQueriesError(
-          filePath,
-          originalDefinition.def,
-          otherQuery && definitionsByName.get(otherQuery.name).def
-        )
-      )
-
-      store.dispatch(
-        actions.queryExtractionGraphQLError({
-          componentPath: filePath,
-        })
-      )
-      continue
-    }
 
     const { usedFragments, missingFragments } =
       determineUsedFragmentsForDefinition(
@@ -359,10 +367,11 @@ const processDefinitions = ({
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
         .map(name => definitionsByName.get(name).def)
-        .concat([operation]),
+        .concat([operation.def]),
     }
 
     const errors = validate(schema, document)
+
     if (errors && errors.length) {
       for (const error of errors) {
         const { formattedMessage, message } = graphqlError(
@@ -396,14 +405,43 @@ const processDefinitions = ({
       continue
     }
 
+    const printedDocument = print(document)
+    // Check for duplicate page/static queries in the same component.
+    // (config query is not a duplicate of page/static query in the component)
+    // TODO: make sure there is at most one query type per component (e.g. one config + one page)
+    if (processedQueries.has(filePath) && !originalDefinition.isConfigQuery) {
+      const otherQuery = processedQueries.get(filePath)
+
+      if (
+        templatePath !== otherQuery.templatePath ||
+        printedDocument !== otherQuery.text
+      ) {
+        addError(
+          multipleRootQueriesError(
+            filePath,
+            originalDefinition.def,
+            otherQuery && definitionsByName.get(otherQuery.name).def
+          )
+        )
+
+        store.dispatch(
+          actions.queryExtractionGraphQLError({
+            componentPath: filePath,
+          })
+        )
+        continue
+      }
+    }
+
     const query = {
       name,
-      text: print(document),
+      text: printedDocument,
       originalText: originalDefinition.text,
       path: filePath,
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
       isConfigQuery: originalDefinition.isConfigQuery,
+      templatePath,
       // ensure hash should be a string and not a number
       hash: String(originalDefinition.hash),
     }

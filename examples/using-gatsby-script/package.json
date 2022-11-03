@@ -1,0 +1,30 @@
+{
+  "name": "using-gatsby-script",
+  "version": "1.0.0",
+  "private": true,
+  "description": "using-gatsby-script",
+  "author": "tyhopp",
+  "keywords": [
+    "gatsby",
+    "gatsby-script"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "@types/react": "^17.0.44",
+    "@types/react-dom": "^17.0.16",
+    "typescript": "^4.6.4"
+  }
+}

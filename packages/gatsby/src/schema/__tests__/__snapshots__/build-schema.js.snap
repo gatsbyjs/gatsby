@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Built-in types includes built-in types 1`] = `
+exports[`Built-in types includes built-in types (v4) 1`] = `
 "\\"\\"\\"Add date formatting options.\\"\\"\\"
 directive @dateformat(formatString: String, locale: String, fromNow: Boolean, difference: String) on FIELD_DEFINITION
 
@@ -214,6 +214,7 @@ type Internal {
   mediaType: String
   owner: String!
   type: String!
+  contentFilePath: String
 }
 
 \\"\\"\\"
@@ -553,6 +554,7 @@ input InternalFilterInput {
   mediaType: StringQueryOperatorInput
   owner: StringQueryOperatorInput
   type: StringQueryOperatorInput
+  contentFilePath: StringQueryOperatorInput
 }
 
 input BooleanQueryOperatorInput {
@@ -638,6 +640,7 @@ enum FileFieldsEnum {
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -653,6 +656,7 @@ enum FileFieldsEnum {
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -661,6 +665,7 @@ enum FileFieldsEnum {
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -677,6 +682,7 @@ enum FileFieldsEnum {
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -692,6 +698,7 @@ enum FileFieldsEnum {
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -700,6 +707,7 @@ enum FileFieldsEnum {
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -708,6 +716,7 @@ enum FileFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
 }
 
 type FileGroupConnection {
@@ -838,6 +847,7 @@ enum DirectoryFieldsEnum {
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -853,6 +863,7 @@ enum DirectoryFieldsEnum {
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -861,6 +872,7 @@ enum DirectoryFieldsEnum {
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -877,6 +889,7 @@ enum DirectoryFieldsEnum {
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -892,6 +905,7 @@ enum DirectoryFieldsEnum {
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -900,6 +914,7 @@ enum DirectoryFieldsEnum {
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -908,6 +923,7 @@ enum DirectoryFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
 }
 
 type DirectoryGroupConnection {
@@ -1010,6 +1026,7 @@ enum SiteFieldsEnum {
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -1025,6 +1042,7 @@ enum SiteFieldsEnum {
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -1033,6 +1051,7 @@ enum SiteFieldsEnum {
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -1049,6 +1068,7 @@ enum SiteFieldsEnum {
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -1064,6 +1084,7 @@ enum SiteFieldsEnum {
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -1072,6 +1093,7 @@ enum SiteFieldsEnum {
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -1080,6 +1102,7 @@ enum SiteFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
 }
 
 type SiteGroupConnection {
@@ -1152,6 +1175,7 @@ enum SiteFunctionFieldsEnum {
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -1167,6 +1191,7 @@ enum SiteFunctionFieldsEnum {
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -1175,6 +1200,7 @@ enum SiteFunctionFieldsEnum {
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -1191,6 +1217,7 @@ enum SiteFunctionFieldsEnum {
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -1206,6 +1233,7 @@ enum SiteFunctionFieldsEnum {
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -1214,6 +1242,7 @@ enum SiteFunctionFieldsEnum {
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -1222,6 +1251,7 @@ enum SiteFunctionFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
 }
 
 type SiteFunctionGroupConnection {
@@ -1331,6 +1361,7 @@ enum SitePageFieldsEnum {
   pluginCreator___parent___internal___mediaType
   pluginCreator___parent___internal___owner
   pluginCreator___parent___internal___type
+  pluginCreator___parent___internal___contentFilePath
   pluginCreator___children
   pluginCreator___children___id
   pluginCreator___children___parent___id
@@ -1346,6 +1377,7 @@ enum SitePageFieldsEnum {
   pluginCreator___children___internal___mediaType
   pluginCreator___children___internal___owner
   pluginCreator___children___internal___type
+  pluginCreator___children___internal___contentFilePath
   pluginCreator___internal___content
   pluginCreator___internal___contentDigest
   pluginCreator___internal___description
@@ -1354,6 +1386,7 @@ enum SitePageFieldsEnum {
   pluginCreator___internal___mediaType
   pluginCreator___internal___owner
   pluginCreator___internal___type
+  pluginCreator___internal___contentFilePath
   id
   parent___id
   parent___parent___id
@@ -1370,6 +1403,7 @@ enum SitePageFieldsEnum {
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -1385,6 +1419,7 @@ enum SitePageFieldsEnum {
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -1393,6 +1428,7 @@ enum SitePageFieldsEnum {
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -1409,6 +1445,7 @@ enum SitePageFieldsEnum {
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -1424,6 +1461,7 @@ enum SitePageFieldsEnum {
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -1432,6 +1470,7 @@ enum SitePageFieldsEnum {
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -1440,6 +1479,7 @@ enum SitePageFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
 }
 
 type SitePageGroupConnection {
@@ -1519,6 +1559,7 @@ enum SitePluginFieldsEnum {
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -1534,6 +1575,7 @@ enum SitePluginFieldsEnum {
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -1542,6 +1584,7 @@ enum SitePluginFieldsEnum {
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -1558,6 +1601,7 @@ enum SitePluginFieldsEnum {
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -1573,6 +1617,7 @@ enum SitePluginFieldsEnum {
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -1581,6 +1626,7 @@ enum SitePluginFieldsEnum {
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -1589,6 +1635,7 @@ enum SitePluginFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
 }
 
 type SitePluginGroupConnection {
@@ -1646,6 +1693,7 @@ enum SiteBuildMetadataFieldsEnum {
   parent___parent___internal___mediaType
   parent___parent___internal___owner
   parent___parent___internal___type
+  parent___parent___internal___contentFilePath
   parent___children
   parent___children___id
   parent___children___parent___id
@@ -1661,6 +1709,7 @@ enum SiteBuildMetadataFieldsEnum {
   parent___children___internal___mediaType
   parent___children___internal___owner
   parent___children___internal___type
+  parent___children___internal___contentFilePath
   parent___internal___content
   parent___internal___contentDigest
   parent___internal___description
@@ -1669,6 +1718,7 @@ enum SiteBuildMetadataFieldsEnum {
   parent___internal___mediaType
   parent___internal___owner
   parent___internal___type
+  parent___internal___contentFilePath
   children
   children___id
   children___parent___id
@@ -1685,6 +1735,7 @@ enum SiteBuildMetadataFieldsEnum {
   children___parent___internal___mediaType
   children___parent___internal___owner
   children___parent___internal___type
+  children___parent___internal___contentFilePath
   children___children
   children___children___id
   children___children___parent___id
@@ -1700,6 +1751,7 @@ enum SiteBuildMetadataFieldsEnum {
   children___children___internal___mediaType
   children___children___internal___owner
   children___children___internal___type
+  children___children___internal___contentFilePath
   children___internal___content
   children___internal___contentDigest
   children___internal___description
@@ -1708,6 +1760,7 @@ enum SiteBuildMetadataFieldsEnum {
   children___internal___mediaType
   children___internal___owner
   children___internal___type
+  children___internal___contentFilePath
   internal___content
   internal___contentDigest
   internal___description
@@ -1716,6 +1769,7 @@ enum SiteBuildMetadataFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  internal___contentFilePath
 }
 
 type SiteBuildMetadataGroupConnection {
@@ -1745,4 +1799,1285 @@ input SiteBuildMetadataSortInput {
   order: [SortOrderEnum] = [ASC]
 }
 "
+`;
+
+exports[`Built-in types includes built-in types (v5) 1`] = `
+"\\"\\"\\"Add date formatting options.\\"\\"\\"
+directive @dateformat(formatString: String, locale: String, fromNow: Boolean, difference: String) on FIELD_DEFINITION
+
+\\"\\"\\"Link to node by foreign-key relation.\\"\\"\\"
+directive @link(by: String! = \\"id\\", from: String, on: String) on FIELD_DEFINITION
+
+\\"\\"\\"Link to File node by relative path.\\"\\"\\"
+directive @fileByRelativePath(from: String) on FIELD_DEFINITION
+
+\\"\\"\\"Proxy resolver from another field.\\"\\"\\"
+directive @proxy(from: String!, fromNode: Boolean! = false) on FIELD_DEFINITION
+
+\\"\\"\\"Infer field types from field values.\\"\\"\\"
+directive @infer on OBJECT
+
+\\"\\"\\"Do not infer field types from field values.\\"\\"\\"
+directive @dontInfer on OBJECT
+
+\\"\\"\\"Define the mime-types handled by this type.\\"\\"\\"
+directive @mimeTypes(
+  \\"\\"\\"The mime-types handled by this type.\\"\\"\\"
+  types: [String!]! = []
+) on OBJECT
+
+\\"\\"\\"
+Define parent-child relations between types. This is used to add \`child*\` and \`children*\` convenience fields like \`childImageSharp\`.
+\\"\\"\\"
+directive @childOf(
+  \\"\\"\\"
+  A list of mime-types this type is a child of. Usually these are the mime-types handled by a transformer plugin.
+  \\"\\"\\"
+  mimeTypes: [String!]! = []
+
+  \\"\\"\\"
+  A list of types this type is a child of. Usually these are the types handled by a transformer plugin.
+  \\"\\"\\"
+  types: [String!]! = []
+) on OBJECT
+
+\\"\\"\\"
+DEPRECATED: Use interface inheritance instead, i.e. \\"interface Foo implements Node\\".
+
+Adds root query fields for an interface. All implementing types must also implement the Node interface.
+\\"\\"\\"
+directive @nodeInterface on INTERFACE
+
+type File implements Node {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  accessTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  changeTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  birthTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  mtime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  ctime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+\\"\\"\\"Node Interface\\"\\"\\"
+interface Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type Internal {
+  content: String
+  contentDigest: String!
+  description: String
+  fieldOwners: [String]
+  ignoreType: Boolean
+  mediaType: String
+  owner: String!
+  type: String!
+  contentFilePath: String
+}
+
+\\"\\"\\"
+A date string, such as 2007-12-03, compliant with the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+\\"\\"\\"
+scalar Date
+
+type Directory implements Node {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  accessTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  changeTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  birthTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  mtime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  ctime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type Site implements Node {
+  buildTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date
+  siteMetadata: SiteSiteMetadata
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
+}
+
+type SiteFunction implements Node {
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
+  relativeCompiledFilePath: String!
+  absoluteCompiledFilePath: String!
+  matchPath: String
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type SitePage implements Node {
+  path: String!
+  component: String!
+  internalComponentName: String!
+  componentChunkName: String!
+  matchPath: String
+  pageContext: JSON
+  pluginCreator: SitePlugin
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+\\"\\"\\"
+The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+\\"\\"\\"
+scalar JSON
+
+type SitePlugin implements Node {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type SiteBuildMetadata implements Node {
+  buildTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type Query {
+  file(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): File
+  allFile(filter: FileFilterInput, sort: [FileSortInput], skip: Int, limit: Int): FileConnection!
+  directory(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Directory
+  allDirectory(filter: DirectoryFilterInput, sort: [DirectorySortInput], skip: Int, limit: Int): DirectoryConnection!
+  site(buildTime: DateQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Site
+  allSite(filter: SiteFilterInput, sort: [SiteSortInput], skip: Int, limit: Int): SiteConnection!
+  siteFunction(functionRoute: StringQueryOperatorInput, pluginName: StringQueryOperatorInput, originalAbsoluteFilePath: StringQueryOperatorInput, originalRelativeFilePath: StringQueryOperatorInput, relativeCompiledFilePath: StringQueryOperatorInput, absoluteCompiledFilePath: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SiteFunction
+  allSiteFunction(filter: SiteFunctionFilterInput, sort: [SiteFunctionSortInput], skip: Int, limit: Int): SiteFunctionConnection!
+  sitePage(path: StringQueryOperatorInput, component: StringQueryOperatorInput, internalComponentName: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, pageContext: JSONQueryOperatorInput, pluginCreator: SitePluginFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePage
+  allSitePage(filter: SitePageFilterInput, sort: [SitePageSortInput], skip: Int, limit: Int): SitePageConnection!
+  sitePlugin(resolve: StringQueryOperatorInput, name: StringQueryOperatorInput, version: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, browserAPIs: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: JSONQueryOperatorInput, packageJson: JSONQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePlugin
+  allSitePlugin(filter: SitePluginFilterInput, sort: [SitePluginSortInput], skip: Int, limit: Int): SitePluginConnection!
+  siteBuildMetadata(buildTime: DateQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SiteBuildMetadata
+  allSiteBuildMetadata(filter: SiteBuildMetadataFilterInput, sort: [SiteBuildMetadataSortInput], skip: Int, limit: Int): SiteBuildMetadataConnection!
+}
+
+input StringQueryOperatorInput {
+  eq: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: String
+  glob: String
+}
+
+input IntQueryOperatorInput {
+  eq: Int
+  ne: Int
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+  in: [Int]
+  nin: [Int]
+}
+
+input DateQueryOperatorInput {
+  eq: Date
+  ne: Date
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  in: [Date]
+  nin: [Date]
+}
+
+input FloatQueryOperatorInput {
+  eq: Float
+  ne: Float
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  in: [Float]
+  nin: [Float]
+}
+
+input NodeFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input NodeFilterListInput {
+  elemMatch: NodeFilterInput
+}
+
+input InternalFilterInput {
+  content: StringQueryOperatorInput
+  contentDigest: StringQueryOperatorInput
+  description: StringQueryOperatorInput
+  fieldOwners: StringQueryOperatorInput
+  ignoreType: BooleanQueryOperatorInput
+  mediaType: StringQueryOperatorInput
+  owner: StringQueryOperatorInput
+  type: StringQueryOperatorInput
+  contentFilePath: StringQueryOperatorInput
+}
+
+input BooleanQueryOperatorInput {
+  eq: Boolean
+  ne: Boolean
+  in: [Boolean]
+  nin: [Boolean]
+}
+
+type FileConnection {
+  totalCount: Int!
+  edges: [FileEdge!]!
+  nodes: [File!]!
+  pageInfo: PageInfo!
+  distinct(field: FileFieldSelector!): [String!]!
+  max(field: FileFieldSelector!): Float
+  min(field: FileFieldSelector!): Float
+  sum(field: FileFieldSelector!): Float
+  group(skip: Int, limit: Int, field: FileFieldSelector!): [FileGroupConnection!]!
+}
+
+type FileEdge {
+  next: File
+  node: File!
+  previous: File
+}
+
+type PageInfo {
+  currentPage: Int!
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  itemCount: Int!
+  pageCount: Int!
+  perPage: Int
+  totalCount: Int!
+}
+
+input FileFieldSelector {
+  sourceInstanceName: FieldSelectorEnum
+  absolutePath: FieldSelectorEnum
+  relativePath: FieldSelectorEnum
+  extension: FieldSelectorEnum
+  size: FieldSelectorEnum
+  prettySize: FieldSelectorEnum
+  modifiedTime: FieldSelectorEnum
+  accessTime: FieldSelectorEnum
+  changeTime: FieldSelectorEnum
+  birthTime: FieldSelectorEnum
+  root: FieldSelectorEnum
+  dir: FieldSelectorEnum
+  base: FieldSelectorEnum
+  ext: FieldSelectorEnum
+  name: FieldSelectorEnum
+  relativeDirectory: FieldSelectorEnum
+  dev: FieldSelectorEnum
+  mode: FieldSelectorEnum
+  nlink: FieldSelectorEnum
+  uid: FieldSelectorEnum
+  gid: FieldSelectorEnum
+  rdev: FieldSelectorEnum
+  ino: FieldSelectorEnum
+  atimeMs: FieldSelectorEnum
+  mtimeMs: FieldSelectorEnum
+  ctimeMs: FieldSelectorEnum
+  atime: FieldSelectorEnum
+  mtime: FieldSelectorEnum
+  ctime: FieldSelectorEnum
+  birthtime: FieldSelectorEnum
+  birthtimeMs: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+enum FieldSelectorEnum {
+  SELECT
+}
+
+input NodeFieldSelector {
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+input InternalFieldSelector {
+  content: FieldSelectorEnum
+  contentDigest: FieldSelectorEnum
+  description: FieldSelectorEnum
+  fieldOwners: FieldSelectorEnum
+  ignoreType: FieldSelectorEnum
+  mediaType: FieldSelectorEnum
+  owner: FieldSelectorEnum
+  type: FieldSelectorEnum
+  contentFilePath: FieldSelectorEnum
+}
+
+type FileGroupConnection {
+  totalCount: Int!
+  edges: [FileEdge!]!
+  nodes: [File!]!
+  pageInfo: PageInfo!
+  distinct(field: FileFieldSelector!): [String!]!
+  max(field: FileFieldSelector!): Float
+  min(field: FileFieldSelector!): Float
+  sum(field: FileFieldSelector!): Float
+  group(skip: Int, limit: Int, field: FileFieldSelector!): [FileGroupConnection!]!
+  field: String!
+  fieldValue: String
+}
+
+input FileFilterInput {
+  sourceInstanceName: StringQueryOperatorInput
+  absolutePath: StringQueryOperatorInput
+  relativePath: StringQueryOperatorInput
+  extension: StringQueryOperatorInput
+  size: IntQueryOperatorInput
+  prettySize: StringQueryOperatorInput
+  modifiedTime: DateQueryOperatorInput
+  accessTime: DateQueryOperatorInput
+  changeTime: DateQueryOperatorInput
+  birthTime: DateQueryOperatorInput
+  root: StringQueryOperatorInput
+  dir: StringQueryOperatorInput
+  base: StringQueryOperatorInput
+  ext: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  relativeDirectory: StringQueryOperatorInput
+  dev: IntQueryOperatorInput
+  mode: IntQueryOperatorInput
+  nlink: IntQueryOperatorInput
+  uid: IntQueryOperatorInput
+  gid: IntQueryOperatorInput
+  rdev: IntQueryOperatorInput
+  ino: FloatQueryOperatorInput
+  atimeMs: FloatQueryOperatorInput
+  mtimeMs: FloatQueryOperatorInput
+  ctimeMs: FloatQueryOperatorInput
+  atime: DateQueryOperatorInput
+  mtime: DateQueryOperatorInput
+  ctime: DateQueryOperatorInput
+  birthtime: DateQueryOperatorInput
+  birthtimeMs: FloatQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input FileSortInput {
+  sourceInstanceName: SortOrderEnum
+  absolutePath: SortOrderEnum
+  relativePath: SortOrderEnum
+  extension: SortOrderEnum
+  size: SortOrderEnum
+  prettySize: SortOrderEnum
+  modifiedTime: SortOrderEnum
+  accessTime: SortOrderEnum
+  changeTime: SortOrderEnum
+  birthTime: SortOrderEnum
+  root: SortOrderEnum
+  dir: SortOrderEnum
+  base: SortOrderEnum
+  ext: SortOrderEnum
+  name: SortOrderEnum
+  relativeDirectory: SortOrderEnum
+  dev: SortOrderEnum
+  mode: SortOrderEnum
+  nlink: SortOrderEnum
+  uid: SortOrderEnum
+  gid: SortOrderEnum
+  rdev: SortOrderEnum
+  ino: SortOrderEnum
+  atimeMs: SortOrderEnum
+  mtimeMs: SortOrderEnum
+  ctimeMs: SortOrderEnum
+  atime: SortOrderEnum
+  mtime: SortOrderEnum
+  ctime: SortOrderEnum
+  birthtime: SortOrderEnum
+  birthtimeMs: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+enum SortOrderEnum {
+  ASC
+  DESC
+}
+
+input NodeSortInput {
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input InternalSortInput {
+  content: SortOrderEnum
+  contentDigest: SortOrderEnum
+  description: SortOrderEnum
+  fieldOwners: SortOrderEnum
+  ignoreType: SortOrderEnum
+  mediaType: SortOrderEnum
+  owner: SortOrderEnum
+  type: SortOrderEnum
+  contentFilePath: SortOrderEnum
+}
+
+type DirectoryConnection {
+  totalCount: Int!
+  edges: [DirectoryEdge!]!
+  nodes: [Directory!]!
+  pageInfo: PageInfo!
+  distinct(field: DirectoryFieldSelector!): [String!]!
+  max(field: DirectoryFieldSelector!): Float
+  min(field: DirectoryFieldSelector!): Float
+  sum(field: DirectoryFieldSelector!): Float
+  group(skip: Int, limit: Int, field: DirectoryFieldSelector!): [DirectoryGroupConnection!]!
+}
+
+type DirectoryEdge {
+  next: Directory
+  node: Directory!
+  previous: Directory
+}
+
+input DirectoryFieldSelector {
+  sourceInstanceName: FieldSelectorEnum
+  absolutePath: FieldSelectorEnum
+  relativePath: FieldSelectorEnum
+  extension: FieldSelectorEnum
+  size: FieldSelectorEnum
+  prettySize: FieldSelectorEnum
+  modifiedTime: FieldSelectorEnum
+  accessTime: FieldSelectorEnum
+  changeTime: FieldSelectorEnum
+  birthTime: FieldSelectorEnum
+  root: FieldSelectorEnum
+  dir: FieldSelectorEnum
+  base: FieldSelectorEnum
+  ext: FieldSelectorEnum
+  name: FieldSelectorEnum
+  relativeDirectory: FieldSelectorEnum
+  dev: FieldSelectorEnum
+  mode: FieldSelectorEnum
+  nlink: FieldSelectorEnum
+  uid: FieldSelectorEnum
+  gid: FieldSelectorEnum
+  rdev: FieldSelectorEnum
+  ino: FieldSelectorEnum
+  atimeMs: FieldSelectorEnum
+  mtimeMs: FieldSelectorEnum
+  ctimeMs: FieldSelectorEnum
+  atime: FieldSelectorEnum
+  mtime: FieldSelectorEnum
+  ctime: FieldSelectorEnum
+  birthtime: FieldSelectorEnum
+  birthtimeMs: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+type DirectoryGroupConnection {
+  totalCount: Int!
+  edges: [DirectoryEdge!]!
+  nodes: [Directory!]!
+  pageInfo: PageInfo!
+  distinct(field: DirectoryFieldSelector!): [String!]!
+  max(field: DirectoryFieldSelector!): Float
+  min(field: DirectoryFieldSelector!): Float
+  sum(field: DirectoryFieldSelector!): Float
+  group(skip: Int, limit: Int, field: DirectoryFieldSelector!): [DirectoryGroupConnection!]!
+  field: String!
+  fieldValue: String
+}
+
+input DirectoryFilterInput {
+  sourceInstanceName: StringQueryOperatorInput
+  absolutePath: StringQueryOperatorInput
+  relativePath: StringQueryOperatorInput
+  extension: StringQueryOperatorInput
+  size: IntQueryOperatorInput
+  prettySize: StringQueryOperatorInput
+  modifiedTime: DateQueryOperatorInput
+  accessTime: DateQueryOperatorInput
+  changeTime: DateQueryOperatorInput
+  birthTime: DateQueryOperatorInput
+  root: StringQueryOperatorInput
+  dir: StringQueryOperatorInput
+  base: StringQueryOperatorInput
+  ext: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  relativeDirectory: StringQueryOperatorInput
+  dev: IntQueryOperatorInput
+  mode: IntQueryOperatorInput
+  nlink: IntQueryOperatorInput
+  uid: IntQueryOperatorInput
+  gid: IntQueryOperatorInput
+  rdev: IntQueryOperatorInput
+  ino: FloatQueryOperatorInput
+  atimeMs: FloatQueryOperatorInput
+  mtimeMs: FloatQueryOperatorInput
+  ctimeMs: FloatQueryOperatorInput
+  atime: DateQueryOperatorInput
+  mtime: DateQueryOperatorInput
+  ctime: DateQueryOperatorInput
+  birthtime: DateQueryOperatorInput
+  birthtimeMs: FloatQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input DirectorySortInput {
+  sourceInstanceName: SortOrderEnum
+  absolutePath: SortOrderEnum
+  relativePath: SortOrderEnum
+  extension: SortOrderEnum
+  size: SortOrderEnum
+  prettySize: SortOrderEnum
+  modifiedTime: SortOrderEnum
+  accessTime: SortOrderEnum
+  changeTime: SortOrderEnum
+  birthTime: SortOrderEnum
+  root: SortOrderEnum
+  dir: SortOrderEnum
+  base: SortOrderEnum
+  ext: SortOrderEnum
+  name: SortOrderEnum
+  relativeDirectory: SortOrderEnum
+  dev: SortOrderEnum
+  mode: SortOrderEnum
+  nlink: SortOrderEnum
+  uid: SortOrderEnum
+  gid: SortOrderEnum
+  rdev: SortOrderEnum
+  ino: SortOrderEnum
+  atimeMs: SortOrderEnum
+  mtimeMs: SortOrderEnum
+  ctimeMs: SortOrderEnum
+  atime: SortOrderEnum
+  mtime: SortOrderEnum
+  ctime: SortOrderEnum
+  birthtime: SortOrderEnum
+  birthtimeMs: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input SiteSiteMetadataFilterInput {
+  title: StringQueryOperatorInput
+  description: StringQueryOperatorInput
+}
+
+type SiteConnection {
+  totalCount: Int!
+  edges: [SiteEdge!]!
+  nodes: [Site!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteFieldSelector!): [String!]!
+  max(field: SiteFieldSelector!): Float
+  min(field: SiteFieldSelector!): Float
+  sum(field: SiteFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFieldSelector!): [SiteGroupConnection!]!
+}
+
+type SiteEdge {
+  next: Site
+  node: Site!
+  previous: Site
+}
+
+input SiteFieldSelector {
+  buildTime: FieldSelectorEnum
+  siteMetadata: SiteSiteMetadataFieldSelector
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+input SiteSiteMetadataFieldSelector {
+  title: FieldSelectorEnum
+  description: FieldSelectorEnum
+}
+
+type SiteGroupConnection {
+  totalCount: Int!
+  edges: [SiteEdge!]!
+  nodes: [Site!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteFieldSelector!): [String!]!
+  max(field: SiteFieldSelector!): Float
+  min(field: SiteFieldSelector!): Float
+  sum(field: SiteFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFieldSelector!): [SiteGroupConnection!]!
+  field: String!
+  fieldValue: String
+}
+
+input SiteFilterInput {
+  buildTime: DateQueryOperatorInput
+  siteMetadata: SiteSiteMetadataFilterInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input SiteSortInput {
+  buildTime: SortOrderEnum
+  siteMetadata: SiteSiteMetadataSortInput
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input SiteSiteMetadataSortInput {
+  title: SortOrderEnum
+  description: SortOrderEnum
+}
+
+type SiteFunctionConnection {
+  totalCount: Int!
+  edges: [SiteFunctionEdge!]!
+  nodes: [SiteFunction!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteFunctionFieldSelector!): [String!]!
+  max(field: SiteFunctionFieldSelector!): Float
+  min(field: SiteFunctionFieldSelector!): Float
+  sum(field: SiteFunctionFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFunctionFieldSelector!): [SiteFunctionGroupConnection!]!
+}
+
+type SiteFunctionEdge {
+  next: SiteFunction
+  node: SiteFunction!
+  previous: SiteFunction
+}
+
+input SiteFunctionFieldSelector {
+  functionRoute: FieldSelectorEnum
+  pluginName: FieldSelectorEnum
+  originalAbsoluteFilePath: FieldSelectorEnum
+  originalRelativeFilePath: FieldSelectorEnum
+  relativeCompiledFilePath: FieldSelectorEnum
+  absoluteCompiledFilePath: FieldSelectorEnum
+  matchPath: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+type SiteFunctionGroupConnection {
+  totalCount: Int!
+  edges: [SiteFunctionEdge!]!
+  nodes: [SiteFunction!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteFunctionFieldSelector!): [String!]!
+  max(field: SiteFunctionFieldSelector!): Float
+  min(field: SiteFunctionFieldSelector!): Float
+  sum(field: SiteFunctionFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteFunctionFieldSelector!): [SiteFunctionGroupConnection!]!
+  field: String!
+  fieldValue: String
+}
+
+input SiteFunctionFilterInput {
+  functionRoute: StringQueryOperatorInput
+  pluginName: StringQueryOperatorInput
+  originalAbsoluteFilePath: StringQueryOperatorInput
+  originalRelativeFilePath: StringQueryOperatorInput
+  relativeCompiledFilePath: StringQueryOperatorInput
+  absoluteCompiledFilePath: StringQueryOperatorInput
+  matchPath: StringQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input SiteFunctionSortInput {
+  functionRoute: SortOrderEnum
+  pluginName: SortOrderEnum
+  originalAbsoluteFilePath: SortOrderEnum
+  originalRelativeFilePath: SortOrderEnum
+  relativeCompiledFilePath: SortOrderEnum
+  absoluteCompiledFilePath: SortOrderEnum
+  matchPath: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input JSONQueryOperatorInput {
+  eq: JSON
+  ne: JSON
+  in: [JSON]
+  nin: [JSON]
+  regex: JSON
+  glob: JSON
+}
+
+input SitePluginFilterInput {
+  resolve: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  version: StringQueryOperatorInput
+  nodeAPIs: StringQueryOperatorInput
+  browserAPIs: StringQueryOperatorInput
+  ssrAPIs: StringQueryOperatorInput
+  pluginFilepath: StringQueryOperatorInput
+  pluginOptions: JSONQueryOperatorInput
+  packageJson: JSONQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+type SitePageConnection {
+  totalCount: Int!
+  edges: [SitePageEdge!]!
+  nodes: [SitePage!]!
+  pageInfo: PageInfo!
+  distinct(field: SitePageFieldSelector!): [String!]!
+  max(field: SitePageFieldSelector!): Float
+  min(field: SitePageFieldSelector!): Float
+  sum(field: SitePageFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePageFieldSelector!): [SitePageGroupConnection!]!
+}
+
+type SitePageEdge {
+  next: SitePage
+  node: SitePage!
+  previous: SitePage
+}
+
+input SitePageFieldSelector {
+  path: FieldSelectorEnum
+  component: FieldSelectorEnum
+  internalComponentName: FieldSelectorEnum
+  componentChunkName: FieldSelectorEnum
+  matchPath: FieldSelectorEnum
+  pageContext: FieldSelectorEnum
+  pluginCreator: SitePluginFieldSelector
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+input SitePluginFieldSelector {
+  resolve: FieldSelectorEnum
+  name: FieldSelectorEnum
+  version: FieldSelectorEnum
+  nodeAPIs: FieldSelectorEnum
+  browserAPIs: FieldSelectorEnum
+  ssrAPIs: FieldSelectorEnum
+  pluginFilepath: FieldSelectorEnum
+  pluginOptions: FieldSelectorEnum
+  packageJson: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+type SitePageGroupConnection {
+  totalCount: Int!
+  edges: [SitePageEdge!]!
+  nodes: [SitePage!]!
+  pageInfo: PageInfo!
+  distinct(field: SitePageFieldSelector!): [String!]!
+  max(field: SitePageFieldSelector!): Float
+  min(field: SitePageFieldSelector!): Float
+  sum(field: SitePageFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePageFieldSelector!): [SitePageGroupConnection!]!
+  field: String!
+  fieldValue: String
+}
+
+input SitePageFilterInput {
+  path: StringQueryOperatorInput
+  component: StringQueryOperatorInput
+  internalComponentName: StringQueryOperatorInput
+  componentChunkName: StringQueryOperatorInput
+  matchPath: StringQueryOperatorInput
+  pageContext: JSONQueryOperatorInput
+  pluginCreator: SitePluginFilterInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input SitePageSortInput {
+  path: SortOrderEnum
+  component: SortOrderEnum
+  internalComponentName: SortOrderEnum
+  componentChunkName: SortOrderEnum
+  matchPath: SortOrderEnum
+  pageContext: SortOrderEnum
+  pluginCreator: SitePluginSortInput
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+input SitePluginSortInput {
+  resolve: SortOrderEnum
+  name: SortOrderEnum
+  version: SortOrderEnum
+  nodeAPIs: SortOrderEnum
+  browserAPIs: SortOrderEnum
+  ssrAPIs: SortOrderEnum
+  pluginFilepath: SortOrderEnum
+  pluginOptions: SortOrderEnum
+  packageJson: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}
+
+type SitePluginConnection {
+  totalCount: Int!
+  edges: [SitePluginEdge!]!
+  nodes: [SitePlugin!]!
+  pageInfo: PageInfo!
+  distinct(field: SitePluginFieldSelector!): [String!]!
+  max(field: SitePluginFieldSelector!): Float
+  min(field: SitePluginFieldSelector!): Float
+  sum(field: SitePluginFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePluginFieldSelector!): [SitePluginGroupConnection!]!
+}
+
+type SitePluginEdge {
+  next: SitePlugin
+  node: SitePlugin!
+  previous: SitePlugin
+}
+
+type SitePluginGroupConnection {
+  totalCount: Int!
+  edges: [SitePluginEdge!]!
+  nodes: [SitePlugin!]!
+  pageInfo: PageInfo!
+  distinct(field: SitePluginFieldSelector!): [String!]!
+  max(field: SitePluginFieldSelector!): Float
+  min(field: SitePluginFieldSelector!): Float
+  sum(field: SitePluginFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SitePluginFieldSelector!): [SitePluginGroupConnection!]!
+  field: String!
+  fieldValue: String
+}
+
+type SiteBuildMetadataConnection {
+  totalCount: Int!
+  edges: [SiteBuildMetadataEdge!]!
+  nodes: [SiteBuildMetadata!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteBuildMetadataFieldSelector!): [String!]!
+  max(field: SiteBuildMetadataFieldSelector!): Float
+  min(field: SiteBuildMetadataFieldSelector!): Float
+  sum(field: SiteBuildMetadataFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldSelector!): [SiteBuildMetadataGroupConnection!]!
+}
+
+type SiteBuildMetadataEdge {
+  next: SiteBuildMetadata
+  node: SiteBuildMetadata!
+  previous: SiteBuildMetadata
+}
+
+input SiteBuildMetadataFieldSelector {
+  buildTime: FieldSelectorEnum
+  id: FieldSelectorEnum
+  parent: NodeFieldSelector
+  children: NodeFieldSelector
+  internal: InternalFieldSelector
+}
+
+type SiteBuildMetadataGroupConnection {
+  totalCount: Int!
+  edges: [SiteBuildMetadataEdge!]!
+  nodes: [SiteBuildMetadata!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteBuildMetadataFieldSelector!): [String!]!
+  max(field: SiteBuildMetadataFieldSelector!): Float
+  min(field: SiteBuildMetadataFieldSelector!): Float
+  sum(field: SiteBuildMetadataFieldSelector!): Float
+  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldSelector!): [SiteBuildMetadataGroupConnection!]!
+  field: String!
+  fieldValue: String
+}
+
+input SiteBuildMetadataFilterInput {
+  buildTime: DateQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input SiteBuildMetadataSortInput {
+  buildTime: SortOrderEnum
+  id: SortOrderEnum
+  parent: NodeSortInput
+  children: NodeSortInput
+  internal: InternalSortInput
+}"
 `;

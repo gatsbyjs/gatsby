@@ -3,6 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.24.0/packages/gatsby-plugin-cxs) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Chores
+
+- allow react/react-dom@experimental [#36533](https://github.com/gatsbyjs/gatsby/issues/36533) ([7ef4a3f](https://github.com/gatsbyjs/gatsby/commit/7ef4a3fe080d45e9edaff9f1d4deebd12a00ddbd))
+
+### [4.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.23.1/packages/gatsby-plugin-cxs) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.23.0/packages/gatsby-plugin-cxs) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.22.0/packages/gatsby-plugin-cxs) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.21.0/packages/gatsby-plugin-cxs) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.20.0/packages/gatsby-plugin-cxs) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.19.0/packages/gatsby-plugin-cxs) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+### [4.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.18.1/packages/gatsby-plugin-cxs) (2022-07-12)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.18.0/packages/gatsby-plugin-cxs) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.17.0/packages/gatsby-plugin-cxs) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.16.0/packages/gatsby-plugin-cxs) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+### [4.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.15.1/packages/gatsby-plugin-cxs) (2022-06-01)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
+## [4.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.15.0/packages/gatsby-plugin-cxs) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-plugin-cxs
+
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-cxs@4.14.0/packages/gatsby-plugin-cxs) (2022-05-10)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)

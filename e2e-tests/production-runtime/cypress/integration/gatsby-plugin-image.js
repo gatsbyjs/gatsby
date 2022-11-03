@@ -16,7 +16,20 @@ function observeDOM(obj, options, callback) {
   }
 }
 
-describe(`gatsby-plugin-image`, () => {
+Cypress.on('uncaught:exception', (err) => {
+  if ((err.message.includes('Minified React error #418') || err.message.includes('Minified React error #423') || err.message.includes('Minified React error #425')) && Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    return false
+  }
+})
+
+describe(
+  `gatsby-plugin-image`,
+  {
+    retries: {
+      runMode: 4,
+    },
+  },
+  () => {
   it(`doesn't recycle image nodes when not necessary`, () => {
     const mutationStub = cy.stub()
     let cleanup

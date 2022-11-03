@@ -1,7 +1,8 @@
-import React, { useEffect, useContext } from "react"
-import { PartytownContext } from "./partytown-context"
+import React, { useEffect } from "react"
+import { collectedScriptsByPage } from "./collected-scripts-by-page"
 import type { ReactElement, ScriptHTMLAttributes } from "react"
 import { requestIdleCallback } from "./request-idle-callback-shim"
+import { Location, useLocation } from "@gatsbyjs/reach-router"
 
 export enum ScriptStrategy {
   postHydrate = `post-hydrate`,
@@ -29,6 +30,7 @@ const handledProps = new Set([
   `onError`,
 ])
 
+// Used for de-duplication
 export const scriptCache: Set<string> = new Set()
 export const scriptCallbackCache: Map<
   string,
@@ -44,9 +46,15 @@ export const scriptCallbackCache: Map<
   }
 > = new Map()
 
-export function Script(props: ScriptProps): ReactElement | null {
-  const { id, src, strategy = ScriptStrategy.postHydrate } = props || {}
-  const { collectScript } = useContext(PartytownContext)
+// Same pattern is used in Gatsby Link
+function GatsbyScriptLocationWrapper(props: ScriptProps): JSX.Element {
+  return <Location>{(): JSX.Element => <GatsbyScript {...props} />}</Location>
+}
+
+function GatsbyScript(props: ScriptProps): ReactElement | null {
+  const { src, strategy = ScriptStrategy.postHydrate } = props || {}
+
+  const { pathname } = useLocation()
 
   useEffect(() => {
     let details: IInjectedScriptDetails | null
@@ -61,9 +69,9 @@ export function Script(props: ScriptProps): ReactElement | null {
         })
         break
       case ScriptStrategy.offMainThread:
-        if (collectScript) {
+        {
           const attributes = resolveAttributes(props)
-          collectScript(attributes)
+          collectedScriptsByPage.set(pathname, attributes)
         }
         break
     }
@@ -88,15 +96,7 @@ export function Script(props: ScriptProps): ReactElement | null {
     const attributes = resolveAttributes(props)
 
     if (typeof window === `undefined`) {
-      if (collectScript) {
-        collectScript(attributes)
-      } else {
-        console.warn(
-          `Unable to collect off-main-thread script '${
-            id || src || `no-id-or-src`
-          }' for configuration with Partytown.\nGatsby script components must be used either as a child of your page, in wrapPageElement, or wrapRootElement.\nSee https://gatsby.dev/gatsby-script for more information.`
-        )
-      }
+      collectedScriptsByPage.set(pathname, attributes)
     }
 
     if (inlineScript) {
@@ -153,10 +153,9 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
      * If a duplicate script is already loaded/errored, we replay load/error callbacks with the original event.
      * If it's not yet loaded/errored, keep track of callbacks so we can call load/error callbacks for each when the event occurs.
      */
-    const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
-
     for (const name of callbackNames) {
       if (currentCallbacks?.[name]) {
+        const cachedCallbacks = scriptCallbackCache.get(scriptKey) || {}
         const { callbacks = [] } = cachedCallbacks?.[name] || {}
         callbacks.push(currentCallbacks?.[name])
 
@@ -164,6 +163,7 @@ function injectScript(props: ScriptProps): IInjectedScriptDetails | null {
           currentCallbacks?.[name]?.(cachedCallbacks?.[name]?.event)
         } else {
           scriptCallbackCache.set(scriptKey, {
+            ...cachedCallbacks,
             [name]: {
               callbacks,
             },
@@ -264,3 +264,5 @@ function onEventCallback(
 
   scriptCallbackCache.set(scriptKey, { [eventName]: { event } })
 }
+
+export { GatsbyScriptLocationWrapper as Script }
