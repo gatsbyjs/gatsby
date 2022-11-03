@@ -177,7 +177,7 @@ const partialHydrationReferenceLoader: LoaderDefinitionFunction<
     },
   })
 
-  return references.join(`\n`)
+  return hasClientExportDirective ? references.join(`\n`) : content
 }
 
 module.exports = partialHydrationReferenceLoader
