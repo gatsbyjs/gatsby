@@ -24,7 +24,7 @@ Unified Hosting is the current infrastructure for Production builds. This brings
 
 ### What is the impact?
 
-The major change that will occur when Unified Hosting is deployed is a difference in Pull Request and Preview build URLs. Previously, these builds were deployed to a `gtsb.io domain`. After this rollout, all builds will be deployed to a `gatsbyjs.io` domain.
+The major change that will occur when Unified Hosting is deployed is a difference in Pull Request and Preview build URLs. Previously, these builds were deployed to a `gtsb.io` domain. After this rollout, all builds will be deployed to a `gatsbyjs.io` domain.
 
 ### Will old `gtsb.io` URLs continue to work?
 
