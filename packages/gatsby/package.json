@@ -110,6 +110,7 @@
     "got": "^11.8.5",
     "graphql": "^16.6.0",
     "graphql-compose": "^9.0.9",
+    "graphql-tag": "^2.12.6",
     "hasha": "^5.2.2",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
