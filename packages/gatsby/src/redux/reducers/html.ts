@@ -258,6 +258,9 @@ export function htmlReducer(
         const htmlFile = state.trackedHtmlFiles.get(path)
         if (htmlFile) {
           htmlFile.dirty = 0
+          // if we regenerated html, slice placeholders will be empty and we will have to fill
+          // them in, so we are marking that page for stitching
+          state.pagesThatNeedToStitchSlices.add(path)
         }
       }
 
