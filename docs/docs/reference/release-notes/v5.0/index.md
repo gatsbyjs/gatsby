@@ -40,7 +40,7 @@ TODO
 
 The Slice API allows you to define highly-shared components in your site, which will then inform Gatsby to build those shared components only once. After the files are built, Gatsby will then stitch the resulting markup and JavaScript to the pages that include that shared component. This means that changes to highly-shared components (such as headers, footers, and common layouts) no longer require a rebuild of all pages that use that shared component.
 
-The Slice API introduces two critical pieces, the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API and the `<Slice>` placeholder. To create a Slice, you must first call `createSlice` within `gatsby-node.js`:
+The Slice API introduces two critical pieces, the [`createSlice`](/docs/reference/config-files/actions/#createSlice) action from the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API and the `<Slice>` placeholder. To create a Slice, you must first call `createSlice` within `gatsby-node`:
 
 ```js:title=gatsby-node.js
 exports.createPages = async ({ actions }) => {
@@ -68,9 +68,13 @@ export const DefaultLayout = ({ children, headerClassName }) => {
 }
 ```
 
+Here's an overview of how it works:
+
+![Diagram of building a header with Gatsby Slice](../../../images/using-slices-build.png)
+
 Now, when a code update or data update is made for the `<Header>` component, only the HTML for the Slice will be updated, and later stitched into the pre-existing HTML for the pages that use it.
 
-While building the Slice API, we wanted to make sure it was worthwhile for all Gatsby sites. To validate the improvements of the Slice API, we created a 10,000 page Contentful site with a shared header. We then issued both code updates to the git repository as well as data updates to Contentful. Here are the results:
+While building the Slice API, we wanted to make sure it was worthwhile for all Gatsby sites. So the Slice API is built into Gatsby's open source product. To validate the improvements of the Slice API, we created a 10,000 page Contentful site with a shared header. We then issued both code updates to the git repository as well as data updates to Contentful. Here are the results:
 
 |                                             | Code Update | Data Update |
 | ------------------------------------------- | ----------- | ----------- |
@@ -88,11 +92,15 @@ For more information, read the [Using Slices How-To Guide](/docs/how-to/performa
 
 Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
 
+[Hydration](/docs/conceptual/react-hydration/) (or often referred to as re-hydration) is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. Since the initial release of Gatsby apps built with Gatsby were always fully hydrated on the client. With Gatsby 5 you now can also use Partial Hydration inside Gatsby.
+
 Partial Hydration is in **Beta** and not enabled by default. You have to opt-in to try it out. Reason for this is that React server components are still quite new (and the ecosystem as a whole hasn't caught up, e.g. CSS-in-JS libraries) and that currently you are required to use an experimental version of `react`/`react-dom`. Therefore we don't recommend using Partial Hydration in production just yet. Once things have stabilized we'll announce the general availablity release of Partial Hydration and adjust the documentation.
+
+![Two stylized browser windows on the left and right side. The left one has the title "Full Hydration", the right one "Partial Hydration". Both browser windows have a stylized web page (with header, content, footer, etc.) with mostly static content except for an interactive gallery. The left window has its complete window marked blue (as the full page hydrates), the right one only the interactive gallery (because of Partial Hydration).](../../../images/full-partial-hydration.png)
 
 Read the [Partial Hydration How-To Guide](/docs/how-to/performance/partial-hydration/) for detailed instructions. We also recommend reading the [Partial Hydration Conceptual Guide](/docs/conceptual/partial-hydration/) to understand why Gatsby chose React server components and how Partial Hydration works on a high-level.
 
-As a quick start, here's how you can use Partial Hydration in Gatsby 5:
+As a quick start, here's how you can use Partial Hydration in Gatsby 5 today:
 
 - Install experimental version of `react` and `react-dom`:
   ```shell
