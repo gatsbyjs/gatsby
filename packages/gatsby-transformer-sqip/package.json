@@ -25,6 +25,7 @@
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next",
+    "gatsby-source-contentful": "^7.0.0-next",
     "gatsby-transformer-sharp": "^5.0.0-next"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
