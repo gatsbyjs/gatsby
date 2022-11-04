@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useContext } from "react"
 import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
