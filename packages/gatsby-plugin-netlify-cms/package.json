@@ -36,7 +36,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-alpha-v5",
+    "gatsby": "^5.0.0-next",
     "netlify-cms-app": "^2.9.0",
     "react": "^18.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^0.0.0",

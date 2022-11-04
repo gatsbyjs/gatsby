@@ -24,7 +24,7 @@
     "@babel/runtime": "^7.15.4"
   },
   "peerDependencies": {
-    "gatsby": "^5.0.0-alpha-v5"
+    "gatsby": "^5.0.0-next"
   },
   "engines": {
     "node": ">=18.0.0"
