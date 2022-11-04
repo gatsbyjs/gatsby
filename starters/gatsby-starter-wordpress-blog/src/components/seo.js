@@ -1,12 +1,11 @@
 /**
  * SEO component that queries for data with
- *  Gatsby's useStaticQuery React hook
+ * Gatsby's useStaticQuery React hook
  *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
+ * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
  */
 
 import React from "react"
-import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 const SEO = ({ description, title, children }) => {
@@ -45,15 +44,6 @@ const SEO = ({ description, title, children }) => {
       {children}
     </>
   )
-}
-
-SEO.defaultProps = {
-  description: ``,
-}
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  title: PropTypes.string.isRequired,
 }
 
 export default SEO
