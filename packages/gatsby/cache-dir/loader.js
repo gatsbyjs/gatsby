@@ -361,74 +361,172 @@ export class BaseLoader {
       return this.inFlightDb.get(pagePath)
     }
 
-    let inFlightPromise
+    const loadDataPromises = [
+      this.loadAppData(),
+      this.loadPageDataJson(pagePath),
+    ]
+
     if (global.hasPartialHydration) {
-      inFlightPromise = Promise.all([
-        this.loadAppData(),
-        this.loadPageDataJson(pagePath),
-        this.loadPartialHydrationJson(pagePath),
-      ]).then(([appData, { payload: pageData }, result]) => {
-        if (result.status === PageResourceStatus.Error) {
-          return {
-            status: PageResourceStatus.Error,
+      loadDataPromises.push(this.loadPartialHydrationJson(pagePath))
+    }
+
+    const inFlightPromise = Promise.all(loadDataPromises).then(allData => {
+      const [appDataResponse, pageDataResponse, rscDataResponse] = allData
+
+      if (
+        pageDataResponse.status === PageResourceStatus.Error ||
+        (rscDataResponse && rscDataResponse.status === PageResourceStatus.Error)
+      ) {
+        return {
+          status: PageResourceStatus.Error,
+        }
+      }
+
+      let pageData = pageDataResponse.payload
+
+      const {
+        componentChunkName,
+        staticQueryHashes: pageStaticQueryHashes = [],
+        slicesMap = {},
+      } = pageData
+
+      const finalResult = {}
+
+      const dedupedSliceNames = Array.from(new Set(Object.values(slicesMap)))
+
+      const loadSlice = slice => {
+        if (this.slicesDb.has(slice.name)) {
+          return this.slicesDb.get(slice.name)
+        } else if (this.sliceInflightDb.has(slice.name)) {
+          return this.sliceInflightDb.get(slice.name)
+        }
+
+        const inFlight = this.loadComponent(slice.componentChunkName).then(
+          component => {
+            return {
+              component: preferDefault(component),
+              sliceContext: slice.result.sliceContext,
+              data: slice.result.data,
+            }
+          }
+        )
+
+        this.sliceInflightDb.set(slice.name, inFlight)
+        inFlight.then(results => {
+          this.slicesDb.set(slice.name, results)
+          this.sliceInflightDb.delete(slice.name)
+        })
+
+        return inFlight
+      }
+
+      return Promise.all(
+        dedupedSliceNames.map(sliceName => this.loadSliceDataJson(sliceName))
+      ).then(slicesData => {
+        const slices = []
+        const dedupedStaticQueryHashes = [...pageStaticQueryHashes]
+
+        for (const { jsonPayload, sliceName } of Object.values(slicesData)) {
+          slices.push({ name: sliceName, ...jsonPayload })
+          for (const staticQueryHash of jsonPayload.staticQueryHashes) {
+            if (!dedupedStaticQueryHashes.includes(staticQueryHash)) {
+              dedupedStaticQueryHashes.push(staticQueryHash)
+            }
           }
         }
 
-        const finalResult = {}
+        const loadChunkPromises = [
+          Promise.all(slices.map(loadSlice)),
+          this.loadComponent(componentChunkName, `head`),
+        ]
+
+        if (!global.hasPartialHydration) {
+          loadChunkPromises.push(this.loadComponent(componentChunkName))
+        }
 
         // In develop we have separate chunks for template and Head components
         // to enable HMR (fast refresh requires single exports).
         // In production we have shared chunk with both exports. Double loadComponent here
         // will be deduped by webpack runtime resulting in single request and single module
         // being loaded for both `component` and `head`.
-        const componentChunkPromise = this.loadComponent(
-          pageData.componentChunkName,
-          `head`
-        ).then(head => {
-          finalResult.createdAt = new Date()
-          finalResult.status = PageResourceStatus.Success
-          if (result.notFound === true) {
-            finalResult.notFound = true
+        // get list of components to get
+        const componentChunkPromises = Promise.all(loadChunkPromises).then(
+          components => {
+            const [sliceComponents, headComponent, pageComponent] = components
+
+            finalResult.createdAt = new Date()
+
+            for (const sliceComponent of sliceComponents) {
+              if (!sliceComponent || sliceComponent instanceof Error) {
+                finalResult.status = PageResourceStatus.Error
+                finalResult.error = sliceComponent
+              }
+            }
+
+            if (!pageComponent || pageComponent instanceof Error) {
+              finalResult.status = PageResourceStatus.Error
+              finalResult.error = pageComponent
+            }
+
+            let pageResources
+
+            if (finalResult.status !== PageResourceStatus.Error) {
+              finalResult.status = PageResourceStatus.Success
+              if (
+                pageDataResponse.notFound === true ||
+                (rscDataResponse && rscDataResponse.notFound === true)
+              ) {
+                finalResult.notFound = true
+              }
+              pageData = Object.assign(pageData, {
+                webpackCompilationHash: appDataResponse
+                  ? appDataResponse.webpackCompilationHash
+                  : ``,
+              })
+
+              if (
+                rscDataResponse.payload &&
+                typeof rscDataResponse.payload === `string`
+              ) {
+                pageResources = toPageResources(pageData, null, headComponent)
+
+                pageResources.partialHydration = rscDataResponse.payload
+
+                const readableStream = new ReadableStream({
+                  start(controller) {
+                    const te = new TextEncoder()
+                    controller.enqueue(te.encode(rscDataResponse.payload))
+                  },
+                  pull(controller) {
+                    // close on next read when queue is empty
+                    controller.close()
+                  },
+                  cancel() {},
+                })
+
+                return waitForResponse(
+                  createFromReadableStream(readableStream)
+                ).then(result => {
+                  pageResources.partialHydration = result
+
+                  return pageResources
+                })
+              }
+            } else {
+              pageResources = toPageResources(
+                pageData,
+                pageComponent,
+                headComponent
+              )
+            }
+            // undefined if final result is an error
+            return pageResources
           }
-          pageData = Object.assign(pageData, {
-            webpackCompilationHash: appData
-              ? appData.webpackCompilationHash
-              : ``,
-          })
+        )
 
-          const pageResources = toPageResources(pageData, null, head)
-
-          if (result.payload && typeof result.payload === `string`) {
-            pageResources.partialHydration = result.payload
-
-            const readableStream = new ReadableStream({
-              start(controller) {
-                const te = new TextEncoder()
-                controller.enqueue(te.encode(result.payload))
-              },
-              pull(controller) {
-                // close on next read when queue is empty
-                controller.close()
-              },
-              cancel() {},
-            })
-
-            return waitForResponse(
-              createFromReadableStream(readableStream)
-            ).then(result => {
-              pageResources.partialHydration = result
-
-              return pageResources
-            })
-          }
-
-          // undefined if final result is an error
-          return pageResources
-        })
-
-        // Necessary for head component
+        // get list of static queries to get
         const staticQueryBatchPromise = Promise.all(
-          (pageData.staticQueryHashes || []).map(staticQueryHash => {
+          dedupedStaticQueryHashes.map(staticQueryHash => {
             // Check for cache in case this static query result has already been loaded
             if (this.staticQueryDb[staticQueryHash]) {
               const jsonPayload = this.staticQueryDb[staticQueryHash]
@@ -460,14 +558,11 @@ export class BaseLoader {
         })
 
         return (
-          Promise.all([componentChunkPromise, staticQueryBatchPromise])
+          Promise.all([componentChunkPromises, staticQueryBatchPromise])
             .then(([pageResources, staticQueryResults]) => {
               let payload
               if (pageResources) {
-                payload = {
-                  ...pageResources,
-                  staticQueryResults: staticQueryResults,
-                }
+                payload = { ...pageResources, staticQueryResults }
                 finalResult.payload = payload
                 emitter.emit(`onPostLoadPageResources`, {
                   page: payload,
@@ -495,183 +590,7 @@ export class BaseLoader {
             })
         )
       })
-    } else {
-      inFlightPromise = Promise.all([
-        this.loadAppData(),
-        this.loadPageDataJson(pagePath),
-      ]).then(allData => {
-        const result = allData[1]
-        if (result.status === PageResourceStatus.Error) {
-          return {
-            status: PageResourceStatus.Error,
-          }
-        }
-
-        let pageData = result.payload
-        const {
-          componentChunkName,
-          staticQueryHashes: pageStaticQueryHashes = [],
-          slicesMap = {},
-        } = pageData
-
-        const finalResult = {}
-
-        const dedupedSliceNames = Array.from(new Set(Object.values(slicesMap)))
-
-        const loadSlice = slice => {
-          if (this.slicesDb.has(slice.name)) {
-            return this.slicesDb.get(slice.name)
-          } else if (this.sliceInflightDb.has(slice.name)) {
-            return this.sliceInflightDb.get(slice.name)
-          }
-
-          const inFlight = this.loadComponent(slice.componentChunkName).then(
-            component => {
-              return {
-                component: preferDefault(component),
-                sliceContext: slice.result.sliceContext,
-                data: slice.result.data,
-              }
-            }
-          )
-
-          this.sliceInflightDb.set(slice.name, inFlight)
-          inFlight.then(results => {
-            this.slicesDb.set(slice.name, results)
-            this.sliceInflightDb.delete(slice.name)
-          })
-
-          return inFlight
-        }
-
-        return Promise.all(
-          dedupedSliceNames.map(sliceName => this.loadSliceDataJson(sliceName))
-        ).then(slicesData => {
-          const slices = []
-          const dedupedStaticQueryHashes = [...pageStaticQueryHashes]
-          for (const { jsonPayload, sliceName } of Object.values(slicesData)) {
-            slices.push({ name: sliceName, ...jsonPayload })
-            for (const staticQueryHash of jsonPayload.staticQueryHashes) {
-              if (!dedupedStaticQueryHashes.includes(staticQueryHash)) {
-                dedupedStaticQueryHashes.push(staticQueryHash)
-              }
-            }
-          }
-
-          // In develop we have separate chunks for template and Head components
-          // to enable HMR (fast refresh requires single exports).
-          // In production we have shared chunk with both exports. Double loadComponent here
-          // will be deduped by webpack runtime resulting in single request and single module
-          // being loaded for both `component` and `head`.
-          // get list of components to get
-          const componentChunkPromises = Promise.all([
-            this.loadComponent(componentChunkName),
-            this.loadComponent(componentChunkName, `head`),
-            Promise.all(slices.map(loadSlice)),
-          ]).then(components => {
-            const [rootComponent, headComponent, sliceComponents] = components
-            finalResult.createdAt = new Date()
-            for (const sliceComponent of sliceComponents) {
-              if (!sliceComponent || sliceComponent instanceof Error) {
-                finalResult.status = PageResourceStatus.Error
-                finalResult.error = sliceComponent
-              }
-            }
-
-            if (!rootComponent || rootComponent instanceof Error) {
-              finalResult.status = PageResourceStatus.Error
-              finalResult.error = rootComponent
-            }
-
-            let pageResources
-            if (finalResult.status !== PageResourceStatus.Error) {
-              finalResult.status = PageResourceStatus.Success
-              if (result.notFound === true) {
-                finalResult.notFound = true
-              }
-              pageData = Object.assign(pageData, {
-                webpackCompilationHash: allData[0]
-                  ? allData[0].webpackCompilationHash
-                  : ``,
-              })
-              pageResources = toPageResources(
-                pageData,
-                rootComponent,
-                headComponent
-              )
-            }
-            // undefined if final result is an error
-            return pageResources
-          })
-
-          // get list of static queries to get
-          const staticQueryBatchPromise = Promise.all(
-            dedupedStaticQueryHashes.map(staticQueryHash => {
-              // Check for cache in case this static query result has already been loaded
-              if (this.staticQueryDb[staticQueryHash]) {
-                const jsonPayload = this.staticQueryDb[staticQueryHash]
-                return { staticQueryHash, jsonPayload }
-              }
-
-              return this.memoizedGet(
-                `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
-              )
-                .then(req => {
-                  const jsonPayload = JSON.parse(req.responseText)
-                  return { staticQueryHash, jsonPayload }
-                })
-                .catch(() => {
-                  throw new Error(
-                    `We couldn't load "${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json"`
-                  )
-                })
-            })
-          ).then(staticQueryResults => {
-            const staticQueryResultsMap = {}
-
-            staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
-              staticQueryResultsMap[staticQueryHash] = jsonPayload
-              this.staticQueryDb[staticQueryHash] = jsonPayload
-            })
-
-            return staticQueryResultsMap
-          })
-
-          return (
-            Promise.all([componentChunkPromises, staticQueryBatchPromise])
-              .then(([pageResources, staticQueryResults]) => {
-                let payload
-                if (pageResources) {
-                  payload = { ...pageResources, staticQueryResults }
-                  finalResult.payload = payload
-                  emitter.emit(`onPostLoadPageResources`, {
-                    page: payload,
-                    pageResources: payload,
-                  })
-                }
-
-                this.pageDb.set(pagePath, finalResult)
-
-                if (finalResult.error) {
-                  return {
-                    error: finalResult.error,
-                    status: finalResult.status,
-                  }
-                }
-
-                return payload
-              })
-              // when static-query fail to load we throw a better error
-              .catch(err => {
-                return {
-                  error: err,
-                  status: PageResourceStatus.Error,
-                }
-              })
-          )
-        })
-      })
-    }
+    })
 
     inFlightPromise
       .then(() => {
