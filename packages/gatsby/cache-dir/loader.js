@@ -375,7 +375,7 @@ export class BaseLoader {
 
       if (
         pageDataResponse.status === PageResourceStatus.Error ||
-        (rscDataResponse && rscDataResponse.status === PageResourceStatus.Error)
+        rscDataResponse?.status === PageResourceStatus.Error
       ) {
         return {
           status: PageResourceStatus.Error,
@@ -463,7 +463,10 @@ export class BaseLoader {
               }
             }
 
-            if (!pageComponent || pageComponent instanceof Error) {
+            if (
+              !global.hasPartialHydration &&
+              (!pageComponent || pageComponent instanceof Error)
+            ) {
               finalResult.status = PageResourceStatus.Error
               finalResult.error = pageComponent
             }
@@ -474,7 +477,7 @@ export class BaseLoader {
               finalResult.status = PageResourceStatus.Success
               if (
                 pageDataResponse.notFound === true ||
-                (rscDataResponse && rscDataResponse.notFound === true)
+                rscDataResponse?.notFound === true
               ) {
                 finalResult.notFound = true
               }
@@ -484,10 +487,7 @@ export class BaseLoader {
                   : ``,
               })
 
-              if (
-                rscDataResponse.payload &&
-                typeof rscDataResponse.payload === `string`
-              ) {
+              if (typeof rscDataResponse?.payload === `string`) {
                 pageResources = toPageResources(pageData, null, headComponent)
 
                 pageResources.partialHydration = rscDataResponse.payload
@@ -511,14 +511,15 @@ export class BaseLoader {
 
                   return pageResources
                 })
+              } else {
+                pageResources = toPageResources(
+                  pageData,
+                  pageComponent,
+                  headComponent
+                )
               }
-            } else {
-              pageResources = toPageResources(
-                pageData,
-                pageComponent,
-                headComponent
-              )
             }
+
             // undefined if final result is an error
             return pageResources
           }
