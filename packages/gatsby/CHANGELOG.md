@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.24.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.7/packages/gatsby) (2022-11-03)
+
+#### Features
+
+- handle graphql-import-node bundling [#36951](https://github.com/gatsbyjs/gatsby/issues/36951) [#36953](https://github.com/gatsbyjs/gatsby/issues/36953) ([1926b4e](https://github.com/gatsbyjs/gatsby/commit/1926b4e5a4044ce0e60bdea04430627520f0a1b8))
+
 ### [4.24.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.24.6/packages/gatsby) (2022-10-31)
 
 #### Bug Fixes
