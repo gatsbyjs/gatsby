@@ -57,9 +57,7 @@ export function Slice(props) {
       )
     }
   } else {
-    throw new Error(
-      `Slices are disabled, likely due to PARTIAL_HYDRATION flag being set.`
-    )
+    throw new Error(`Slices are disabled.`)
   }
 }
 

@@ -85,33 +85,26 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           {({ location }) => (
             <EnsureResources location={location}>
               {({ pageResources, location }) => {
-                if (pageResources.partialHydration) {
-                  return (
-                    <DataContext.Provider value={{ pageResources, location }}>
-                      {children}
-                    </DataContext.Provider>
-                  )
-                } else {
-                  const staticQueryResults = getStaticQueryResults()
-                  const sliceResults = getSliceResults()
-                  return (
-                    <StaticQueryContext.Provider value={staticQueryResults}>
-                      <SlicesContext.Provider value={slicesContext}>
-                        <SlicesResultsContext.Provider value={sliceResults}>
-                          <SlicesMapContext.Provider
-                            value={pageResources.page.slicesMap}
+                const staticQueryResults = getStaticQueryResults()
+                const sliceResults = getSliceResults()
+
+                return (
+                  <StaticQueryContext.Provider value={staticQueryResults}>
+                    <SlicesContext.Provider value={slicesContext}>
+                      <SlicesResultsContext.Provider value={sliceResults}>
+                        <SlicesMapContext.Provider
+                          value={pageResources.page.slicesMap}
+                        >
+                          <DataContext.Provider
+                            value={{ pageResources, location }}
                           >
-                            <DataContext.Provider
-                              value={{ pageResources, location }}
-                            >
-                              {children}
-                            </DataContext.Provider>
-                          </SlicesMapContext.Provider>
-                        </SlicesResultsContext.Provider>
-                      </SlicesContext.Provider>
-                    </StaticQueryContext.Provider>
-                  )
-                }
+                            {children}
+                          </DataContext.Provider>
+                        </SlicesMapContext.Provider>
+                      </SlicesResultsContext.Provider>
+                    </SlicesContext.Provider>
+                  </StaticQueryContext.Provider>
+                )
               }}
             </EnsureResources>
           )}
