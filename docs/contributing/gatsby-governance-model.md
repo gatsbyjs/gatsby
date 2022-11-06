@@ -63,7 +63,7 @@ Have you done something (big or small) to contribute to the health, success, or 
 
 #### Privileges
 
-At this time we have no specific privileges for this role except that you can claim yourself [free Gatsby swag](/contributing/contributor-swag/). If you have ideas here please let us know!
+At this time we have no specific privileges for this role except that you can claim yourself [free Gatsby swag](/contributing/contributor-swag/). If you have ideas please let us know [here](https://github.com/gatsbyjs/gatsby/discussions)!
 
 #### Responsibilities
 
