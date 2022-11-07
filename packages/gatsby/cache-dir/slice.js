@@ -13,6 +13,7 @@ export function Slice(props) {
       sliceName: props.alias,
     }
     delete internalProps.alias
+    delete internalProps.__renderedByLocation
 
     const slicesContext = useContext(SlicesContext)
 
