@@ -20,17 +20,18 @@ const pageQuery = {
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
   options: [],
-  generate: arg => `import React from "react"
+  generate: arg => `import * as React from "react"
 import { graphql } from "gatsby"
 
-const Page = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
+const Page = ({ data }) => (
+  <pre>{JSON.stringify(data, null, 2)}</pre>
+)
 
 export const query = graphql\`
 ${getQuery(arg, 2)}
 \`
 
 export default Page
-
 `,
 }
 
@@ -39,7 +40,7 @@ const useStaticQuery = {
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
   options: [],
-  generate: arg => `import React from "react"
+  generate: arg => `import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 const ComponentName = () => {
@@ -61,23 +62,24 @@ const createPages = {
   options: [],
   generate: arg => `const path = require(\`path\`)
 
+const templatePath = path.resolve(\`PATH/TO/TEMPLATE.js\`)
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const result = await graphql(\`
 ${getQuery(arg, 4)}
   \`)
-  const templatePath = path.resolve(\`PATH/TO/TEMPLATE.js\`)
   
   result.data.${
     arg.operationDataList[0].operationDefinition.selectionSet.selections[0].name
       .value
   }.forEach((node) => {
     createPage({
-      path: NODE_SLUG,
+      path: node.id,
       component: templatePath,
       context: {
-        slug: NODE_SLUG,
+        id: node.id
       },
     })
   })

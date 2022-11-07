@@ -1,6 +1,6 @@
 const { spawn } = require(`child_process`)
 const path = require(`path`)
-const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
+const { murmurhash } = require(`gatsby-core-utils/murmurhash`)
 const { readPageData } = require(`gatsby/dist/utils/page-data`)
 const { stripIgnoredCharacters } = require(`gatsby/graphql`)
 const fs = require(`fs-extra`)
@@ -467,6 +467,15 @@ describe(`First run (baseline)`, () => {
     test(`are written correctly when imported`, async () => {
       const queries = [titleQuery, ...globalQueries]
       const pagePath = `/import/`
+
+      const { staticQueryHashes } = await readPageData(publicDir, pagePath)
+
+      expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+    })
+
+    test(`are written correctly when a re-exported query is imported`, async () => {
+      const queries = [titleQuery, ...globalQueries]
+      const pagePath = `/import-re-export/`
 
       const { staticQueryHashes } = await readPageData(publicDir, pagePath)
 

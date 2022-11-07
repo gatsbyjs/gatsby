@@ -1,5 +1,5 @@
 import { readFile } from "fs-extra"
-import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 
 jest.mock(`fs-extra`, () => {
   return {
@@ -7,7 +7,7 @@ jest.mock(`fs-extra`, () => {
     readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
   }
 })
-jest.mock(`babel-plugin-remove-graphql-queries/murmur`)
+jest.mock(`gatsby-core-utils/murmurhash`)
 import glob from "glob"
 
 import { pagesReducer as reducer } from "../reducers/pages"

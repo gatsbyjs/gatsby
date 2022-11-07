@@ -1,12 +1,14 @@
-const babel = require(`@babel/core`)
-const plugin = require(`../`)
+import { transform as babelTransform } from "@babel/core"
+import plugin from "../"
 
-function matchesSnapshot(query) {
-  const { code: codeWithoutFileName } = babel.transform(query, {
+function matchesSnapshot(query): void {
+  // @ts-ignore - code exists
+  const { code: codeWithoutFileName } = babelTransform(query, {
     presets: [`@babel/preset-react`],
     plugins: [plugin],
   })
-  const { code: codeWithFileName } = babel.transform(query, {
+  // @ts-ignore - code exists
+  const { code: codeWithFileName } = babelTransform(query, {
     presets: [`@babel/preset-react`],
     plugins: [plugin],
     filename: `src/components/test.js`,
@@ -16,11 +18,11 @@ function matchesSnapshot(query) {
   expect(codeWithFileName).toMatchSnapshot()
 }
 
-function transform(query, filename) {
-  const { code } = babel.transform(query, {
+function transform(query): string | null | undefined {
+  // @ts-ignore - code exists
+  const { code } = babelTransform(query, {
     presets: [`@babel/preset-react`],
     plugins: [plugin],
-    filename,
   })
   return code
 }
@@ -499,8 +501,9 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   })
 
   it(`validates that config export is async`, () => {
-    const run = () =>
-      transform(`
+    const run = (): any =>
+      transform(
+        `
   import * as React from 'react'
   import { graphql } from "gatsby"
 
@@ -519,7 +522,8 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
       }
     }
   }
-  `)
+  `
+      )
     expect(run).toThrowErrorMatchingInlineSnapshot(
       `"unknown file: BabelPluginRemoveGraphQLQueries: the \\"config\\" export must be async when using it with graphql"`
     )

@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useContext } from "react"
 import { ServerSlice } from "./slice/server-slice"
 import { InlineSlice } from "./slice/inline-slice"
@@ -56,9 +58,7 @@ export function Slice(props) {
       )
     }
   } else {
-    throw new Error(
-      `Slices are disabled, likely due to PARTIAL_HYDRATION flag being set.`
-    )
+    throw new Error(`Slices are disabled.`)
   }
 }
 

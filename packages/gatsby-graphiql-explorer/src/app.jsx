@@ -6,8 +6,8 @@ import ReactDOM from "react-dom"
 import { GraphiQL } from "graphiql"
 import { getIntrospectionQuery } from "graphql"
 import { useExplorerPlugin } from "@graphiql/plugin-explorer"
+import { useExporterPlugin } from "@graphiql/plugin-code-exporter"
 
-import { useExporterPlugin } from "./code-exporter/plugin.jsx"
 import { snippets } from "./code-exporter/snippets.js"
 import { Logo } from "./logo.jsx"
 import { fetcher, fetchFragments, locationQuery } from "./utils.js"
@@ -21,6 +21,7 @@ import {
 
 import "graphiql/graphiql.css"
 import "@graphiql/plugin-explorer/dist/style.css"
+import "@graphiql/plugin-code-exporter/dist/style.css"
 import "./app.css"
 
 const parameters = {}

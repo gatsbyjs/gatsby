@@ -1,4 +1,5 @@
 import store from "~/store"
+import { camelCase } from "lodash"
 
 export const getTypeInfoBySingleName = singleName => {
   const { typeMap } = store.getState().remoteSchema
@@ -16,9 +17,10 @@ export const getTypeInfoBySingleName = singleName => {
 
 export const getQueryInfoBySingleFieldName = singleName => {
   const { nodeQueries } = store.getState().remoteSchema
-
   const queryInfo = Object.values(nodeQueries).find(
-    q => q.typeInfo.singularName === singleName
+    q =>
+      q.typeInfo.singularName === singleName ||
+      q.typeInfo.singularName === camelCase(singleName)
   )
 
   return queryInfo
