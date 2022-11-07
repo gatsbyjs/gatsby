@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "5.0.0-next.14",
+  "version": "5.0.0-next.15",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -93,9 +93,9 @@
     "fs-extra": "^10.1.0",
     "gatsby-cli": "^5.0.0-next.9",
     "gatsby-core-utils": "^4.0.0-next.2",
-    "gatsby-graphiql-explorer": "^3.0.0-next.1",
+    "gatsby-graphiql-explorer": "^3.0.0-next.2",
     "gatsby-legacy-polyfills": "^3.0.0-next.1",
-    "gatsby-link": "^5.0.0-next.4",
+    "gatsby-link": "^5.0.0-next.5",
     "gatsby-page-utils": "^3.0.0-next.3",
     "gatsby-parcel-config": "1.0.0-next.2",
     "gatsby-plugin-page-creator": "^5.0.0-next.5",
