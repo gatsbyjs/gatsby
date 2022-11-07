@@ -80,7 +80,18 @@ npm install react@latest react-dom@latest
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the `next` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
+Update your `package.json` to use the `next` version for all Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. All our packages managed by us got a major version bump. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
+
+So for example, if you have `gatsby-plugin-image` installed in your project, update that package to use the `next` version:
+
+```diff:title=package.json
+{
+  "dependencies": {
+-   "gatsby-plugin-image": "^2.0.0"
++   "gatsby-plugin-image": "^3.0.0-next.0"
+  }
+}
+```
 
 #### Updating community plugins
 
@@ -322,6 +333,10 @@ Effective changes in v6 will include:
 - Remove `uri` prop in favor of `location` prop
 
 The `location` prop will remain different in the browser and server context due to the router offering more properties in the browser context from `window.location`.
+
+### `___NODE` convention is deprecated
+
+In the [v3 to v4 release notes](/docs/reference/release-notes/migrating-from-v3-to-v4/#___node-convention-is-deprecated) we mentioned that the `___NODE` convention is deprecated. This is still the case for Gatsby 5 since we didn't get to migrate all important plugins to the new syntax. So this syntax will continue to work in Gatsby 5, but we **urge** you to migrate to the `@link` directive. [Get more information](/docs/reference/release-notes/migrating-from-v3-to-v4/#___node-convention-is-deprecated).
 
 ## For plugin maintainers
 
