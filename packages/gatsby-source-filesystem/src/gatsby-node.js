@@ -162,6 +162,11 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       Joi.object().regex(),
       Joi.function()
     ),
+    usePolling: Joi.boolean()
+      .default(false)
+      .description(
+        `When set to true, use file system polling instead of fsEvents`
+      ),
   })
 
 exports.sourceNodes = (api, pluginOptions) => {
@@ -202,6 +207,7 @@ See docs here - https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/
       `../**/dist/**`,
       ...(pluginOptions.ignore || []),
     ],
+    usePolling: pluginOptions.usePolling,
   })
 
   watcher.on(`add`, path => {
