@@ -24,9 +24,9 @@ For most users we expect a **smooth upgrade path** as only a couple of changes w
 ## Handling deprecations
 
 Before upgrading to v5 we highly recommend upgrading `gatsby` (and all plugins) to the latest v4 version.
-Some changes required for Gatsby 5 could be applied incrementally to the latest v4 which should contribute to smoother upgrade experience.
+Some changes required for Gatsby 5 can be applied incrementally to the latest v4, which should contribute to a smoother upgrade experience.
 
-> Use `npm outdated` or `yarn upgrade-interactive` for automatic upgrade to the latest v4 release.
+> You can run the `npm outdated` or `yarn upgrade-interactive` commands in your project to upgrade to the latest v4 release interactively.
 
 After upgrading, run `gatsby build` and look for deprecation messages in the build log.
 Follow instructions to fix those deprecations.
@@ -80,9 +80,9 @@ npm install react@latest react-dom@latest
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the `next` version for all Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. All our packages managed by us got a major version bump. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
+Update your `package.json` to use the `next` version for all Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note that this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. All packages we manage received a major version bump. Community plugins may not be upgraded yet so please check their repository for the current status.
 
-So for example, if you have `gatsby-plugin-image` installed in your project, update that package to use the `next` version:
+For example, if you have `gatsby-plugin-image` installed in your project, update that package to use the `next` version:
 
 ```diff:title=package.json
 {
@@ -125,7 +125,7 @@ We are dropping official support for React 16 and 17. The new minimal required v
 
 ### Non-ESM browsers are not polyfilled by default
 
-Gatsby's `browserlist` configuration changed to now include `supports es6-module` by default. This means that Non-ESM browsers (like Internet Explorer) are not polyfilled anymore. If you still need to support those browser you'll need to [adjust your browserlist configuration](/docs/how-to/custom-configuration/browser-support/).
+Gatsby's `browserlist` configuration changed to now include `supports es6-module` by default. This means that Non-ESM browsers (like Internet Explorer) are not polyfilled anymore. If you still need to support those browsers you'll need to [adjust your browserlist configuration](/docs/how-to/custom-configuration/browser-support/).
 
 ### GraphQL schema: Changes to sort and aggregation fields
 
@@ -141,7 +141,7 @@ This will apply the codemod to all your files. If you only want to run it on som
 
 The old syntax will continue to work as Gatsby automatically applies the mentioned codemod and transforms your code, however we strongly encourage you to permanently migrate your queries to the new syntax. This way you won't see deprecation messages in your terminal and can be sure that the queries work in [GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/) (because the old ones won't).
 
-Below you can find two examples of an before and after:
+Examples of syntax before and after the codemod is applied:
 
 **Sort:**
 
@@ -246,7 +246,7 @@ Maybe you didn't know, but Gatsby supported [GraphQL Playground](https://github.
 
 ### Gatsby related packages
 
-Breaking Changes in plugins that we own and maintain.
+Breaking changes in plugins that we own and maintain.
 
 #### gatsby-plugin-sitemap
 
