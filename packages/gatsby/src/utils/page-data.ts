@@ -148,6 +148,9 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
+let staleNodeManifests = false
+const maxManifestIdsToLog = 50
+
 export async function flush(parentSpan?: Span): Promise<void> {
   if (isFlushing) {
     // We're already in the middle of a flush
@@ -162,6 +165,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     program,
     staticQueriesByTemplate,
     queries,
+    nodeManifests,
   } = store.getState()
   const isBuild = program?._?.[0] !== `develop`
 
@@ -183,6 +187,25 @@ export async function flush(parentSpan?: Span): Promise<void> {
       { id: `write-page-data-public-directory`, parentSpan }
     )
     writePageDataActivity.start()
+  } else if (nodeManifests.length > 0 && staleNodeManifests) {
+    staleNodeManifests = false
+
+    reporter.warn(
+      `[gatsby] node manifests were created but no page-data.json files were written, so manifest ID's were not added to page-data.json files. This may be a bug or it may be due to a source plugin creating a node manifest for a node that did not change. Node manifest IDs: ${nodeManifests
+        .map(n => n.manifestId)
+        .slice(0, maxManifestIdsToLog)
+        .join(`,`)}${
+        nodeManifests.length > maxManifestIdsToLog
+          ? ` There were ${
+              nodeManifests.length - maxManifestIdsToLog
+            } additional ID's that were not logged due to output length.`
+          : ``
+      }`
+    )
+
+    nodeManifestPagePathMap = await processNodeManifests()
+  } else {
+    staleNodeManifests = true
   }
 
   const flushQueue = fastq(async (pagePath, cb) => {
