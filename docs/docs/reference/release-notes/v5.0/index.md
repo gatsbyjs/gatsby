@@ -156,6 +156,37 @@ While we have your attention we want to showcase all the awesome features we shi
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [AndrPetrov](https://github.com/AndrPetrov): fix(gatsby-link): Correct handling of trailingSlash & pathPrefix [PR #36542](https://github.com/gatsbyjs/gatsby/pull/36542)
+- [evanwinter](https://github.com/evanwinter): chore(docs): Update "Layout components" related links [PR #36572](https://github.com/gatsbyjs/gatsby/pull/36572)
+- [Osiris8](https://github.com/Osiris8): chore(docs): Fix `Seo` imports in tutorial [PR #36587](https://github.com/gatsbyjs/gatsby/pull/36587)
+- [alesma](https://github.com/alesma): chore(gatsby-plugin-sitemap): Add info about `page` object to README [PR #36582](https://github.com/gatsbyjs/gatsby/pull/36582)
+- [openscript](https://github.com/openscript): chore(gatsby): Add `loadPageDataSync` property to `onRenderBody` TS type [PR #36492](https://github.com/gatsbyjs/gatsby/pull/36492)
+- [treboryx](https://github.com/treboryx): fix(gatsby): Pass hostname to detect-port [PR #36496](https://github.com/gatsbyjs/gatsby/pull/36496)
+- [karlhorky](https://github.com/karlhorky): feat(gatsby-remark-copy-linked-files): Add `absolutePath` to dir function [PR #36213](https://github.com/gatsbyjs/gatsby/pull/36213)
+- [kvnang](https://github.com/kvnang): chore(docs): Fix Partytown forward events examples [PR #36613](https://github.com/gatsbyjs/gatsby/pull/36613)
+- [MarcusCole518](https://github.com/MarcusCole518): chore(docs): Add "Payments Managing" & "Deploying to Fastly" [PR #36546](https://github.com/gatsbyjs/gatsby/pull/36546)
+- [colbywhite](https://github.com/colbywhite): chore(docs): Swap mobile url for regular url [PR #36618](https://github.com/gatsbyjs/gatsby/pull/36618)
+- [SilencerWeb](https://github.com/SilencerWeb): chore(gatsby-source-wordpress): Fix license link [PR #36621](https://github.com/gatsbyjs/gatsby/pull/36621)
+- [benomatis](https://github.com/benomatis): fix(docs): tiny grammatical correction [PR #36630](https://github.com/gatsbyjs/gatsby/pull/36630)
+- [ebuildy](https://github.com/ebuildy): fix(gatsby-parcel-config): Adjust dependencies [PR #36583](https://github.com/gatsbyjs/gatsby/pull/36583)
+- [Auspicus](https://github.com/Auspicus): feat(gatsby): Enable source maps when compiling Gatsby files in development [PR #36450](https://github.com/gatsbyjs/gatsby/pull/36450)
+- [kxxt](https://github.com/kxxt): fix(gatsby-core-utils): Use `grep -E` instead of `egrep` [PR #36648](https://github.com/gatsbyjs/gatsby/pull/36648)
+- Chris Skinner: chore(docs): Update storybook main.js docs [PR #36627](https://github.com/gatsbyjs/gatsby/pull/36627)
+- [mattmuroya](https://github.com/mattmuroya): chore(gatsby-source-contentful): Correct image embed code sample [PR #36670](https://github.com/gatsbyjs/gatsby/pull/36670)
+- [yasell](https://github.com/yasell): fix(gatsby): remove unused console.log [PR #36713](https://github.com/gatsbyjs/gatsby/pull/36713)
+- [ashhitch](https://github.com/ashhitch): chore(docs): Update storybook main.js examples to be consistant [PR #36702](https://github.com/gatsbyjs/gatsby/pull/36702)
+- [joshterrill](https://github.com/joshterrill): chore: Update old placehold.it URLs [PR #36731](https://github.com/gatsbyjs/gatsby/pull/36731)
+- [Toxillo](https://github.com/Toxillo): chore(docs): Update tutorial part 5 with a better fitting screenshot [PR #36741](https://github.com/gatsbyjs/gatsby/pull/36741)
+- [ShaunDychko](https://github.com/ShaunDychko): chore(gatsby-plugin-sitemap): Document `excludes` glob matching [PR #36690](https://github.com/gatsbyjs/gatsby/pull/36690)
+- [Lightwight](https://github.com/Lightwight): fix(gatsby-page-utils): path creation on windows filesystem [PR #36766](https://github.com/gatsbyjs/gatsby/pull/36766)
+- [kentmz](https://github.com/kentmz): chore(docs): added Dialoguewise to headless cms list [PR #36651](https://github.com/gatsbyjs/gatsby/pull/36651)
+- [muescha](https://github.com/muescha)
+  - chore(docs): TypeScript and Gatsby: add info for CSS Modules [PR #36820](https://github.com/gatsbyjs/gatsby/pull/36820)
+  - chore(docs): Tutorial Part 2 - add exports and imports for component example [PR #36818](https://github.com/gatsbyjs/gatsby/pull/36818)
+  - chore(docs): Tutorial Part 2 - Fix import [PR #36825](https://github.com/gatsbyjs/gatsby/pull/36825)
+- [brysongilbert](https://github.com/brysongilbert): chore(gatsby-core-utils): Update README with correct cpuCoreCount args [PR #36838](https://github.com/gatsbyjs/gatsby/pull/36838)
+- [mac2000](https://github.com/mac2000): feat(gatsby-remark-embed-snippet): added csproj to language map so it will be recognized as xml [PR #36919](https://github.com/gatsbyjs/gatsby/pull/36919)
+- [BreGoNunez](https://github.com/BreGoNunez): chore(docs): Add clarification for Pro Tip on Part 4 of tutorial [PR #36918](https://github.com/gatsbyjs/gatsby/pull/36918)
+- [roryclaasen](https://github.com/roryclaasen): chore(gatsby-link): Correct type export [PR #36968](https://github.com/gatsbyjs/gatsby/pull/36968)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.24.0-next.0...gatsby@5.0.0
