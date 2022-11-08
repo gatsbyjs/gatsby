@@ -12,11 +12,12 @@ Generally, you can expect **1 major version per calendar year**. Although, there
 
 Note: Future time ranges are listed when a specific target date is not yet determined.
 
-| Version | Status                        | As Of            | Until   |
-| ------- | ----------------------------- | ---------------- | ------- |
-| 4       | Active Long-term support      | October 21, 2021 | Q4 2022 |
-| 3       | Maintenance Long-term support | October 21, 2021 | Q4 2022 |
-| 2       | Unsupported                   | January 1, 2022  | -       |
+| Version | Status                        | As Of            | Until            |
+| ------- | ----------------------------- | ---------------- | ---------------- |
+| 5       | Active Long-term support      | November 8, 2022 | Q4 2023          |
+| 4       | Maintenance Long-term support | November 8, 2022 | Q4 2023          |
+| 3       | Unsupported                   | October 21, 2021 | November 8, 2022 |
+| 2       | Unsupported                   | January 1, 2022  | -                |
 
 ## Terminology
 
@@ -30,7 +31,7 @@ Note: Future time ranges are listed when a specific target date is not yet deter
 
 ## What does this mean for users of the Gatsby framework?
 
-- To receive the newest enhancements and bug fixes, ensure that you've [migrated to Gatsby Version 4](/docs/reference/release-notes/migrating-from-v3-to-v4/)
+- To receive the newest enhancements and bug fixes, ensure that you've [migrated to Gatsby Version 5](/docs/reference/release-notes/migrating-from-v4-to-v5/)
 - Continue reporting any issues as you typically would, either using [support](https://www.gatsbyjs.com/support/) on Gatsbyjs.com, or by [opening an issues](https://github.com/gatsbyjs/gatsby/issues/new/choose) in our GitHub repository.
 
 ## What does this mean for Gatsby Cloud?

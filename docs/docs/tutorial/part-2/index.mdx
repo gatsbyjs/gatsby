@@ -2,9 +2,9 @@
 title: "Part 2: Use and Style React Components"
 ---
 
-import { Announcement, LinkButton } from 'gatsby-interface'
-import Collapsible from '@components/collapsible'
-import { MdArrowForward } from 'react-icons/md'
+import { Announcement, LinkButton } from "gatsby-interface"
+import Collapsible from "@components/collapsible"
+import { MdArrowForward } from "react-icons/md"
 
 ## Introduction
 
@@ -14,12 +14,12 @@ To build out the basic page structure for your blog site, you'll need to know ab
 
 By the end of this part of the Tutorial, you will be able to:
 
-* Create **page components** to add new pages to your site.
-* Add a title to your site using the **Gatsby Head API**
-* Import and use a **pre-built component** from another package.
-* Create your own **reusable "building block" component**.
-* Use component **props** to change the way a component renders.
-* Use the **`children`** prop to create a wrapper component.
+- Create **page components** to add new pages to your site.
+- Add a title to your site using the **Gatsby Head API**
+- Import and use a **pre-built component** from another package.
+- Create your own **reusable "building block" component**.
+- Use component **props** to change the way a component renders.
+- Use the **`children`** prop to create a wrapper component.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -27,9 +27,19 @@ By the end of this part of the Tutorial, you will be able to:
 
 If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 2. **Please note:** At the time of recording the Gatsby Head API didn't exist yet and thus the video contents and text contents are different. Please always follow the written instructions. We'll do our best to record a new version in the future, thanks for understanding!
 
+**Note**: Parts of this recording may be slightly outdated, but the concepts are generally applicable. For the most up-to-date information, follow along with the written tutorial.
+
 Don't want to miss any future livestreams? Follow our [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wXRrlEitw94?start=279" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/wXRrlEitw94?start=279"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 </Announcement>
 
@@ -45,8 +55,7 @@ For example, imagine the UI for an online store's Products page:
 
 To build this page in React, you might have a `<Navbar>` component for the navigation menu, a `<Sidebar>` component for extra information displayed to the side of the main content, and a `<ProductGrid>` component to display all of the products for sale.
 
-You can also create components from other components. For example, you might decide to break down the `<ProductGrid>` component into a list of multiple `<ProductCard>` components, which each display the details about a single product. This pattern is called **composition**, since your larger `<ProductGrid>` component is *composed* of smaller `<ProductCard>` components.
-
+You can also create components from other components. For example, you might decide to break down the `<ProductGrid>` component into a list of multiple `<ProductCard>` components, which each display the details about a single product. This pattern is called **composition**, since your larger `<ProductGrid>` component is _composed_ of smaller `<ProductCard>` components.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -57,7 +66,6 @@ Look back at the [finished example blog site](https://gatsbytutorialexample.gats
 Not sure where to start? Look for parts of the UI that repeat within a page or across multiple pages.
 
 </Announcement>
-
 
 ### What is a React component?
 
@@ -75,9 +83,7 @@ So a simple React component might look something like this:
 
 ```javascript
 const Greeting = () => {
-  return (
-    <h1>Hello world!</h1>
-  )
+  return <h1>Hello world!</h1>
 }
 ```
 
@@ -236,7 +242,7 @@ export default AboutPage
 ```
 
 2. Add a page title to your page. Gatsby lets you define a `<title>` and other [document metadata](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) with the [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/). You have to export a component called `Head` from your page template to apply the metadata.
-Adding such metadata helps search engines like Google to better understand your site. For this tutorial you'll only be adding titles to pages but you can also later add other metadata.
+   Adding such metadata helps search engines like Google to better understand your site. For this tutorial you'll only be adding titles to pages but you can also later add other metadata.
 
 ```js:title=src/pages/about.js
 import * as React from 'react'
@@ -255,6 +261,7 @@ export const Head = () => <title>About Me</title>
 
 export default AboutPage
 ```
+
 <Announcement style={{marginBottom: "1.5rem"}}>
 
 **Key Gatsby Concept** 💡
@@ -322,18 +329,18 @@ You can use component props to change the way a component renders. Props are ess
 
 The code snippets below show an example of how to pass a prop into a component when it's rendered and how to use the value of that prop within the component definition:
 
-* When you define your component, it should take in a single argument: an object called `props`. The `props` object will have whatever properties you passed into your component when you rendered it.
+- When you define your component, it should take in a single argument: an object called `props`. The `props` object will have whatever properties you passed into your component when you rendered it.
 
-    ```javascript:title=src/components/greeting.js
-    // Defining the <Greeting> component
-    const Greeting = (props) => { // highlight-line
-      return (
-        <p>Hi {props.name}!</p> // highlight-line
-      )
-    }
-  
-    export default Greeting
-    ```
+  ```javascript:title=src/components/greeting.js
+  // Defining the <Greeting> component
+  const Greeting = (props) => { // highlight-line
+    return (
+      <p>Hi {props.name}!</p> // highlight-line
+    )
+  }
+
+  export default Greeting
+  ```
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -341,24 +348,24 @@ The code snippets below show an example of how to pass a prop into a component w
 
 </Announcement>
 
-* When rendering the `Greeting` component, you pass in the `name` prop with a specific value, like `"Megan"`. You could swap in a different value string each time you render the `Greeting` component.
+- When rendering the `Greeting` component, you pass in the `name` prop with a specific value, like `"Megan"`. You could swap in a different value string each time you render the `Greeting` component.
 
-    ```javascript:title=src/pages/say-hello.js
-    import Greeting from "../components/greeting" // highlight-line
-  
-    // Rendering the <Greeting> component
-    const SayHello = () => {
-      return (
-        <div>
-          {/* highlight-start */}
-          <Greeting name="Megan" />
-          <Greeting name="Obinna" />
-          <Greeting name="Generosa" />
-          {/* highlight-end */}
-        </div>
-      )
-    }
-    ```
+  ```javascript:title=src/pages/say-hello.js
+  import Greeting from "../components/greeting" // highlight-line
+
+  // Rendering the <Greeting> component
+  const SayHello = () => {
+    return (
+      <div>
+        {/* highlight-start */}
+        <Greeting name="Megan" />
+        <Greeting name="Obinna" />
+        <Greeting name="Generosa" />
+        {/* highlight-end */}
+      </div>
+    )
+  }
+  ```
 
 You can name your props whatever you want. For example, if you passed in `iceCreamFlavor="mint chip"` when you rendered a component, that prop would be available to use inside your component at `props.iceCreamFlavor`.
 
@@ -405,7 +412,6 @@ export const Head = () => <title>Home Page</title>
 export default IndexPage
 ```
 
-
 2. On the About page, import the `Link` component from the Gatsby package and add a link to your Home page.
 
 ```js:title=src/pages/about.js
@@ -428,13 +434,11 @@ export const Head = () => <title>About Me</title>
 export default AboutPage
 ```
 
-
 3. In your web browser, click on each of the links to make sure they're working correctly.
 
 ![A screenshot of the Home page. Now, under the heading, there's a link to the About page.](./index-page-with-link.png)
 
 ![A screenshot of the About page. Now, under the heading, there's a link to the Home page.](./about-page-with-link.png)
-
 
 ## Create a reusable layout component
 
@@ -459,9 +463,7 @@ One such prop is called `children`. When you render a component, the `children` 
 The `Link` component you used in the last section also used the `children` prop. You used it to pass in the text to be hyperlinked.
 
 ```js
-<Link to="/">
-  This text is passed into the Link component's children prop!
-</Link>
+<Link to="/">This text is passed into the Link component's children prop!</Link>
 ```
 
 </Announcement>
@@ -823,12 +825,12 @@ Congratulations, you've made it to the end of Part 2! 🥳 (That was a long one!
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* What's the difference between a page component and a building-block component?
-* How do you add a new page to your Gatsby site?
-* How do you add a title to a page?
-* What are the three steps for writing a new React component?
-* What are props and when might you use them?
-* What is the `children` prop and why is it useful?
+- What's the difference between a page component and a building-block component?
+- How do you add a new page to your Gatsby site?
+- How do you add a title to a page?
+- What are the three steps for writing a new React component?
+- What are props and when might you use them?
+- What is the `children` prop and why is it useful?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -850,13 +852,13 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 ### Key takeaways
 
-* React is a library that helps you break down your UI into smaller pieces called components. A component is a function that returns a React element. React elements can be written in JSX.
-* **Page components** contain all the UI elements for a specific page of your site. Gatsby automatically creates pages for components that are the default exports of files in the `src/pages` directory. The name of the file will be used as the route for the page.
-* You can use the **Gatsby Head API** by exporting a named function `Head` to define metadata for the page.
-* **Building-block components** are smaller reusable parts of your UI. They can be imported into page components or other building block components.
-* You can import **pre-built** components (like `Link`) from other packages, or you can write your own **custom** components from scratch (like `Layout`).
-* You can use **props** to change how a component renders. You can define your own props when you build a component. React also has some built-in props, like `children` and `className`.
-* Gatsby isn't opinionated about what styling approach you want to use, but it works with **CSS Modules** by default.
+- React is a library that helps you break down your UI into smaller pieces called components. A component is a function that returns a React element. React elements can be written in JSX.
+- **Page components** contain all the UI elements for a specific page of your site. Gatsby automatically creates pages for components that are the default exports of files in the `src/pages` directory. The name of the file will be used as the route for the page.
+- You can use the **Gatsby Head API** by exporting a named function `Head` to define metadata for the page.
+- **Building-block components** are smaller reusable parts of your UI. They can be imported into page components or other building block components.
+- You can import **pre-built** components (like `Link`) from other packages, or you can write your own **custom** components from scratch (like `Layout`).
+- You can use **props** to change how a component renders. You can define your own props when you build a component. React also has some built-in props, like `children` and `className`.
+- Gatsby isn't opinionated about what styling approach you want to use, but it works with **CSS Modules** by default.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 

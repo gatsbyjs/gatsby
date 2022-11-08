@@ -166,12 +166,11 @@ module.exports = {
         href: to,
       })
   ),
-  StaticQuery: jest.fn(),
   useStaticQuery: jest.fn(),
 }
 ```
 
-This mocks the `graphql()` function, `Link` component, and `StaticQuery` component.
+This mocks the `graphql()` function, `Link` component, and `useStaticQuery` hook.
 
 ## Writing tests
 
@@ -290,15 +289,12 @@ const paths = pathsToModuleNameMapper(compilerOptions.paths, {
 
 ## Other resources
 
-If you need to make changes to your Babel config, you can edit the config in
-`jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
-though remember you may need to install the Babel 7 versions. See
-[the Gatsby Babel config guide](/docs/how-to/custom-configuration/babel) for some examples.
+If you need to make changes to your Babel config, you can edit the config in `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby. See [the Gatsby Babel config guide](/docs/how-to/custom-configuration/babel) for some examples.
 
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).
 
-For an example encapsulating all of these techniques--and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
+For an example encapsulating all of these techniques and a full unit test suite with [@testing-library/react][react-testing-library], check out the [using-jest][using-jest] example.
 
 [using-jest]: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest
 [react-testing-library]: https://github.com/testing-library/react-testing-library
