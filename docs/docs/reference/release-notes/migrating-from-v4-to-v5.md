@@ -36,12 +36,12 @@ Next, you need to update your dependencies. We recommend [upgrading to Node 18](
 
 ### Update Gatsby version
 
-You need to update your `package.json` to use the `next` version of Gatsby.
+You need to update your `package.json` to use the `latest` version of Gatsby.
 
 ```json:title=package.json
 {
   "dependencies": {
-    "gatsby": "^5.0.0-next.0"
+    "gatsby": "^5.0.0"
   }
 }
 ```
@@ -49,13 +49,13 @@ You need to update your `package.json` to use the `next` version of Gatsby.
 Or run
 
 ```shell
-npm install gatsby@next
+npm install gatsby@latest
 ```
 
 Please note: If you use npm 7 you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
 
 ```shell
-npm install gatsby@next --legacy-peer-deps
+npm install gatsby@latest --legacy-peer-deps
 ```
 
 ### Update React version
@@ -79,15 +79,15 @@ npm install react@latest react-dom@latest
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the `next` version for all Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note that this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. All packages we manage received a major version bump. Community plugins may not be upgraded yet so please check their repository for the current status.
+Update your `package.json` to use the `latest` version for all Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note that this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. All packages we manage received a major version bump. Community plugins may not be upgraded yet so please check their repository for the current status.
 
-For example, if you have `gatsby-plugin-image` installed in your project, update that package to use the `next` version:
+For example, if you have `gatsby-plugin-image` installed in your project, update that package to use the `latest` version:
 
 ```diff:title=package.json
 {
   "dependencies": {
 -   "gatsby-plugin-image": "^2.0.0"
-+   "gatsby-plugin-image": "^3.0.0-next.0"
++   "gatsby-plugin-image": "^3.0.0"
   }
 }
 ```
@@ -106,7 +106,13 @@ If you are using npm 7, the warning may instead be an error:
 npm ERR! ERESOLVE unable to resolve dependency tree
 ```
 
-This is because the plugin needs to update its `peerDependencies` to include the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
+This is because the plugin needs to update its `peerDependencies` to include the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7 or later, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. If your build is failing on Gatsby Cloud, you can add a `.npmrc` file with that flag enabled like this:
+
+```shell
+npm config -L project set legacy-peer-deps true
+```
+
+Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
 
 ## Handling breaking changes
 
@@ -135,10 +141,10 @@ As per the [RFC: Change to sort and aggregation fields API](https://github.com/g
 We provide a codemod (via [gatsby-codemods](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-codemods)) for you to easily convert your queries to the new syntax. Go to your project and run the following in your terminal:
 
 ```shell
-npx gatsby-codemods@next sort-and-aggr-graphql .
+npx gatsby-codemods@latest sort-and-aggr-graphql .
 ```
 
-This will apply the codemod to all your files. If you only want to run it on some files/directories, adjust the last parameter (`npx gatsby-codemods@next sort-and-aggr-graphql <filepath>`).
+This will apply the codemod to all your files. If you only want to run it on some files/directories, adjust the last parameter (`npx gatsby-codemods@latest sort-and-aggr-graphql <filepath>`).
 
 The old syntax will continue to work as Gatsby automatically applies the mentioned codemod and transforms your code, however we strongly encourage you to permanently migrate your queries to the new syntax. This way you won't see deprecation messages in your terminal and can be sure that the queries work in [GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/) (because the old ones won't).
 
