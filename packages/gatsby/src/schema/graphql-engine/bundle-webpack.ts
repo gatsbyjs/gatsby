@@ -166,6 +166,12 @@ export async function createGraphqlEngineBundle(
           test: /\.txt/,
           type: `asset/resource`,
         },
+        {
+          test: /\.(graphqls?|gqls?)$/,
+          use: {
+            loader: require.resolve(`graphql-tag/loader`),
+          },
+        },
       ],
     },
     resolve: {
@@ -180,6 +186,9 @@ export async function createGraphqlEngineBundle(
         lmdb: require.resolve(`lmdb`),
         "ts-node": require.resolve(`./shims/ts-node`),
         "gatsby-sharp$": require.resolve(`./shims/gatsby-sharp`),
+        "graphql-import-node$": require.resolve(`./shims/no-op-module`),
+        "graphql-import-node/register$":
+          require.resolve(`./shims/no-op-module`),
       },
     },
     plugins: [

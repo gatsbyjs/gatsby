@@ -39,6 +39,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
       id: ERROR_CODES.NonExistentFileNode,
       context: {
         resourcePath: this.resourcePath,
+        mdxPath,
       },
     })
   }
@@ -71,6 +72,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
         id: ERROR_CODES.InvalidAcornAST,
         context: {
           resourcePath: this.resourcePath,
+          mdxPath,
         },
       })
     }
@@ -249,6 +251,7 @@ const gatsbyLayoutLoader: LoaderDefinition = async function (
       id: ERROR_CODES.InvalidAcornAST,
       context: {
         resourcePath: this.resourcePath,
+        mdxPath,
       },
       error,
     })

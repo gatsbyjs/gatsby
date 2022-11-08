@@ -14,7 +14,7 @@ function graphql() {
 export { default as PageRenderer } from "./public-page-renderer"
 export { useScrollRestoration } from "gatsby-react-router-scroll"
 export {
-  default as Link,
+  Link,
   withPrefix,
   withAssetPrefix,
   navigate,

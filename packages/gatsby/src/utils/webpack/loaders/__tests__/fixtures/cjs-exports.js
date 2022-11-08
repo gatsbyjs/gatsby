@@ -1,4 +1,4 @@
-"client export"
+"use client"
 
 exports.a = {
   b: 1

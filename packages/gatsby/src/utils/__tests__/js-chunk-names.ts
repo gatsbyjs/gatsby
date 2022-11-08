@@ -1,4 +1,4 @@
-import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
+import { murmurhash } from "gatsby-core-utils/murmurhash"
 import { generateComponentChunkName } from "../js-chunk-names"
 
 jest.mock(`../../redux`, () => {
@@ -13,7 +13,7 @@ jest.mock(`../../redux`, () => {
   }
 })
 
-jest.mock(`babel-plugin-remove-graphql-queries/murmur`)
+jest.mock(`gatsby-core-utils/murmurhash`)
 
 describe(`js-chunk-names`, () => {
   beforeEach(() => {

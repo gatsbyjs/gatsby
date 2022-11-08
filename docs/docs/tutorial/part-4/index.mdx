@@ -973,16 +973,14 @@ export default BlogPage
 
 **Pro Tip:** The Gatsby Head API and its `Head` export also receives the `data` prop. This isn't directly obvious when using the component unless your IDE gives autocompletion or hints. If you're unsure how to use an API, head over to the [reference guides](/docs/reference) for instructions. There you'll find guides like [Gatsby Head API](/docs/reference/built-in-components/gatsby-head/).
 
-When accessing `data` in `Head` it is the same data as in your page component:
+As an example, let's say you queried the `title` from `siteMetadata` in your page query. You'll then be able to access that through the `data` prop in `Head` (as with page component):
 
 ```js
-export const Head = ({ data }) => (
-  <>
-    <title>{data.site.siteMetadata.title}</title>
-  </>
-)
+export const Head = ({ data }) => <title>{data.site.siteMetadata.title}</title>
 ```
 
+In [Part 6](/docs/tutorial/part-6/#render-post-contents-in-the-blog-post-page-template) you'll learn how to use this pattern, for now keep using the `<Seo />` component.
+  
 </Announcement>
 
 4. Now, when you look at your blog page in a web browser, you should see a list with the filenames for each of your posts:

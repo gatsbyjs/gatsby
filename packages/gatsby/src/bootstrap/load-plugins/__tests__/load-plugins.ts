@@ -14,7 +14,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     log: jest.fn(),
     warn: jest.fn((...args) => {
       // filter out compatible warnings as we get a lot of
-      // Plugin X is not compatible with your gatsby version 4.X.Y-next.Z - It requires gatsby@^5.0.0-alpha-v5
+      // Plugin X is not compatible with your gatsby version X - It requires X
       // right now
       if (!args[0].includes(`is not compatible with your gatsby version`)) {
         mockNonIncompatibleWarn(...args)
@@ -174,6 +174,7 @@ describe(`Load plugins`, () => {
               `pluginOptionsSchema`,
               `resolvableExtensions`,
               `onCreateBabelConfig`,
+              `onCreateWebpackConfig`,
             ],
             pluginOptions: {
               allExtensions: false,

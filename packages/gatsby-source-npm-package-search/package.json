@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-npm-package-search",
   "description": "Search NPM packages and pull NPM & GitHub metadata from Algolia's NPM index",
-  "version": "5.0.0-next.1",
+  "version": "5.0.0-next.2",
   "author": "james.a.stack@gmail.com",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^5.0.0-alpha-v5"
+    "gatsby": "^5.0.0-next"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
