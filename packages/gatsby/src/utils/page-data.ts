@@ -242,7 +242,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     )
 
     nodeManifestPagePathMap = await processNodeManifests()
-  } else {
+  } else if (nodeManifests.length > 0) {
     staleNodeManifests = true
   }
 
