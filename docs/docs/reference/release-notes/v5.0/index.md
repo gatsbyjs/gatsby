@@ -30,6 +30,8 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 If you're looking for an overview of all breaking changes and how to migrate, please see the [migrating from v4 to v5 guide](/docs/reference/release-notes/migrating-from-v4-to-v5/).
 
+If you're curious about our release schedules and which versions are officially supported, head to the [Gatsby Framework Version Support](/docs/reference/release-notes/gatsby-version-support/) document. As of Gatsby 5 we're no longer supporting Gatsby 2 and Gatsby 3.
+
 ## Slice API
 
 The Slice API allows you to define highly-shared components in your site, which will then inform Gatsby to build those shared components only once. After the files are built, Gatsby will then stitch the resulting markup and JavaScript to the pages that include that shared component. This means that changes to highly-shared components (such as headers, footers, and common layouts) no longer require a rebuild of all pages that use that shared component.
@@ -82,6 +84,8 @@ Across the board we can see at least a 20% decrease in build time when using Sli
 
 For more information, read the [Using Slices How-To Guide](/docs/how-to/performance/using-slices/) or the [Slice API Reference Documentation](/docs/reference/built-in-components/gatsby-slice).
 
+If you have any questions about the Slice API, you can comment on the [Gatsby 5 Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/36609) or [`gatsby-5` Discord channel](https://discord.gg/MhfpnT4cNg).
+
 ## Partial Hydration (Beta)
 
 Partial Hydration enables you to selectively add interactivity to your otherwise completly static app. This results in improved frontend performance while keeping the benefits of client-side apps. Gatsby uses [React server components](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md) to achieve this.
@@ -109,6 +113,8 @@ As a quick start, here's how you can use Partial Hydration in Gatsby 5 today:
   }
   ```
 - Add the `"use client"` directive to any component that needs to be a client component. You can see an example in the [gatsby-partial-hydration-starter](https://github.com/gatsbyjs/gatsby-partial-hydration-starter/blob/main/src/components/demo.js)
+
+If you have any questions about Partial Hydration, you can comment on the [RFC: Partial Hydration](https://github.com/gatsbyjs/gatsby/discussions/36608) or [`partial-hydration` Discord channel](https://discord.gg/KEVcg3rup2).
 
 ## GraphiQL v2
 

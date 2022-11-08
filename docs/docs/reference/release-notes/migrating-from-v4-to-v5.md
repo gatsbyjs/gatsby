@@ -4,7 +4,7 @@ title: Migrating from v4 to v5
 
 Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
-> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/blob/v5-docs/docs/docs/reference/release-notes/migrating-from-v4-to-v5.md)!
+> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/reference/release-notes/migrating-from-v4-to-v5.md)!
 
 ## Introduction
 
@@ -28,8 +28,7 @@ Some changes required for Gatsby 5 can be applied incrementally to the latest v4
 
 > You can run the `npm outdated` or `yarn upgrade-interactive` commands in your project to upgrade to the latest v4 release interactively.
 
-After upgrading, run `gatsby build` and look for deprecation messages in the build log.
-Follow instructions to fix those deprecations.
+After upgrading, run `gatsby build` and look for deprecation messages in the build log. Follow instructions to fix those deprecations.
 
 ## Updating your dependencies
 
@@ -112,6 +111,8 @@ This is because the plugin needs to update its `peerDependencies` to include the
 ## Handling breaking changes
 
 This section explains breaking changes that were made for Gatsby 5. Some of those changes had a deprecation message in v4. In order to successfully update, you'll need to resolve these changes.
+
+If you're curious about our release schedules and which versions are officially supported, head to the [Gatsby Framework Version Support](/docs/reference/release-notes/gatsby-version-support/) document. As of Gatsby 5 we're no longer supporting Gatsby 2 and Gatsby 3.
 
 ### Minimal Node.js version 18.0.0
 
