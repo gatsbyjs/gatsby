@@ -142,6 +142,12 @@ Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-rele
 
 We are dropping official support for React 16 and 17. The new minimal required version is React 18. This is a requirement for the Partial Hydration feature.
 
+## Performance improvements
+
+- The [GraphQL schema: Changes to sort and aggregation fields](/docs/reference/release-notes/migrating-from-v4-to-v5/#graphql-schema-changes-to-sort-and-aggregation-fields) change enables lower resource usage (significantly reduced memory usage) and faster “Building schema” step.
+
+- The [Non-ESM browsers are not polyfilled by default](/docs/reference/release-notes/migrating-from-v4-to-v5/#non-esm-browsers-are-not-polyfilled-by-default) change speeds up the "Building production JavaScript and CSS bundles" step dramatically since webpack doesn't have to polyfill a lot of code anymore.
+
 ## Highlights from v4
 
 While we have your attention we want to showcase all the awesome features we shipped during the Gatsby 4 lifecycle. Give them a try!
@@ -156,22 +162,6 @@ While we have your attention we want to showcase all the awesome features we shi
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-- [AndrPetrov](https://github.com/AndrPetrov): fix(gatsby-link): Correct handling of trailingSlash & pathPrefix [PR #36542](https://github.com/gatsbyjs/gatsby/pull/36542)
-- [evanwinter](https://github.com/evanwinter): chore(docs): Update "Layout components" related links [PR #36572](https://github.com/gatsbyjs/gatsby/pull/36572)
-- [Osiris8](https://github.com/Osiris8): chore(docs): Fix `Seo` imports in tutorial [PR #36587](https://github.com/gatsbyjs/gatsby/pull/36587)
-- [alesma](https://github.com/alesma): chore(gatsby-plugin-sitemap): Add info about `page` object to README [PR #36582](https://github.com/gatsbyjs/gatsby/pull/36582)
-- [openscript](https://github.com/openscript): chore(gatsby): Add `loadPageDataSync` property to `onRenderBody` TS type [PR #36492](https://github.com/gatsbyjs/gatsby/pull/36492)
-- [treboryx](https://github.com/treboryx): fix(gatsby): Pass hostname to detect-port [PR #36496](https://github.com/gatsbyjs/gatsby/pull/36496)
-- [karlhorky](https://github.com/karlhorky): feat(gatsby-remark-copy-linked-files): Add `absolutePath` to dir function [PR #36213](https://github.com/gatsbyjs/gatsby/pull/36213)
-- [kvnang](https://github.com/kvnang): chore(docs): Fix Partytown forward events examples [PR #36613](https://github.com/gatsbyjs/gatsby/pull/36613)
-- [MarcusCole518](https://github.com/MarcusCole518): chore(docs): Add "Payments Managing" & "Deploying to Fastly" [PR #36546](https://github.com/gatsbyjs/gatsby/pull/36546)
-- [colbywhite](https://github.com/colbywhite): chore(docs): Swap mobile url for regular url [PR #36618](https://github.com/gatsbyjs/gatsby/pull/36618)
-- [SilencerWeb](https://github.com/SilencerWeb): chore(gatsby-source-wordpress): Fix license link [PR #36621](https://github.com/gatsbyjs/gatsby/pull/36621)
-- [benomatis](https://github.com/benomatis): fix(docs): tiny grammatical correction [PR #36630](https://github.com/gatsbyjs/gatsby/pull/36630)
-- [ebuildy](https://github.com/ebuildy): fix(gatsby-parcel-config): Adjust dependencies [PR #36583](https://github.com/gatsbyjs/gatsby/pull/36583)
-- [Auspicus](https://github.com/Auspicus): feat(gatsby): Enable source maps when compiling Gatsby files in development [PR #36450](https://github.com/gatsbyjs/gatsby/pull/36450)
-- [kxxt](https://github.com/kxxt): fix(gatsby-core-utils): Use `grep -E` instead of `egrep` [PR #36648](https://github.com/gatsbyjs/gatsby/pull/36648)
-- Chris Skinner: chore(docs): Update storybook main.js docs [PR #36627](https://github.com/gatsbyjs/gatsby/pull/36627)
 - [mattmuroya](https://github.com/mattmuroya): chore(gatsby-source-contentful): Correct image embed code sample [PR #36670](https://github.com/gatsbyjs/gatsby/pull/36670)
 - [yasell](https://github.com/yasell): fix(gatsby): remove unused console.log [PR #36713](https://github.com/gatsbyjs/gatsby/pull/36713)
 - [ashhitch](https://github.com/ashhitch): chore(docs): Update storybook main.js examples to be consistant [PR #36702](https://github.com/gatsbyjs/gatsby/pull/36702)
@@ -189,4 +179,4 @@ A big **Thank You** to [our community who contributed][full-changelog] to this r
 - [BreGoNunez](https://github.com/BreGoNunez): chore(docs): Add clarification for Pro Tip on Part 4 of tutorial [PR #36918](https://github.com/gatsbyjs/gatsby/pull/36918)
 - [roryclaasen](https://github.com/roryclaasen): chore(gatsby-link): Correct type export [PR #36968](https://github.com/gatsbyjs/gatsby/pull/36968)
 
-[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.24.0-next.0...gatsby@5.0.0
+[full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.25.0-next.0...gatsby@5.0.0
