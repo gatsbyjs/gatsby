@@ -8,24 +8,22 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "gatsby": "^4.24.7",
-    "gatsby-plugin-feed": "^4.24.0",
-    "gatsby-plugin-image": "^2.24.0",
-    "gatsby-plugin-manifest": "^4.24.0",
-    "gatsby-plugin-sharp": "^4.24.0",
-    "gatsby-remark-copy-linked-files": "^5.24.0",
-    "gatsby-remark-images": "^6.24.0",
-    "gatsby-remark-prismjs": "^6.24.0",
-    "gatsby-remark-responsive-iframe": "^5.24.0",
-    "gatsby-remark-smartypants": "^5.24.0",
-    "gatsby-source-filesystem": "^4.24.0",
-    "gatsby-transformer-remark": "^5.24.0",
-    "gatsby-transformer-sharp": "^4.24.0",
+    "@fontsource/merriweather": "^4.5.14",
+    "@fontsource/montserrat": "^4.5.13",
+    "gatsby": "^5.0.0",
+    "gatsby-plugin-feed": "^5.0.0",
+    "gatsby-plugin-image": "^3.0.0",
+    "gatsby-plugin-manifest": "^5.0.0",
+    "gatsby-plugin-sharp": "^5.0.0",
+    "gatsby-remark-images": "^7.0.0",
+    "gatsby-remark-prismjs": "^7.0.0",
+    "gatsby-remark-responsive-iframe": "^6.0.0",
+    "gatsby-source-filesystem": "^5.0.0",
+    "gatsby-transformer-remark": "^6.0.0",
+    "gatsby-transformer-sharp": "^5.0.0",
     "prismjs": "^1.29.0",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "typeface-merriweather": "0.0.72",
-    "typeface-montserrat": "0.0.75"
+    "react-dom": "^18.1.0"
   },
   "devDependencies": {
     "prettier": "^2.7.1"
