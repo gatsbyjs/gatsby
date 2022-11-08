@@ -3,7 +3,7 @@ import * as fs from "fs-extra"
 import { createContentDigest } from "gatsby-core-utils"
 import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 import type { GatsbyNode } from "gatsby"
-// import slicesData from "./shared-data/slices"
+import slicesData from "./shared-data/slices"
 
 export const onPreBootstrap: GatsbyNode["onPreBootstrap"] = () => {
   fs.copyFileSync(
