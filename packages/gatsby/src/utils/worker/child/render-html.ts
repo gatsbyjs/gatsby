@@ -351,8 +351,25 @@ export async function renderPartialHydrationProd({
 
   for (const pagePath of paths) {
     const pageData = await readPageData(publicDir, pagePath)
+
+    // we collect static query hashes from page template and also all used slices on the page
+    const staticQueryHashes = new Set(pageData.staticQueryHashes)
+    if (pageData.slicesMap) {
+      for (const sliceName of Object.values(pageData.slicesMap)) {
+        const sliceDataPath = path.join(
+          publicDir,
+          `slice-data`,
+          `${sliceName}.json`
+        )
+        const sliceData = await fs.readJSON(sliceDataPath)
+        for (const staticQueryHash of sliceData.staticQueryHashes) {
+          staticQueryHashes.add(staticQueryHash)
+        }
+      }
+    }
+
     const { staticQueryContext } = await getStaticQueryContext(
-      pageData.staticQueryHashes
+      Array.from(staticQueryHashes)
     )
 
     const pageRenderer = path.join(

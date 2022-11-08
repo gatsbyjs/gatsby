@@ -63,13 +63,7 @@ export async function loadConfig({
         reporter.info(message)
       }
 
-      if (process.env.GATSBY_PARTIAL_HYDRATION) {
-        delete process.env.GATSBY_SLICES
-
-        reporter.warn(`SLICES is inactive when PARTIAL_HYDRATION is enabled.`)
-      } else {
-        process.env.GATSBY_SLICES = `true`
-      }
+      process.env.GATSBY_SLICES = `true`
 
       //  track usage of feature
       enabledConfigFlags.forEach(flag => {
