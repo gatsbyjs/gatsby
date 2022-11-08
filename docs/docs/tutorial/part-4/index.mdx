@@ -576,7 +576,7 @@ After going through this tutorial, be sure to check out [Adding an SEO Component
 import * as React from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 
-const useSiteMetadata = ({ title }) => {
+const useSiteMetadata = () => {
   const data = useStaticQuery(graphql`
     query {
       site {
