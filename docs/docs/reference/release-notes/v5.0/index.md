@@ -30,12 +30,6 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 If you're looking for an overview of all breaking changes and how to migrate, please see the [migrating from v4 to v5 guide](/docs/reference/release-notes/migrating-from-v4-to-v5/).
 
-## Overview Video
-
-Prefer video over text? No problem! Learn more about all the new features of Gatsby 5 in the video below:
-
-TODO
-
 ## Slice API
 
 The Slice API allows you to define highly-shared components in your site, which will then inform Gatsby to build those shared components only once. After the files are built, Gatsby will then stitch the resulting markup and JavaScript to the pages that include that shared component. This means that changes to highly-shared components (such as headers, footers, and common layouts) no longer require a rebuild of all pages that use that shared component.
