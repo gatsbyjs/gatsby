@@ -6,6 +6,15 @@ const typeIsExcluded = ({ pluginOptions, typeName }) =>
   pluginOptions.type[typeName] &&
   pluginOptions.type[typeName].exclude
 
+const fieldIsExcludedOnAll = ({ pluginOptions, field }) => {
+  const allFieldSettings = pluginOptions?.type?.__all
+
+  if (!allFieldSettings) {
+    return false
+  }
+  return !!allFieldSettings?.excludeFieldNames?.includes(field?.name)
+}
+
 const fieldIsExcludedOnParentType = ({ pluginOptions, field, parentType }) => {
   const allTypeSettings = pluginOptions.type
 
@@ -33,4 +42,4 @@ const fieldIsExcludedOnParentType = ({ pluginOptions, field, parentType }) => {
   return !!fieldIsExcludedOnParentType
 }
 
-export { typeIsExcluded, fieldIsExcludedOnParentType }
+export { typeIsExcluded, fieldIsExcludedOnAll, fieldIsExcludedOnParentType }

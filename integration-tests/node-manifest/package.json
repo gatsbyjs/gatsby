@@ -7,11 +7,11 @@
     "test": "cross-env GATSBY_COMMAND_NAME=build jest --runInBand && cross-env GATSBY_COMMAND_NAME=develop jest --runInBand"
   },
   "author": "Tyler Barnes <tyler@gatsbyjs.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "gatsby": "next",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -20,9 +20,5 @@
     "jest": "^27.2.1",
     "rimraf": "^3.0.2",
     "urling": "^1.0.7"
-  },
-  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
-  "resolutions": {
-    "responselike": "^2.0.0"
   }
 }

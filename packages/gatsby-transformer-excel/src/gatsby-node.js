@@ -28,7 +28,7 @@ const extensions = [
   `numbers`,
 ]
 
-function unstable_shouldOnCreateNode({ node }) {
+function shouldOnCreateNode({ node }) {
   return extensions.includes((node.extension || ``).toLowerCase())
 }
 
@@ -36,10 +36,6 @@ async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   options = {}
 ) {
-  if (!unstable_shouldOnCreateNode({ node })) {
-    return
-  }
-
   const { createNode, createParentChildLink } = actions
 
   // accept *all* options to pass to the sheet_to_json function
@@ -108,5 +104,5 @@ async function onCreateNode(
   return
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 exports.onCreateNode = onCreateNode

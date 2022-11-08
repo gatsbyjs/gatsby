@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent } from "react"
+import React, { Fragment, FunctionComponent, PropsWithChildren } from "react"
 import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
 
@@ -96,14 +96,15 @@ const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
   return null
 }
 
-export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> =
-  function LayoutWrapper({ children, ...props }) {
-    return (
-      <Fragment>
-        <Sizer {...props} />
-        {children}
+export const LayoutWrapper: FunctionComponent<
+  PropsWithChildren<ILayoutWrapperProps>
+> = function LayoutWrapper({ children, ...props }) {
+  return (
+    <Fragment>
+      <Sizer {...props} />
+      {children}
 
-        {SERVER ? <NativeScriptLoading /> : null}
-      </Fragment>
-    )
-  }
+      {SERVER ? <NativeScriptLoading /> : null}
+    </Fragment>
+  )
+}
