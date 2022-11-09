@@ -32,6 +32,20 @@ If you're looking for an overview of all breaking changes and how to migrate, pl
 
 If you're curious about our release schedules and which versions are officially supported, head to the [Gatsby Framework Version Support](/docs/reference/release-notes/gatsby-version-support/) document. As of Gatsby 5 we're no longer supporting Gatsby 2 and Gatsby 3.
 
+## Overview Video
+
+Prefer video over text? No problem! Learn more about all the new features in the video below:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube-nocookie.com/embed/6RwfzZi5gn0"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
 ## Slice API
 
 The Slice API allows you to define highly-shared components in your site, which will then inform Gatsby to build those shared components only once. After the files are built, Gatsby will then stitch the resulting markup and JavaScript to the pages that include that shared component. This means that changes to highly-shared components (such as headers, footers, and common layouts) no longer require a rebuild of all pages that use that shared component.
