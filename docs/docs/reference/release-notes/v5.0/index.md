@@ -12,7 +12,7 @@ and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you e
 
 Key highlights of this release:
 
-- [Slices API](#slices-api) - Only re-build individual slices of your page
+- [Slices API](#slice-api) - Only re-build individual slices of your page
 - [Partial Hydration (Beta)](#partial-hydration-beta) - Improve frontend performance by shipping less JavaScript
 - [GraphiQL v2](#graphiql-v2) - An all new UI with features like dark mode, tabs, and persisted state
 
