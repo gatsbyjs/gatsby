@@ -397,19 +397,27 @@ export async function createSchemaCustomization(
 
   // Rich Text
   const makeRichTextLinksResolver =
-    (nodeType, entityType) => (source, args, context) => {
+    (nodeType, entityType) => async (source, _args, context) => {
       const links = getRichTextEntityLinks(source, nodeType)[entityType].map(
         ({ id }) => id
       )
 
-      return context.nodeModel.getAllNodes().filter(
-        node =>
-          node.internal.owner === `gatsby-source-contentful` &&
-          node?.sys?.id &&
-          node?.sys?.type === entityType &&
-          links.includes(node.sys.id)
-        // @todo how can we check for correct space and environment? We need to access the sys field of the fields parent entry.
-      )
+      const node = context.nodeModel.findRootNodeAncestor(source)
+      if (!node) return null
+
+      const res = await context.nodeModel.findAll({
+        query: {
+          sys: {
+            id: {
+              in: links,
+            },
+            spaceId: { eq: node.sys.spaceId },
+          },
+        },
+        type: `Contentful${entityType}`,
+      })
+
+      return res.entries
     }
 
   // Contentful specific types
