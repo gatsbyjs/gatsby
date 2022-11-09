@@ -59,7 +59,7 @@ exports.onRenderBody = (
           : `true`
       }) {
         window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer && window.dataLayer.push(arguments);}
+        function gtag(){window.dataLayer.push(arguments);}
         gtag('js', new Date());
 
         ${pluginOptions.trackingIds
