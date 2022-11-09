@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@5.0.0/packages/gatsby-plugin-typography) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- GraphiQL v2 [#36541](https://github.com/gatsbyjs/gatsby/issues/36541) ([55a601d](https://github.com/gatsbyjs/gatsby/commit/55a601d759589286fb99e97db0ba095a1e6ed894))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
 ## [4.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typography@4.24.0/packages/gatsby-plugin-typography) (2022-09-27)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
