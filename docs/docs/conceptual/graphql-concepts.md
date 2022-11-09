@@ -338,9 +338,7 @@ export default function Home({ data }) {
       <h1>Index page</h1>
       <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
       {data.allMarkdownRemark.edges.map(({ node }) => (
-        <div key={node.id}>
-          <IndexPost frontmatter={node.frontmatter} />
-        </div>
+        <IndexPost key={node.id} frontmatter={node.frontmatter} />
       ))}
     </div>
   )
