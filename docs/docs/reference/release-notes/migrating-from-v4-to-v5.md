@@ -413,4 +413,4 @@ Or with `yarn`:
 yarn why graphql
 ```
 
-A brute-force way of solving this is to delete your lock file, delete `node_modules` and re-install with `npm install --legacy-peer-deps`/`yarn install`.
+A brute-force way of solving this is to delete your lock file, delete `node_modules` and re-install with `npm install --legacy-peer-deps`/`yarn install`. This only works though if your project is just `gatsby`, if you have a more complicated setup you might need to use features like `resolutions`.
