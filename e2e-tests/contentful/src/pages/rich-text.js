@@ -115,7 +115,7 @@ export default RichTextPage
 export const pageQuery = graphql`
   query RichTextQuery {
     default: allContentfulContentTypeRichText(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         title: { glob: "!*Localized*|*Validated*" }
         sys: { locale: { eq: "en-US" } }
@@ -227,7 +227,7 @@ export const pageQuery = graphql`
       }
     }
     english: allContentfulContentTypeRichText(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         title: { glob: "*Localized*" }
         sys: { locale: { eq: "en-US" } }
@@ -242,7 +242,7 @@ export const pageQuery = graphql`
       }
     }
     german: allContentfulContentTypeRichText(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         title: { glob: "*Localized*" }
         sys: { locale: { eq: "de-DE" } }

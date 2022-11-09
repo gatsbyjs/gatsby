@@ -92,14 +92,14 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query TagsQuery {
-    tags: allContentfulTag(sort: { fields: id }) {
+    tags: allContentfulTag(sort: { id: ASC }) {
       nodes {
         name
         contentful_id
       }
     }
     integers: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
       filter: {
         metadata: {
           tags: { elemMatch: { contentful_id: { eq: "numberInteger" } } }
@@ -113,7 +113,7 @@ export const pageQuery = graphql`
       }
     }
     decimals: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
       filter: {
         metadata: {
           tags: { elemMatch: { contentful_id: { eq: "numberDecimal" } } }
@@ -127,7 +127,7 @@ export const pageQuery = graphql`
       }
     }
     assets: allContentfulAsset(
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
       filter: {
         metadata: { tags: { elemMatch: { contentful_id: { eq: "animal" } } } }
         sys: { locale: { eq: "en-US" } }

@@ -54,7 +54,7 @@ export default NumberPage
 export const pageQuery = graphql`
   query NumberQuery {
     default: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
       filter: {
         title: { glob: "!*Localized*" }
         sys: { locale: { eq: "en-US" } }
@@ -67,7 +67,7 @@ export const pageQuery = graphql`
       }
     }
     english: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
       filter: {
         title: { glob: "*Localized*" }
         sys: { locale: { eq: "en-US" } }
@@ -80,7 +80,7 @@ export const pageQuery = graphql`
       }
     }
     german: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
       filter: {
         title: { glob: "*Localized*" }
         sys: { locale: { eq: "de-DE" } }

@@ -113,7 +113,7 @@ export default MediaReferencePage
 export const pageQuery = graphql`
   query MediaReferenceQuery {
     default: allContentfulContentTypeMediaReference(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         title: { glob: "!*Localized*" }
         sys: { locale: { eq: "en-US" } }
@@ -133,7 +133,7 @@ export const pageQuery = graphql`
       }
     }
     english: allContentfulContentTypeMediaReference(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         title: { glob: "*Localized*" }
         sys: { locale: { eq: "en-US" } }
@@ -159,7 +159,7 @@ export const pageQuery = graphql`
       }
     }
     german: allContentfulContentTypeMediaReference(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         title: { glob: "*Localized*" }
         sys: { locale: { eq: "de-DE" } }

@@ -244,7 +244,7 @@ export const pageQuery = graphql`
           locale: { eq: "en-US" }
         }
       }
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
     ) {
       nodes {
         title
@@ -279,7 +279,7 @@ export const pageQuery = graphql`
       filter: {
         sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "en-US" } }
       }
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
     ) {
       nodes {
         title
@@ -293,7 +293,7 @@ export const pageQuery = graphql`
       filter: {
         sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "de-DE" } }
       }
-      sort: { fields: sys___id }
+      sort: { sys: { id: ASC } }
     ) {
       nodes {
         title

@@ -96,7 +96,7 @@ export default ContentReferencePage
 export const pageQuery = graphql`
   query ContentReferenceQuery {
     default: allContentfulContentTypeContentReference(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         sys: { locale: { eq: "en-US" } }
         title: { glob: "!*Localized*" }
@@ -205,7 +205,7 @@ export const pageQuery = graphql`
       }
     }
     english: allContentfulContentTypeContentReference(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         sys: { locale: { eq: "en-US" } }
         title: { glob: "*Localized*" }
@@ -242,7 +242,7 @@ export const pageQuery = graphql`
       }
     }
     german: allContentfulContentTypeContentReference(
-      sort: { fields: title }
+      sort: { title: ASC }
       filter: {
         sys: { locale: { eq: "de-DE" } }
         title: { glob: "*Localized*" }
