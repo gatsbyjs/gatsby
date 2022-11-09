@@ -32,7 +32,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.constrained ? (
               <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -50,7 +50,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.fullWidth ? (
               <GatsbyImage image={node.fullWidth} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -69,7 +69,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.fixed ? (
               <GatsbyImage image={node.fixed} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -88,7 +88,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.dominantColor ? (
               <GatsbyImage image={node.dominantColor} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -107,7 +107,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.traced ? (
               <GatsbyImage image={node.traced} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -126,7 +126,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.blurred ? (
               <GatsbyImage image={node.blurred} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -145,7 +145,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.customImageFormats ? (
               <GatsbyImage image={node.customImageFormats} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -172,7 +172,7 @@ const GatsbyPluginImagePage = ({ data }) => {
                 alt={node.title}
               />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -191,7 +191,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.constrained ? (
               <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
@@ -210,7 +210,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             {node.constrained ? (
               <GatsbyImage image={node.constrained} alt={node.title} />
             ) : (
-              <SvgImage src={node.file.url} alt={node.title} />
+              <SvgImage src={node.url} alt={node.title} />
             )}
           </div>
         ))}
