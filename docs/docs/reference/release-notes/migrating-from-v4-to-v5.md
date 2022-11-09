@@ -401,7 +401,7 @@ specifiedByURL: undefined, serialize: [function String], parseValue: [function S
 [function parseLiteral], extensions: {  }, astNode: undefined, extensionASTNodes: [] }).
 ```
 
-This error (or any other similar errors) happen when you have multiple versions of `graphql` installed in your project. You can check this manually by running:
+This error (or any other similar errors) happens when you have multiple versions of `graphql` installed in your project. You can check this manually by running:
 
 ```shell
 npm ls graphql
