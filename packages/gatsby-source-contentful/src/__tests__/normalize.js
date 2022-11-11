@@ -154,11 +154,11 @@ describe(`Process contentful data (by name)`, () => {
     })
 
     expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
-      `product___NODE`
+      `product`
     )
 
     expect(foreignReferenceMap[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0].name).toBe(
-      `brand___NODE`
+      `brand`
     )
   })
 
@@ -355,11 +355,11 @@ describe(`Process contentful data (by id)`, () => {
     })
 
     expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
-      `2pqfxujwe8qsykum0u6w8m___NODE`
+      `2pqfxujwe8qsykum0u6w8m`
     )
 
     expect(foreignReferenceMap[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0].name).toBe(
-      `sfztzbsum8coewygeuyes___NODE`
+      `sfztzbsum8coewygeuyes`
     )
   })
 

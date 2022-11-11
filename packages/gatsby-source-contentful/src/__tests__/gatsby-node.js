@@ -240,7 +240,7 @@ describe(`gatsby-node`, () => {
                   type: value.sys.linkType || value.sys.type,
                 })
               )
-              matchedObject[`${field}___NODE`] = linkId
+              matchedObject[field] = linkId
 
               if (
                 value.sys.type !== `Asset` &&
@@ -250,7 +250,7 @@ describe(`gatsby-node`, () => {
                   references.set(linkId, {})
                 }
 
-                const referenceKey = `${currentContentType.name.toLowerCase()}___NODE`
+                const referenceKey = currentContentType.name.toLowerCase()
                 const reference = references.get(linkId)
                 const linkedNode = getNode(linkId)
                 reference[referenceKey] =
@@ -264,7 +264,7 @@ describe(`gatsby-node`, () => {
             }
             case `Text`: {
               const linkId = createNodeId(`${nodeId}${field}TextNode`)
-              matchedObject[`${field}___NODE`] = linkId
+              matchedObject[field] = linkId
               break
             }
             default:
@@ -313,7 +313,7 @@ describe(`gatsby-node`, () => {
         // check if all references got removed references should be removed
         for (const value of currentNodeMap.values()) {
           Object.keys(value).forEach(field => {
-            if (field.endsWith(`___NODE`)) {
+            if (![`id`, `parent`].includes(field)) {
               expect([].concat(value[field])).not.toContain(nodeId)
             }
           })
@@ -654,7 +654,7 @@ describe(`gatsby-node`, () => {
 
     createdBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
-      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
+      expect(getNode(blogEntry[`author`])).toBeTruthy()
     })
 
     expect(actions.createNode).toHaveBeenCalledTimes(44)
@@ -744,7 +744,7 @@ describe(`gatsby-node`, () => {
     updatedBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
       expect(blogEntry.title).toBe(`Hello world 1234`)
-      expect(getNode(blogEntry[`author___NODE`])).toBeTruthy()
+      expect(getNode(blogEntry[`author`])).toBeTruthy()
     })
 
     expect(actions.createNode).toHaveBeenCalledTimes(52)
@@ -812,8 +812,8 @@ describe(`gatsby-node`, () => {
     for (const author of getNodes().filter(
       n => n.internal.type === `ContentfulPerson`
     )) {
-      expect(author[`blog post___NODE`].length).toEqual(3)
-      expect(author[`blog post___NODE`]).toEqual(
+      expect(author[`blog post`].length).toEqual(3)
+      expect(author[`blog post`]).toEqual(
         expect.not.arrayContaining([
           makeId({
             spaceId: removedBlogEntry.sys.space.sys.id,
@@ -833,15 +833,15 @@ describe(`gatsby-node`, () => {
     // check if blog post exists
     removedBlogEntryIds.forEach(entryId => {
       const blogEntry = getNode(entryId)
-      authorIds.push(blogEntry[`author___NODE`])
+      authorIds.push(blogEntry[`author`])
       expect(blogEntry).not.toBeUndefined()
     })
 
     for (const author of getNodes().filter(
       n => n.internal.type === `ContentfulPerson`
     )) {
-      expect(author[`blog post___NODE`].length).toEqual(4)
-      expect(author[`blog post___NODE`]).toEqual(
+      expect(author[`blog post`].length).toEqual(4)
+      expect(author[`blog post`]).toEqual(
         expect.arrayContaining([
           makeId({
             spaceId: removedBlogEntry.sys.space.sys.id,
@@ -879,8 +879,8 @@ describe(`gatsby-node`, () => {
     for (const author of getNodes().filter(
       n => n.internal.type === `ContentfulPerson`
     )) {
-      expect(author[`blog post___NODE`].length).toEqual(3)
-      expect(author[`blog post___NODE`]).toEqual(
+      expect(author[`blog post`].length).toEqual(3)
+      expect(author[`blog post`]).toEqual(
         expect.not.arrayContaining([
           makeId({
             spaceId: removedBlogEntry.sys.space.sys.id,
@@ -895,7 +895,7 @@ describe(`gatsby-node`, () => {
 
     // check if references are gone
     authorIds.forEach(authorId => {
-      expect(getNode(authorId)[`blog post___NODE`]).toEqual(
+      expect(getNode(authorId)[`blog post`]).toEqual(
         expect.not.arrayContaining(deletedEntryIds)
       )
     })

@@ -4,7 +4,7 @@ import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
-
+import { SourceNodesArgs } from "gatsby"
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -32,6 +32,7 @@ const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 
 let isFirstSource = true
 export async function sourceNodes(
+  /** @type {SourceNodesArgs} */
   {
     actions,
     getNode,
@@ -278,6 +279,7 @@ export async function sourceNodes(
       .filter(node => node)
 
     localizedNodes.forEach(node => {
+      // @todo nodes of text fields should be deleted as well
       deleteNode(node)
     })
   }
@@ -336,13 +338,12 @@ export async function sourceNodes(
 
       // Remove references to deleted nodes
       if (n.sys.id && deletedEntryGatsbyReferenceIds.size) {
+        // Only loop reference fields (fields with @link?)
         Object.keys(n).forEach(name => {
           // @todo Detect reference fields based on schema. Should be easier to achieve in the upcoming version.
-          if (!name.endsWith(`___NODE`)) {
-            return
-          }
-          if (Array.isArray(n[name])) {
-            n[name] = n[name].filter(referenceId => {
+          const fieldValue = n[name]
+          if (Array.isArray(fieldValue)) {
+            n[name] = fieldValue.filter(referenceId => {
               const shouldRemove =
                 deletedEntryGatsbyReferenceIds.has(referenceId)
               if (shouldRemove) {
@@ -351,8 +352,7 @@ export async function sourceNodes(
               return !shouldRemove
             })
           } else {
-            const referenceId = n[name]
-            if (deletedEntryGatsbyReferenceIds.has(referenceId)) {
+            if (deletedEntryGatsbyReferenceIds.has(fieldValue)) {
               existingNodesThatNeedReverseLinksUpdateInDatastore.add(n)
               n[name] = null
             }
