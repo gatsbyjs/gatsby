@@ -938,3 +938,89 @@ Gatsby will continue to work. Please track the [upstream issue](https://github.c
 Workspaces and their hoisting of dependencies can cause you troubles if you incrementally want to update a package. For example, if you use `gatsby-plugin-emotion` in multiple packages but only update its version in one, you might end up with multiple versions inside your project. Run `yarn why package-name` (in this example `yarn why gatsby-plugin-emotion`) to check if different versions are installed.
 
 We recommend updating all dependencies at once and re-checking it with `yarn why package-name`. You should only see one version found now.
+
+### Legacy Browser (IE 11 Polyfill)
+
+Migrating to GatsbyJS v3 with the required dependencies (Webpack 5 + React 17) changed how polyfills were injected into the build. 
+
+If you plan to target IE 11, you will encounter the error: 
+```
+SCRIPT438: Object doesn't support property or method 'setPrototypeOf'
+```
+To fix this, first create a polyfill for Object.setPrototypeOf() in file `setPrototypeOf.js`:
+```
+// filename: setPrototypeOf.js
+// location: project root
+const setPrototypeOf = (function(Object, magic) {
+    'use strict';
+    var set;
+    function checkArgs(O, proto) {
+        // React calls Object.setPrototypeOf with function type, exit
+        if (typeof O === 'function') { return; }
+        if (typeof O !== 'object' || O === null) {
+            throw new TypeError('can not set prototype on a non-object');
+        }
+    }
+    function setPrototypeOf(O, proto) {
+        checkArgs(O, proto);
+        set.call(O, proto);
+        return O;
+    }
+    try {
+        // this works already in Firefox and Safari
+        set = Object.getOwnPropertyDescriptor(Object.prototype, magic).set;
+        set.call({}, null);
+    } catch (o_O) {
+        set = function(proto) {
+            this[magic] = proto;
+        };
+        setPrototypeOf.polyfill = setPrototypeOf(
+            setPrototypeOf({}, null),
+            Object.prototype
+        ) instanceof Object;
+    }
+    return setPrototypeOf;
+}(Object, '__proto__'));
+
+export { setPrototypeOf };
+```
+
+Then create file `polyfills.js`, where you can add multiple polyfills (custom or imported):
+```
+// filename: polyfills.js
+// location: project root
+import { setPrototypeOf } from './setPrototypeOf';
+
+// Polyfills
+Object.setPrototypeOf = setPrototypeOf;
+```
+
+Then inject them into Webpack using the `onCreateWebpackConfig` API in `gatsy-node.js` during stage `build-javascript`:
+```
+// filename: gatsby-node.js
+const webpack = require('webpack');
+
+exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
+  if(stage === 'build-javascript') {
+    // We want to include the babel polyfills before any application code,
+    // so we're inserting it as an additional entry point.  Gatsby does not allow
+    // this in "setWebpackConfig", so we have to use "replaceWebpackConfig"
+    const config = getConfig();
+    const app = typeof config.entry.app === 'string'
+      ? [config.entry.app]
+      : config.entry.app;
+    config.entry.app = ['./polyfills', ...app];
+    actions.replaceWebpackConfig(config);
+  }
+
+  // Other plugins -- not required for this example, but shown for reference
+  actions.setWebpackConfig({
+    plugins: [
+        new webpack.ProvidePlugin({
+            Buffer: [require.resolve("buffer/"), "Buffer"],
+        }),
+    ],
+  });
+}
+```
+IE11 browser will now use this polyfill for Object.setPrototypeOf().
