@@ -5,7 +5,7 @@
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
     "babel-plugin-search-and-replace": "^1.1.0",
-    "gatsby": "^4.25.0-alpha-preview-slices.d20221011t181843.56",
+    "gatsby": "next",
     "gatsby-image": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-less": "next",
