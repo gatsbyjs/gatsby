@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import parse from "html-react-parser"
 
 // We're using Gutenberg so we need the block styles
@@ -9,11 +9,11 @@ import "@wordpress/block-library/build-style/theme.css"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
 const BlogPostTemplate = ({ data: { previous, next, post } }) => {
   const featuredImage = {
-    fluid: post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
+    image: post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
     alt: post.featuredImage?.node?.altText || ``,
   }
 
@@ -30,12 +30,8 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
           <p>{post.date}</p>
 
           {/* if we have a featured image for this post let's display it */}
-          {featuredImage?.fluid && (
-            <Image
-              fluid={featuredImage.fluid}
-              alt={featuredImage.alt}
-              style={{ marginBottom: 50 }}
-            />
+          {featuredImage?.image && (
+            <GatsbyImage alt={featuredImage.alt} image={featuredImage.image} />
           )}
         </header>
 
@@ -82,7 +78,7 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
 }
 
 export const Head = ({ data: { post } }) => (
-  <SEO title={post.title} description={post.excerpt} />
+  <Seo title={post.title} description={post.excerpt} />
 )
 
 export default BlogPostTemplate
@@ -101,15 +97,12 @@ export const pageQuery = graphql`
       content
       title
       date(formatString: "MMMM DD, YYYY")
-
       featuredImage {
         node {
           altText
           localFile {
             childImageSharp {
-              fluid(maxWidth: 1000, quality: 100) {
-                ...GatsbyImageSharpFluid_tracedSVG
-              }
+              gatsbyImageData(width: 1000, quality: 90)
             }
           }
         }

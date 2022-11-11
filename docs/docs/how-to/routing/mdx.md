@@ -379,36 +379,6 @@ To extend your GraphQL nodes, you can use the [`onCreateNode` API](/docs/referen
 
 You can find examples in the [README of `gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes).
 
-## Making GraphQL queries within an MDX File
-
-You can fetch data to use within your MDX file by using `StaticQuery`:
-
-<!-- prettier-ignore -->
-```mdx
-import { graphql } from "gatsby"
-
-<StaticQuery
-  query={graphql`
-    query {
-      site {
-        siteMetadata {
-          description
-        }
-      }
-    }
-  `}
-  render={data => (
-
-# My Awesome Page
-
-Here's a paragraph, followed by a paragraph with data!
-
-<p>{props.data.site.siteMetadata.description}</p>
-
-  )}
-/>
-```
-
 ## `gatsby-remark-*` and `remark` plugins
 
 `gatsby-plugin-mdx` can also use `gatsby-remark-*` (e.g. `gatsby-remark-images`) and `remark` (e.g. `remark-gfm`) plugins. You can learn more about this in the [configuration section](/plugins/gatsby-plugin-mdx#configuration) of `gatsby-plugin-mdx`'s README.

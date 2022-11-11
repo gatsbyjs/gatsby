@@ -5,10 +5,7 @@ description: "Learn how to set a Node version for your Gatsby Cloud site."
 
 ## Introduction
 
-You can specify a Node.js version for site in Gatsby Cloud in two different ways, by environment variable or `.nvmrc` file. If you don't set a Node version, Gatsby cloud will use the following defaults:
-
-- The default Node.js version is 14.
-- If you are using npm 7, the default is 16.
+You can specify a Node.js version for site in Gatsby Cloud in two different ways, by environment variable or `.nvmrc` file. If you don't set a Node version, Gatsby cloud will use Node 18 by default.
 
 ### Environment variable
 
@@ -21,5 +18,5 @@ You can include a `.nvmrc` file in your project repository, and Gatsby Cloud wil
 Example format:
 
 ```javascript:title=.nvmrc
-v14.19.0
+v18.9.0
 ```
