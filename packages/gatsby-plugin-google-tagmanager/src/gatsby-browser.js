@@ -56,14 +56,16 @@ function sendToGTM({ name, value, id }, dataLayer) {
   })
 }
 
-export function onRouteUpdate(_, pluginOptions) {
+export function onRouteUpdate(_, pluginOptions, { prevLocation }) {
   if (
     process.env.NODE_ENV === `production` ||
     pluginOptions.includeInDevelopment
   ) {
-    // so when gatsby detects that this is the first page load and this option is true
-    // then only send the page_view event.
-    if (pluginOptions.sendPageViewOnFirstPageLoad) {
+    // so when gatsby detects that this is the first page load and this option is false
+    // then do not fire the gtm event.
+    const doNotFireGtm =
+      !pluginOptions.doNotSendPageViewOnFirstPageLoad && prevLocation === null
+    if (doNotFireGtm) {
       // wrap inside a timeout to ensure the title has properly been changed
       setTimeout(() => {
         const data = pluginOptions.dataLayerName
