@@ -44,4 +44,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     selfHostedOrigin: Joi.string()
       .default(`https://www.googletagmanager.com`)
       .description(`The origin where GTM is hosted.`),
+    allowPageView: Joi.boolean()
+      .default(false)
+      .description(
+        `Include page view option for Google Tag manager. By default it is false`
+      ),
   })
