@@ -365,7 +365,7 @@ describe(`fetch-remote-file`, () => {
   it(`downloads and create a jpg file for file with non-ascii filename`, async () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/dog.jpg`,
-      name: `${encodeURIComponent(`개`)}.jpg`,
+      name: `${encodeURIComponent(`개`)}`,
       cache,
     })
 
