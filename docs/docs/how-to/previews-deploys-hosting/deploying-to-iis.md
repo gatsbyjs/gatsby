@@ -2,20 +2,27 @@
 title: Deploying to Microsoft Internet Information Server (IIS)
 ---
 
-Deploying to Microsoft IIS is mostly copy & paste.
-After `gatsby build` copy the contents of the `public` folder into the `wwwroot` folder of your IIS web.
+[Internet Information Services (IIS)](https://www.iis.net/) for Windows® Server is a flexible, secure and manageable Web server for hosting anything on the Web. From media streaming to web applications, IIS's scalable and open architecture is ready to handle the most demanding tasks.
 
-One important and sometimes overlooked aspect is to configure caching correctly.
-The following configuration will give you a good starting point in line with Gatsby's [suggested approach to caching](/docs/how-to/previews-deploys-hosting/caching/).
+## Prerequisites
 
-Install the [IIS URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) module if it's not already there.
-It's required to define the `outboundRules` in the `web.config` given below.
+- A Gatsby project set up. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
 
-Add a `web.config` file to the `static` folder inside your Gatsby solution. It will be copied unchanged to the `public` folder
-during `gatsby build`.
+## Instructions
 
-Please note that local settings you make for your web in IIS Manager change the `web.config` file;
-you have to be careful to copy any changes to `web.config` on your server back to the version in your Gatsby `static` folder.
+### wwwroot
+
+Deploying to IIS is mostly copy & paste. After `gatsby build`, copy the contents of the `public/` folder into the `wwwroot` folder of your IIS web.
+
+### Caching
+
+One important and sometimes overlooked aspect is to configure caching correctly. The following configuration will give you a good starting point in line with Gatsby's [suggested approach to caching](/docs/how-to/previews-deploys-hosting/caching/).
+
+- Install the [IIS URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) module if it's not already there. It's required to define the `outboundRules` in the `web.config` given below.
+- Add a `web.config` file to the `static` folder of your Gatsby project. It will be copied unchanged to the `public` folder
+  during `gatsby build`.
+
+Please note that local settings you make for your web in IIS Manager change the `web.config` file. You have to be careful to copy any changes to `web.config` on your server back to the version in your Gatsby `static` folder.
 
 ```xml:file=static\web.config
 <?xml version="1.0" encoding="UTF-8"?>
@@ -68,3 +75,7 @@ you have to be careful to copy any changes to `web.config` on your server back t
     </system.webServer>
 </configuration>
 ```
+
+## Limitations
+
+IIS doesn't support advanced features like [SSR](/docs/how-to/rendering-options/using-server-side-rendering/), [DSG](/docs/how-to/rendering-options/using-deferred-static-generation/), or [Image CDN](/docs/how-to/images-and-media/using-gatsby-plugin-image/#gatsby-cloud-image-cdn). You can get all features and faster builds by signing up to [Gatsby Cloud](/dashboard/signup).
