@@ -941,16 +941,15 @@ We recommend updating all dependencies at once and re-checking it with `yarn why
 
 ### Legacy Browser (IE 11 Polyfill)
 
-Migrating to GatsbyJS v3 with the required dependencies (Webpack 5 + React 17) changed how polyfills were injected into the build. 
+If you plan on targeting IE 11, you might run into an error like this:
 
-If you plan to target IE 11, you will encounter the error: 
-```
+```shell
 SCRIPT438: Object doesn't support property or method 'setPrototypeOf'
 ```
-To fix this, first create a polyfill for Object.setPrototypeOf() in file `setPrototypeOf.js`:
-```
-// filename: setPrototypeOf.js
-// location: project root
+
+To fix this, first create a polyfill for `Object.setPrototypeOf()` in a file called `setPrototypeOf.js` at the root of the site:
+
+```js:title=setPrototypeOf.js
 const setPrototypeOf = (function(Object, magic) {
     'use strict';
     var set;
@@ -980,31 +979,25 @@ const setPrototypeOf = (function(Object, magic) {
         ) instanceof Object;
     }
     return setPrototypeOf;
-}(Object, '__proto__'));
+}(Object, '__proto__'))
 
-export { setPrototypeOf };
+export { setPrototypeOf }
 ```
 
-Then create file `polyfills.js`, where you can add multiple polyfills (custom or imported):
-```
-// filename: polyfills.js
-// location: project root
-import { setPrototypeOf } from './setPrototypeOf';
+Then create a file called `polyfills.js`, where you can add multiple polyfills (custom or imported):
+
+```js:title=polyfills.js
+import { setPrototypeOf } from "./setPrototypeOf"
 
 // Polyfills
-Object.setPrototypeOf = setPrototypeOf;
+Object.setPrototypeOf = setPrototypeOf
 ```
 
-Then inject them into Webpack using the `onCreateWebpackConfig` API in `gatsy-node.js` during stage `build-javascript`:
-```
-// filename: gatsby-node.js
-const webpack = require('webpack');
+Then inject them into webpack using the `onCreateWebpackConfig` API in `gatsy-node.js` during stage `build-javascript`:
 
+```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
-  if(stage === 'build-javascript') {
-    // We want to include the babel polyfills before any application code,
-    // so we're inserting it as an additional entry point.  Gatsby does not allow
-    // this in "setWebpackConfig", so we have to use "replaceWebpackConfig"
+  if (stage === "build-javascript") {
     const config = getConfig();
     const app = typeof config.entry.app === 'string'
       ? [config.entry.app]
@@ -1012,15 +1005,7 @@ exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
     config.entry.app = ['./polyfills', ...app];
     actions.replaceWebpackConfig(config);
   }
-
-  // Other plugins -- not required for this example, but shown for reference
-  actions.setWebpackConfig({
-    plugins: [
-        new webpack.ProvidePlugin({
-            Buffer: [require.resolve("buffer/"), "Buffer"],
-        }),
-    ],
-  });
 }
 ```
-IE11 browser will now use this polyfill for Object.setPrototypeOf().
+
+IE11 browser will now use this polyfill for `Object.setPrototypeOf()`.
