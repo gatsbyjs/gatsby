@@ -222,6 +222,15 @@ const defaultPackageRules = [
     dependencyDashboardApproval: false,
   },
   {
+    groupName: `E2E tests`,
+    commitMessageTopic: `e2e-tests`,
+    matchPaths: [`e2e-tests/**`],
+    schedule: `before 7am on Monday`,
+    matchUpdateTypes: [`major`],
+    groupSlug: `e2e-tests-major`,
+    dependencyDashboardApproval: false,
+  },
+  {
     extends: [`monorepo:gatsby`],
     commitMessageTopic: `starters and examples Gatsby packages`,
     groupName: `starters and examples - Gatsby`,
@@ -353,7 +362,13 @@ const renovateConfig = {
     `:ignoreModulesAndTests`,
     `:enableVulnerabilityAlerts`,
   ],
-  includePaths: [`package.json`, `packages/**`, `starters/**`, `examples/**`],
+  includePaths: [
+    `package.json`,
+    `packages/**`,
+    `starters/**`,
+    `examples/**`,
+    `e2e-tests/**`,
+  ],
   major: {
     dependencyDashboardApproval: true,
   },

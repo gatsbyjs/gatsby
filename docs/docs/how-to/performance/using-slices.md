@@ -123,7 +123,7 @@ In this example, let's say you want to pull all header items from your CMS.
 const Header = ({ data }) => {
   return (
     <div>
-      {data.allHeaderItems.nodes.forEach(headerItem = (
+      {data.allHeaderItems.nodes.map(headerItem = (
         // highlight-next-line
         <Link to={headerItem.path}>{headerItem.text}</Link>
       ))}
