@@ -103,7 +103,6 @@
     "lint": "npm-run-all --continue-on-error -p lint:code lint:other",
     "lint:code": "eslint --ext .js,.jsx,.ts,.tsx --quiet .",
     "lint:other": "npm run prettier -- --check",
-    "lint:scripts": "sh scripts/lint-shell-scripts.sh",
     "markdown": "md-magic --path \"starters/**/README.md\"",
     "plop": "plop",
     "postmarkdown": "prettier --write \"starters/**/README.md\"",
