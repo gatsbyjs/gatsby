@@ -8,7 +8,6 @@ Looking for the [v4 docs](https://v4.gatsbyjs.com)?
 
 ## Introduction
 
-
 This is a reference for upgrading your site from Gatsby 4 to Gatsby 5. Version 5 introduces the Slice API and Partial Hydration (Beta). Slices unlock up to 90% reduction in build duration for content changes in highly shared components, Partial Hydration allows you to ship only the necessary JavaScript to the browser. If you're curious what's new, head over to the [v5.0 Release Notes](/docs/reference/release-notes/v5.0/).
 
 For most users we expect a **smooth upgrade path** as only a couple of changes will be required: [Updating to Node 18](#minimal-nodejs-version-1800), [switching to React 18](#minimal-required-react-version-is-18), and [changing GraphQL queries](#graphql-schema-changes-to-sort-and-aggregation-fields) using a codemod.
