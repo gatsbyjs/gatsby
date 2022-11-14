@@ -235,13 +235,14 @@ export async function sourceNodes(
   })
 
   // Build foreign reference map before starting to insert any nodes
+  const useNameForId = pluginConfig.get(`useNameForId`)
   const foreignReferenceMap = buildForeignReferenceMap({
     contentTypeItems,
     entryList,
     resolvable,
     defaultLocale,
     space,
-    useNameForId: pluginConfig.get(`useNameForId`),
+    useNameForId,
   })
 
   reporter.verbose(`Resolving Contentful references`)
@@ -297,6 +298,34 @@ export async function sourceNodes(
     deletionActivity.end()
   }
 
+  // Create map of reference fields to properly delete stale references
+  const referenceFieldMap = new Map()
+  for (const contentTypeItem of contentTypeItems) {
+    const referenceFields = contentTypeItem.fields.filter(field => {
+      if (field.disabled || field.omitted) {
+        return false
+      }
+
+      return (
+        field.type === `Link` ||
+        (field.type === `Array` && field.items.type === `Link`)
+      )
+    })
+    if (referenceFields.length) {
+      referenceFieldMap.set(
+        contentTypeItem.name,
+        referenceFields.map(field => field.id)
+      )
+    }
+  }
+
+  // @todo mirror structure of Contentful GraphQL API, as it prevents field name overlaps
+  const reverseReferenceFields = contentTypeItems.map(contentTypeItem =>
+    useNameForId
+      ? contentTypeItem.name.toLowerCase()
+      : contentTypeItem.sys.id.toLowerCase()
+  )
+
   // Update existing entry nodes that weren't updated but that need reverse links added or removed.
   const existingNodesThatNeedReverseLinksUpdateInDatastore = new Set()
   existingNodes
@@ -337,10 +366,17 @@ export async function sourceNodes(
       }
 
       // Remove references to deleted nodes
-      if (n.sys.id && deletedEntryGatsbyReferenceIds.size) {
-        // Only loop reference fields (fields with @link?)
-        Object.keys(n).forEach(name => {
-          // @todo Detect reference fields based on schema. Should be easier to achieve in the upcoming version.
+      if (
+        n.sys.id &&
+        deletedEntryGatsbyReferenceIds.size &&
+        referenceFieldMap.has(n.sys.contentType)
+      ) {
+        const referenceFields = [
+          ...referenceFieldMap.get(n.sys.contentType),
+          ...reverseReferenceFields,
+        ]
+
+        referenceFields.forEach(name => {
           const fieldValue = n[name]
           if (Array.isArray(fieldValue)) {
             n[name] = fieldValue.filter(referenceId => {
@@ -432,9 +468,7 @@ export async function sourceNodes(
     if (entryList[i].length) {
       reporter.info(
         `Creating ${entryList[i].length} Contentful ${
-          pluginConfig.get(`useNameForId`)
-            ? contentTypeItem.name
-            : contentTypeItem.sys.id
+          useNameForId ? contentTypeItem.name : contentTypeItem.sys.id
         } nodes`
       )
     }
@@ -454,7 +488,7 @@ export async function sourceNodes(
         defaultLocale,
         locales,
         space,
-        useNameForId: pluginConfig.get(`useNameForId`),
+        useNameForId,
         pluginConfig,
         unstable_createNodeManifest,
       })
