@@ -84,14 +84,13 @@
     "retext-syntax-mentions": "^2.1.1",
     "retext-syntax-urls": "^2.0.0",
     "rimraf": "^3.0.2",
-    "svgo": "1.3.2",
     "typescript": "^4.7.4",
     "unified": "^9.2.0",
     "yargs": "^15.4.1"
   },
   "engines": {
     "yarn": "^1.17.3",
-    "node": ">=12.13.0"
+    "node": ">=18.0.0"
   },
   "eslintIgnore": [
     "interfaces",
@@ -104,18 +103,16 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --ext .js,.jsx,.ts,.tsx --fix",
-    "*.{md,css,scss,yaml,yml}": "prettier --write",
-    "*.svg": "svgo --pretty --indent=2 --config=svgo.yml --multipass"
+    "*.{md,css,scss,yaml,yml}": "prettier --write"
   },
   "private": true,
   "scripts": {
     "bootstrap": "cross-env COMPILER_OPTIONS=\"GATSBY_MAJOR=5\" npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
     "check-repo-fields": "node scripts/check-repo-fields.js",
     "check-versions": "node scripts/check-versions.js",
-    "format": "npm run format:code && npm run format:other && npm run format:svg",
+    "format": "npm run format:code && npm run format:other",
     "format:code": "npm run lint:code -- --fix",
     "format:other": "npm run prettier -- --write",
-    "format:svg": "node scripts/format-svg.js",
     "hooks:install": "node node_modules/husky/husky.js install",
     "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
     "jest": "jest",
