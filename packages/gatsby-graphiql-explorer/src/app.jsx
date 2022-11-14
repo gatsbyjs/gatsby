@@ -111,10 +111,11 @@ const App = ({ initialExternalFragments }) => {
       let { enableRefresh, refreshToken } = result.extensions
 
       switch (typeof enableRefresh) {
-        case `string`:
+        case `string`: {
           const lowerCased = enableRefresh.toLowerCase()
           enableRefresh = lowerCased === `1` || lowerCased === `true`
           break
+        }
         case `number`:
           enableRefresh = enableRefresh > 0
           break
