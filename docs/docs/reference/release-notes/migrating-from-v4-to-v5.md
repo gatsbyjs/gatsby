@@ -52,7 +52,7 @@ Or run
 npm install gatsby@latest
 ```
 
-Please note: If you use npm 7 you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
+Please note: If you use npm 7 or higher you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
 
 ```shell
 npm install gatsby@latest --legacy-peer-deps
