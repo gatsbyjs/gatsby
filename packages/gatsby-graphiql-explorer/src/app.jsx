@@ -108,9 +108,22 @@ const App = ({ initialExternalFragments }) => {
     const fetchData = async () => {
       const result = await graphQLIntrospection()
 
+      let { enableRefresh, refreshToken } = result.extensions
+
+      switch (typeof enableRefresh) {
+        case `string`: {
+          const lowerCased = enableRefresh.toLowerCase()
+          enableRefresh = lowerCased === `1` || lowerCased === `true`
+          break
+        }
+        case `number`:
+          enableRefresh = enableRefresh > 0
+          break
+      }
+
       setRefreshState({
-        enableRefresh: !!+result.extensions.enableRefresh,
-        refreshToken: result.extensions.refreshToken,
+        enableRefresh,
+        refreshToken,
       })
     }
 
