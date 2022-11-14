@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.0.1/packages/gatsby) (2022-11-10)
+
+#### Bug Fixes
+
+- write out sq files when result doesn't change but query hash changes [#36997](https://github.com/gatsbyjs/gatsby/issues/36997) [#37004](https://github.com/gatsbyjs/gatsby/issues/37004) ([df29dc9](https://github.com/gatsbyjs/gatsby/commit/df29dc927f698582e3bf71dd59455c172a92c1aa))
+
 ## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.0.0/packages/gatsby) (2022-11-08)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
