@@ -898,6 +898,19 @@ module.exports = async (
     config.cache = cacheConfig
   }
 
+  if (
+    stage === `develop` &&
+    process.env.GATSBY_EXPERIMENTAL_WEBPACK_LAZY_COMPILATION
+  ) {
+    config.experiments = {
+      lazyCompilation: {
+        entries: true,
+        imports: true,
+      },
+    }
+    config.cache.compression = `brotli`
+  }
+
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
