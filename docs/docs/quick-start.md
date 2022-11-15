@@ -47,8 +47,8 @@ The CLI also supports two flags:
 
 Flags are not positional, so these commands are equivalent:
 
-- `npm init gatsby -y -ts my-site-name`
-- `npm init gatsby my-site-name -y -ts`
+- `npm init gatsby -- -y -ts my-site-name`
+- `npm init gatsby my-site-name -- -y -ts`
 
 ### Add more features
 

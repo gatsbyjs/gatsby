@@ -268,7 +268,7 @@ module.exports = {
   ],
   settings: {
     react: {
-      version: `16.9.0`,
+      version: `18.2.0`,
     },
   },
 }
