@@ -6,6 +6,8 @@ import { WrapRootContext } from "./wrap-root-context"
 const gatsbyScriptTestPage = `/gatsby-script-ssr-browser-apis/`
 
 export default ({ element, props }) => {
+  const { title } = useContext(WrapRootContext)
+
   return (
     <>
       {element}

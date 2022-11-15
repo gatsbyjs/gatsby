@@ -6,8 +6,6 @@ import * as StaticQuery from "../components/static-query"
 import * as UseStaticQuery from "../components/static-query/use-static-query"
 
 const StaticQueryPage = () => {
-  const { title } = useContext(WrapRootContext)
-
   return (
     <Layout>
       <h1>

@@ -22,6 +22,11 @@ export default ({ element }) => {
         },
       }) => (
         <ContextForSlicesProvider>
+          {/* Instead of adding UI markup here, we just set provider
+          and actual UI is rendered in wrapPageElement. WrapRootElement
+          should never create UI elements as it will cause problems
+          for slices - it should only setup providers or components
+          resulting in side effects (for example Script components) */}
           <WrapRootContext.Provider value={{ title }}>
             {element}
             <Script src={scripts.jQuery} strategy="post-hydrate" />
