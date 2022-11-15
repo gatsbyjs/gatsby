@@ -4,7 +4,6 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import * as StaticQuery from "../components/static-query"
 import * as UseStaticQuery from "../components/static-query/use-static-query"
-import { WrapRootContext } from "../wrap-root-context"
 
 const StaticQueryPage = () => {
   const { title } = useContext(WrapRootContext)
@@ -24,10 +23,6 @@ const StaticQueryPage = () => {
       <UseStaticQuery.Variable data-testid="use-static-query-variable" />
       <UseStaticQuery.ExportedVariable data-testid="use-static-query-exported" />
       <UseStaticQuery.Destructuring data-testid="use-static-query-destructuring" />
-      <div>
-        StaticQuery in wrapRootElement test (should show site title):
-        <span data-testid="wrap-root-element-result">{title}</span>
-      </div>
     </Layout>
   )
 }
