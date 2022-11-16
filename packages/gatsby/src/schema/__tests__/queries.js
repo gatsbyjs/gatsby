@@ -1,8 +1,9 @@
-const { graphql } = require(`graphql`)
+const { graphql, parse, print } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
+const { tranformDocument } = require(`../../query/transform-document`)
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
@@ -46,17 +47,24 @@ describe(`Query schema`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = (query, variables) =>
-    graphql(
+  const runQuery = (query, variables) => {
+    if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+      const inputAst = typeof query === `string` ? parse(query) : query
+      const { ast } = tranformDocument(inputAst)
+      query = print(ast)
+    }
+
+    return graphql({
       schema,
-      query,
-      undefined,
-      withResolverContext({
+      source: query,
+      rootValue: undefined,
+      contextValue: withResolverContext({
         schema,
         schemaComposer,
       }),
-      variables
-    )
+      variableValues: variables,
+    })
+  }
 
   beforeAll(async () => {
     apiRunnerNode.mockImplementation(async (api, ...args) => {
@@ -100,7 +108,7 @@ describe(`Query schema`, () => {
           args[0].createResolvers({
             Frontmatter: {
               authors: {
-                resolve(source, args, context, info) {
+                async resolve(source, args, context, info) {
                   // NOTE: When using the first field resolver argument (here called
                   // `source`, also called `parent` or `root`), it is important to
                   // take care of the fact that the resolver can be called more than once
@@ -115,9 +123,13 @@ describe(`Query schema`, () => {
                   ) {
                     return source.authors
                   }
-                  return context.nodeModel
-                    .getAllNodes({ type: `Author` })
-                    .filter(author => source.authors.includes(author.email))
+                  const { entries } = await context.nodeModel.findAll({
+                    type: `Author`,
+                  })
+                  const authors = entries.filter(author =>
+                    source.authors.includes(author.email)
+                  )
+                  return Array.from(authors)
                 },
               },
             },
@@ -146,10 +158,12 @@ describe(`Query schema`, () => {
             Query: {
               allAuthorNames: {
                 type: `[String!]!`,
-                resolve(source, args, context, info) {
-                  return context.nodeModel
-                    .getAllNodes({ type: `Author` })
-                    .map(author => author.name)
+                async resolve(source, args, context, info) {
+                  const { entries } = await context.nodeModel.findAll({
+                    type: `Author`,
+                  })
+
+                  return Array.from(entries, author => author.name)
                 },
               },
             },

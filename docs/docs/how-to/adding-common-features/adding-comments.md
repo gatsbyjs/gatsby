@@ -35,8 +35,6 @@ If these concerns outweigh the benefits of Disqus, you may want to look into som
 
 ## Implementing Disqus
 
-![Disqus logo](../../images/disqus-logo.svg)
-
 Here are the steps for adding Disqus comments to your own blog:
 
 1. [Sign-up to Disqus](https://disqus.com/profile/signup). During the process you'll have to choose a shortname for your site. This is how Disqus will identify comments coming from your site. Copy that for later.

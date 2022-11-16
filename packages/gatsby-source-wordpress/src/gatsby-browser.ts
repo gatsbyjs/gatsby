@@ -1,6 +1,6 @@
-/* global HAS_REACT_18 */
 import type { GatsbyImageProps } from "gatsby-plugin-image"
 import React from "react"
+import ReactDOM from "react-dom/client"
 
 let hydrateRef
 
@@ -19,17 +19,6 @@ export function onRouteUpdate(): void {
     }
     hydrateRef = setTimeout(hydrateImages)
   }
-}
-
-declare const HAS_REACT_18: boolean
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let ReactDOM: any
-
-if (HAS_REACT_18) {
-  ReactDOM = require(`react-dom/client`)
-} else {
-  ReactDOM = require(`react-dom`)
 }
 
 function hydrateImages(): void {
@@ -80,15 +69,9 @@ function hydrateImages(): void {
             hydrationData.innerHTML
           )
 
-          if (ReactDOM.createRoot) {
-            const root = ReactDOM.createRoot(gatsbyImageHydrationElement)
-            root.render(React.createElement(mod.GatsbyImage, imageProps))
-          } else {
-            ReactDOM.hydrate(
-              React.createElement(mod.GatsbyImage, imageProps),
-              gatsbyImageHydrationElement
-            )
-          }
+          // @ts-ignore - TODO: Fix me
+          const root = ReactDOM.createRoot(gatsbyImageHydrationElement)
+          root.render(React.createElement(mod.GatsbyImage, imageProps))
         }
       }
     })

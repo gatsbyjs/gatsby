@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "2.22.0-next.0",
+  "version": "3.1.0-next.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=18.0.0"
   },
   "files": [
     "lib/*.js"

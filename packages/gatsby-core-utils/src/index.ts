@@ -20,5 +20,6 @@ export { listPlugins } from "./list-plugins"
 export { createFilePath } from "./filename-utils"
 export { readConfigFile, getConfigPath } from "./utils"
 export { lock } from "./lock"
+export { murmurhash } from "./murmurhash"
 
 export type { IFetchRemoteFileOptions } from "./fetch-remote-file"

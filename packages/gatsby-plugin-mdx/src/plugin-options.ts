@@ -1,7 +1,8 @@
 import type { ProcessorOptions } from "@mdx-js/mdx"
 import type { GatsbyCache, NodePluginArgs, PluginOptions, Store } from "gatsby"
 import deepmerge from "deepmerge"
-import type { IPluginRefObject } from "gatsby-plugin-utils/types"
+import type { IPluginInfo } from "gatsby-plugin-utils/types"
+import { cachedImport } from "./cache-helpers"
 import { getSourcePluginsAsRemarkPlugins } from "./get-source-plugins-as-remark-plugins"
 import rehypeMdxMetadataExtractor from "./rehype-metadata-extractor"
 import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
@@ -10,7 +11,7 @@ import { remarkPathPlugin } from "./remark-path-prefix-plugin"
 export interface IMdxPluginOptions {
   extensions: [string]
   mdxOptions: ProcessorOptions
-  gatsbyRemarkPlugins?: [IPluginRefObject]
+  gatsbyRemarkPlugins?: [IPluginInfo]
 }
 interface IHelpers {
   getNode: NodePluginArgs["getNode"]
@@ -51,6 +52,10 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
 ) => {
   const options = defaultOptions(pluginOptions)
 
+  const { default: remarkUnwrapImages } = await cachedImport<
+    typeof import("remark-unwrap-images")
+  >(`remark-unwrap-images`)
+
   // Set jsxRuntime & jsxImportSource based on Gatsby project config
   const { config } = helpers.store.getState()
   const { jsxRuntime, jsxImportSource } = config
@@ -60,6 +65,10 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
   if (!options.mdxOptions.remarkPlugins) {
     options.mdxOptions.remarkPlugins = []
   }
+
+  // The unwrapping has to happen before any other remark plugins are run (especially gatsby-remark-images)
+  // Otherwise remark-unwrap-images would operate on the already transformed images
+  options.mdxOptions.remarkPlugins.push(remarkUnwrapImages)
 
   // Inject Gatsby path prefix if needed
   if (helpers.pathPrefix) {
@@ -84,7 +93,7 @@ export const enhanceMdxOptions: EnhanceMdxOptions = async (
 
       if (typeof requiredPlugin.setParserPlugins === `function`) {
         for (const parserPlugin of requiredPlugin.setParserPlugins(
-          plugin.options || {}
+          plugin.pluginOptions || {}
         )) {
           if (Array.isArray(parserPlugin)) {
             const [parser, parserPluginOptions] = parserPlugin

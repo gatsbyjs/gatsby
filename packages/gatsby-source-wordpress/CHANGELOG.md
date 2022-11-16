@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.0.0/packages/gatsby-source-wordpress) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Bug Fixes
+
+- check for camelCase single field name [#36817](https://github.com/gatsbyjs/gatsby/issues/36817) ([372345e](https://github.com/gatsbyjs/gatsby/commit/372345eedc1ed2625717fa7988a1174a93fb38ca))
+- exclude field name when set for \_\_all [#36840](https://github.com/gatsbyjs/gatsby/issues/36840) ([55d50a9](https://github.com/gatsbyjs/gatsby/commit/55d50a9120df0f32425efcda27d3cbb730f3bfe2))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- Remove HAS_REACT_18 check [#36850](https://github.com/gatsbyjs/gatsby/issues/36850) ([20ef7c1](https://github.com/gatsbyjs/gatsby/commit/20ef7c12ffa9fd48c763c913e70ef20bef8a68fc))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [6.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.24.0/packages/gatsby-source-wordpress) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+#### Chores
+
+- Fix license link Fix [#36621](https://github.com/gatsbyjs/gatsby/issues/36621) ([67fa4b4](https://github.com/gatsbyjs/gatsby/commit/67fa4b48b2b986b3a0e82dd211bc79e679d4f3c2))
+
+### [6.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.23.1/packages/gatsby-source-wordpress) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.23.0/packages/gatsby-source-wordpress) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+#### Bug Fixes
+
+- match more urls wp on delta [#36474](https://github.com/gatsbyjs/gatsby/issues/36474) ([5302b7a](https://github.com/gatsbyjs/gatsby/commit/5302b7a29e12d2b1132d5852ed4ddc0d638443c4))
+- match full urls when replacing media item links to static [#36447](https://github.com/gatsbyjs/gatsby/issues/36447) ([dbbda9e](https://github.com/gatsbyjs/gatsby/commit/dbbda9e9224cff65a8d1fe8ca00a15d6a9eabe09))
+
+#### Chores
+
+- update dependency @types/semver to ^7.3.12 [#36510](https://github.com/gatsbyjs/gatsby/issues/36510) ([0b6e823](https://github.com/gatsbyjs/gatsby/commit/0b6e8237ddf50258c896a44a952ecd388963879c))
+
+### [6.22.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.22.1/packages/gatsby-source-wordpress) (2022-09-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.22.0/packages/gatsby-source-wordpress) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [6.21.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.21.1/packages/gatsby-source-wordpress) (2022-08-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [6.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.21.0/packages/gatsby-source-wordpress) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+#### Chores
+
+- update sharp [#35539](https://github.com/gatsbyjs/gatsby/issues/35539) ([a9132a5](https://github.com/gatsbyjs/gatsby/commit/a9132a53eac37f713e8cb8a8246c62f4f8d8f142))
+- update dependency @types/semver to ^7.3.10 [#36027](https://github.com/gatsbyjs/gatsby/issues/36027) ([a529451](https://github.com/gatsbyjs/gatsby/commit/a5294515f966b336db6c910168bdc06897d2a42b))
+
 ## [6.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.20.0/packages/gatsby-source-wordpress) (2022-08-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)

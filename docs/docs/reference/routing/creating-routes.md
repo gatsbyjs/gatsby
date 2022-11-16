@@ -69,7 +69,7 @@ exports.createPages = async function ({ actions, graphql }) {
     }
   `)
   // highlight-start
-  data.allMarkdownRemark.forEach(node => {
+  data.allMarkdownRemark.nodes.forEach(node => {
     const slug = node.fields.slug
     actions.createPage({
       path: slug,
