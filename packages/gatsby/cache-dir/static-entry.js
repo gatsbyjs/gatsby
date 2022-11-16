@@ -556,12 +556,9 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
   }
 
   const sliceElement = (
-    <SlicesContext.Provider value={slicesContext}>
-      <StaticQueryContext.Provider value={staticQueryContext}>
-        <SliceComponent sliceContext={slice.context} {...props} />
-      </StaticQueryContext.Provider>
-    </SlicesContext.Provider>
+    <SliceComponent sliceContext={slice.context} {...props} />
   )
+
   const sliceWrappedWithWrapRootElement = apiRunner(
     `wrapRootElement`,
     { element: sliceElement },
@@ -571,15 +568,26 @@ export async function renderSlice({ slice, staticQueryContext, props = {} }) {
     }
   ).pop()
 
+  const sliceWrappedWithWrapRootElementAndContexts = (
+    <SlicesContext.Provider value={slicesContext}>
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        {sliceWrappedWithWrapRootElement}
+      </StaticQueryContext.Provider>
+    </SlicesContext.Provider>
+  )
+
   const writableStream = new WritableAsPromise()
-  const { pipe } = renderToPipeableStream(sliceWrappedWithWrapRootElement, {
-    onAllReady() {
-      pipe(writableStream)
-    },
-    onError(error) {
-      writableStream.destroy(error)
-    },
-  })
+  const { pipe } = renderToPipeableStream(
+    sliceWrappedWithWrapRootElementAndContexts,
+    {
+      onAllReady() {
+        pipe(writableStream)
+      },
+      onError(error) {
+        writableStream.destroy(error)
+      },
+    }
+  )
 
   return await writableStream
 }

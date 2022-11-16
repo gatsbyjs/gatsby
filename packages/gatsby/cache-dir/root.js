@@ -90,20 +90,30 @@ class LocationHandler extends React.Component {
     }
 
     return (
-      <RouteUpdates location={location}>
-        <Router
-          basepath={__BASE_PATH__}
-          location={location}
-          id="gatsby-focus-wrapper"
-        >
-          <RouteHandler
-            path={location.pathname}
-            location={location}
-            pageResources={dev404PageResources}
-            custom404={custom404}
-          />
-        </Router>
-      </RouteUpdates>
+      <EnsureResources location={location}>
+        {locationAndPageResources => (
+          <SlicesContext.Provider value={slicesContext}>
+            <SlicesMapContext.Provider
+              value={locationAndPageResources.pageResources.page.slicesMap}
+            >
+              <RouteUpdates location={location}>
+                <Router
+                  basepath={__BASE_PATH__}
+                  location={location}
+                  id="gatsby-focus-wrapper"
+                >
+                  <RouteHandler
+                    path={location.pathname}
+                    location={location}
+                    pageResources={dev404PageResources}
+                    custom404={custom404}
+                  />
+                </Router>
+              </RouteUpdates>
+            </SlicesMapContext.Provider>
+          </SlicesContext.Provider>
+        )}
+      </EnsureResources>
     )
   }
 }
