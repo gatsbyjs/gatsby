@@ -54,14 +54,6 @@ export interface NodeModel {
     { ids: Array<string>, type?: TypeOrTypeName },
     pageDependencies?: PageDependencies
   ): Array<any>;
-  getAllNodes(
-    { type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
-  ): Array<any>;
-  runQuery(
-    args: QueryArguments,
-    pageDependencies?: PageDependencies
-  ): Promise<any>;
   getTypes(): Array<string>;
   trackPageDependencies<nodeOrNodes: Node | Node[]>(
     result: nodeOrNodes,
@@ -188,71 +180,6 @@ class LocalNodeModel {
     }
 
     return wrapNodes(this.trackPageDependencies(result, pageDependencies))
-  }
-
-  /**
-   * Get all nodes in the store, or all nodes of a specified type. Note that
-   * this adds connectionType tracking by default if type is passed.
-   *
-   * @deprecated Since version 4.0 - Use nodeModel.findAll() instead
-   * @param {Object} args
-   * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Node[]}
-   */
-  getAllNodes(args, pageDependencies = {}) {
-    // TODO(v5): Remove API
-    reportOnce(
-      `nodeModel.getAllNodes() is deprecated. Use nodeModel.findAll() with an empty query instead.`
-    )
-    const { type = `Node` } = args || {}
-
-    let result
-    if (type === `Node`) {
-      result = getNodes()
-    } else {
-      const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodesByType = nodeTypeNames.map(typeName =>
-        getNodesByType(typeName)
-      )
-      const nodes = [].concat(...nodesByType)
-      result = nodes.filter(Boolean)
-    }
-
-    if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
-    }
-
-    if (typeof pageDependencies.connectionType === `undefined`) {
-      pageDependencies.connectionType =
-        typeof type === `string` ? type : type.name
-    }
-
-    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
-  }
-
-  /**
-   * Get nodes of a type matching the specified query.
-   *
-   * @deprecated Since version 4.0 - Use nodeModel.findAll() or nodeModel.findOne() instead
-   * @param {Object} args
-   * @param {Object} args.query Query arguments (`filter` and `sort`)
-   * @param {(string|GraphQLOutputType)} args.type Type
-   * @param {boolean} [args.firstOnly] If true, return only first match
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Promise<Node[]>}
-   */
-  async runQuery(args, pageDependencies = {}) {
-    // TODO(v5): Remove API
-    reportOnce(
-      `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead.`
-    )
-    if (args.firstOnly) {
-      return this.findOne(args, pageDependencies)
-    }
-    const { skip, limit, ...query } = args.query
-    const result = await this.findAll({ ...args, query }, pageDependencies)
-    return Array.from(result.entries)
   }
 
   async _query(args) {
@@ -546,28 +473,53 @@ class LocalNodeModel {
    */
   findRootNodeAncestor(obj, predicate = null) {
     let iterations = 0
-    let node = obj
+    let ids = this._rootNodeMap.get(obj)
+    if (!ids) {
+      ids = []
+    }
+    if (obj?.parent) {
+      ids.push(obj.parent)
+    }
+    let matchingRoot = null
 
-    while (iterations++ < 100) {
-      if (predicate && predicate(node)) return node
+    if (ids) {
+      for (const id of ids) {
+        let tracked = getNodeById(id)
 
-      const parent = getNodeById(node.parent)
-      const id = this._rootNodeMap.get(node)
-      const trackedParent = getNodeById(id)
+        if (tracked) {
+          const visited = new Set()
 
-      if (!parent && !trackedParent) {
-        const isMatchingRoot = !predicate || predicate(node)
-        return isMatchingRoot ? node : null
+          while (iterations++ < 100) {
+            if (predicate && predicate(tracked)) {
+              return tracked
+            }
+
+            if (visited.has(tracked)) {
+              reporter.error(
+                `It looks like you have a node that's set its parent as itself:\n\n` +
+                  tracked
+              )
+              break
+            }
+            visited.add(tracked)
+
+            const parent = getNodeById(tracked.parent)
+
+            if (!parent) {
+              break
+            }
+
+            tracked = parent
+          }
+
+          if (tracked && !predicate) {
+            matchingRoot = tracked
+          }
+        }
       }
-
-      node = parent || trackedParent
     }
 
-    reporter.error(
-      `It looks like you have a node that's set its parent as itself:\n\n` +
-        node
-    )
-    return null
+    return matchingRoot
   }
 
   /**
@@ -627,20 +579,6 @@ class ContextualNodeModel {
 
   getNodesByIds(args, pageDependencies) {
     return this.nodeModel.getNodesByIds(
-      args,
-      this._getFullDependencies(pageDependencies)
-    )
-  }
-
-  getAllNodes(args, pageDependencies) {
-    return this.nodeModel.getAllNodes(
-      args,
-      this._getFullDependencies(pageDependencies)
-    )
-  }
-
-  runQuery(args, pageDependencies) {
-    return this.nodeModel.runQuery(
       args,
       this._getFullDependencies(pageDependencies)
     )
@@ -964,7 +902,13 @@ const addRootNodeToInlineObject = (
 
     // don't need to track node itself
     if (!isNode) {
-      rootNodeMap.set(data, nodeId)
+      let nodeIds = rootNodeMap.get(data)
+      if (!nodeIds) {
+        nodeIds = new Set([nodeId])
+      } else {
+        nodeIds.add(nodeId)
+      }
+      rootNodeMap.set(data, nodeIds)
     }
   }
 }

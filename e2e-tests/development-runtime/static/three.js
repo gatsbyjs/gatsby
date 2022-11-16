@@ -1,0 +1,5 @@
+;(() => {
+  window.THREE = {
+    it: `loaded`,
+  }
+})()

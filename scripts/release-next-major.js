@@ -75,9 +75,22 @@ let currentGitHash = null
       }
     )
 
+    const d = new Date()
+    const postFixString = `d${d.getUTCFullYear().toString().padStart(4, `0`)}${(
+      d.getUTCMonth() + 1
+    )
+      .toString()
+      .padStart(2, `0`)}${d.getUTCDate().toString().padStart(2, `0`)}t${d
+      .getUTCHours()
+      .toString()
+      .padStart(2, `0`)}${d.getUTCMinutes().toString().padStart(2, `0`)}${d
+      .getUTCSeconds()
+      .toString()
+      .padStart(2, `0`)}`
+
     const bumpType = `major`
     const tagName = `alpha-v${nextMajor}`
-    const preId = `alpha-v${nextMajor}`
+    const preId = `alpha-v${nextMajor}.${postFixString}`
     // TODO swap back to above.
     // const tagName = `alpha-9689ff`
     // const preId = `alpha-9689ff`

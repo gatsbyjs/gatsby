@@ -14,8 +14,8 @@
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-images": "next",
     "gatsby-source-filesystem": "next",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "theme-ui": "^0.3.1"
   },
   "keywords": [
@@ -46,9 +46,5 @@
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
     "start-server-and-test": "^1.7.1"
-  },
-  "//": "we need to add fixed version of @types/responsible because it's 14.16+ and the package is configured wrongly",
-  "resolutions": {
-    "responselike": "^2.0.0"
   }
 }

@@ -319,7 +319,7 @@ For further reading, check out the [createPages](/docs/reference/config-files/ga
 
 ### Make a layout template for your posts
 
-You can create a file called `posts.jsx` in `src/templates` - this component will be rendered as the template for all posts. Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title. **Please note:** The query must **not** have a name. This way Gatsby can create a unique one internally and the `__contentFilePath` in the next step will work correctly.
+You can create a file called `posts.jsx` in `src/templates` - this component will be rendered as the template for all posts. Now, create a component that accepts your compiled MDX content via `children` and uses GraphQL `data` to show the title:
 
 ```jsx:title=src/templates/posts.jsx
 import React from "react"
@@ -378,36 +378,6 @@ That's it, you're done. Run `gatsby develop` to see your posts wrapped with `pos
 To extend your GraphQL nodes, you can use the [`onCreateNode` API](/docs/reference/config-files/gatsby-node/#onCreateNode).
 
 You can find examples in the [README of `gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx#extending-the-graphql-mdx-nodes).
-
-## Making GraphQL queries within an MDX File
-
-You can fetch data to use within your MDX file by using `StaticQuery`:
-
-<!-- prettier-ignore -->
-```mdx
-import { graphql } from "gatsby"
-
-<StaticQuery
-  query={graphql`
-    query {
-      site {
-        siteMetadata {
-          description
-        }
-      }
-    }
-  `}
-  render={data => (
-
-# My Awesome Page
-
-Here's a paragraph, followed by a paragraph with data!
-
-<p>{props.data.site.siteMetadata.description}</p>
-
-  )}
-/>
-```
 
 ## `gatsby-remark-*` and `remark` plugins
 

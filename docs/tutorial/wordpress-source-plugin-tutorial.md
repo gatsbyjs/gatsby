@@ -142,7 +142,7 @@ This next query will pull in a sorted list of the blog posts:
 
 ```graphql
 {
-  allWordpressPost(sort: { fields: [date] }) {
+  allWordpressPost(sort: { date: ASC }) {
     edges {
       node {
         title
@@ -186,7 +186,7 @@ export default function Home({ data }) {
 //highlight-start
 export const pageQuery = graphql`
   query {
-    allWordpressPost(sort: { fields: [date] }) {
+    allWordpressPost(sort: { date: ASC }) {
       edges {
         node {
           title
@@ -230,7 +230,7 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     {
-      allWordpressPost(sort: { fields: [date] }) {
+      allWordpressPost(sort: { date: ASC }) {
         edges {
           node {
             title
@@ -299,7 +299,7 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     {
-      allWordpressPost(sort: { fields: [date] }) {
+      allWordpressPost(sort: { date: ASC }) {
         edges {
           node {
             title
@@ -368,7 +368,7 @@ export default function Home({ data }) {
 
 export const pageQuery = graphql`
   query {
-    allWordpressPost(sort: { fields: [date] }) {
+    allWordpressPost(sort: { date: ASC }) {
       edges {
         node {
           title

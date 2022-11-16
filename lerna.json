@@ -9,9 +9,6 @@
       "conventionalCommits": true,
       "changelog": false,
       "message": "chore(release): Publish"
-    },
-    "bootstrap": {
-      "ignore": ["**/gatsby-admin"]
     }
   },
   "packages": ["packages/*"],

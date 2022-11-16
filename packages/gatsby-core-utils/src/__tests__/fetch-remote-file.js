@@ -133,7 +133,23 @@ const server = setupServer(
       ctx.body(content)
     )
   }),
+  // Should test with non-ascii word `개` (which means dog in Korean)
+  rest.get(
+    `http://external.com/${encodeURIComponent(`개`)}.jpg`,
+    async (req, res, ctx) => {
+      const { content, contentLength } = await getFileContent(
+        path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
+        req
+      )
 
+      return res(
+        ctx.set(`Content-Type`, `image/jpg`),
+        ctx.set(`Content-Length`, contentLength),
+        ctx.status(200),
+        ctx.body(content)
+      )
+    }
+  ),
   rest.get(`http://external.com/dog`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
@@ -327,6 +343,33 @@ describe(`fetch-remote-file`, () => {
     })
 
     expect(path.basename(filePath)).toBe(`dog.jpg`)
+    expect(getFileSize(filePath)).resolves.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
+    expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`downloads and create a jpg file for file with non-ascii url`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/${encodeURIComponent(`개`)}.jpg`,
+      cache,
+    })
+
+    expect(path.basename(filePath)).toBe(`개.jpg`)
+    expect(getFileSize(filePath)).resolves.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
+    expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`downloads and create a jpg file for file with non-ascii filename`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog.jpg`,
+      name: `${encodeURIComponent(`개`)}`,
+      cache,
+    })
+
+    expect(path.basename(filePath)).toBe(`개.jpg`)
     expect(getFileSize(filePath)).resolves.toBe(
       await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
     )

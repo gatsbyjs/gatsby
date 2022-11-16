@@ -48,12 +48,12 @@ const getLinkedContentList = ({ type, linkedContentFieldName }) => {
 	const fieldResolver =
 	{
 		type: [type],
-		resolve: (source, args, context, info) => {
-			const list = context.nodeModel.getAllNodes({ type });
-			const filteredList = list.filter(
+		resolve: async (source, args, context, info) => {
+			const { entries } = await context.nodeModel.findAll({ type })
+			const filteredList = entries.filter(
 				item => item.properties.referenceName === source.customFields[linkedContentFieldName].referencename
 			)
-			return filteredList;
+			return Array.from(filteredList);
 		}
 	}
 

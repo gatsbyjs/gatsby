@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.0.0/packages/gatsby-source-contentful) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Features
+
+- GraphiQL v2 [#36541](https://github.com/gatsbyjs/gatsby/issues/36541) ([55a601d](https://github.com/gatsbyjs/gatsby/commit/55a601d759589286fb99e97db0ba095a1e6ed894))
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- Update to GraphQL 16 [#36813](https://github.com/gatsbyjs/gatsby/issues/36813) ([9f840ad](https://github.com/gatsbyjs/gatsby/commit/9f840adc2e5fada5014f27814b49fbdf914d4ef9))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+- Correct image embed code sample [#36670](https://github.com/gatsbyjs/gatsby/issues/36670) ([1e8b95c](https://github.com/gatsbyjs/gatsby/commit/1e8b95c4cc2a8c1d59adde9fad9a3ea457c6ad48))
+
+## [7.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.22.0/packages/gatsby-source-contentful) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+### [7.21.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.21.1/packages/gatsby-source-contentful) (2022-09-22)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [7.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.21.0/packages/gatsby-source-contentful) (2022-09-13)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)

@@ -30,11 +30,11 @@ Calculate the number of CPU cores on the current machine
 
 This function can be controlled by an env variable `GATSBY_CPU_COUNT` setting the first argument to true.
 
-| value         | description                                            |
-| ------------- | ------------------------------------------------------ |
-|               | Counts amount of real cores by running a shell command |
-| logical-cores | `require("os").cpus()` to count all virtual cores      |
-| any number    | Sets cpu count to that specific number                 |
+| value           | description                                            |
+| --------------- | ------------------------------------------------------ |
+|                 | Counts amount of real cores by running a shell command |
+| `logical_cores` | `require("os").cpus()` to count all virtual cores      |
+| any number      | Sets cpu count to that specific number                 |
 
 ```js
 const { cpuCoreCount } = require("gatsby-core-utils")
@@ -45,7 +45,7 @@ const coreCount = cpuCoreCount(false)
 
 ```js
 const { cpuCoreCount } = require("gatsby-core-utils")
-process.env.GATSBY_CPU_COUNT = "logical-cores"
+process.env.GATSBY_CPU_COUNT = "logical_cores"
 
 const coreCount = cpuCoreCount()
 // ...

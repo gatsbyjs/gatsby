@@ -32,7 +32,7 @@ class TagsPageRoute extends React.Component {
 export default TagsPageRoute
 
 export const pageQuery = graphql`
-  query {
+  {
     site {
       siteMetadata {
         title
@@ -42,7 +42,7 @@ export const pageQuery = graphql`
       limit: 2000
       filter: { frontmatter: { draft: { ne: true }, example: { ne: true } } }
     ) {
-      group(field: frontmatter___tags) {
+      group(field: { frontmatter: { tags: SELECT } }) {
         fieldValue
         totalCount
       }

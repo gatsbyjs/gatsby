@@ -63,6 +63,8 @@ export async function loadConfig({
         reporter.info(message)
       }
 
+      process.env.GATSBY_SLICES = `true`
+
       //  track usage of feature
       enabledConfigFlags.forEach(flag => {
         if (flag.telemetryId) {

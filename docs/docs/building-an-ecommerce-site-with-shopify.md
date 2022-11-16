@@ -56,7 +56,7 @@ Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql
 
 ```graphql
 {
-  allShopifyProduct(sort: { fields: [title] }) {
+  allShopifyProduct(sort: { title: ASC }) {
     edges {
       node {
         title
@@ -106,7 +106,7 @@ export default ProductsPage
 
 export const query = graphql`
   {
-    allShopifyProduct(sort: { fields: [title] }) {
+    allShopifyProduct(sort: { title: ASC }) {
       edges {
         node {
           title
@@ -158,7 +158,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // Query for all products in Shopify
   const result = await graphql(`
     query {
-      allShopifyProduct(sort: { fields: [title] }) {
+      allShopifyProduct(sort: { title: ASC }) {
         edges {
           node {
             title

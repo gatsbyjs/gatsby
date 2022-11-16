@@ -14,6 +14,7 @@ let posts
 
 Modal.setAppElement(`#___gatsby`)
 
+// TODO(v6): Refactor this to a function component
 class GatsbyGramModal extends React.Component {
   static propTypes = {
     isOpen: PropTypes.bool,
@@ -76,6 +77,7 @@ class GatsbyGramModal extends React.Component {
     }
   }
 
+  // TODO(v6): Refactor to use `useStaticQuery` instead of `StaticQuery`, `StaticQuery` will be removed in v6
   render() {
     return (
       <StaticQuery
