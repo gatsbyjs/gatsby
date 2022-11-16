@@ -904,7 +904,7 @@ module.exports = async (
   ) {
     config.experiments = {
       lazyCompilation: {
-        entries: true,
+        entries: false,
         imports: true,
       },
     }
