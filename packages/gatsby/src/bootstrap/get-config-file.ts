@@ -5,6 +5,7 @@ import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import { COMPILED_CACHE_DIR } from "../utils/parcel/compile-gatsby-files"
 import { isNearMatch } from "../utils/is-near-match"
+import { pathToFileURL } from "url"
 
 export async function getConfigFile(
   siteDirectory: string,
@@ -95,6 +96,26 @@ export async function getConfigFile(
             configName,
           },
         })
+      }
+
+      // TODO: Maybe move this to a better spot in this function, let's test it here for now
+      if (nearMatch && nearMatch.endsWith(`.mjs`)) {
+        try {
+          configFilePath = path.join(siteDirectory, nearMatch)
+          const url = pathToFileURL(configFilePath)
+          const importedModule = await import(url.href)
+
+          if (!importedModule.default) {
+            // TODO: Structured error
+            console.error(`No default export found in gatsby-config.mjs`)
+          }
+
+          configModule = importedModule.default
+          return { configModule, configFilePath }
+        } catch (cause) {
+          // TODO: Structured error
+          throw new Error(`Failed to load .mjs config file`, { cause })
+        }
       }
 
       // gatsby-config is misnamed

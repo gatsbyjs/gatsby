@@ -195,7 +195,7 @@
     "@types/string-similarity": "^4.0.0",
     "@types/tmp": "^0.2.0",
     "@types/webpack-virtual-modules": "^0.1.1",
-    "babel-preset-gatsby-package": "^3.1.0-next.0",
+    "babel-preset-gatsby-package": "file:../babel-reset-gatsby-package",
     "copyfiles": "^2.3.0",
     "cross-env": "^7.0.3",
     "documentation": "^13.1.0",
