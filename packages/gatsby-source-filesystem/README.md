@@ -47,7 +47,17 @@ module.exports = {
 
 ## Options
 
-In addition to the name and path parameters you may pass an optional `ignore` array of file globs to ignore.
+### name
+
+The name of the fileset when querying file nodes from graphql.
+
+### path
+
+The path to the files (e.g. `${__dirname}/content/blog`)
+
+### ignore
+
+You may pass an optional `ignore` array of file globs to ignore.
 
 They will be added to the following default list:
 
@@ -62,7 +72,9 @@ They will be added to the following default list:
 ../**/dist/**
 ```
 
-To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
+### usePolling
+
+Configure the `usePolling` option of https://github.com/paulmillr/chokidar
 
 ## How to query
 
@@ -192,6 +204,8 @@ createRemoteFileNode({
   ext: ".jpg",
 })
 ```
+
+To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
 
 #### Example usage
 

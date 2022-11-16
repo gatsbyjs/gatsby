@@ -165,7 +165,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     usePolling: Joi.boolean()
       .default(false)
       .description(
-        `When set to true, use file system polling instead of fsEvents`
+        `Configure the "usePolling" option of https://github.com/paulmillr/chokidar`
       ),
   })
 
