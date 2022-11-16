@@ -41,19 +41,19 @@ export async function requireGatsbyPlugin(
         pluginModule = await import(url?.href)
       } catch (failedToImportError) {
         // TODO: Better error handling
-        throw new Error(`Failed to import plugin ${requirePluginModulePath}`, {
-          cause: failedToImportError,
-        })
+        // throw new Error(`Failed to import plugin ${requirePluginModulePath}`, {
+        //   cause: failedToImportError,
+        // })
       }
 
       if (!pluginModule) {
-        throw new Error(`Failed to require plugin ${requirePluginModulePath}`, {
-          cause: failedToRequireError,
-        })
+        // throw new Error(`Failed to require plugin ${requirePluginModulePath}`, {
+        //   cause: failedToRequireError,
+        // })
       }
     }
 
-    pluginModuleCache.set(key, pluginModule)
+    if (pluginModule) pluginModuleCache.set(key, pluginModule)
   }
   return pluginModule
 }
