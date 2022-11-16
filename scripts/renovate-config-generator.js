@@ -386,6 +386,12 @@ const renovateConfig = {
   packageRules: defaultPackageRules.concat(
     Array.from(packageRules.values()).flat()
   ),
+  force: {
+    constraints: {
+      node: `>=18.0.0`,
+      npm: `>=8.0.0`,
+    },
+  },
 }
 
 fs.writeJSONSync(path.join(ROOT_DIR, `renovate.json5`), renovateConfig, {

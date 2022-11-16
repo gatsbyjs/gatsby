@@ -29498,7 +29498,6 @@
         "@pmmmwh/react-refresh-webpack-plugin",
         "axios",
         "cookie",
-        "express-graphql",
         "json-loader",
         "memoizee",
         "opentracing",
@@ -29557,7 +29556,6 @@
         "@pmmmwh/react-refresh-webpack-plugin",
         "axios",
         "cookie",
-        "express-graphql",
         "json-loader",
         "memoizee",
         "opentracing",
@@ -29603,5 +29601,11 @@
       "commitMessageSuffix": "{{#unless groupName}} for gatsby{{/unless}}",
       "dependencyDashboardApproval": true
     }
-  ]
+  ],
+  "force": {
+    "constraints": {
+      "node": ">=18.0.0",
+      "npm": ">=8.0.0"
+    }
+  }
 }
