@@ -74,7 +74,11 @@ export async function compileGatsbyFiles(
 
       const { name } = path.parse(file)
       // Of course, allow valid gatsby-node files
-      if (file === `gatsby-node.js` || file === `gatsby-node.ts`) {
+      if (
+        file === `gatsby-node.js` ||
+        file === `gatsby-node.mjs` ||
+        file === `gatsby-node.ts`
+      ) {
         break
       }
 

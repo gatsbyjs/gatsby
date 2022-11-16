@@ -403,13 +403,16 @@ export async function validateConfigPluginsOptions(
 /**
  * Identify which APIs each plugin exports
  */
-export function collatePluginAPIs({
+export async function collatePluginAPIs({
   currentAPIs,
   flattenedPlugins,
 }: {
   currentAPIs: ICurrentAPIs
   flattenedPlugins: Array<IPluginInfo & Partial<IFlattenedPlugin>>
-}): { flattenedPlugins: Array<IFlattenedPlugin>; badExports: IEntryMap } {
+}): Promise<{
+  flattenedPlugins: Array<IFlattenedPlugin>
+  badExports: IEntryMap
+}> {
   // Get a list of bad exports
   const badExports: IEntryMap = {
     node: [],
@@ -417,7 +420,7 @@ export function collatePluginAPIs({
     ssr: [],
   }
 
-  flattenedPlugins.forEach(plugin => {
+  for (const plugin of flattenedPlugins) {
     plugin.nodeAPIs = []
     plugin.browserAPIs = []
     plugin.ssrAPIs = []
@@ -425,16 +428,23 @@ export function collatePluginAPIs({
     // Discover which APIs this plugin implements and store an array against
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
-    const pluginNodeExports = resolveModuleExports(
-      plugin.resolvedCompiledGatsbyNode ?? `${plugin.resolve}/gatsby-node`,
-      {
-        mode: `require`,
-      }
-    )
-    const pluginBrowserExports = resolveModuleExports(
+    let pluginNodeExports
+
+    try {
+      pluginNodeExports = await resolveModuleExports(
+        plugin.resolvedCompiledGatsbyNode ?? `${plugin.resolve}/gatsby-node`,
+        {
+          mode: `require`,
+        }
+      )
+    } catch (cause) {
+      throw new Error(`ABC Failed to import gatsby-node`, { cause })
+    }
+
+    const pluginBrowserExports = await resolveModuleExports(
       `${plugin.resolve}/gatsby-browser`
     )
-    const pluginSSRExports = resolveModuleExports(
+    const pluginSSRExports = await resolveModuleExports(
       `${plugin.resolve}/gatsby-ssr`
     )
 
@@ -461,7 +471,7 @@ export function collatePluginAPIs({
         getBadExports(plugin, pluginSSRExports, currentAPIs.ssr)
       ) // Collate any bad exports
     }
-  })
+  }
 
   return {
     flattenedPlugins: flattenedPlugins as Array<IFlattenedPlugin>,
