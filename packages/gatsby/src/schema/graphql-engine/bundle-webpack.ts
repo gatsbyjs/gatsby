@@ -70,6 +70,9 @@ export async function createGraphqlEngineBundle(
     externalsPresets: {
       node: false,
     },
+    experiments: {
+      topLevelAwait: true,
+    },
     cache: {
       type: `filesystem`,
       name: `graphql-engine`,
