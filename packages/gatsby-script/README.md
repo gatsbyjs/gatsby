@@ -37,8 +37,8 @@ function IndexPage() {
         {`
           // Example configuration of Google Analytics for use in Partytown
           window.dataLayer = window.dataLayer || [];
-          window.gtag = function gtag() { window.dataLayer.push(arguments); }
-          gtag('js', new Date()); 
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
           gtag('config', ${GTM}, { send_page_view: false })
         `}
       </Script>
