@@ -24,7 +24,13 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> =
       .allow(null),
     category: Joi.string().valid(`USER`, `SYSTEM`, `THIRD_PARTY`),
     level: Joi.string().valid(`ERROR`, `WARNING`, `INFO`, `DEBUG`),
-    type: Joi.string().valid(`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`),
+    type: Joi.string().valid(
+      `GRAPHQL`,
+      `CONFIG`,
+      `WEBPACK`,
+      `PLUGIN`,
+      `COMPILATION`
+    ),
     filePath: Joi.string(),
     location: Joi.object({
       start: Position.required(),

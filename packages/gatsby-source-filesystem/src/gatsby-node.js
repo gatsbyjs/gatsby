@@ -171,7 +171,7 @@ exports.sourceNodes = (api, pluginOptions) => {
 The path passed to gatsby-source-filesystem does not exist on your file system:
 ${pluginOptions.path}
 Please pick a path to an existing directory.
-See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
+See docs here - https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/
       `)
   }
 

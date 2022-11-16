@@ -7,11 +7,12 @@ import {
   getConfigPath,
   getConfigStore,
 } from "gatsby-core-utils"
-import { transform } from "@babel/core"
-import { BabelPluginAddPluginsToGatsbyConfig } from "./plugin-babel-utils"
+import { transform, TransformOptions } from "@babel/core"
+import BabelPluginAddPluginsToGatsbyConfig from "./plugin-babel-utils"
 
 const addPluginToConfig = (
   src: string,
+  srcPath: string,
   {
     name,
     options,
@@ -22,19 +23,41 @@ const addPluginToConfig = (
     key: string
   }
 ): string => {
-  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
-    pluginOrThemeName: name,
-    options,
-    shouldAdd: true,
-    key,
-  })
+  let code
 
-  // @ts-ignore - fix me
-  const { code } = transform(src, {
-    // @ts-ignore - fix me
-    plugins: [addPlugins.plugin],
-    configFile: false,
-  })
+  try {
+    const transformOptions: TransformOptions = {
+      plugins: [
+        [
+          BabelPluginAddPluginsToGatsbyConfig,
+          {
+            pluginOrThemeName: name,
+            options,
+            key,
+          },
+        ],
+      ],
+      filename: srcPath,
+      configFile: false,
+    }
+
+    // Use the Babel TS preset if we're operating on `gatsby-config.ts`
+    if (srcPath.endsWith(`ts`)) {
+      transformOptions.presets = [require.resolve(`@babel/preset-typescript`)]
+    }
+
+    code = transform(src, transformOptions)?.code
+
+    // Add back stripped type import, do light formatting, remove added empty module export.
+    // Use semicolon since Babel does that anyway, and we might as well be consistent.
+    if (srcPath.endsWith(`ts`)) {
+      code = `import type { GatsbyConfig } from "gatsby";\n\n${code}`
+      code = code.replace(`export {};`, ``)
+      code = code.replace(`export default config;`, `\nexport default config;`)
+    }
+  } catch (error) {
+    console.error(`Failed to transform gatsby config`, error)
+  }
 
   return code
 }
@@ -53,10 +76,13 @@ export const GatsbyPluginCreate = async ({
   key,
 }: IGatsbyPluginCreateInput): Promise<void> => {
   const release = await lock(`gatsby-config.js`)
+  const configSrcPath = getConfigPath(root)
   const configSrc = await readConfigFile(root)
-
-  const code = addPluginToConfig(configSrc, { name, options, key })
-
+  const code = addPluginToConfig(configSrc, configSrcPath, {
+    name,
+    options,
+    key,
+  })
   await fs.writeFile(getConfigPath(root), code)
   release()
 }

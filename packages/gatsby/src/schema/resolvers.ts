@@ -11,10 +11,12 @@ import {
   isObjectType,
   isInterfaceType,
   isEnumType,
+  isInputObjectType,
   SelectionSetNode,
   SelectionNode,
   FieldNode,
 } from "graphql"
+import isPlainObject from "lodash/isPlainObject"
 import { Path } from "graphql/jsutils/Path"
 import reporter from "gatsby-cli/lib/reporter"
 import { pathToArray } from "../query/utils"
@@ -27,11 +29,68 @@ import {
 import { IGatsbyNode } from "../redux/types"
 import { IQueryResult } from "../datastore/types"
 import { GatsbyIterable } from "../datastore/common/iterable"
+import { getResolvedFields, fieldPathNeedToResolve } from "./utils"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
 type nestedListOfStrings = Array<string | nestedListOfStrings>
 type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
+
+type NestedPathStructure = INestedPathStructureNode | true | "ASC" | "DESC"
+
+interface INestedPathStructureNode {
+  [key: string]: NestedPathStructure
+}
+
+function pathObjectToPathString(input: INestedPathStructureNode): {
+  path: string
+  leaf: any
+} {
+  const path: Array<string> = []
+  let currentValue: NestedPathStructure | undefined = input
+  let leaf: any = undefined
+  while (currentValue) {
+    if (isPlainObject(currentValue)) {
+      const entries = Object.entries(currentValue)
+      if (entries.length !== 1) {
+        throw new Error(`Invalid field arg`)
+      }
+      for (const [key, value] of entries) {
+        path.push(key)
+        currentValue = value
+      }
+    } else {
+      leaf = currentValue
+      currentValue = undefined
+    }
+  }
+
+  return {
+    path: path.join(`.`),
+    leaf,
+  }
+}
+
+function getMaybeResolvedValue(
+  node: IGatsbyNode,
+  field: string | INestedPathStructureNode,
+  nodeInterfaceName: string
+): any {
+  if (typeof field !== `string`) {
+    field = pathObjectToPathString(field).path
+  }
+
+  if (
+    fieldPathNeedToResolve({
+      selector: field,
+      type: nodeInterfaceName,
+    })
+  ) {
+    return getValueAt(getResolvedFields(node) as Record<string, unknown>, field)
+  } else {
+    return getValueAt(node, field)
+  }
+}
 
 export function findOne<TSource, TArgs>(
   typeName: string
@@ -52,7 +111,40 @@ export function findOne<TSource, TArgs>(
   }
 }
 
-type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number }
+type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number; sort: any }
+
+function maybeConvertSortInputObjectToSortPath<TArgs>(
+  args: PaginatedArgs<TArgs>
+): any {
+  if (!args.sort) {
+    return args
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `5`) {
+    let sorts = args.sort
+    if (!Array.isArray(sorts)) {
+      sorts = [sorts]
+    }
+
+    const modifiedSort: any = {
+      fields: [],
+      order: [],
+    }
+
+    for (const sort of sorts) {
+      const { path, leaf } = pathObjectToPathString(sort)
+      modifiedSort.fields.push(path)
+      modifiedSort.order.push(leaf)
+    }
+
+    return {
+      ...args,
+      sort: modifiedSort,
+    }
+  }
+
+  return args
+}
 
 export function findManyPaginated<TSource, TArgs>(
   typeName: string
@@ -77,7 +169,7 @@ export function findManyPaginated<TSource, TArgs>(
     const limit = typeof args.limit === `number` ? args.limit + 2 : undefined
 
     const extendedArgs = {
-      ...args,
+      ...maybeConvertSortInputObjectToSortPath(args),
       group: group || [],
       distinct: distinct || [],
       max: max || [],
@@ -109,106 +201,108 @@ export function findManyPaginated<TSource, TArgs>(
 }
 
 interface IFieldConnectionArgs {
-  field: string
+  field: string | INestedPathStructureNode
 }
 
-export const distinct: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function distinctResolver(source, args): Array<string> {
-  const { field } = args
-  const { edges } = source
+export function createDistinctResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function distinctResolver(source, args): Array<string> {
+    const { field } = args
+    const { edges } = source
 
-  const values = new Set<string>()
-  edges.forEach(({ node }) => {
-    const value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
-    if (value === null || value === undefined) {
-      return
-    }
-    if (Array.isArray(value)) {
-      value.forEach(subValue =>
-        values.add(subValue instanceof Date ? subValue.toISOString() : subValue)
-      )
-    } else if (value instanceof Date) {
-      values.add(value.toISOString())
-    } else {
-      values.add(value)
-    }
-  })
-  return Array.from(values).sort()
-}
-
-export const min: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function minResolver(source, args): number | null {
-  const { field } = args
-  const { edges } = source
-
-  let min = Number.MAX_SAFE_INTEGER
-
-  edges.forEach(({ node }) => {
-    let value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
-
-    if (typeof value !== `number`) {
-      value = Number(value)
-    }
-    if (!isNaN(value) && value < min) {
-      min = value
-    }
-  })
-  if (min === Number.MAX_SAFE_INTEGER) {
-    return null
+    const values = new Set<string>()
+    edges.forEach(({ node }) => {
+      const value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+      if (value === null || value === undefined) {
+        return
+      }
+      if (Array.isArray(value)) {
+        value.forEach(subValue =>
+          values.add(
+            subValue instanceof Date ? subValue.toISOString() : subValue
+          )
+        )
+      } else if (value instanceof Date) {
+        values.add(value.toISOString())
+      } else {
+        values.add(value)
+      }
+    })
+    return Array.from(values).sort()
   }
-  return min
 }
 
-export const max: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function maxResolver(source, args): number | null {
-  const { field } = args
-  const { edges } = source
+export function createMinResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function minResolver(source, args): number | null {
+    const { field } = args
+    const { edges } = source
 
-  let max = Number.MIN_SAFE_INTEGER
+    let min = Number.MAX_SAFE_INTEGER
 
-  edges.forEach(({ node }) => {
-    let value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
-    if (typeof value !== `number`) {
-      value = Number(value)
+    edges.forEach(({ node }) => {
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+
+      if (typeof value !== `number`) {
+        value = Number(value)
+      }
+      if (!isNaN(value) && value < min) {
+        min = value
+      }
+    })
+    if (min === Number.MAX_SAFE_INTEGER) {
+      return null
     }
-    if (!isNaN(value) && value > max) {
-      max = value
-    }
-  })
-  if (max === Number.MIN_SAFE_INTEGER) {
-    return null
+    return min
   }
-  return max
 }
 
-export const sum: GatsbyResolver<
-  IGatsbyConnection<IGatsbyNode>,
-  IFieldConnectionArgs
-> = function sumResolver(source, args): number | null {
-  const { field } = args
-  const { edges } = source
+export function createMaxResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function maxResolver(source, args): number | null {
+    const { field } = args
+    const { edges } = source
 
-  return edges.reduce<number | null>((prev, { node }) => {
-    let value =
-      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
+    let max = Number.MIN_SAFE_INTEGER
 
-    if (typeof value !== `number`) {
-      value = Number(value)
+    edges.forEach(({ node }) => {
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+      if (typeof value !== `number`) {
+        value = Number(value)
+      }
+      if (!isNaN(value) && value > max) {
+        max = value
+      }
+    })
+    if (max === Number.MIN_SAFE_INTEGER) {
+      return null
     }
-    if (!isNaN(value)) {
-      return (prev || 0) + value
-    }
-    return prev
-  }, null)
+    return max
+  }
+}
+
+export function createSumResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<IGatsbyConnection<IGatsbyNode>, IFieldConnectionArgs> {
+  return function sumResolver(source, args): number | null {
+    const { field } = args
+    const { edges } = source
+
+    return edges.reduce<number | null>((prev, { node }) => {
+      let value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+
+      if (typeof value !== `number`) {
+        value = Number(value)
+      }
+      if (!isNaN(value)) {
+        return (prev || 0) + value
+      }
+      return prev
+    }, null)
+  }
 }
 
 type IGatsbyGroupReturnValue<NodeType> = Array<
@@ -218,49 +312,60 @@ type IGatsbyGroupReturnValue<NodeType> = Array<
   }
 >
 
-export const group: GatsbyResolver<
+export function createGroupResolver(
+  nodeInterfaceName: string
+): GatsbyResolver<
   IGatsbyConnection<IGatsbyNode>,
   PaginatedArgs<IFieldConnectionArgs>
-> = function groupResolver(source, args): IGatsbyGroupReturnValue<IGatsbyNode> {
-  const { field } = args
-  const { edges } = source
-  const groupedResults: Record<string, Array<IGatsbyNode>> = edges.reduce(
-    (acc, { node }) => {
-      const value =
-        getValueAt(node, `__gatsby_resolved.${field}`) ||
-        getValueAt(node, field)
-      const values = Array.isArray(value) ? value : [value]
-      values
-        .filter(value => value != null)
-        .forEach(value => {
-          const key = value instanceof Date ? value.toISOString() : value
-          acc[key] = (acc[key] || []).concat(node)
-        })
-      return acc
-      // Note: using Object.create on purpose:
-      //   object key may be arbitrary string including reserved words (i.e. `constructor`)
-      //   see: https://github.com/gatsbyjs/gatsby/issues/22508
-    },
-    Object.create(null)
-  )
+> {
+  return function groupResolver(
+    source,
+    args
+  ): IGatsbyGroupReturnValue<IGatsbyNode> {
+    const { field } = args
+    const { edges } = source
+    const groupedResults: Record<string, Array<IGatsbyNode>> = edges.reduce(
+      (acc, { node }) => {
+        const value = getMaybeResolvedValue(node, field, nodeInterfaceName)
+        const values = Array.isArray(value) ? value : [value]
+        values
+          .filter(value => value != null)
+          .forEach(value => {
+            const key = value instanceof Date ? value.toISOString() : value
+            acc[key] = (acc[key] || []).concat(node)
+          })
+        return acc
+        // Note: using Object.create on purpose:
+        //   object key may be arbitrary string including reserved words (i.e. `constructor`)
+        //   see: https://github.com/gatsbyjs/gatsby/issues/22508
+      },
+      Object.create(null)
+    )
 
-  return Object.keys(groupedResults)
-    .sort()
-    .reduce((acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
-      const entries = groupedResults[fieldValue] || []
-      acc.push({
-        ...paginate(
-          {
-            entries: new GatsbyIterable(entries),
-            totalCount: async () => entries.length,
-          },
-          args
-        ),
-        field,
-        fieldValue,
-      })
-      return acc
-    }, [])
+    return Object.keys(groupedResults)
+      .sort()
+      .reduce(
+        (acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
+          const entries = groupedResults[fieldValue] || []
+          acc.push({
+            ...paginate(
+              {
+                entries: new GatsbyIterable(entries),
+                totalCount: async () => entries.length,
+              },
+              args
+            ),
+            field:
+              typeof field === `string`
+                ? field
+                : pathObjectToPathString(field).path,
+            fieldValue,
+          })
+          return acc
+        },
+        []
+      )
+  }
 }
 
 export function paginate(
@@ -532,25 +637,52 @@ function getProjectedField(
       info
     )
 
+    if (fieldNodes.length === 0) {
+      return []
+    }
+
     const returnType = getNullableType(info.returnType)
 
     if (isObjectType(returnType) || isInterfaceType(returnType)) {
       const field = returnType.getFields()[fieldName]
       const fieldArg = field?.args?.find(arg => arg.name === `field`)
       if (fieldArg) {
-        const fieldEnum = getNullableType(fieldArg.type)
+        const fieldTC = getNullableType(fieldArg.type)
 
-        if (isEnumType(fieldEnum)) {
+        if (isEnumType(fieldTC) || isInputObjectType(fieldTC)) {
           return fieldNodes.reduce(
             (acc: Array<string>, fieldNode: FieldNode) => {
               const fieldArg = fieldNode.arguments?.find(
                 arg => arg.name.value === `field`
               )
-              if (fieldArg?.value.kind === Kind.ENUM) {
-                const enumKey = fieldArg.value.value
-                const enumValue = fieldEnum.getValue(enumKey)
-                if (enumValue) {
-                  return [...acc, enumValue.value]
+              if (isEnumType(fieldTC)) {
+                if (fieldArg?.value.kind === Kind.ENUM) {
+                  const enumKey = fieldArg.value.value
+                  const enumValue = fieldTC.getValue(enumKey)
+                  if (enumValue) {
+                    acc.push(enumValue.value)
+                  }
+                }
+              } else if (isInputObjectType(fieldTC)) {
+                const path: Array<string> = []
+                let currentValue = fieldArg?.value
+                while (currentValue) {
+                  if (currentValue.kind === Kind.OBJECT) {
+                    if (currentValue.fields.length !== 1) {
+                      throw new Error(`Invalid field arg`)
+                    }
+
+                    const fieldArg = currentValue.fields[0]
+                    path.push(fieldArg.name.value)
+                    currentValue = fieldArg.value
+                  } else {
+                    currentValue = undefined
+                  }
+                }
+
+                if (path.length > 0) {
+                  const sortPath = path.join(`.`)
+                  acc.push(sortPath)
                 }
               }
               return acc
@@ -676,7 +808,7 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
-    if (context.telemetryResolverTimings) {
+    if (context?.telemetryResolverTimings) {
       time = process.hrtime.bigint()
     }
 
@@ -687,7 +819,7 @@ export function wrappingResolver<TSource, TArgs>(
     }
 
     const endActivity = (): void => {
-      if (context.telemetryResolverTimings) {
+      if (context?.telemetryResolverTimings) {
         context.telemetryResolverTimings.push({
           name: `${info.parentType}.${info.fieldName}`,
           duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,

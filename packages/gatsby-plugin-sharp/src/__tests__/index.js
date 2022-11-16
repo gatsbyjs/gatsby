@@ -549,6 +549,20 @@ describe(`gatsby-plugin-sharp`, () => {
         }
       `)
     })
+
+    it(`handles really wide aspect ratios for blurred placeholder`, async () => {
+      const result = await base64({
+        file: getFileObject(
+          path.join(__dirname, `images/wide-aspect-ratio.png`),
+          `wide-aspect-ratio`,
+          `1000x10`
+        ),
+        args,
+      })
+
+      expect(result.width).toEqual(20)
+      expect(result.height).toEqual(1)
+    })
   })
 
   describe(`tracedSVG`, () => {
@@ -614,6 +628,28 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`fluid`, async () => {
       const result = await fluid({ file, args })
       expect(result).toMatchSnapshot()
+    })
+
+    it(`creates two different images for different duotone settings`, async () => {
+      const testName = `duotone-digest-test`
+      const firstImage = await fluid({
+        file: getFileObject(path.join(__dirname, `images/test.png`), testName),
+        args: {
+          maxWidth: 100,
+          width: 100,
+          duotone: { highlight: `#BBFFE6`, shadow: `#51758D` },
+        },
+      })
+      const secondImage = await fluid({
+        file: getFileObject(path.join(__dirname, `images/test.png`), testName),
+        args: {
+          maxWidth: 100,
+          width: 100,
+          duotone: { highlight: `#F1D283`, shadow: `#000000` },
+        },
+      })
+
+      expect(firstImage.src).not.toEqual(secondImage.src)
     })
   })
 

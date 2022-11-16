@@ -158,7 +158,7 @@ window pops up (check for blocked pop-ups if you don't see it), and try creating
 new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
 containing a Markdown file with your blog post content!
 
-Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/how-to/routing/mdx/writing-pages/).
+Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/how-to/routing/mdx/).
 
 Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses to locate markdown files.
 

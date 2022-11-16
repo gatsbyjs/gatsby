@@ -346,6 +346,7 @@ describe(`Production loader`, () => {
       expect(expectation).toMatchSnapshot()
       expect(Object.keys(expectation)).toEqual([
         `component`,
+        `head`,
         `json`,
         `page`,
         `staticQueryResults`,

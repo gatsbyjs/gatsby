@@ -35,6 +35,14 @@ describe(`Static path ('${staticPath}')`, () => {
     cy.getTestElement(`query`).contains(`{}`)
     cy.getTestElement(`params`).contains(`{}`)
   })
+
+  it(`Preserves window.location.search as querystring passed`, () => {
+    const queryString = `?a=b%23&x=y%25&j=`
+    cy.visit(staticPath + queryString).waitForRouteChange()
+    cy.window().then(win => {
+      expect(win.location.search).to.equal(queryString)
+    })
+  })
 })
 
 describe(`Param path ('${paramPath}:param')`, () => {

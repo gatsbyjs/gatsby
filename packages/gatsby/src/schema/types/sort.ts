@@ -18,6 +18,8 @@ import {
   toInputObjectType,
 } from "graphql-compose"
 
+import { convertToNestedInputType, IVisitContext } from "./utils"
+
 type AnyTypeComposer<TContext> =
   | ObjectTypeComposer<any, TContext>
   | InputTypeComposer<TContext>
@@ -53,7 +55,7 @@ const convert = <TContext = any>({
   fields,
   prefix = null,
   depth = 0,
-  deprecationReason,
+  deprecationReason: parentFieldDeprecationReason,
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: AnyTypeComposer<TContext>
@@ -65,6 +67,7 @@ const convert = <TContext = any>({
   const sortFields = {}
 
   Object.keys(fields).forEach(fieldName => {
+    let deprecationReason = parentFieldDeprecationReason
     const fieldConfig = fields[fieldName]
     const sortable =
       typeComposer instanceof UnionTypeComposer ||
@@ -176,4 +179,44 @@ export const getSortInput = <TSource = any, TContext = any>({
       order: { type: [sortOrderEnumTC], defaultValue: [`ASC`] },
     })
   })
+}
+
+type Context = any
+
+export const getSortInputNestedObjects = ({
+  schemaComposer,
+  typeComposer,
+}: {
+  schemaComposer: SchemaComposer<Context>
+  typeComposer: ObjectTypeComposer<Context> | InterfaceTypeComposer<Context>
+}): InputTypeComposer => {
+  const itc = convertToNestedInputType({
+    schemaComposer,
+    typeComposer,
+    postfix: `SortInput`,
+    onEnter: ({ fieldName, typeComposer }): IVisitContext => {
+      const sortable =
+        typeComposer instanceof UnionTypeComposer ||
+        typeComposer instanceof ScalarTypeComposer
+          ? undefined
+          : typeComposer.getFieldExtension(fieldName, `sortable`)
+      if (sortable === SORTABLE_ENUM.NOT_SORTABLE) {
+        // stop traversing
+        return null
+      } else if (sortable === SORTABLE_ENUM.DEPRECATED_SORTABLE) {
+        // mark this and all nested fields as deprecated
+        return {
+          deprecationReason: `Sorting on fields that need arguments to resolve is deprecated.`,
+        }
+      }
+
+      // continue
+      return undefined
+    },
+    // @ts-ignore TODO: correct types
+    leafInputComposer: getSortOrderEnum({ schemaComposer }),
+  })
+
+  // @ts-ignore TODO: correct types
+  return itc.List
 }

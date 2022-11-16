@@ -86,7 +86,7 @@
 
 ```graphql
 {
-  allMarkdownRemark(sort: { fields: [frontmatter___date], order: ASC }) {
+  allMarkdownRemark(sort: { frontmatter: { date: ASC } }) {
     totalCount
     edges {
       node {
@@ -124,7 +124,7 @@
   allMarkdownRemark(
     limit: 3
     filter: { frontmatter: { date: { ne: null } } }
-    sort: { fields: [frontmatter___date], order: DESC }
+    sort: { frontmatter: { date: DESC } }
   ) {
     edges {
       node {
@@ -174,8 +174,9 @@ query GetBlogPosts($limit: Int, $filter: filterMarkdownRemark, $sort: markdownRe
     }
   },
   "sort": {
-    "fields": "frontmatter___date",
-    "order": "DESC"
+    "frontmatter": {
+      "date": "DESC"
+    }
   }
 }
 ```

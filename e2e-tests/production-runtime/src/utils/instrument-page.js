@@ -1,33 +1,29 @@
 import * as React from "react"
 
-export default Page =>
-  class extends React.Component {
-    addLogEntry(action) {
+function InstrumentPage(Component) {
+  return function WithInstrumentPageComponent({ ...props }) {
+    function addLogEntry(action) {
       if (typeof window !== `undefined`) {
         window.___PageComponentLifecycleCallsLog.push({
           action,
-          pageComponent: this.props.pageResources.page.componentChunkName,
-          locationPath: this.props.location.pathname,
-          pagePath: this.props.pageResources.page.path,
+          pageComponent: props.pageResources.page.componentChunkName,
+          locationPath: props.location.pathname,
+          pagePath: props.pageResources.page.path,
         })
       }
     }
-
-    constructor(props) {
-      super(props)
-      this.addLogEntry(`constructor`)
-    }
-
-    componentDidMount() {
-      this.addLogEntry(`componentDidMount`)
-    }
-
-    componentWillUnmount() {
-      this.addLogEntry(`componentWillUnmount`)
-    }
-
-    render() {
-      this.addLogEntry(`render`)
-      return <Page {...this.props} />
-    }
+  
+    React.useEffect(() => {
+      addLogEntry(`componentDidMount`)
+      return () => {
+        addLogEntry(`componentWillUnmount`)
+      }
+    }, [])
+  
+    addLogEntry(`render`)
+  
+    return <Component {...props} />
   }
+}
+
+export default InstrumentPage

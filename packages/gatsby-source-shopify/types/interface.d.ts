@@ -1,18 +1,15 @@
-interface ShopifyPluginOptions {
-  password: string
-  storeUrl: string
-  downloadImages?: boolean
-  shopifyConnections?: string[]
-  typePrefix?: string
-  salesChannel?: string
+interface IBulkResult {
+  id: string
+  [key: string]: unknown
 }
 
-interface NodeBuilder {
-  buildNode: (obj: Record<string, any>) => Promise<NodeInput>
-}
+type BulkResults = Array<IBulkResult>
 
-type BulkResult = Record<string, any>
-type BulkResults = BulkResult[]
+interface IDecoratedResult {
+  shopifyId: string
+  __parentId?: string
+  [key: string]: unknown
+}
 
 type BulkOperationStatus =
   | "CANCELED"
@@ -23,7 +20,7 @@ type BulkOperationStatus =
   | "FAILED"
   | "RUNNING"
 
-interface BulkOperationNode {
+interface IBulkOperationNode {
   status: BulkOperationStatus
   /**
    * FIXME: The docs say objectCount is a number, but it's a string. Let's
@@ -36,29 +33,33 @@ interface BulkOperationNode {
   query: string
 }
 
-interface CurrentBulkOperationResponse {
+interface IShopifyNodeMap {
+  [key: string]: IShopifyNode
+}
+
+interface ICurrentBulkOperationResponse {
   currentBulkOperation: {
     id: string
     status: BulkOperationStatus
   }
 }
 
-interface UserError {
-  field?: string[]
+interface IUserError {
+  field?: Array<string>
   message: string
 }
 
-interface BulkOperationRunQueryResponse {
+interface IBulkOperationRunQueryResponse {
   bulkOperationRunQuery: {
-    userErrors: UserError[]
-    bulkOperation: BulkOperationNode
+    userErrors: Array<IUserError>
+    bulkOperation: IBulkOperationNode
   }
 }
 
-interface BulkOperationCancelResponse {
+interface IBulkOperationCancelResponse {
   bulkOperationCancel: {
-    bulkOperation: BulkOperationNode
-    userErrors: UserError[]
+    bulkOperation: IBulkOperationNode
+    userErrors: Array<UserError>
   }
 }
 
@@ -97,4 +98,61 @@ interface IErrorMapEntry {
 
 interface IErrorMap {
   [code: string]: IErrorMapEntry
+}
+
+interface IGetShopifyImageArgs
+  extends Omit<
+    IGetImageDataArgs,
+    "urlBuilder" | "baseUrl" | "formats" | "sourceWidth" | "sourceHeight"
+  > {
+  image: IShopifyImage
+}
+
+interface IShopifyBulkOperation {
+  execute: () => Promise<IBulkOperationRunQueryResponse>
+  name: string
+}
+
+interface IImageData {
+  id: string
+  originalSrc: string
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  localFile___NODE: string | undefined
+}
+
+interface IShopifyImage extends IShopifyNode {
+  width: number
+  height: number
+  originalSrc: string
+}
+
+interface IShopifyNode {
+  id: string
+  shopifyId: string
+  internal: {
+    type: string
+    mediaType?: string
+    content?: string
+    contentDigest: string
+    description?: string
+  }
+  [key: string]: unknown
+}
+
+interface IShopifyPluginOptions {
+  password: string
+  storeUrl: string
+  downloadImages: boolean
+  shopifyConnections: Array<string>
+  typePrefix: string
+  salesChannel: string
+  prioritize?: boolean
+}
+
+interface IGraphQLClient {
+  request: <T>(query: string, variables?: Record<string, any>) => Promise<T>
+}
+
+interface IRestClient {
+  request: (path: string) => Promise<import("node-fetch").Response>
 }

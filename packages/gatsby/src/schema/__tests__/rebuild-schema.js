@@ -286,7 +286,7 @@ describe(`build and update individual types`, () => {
     await expectSymmetricDelete(node)
   })
 
-  it(`creates nested types within existing nested types`, async () => {
+  it.skip(`creates nested types within existing nested types`, async () => {
     const node = {
       id: `Nested2`,
       internal: { type: `Nested`, contentDigest: `0` },
@@ -413,7 +413,7 @@ describe(`build and update individual types`, () => {
     expect(String(field.type)).toEqual(`Foo`)
   })
 
-  it(`creates derived types`, async () => {
+  it.skip(`creates derived types`, async () => {
     const node = {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
@@ -505,7 +505,7 @@ describe(`build and update individual types`, () => {
     await expectSymmetricDelete(node)
   })
 
-  it(`creates derived types for nested fields`, async () => {
+  it.skip(`creates derived types for nested fields`, async () => {
     const node = {
       id: `Nested2`,
       internal: { type: `Nested`, contentDigest: `0` },
@@ -606,7 +606,7 @@ describe(`build and update individual types`, () => {
     await expectSymmetricDelete(nodes)
   })
 
-  it(`creates new fields on ADD_FIELD_TO_NODE`, async () => {
+  it.skip(`creates new fields on ADD_FIELD_TO_NODE`, async () => {
     const node = createNodes()[1]
 
     addNodeField({
@@ -634,7 +634,7 @@ describe(`build and update individual types`, () => {
     `)
   })
 
-  it(`creates new nested fields on ADD_FIELD_TO_NODE`, async () => {
+  it.skip(`creates new nested fields on ADD_FIELD_TO_NODE`, async () => {
     const node = createNodes()[1]
 
     addNodeField({

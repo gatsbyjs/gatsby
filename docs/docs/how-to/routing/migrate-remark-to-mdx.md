@@ -13,7 +13,7 @@ For people who already have an existing blog using `gatsby-transformer-remark` b
 Add the `gatsby-plugin-mdx` plugin (and its peer dependencies) to your `package.json` file and remove the `gatsby-transformer-remark` plugin.
 
 ```shell
-npm install @mdx-js/mdx @mdx-js/react gatsby-plugin-mdx
+npm install @mdx-js/react gatsby-plugin-mdx
 npm remove gatsby-transformer-remark
 ```
 
@@ -49,7 +49,7 @@ Now with this addition, `gatsby-plugin-mdx` will see files that end with both `.
 
 ## Update gatsby-node.js
 
-In the `createPages` API call, when you query for `allMarkdownRemark`, replace it with `allMdx`.
+In the `createPages` API call, when you query for `allMarkdownRemark`, replace it with `allMdx` and also query for `internal.contentFilePath`.
 
 ```diff:title=gatsby-node.js
 const result = await graphql(
@@ -57,9 +57,20 @@ const result = await graphql(
     {
 -     allMarkdownRemark(
 +     allMdx(
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC }}
         limit: 1000
       ) {
+        nodes {
+          id
+          fields {
+            slug
+          }
++         internal {
++           contentFilePath
++         }
+        }
+      }
+    }
 ```
 
 Don't forget to update the `posts` constant by replacing `allMarkdownRemark` with `allMdx`.
@@ -67,6 +78,16 @@ Don't forget to update the `posts` constant by replacing `allMarkdownRemark` wit
 ```diff:title=gatsby-node.js
 -const posts = result.data.allMarkdownRemark.nodes
 +const posts = result.data.allMdx.nodes
+```
+
+You'll need to update the `component` path passed to the `createPage` action to include the `internal.contentFilePath` as a query param:
+
+```diff:title=gatsby-node.js
+createPage({
+  path: post.fields.slug,
+- component: blogPost,
++ component: `${blogPost}?__contentFilePath=${post.internal.contentFilePath}`,
+  context: {
 ```
 
 Also, update `onCreateNode` which creates the blog post slugs to watch for the node type of `Mdx` instead of `MarkdownRemark`.
@@ -81,36 +102,32 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
 ## Update usage in pages
 
-Similar to `gatsby-node.js`, wherever you use `allMarkdownRemark` in a GraphQL query, change it to `allMdx`.
+Similar to `gatsby-node.js`, wherever you use `allMarkdownRemark`/`markdownRemark` in a GraphQL query, change it to `allMdx`/`mdx`.
 
-Then in your blogpost template, to render the MDX, pull in the `MDXRenderer` React component from `gatsby-plugin-mdx`.
+Then in your blogpost template, to render the MDX, add a `children` prop to your page template.
 
-```jsx:title=src/templates/blog-post.js
-import { MDXRenderer } from "gatsby-plugin-mdx"
+```diff:title=src/templates/blog-post.js
+-const BlogPostTemplate = ({ data, location }) => {
++const BlogPostTemplate = ({ data, location, children }) => {
 ```
 
-And in the GraphQL query, change the `html` field in `mdx` to `body`.
+And in the GraphQL query, remove the `html` field.
 
 ```graphql:title=src/templates/blog-post.js
-mdx(fields: { slug: { eq: $slug } }) {
+mdx(id: { eq: $id }) {
   id
   excerpt(pruneLength: 160)
-  body // highlight-line
   frontmatter {
-    ...
+    # ...
   }
 }
 ```
 
-And finally swap out the component with `dangerouslySetInnerHTML` to a `MDXRenderer` component:
+And finally swap out the component with `dangerouslySetInnerHTML` to just render the `children`:
 
 ```diff:title=src/templates/blog-post.js
-const post = data.mdx
-
-// ...
-
--<section dangerouslySetInnerHTML={{ __html: post.html }} />
-+<MDXRenderer>{post.body}</MDXRenderer>
+-<section dangerouslySetInnerHTML={{ __html: post.html }} itemProp="articleBody" />
++<section itemProp="articleBody">{children}</section>
 ```
 
 ## Update Markdown files that include HTML code
@@ -126,5 +143,5 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 
 ## Additional resources
 
-- Follow [Importing and Using Components in MDX](/docs/mdx/importing-and-using-components/) to find out how you can insert React components in your MDX files.
-- Follow [Using MDX Plugins](/docs/how-to/routing/mdx-plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.
+- [Adding MDX pages](/docs/how-to/routing/mdx)
+- [gatsby-plugin-mdx README](/plugins/gatsby-plugin-mdx)

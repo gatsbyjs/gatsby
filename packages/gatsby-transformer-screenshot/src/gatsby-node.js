@@ -1,5 +1,5 @@
 const axios = require(`axios`)
-const Queue = require(`better-queue`)
+const Queue = require(`fastq`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
@@ -82,7 +82,7 @@ exports.onPreBootstrap = (
   })
 }
 
-function unstable_shouldOnCreateNode({ node }, pluginOptions) {
+function shouldOnCreateNode({ node }, pluginOptions) {
   /*
    * Check if node is of a type we care about, and has a url field
    * (originally only checked sites.yml, hence including by default)
@@ -91,40 +91,30 @@ function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   return validNodeTypes.includes(node.internal.type) && node.url
 }
 
-exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+exports.shouldOnCreateNode = shouldOnCreateNode
 
-exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
-) => {
-  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
-    return
-  }
-
+exports.onCreateNode = async ({
+  node,
+  actions,
+  store,
+  cache,
+  createNodeId,
+  createContentDigest,
+  getCache,
+}) => {
   const { createNode, createParentChildLink } = actions
 
   try {
-    const screenshotNode = await new Promise((resolve, reject) => {
-      screenshotQueue.push(
-        {
-          url: node.url,
-          parent: node.id,
-          store,
-          cache,
-          createNode,
-          createNodeId,
-          getCache,
-          createContentDigest,
-          parentNodeId: node.id,
-        },
-        (err, result) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(result)
-          }
-        }
-      )
+    const screenshotNode = await screenshotQueue.push({
+      url: node.url,
+      parent: node.id,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      getCache,
+      createContentDigest,
+      parentNodeId: node.id,
     })
 
     createParentChildLink({
@@ -163,13 +153,11 @@ const createScreenshotNode = async ({
 
       fileNode = await createRemoteFileNode({
         url: screenshotResponse.data.url,
-        store,
         cache,
         createNode,
         createNodeId,
         getCache,
         parentNodeId,
-        reporter,
       })
       expires = screenshotResponse.data.expires
 

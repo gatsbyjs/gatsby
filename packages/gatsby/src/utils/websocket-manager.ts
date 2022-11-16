@@ -13,7 +13,7 @@ import { findPageByPath } from "./find-page-by-path"
 import { Server as SocketIO, Socket } from "socket.io"
 import { getPageMode } from "./page-mode"
 
-export interface IPageQueryResult {
+export interface IPageOrSliceQueryResult {
   id: string
   result?: IPageDataWithQueryResult
 }
@@ -23,7 +23,6 @@ export interface IStaticQueryResult {
   result: unknown // TODO: Improve this once we understand what the type is
 }
 
-type PageResultsMap = Map<string, IPageQueryResult>
 type QueryResultsMap = Map<string, IStaticQueryResult>
 
 function hashPaths(paths: Array<string>): Array<string> {
@@ -39,7 +38,6 @@ export class WebsocketManager {
   activePaths: Set<string> = new Set()
   clients: Set<IClientInfo> = new Set()
   errors: Map<string, string> = new Map()
-  pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
   websocket: SocketIO | undefined
 
@@ -130,7 +128,7 @@ export class WebsocketManager {
       })
     })
 
-    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.GATSBY_QUERY_ON_DEMAND) {
       // page-data marked stale due to dirty query tracking
       const boundEmitStalePageDataPathsFromDirtyQueryTracking =
         this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)
@@ -184,9 +182,7 @@ export class WebsocketManager {
     }
   }
 
-  emitPageData = (data: IPageQueryResult): void => {
-    this.pageResults.set(data.id, data)
-
+  emitPageData = (data: IPageOrSliceQueryResult): void => {
     if (this.websocket) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
 
@@ -202,6 +198,12 @@ export class WebsocketManager {
           { debounce: true }
         )
       }
+    }
+  }
+
+  emitSliceData = (data: IPageOrSliceQueryResult): void => {
+    if (this.websocket) {
+      this.websocket.send({ type: `sliceQueryResult`, payload: data })
     }
   }
 

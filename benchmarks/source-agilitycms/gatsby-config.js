@@ -13,7 +13,7 @@ const agilityConfig = {
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
 
 module.exports = {

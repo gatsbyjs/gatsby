@@ -1,6 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
-const lazyImport = import(`../test`)
+import(`../test`)
 
 export default function Inline() {
   const { site } = useStaticQuery(graphql`

@@ -7,7 +7,6 @@ import { spin } from "tiny-spin"
 import { getConfigStore } from "./utils/get-config-store"
 type PackageManager = "yarn" | "npm"
 import colors from "ansi-colors"
-import { makeNpmSafe } from "./utils/make-npm-safe"
 import { clearLine } from "./utils/clear-line"
 
 const packageManagerConfigKey = `cli.packageManager`
@@ -82,12 +81,12 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
 
 const setNameInPackage = async (
   sitePath: string,
-  name: string
+  npmSafeSiteName: string
 ): Promise<void> => {
   const packageJsonPath = path.join(sitePath, `package.json`)
   const packageJson = await fs.readJSON(packageJsonPath)
-  packageJson.name = makeNpmSafe(name)
-  packageJson.description = name
+  packageJson.name = npmSafeSiteName
+  packageJson.description = npmSafeSiteName
   delete packageJson.license
   try {
     const result = await execa(`git`, [`config`, `user.name`])
@@ -205,13 +204,13 @@ export async function initStarter(
   starter: string,
   rootPath: string,
   packages: Array<string>,
-  siteName: string
+  npmSafeSiteName: string
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
 
-  await setNameInPackage(sitePath, siteName)
+  await setNameInPackage(sitePath, npmSafeSiteName)
 
   await install(rootPath, packages)
 

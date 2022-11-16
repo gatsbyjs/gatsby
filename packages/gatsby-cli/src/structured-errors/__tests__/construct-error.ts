@@ -47,23 +47,23 @@ test(`it constructs an error from the supplied errorMap`, () => {
       "1337": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     }
   )
 
   expect(error.code).toBe(`1337`)
-  expect(error.docsUrl).toBe(`https://www.gatsbyjs.org/docs/gatsby-cli/#new`)
+  expect(error.docsUrl).toBe(`https://www.gatsbyjs.com/docs/gatsby-cli/#new`)
 })
 
 test(`it does not overwrite internal error map`, () => {
   const error = constructError(
-    { details: { id: `95312`, context: { ref: `Error!` } } },
+    { details: { id: `95312`, context: { undefinedGlobal: `window` } } },
     {
       "95312": {
         text: (context): string => `Error text is ${context.someProp} `,
         level: Level.ERROR,
-        docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+        docsUrl: `https://www.gatsbyjs.com/docs/gatsby-cli/#new`,
       },
     }
   )

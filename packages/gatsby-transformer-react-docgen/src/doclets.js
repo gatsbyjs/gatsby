@@ -14,7 +14,7 @@ const isLiteral = str => /^('|"|true|false|\d+)/.test(str.trim())
 export const cleanDoclets = desc => {
   desc = desc || ``
   const idx = desc.search(DOCLET_PATTERN)
-  return (idx === -1 ? desc : desc.substr(0, idx)).trim()
+  return (idx === -1 ? desc : desc.slice(0, idx)).trim()
 }
 
 /**

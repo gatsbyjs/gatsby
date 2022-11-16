@@ -1,4 +1,5 @@
 import { Span } from "opentracing"
+import reporter from "gatsby-cli/lib/reporter"
 import { IProgram } from "../commands/types"
 import { Runner } from "../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../query/graphql-runner"
@@ -11,9 +12,12 @@ import { Compiler } from "webpack"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
 
+type Reporter = typeof reporter
+
 export interface IGroupedQueryIds {
   pageQueryIds: Array<IGatsbyPage>
   staticQueryIds: Array<string>
+  sliceQueryIds: Array<string>
 }
 
 export interface IMutationAction {
@@ -23,6 +27,8 @@ export interface IMutationAction {
 }
 
 export interface IBuildContext {
+  reporter?: Reporter
+  shouldRunInitialTypegen?: boolean
   program: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span

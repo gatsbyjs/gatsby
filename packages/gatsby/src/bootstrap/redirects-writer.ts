@@ -19,7 +19,7 @@ export const writeRedirects = async (): Promise<void> => {
 
   for (const redirect of redirects) {
     const alternativePath = redirect.fromPath.endsWith(`/`)
-      ? redirect.fromPath.substr(0, redirect.fromPath.length - 1)
+      ? redirect.fromPath.slice(0, -1)
       : redirect.fromPath + `/`
 
     let hasSamePage: boolean

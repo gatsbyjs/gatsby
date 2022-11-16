@@ -54,7 +54,7 @@ async function installPluginConfig(
       options,
       key: pluginKey,
     })
-    reporter.info(`Installed ${pluginName || pluginKey} in gatsby-config.js`)
+    reporter.info(`Installed ${pluginName || pluginKey} in gatsby-config`)
   } catch (err) {
     reporter.error(JSON.parse(err)?.message)
     installTimer.setStatus(`FAILED`)

@@ -6,8 +6,8 @@ import {
 } from "../types"
 
 const FLAG_DIRTY_CLEARED_CACHE = 0b0000001
-const FLAG_DIRTY_NEW_PAGE = 0b0000010
-const FLAG_DIRTY_PAGE_DATA_CHANGED = 0b0000100
+const FLAG_DIRTY_NEW_ENTRY = 0b0000010
+const FLAG_DIRTY_DATA_CHANGED = 0b0000100
 const FLAG_DIRTY_STATIC_QUERY_FIRST_RUN = 0b0001000
 const FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED = 0b0010000
 const FLAG_DIRTY_BROWSER_COMPILATION_HASH = 0b0100000
@@ -18,10 +18,17 @@ type PagePath = string
 function initialState(): IGatsbyState["html"] {
   return {
     trackedHtmlFiles: new Map<PagePath, IHtmlFileState>(),
+    slicesProps: {
+      bySliceId: new Map(),
+      byPagePath: new Map(),
+      bySliceName: new Map(),
+    },
     browserCompilationHash: ``,
     ssrCompilationHash: ``,
     trackedStaticQueryResults: new Map<string, IStaticQueryResultState>(),
     unsafeBuiltinWasUsedInSSR: false,
+    templateCompilationHashes: {},
+    pagesThatNeedToStitchSlices: new Set(),
   }
 }
 
@@ -39,6 +46,7 @@ export function htmlReducer(
         // if they are recreated "isDeleted" flag will be removed
         state.browserCompilationHash = ``
         state.ssrCompilationHash = ``
+        state.templateCompilationHashes = {}
         state.trackedStaticQueryResults.clear()
         state.unsafeBuiltinWasUsedInSSR = false
         state.trackedHtmlFiles.forEach(htmlFile => {
@@ -46,6 +54,13 @@ export function htmlReducer(
           // there was a change somewhere, so just in case we mark those files are dirty as well
           htmlFile.dirty |= FLAG_DIRTY_CLEARED_CACHE
         })
+        // slice html don't need to be deleted, they are just cleared
+        state.slicesProps = {
+          bySliceId: new Map(),
+          byPagePath: new Map(),
+          bySliceName: new Map(),
+        }
+        state.pagesThatNeedToStitchSlices = new Set()
         return state
       }
     }
@@ -58,7 +73,7 @@ export function htmlReducer(
       let htmlFile = state.trackedHtmlFiles.get(path)
       if (!htmlFile) {
         htmlFile = {
-          dirty: FLAG_DIRTY_NEW_PAGE,
+          dirty: FLAG_DIRTY_NEW_ENTRY,
           isDeleted: false,
           pageDataHash: ``,
         }
@@ -69,6 +84,18 @@ export function htmlReducer(
         htmlFile.isDeleted = false
       }
 
+      return state
+    }
+
+    case `CREATE_SLICE`: {
+      const existing = state.slicesProps.bySliceName.get(action.payload.name)
+      if (!existing) {
+        state.slicesProps.bySliceName.set(action.payload.name, {
+          dirty: FLAG_DIRTY_NEW_ENTRY,
+          props: new Set(),
+          sliceDataHash: ``,
+        })
+      }
       return state
     }
 
@@ -95,7 +122,7 @@ export function htmlReducer(
       // directly when generating html. We care about page-data (which contains page query result).
       // Handling of page-data that transitively handles page query result is done in handler for
       // `ADD_PAGE_DATA_STATS` action.
-      if (!action.payload.isPage) {
+      if (action.payload.queryType === `static`) {
         // static query case
         let staticQueryResult = state.trackedStaticQueryResults.get(
           action.payload.queryHash
@@ -130,18 +157,69 @@ export function htmlReducer(
 
       if (htmlFile.pageDataHash !== action.payload.pageDataHash) {
         htmlFile.pageDataHash = action.payload.pageDataHash
-        htmlFile.dirty |= FLAG_DIRTY_PAGE_DATA_CHANGED
+        htmlFile.dirty |= FLAG_DIRTY_DATA_CHANGED
       }
       return state
     }
 
     case `SET_WEBPACK_COMPILATION_HASH`: {
-      if (state.browserCompilationHash !== action.payload) {
-        state.browserCompilationHash = action.payload
-        state.trackedHtmlFiles.forEach(htmlFile => {
-          htmlFile.dirty |= FLAG_DIRTY_BROWSER_COMPILATION_HASH
-        })
+      if (!(_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES)) {
+        if (state.browserCompilationHash !== action.payload) {
+          state.browserCompilationHash = action.payload
+          state.trackedHtmlFiles.forEach(htmlFile => {
+            htmlFile.dirty |= FLAG_DIRTY_BROWSER_COMPILATION_HASH
+          })
+        }
       }
+      return state
+    }
+
+    case `ADD_SLICE_DATA_STATS`: {
+      const sliceProps = state.slicesProps.bySliceName.get(
+        action.payload.sliceName
+      )
+      if (!sliceProps) {
+        throw new Error(`no slice props for ${action.payload.sliceName}`)
+      }
+
+      if (sliceProps.sliceDataHash !== action.payload.sliceDataHash) {
+        sliceProps.sliceDataHash = action.payload.sliceDataHash
+        sliceProps.dirty |= FLAG_DIRTY_DATA_CHANGED
+      }
+      return state
+    }
+
+    case `SET_SSR_TEMPLATE_WEBPACK_COMPILATION_HASH`: {
+      if (
+        state.templateCompilationHashes[action.payload.templatePath] !==
+        action.payload.templateHash
+      ) {
+        state.templateCompilationHashes[action.payload.templatePath] =
+          action.payload.templateHash
+
+        if (action.payload.isSlice) {
+          for (const sliceName of action.payload.pages) {
+            const sliceTemplate = state.slicesProps.bySliceName.get(sliceName)
+            if (sliceTemplate) {
+              sliceTemplate.dirty |= FLAG_DIRTY_SSR_COMPILATION_HASH
+            }
+          }
+        } else {
+          if (action.payload.pages) {
+            action.payload.pages.forEach(pagePath => {
+              const htmlFile = state.trackedHtmlFiles.get(pagePath)
+              if (htmlFile) {
+                htmlFile.dirty |= FLAG_DIRTY_SSR_COMPILATION_HASH
+              }
+            })
+          } else {
+            process.stdout.write(
+              `---no pages for:\n${JSON.stringify(action.payload, null, 2)}\n`
+            )
+          }
+        }
+      }
+
       return state
     }
 
@@ -180,6 +258,9 @@ export function htmlReducer(
         const htmlFile = state.trackedHtmlFiles.get(path)
         if (htmlFile) {
           htmlFile.dirty = 0
+          // if we regenerated html, slice placeholders will be empty and we will have to fill
+          // them in, so we are marking that page for stitching
+          state.pagesThatNeedToStitchSlices.add(path)
         }
       }
 
@@ -195,6 +276,16 @@ export function htmlReducer(
         }
       }
 
+      if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+        // mark slices as dirty
+        for (const sliceName of action.payload.slices) {
+          const sliceProps = state.slicesProps.bySliceName.get(sliceName)
+          if (sliceProps) {
+            sliceProps.dirty |= FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED
+          }
+        }
+      }
+
       // mark static queries as not dirty anymore (we flushed their dirtiness into pages)
       for (const staticQueryHash of action.payload.staticQueryHashes) {
         const staticQueryResult =
@@ -203,11 +294,135 @@ export function htmlReducer(
           staticQueryResult.dirty = 0
         }
       }
+
+      if (_CFLAGS_.GATSBY_MAJOR === `5` && process.env.GATSBY_SLICES) {
+        // loop through slice names and mark their slice props as dirty
+        for (const sliceNameInfo of state.slicesProps.bySliceName.values()) {
+          if (sliceNameInfo.dirty) {
+            for (const sliceId of sliceNameInfo.props) {
+              const slicePropInfo = state.slicesProps.bySliceId.get(sliceId)
+
+              if (slicePropInfo) {
+                slicePropInfo.dirty |= sliceNameInfo.dirty
+              }
+            }
+            sliceNameInfo.dirty = 0
+          }
+        }
+      }
+
       return state
     }
 
     case `SSR_USED_UNSAFE_BUILTIN`: {
       state.unsafeBuiltinWasUsedInSSR = true
+      return state
+    }
+
+    case `SET_SLICES_PROPS`: {
+      for (const [pagePath, slicesDataBySliceId] of Object.entries(
+        action.payload
+      )) {
+        const newListOfSlices = new Set<string>()
+        for (const [
+          sliceId,
+          { props, sliceName, hasChildren },
+        ] of Object.entries(slicesDataBySliceId)) {
+          newListOfSlices.add(sliceId)
+
+          let sliceInfo = state.slicesProps.bySliceId.get(sliceId)
+          if (!sliceInfo) {
+            sliceInfo = {
+              pages: new Set([pagePath]),
+              props,
+              sliceName,
+              hasChildren,
+              dirty: FLAG_DIRTY_NEW_ENTRY,
+            }
+            state.slicesProps.bySliceId.set(sliceId, sliceInfo)
+
+            let existingBySliceName =
+              state.slicesProps.bySliceName.get(sliceName)
+            if (!existingBySliceName) {
+              existingBySliceName = {
+                dirty: 0,
+                sliceDataHash: ``,
+                props: new Set<string>(),
+              }
+              state.slicesProps.bySliceName.set(sliceName, existingBySliceName)
+            }
+
+            existingBySliceName.props.add(sliceId)
+          } else {
+            sliceInfo.pages.add(pagePath)
+
+            if (hasChildren) {
+              sliceInfo.hasChildren = true
+            }
+          }
+        }
+
+        const oldListOfSlices = state.slicesProps.byPagePath.get(pagePath)
+        if (oldListOfSlices) {
+          for (const sliceId of oldListOfSlices) {
+            if (!newListOfSlices.has(sliceId)) {
+              oldListOfSlices.delete(sliceId)
+              const sliceInfo = state.slicesProps.bySliceId.get(sliceId)
+
+              if (sliceInfo) {
+                sliceInfo.pages.delete(pagePath)
+              }
+            }
+          }
+        }
+
+        state.slicesProps.byPagePath.set(pagePath, newListOfSlices)
+      }
+
+      return state
+    }
+
+    case `SLICES_PROPS_REMOVE_STALE`: {
+      for (const [
+        sliceId,
+        { pages, sliceName },
+      ] of state.slicesProps.bySliceId.entries()) {
+        if (pages.size <= 0) {
+          state.slicesProps.bySliceId.delete(sliceId)
+          const slicePropsListForThisSliceName =
+            state.slicesProps.bySliceName.get(sliceName)
+          if (slicePropsListForThisSliceName) {
+            slicePropsListForThisSliceName.props.delete(sliceId)
+          }
+        }
+      }
+      return state
+    }
+
+    case `SLICES_PROPS_RENDERED`: {
+      for (const { sliceId } of action.payload) {
+        const sliceState = state.slicesProps.bySliceId.get(sliceId)
+        if (sliceState) {
+          sliceState.dirty = 0
+          for (const pagePath of sliceState.pages) {
+            state.pagesThatNeedToStitchSlices.add(pagePath)
+          }
+        }
+      }
+      return state
+    }
+
+    case `SLICES_SCRIPTS_REGENERATED`: {
+      for (const [pagePath, htmlPageState] of state.trackedHtmlFiles) {
+        if (!htmlPageState.isDeleted) {
+          state.pagesThatNeedToStitchSlices.add(pagePath)
+        }
+      }
+      return state
+    }
+
+    case `SLICES_STITCHED`: {
+      state.pagesThatNeedToStitchSlices.clear()
       return state
     }
   }

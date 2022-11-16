@@ -1,5 +1,11 @@
 import { BulkQuery } from "./bulk-query"
 
+/*
+ * TODO - Add 'locations.edges.node.fulfillmentService.callbackUrl'.
+ * As of 2021-11-18 this field, when queried against a legacy location
+ * will cause an error. We have notified Shopify and will return this field
+ * once the issue is resolved.
+ */
 export class LocationsQuery extends BulkQuery {
   query(date?: Date): string {
     const publishedStatus = this.pluginOptions.salesChannel
@@ -16,10 +22,9 @@ export class LocationsQuery extends BulkQuery {
 
     const query = `
       {
-        locations(query: "${queryString}") {
+        locations(includeInactive: true, includeLegacy: true, query: "${queryString}") {
           edges {
             node {
-              id
               activatable
               address {
                 address1
@@ -40,7 +45,6 @@ export class LocationsQuery extends BulkQuery {
               deactivatedAt
               deletable
               fulfillmentService {
-                callbackUrl
                 fulfillmentOrdersOptIn
                 handle
                 id
@@ -56,6 +60,7 @@ export class LocationsQuery extends BulkQuery {
               fulfillsOnlineOrders
               hasActiveInventory
               hasUnfulfilledOrders
+              id
               isActive
               legacyResourceId
               name

@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-expressions */
-import { RefObject } from "react"
-
 let intersectionObserver: IntersectionObserver
 
 export type Unobserver = () => void
@@ -20,7 +17,7 @@ const SLOW_CONNECTION_THRESHOLD = `2500px`
 
 export function createIntersectionObserver(
   callback: () => void
-): (element: RefObject<HTMLElement | undefined>) => Unobserver {
+): (element: HTMLElement) => Unobserver {
   const connectionType = connection?.effectiveType
 
   // if we don't support intersectionObserver we don't lazy load (Sorry IE 11).
@@ -52,19 +49,15 @@ export function createIntersectionObserver(
     )
   }
 
-  return function observe(
-    element: RefObject<HTMLElement | undefined>
-  ): Unobserver {
-    if (element.current) {
-      // Store a reference to the callback mapped to the element being watched
-      ioEntryMap.set(element.current, callback)
-      intersectionObserver.observe(element.current)
-    }
+  return function observe(element: HTMLElement): Unobserver {
+    // Store a reference to the callback mapped to the element being watched
+    ioEntryMap.set(element, callback)
+    intersectionObserver.observe(element)
 
     return function unobserve(): void {
-      if (intersectionObserver && element.current) {
-        ioEntryMap.delete(element.current)
-        intersectionObserver.unobserve(element.current)
+      if (intersectionObserver && element) {
+        ioEntryMap.delete(element)
+        intersectionObserver.unobserve(element)
       }
     }
   }

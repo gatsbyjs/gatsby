@@ -21,13 +21,14 @@ describe(`setSiteConfig`, () => {
     expect(action).toMatchInlineSnapshot(`
       Object {
         "payload": Object {
+          "graphqlTypegen": false,
           "jsxRuntime": "classic",
           "pathPrefix": "",
           "polyfill": true,
           "siteMetadata": Object {
             "hi": true,
           },
-          "trailingSlash": "legacy",
+          "trailingSlash": "always",
         },
         "type": "SET_SITE_CONFIG",
       }
@@ -39,10 +40,11 @@ describe(`setSiteConfig`, () => {
     expect(action).toMatchInlineSnapshot(`
       Object {
         "payload": Object {
+          "graphqlTypegen": false,
           "jsxRuntime": "classic",
           "pathPrefix": "",
           "polyfill": true,
-          "trailingSlash": "legacy",
+          "trailingSlash": "always",
         },
         "type": "SET_SITE_CONFIG",
       }

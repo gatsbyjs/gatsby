@@ -3,6 +3,129 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@3.0.0/packages/gatsby-cypress) (2022-11-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.0)
+
+#### Chores
+
+- Update peerDeps [#36965](https://github.com/gatsbyjs/gatsby/issues/36965) ([b624442](https://github.com/gatsbyjs/gatsby/commit/b6244424fe8b724cbc23b80b2b4f5424cc2055a4))
+- apply patches for v5 [#36796](https://github.com/gatsbyjs/gatsby/issues/36796) ([25f79b6](https://github.com/gatsbyjs/gatsby/commit/25f79b6c3719fdf09584ade620a05c66ba2a697c))
+
+## [2.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.24.0/packages/gatsby-cypress) (2022-09-27)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.24)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.23.0/packages/gatsby-cypress) (2022-09-13)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.23)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.22.0/packages/gatsby-cypress) (2022-08-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.22)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.21.0/packages/gatsby-cypress) (2022-08-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.21)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.20.0/packages/gatsby-cypress) (2022-08-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.20)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.19.0/packages/gatsby-cypress) (2022-07-19)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.19)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.18.0/packages/gatsby-cypress) (2022-07-05)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.18)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.17.0/packages/gatsby-cypress) (2022-06-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.17)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.16.0/packages/gatsby-cypress) (2022-06-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.16)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.15.0/packages/gatsby-cypress) (2022-05-24)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.15)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.14.0/packages/gatsby-cypress) (2022-05-10)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.14)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.13.0/packages/gatsby-cypress) (2022-04-26)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.13)
+
+**Note:** Version bump only for package gatsby-cypress
+
+### [2.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.12.1/packages/gatsby-cypress) (2022-04-13)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.12.0/packages/gatsby-cypress) (2022-04-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.12)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.11.0/packages/gatsby-cypress) (2022-03-29)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.11)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.10.0/packages/gatsby-cypress) (2022-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.10)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.9.0/packages/gatsby-cypress) (2022-03-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.9)
+
+#### Chores
+
+- Format changelog files ([088f23b](https://github.com/gatsbyjs/gatsby/commit/088f23b084b67f746a383e06e9216cef83270317))
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.8.0/packages/gatsby-cypress) (2022-02-22)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.8)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.7.0/packages/gatsby-cypress) (2022-02-08)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.7)
+
+**Note:** Version bump only for package gatsby-cypress
+
 ## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cypress@2.6.0/packages/gatsby-cypress) (2022-01-25)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.6)

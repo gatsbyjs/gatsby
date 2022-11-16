@@ -15,14 +15,10 @@ export class OrdersQuery extends BulkQuery {
         orders(query: "${queryString}") {
           edges {
             node {
-              id
-              edited
               closed
               closedAt
-              refunds {
-                id
-                createdAt
-              }
+              edited
+              id
               lineItems {
                 edges {
                   node {
@@ -32,6 +28,10 @@ export class OrdersQuery extends BulkQuery {
                     }
                   }
                 }
+              }
+              refunds {
+                createdAt
+                id
               }
             }
           }
