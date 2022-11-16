@@ -9,17 +9,19 @@ import isEqual from "lodash/isEqual"
 
 function mergePageEntry(cachedPage, newPageData) {
   return {
-    ...cachedPage,
+    ...(cachedPage ?? {}),
+    createdAt: new Date(),
     payload: {
-      ...cachedPage.payload,
+      ...cachedPage?.payload,
+      ...newPageData.payload,
       json: {
         // For SSR, cachedPage may contain "data" and "serverData"
         // But newPageData may contain only "data" or only "serverData" depending on what was updated
-        ...cachedPage.payload.json,
+        ...cachedPage?.payload.json,
         ...newPageData.result,
       },
       page: {
-        ...cachedPage.payload.page,
+        ...cachedPage?.payload.page,
         getServerDataError: newPageData.getServerDataError,
         staticQueryResults: newPageData.staticQueryResults,
       },
@@ -54,10 +56,12 @@ class DevLoader extends BaseLoader {
         if (msg.type === `staticQueryResult`) {
           this.handleStaticQueryResultHotUpdate(msg)
         } else if (msg.type === `pageQueryResult`) {
+          console.log(`Received pageQueryResult from socket.io`, msg)
           this.handlePageQueryResultHotUpdate(msg)
         } else if (msg.type === `sliceQueryResult`) {
           this.handleSliceQueryResultHotUpdate(msg)
         } else if (msg.type === `stalePageData`) {
+          console.log(`Received stalePageData from socket.io`, msg)
           this.handleStalePageDataMessage(msg)
         } else if (msg.type === `staleServerData`) {
           this.handleStaleServerDataMessage(msg)
@@ -167,12 +171,14 @@ class DevLoader extends BaseLoader {
       })
 
       const cachedPage = this.pageDb.get(pageDataDbCacheKey)
-      if (cachedPage) {
-        this.pageDb.set(
-          pageDataDbCacheKey,
-          mergePageEntry(cachedPage, newPageData)
-        )
-      }
+      // if (cachedPage) {
+      console.log(`merging from cached`)
+      this.pageDb.set(
+        pageDataDbCacheKey,
+        mergePageEntry(cachedPage, newPageData)
+      )
+      // } else {
+      // }
 
       // Additionally if those are query results for "/404.html"
       // we have to update all paths user wanted to visit, but didn't have

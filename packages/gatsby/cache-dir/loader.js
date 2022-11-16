@@ -346,6 +346,7 @@ export class BaseLoader {
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       if (process.env.BUILD_STAGE !== `develop` || !page.payload.stale) {
+        console.log(`using cached pagedata for ${pagePath}`, page)
         if (page.error) {
           return {
             error: page.error,
@@ -361,6 +362,7 @@ export class BaseLoader {
       return this.inFlightDb.get(pagePath)
     }
 
+    console.log(`actually running loadPage for ${pagePath}`)
     const loadDataPromises = [
       this.loadAppData(),
       this.loadPageDataJson(pagePath),
@@ -390,7 +392,9 @@ export class BaseLoader {
         slicesMap = {},
       } = pageData
 
-      const finalResult = {}
+      const finalResult = {
+        createdAt: new Date(),
+      }
 
       const dedupedSliceNames = Array.from(new Set(Object.values(slicesMap)))
 
@@ -403,6 +407,8 @@ export class BaseLoader {
 
         const inFlight = this.loadComponent(slice.componentChunkName).then(
           component => {
+            // if this was rebuilt by webpack, trigger another page-data fetch to get fresh result with potentially updated static query hashes?
+
             return {
               component: preferDefault(component),
               sliceContext: slice.result.sliceContext,
@@ -441,7 +447,34 @@ export class BaseLoader {
         ]
 
         if (!global.hasPartialHydration) {
-          loadChunkPromises.push(this.loadComponent(componentChunkName))
+          let unregister
+          // let isRecompiling = false
+          let needAdditionalPageDataFetch = false
+
+          if (module.hot) {
+            const statusHandler = status => {
+              console.log(`webpack hot status`, status)
+              if (status === `check`) {
+                needAdditionalPageDataFetch = true
+              } else if (status === `idle`) {
+              }
+            }
+            module.hot.addStatusHandler(statusHandler)
+            unregister = () => {
+              module.hot.removeStatusHandler(statusHandler)
+            }
+          }
+
+          loadChunkPromises.push(
+            this.loadComponent(componentChunkName).then(toReturn => {
+              if (unregister) {
+                unregister()
+              }
+
+              console.log(`needToRefetch`, needAdditionalPageDataFetch)
+              return toReturn
+            })
+          )
         }
 
         // In develop we have separate chunks for template and Head components
@@ -454,7 +487,7 @@ export class BaseLoader {
           components => {
             const [sliceComponents, headComponent, pageComponent] = components
 
-            finalResult.createdAt = new Date()
+            // finalResult.createdAt = new Date()
 
             for (const sliceComponent of sliceComponents) {
               if (!sliceComponent || sliceComponent instanceof Error) {
@@ -571,16 +604,36 @@ export class BaseLoader {
                 })
               }
 
-              this.pageDb.set(pagePath, finalResult)
+              const existingEntry = this.pageDb.get(pagePath)
+              console.log(`setting pagedata from loadPage`, {
+                finalResult,
+                existingEntry,
+              })
+              if (
+                !existingEntry ||
+                existingEntry.createdAt < finalResult.createdAt
+              ) {
+                console.log(`1`)
+                this.pageDb.set(pagePath, finalResult)
 
-              if (finalResult.error) {
-                return {
-                  error: finalResult.error,
-                  status: finalResult.status,
+                if (finalResult.error) {
+                  return {
+                    error: finalResult.error,
+                    status: finalResult.status,
+                  }
                 }
+
+                return payload
+              } else {
+                console.log(`2`)
+                if (existingEntry) {
+                  existingEntry.payload.stale = true
+                }
+                this.inFlightDb.delete(pagePath)
+                return this.loadPage(rawPath)
               }
 
-              return payload
+              return existingEntry.payload
             })
             // when static-query fail to load we throw a better error
             .catch(err => {
