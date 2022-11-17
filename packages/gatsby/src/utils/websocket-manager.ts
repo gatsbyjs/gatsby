@@ -261,11 +261,19 @@ export class WebsocketManager {
     return false
   }
 
-  emitMappingStatus(didChange: boolean): void {
+  emitDataFilesWillRegenerate(didChange: boolean): void {
     if (this.websocket) {
       this.websocket.send({
-        type: `mappingWillChange`,
+        type: `dataFilesWillRegenerate`,
         payload: didChange,
+      })
+    }
+  }
+
+  emitDataFilesDidRegenerate(): void {
+    if (this.websocket) {
+      this.websocket.send({
+        type: `dataFilesDidRegenerate`,
       })
     }
   }

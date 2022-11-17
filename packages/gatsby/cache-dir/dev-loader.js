@@ -54,20 +54,41 @@ class DevLoader extends BaseLoader {
         if (msg.type === `staticQueryResult`) {
           this.handleStaticQueryResultHotUpdate(msg)
         } else if (msg.type === `pageQueryResult`) {
-          console.log(`Received pageQueryResult from socket.io`, msg)
+          // console.log(`Received pageQueryResult from socket.io`, msg)
           this.handlePageQueryResultHotUpdate(msg)
         } else if (msg.type === `sliceQueryResult`) {
           this.handleSliceQueryResultHotUpdate(msg)
         } else if (msg.type === `stalePageData`) {
-          console.log(`Received stalePageData from socket.io`, msg)
+          // console.log(`Received stalePageData from socket.io`, msg)
           this.handleStalePageDataMessage(msg)
         } else if (msg.type === `staleServerData`) {
           this.handleStaleServerDataMessage(msg)
-        } else if (msg.type === `mappingWillChange`) {
+        } else if (msg.type === `dataFilesWillRegenerate`) {
           if (msg.payload === true) {
             this.lastMappingWillChange = new Date()
+            console.log(
+              `[websocket-msg-handler] received dataFilesWillRegenerate(true), setting up promise that will be resolved when they do`
+            )
+            this.dataFilesRegenerationPromise = new Promise(resolve => {
+              this.dataFilesRegenerated = () => {
+                console.log(
+                  `[websocket-msg-handler] data files regenerated, resolving promise`
+                )
+                this.dataFilesRegenerationPromise = null
+                this.dataFilesRegenerated = null
+                resolve()
+              }
+            })
+          } else {
+            console.log(
+              `[websocket-msg-handler] dataFilesWillRegenerate`,
+              msg.payload
+            )
           }
-          console.log(`mappingWillChange`, msg.payload)
+        } else if (msg.type === `dataFilesDidRegenerate`) {
+          if (this.dataFilesRegenerated) {
+            this.dataFilesRegenerated()
+          }
         }
       })
     } else if (process.env.NODE_ENV !== `test`) {
@@ -81,6 +102,22 @@ class DevLoader extends BaseLoader {
     }
 
     return this.lastMappingWillChange > startedAt
+  }
+
+  _loadPage(pagePath) {
+    if (this.dataFilesRegenerationPromise) {
+      console.log(
+        `[_loadPage] waiting for data files regen promise to resolve before actually running loadPage for ${pagePath}`
+      )
+      return this.dataFilesRegenerationPromise.then(() => {
+        console.log(
+          `[_loadPage] resuming loadPage for ${pagePath} after data files regen promise resolved`
+        )
+        return super._loadPage(pagePath)
+      })
+    } else {
+      return super._loadPage(pagePath)
+    }
   }
 
   updateAsyncRequires(asyncRequires) {

@@ -379,7 +379,7 @@ export class StaticQueryMapper {
         }
 
         if (process.env.NODE_ENV !== `production`) {
-          websocketManager.emitMappingStatus(mappingWillChange)
+          websocketManager.emitDataFilesWillRegenerate(mappingWillChange)
         }
       }
     )

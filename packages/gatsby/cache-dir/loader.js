@@ -571,7 +571,13 @@ export class BaseLoader {
           Promise.all([componentChunkPromises, staticQueryBatchPromise])
             .then(([pageResources, staticQueryResults]) => {
               if (this.shouldRestartLoadPage(finalResult.createdAt)) {
+                console.log(
+                  `Restarting loadPage for ${pagePath} because generating new one was scheduled after initial loadPage happened`
+                )
+
                 return this._loadPage(pagePath)
+              } else {
+                console.log(`Finishing loadPage for ${pagePath}`)
               }
 
               let payload
